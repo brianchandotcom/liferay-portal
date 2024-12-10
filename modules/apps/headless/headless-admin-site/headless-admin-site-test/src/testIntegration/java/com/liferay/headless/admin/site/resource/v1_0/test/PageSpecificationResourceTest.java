@@ -1293,17 +1293,30 @@ public class PageSpecificationResourceTest
 		Layout draftLayout = _updateLayout(
 			layout.fetchDraftLayout(), serviceContext);
 
-		PageSpecification pageSpecification =
-			pageSpecificationResource.
-				getSiteSiteByExternalReferenceCodePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					draftLayout.getExternalReferenceCode());
+		ContentPageSpecification contentPageSpecification =
+			(ContentPageSpecification)
+				pageSpecificationResource.
+					getSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode());
+
+		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			contentPageSpecification,
+			() -> new ContentPageSpecification() {
+				{
+					setPageExperiences(
+						contentPageSpecification::getPageExperiences);
+					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+				}
+			});
 
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
-			pageSpecification, serviceContext,
+			contentPageSpecification, serviceContext,
 			settings -> _getContentPageSpecification(settings));
 
-		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		contentPageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
 			() ->
@@ -1311,7 +1324,7 @@ public class PageSpecificationResourceTest
 					patchSiteSiteByExternalReferenceCodePageSpecification(
 						testGroup.getExternalReferenceCode(),
 						draftLayout.getExternalReferenceCode(),
-						pageSpecification));
+						contentPageSpecification));
 	}
 
 	private void

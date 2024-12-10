@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.verify.model.GroupVerifiableResourcedModel;
 import com.liferay.portal.verify.model.LayoutBranchVerifiableResourcedModel;
 import com.liferay.portal.verify.model.LayoutVerifiableResourcedModel;
@@ -184,23 +183,17 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select schemaVersion from Release_ where servletContextName " +
-					"= 'com.liferay.layout.impl'")) {
+					"= 'com.liferay.layout.service' and schemaVersion = " +
+						"'0.0.0'")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
+				if (resultSet.next()) {
 					return false;
-				}
-
-				Version version = Version.parseVersion(
-					resultSet.getString("schemaVersion"));
-
-				if (version.compareTo(new Version(1, 0, 0)) >= 0) {
-					return true;
 				}
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private void _verifyResourcedModel(

@@ -19,6 +19,8 @@ export {default as detailsItemFinder} from './detailsItemFinder';
 export {default as duplicateCpDefinitionAutocomplete} from './duplicateCpDefinitionAutocomplete';
 export {default as editCpDefinitionOptionValueAutocomplete} from './editCpDefinitionOptionValueAutocomplete';
 export {default as editCpDefinitionOptionValueRel} from './editCpDefinitionOptionValueRel';
+export {default as editCpConfigurationEntry} from './edit_cp_configuration_entry';
+export {default as editCpConfigurationList} from './edit_cp_configuration_list';
 export {default as editCpDefinition} from './edit_cp_definition';
 export {default as editCpDefinitionVisibility} from './edit_cp_definition_visibility';
 export {default as editCpInstanceUnitOfMeasure} from './edit_cp_instance_unit_of_measure';

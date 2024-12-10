@@ -5,12 +5,17 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet;
 
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext;
 import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPConfigurationListService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,8 +65,11 @@ public class CPConfigurationListPortlet extends MVCPortlet {
 
 		CPConfigurationListDisplayContext cpConfigurationListDisplayContext =
 			new CPConfigurationListDisplayContext(
-				_commerceCatalogService, _cpConfigurationEntryService,
-				_cpConfigurationListService, _cpDefinitionService,
+				_commerceAvailabilityEstimateService, _commerceCatalogService,
+				_commerceLowStockActivityRegistry, _cpConfigurationEntryService,
+				_cpConfigurationListService,
+				_cpDefinitionInventoryEngineRegistry, _cpDefinitionService,
+				_cpMeasurementUnitLocalService, _cpTaxCategoryLocalService,
 				_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(
@@ -71,7 +79,14 @@ public class CPConfigurationListPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
+
+	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
 	private CPConfigurationEntryService _cpConfigurationEntryService;
@@ -80,7 +95,17 @@ public class CPConfigurationListPortlet extends MVCPortlet {
 	private CPConfigurationListService _cpConfigurationListService;
 
 	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private Portal _portal;

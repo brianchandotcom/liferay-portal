@@ -97,6 +97,7 @@ page import="com.liferay.commerce.product.exception.NoSuchCProductException" %><
 page import="com.liferay.commerce.product.exception.NoSuchCatalogException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
+page import="com.liferay.commerce.product.model.CPConfigurationEntry" %><%@
 page import="com.liferay.commerce.product.model.CPConfigurationList" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionLink" %><%@

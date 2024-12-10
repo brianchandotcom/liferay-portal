@@ -44,6 +44,7 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
@@ -1405,6 +1406,12 @@ public class CPDefinitionLocalServiceImpl
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 			companyGroup.getGroupId(), CProduct.class,
 			cpDefinition.getCProductId());
+
+		// Commerce product configuration entries
+
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+			_portal.getClassNameId(CPDefinition.class),
+			cpDefinition.getCPDefinitionId());
 
 		// Commerce product display layouts
 
@@ -3330,6 +3337,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
+
+	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

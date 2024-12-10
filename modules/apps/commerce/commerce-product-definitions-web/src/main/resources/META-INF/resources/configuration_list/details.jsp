@@ -7,4 +7,91 @@
 
 <%@ include file="/init.jsp" %>
 
-DETAILS
+<%
+CPConfigurationListDisplayContext cpConfigurationListDisplayContext = (CPConfigurationListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPConfigurationList cpConfigurationList = cpConfigurationListDisplayContext.getCPConfigurationList();
+long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTemplateCPConfigurationEntryId();
+%>
+
+<aui:form method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "saveCPConfigurationList(event, this.form)" %>'>
+	<div class="row">
+		<aui:model-context bean="<%= cpConfigurationList %>" model="<%= CPConfigurationList.class %>" />
+
+		<div class="<%= (templateCPConfigurationEntryId > 0) ? "col-12" : "col-8" %>">
+			<commerce-ui:panel
+				elementClasses="mt-4"
+				title='<%= LanguageUtil.get(request, "details") %>'
+			>
+				<div class="row">
+					<div class="col-12">
+						<aui:input data-qa-id="nameInput" formName="fm" name="name" type="text">
+							<aui:validator name="required" />
+						</aui:input>
+					</div>
+
+					<div class="col-12">
+						<aui:input data-qa-id="catalogNameInput" disabled="<%= true %>" formName="fm" name="catalogName" type="text" value="<%= cpConfigurationListDisplayContext.getCommerceCatalogName() %>">
+							<aui:validator name="required" />
+						</aui:input>
+					</div>
+
+					<div class="col-12">
+						<aui:input data-qa-id="priorityInput" formName="fm" name="priority" type="text">
+							<aui:validator name="number" />
+							<aui:validator name="required" />
+						</aui:input>
+					</div>
+				</div>
+			</commerce-ui:panel>
+		</div>
+
+		<c:if test="<%= templateCPConfigurationEntryId <= 0 %>">
+			<div class="col-4">
+				<commerce-ui:panel
+					elementClasses="mt-4"
+					title='<%= LanguageUtil.get(request, "schedule") %>'
+				>
+					<div class="row">
+						<div class="col-12">
+							<aui:input data-qa-id="displayDateInput" formName="fm" name="displayDate" />
+						</div>
+
+						<div class="col-12">
+							<aui:input data-qa-id="expirationDateInput" dateTogglerCheckboxLabel="never-expire" disabled="<%= cpConfigurationList.getExpirationDate() == null %>" formName="fm" name="expirationDate" />
+						</div>
+					</div>
+				</commerce-ui:panel>
+			</div>
+		</c:if>
+
+		<c:if test="<%= templateCPConfigurationEntryId > 0 %>">
+			<div class="col-12">
+				<commerce-ui:panel
+					title='<%= LanguageUtil.get(request, "default-product-configuration-settings") %>'
+				>
+					<liferay-util:include page="/configuration_list/edit_cp_configuration_entry_form.jsp" servletContext="<%= application %>" />
+				</commerce-ui:panel>
+			</div>
+		</c:if>
+	</div>
+
+	<clay:button
+		cssClass="hide"
+		id='<%= liferayPortletResponse.getNamespace() + "saveButton" %>'
+		type="submit"
+	/>
+</aui:form>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"cpConfigurationEntryId", templateCPConfigurationEntryId
+		).put(
+			"cpConfigurationListId", cpConfigurationListDisplayContext.getCPConfigurationListId()
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="{editCpConfigurationList} from commerce-product-definitions-web"
+/>

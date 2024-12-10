@@ -5,12 +5,17 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPConfigurationListDisplayContext;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPConfigurationListService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,8 +53,11 @@ public class CPConfigurationListDetailsScreenNavigationEntry
 
 		CPConfigurationListDisplayContext cpConfigurationListDisplayContext =
 			new CPConfigurationListDisplayContext(
-				_commerceCatalogService, _cpConfigurationEntryService,
-				_cpConfigurationListService, _cpDefinitionService,
+				_commerceAvailabilityEstimateService, _commerceCatalogService,
+				_commerceLowStockActivityRegistry, _cpConfigurationEntryService,
+				_cpConfigurationListService,
+				_cpDefinitionInventoryEngineRegistry, _cpDefinitionService,
+				_cpMeasurementUnitLocalService, _cpTaxCategoryLocalService,
 				httpServletRequest);
 
 		httpServletRequest.setAttribute(
@@ -61,7 +69,14 @@ public class CPConfigurationListDetailsScreenNavigationEntry
 	}
 
 	@Reference
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
+
+	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
 	private CPConfigurationEntryService _cpConfigurationEntryService;
@@ -70,7 +85,17 @@ public class CPConfigurationListDetailsScreenNavigationEntry
 	private CPConfigurationListService _cpConfigurationListService;
 
 	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -22,6 +22,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 </liferay-portlet:renderURL>
 
 <commerce-ui:header
+	actions="<%= cpConfigurationListDisplayContext.getHeaderActionModels() %>"
 	bean="<%= cpConfigurationList %>"
 	beanIdLabel="id"
 	displayBeanId="<%= cpConfigurationListDisplayContext.getCPConfigurationListId() %>"

@@ -119,6 +119,19 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPConfigurationEntries(long classNameId, long classPK) {
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			cpConfigurationEntryPersistence.findByC_C(classNameId, classPK);
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+				cpConfigurationEntry);
+		}
+	}
+
+	@Override
 	public CPConfigurationEntry fetchCPConfigurationEntry(
 		long classNameId, long classPK, long cpConfigurationListId) {
 

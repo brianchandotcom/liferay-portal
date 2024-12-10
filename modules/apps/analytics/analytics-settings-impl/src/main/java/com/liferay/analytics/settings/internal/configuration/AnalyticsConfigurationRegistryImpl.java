@@ -7,6 +7,7 @@ package com.liferay.analytics.settings.internal.configuration;
 
 import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
 import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatchExporterConstants;
+import com.liferay.analytics.machine.learning.constants.AnalyticsMachineLearningConstants;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -205,6 +206,60 @@ public class AnalyticsConfigurationRegistryImpl
 			new ServiceContext());
 	}
 
+	private boolean _contentRecommenderMostPopularItemsChanged(
+		Dictionary<String, ?> dictionary) {
+
+		boolean contentRecommenderMostPopularItemsEnabled =
+			GetterUtil.getBoolean(
+				dictionary.get("contentRecommenderMostPopularItemsEnabled"));
+		boolean previousContentRecommenderMostPopularItemsEnabled =
+			GetterUtil.getBoolean(
+				dictionary.get(
+					"previousContentRecommenderMostPopularItemsEnabled"));
+
+		if (previousContentRecommenderMostPopularItemsEnabled !=
+				contentRecommenderMostPopularItemsEnabled) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _contentRecommenderMostPopularItemsEnabled(
+		Dictionary<String, ?> dictionary) {
+
+		return GetterUtil.getBoolean(
+			dictionary.get("contentRecommenderMostPopularItemsEnabled"));
+	}
+
+	private boolean _contentRecommenderUserPersonalizationChanged(
+		Dictionary<String, ?> dictionary) {
+
+		boolean contentRecommenderUserPersonalizationEnabled =
+			GetterUtil.getBoolean(
+				dictionary.get("contentRecommenderUserPersonalizationEnabled"));
+		boolean previousContentRecommenderUserPersonalizationEnabled =
+			GetterUtil.getBoolean(
+				dictionary.get(
+					"previousContentRecommenderUserPersonalizationEnabled"));
+
+		if (previousContentRecommenderUserPersonalizationEnabled !=
+				contentRecommenderUserPersonalizationEnabled) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _contentRecommenderUserPersonalizationEnabled(
+		Dictionary<String, ?> dictionary) {
+
+		return GetterUtil.getBoolean(
+			dictionary.get("contentRecommenderUserPersonalizationEnabled"));
+	}
+
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByScreenName(
 			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
@@ -281,6 +336,24 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_ORDER,
 					AnalyticsDXPEntityBatchExporterConstants.
 						DISPATCH_TRIGGER_NAME_PRODUCT);
+			}
+
+			if (_contentRecommenderMostPopularItemsEnabled(dictionary)) {
+				Collections.addAll(
+					dispatchTriggerNames,
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_ASSET_ENTITIES,
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_MOST_VIEWED_RECOMMENDER);
+			}
+
+			if (_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+				Collections.addAll(
+					dispatchTriggerNames,
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_ASSET_ENTITIES,
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER);
 			}
 
 			if (!dispatchTriggerNames.isEmpty()) {
@@ -367,6 +440,28 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 			}
 
+			if ((_contentRecommenderMostPopularItemsChanged(dictionary) &&
+				 _contentRecommenderMostPopularItemsEnabled(dictionary)) ||
+				(_contentRecommenderUserPersonalizationChanged(dictionary) &&
+				 _contentRecommenderUserPersonalizationEnabled(dictionary))) {
+
+				refreshDispatchTriggerNames.add(
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_ASSET_ENTITIES);
+
+				if (_contentRecommenderMostPopularItemsEnabled(dictionary)) {
+					refreshDispatchTriggerNames.add(
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_MOST_VIEWED_RECOMMENDER);
+				}
+
+				if (_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+					refreshDispatchTriggerNames.add(
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER);
+				}
+			}
+
 			if ((_syncedAccountSettingsChanged(dictionary) &&
 				 _syncedAccountSettingsEnabled(dictionary)) ||
 				(_syncedAccountSettingsEnabled(dictionary) &&
@@ -386,12 +481,29 @@ public class AnalyticsConfigurationRegistryImpl
 					companyId,
 					refreshDispatchTriggerNames.toArray(new String[0]));
 
-				_analyticsDXPEntityBatchExporter.export(
-					companyId,
-					new String[] {
+				if (refreshDispatchTriggerNames.contains(
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_ASSET_ENTITIES)) {
+
+					_analyticsDXPEntityBatchExporter.export(
+						companyId,
+						new String[] {
+							AnalyticsMachineLearningConstants.
+								DISPATCH_TRIGGER_NAME_ASSET_ENTITIES
+						});
+				}
+
+				if (refreshDispatchTriggerNames.contains(
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_DXP_ENTITIES
-					});
+							DISPATCH_TRIGGER_NAME_DXP_ENTITIES)) {
+
+					_analyticsDXPEntityBatchExporter.export(
+						companyId,
+						new String[] {
+							AnalyticsDXPEntityBatchExporterConstants.
+								DISPATCH_TRIGGER_NAME_DXP_ENTITIES
+						});
+				}
 			}
 
 			if (!_syncedAccountSettingsEnabled(dictionary) &&

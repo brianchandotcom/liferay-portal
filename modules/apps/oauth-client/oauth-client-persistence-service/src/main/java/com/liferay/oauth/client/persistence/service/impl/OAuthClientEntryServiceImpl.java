@@ -37,7 +37,7 @@ public class OAuthClientEntryServiceImpl
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String infoJSON,
-			long metadataCacheInMillis, String oidcUserInfoMapperJSON,
+			long metadataCachingTime, String oidcUserInfoMapperJSON,
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -48,7 +48,7 @@ public class OAuthClientEntryServiceImpl
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
 			userId, authRequestParametersJSON, authServerWellKnownURI, infoJSON,
-			metadataCacheInMillis, oidcUserInfoMapperJSON,
+			metadataCachingTime, oidcUserInfoMapperJSON,
 			tokenRequestParametersJSON);
 	}
 
@@ -147,7 +147,7 @@ public class OAuthClientEntryServiceImpl
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String infoJSON,
-			long metadataCacheInMillis, String oidcUserInfoMapperJSON,
+			long metadataCachingTime, String oidcUserInfoMapperJSON,
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -156,7 +156,7 @@ public class OAuthClientEntryServiceImpl
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
 			oAuthClientEntryId, authRequestParametersJSON,
-			authServerWellKnownURI, infoJSON, metadataCacheInMillis,
+			authServerWellKnownURI, infoJSON, metadataCachingTime,
 			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
 	}
 

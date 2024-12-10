@@ -104,10 +104,10 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 			Assert.assertEquals(
 				discoveryEndpointCacheInMillis,
-				oAuthClientEntry1.getMetadataCacheInMillis());
+				oAuthClientEntry1.getMetadataCachingTime());
 			Assert.assertEquals(
 				OAuthClientEntryConstants.METADATA_CACHE_IN_MILLIS_DEFAULT,
-				oAuthClientEntry2.getMetadataCacheInMillis());
+				oAuthClientEntry2.getMetadataCachingTime());
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(pid);
@@ -128,7 +128,7 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update OAuthClientEntry set metadataCacheInMillis = null " +
+				"update OAuthClientEntry set metadataCachingTime = null " +
 					"where oAuthClientEntryId = ?");
 
 			preparedStatement.setLong(

@@ -500,8 +500,7 @@ public class PageSpecificationResourceImpl
 	private long _getFaviconFileEntryId(Layout layout, Settings settings)
 		throws Exception {
 
-		if ((settings == null) ||
-			(settings.getFavIcon() == null) ||
+		if ((settings == null) || (settings.getFavIcon() == null) ||
 			!(settings.getFavIcon() instanceof ItemExternalReference)) {
 
 			return 0;

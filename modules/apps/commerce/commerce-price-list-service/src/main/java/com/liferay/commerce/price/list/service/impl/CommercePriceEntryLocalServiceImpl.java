@@ -1014,15 +1014,15 @@ public class CommercePriceEntryLocalServiceImpl
 			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
 				cpInstanceId, unitOfMeasureKey);
 
-		if (cpInstanceUnitOfMeasure != null) {
-			BigDecimal incrementalOrderQuantity =
-				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
-
-			return incrementalOrderQuantity.setScale(
-				cpInstanceUnitOfMeasure.getPrecision(), RoundingMode.HALF_UP);
+		if (cpInstanceUnitOfMeasure == null) {
+			return null;
 		}
 
-		return null;
+		BigDecimal incrementalOrderQuantity =
+			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+
+		return incrementalOrderQuantity.setScale(
+			cpInstanceUnitOfMeasure.getPrecision(), RoundingMode.HALF_UP);
 	}
 
 	private String _getUnitOfMeasureKey(
@@ -1036,24 +1036,24 @@ public class CommercePriceEntryLocalServiceImpl
 			_cpInstanceUnitOfMeasureLocalService.
 				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 
-		if ((cpInstanceUnitOfMeasuresCount == 1) &&
-			Validator.isBlank(unitOfMeasureKey)) {
+		if ((cpInstanceUnitOfMeasuresCount != 1) ||
+			!Validator.isBlank(unitOfMeasureKey)) {
 
-			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-				_cpInstanceUnitOfMeasureLocalService.
-					getCPInstanceUnitOfMeasures(cpInstanceId, 0, 1, null);
-
-			if (ListUtil.isEmpty(cpInstanceUnitOfMeasures)) {
-				return null;
-			}
-
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-				cpInstanceUnitOfMeasures.get(0);
-
-			return cpInstanceUnitOfMeasure.getKey();
+			return null;
 		}
 
-		return null;
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
+				cpInstanceId, 0, 1, null);
+
+		if (ListUtil.isEmpty(cpInstanceUnitOfMeasures)) {
+			return null;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasures.get(0);
+
+		return cpInstanceUnitOfMeasure.getKey();
 	}
 
 	private void _reindexCPDefinition(long cpDefinitionId)

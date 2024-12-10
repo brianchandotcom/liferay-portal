@@ -58,12 +58,12 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 			_commerceNotificationsRequestHelper.getRequest(),
 			"commerceChannelId");
 
-		if (commerceChannelId > 0) {
-			return _commerceChannelLocalService.getCommerceChannel(
-				commerceChannelId);
+		if (commerceChannelId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceChannelLocalService.getCommerceChannel(
+			commerceChannelId);
 	}
 
 	public long getCommerceChannelId() throws PortalException {

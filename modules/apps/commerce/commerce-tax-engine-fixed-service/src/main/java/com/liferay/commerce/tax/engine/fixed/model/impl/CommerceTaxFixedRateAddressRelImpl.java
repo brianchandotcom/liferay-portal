@@ -23,12 +23,12 @@ public class CommerceTaxFixedRateAddressRelImpl
 
 	@Override
 	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {
-		if (getCommerceTaxMethodId() > 0) {
-			return CommerceTaxMethodLocalServiceUtil.getCommerceTaxMethod(
-				getCommerceTaxMethodId());
+		if (getCommerceTaxMethodId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceTaxMethodLocalServiceUtil.getCommerceTaxMethod(
+			getCommerceTaxMethodId());
 	}
 
 	@Override

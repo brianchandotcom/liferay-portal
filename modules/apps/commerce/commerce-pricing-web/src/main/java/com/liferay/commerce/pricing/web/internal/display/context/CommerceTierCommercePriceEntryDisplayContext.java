@@ -57,12 +57,12 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		long commercePriceEntryId = ParamUtil.getLong(
 			commercePricingRequestHelper.getRequest(), "commercePriceEntryId");
 
-		if (commercePriceEntryId > 0) {
-			return _commercePriceEntryService.getCommercePriceEntry(
-				commercePriceEntryId);
+		if (commercePriceEntryId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commercePriceEntryService.getCommercePriceEntry(
+			commercePriceEntryId);
 	}
 
 	public long getCommercePriceEntryId() throws PortalException {

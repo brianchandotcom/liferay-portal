@@ -27,38 +27,36 @@ public class CommerceShippingFixedOptionRelImpl
 	public CommerceInventoryWarehouse getCommerceInventoryWarehouse()
 		throws PortalException {
 
-		if (getCommerceInventoryWarehouseId() > 0) {
-			return CommerceInventoryWarehouseLocalServiceUtil.
-				getCommerceInventoryWarehouse(
-					getCommerceInventoryWarehouseId());
+		if (getCommerceInventoryWarehouseId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceInventoryWarehouseLocalServiceUtil.
+			getCommerceInventoryWarehouse(getCommerceInventoryWarehouseId());
 	}
 
 	@Override
 	public CommerceShippingFixedOption getCommerceShippingFixedOption()
 		throws PortalException {
 
-		if (getCommerceShippingFixedOptionId() > 0) {
-			return CommerceShippingFixedOptionLocalServiceUtil.
-				getCommerceShippingFixedOption(
-					getCommerceShippingFixedOptionId());
+		if (getCommerceShippingFixedOptionId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceShippingFixedOptionLocalServiceUtil.
+			getCommerceShippingFixedOption(getCommerceShippingFixedOptionId());
 	}
 
 	@Override
 	public CommerceShippingMethod getCommerceShippingMethod()
 		throws PortalException {
 
-		if (getCommerceShippingMethodId() > 0) {
-			return CommerceShippingMethodLocalServiceUtil.
-				getCommerceShippingMethod(getCommerceShippingMethodId());
+		if (getCommerceShippingMethodId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceShippingMethodLocalServiceUtil.getCommerceShippingMethod(
+			getCommerceShippingMethodId());
 	}
 
 	@Override

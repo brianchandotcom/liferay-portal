@@ -229,14 +229,14 @@ public class CommerceCatalogDisplayContext {
 				).build(),
 				0, 2, "name", false);
 
-		if (baseModelSearchResult.getLength() == 1) {
-			List<AccountEntry> accountEntries =
-				baseModelSearchResult.getBaseModels();
-
-			return accountEntries.get(0);
+		if (baseModelSearchResult.getLength() != 1) {
+			return null;
 		}
 
-		return null;
+		List<AccountEntry> accountEntries =
+			baseModelSearchResult.getBaseModels();
+
+		return accountEntries.get(0);
 	}
 
 	public FileEntry getDefaultFileEntry() throws PortalException {

@@ -1698,12 +1698,11 @@ public class CommerceDiscountLocalServiceImpl
 			true
 		).and(
 			() -> {
-				if (companyId != null) {
-					return CommerceDiscountTable.INSTANCE.companyId.eq(
-						companyId);
+				if (companyId == null) {
+					return null;
 				}
 
-				return null;
+				return CommerceDiscountTable.INSTANCE.companyId.eq(companyId);
 			}
 		).and(
 			CommerceDiscountTable.INSTANCE.status.eq(

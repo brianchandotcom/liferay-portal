@@ -231,15 +231,15 @@ public class CommerceTermEntryRelLocalServiceImpl
 					_classNameLocalService.getClassNameId(className))
 			).and(
 				() -> {
-					if (Validator.isNotNull(keywords)) {
-						return Predicate.withParentheses(
-							_customSQL.getKeywordsPredicate(
-								DSLFunctionFactoryUtil.lower(
-									keywordsPredicateExpression),
-								_customSQL.keywords(keywords, true)));
+					if (Validator.isNull(keywords)) {
+						return null;
 					}
 
-					return null;
+					return Predicate.withParentheses(
+						_customSQL.getKeywordsPredicate(
+							DSLFunctionFactoryUtil.lower(
+								keywordsPredicateExpression),
+							_customSQL.keywords(keywords, true)));
 				}
 			));
 	}

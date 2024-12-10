@@ -500,7 +500,8 @@ public class PageSpecificationResourceImpl
 	private long _getFaviconFileEntryId(Layout layout, Settings settings)
 		throws Exception {
 
-		if ((settings.getFavIcon() == null) ||
+		if ((settings == null) ||
+			(settings.getFavIcon() == null) ||
 			!(settings.getFavIcon() instanceof ItemExternalReference)) {
 
 			return 0;
@@ -538,6 +539,10 @@ public class PageSpecificationResourceImpl
 
 	private long _getMasterLayoutPlid(Layout layout, Settings settings)
 		throws Exception {
+
+		if (settings == null) {
+			return 0;
+		}
 
 		ItemExternalReference itemExternalReference =
 			settings.getMasterPageItemExternalReference();
@@ -600,6 +605,10 @@ public class PageSpecificationResourceImpl
 
 	private long _getStyleBookEntryId(Layout layout, Settings settings)
 		throws Exception {
+
+		if (settings == null) {
+			return 0;
+		}
 
 		ItemExternalReference itemExternalReference =
 			settings.getStyleBookItemExternalReference();

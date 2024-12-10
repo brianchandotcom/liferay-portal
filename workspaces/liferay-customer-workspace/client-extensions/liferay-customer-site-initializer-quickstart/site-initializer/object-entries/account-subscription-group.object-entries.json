@@ -242,6 +242,15 @@
 			"name": "Liferay Self-Hosted",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-014",
 			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-015",
+			"externalReferenceCode": "ERC-015_liferay-saas",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay SaaS",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-015",
+			"tabOrder": 2
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

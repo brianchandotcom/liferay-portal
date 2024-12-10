@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -56,8 +57,17 @@ public class PageFragmentInstanceDefinitionDTOConverter
 		return new PageFragmentInstanceDefinition() {
 			{
 				setCssClasses(
-					() -> ArrayUtil.toStringArray(
-						fragmentStyledLayoutStructureItem.getCssClasses()));
+					() -> {
+						if (SetUtil.isEmpty(
+								fragmentStyledLayoutStructureItem.
+									getCssClasses())) {
+
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(
+							fragmentStyledLayoutStructureItem.getCssClasses());
+					});
 				setCustomCSS(fragmentStyledLayoutStructureItem::getCustomCSS);
 				setFragmentReference(
 					() -> {

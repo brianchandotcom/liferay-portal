@@ -11,6 +11,7 @@ import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -40,8 +41,17 @@ public class PageFormDefinitionDTOConverter
 		return new PageFormDefinition() {
 			{
 				setCssClasses(
-					() -> ArrayUtil.toStringArray(
-						formStyledLayoutStructureItem.getCssClasses()));
+					() -> {
+						if (SetUtil.isEmpty(
+								formStyledLayoutStructureItem.
+									getCssClasses())) {
+
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(
+							formStyledLayoutStructureItem.getCssClasses());
+					});
 				setCustomCSS(formStyledLayoutStructureItem::getCustomCSS);
 				setFormConfig(
 					() -> _toFormConfig(formStyledLayoutStructureItem));

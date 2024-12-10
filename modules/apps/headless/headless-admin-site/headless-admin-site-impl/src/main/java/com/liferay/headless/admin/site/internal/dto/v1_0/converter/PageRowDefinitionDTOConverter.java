@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.PageRowDefinition;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -37,8 +38,16 @@ public class PageRowDefinitionDTOConverter
 		return new PageRowDefinition() {
 			{
 				setCssClasses(
-					() -> ArrayUtil.toStringArray(
-						rowStyledLayoutStructureItem.getCssClasses()));
+					() -> {
+						if (SetUtil.isEmpty(
+								rowStyledLayoutStructureItem.getCssClasses())) {
+
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(
+							rowStyledLayoutStructureItem.getCssClasses());
+					});
 				setCustomCSS(rowStyledLayoutStructureItem::getCustomCSS);
 				setGutters(rowStyledLayoutStructureItem::isGutters);
 				setIndexed(rowStyledLayoutStructureItem::isIndexed);

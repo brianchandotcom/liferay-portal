@@ -40,14 +40,6 @@ public class AppServer {
 				"/domains/liferay/autodeploy/ROOT", appServerName);
 		}
 
-		if (appServerName.equals("websphere")) {
-			return new AppServer(
-				_getAppServerDirName(liferayHomeDir, "websphere"), "", "/lib",
-				"/profiles/liferay/installedApps/liferay-cell" +
-					"/liferay-portal.ear/liferay-portal.war",
-				appServerName);
-		}
-
 		if (appServerName.equals("wildfly")) {
 			return new AppServer(
 				_getAppServerDirName(liferayHomeDir, "wildfly"),

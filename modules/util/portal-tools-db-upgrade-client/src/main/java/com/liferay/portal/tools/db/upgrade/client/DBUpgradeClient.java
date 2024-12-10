@@ -789,7 +789,7 @@ public class DBUpgradeClient {
 	}
 
 	private static final String[] _APP_SERVER_NAMES = {
-		"jboss", "tomcat", "weblogic", "websphere", "wildfly"
+		"jboss", "tomcat", "weblogic", "wildfly"
 	};
 
 	private static final String[] _DATABASE_TYPES = {

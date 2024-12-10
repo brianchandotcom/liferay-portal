@@ -7,4 +7,5 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/partials/fieldset.jsp" servletContext="<%= application %>" />
 <liferay-util:include page="/partials/search_paginator.jsp" servletContext="<%= application %>" />

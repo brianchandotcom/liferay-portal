@@ -178,6 +178,14 @@ public class ClassNameLocalServiceImpl
 
 	@Override
 	public void invalidate() {
+		if (DBPartition.isPartitionEnabled() &&
+			(CompanyThreadLocal.getCompanyId() != CompanyConstants.SYSTEM)) {
+
+			ClassNamePool.invalidate(CompanyThreadLocal.getCompanyId());
+
+			return;
+		}
+
 		ClassNamePool.invalidate();
 	}
 
@@ -238,6 +246,11 @@ public class ClassNameLocalServiceImpl
 			for (Map<Long, ClassName> map : _classNamesMap.values()) {
 				map.clear();
 			}
+		}
+
+		public static void invalidate(long companyId) {
+			_classNamesMap.remove(companyId);
+			_classNameIdsMap.remove(companyId);
 		}
 
 		public static void remove(ClassName className) {

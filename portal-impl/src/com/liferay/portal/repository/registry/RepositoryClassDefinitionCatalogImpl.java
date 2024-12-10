@@ -6,10 +6,12 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -111,6 +113,15 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public void invalidate() {
+		if (DBPartition.isPartitionEnabled() &&
+			(CompanyThreadLocal.getCompanyId() != CompanyConstants.SYSTEM)) {
+
+			_repositoryClassDefinitions.remove(
+				CompanyThreadLocal.getCompanyId());
+
+			return;
+		}
+
 		for (Map<String, RepositoryClassDefinition>
 				companyRepositoryClassDefinitions :
 					_repositoryClassDefinitions.values()) {

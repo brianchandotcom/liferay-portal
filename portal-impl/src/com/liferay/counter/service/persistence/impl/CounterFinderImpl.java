@@ -12,6 +12,7 @@ import com.liferay.counter.model.CounterRegister;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
@@ -20,9 +21,12 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -116,7 +120,21 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 	@Override
 	public void invalidate() {
-		_counterRegisterMap.clear();
+		if (!DBPartition.isPartitionEnabled() ||
+			(CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+			_counterRegisterMap.clear();
+
+			return;
+		}
+
+		for (String key : _counterRegisterMap.keySet()) {
+			if (key.endsWith(
+					StringPool.AT + CompanyThreadLocal.getCompanyId())) {
+
+				_counterRegisterMap.remove(key);
+			}
+		}
 	}
 
 	@Override

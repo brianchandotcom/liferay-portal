@@ -173,25 +173,27 @@ public class CommerceShipmentFDSDataProvider
 	}
 
 	private long[] _getAccountEntryIds(long userId) throws PortalException {
-		if (!_portletResourcePermission.contains(
+		if (_portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceActionKeys.MANAGE_ALL_ACCOUNTS)) {
 
-			List<AccountEntry> accountEntries =
-				_accountEntryLocalService.getUserAccountEntries(
-					userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-					StringPool.BLANK,
-					_commerceAccountHelper.toAccountEntryTypes(
-						CommerceChannelConstants.SITE_TYPE_B2X),
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+			return null;
+		}
 
-			long[] accountEntriesIds = ListUtil.toLongArray(
-				accountEntries, AccountEntryModel::getAccountEntryId);
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				StringPool.BLANK,
+				_commerceAccountHelper.toAccountEntryTypes(
+					CommerceChannelConstants.SITE_TYPE_B2X),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-			if (accountEntriesIds.length != 0) {
-				return accountEntriesIds;
-			}
+		long[] accountEntriesIds = ListUtil.toLongArray(
+			accountEntries, AccountEntryModel::getAccountEntryId);
+
+		if (accountEntriesIds.length != 0) {
+			return accountEntriesIds;
 		}
 
 		return null;

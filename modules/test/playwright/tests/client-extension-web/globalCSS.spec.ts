@@ -8,28 +8,42 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
-export const test = mergeTests(loginTest());
+export const testSample = mergeTests(loginTest());
 
-const SAMPLE = {
-	erc: 'LXC:liferay-sample-global-css',
-	name: 'Liferay Sample Global CSS',
-	url: '/o/liferay-sample-global-css/global.ed43ae1d215bfee1d2df.css',
-};
+const SAMPLES = [
+	{
+		erc: 'LXC:liferay-sample-global-css-1',
+		name: 'Liferay Sample Global CSS 1',
+		url: '/o/liferay-sample-global-css-1/global.c4e57d8fcb15990d6a43.css',
+	},
+	{
+		erc: 'LXC:liferay-sample-global-css-2',
+		name: 'Liferay Sample Global CSS 2',
+		url: '/o/liferay-sample-global-css-2/global.2d96a4ee5d6cf2845a29.css',
+	},
+];
 
-test(`${SAMPLE.name} is registered`, async ({page}) => {
-	const viewClientExtensionPage = new ViewClientExtensionPage(
-		page,
-		SAMPLE.erc
+for (const sample of SAMPLES) {
+	testSample(`${sample.name} is registered`, async ({page}) => {
+		const viewClientExtensionPage = new ViewClientExtensionPage(
+			page,
+			sample.erc
+		);
+
+		await viewClientExtensionPage.goto();
+
+		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
+		expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
+			sample.url
+		);
+	});
+
+	testSample(
+		`${sample.name}'s .css file can be downloaded`,
+		async ({page}) => {
+			const response = await page.goto(sample.url);
+
+			expect(response.status()).toBe(200);
+		}
 	);
-
-	await viewClientExtensionPage.goto();
-
-	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
-	expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(SAMPLE.url);
-});
-
-test(`${SAMPLE.name}'s .css file can be downloaded`, async ({page}) => {
-	const response = await page.goto(SAMPLE.url);
-
-	expect(response.status()).toBe(200);
-});
+}

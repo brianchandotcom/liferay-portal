@@ -223,64 +223,69 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
-		if (postalAddress.getAddressLocality() != null) {
-			address.setCity(postalAddress.getAddressLocality());
-		}
-
 		if ((postalAddress.getAddressRegion() != null) && (country == null)) {
 			country = _countryService.getCountry(address.getCountryId());
 
 			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
-		if (postalAddress.getAddressType() != null) {
-			ListType listType = _getListType(address, postalAddress);
+		boolean oldPrimary = address.isPrimary();
 
-			address.setListTypeId(listType.getListTypeId());
-		}
-
-		if (postalAddress.getName() != null) {
-			address.setName(postalAddress.getName());
-		}
-
-		String phoneNumber = address.getPhoneNumber();
-
-		if (postalAddress.getPhoneNumber() != null) {
-			phoneNumber = postalAddress.getPhoneNumber();
-		}
-
-		if (postalAddress.getPostalCode() != null) {
-			address.setZip(postalAddress.getPostalCode());
-		}
-
-		if (postalAddress.getPrimary() != null) {
-			address.setPrimary(postalAddress.getPrimary());
-		}
-
-		if (postalAddress.getStreetAddressLine1() != null) {
-			address.setStreet1(postalAddress.getStreetAddressLine1());
-		}
-
-		if (postalAddress.getStreetAddressLine2() != null) {
-			address.setStreet2(postalAddress.getStreetAddressLine2());
-		}
-
-		if (postalAddress.getStreetAddressLine3() != null) {
-			address.setStreet3(postalAddress.getStreetAddressLine3());
-		}
+		boolean newPrimary = GetterUtil.getBoolean(
+			postalAddress.getPrimary(), oldPrimary);
 
 		address = _addressService.updateAddress(
-			address.getAddressId(), address.getName(), address.getDescription(),
-			address.getStreet1(), address.getStreet2(), address.getStreet3(),
-			address.getCity(), address.getZip(), address.getRegionId(),
-			address.getCountryId(), address.getListTypeId(),
-			address.isMailing(), address.isPrimary(), phoneNumber);
+			address.getAddressId(),
+			GetterUtil.getString(postalAddress.getName(), address.getName()),
+			address.getDescription(),
+			GetterUtil.getString(
+				postalAddress.getStreetAddressLine1(), address.getStreet1()),
+			GetterUtil.getString(
+				postalAddress.getStreetAddressLine2(), address.getStreet2()),
+			GetterUtil.getString(
+				postalAddress.getStreetAddressLine3(), address.getStreet3()),
+			GetterUtil.getString(
+				postalAddress.getAddressLocality(), address.getCity()),
+			GetterUtil.getString(
+				postalAddress.getPostalCode(), address.getZip()),
+			address.getRegionId(), address.getCountryId(),
+			GetterUtil.getLong(
+				_getListTypeId(address, postalAddress),
+				address.getListTypeId()),
+			address.isMailing(), newPrimary,
+			GetterUtil.getString(
+				postalAddress.getPhoneNumber(), address.getPhoneNumber()));
 
 		address = _addressService.updateExternalReferenceCode(
 			address,
 			GetterUtil.getString(
 				postalAddress.getExternalReferenceCode(),
 				address.getExternalReferenceCode()));
+
+		if (!newPrimary && oldPrimary) {
+			List<Address> addresses = _addressService.getAddresses(
+				address.getClassName(), address.getClassPK());
+
+			for (Address currentAddress : addresses) {
+				if ((addresses.size() == 1) ||
+					(currentAddress.getAddressId() != address.getAddressId())) {
+
+					_addressService.updateAddress(
+						currentAddress.getAddressId(), currentAddress.getName(),
+						currentAddress.getDescription(),
+						currentAddress.getStreet1(),
+						currentAddress.getStreet2(),
+						currentAddress.getStreet3(), currentAddress.getCity(),
+						currentAddress.getZip(), currentAddress.getRegionId(),
+						currentAddress.getCountryId(),
+						currentAddress.getListTypeId(),
+						currentAddress.isMailing(), true,
+						currentAddress.getPhoneNumber());
+
+					break;
+				}
+			}
+		}
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
@@ -315,8 +320,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		long regionId = _getRegionId(postalAddress, country);
 
-		ListType listType = _getListType(null, postalAddress);
-
 		Address address = _addressService.addAddress(
 			postalAddress.getExternalReferenceCode(),
 			AccountEntry.class.getName(), accountId, postalAddress.getName(),
@@ -324,7 +327,8 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getStreetAddressLine2(),
 			postalAddress.getStreetAddressLine3(),
 			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
-			regionId, country.getCountryId(), listType.getListTypeId(), false,
+			regionId, country.getCountryId(),
+			_getListTypeId(null, postalAddress), false,
 			postalAddress.getPrimary(), postalAddress.getPhoneNumber(),
 			ServiceContextFactory.getInstance(contextHttpServletRequest));
 
@@ -345,17 +349,15 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		long regionId = _getRegionId(postalAddress, country);
 
-		ListType listType = _getListType(address, postalAddress);
-
 		address = _addressService.updateAddress(
 			address.getAddressId(), postalAddress.getName(),
 			address.getDescription(), postalAddress.getStreetAddressLine1(),
 			postalAddress.getStreetAddressLine2(),
 			postalAddress.getStreetAddressLine3(),
 			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
-			regionId, country.getCountryId(), listType.getListTypeId(),
-			address.isMailing(), postalAddress.getPrimary(),
-			postalAddress.getPhoneNumber());
+			regionId, country.getCountryId(),
+			_getListTypeId(address, postalAddress), address.isMailing(),
+			postalAddress.getPrimary(), postalAddress.getPhoneNumber());
 
 		address = _addressService.updateExternalReferenceCode(
 			address,
@@ -417,7 +419,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return country;
 	}
 
-	private ListType _getListType(Address address, PostalAddress postalAddress)
+	private Long _getListTypeId(Address address, PostalAddress postalAddress)
 		throws Exception {
 
 		String type = AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS;
@@ -437,7 +439,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			throw new BadRequestException("Type not found");
 		}
 
-		return listType;
+		return listType.getListTypeId();
 	}
 
 	private long _getRegionId(PostalAddress postalAddress, Country country) {

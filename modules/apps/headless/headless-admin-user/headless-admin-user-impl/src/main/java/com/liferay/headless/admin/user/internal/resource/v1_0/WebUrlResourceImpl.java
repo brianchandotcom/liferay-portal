@@ -171,6 +171,11 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 	public WebUrl patchWebUrl(Long webUrlId, WebUrl webUrl) throws Exception {
 		Website website = _websiteService.getWebsite(webUrlId);
 
+		boolean oldPrimary = website.isPrimary();
+
+		boolean newPrimary = GetterUtil.getBoolean(
+			webUrl.getPrimary(), oldPrimary);
+
 		website = _websiteService.updateWebsite(
 			GetterUtil.getString(
 				webUrl.getExternalReferenceCode(),
@@ -179,7 +184,25 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 			GetterUtil.getLong(
 				_getListTypeId(website.getClassName(), webUrl.getUrlType()),
 				website.getListTypeId()),
-			GetterUtil.getBoolean(webUrl.getPrimary(), website.isPrimary()));
+			newPrimary);
+
+		if (!newPrimary && oldPrimary) {
+			List<Website> websites = _websiteService.getWebsites(
+				website.getClassName(), website.getClassPK());
+
+			for (Website currentWebsite : websites) {
+				if ((websites.size() == 1) ||
+					(currentWebsite.getWebsiteId() != website.getWebsiteId())) {
+
+					_websiteService.updateWebsite(
+						currentWebsite.getExternalReferenceCode(),
+						currentWebsite.getWebsiteId(), currentWebsite.getUrl(),
+						currentWebsite.getListTypeId(), true);
+
+					break;
+				}
+			}
+		}
 
 		return WebUrlUtil.toWebUrl(website);
 	}

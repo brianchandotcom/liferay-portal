@@ -564,19 +564,18 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		boolean displayStockQuantity =
 			cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance);
 
-		if (displayStockQuantity) {
-			long commerceChannelGroupId =
-				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(
-						themeDisplay.getScopeGroupId());
-
-			return _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), _getAccountEntryId(),
-				cpInstance.getGroupId(), commerceChannelGroupId,
-				cpInstance.getSku(), StringPool.BLANK);
+		if (!displayStockQuantity) {
+			return null;
 		}
 
-		return null;
+		long commerceChannelGroupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getScopeGroupId());
+
+		return _commerceInventoryEngine.getStockQuantity(
+			cpInstance.getCompanyId(), _getAccountEntryId(),
+			cpInstance.getGroupId(), commerceChannelGroupId,
+			cpInstance.getSku(), StringPool.BLANK);
 	}
 
 	private String _getSKU(CPInstance cpInstance) throws PortalException {

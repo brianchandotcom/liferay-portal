@@ -848,13 +848,13 @@ public class CPTestUtil {
 			).put(
 				"params",
 				() -> {
-					if (Validator.isNotNull(keywords)) {
-						return LinkedHashMapBuilder.<String, Object>put(
-							"keywords", keywords
-						).build();
+					if (Validator.isNull(keywords)) {
+						return null;
 					}
 
-					return null;
+					return LinkedHashMapBuilder.<String, Object>put(
+						"keywords", keywords
+					).build();
 				}
 			).build());
 		searchContext.setCompanyId(group.getCompanyId());

@@ -276,31 +276,34 @@ public class CPDefinitionVirtualSettingDisplayContext
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
-		if (cpDefinitionVirtualSetting != null) {
-			long journalArticleResourcePK =
-				cpDefinitionVirtualSetting.
-					getTermsOfUseJournalArticleResourcePrimKey();
-
-			if (journalArticleResourcePK > 0) {
-				return _journalArticleService.getLatestArticle(
-					journalArticleResourcePK);
-			}
+		if (cpDefinitionVirtualSetting == null) {
+			return null;
 		}
 
-		return null;
+		long journalArticleResourcePK =
+			cpDefinitionVirtualSetting.
+				getTermsOfUseJournalArticleResourcePrimKey();
+
+		if (journalArticleResourcePK <= 0) {
+			return null;
+		}
+
+		return _journalArticleService.getLatestArticle(
+			journalArticleResourcePK);
 	}
 
 	public FileEntry getSampleFileEntry() throws PortalException {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
-		if (cpDefinitionVirtualSetting != null) {
-			long fileEntryId =
-				cpDefinitionVirtualSetting.getSampleFileEntryId();
+		if (cpDefinitionVirtualSetting == null) {
+			return null;
+		}
 
-			if (fileEntryId > 0) {
-				return _dlAppService.getFileEntry(fileEntryId);
-			}
+		long fileEntryId = cpDefinitionVirtualSetting.getSampleFileEntryId();
+
+		if (fileEntryId > 0) {
+			return _dlAppService.getFileEntry(fileEntryId);
 		}
 
 		return null;

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -117,7 +118,24 @@ public class VerifyLayoutResourcePermissionsTest
 		_deleteResourcePermissions(
 			privateLayout1, publicLayout1, userGroupLayout1);
 
-		VerifyResourcePermissions.verify(new LayoutVerifiableResourcedModel());
+		Release release = _releaseLocalService.fetchRelease(
+			"com.liferay.layout.service");
+
+		String originalSchemaVersion = release.getSchemaVersion();
+
+		release.setSchemaVersion("0.0.0");
+
+		release = _releaseLocalService.updateRelease(release);
+
+		try {
+			VerifyResourcePermissions.verify(
+				new LayoutVerifiableResourcedModel());
+		}
+		finally {
+			release.setSchemaVersion(originalSchemaVersion);
+
+			_releaseLocalService.updateRelease(release);
+		}
 
 		_assertResourcePermission(
 			_guestActions, _guestRole, publicLayout1, publicLayout2);
@@ -158,8 +176,6 @@ public class VerifyLayoutResourcePermissionsTest
 
 		_deleteResourcePermissions(
 			privateLayout1, publicLayout1, userGroupLayout1);
-
-		_releaseLocalService.addRelease("com.liferay.layout.impl", "1.0.0");
 
 		int count =
 			_resourcePermissionLocalService.getResourcePermissionsCount();

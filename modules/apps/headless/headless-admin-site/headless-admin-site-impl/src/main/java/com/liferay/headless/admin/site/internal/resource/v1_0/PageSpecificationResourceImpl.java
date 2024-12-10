@@ -508,6 +508,12 @@ public class PageSpecificationResourceImpl
 		ItemExternalReference itemExternalReference =
 			(ItemExternalReference)settings.getFavIcon();
 
+		if (Validator.isNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
+			return 0;
+		}
+
 		long groupId = layout.getGroupId();
 
 		Scope scope = itemExternalReference.getScope();
@@ -594,12 +600,15 @@ public class PageSpecificationResourceImpl
 	private long _getStyleBookEntryId(Layout layout, Settings settings)
 		throws Exception {
 
-		if (settings.getStyleBookItemExternalReference() == null) {
-			return 0;
-		}
-
 		ItemExternalReference itemExternalReference =
 			settings.getStyleBookItemExternalReference();
+
+		if ((itemExternalReference == null) ||
+			Validator.isNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
+			return 0;
+		}
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryService.getStyleBookEntryByExternalReferenceCode(

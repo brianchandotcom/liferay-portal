@@ -343,17 +343,9 @@ public class PageSpecificationResourceTest
 			return true;
 		}
 
-		ContentPageSpecification curContentPageSpecification =
-			(ContentPageSpecification)pageSpecification2;
-		ContentPageSpecification contentPageSpecification =
-			(ContentPageSpecification)pageSpecification1;
-
-		if (!_pageExperiencesEquals(
-				curContentPageSpecification.getPageExperiences(),
-				contentPageSpecification.getPageExperiences())) {
-
-			return false;
-		}
+		_assertContentPageSpecification(
+			(ContentPageSpecification)pageSpecification1,
+			(ContentPageSpecification)pageSpecification2);
 
 		return true;
 	}
@@ -385,6 +377,32 @@ public class PageSpecificationResourceTest
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			false, null, RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), serviceContext);
+	}
+
+	private void _assertContentPageSpecification(
+		ContentPageSpecification contentPageSpecification,
+		ContentPageSpecification curContentPageSpecification) {
+
+		PageExperience[] curPageExperiences =
+			curContentPageSpecification.getPageExperiences();
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(curPageExperiences));
+
+		PageExperience[] pageExperiences =
+			contentPageSpecification.getPageExperiences();
+
+		Assert.assertEquals(
+			curPageExperiences.toString(), curPageExperiences.length,
+			pageExperiences.length);
+
+		for (PageExperience curPageExperience : curPageExperiences) {
+			PageExperience pageExperience = _getPageExperience(
+				curPageExperience.getExternalReferenceCode(), pageExperiences);
+
+			_assertPageElements(
+				curPageExperience.getPageElements(),
+				pageExperience.getPageElements());
+		}
 	}
 
 	private void _assertContentPageSpecification(
@@ -425,6 +443,40 @@ public class PageSpecificationResourceTest
 		layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		Assert.assertEquals(published, layout.isPublished());
+	}
+
+	private void _assertPageElements(
+		PageElement[] curPageElements, PageElement[] pageElements) {
+
+		if (ArrayUtil.isEmpty(pageElements)) {
+			Assert.assertTrue(ArrayUtil.isEmpty(curPageElements));
+
+			return;
+		}
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(curPageElements));
+
+		Assert.assertEquals(
+			curPageElements.toString(), curPageElements.length,
+			pageElements.length);
+
+		for (PageElement curPageElement : curPageElements) {
+			PageElement pageElement = _getPageElement(
+				curPageElement.getExternalReferenceCode(), pageElements);
+
+			Assert.assertEquals(
+				pageElement.getParentExternalReferenceCode(),
+				curPageElement.getParentExternalReferenceCode());
+			Assert.assertEquals(
+				GetterUtil.getInteger(pageElement.getPosition()),
+				GetterUtil.getInteger(curPageElement.getPosition()));
+			Assert.assertEquals(
+				pageElement.getType(), curPageElement.getType());
+
+			_assertPageElements(
+				pageElement.getPageElements(),
+				curPageElement.getPageElements());
+		}
 	}
 
 	private void _assertPageSpecification(
@@ -1176,77 +1228,6 @@ public class PageSpecificationResourceTest
 					"true"
 				).build());
 		}
-	}
-
-	private boolean _pageElementsEquals(
-		PageElement[] curPageElements, PageElement[] pageElements) {
-
-		if (ArrayUtil.isEmpty(curPageElements) &&
-			ArrayUtil.isEmpty(pageElements)) {
-
-			return true;
-		}
-
-		if (ArrayUtil.isEmpty(curPageElements) ||
-			ArrayUtil.isEmpty(pageElements) ||
-			(curPageElements.length != pageElements.length)) {
-
-			return false;
-		}
-
-		for (PageElement curPageElement : curPageElements) {
-			PageElement pageElement = _getPageElement(
-				curPageElement.getExternalReferenceCode(), pageElements);
-
-			if ((pageElement == null) ||
-				!_pageElementsEquals(
-					curPageElement.getPageElements(),
-					pageElement.getPageElements()) ||
-				!Objects.equals(
-					curPageElement.getParentExternalReferenceCode(),
-					pageElement.getParentExternalReferenceCode()) ||
-				(GetterUtil.getInteger(curPageElement.getPosition()) !=
-					GetterUtil.getInteger(pageElement.getPosition())) ||
-				!Objects.equals(
-					curPageElement.getType(), pageElement.getType())) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean _pageExperiencesEquals(
-		PageExperience[] curPageExperiences, PageExperience[] pageExperiences) {
-
-		if (ArrayUtil.isEmpty(curPageExperiences) &&
-			ArrayUtil.isEmpty(pageExperiences)) {
-
-			return true;
-		}
-
-		if (ArrayUtil.isEmpty(curPageExperiences) ||
-			ArrayUtil.isEmpty(pageExperiences) ||
-			(curPageExperiences.length != pageExperiences.length)) {
-
-			return false;
-		}
-
-		for (PageExperience curPageExperience : curPageExperiences) {
-			PageExperience pageExperience = _getPageExperience(
-				curPageExperience.getExternalReferenceCode(), pageExperiences);
-
-			if ((pageExperience == null) ||
-				_pageElementsEquals(
-					curPageExperience.getPageElements(),
-					pageExperience.getPageElements())) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private void _testDeleteSiteSiteByExternalReferenceCodePageSpecification(

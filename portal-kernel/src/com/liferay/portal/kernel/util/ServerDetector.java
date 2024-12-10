@@ -116,24 +116,8 @@ public class ServerDetector {
 			return ServerType.valueOf(StringUtil.toUpperCase(serverId));
 		}
 
-		if (_hasSystemProperty("com.sun.aas.instanceRoot")) {
-			return ServerType.GLASSFISH;
-		}
-
 		if (_hasSystemProperty("jboss.home.dir")) {
 			return ServerType.JBOSS;
-		}
-
-		if (_hasSystemProperty("jonas.base")) {
-			return ServerType.JONAS;
-		}
-
-		if (_detect("oracle.oc4j.util.ClassUtils")) {
-			return ServerType.OC4J;
-		}
-
-		if (_hasSystemProperty("resin.home")) {
-			return ServerType.RESIN;
 		}
 
 		if (_detect("/weblogic/Server.class")) {
@@ -146,10 +130,6 @@ public class ServerDetector {
 
 		if (_hasSystemProperty("jboss.home.dir")) {
 			return ServerType.WILDFLY;
-		}
-
-		if (_hasSystemProperty("jetty.home")) {
-			return ServerType.JETTY;
 		}
 
 		if (_hasSystemProperty("catalina.base")) {
@@ -188,8 +168,7 @@ public class ServerDetector {
 
 	private enum ServerType {
 
-		GLASSFISH("glassfish"), JBOSS("jboss"), JETTY("jetty"), JONAS("jonas"),
-		OC4J("oc4j"), RESIN("resin"), TOMCAT("tomcat"), UNKNOWN("unknown"),
+		JBOSS("jboss"), TOMCAT("tomcat"), UNKNOWN("unknown"),
 		WEBLOGIC("weblogic"), WEBSPHERE("websphere"), WILDFLY("wildfly");
 
 		public String getLowerCaseName() {

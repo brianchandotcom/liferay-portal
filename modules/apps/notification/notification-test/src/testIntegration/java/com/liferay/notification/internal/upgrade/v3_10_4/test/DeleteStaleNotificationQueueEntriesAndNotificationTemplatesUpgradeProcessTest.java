@@ -126,11 +126,11 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NotificationQueueEntry (mvccVersion, ",
+					"insert into NotificationQueueEntry (mvccVersion, ",
 					"notificationQueueEntryId, companyId, userId, userName, ",
 					"createDate, modifiedDate, notificationTemplateId, body, ",
 					"classNameId, classPK, priority, sentDate, subject, ",
-					"type_, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+					"type_, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
 					"?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());
@@ -158,9 +158,9 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NQueueEntryAttachment (mvccVersion, ",
+					"insert into NQueueEntryAttachment (mvccVersion, ",
 					"NQueueEntryAttachmentId, companyId, fileEntryId, ",
-					"notificationQueueEntryId) VALUES (?, ?, ?, ?, ?)"))) {
+					"notificationQueueEntryId) values (?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());
 			preparedStatement.setLong(
@@ -181,9 +181,9 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NotificationRecipient (mvccVersion, uuid_, ",
+					"insert into NotificationRecipient (mvccVersion, uuid_, ",
 					"notificationRecipientId, companyId, userId, userName, ",
-					"createDate, modifiedDate, classNameId, classPK) VALUES ",
+					"createDate, modifiedDate, classNameId, classPK) values ",
 					"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());
@@ -208,10 +208,10 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NotificationRecipientSetting (mvccVersion, ",
+					"insert into NotificationRecipientSetting (mvccVersion, ",
 					"uuid_, notificationRecipientSettingId, companyId, ",
 					"userId, userName, createDate, modifiedDate, ",
-					"notificationRecipientId, name, value) VALUES (?, ?, ?, ",
+					"notificationRecipientId, name, value) values (?, ?, ?, ",
 					"?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());
@@ -234,11 +234,11 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NotificationTemplate (mvccVersion, uuid_, ",
+					"insert into NotificationTemplate (mvccVersion, uuid_, ",
 					"externalReferenceCode, notificationTemplateId, ",
 					"companyId, userId, userName, createDate, modifiedDate, ",
 					"objectDefinitionId, body, description, editorType, name, ",
-					"recipientType, subject, system_, type_) VALUES (?, ?, ?, ",
+					"recipientType, subject, system_, type_) values (?, ?, ?, ",
 					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());
@@ -268,9 +268,9 @@ public class
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"INSERT INTO NTemplateAttachment (mvccVersion, ",
+					"insert into NTemplateAttachment (mvccVersion, ",
 					"NTemplateAttachmentId, companyId, ",
-					"notificationTemplateId, objectFieldId) VALUES (?, ?, ?, ",
+					"notificationTemplateId, objectFieldId) values (?, ?, ?, ",
 					"?, ?)"))) {
 
 			preparedStatement.setLong(1, RandomTestUtil.nextLong());

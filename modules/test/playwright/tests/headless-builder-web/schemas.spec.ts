@@ -234,14 +234,12 @@ testFeatureFlagsDisabled(
 			).body;
 
 			objectDefinitions.push(objectDefinition);
-		}
 
-		objectDefinitions.forEach((objectDefinition) => {
 			apiHelpers.data.push({
 				id: objectDefinition.id,
 				type: 'objectDefinition',
 			});
-		});
+		}
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			applicationData,

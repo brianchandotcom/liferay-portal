@@ -106,6 +106,16 @@ public class GeneralConfigurationSerDes {
 			sb.append("]");
 		}
 
+		if (generalConfiguration.getCollectionProvider() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionProvider\": ");
+
+			sb.append(generalConfiguration.getCollectionProvider());
+		}
+
 		if (generalConfiguration.getEmptySearchEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -245,6 +255,15 @@ public class GeneralConfigurationSerDes {
 					generalConfiguration.getClauseContributorsIncludes()));
 		}
 
+		if (generalConfiguration.getCollectionProvider() == null) {
+			map.put("collectionProvider", null);
+		}
+		else {
+			map.put(
+				"collectionProvider",
+				String.valueOf(generalConfiguration.getCollectionProvider()));
+		}
+
 		if (generalConfiguration.getEmptySearchEnabled() == null) {
 			map.put("emptySearchEnabled", null);
 		}
@@ -337,6 +356,11 @@ public class GeneralConfigurationSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "collectionProvider")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "emptySearchEnabled")) {
 
 				return false;
@@ -386,6 +410,14 @@ public class GeneralConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					generalConfiguration.setClauseContributorsIncludes(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionProvider")) {
+
+				if (jsonParserFieldValue != null) {
+					generalConfiguration.setCollectionProvider(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

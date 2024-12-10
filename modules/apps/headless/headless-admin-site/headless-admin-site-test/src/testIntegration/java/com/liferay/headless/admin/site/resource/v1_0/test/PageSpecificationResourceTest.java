@@ -446,13 +446,16 @@ public class PageSpecificationResourceTest
 		ContentPageSpecification contentPageSpecification,
 		ContentPageSpecification curContentPageSpecification) {
 
+		PageExperience[] pageExperiences =
+			contentPageSpecification.getPageExperiences();
 		PageExperience[] curPageExperiences =
 			curContentPageSpecification.getPageExperiences();
 
-		Assert.assertTrue(ArrayUtil.isNotEmpty(curPageExperiences));
+		if (ArrayUtil.isEmpty(pageExperiences)) {
+			Assert.assertTrue(ArrayUtil.isEmpty(curPageExperiences));
 
-		PageExperience[] pageExperiences =
-			contentPageSpecification.getPageExperiences();
+			return;
+		}
 
 		Assert.assertEquals(
 			curPageExperiences.toString(), curPageExperiences.length,

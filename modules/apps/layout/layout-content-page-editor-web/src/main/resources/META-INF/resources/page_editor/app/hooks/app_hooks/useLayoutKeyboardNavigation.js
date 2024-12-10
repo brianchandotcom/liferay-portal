@@ -74,6 +74,9 @@ export function useLayoutKeyboardNavigation(item) {
 			}
 		},
 		false,
+
+		// False positive - react-compiler/react-compiler
+		// eslint-disable-next-line react-compiler/react-compiler
 		elementRef.current
 	);
 
@@ -83,6 +86,9 @@ export function useLayoutKeyboardNavigation(item) {
 		'focusout',
 		() => hoverItem(null),
 		false,
+
+		// False positive - react-compiler/react-compiler
+		// eslint-disable-next-line react-compiler/react-compiler
 		elementRef.current
 	);
 
@@ -131,6 +137,9 @@ export function useLayoutKeyboardNavigation(item) {
 			}
 		},
 		false,
+
+		// False positive - react-compiler/react-compiler
+		// eslint-disable-next-line react-compiler/react-compiler
 		elementRef.current
 	);
 

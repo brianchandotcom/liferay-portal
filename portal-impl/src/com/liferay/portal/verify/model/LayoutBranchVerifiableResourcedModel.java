@@ -27,7 +27,7 @@ public class LayoutBranchVerifiableResourcedModel
 
 	@Override
 	public String getTableName() {
-		return LayoutBranchModelImpl.TABLE_NAME;
+		return "LayoutBranch";
 	}
 
 	@Override

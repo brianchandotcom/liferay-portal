@@ -121,6 +121,19 @@
 			"startDate": "2021-01-01 00:00:00.0",
 			"subscriptionStatus": "Active",
 			"subscriptionTermStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-015",
+			"accountSubscriptionERC": "ERC-015_liferay-saas_non-production",
+			"accountSubscriptionGroupERC": "ERC-015_liferay-saas",
+			"endDate": "2026-03-31 00:00:00.0",
+			"instanceSize": "1",
+			"provisioned": 1,
+			"quantity": 1,
+			"r_accountEntryToAccountSubscriptionTerm_accountEntryERC": "ERC-015",
+			"startDate": "2023-04-01 00:00:00.0",
+			"subscriptionStatus": "Active",
+			"subscriptionTermStatus": "Active"
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionTerm"

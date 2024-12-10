@@ -427,6 +427,17 @@ public class PageSpecificationResourceImpl
 					settings::getThemeSpritemapClientExtension);
 			}
 		}
+
+		if (!Objects.equals(
+				PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+				existingPageSpecification.getType())) {
+
+			return;
+		}
+
+		_preparePatch(
+			(ContentPageSpecification)pageSpecification,
+			(ContentPageSpecification)existingPageSpecification);
 	}
 
 	private void _addChildPageElements(
@@ -557,6 +568,26 @@ public class PageSpecificationResourceImpl
 		return layoutPageTemplateEntry.getPlid();
 	}
 
+	private PageExperience _getPageExperience(
+		ContentPageSpecification contentPageSpecification,
+		String pageExperienceExternalReferenceCode) {
+
+		for (PageExperience pageExperience :
+				contentPageSpecification.getPageExperiences()) {
+
+			if (!Objects.equals(
+					pageExperience.getExternalReferenceCode(),
+					pageExperienceExternalReferenceCode)) {
+
+				continue;
+			}
+
+			return pageExperience;
+		}
+
+		throw new UnsupportedOperationException();
+	}
+
 	private long _getStyleBookEntryId(Layout layout, Settings settings)
 		throws Exception {
 
@@ -605,6 +636,26 @@ public class PageSpecificationResourceImpl
 
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty("published"));
+	}
+
+	private void _preparePatch(
+		ContentPageSpecification contentPageSpecification,
+		ContentPageSpecification existingContentPageSpecification) {
+
+		if (contentPageSpecification.getPageExperiences() == null) {
+			return;
+		}
+
+		for (PageExperience pageExperience :
+				contentPageSpecification.getPageExperiences()) {
+
+			PageExperience existingPageExperience = _getPageExperience(
+				existingContentPageSpecification,
+				pageExperience.getExternalReferenceCode());
+
+			existingPageExperience.setPageElements(
+				pageExperience::getPageElements);
+		}
 	}
 
 	private List<PageSpecification> _toPageSpecifications(Layout layout)

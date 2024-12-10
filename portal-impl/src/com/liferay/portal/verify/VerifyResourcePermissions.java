@@ -8,7 +8,6 @@ package com.liferay.portal.verify;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,33 +76,15 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				for (VerifiableResourcedModel verifiableResourcedModel :
 						verifiableResourcedModels) {
 
+					if (_isSkipVerifyResourcePermissions(
+							verifiableResourcedModel)) {
+
+						continue;
+					}
+
 					_verifyResourcedModel(role, verifiableResourcedModel);
 				}
 			});
-	}
-
-	protected boolean isSkipVerifyLayoutVerifiableResourcedModel()
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select schemaVersion from Release_ where servletContextName " +
-					"= 'com.liferay.layout.impl'")) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return false;
-				}
-
-				Version version = Version.parseVersion(
-					resultSet.getString("schemaVersion"));
-
-				if (_VERSION.compareTo(version) <= 0) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private int _getVerifiableResourcedModelsCount(
@@ -191,17 +172,40 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		return SQLTransformer.transform(sb.toString());
 	}
 
+	private boolean _isSkipVerifyResourcePermissions(
+			VerifiableResourcedModel verifiableResourcedModel)
+		throws Exception {
+
+		if (!(verifiableResourcedModel instanceof
+				LayoutVerifiableResourcedModel)) {
+
+			return false;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= 'com.liferay.layout.impl'")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return false;
+				}
+
+				Version version = Version.parseVersion(
+					resultSet.getString("schemaVersion"));
+
+				if (version.compareTo(new Version(1, 0, 0)) >= 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private void _verifyResourcedModel(
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
-
-		if ((verifiableResourcedModel instanceof
-				LayoutVerifiableResourcedModel) &&
-			(!StartupHelperUtil.isUpgrading() ||
-			 isSkipVerifyLayoutVerifiableResourcedModel())) {
-
-			return;
-		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName())) {
@@ -320,8 +324,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				null);
 		}
 	}
-
-	private static final Version _VERSION = Version.parseVersion("1.0.0");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);

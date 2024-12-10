@@ -51,6 +51,15 @@ public class AnalyticsConfigurationModelListener
 			"previousSyncAllContacts",
 			analyticsConfiguration.syncAllContacts());
 
+		properties.put(
+			"previousContentRecommenderMostPopularItemsEnabled",
+			analyticsConfiguration.contentRecommenderMostPopularItemsEnabled());
+
+		properties.put(
+			"previousContentRecommenderUserPersonalizationEnabled",
+			analyticsConfiguration.
+				contentRecommenderUserPersonalizationEnabled());
+
 		String[] syncedAccountFieldNames =
 			analyticsConfiguration.syncedAccountFieldNames();
 

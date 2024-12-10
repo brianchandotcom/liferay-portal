@@ -523,17 +523,9 @@ message.
 		</copy>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="tcserver" />
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<if>
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<then>
-						<ant dir="support-tomcat" inheritAll="false" target="deploy" />
-					</then>
-				</if>
+				<ant dir="support-tomcat" inheritAll="false" target="deploy" />
 
 				<copy
 					todir="${app.server.shielded-container-lib.portal.dir}"
@@ -543,18 +535,6 @@ message.
 						includes="activation.jar,mail.jar"
 					/>
 				</copy>
-
-				<if>
-					<equals arg1="${app.server.type}" arg2="tcserver" />
-					<then>
-						<delete>
-							<fileset
-								dir="${app.server.shielded-container-lib.portal.dir}"
-								includes="tomcat-juli.jar"
-							/>
-						</delete>
-					</then>
-				</if>
 			</then>
 		</if>
 

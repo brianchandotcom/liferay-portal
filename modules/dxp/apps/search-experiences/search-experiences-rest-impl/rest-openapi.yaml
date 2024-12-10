@@ -134,6 +134,8 @@ components:
                             items:
                                 type: string
                             type: array
+                        collectionProvider:
+                            type: boolean
                         emptySearchEnabled:
                             type: boolean
                         explain:

@@ -12,15 +12,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.verify.model.GroupVerifiableResourcedModel;
 import com.liferay.portal.verify.model.LayoutBranchVerifiableResourcedModel;
@@ -159,8 +162,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	private boolean _isSkipVerifyResourcePermissions(
-			VerifiableResourcedModel verifiableResourcedModel)
-		throws Exception {
+		VerifiableResourcedModel verifiableResourcedModel) {
 
 		if (!(verifiableResourcedModel instanceof
 				LayoutVerifiableResourcedModel)) {
@@ -168,16 +170,13 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			return false;
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select schemaVersion from Release_ where servletContextName " +
-					"= 'com.liferay.layout.service' and schemaVersion = " +
-						"'0.0.0'")) {
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			"com.liferay.layout.service");
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return false;
-				}
-			}
+		if ((release != null) &&
+			StringUtil.equals(release.getSchemaVersion(), "0.0.0")) {
+
+			return false;
 		}
 
 		return true;

@@ -94,7 +94,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_DRAG_HANDLER</td>
-	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]/div[contains(@class,'drag-handler')]</td>
+	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]//div[contains(@class,'drag-handler')]</td>
 	<td></td>
 </tr>
 <tr>

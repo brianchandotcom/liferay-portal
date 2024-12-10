@@ -505,8 +505,10 @@ function LocalizationOptions({item, onValueSelect}) {
 					<ClayForm.Group small>
 						<SelectField
 							field={{
-								label: Liferay.Language.get('success-action'),
-								name: 'source',
+								label: Liferay.Language.get(
+									'unlocalizable-fields-state'
+								),
+								name: 'unlocalizableFieldsState',
 								typeOptions: {
 									validValues:
 										UNLOCALIZED_FIELDS_STATE_OPTIONS,

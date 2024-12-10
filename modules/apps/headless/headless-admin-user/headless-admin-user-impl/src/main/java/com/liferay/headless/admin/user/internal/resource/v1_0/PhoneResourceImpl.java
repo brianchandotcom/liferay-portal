@@ -157,6 +157,11 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 		com.liferay.portal.kernel.model.Phone serviceBuilderPhone =
 			_phoneService.getPhone(phoneId);
 
+		boolean oldPrimary = serviceBuilderPhone.isPrimary();
+
+		boolean newPrimary = GetterUtil.getBoolean(
+			phone.getPrimary(), oldPrimary);
+
 		serviceBuilderPhone = _phoneService.updatePhone(
 			GetterUtil.getString(
 				phone.getExternalReferenceCode(),
@@ -170,8 +175,32 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 				_getListTypeId(
 					serviceBuilderPhone.getClassName(), phone.getPhoneType()),
 				serviceBuilderPhone.getListTypeId()),
-			GetterUtil.getBoolean(
-				phone.getPrimary(), serviceBuilderPhone.isPrimary()));
+			newPrimary);
+
+		if (!newPrimary && oldPrimary) {
+			List<com.liferay.portal.kernel.model.Phone> serviceBuilderPhones =
+				_phoneService.getPhones(
+					serviceBuilderPhone.getClassName(),
+					serviceBuilderPhone.getClassPK());
+
+			for (com.liferay.portal.kernel.model.Phone
+					currentServiceBuilderPhone : serviceBuilderPhones) {
+
+				if ((serviceBuilderPhones.size() == 1) ||
+					(currentServiceBuilderPhone.getPhoneId() !=
+						serviceBuilderPhone.getPhoneId())) {
+
+					_phoneService.updatePhone(
+						currentServiceBuilderPhone.getExternalReferenceCode(),
+						currentServiceBuilderPhone.getPhoneId(),
+						currentServiceBuilderPhone.getNumber(),
+						currentServiceBuilderPhone.getExtension(),
+						currentServiceBuilderPhone.getListTypeId(), true);
+
+					break;
+				}
+			}
+		}
 
 		return PhoneUtil.toPhone(serviceBuilderPhone);
 	}

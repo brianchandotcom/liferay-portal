@@ -108,15 +108,16 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
-			_emailAddressService.fetchEmailAddressByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress =
+				_emailAddressService.fetchEmailAddressByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
-		if (serviceEmailAddress == null) {
+		if (serviceBuilderEmailAddress == null) {
 			throw new NoSuchEmailAddressException();
 		}
 
-		return getEmailAddress(serviceEmailAddress.getEmailAddressId());
+		return getEmailAddress(serviceBuilderEmailAddress.getEmailAddressId());
 	}
 
 	@Override
@@ -177,10 +178,11 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 			Long emailAddressId, EmailAddress emailAddress)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
-			_emailAddressService.getEmailAddress(emailAddressId);
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress = _emailAddressService.getEmailAddress(
+				emailAddressId);
 
-		return _updateEmailAddress(emailAddress, serviceEmailAddress);
+		return _updateEmailAddress(emailAddress, serviceBuilderEmailAddress);
 	}
 
 	@Override
@@ -188,15 +190,16 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 			String externalReferenceCode, EmailAddress emailAddress)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress =
-			_emailAddressService.fetchEmailAddressByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress =
+				_emailAddressService.fetchEmailAddressByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
 
-		if (serviceEmailAddress == null) {
+		if (serviceBuilderEmailAddress == null) {
 			throw new NoSuchEmailAddressException();
 		}
 
-		return _updateEmailAddress(emailAddress, serviceEmailAddress);
+		return _updateEmailAddress(emailAddress, serviceBuilderEmailAddress);
 	}
 
 	private Long _getListTypeId(String className, String name) {
@@ -213,25 +216,59 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	private EmailAddress _updateEmailAddress(
 			EmailAddress emailAddress,
-			com.liferay.portal.kernel.model.EmailAddress serviceEmailAddress)
+			com.liferay.portal.kernel.model.EmailAddress
+				serviceBuilderEmailAddress)
 		throws Exception {
 
-		serviceEmailAddress = _emailAddressService.updateEmailAddress(
+		boolean oldPrimary = serviceBuilderEmailAddress.isPrimary();
+
+		boolean newPrimary = GetterUtil.getBoolean(
+			emailAddress.getPrimary(), oldPrimary);
+
+		serviceBuilderEmailAddress = _emailAddressService.updateEmailAddress(
 			GetterUtil.getString(
 				emailAddress.getExternalReferenceCode(),
-				serviceEmailAddress.getExternalReferenceCode()),
-			serviceEmailAddress.getEmailAddressId(),
+				serviceBuilderEmailAddress.getExternalReferenceCode()),
+			serviceBuilderEmailAddress.getEmailAddressId(),
 			GetterUtil.getString(
 				emailAddress.getEmailAddress(),
-				serviceEmailAddress.getAddress()),
+				serviceBuilderEmailAddress.getAddress()),
 			GetterUtil.getLong(
 				_getListTypeId(
-					serviceEmailAddress.getClassName(), emailAddress.getType()),
-				serviceEmailAddress.getListTypeId()),
-			GetterUtil.getBoolean(
-				emailAddress.getPrimary(), serviceEmailAddress.isPrimary()));
+					serviceBuilderEmailAddress.getClassName(),
+					emailAddress.getType()),
+				serviceBuilderEmailAddress.getListTypeId()),
+			newPrimary);
 
-		return EmailAddressUtil.toEmailAddress(serviceEmailAddress);
+		if (!newPrimary && oldPrimary) {
+			List<com.liferay.portal.kernel.model.EmailAddress>
+				serviceBuilderEmailAddresses =
+					_emailAddressService.getEmailAddresses(
+						serviceBuilderEmailAddress.getClassName(),
+						serviceBuilderEmailAddress.getClassPK());
+
+			for (com.liferay.portal.kernel.model.EmailAddress
+					currentServiceBuilderEmailAddress :
+						serviceBuilderEmailAddresses) {
+
+				if ((serviceBuilderEmailAddresses.size() == 1) ||
+					(currentServiceBuilderEmailAddress.getEmailAddressId() !=
+						serviceBuilderEmailAddress.getEmailAddressId())) {
+
+					_emailAddressService.updateEmailAddress(
+						currentServiceBuilderEmailAddress.
+							getExternalReferenceCode(),
+						currentServiceBuilderEmailAddress.getEmailAddressId(),
+						currentServiceBuilderEmailAddress.getAddress(),
+						currentServiceBuilderEmailAddress.getListTypeId(),
+						true);
+
+					break;
+				}
+			}
+		}
+
+		return EmailAddressUtil.toEmailAddress(serviceBuilderEmailAddress);
 	}
 
 	private void _updatePrimaryEmailAddress(String className, long contactId)

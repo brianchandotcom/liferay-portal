@@ -67,6 +67,9 @@ public interface AnalyticsConfiguration {
 	public boolean contentRecommenderMostPopularItemsEnabled();
 
 	@Meta.AD(required = false)
+	public boolean previousContentRecommenderMostPopularItemsEnabled();
+
+	@Meta.AD(required = false)
 	public String publicKey();
 
 	@Meta.AD(required = false)
@@ -155,6 +158,9 @@ public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
 	public boolean contentRecommenderUserPersonalizationEnabled();
+
+	@Meta.AD(required = false)
+	public boolean previousContentRecommenderUserPersonalizationEnabled();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean wizardMode();

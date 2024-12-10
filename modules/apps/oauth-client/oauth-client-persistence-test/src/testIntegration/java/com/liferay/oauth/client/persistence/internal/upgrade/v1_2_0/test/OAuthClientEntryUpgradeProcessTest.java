@@ -44,9 +44,7 @@ public class OAuthClientEntryUpgradeProcessTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUpgradeOAuthClientEntriesWithOIDCProviderConfiguration()
-		throws Exception {
-
+	public void testUpgrade() throws Exception {
 		long discoveryEndpointCacheInMillis = RandomTestUtil.randomLong();
 		String openIdConnectClientId = RandomTestUtil.randomString();
 
@@ -68,62 +66,52 @@ public class OAuthClientEntryUpgradeProcessTest {
 			).build());
 
 		try {
-			OAuthClientEntry oAuthClientEntry =
+			OAuthClientEntry oAuthClientEntry1 =
 				_oAuthClientEntryLocalService.getOAuthClientEntry(
 					TestPropsValues.getCompanyId(), _AUTH_SERVER_WELL_KNOWN_URI,
 					openIdConnectClientId);
+			OAuthClientEntry oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.addOAuthClientEntry(
+					TestPropsValues.getUserId(), StringPool.BLANK,
+					_AUTH_SERVER_WELL_KNOWN_URI,
+					JSONUtil.put(
+						"client_id", RandomTestUtil.randomString()
+					).put(
+						"client_name", RandomTestUtil.randomString()
+					).put(
+						"client_secret", RandomTestUtil.randomString()
+					).put(
+						"redirect_uris", JSONUtil.put("")
+					).put(
+						"scope", "openid email profile"
+					).put(
+						"subject_type", "public"
+					).toString(),
+					0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					StringPool.BLANK);
 
-			_setUpgradePreCondition(oAuthClientEntry);
+			_setUpgradePreCondition(oAuthClientEntry1);
+			_setUpgradePreCondition(oAuthClientEntry2);
 
 			_runUpgrade();
 
-			oAuthClientEntry =
+			oAuthClientEntry1 =
 				_oAuthClientEntryLocalService.getOAuthClientEntry(
-					oAuthClientEntry.getOAuthClientEntryId());
+					oAuthClientEntry1.getOAuthClientEntryId());
+			oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.getOAuthClientEntry(
+					oAuthClientEntry2.getOAuthClientEntryId());
 
 			Assert.assertEquals(
 				discoveryEndpointCacheInMillis,
-				oAuthClientEntry.getMetadataCacheInMillis());
+				oAuthClientEntry1.getMetadataCacheInMillis());
+			Assert.assertEquals(
+				OAuthClientEntryConstants.METADATA_CACHE_IN_MILLIS_DEFAULT,
+				oAuthClientEntry2.getMetadataCacheInMillis());
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(pid);
 		}
-	}
-
-	@Test
-	public void testUpgradeOAuthClientEntriesWithoutOIDCProviderConfiguration()
-		throws Exception {
-
-		OAuthClientEntry oAuthClientEntry =
-			_oAuthClientEntryLocalService.addOAuthClientEntry(
-				TestPropsValues.getUserId(), StringPool.BLANK,
-				_AUTH_SERVER_WELL_KNOWN_URI,
-				JSONUtil.put(
-					"client_id", RandomTestUtil.randomString()
-				).put(
-					"client_name", RandomTestUtil.randomString()
-				).put(
-					"client_secret", RandomTestUtil.randomString()
-				).put(
-					"redirect_uris", JSONUtil.put("")
-				).put(
-					"scope", "openid email profile"
-				).put(
-					"subject_type", "public"
-				).toString(),
-				0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				StringPool.BLANK);
-
-		_setUpgradePreCondition(oAuthClientEntry);
-
-		_runUpgrade();
-
-		oAuthClientEntry = _oAuthClientEntryLocalService.getOAuthClientEntry(
-			oAuthClientEntry.getOAuthClientEntryId());
-
-		Assert.assertEquals(
-			OAuthClientEntryConstants.METADATA_CACHE_IN_MILLIS_DEFAULT,
-			oAuthClientEntry.getMetadataCacheInMillis());
 	}
 
 	private void _runUpgrade() throws Exception {

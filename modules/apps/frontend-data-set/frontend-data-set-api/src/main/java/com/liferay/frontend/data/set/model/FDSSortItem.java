@@ -12,12 +12,20 @@ import java.util.HashMap;
  */
 public class FDSSortItem extends HashMap<String, Object> {
 
+	public void setActive(Boolean active) {
+		put("active", active);
+	}
+
 	public void setDirection(String direction) {
 		put("direction", direction);
 	}
 
 	public void setKey(String key) {
 		put("key", key);
+	}
+
+	public void setLabel(String label) {
+		put("label", label);
 	}
 
 }

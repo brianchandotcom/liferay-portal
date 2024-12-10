@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -760,15 +761,13 @@ public class PageSpecificationResourceImpl
 
 		unicodeProperties.setProperty("javascript", settings.getJavascript());
 
-		if (settings.getThemeSettings() != null) {
-			for (String key :
-					ListUtil.fromCollection(unicodeProperties.keySet())) {
-
-				if (key.startsWith("lfr-theme:")) {
-					unicodeProperties.remove(key);
-				}
+		for (String key : ListUtil.fromCollection(unicodeProperties.keySet())) {
+			if (key.startsWith("lfr-theme:")) {
+				unicodeProperties.remove(key);
 			}
+		}
 
+		if (MapUtil.isNotEmpty(settings.getThemeSettings())) {
 			unicodeProperties.putAll(
 				(Map<String, ? extends String>)settings.getThemeSettings());
 		}

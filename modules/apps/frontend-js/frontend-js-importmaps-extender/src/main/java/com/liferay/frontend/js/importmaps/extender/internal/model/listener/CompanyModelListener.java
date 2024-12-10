@@ -21,17 +21,13 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
-	public void onAfterCreate(Company company) {
+	public void onAfterRemove(Company company) {
 		JSImportMapsExtenderTopHeadDynamicInclude
 			jsImportMapsExtenderTopHeadDynamicInclude =
 				(JSImportMapsExtenderTopHeadDynamicInclude)_dynamicInclude;
 
-		jsImportMapsExtenderTopHeadDynamicInclude.invalidateCache();
-	}
-
-	@Override
-	public void onAfterRemove(Company company) {
-		onAfterCreate(company);
+		jsImportMapsExtenderTopHeadDynamicInclude.invalidateCache(
+			company.getCompanyId());
 	}
 
 	@Reference(

@@ -1508,6 +1508,100 @@ test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resou
 	await waitForAlert(siteSettingsPage.page);
 });
 
+test('LPD-32213 AC1 TC2: Verify after successful SP initiated SSO with auth.forward.by.last.path=true, the user is redirected to the page SSO was initiated from, regardless of Default Landing Page or Home Url.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create a user on the IdP instance
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// Create a new page on the SP Instance to initiate SSO from
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const spSsoPageUrl = DEFAULT_SP_URL + '/web/guest/' + pageTitle;
+
+	// Configure Default Landing Page on SP instance
+
+	await pagesAdminPage.goto();
+
+	const defaultLandingPageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: defaultLandingPageTitle,
+	});
+
+	const defaultLandingPagePath = '/web/guest/' + defaultLandingPageTitle;
+
+	// Configure Home Url on SP instance
+
+	await pagesAdminPage.goto();
+
+	const homeUrlPageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: homeUrlPageTitle,
+	});
+
+	const homeUrlPagePath = '/web/guest/' + homeUrlPageTitle;
+
+	// Configure Default Landing Page and Home Url
+
+	const instanceSettingsPage = new InstanceSettingsPage(spAdminPage);
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'Instance Configuration',
+		'General',
+		false
+	);
+
+	const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+	await generalPage.editDefaultLandingPage(defaultLandingPagePath);
+	await generalPage.editHomeUrl(homeUrlPagePath);
+
+	resetAfterTestGeneralPage.add(DEFAULT_SP_NAME);
+
+	// SP initiated SSO from specified page
+
+	const newPage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		spSsoPageUrl
+	);
+
+	// Expect to be redirected back to page SSO was initiated from
+
+	expect(await newPage.url()).toContain(spSsoPageUrl);
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

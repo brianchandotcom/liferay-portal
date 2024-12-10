@@ -514,6 +514,30 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 			}
 
+			if (!_contentRecommenderMostPopularItemsEnabled(dictionary) &&
+				!_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+
+				unscheduleDispatchTriggerNames.add(
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_ASSET_ENTITIES);
+			}
+
+			if (_contentRecommenderMostPopularItemsChanged(dictionary) &&
+				!_contentRecommenderMostPopularItemsEnabled(dictionary)) {
+
+				unscheduleDispatchTriggerNames.add(
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_MOST_VIEWED_RECOMMENDER);
+			}
+
+			if (_contentRecommenderUserPersonalizationChanged(dictionary) &&
+				!_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+
+				unscheduleDispatchTriggerNames.add(
+					AnalyticsMachineLearningConstants.
+						DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER);
+			}
+
 			if (!unscheduleDispatchTriggerNames.isEmpty()) {
 				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
 					companyId,

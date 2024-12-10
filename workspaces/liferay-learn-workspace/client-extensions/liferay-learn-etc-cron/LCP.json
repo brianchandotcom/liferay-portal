@@ -2,6 +2,7 @@
 	"concurrencyPolicy": "Forbid",
 	"cpu": 4,
 	"env": {
+		"GRADLE_OPTS": "-Dorg.gradle.daemon=false",
 		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx4096m",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_BRANCH": "master",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_DEPLOY_KEY": "@liferay-learn-github-deploy-key",
@@ -46,7 +47,6 @@
 	"scale": 1,
 	"schedule": "0 10 * * 1",
 	"volumes": {
-		"homeLiferay": "/home/liferay",
 		"publicHtml": "/public_html"
 	}
 }

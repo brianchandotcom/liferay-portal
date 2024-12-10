@@ -8,17 +8,16 @@ package com.liferay.asset.model;
 import com.liferay.asset.kernel.NoSuchClassTypeFieldException;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -78,36 +77,32 @@ public class DDMStructureClassType implements ClassType {
 	protected List<ClassTypeField> getClassTypeFields(long ddmStructureId)
 		throws PortalException {
 
-		List<ClassTypeField> classTypeFields = new ArrayList<>();
-
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
 
-		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
+		return TransformUtil.transform(
+			ddmStructure.getDDMFormFields(false),
+			ddmFormField -> {
+				String indexType = ddmFormField.getIndexType();
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			String indexType = ddmFormField.getIndexType();
+				String type = ddmFormField.getType();
 
-			String type = ddmFormField.getType();
+				if (Validator.isNull(indexType) ||
+					Objects.equals(indexType, "none") ||
+					!ArrayUtil.contains(
+						_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
 
-			if (Validator.isNull(indexType) ||
-				Objects.equals(indexType, "none") ||
-				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
+					return null;
+				}
 
-				continue;
-			}
+				LocalizedValue label = ddmFormField.getLabel();
 
-			LocalizedValue label = ddmFormField.getLabel();
-
-			classTypeFields.add(
-				new ClassTypeField(
+				return new ClassTypeField(
 					ddmStructure.getStructureId(),
 					ddmFormField.getFieldReference(),
 					label.getString(LocaleUtil.fromLanguageId(_languageId)),
-					ddmFormField.getName(), type));
-		}
-
-		return classTypeFields;
+					ddmFormField.getName(), type);
+			});
 	}
 
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {

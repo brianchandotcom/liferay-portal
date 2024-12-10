@@ -155,17 +155,15 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	private List<String> _filterAttributeNames(
 		List<String> attributeNames, List<String> removeAttributeNames) {
 
-		List<String> filteredAttributeNames = new ArrayList<>();
+		return TransformUtil.transform(
+			attributeNames,
+			attributeName -> {
+				if (removeAttributeNames.contains(attributeName)) {
+					return null;
+				}
 
-		for (String attributeName : attributeNames) {
-			if (removeAttributeNames.contains(attributeName)) {
-				continue;
-			}
-
-			filteredAttributeNames.add(attributeName);
-		}
-
-		return filteredAttributeNames;
+				return attributeName;
+			});
 	}
 
 	private Map<String, Serializable> _getAttributes(

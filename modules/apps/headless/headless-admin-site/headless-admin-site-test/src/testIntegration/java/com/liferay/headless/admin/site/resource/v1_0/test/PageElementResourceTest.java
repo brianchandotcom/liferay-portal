@@ -53,8 +53,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageExperiencePageElement_addPageElement(
 				randomPageElement());
 
-		_draftLayout = _layoutLocalService.fetchLayout(_draftLayout.getPlid());
-
 		LayoutStructure layoutStructure = _getLayoutStructure();
 
 		Assert.assertNotNull(

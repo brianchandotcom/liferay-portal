@@ -212,7 +212,7 @@ const SecurityVulnerabilitiesItem = () => {
 						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES] && (
 							<div className="mb-4">
 								<h5 className="text-neutral-10">
-									{i18n.translate('categories')}
+									{i18n.translate('category')}
 								</h5>
 
 								{jiraIssue[JiraEnum.FIELDS]?.[
@@ -247,7 +247,7 @@ const SecurityVulnerabilitiesItem = () => {
 							].length > 0 && (
 								<div className="mb-4">
 									<h5 className="text-neutral-10">
-										{i18n.translate('affected-versions')}
+										{i18n.translate('affected-version')}
 									</h5>
 
 									{jiraIssue[JiraEnum.FIELDS]?.[
@@ -263,7 +263,7 @@ const SecurityVulnerabilitiesItem = () => {
 								.length > 0 && (
 								<div className="mb-4">
 									<h5 className="text-neutral-10">
-										{i18n.translate('fix-versions')}
+										{i18n.translate('fix-version')}
 									</h5>
 
 									{jiraIssue[JiraEnum.FIELDS]?.[

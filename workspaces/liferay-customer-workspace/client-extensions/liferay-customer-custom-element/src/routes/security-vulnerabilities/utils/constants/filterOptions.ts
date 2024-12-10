@@ -23,7 +23,7 @@ export const FILTER_MAP: {[key: string]: string} = {
 
 export const FILTER_OPTIONS: IProps = {
 	[JiraEnum.AFFECTED_VERSIONS]: ['2024.Q4', '2024.Q3', '2024.Q2', '2024.Q1'],
-	[JiraEnum.CATEGORIES]: ['Paas', 'Saas', 'Self-Hosted', 'Docker'],
+	[JiraEnum.CATEGORIES]: ['PaaS', 'SaaS', 'On Premise', 'Docker'],
 	[JiraEnum.FIX_VERSIONS]: ['2024.Q4', '2024.Q3', '2024.Q2', '2024.Q1'],
 	[JiraEnum.ISSUE_CLASSIFICATION]: [
 		'Confirmed Vulnerability',

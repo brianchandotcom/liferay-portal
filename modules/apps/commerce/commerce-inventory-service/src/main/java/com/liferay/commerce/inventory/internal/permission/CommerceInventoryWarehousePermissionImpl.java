@@ -179,19 +179,21 @@ public class CommerceInventoryWarehousePermissionImpl
 					new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER},
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				accountEntry -> {
-					if (_userGroupRoleLocalService.hasUserGroupRole(
+					if (!_userGroupRoleLocalService.hasUserGroupRole(
 							permissionChecker.getUserId(),
 							accountEntry.getAccountEntryGroupId(),
 							AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER)) {
 
-						List<CommerceChannel> commerceChannels =
-							_commerceChannelLocalService.
-								getCommerceChannelsByAccountEntryId(
-									accountEntry.getAccountEntryId());
+						return null;
+					}
 
-						if (ListUtil.isNotEmpty(commerceChannels)) {
-							return commerceChannels.get(0);
-						}
+					List<CommerceChannel> commerceChannels =
+						_commerceChannelLocalService.
+							getCommerceChannelsByAccountEntryId(
+								accountEntry.getAccountEntryId());
+
+					if (ListUtil.isNotEmpty(commerceChannels)) {
+						return commerceChannels.get(0);
 					}
 
 					return null;

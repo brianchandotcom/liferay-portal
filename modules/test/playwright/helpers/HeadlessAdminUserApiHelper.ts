@@ -331,7 +331,7 @@ export class HeadlessAdminUserApiHelper {
 			/user-accounts/by-email-address${
 				accountRoleIds ? `?accountRoleIds=${accountRoleIds}` : ''
 			}`,
-			{data: {emailAddresses}}
+			{data: emailAddresses}
 		);
 	}
 

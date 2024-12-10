@@ -62,8 +62,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		doVerify(
 			new GroupVerifiableResourcedModel(),
-			new LayoutVerifiableResourcedModel(),
-			new LayoutBranchVerifiableResourcedModel());
+			new LayoutBranchVerifiableResourcedModel(),
+			new LayoutVerifiableResourcedModel());
 	}
 
 	protected void doVerify(

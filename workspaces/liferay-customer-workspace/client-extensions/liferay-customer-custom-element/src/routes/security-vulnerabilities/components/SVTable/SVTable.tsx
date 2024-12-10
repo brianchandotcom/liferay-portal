@@ -29,7 +29,12 @@ const SVTable = ({columns, rows}: IProps) => {
 	const navigate = useNavigate();
 
 	return (
-		<ClayTable borderless className="sv-table table" noWrap striped={false}>
+		<ClayTable
+			borderless
+			className="sv-structured-data sv-table table"
+			noWrap
+			striped={false}
+		>
 			<ClayTable.Head align="left">
 				<ClayTable.Row>
 					{columns.map((column) => (

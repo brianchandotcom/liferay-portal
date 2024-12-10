@@ -29,6 +29,9 @@ import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-conten
 import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web/productDetailsPage';
 import {ProductPublisherPage} from '../pages/commerce/commerce-product-content-web/productPublisherPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
+import {CommerceAdminProductConfigurationEntriesPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntriesPage';
+import {CommerceAdminProductConfigurationEntryPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntryPage';
+import {CommerceAdminProductConfigurationListPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListPage';
 import {CommerceAdminProductConfigurationListsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListsPage';
 import {CommerceAdminProductDetailsDiagramPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsDiagramPage';
 import {CommerceAdminProductDetailsMediaPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsMediaPage';
@@ -46,15 +49,6 @@ import {CommerceWishListPage} from '../pages/commerce/commerce-wish-list-web/com
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
-import {
-	CommerceAdminProductConfigurationListPage
-} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListPage";
-import {
-	CommerceAdminProductConfigurationEntriesPage
-} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntriesPage";
-import {
-	CommerceAdminProductConfigurationEntryPage
-} from "../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntryPage";
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;

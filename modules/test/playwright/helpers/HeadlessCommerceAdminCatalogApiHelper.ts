@@ -114,6 +114,7 @@ export type TProductConfiguration = {
 	entityExternalReferenceCode?: string;
 	entityId: number;
 	entityName?: string;
+	entityType?: string;
 	externalReferenceCode?: string;
 	id?: number;
 	inventoryEngine?: string;
@@ -122,12 +123,11 @@ export type TProductConfiguration = {
 	minOrderQuantity?: number;
 	minStockQuantity?: number;
 	multipleOrderQuantity?: number;
-	productShippingConfiguration?: any,
+	productShippingConfiguration?: any;
 	productTaxConfiguration?: any;
 	purchasable?: boolean;
 	visible?: boolean;
-	entityType?: string;
-}
+};
 
 type TProductVirtualSettings = {
 	activationStatus?: number;
@@ -559,13 +559,16 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return product;
 	}
 
-	async postProductConfiguration(productConfigurationListId: number, productConfiguration?: TProductConfiguration): Promise<TProductConfiguration> {
+	async postProductConfiguration(
+		productConfigurationListId: number,
+		productConfiguration?: TProductConfiguration
+	): Promise<TProductConfiguration> {
 		productConfiguration = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}/product-configurations`,
 			{
 				data: {
+					entityType: 'product',
 					visible: true,
-					entityType: "product",
 					...productConfiguration,
 				},
 			}

@@ -33,90 +33,82 @@ export default function (context) {
 				URL = `/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/${context.cpConfigurationListId}/product-configurations`;
 			}
 
-			return Liferay.Util.fetch(
-				URL,
-				{
-					body: JSON.stringify({
-						allowBackOrder:
-							formData.get(`${context.namespace}backOrders`) ===
+			return Liferay.Util.fetch(URL, {
+				body: JSON.stringify({
+					allowBackOrder:
+						formData.get(`${context.namespace}backOrders`) === 'on',
+					allowedOrderQuantities: (
+						formData.get(
+							`${context.namespace}allowedOrderQuantities`
+						) || ''
+					)
+						.split(/[,. ]/g)
+						.filter(Boolean),
+					availabilityEstimateId:
+						formData.get(
+							`${context.namespace}commerceAvailabilityEstimateId`
+						) || 0,
+					displayAvailability:
+						formData.get(
+							`${context.namespace}displayAvailability`
+						) === 'on',
+					displayStockQuantity:
+						formData.get(
+							`${context.namespace}displayStockQuantity`
+						) === 'on',
+					entityId: context.entityId,
+					inventoryEngine: formData.get(
+						`${context.namespace}CPDefinitionInventoryEngine`
+					),
+					lowStockAction: formData.get(
+						`${context.namespace}lowStockActivity`
+					),
+					maxOrderQuantity: formData.get(
+						`${context.namespace}maxOrderQuantity`
+					),
+					minOrderQuantity: formData.get(
+						`${context.namespace}minOrderQuantity`
+					),
+					minStockQuantity: formData.get(
+						`${context.namespace}minStockQuantity`
+					),
+					multipleOrderQuantity: formData.get(
+						`${context.namespace}multipleOrderQuantity`
+					),
+					productShippingConfiguration: {
+						depth: formData.get(`${context.namespace}depth`),
+						freeShipping:
+							formData.get(`${context.namespace}freeShipping`) ===
 							'on',
-						allowedOrderQuantities: (
+						height: formData.get(`${context.namespace}height`),
+						shippable:
+							formData.get(`${context.namespace}shippable`) ===
+							'on',
+						shippingSeparately:
 							formData.get(
-								`${context.namespace}allowedOrderQuantities`
-							) || ''
-						)
-							.split(/[,. ]/g)
-							.filter(Boolean),
-						availabilityEstimateId:
+								`${context.namespace}shipSeparately`
+							) === 'on',
+						weight: formData.get(`${context.namespace}weight`),
+						width: formData.get(`${context.namespace}width`),
+					},
+					productTaxConfiguration: {
+						id:
 							formData.get(
-								`${context.namespace}commerceAvailabilityEstimateId`
+								`${context.namespace}CPTaxCategoryId`
 							) || 0,
-						displayAvailability:
-							formData.get(
-								`${context.namespace}displayAvailability`
-							) === 'on',
-						displayStockQuantity:
-							formData.get(
-								`${context.namespace}displayStockQuantity`
-							) === 'on',
-						entityId: context.entityId,
-						inventoryEngine: formData.get(
-							`${context.namespace}CPDefinitionInventoryEngine`
-						),
-						lowStockAction: formData.get(
-							`${context.namespace}lowStockActivity`
-						),
-						maxOrderQuantity: formData.get(
-							`${context.namespace}maxOrderQuantity`
-						),
-						minOrderQuantity: formData.get(
-							`${context.namespace}minOrderQuantity`
-						),
-						minStockQuantity: formData.get(
-							`${context.namespace}minStockQuantity`
-						),
-						multipleOrderQuantity: formData.get(
-							`${context.namespace}multipleOrderQuantity`
-						),
-						productShippingConfiguration: {
-							depth: formData.get(`${context.namespace}depth`),
-							freeShipping:
-								formData.get(
-									`${context.namespace}freeShipping`
-								) === 'on',
-							height: formData.get(`${context.namespace}height`),
-							shippable:
-								formData.get(
-									`${context.namespace}shippable`
-								) === 'on',
-							shippingSeparately:
-								formData.get(
-									`${context.namespace}shipSeparately`
-								) === 'on',
-							weight: formData.get(`${context.namespace}weight`),
-							width: formData.get(`${context.namespace}width`),
-						},
-						productTaxConfiguration: {
-							id:
-								formData.get(
-									`${context.namespace}CPTaxCategoryId`
-								) || 0,
-							taxable:
-								formData.get(
-									`${context.namespace}taxExempt`
-								) !== 'on',
-						},
-						purchasable:
-							formData.get(`${context.namespace}purchasable`) ===
+						taxable:
+							formData.get(`${context.namespace}taxExempt`) !==
 							'on',
-						visible:
-							formData.get(`${context.namespace}visible`) ===
-							'on',
-					}),
-					headers: fetchParams.headers,
-					method: context.mode === 'add' ? 'POST': 'PATCH',
-				}
-			)
+					},
+					purchasable:
+						formData.get(`${context.namespace}purchasable`) ===
+						'on',
+					visible:
+						formData.get(`${context.namespace}visible`) === 'on',
+				}),
+				headers: fetchParams.headers,
+				method: context.mode === 'add' ? 'POST' : 'PATCH',
+			})
 				.then((response) => {
 					if (!response.ok) {
 						return response.json().then((data) => {

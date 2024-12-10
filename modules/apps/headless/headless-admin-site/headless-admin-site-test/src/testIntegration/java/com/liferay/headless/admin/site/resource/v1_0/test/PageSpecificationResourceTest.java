@@ -333,19 +333,81 @@ public class PageSpecificationResourceTest
 		PageSpecification pageSpecification1,
 		PageSpecification pageSpecification2) {
 
-		if (!super.equals(pageSpecification1, pageSpecification2)) {
-			return false;
-		}
-
-		if (!(pageSpecification1 instanceof ContentPageSpecification) ||
-			!(pageSpecification2 instanceof ContentPageSpecification)) {
-
+		if (pageSpecification1 == pageSpecification2) {
 			return true;
 		}
 
-		_assertContentPageSpecification(
-			(ContentPageSpecification)pageSpecification1,
-			(ContentPageSpecification)pageSpecification2);
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					additionalAssertFieldName, "externalReferenceCode")) {
+
+				Assert.assertEquals(
+					pageSpecification1.getExternalReferenceCode(),
+					pageSpecification2.getExternalReferenceCode());
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "settings")) {
+				Assert.assertTrue(
+					Objects.deepEquals(
+						pageSpecification1.getSettings(),
+						pageSpecification2.getSettings()));
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "status")) {
+				Assert.assertEquals(
+					pageSpecification1.getStatus(),
+					pageSpecification2.getStatus());
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "type")) {
+				Assert.assertEquals(
+					pageSpecification1.getType(), pageSpecification2.getType());
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "pageExperiences")) {
+				if (!(pageSpecification1 instanceof ContentPageSpecification) ||
+					!(pageSpecification2 instanceof ContentPageSpecification)) {
+
+					continue;
+				}
+
+				_assertContentPageSpecification(
+					(ContentPageSpecification)pageSpecification1,
+					(ContentPageSpecification)pageSpecification2);
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName, "widgetPageSections")) {
+
+				if (!(pageSpecification1 instanceof WidgetPageSpecification) ||
+					!(pageSpecification2 instanceof WidgetPageSpecification)) {
+
+					continue;
+				}
+
+				_assertWidgetPageSpecification(
+					(WidgetPageSpecification)pageSpecification2,
+					(WidgetPageSpecification)pageSpecification1);
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
 
 		return true;
 	}
@@ -353,7 +415,8 @@ public class PageSpecificationResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"externalReferenceCode", "settings", "status", "type"
+			"externalReferenceCode", "pageExperiences", "settings", "status",
+			"type"
 		};
 	}
 
@@ -653,6 +716,16 @@ public class PageSpecificationResourceTest
 			widgetPageSpecification.getType());
 
 		Assert.assertNull(widgetPageSpecification.getWidgetPageSections());
+	}
+
+	private void _assertWidgetPageSpecification(
+		WidgetPageSpecification curWidgetPageSpecification,
+		WidgetPageSpecification widgetPageSpecification) {
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				widgetPageSpecification.getWidgetPageSections(),
+				curWidgetPageSpecification.getWidgetPageSections()));
 	}
 
 	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(

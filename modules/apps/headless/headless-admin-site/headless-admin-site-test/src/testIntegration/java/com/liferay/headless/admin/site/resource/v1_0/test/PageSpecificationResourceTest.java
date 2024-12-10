@@ -27,6 +27,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -61,6 +62,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -259,13 +261,21 @@ public class PageSpecificationResourceTest
 						layoutUtilityPageEntry.getExternalReferenceCode()));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodePageSpecification()
 		throws Exception {
 
-		super.testPatchSiteSiteByExternalReferenceCodePageSpecification();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
+			serviceContext);
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext),
+			serviceContext);
 	}
 
 	@Ignore
@@ -584,6 +594,61 @@ public class PageSpecificationResourceTest
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
 
+	private Settings _getColorSchemeNameSettings(Settings settings) {
+		if (settings.getColorSchemeName() != null) {
+			settings.setColorSchemeName(() -> null);
+
+			return new Settings() {
+				{
+					setColorSchemeName(() -> StringPool.BLANK);
+				}
+			};
+		}
+
+		settings.setColorSchemeName(() -> "01");
+		settings.setThemeName(() -> "Classic");
+
+		return new Settings() {
+			{
+				setColorSchemeName(() -> "01");
+				setThemeName(() -> "Classic");
+			}
+		};
+	}
+
+	private ContentPageSpecification _getContentPageSpecification(
+		Settings curSettings) {
+
+		return new ContentPageSpecification() {
+			{
+				setSettings(() -> curSettings);
+				setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+			}
+		};
+	}
+
+	private Settings _getCssSettings(Settings settings) {
+		if (settings.getCss() != null) {
+			settings.setCss(() -> null);
+
+			return new Settings() {
+				{
+					setCss(() -> StringPool.BLANK);
+				}
+			};
+		}
+
+		String curCss = RandomTestUtil.randomString();
+
+		settings.setCss(() -> curCss);
+
+		return new Settings() {
+			{
+				setCss(() -> curCss);
+			}
+		};
+	}
+
 	private LayoutPageTemplateEntry _getDisplayPageLayoutPageTemplateEntry(
 			ServiceContext serviceContext)
 		throws Exception {
@@ -607,6 +672,28 @@ public class PageSpecificationResourceTest
 			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
+	}
+
+	private Settings _getJavaScriptSettings(Settings settings) {
+		if (settings.getJavascript() != null) {
+			settings.setJavascript(() -> null);
+
+			return new Settings() {
+				{
+					setJavascript(() -> StringPool.BLANK);
+				}
+			};
+		}
+
+		String javaScript = RandomTestUtil.randomString();
+
+		settings.setJavascript(() -> javaScript);
+
+		return new Settings() {
+			{
+				setJavascript(() -> javaScript);
+			}
+		};
 	}
 
 	private Layout _getLayout(String externalReferenceCode, Layout... layouts)
@@ -682,6 +769,50 @@ public class PageSpecificationResourceTest
 		return layoutPageTemplateEntry.getPlid();
 	}
 
+	private Settings _getMasterPageItemExternalReferenceSettings(
+			ServiceContext serviceContext, Settings settings)
+		throws Exception {
+
+		if (settings.getMasterPageItemExternalReference() != null) {
+			settings.setMasterPageItemExternalReference(() -> null);
+
+			return new Settings() {
+				{
+					setMasterPageItemExternalReference(
+						() -> new ItemExternalReference() {
+							{
+								setCollectionType(CollectionType.COLLECTION);
+								setExternalReferenceCode(
+									() -> StringPool.BLANK);
+							}
+						});
+				}
+			};
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setCollectionType(CollectionType.COLLECTION);
+					setExternalReferenceCode(
+						layoutPageTemplateEntry::getExternalReferenceCode);
+				}
+			};
+
+		settings.setMasterPageItemExternalReference(
+			() -> itemExternalReference);
+
+		return new Settings() {
+			{
+				setMasterPageItemExternalReference(() -> itemExternalReference);
+			}
+		};
+	}
+
 	private PageElement[] _getPageElements(
 		int count, String curParentExternalReferenceCode) {
 
@@ -726,6 +857,97 @@ public class PageSpecificationResourceTest
 		return styleBookEntry.getStyleBookEntryId();
 	}
 
+	private Settings _getStyleBookItemExternalReferenceSettings(
+			ServiceContext serviceContext, Settings settings)
+		throws Exception {
+
+		if (settings.getStyleBookItemExternalReference() != null) {
+			settings.setStyleBookItemExternalReference(() -> null);
+
+			return new Settings() {
+				{
+					setStyleBookItemExternalReference(
+						() -> new ItemExternalReference() {
+							{
+								setCollectionType(CollectionType.COLLECTION);
+								setExternalReferenceCode(
+									() -> StringPool.BLANK);
+							}
+						});
+				}
+			};
+		}
+
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(serviceContext);
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setCollectionType(CollectionType.COLLECTION);
+					setExternalReferenceCode(
+						styleBookEntry::getExternalReferenceCode);
+				}
+			};
+
+		settings.setStyleBookItemExternalReference(() -> itemExternalReference);
+
+		return new Settings() {
+			{
+				setStyleBookItemExternalReference(() -> itemExternalReference);
+			}
+		};
+	}
+
+	private Settings _getThemeNameSettings(Settings settings) {
+		if (settings.getThemeName() != null) {
+			settings.setColorSchemeName(() -> null);
+			settings.setThemeName(() -> null);
+
+			return new Settings() {
+				{
+					setColorSchemeName(() -> StringPool.BLANK);
+					setThemeName(() -> StringPool.BLANK);
+				}
+			};
+		}
+
+		settings.setThemeName(() -> "Classic");
+
+		return new Settings() {
+			{
+				setThemeName(() -> "Classic");
+			}
+		};
+	}
+
+	private Settings _getThemeSettingsSettings(Settings settings) {
+		if (settings.getThemeSettings() != null) {
+			settings.setThemeSettings(() -> null);
+
+			return new Settings() {
+				{
+					setThemeSettings(() -> new HashMap<>());
+				}
+			};
+		}
+
+		Map<String, String> map = HashMapBuilder.put(
+			"lfr-theme:" + RandomTestUtil.randomString(),
+			RandomTestUtil.randomString()
+		).put(
+			"lfr-theme:" + RandomTestUtil.randomString(),
+			RandomTestUtil.randomString()
+		).build();
+
+		settings.setThemeSettings(() -> map);
+
+		return new Settings() {
+			{
+				setThemeSettings(() -> map);
+			}
+		};
+	}
+
 	private UnicodeProperties _getThemeSettingsUnicodeProperties(
 		UnicodeProperties unicodeProperties) {
 
@@ -754,6 +976,17 @@ public class PageSpecificationResourceTest
 		).put(
 			"lfr-theme:regular:show-maximize-minimize-application-links", true
 		).buildString();
+	}
+
+	private WidgetPageSpecification _getWidgetPageSpecification(
+		Settings curSettings) {
+
+		return new WidgetPageSpecification() {
+			{
+				setSettings(() -> curSettings);
+				setType(() -> Type.WIDGET_PAGE_SPECIFICATION);
+			}
+		};
 	}
 
 	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
@@ -1011,6 +1244,117 @@ public class PageSpecificationResourceTest
 
 		_assertPageSpecificationsPage(
 			unsafeSupplier.get(), layout, draftLayout);
+	}
+
+	private void _testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		PageSpecification pageSpecification =
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode());
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
+			pageSpecification, serviceContext,
+			settings -> _getWidgetPageSpecification(settings));
+
+		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					patchSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode(), pageSpecification));
+	}
+
+	private void _testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			PageSpecification pageSpecification,
+			UnsafeSupplier<PageSpecification, Exception> unsafeSupplier)
+		throws Exception {
+
+		Assert.assertTrue(
+			equals(
+				pageSpecification,
+				pageSpecificationResource.
+					patchSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						pageSpecification.getExternalReferenceCode(),
+						unsafeSupplier.get())));
+	}
+
+	private void
+			_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+				Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		Layout draftLayout = _updateLayout(
+			layout.fetchDraftLayout(), serviceContext);
+
+		PageSpecification pageSpecification =
+			pageSpecificationResource.
+				getSiteSiteByExternalReferenceCodePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					draftLayout.getExternalReferenceCode());
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
+			pageSpecification, serviceContext,
+			settings -> _getContentPageSpecification(settings));
+
+		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					patchSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode(),
+						pageSpecification));
+	}
+
+	private void
+			_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
+				PageSpecification pageSpecification,
+				ServiceContext serviceContext,
+				UnsafeFunction<Settings, PageSpecification, Exception>
+					unsafeFunction)
+		throws Exception {
+
+		Settings settings = pageSpecification.getSettings();
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(_getColorSchemeNameSettings(settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(
+				_getMasterPageItemExternalReferenceSettings(
+					serviceContext, settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(_getCssSettings(settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(_getJavaScriptSettings(settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(
+				_getStyleBookItemExternalReferenceSettings(
+					serviceContext, settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(_getThemeNameSettings(settings)));
+
+		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
+			pageSpecification,
+			() -> unsafeFunction.apply(_getThemeSettingsSettings(settings)));
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodePageSpecification(

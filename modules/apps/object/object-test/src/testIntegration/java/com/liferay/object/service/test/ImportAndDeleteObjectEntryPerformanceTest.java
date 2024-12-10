@@ -129,9 +129,11 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			httpInvoker.invoke();
 
 			List<ObjectDefinition> objectDefinitions =
-				_objectDefinitionLocalService.getCustomObjectDefinitions(0);
+				_objectDefinitionLocalService.getCustomObjectDefinitions(
+					_CUSTOM_OBJECT_DEFINITION_STATUS);
 
-			_objectDefinition = objectDefinitions.get(0);
+			_objectDefinition = objectDefinitions.get(
+				_OBJECT_DEFINITION_LIST_INDEX);
 
 			long currentObjectEntryCount = 0;
 
@@ -165,6 +167,10 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 		objectFolderResource.putObjectFolderByExternalReferenceCode(
 			objectFolder.getExternalReferenceCode(), objectFolder);
 	}
+
+	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;
+
+	private static final int _OBJECT_DEFINITION_LIST_INDEX = 0;
 
 	private static final int _OBJECT_ENTRY_COUNT = 100;
 

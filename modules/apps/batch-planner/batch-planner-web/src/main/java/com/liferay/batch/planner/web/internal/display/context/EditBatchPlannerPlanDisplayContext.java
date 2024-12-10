@@ -12,6 +12,7 @@ import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -208,25 +209,13 @@ public class EditBatchPlannerPlanDisplayContext {
 	private List<SelectOption> _getTemplateSelectOptions(
 		List<BatchPlannerPlan> batchPlannerPlans) {
 
-		List<SelectOption> templateSelectOptions = new ArrayList<>();
-
-		for (BatchPlannerPlan batchPlannerPlan : batchPlannerPlans) {
-			boolean selected = false;
-
-			if (batchPlannerPlan.getBatchPlannerPlanId() ==
-					_selectedBatchPlannerPlanId) {
-
-				selected = true;
-			}
-
-			templateSelectOptions.add(
-				new SelectOption(
-					batchPlannerPlan.getName(),
-					String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
-					selected));
-		}
-
-		return templateSelectOptions;
+		return TransformUtil.transform(
+			batchPlannerPlans,
+			batchPlannerPlan -> new SelectOption(
+				batchPlannerPlan.getName(),
+				String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
+				batchPlannerPlan.getBatchPlannerPlanId() ==
+					_selectedBatchPlannerPlanId));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

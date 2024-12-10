@@ -9,6 +9,7 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -182,20 +182,17 @@ public class BatchEngineImportTaskServiceImpl
 			List<BatchEngineImportTask> batchEngineImportTasks)
 		throws PrincipalException {
 
-		List<BatchEngineImportTask> filteredBatchEngineImportTasks =
-			new ArrayList<>();
-
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (BatchEngineImportTask batchEngineImportTask :
-				batchEngineImportTasks) {
+		return TransformUtil.transform(
+			batchEngineImportTasks,
+			batchEngineImportTask -> {
+				if (_hasPermission(batchEngineImportTask, permissionChecker)) {
+					return batchEngineImportTask;
+				}
 
-			if (_hasPermission(batchEngineImportTask, permissionChecker)) {
-				filteredBatchEngineImportTasks.add(batchEngineImportTask);
-			}
-		}
-
-		return filteredBatchEngineImportTasks;
+				return null;
+			});
 	}
 
 	private boolean _hasPermission(

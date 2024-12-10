@@ -4,7 +4,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
@@ -38,8 +38,10 @@ const ProjectRoutes = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 	const {featureFlags} = useAppPropertiesContext();
 
-	const {data: koroneikiData, loading: koroneikiAccountLoading} = useCurrentKoroneikiAccount();
-	const koroneikiAccount = koroneikiData?.koroneikiAccountByExternalReferenceCode;
+	const {data: koroneikiData, loading: koroneikiAccountLoading} =
+		useCurrentKoroneikiAccount();
+	const koroneikiAccount =
+		koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
 	const {data: myUserAccountData} =
 		useMyUserAccountByAccountExternalReferenceCode(
@@ -48,6 +50,15 @@ const ProjectRoutes = () => {
 		);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
+	const hasSaasSubscription = useMemo(
+		() =>
+			subscriptionGroups?.some(
+				(subscription) =>
+					subscription.externalReferenceCode ===
+					`${project?.externalReferenceCode}_liferay-saas`
+			),
+		[subscriptionGroups]
+	);
 
 	useEffect(() => {
 		if (project && subscriptionGroups) {
@@ -91,9 +102,7 @@ const ProjectRoutes = () => {
 
 					<Route
 						element={
-							<ProductOutlet
-								product={PRODUCT_TYPES.dxpCloud}
-							/>
+							<ProductOutlet product={PRODUCT_TYPES.dxpCloud} />
 						}
 					>
 						<Route
@@ -258,8 +267,12 @@ const ProjectRoutes = () => {
 
 					{featureFlags.includes('LRSD-6322') &&
 						loggedUserAccount?.isLiferayStaff &&
-						<Route element={<ProjectUsage />} path="project-usage" />
-					}
+						hasSaasSubscription && (
+							<Route
+								element={<ProjectUsage />}
+								path="project-usage"
+							/>
+						)}
 
 					<Route element={<h3>Page not found</h3>} path="*" />
 				</Route>

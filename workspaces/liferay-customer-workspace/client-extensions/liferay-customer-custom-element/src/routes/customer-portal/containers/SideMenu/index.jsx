@@ -4,13 +4,13 @@
  */
 
 import classNames from 'classnames';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useAppPropertiesContext } from '~/common/contexts/AppPropertiesContext';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../common/I18n';
-import { Button } from '../../../../common/components';
+import {Button} from '../../../../common/components';
 import getKebabCase from '../../../../common/utils/getKebabCase';
-import { useCustomerPortal } from '../../context';
-import { MENU_TYPES, PRODUCT_TYPES } from '../../utils/constants';
+import {useCustomerPortal} from '../../context';
+import {MENU_TYPES, PRODUCT_TYPES} from '../../utils/constants';
 import SideMenuSkeleton from './Skeleton';
 import MenuItem from './components/MenuItem';
 import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
@@ -19,13 +19,15 @@ import useMyUserAccountByAccountExternalReferenceCode from '../../pages/Project/
 const ACTIVATION_PATH = 'activation';
 
 const SideMenu = () => {
-	const [{subscriptionGroups}] = useCustomerPortal();
+	const [{project, subscriptionGroups}] = useCustomerPortal();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
 	const [menuItemActiveStatus, setMenuItemActiveStatus] = useState([]);
 	const {featureFlags} = useAppPropertiesContext();
 
-	const {data: koroneikiData, loading: koroneikiAccountLoading} = useCurrentKoroneikiAccount();
-	const koroneikiAccount = koroneikiData?.koroneikiAccountByExternalReferenceCode;
+	const {data: koroneikiData, loading: koroneikiAccountLoading} =
+		useCurrentKoroneikiAccount();
+	const koroneikiAccount =
+		koroneikiData?.koroneikiAccountByExternalReferenceCode;
 
 	const {data: myUserAccountData} =
 		useMyUserAccountByAccountExternalReferenceCode(
@@ -38,17 +40,29 @@ const SideMenu = () => {
 
 	const activationSubscriptionGroups = useMemo(
 		() =>
-			subscriptionGroups?.filter(
-				(subscriptionGroup) => {
-					return subscriptionGroup.hasActivation && subscriptionGroup.name !== MENU_TYPES.liferayPaaS && subscriptionGroup.name !== MENU_TYPES.liferaySaaS;
-				}
-			),
+			subscriptionGroups?.filter((subscriptionGroup) => {
+				return (
+					subscriptionGroup.hasActivation &&
+					subscriptionGroup.name !== MENU_TYPES.liferayPaaS &&
+					subscriptionGroup.name !== MENU_TYPES.liferaySaaS
+				);
+			}),
 		[subscriptionGroups]
 	);
 
 	const hasSomeMenuItemActive = useMemo(
 		() => menuItemActiveStatus.some((menuItemActive) => !!menuItemActive),
 		[menuItemActiveStatus]
+	);
+
+	const hasSaasSubscription = useMemo(
+		() =>
+			subscriptionGroups?.some(
+				(subscription) =>
+					subscription.externalReferenceCode ===
+					`${project?.externalReferenceCode}_liferay-saas`
+			),
+		[subscriptionGroups]
 	);
 
 	useEffect(() => {
@@ -67,46 +81,48 @@ const SideMenu = () => {
 
 	const hasProductSubscription = useMemo(
 		() => (productType) =>
-			subscriptionGroups?.some(
-				({name}) => name === productType
-			),
+			subscriptionGroups?.some(({name}) => name === productType),
 		[subscriptionGroups]
 	);
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() =>
-			activationSubscriptionGroups?.map(({ activationProductName, name }, index) => {
-				const displayName = activationProductName ? activationProductName : name;
+			activationSubscriptionGroups?.map(
+				({activationProductName, name}, index) => {
+					const displayName = activationProductName
+						? activationProductName
+						: name;
 
-				const redirectPage = getKebabCase(displayName);
+					const redirectPage = getKebabCase(displayName);
 
-				const menuUpdateStatus = (isActive) =>
-					setMenuItemActiveStatus(
-						(previousMenuItemActiveStatus) => {
-							const menuItemStatus = [
-								...previousMenuItemActiveStatus,
-							];
-							menuItemStatus[index] = isActive;
+					const menuUpdateStatus = (isActive) =>
+						setMenuItemActiveStatus(
+							(previousMenuItemActiveStatus) => {
+								const menuItemStatus = [
+									...previousMenuItemActiveStatus,
+								];
+								menuItemStatus[index] = isActive;
 
-							setIsOpenedProductsMenu(
-								menuItemStatus.some(Boolean)
-							);
+								setIsOpenedProductsMenu(
+									menuItemStatus.some(Boolean)
+								);
 
-							return menuItemStatus;
-						}
+								return menuItemStatus;
+							}
+						);
+
+					return (
+						<MenuItem
+							iconKey={redirectPage.split('-')[0]}
+							key={`${displayName}-${index}`}
+							setActive={menuUpdateStatus}
+							to={`${ACTIVATION_PATH}/${redirectPage}`}
+						>
+							{displayName}
+						</MenuItem>
 					);
-
-				return (
-					<MenuItem
-						iconKey={redirectPage.split('-')[0]}
-						key={`${displayName}-${index}`}
-						setActive={menuUpdateStatus}
-						to={`${ACTIVATION_PATH}/${redirectPage}`}
-					>
-						{displayName}
-					</MenuItem>
-				);
-			}),
+				}
+			),
 		[activationSubscriptionGroups]
 	);
 
@@ -124,7 +140,9 @@ const SideMenu = () => {
 				</div>
 
 				{featureFlags.includes('LPS-153478') &&
-					hasProductSubscription(PRODUCT_TYPES.liferayExperienceCloud) && (
+					hasProductSubscription(
+						PRODUCT_TYPES.liferayExperienceCloud
+					) && (
 						<div className="d-flex">
 							<MenuItem
 								iconKey="experienceCloud"
@@ -135,12 +153,14 @@ const SideMenu = () => {
 								{MENU_TYPES.liferaySaaS}
 							</MenuItem>
 						</div>
-					)
-				}
+					)}
 
 				{hasProductSubscription(PRODUCT_TYPES.dxpCloud) && (
 					<div className="d-flex">
-						<MenuItem iconKey="lxc" to={getKebabCase(PRODUCT_TYPES.dxpCloud)}>
+						<MenuItem
+							iconKey="lxc"
+							to={getKebabCase(PRODUCT_TYPES.dxpCloud)}
+						>
 							{MENU_TYPES.liferayPaaS}
 						</MenuItem>
 					</div>
@@ -158,13 +178,18 @@ const SideMenu = () => {
 								className={classNames(
 									'align-items-center btn-borderless d-flex px-2 py-2 rounded w-100',
 									{
-										'cp-product-activation-active': isOpenedProductsMenu,
+										'cp-product-activation-active':
+											isOpenedProductsMenu,
 										'text-neutral-4':
-											activationSubscriptionGroups.length < 1,
-										'text-neutral-10': !!activationSubscriptionGroups.length,
+											activationSubscriptionGroups.length <
+											1,
+										'text-neutral-10':
+											!!activationSubscriptionGroups.length,
 									}
 								)}
-								disabled={activationSubscriptionGroups.length < 1}
+								disabled={
+									activationSubscriptionGroups.length < 1
+								}
 								iconKey="productActivation"
 								onClick={() =>
 									setIsOpenedProductsMenu(
@@ -183,7 +208,8 @@ const SideMenu = () => {
 							className={classNames(
 								'cp-products-list list-unstyled ml-3 overflow-hidden mb-1',
 								{
-									'cp-products-list-active': isOpenedProductsMenu,
+									'cp-products-list-active':
+										isOpenedProductsMenu,
 								}
 							)}
 							ref={productActivationMenuRef}
@@ -192,7 +218,7 @@ const SideMenu = () => {
 						</ul>
 					</li>
 				)}
-				
+
 				{featureFlags.includes('ISSD-119') && (
 					<div className="d-flex">
 						<MenuItem
@@ -216,7 +242,8 @@ const SideMenu = () => {
 				</div>
 
 				{featureFlags.includes('LRSD-6322') &&
-					loggedUserAccount?.isLiferayStaff && (
+					loggedUserAccount?.isLiferayStaff &&
+					hasSaasSubscription && (
 						<div className="d-flex">
 							<MenuItem
 								iconKey="projectUsage"

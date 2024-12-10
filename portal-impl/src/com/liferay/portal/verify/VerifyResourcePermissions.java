@@ -229,20 +229,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					if (verifiableResourcedModel instanceof
 							LayoutVerifiableResourcedModel) {
 
-						addGroupPermission = true;
-						addGuestPermission = true;
-
 						groupId = (Long)values[2];
 						boolean privateLayout = (Boolean)values[3];
 
-						if (privateLayout) {
-							addGuestPermission = false;
-
+						if (!privateLayout) {
+							addGroupPermission = true;
+							addGuestPermission = true;
+						}
+						else {
 							Group group = GroupLocalServiceUtil.getGroup(
 								groupId);
 
-							if (group.isUser() || group.isUserGroup()) {
-								addGroupPermission = false;
+							if (!group.isUser() && !group.isUserGroup()) {
+								addGroupPermission = true;
 							}
 						}
 					}

@@ -12,6 +12,8 @@ import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performUserSwitch} from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import clickRowAction from '../../utils/clickRowAction';
+import getRowByText from '../../utils/getRowByText';
 import saveFromModal from '../../utils/saveFromModal';
 import {setupUserRoleAndLoginAsUser} from '../../utils/setupUserRoleAndLoginAsUser';
 import {EItemActionTarget} from '../../utils/types';
@@ -498,23 +500,26 @@ test('Check "Edit" permission', async ({
 		).toBeVisible();
 	});
 
+	const confirmDeleteButton = page.getByRole('button', {
+		name: 'Delete',
+	});
+
+	let filtersTableRow: Locator;
+
 	await test.step('Check that the user can edit data set filters', async () => {
 		await filtersPage.selectTab('Filters');
 
-		await filtersPage.getRowByText(filterLabel).waitFor();
-
-		await filtersPage
-			.getRowByText(filterLabel)
-			.locator('.actions-cell button')
-			.click();
-
-		const editButton = filtersPage.page.getByRole('menuitem', {
-			name: 'Edit',
+		filtersTableRow = await getRowByText({
+			page,
+			table: filtersPage.filterTable,
+			text: filterLabel,
 		});
 
-		await expect(editButton).toBeInViewport();
-
-		await editButton.click();
+		await clickRowAction({
+			actionLabel: 'Edit',
+			page,
+			row: filtersTableRow,
+		});
 
 		const nameInput = filtersPage.newDateRangeFilterForm.nameInput;
 
@@ -526,23 +531,10 @@ test('Check "Edit" permission', async ({
 	});
 
 	await test.step('Check that the user can delete data set filters', async () => {
-		await filtersPage.getRowByText(filterLabel).waitFor();
-
-		await filtersPage
-			.getRowByText(filterLabel)
-			.locator('.actions-cell button')
-			.click();
-
-		const deleteButton = filtersPage.page.getByRole('menuitem', {
-			name: 'Delete',
-		});
-
-		await expect(deleteButton).toBeInViewport();
-
-		await deleteButton.click();
-
-		const confirmDeleteButton = page.getByRole('button', {
-			name: 'Delete',
+		await clickRowAction({
+			actionLabel: 'Delete',
+			page,
+			row: filtersTableRow,
 		});
 
 		await confirmDeleteButton.waitFor();
@@ -552,55 +544,35 @@ test('Check "Edit" permission', async ({
 		await waitForAlert(page);
 	});
 
-	const sortingRow =
-		await test.step('Check that the user can edit data set sortings', async () => {
-			await sortingPage.selectTab('Sorting');
+	let sortingsTableRow: Locator;
 
-			const sortingRow = sortingPage.page
-				.locator('tbody')
-				.locator('tr')
-				.filter({
-					has: page.getByText(sortingLabel, {exact: true}).first(),
-				});
+	await test.step('Check that the user can edit data set sortings', async () => {
+		await sortingPage.selectTab('Sorting');
 
-			await sortingRow
-				.getByRole('cell', {name: 'Actions'})
-				.getByRole('button')
-				.click();
-
-			const editButton = page.getByRole('menuitem', {
-				name: 'Edit',
-			});
-
-			await expect(editButton).toBeInViewport();
-
-			await editButton.click();
-
-			await expect(
-				sortingPage.page.getByLabel('Use as Default Sorting')
-			).toBeInViewport();
-
-			await saveFromModal({page: sortingPage.page});
-
-			return sortingRow;
+		sortingsTableRow = await getRowByText({
+			page,
+			table: sortingPage.sortingTable,
+			text: sortingLabel,
 		});
+
+		await clickRowAction({
+			actionLabel: 'Edit',
+			page,
+			row: sortingsTableRow,
+		});
+
+		await expect(
+			sortingPage.page.getByLabel('Use as Default Sorting')
+		).toBeInViewport();
+
+		await saveFromModal({page: sortingPage.page});
+	});
 
 	await test.step('Check that the user can delete data set sortings', async () => {
-		await sortingRow
-			.getByRole('cell', {name: 'Actions'})
-			.getByRole('button')
-			.click();
-
-		const deleteButton = page.getByRole('menuitem', {
-			name: 'Delete',
-		});
-
-		await expect(deleteButton).toBeInViewport();
-
-		await deleteButton.click();
-
-		const confirmDeleteButton = page.getByRole('button', {
-			name: 'Delete',
+		await clickRowAction({
+			actionLabel: 'Delete',
+			page,
+			row: sortingsTableRow,
 		});
 
 		await confirmDeleteButton.waitFor();
@@ -610,57 +582,36 @@ test('Check "Edit" permission', async ({
 		await waitForAlert(page);
 	});
 
-	const actionRow =
-		await test.step('Check that the user can edit data set actions', async () => {
-			await actionsPage.dataSetPage.selectTab('Actions');
+	let actionsTableRow: Locator;
 
-			const actionRow = actionsPage.page
-				.locator('tbody')
-				.locator('tr')
-				.filter({
-					has: page.getByText(actionLabel, {exact: true}).first(),
-				});
+	await test.step('Check that the user can edit data set actions', async () => {
+		await actionsPage.dataSetPage.selectTab('Actions');
+		await expect(actionsPage.itemActionsTab).toBeInViewport();
 
-			await actionRow
-				.getByRole('cell', {name: 'Actions'})
-				.getByRole('button')
-				.click();
-
-			const editButton = actionsPage.page.getByRole('menuitem', {
-				name: 'Edit',
-			});
-
-			await expect(editButton).toBeInViewport();
-
-			await editButton.click();
-
-			await expect(
-				actionsPage.actionForm.changeIconButton
-			).toBeInViewport();
-
-			await actionsPage.actionForm.saveButton.click();
-
-			await waitForAlert(actionsPage.page);
-
-			return actionRow;
+		actionsTableRow = await getRowByText({
+			page,
+			table: actionsPage.itemActionsTable,
+			text: actionLabel,
 		});
+
+		await clickRowAction({
+			actionLabel: 'Edit',
+			page,
+			row: actionsTableRow,
+		});
+
+		await expect(actionsPage.actionForm.changeIconButton).toBeInViewport();
+
+		await actionsPage.actionForm.saveButton.click();
+
+		await waitForAlert(actionsPage.page);
+	});
 
 	await test.step('Check that the user can delete data set actions', async () => {
-		await actionRow
-			.getByRole('cell', {name: 'Actions'})
-			.getByRole('button')
-			.click();
-
-		const deleteButton = actionsPage.page.getByRole('menuitem', {
-			name: 'Delete',
-		});
-
-		await expect(deleteButton).toBeInViewport();
-
-		await deleteButton.click();
-
-		const confirmDeleteButton = page.getByRole('button', {
-			name: 'Delete',
+		await clickRowAction({
+			actionLabel: 'Delete',
+			page,
+			row: actionsTableRow,
 		});
 
 		await confirmDeleteButton.waitFor();

@@ -136,7 +136,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<not>
 					<or>
 						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${app.server.type}" arg2="tcserver" />
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<equals arg1="${app.server.type}" arg2="weblogic" />
 						<equals arg1="${app.server.type}" arg2="websphere" />
@@ -144,7 +143,7 @@ module.framework.properties.osgi.console=11312</echo>
 					</or>
 				</not>
 				<then>
-					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tcserver, tomcat, weblogic, websphere, or wildfly.</fail>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}, jboss, tomcat, weblogic, websphere, or wildfly.</fail>
 				</then>
 			</if>
 
@@ -2908,16 +2907,6 @@ portal.dir=standalone/deployments/ROOT.war
 server.detector.server.id=jboss</echo>
 				</then>
 				<elseif>
-					<equals arg1="${app.server.type}" arg2="tcserver" />
-					<then>
-						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
-extra.lib.dirs=runtimes/tomcat-9.0.10.A.RELEASE/lib
-global.lib.dir=instances/liferay/lib
-portal.dir=instances/liferay/webapps/ROOT
-server.detector.server.id=tomcat</echo>
-					</then>
-				</elseif>
-				<elseif>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>
 						<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
@@ -5089,26 +5078,6 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<and>
-					<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-					<matches pattern="https?://" string="${test.build.portal.war.url}" />
-				</and>
-				<then>
-					<antcall inheritAll="false" target="prepare-test-bundle">
-						<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-						<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
-						<param name="app.server.type" value="tcserver" />
-					</antcall>
-				</then>
-				<elseif>
-					<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-					<then>
-						<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-tcserver" />
-					</then>
-				</elseif>
-			</if>
-
-			<if>
 				<matches pattern="https?://" string="${test.build.bundle.tomcat.zip.url}" />
 				<then>
 					<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
@@ -6425,21 +6394,6 @@ ${custom.upgrade.properties}</echo>
 					<var name="app.server.lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/lib/" />
 					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/standalone/deployments/ROOT.war/WEB-INF/shielded-container-lib/" />
 					<var name="app.server.zip.url" value="http://developers.redhat.com/download-manager/file/${app.server.zip.name}" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="@{app.server.type}" arg2="tcserver" />
-				<then>
-					<var name="app.server.dir" value="${app.server.parent.dir}/tc-server-@{app.server.version}" />
-					<var name="app.server.zip.name" value="apache-tomcat-@{app.server.version}.zip" />
-
-					<var name="app.server.bin.dir" value="${app.server.dir}/instances/liferay/bin" />
-					<var name="app.server.classes.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/classes" />
-					<var name="app.server.lib.global.dir" value="${app.server.dir}/lib" />
-					<var name="app.server.lib.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/lib/" />
-					<var name="app.server.shielded-container-lib.portal.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/shielded-container-lib/" />
-					<var name="app.server.zip.url" value="http://archive.apache.org/dist/tomcat/tomcat-9/v@{app.server.version}/bin/${app.server.zip.name}" />
 				</then>
 			</if>
 
@@ -8080,9 +8034,6 @@ ${docker.start.error}</fail>
 					<if>
 						<and>
 							<isset property="app.server.stopping.timeout" />
-							<not>
-								<equals arg1="${app.server.type}" arg2="tcserver" />
-							</not>
 						</and>
 						<then>
 							<antcall target="print-jstack-logs">
@@ -12296,16 +12247,6 @@ javascript.fast.load=false</echo>
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="tcserver" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-session.cookie.use.full.hostname=true
-				</echo>
-			</then>
-		</if>
 
 		<if>
 			<isset property="set.permission.algorithm.5" />

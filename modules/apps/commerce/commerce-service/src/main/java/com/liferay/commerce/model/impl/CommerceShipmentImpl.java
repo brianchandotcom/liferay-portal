@@ -49,12 +49,12 @@ public class CommerceShipmentImpl extends CommerceShipmentBaseImpl {
 
 		long commerceShippingMethodId = getCommerceShippingMethodId();
 
-		if (commerceShippingMethodId > 0) {
-			return CommerceShippingMethodLocalServiceUtil.
-				getCommerceShippingMethod(commerceShippingMethodId);
+		if (commerceShippingMethodId <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceShippingMethodLocalServiceUtil.getCommerceShippingMethod(
+			commerceShippingMethodId);
 	}
 
 }

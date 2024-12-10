@@ -424,13 +424,13 @@ public class CommerceProductPriceCalculationV2Impl
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				commerceCatalog.getGroupId());
 
-		if (basePriceList != null) {
-			return _commercePriceEntryLocalService.fetchCommercePriceEntry(
-				basePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), unitOfMeasureKey, true);
+		if (basePriceList == null) {
+			return null;
 		}
 
-		return null;
+		return _commercePriceEntryLocalService.fetchCommercePriceEntry(
+			basePriceList.getCommercePriceListId(),
+			cpInstance.getCPInstanceUuid(), unitOfMeasureKey, true);
 	}
 
 	@Override

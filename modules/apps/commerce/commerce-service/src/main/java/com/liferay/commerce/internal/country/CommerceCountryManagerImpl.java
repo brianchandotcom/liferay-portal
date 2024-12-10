@@ -147,12 +147,12 @@ public class CommerceCountryManagerImpl
 					companyId
 				).and(
 					() -> {
-						if (!all) {
-							return CommerceInventoryWarehouseTable.INSTANCE.
-								active.eq(true);
+						if (all) {
+							return null;
 						}
 
-						return null;
+						return CommerceInventoryWarehouseTable.INSTANCE.active.
+							eq(true);
 					}
 				)
 			).orderBy(

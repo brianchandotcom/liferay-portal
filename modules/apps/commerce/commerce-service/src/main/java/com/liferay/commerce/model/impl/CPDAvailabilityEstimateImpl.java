@@ -19,13 +19,13 @@ public class CPDAvailabilityEstimateImpl
 	public CommerceAvailabilityEstimate getCommerceAvailabilityEstimate()
 		throws PortalException {
 
-		if (getCommerceAvailabilityEstimateId() > 0) {
-			return CommerceAvailabilityEstimateLocalServiceUtil.
-				getCommerceAvailabilityEstimate(
-					getCommerceAvailabilityEstimateId());
+		if (getCommerceAvailabilityEstimateId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CommerceAvailabilityEstimateLocalServiceUtil.
+			getCommerceAvailabilityEstimate(
+				getCommerceAvailabilityEstimateId());
 	}
 
 }

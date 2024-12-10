@@ -1087,15 +1087,15 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			_commerceOrderModelResourcePermission.
 				getPortletResourcePermission();
 
-		if (!portletResourcePermission.contains(
+		if (portletResourcePermission.contains(
 				getPermissionChecker(), groupId,
 				CommerceOrderActionKeys.MANAGE_ALL_ACCOUNTS)) {
 
-			return _commerceAccountHelper.getUserCommerceAccountIds(
-				getUserId(), groupId);
+			return null;
 		}
 
-		return null;
+		return _commerceAccountHelper.getUserCommerceAccountIds(
+			getUserId(), groupId);
 	}
 
 	@Reference

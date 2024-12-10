@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.tools.deploy.BaseAutoDeployer;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -149,33 +147,6 @@ public class PortletAutoDeployer
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	public void updateDeployDirectory(File srcFile) throws Exception {
-		boolean customPortletXML = PropsValues.AUTO_DEPLOY_CUSTOM_PORTLET_XML;
-
-		customPortletXML = GetterUtil.getBoolean(
-			System.getProperty("deployer.custom.portlet.xml"),
-			customPortletXML);
-
-		if (!customPortletXML) {
-			return;
-		}
-
-		File portletXML = new File(
-			srcFile + "/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
-
-		if (portletXML.exists()) {
-			File portletCustomXML = new File(
-				srcFile + "/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_CUSTOM);
-
-			if (portletCustomXML.exists()) {
-				portletCustomXML.delete();
-			}
-
-			portletXML.renameTo(portletCustomXML);
-		}
 	}
 
 	public void updatePortletXML(File portletXML) throws Exception {

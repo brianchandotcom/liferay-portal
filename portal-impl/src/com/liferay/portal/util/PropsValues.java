@@ -216,10 +216,6 @@ public class PropsValues {
 	public static final String AUTH_TOKEN_SHARED_SECRET = PropsUtil.get(
 		PropsKeys.AUTH_TOKEN_SHARED_SECRET);
 
-	public static final boolean AUTO_DEPLOY_CUSTOM_PORTLET_XML =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.AUTO_DEPLOY_CUSTOM_PORTLET_XML));
-
 	public static final String AUTO_DEPLOY_DEPLOY_DIR = PropsUtil.get(
 		PropsKeys.AUTO_DEPLOY_DEPLOY_DIR);
 

@@ -456,9 +456,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		return filterMap;
 	}
 
-	public void updateDeployDirectory(File srcFile) throws Exception {
-	}
-
 	protected String auiTaglibDTD;
 	protected String portletExtTaglibDTD;
 	protected String portletTaglibDTD;
@@ -641,8 +638,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 		if (deployDir == null) {
 			return;
 		}
-
-		updateDeployDirectory(srcFile);
 
 		FileUtil.copyDirectory(srcFile, deployDir);
 	}

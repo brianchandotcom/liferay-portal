@@ -252,9 +252,6 @@ public interface PropsKeys {
 	public static final String AUTH_VERIFIER_PIPELINE =
 		"auth.verifier.pipeline";
 
-	public static final String AUTO_DEPLOY_CUSTOM_PORTLET_XML =
-		"auto.deploy.custom.portlet.xml";
-
 	public static final String AUTO_DEPLOY_DEPLOY_DIR =
 		"auto.deploy.deploy.dir";
 

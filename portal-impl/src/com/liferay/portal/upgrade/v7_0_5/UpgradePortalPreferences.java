@@ -113,13 +113,13 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	private static final String[] _OBSOLETE_PORTAL_PREFERENCES = {
-		PropsKeys.AUTO_DEPLOY_CUSTOM_PORTLET_XML,
-		PropsKeys.AUTO_DEPLOY_DEPLOY_DIR, "auto.deploy.dest.dir",
-		PropsKeys.AUTO_DEPLOY_ENABLED, PropsKeys.AUTO_DEPLOY_INTERVAL,
-		"auto.deploy.jboss.prefix", PropsKeys.AUTO_DEPLOY_TOMCAT_CONF_DIR,
-		"auto.deploy.tomcat.lib.dir", "auto.deploy.unpack.war",
-		"plugin.notifications.enabled", "plugin.notifications.packages.ignored",
-		"plugin.repositories.trusted", "plugin.repositories.untrusted"
+		"auto.deploy.custom.portlet.xml", PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
+		"auto.deploy.dest.dir", PropsKeys.AUTO_DEPLOY_ENABLED,
+		PropsKeys.AUTO_DEPLOY_INTERVAL, "auto.deploy.jboss.prefix",
+		PropsKeys.AUTO_DEPLOY_TOMCAT_CONF_DIR, "auto.deploy.tomcat.lib.dir",
+		"auto.deploy.unpack.war", "plugin.notifications.enabled",
+		"plugin.notifications.packages.ignored", "plugin.repositories.trusted",
+		"plugin.repositories.untrusted"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

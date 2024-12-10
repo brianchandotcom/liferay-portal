@@ -23,12 +23,11 @@ public class CPDisplayLayoutImpl extends CPDisplayLayoutBaseImpl {
 	public AssetCategory fetchAssetCategory() {
 		String className = getClassName();
 
-		if (className.equals(AssetCategory.class.getName())) {
-			return AssetCategoryLocalServiceUtil.fetchAssetCategory(
-				getClassPK());
+		if (!className.equals(AssetCategory.class.getName())) {
+			return null;
 		}
 
-		return null;
+		return AssetCategoryLocalServiceUtil.fetchAssetCategory(getClassPK());
 	}
 
 	@Override

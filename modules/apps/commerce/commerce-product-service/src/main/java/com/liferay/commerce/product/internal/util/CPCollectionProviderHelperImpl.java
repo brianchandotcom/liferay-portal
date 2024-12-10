@@ -105,62 +105,61 @@ public class CPCollectionProviderHelperImpl
 						RelatedInfoItemCollectionProvider.class,
 						cpDefinitionOptionRel.getInfoItemServiceKey());
 
-		if (configurableInfoCollectionProvider != null) {
-			CollectionQuery collectionQuery = new CollectionQuery();
-
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.fetchCPDefinition(
-					cpDefinitionOptionRel.getCPDefinitionId());
-
-			collectionQuery.setConfiguration(
-				HashMapBuilder.put(
-					"categoryIds",
-					() -> {
-						UnicodeProperties typeSettingsUnicodeProperties =
-							cpDefinitionOptionRel.
-								getTypeSettingsUnicodeProperties();
-
-						return StringUtil.split(
-							typeSettingsUnicodeProperties.getProperty(
-								"categoryIds", StringPool.BLANK));
-					}
-				).put(
-					"companyIds", new String[] {String.valueOf(companyId)}
-				).put(
-					"groupIds", new String[] {String.valueOf(groupId)}
-				).build());
-
-			if (Validator.isNotNull(keywords)) {
-				collectionQuery.setInfoFilters(
-					HashMapBuilder.<String, InfoFilter>put(
-						KeywordsInfoFilter.class.getName(),
-						() -> {
-							KeywordsInfoFilter keywordsInfoFilter =
-								new KeywordsInfoFilter();
-
-							keywordsInfoFilter.setKeywords(keywords);
-
-							return keywordsInfoFilter;
-						}
-					).build());
-			}
-
-			if (pagination == null) {
-				collectionQuery.setPagination(
-					Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-			}
-			else {
-				collectionQuery.setPagination(pagination);
-			}
-
-			collectionQuery.setRelatedItemObject(cpDefinition);
-
-			return (InfoPage<CPDefinitionOptionValueRel>)
-				configurableInfoCollectionProvider.getCollectionInfoPage(
-					collectionQuery);
+		if (configurableInfoCollectionProvider == null) {
+			return null;
 		}
 
-		return null;
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionOptionRel.getCPDefinitionId());
+
+		collectionQuery.setConfiguration(
+			HashMapBuilder.put(
+				"categoryIds",
+				() -> {
+					UnicodeProperties typeSettingsUnicodeProperties =
+						cpDefinitionOptionRel.
+							getTypeSettingsUnicodeProperties();
+
+					return StringUtil.split(
+						typeSettingsUnicodeProperties.getProperty(
+							"categoryIds", StringPool.BLANK));
+				}
+			).put(
+				"companyIds", new String[] {String.valueOf(companyId)}
+			).put(
+				"groupIds", new String[] {String.valueOf(groupId)}
+			).build());
+
+		if (Validator.isNotNull(keywords)) {
+			collectionQuery.setInfoFilters(
+				HashMapBuilder.<String, InfoFilter>put(
+					KeywordsInfoFilter.class.getName(),
+					() -> {
+						KeywordsInfoFilter keywordsInfoFilter =
+							new KeywordsInfoFilter();
+
+						keywordsInfoFilter.setKeywords(keywords);
+
+						return keywordsInfoFilter;
+					}
+				).build());
+		}
+
+		if (pagination == null) {
+			collectionQuery.setPagination(
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		}
+		else {
+			collectionQuery.setPagination(pagination);
+		}
+
+		collectionQuery.setRelatedItemObject(cpDefinition);
+
+		return (InfoPage<CPDefinitionOptionValueRel>)
+			configurableInfoCollectionProvider.getCollectionInfoPage(
+				collectionQuery);
 	}
 
 	@Reference

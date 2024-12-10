@@ -29,14 +29,14 @@ public class CPSpecificationOptionImpl extends CPSpecificationOptionBaseImpl {
 	public CPOptionCategory getCPOptionCategory() throws PortalException {
 		long cpOptionCategoryId = getCPOptionCategoryId();
 
-		if (cpOptionCategoryId !=
+		if (cpOptionCategoryId ==
 				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
 
-			return CPOptionCategoryLocalServiceUtil.getCPOptionCategory(
-				cpOptionCategoryId);
+			return null;
 		}
 
-		return null;
+		return CPOptionCategoryLocalServiceUtil.getCPOptionCategory(
+			cpOptionCategoryId);
 	}
 
 	@Override

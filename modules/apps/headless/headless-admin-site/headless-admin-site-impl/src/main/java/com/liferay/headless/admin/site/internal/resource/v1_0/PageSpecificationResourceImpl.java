@@ -535,7 +535,10 @@ public class PageSpecificationResourceImpl
 		ItemExternalReference itemExternalReference =
 			settings.getMasterPageItemExternalReference();
 
-		if (itemExternalReference == null) {
+		if ((itemExternalReference == null) ||
+			Validator.isNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
 			return 0;
 		}
 

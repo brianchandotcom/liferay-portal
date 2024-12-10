@@ -15,6 +15,9 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +70,9 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/jira/issue/{issueKey}")
-	public ResponseEntity<String> get(@PathVariable("issueKey") String issueKey)
+	public ResponseEntity<String> get(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("issueKey") String issueKey)
 		throws Exception {
 
 		try {
@@ -79,8 +84,13 @@ public class JiraRestController extends BaseRestController {
 
 			JSONObject responseJSONObject = _transformIssue(jsonObject);
 
+			if (_hasIssuePermission(jwt, responseJSONObject)) {
+				return new ResponseEntity<>(
+					responseJSONObject.toString(), HttpStatus.OK);
+			}
+
 			return new ResponseEntity<>(
-				responseJSONObject.toString(), HttpStatus.OK);
+				"No issue found with key " + issueKey, HttpStatus.UNAUTHORIZED);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -416,6 +426,45 @@ public class JiraRestController extends BaseRestController {
 		}
 
 		return false;
+	}
+
+	private boolean _hasIssuePermission(Jwt jwt, JSONObject issueJSONObject) {
+		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject("fields");
+
+		String publishingStatus = fieldsJSONObject.optString(
+			"publishingStatus");
+
+		LocalDateTime publishingDate = _parsePublishingDate(
+			jwt, issueJSONObject);
+
+		if (publishingStatus.equals("Ready for Publishing") &&
+			publishingDate.isBefore(LocalDateTime.now())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private LocalDateTime _parsePublishingDate(
+		Jwt jwt, JSONObject issueJSONObject) {
+
+		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject("fields");
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSx");
+
+		if (_hasEarlyPublishAccess(jwt)) {
+			String publishingDate = fieldsJSONObject.optString(
+				"partnerPublishingDate");
+
+			return LocalDateTime.parse(publishingDate, formatter);
+		}
+
+		String publishingDate = fieldsJSONObject.optString(
+			"customerPublishingDate");
+
+		return LocalDateTime.parse(publishingDate, formatter);
 	}
 
 	private JSONObject _search(

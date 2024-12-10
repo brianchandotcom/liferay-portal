@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
@@ -24,6 +25,7 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	loginTest(),
+	isolatedSiteTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
 );
@@ -357,4 +359,44 @@ test('Can cut and paste a grid inside a container', async ({
 
 	expect(await pageEditorPage.isActive(pastedGridId)).toBe(true);
 	expect(await pageEditorPage.isActive(pastedHeadingId)).toBe(false);
+});
+
+test('Can select a grid by clicking the gutter space', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create a page with a grid and go to edit mode
+
+	const gridId = getRandomString();
+
+	const gridDefinition = getGridDefinition({
+		id: gridId,
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([gridDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Click the gutter space and check the grid is selected
+
+	await page
+		.locator('.page-editor__col')
+		.nth(1)
+		.click({
+			position: {
+				x: 2,
+				y: 2,
+			},
+		});
+
+	await expect(
+		page.locator('.page-editor__topper__title', {hasText: 'Grid'})
+	).toBeVisible();
 });

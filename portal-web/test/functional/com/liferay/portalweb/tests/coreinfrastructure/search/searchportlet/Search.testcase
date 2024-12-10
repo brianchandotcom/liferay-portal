@@ -1,8 +1,6 @@
 @component-name = "portal-search"
 definition {
 
-	property custom.properties = "feature.flag.LPD-35013=false";
-	property osgi.modules.includes = "wiki";
 	property portal.release = "false";
 	property portal.suite.search.engine = "elasticsearch7,opensearch2";
 	property portal.upstream = "true";
@@ -12,10 +10,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		WikiPortlet.enableWiki();
-
-		Navigator.openURL();
 	}
 
 	tearDown {
@@ -2562,74 +2556,6 @@ definition {
 		SearchResults.viewNoSearchResults(searchTerm = "Content1");
 	}
 
-	@priority = 4
-	test SearchWikiPage {
-		property custom.properties = "feature.flag.LPD-35013=true";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Wiki Test Page");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoAllPagesPG();
-
-		WikiPage.addPG(
-			pageName = "Wiki Test Page",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
-
-		Navigator.openURL();
-
-		SearchPage.searchEmbedded(searchTerm = "Wiki Page Title");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-
-		SearchPage.searchEmbedded(searchTerm = "Wiki Page Content");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-
-		SearchPage.searchEmbedded(searchTerm = "Wiki");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-
-		SearchPage.searchEmbedded(searchTerm = "Page");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-
-		SearchPage.searchEmbedded(searchTerm = "Title");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-
-		SearchPage.searchEmbedded(searchTerm = "Content");
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = "Wiki Page Content",
-			searchAssetTitle = "Wiki Page Title",
-			searchAssetType = "Wiki Page");
-	}
-
 	@priority = 3
 	test SearchWithCustomSortOption {
 		task ("Create 3 Web Content Articles. Add more words to some article's content fields to get them to show up lower in search results") {
@@ -2690,43 +2616,6 @@ definition {
 		task ("Assert the search results are being ordered by title even though the extra words in the articles's content fields would have produced the opposite order") {
 			SearchResults.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
 		}
-	}
-
-	@priority = 4
-	test SearchXSSAsset {
-		property custom.properties = "feature.flag.LPD-35013=true";
-
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
-			wikiPageContent = "<script>alert(123);</script>",
-			wikiPageName = "Wiki Title");
-
-		SearchPage.searchEmbedded(searchTerm = "Title");
-
-		AssertAlertNotPresent();
-
-		SearchResults.viewSearchResults(
-			searchAssetSummary = '''<script>alert(123);</script>''',
-			searchAssetTitle = "Wiki Title",
-			searchAssetType = "Wiki Page");
-
-		var actualScript = '''<script>alert(123);</script>''';
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
-
-		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
-
-		SearchResults.configureSearchResults(disableHighlighting = "true");
-
-		Refresh();
-
-		AssertAlertNotPresent();
-
-		AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
-
-		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 	}
 
 	@description = "This is a use case for LPS-152937."

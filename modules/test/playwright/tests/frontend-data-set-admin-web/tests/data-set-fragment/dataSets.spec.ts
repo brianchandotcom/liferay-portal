@@ -77,6 +77,8 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 				article.articleId
 			);
 		});
+
+		article = null;
 	}
 });
 

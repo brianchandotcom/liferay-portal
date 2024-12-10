@@ -59,20 +59,25 @@ boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryA
 						</c:choose>
 					</portlet:actionURL>
 
-					<liferay-ui:icon
+					<clay:link
+						aria-label='<%= LanguageUtil.get(request, "unsubscribe") %>'
+						borderless="<%= true %>"
+						cssClass="lfr-portal-tooltip"
+						displayType="secondary"
+						href="<%= unsubscribeURL %>"
 						icon="bell-off"
-						linkCssClass="icon-monospaced"
-						markupView="lexicon"
-						message="unsubscribe"
-						url="<%= unsubscribeURL %>"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+						title='<%= LanguageUtil.get(request, "unsubscribe") %>'
+						type="button"
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:icon
-						icon="bell-off"
-						linkCssClass="icon-monospaced"
-						markupView="lexicon"
-						message="subscribed-to-a-parent-folder"
+					<clay:icon
+						aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+						cssClass="icon-monospaced lfr-portal-tooltip mt-0"
+						symbol="bell-off"
+						title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
 					/>
 				</c:otherwise>
 			</c:choose>
@@ -92,12 +97,17 @@ boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryA
 				</c:choose>
 			</portlet:actionURL>
 
-			<liferay-ui:icon
+			<clay:link
+				aria-label='<%= LanguageUtil.get(request, "subscribe") %>'
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip"
+				displayType="secondary"
+				href="<%= subscribeURL %>"
 				icon="bell-on"
-				linkCssClass="icon-monospaced"
-				markupView="lexicon"
-				message="subscribe"
-				url="<%= subscribeURL %>"
+				monospaced="<%= true %>"
+				small="<%= true %>"
+				title='<%= LanguageUtil.get(request, "subscribe") %>'
+				type="button"
 			/>
 		</c:otherwise>
 	</c:choose>

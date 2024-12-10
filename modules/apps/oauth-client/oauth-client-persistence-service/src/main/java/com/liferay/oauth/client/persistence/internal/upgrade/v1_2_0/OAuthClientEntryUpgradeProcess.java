@@ -55,8 +55,8 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"update OAuthClientEntry set metadataCachingTime = " +
-							"? where clientId = ?")) {
+						"update OAuthClientEntry set metadataCachingTime = ? " +
+							"where clientId = ?")) {
 
 				preparedStatement.setLong(1, discoveryEndPointCacheInMillis);
 				preparedStatement.setString(2, openIdConnectClientId);

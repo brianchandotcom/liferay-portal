@@ -46,26 +46,6 @@ public class ClassPathUtil {
 				fileName = fileName.substring(0, index + 4);
 			}
 		}
-		else if (Objects.equals(url.getProtocol(), "wsjar")) {
-
-			// WebSphere uses a custom wsjar protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			String protocol = "file:";
-
-			int index = fileName.indexOf(protocol);
-
-			if (index > -1) {
-				fileName = fileName.substring(protocol.length());
-			}
-
-			index = fileName.indexOf('!');
-
-			if (index > -1) {
-				fileName = fileName.substring(0, index);
-			}
-		}
 		else if (Objects.equals(url.getProtocol(), "zip")) {
 
 			// Weblogic uses a custom zip protocol to represent JAR files

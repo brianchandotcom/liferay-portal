@@ -45,8 +45,7 @@ public class ClassUtilTest {
 		URL.setURLStreamHandlerFactory(
 			protocol -> {
 				if (protocol.equals("vfs") || protocol.equals("zip") ||
-					protocol.equals("bundleresource") ||
-					protocol.equals("wsjar")) {
+					protocol.equals("bundleresource")) {
 
 					return new URLStreamHandler() {
 

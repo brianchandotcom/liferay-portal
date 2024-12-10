@@ -8,8 +8,8 @@ package com.liferay.frontend.data.set.sort;
 /**
  * @author Daniel Sanz
  */
-public interface FDSSortListRegistry {
+public interface FDSSortsRegistry {
 
-	public FDSSortList getFDSSortList(String fdsName);
+	public FDSSorts getFDSSorts(String fdsName);
 
 }

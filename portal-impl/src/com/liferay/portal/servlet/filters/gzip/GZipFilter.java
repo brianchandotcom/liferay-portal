@@ -30,13 +30,13 @@ public class GZipFilter extends BasePortalFilter {
 	public GZipFilter() {
 
 		// The compression filter will work on JBoss, Tomcat, WebLogic,
-		// and WebSphere, but may break on other servers
+		// but may break on other servers
 
 		boolean filterEnabled = false;
 
 		if (super.isFilterEnabled() &&
 			(ServerDetector.isJBoss() || ServerDetector.isTomcat() ||
-			 ServerDetector.isWebLogic() || ServerDetector.isWebSphere())) {
+			 ServerDetector.isWebLogic())) {
 
 			filterEnabled = true;
 		}

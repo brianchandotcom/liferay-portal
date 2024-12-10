@@ -329,10 +329,6 @@
 		<filter-name>WebLogic Include Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeFilter</filter-class>
 	</filter>
-	<filter>
-		<filter-name>WebSphere Async Servlet Request Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.websphere.WebSphereAsyncServletRequestFilter</filter-class>
-	</filter>
 	<filter-mapping>
 		<filter-name>Ignore Filter - FTL</filter-name>
 		<url-pattern>*.ftl</url-pattern>
@@ -828,12 +824,5 @@
 		<filter-name>WebLogic Include Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>INCLUDE</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>WebSphere Async Servlet Request Filter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 </web-app>

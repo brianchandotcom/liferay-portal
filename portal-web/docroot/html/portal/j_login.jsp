@@ -8,11 +8,7 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%
-String jSecurityCheck = "j_security_check";
-
-if (!ServerDetector.isWebSphere()) {
-	jSecurityCheck = themeDisplay.getPathMain() + "/portal/" + jSecurityCheck;
-}
+String jSecurityCheck = themeDisplay.getPathMain() + "/portal/j_security_check";
 
 String jUserName = (String)session.getAttribute("j_username");
 String jPassword = (String)session.getAttribute("j_password");

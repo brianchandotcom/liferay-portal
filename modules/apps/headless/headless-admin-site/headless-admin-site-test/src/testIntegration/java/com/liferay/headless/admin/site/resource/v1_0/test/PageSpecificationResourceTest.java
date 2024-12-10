@@ -278,6 +278,17 @@ public class PageSpecificationResourceTest
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext),
 			serviceContext);
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
+			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			serviceContext);
 	}
 
 	@Ignore

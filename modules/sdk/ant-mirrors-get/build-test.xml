@@ -23,32 +23,12 @@
 		<mirrors-get
 			dest="test"
 			force="true"
-			src="http://mirrors.lax.liferay.com/dtb5pzswcit1e.cloudfront.net/product_files/Pivotal-tc-Server/pivotal-tc-server-developer-3.1.2.RELEASE.zip"
-			trylocalnetwork="true"
-			verbose="true"
-		/>
-	</target>
-
-	<target name="test-3">
-		<mirrors-get
-			dest="test"
-			force="true"
-			src="http://dtb5pzswcit1e.cloudfront.net/product_files/Pivotal-tc-Server/pivotal-tc-server-developer-3.1.2.RELEASE.zip"
-			trylocalnetwork="false"
-			verbose="true"
-		/>
-	</target>
-
-	<target name="test-4">
-		<mirrors-get
-			dest="test"
-			force="true"
 			src="abc"
 			verbose="true"
 		/>
 	</target>
 
-	<target name="test-5">
+	<target name="test-3">
 		<mirrors-get
 			dest="mysql-connector-j-8.3.0.jar"
 			force="false"
@@ -58,7 +38,7 @@
 		/>
 	</target>
 
-	<target name="test-6">
+	<target name="test-4">
 		<mirrors-get
 			dest="liferay-portal-tomcat-master-private.tar.gz"
 			force="true"

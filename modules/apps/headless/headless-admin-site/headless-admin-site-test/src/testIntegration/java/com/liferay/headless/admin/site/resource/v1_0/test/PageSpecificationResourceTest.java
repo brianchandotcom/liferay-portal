@@ -1450,6 +1450,23 @@ public class PageSpecificationResourceTest
 				}
 			});
 
+		_assertProblemException(
+			() ->
+				pageSpecificationResource.
+					patchSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						draftLayout.getExternalReferenceCode(),
+						new ContentPageSpecification() {
+							{
+								setPageExperiences(
+									() -> ArrayUtil.append(
+										contentPageSpecification.
+											getPageExperiences(),
+										new PageExperience()));
+								setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+							}
+						}));
+
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithSettings(
 			contentPageSpecification, serviceContext,
 			settings -> _getContentPageSpecification(settings));

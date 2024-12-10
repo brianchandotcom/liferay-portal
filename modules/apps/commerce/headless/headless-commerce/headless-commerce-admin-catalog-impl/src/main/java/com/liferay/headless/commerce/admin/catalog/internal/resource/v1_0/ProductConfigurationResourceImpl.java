@@ -484,7 +484,7 @@ public class ProductConfigurationResourceImpl
 						contextCompany.getCompanyId());
 
 			if (cpDefinition == null) {
-				_cpDefinitionService.getCPDefinition(classPK);
+				cpDefinition = _cpDefinitionService.getCPDefinition(classPK);
 			}
 
 			classPK = cpDefinition.getCPDefinitionId();

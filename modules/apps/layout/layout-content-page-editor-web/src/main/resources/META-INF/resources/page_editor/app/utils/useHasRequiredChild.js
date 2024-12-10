@@ -15,7 +15,7 @@ import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from './cache';
 import hasRequiredInputChild from './hasRequiredInputChild';
-import hasVisibleSubmitChild from './hasVisibleSubmitChild';
+import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
 import useCache from './useCache';
 
 export default function useHasRequiredChild(itemId) {
@@ -51,11 +51,11 @@ export default function useHasRequiredChild(itemId) {
 		}
 
 		return (
-			hasVisibleSubmitChild(
-				itemId,
-				globalContext,
-				layoutDataRef.current,
+			hasVisibleFormButtonChild(
 				fragmentEntryLinksRef.current,
+				itemId,
+				layoutDataRef.current,
+				'submit',
 				selectedViewportSize
 			) ||
 			hasRequiredInputChild({

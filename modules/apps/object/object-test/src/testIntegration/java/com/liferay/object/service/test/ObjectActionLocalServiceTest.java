@@ -2236,7 +2236,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			objectAction2.getLabelMap());
 
-		// Label map null
+		// Label map is null
 
 		ObjectAction objectAction3 = _addObjectAction(
 			StringPool.BLANK, null, RandomTestUtil.randomString(),

@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -45,8 +46,17 @@ public class PageContainerDefinitionDTOConverter
 				setContentVisibility(
 					containerStyledLayoutStructureItem::getContentVisibility);
 				setCssClasses(
-					() -> ArrayUtil.toStringArray(
-						containerStyledLayoutStructureItem.getCssClasses()));
+					() -> {
+						if (SetUtil.isEmpty(
+								containerStyledLayoutStructureItem.
+									getCssClasses())) {
+
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(
+							containerStyledLayoutStructureItem.getCssClasses());
+					});
 				setCustomCSS(containerStyledLayoutStructureItem::getCustomCSS);
 				setHtmlProperties(
 					() -> _toHtmlProperties(

@@ -3690,13 +3690,30 @@ public class ObjectEntryLocalServiceImpl
 						dynamicObjectDefinitionLocalizationTable.getColumn(
 							objectField.getDBColumnName());
 
+					Map<String, Serializable> insertedLocalizedValue =
+						new HashMap<>(1);
+
 					_setColumn(
-						columnNames, index++, new HashMap<>(),
+						columnNames, index++, insertedLocalizedValue,
 						preparedStatement, column.getSQLType(),
 						_getLocalizedValue(
 							languageId,
 							(Map<String, String>)values.get(
 								objectField.getI18nObjectFieldName())));
+
+					Map<String, Serializable> localizedValues =
+						(Map<String, Serializable>)insertedValues.getOrDefault(
+							column.getName() + "i18n", new HashMap<>());
+
+					localizedValues.put(
+						languageId,
+						insertedLocalizedValue.get(
+							StringUtil.removeLast(
+								column.getName(), StringPool.UNDERLINE)));
+
+					_putLocalizedValues(
+						column.getName(), (Serializable)localizedValues,
+						insertedValues);
 				}
 
 				preparedStatement.addBatch();
@@ -3706,13 +3723,6 @@ public class ObjectEntryLocalServiceImpl
 
 			FinderCacheUtil.clearDSLQueryCache(
 				dynamicObjectDefinitionLocalizationTable.getTableName());
-
-			for (ObjectField objectField : objectFields) {
-				_putLocalizedValues(
-					objectField.getDBColumnName(),
-					values.get(objectField.getDBColumnName() + "i18n"),
-					insertedValues);
-			}
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

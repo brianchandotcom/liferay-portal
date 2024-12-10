@@ -154,7 +154,7 @@ function FormOptions({item, onValueSelect}) {
 						onValueSelect={onValueSelect}
 					/>
 
-					{formIsMapped(item) && Liferay.FeatureFlags['LPD-10727'] ? (
+					{formIsMapped(item) ? (
 						<FormMultistepOptions
 							item={item}
 							onValueSelect={onValueSelect}

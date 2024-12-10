@@ -94,16 +94,12 @@ public class FormLayoutStructureItemMapper
 													formStyledLayoutStructureItem));
 										}
 
-										if (FeatureFlagManagerUtil.isEnabled(
-												"LPD-10727")) {
-
-											setFormType(
-												() -> _toFormType(
-													formStyledLayoutStructureItem));
-											setNumberOfSteps(
-												formStyledLayoutStructureItem::
-													getNumberOfSteps);
-										}
+										setFormType(
+											() -> _toFormType(
+												formStyledLayoutStructureItem));
+										setNumberOfSteps(
+											formStyledLayoutStructureItem::
+												getNumberOfSteps);
 									}
 								});
 							setFragmentStyle(

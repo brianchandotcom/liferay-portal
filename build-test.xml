@@ -10619,6 +10619,21 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="enable-glowroot-for-tomcat">
+		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+GLOWROOT_OPTS="-javaagent:${CATALINA_HOME}/../glowroot/glowroot.jar -Dglowroot.enabled=true"
+
+CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</target>
+
 	<target name="execute-command-from-gogo-shell">
 		<set-app-server-properties
 			app.server.bundle.index="${bundle.index}"

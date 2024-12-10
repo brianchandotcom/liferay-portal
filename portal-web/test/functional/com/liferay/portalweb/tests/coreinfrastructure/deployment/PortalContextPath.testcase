@@ -132,6 +132,12 @@ definition {
 		property test.run.type = "single";
 
 		task ("Visit Glowroot page with non root context") {
+			AntCommands.runCommand("build-test.xml", "stop-app-server");
+
+			AntCommands.runCommand("build-test.xml", "enable-glowroot-for-tomcat");
+
+			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
+
 			SignIn.signInSpecificURL(
 				url = "http://localhost:8080/liferay",
 				userEmailAddress = "test@liferay.com",

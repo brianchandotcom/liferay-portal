@@ -23,100 +23,115 @@ const ProjectUsage = () => {
 		<div className="container-xl cp-project-usage-page m-0 p-0">
 			<h2 className="mb-4">{i18n.translate('project-usage-metrics')}</h2>
 
-			{!displayUsage && !isLoading && (
-				<ContactBanner
-					className="mb-5"
-					description={i18n.translate(
-						'project-usage-metrics-are-available-for-liferay-saas-customers-on-liferays-latest-billing-model'
-					)}
-					title={i18n.translate(
-						'this-project-is-on-a-legacy-billing-model'
-					)}
+			{isLoading && (
+				<span
+					aria-hidden="true"
+					className="loading-animation loading-animation-seconday loading-animation-sm mt-10"
 				/>
 			)}
 
-			<div className="position-relative">
-				{!displayUsage && (
-					<div className="fade-panel position-absolute" />
-				)}
-
-				<ProjectUsageSection
-					className="mb-5"
-					isLoading={isLoading}
-					title={i18n.translate('sites-and-users')}
-				>
-					{usageData?.siteAndUsers.map((chartData, index) => (
-						<CardContainer
-							displayUsage={displayUsage}
-							infoButtonText={chartData.infoText}
-							key={`${chartData.title}-${index}`}
-						>
-							<ProgressBarContent
-								displayUsage={displayUsage}
-								maxCount={chartData?.maxCount}
-								title={chartData?.title}
-								usedCount={chartData?.usedCount}
-							/>
-						</CardContainer>
-					))}
-				</ProjectUsageSection>
-
-				<ProjectUsageSection
-					className="mb-5"
-					isLoading={isLoading}
-					title={i18n.translate('resource-usage')}
-				>
-					{usageData?.resourceUsage.map((chartData, index) => (
-						<CardContainer
-							displayUsage={displayUsage}
-							infoButtonText={chartData.infoText}
-							key={`${chartData.title}-${index}`}
-						>
-							<ChartContent
-								dataSizeUnits={chartData.dataSizeUnits}
-								displayUsage={displayUsage}
-								maxCount={chartData.maxCount}
-								maxCountText={chartData.maxCountText}
-								title={chartData.title}
-								usedCount={chartData.usedCount}
-							/>
-						</CardContainer>
-					))}
-				</ProjectUsageSection>
-
-				{displayUsage && (
-					<>
-						{!!addOns.length && (
-							<ProjectUsageSection
-								className="mb-5"
-								contentSkeleton={2}
-								isLoading={isLoading}
-								title={i18n.translate('add-ons')}
-							>
-								{addOns?.map((addOn, index) => (
-									<CardContainer
-										className="align-items-center d-flex p-4"
-										displayUsage={displayUsage}
-										infoButtonText={addOn.infoText}
-										key={`${addOn.title}-${index}`}
-									>
-										<AddOnContent title={addOn.title} />
-									</CardContainer>
-								))}
-							</ProjectUsageSection>
-						)}
-
+			{!isLoading && (
+				<>
+					{!displayUsage && (
 						<ContactBanner
+							className="mb-5"
 							description={i18n.translate(
-								'dont-let-resource-limits-put-your-project-at-risk'
+								'project-usage-metrics-are-available-for-liferay-saas-customers-on-liferays-latest-billing-model'
 							)}
 							title={i18n.translate(
-								'need-more-project-resources'
+								'this-project-is-on-a-legacy-billing-model'
 							)}
 						/>
-					</>
-				)}
-			</div>
+					)}
+
+					<div className="position-relative">
+						{!displayUsage && (
+							<div className="fade-panel position-absolute" />
+						)}
+
+						<ProjectUsageSection
+							className="mb-5"
+							title={i18n.translate('sites-and-users')}
+						>
+							{usageData?.siteAndUsers.map((chartData, index) => (
+								<CardContainer
+									displayUsage={displayUsage}
+									infoButtonText={chartData.infoText}
+									key={`${chartData.title}-${index}`}
+								>
+									<ProgressBarContent
+										displayUsage={displayUsage}
+										maxCount={chartData?.maxCount}
+										title={chartData?.title}
+										usedCount={chartData?.usedCount}
+									/>
+								</CardContainer>
+							))}
+						</ProjectUsageSection>
+
+						<ProjectUsageSection
+							className="mb-5"
+							title={i18n.translate('resource-usage')}
+						>
+							{usageData?.resourceUsage.map(
+								(chartData, index) => (
+									<CardContainer
+										displayUsage={displayUsage}
+										infoButtonText={chartData.infoText}
+										key={`${chartData.title}-${index}`}
+									>
+										<ChartContent
+											dataSizeUnits={
+												chartData.dataSizeUnits
+											}
+											displayUsage={displayUsage}
+											maxCount={chartData.maxCount}
+											maxCountText={
+												chartData.maxCountText
+											}
+											title={chartData.title}
+											usedCount={chartData.usedCount}
+										/>
+									</CardContainer>
+								)
+							)}
+						</ProjectUsageSection>
+
+						{displayUsage && (
+							<>
+								{!!addOns.length && (
+									<ProjectUsageSection
+										className="mb-5"
+										title={i18n.translate('add-ons')}
+									>
+										{addOns?.map((addOn, index) => (
+											<CardContainer
+												className="align-items-center d-flex p-4"
+												displayUsage={displayUsage}
+												infoButtonText={addOn.infoText}
+												key={`${addOn.title}-${index}`}
+											>
+												<AddOnContent
+													title={addOn.title}
+												/>
+											</CardContainer>
+										))}
+									</ProjectUsageSection>
+								)}
+
+								<ContactBanner
+									description={i18n.translate(
+										'dont-let-resource-limits-put-your-project-at-risk'
+									)}
+									title={i18n.translate(
+										'need-more-project-resources'
+									)}
+								/>
+							</>
+						)}
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

@@ -1291,15 +1291,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectDefinition1.isApproved() == objectDefinition2.isApproved()) {
 			if (objectDefinition1.isApproved()) {
-				if (!objectDefinition1.isRootNode()) {
-					ObjectDefinition rootObjectDefinition1 =
-						_objectDefinitionPersistence.findByPrimaryKey(
-							objectDefinition1.getRootObjectDefinitionId());
-
-					objectDefinitionLocalService.deployObjectDefinition(
-						rootObjectDefinition1);
-				}
-
 				objectDefinition1.setPreviousRESTContextPath(
 					objectDefinition1PreviousRESTContextPath);
 
@@ -1352,6 +1343,15 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinitionLocalService.deployObjectDefinition(
 						nodeObjectDefinition);
 				}
+			}
+
+			ObjectDefinition rootObjectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinition1.getRootObjectDefinitionId());
+
+			if (rootObjectDefinition1.isApproved()) {
+				objectDefinitionLocalService.deployObjectDefinition(
+					rootObjectDefinition1);
 			}
 		}
 		else {

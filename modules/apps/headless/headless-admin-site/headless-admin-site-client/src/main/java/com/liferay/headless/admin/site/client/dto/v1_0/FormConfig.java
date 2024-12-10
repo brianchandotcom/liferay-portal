@@ -71,6 +71,56 @@ public class FormConfig implements Cloneable, Serializable {
 
 	protected Object formSuccessSubmissionResult;
 
+	public FormType getFormType() {
+		return formType;
+	}
+
+	public String getFormTypeAsString() {
+		if (formType == null) {
+			return null;
+		}
+
+		return formType.toString();
+	}
+
+	public void setFormType(FormType formType) {
+		this.formType = formType;
+	}
+
+	public void setFormType(
+		UnsafeSupplier<FormType, Exception> formTypeUnsafeSupplier) {
+
+		try {
+			formType = formTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FormType formType;
+
+	public Integer getNumberOfSteps() {
+		return numberOfSteps;
+	}
+
+	public void setNumberOfSteps(Integer numberOfSteps) {
+		this.numberOfSteps = numberOfSteps;
+	}
+
+	public void setNumberOfSteps(
+		UnsafeSupplier<Integer, Exception> numberOfStepsUnsafeSupplier) {
+
+		try {
+			numberOfSteps = numberOfStepsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfSteps;
+
 	@Override
 	public FormConfig clone() throws CloneNotSupportedException {
 		return (FormConfig)super.clone();
@@ -100,6 +150,39 @@ public class FormConfig implements Cloneable, Serializable {
 
 	public String toString() {
 		return FormConfigSerDes.toJSON(this);
+	}
+
+	public static enum FormType {
+
+		MULTISTEP("Multistep"), SIMPLE("Simple");
+
+		public static FormType create(String value) {
+			for (FormType formType : values()) {
+				if (Objects.equals(formType.getValue(), value) ||
+					Objects.equals(formType.name(), value)) {
+
+					return formType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FormType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

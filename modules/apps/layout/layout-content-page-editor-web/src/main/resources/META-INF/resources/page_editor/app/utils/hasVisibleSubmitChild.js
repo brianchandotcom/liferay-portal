@@ -14,22 +14,6 @@ export default function hasVisibleSubmitChild(
 	fragmentEntryLinks,
 	viewportSize
 ) {
-	if (!Liferay.FeatureFlags['LPD-10727']) {
-		const element = document.querySelector(
-			`.${getLayoutDataItemUniqueClassName(itemId)}`
-		);
-
-		if (!element) {
-			return false;
-		}
-
-		return Array.from(
-			element.querySelectorAll(
-				'input[type=submit], button[type=submit], button:not([type])'
-			)
-		).some((buttonElement) => isVisible(buttonElement, globalContext));
-	}
-
 	return hasVisibleFormButtonChild({
 		fragmentEntryLinks,
 		itemId,

@@ -289,22 +289,9 @@ export function FormInputGeneralPanel({item}) {
 				)
 				.flatMap((fieldSet) => fieldSet.fields) ?? [];
 
-		if (
-			Liferay.FeatureFlags['LPD-10727'] &&
-			allowedInputTypes?.includes('stepper')
-		) {
+		if (allowedInputTypes?.includes('stepper')) {
 			return fieldSetsWithoutLabel.filter(
 				(field) => field.name !== 'numberOfSteps'
-			);
-		}
-
-		if (
-			!Liferay.FeatureFlags['LPD-10727'] &&
-			fragmentEntryLinkRef.current?.fragmentEntryKey ===
-				'INPUTS-submit-button'
-		) {
-			return fieldSetsWithoutLabel.filter(
-				(field) => field.name !== 'type'
 			);
 		}
 

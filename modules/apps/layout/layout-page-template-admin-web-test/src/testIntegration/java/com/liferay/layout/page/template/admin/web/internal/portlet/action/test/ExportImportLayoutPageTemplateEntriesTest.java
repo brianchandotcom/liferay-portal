@@ -560,7 +560,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		_validateImportExport(expectedFile, inputFile);
 	}
 
-	@FeatureFlags("LPD-10727")
 	@Test
 	public void testImportExportLayoutPageTemplateEntryFormSteps()
 		throws Exception {

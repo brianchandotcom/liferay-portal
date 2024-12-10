@@ -111,7 +111,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		boolean count, VerifiableResourcedModel verifiableResourcedModel,
 		Role role) {
 
-		StringBundler sb = new StringBundler(36);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("select ");
 
@@ -130,20 +130,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			if (verifiableResourcedModel instanceof
 					LayoutVerifiableResourcedModel) {
 
-				LayoutVerifiableResourcedModel layoutVerifiableResourcedModel =
-					(LayoutVerifiableResourcedModel)verifiableResourcedModel;
-
-				sb.append(", ");
-				sb.append(layoutVerifiableResourcedModel.getTableName());
-				sb.append(".");
-				sb.append(
-					layoutVerifiableResourcedModel.getGroupIdColumnName());
-				sb.append(", ");
-				sb.append(layoutVerifiableResourcedModel.getTableName());
-				sb.append(".");
-				sb.append(
-					layoutVerifiableResourcedModel.
-						getPrivateLayoutColumnName());
+				sb.append(", Layout.groupId, Layout.privateLayout");
 			}
 		}
 
@@ -221,19 +208,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					if (verifiableResourcedModel instanceof
 							LayoutVerifiableResourcedModel) {
 
-						LayoutVerifiableResourcedModel
-							layoutVerifiableResourcedModel =
-								(LayoutVerifiableResourcedModel)
-									verifiableResourcedModel;
-
 						values = new Object[] {
 							values[0], values[1],
-							resultSet.getLong(
-								layoutVerifiableResourcedModel.
-									getGroupIdColumnName()),
-							resultSet.getBoolean(
-								layoutVerifiableResourcedModel.
-									getPrivateLayoutColumnName())
+							resultSet.getLong("Layout.groupId"),
+							resultSet.getBoolean("Layout.privateLayout")
 						};
 					}
 

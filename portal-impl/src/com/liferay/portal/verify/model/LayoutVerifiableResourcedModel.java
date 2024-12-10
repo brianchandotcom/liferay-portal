@@ -15,10 +15,6 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 public class LayoutVerifiableResourcedModel
 	implements VerifiableResourcedModel {
 
-	public String getGroupIdColumnName() {
-		return "groupId";
-	}
-
 	@Override
 	public String getModelName() {
 		return Layout.class.getName();
@@ -27,10 +23,6 @@ public class LayoutVerifiableResourcedModel
 	@Override
 	public String getPrimaryKeyColumnName() {
 		return "plid";
-	}
-
-	public String getPrivateLayoutColumnName() {
-		return "privateLayout";
 	}
 
 	@Override

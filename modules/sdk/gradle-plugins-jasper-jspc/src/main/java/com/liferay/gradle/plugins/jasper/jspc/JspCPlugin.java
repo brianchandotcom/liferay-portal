@@ -85,7 +85,7 @@ public class JspCPlugin implements Plugin<Project> {
 			"9.0.97");
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "org.glassfish.web",
-			"javax.servlet.jsp.jstl", "1.2.3");
+			"javax.servlet.jsp.jstl", "1.2.3", false);
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "org.osgi", "osgi.core", "6.0.0");
 

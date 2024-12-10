@@ -97,13 +97,13 @@ public class CommerceInventoryDisplayContext {
 			_cpRequestHelper.getRequest(),
 			"commerceInventoryReplenishmentItemId");
 
-		if (commerceInventoryReplenishmentItemId > 0) {
-			return _commerceInventoryReplenishmentItemService.
-				getCommerceInventoryReplenishmentItem(
-					commerceInventoryReplenishmentItemId);
+		if (commerceInventoryReplenishmentItemId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceInventoryReplenishmentItemService.
+			getCommerceInventoryReplenishmentItem(
+				commerceInventoryReplenishmentItemId);
 	}
 
 	public long getCommerceInventoryReplenishmentItemId()
@@ -126,13 +126,12 @@ public class CommerceInventoryDisplayContext {
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			_cpRequestHelper.getRequest(), "commerceInventoryWarehouseItemId");
 
-		if (commerceInventoryWarehouseItemId > 0) {
-			return _commerceInventoryWarehouseItemService.
-				getCommerceInventoryWarehouseItem(
-					commerceInventoryWarehouseItemId);
+		if (commerceInventoryWarehouseItemId <= 0) {
+			return null;
 		}
 
-		return null;
+		return _commerceInventoryWarehouseItemService.
+			getCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
 	public long getCommerceInventoryWarehouseItemId() throws PortalException {

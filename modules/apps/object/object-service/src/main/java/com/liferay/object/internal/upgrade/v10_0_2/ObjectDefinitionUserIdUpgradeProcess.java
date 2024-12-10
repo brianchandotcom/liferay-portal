@@ -6,6 +6,7 @@
 package com.liferay.object.internal.upgrade.v10_0_2;
 
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUserIdUpgradeProcess;
 
 /**
  * @author Igor Costa

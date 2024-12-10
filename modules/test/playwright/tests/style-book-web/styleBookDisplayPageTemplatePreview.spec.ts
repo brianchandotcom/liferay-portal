@@ -137,7 +137,9 @@ test('Add a heading fragment and check that the display page templates are shown
 			expect(page.getByText('Saved')).toBeVisible();
 
 			const heading = page
-				.frameLocator('iframe')
+				.frameLocator('iframe.style-book-editor__page-preview-frame')
+				.locator('.lfr-layout-structure-item-basic-component-heading')
+				.first()
 				.getByRole('heading', {name: 'Heading Example'});
 
 			const fragmentColor = await heading.evaluate((element) => {

@@ -758,7 +758,7 @@ public class JournalFolderServiceHttp {
 	public static java.util.List<Object> getFoldersAndArticles(
 		HttpPrincipal httpPrincipal, long groupId, long userId, long folderId,
 		long ddmStructureId, int status, java.util.Locale locale,
-		int[] excludedStatus, int start, int end,
+		int[] excludedStatuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
 
 		try {
@@ -768,7 +768,7 @@ public class JournalFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, folderId, ddmStructureId, status,
-				locale, excludedStatus, start, end, orderByComparator);
+				locale, excludedStatuses, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -956,7 +956,7 @@ public class JournalFolderServiceHttp {
 
 	public static int getFoldersAndArticlesCount(
 		HttpPrincipal httpPrincipal, long groupId, long userId, long folderId,
-		long ddmStructureId, int[] excludedStatus, int status) {
+		long ddmStructureId, int[] excludedStatuses, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -965,7 +965,7 @@ public class JournalFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, userId, folderId, ddmStructureId,
-				excludedStatus, status);
+				excludedStatuses, status);
 
 			Object returnObj = null;
 

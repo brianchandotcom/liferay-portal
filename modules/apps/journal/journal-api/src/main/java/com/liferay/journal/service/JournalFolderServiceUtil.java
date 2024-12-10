@@ -175,12 +175,12 @@ public class JournalFolderServiceUtil {
 
 	public static List<Object> getFoldersAndArticles(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int status, java.util.Locale locale, int[] excludedStatus, int start,
+		int status, java.util.Locale locale, int[] excludedStatuses, int start,
 		int end, OrderByComparator<?> orderByComparator) {
 
 		return getService().getFoldersAndArticles(
 			groupId, userId, folderId, ddmStructureId, status, locale,
-			excludedStatus, start, end, orderByComparator);
+			excludedStatuses, start, end, orderByComparator);
 	}
 
 	public static int getFoldersAndArticlesCount(
@@ -218,10 +218,11 @@ public class JournalFolderServiceUtil {
 
 	public static int getFoldersAndArticlesCount(
 		long groupId, long userId, long folderId, long ddmStructureId,
-		int[] excludedStatus, int status) {
+		int[] excludedStatuses, int status) {
 
 		return getService().getFoldersAndArticlesCount(
-			groupId, userId, folderId, ddmStructureId, excludedStatus, status);
+			groupId, userId, folderId, ddmStructureId, excludedStatuses,
+			status);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId) {

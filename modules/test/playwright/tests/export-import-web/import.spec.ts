@@ -13,6 +13,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -31,6 +32,9 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	documentLibraryPagesTest,
+	featureFlagsTest({
+		'LPD-35013': true,
+	}),
 	productMenuPageTest,
 	exportImportPagesTest,
 	stagingPageTest,

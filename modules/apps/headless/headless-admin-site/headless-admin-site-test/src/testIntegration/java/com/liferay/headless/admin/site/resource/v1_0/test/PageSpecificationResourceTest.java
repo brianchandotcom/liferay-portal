@@ -442,27 +442,28 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertContentPageSpecification(
-		ContentPageSpecification contentPageSpecification,
-		ContentPageSpecification curContentPageSpecification) {
+		ContentPageSpecification expectedContentPageSpecification,
+		ContentPageSpecification actualContentPageSpecification) {
 
-		PageExperience[] pageExperiences =
-			contentPageSpecification.getPageExperiences();
-		PageExperience[] curPageExperiences =
-			curContentPageSpecification.getPageExperiences();
+		PageExperience[] expectedPageExperiences =
+			expectedContentPageSpecification.getPageExperiences();
+		PageExperience[] actualPageExperiences =
+			actualContentPageSpecification.getPageExperiences();
 
-		if (ArrayUtil.isEmpty(pageExperiences)) {
-			Assert.assertTrue(ArrayUtil.isEmpty(curPageExperiences));
+		if (ArrayUtil.isEmpty(expectedPageExperiences)) {
+			Assert.assertTrue(ArrayUtil.isEmpty(actualPageExperiences));
 
 			return;
 		}
 
 		Assert.assertEquals(
-			Arrays.toString(curPageExperiences), pageExperiences.length,
-			curPageExperiences.length);
+			Arrays.toString(actualPageExperiences),
+			expectedPageExperiences.length, actualPageExperiences.length);
 
-		for (PageExperience curPageExperience : curPageExperiences) {
+		for (PageExperience curPageExperience : actualPageExperiences) {
 			PageExperience pageExperience = _getPageExperience(
-				curPageExperience.getExternalReferenceCode(), pageExperiences);
+				curPageExperience.getExternalReferenceCode(),
+				expectedPageExperiences);
 
 			_assertPageElements(
 				curPageExperience.getPageElements(),
@@ -511,23 +512,24 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertPageElements(
-		PageElement[] curPageElements, PageElement[] pageElements) {
+		PageElement[] expectedPageElements, PageElement[] actualPageElements) {
 
-		if (ArrayUtil.isEmpty(pageElements)) {
-			Assert.assertTrue(ArrayUtil.isEmpty(curPageElements));
+		if (ArrayUtil.isEmpty(expectedPageElements)) {
+			Assert.assertTrue(ArrayUtil.isEmpty(actualPageElements));
 
 			return;
 		}
 
-		Assert.assertTrue(ArrayUtil.isNotEmpty(curPageElements));
+		Assert.assertTrue(ArrayUtil.isNotEmpty(actualPageElements));
 
 		Assert.assertEquals(
-			Arrays.toString(curPageElements), pageElements.length,
-			curPageElements.length);
+			Arrays.toString(actualPageElements), expectedPageElements.length,
+			actualPageElements.length);
 
-		for (PageElement curPageElement : curPageElements) {
+		for (PageElement curPageElement : actualPageElements) {
 			PageElement pageElement = _getPageElement(
-				curPageElement.getExternalReferenceCode(), pageElements);
+				curPageElement.getExternalReferenceCode(),
+				expectedPageElements);
 
 			Assert.assertEquals(
 				pageElement.getParentExternalReferenceCode(),
@@ -539,8 +541,8 @@ public class PageSpecificationResourceTest
 				pageElement.getType(), curPageElement.getType());
 
 			_assertPageElements(
-				pageElement.getPageElements(),
-				curPageElement.getPageElements());
+				curPageElement.getPageElements(),
+				pageElement.getPageElements());
 		}
 	}
 
@@ -710,34 +712,38 @@ public class PageSpecificationResourceTest
 		equals(contentPageSpecification, putPageSpecification);
 	}
 
-	private void _assertSettings(Settings curSettings, Settings settings) {
-		if (settings == null) {
-			Assert.assertNull(curSettings);
+	private void _assertSettings(
+		Settings expectedSettings, Settings actualSettings) {
+
+		if (expectedSettings == null) {
+			Assert.assertNull(actualSettings);
 
 			return;
 		}
 
 		Assert.assertEquals(
-			settings.getColorSchemeName(), curSettings.getColorSchemeName());
-		Assert.assertEquals(settings.getCss(), curSettings.getCss());
+			expectedSettings.getColorSchemeName(),
+			actualSettings.getColorSchemeName());
+		Assert.assertEquals(expectedSettings.getCss(), actualSettings.getCss());
 		Assert.assertEquals(
-			settings.getJavascript(), curSettings.getJavascript());
+			expectedSettings.getJavascript(), actualSettings.getJavascript());
 
 		Assert.assertTrue(
 			Objects.deepEquals(
-				settings.getMasterPageItemExternalReference(),
-				curSettings.getMasterPageItemExternalReference()));
+				expectedSettings.getMasterPageItemExternalReference(),
+				actualSettings.getMasterPageItemExternalReference()));
 
 		Assert.assertTrue(
 			Objects.deepEquals(
-				settings.getStyleBookItemExternalReference(),
-				curSettings.getStyleBookItemExternalReference()));
+				expectedSettings.getStyleBookItemExternalReference(),
+				actualSettings.getStyleBookItemExternalReference()));
 
 		Assert.assertEquals(
-			settings.getThemeName(), curSettings.getThemeName());
+			expectedSettings.getThemeName(), actualSettings.getThemeName());
 
-		Map<String, String> themeSettings = settings.getThemeSettings();
-		Map<String, String> curThemeSettings = curSettings.getThemeSettings();
+		Map<String, String> themeSettings = expectedSettings.getThemeSettings();
+		Map<String, String> curThemeSettings =
+			actualSettings.getThemeSettings();
 
 		if (MapUtil.isEmpty(themeSettings)) {
 			Assert.assertTrue(
@@ -767,13 +773,13 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertWidgetPageSpecification(
-		WidgetPageSpecification curWidgetPageSpecification,
-		WidgetPageSpecification widgetPageSpecification) {
+		WidgetPageSpecification expectedWidgetPageSpecification,
+		WidgetPageSpecification actualWidgetPageSpecification) {
 
 		Assert.assertTrue(
 			Objects.deepEquals(
-				widgetPageSpecification.getWidgetPageSections(),
-				curWidgetPageSpecification.getWidgetPageSections()));
+				expectedWidgetPageSpecification.getWidgetPageSections(),
+				actualWidgetPageSpecification.getWidgetPageSections()));
 	}
 
 	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(

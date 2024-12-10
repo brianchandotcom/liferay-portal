@@ -144,6 +144,7 @@ const ActivableTopperEmpty = ({
 	isHovered,
 	item,
 	itemElement,
+	shouldIgnoreEvents,
 }) => {
 	const containerRef = useRef(null);
 
@@ -194,6 +195,10 @@ const ActivableTopperEmpty = ({
 						}
 					),
 					onClick: (event) => {
+						if (shouldIgnoreEvents(event)) {
+							return;
+						}
+
 						event.stopPropagation();
 
 						selectItem(item.itemId, {
@@ -201,6 +206,10 @@ const ActivableTopperEmpty = ({
 						});
 					},
 					onMouseLeave: (event) => {
+						if (shouldIgnoreEvents(event)) {
+							return;
+						}
+
 						event.stopPropagation();
 
 						if (isHovered) {
@@ -210,6 +219,10 @@ const ActivableTopperEmpty = ({
 						}
 					},
 					onMouseOver: (event) => {
+						if (shouldIgnoreEvents(event)) {
+							return;
+						}
+
 						event.stopPropagation();
 
 						hoverItem(item.itemId, {

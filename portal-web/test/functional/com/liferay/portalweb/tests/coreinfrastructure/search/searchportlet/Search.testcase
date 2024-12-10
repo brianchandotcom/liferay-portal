@@ -1295,7 +1295,7 @@ definition {
 	@description = "This is a use case for LPS-90078."
 	@priority = 4
 	test ModifyPaginationPortalProperties {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,wildfly";
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
 		property custom.properties = "search.container.page.default.delta=1${line.separator}feature.flag.LPD-35013=true";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";

@@ -1634,6 +1634,8 @@ components:
                         - $ref: "#/components/schemas/PageContainerDefinition"
                         - $ref: "#/components/schemas/PageDropZoneDefinition"
                         - $ref: "#/components/schemas/PageFormDefinition"
+                        - $ref: "#/components/schemas/PageFormStepContainerDefinition"
+                        - $ref: "#/components/schemas/PageFormStepDefinition"
                         - $ref: "#/components/schemas/PageFragmentCompositionInstanceDefinition"
                         - $ref: "#/components/schemas/PageFragmentDropZoneDefinition"
                         - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
@@ -1813,6 +1815,83 @@ components:
                     description:
                         The custom name of of a page form.
                     type: string
+            type: object
+        PageFormStepContainerDefinition:
+            # @review
+            description:
+                The definition of a page form step container.
+            properties:
+                cssClasses:
+                    # @review
+                    description:
+                        A list of CSS classes that are applied to the page element.
+                    items:
+                        type: string
+                    type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the page element.
+                    type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page form.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
+                fragmentStyle:
+                    $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a page form.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a page form.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
+                layout:
+                    # @review
+                    description:
+                        The page form's layout.
+                    properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        contentDisplay:
+                            enum: [Block, FlexColumn, FlexRow]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                        widthType:
+                            # @review
+                            description:
+                                The width's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
+                    type: object
+                name:
+                    # @review
+                    description:
+                        The custom name of of a page form.
+                    type: string
+            type: object
+        PageFormStepDefinition:
+            # @review
+            description:
+                The definition of a page form step.
+            properties:
+                formStepConfig:
+                    # @review
+                    description:
+                        The page form step's configuration.
+                    type: object
             type: object
         PageFragmentCompositionInstanceDefinition:
             # @review

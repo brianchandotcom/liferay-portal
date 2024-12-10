@@ -31,6 +31,11 @@ public class LayoutClassedModelUsagesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchActionURL() {
+		return null;
+	}
+
+	@Override
 	public Boolean isSelectable() {
 		return false;
 	}

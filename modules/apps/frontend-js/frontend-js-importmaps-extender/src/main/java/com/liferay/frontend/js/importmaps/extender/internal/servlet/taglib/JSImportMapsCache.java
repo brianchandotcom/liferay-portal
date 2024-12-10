@@ -8,7 +8,6 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,25 +19,64 @@ public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
 
-	public JSImportMapsCache(
-		CompanyLocalService companyLocalService, JSONFactory jsonFactory) {
-
-		_companyLocalService = companyLocalService;
+	public JSImportMapsCache(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
 	public synchronized String getImportMaps(long companyId) {
-		if (!_valid) {
-			_rebuildImportMaps();
-
-			_valid = true;
+		if (companyId == COMPANY_ID_ALL) {
+			throw new IllegalArgumentException(
+				"Do not pass COMPANY_ID_ALL as companyId");
 		}
 
-		return _importMapsMap.get(companyId);
+		String importMaps = _importMapsMap.get(companyId);
+
+		if (importMaps == null) {
+			importMaps = JSONUtil.put(
+				"imports",
+				() -> {
+					JSONObject importsJSONObject =
+						_jsonFactory.createJSONObject();
+
+					_putImports(
+						importsJSONObject,
+						_getGlobalImportMapsJSONObjects(COMPANY_ID_ALL));
+					_putImports(
+						importsJSONObject,
+						_getGlobalImportMapsJSONObjects(companyId));
+
+					return importsJSONObject;
+				}
+			).put(
+				"scopes",
+				() -> {
+					JSONObject scopesJSONObject =
+						_jsonFactory.createJSONObject();
+
+					_putScopes(
+						scopesJSONObject,
+						_getScopedImportMapsJSONObjects(COMPANY_ID_ALL));
+					_putScopes(
+						scopesJSONObject,
+						_getScopedImportMapsJSONObjects(companyId));
+
+					return scopesJSONObject;
+				}
+			).toString();
+
+			_importMapsMap.put(companyId, importMaps);
+		}
+
+		return importMaps;
 	}
 
-	public synchronized void invalidate() {
-		_valid = false;
+	public synchronized void invalidate(long companyId) {
+		if (companyId == COMPANY_ID_ALL) {
+			_importMapsMap.clear();
+		}
+		else {
+			_importMapsMap.remove(companyId);
+		}
 	}
 
 	public synchronized JSImportMapsRegistration register(
@@ -52,13 +90,13 @@ public class JSImportMapsCache {
 
 			globalImportMapsJSONObjects.put(globalId, jsonObject);
 
-			invalidate();
+			invalidate(companyId);
 
 			return () -> {
 				synchronized (JSImportMapsCache.this) {
 					globalImportMapsJSONObjects.remove(globalId);
 
-					invalidate();
+					invalidate(companyId);
 				}
 			};
 		}
@@ -68,13 +106,13 @@ public class JSImportMapsCache {
 
 		scopedImportMapsJSONObjects.put(scope, jsonObject);
 
-		invalidate();
+		invalidate(companyId);
 
 		return () -> {
 			synchronized (JSImportMapsCache.this) {
 				scopedImportMapsJSONObjects.remove(scope);
 
-				invalidate();
+				invalidate(companyId);
 			}
 		};
 	}
@@ -147,46 +185,6 @@ public class JSImportMapsCache {
 		}
 	}
 
-	private void _rebuildImportMaps() {
-		_importMapsMap.clear();
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> _importMapsMap.put(
-				companyId,
-				JSONUtil.put(
-					"imports",
-					() -> {
-						JSONObject importsJSONObject =
-							_jsonFactory.createJSONObject();
-
-						_putImports(
-							importsJSONObject,
-							_getGlobalImportMapsJSONObjects(COMPANY_ID_ALL));
-						_putImports(
-							importsJSONObject,
-							_getGlobalImportMapsJSONObjects(companyId));
-
-						return importsJSONObject;
-					}
-				).put(
-					"scopes",
-					() -> {
-						JSONObject scopesJSONObject =
-							_jsonFactory.createJSONObject();
-
-						_putScopes(
-							scopesJSONObject,
-							_getScopedImportMapsJSONObjects(COMPANY_ID_ALL));
-						_putScopes(
-							scopesJSONObject,
-							_getScopedImportMapsJSONObjects(companyId));
-
-						return scopesJSONObject;
-					}
-				).toString()));
-	}
-
-	private final CompanyLocalService _companyLocalService;
 	private final Map<Long, Map<Long, JSONObject>>
 		_globalImportMapsJSONObjectsMap = new HashMap<>();
 	private final Map<Long, String> _importMapsMap = new HashMap<>();
@@ -194,6 +192,5 @@ public class JSImportMapsCache {
 	private volatile long _nextGlobalId;
 	private final Map<Long, Map<String, JSONObject>>
 		_scopedImportMapsJSONObjectsMap = new HashMap<>();
-	private volatile boolean _valid = true;
 
 }

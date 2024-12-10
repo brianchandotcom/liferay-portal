@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -314,6 +315,36 @@ public class PageSpecificationResourceTest
 		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
 			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
+	}
+
+	@Override
+	protected boolean equals(
+		PageSpecification pageSpecification1,
+		PageSpecification pageSpecification2) {
+
+		if (!super.equals(pageSpecification1, pageSpecification2)) {
+			return false;
+		}
+
+		if (!(pageSpecification1 instanceof ContentPageSpecification) ||
+			!(pageSpecification2 instanceof ContentPageSpecification)) {
+
+			return true;
+		}
+
+		ContentPageSpecification curContentPageSpecification =
+			(ContentPageSpecification)pageSpecification2;
+		ContentPageSpecification contentPageSpecification =
+			(ContentPageSpecification)pageSpecification1;
+
+		if (!_pageExperiencesEquals(
+				curContentPageSpecification.getPageExperiences(),
+				contentPageSpecification.getPageExperiences())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -814,6 +845,23 @@ public class PageSpecificationResourceTest
 		};
 	}
 
+	private PageElement _getPageElement(
+		String pageElementExternalReferenceCode, PageElement[] pageElements) {
+
+		for (PageElement pageElement : pageElements) {
+			if (!Objects.equals(
+					pageElement.getExternalReferenceCode(),
+					pageElementExternalReferenceCode)) {
+
+				continue;
+			}
+
+			return pageElement;
+		}
+
+		return null;
+	}
+
 	private PageElement[] _getPageElements(
 		int count, String curParentExternalReferenceCode) {
 
@@ -844,6 +892,24 @@ public class PageSpecificationResourceTest
 		}
 
 		return pageElements;
+	}
+
+	private PageExperience _getPageExperience(
+		String pageExperienceExternalReferenceCode,
+		PageExperience[] pageExperiences) {
+
+		for (PageExperience pageExperience : pageExperiences) {
+			if (!Objects.equals(
+					pageExperience.getExternalReferenceCode(),
+					pageExperienceExternalReferenceCode)) {
+
+				continue;
+			}
+
+			return pageExperience;
+		}
+
+		return null;
 	}
 
 	private long _getStyleBookEntryId(ServiceContext serviceContext)
@@ -1096,6 +1162,77 @@ public class PageSpecificationResourceTest
 					"true"
 				).build());
 		}
+	}
+
+	private boolean _pageElementsEquals(
+		PageElement[] curPageElements, PageElement[] pageElements) {
+
+		if (ArrayUtil.isEmpty(curPageElements) &&
+			ArrayUtil.isEmpty(pageElements)) {
+
+			return true;
+		}
+
+		if (ArrayUtil.isEmpty(curPageElements) ||
+			ArrayUtil.isEmpty(pageElements) ||
+			(curPageElements.length != pageElements.length)) {
+
+			return false;
+		}
+
+		for (PageElement curPageElement : curPageElements) {
+			PageElement pageElement = _getPageElement(
+				curPageElement.getExternalReferenceCode(), pageElements);
+
+			if ((pageElement == null) ||
+				!_pageElementsEquals(
+					curPageElement.getPageElements(),
+					pageElement.getPageElements()) ||
+				!Objects.equals(
+					curPageElement.getParentExternalReferenceCode(),
+					pageElement.getParentExternalReferenceCode()) ||
+				(GetterUtil.getInteger(curPageElement.getPosition()) !=
+					GetterUtil.getInteger(pageElement.getPosition())) ||
+				!Objects.equals(
+					curPageElement.getType(), pageElement.getType())) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean _pageExperiencesEquals(
+		PageExperience[] curPageExperiences, PageExperience[] pageExperiences) {
+
+		if (ArrayUtil.isEmpty(curPageExperiences) &&
+			ArrayUtil.isEmpty(pageExperiences)) {
+
+			return true;
+		}
+
+		if (ArrayUtil.isEmpty(curPageExperiences) ||
+			ArrayUtil.isEmpty(pageExperiences) ||
+			(curPageExperiences.length != pageExperiences.length)) {
+
+			return false;
+		}
+
+		for (PageExperience curPageExperience : curPageExperiences) {
+			PageExperience pageExperience = _getPageExperience(
+				curPageExperience.getExternalReferenceCode(), pageExperiences);
+
+			if ((pageExperience == null) ||
+				_pageElementsEquals(
+					curPageExperience.getPageElements(),
+					pageExperience.getPageElements())) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _testDeleteSiteSiteByExternalReferenceCodePageSpecification(

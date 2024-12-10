@@ -35,7 +35,7 @@ public class LayoutVerifiableResourcedModel
 
 	@Override
 	public String getTableName() {
-		return LayoutModelImpl.TABLE_NAME;
+		return "Layout";
 	}
 
 	@Override

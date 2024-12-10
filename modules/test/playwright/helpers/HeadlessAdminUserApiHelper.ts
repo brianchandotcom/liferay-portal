@@ -475,6 +475,15 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async getAccountRolesByRoleName(
+		accountId: number,
+		accountRoleName: string
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/account-roles?filter=name eq '${accountRoleName}'`
+		);
+	}
+
 	async assignUserToRole(
 		roleExternalReferenceCode: string,
 		userId: number | string

@@ -351,10 +351,9 @@ public class PageSpecificationResourceTest
 			}
 
 			if (Objects.equals(additionalAssertFieldName, "settings")) {
-				Assert.assertTrue(
-					Objects.deepEquals(
-						pageSpecification1.getSettings(),
-						pageSpecification2.getSettings()));
+				_assertSettings(
+					pageSpecification2.getSettings(),
+					pageSpecification1.getSettings());
 
 				continue;
 			}
@@ -709,6 +708,52 @@ public class PageSpecificationResourceTest
 					contentPageSpecification);
 
 		equals(contentPageSpecification, putPageSpecification);
+	}
+
+	private void _assertSettings(Settings curSettings, Settings settings) {
+		if (settings == null) {
+			Assert.assertNull(curSettings);
+
+			return;
+		}
+
+		Assert.assertEquals(
+			settings.getColorSchemeName(), curSettings.getColorSchemeName());
+		Assert.assertEquals(settings.getCss(), curSettings.getCss());
+		Assert.assertEquals(
+			settings.getJavascript(), curSettings.getJavascript());
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				settings.getMasterPageItemExternalReference(),
+				curSettings.getMasterPageItemExternalReference()));
+
+		Assert.assertTrue(
+			Objects.deepEquals(
+				settings.getStyleBookItemExternalReference(),
+				curSettings.getStyleBookItemExternalReference()));
+
+		Assert.assertEquals(
+			settings.getThemeName(), curSettings.getThemeName());
+
+		Map<String, String> themeSettings = settings.getThemeSettings();
+		Map<String, String> curThemeSettings = curSettings.getThemeSettings();
+
+		if (MapUtil.isEmpty(themeSettings)) {
+			Assert.assertTrue(
+				MapUtil.toString(curThemeSettings),
+				MapUtil.isEmpty(curThemeSettings));
+
+			return;
+		}
+
+		Assert.assertEquals(
+			MapUtil.toString(curThemeSettings), themeSettings.size(),
+			curThemeSettings.size());
+
+		Assert.assertEquals(
+			MapUtil.toString(curThemeSettings), themeSettings,
+			curThemeSettings);
 	}
 
 	private void _assertWidgetPageSpecification(

@@ -97,16 +97,16 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 					_commerceChannel.getCommerceChannelId(),
 					CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT);
 
-		if (commerceChannelAccountEntryRel != null) {
-			_commercePaymentMethodGroupRel =
-				_commercePaymentMethodGroupRelService.
-					fetchCommercePaymentMethodGroupRel(
-						commerceChannelAccountEntryRel.getClassPK());
-
-			return _commercePaymentMethodGroupRel;
+		if (commerceChannelAccountEntryRel == null) {
+			return null;
 		}
 
-		return null;
+		_commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelService.
+				fetchCommercePaymentMethodGroupRel(
+					commerceChannelAccountEntryRel.getClassPK());
+
+		return _commercePaymentMethodGroupRel;
 	}
 
 	public List<CommercePaymentMethodGroupRel>

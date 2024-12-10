@@ -70,15 +70,15 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 				fetchCommercePaymentMethodGroupRel(
 					commerceChannel.getGroupId(), paymentIntegrationKey);
 
-		if ((commercePaymentMethodGroupRel != null) &&
-			commercePaymentMethodGroupRel.isActive()) {
+		if ((commercePaymentMethodGroupRel == null) ||
+			!commercePaymentMethodGroupRel.isActive()) {
 
-			return _commercePaymentIntegrationRegistry.
-				getCommercePaymentIntegration(
-					commercePaymentMethodGroupRel.getPaymentIntegrationKey());
+			return null;
 		}
 
-		return null;
+		return _commercePaymentIntegrationRegistry.
+			getCommercePaymentIntegration(
+				commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 	}
 
 	@Override
@@ -100,14 +100,14 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 				fetchCommercePaymentMethodGroupRel(
 					commerceOrder.getGroupId(), commercePaymentMethodKey);
 
-		if ((commercePaymentMethodGroupRel != null) &&
-			commercePaymentMethodGroupRel.isActive()) {
+		if ((commercePaymentMethodGroupRel == null) ||
+			!commercePaymentMethodGroupRel.isActive()) {
 
-			return _commercePaymentMethodRegistry.getCommercePaymentMethod(
-				commercePaymentMethodGroupRel.getPaymentIntegrationKey());
+			return null;
 		}
 
-		return null;
+		return _commercePaymentMethodRegistry.getCommercePaymentMethod(
+			commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 	}
 
 	@Override

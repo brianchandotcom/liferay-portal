@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -91,6 +93,19 @@ public class PageFormDefinitionDTOConverter
 							}
 						};
 					});
+				setFormType(
+					() -> {
+						if (Objects.equals(
+								formStyledLayoutStructureItem.getFormType(),
+								"simple")) {
+
+							return FormType.SIMPLE;
+						}
+
+						return FormType.MULTISTEP;
+					});
+				setNumberOfSteps(
+					formStyledLayoutStructureItem::getNumberOfSteps);
 			}
 		};
 	}

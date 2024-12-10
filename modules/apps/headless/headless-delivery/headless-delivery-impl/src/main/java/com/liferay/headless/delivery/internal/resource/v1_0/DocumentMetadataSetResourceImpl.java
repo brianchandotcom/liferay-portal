@@ -262,6 +262,29 @@ public class DocumentMetadataSetResourceImpl
 			_ddmStructureService.getStructure(dataDefinition.getId()));
 	}
 
+	private Page<DocumentMetadataSet> _getPage(
+			Map<String, Map<String, String>> actions, long groupId,
+			Pagination pagination)
+		throws Exception {
+
+		Group group = groupLocalService.getGroup(groupId);
+		long classNameId = _classNameLocalService.getClassNameId(
+			DLFileEntryMetadata.class);
+
+		return Page.of(
+			actions,
+			transform(
+				_ddmStructureService.getStructures(
+					group.getCompanyId(), new long[] {groupId}, classNameId,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				ddmStructure -> _toDocumentMetadataSet(ddmStructure)),
+			pagination,
+			_ddmStructureService.getStructuresCount(
+				group.getCompanyId(), new long[] {groupId}, classNameId, null,
+				WorkflowConstants.STATUS_ANY));
+	}
+
 	private DataDefinition _toDataDefinition(
 		DocumentMetadataSet documentMetadataSet) {
 
@@ -290,29 +313,6 @@ public class DocumentMetadataSetResourceImpl
 				setUserId(contextUser::getUserId);
 			}
 		};
-	}
-
-	private Page<DocumentMetadataSet> _getPage(
-			Map<String, Map<String, String>> actions, long groupId,
-			Pagination pagination)
-		throws Exception {
-
-		Group group = groupLocalService.getGroup(groupId);
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntryMetadata.class);
-
-		return Page.of(
-			actions,
-			transform(
-				_ddmStructureService.getStructures(
-					group.getCompanyId(), new long[] {groupId}, classNameId,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				ddmStructure -> _toDocumentMetadataSet(ddmStructure)),
-			pagination,
-			_ddmStructureService.getStructuresCount(
-				group.getCompanyId(), new long[] {groupId}, classNameId, null,
-				WorkflowConstants.STATUS_ANY));
 	}
 
 	private DocumentMetadataSet _toDocumentMetadataSet(

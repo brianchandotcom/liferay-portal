@@ -16,17 +16,12 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.dto.v1_0.PageContainerDefinition;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -48,7 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -114,15 +108,20 @@ public class PageSpecificationResourceTest
 			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
 			serviceContext);
 		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
-			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
-			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
-			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext),
+			serviceContext);
 		_testDeleteSiteSiteByExternalReferenceCodePageSpecification(
-			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 	}
 
@@ -136,7 +135,8 @@ public class PageSpecificationResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		_testPageSpecificationsPage(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
@@ -158,7 +158,7 @@ public class PageSpecificationResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getMasterLayoutPageTemplateEntry(
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_DRAFT);
 
 		_testPageSpecificationsPage(
@@ -186,15 +186,20 @@ public class PageSpecificationResourceTest
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(
 			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext));
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext),
+			serviceContext);
 		_testGetSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 	}
 
@@ -208,7 +213,8 @@ public class PageSpecificationResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getBasicLayoutPageTemplateEntry(serviceContext);
+			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
+				serviceContext);
 
 		_testPageSpecificationsPage(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
@@ -251,7 +257,8 @@ public class PageSpecificationResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_getLayoutUtilityPageEntry(serviceContext);
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
+				serviceContext);
 
 		_testPageSpecificationsPage(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
@@ -279,15 +286,20 @@ public class PageSpecificationResourceTest
 			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext),
 			serviceContext);
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext),
+			serviceContext);
 		_testPatchSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 	}
 
@@ -316,15 +328,20 @@ public class PageSpecificationResourceTest
 			_addLayout(LayoutConstants.TYPE_PORTLET, serviceContext),
 			serviceContext);
 		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getLayoutUtilityPageEntryLayout(serviceContext), serviceContext);
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext),
+			serviceContext);
 		_testPutSiteSiteByExternalReferenceCodePageSpecificationWithLayoutWithDraftLayout(
-			_getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
 	}
 
@@ -781,40 +798,6 @@ public class PageSpecificationResourceTest
 				actualWidgetPageSpecification.getWidgetPageSections()));
 	}
 
-	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(),
-					serviceContext.getScopeGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					serviceContext);
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	private Layout _getBasicLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getBasicLayoutPageTemplateEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
 	private Settings _getColorSchemeNameSettings(Settings settings) {
 		if (settings.getColorSchemeName() != null) {
 			settings.setColorSchemeName(() -> null);
@@ -870,31 +853,6 @@ public class PageSpecificationResourceTest
 		};
 	}
 
-	private LayoutPageTemplateEntry _getDisplayPageLayoutPageTemplateEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			_portal.getClassNameId(
-				"com.liferay.asset.kernel.model.AssetCategory"),
-			0, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	private Layout _getDisplayPageLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
 	private Settings _getJavaScriptSettings(Settings settings) {
 		if (settings.getJavascript() != null) {
 			settings.setJavascript(() -> null);
@@ -931,51 +889,6 @@ public class PageSpecificationResourceTest
 		return null;
 	}
 
-	private LayoutUtilityPageEntry _getLayoutUtilityPageEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			0, 0, false, RandomTestUtil.randomString(),
-			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
-			serviceContext);
-	}
-
-	private Layout _getLayoutUtilityPageEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_getLayoutUtilityPageEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
-	}
-
-	private LayoutPageTemplateEntry _getMasterLayoutPageTemplateEntry(
-			ServiceContext serviceContext, int status)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, status,
-			serviceContext);
-	}
-
-	private Layout _getMasterLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getMasterLayoutPageTemplateEntry(
-				serviceContext, WorkflowConstants.STATUS_DRAFT);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
 	private long _getMasterLayoutPlid(ServiceContext serviceContext)
 		throws Exception {
 
@@ -984,7 +897,7 @@ public class PageSpecificationResourceTest
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getMasterLayoutPageTemplateEntry(
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 		return layoutPageTemplateEntry.getPlid();
@@ -1012,7 +925,7 @@ public class PageSpecificationResourceTest
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getMasterLayoutPageTemplateEntry(
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
 				serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 		ItemExternalReference itemExternalReference =
@@ -1302,8 +1215,9 @@ public class PageSpecificationResourceTest
 		}
 		else {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_getMasterLayoutPageTemplateEntry(
-					serviceContext, WorkflowConstants.STATUS_APPROVED);
+				LayoutPageTemplateEntryTestUtil.
+					getMasterLayoutPageTemplateEntry(
+						serviceContext, WorkflowConstants.STATUS_APPROVED);
 
 			settings.setMasterPageItemExternalReference(
 				() -> new ItemExternalReference() {
@@ -1757,19 +1671,8 @@ public class PageSpecificationResourceTest
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
-
-	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceService _segmentsExperienceService;

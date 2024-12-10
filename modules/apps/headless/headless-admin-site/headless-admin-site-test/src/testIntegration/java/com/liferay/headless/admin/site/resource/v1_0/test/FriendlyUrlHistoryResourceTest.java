@@ -8,17 +8,11 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,7 +25,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +56,8 @@ public class FriendlyUrlHistoryResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
 		List<String> friendlyURLs = _updateLayout(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
@@ -81,9 +75,11 @@ public class FriendlyUrlHistoryResourceTest
 			friendlyURLs);
 
 		_assertProblemException(
-			_getBasicLayoutPageTemplateEntry(serviceContext));
+			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
+				serviceContext));
 		_assertProblemException(
-			_getMasterLayoutPageTemplateEntry(serviceContext));
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_DRAFT));
 	}
 
 	@Override
@@ -109,13 +105,17 @@ public class FriendlyUrlHistoryResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_assertProblemException(
-			_getBasicLayoutPageTemplateEntryLayout(serviceContext));
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext));
 		_assertProblemException(
-			_getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
 		_assertProblemException(
-			_getMasterLayoutPageTemplateEntryLayout(serviceContext));
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext));
 		_assertProblemException(
-			_getLayoutUtilityPageEntryLayout(serviceContext));
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext));
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class FriendlyUrlHistoryResourceTest
 		throws Exception {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_getLayoutUtilityPageEntry(
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -196,109 +196,6 @@ public class FriendlyUrlHistoryResourceTest
 		}
 	}
 
-	private LayoutPageTemplateEntry _getBasicLayoutPageTemplateEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(),
-					serviceContext.getScopeGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					serviceContext);
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	private Layout _getBasicLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getBasicLayoutPageTemplateEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
-	private LayoutPageTemplateEntry _getDisplayPageLayoutPageTemplateEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			_portal.getClassNameId(
-				"com.liferay.asset.kernel.model.AssetCategory"),
-			0, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	private Layout _getDisplayPageLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getDisplayPageLayoutPageTemplateEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
-	private LayoutUtilityPageEntry _getLayoutUtilityPageEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			0, 0, false, RandomTestUtil.randomString(),
-			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR, 0,
-			serviceContext);
-	}
-
-	private Layout _getLayoutUtilityPageEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_getLayoutUtilityPageEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
-	}
-
-	private LayoutPageTemplateEntry _getMasterLayoutPageTemplateEntry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	private Layout _getMasterLayoutPageTemplateEntryLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getMasterLayoutPageTemplateEntry(serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
 	private void
 			_testGetSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 				Layout layout)
@@ -357,20 +254,5 @@ public class FriendlyUrlHistoryResourceTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
-
-	@Inject
-	private Portal _portal;
 
 }

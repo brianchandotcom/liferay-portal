@@ -63,12 +63,6 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 			remoteUser = String.valueOf(userId);
 		}
 
-		// WebSphere will not return the remote user unless you are
-		// authenticated AND accessing a protected path. Other servers will
-		// return the remote user for all threads associated with an
-		// authenticated user. We use ProtectedServletRequest to ensure we get
-		// similar behavior across all servers.
-
 		if (remoteUser != null) {
 			httpServletRequest = new ProtectedServletRequest(
 				httpServletRequest, remoteUser);

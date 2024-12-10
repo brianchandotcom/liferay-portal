@@ -520,6 +520,57 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testDeployRemotePortlet() throws Exception {
+		Company company = companyLocalService.fetchCompanyByVirtualHost(
+			TestPropsValues.COMPANY_WEB_ID);
+
+		String portletName = RandomTestUtil.randomString();
+
+		try {
+			_deployRemotePortlet(company.getCompanyId(), portletName);
+
+			long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
+
+			_deployRemotePortlet(defaultCompanyId, portletName);
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						company.getCompanyId())) {
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				Assert.assertNotNull(portlet);
+				Assert.assertEquals(
+					company.getCompanyId(), portlet.getCompanyId());
+			}
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						defaultCompanyId)) {
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				Assert.assertNotNull(portlet);
+				Assert.assertEquals(defaultCompanyId, portlet.getCompanyId());
+			}
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						COMPANY_IDS[0])) {
+
+				Assert.assertNull(
+					_portletLocalService.getPortletById(portletName));
+			}
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _destroyRemotePortlet(companyId, portletName));
+		}
+	}
+
+	@Test
 	public void testDropIndexControlTable() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -656,57 +707,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testInitResourceActions() throws Exception {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> StartupHelperUtil.initResourceActions());
-	}
-
-	@Test
-	public void testPortlets() throws Exception {
-		Company company = companyLocalService.fetchCompanyByVirtualHost(
-			TestPropsValues.COMPANY_WEB_ID);
-
-		String portletName = RandomTestUtil.randomString();
-
-		try {
-			_deployRemotePortlet(company.getCompanyId(), portletName);
-
-			long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
-
-			_deployRemotePortlet(defaultCompanyId, portletName);
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
-
-				Portlet portlet = _portletLocalService.getPortletById(
-					portletName);
-
-				Assert.assertNotNull(portlet);
-				Assert.assertEquals(
-					company.getCompanyId(), portlet.getCompanyId());
-			}
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						defaultCompanyId)) {
-
-				Portlet portlet = _portletLocalService.getPortletById(
-					portletName);
-
-				Assert.assertNotNull(portlet);
-				Assert.assertEquals(defaultCompanyId, portlet.getCompanyId());
-			}
-
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						COMPANY_IDS[0])) {
-
-				Assert.assertNull(
-					_portletLocalService.getPortletById(portletName));
-			}
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> _destroyRemotePortlet(companyId, portletName));
-		}
 	}
 
 	@Test

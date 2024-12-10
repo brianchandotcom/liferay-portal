@@ -54,9 +54,9 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 		"clientId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Clob> infoJSON = createColumn(
 		"infoJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<OAuthClientEntryTable, Long> metadataCacheInMillis =
+	public final Column<OAuthClientEntryTable, Long> metadataCachingTime =
 		createColumn(
-			"metadataCacheInMillis", Long.class, Types.BIGINT,
+			"metadataCachingTime", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, String> oidcUserInfoMapperJSON =
 		createColumn(

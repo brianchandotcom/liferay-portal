@@ -45,7 +45,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
-		attributes.put("metadataCacheInMillis", getMetadataCacheInMillis());
+		attributes.put("metadataCachingTime", getMetadataCachingTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
@@ -123,11 +123,10 @@ public class OAuthClientEntryWrapper
 			setInfoJSON(infoJSON);
 		}
 
-		Long metadataCacheInMillis = (Long)attributes.get(
-			"metadataCacheInMillis");
+		Long metadataCachingTime = (Long)attributes.get("metadataCachingTime");
 
-		if (metadataCacheInMillis != null) {
-			setMetadataCacheInMillis(metadataCacheInMillis);
+		if (metadataCachingTime != null) {
+			setMetadataCachingTime(metadataCachingTime);
 		}
 
 		String oidcUserInfoMapperJSON = (String)attributes.get(
@@ -210,19 +209,19 @@ public class OAuthClientEntryWrapper
 		return model.getInfoJSON();
 	}
 
-	/**
-	 * Returns the metadata cache in millis of this o auth client entry.
-	 *
-	 * @return the metadata cache in millis of this o auth client entry
-	 */
-	@Override
-	public long getMetadataCacheInMillis() {
-		return model.getMetadataCacheInMillis();
-	}
-
 	@Override
 	public int getMetadataCacheInSeconds() {
 		return model.getMetadataCacheInSeconds();
+	}
+
+	/**
+	 * Returns the metadata caching time of this o auth client entry.
+	 *
+	 * @return the metadata caching time of this o auth client entry
+	 */
+	@Override
+	public long getMetadataCachingTime() {
+		return model.getMetadataCachingTime();
 	}
 
 	/**
@@ -381,13 +380,13 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Sets the metadata cache in millis of this o auth client entry.
+	 * Sets the metadata caching time of this o auth client entry.
 	 *
-	 * @param metadataCacheInMillis the metadata cache in millis of this o auth client entry
+	 * @param metadataCachingTime the metadata caching time of this o auth client entry
 	 */
 	@Override
-	public void setMetadataCacheInMillis(long metadataCacheInMillis) {
-		model.setMetadataCacheInMillis(metadataCacheInMillis);
+	public void setMetadataCachingTime(long metadataCachingTime) {
+		model.setMetadataCachingTime(metadataCachingTime);
 	}
 
 	/**

@@ -11,7 +11,7 @@ import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {MULTI_SELECT_TYPES} from '../../config/constants/multiSelectTypes';
 import {
 	useHoverItem,
-	useMultiSelectType,
+	useMultiSelectTypeRef,
 	useSelectItem,
 } from '../../contexts/ControlsContext';
 import {LayoutKeyboardContext} from '../../contexts/LayoutKeyboardContext';
@@ -20,7 +20,7 @@ export function useLayoutKeyboardNavigation(item) {
 	const elementRef = useRef(null);
 
 	const hoverItem = useHoverItem();
-	const multiSelectType = useMultiSelectType();
+	const multiSelectTypeRef = useMultiSelectTypeRef();
 	const selectItem = useSelectItem();
 
 	const {itemList, setTargetId, targetId} = useContext(LayoutKeyboardContext);
@@ -32,7 +32,7 @@ export function useLayoutKeyboardNavigation(item) {
 		if (targetId === item.itemId) {
 			elementRef.current.focus();
 
-			if (multiSelectType === MULTI_SELECT_TYPES.range) {
+			if (multiSelectTypeRef.current === MULTI_SELECT_TYPES.range) {
 				selectItem(item.itemId, {
 					origin: ITEM_ACTIVATION_ORIGINS.keyboard,
 				});
@@ -41,9 +41,7 @@ export function useLayoutKeyboardNavigation(item) {
 				hoverItem(item.itemId);
 			}
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hoverItem, item, selectItem, targetId]);
+	}, [hoverItem, item, multiSelectTypeRef, selectItem, targetId]);
 
 	// Hover and set target when focusing first item
 

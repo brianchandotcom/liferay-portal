@@ -6,7 +6,9 @@
 package com.liferay.blogs.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -63,7 +65,9 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -73,6 +77,7 @@ import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.io.InputStream;
@@ -369,6 +374,53 @@ public class BlogsEntryLocalServiceTest {
 
 				Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 			});
+	}
+
+	@Test(expected = AssetCategoryException.class)
+	public void testAddEntryWithCategoriesFromVocabularyNonmultiValued()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper(
+				false, new long[] {AssetCategoryConstants.ALL_CLASS_NAME_ID},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
+				new boolean[] {false}, new boolean[] {false});
+
+		Assert.assertFalse(assetVocabularySettingsHelper.isMultiValued());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				_user.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabularySettingsHelper.toString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		_blogsEntryLocalService.addEntry(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), true, true, new String[0],
+			null, null, null, serviceContext);
 	}
 
 	@Test
@@ -1205,6 +1257,65 @@ public class BlogsEntryLocalServiceTest {
 			entry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
 	}
 
+	@Test(expected = AssetCategoryException.class)
+	public void testUpdateEntryWithCategoriesFromVocabularyNonmultiValued()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper(
+				false, new long[] {AssetCategoryConstants.ALL_CLASS_NAME_ID},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
+				new boolean[] {false}, new boolean[] {false});
+
+		Assert.assertFalse(assetVocabularySettingsHelper.isMultiValued());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				_user.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabularySettingsHelper.toString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory1.getCategoryId()});
+
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), true, true, new String[0],
+			null, null, null, serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		_blogsEntryLocalService.updateEntry(
+			blogsEntry.getUserId(), blogsEntry.getEntryId(),
+			blogsEntry.getTitle(), blogsEntry.getSubtitle(),
+			blogsEntry.getUrlTitle(), blogsEntry.getDescription(),
+			blogsEntry.getContent(), blogsEntry.getDisplayDate(),
+			blogsEntry.isAllowPingbacks(), blogsEntry.isAllowTrackbacks(),
+			new String[0], blogsEntry.getCoverImageCaption(), null, null,
+			serviceContext);
+	}
+
 	@Test
 	public void testUpdateEntryWithURLTitleWithSlashPrefix() throws Exception {
 		ServiceContext serviceContext =
@@ -1681,6 +1792,20 @@ public class BlogsEntryLocalServiceTest {
 			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
+	}
+
+	private AssetVocabularySettingsHelper _getAssetVocabularySettingsHelper(
+		boolean multiValued, long[] classNameIds, long[] classTypePKs,
+		boolean[] depotRequireds, boolean[] requireds) {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			classNameIds, classTypePKs, depotRequireds, requireds);
+		assetVocabularySettingsHelper.setMultiValued(multiValued);
+
+		return assetVocabularySettingsHelper;
 	}
 
 	private String _repeat(String string, int times) {

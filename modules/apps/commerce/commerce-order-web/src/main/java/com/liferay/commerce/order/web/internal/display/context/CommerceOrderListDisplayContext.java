@@ -118,7 +118,7 @@ public class CommerceOrderListDisplayContext {
 				null, "trash", "delete",
 				LanguageUtil.get(
 					_commerceOrderRequestHelper.getRequest(), "delete"),
-				null, null, null));
+				"delete", "delete", "headless"));
 	}
 
 	public FDSSortItemList getFDSSortItemList() {

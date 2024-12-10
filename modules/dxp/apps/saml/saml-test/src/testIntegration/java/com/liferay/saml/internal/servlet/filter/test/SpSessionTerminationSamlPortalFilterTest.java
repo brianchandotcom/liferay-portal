@@ -81,7 +81,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			boolean enabled, long companyId)
 		throws Exception {
 
-		long originalEnabled = CompanyThreadLocal.getCompanyId();
+		long originalCompanyId = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(companyId);
 
@@ -111,7 +111,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 				throw new RuntimeException(exception);
 			}
 			finally {
-				CompanyThreadLocal.setCompanyId(originalEnabled);
+				CompanyThreadLocal.setCompanyId(originalCompanyId);
 			}
 		};
 	}

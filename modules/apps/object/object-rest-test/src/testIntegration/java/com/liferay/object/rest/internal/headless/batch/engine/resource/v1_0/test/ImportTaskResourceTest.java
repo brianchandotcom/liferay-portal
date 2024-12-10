@@ -38,7 +38,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 	public void testPostImportTaskInsertCreateStrategyWithPermissions()
 		throws Exception {
 
-		// With empty permissions
+		// With empty "permissions"
 
 		JSONObject beforeImportJSONObject1 = JSONUtil.put(
 			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
@@ -69,7 +69,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With no permissions
+		// With no "permissions"
 
 		JSONObject beforeImportJSONObject2 = JSONUtil.put(
 			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
@@ -107,7 +107,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With permissions
+		// With "permissions"
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -152,7 +152,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 	public void testPostImportTaskUpsertCreateStrategyWithPermissions()
 		throws Exception {
 
-		// With empty permissions
+		// With empty "permissions"
 
 		JSONObject beforeUpsertJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -191,7 +191,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With no permissions
+		// With no "permissions"
 
 		JSONObject beforeUpsertJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -240,7 +240,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With permissions
+		// With "permissions"
 
 		JSONObject beforeUpsertJSONObject3 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -341,7 +341,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// Without 'restrictedFieldNames' query parameter
+		// Without "restrictedFieldNames" query parameter
 
 		waitForFinish(
 			"COMPLETED", true,

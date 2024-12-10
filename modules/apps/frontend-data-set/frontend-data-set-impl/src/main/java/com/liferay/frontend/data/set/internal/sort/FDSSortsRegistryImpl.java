@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.sort;
 
-import com.liferay.frontend.data.set.sort.FDSSortList;
-import com.liferay.frontend.data.set.sort.FDSSortListRegistry;
+import com.liferay.frontend.data.set.sort.FDSSorts;
+import com.liferay.frontend.data.set.sort.FDSSortsRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -21,12 +21,23 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Daniel Sanz
  */
-@Component(service = FDSSortListRegistry.class)
-public class FDSSortListRegistryImpl implements FDSSortListRegistry {
+@Component(service = FDSSortsRegistry.class)
+public class FDSSortsRegistryImpl implements FDSSortsRegistry {
+
+	public FDSSortsRegistryImpl() {
+	}
+
+	public FDSSortsRegistryImpl(
+		ServiceTrackerMap
+			<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSorts>>
+				serviceTrackerMap) {
+
+		_serviceTrackerMap = serviceTrackerMap;
+	}
 
 	@Override
-	public FDSSortList getFDSSortList(String fdsName) {
-		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSortList>
+	public FDSSorts getFDSSorts(String fdsName) {
+		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSorts>
 			serviceWrapper = _serviceTrackerMap.getService(fdsName);
 
 		if (serviceWrapper == null) {
@@ -45,8 +56,8 @@ public class FDSSortListRegistryImpl implements FDSSortListRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSSortList.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSSortList>serviceWrapper(
+			bundleContext, FDSSorts.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSSorts>serviceWrapper(
 				bundleContext));
 	}
 
@@ -56,10 +67,10 @@ public class FDSSortListRegistryImpl implements FDSSortListRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSSortListRegistryImpl.class);
+		FDSSortsRegistryImpl.class);
 
 	private ServiceTrackerMap
-		<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSortList>>
+		<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSorts>>
 			_serviceTrackerMap;
 
 }

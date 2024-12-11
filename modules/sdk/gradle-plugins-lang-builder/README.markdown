@@ -105,6 +105,6 @@ manually adding a dependency to the `langBuilder` configuration:
 
 ```gradle
 dependencies {
-	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "1.0.53"
+	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "1.0.54"
 }
 ```

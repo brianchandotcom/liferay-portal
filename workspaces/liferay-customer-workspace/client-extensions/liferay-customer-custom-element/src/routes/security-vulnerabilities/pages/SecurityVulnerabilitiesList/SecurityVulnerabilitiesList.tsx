@@ -53,6 +53,7 @@ const SecurityVulnerabilitiesList = () => {
 
 	const setPageSize = (pageSize: number) => {
 		updateSearchParams({
+			[JiraEnum.PAGE]: 1,
 			[JiraEnum.PAGE_SIZE]: pageSize,
 		});
 	};

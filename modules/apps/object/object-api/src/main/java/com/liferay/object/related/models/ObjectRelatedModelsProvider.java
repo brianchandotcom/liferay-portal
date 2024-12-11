@@ -18,11 +18,6 @@ import java.util.List;
  */
 public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 
-	public static final String KEY_OBJECT_DEFINITION_ERC =
-		"object.definition.erc";
-
-	public static final String KEY_RELATIONSHIP_TYPE = "relationship.type";
-
 	public void deleteRelatedModel(
 			long userId, long groupId, long objectRelationshipId,
 			long primaryKey, String deletionType)

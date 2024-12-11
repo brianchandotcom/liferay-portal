@@ -36,8 +36,8 @@ import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryIn
 import com.liferay.object.internal.system.info.item.provider.SystemObjectEntryInfoItemObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistryUtil;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -356,14 +356,14 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					"model.class.name", objectDefinition.getClassName()
 				).build());
 
-			ObjectRelatedModelsProviderRegistrationUtil.register(
+			ObjectRelatedModelsProviderRegistryUtil.register(
 				_bundleContext, objectDefinition,
 				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectDefinitionLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					systemObjectDefinitionManager,
 					_systemObjectDefinitionManagerRegistry));
-			ObjectRelatedModelsProviderRegistrationUtil.register(
+			ObjectRelatedModelsProviderRegistryUtil.register(
 				_bundleContext, objectDefinition,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectDefinitionLocalService,

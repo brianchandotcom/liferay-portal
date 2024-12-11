@@ -7,13 +7,18 @@
 
 <%@ include file="/init.jsp" %>
 
+
 <%
-final String navigation = ParamUtil.getString(request, "navigation", "search-iterator");
+SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAttribute(SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <clay:navigation-bar
 	navigationItems="<%= sampleDisplayContext.getNavigationItems() %>"
 />
+
+<%
+String navigation = ParamUtil.getString(request, "navigation", "search-iterator");
+%>
 
 <c:choose>
 	<c:when test='<%= navigation.equals("search-iterator") %>'>

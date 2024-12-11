@@ -9,6 +9,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -150,30 +151,20 @@ public abstract class BaseBookmarksTrashHandler extends BaseTrashHandler {
 			OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			classPK);
 
-		List<Object> foldersAndEntries =
+		return TransformUtil.transform(
 			BookmarksFolderLocalServiceUtil.getFoldersAndEntries(
 				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end, orderByComparator);
+				start, end, orderByComparator),
+			folderOrEntry -> {
+				if (folderOrEntry instanceof BookmarksFolder) {
+					return (BookmarksFolder)folderOrEntry;
+				}
 
-		for (Object folderOrEntry : foldersAndEntries) {
-			if (folderOrEntry instanceof BookmarksFolder) {
-				BookmarksFolder curFolder = (BookmarksFolder)folderOrEntry;
-
-				trashedModels.add(curFolder);
-			}
-			else {
-				BookmarksEntry entry = (BookmarksEntry)folderOrEntry;
-
-				trashedModels.add(entry);
-			}
-		}
-
-		return trashedModels;
+				return (BookmarksEntry)folderOrEntry;
+			});
 	}
 
 	protected abstract long getGroupId(long classPK) throws PortalException;

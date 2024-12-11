@@ -472,6 +472,10 @@ definition {
 				layoutName = "questions-page",
 				siteURLKey = "guest");
 
+			WaitForElementPresent(
+				key_tagName = "tag1",
+				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
 			Questions.search(
 				searchKey = "tag1",
 				searchTag = "true");

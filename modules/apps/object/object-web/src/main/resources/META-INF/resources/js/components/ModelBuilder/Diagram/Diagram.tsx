@@ -245,6 +245,12 @@ function DiagramBuilder() {
 			},
 			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 		});
+
+		openToast({
+			message: Liferay.Language.get(
+				'relationship-was-created-successfully'
+			),
+		});
 	};
 
 	return (

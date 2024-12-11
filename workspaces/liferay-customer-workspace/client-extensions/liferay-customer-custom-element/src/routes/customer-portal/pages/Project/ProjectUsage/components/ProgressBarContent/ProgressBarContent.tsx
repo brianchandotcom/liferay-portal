@@ -44,9 +44,10 @@ const ProgressBarContent: React.FC<IProps> = ({
 							'col-3 empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage && isUnlimited
-							? i18n.translate('unlimited')
-							: usedCount.toLocaleString()}
+						{displayUsage &&
+							(isUnlimited
+								? i18n.translate('unlimited')
+								: usedCount.toLocaleString())}
 					</h3>
 
 					{displayUsage && (

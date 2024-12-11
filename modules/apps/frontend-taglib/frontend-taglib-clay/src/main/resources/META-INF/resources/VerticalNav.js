@@ -49,7 +49,7 @@ export default function VerticalNav({
 					{item.icons?.map((icon) => {
 						return (
 							<ClayIcon
-								className="c-ml-2 text-muted"
+								className="c-ml-2 c-mr-2 text-muted"
 								key={icon.symbol}
 								symbol={icon.symbol}
 								title={icon.title}
@@ -58,9 +58,7 @@ export default function VerticalNav({
 					})}
 
 					{item.deprecated ? (
-						<span className="c-ml-2">
-							<FeatureIndicator type="deprecated" />
-						</span>
+						<FeatureIndicator type="deprecated" />
 					) : null}
 				</ClayVerticalNav.Item>
 			)}

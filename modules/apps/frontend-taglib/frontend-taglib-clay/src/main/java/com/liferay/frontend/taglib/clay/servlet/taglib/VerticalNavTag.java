@@ -311,7 +311,7 @@ public class VerticalNavTag extends BaseContainerTag {
 
 					IconTag iconTag = new IconTag();
 
-					iconTag.setCssClass("c-ml-2 text-muted");
+					iconTag.setCssClass("c-ml-2 c-mr-2 text-muted");
 					iconTag.setSymbol(symbol);
 
 					iconTag.doTag(pageContext);
@@ -319,7 +319,7 @@ public class VerticalNavTag extends BaseContainerTag {
 			}
 
 			if (GetterUtil.getBoolean(verticalNavItem.get("deprecated"))) {
-				jspWriter.write("<span class=\"badge badge-warning c-ml-2");
+				jspWriter.write("<span class=\"badge badge-warning");
 				jspWriter.write(" text-uppercase badge-translucent\">");
 				jspWriter.write("<span class=\"badge-item ");
 				jspWriter.write("badge-item-expand\">");

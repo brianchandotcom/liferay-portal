@@ -709,16 +709,18 @@ public class FileEntryContentDashboardItem
 				_portal.getHttpServletRequest(liferayPortletRequest),
 				ContentDashboardItemAction.Type.PREVIEW);
 
-		if (!contentDashboardItemActions.isEmpty()) {
-			ContentDashboardItemAction contentDashboardItemAction =
-				contentDashboardItemActions.get(0);
+		if (contentDashboardItemActions.isEmpty()) {
+			return null;
+		}
 
-			try {
-				return new URL(contentDashboardItemAction.getURL());
-			}
-			catch (MalformedURLException malformedURLException) {
-				_log.error(malformedURLException);
-			}
+		ContentDashboardItemAction contentDashboardItemAction =
+			contentDashboardItemActions.get(0);
+
+		try {
+			return new URL(contentDashboardItemAction.getURL());
+		}
+		catch (MalformedURLException malformedURLException) {
+			_log.error(malformedURLException);
 		}
 
 		return null;

@@ -110,7 +110,7 @@ public class KBArticleLayoutDisplayPageProvider
 		try {
 			List<String> parts = StringUtil.split(urlTitle, CharPool.SLASH);
 
-			if (parts.size() <= 1) {
+			if (parts.isEmpty()) {
 				return null;
 			}
 

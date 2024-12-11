@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../../liferay.config';
 
 export class CommerceLayoutsPage {
+	readonly accountSelectorButton: (name: string) => Locator;
 	readonly addOrderButton: Locator;
 	readonly addPageButton: Locator;
 	readonly addPageModalSubmitButton: Locator;
@@ -20,6 +21,7 @@ export class CommerceLayoutsPage {
 	readonly changeCurrentThemeButton: Locator;
 	readonly closeProductMenuButton: Locator;
 	readonly configureMenuItem: Locator;
+	readonly createNewOrderButton: Locator;
 	readonly createPageMenuItem: Locator;
 	readonly defaultDisplayPageTemplateIcon: Locator;
 	readonly defineCustomThemeCheckbox: Locator;
@@ -78,6 +80,11 @@ export class CommerceLayoutsPage {
 	readonly widgetPageTemplateButton: Locator;
 
 	constructor(page: Page) {
+		this.accountSelectorButton = (name) => {
+			return page.getByRole('button', {
+				name,
+			});
+		};
 		this.addOrderButton = page.getByRole('button', {
 			exact: true,
 			name: 'Add Order',
@@ -118,6 +125,10 @@ export class CommerceLayoutsPage {
 		this.configureMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Configure',
+		});
+		this.createNewOrderButton = page.getByRole('button', {
+			exact: true,
+			name: 'Create New Order',
 		});
 		this.createPageMenuItem = page
 			.getByTestId('dropdownMenu')

@@ -18,6 +18,7 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {commerceReturnSetUp} from '../utils/commerce';
@@ -32,6 +33,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11147': true,
 		'LPD-20379': true,
+		'LPS-178052': true,
 	}),
 	loginTest()
 );
@@ -2497,4 +2499,76 @@ test('LPD-36953 Order Multishipping fragment', async ({
 	await expect(page.getByText(sku1.sku)).toBeVisible();
 
 	await expect(page.getByText(sku2.sku)).toBeVisible();
+});
+
+test('LPD-43496 Account selector redirects to order details DPT if open order content portlet is not present', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	displayPageTemplatesPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		siteGroupId: site.id,
+	});
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	await commerceLayoutsPage.createDisplayPageTemplate(
+		getRandomString(),
+		'Order',
+		site.name
+	);
+	await commerceLayoutsPage.addFragment('Heading');
+
+	await expect(page.getByText('Heading Example')).toBeVisible();
+
+	await commerceLayoutsPage.publishButton.click();
+
+	await waitForAlert(
+		page,
+		'The display page template was published successfully.'
+	);
+
+	await commerceLayoutsPage.moreActionsButton.click();
+	await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		commerceLayoutsPage.defaultDisplayPageTemplateIcon
+	).toBeVisible();
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.accountSelectorButton(account.name).click();
+	await commerceLayoutsPage.createNewOrderButton.click();
+
+	await expect(page.getByText('Heading Example')).toBeVisible();
 });

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -467,6 +468,8 @@ public class SegmentsServicePreActionTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLifecycleRender(true);
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

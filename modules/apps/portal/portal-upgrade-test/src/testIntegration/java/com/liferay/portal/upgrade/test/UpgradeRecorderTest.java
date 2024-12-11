@@ -109,7 +109,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailureResultByPendingModuleUpgrade() throws Exception {
+	public void testFailureResultByPendingModuleUpgrade() {
 		BundleContext bundleContext = _bundle.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
@@ -140,7 +140,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailureResultByVerifyException() throws Exception {
+	public void testFailureResultByVerifyException() {
 		StartupHelperUtil.setUpgrading(true);
 
 		VerifyExceptionProcess verifyExceptionProcess =
@@ -214,7 +214,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testSuccessResultWithUnrelatedError() throws Exception {
+	public void testSuccessResultWithUnrelatedError() {
 		StartupHelperUtil.setUpgrading(true);
 
 		UnrelatedErrorUpgradeProcess unrelatedErrorUpgradeProcess =
@@ -229,7 +229,7 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testSuccessResultWithWarning() throws Exception {
+	public void testSuccessResultWithWarning() {
 		StartupHelperUtil.setUpgrading(true);
 
 		WarningUpgradeProcess warningUpgradeProcess =

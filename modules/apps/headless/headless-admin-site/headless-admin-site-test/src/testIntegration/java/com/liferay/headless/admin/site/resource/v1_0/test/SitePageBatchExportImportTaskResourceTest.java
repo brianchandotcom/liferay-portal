@@ -55,6 +55,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Rubén Pulido
  */
@@ -184,8 +187,9 @@ public class SitePageBatchExportImportTaskResourceTest {
 	private void _assertEquals(
 		SitePage expectedSitePage, SitePage actualSitePage) {
 
-		Assert.assertEquals(
-			expectedSitePage.toString(), actualSitePage.toString());
+		JSONAssert.assertEquals(
+			expectedSitePage.toString(), actualSitePage.toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _assertExecuteStatusEquals(

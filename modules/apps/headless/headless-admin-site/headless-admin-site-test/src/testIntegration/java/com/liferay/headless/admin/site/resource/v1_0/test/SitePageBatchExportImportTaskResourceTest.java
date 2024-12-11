@@ -183,12 +183,10 @@ public class SitePageBatchExportImportTaskResourceTest {
 		expectedSitePage.setDateCreated((Date)null);
 		expectedSitePage.setDateModified((Date)null);
 		expectedSitePage.setDatePublished((Date)null);
-		expectedSitePage.setSiteExternalReferenceCode((String)null);
 
 		actualSitePage.setDateCreated((Date)null);
 		actualSitePage.setDateModified((Date)null);
 		actualSitePage.setDatePublished((Date)null);
-		actualSitePage.setSiteExternalReferenceCode((String)null);
 
 		Assert.assertEquals(
 			expectedSitePage.toString(), actualSitePage.toString());

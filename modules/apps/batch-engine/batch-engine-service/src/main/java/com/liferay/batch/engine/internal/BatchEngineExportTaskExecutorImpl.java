@@ -131,13 +131,12 @@ public class BatchEngineExportTaskExecutorImpl
 	private void _exportItems(BatchEngineExportTask batchEngineExportTask)
 		throws Exception {
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		NestedFieldsContext oldNestedFieldsContext = null;
 
 		Map<String, Serializable> parameters = _getParameters(
 			batchEngineExportTask);
-
-		NestedFieldsContext oldNestedFieldsContext = null;
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
 		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(

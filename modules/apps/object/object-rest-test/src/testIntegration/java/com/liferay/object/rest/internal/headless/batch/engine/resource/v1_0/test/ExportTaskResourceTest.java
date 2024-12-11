@@ -143,21 +143,21 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 	@FeatureFlags("LPD-29367")
 	@Test
 	public void testPostExportTaskWithNestedFieldNames() throws Exception {
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
 		// With "nestedFieldNames" query parameter
 
-		JSONObject jsonObject1 = _testPostExportTask(
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+
+		JSONObject jsonObject = _testPostExportTask(
 			"COMPLETED", "nestedFieldNames=permissions", objectDefinition);
 
-		Assert.assertEquals(1, jsonObject1.getInt("processedItemsCount"));
-
-		JSONArray contentJSONArray1 = _getExportTaskContentJSONArray(
-			jsonObject1.getString("externalReferenceCode"));
+		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
 
 		JSONArray permissionsJSONArray = JSONUtil.getValueAsJSONArray(
-			contentJSONArray1, "JSONObject/0", "JSONArray/permissions");
+			_getExportTaskContentJSONArray(
+				jsonObject.getString("externalReferenceCode")),
+			"JSONObject/0", "JSONArray/permissions");
 
 		JSONAssert.assertEquals(
 			ObjectMapperProviderUtil.getObjectMapper(
@@ -173,17 +173,14 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		// Without "nestedFieldNames" query parameter
 
-		JSONObject jsonObject2 = _testPostExportTask(
-			"COMPLETED", null, objectDefinition);
+		jsonObject = _testPostExportTask("COMPLETED", null, objectDefinition);
 
-		Assert.assertEquals(1, jsonObject2.getInt("processedItemsCount"));
-
-		JSONArray contentJSONArray2 = _getExportTaskContentJSONArray(
-			jsonObject2.getString("externalReferenceCode"));
-
+		Assert.assertEquals(1, jsonObject.getInt("processedItemsCount"));
 		Assert.assertNull(
 			JSONUtil.getValueAsJSONArray(
-				contentJSONArray2, "JSONObject/0", "JSONArray/permissions"));
+				_getExportTaskContentJSONArray(
+					jsonObject.getString("externalReferenceCode")),
+				"JSONObject/0", "JSONArray/permissions"));
 	}
 
 	private JSONArray _getExportTaskContentJSONArray(

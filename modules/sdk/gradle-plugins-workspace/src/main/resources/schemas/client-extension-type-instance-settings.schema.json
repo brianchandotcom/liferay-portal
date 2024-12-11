@@ -197,6 +197,12 @@
 					},
 					"type": "array"
 				},
+				"previousContentRecommenderMostPopularItemsEnabled": {
+					"type": "boolean"
+				},
+				"previousContentRecommenderUserPersonalizationEnabled": {
+					"type": "boolean"
+				},
 				"previousSyncAllAccounts": {
 					"type": "boolean"
 				},

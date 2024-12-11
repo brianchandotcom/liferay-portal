@@ -72,8 +72,14 @@ public class AssetTagFinderImpl
 							AssetEntryTable.INSTANCE.groupId.eq(
 								groupId
 							).and(
-								AssetEntryTable.INSTANCE.classNameId.eq(
-									classNameId)
+								() -> {
+									if (classNameId <= 0) {
+										return null;
+									}
+
+									return AssetEntryTable.INSTANCE.classNameId.
+										eq(classNameId);
+								}
 							).and(
 								AssetEntryTable.INSTANCE.visible.eq(true)
 							);

@@ -7,6 +7,7 @@ package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -74,15 +75,15 @@ public class ChildSitesItemSelectorViewDisplayContext
 	private List<Group> _filterGroups(
 		List<Group> groups, PermissionChecker permissionChecker) {
 
-		List<Group> filteredGroups = new ArrayList<>();
+		return TransformUtil.transform(
+			groups,
+			group -> {
+				if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+					return group;
+				}
 
-		for (Group group : groups) {
-			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
+				return null;
+			});
 	}
 
 	private LinkedHashMap<String, Object> _getGroupParams() {

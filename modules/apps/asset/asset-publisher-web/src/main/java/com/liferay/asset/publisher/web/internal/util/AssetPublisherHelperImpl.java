@@ -29,6 +29,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -964,17 +965,17 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 	private List<AssetEntry> _filterAssetCategoriesAssetEntries(
 		List<AssetEntry> assetEntries, long[] assetCategoryIds) {
 
-		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+		return TransformUtil.transform(
+			assetEntries,
+			assetEntry -> {
+				if (ArrayUtil.containsAll(
+						assetEntry.getCategoryIds(), assetCategoryIds)) {
 
-		for (AssetEntry assetEntry : assetEntries) {
-			if (ArrayUtil.containsAll(
-					assetEntry.getCategoryIds(), assetCategoryIds)) {
+					return assetEntry;
+				}
 
-				filteredAssetEntries.add(assetEntry);
-			}
-		}
-
-		return filteredAssetEntries;
+				return null;
+			});
 	}
 
 	private long[] _filterAssetCategoryIds(

@@ -2208,17 +2208,17 @@ public class AssetPublisherDisplayContext {
 	private List<AssetEntry> _filterAssetCategoriesAssetEntries(
 		List<AssetEntry> assetEntries, long[] assetCategoryIds) {
 
-		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+		return TransformUtil.transform(
+			assetEntries,
+			assetEntry -> {
+				if (ArrayUtil.containsAll(
+						assetEntry.getCategoryIds(), assetCategoryIds)) {
 
-		for (AssetEntry assetEntry : assetEntries) {
-			if (ArrayUtil.containsAll(
-					assetEntry.getCategoryIds(), assetCategoryIds)) {
+					return assetEntry;
+				}
 
-				filteredAssetEntries.add(assetEntry);
-			}
-		}
-
-		return filteredAssetEntries;
+				return null;
+			});
 	}
 
 	private List<AssetEntry> _filterAssetTagNamesAssetEntries(

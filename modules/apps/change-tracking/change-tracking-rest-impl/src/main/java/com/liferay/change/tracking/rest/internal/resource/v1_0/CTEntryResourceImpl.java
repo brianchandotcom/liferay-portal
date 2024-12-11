@@ -306,7 +306,11 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	private CTEntry _toCTEntry(Long ctEntryId) throws Exception {
 		com.liferay.change.tracking.model.CTEntry ctEntry =
-			_ctEntryLocalService.getCTEntry(ctEntryId);
+			_ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+		if (ctEntry == null) {
+			return null;
+		}
 
 		return _ctEntryDTOConverter.toDTO(
 			_getDTOConverterContext(ctEntry), ctEntry);

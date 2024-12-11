@@ -7,10 +7,16 @@ package com.liferay.object.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectFieldValidationConstants;
+import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -43,6 +49,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -84,19 +91,106 @@ public class ObjectEntryIndexerReindexTest {
 					true, ObjectDefinitionConstants.SCOPE_COMPANY,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING, true, true,
-							null, RandomTestUtil.randomString(), "name",
-							Arrays.asList(
+						new DecimalObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"decimalLocalized"
+						).build(),
+						new IntegerObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"integerLocalized"
+						).build(),
+						new LongIntegerObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"longIntegerLocalized"
+						).build(),
+						new LongTextObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"longTextLocalized"
+						).build(),
+						new PrecisionDecimalObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"precisionDecimalLocalized"
+						).build(),
+						new RichTextObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"richTextLocalized"
+						).build(),
+						new TextObjectFieldBuilder(
+						).indexed(
+							true
+						).indexedAsKeyword(
+							true
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).localized(
+							true
+						).name(
+							"textLocalized"
+						).objectFieldSettings(
+							Collections.singletonList(
 								new ObjectFieldSettingBuilder(
 								).name(
 									ObjectFieldSettingConstants.
 										NAME_UNIQUE_VALUES
 								).value(
 									Boolean.TRUE.toString()
-								).build()),
-							false)));
+								).build())
+						).build()));
 
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
@@ -106,11 +200,47 @@ public class ObjectEntryIndexerReindexTest {
 				TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
+					"decimalLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US", RandomTestUtil.randomDouble()
+					).put(
+						"pt_BR", RandomTestUtil.randomDouble()
+					).build()
+				).put(
+					"integerLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US", RandomTestUtil.randomInt()
+					).put(
+						"pt_BR", RandomTestUtil.randomInt()
+					).build()
+				).put(
+					"longIntegerLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US",
+						RandomTestUtil.randomLong(
+							1,
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MAX)
+					).put(
+						"pt_BR",
+						RandomTestUtil.randomLong(
+							1,
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MAX)
+					).build()
+				).put(
 					"longTextLocalized_i18n",
 					HashMapBuilder.put(
 						"en_US", RandomTestUtil.randomString()
 					).put(
 						"pt_BR", RandomTestUtil.randomString()
+					).build()
+				).put(
+					"precisionDecimalLocalized_i18n",
+					HashMapBuilder.put(
+						"en_US", RandomTestUtil.randomDouble()
+					).put(
+						"pt_BR", RandomTestUtil.randomDouble()
 					).build()
 				).put(
 					"richTextLocalized_i18n",

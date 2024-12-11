@@ -1847,7 +1847,7 @@ public class ObjectEntryLocalServiceImpl
 	private void _addFileEntry(
 			DLFileEntry dlFileEntry, ObjectDefinition objectDefinition,
 			long objectEntryId, ObjectField objectField,
-			ServiceContext serviceContext, long userId,
+			ServiceContext serviceContext, long userId, String valueLanguageId,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -1891,7 +1891,17 @@ public class ObjectEntryLocalServiceImpl
 				StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
 				dlFileEntry.getSize(), null, null, null, serviceContext);
 
-			values.put(objectField.getName(), fileEntry.getFileEntryId());
+			if (objectField.isLocalized()) {
+				Map<String, Serializable> localizedValues =
+					(Map<String, Serializable>)values.get(
+						objectField.getI18nObjectFieldName());
+
+				localizedValues.put(
+					valueLanguageId, fileEntry.getFileEntryId());
+			}
+			else {
+				values.put(objectField.getName(), fileEntry.getFileEntryId());
+			}
 		}
 		finally {
 			if (dlFileEntry != null) {
@@ -5273,7 +5283,7 @@ public class ObjectEntryLocalServiceImpl
 
 				_addFileEntry(
 					dlFileEntry, objectDefinition, objectEntryId, objectField,
-					serviceContext, userId, values);
+					serviceContext, userId, valueLanguageId, values);
 
 				return;
 			}

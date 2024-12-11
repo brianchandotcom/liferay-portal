@@ -12,12 +12,12 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,23 +41,17 @@ public class CommerceChannelFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Channel> channels = new ArrayList<>();
-
 		List<CommerceChannel> commerceChannels = _commerceChannelService.search(
 			_portal.getCompanyId(httpServletRequest), fdsKeywords.getKeywords(),
 			fdsPagination.getStartPosition(), fdsPagination.getEndPosition(),
 			sort);
 
-		for (CommerceChannel commerceChannel : commerceChannels) {
-			channels.add(
-				new Channel(
-					commerceChannel.getCommerceChannelId(),
-					commerceChannel.getName(),
-					_language.get(
-						httpServletRequest, commerceChannel.getType())));
-		}
-
-		return channels;
+		return TransformUtil.transform(
+			commerceChannels,
+			commerceChannel -> new Channel(
+				commerceChannel.getCommerceChannelId(),
+				commerceChannel.getName(),
+				_language.get(httpServletRequest, commerceChannel.getType())));
 	}
 
 	@Override

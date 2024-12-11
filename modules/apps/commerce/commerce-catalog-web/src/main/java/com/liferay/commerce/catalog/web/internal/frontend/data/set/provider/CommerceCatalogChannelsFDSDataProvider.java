@@ -14,11 +14,11 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +42,6 @@ public class CommerceCatalogChannelsFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Channel> channels = new ArrayList<>();
-
 		long commerceCatalogId = ParamUtil.getLong(
 			httpServletRequest, "commerceCatalogId");
 
@@ -53,17 +51,16 @@ public class CommerceCatalogChannelsFDSDataProvider
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition());
 
-		for (CommerceChannelRel commerceChannelRel : commerceChannels) {
-			CommerceChannel commerceChannel =
-				commerceChannelRel.getCommerceChannel();
+		return TransformUtil.transform(
+			commerceChannels,
+			commerceChannelRel -> {
+				CommerceChannel commerceChannel =
+					commerceChannelRel.getCommerceChannel();
 
-			channels.add(
-				new Channel(
+				return new Channel(
 					commerceChannel.getCommerceChannelId(),
-					commerceChannel.getName(), commerceChannel.getType()));
-		}
-
-		return channels;
+					commerceChannel.getName(), commerceChannel.getType());
+			});
 	}
 
 	@Override

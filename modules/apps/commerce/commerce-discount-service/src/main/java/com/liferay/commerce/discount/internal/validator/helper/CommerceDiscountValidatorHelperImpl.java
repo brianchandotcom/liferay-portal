@@ -12,9 +12,9 @@ import com.liferay.commerce.discount.validator.CommerceDiscountValidator;
 import com.liferay.commerce.discount.validator.CommerceDiscountValidatorRegistry;
 import com.liferay.commerce.discount.validator.CommerceDiscountValidatorResult;
 import com.liferay.commerce.discount.validator.helper.CommerceDiscountValidatorHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,27 +69,21 @@ public class CommerceDiscountValidatorHelperImpl
 			String... types)
 		throws PortalException {
 
-		List<CommerceDiscountValidatorResult> commerceDiscountValidatorResults =
-			new ArrayList<>();
-
-		List<CommerceDiscountValidator> commerceDiscountValidators =
+		return TransformUtil.transform(
 			_commerceDiscountValidatorRegistry.getCommerceDiscountValidators(
-				types);
+				types),
+			commerceDiscountValidator -> {
+				CommerceDiscountValidatorResult
+					commerceDiscountValidatorResult =
+						commerceDiscountValidator.validate(
+							commerceContext, commerceDiscount);
 
-		for (CommerceDiscountValidator commerceDiscountValidator :
-				commerceDiscountValidators) {
+				if (!commerceDiscountValidatorResult.isValid()) {
+					return commerceDiscountValidatorResult;
+				}
 
-			CommerceDiscountValidatorResult commerceDiscountValidatorResult =
-				commerceDiscountValidator.validate(
-					commerceContext, commerceDiscount);
-
-			if (!commerceDiscountValidatorResult.isValid()) {
-				commerceDiscountValidatorResults.add(
-					commerceDiscountValidatorResult);
-			}
-		}
-
-		return commerceDiscountValidatorResults;
+				return null;
+			});
 	}
 
 	@Reference

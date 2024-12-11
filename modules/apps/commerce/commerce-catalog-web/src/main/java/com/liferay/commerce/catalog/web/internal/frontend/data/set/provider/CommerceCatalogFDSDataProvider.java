@@ -12,13 +12,13 @@ import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +42,6 @@ public class CommerceCatalogFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Catalog> catalogs = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -53,16 +51,13 @@ public class CommerceCatalogFDSDataProvider
 			fdsPagination.getStartPosition(), fdsPagination.getEndPosition(),
 			new Sort(Field.NAME, false));
 
-		for (CommerceCatalog catalog : commerceCatalogs) {
-			catalogs.add(
-				new Catalog(
-					catalog.getCommerceCatalogId(),
-					catalog.getCommerceCurrencyCode(),
-					catalog.getCatalogDefaultLanguageId(), catalog.getName(),
-					catalog.isSystem()));
-		}
-
-		return catalogs;
+		return TransformUtil.transform(
+			commerceCatalogs,
+			catalog -> new Catalog(
+				catalog.getCommerceCatalogId(),
+				catalog.getCommerceCurrencyCode(),
+				catalog.getCatalogDefaultLanguageId(), catalog.getName(),
+				catalog.isSystem()));
 	}
 
 	@Override

@@ -14,12 +14,12 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,32 +49,24 @@ public class CommerceChannelHealthCheckFDSDataProvider
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		List<CommerceChannelHealthStatus> commerceChannelHealthStatuses =
+		return TransformUtil.transform(
 			_commerceChannelHealthStatusRegistry.
-				getCommerceChannelHealthStatuses();
+				getCommerceChannelHealthStatuses(),
+			commerceChannelHealthStatus -> {
+				if (commerceChannelHealthStatus.isFixed(
+						commerceChannel.getCompanyId(),
+						commerceChannel.getCommerceChannelId())) {
 
-		List<HealthCheck> healthChecks = new ArrayList<>();
+					return null;
+				}
 
-		for (CommerceChannelHealthStatus commerceChannelHealthStatus :
-				commerceChannelHealthStatuses) {
-
-			if (commerceChannelHealthStatus.isFixed(
-					commerceChannel.getCompanyId(),
-					commerceChannel.getCommerceChannelId())) {
-
-				continue;
-			}
-
-			healthChecks.add(
-				new HealthCheck(
+				return new HealthCheck(
 					commerceChannelHealthStatus.getKey(),
 					commerceChannelHealthStatus.getName(
 						_portal.getLocale(httpServletRequest)),
 					commerceChannelHealthStatus.getDescription(
-						_portal.getLocale(httpServletRequest))));
-		}
-
-		return healthChecks;
+						_portal.getLocale(httpServletRequest)));
+			});
 	}
 
 	@Override

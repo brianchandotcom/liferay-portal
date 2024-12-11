@@ -35,10 +35,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@Test
-	public void testPostImportTaskInsertCreateStrategyWithPermissions()
-		throws Exception {
+	public void testPostImportTask() throws Exception {
 
-		// With empty "permissions"
+		// With empty "permissions" and "createStrategy" INSERT
 
 		JSONObject beforeImportJSONObject1 = JSONUtil.put(
 			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
@@ -69,7 +68,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With no "permissions"
+		// With no "permissions" and "createStrategy" INSERT
 
 		JSONObject beforeImportJSONObject2 = JSONUtil.put(
 			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
@@ -107,7 +106,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "permissions"
+		// With "permissions" and "createStrategy" INSERT
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -146,13 +145,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				beforeImportJSONObject3.getString("externalReferenceCode")
 			).toString(),
 			JSONCompareMode.LENIENT);
-	}
 
-	@Test
-	public void testPostImportTaskUpsertCreateStrategyWithPermissions()
-		throws Exception {
-
-		// With empty "permissions"
+		// With empty "permissions" and "createStrategy" UPSERT
 
 		JSONObject beforeUpsertJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -191,7 +185,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With no "permissions"
+		// With no "permissions" and "createStrategy" UPSERT
 
 		JSONObject beforeUpsertJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -240,7 +234,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "permissions"
+		// With "permissions" and "createStrategy" UPSERT
 
 		JSONObject beforeUpsertJSONObject3 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -253,8 +247,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				"?nestedFields=permissions",
 				"&restrictFields=dateCreated,dateModified"),
 			Http.Method.POST);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		JSONObject jsonObject3 = _addViewPermission(
 			JSONFactoryUtil.createJSONObject(
@@ -295,18 +287,11 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				jsonObject3.getString("externalReferenceCode")
 			).toString(),
 			JSONCompareMode.LENIENT);
-	}
-
-	@Test
-	public void testPostImportTaskWithRestrictedFieldNamesParam()
-		throws Exception {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		JSONObject beforeImportJSONObject = _getJSONObject(
+		JSONObject beforeImportJSONObject4 = _getJSONObject(
 			objectEntry.getExternalReferenceCode());
 
 		// With "restrictedFieldNames" query parameter
@@ -315,7 +300,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
 				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
+					"[", _addViewPermission(beforeImportJSONObject4, role),
+					"]"),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -347,7 +333,8 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
 				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject, role), "]"),
+					"[", _addViewPermission(beforeImportJSONObject4, role),
+					"]"),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",

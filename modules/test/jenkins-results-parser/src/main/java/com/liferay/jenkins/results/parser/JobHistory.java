@@ -93,7 +93,22 @@ public class JobHistory {
 			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
 
 		try {
-			JenkinsResultsParserUtil.toFile(ciHistoryURL, tempGzipFile);
+			String ciHistoryURLString = String.valueOf(ciHistoryURL);
+
+			if (ciHistoryURLString.startsWith(
+					CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
+				ciHistoryURLString.startsWith(
+					CloudStorageSyncUtil.GCP_BUCKET_PATH_PATCHER_SHARED) ||
+				ciHistoryURLString.startsWith(
+					CloudStorageSyncUtil.GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
+
+				CloudStorageSyncUtil.copyGCPFile(
+					ciHistoryURLString,
+					JenkinsResultsParserUtil.getCanonicalPath(tempGzipFile));
+			}
+			else {
+				JenkinsResultsParserUtil.toFile(ciHistoryURL, tempGzipFile);
+			}
 
 			String content = JenkinsResultsParserUtil.read(tempGzipFile);
 

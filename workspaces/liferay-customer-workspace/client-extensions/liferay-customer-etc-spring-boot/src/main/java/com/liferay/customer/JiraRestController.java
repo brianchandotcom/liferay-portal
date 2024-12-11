@@ -476,13 +476,13 @@ public class JiraRestController extends BaseRestController {
 			issueFieldsJSONObject.optString(
 				_jiraSecurityVulnerabilityFieldAffectedVersionsDetails)
 		).put(
-			"affects",
-			issueFieldsJSONObject.optString(
-				_jiraSecurityVulnerabilityFieldAffects)
-		).put(
 			"affectedVersions",
 			_flattenJSONArray(
 				issueFieldsJSONObject.getJSONArray(_FIELD_VERSIONS))
+		).put(
+			"affects",
+			issueFieldsJSONObject.optString(
+				_jiraSecurityVulnerabilityFieldAffects)
 		).put(
 			"categories",
 			_flattenJSONArray(

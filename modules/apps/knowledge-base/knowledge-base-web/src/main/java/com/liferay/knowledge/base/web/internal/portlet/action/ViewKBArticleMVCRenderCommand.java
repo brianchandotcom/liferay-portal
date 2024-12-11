@@ -54,8 +54,10 @@ public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 		KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		CTTimelineUtil.setCTTimelineKeys(
-			renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+		if (kbArticle != null) {
+			CTTimelineUtil.setCTTimelineKeys(
+				renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+		}
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			return "/admin/view_kb_article.jsp";

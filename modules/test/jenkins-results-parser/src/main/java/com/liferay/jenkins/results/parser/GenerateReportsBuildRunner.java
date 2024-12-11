@@ -394,6 +394,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				_getBuildProperty("ci.system.status.report.job.name"),
 				_getBuildProperty("ci.system.status.report.test.suite.name"));
 		}
+		else {
+			JenkinsResultsParserUtil.rsync(
+				null, filePath + "/js/testray-data.js", "test-1-0",
+				JenkinsResultsParserUtil.combine(
+					_REPORT_RSYNC_DESTINATION_DIR_PATH, "/",
+					_getReportDirName(Report.CI_SYSTEM_STATUS.toString()),
+					"/js/testray-data.js"));
+		}
 
 		_updateReport(filePath);
 

@@ -446,32 +446,6 @@ public class ObjectActionLocalServiceImpl
 		}
 	}
 
-	private Map<Locale, String> _populateLabelMap(
-		Map<Locale, String> labelMap, String name, Locale locale) {
-
-		if ((labelMap == null) || labelMap.isEmpty()) {
-			return HashMapBuilder.put(
-				locale, name
-			).build();
-		}
-
-		if (Validator.isNotNull(labelMap.get(locale))) {
-			return labelMap;
-		}
-
-		if (labelMap.size() == 1) {
-			for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
-				labelMap.put(locale, entry.getValue());
-			}
-
-			return labelMap;
-		}
-
-		labelMap.put(locale, name);
-
-		return labelMap;
-	}
-
 	private boolean _isUsePreferredLanguageForGuestsSupported(
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
@@ -503,6 +477,32 @@ public class ObjectActionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private Map<Locale, String> _populateLabelMap(
+		Map<Locale, String> labelMap, String name, Locale locale) {
+
+		if ((labelMap == null) || labelMap.isEmpty()) {
+			return HashMapBuilder.put(
+				locale, name
+			).build();
+		}
+
+		if (Validator.isNotNull(labelMap.get(locale))) {
+			return labelMap;
+		}
+
+		if (labelMap.size() == 1) {
+			for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+				labelMap.put(locale, entry.getValue());
+			}
+
+			return labelMap;
+		}
+
+		labelMap.put(locale, name);
+
+		return labelMap;
 	}
 
 	private void _validateActive(

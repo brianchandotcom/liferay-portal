@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -139,6 +140,41 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 			sb.append("\"");
 		}
 
+		Long creatorId = getCreatorId();
+
+		if (creatorId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorId\": ");
+
+			sb.append(creatorId);
+		}
+
+		Object customFields = getCustomFields();
+
+		if (customFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			if (customFields instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject((Map<?, ?>)customFields));
+			}
+			else if (customFields instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)customFields));
+				sb.append("\"");
+			}
+			else {
+				sb.append(customFields);
+			}
+		}
+
 		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
@@ -199,6 +235,62 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 			sb.append(documentId);
 		}
 
+		Date expirationDate = getExpirationDate();
+
+		if (expirationDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"expirationDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(expirationDate));
+
+			sb.append("\"");
+		}
+
+		Long folderId = getFolderId();
+
+		if (folderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"folderId\": ");
+
+			sb.append(folderId);
+		}
+
+		String friendlyUrl = getFriendlyUrl();
+
+		if (friendlyUrl != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrl\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyUrl));
+
+			sb.append("\"");
+		}
+
+		Long groupId = getGroupId();
+
+		if (groupId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupId\": ");
+
+			sb.append(groupId);
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -255,6 +347,18 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 			sb.append(String.valueOf(nestedTestEntity));
 		}
 
+		Integer priority = getPriority();
+
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(priority);
+		}
+
 		String self = getSelf();
 
 		if (self != null) {
@@ -271,7 +375,7 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 			sb.append("\"");
 		}
 
-		TestEntity testEntities = getTestEntities();
+		TestEntity[] testEntities = getTestEntities();
 
 		if (testEntities != null) {
 			if (sb.length() > 1) {
@@ -280,7 +384,33 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 
 			sb.append("\"testEntities\": ");
 
-			sb.append(String.valueOf(testEntities));
+			sb.append("[");
+
+			for (int i = 0; i < testEntities.length; i++) {
+				sb.append(String.valueOf(testEntities[i]));
+
+				if ((i + 1) < testEntities.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		String title = getTitle();
+
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(title));
+
+			sb.append("\"");
 		}
 
 		Type type = getType();
@@ -297,6 +427,18 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 			sb.append(type);
 
 			sb.append("\"");
+		}
+
+		Long viewCount = getViewCount();
+
+		if (viewCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewCount\": ");
+
+			sb.append(viewCount);
 		}
 
 		sb.append("}");

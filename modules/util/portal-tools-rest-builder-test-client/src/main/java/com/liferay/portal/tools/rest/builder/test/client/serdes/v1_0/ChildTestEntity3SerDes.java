@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity3;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -51,6 +52,33 @@ public class ChildTestEntity3SerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (childTestEntity3.getCreatorId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorId\": ");
+
+			sb.append(childTestEntity3.getCreatorId());
+		}
+
+		if (childTestEntity3.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			if (childTestEntity3.getCustomFields() instanceof String) {
+				sb.append("\"");
+				sb.append((String)childTestEntity3.getCustomFields());
+				sb.append("\"");
+			}
+			else {
+				sb.append(childTestEntity3.getCustomFields());
+			}
+		}
 
 		if (childTestEntity3.getDateCreated() != null) {
 			if (sb.length() > 1) {
@@ -108,6 +136,56 @@ public class ChildTestEntity3SerDes {
 			sb.append(childTestEntity3.getDocumentId());
 		}
 
+		if (childTestEntity3.getExpirationDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"expirationDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					childTestEntity3.getExpirationDate()));
+
+			sb.append("\"");
+		}
+
+		if (childTestEntity3.getFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"folderId\": ");
+
+			sb.append(childTestEntity3.getFolderId());
+		}
+
+		if (childTestEntity3.getFriendlyUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrl\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(childTestEntity3.getFriendlyUrl()));
+
+			sb.append("\"");
+		}
+
+		if (childTestEntity3.getGroupId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"groupId\": ");
+
+			sb.append(childTestEntity3.getGroupId());
+		}
+
 		if (childTestEntity3.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -156,6 +234,16 @@ public class ChildTestEntity3SerDes {
 			sb.append(String.valueOf(childTestEntity3.getNestedTestEntity()));
 		}
 
+		if (childTestEntity3.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(childTestEntity3.getPriority());
+		}
+
 		if (childTestEntity3.getSelf() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -177,7 +265,34 @@ public class ChildTestEntity3SerDes {
 
 			sb.append("\"testEntities\": ");
 
-			sb.append(String.valueOf(childTestEntity3.getTestEntities()));
+			sb.append("[");
+
+			for (int i = 0; i < childTestEntity3.getTestEntities().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(childTestEntity3.getTestEntities()[i]));
+
+				if ((i + 1) < childTestEntity3.getTestEntities().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (childTestEntity3.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(childTestEntity3.getTitle()));
+
+			sb.append("\"");
 		}
 
 		if (childTestEntity3.getType() != null) {
@@ -192,6 +307,16 @@ public class ChildTestEntity3SerDes {
 			sb.append(childTestEntity3.getType());
 
 			sb.append("\"");
+		}
+
+		if (childTestEntity3.getViewCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewCount\": ");
+
+			sb.append(childTestEntity3.getViewCount());
 		}
 
 		sb.append("}");
@@ -215,6 +340,23 @@ public class ChildTestEntity3SerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (childTestEntity3.getCreatorId() == null) {
+			map.put("creatorId", null);
+		}
+		else {
+			map.put(
+				"creatorId", String.valueOf(childTestEntity3.getCreatorId()));
+		}
+
+		if (childTestEntity3.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(childTestEntity3.getCustomFields()));
+		}
 
 		if (childTestEntity3.getDateCreated() == null) {
 			map.put("dateCreated", null);
@@ -253,6 +395,39 @@ public class ChildTestEntity3SerDes {
 				"documentId", String.valueOf(childTestEntity3.getDocumentId()));
 		}
 
+		if (childTestEntity3.getExpirationDate() == null) {
+			map.put("expirationDate", null);
+		}
+		else {
+			map.put(
+				"expirationDate",
+				liferayToJSONDateFormat.format(
+					childTestEntity3.getExpirationDate()));
+		}
+
+		if (childTestEntity3.getFolderId() == null) {
+			map.put("folderId", null);
+		}
+		else {
+			map.put("folderId", String.valueOf(childTestEntity3.getFolderId()));
+		}
+
+		if (childTestEntity3.getFriendlyUrl() == null) {
+			map.put("friendlyUrl", null);
+		}
+		else {
+			map.put(
+				"friendlyUrl",
+				String.valueOf(childTestEntity3.getFriendlyUrl()));
+		}
+
+		if (childTestEntity3.getGroupId() == null) {
+			map.put("groupId", null);
+		}
+		else {
+			map.put("groupId", String.valueOf(childTestEntity3.getGroupId()));
+		}
+
 		if (childTestEntity3.getId() == null) {
 			map.put("id", null);
 		}
@@ -285,6 +460,13 @@ public class ChildTestEntity3SerDes {
 				String.valueOf(childTestEntity3.getNestedTestEntity()));
 		}
 
+		if (childTestEntity3.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(childTestEntity3.getPriority()));
+		}
+
 		if (childTestEntity3.getSelf() == null) {
 			map.put("self", null);
 		}
@@ -301,11 +483,26 @@ public class ChildTestEntity3SerDes {
 				String.valueOf(childTestEntity3.getTestEntities()));
 		}
 
+		if (childTestEntity3.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(childTestEntity3.getTitle()));
+		}
+
 		if (childTestEntity3.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put("type", String.valueOf(childTestEntity3.getType()));
+		}
+
+		if (childTestEntity3.getViewCount() == null) {
+			map.put("viewCount", null);
+		}
+		else {
+			map.put(
+				"viewCount", String.valueOf(childTestEntity3.getViewCount()));
 		}
 
 		return map;
@@ -326,7 +523,13 @@ public class ChildTestEntity3SerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "creatorId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
@@ -336,6 +539,18 @@ public class ChildTestEntity3SerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrl")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "groupId")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -350,13 +565,22 @@ public class ChildTestEntity3SerDes {
 			else if (Objects.equals(jsonParserFieldName, "nestedTestEntity")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
 				return false;
 			}
 
@@ -368,7 +592,19 @@ public class ChildTestEntity3SerDes {
 			ChildTestEntity3 childTestEntity3, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "creatorId")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setCreatorId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setCustomFields(
+						(Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity3.setDateCreated(
 						toDate((String)jsonParserFieldValue));
@@ -389,6 +625,30 @@ public class ChildTestEntity3SerDes {
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity3.setDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setExpirationDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderId")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setFolderId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrl")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setFriendlyUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "groupId")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setGroupId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -416,6 +676,12 @@ public class ChildTestEntity3SerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setPriority(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity3.setSelf((String)jsonParserFieldValue);
@@ -423,8 +689,23 @@ public class ChildTestEntity3SerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity3.setTestEntities(
-						TestEntitySerDes.toDTO((String)jsonParserFieldValue));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TestEntity[] testEntitiesArray =
+						new TestEntity[jsonParserFieldValues.length];
+
+					for (int i = 0; i < testEntitiesArray.length; i++) {
+						testEntitiesArray[i] = TestEntitySerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					childTestEntity3.setTestEntities(testEntitiesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -432,6 +713,12 @@ public class ChildTestEntity3SerDes {
 					childTestEntity3.setType(
 						ChildTestEntity3.Type.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity3.setViewCount(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

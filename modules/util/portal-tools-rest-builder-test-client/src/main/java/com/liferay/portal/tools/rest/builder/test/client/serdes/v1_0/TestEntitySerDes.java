@@ -89,6 +89,21 @@ public class TestEntitySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (testEntity.getCreatorId() == null) {
+			map.put("creatorId", null);
+		}
+		else {
+			map.put("creatorId", String.valueOf(testEntity.getCreatorId()));
+		}
+
+		if (testEntity.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields", String.valueOf(testEntity.getCustomFields()));
+		}
+
 		if (testEntity.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -119,6 +134,36 @@ public class TestEntitySerDes {
 		}
 		else {
 			map.put("documentId", String.valueOf(testEntity.getDocumentId()));
+		}
+
+		if (testEntity.getExpirationDate() == null) {
+			map.put("expirationDate", null);
+		}
+		else {
+			map.put(
+				"expirationDate",
+				liferayToJSONDateFormat.format(testEntity.getExpirationDate()));
+		}
+
+		if (testEntity.getFolderId() == null) {
+			map.put("folderId", null);
+		}
+		else {
+			map.put("folderId", String.valueOf(testEntity.getFolderId()));
+		}
+
+		if (testEntity.getFriendlyUrl() == null) {
+			map.put("friendlyUrl", null);
+		}
+		else {
+			map.put("friendlyUrl", String.valueOf(testEntity.getFriendlyUrl()));
+		}
+
+		if (testEntity.getGroupId() == null) {
+			map.put("groupId", null);
+		}
+		else {
+			map.put("groupId", String.valueOf(testEntity.getGroupId()));
 		}
 
 		if (testEntity.getId() == null) {
@@ -152,6 +197,13 @@ public class TestEntitySerDes {
 				String.valueOf(testEntity.getNestedTestEntity()));
 		}
 
+		if (testEntity.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(testEntity.getPriority()));
+		}
+
 		if (testEntity.getSelf() == null) {
 			map.put("self", null);
 		}
@@ -167,11 +219,25 @@ public class TestEntitySerDes {
 				"testEntities", String.valueOf(testEntity.getTestEntities()));
 		}
 
+		if (testEntity.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(testEntity.getTitle()));
+		}
+
 		if (testEntity.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put("type", String.valueOf(testEntity.getType()));
+		}
+
+		if (testEntity.getViewCount() == null) {
+			map.put("viewCount", null);
+		}
+		else {
+			map.put("viewCount", String.valueOf(testEntity.getViewCount()));
 		}
 
 		return map;
@@ -192,7 +258,13 @@ public class TestEntitySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "creatorId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
@@ -202,6 +274,18 @@ public class TestEntitySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrl")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "groupId")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -216,13 +300,22 @@ public class TestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "nestedTestEntity")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
 				return false;
 			}
 
@@ -263,7 +356,18 @@ public class TestEntitySerDes {
 			TestEntity testEntity, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "creatorId")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setCreatorId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setCustomFields((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setDateCreated(
 						toDate((String)jsonParserFieldValue));
@@ -283,6 +387,29 @@ public class TestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setExpirationDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderId")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setFolderId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrl")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setFriendlyUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "groupId")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setGroupId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -309,6 +436,12 @@ public class TestEntitySerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setPriority(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setSelf((String)jsonParserFieldValue);
@@ -316,14 +449,35 @@ public class TestEntitySerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
 				if (jsonParserFieldValue != null) {
-					testEntity.setTestEntities(
-						TestEntitySerDes.toDTO((String)jsonParserFieldValue));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TestEntity[] testEntitiesArray =
+						new TestEntity[jsonParserFieldValues.length];
+
+					for (int i = 0; i < testEntitiesArray.length; i++) {
+						testEntitiesArray[i] = TestEntitySerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					testEntity.setTestEntities(testEntitiesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					testEntity.setType(
 						TestEntity.Type.create((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
+				if (jsonParserFieldValue != null) {
+					testEntity.setViewCount(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

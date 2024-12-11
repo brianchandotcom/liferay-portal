@@ -239,12 +239,11 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						skuDTOConverterContext));
 				setReplacementSkuExternalReferenceCode(
 					() -> {
-						if (replacementCPInstance != null) {
-							return replacementCPInstance.
-								getExternalReferenceCode();
+						if (replacementCPInstance == null) {
+							return null;
 						}
 
-						return null;
+						return replacementCPInstance.getExternalReferenceCode();
 					});
 				setReplacementSkuId(
 					() -> {
@@ -576,13 +575,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			Locale locale)
 		throws Exception {
 
-		if (MapUtil.isNotEmpty(cpDefinitionOptionValueRelsMap)) {
-			return SkuOptionUtil.getSkuOptions(
-				cpDefinitionOptionValueRelsMap, _cpInstanceLocalService,
-				locale);
+		if (MapUtil.isEmpty(cpDefinitionOptionValueRelsMap)) {
+			return null;
 		}
 
-		return null;
+		return SkuOptionUtil.getSkuOptions(
+			cpDefinitionOptionValueRelsMap, _cpInstanceLocalService, locale);
 	}
 
 	private boolean _isTaxIncludedInPrice(long commerceChannelId)

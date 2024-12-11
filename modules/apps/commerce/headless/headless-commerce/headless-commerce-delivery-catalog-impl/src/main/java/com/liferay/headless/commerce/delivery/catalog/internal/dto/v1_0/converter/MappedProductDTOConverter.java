@@ -295,22 +295,22 @@ public class MappedProductDTOConverter
 					});
 				setReplacementMessage(
 					() -> {
-						if ((cpInstance != null) &&
-							cpInstance.isDiscontinued() &&
-							(firstAvailableReplacementCPInstance != null) &&
-							(cpInstance.getCPInstanceId() ==
+						if ((cpInstance == null) ||
+							!cpInstance.isDiscontinued() ||
+							(firstAvailableReplacementCPInstance == null) ||
+							(cpInstance.getCPInstanceId() !=
 								csDiagramEntry.getCPInstanceId())) {
 
-							return _language.format(
-								mappedProductDTOConverterContext.getLocale(),
-								"x-has-been-replaced-by-x",
-								new String[] {
-									csDiagramEntry.getSku(),
-									firstAvailableReplacementCPInstance.getSku()
-								});
+							return null;
 						}
 
-						return null;
+						return _language.format(
+							mappedProductDTOConverterContext.getLocale(),
+							"x-has-been-replaced-by-x",
+							new String[] {
+								csDiagramEntry.getSku(),
+								firstAvailableReplacementCPInstance.getSku()
+							});
 					});
 				setSequence(csDiagramEntry::getSequence);
 				setSku(

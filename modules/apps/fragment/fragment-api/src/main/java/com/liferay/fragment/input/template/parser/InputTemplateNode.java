@@ -9,9 +9,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -22,7 +24,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	public InputTemplateNode(
 		String errorMessage, String helpText, String label, boolean localizable,
 		String name, boolean readOnly, boolean required, boolean showHelpText,
-		boolean showLabel, String type, String value) {
+		boolean showLabel, String type, String value,
+		Map<Locale, String> valueI18n) {
 
 		_errorMessage = errorMessage;
 		_helpText = helpText;
@@ -35,6 +38,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		_showLabel = showLabel;
 		_type = type;
 		_value = value;
+		_valueI18n = valueI18n;
 
 		put("errorMessage", errorMessage);
 		put("helpText", helpText);
@@ -47,6 +51,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		put("showLabel", showLabel);
 		put("type", type);
 		put("value", value);
+		put("valueI18n", LocalizedMapUtil.getLanguageIdMap(valueI18n));
 	}
 
 	public void addAttribute(String name, Object object) {
@@ -79,6 +84,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public String getType() {
 		return _type;
+	}
+
+	public Map<Locale, String> getValueI18n() {
+		return _valueI18n;
 	}
 
 	public boolean isLocalizable() {
@@ -138,6 +147,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 			"type", _type
 		).put(
 			"value", _value
+		).put(
+			"valueI18n",
+			JSONFactoryUtil.createJSONObject(
+				LocalizedMapUtil.getLanguageIdMap(_valueI18n))
 		);
 	}
 
@@ -182,5 +195,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	private final boolean _showLabel;
 	private final String _type;
 	private final String _value;
+	private final Map<Locale, String> _valueI18n;
 
 }

@@ -70,17 +70,6 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_logCaptures.add(
-			LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineExportTaskExecutorImpl",
-				LoggerTestUtil.ERROR));
-		_logCaptures.add(
-			LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR));
-
 		User adminUser = UserTestUtil.getAdminUser(
 			TestPropsValues.getCompanyId());
 
@@ -114,6 +103,17 @@ public class SitePageBatchExportImportTaskResourceTest {
 		).parameter(
 			"siteExternalReferenceCode", _importGroup.getExternalReferenceCode()
 		).build();
+
+		_logCaptures.add(
+			LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineExportTaskExecutorImpl",
+				LoggerTestUtil.ERROR));
+		_logCaptures.add(
+			LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR));
 
 		_sitePageResource = SitePageResource.builder(
 		).authentication(

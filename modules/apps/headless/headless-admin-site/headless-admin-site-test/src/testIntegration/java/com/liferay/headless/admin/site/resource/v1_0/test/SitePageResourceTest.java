@@ -193,8 +193,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					setType(Type.WIDGET_PAGE_SETTINGS);
 				}
 			});
-		sitePage.setSiteExternalReferenceCode(
-			testGroup.getExternalReferenceCode());
 		sitePage.setType(SitePage.Type.WIDGET_PAGE);
 
 		return sitePage;
@@ -221,7 +219,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		return sitePageResource.postByExternalReferenceCodeSitePage(
-			sitePage.getSiteExternalReferenceCode(), sitePage);
+			testGroup.getExternalReferenceCode(), sitePage);
 	}
 
 	private void _assertNestedFields(SitePage sitePage) throws Exception {

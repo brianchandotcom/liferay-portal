@@ -54,17 +54,15 @@ public class SamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
-			new SearchPaginatorDisplayContext(
-				_portal, renderRequest, renderResponse));
-
-		renderRequest.setAttribute(
 			SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT,
 			new SampleDisplayContext(renderRequest, renderResponse));
-
 		renderRequest.setAttribute(
 			SamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,
 			new SearchIteratorDisplayContext(
+				_portal, renderRequest, renderResponse));
+		renderRequest.setAttribute(
+			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
+			new SearchPaginatorDisplayContext(
 				_portal, renderRequest, renderResponse));
 
 		super.doDispatch(renderRequest, renderResponse);

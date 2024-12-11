@@ -16,10 +16,6 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {
-	deleteAfterTestProviderConnections,
-	deleteAfterTestVirtualInstances,
-} from '../saml.spec';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
 export const DEFAULT_IDP_NAME = 'www.able.com';
@@ -30,6 +26,8 @@ export const SECONDARY_IDP_NAME = 'www.charlie.com';
 export const SECONDARY_IDP_URL = `http://${SECONDARY_IDP_NAME}:8080`;
 export const SECONDARY_SP_NAME = 'www.dog.com';
 export const SECONDARY_SP_URL = `http://${SECONDARY_SP_NAME}:8080`;
+export const deleteAfterTestProviderConnections = new Set<string>();
+export const deleteAfterTestVirtualInstances = new Set<string>();
 
 export async function createCustomField(
 	adminPage: Page,

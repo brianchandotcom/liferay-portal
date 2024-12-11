@@ -72,6 +72,8 @@ import {
 	createIdentityProviderVirtualInstance,
 	createServiceProviderVirtualInstance,
 	createUser,
+	deleteAfterTestProviderConnections,
+	deleteAfterTestVirtualInstances,
 	deleteVirtualInstance,
 	performSamlSafeLogin,
 	resetSamlConfiguration,
@@ -90,8 +92,6 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
-export const deleteAfterTestProviderConnections = new Set<string>();
-export const deleteAfterTestVirtualInstances = new Set<string>();
 const resetAfterTestGeneralPage = new Set<string>();
 
 test.afterAll(async ({browser}) => {

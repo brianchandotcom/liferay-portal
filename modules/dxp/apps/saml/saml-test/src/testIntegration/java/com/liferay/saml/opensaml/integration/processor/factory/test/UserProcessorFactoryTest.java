@@ -52,8 +52,7 @@ public class UserProcessorFactoryTest {
 
 		Assert.assertNotEquals(0, _user.getUserId());
 
-		_assertProcess(
-			"Jane", "Doena", "jane.doena@example.com", "jane.doena");
+		_assertProcess("Jane", "Doena", "jane.doena@example.com", "jane.doena");
 		_assertProcess(
 			"John-changed", "Doe-changed", "JOHN.DOE@example.com",
 			"john.doe.changed");

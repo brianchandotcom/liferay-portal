@@ -56,6 +56,7 @@ export {commerceEvents};
 
 export {default as MiniCompare} from './components/mini_compare/entry';
 export {default as PriceComponent} from './components/price/Price';
+export {default as createCommerceCart} from './utilities/createCommerceCart';
 export {default as FormUtils} from './utilities/forms/index';
 export {
 	useLiferayModule,

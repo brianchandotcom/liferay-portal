@@ -28,12 +28,14 @@ export function accountSelectorTag({
 	accountSelectorId,
 	commerceChannelId,
 	createNewOrderURL,
+	currencyCode,
 	currentCommerceAccount,
 	currentCommerceOrder,
+	hasCommerceOpenOrderContentPortlet,
+	orderTypes,
 	refreshPageOnAccountSelected,
 	selectOrderURL,
 	setCurrentAccountURL,
-	showOrderTypeModal,
 }) {
 	accountSelector(accountSelectorId, accountSelectorId, {
 		accountEntryAllowedTypes:
@@ -42,13 +44,14 @@ export function accountSelectorTag({
 				: accountEntryAllowedTypes,
 		commerceChannelId,
 		createNewOrderURL,
+		currencyCode,
 		currentCommerceAccount,
 		currentCommerceOrder,
-		namespace: accountSelectorId,
+		hasCommerceOpenOrderContentPortlet,
+		orderTypes,
 		refreshPageOnAccountSelected,
 		selectOrderURL,
 		setCurrentAccountURL,
-		showOrderTypeModal,
 	});
 }
 

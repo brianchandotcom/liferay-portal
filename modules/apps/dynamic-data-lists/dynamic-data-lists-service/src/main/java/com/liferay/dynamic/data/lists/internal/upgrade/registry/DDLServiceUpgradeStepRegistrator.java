@@ -6,7 +6,6 @@
 package com.liferay.dynamic.data.lists.internal.upgrade.registry;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.SchemaUpgradeProcess;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
@@ -48,11 +47,6 @@ public class DDLServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.2", "1.1.0",
-			UpgradeProcessFactory.runSQL(
-				"update DDLRecord set recordSetVersion = '" +
-					DDLRecordSetConstants.VERSION_DEFAULT + "'",
-				"update DDLRecordSet set version = '" +
-					DDLRecordSetConstants.VERSION_DEFAULT + "'"),
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				DDLRecordSetVersionUpgradeProcess(_counterLocalService));
 

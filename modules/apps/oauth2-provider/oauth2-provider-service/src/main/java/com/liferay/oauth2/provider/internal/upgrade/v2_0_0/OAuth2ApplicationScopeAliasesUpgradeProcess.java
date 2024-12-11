@@ -11,6 +11,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -46,6 +48,15 @@ public class OAuth2ApplicationScopeAliasesUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> _upgradeCompany(companyId));
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				"OAuth2ApplicationScopeAliases", "scopeAliases",
+				"scopeAliasesHash")
+		};
 	}
 
 	private ResultSet _getApplicationScopeAliasesResultSet(long companyId)

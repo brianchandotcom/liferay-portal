@@ -404,8 +404,6 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register(
 			"6.0.0", "6.1.0",
-			UpgradeProcessFactory.addColumns(
-				"JournalArticle", "smallImageSource INTEGER"),
 			new JournalArticleSmallImageSourceUpgradeProcess());
 
 		registry.register(

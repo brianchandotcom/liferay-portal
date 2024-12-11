@@ -77,8 +77,6 @@ public class SamlServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.4", "2.0.0",
-			UpgradeProcessFactory.addColumns(
-				"SamlSpSession", "samlIdpEntityId VARCHAR(1024) null"),
 			new com.liferay.saml.persistence.internal.upgrade.v2_0_0.
 				SamlSpSessionDataUpgradeProcess(_configurationAdmin));
 

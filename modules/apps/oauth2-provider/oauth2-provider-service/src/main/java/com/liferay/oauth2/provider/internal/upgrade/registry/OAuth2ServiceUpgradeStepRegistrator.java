@@ -48,10 +48,7 @@ public class OAuth2ServiceUpgradeStepRegistrator
 		registry.register(
 			"1.3.0", "2.0.0",
 			new OAuth2ApplicationScopeAliasesUpgradeProcess(
-				_companyLocalService, _scopeLocator),
-			UpgradeProcessFactory.dropColumns(
-				"OAuth2ApplicationScopeAliases", "scopeAliases",
-				"scopeAliasesHash"));
+				_companyLocalService, _scopeLocator));
 
 		registry.register(
 			"2.0.0", "3.0.0",

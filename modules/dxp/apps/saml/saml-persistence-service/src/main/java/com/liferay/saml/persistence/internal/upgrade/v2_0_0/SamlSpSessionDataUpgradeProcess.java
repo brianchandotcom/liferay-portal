@@ -7,6 +7,8 @@ package com.liferay.saml.persistence.internal.upgrade.v2_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,6 +75,14 @@ public class SamlSpSessionDataUpgradeProcess extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			migrateSAMLProviderConfiguration();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"SamlSpSession", "samlIdpEntityId VARCHAR(1024) null")
+		};
 	}
 
 	private static final String _FACTORY_PID =

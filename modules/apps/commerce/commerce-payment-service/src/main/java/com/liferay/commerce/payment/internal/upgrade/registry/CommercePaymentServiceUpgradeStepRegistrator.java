@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,11 +91,18 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 				"errorMessages TEXT null", "languageId VARCHAR(75) null"));
 
 		registry.register(
-			"1.6.0", "1.7.0",
-			UpgradeProcessFactory.addColumns(
-				"CommercePaymentEntry", "note TEXT null",
-				"reasonKey VARCHAR(75) null", "reasonName STRING null"),
+			"1.6.0", "1.6.1",
 			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected UpgradeStep[] getPreUpgradeSteps() {
+					return new UpgradeStep[] {
+						UpgradeProcessFactory.addColumns(
+							"CommercePaymentEntry", "note TEXT null",
+							"reasonKey VARCHAR(75) null",
+							"reasonName STRING null")
+					};
+				}
 
 				@Override
 				protected String[][] getTableAndPrimaryKeyColumnNames() {
@@ -103,7 +111,10 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 					};
 				}
 
-			},
+			});
+
+		registry.register(
+			"1.6.1", "1.7.0",
 			new com.liferay.commerce.payment.internal.upgrade.v1_7_0.
 				CommercePaymentEntryUpgradeProcess());
 

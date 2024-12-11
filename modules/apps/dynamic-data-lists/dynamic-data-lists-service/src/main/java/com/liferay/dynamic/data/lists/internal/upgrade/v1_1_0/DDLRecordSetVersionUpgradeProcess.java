@@ -10,6 +10,8 @@ import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
@@ -86,6 +88,17 @@ public class DDLRecordSetVersionUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.executeBatch();
 			}
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.runSQL(
+				"update DDLRecord set recordSetVersion = '" +
+					DDLRecordSetConstants.VERSION_DEFAULT + "'",
+				"update DDLRecordSet set version = '" +
+					DDLRecordSetConstants.VERSION_DEFAULT + "'")
+		};
 	}
 
 	private final CounterLocalService _counterLocalService;

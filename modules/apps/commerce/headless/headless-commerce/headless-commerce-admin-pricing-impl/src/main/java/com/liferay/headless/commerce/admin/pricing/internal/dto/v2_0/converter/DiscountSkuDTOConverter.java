@@ -76,14 +76,13 @@ public class DiscountSkuDTOConverter
 	private String _getUnitOfMeasureKey(
 		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		if ((typeSettingsUnicodeProperties != null) &&
-			typeSettingsUnicodeProperties.containsKey("unitOfMeasureKey")) {
+		if ((typeSettingsUnicodeProperties == null) ||
+			!typeSettingsUnicodeProperties.containsKey("unitOfMeasureKey")) {
 
-			return typeSettingsUnicodeProperties.getProperty(
-				"unitOfMeasureKey");
+			return null;
 		}
 
-		return null;
+		return typeSettingsUnicodeProperties.getProperty("unitOfMeasureKey");
 	}
 
 	@Reference

@@ -137,31 +137,31 @@ public class FileEntry implements Serializable {
 	private Supplier<String> _fileBase64Supplier;
 
 	@Schema(
-		description = "optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileSourceURL`)"
+		description = "optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileURL`)"
 	)
-	public String getFileSourceURL() {
-		if (_fileSourceURLSupplier != null) {
-			fileSourceURL = _fileSourceURLSupplier.get();
+	public String getFileURL() {
+		if (_fileURLSupplier != null) {
+			fileURL = _fileURLSupplier.get();
 
-			_fileSourceURLSupplier = null;
+			_fileURLSupplier = null;
 		}
 
-		return fileSourceURL;
+		return fileURL;
 	}
 
-	public void setFileSourceURL(String fileSourceURL) {
-		this.fileSourceURL = fileSourceURL;
+	public void setFileURL(String fileURL) {
+		this.fileURL = fileURL;
 
-		_fileSourceURLSupplier = null;
+		_fileURLSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFileSourceURL(
-		UnsafeSupplier<String, Exception> fileSourceURLUnsafeSupplier) {
+	public void setFileURL(
+		UnsafeSupplier<String, Exception> fileURLUnsafeSupplier) {
 
-		_fileSourceURLSupplier = () -> {
+		_fileURLSupplier = () -> {
 			try {
-				return fileSourceURLUnsafeSupplier.get();
+				return fileURLUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -173,13 +173,13 @@ public class FileEntry implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileSourceURL`)"
+		description = "optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileURL`)"
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fileSourceURL;
+	protected String fileURL;
 
 	@JsonIgnore
-	private Supplier<String> _fileSourceURLSupplier;
+	private Supplier<String> _fileURLSupplier;
 
 	@Schema
 	@Valid
@@ -440,18 +440,18 @@ public class FileEntry implements Serializable {
 			sb.append("\"");
 		}
 
-		String fileSourceURL = getFileSourceURL();
+		String fileURL = getFileURL();
 
-		if (fileSourceURL != null) {
+		if (fileURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fileSourceURL\": ");
+			sb.append("\"fileURL\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fileSourceURL));
+			sb.append(_escape(fileURL));
 
 			sb.append("\"");
 		}

@@ -41,8 +41,10 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -91,13 +93,20 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				continue;
 			}
 
+			Object value = values.get(objectField.getName());
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &
+				objectField.isLocalized()) {
+
+				value = values.get(objectField.getI18nObjectFieldName());
+			}
+
 			_addInfoFieldValue(
 				dlAppLocalService, dlURLHelper, infoFieldValues,
 				listTypeEntryLocalService, objectEntryLocalService, objectField,
 				objectFieldInfoFieldConverter,
 				ObjectField.class.getSimpleName(),
-				objectRelationshipLocalService, themeDisplay,
-				values.get(objectField.getName()));
+				objectRelationshipLocalService, themeDisplay, value);
 
 			if (!objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
@@ -132,6 +141,15 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						parentObjectDefinition.getObjectDefinitionId(),
 						false)) {
 
+				value = properties.get(relatedObjectField.getName());
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &
+					relatedObjectField.isLocalized()) {
+
+					value = properties.get(
+						relatedObjectField.getI18nObjectFieldName());
+				}
+
 				_addInfoFieldValue(
 					dlAppLocalService, dlURLHelper, infoFieldValues,
 					listTypeEntryLocalService, objectEntryLocalService,
@@ -140,8 +158,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						ObjectRelationship.class.getSimpleName(),
 						StringPool.POUND, parentObjectDefinition.getName(),
 						StringPool.POUND, objectRelationship.getName()),
-					objectRelationshipLocalService, themeDisplay,
-					properties.get(relatedObjectField.getName()));
+					objectRelationshipLocalService, themeDisplay, value);
 			}
 		}
 
@@ -408,7 +425,8 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			if ((themeDisplay != null) &&
 				map.containsKey(themeDisplay.getLanguageId())) {
 
-				infoFieldValue = map.get(themeDisplay.getLanguageId());
+				infoFieldValue = InfoLocalizedValue.function(
+					locale -> map.get(LanguageUtil.getLanguageId(locale)));
 			}
 		}
 

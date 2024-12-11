@@ -397,16 +397,16 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 		@Override
 		public Object getAttribute(String name) {
-			if (Objects.equals(name, WebKeys.THEME_DISPLAY)) {
-				try {
-					return _getThemeDisplay();
-				}
-				catch (Exception exception) {
-					throw new AssertionError(exception);
-				}
+			if (!Objects.equals(name, WebKeys.THEME_DISPLAY)) {
+				return null;
 			}
 
-			return null;
+			try {
+				return _getThemeDisplay();
+			}
+			catch (Exception exception) {
+				throw new AssertionError(exception);
+			}
 		}
 
 		@Override

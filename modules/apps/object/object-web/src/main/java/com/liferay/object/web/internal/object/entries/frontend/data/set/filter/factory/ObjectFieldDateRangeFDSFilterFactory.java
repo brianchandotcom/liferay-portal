@@ -32,7 +32,7 @@ public class ObjectFieldDateRangeFDSFilterFactory
 
 	@Override
 	public FDSFilter create(
-			Locale locale, long objectDefinitionId,
+			long groupId, Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException {
 
@@ -52,7 +52,7 @@ public class ObjectFieldDateRangeFDSFilterFactory
 		}
 
 		return new ObjectFieldDateRangeFDSFilter(
-			id,
+			groupId, id,
 			_getLabel(
 				locale, objectDefinitionId,
 				objectViewFilterColumn.getObjectFieldName()));

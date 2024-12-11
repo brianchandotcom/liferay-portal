@@ -15,9 +15,16 @@ import java.util.Calendar;
  */
 public class ObjectFieldDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
-	public ObjectFieldDateRangeFDSFilter(String id, String label) {
+	public ObjectFieldDateRangeFDSFilter(
+		long groupId, String id, String label) {
+
+		_groupId = groupId;
 		_id = id;
 		_label = label;
+	}
+
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	@Override
@@ -44,6 +51,7 @@ public class ObjectFieldDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 		return new DateFDSFilterItem(0, 0, 0);
 	}
 
+	private final long _groupId;
 	private final String _id;
 	private final String _label;
 

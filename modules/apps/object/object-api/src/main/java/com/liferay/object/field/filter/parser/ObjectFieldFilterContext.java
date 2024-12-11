@@ -15,12 +15,17 @@ import java.util.Locale;
 public class ObjectFieldFilterContext {
 
 	public ObjectFieldFilterContext(
-		Locale locale, long objectDefinitionId,
+		long groupId, Locale locale, long objectDefinitionId,
 		ObjectViewFilterColumn objectViewFilterColumn) {
 
+		_groupId = groupId;
 		_locale = locale;
 		_objectDefinitionId = objectDefinitionId;
 		_objectViewFilterColumn = objectViewFilterColumn;
+	}
+
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public Locale getLocale() {
@@ -33,6 +38,10 @@ public class ObjectFieldFilterContext {
 
 	public ObjectViewFilterColumn getObjectViewFilterColumn() {
 		return _objectViewFilterColumn;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public void setLocale(Locale locale) {
@@ -49,6 +58,7 @@ public class ObjectFieldFilterContext {
 		_objectViewFilterColumn = objectViewFilterColumn;
 	}
 
+	private long _groupId;
 	private Locale _locale;
 	private long _objectDefinitionId;
 	private ObjectViewFilterColumn _objectViewFilterColumn;

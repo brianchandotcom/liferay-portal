@@ -165,3 +165,28 @@ test('LPD-29089 Assert Publication Overview filter', async ({
 		changeTrackingPage.frontendDataSetEntries.getByText('Wiki Node')
 	).toBeHidden();
 });
+
+test('LPD-47743 Assert Publication Score is visible', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	for (let i = 0; i < 5; i++) {
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+	}
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await expect(page.getByText('Publication Size:')).toBeVisible();
+});

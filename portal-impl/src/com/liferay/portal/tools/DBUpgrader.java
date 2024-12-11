@@ -239,9 +239,7 @@ public class DBUpgrader {
 
 		_registerModuleServiceLifecycle("portlets.initialized");
 
-		if ((_upgradeClient && isUpgradeDatabaseAutoRunEnabled()) ||
-			StartupHelperUtil.isNewRelease()) {
-
+		if (_upgradeClient || StartupHelperUtil.isNewRelease()) {
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 	}

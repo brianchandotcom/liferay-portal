@@ -338,13 +338,13 @@ public class SkuVirtualSettingsUtil {
 	}
 
 	private static String _validateURL(String value) throws Exception {
-		if (Validator.isNotNull(value)) {
-			URL url = new URL(value);
-
-			return url.toString();
+		if (Validator.isNull(value)) {
+			return null;
 		}
 
-		return null;
+		URL url = new URL(value);
+
+		return url.toString();
 	}
 
 }

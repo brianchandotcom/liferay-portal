@@ -88,26 +88,26 @@ public class AttachmentUtil {
 				serviceContext);
 		}
 
-		if (Validator.isNotNull(attachment.getSrc())) {
-			URL url = new URL(attachment.getSrc());
-
-			if (Objects.equals(url.getProtocol(), "file")) {
-				throw new CPAttachmentFileEntryProtocolException(
-					"Unsupported URL protocol");
-			}
-
-			URLConnection urlConnection = url.openConnection();
-
-			urlConnection.connect();
-
-			File file = FileUtil.createTempFile(urlConnection.getInputStream());
-
-			return _addFileEntry(
-				file, attachment.getContentType(), uniqueFileNameProvider,
-				serviceContext);
+		if (Validator.isNull(attachment.getSrc())) {
+			return null;
 		}
 
-		return null;
+		URL url = new URL(attachment.getSrc());
+
+		if (Objects.equals(url.getProtocol(), "file")) {
+			throw new CPAttachmentFileEntryProtocolException(
+				"Unsupported URL protocol");
+		}
+
+		URLConnection urlConnection = url.openConnection();
+
+		urlConnection.connect();
+
+		File file = FileUtil.createTempFile(urlConnection.getInputStream());
+
+		return _addFileEntry(
+			file, attachment.getContentType(), uniqueFileNameProvider,
+			serviceContext);
 	}
 
 	public static FileEntry addFileEntry(

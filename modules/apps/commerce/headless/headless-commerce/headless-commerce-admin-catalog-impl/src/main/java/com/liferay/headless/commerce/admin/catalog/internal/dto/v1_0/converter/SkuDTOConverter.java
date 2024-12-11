@@ -94,12 +94,11 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				setPurchasable(cpInstance::isPurchasable);
 				setReplacementSkuExternalReferenceCode(
 					() -> {
-						if (replacementCPInstance != null) {
-							return replacementCPInstance.
-								getExternalReferenceCode();
+						if (replacementCPInstance == null) {
+							return null;
 						}
 
-						return null;
+						return replacementCPInstance.getExternalReferenceCode();
 					});
 				setReplacementSkuId(
 					() -> {
@@ -176,12 +175,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					});
 				setUnitOfMeasureName(
 					() -> {
-						if (cpInstanceUnitOfMeasure != null) {
-							return LanguageUtils.getLanguageIdMap(
-								cpInstanceUnitOfMeasure.getNameMap());
+						if (cpInstanceUnitOfMeasure == null) {
+							return null;
 						}
 
-						return null;
+						return LanguageUtils.getLanguageIdMap(
+							cpInstanceUnitOfMeasure.getNameMap());
 					});
 				setUnitOfMeasureSkuId(
 					() -> {

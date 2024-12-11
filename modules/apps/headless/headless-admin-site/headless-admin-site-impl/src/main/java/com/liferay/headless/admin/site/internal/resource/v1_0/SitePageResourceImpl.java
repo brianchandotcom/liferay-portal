@@ -103,8 +103,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			siteExternalReferenceCode, contextCompany.getCompanyId());
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		return SearchUtil.search(
 			null,
@@ -113,8 +113,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					booleanQuery.getPreBooleanFilter();
 
 				booleanFilter.add(
-					new TermFilter(
-						Field.GROUP_ID, String.valueOf(group.getGroupId())),
+					new TermFilter(Field.GROUP_ID, String.valueOf(groupId)),
 					BooleanClauseOccur.MUST);
 			},
 			filter, Layout.class.getName(), search, pagination,
@@ -128,7 +127,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {group.getGroupId()});
+				searchContext.setGroupIds(new long[] {groupId});
 				searchContext.setKeywords(search);
 			},
 			sorts,

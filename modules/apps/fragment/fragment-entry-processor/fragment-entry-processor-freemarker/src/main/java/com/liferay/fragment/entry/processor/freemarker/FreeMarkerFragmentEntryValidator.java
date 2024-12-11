@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -115,7 +116,7 @@ public class FreeMarkerFragmentEntryValidator
 					new InputTemplateNode(
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						false, "name", false, false, false, false, "type",
-						"value")
+						"value", Collections.emptyMap())
 				).put(
 					"layoutMode", Constants.VIEW
 				).putAll(

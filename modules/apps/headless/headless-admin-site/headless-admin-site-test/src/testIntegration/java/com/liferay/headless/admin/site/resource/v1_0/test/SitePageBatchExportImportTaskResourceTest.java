@@ -43,7 +43,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
@@ -134,12 +133,17 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 		String className = "com.liferay.headless.admin.site.dto.v1_0.SitePage";
 
-		SitePage sitePage1 =
+		SitePage sitePage1 = _randomSitePage();
+		SitePage sitePage2 = _randomSitePage();
+
+		_assertEquals(
+			sitePage1,
 			_sitePageResource.postByExternalReferenceCodeSitePage(
-				_exportGroup.getExternalReferenceCode(), _randomSitePage());
-		SitePage sitePage2 =
+				_exportGroup.getExternalReferenceCode(), sitePage1));
+		_assertEquals(
+			sitePage2,
 			_sitePageResource.postByExternalReferenceCodeSitePage(
-				_exportGroup.getExternalReferenceCode(), _randomSitePage());
+				_exportGroup.getExternalReferenceCode(), sitePage2));
 
 		try {
 			JSONArray itemsJSONArray = _getExportedItemsJSONArray(className);
@@ -179,14 +183,6 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 	private void _assertEquals(
 		SitePage expectedSitePage, SitePage actualSitePage) {
-
-		expectedSitePage.setDateCreated((Date)null);
-		expectedSitePage.setDateModified((Date)null);
-		expectedSitePage.setDatePublished((Date)null);
-
-		actualSitePage.setDateCreated((Date)null);
-		actualSitePage.setDateModified((Date)null);
-		actualSitePage.setDatePublished((Date)null);
 
 		Assert.assertEquals(
 			expectedSitePage.toString(), actualSitePage.toString());

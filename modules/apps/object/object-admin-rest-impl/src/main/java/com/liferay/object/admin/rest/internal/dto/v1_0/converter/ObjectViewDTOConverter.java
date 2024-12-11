@@ -152,7 +152,7 @@ public class ObjectViewDTOConverter
 					_objectFieldFilterContributorRegistry.
 						getObjectFieldFilterContributor(
 							new ObjectFieldFilterContext(
-								locale, objectDefinitionId,
+								0, locale, objectDefinitionId,
 								serviceBuilderObjectViewFilterColumn));
 
 				return objectFieldFilterContributor.toValueSummary();

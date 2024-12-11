@@ -30,7 +30,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 
 	@Override
 	public FDSFilter create(
-			Locale locale, long objectDefinitionId,
+			long groupId, Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException {
 
@@ -38,7 +38,8 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 			_objectFieldFilterContributorRegistry.
 				getObjectFieldFilterContributor(
 					new ObjectFieldFilterContext(
-						locale, objectDefinitionId, objectViewFilterColumn));
+						groupId, locale, objectDefinitionId,
+						objectViewFilterColumn));
 
 		return objectFieldFilterContributor.getFDSFilter();
 	}

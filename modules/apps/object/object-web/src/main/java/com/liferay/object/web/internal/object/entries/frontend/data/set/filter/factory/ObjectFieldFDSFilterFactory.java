@@ -16,7 +16,7 @@ import java.util.Locale;
 public interface ObjectFieldFDSFilterFactory {
 
 	public FDSFilter create(
-			Locale locale, long objectDefinitionId,
+			long groupId, Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws Exception;
 

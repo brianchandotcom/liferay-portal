@@ -64,6 +64,7 @@ public class ListObjectFieldFilterContributor
 		throws PortalException {
 
 		_objectFieldFilterStrategy = _toObjectFieldFilterStrategy(
+			objectFieldFilterContext.getGroupId(),
 			objectFieldFilterContext.getLocale(),
 			objectFieldFilterContext.getObjectDefinitionId(),
 			objectFieldFilterContext.getObjectViewFilterColumn());
@@ -80,7 +81,7 @@ public class ListObjectFieldFilterContributor
 	}
 
 	private ObjectFieldFilterStrategy _toObjectFieldFilterStrategy(
-			Locale locale, long objectDefinitionId,
+			long groupId, Locale locale, long objectDefinitionId,
 			ObjectViewFilterColumn objectViewFilterColumn)
 		throws PortalException {
 
@@ -113,7 +114,7 @@ public class ListObjectFieldFilterContributor
 					objectField.getObjectFieldId());
 
 		return new OneToManyObjectFieldFilterStrategy(
-			locale,
+			groupId, locale,
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1()),
 			_objectDefinitionLocalService, _objectEntryLocalService,

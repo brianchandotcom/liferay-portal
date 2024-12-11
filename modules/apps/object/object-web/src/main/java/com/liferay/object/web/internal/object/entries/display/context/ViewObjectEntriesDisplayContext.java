@@ -193,6 +193,8 @@ public class ViewObjectEntriesDisplayContext {
 							objectViewFilterColumn);
 
 				return objectFieldFDSFilterFactory.create(
+					_objectScopeProvider.getGroupId(
+						_objectRequestHelper.getRequest()),
 					_objectRequestHelper.getLocale(),
 					_objectDefinition.getObjectDefinitionId(),
 					objectViewFilterColumn);

@@ -50,7 +50,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", beforeImportJSONObject1, "]"),
+				JSONUtil.putAll(
+					beforeImportJSONObject1
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -79,7 +81,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", beforeImportJSONObject2, "]"),
+				JSONUtil.putAll(
+					beforeImportJSONObject2
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -121,7 +125,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", beforeImportJSONObject3, "]"),
+				JSONUtil.putAll(
+					beforeImportJSONObject3
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -167,7 +173,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", jsonObject1, "]"),
+				JSONUtil.putAll(
+					jsonObject1
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -207,7 +215,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", jsonObject2, "]"),
+				JSONUtil.putAll(
+					jsonObject2
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -256,7 +266,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat("[", jsonObject3, "]"),
+				JSONUtil.putAll(
+					jsonObject3
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -299,9 +311,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject4, role),
-					"]"),
+				JSONUtil.putAll(
+					_addViewPermission(beforeImportJSONObject4, role)
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -332,9 +344,9 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
-				StringBundler.concat(
-					"[", _addViewPermission(beforeImportJSONObject4, role),
-					"]"),
+				JSONUtil.putAll(
+					_addViewPermission(beforeImportJSONObject4, role)
+				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",

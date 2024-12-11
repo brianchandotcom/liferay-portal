@@ -328,6 +328,7 @@ function getNextTarget({
 		isValidMovement({
 			allowSelfTarget: key === 'ArrowLeft' || key === 'ArrowRight',
 			dropPosition: candidate.position,
+			items,
 			sources,
 			target: candidateItem,
 		})

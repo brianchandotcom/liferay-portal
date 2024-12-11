@@ -9,6 +9,7 @@ import {MillerColumnItem} from '../types/MillerColumnItem';
 type Props = {
 	allowSelfTarget?: boolean;
 	dropPosition: DropPosition;
+	items: Map<string, MillerColumnItem>;
 	sources: MillerColumnItem[];
 	target: MillerColumnItem;
 };
@@ -16,6 +17,7 @@ type Props = {
 export function isValidMovement({
 	allowSelfTarget = false,
 	dropPosition,
+	items,
 	sources,
 	target,
 }: Props) {
@@ -56,6 +58,8 @@ export function isValidMovement({
 			return false;
 		}
 
-		return sources.every((source) => target.id !== source.parentId);
+		return sources.every(
+			(source) => target.id !== source.parentId || !items.get(source.id)
+		);
 	}
 }

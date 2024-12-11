@@ -271,6 +271,7 @@ const MillerColumnsItem = ({
 
 			return isValidMovement({
 				dropPosition,
+				items,
 				sources: source.items,
 				target: item,
 			});

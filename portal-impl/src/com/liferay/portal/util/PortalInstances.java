@@ -57,14 +57,14 @@ public class PortalInstances {
 
 	public static Company addCompany(
 			String siteInitializerKey,
-			UnsafeSupplier<Company, PortalException> unsafeSupplier)
+			UnsafeSupplier<Company, PortalException> addCompanyUnsafeSupplier)
 		throws PortalException {
 
 		try (SafeCloseable safeCloseable1 =
 				SiteInitializerThreadLocal.setKeyWithSafeCloseable(
 					siteInitializerKey)) {
 
-			return unsafeSupplier.get();
+			return addCompanyUnsafeSupplier.get();
 		}
 	}
 

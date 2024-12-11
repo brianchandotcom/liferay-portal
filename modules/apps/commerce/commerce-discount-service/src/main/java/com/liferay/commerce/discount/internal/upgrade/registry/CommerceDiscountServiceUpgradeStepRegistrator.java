@@ -54,11 +54,15 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 				"CommerceDiscount", "externalReferenceCode VARCHAR(75)"));
 
 		registry.register(
-			"2.1.0", "2.2.0",
+			"2.1.0", "2.1.1",
 			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
-				CommerceDiscountUpgradeProcess(),
-			CommerceDiscountAccountRelTable.create(),
-			new CommerceDiscountRuleNameUpgradeProcess(),
+				CommerceDiscountUpgradeProcess());
+
+		registry.register(
+			"2.1.1", "2.1.2", new CommerceDiscountRuleNameUpgradeProcess());
+
+		registry.register(
+			"2.1.2", "2.2.0", CommerceDiscountAccountRelTable.create(),
 			com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.
 				CommerceDiscountCommerceAccountGroupRelTable.create());
 

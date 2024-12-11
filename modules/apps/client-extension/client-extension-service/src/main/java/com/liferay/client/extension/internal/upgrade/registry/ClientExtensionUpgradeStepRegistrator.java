@@ -75,7 +75,10 @@ public class ClientExtensionUpgradeStepRegistrator
 				ClientExtensionEntryUpgradeProcess());
 
 		registry.register(
-			"3.0.0", "3.1.0", ClientExtensionEntryRelTable.create(),
+			"3.0.0", "3.0.1", ClientExtensionEntryRelTable.create());
+
+		registry.register(
+			"3.0.1", "3.1.0",
 			new com.liferay.client.extension.internal.upgrade.v3_1_0.
 				ClientExtensionEntryUpgradeProcess());
 

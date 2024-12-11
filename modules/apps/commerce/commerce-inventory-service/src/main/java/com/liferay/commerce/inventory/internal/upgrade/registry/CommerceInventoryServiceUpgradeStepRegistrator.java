@@ -142,7 +142,10 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 					"CIWarehouseItem.commerceInventoryWarehouseId)")));
 
 		registry.register(
-			"2.5.1", "2.6.0", CommerceInventoryWarehouseRelTable.create(),
+			"2.5.1", "2.5.2", CommerceInventoryWarehouseRelTable.create());
+
+		registry.register(
+			"2.5.2", "2.6.0",
 			new com.liferay.commerce.inventory.internal.upgrade.v2_6_0.
 				CommerceInventoryWarehouseUpgradeProcess());
 

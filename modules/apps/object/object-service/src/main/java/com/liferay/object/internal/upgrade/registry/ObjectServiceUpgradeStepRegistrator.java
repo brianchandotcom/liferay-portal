@@ -318,10 +318,12 @@ public class ObjectServiceUpgradeStepRegistrator
 				SchemaUpgradeProcess());
 
 		registry.register(
-			"5.3.1", "6.0.0",
+			"5.3.1", "5.3.2",
 			new com.liferay.object.internal.upgrade.v6_0_0.
-				ObjectValidationRuleUpgradeProcess(),
-			ObjectValidationRuleSettingTable.create());
+				ObjectValidationRuleUpgradeProcess());
+
+		registry.register(
+			"5.3.2", "6.0.0", ObjectValidationRuleSettingTable.create());
 
 		registry.register(
 			"6.0.0", "7.0.0",

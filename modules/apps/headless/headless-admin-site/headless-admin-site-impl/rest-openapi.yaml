@@ -2791,12 +2791,6 @@ components:
                     description:
                         The parent page external reference code or null if it is a top level page.
                     type: string
-                siteExternalReferenceCode:
-                    # @review
-                    description:
-                        The external reference code of the site to which this page is scoped.
-                    readOnly: true
-                    type: string
                 taxonomyCategories:
                     # @review
                     description:

@@ -56,8 +56,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-			CTTimelineUtil.setCTTimelineKeys(
-				renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+			if (kbArticle != null) {
+				CTTimelineUtil.setCTTimelineKeys(
+					renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+			}
 
 			return "/article/view.jsp";
 		}
@@ -66,8 +68,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			KBArticle kbArticle = (KBArticle)renderRequest.getAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-			CTTimelineUtil.setCTTimelineKeys(
-				renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+			if (kbArticle != null) {
+				CTTimelineUtil.setCTTimelineKeys(
+					renderRequest, KBArticle.class, kbArticle.getKbArticleId());
+			}
 
 			return "/display/view.jsp";
 		}

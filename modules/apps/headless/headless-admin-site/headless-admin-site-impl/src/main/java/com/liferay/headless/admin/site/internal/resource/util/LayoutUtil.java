@@ -267,7 +267,10 @@ public class LayoutUtil {
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		unicodeProperties.setProperty("javascript", settings.getJavascript());
+		if (settings != null) {
+			unicodeProperties.setProperty(
+				"javascript", settings.getJavascript());
+		}
 
 		for (String key : ListUtil.fromCollection(unicodeProperties.keySet())) {
 			if (key.startsWith("lfr-theme:")) {
@@ -275,7 +278,9 @@ public class LayoutUtil {
 			}
 		}
 
-		if (MapUtil.isNotEmpty(settings.getThemeSettings())) {
+		if ((settings != null) &&
+			MapUtil.isNotEmpty(settings.getThemeSettings())) {
+
 			unicodeProperties.putAll(
 				(Map<String, ? extends String>)settings.getThemeSettings());
 		}
@@ -287,7 +292,9 @@ public class LayoutUtil {
 		Theme theme = null;
 		String themeId = null;
 
-		if (Validator.isNotNull(settings.getThemeName())) {
+		if ((settings != null) &&
+			Validator.isNotNull(settings.getThemeName())) {
+
 			for (Theme curTheme :
 					ThemeLocalServiceUtil.getThemes(layout.getCompanyId())) {
 
@@ -310,7 +317,9 @@ public class LayoutUtil {
 
 		String colorSchemeId = null;
 
-		if (Validator.isNotNull(settings.getColorSchemeName())) {
+		if ((settings != null) &&
+			Validator.isNotNull(settings.getColorSchemeName())) {
+
 			if (theme == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -343,9 +352,15 @@ public class LayoutUtil {
 			}
 		}
 
+		String css = null;
+
+		if (settings != null) {
+			css = settings.getCss();
+		}
+
 		return LayoutServiceUtil.updateLookAndFeel(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			themeId, colorSchemeId, settings.getCss());
+			themeId, colorSchemeId, css);
 	}
 
 	private static void _updatePageExperiences(
@@ -356,8 +371,8 @@ public class LayoutUtil {
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(
 				layout.getGroupId(), layout.getPlid(), true);
 
-		if (pageExperiences == null ||
-			pageExperiences.length != segmentsExperiences.size()) {
+		if ((pageExperiences == null) ||
+			(pageExperiences.length != segmentsExperiences.size())) {
 
 			throw new UnsupportedOperationException();
 		}

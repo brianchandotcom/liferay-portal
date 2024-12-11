@@ -42,7 +42,7 @@ public class JobHistory {
 		return _upstreamBranchName;
 	}
 
-	protected JobHistory(URL ciHistoryURL) {
+	protected JobHistory(String ciHistoryURL) {
 		JSONObject ciHistoryJSONObject = _getCIHistoryJSONObject(ciHistoryURL);
 
 		if (ciHistoryJSONObject == null) {
@@ -83,7 +83,7 @@ public class JobHistory {
 			"upstream_branch_name");
 	}
 
-	private JSONObject _getCIHistoryJSONObject(URL ciHistoryURL) {
+	private JSONObject _getCIHistoryJSONObject(String ciHistoryURL) {
 		if (ciHistoryURL == null) {
 			return null;
 		}
@@ -93,21 +93,20 @@ public class JobHistory {
 			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
 
 		try {
-			String ciHistoryURLString = String.valueOf(ciHistoryURL);
-
-			if (ciHistoryURLString.startsWith(
+			if (ciHistoryURL.startsWith(
 					CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-				ciHistoryURLString.startsWith(
+				ciHistoryURL.startsWith(
 					CloudStorageSyncUtil.GCP_BUCKET_PATH_PATCHER_SHARED) ||
-				ciHistoryURLString.startsWith(
+				ciHistoryURL.startsWith(
 					CloudStorageSyncUtil.GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
 
 				CloudStorageSyncUtil.copyGCPFile(
-					ciHistoryURLString,
+					ciHistoryURL,
 					JenkinsResultsParserUtil.getCanonicalPath(tempGzipFile));
 			}
 			else {
-				JenkinsResultsParserUtil.toFile(ciHistoryURL, tempGzipFile);
+				JenkinsResultsParserUtil.toFile(
+					new URL(ciHistoryURL), tempGzipFile);
 			}
 
 			String content = JenkinsResultsParserUtil.read(tempGzipFile);

@@ -26,8 +26,10 @@ public class ReleaseFeatureFlagWebUpgradeStepRegistrator
 
 		// See https://tinyurl.com/yuzbmuzp on how to use this
 
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			new ReleaseFeatureFlagUpgradeStep(
 				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS));
 	}

@@ -1602,6 +1602,89 @@ test('LPD-32213 AC1 TC2: Verify after successful SP initiated SSO with auth.forw
 	expect(await newPage.url()).toContain(spSsoPageUrl);
 });
 
+test('LPD-32214 AC1 TC1: Verify SP initiated SLO logs user out of IdP and SP, then redirects back to Default Logout Page configuration value of SP.', async ({
+	browser,
+}) => {
+	const idpAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_IDP_NAME,
+		'Identity Provider'
+	);
+
+	const spAdminPage = await configureVirtualInstanceForSaml(
+		browser,
+		DEFAULT_SP_NAME,
+		'Service Provider'
+	);
+
+	await connectSpAndIdp(
+		idpAdminPage,
+		DEFAULT_IDP_NAME,
+		spAdminPage,
+		DEFAULT_SP_NAME
+	);
+
+	// Create new page on SP Instance
+
+	const pagesAdminPage = new PagesAdminPage(spAdminPage);
+
+	await pagesAdminPage.goto();
+
+	const pageTitle = getRandomString();
+
+	await pagesAdminPage.createNewPage({
+		name: pageTitle,
+	});
+
+	const defaultLogoutPagePath = '/web/guest/' + pageTitle;
+
+	// Configure new page as the Default Logout Page
+
+	const instanceSettingsPage = new InstanceSettingsPage(spAdminPage);
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'Instance Configuration',
+		'General',
+		false
+	);
+
+	const generalPage = new GeneralPage(instanceSettingsPage.page);
+
+	await generalPage.editDefaultLogoutPage(defaultLogoutPagePath);
+
+	resetAfterTestGeneralPage.add(DEFAULT_IDP_NAME);
+
+	// Create IdP User
+
+	const userAccount = await createUser(idpAdminPage, DEFAULT_IDP_NAME);
+
+	// SP initiated SSO
+
+	const newPage = await performSpInitiatedSSO(
+		browser,
+		userAccount.emailAddress,
+		DEFAULT_SP_URL
+	);
+
+	// SP initiated SLO
+
+	await performLogout(newPage);
+
+	// Expect to be redirected back to Default Logout Page configuration value
+
+	await newPage.waitForTimeout(5000);
+
+	expect(await newPage.url()).toContain(
+		DEFAULT_SP_URL + defaultLogoutPagePath
+	);
+
+	// Verify the IdP was also logged out
+
+	await newPage.goto(DEFAULT_IDP_URL);
+
+	expect(await newPage.getByRole('button', {name: 'Sign In'})).toBeVisible();
+});
+
 test('SAML connection cannot be saved if a custom field value is used more than once', async ({
 	browser,
 }) => {

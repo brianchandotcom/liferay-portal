@@ -580,7 +580,7 @@ public class CommerceOrderContentDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		String displayStyleGroupExternalReferenceCode;
+		String displayStyleGroupExternalReferenceCode = null;
 
 		if (Validator.isNull(portletId)) {
 			return _cpRequestHelper.getScopeGroupId();
@@ -651,7 +651,7 @@ public class CommerceOrderContentDisplayContext {
 			return _displayStyleGroupKey;
 		}
 
-		String displayStyleGroupExternalReferenceCode;
+		String displayStyleGroupExternalReferenceCode = null;
 
 		if (portletId.equals(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
 			OpenCommerceOrderContentPortletInstanceConfiguration

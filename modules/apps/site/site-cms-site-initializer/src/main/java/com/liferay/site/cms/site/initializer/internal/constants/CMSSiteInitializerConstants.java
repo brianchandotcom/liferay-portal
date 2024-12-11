@@ -6,11 +6,11 @@
 package com.liferay.site.cms.site.initializer.internal.constants;
 
 /**
- * @author Jürgen Kappler
+ * @author Adolfo Pérez
  */
-public class CMSFDSNames {
+public class CMSSiteInitializerConstants {
 
-	public static final String CMS_ALL_SECTIONS =
-		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-all-sections";
+	public static final String BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.site.cms.site.initializer";
 
 }

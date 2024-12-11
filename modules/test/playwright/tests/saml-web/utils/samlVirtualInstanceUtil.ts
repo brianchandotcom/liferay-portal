@@ -148,7 +148,7 @@ export async function deleteVirtualInstance(name: string, page: Page) {
 export async function performSamlSafeLogin(
 	browser,
 	domain: string,
-	baseUrl = '?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
+	baseUrl = '/web/guest?p_p_id=com_liferay_login_web_portlet_LoginPortlet&' +
 		'p_p_state=maximized',
 	mailId = domain !== 'localhost' ? `@${domain}.com` : undefined,
 	rememberMe = true,

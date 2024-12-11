@@ -90,6 +90,56 @@ public class VerifyLayoutResourcePermissionsTest
 	}
 
 	@Test
+	@TestInfo("LPD-37372")
+	public void testIsSkipVerifyResourcePermissions() throws Exception {
+		Layout publicLayout1 = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout publicLayout2 = LayoutTestUtil.addTypePortletLayout(_group);
+
+		_assertResourcePermission(
+			_guestActions, _guestRole, publicLayout1, publicLayout2);
+
+		Layout privateLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_group, true);
+		Layout privateLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_group, true);
+
+		_assertResourcePermission(
+			_groupActions, _groupRole, publicLayout1, publicLayout2,
+			privateLayout1, privateLayout2);
+
+		Layout userGroupLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_user.getGroup());
+		Layout userGroupLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_user.getGroup());
+
+		_assertResourcePermission(
+			_ownerActions, _ownerRole, publicLayout1, publicLayout2,
+			privateLayout1, privateLayout2, userGroupLayout1, userGroupLayout2);
+
+		_deleteResourcePermissions(
+			privateLayout1, publicLayout1, userGroupLayout1);
+
+		int count =
+			_resourcePermissionLocalService.getResourcePermissionsCount();
+
+		VerifyResourcePermissions.verify(new LayoutVerifiableResourcedModel());
+
+		_assertResourcePermission(_guestActions, _guestRole, publicLayout2);
+		_assertResourcePermission(
+			_groupActions, _groupRole, publicLayout2, privateLayout2);
+		_assertResourcePermission(
+			_ownerActions, _ownerRole, publicLayout2, privateLayout2,
+			userGroupLayout2);
+
+		_assertEmptyResourcePermissions(
+			privateLayout1, publicLayout1, userGroupLayout1);
+
+		Assert.assertEquals(
+			count,
+			_resourcePermissionLocalService.getResourcePermissionsCount());
+	}
+
+	@Test
 	public void testVerify() throws Exception {
 		Layout publicLayout1 = LayoutTestUtil.addTypePortletLayout(_group);
 		Layout publicLayout2 = LayoutTestUtil.addTypePortletLayout(_group);
@@ -145,56 +195,6 @@ public class VerifyLayoutResourcePermissionsTest
 		_assertResourcePermission(
 			_ownerActions, _ownerRole, publicLayout1, publicLayout2,
 			privateLayout1, privateLayout2, userGroupLayout1, userGroupLayout2);
-	}
-
-	@Test
-	@TestInfo("LPD-37372")
-	public void testIsSkipVerifyResourcePermissions() throws Exception {
-		Layout publicLayout1 = LayoutTestUtil.addTypePortletLayout(_group);
-		Layout publicLayout2 = LayoutTestUtil.addTypePortletLayout(_group);
-
-		_assertResourcePermission(
-			_guestActions, _guestRole, publicLayout1, publicLayout2);
-
-		Layout privateLayout1 = LayoutTestUtil.addTypePortletLayout(
-			_group, true);
-		Layout privateLayout2 = LayoutTestUtil.addTypePortletLayout(
-			_group, true);
-
-		_assertResourcePermission(
-			_groupActions, _groupRole, publicLayout1, publicLayout2,
-			privateLayout1, privateLayout2);
-
-		Layout userGroupLayout1 = LayoutTestUtil.addTypePortletLayout(
-			_user.getGroup());
-		Layout userGroupLayout2 = LayoutTestUtil.addTypePortletLayout(
-			_user.getGroup());
-
-		_assertResourcePermission(
-			_ownerActions, _ownerRole, publicLayout1, publicLayout2,
-			privateLayout1, privateLayout2, userGroupLayout1, userGroupLayout2);
-
-		_deleteResourcePermissions(
-			privateLayout1, publicLayout1, userGroupLayout1);
-
-		int count =
-			_resourcePermissionLocalService.getResourcePermissionsCount();
-
-		VerifyResourcePermissions.verify(new LayoutVerifiableResourcedModel());
-
-		_assertResourcePermission(_guestActions, _guestRole, publicLayout2);
-		_assertResourcePermission(
-			_groupActions, _groupRole, publicLayout2, privateLayout2);
-		_assertResourcePermission(
-			_ownerActions, _ownerRole, publicLayout2, privateLayout2,
-			userGroupLayout2);
-
-		_assertEmptyResourcePermissions(
-			privateLayout1, publicLayout1, userGroupLayout1);
-
-		Assert.assertEquals(
-			count,
-			_resourcePermissionLocalService.getResourcePermissionsCount());
 	}
 
 	@Override

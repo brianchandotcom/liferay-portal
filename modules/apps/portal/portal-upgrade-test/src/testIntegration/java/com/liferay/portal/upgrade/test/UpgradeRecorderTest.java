@@ -136,7 +136,7 @@ public class UpgradeRecorderTest {
 			}
 		}
 
-		Assert.assertEquals("unresolved", _getResult());
+		Assert.assertEquals("failure", _getResult());
 	}
 
 	@Test

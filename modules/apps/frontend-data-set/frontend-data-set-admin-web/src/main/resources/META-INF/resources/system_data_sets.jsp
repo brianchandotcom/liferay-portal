@@ -7,10 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-portletDisplay.setBeta(true);
-%>
-
 <div>
 	<react:component
 		module="{SystemDataSets} from frontend-data-set-admin-web"

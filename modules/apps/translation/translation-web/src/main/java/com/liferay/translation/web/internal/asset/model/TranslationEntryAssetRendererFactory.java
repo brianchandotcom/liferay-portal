@@ -54,6 +54,11 @@ public class TranslationEntryAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "automatic-translate";
+	}
+
+	@Override
 	public String getType() {
 		return "translation";
 	}

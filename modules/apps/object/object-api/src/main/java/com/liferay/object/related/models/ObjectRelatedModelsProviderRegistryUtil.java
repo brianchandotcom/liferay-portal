@@ -15,7 +15,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Carlos Correa
  */
-public class ObjectRelatedModelsProviderRegistrationUtil {
+public class ObjectRelatedModelsProviderRegistryUtil {
 
 	public static ServiceRegistration<?> register(
 		BundleContext bundleContext, ObjectDefinition objectDefinition,

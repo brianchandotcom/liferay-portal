@@ -57,8 +57,6 @@ public class FaroServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.0.0", "6.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v6_0_0.
-				UpgradeFaroProjectUpgradeProcess(),
 			UpgradeProcessFactory.runSQL(
 				StringBundler.concat(
 					"create table OSBFaro_FaroProjectEmailAddressDomain ",

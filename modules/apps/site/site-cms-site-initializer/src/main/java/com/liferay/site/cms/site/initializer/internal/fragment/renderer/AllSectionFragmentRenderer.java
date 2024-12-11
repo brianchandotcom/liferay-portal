@@ -84,7 +84,7 @@ public class AllSectionFragmentRenderer implements FragmentRenderer {
 			headlessDisplayTag.setBulkActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFdsActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFormName("fm");
-			headlessDisplayTag.setId(CMSFDSNames.CMS_ALL_SECTION);
+			headlessDisplayTag.setId(CMSFDSNames.ALL_SECTION);
 			headlessDisplayTag.setItemsPerPage(10);
 			headlessDisplayTag.setSelectedItemsKey("id");
 			headlessDisplayTag.setSelectionType("multiple");

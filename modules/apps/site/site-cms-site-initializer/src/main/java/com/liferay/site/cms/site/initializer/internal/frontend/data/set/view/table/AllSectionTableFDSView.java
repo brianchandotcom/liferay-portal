@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSFDSNames.CMS_ALL_SECTION,
+	property = "frontend.data.set.name=" + CMSFDSNames.ALL_SECTION,
 	service = FDSView.class
 )
 public class AllSectionTableFDSView extends BaseTableFDSView {

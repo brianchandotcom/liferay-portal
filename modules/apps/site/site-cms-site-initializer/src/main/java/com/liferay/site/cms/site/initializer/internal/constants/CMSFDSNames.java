@@ -10,7 +10,7 @@ package com.liferay.site.cms.site.initializer.internal.constants;
  */
 public class CMSFDSNames {
 
-	public static final String CMS_ALL_SECTION =
+	public static final String ALL_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-all-section";
 
 }

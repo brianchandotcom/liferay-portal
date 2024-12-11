@@ -35,10 +35,10 @@ export function LocalizationSelect({
 	};
 
 	useEffect(() => {
-		Liferay.on(EVENT_TRANSLATION_STATUS, ({languageId}) => {
+		const updateTranslationStatus = ({languageId}) => {
 			const translatedInputs = Array.from(
 				document.querySelectorAll(
-					`[type="hidden"][name*="_${languageId}"]`
+					`[type="hidden"][name$="_${languageId}"]`
 				)
 			).filter((input) => input.getAttribute('value') !== null);
 
@@ -46,12 +46,18 @@ export function LocalizationSelect({
 				...previousState,
 				[languageId]: translatedInputs.length,
 			}));
-		});
+		};
+
+		Liferay.on(EVENT_TRANSLATION_STATUS, updateTranslationStatus);
+
+		for (const locale of locales) {
+			updateTranslationStatus({languageId: locale.id});
+		}
 
 		return () => {
 			Liferay.detach(EVENT_TRANSLATION_STATUS);
 		};
-	}, []);
+	}, [locales]);
 
 	return (
 		<Picker

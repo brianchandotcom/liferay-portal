@@ -26,42 +26,29 @@ public class CloudStorageSyncUtil {
 	public static final String GCP_BUCKET_PATH_TESTRAY_RESULTS =
 		"gs://testray-results";
 
-	public static void syncGCPFiles(String source, String destination) {
+	public static void copyGCPFile(String source, String destination) {
 		List<String> commands = new ArrayList<>();
+
+		commands.add(_getGCPAuthenticationCommand(source, destination));
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("gcloud auth activate-service-account --key-file ");
+		sb.append("gcloud storage cp ");
+		sb.append(source);
+		sb.append(" ");
+		sb.append(destination);
 
-		if (source.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-			destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA)) {
+		commands.add(sb.toString());
 
-			sb.append(
-				_buildProperties.getProperty(
-					"google.application.crendential.file[jenkins]"));
+		_executeCommands(commands.toArray(new String[0]));
+	}
 
-			commands.add(sb.toString());
-		}
-		else if (source.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED) ||
-				 destination.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED)) {
+	public static void syncGCPFiles(String source, String destination) {
+		List<String> commands = new ArrayList<>();
 
-			sb.append(
-				_buildProperties.getProperty(
-					"google.application.crendential.file[patcher]"));
+		commands.add(_getGCPAuthenticationCommand(source, destination));
 
-			commands.add(sb.toString());
-		}
-		else if (source.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS) ||
-				 destination.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
-
-			sb.append(
-				_buildProperties.getProperty(
-					"google.application.crendential.file[testray]"));
-
-			commands.add(sb.toString());
-		}
-
-		sb.setLength(0);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("gcloud storage rsync --recursive ");
 		sb.append(source);
@@ -95,6 +82,44 @@ public class CloudStorageSyncUtil {
 
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private static String _getGCPAuthenticationCommand(
+		String source, String destination) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("gcloud auth activate-service-account --key-file ");
+
+		if (source.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
+			destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA)) {
+
+			sb.append(
+				_buildProperties.getProperty(
+					"google.application.crendential.file[jenkins]"));
+
+			return sb.toString();
+		}
+		else if (source.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED) ||
+				 destination.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED)) {
+
+			sb.append(
+				_buildProperties.getProperty(
+					"google.application.crendential.file[patcher]"));
+
+			return sb.toString();
+		}
+		else if (source.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS) ||
+				 destination.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
+
+			sb.append(
+				_buildProperties.getProperty(
+					"google.application.crendential.file[testray]"));
+
+			return sb.toString();
+		}
+
+		return null;
 	}
 
 	private static final Properties _buildProperties;

@@ -116,79 +116,71 @@ public class ProductOptionValueDTOConverter
 						getCPDefinitionOptionValueRelId);
 				setInfoMessage(
 					() -> {
-						if (cpInstance == null) {
+						if ((cpInstance == null) ||
+							!cpDefinitionOptionRelConfiguration.
+								showUnselectableOptions()) {
+
 							return null;
 						}
 
-						if (cpDefinitionOptionRelConfiguration.
-								showUnselectableOptions()) {
+						Long skuId = (Long)dtoConverterContext.getAttribute(
+							"skuId");
 
-							Long skuId = (Long)dtoConverterContext.getAttribute(
-								"skuId");
+						if (Validator.isNull(skuId)) {
+							return null;
+						}
 
-							if (Validator.isNull(skuId)) {
-								return null;
-							}
+						CPInstance selectedCPInstance =
+							_cpInstanceLocalService.fetchCPInstance(skuId);
 
-							CPInstance selectedCPInstance =
-								_cpInstanceLocalService.fetchCPInstance(skuId);
+						if (selectedCPInstance == null) {
+							return null;
+						}
 
-							if (selectedCPInstance == null) {
-								return null;
-							}
+						List<CommerceOptionValue> commerceOptionValues =
+							new ArrayList<>();
 
-							List<CommerceOptionValue> commerceOptionValues =
-								new ArrayList<>();
+						JSONArray jsonArray = _getSelectedSkuOptionsJSONArray(
+							cpDefinitionOptionRel, cpDefinitionOptionValueRel,
+							(SkuOption[])dtoConverterContext.getAttribute(
+								"skuOptions"));
 
-							JSONArray jsonArray =
-								_getSelectedSkuOptionsJSONArray(
-									cpDefinitionOptionRel,
-									cpDefinitionOptionValueRel,
-									(SkuOption[])
-										dtoConverterContext.getAttribute(
-											"skuOptions"));
+						if (jsonArray == null) {
+							jsonArray = _getClonedJSONArray(
+								cpDefinitionOptionRel,
+								cpDefinitionOptionValueRel,
+								selectedCPInstance.getCPInstanceId());
+						}
 
-							if (jsonArray == null) {
-								jsonArray = _getClonedJSONArray(
-									cpDefinitionOptionRel,
-									cpDefinitionOptionValueRel,
-									selectedCPInstance.getCPInstanceId());
-							}
+						if (jsonArray != null) {
+							commerceOptionValues =
+								_commerceOptionValueHelper.
+									getCPDefinitionCommerceOptionValues(
+										cpDefinitionOptionRel.
+											getCPDefinitionId(),
+										jsonArray.toString());
+						}
 
-							if (jsonArray != null) {
-								commerceOptionValues =
-									_commerceOptionValueHelper.
-										getCPDefinitionCommerceOptionValues(
-											cpDefinitionOptionRel.
-												getCPDefinitionId(),
-											jsonArray.toString());
-							}
+						CPDefinition cpDefinition =
+							cpInstance.getCPDefinition();
 
-							CPDefinition cpDefinition =
-								cpInstance.getCPDefinition();
+						String corEntryInfoMessage = _getCOREntryInfoMessage(
+							commerceOptionValues, cpDefinitionOptionRel,
+							cpDefinitionOptionValueRel, cpInstance,
+							cpDefinition.getCProductId(), dtoConverterContext);
 
-							String corEntryInfoMessage =
-								_getCOREntryInfoMessage(
-									commerceOptionValues, cpDefinitionOptionRel,
-									cpDefinitionOptionValueRel, cpInstance,
-									cpDefinition.getCProductId(),
-									dtoConverterContext);
+						if (Validator.isNotNull(corEntryInfoMessage)) {
+							return corEntryInfoMessage;
+						}
 
-							if (Validator.isNotNull(corEntryInfoMessage)) {
-								return corEntryInfoMessage;
-							}
+						String cpDefinitionLinkInfoMessage =
+							_getCPDefinitionLinkInfoMessage(
+								commerceOptionValues,
+								cpDefinitionOptionValueRel.getKey(),
+								cpDefinition, dtoConverterContext);
 
-							String cpDefinitionLinkInfoMessage =
-								_getCPDefinitionLinkInfoMessage(
-									commerceOptionValues,
-									cpDefinitionOptionValueRel.getKey(),
-									cpDefinition, dtoConverterContext);
-
-							if (Validator.isNotNull(
-									cpDefinitionLinkInfoMessage)) {
-
-								return cpDefinitionLinkInfoMessage;
-							}
+						if (Validator.isNotNull(cpDefinitionLinkInfoMessage)) {
+							return cpDefinitionLinkInfoMessage;
 						}
 
 						return null;

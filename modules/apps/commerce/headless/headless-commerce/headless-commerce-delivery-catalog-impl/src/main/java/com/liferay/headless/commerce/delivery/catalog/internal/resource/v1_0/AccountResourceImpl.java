@@ -207,15 +207,15 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			logoId = accountEntry.getLogoId();
 		}
 
-		if ((logoId != null) && (logoId != 0) &&
-			((accountEntry == null) || (accountEntry.getLogoId() != logoId))) {
+		if ((logoId == null) || (logoId == 0) ||
+			((accountEntry != null) && (accountEntry.getLogoId() == logoId))) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(logoId);
-
-			return _file.getBytes(fileEntry.getContentStream());
+			return null;
 		}
 
-		return null;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(logoId);
+
+		return _file.getBytes(fileEntry.getContentStream());
 	}
 
 	private long[] _getOrganizationIds(Account account) {

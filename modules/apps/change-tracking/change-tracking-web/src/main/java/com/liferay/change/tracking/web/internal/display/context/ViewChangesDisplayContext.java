@@ -403,6 +403,8 @@ public class ViewChangesDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"itemsOverview", itemsOverviewJSONArray
+		).put(
+			"publicationScore", _ctCollection.getScore()
 		).build();
 	}
 

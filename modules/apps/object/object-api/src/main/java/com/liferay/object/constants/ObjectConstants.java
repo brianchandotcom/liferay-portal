@@ -10,6 +10,11 @@ package com.liferay.object.constants;
  */
 public class ObjectConstants {
 
+	public static final String KEY_OBJECT_DEFINITION_ERC =
+		"object.definition.erc";
+
+	public static final String KEY_RELATIONSHIP_TYPE = "relationship.type";
+
 	public static final String RESOURCE_NAME = "com.liferay.object";
 
 }

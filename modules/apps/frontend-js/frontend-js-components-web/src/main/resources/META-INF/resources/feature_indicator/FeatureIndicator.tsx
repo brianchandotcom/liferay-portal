@@ -92,10 +92,12 @@ export default function FeatureIndicator({
 								title={tooltipTitle}
 								translucent
 							>
-								<span className="inline-item">{label}</span>
+								<span className="inline-item text-uppercase">
+									{label}
+								</span>
 
 								{symbol && (
-									<span className="inline-item inline-item-after">
+									<span className="inline-item inline-item-after ml-2">
 										<ClayIcon symbol={symbol} />
 									</span>
 								)}

@@ -30,6 +30,7 @@ import './styles/index.scss';
 import {Analytics} from '../../core/Analytics';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 
 const getProductBasePriceAndTrial = (
 	product: DeliveryProduct,
@@ -215,6 +216,10 @@ const GetAppOutlet = () => {
 			const paymentMethodURL = await getPaymentMethodURL(
 				cartResponse.id,
 				nextStepsCallbackURL
+			);
+
+			await CommerceSelectAccountImpl.selectAccount(
+				account?.id as number
 			);
 
 			window.location.href = paymentMethodURL || nextStepsCallbackURL;

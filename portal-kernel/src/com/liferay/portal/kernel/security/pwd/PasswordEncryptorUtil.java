@@ -172,7 +172,7 @@ public class PasswordEncryptorUtil {
 	}
 
 	private static String _getEncryptedPasswordAlgorithm(
-		String encryptedPassword) {
+		String encryptedPassword) throws PwdEncryptorException{
 
 		String legacyAlgorithm = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY));
@@ -203,11 +203,13 @@ public class PasswordEncryptorUtil {
 				return legacyAlgorithm;
 			}
 
-			_log.error(
-				"You may have forgotten to configure " +
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"You may have forgotten to configure " +
 					"passwords.encryption.algorithm.legacy property");
+			}
+			throw new PwdEncryptorException.PwdEncryptorAlgorithmException("Indefined algorithm");
 
-			return null;
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

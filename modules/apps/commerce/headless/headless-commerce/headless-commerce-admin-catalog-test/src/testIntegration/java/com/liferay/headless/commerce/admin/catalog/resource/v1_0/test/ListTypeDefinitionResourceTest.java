@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
+import com.liferay.commerce.product.service.CPSpecificationOptionListTypeDefinitionRelLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -78,13 +80,11 @@ public class ListTypeDefinitionResourceTest
 	public void testPostSpecificationIdListTypeDefinition() throws Exception {
 		super.testPostSpecificationIdListTypeDefinition();
 
-		CPSpecificationOption cpSpecificationOption =
-			_cpSpecificationOptionLocalService.getCPSpecificationOption(
-				_cpSpecificationOption.getCPSpecificationOptionId());
-
 		Assert.assertFalse(
-			cpSpecificationOption.getListTypeDefinitions(
-			).isEmpty());
+			ListUtil.isEmpty(
+				_cpSpecificationOptionListTypeDefinitionRelLocalService.
+					getCPSpecificationOptionListTypeDefinitionRels(
+						_cpSpecificationOption.getCPSpecificationOptionId())));
 	}
 
 	@Override
@@ -141,6 +141,10 @@ public class ListTypeDefinitionResourceTest
 
 	@DeleteAfterTestRun
 	private CPSpecificationOption _cpSpecificationOption;
+
+	@Inject
+	private CPSpecificationOptionListTypeDefinitionRelLocalService
+		_cpSpecificationOptionListTypeDefinitionRelLocalService;
 
 	@Inject
 	private CPSpecificationOptionLocalService

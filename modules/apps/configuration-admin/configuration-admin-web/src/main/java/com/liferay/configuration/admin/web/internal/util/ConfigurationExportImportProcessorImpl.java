@@ -127,28 +127,28 @@ public class ConfigurationExportImportProcessorImpl
 			return company.getCompanyId();
 		}
 
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
-			String[] parts = StringUtil.split(
-				(String)portableIdentifier, _SEPARATOR);
-
-			String webId = parts[0];
-
-			long companyId = GetterUtil.getLong(
-				_getInternalIdentifier(
-					ExtendedObjectClassDefinition.Scope.COMPANY, webId));
-
-			if (companyId == 0L) {
-				return null;
-			}
-
-			String groupKey = parts[1];
-
-			Group group = _groupLocalService.getGroup(companyId, groupKey);
-
-			return group.getGroupId();
+		if (!scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+			return null;
 		}
 
-		return null;
+		String[] parts = StringUtil.split(
+			(String)portableIdentifier, _SEPARATOR);
+
+		String webId = parts[0];
+
+		long companyId = GetterUtil.getLong(
+			_getInternalIdentifier(
+				ExtendedObjectClassDefinition.Scope.COMPANY, webId));
+
+		if (companyId == 0L) {
+			return null;
+		}
+
+		String groupKey = parts[1];
+
+		Group group = _groupLocalService.getGroup(companyId, groupKey);
+
+		return group.getGroupId();
 	}
 
 	private Serializable _getPortableIdentifier(
@@ -161,17 +161,17 @@ public class ConfigurationExportImportProcessorImpl
 			return company.getWebId();
 		}
 
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
-			Group group = _groupLocalService.getGroup((long)scopePK);
-
-			return StringBundler.concat(
-				_getPortableIdentifier(
-					ExtendedObjectClassDefinition.Scope.COMPANY,
-					group.getCompanyId()),
-				_SEPARATOR, group.getGroupKey());
+		if (!scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+			return null;
 		}
 
-		return null;
+		Group group = _groupLocalService.getGroup((long)scopePK);
+
+		return StringBundler.concat(
+			_getPortableIdentifier(
+				ExtendedObjectClassDefinition.Scope.COMPANY,
+				group.getCompanyId()),
+			_SEPARATOR, group.getGroupKey());
 	}
 
 	private static final String _SEPARATOR = "--";

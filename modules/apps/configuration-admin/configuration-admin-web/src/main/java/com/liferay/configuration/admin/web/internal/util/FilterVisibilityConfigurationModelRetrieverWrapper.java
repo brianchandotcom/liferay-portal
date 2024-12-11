@@ -44,12 +44,12 @@ public class FilterVisibilityConfigurationModelRetrieverWrapper
 		String pid, ExtendedObjectClassDefinition.Scope scope,
 		Serializable scopePK) {
 
-		if (ConfigurationVisibilityUtil.isVisible(pid, scope, scopePK)) {
-			return _configurationModelRetriever.getConfiguration(
-				pid, scope, scopePK);
+		if (!ConfigurationVisibilityUtil.isVisible(pid, scope, scopePK)) {
+			return null;
 		}
 
-		return null;
+		return _configurationModelRetriever.getConfiguration(
+			pid, scope, scopePK);
 	}
 
 	@Override

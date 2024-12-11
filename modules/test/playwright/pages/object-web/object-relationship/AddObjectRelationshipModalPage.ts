@@ -25,10 +25,12 @@ export class AddNewObjectRelationshipModalPage {
 	}
 
 	async handleForm({
+		inherited,
 		manyRecordsOf,
 		objectRelationshipLabel,
 		type,
 	}: {
+		inherited?: boolean;
 		manyRecordsOf?: string;
 		objectRelationshipLabel: string;
 		type: ObjectRelationshipType;
@@ -40,6 +42,10 @@ export class AddNewObjectRelationshipModalPage {
 		);
 
 		await this.objectRelationshipFormPage.selectType(type);
+
+		if (inherited) {
+			await this.objectRelationshipFormPage.inheritanceCheckbox.check();
+		}
 
 		if (manyRecordsOf) {
 			await this.objectRelationshipFormPage.selectManyRecordsOf(

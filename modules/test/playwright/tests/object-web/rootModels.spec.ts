@@ -535,3 +535,214 @@ test.describe('Manage root models elements through Objects Admin', () => {
 		}
 	});
 });
+
+test.describe('Manage root models elements through Model Builder', () => {
+	test('assert inherited relationship styles on nodes and edges', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderRightSidebarPage,
+		objectRelationshipsPage,
+		page,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition1.externalReferenceCode,
+				{
+					edge: true,
+					label: {
+						en_US: 'objectRelationshipLabel' + getRandomInt(),
+					},
+					name:
+						'objectRelationshipName' +
+						Math.floor(Math.random() * 99),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition1.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: ObjectRelationship.TypeEnum.OneToMany,
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await modelBuilderDiagramPage.goto({
+			objectFolderName: objectFolder.name,
+		});
+
+		await modelBuilderDiagramPage.clickObjectRelationshipEdge(
+			objectRelationship.label['en_US']
+		);
+
+		await expect(
+			modelBuilderRightSidebarPage.inheritanceCheckbox
+		).toBeChecked();
+
+		await expect(
+			page
+				.getByRole('button', {name: objectRelationship.label['en_US']})
+				.getByRole('presentation')
+		).toBeVisible();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes
+				.filter({
+					hasText: objectDefinition1.label['en_US'],
+				})
+				.locator('.lfr-objects__model-builder-node-container')
+		).toHaveClass(/treeItem/);
+
+		await modelBuilderRightSidebarPage.inheritanceCheckbox.waitFor();
+
+		await modelBuilderRightSidebarPage.inheritanceCheckbox.click();
+
+		await expect(
+			objectRelationshipsPage.inheritanceModalHeader
+		).toBeVisible();
+
+		await objectRelationshipsPage.inheritanceModalDisableButton.click();
+
+		await modelBuilderRightSidebarPage.inheritanceCheckbox.waitFor();
+
+		await expect(
+			modelBuilderRightSidebarPage.inheritanceCheckbox
+		).not.toBeChecked();
+
+		await expect(
+			page
+				.getByRole('button', {name: objectRelationship.label['en_US']})
+				.getByRole('presentation')
+		).not.toBeVisible();
+
+		await expect(
+			modelBuilderDiagramPage.objectDefinitionNodes
+				.filter({
+					hasText: objectDefinition2.label['en_US'],
+				})
+				.locator('.lfr-objects__model-builder-node-container')
+		).not.toHaveClass(/treeItem/);
+	});
+
+	test('can create relationship with inheritance enabled using the add relationship modal', async ({
+		addNewObjectRelationshipModalPage,
+		apiHelpers,
+		modelBuilderDiagramPage,
+		modelBuilderRightSidebarPage,
+		page,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			await modelBuilderDiagramPage.goto({
+				objectFolderName: objectFolder.name,
+			});
+
+			await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
+				objectDefinition1.id,
+				objectDefinition2.id
+			);
+
+			const objectRelationship =
+				await addNewObjectRelationshipModalPage.handleForm({
+					inherited: true,
+					objectRelationshipLabel:
+						'objectRelationship' + getRandomInt(),
+					type: 'One to Many',
+				});
+
+			objectRelationships.push(objectRelationship);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await expect(
+				page.locator('#ToastAlertContainer .alert-success')
+			).toBeVisible();
+
+			await expect(
+				modelBuilderRightSidebarPage.inheritanceCheckbox
+			).toBeChecked();
+		}
+		finally {
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipApiClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
+});

@@ -139,6 +139,7 @@ test.afterEach(async ({browser}) => {
 
 		await generalPage.editDefaultLandingPage('');
 		await generalPage.editDefaultLogoutPage('');
+		await generalPage.editHomeUrl('');
 
 		await newPage.close();
 	}

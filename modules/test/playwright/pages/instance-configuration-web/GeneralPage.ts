@@ -10,12 +10,14 @@ import {waitForAlert} from '../../utils/waitForAlert';
 export class GeneralPage {
 	readonly defaultLandingPageField: Locator;
 	readonly defaultLogoutPageField: Locator;
+	readonly homeUrlField: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.defaultLandingPageField = page.getByLabel('Default Landing Page');
 		this.defaultLogoutPageField = page.getByLabel('Default Logout Page');
+		this.homeUrlField = page.getByLabel('Home URL');
 		this.page = page;
 		this.saveButton = page
 			.getByRole('button', {name: 'Save'})
@@ -31,6 +33,13 @@ export class GeneralPage {
 
 	async editDefaultLogoutPage(defaultLogoutPage: string) {
 		await this.defaultLogoutPageField.fill(defaultLogoutPage);
+
+		await this.saveButton.click();
+		await waitForAlert(this.page);
+	}
+
+	async editHomeUrl(homeUrl: string) {
+		await this.homeUrlField.fill(homeUrl);
 
 		await this.saveButton.click();
 		await waitForAlert(this.page);

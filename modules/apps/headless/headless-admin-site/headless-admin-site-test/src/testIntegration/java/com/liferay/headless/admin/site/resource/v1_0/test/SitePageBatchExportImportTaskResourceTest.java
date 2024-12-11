@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -78,9 +81,12 @@ public class SitePageBatchExportImportTaskResourceTest {
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR));
 
+		User adminUser = UserTestUtil.getAdminUser(
+			TestPropsValues.getCompanyId());
+
 		_contentExportTaskResource = ExportTaskResource.builder(
 		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
 		).build();
@@ -89,7 +95,7 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 		_exportTaskResource = ExportTaskResource.builder(
 		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).parameter(
@@ -100,7 +106,7 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 		_importTaskResource = ImportTaskResource.builder(
 		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).header(
@@ -111,7 +117,7 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 		_sitePageResource = SitePageResource.builder(
 		).authentication(
-			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			"X-Liferay-Accept-All-Languages", "true"
 		).build();

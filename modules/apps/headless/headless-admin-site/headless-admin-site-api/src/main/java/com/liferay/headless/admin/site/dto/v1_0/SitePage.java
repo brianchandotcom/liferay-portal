@@ -783,53 +783,6 @@ public class SitePage implements Serializable {
 	private Supplier<String> _parentSitePageExternalReferenceCodeSupplier;
 
 	@Schema(
-		description = "The external reference code of the site to which this page is scoped."
-	)
-	public String getSiteExternalReferenceCode() {
-		if (_siteExternalReferenceCodeSupplier != null) {
-			siteExternalReferenceCode =
-				_siteExternalReferenceCodeSupplier.get();
-
-			_siteExternalReferenceCodeSupplier = null;
-		}
-
-		return siteExternalReferenceCode;
-	}
-
-	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
-		this.siteExternalReferenceCode = siteExternalReferenceCode;
-
-		_siteExternalReferenceCodeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSiteExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			siteExternalReferenceCodeUnsafeSupplier) {
-
-		_siteExternalReferenceCodeSupplier = () -> {
-			try {
-				return siteExternalReferenceCodeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The external reference code of the site to which this page is scoped."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String siteExternalReferenceCode;
-
-	@JsonIgnore
-	private Supplier<String> _siteExternalReferenceCodeSupplier;
-
-	@Schema(
 		description = "The associated categories. They are not returned by default. They can be embedded via nestedFields."
 	)
 	@Valid
@@ -1378,22 +1331,6 @@ public class SitePage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(parentSitePageExternalReferenceCode));
-
-			sb.append("\"");
-		}
-
-		String siteExternalReferenceCode = getSiteExternalReferenceCode();
-
-		if (siteExternalReferenceCode != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"siteExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(siteExternalReferenceCode));
 
 			sb.append("\"");
 		}

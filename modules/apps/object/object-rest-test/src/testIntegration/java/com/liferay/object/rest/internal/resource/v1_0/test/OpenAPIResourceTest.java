@@ -217,8 +217,7 @@ public class OpenAPIResourceTest {
 			).apply(
 				() -> {
 					User user = UserTestUtil.addUser(
-						_companyLocalService.getCompany(
-							jsonObject.getLong("companyId")));
+						_companyLocalService.getCompany(companyId));
 
 					ObjectDefinition companyObjectDefinition =
 						ObjectDefinitionTestUtil.publishObjectDefinition(

@@ -221,225 +221,241 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 });
 
-test('LPD-35560 PreviewStyleBookOnPages', async ({
-	page,
-	pageEditorPage,
-	pagesAdminPage,
-	productMenuPage,
-	site,
-	styleBooksPage,
-}) => {
-	const firstPageName = getRandomString();
-	const secondPageName = getRandomString();
-	const thirdPageName = getRandomString();
+test(
+	'Preview style book on pages',
+	{tag: '@LPD-35560'},
+	async ({
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		productMenuPage,
+		site,
+		styleBooksPage,
+	}) => {
+		const firstPageName = getRandomString();
+		const secondPageName = getRandomString();
+		const thirdPageName = getRandomString();
 
-	const styleBookName = getRandomString();
+		const styleBookName = getRandomString();
 
-	const previewIframe = page.frameLocator(
-		'iframe.style-book-editor__page-preview-frame'
-	);
+		const previewIframe = page.frameLocator(
+			'iframe.style-book-editor__page-preview-frame'
+		);
 
-	await test.step('Add the first page with a Blogs widget', async () => {
-		await productMenuPage.goToPages();
+		await test.step('Add the first page with a Blogs widget', async () => {
+			await productMenuPage.goToPages();
 
-		await pagesAdminPage.createNewPage({
-			addButtonLabel: 'Page',
-			draft: true,
-			name: firstPageName,
-			template: 'Blank',
+			await pagesAdminPage.createNewPage({
+				addButtonLabel: 'Page',
+				draft: true,
+				name: firstPageName,
+				template: 'Blank',
+			});
+
+			await pageEditorPage.addWidget('Collaboration', 'Blogs');
 		});
 
-		await pageEditorPage.addWidget('Collaboration', 'Blogs');
-	});
+		await test.step('Add the second page with a My Sites widget', async () => {
+			await productMenuPage.goToPages();
 
-	await test.step('Add the second page with a My Sites widget', async () => {
-		await productMenuPage.goToPages();
+			await pagesAdminPage.createNewPage({
+				addButtonLabel: 'Page',
+				draft: true,
+				name: secondPageName,
+				template: 'Blank',
+			});
 
-		await pagesAdminPage.createNewPage({
-			addButtonLabel: 'Page',
-			draft: true,
-			name: secondPageName,
-			template: 'Blank',
+			await pageEditorPage.addWidget('Community', 'My Sites');
 		});
 
-		await pageEditorPage.addWidget('Community', 'My Sites');
-	});
+		await test.step('Add a paragraph fragment to the third page and publish', async () => {
+			await productMenuPage.goToPages();
 
-	await test.step('Add a paragraph fragment to the third page and publish', async () => {
-		await productMenuPage.goToPages();
+			await pagesAdminPage.createNewPage({
+				addButtonLabel: 'Page',
+				draft: true,
+				name: thirdPageName,
+				template: 'Blank',
+			});
 
-		await pagesAdminPage.createNewPage({
-			addButtonLabel: 'Page',
-			draft: true,
-			name: thirdPageName,
-			template: 'Blank',
+			await pageEditorPage.addFragment('Basic Components', 'Paragraph');
+
+			await pageEditorPage.publishPage();
 		});
 
-		await page.reload({waitUntil: 'load'});
+		await test.step('Add a heading fragment to the first page and publish', async () => {
+			await page.getByRole('link', {name: firstPageName}).click();
 
-		await pageEditorPage.addFragment('Basic Components', 'Paragraph');
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
 
-		await pageEditorPage.publishPage();
-	});
+			await pageEditorPage.publishPage();
+		});
 
-	await test.step('Add a heading fragment to the first page and publish', async () => {
-		await page.getByRole('link', {name: firstPageName}).click();
+		await test.step('Add a button fragment to the second page and publish', async () => {
+			await page.getByRole('link', {name: secondPageName}).click();
 
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
+			await pageEditorPage.addFragment('Basic Components', 'Button');
 
-		await pageEditorPage.publishPage();
-	});
+			await pageEditorPage.publishPage();
+		});
 
-	await test.step('Add a button fragment to the second page and publish', async () => {
-		await page.getByRole('link', {name: secondPageName}).click();
+		await test.step('Add a style book', async () => {
+			await styleBooksPage.goto(site['friendlyUrl']);
 
-		await pageEditorPage.addFragment('Basic Components', 'Button');
+			await styleBooksPage.create(styleBookName);
 
-		await pageEditorPage.publishPage();
-	});
+			await styleBooksPage.publish();
+		});
 
-	await test.step('Add a style book', async () => {
-		await styleBooksPage.goto(site['friendlyUrl']);
+		await test.step('Dropdown trigger with text Pages is shown in Management Bar preview type selector', async () => {
+			await page
+				.locator('.form-check-card')
+				.filter({
+					hasText: styleBookName,
+				})
+				.getByRole('button', {name: 'More actions'})
+				.click();
 
-		await styleBooksPage.create(styleBookName);
+			await page.getByRole('menuitem', {name: 'Edit'}).click();
 
-		await styleBooksPage.publish();
-	});
+			await expect(
+				page.getByRole('button', {name: 'Pages'})
+			).toBeVisible();
 
-	await test.step('Pages is shown in mangement bar preview type selector', async () => {
-		await page
-			.locator('.form-check-card')
-			.filter({
-				hasText: styleBookName,
-			})
-			.getByRole('button', {name: 'More actions'})
-			.click();
+			await expect(
+				page.getByRole('button', {name: secondPageName})
+			).toBeVisible();
+		});
 
-		await page.getByRole('menuitem', {name: 'Edit'}).click();
+		await test.step('Third content page name is shown in management bar preview item selector', async () => {
+			await styleBooksPage.changePreviewPage(
+				secondPageName,
+				thirdPageName
+			);
 
-		await expect(page.getByRole('button', {name: 'Pages'})).toBeVisible();
+			await expect(
+				page.getByRole('button', {name: thirdPageName})
+			).toBeVisible();
+		});
 
-		await expect(
-			page.getByRole('button', {name: secondPageName})
-		).toBeVisible();
-	});
+		await test.step('Change Body Color in the General frontend token category', async () => {
+			await styleBooksPage.selectFrontendTokenCategory('General');
 
-	await test.step('Third content page name is shown in management bar preview item selector', async () => {
-		await styleBooksPage.changePreviewPage(secondPageName, thirdPageName);
+			await styleBooksPage.updateTokenInputColor(
+				'Body Color',
+				'#227777',
+				'Body'
+			);
 
-		await expect(
-			page.getByRole('button', {name: thirdPageName})
-		).toBeVisible();
-	});
+			await styleBooksPage.waitForAutoSave();
+		});
 
-	await test.step('Change Body Color in the General frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('General');
+		await test.step('Preview color effects on the third content page', async () => {
+			await expect(previewIframe.locator('body')).toHaveCSS(
+				'color',
+				'rgb(34, 119, 119)'
+			);
+		});
 
-		await styleBooksPage.updateTokenInputColor(
-			'Body Color',
-			'#227777',
-			'Body'
-		);
+		await test.step('Change the preview item to the second content page', async () => {
+			await styleBooksPage.changePreviewPage(
+				thirdPageName,
+				secondPageName
+			);
+		});
 
-		await styleBooksPage.waitForAutoSave();
-	});
+		await test.step('Change color of Button Primary in the Buttons frontend token category', async () => {
+			await styleBooksPage.selectFrontendTokenCategory('Buttons');
 
-	await test.step('Preview color effects on the third content page', async () => {
-		await expect(previewIframe.locator('body')).toHaveCSS(
-			'color',
-			'rgb(34, 119, 119)'
-		);
-	});
+			await styleBooksPage.updateTokenInputColor(
+				'Color',
+				'#880022',
+				'Button Primary'
+			);
+		});
 
-	await test.step('Change the preview item to the second content page', async () => {
-		await styleBooksPage.changePreviewPage(thirdPageName, secondPageName);
-	});
+		await test.step('Preview color effects on the second content page', async () => {
+			await expect(previewIframe.locator('.btn-primary')).toHaveCSS(
+				'color',
+				'rgb(136, 0, 34)'
+			);
+		});
 
-	await test.step('Change color of Button Primary in the Buttons frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Buttons');
+		await test.step('Change the preview item to the first content page', async () => {
+			await styleBooksPage.changePreviewPage(
+				secondPageName,
+				firstPageName
+			);
+		});
 
-		await styleBooksPage.updateTokenInputColor(
-			'Color',
-			'#880022',
-			'Button Primary'
-		);
-	});
+		await test.step('Change Body Color in the General frontend token category', async () => {
+			await styleBooksPage.selectFrontendTokenCategory('General');
 
-	await test.step('Preview color effects on the second content page', async () => {
-		await expect(previewIframe.locator('.btn-primary')).toHaveCSS(
-			'color',
-			'rgb(136, 0, 34)'
-		);
-	});
+			await styleBooksPage.updateTokenInputColor(
+				'Body Color',
+				'#995511',
+				'Body'
+			);
 
-	await test.step('Change the preview item to the first content page', async () => {
-		await styleBooksPage.changePreviewPage(secondPageName, firstPageName);
-	});
+			await styleBooksPage.waitForAutoSave();
+		});
 
-	await test.step('Change Body Color in the General frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('General');
+		await test.step('Preview color effects on the first content page', async () => {
+			await expect(previewIframe.locator('body')).toHaveCSS(
+				'color',
+				'rgb(153, 85, 17)'
+			);
+		});
 
-		await styleBooksPage.updateTokenInputColor(
-			'Body Color',
-			'#995511',
-			'Body'
-		);
+		await test.step('Change the preview item to the second content page', async () => {
+			await styleBooksPage.changePreviewPage(
+				firstPageName,
+				secondPageName
+			);
+		});
 
-		await styleBooksPage.waitForAutoSave();
-	});
+		await test.step('Change Font Family Base in the Typography frontend token category', async () => {
+			await styleBooksPage.selectFrontendTokenCategory('Typography');
 
-	await test.step('Preview color effects on the first content page', async () => {
-		await expect(previewIframe.locator('body')).toHaveCSS(
-			'color',
-			'rgb(153, 85, 17)'
-		);
-	});
+			await styleBooksPage.updateTokenInput(
+				'Font Family Base',
+				'times',
+				'Font Family'
+			);
 
-	await test.step('Change the preview item to the second content page', async () => {
-		await styleBooksPage.changePreviewPage(firstPageName, secondPageName);
-	});
+			await styleBooksPage.waitForAutoSave();
+		});
 
-	await test.step('Change Font Family Base in the Typography frontend token category', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Typography');
+		await test.step('Preview typography effects on the second content page', async () => {
+			await expect(
+				previewIframe.getByRole('link', {name: 'My Sites'})
+			).toHaveCSS('font-family', 'times');
+		});
 
-		await styleBooksPage.updateTokenInput(
-			'Font Family Base',
-			'times',
-			'Font Family'
-		);
+		await test.step('View the Showing X of Y Items shown in dropdown menu of preview item selector then change the preview item to the first content page', async () => {
+			await page.getByRole('button', {name: secondPageName}).click();
 
-		await styleBooksPage.waitForAutoSave();
-	});
+			await expect(
+				page.getByText(/Showing\s[0-9]+\sof\s[0-9]+\sItems/)
+			).toBeVisible();
 
-	await test.step('Preview typography effects on the second content page', async () => {
-		await expect(
-			previewIframe.getByRole('link', {name: 'My Sites'})
-		).toHaveCSS('font-family', 'times');
-	});
+			await page.getByRole('menuitem', {name: firstPageName}).click();
+		});
 
-	await test.step('View the Showing X of Y Items shown in dropdown menu of preview item selector then change the preview item to the first content page', async () => {
-		await page.getByRole('button', {name: secondPageName}).click();
+		await test.step('Change Font Family Base in the Typography frontend token category', async () => {
+			await styleBooksPage.updateTokenInput(
+				'Font Family Base',
+				'courier',
+				'Font Family'
+			);
 
-		await expect(
-			page.getByText(/Showing\s[0-9]+\sof\s[0-9]+\sItems/)
-		).toBeVisible();
+			await styleBooksPage.waitForAutoSave();
+		});
 
-		await page.getByRole('menuitem', {name: firstPageName}).click();
-	});
-
-	await test.step('Change Font Family Base in the Typography frontend token category', async () => {
-		await styleBooksPage.updateTokenInput(
-			'Font Family Base',
-			'courier',
-			'Font Family'
-		);
-
-		await styleBooksPage.waitForAutoSave();
-	});
-
-	await test.step('Preview typography effects on the first content page', async () => {
-		await expect(
-			previewIframe.getByRole('link', {name: 'New Entry'})
-		).toHaveCSS('font-family', 'courier');
-	});
-});
+		await test.step('Preview typography effects on the first content page', async () => {
+			await expect(
+				previewIframe.getByRole('link', {name: 'New Entry'})
+			).toHaveCSS('font-family', 'courier');
+		});
+	}
+);

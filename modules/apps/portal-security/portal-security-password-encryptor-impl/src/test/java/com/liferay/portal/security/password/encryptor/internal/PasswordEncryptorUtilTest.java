@@ -9,10 +9,12 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -307,6 +309,23 @@ public class PasswordEncryptorUtilTest {
 		}
 		catch (Exception exception) {
 		}
+	}
+
+
+	@Test(expected = PwdEncryptorException.PwdEncryptorAlgorithmException.class)
+	public void testFindByPrimaryKeyMissing() throws Exception {
+		String encryptedPassword = RandomTestUtil.randomString();
+		String plainPassword = RandomTestUtil.randomString();
+
+
+
+		try (SafeCloseable safeCloseable =
+				 PropsValuesTestUtil.swapWithSafeCloseable(
+					 "PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY", null)) {
+
+				PasswordEncryptorUtil.encrypt(plainPassword, encryptedPassword);
+		}
+
 	}
 
 	protected void testLegacyEncrypt(

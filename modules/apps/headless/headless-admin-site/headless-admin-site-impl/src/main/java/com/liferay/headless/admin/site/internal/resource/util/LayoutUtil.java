@@ -271,6 +271,9 @@ public class LayoutUtil {
 			unicodeProperties.setProperty(
 				"javascript", settings.getJavascript());
 		}
+		else {
+			unicodeProperties.remove("javascript");
+		}
 
 		for (String key : ListUtil.fromCollection(unicodeProperties.keySet())) {
 			if (key.startsWith("lfr-theme:")) {

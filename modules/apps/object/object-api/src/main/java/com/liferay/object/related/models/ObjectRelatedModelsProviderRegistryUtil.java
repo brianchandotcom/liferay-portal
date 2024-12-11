@@ -5,6 +5,7 @@
 
 package com.liferay.object.related.models;
 
+import com.liferay.object.constants.ObjectRelatedModelsProviderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
@@ -35,10 +36,10 @@ public class ObjectRelatedModelsProviderRegistryUtil {
 			HashMapDictionaryBuilder.<String, Object>put(
 				Constants.SERVICE_RANKING, () -> serviceRanking
 			).put(
-				ObjectRelatedModelsProvider.KEY_OBJECT_DEFINITION_ERC,
+				ObjectRelatedModelsProviderConstants.KEY_OBJECT_DEFINITION_ERC,
 				objectDefinition.getExternalReferenceCode()
 			).put(
-				ObjectRelatedModelsProvider.KEY_RELATIONSHIP_TYPE,
+				ObjectRelatedModelsProviderConstants.KEY_RELATIONSHIP_TYPE,
 				objectRelatedModelsProvider.getObjectRelationshipType()
 			).build());
 	}

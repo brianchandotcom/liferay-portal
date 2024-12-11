@@ -46,6 +46,14 @@ else if (layoutMode !== 'edit' && input.localizable) {
 			}
 		});
 	});
+
+	if (input.valueI18n) {
+		Object.entries(input.valueI18n).forEach(([languageId, value]) => {
+			const translationInput = getOrCreateTranslationInput(languageId);
+
+			translationInput.value = value;
+		});
+	}
 }
 
 function getOrCreateTranslationInput(languageId) {
@@ -57,7 +65,7 @@ function getOrCreateTranslationInput(languageId) {
 		translationInput = document.createElement('input');
 		translationInput.type = 'hidden';
 		translationInput.id = inputId;
-		translationInput.name = `${input.name}_${currentLanguageId}`;
+		translationInput.name = `${input.name}_${languageId}`;
 
 		inputLabelElement.parentElement.appendChild(translationInput);
 	}

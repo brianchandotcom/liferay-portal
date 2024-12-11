@@ -9,6 +9,7 @@ const lengthWarning = document.getElementById(
 const lengthWarningText = document.getElementById(
 	`${fragmentNamespace}-length-warning-text`
 );
+
 const inputElement = document.getElementById(`${fragmentNamespace}-text-input`);
 
 function enableLengthWarning() {
@@ -91,6 +92,17 @@ function main() {
 					languageId: currentLanguageId,
 				});
 			});
+
+			if (input.valueI18n) {
+				Object.entries(input.valueI18n).forEach(
+					([languageId, value]) => {
+						const translationInput =
+							getOrCreateTranslationInput(languageId);
+
+						translationInput.value = value;
+					}
+				);
+			}
 		}
 	}
 }
@@ -104,7 +116,7 @@ function getOrCreateTranslationInput(languageId) {
 		translationInput = document.createElement('input');
 		translationInput.type = 'hidden';
 		translationInput.id = inputId;
-		translationInput.name = `${input.name}_${currentLanguageId}`;
+		translationInput.name = `${input.name}_${languageId}`;
 		inputElement.parentNode.appendChild(translationInput);
 	}
 

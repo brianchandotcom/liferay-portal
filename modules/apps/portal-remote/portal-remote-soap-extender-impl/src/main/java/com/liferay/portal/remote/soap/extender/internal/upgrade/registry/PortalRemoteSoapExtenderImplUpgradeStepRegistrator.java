@@ -22,15 +22,17 @@ public class PortalRemoteSoapExtenderImplUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
+
 		registry.register(
-			"0.0.0", "0.0.1",
+			"0.0.1", "0.0.2",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.remote.soap.extender.configuration." +
 					"SoapExtenderConfiguration",
 				SoapExtenderConfiguration.class.getName()));
 
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.2", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.remote.soap.extender.configuration." +
 					"JaxWsApiConfiguration",

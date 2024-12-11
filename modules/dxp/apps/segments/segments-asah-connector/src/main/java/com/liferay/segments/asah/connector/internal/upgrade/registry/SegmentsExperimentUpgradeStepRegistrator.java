@@ -24,7 +24,7 @@ public class SegmentsExperimentUpgradeStepRegistrator
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.0", "1.0.0",
+			"0.0.1", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.segments.experiment.web.internal.configuration." +
 					"SegmentsExperimentConfiguration",

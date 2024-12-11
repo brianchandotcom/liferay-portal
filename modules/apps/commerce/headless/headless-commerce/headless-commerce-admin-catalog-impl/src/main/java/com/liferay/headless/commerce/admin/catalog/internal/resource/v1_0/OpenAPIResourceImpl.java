@@ -123,6 +123,14 @@ public class OpenAPIResourceImpl {
 
 			add(ProductConfigurationListResourceImpl.class);
 
+			add(ProductConfigurationListAccountResourceImpl.class);
+
+			add(ProductConfigurationListAccountGroupResourceImpl.class);
+
+			add(ProductConfigurationListChannelResourceImpl.class);
+
+			add(ProductConfigurationListOrderTypeResourceImpl.class);
+
 			add(ProductGroupResourceImpl.class);
 
 			add(ProductGroupProductResourceImpl.class);

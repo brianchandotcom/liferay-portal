@@ -5,6 +5,8 @@
 
 package com.liferay.calendar.recurrence;
 
+import com.liferay.petra.function.transform.TransformUtil;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -85,13 +87,9 @@ public class Recurrence {
 	}
 
 	public List<Weekday> getWeekdays() {
-		List<Weekday> weekdays = new ArrayList<>();
-
-		for (PositionalWeekday positionalWeekday : _positionalWeekdays) {
-			weekdays.add(positionalWeekday.getWeekday());
-		}
-
-		return weekdays;
+		return TransformUtil.transform(
+			_positionalWeekdays,
+			positionalWeekday -> positionalWeekday.getWeekday());
 	}
 
 	public void removeExceptionJCalendar(Calendar jCalendar) {

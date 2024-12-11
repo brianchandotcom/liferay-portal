@@ -1382,7 +1382,7 @@ public class DefaultObjectEntryManagerImpl
 		if ((fileEntry == null) ||
 			((fileEntry.getExternalReferenceCode() == null) &&
 			 (fileEntry.getFileBase64() == null) &&
-			 (fileEntry.getFileSourceURL() == null))) {
+			 (fileEntry.getFileURL() == null))) {
 
 			return;
 		}
@@ -1404,11 +1404,11 @@ public class DefaultObjectEntryManagerImpl
 		if (fileEntry.getFileBase64() != null) {
 			fileContent = _decode(fileEntry.getFileBase64());
 		}
-		else if ((fileEntry.getFileSourceURL() != null) &&
+		else if ((fileEntry.getFileURL() != null) &&
 				 FeatureFlagManagerUtil.isEnabled("LPD-39967")) {
 
 			try {
-				URL url = new URL(fileEntry.getFileSourceURL());
+				URL url = new URL(fileEntry.getFileURL());
 
 				if (Objects.equals(url.getProtocol(), "file")) {
 					throw new UnsupportedOperationException(
@@ -1422,12 +1422,11 @@ public class DefaultObjectEntryManagerImpl
 				fileContent = StreamUtil.toByteArray(
 					urlConnection.getInputStream());
 
-				fileEntry.setFileSourceURL(() -> (String)null);
+				fileEntry.setFileURL(() -> (String)null);
 			}
 			catch (IOException ioException) {
 				throw new IllegalArgumentException(
-					"Unable to download file from " +
-						fileEntry.getFileSourceURL(),
+					"Unable to download file from " + fileEntry.getFileURL(),
 					ioException);
 			}
 		}

@@ -13,7 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarUtil;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -205,7 +205,7 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			ServiceRegistration<ObjectRelatedModelsProvider<?>>
 				serviceRegistration =
 					(ServiceRegistration<ObjectRelatedModelsProvider<?>>)
-						ObjectRelatedModelsProviderRegistrationUtil.register(
+						ObjectRelatedModelsProviderRegistrarUtil.register(
 							_bundleContext,
 							_objectDefinitionLocalService.
 								fetchObjectDefinitionByExternalReferenceCode(

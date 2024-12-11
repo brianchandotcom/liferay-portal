@@ -18,11 +18,11 @@ make sure "Expose daemon on tcp://localhost:2375 without TLS" on the "General" p
 
 #### Building Local Docker Image
 
-1. Install 1Password app for [Linux](https://1password.com/downloads/linux) or [Mac](https://1password.com/downloads/mac).
+1. Install 1Password.
 
 1. Install 1Password [CLI](https://developer.1password.com/docs/cli/get-started/#install).
 
-1. Turn on [Integrate with 1Password CLI](https://developer.1password.com/docs/cli/get-started/#step-2-turn-on-the-1password-desktop-app-integration) in 1Password app.
+1. Turn on [Integrate with 1Password CLI](https://developer.1password.com/docs/cli/get-started/#step-2-turn-on-the-1password-desktop-app-integration) in 1Password.
 
 1. Run `./gradlew buildAppDockerImage`
 

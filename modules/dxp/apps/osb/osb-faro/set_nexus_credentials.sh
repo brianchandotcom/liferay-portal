@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function main {
-	cd ../../../../../
+	pushd ../../../../../
 
 	touch "build.$(whoami).properties"
 	
@@ -14,9 +14,9 @@ function main {
 
 	if [[ $(grep -c "build.repository.private.url" "build.$(whoami).properties") == 0 ]]
 	then
-		local nexus_website=$(op read "op://Analytics Cloud Team/Nexus Private Repository Account/website")
+		local nexus_url=$(op read "op://Analytics Cloud Team/Nexus Private Repository Account/website")
 		
-		echo "build.repository.private.url=${nexus_website}" >> "build.$(whoami).properties"
+		echo "build.repository.private.url=${nexus_url}" >> "build.$(whoami).properties"
 	fi
 
 	if [[ $(grep -c "build.repository.private.username" "build.$(whoami).properties") == 0 ]]
@@ -27,6 +27,8 @@ function main {
 	fi
 
 	ant update-gradle-properties
+
+	popd
 }
 
 main

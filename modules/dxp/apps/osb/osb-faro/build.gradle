@@ -69,9 +69,7 @@ buildNexusCredentials {
 	commandLine("/bin/sh", "-c", "./set_nexus_credentials.sh")
 
 	onlyIf {
-		faroEnvironmentName.equals("local") &&
-		(!project.hasProperty("liferay.ci") ||
-			!project.getProperty("liferay.ci").equals("true"))
+		faroEnvironmentName.equals("local") && (!project.hasProperty("liferay.ci") || !project.getProperty("liferay.ci").equals("true"))
 	}
 }
 

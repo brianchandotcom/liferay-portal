@@ -31,6 +31,8 @@ const ProgressBarContent: React.FC<IProps> = ({
 		return `${Math.random() * 100}%`;
 	}, [displayUsage, maxCount, usedCount]);
 
+	const isUnlimited = maxCount < 0;
+
 	return (
 		<div className="progress-bar-content w-100">
 			<h5 className="mb-3">{title}</h5>
@@ -42,12 +44,16 @@ const ProgressBarContent: React.FC<IProps> = ({
 							'col-3 empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage && usedCount.toLocaleString()}
+						{displayUsage && isUnlimited
+							? i18n.translate('unlimited')
+							: usedCount.toLocaleString()}
 					</h3>
 
 					{displayUsage && (
 						<span className="total-value-text">
-							{i18n.translate('of')} {maxCount.toLocaleString()}
+							{isUnlimited
+								? '∞'
+								: `${i18n.translate('of')} ${maxCount.toLocaleString()}`}
 						</span>
 					)}
 				</div>
@@ -56,7 +62,7 @@ const ProgressBarContent: React.FC<IProps> = ({
 					<div
 						className="bar-content"
 						style={{
-							width: barPercentage,
+							width: isUnlimited ? 0 : barPercentage,
 						}}
 					/>
 				</div>

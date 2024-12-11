@@ -41,7 +41,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
-import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrationUtil;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelperUtil;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -377,17 +377,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
-			ObjectRelatedModelsProviderRegistrationUtil.register(
+			ObjectRelatedModelsProviderRegistrarHelperUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectRelationshipLocalService)),
-			ObjectRelatedModelsProviderRegistrationUtil.register(
+			ObjectRelatedModelsProviderRegistrarHelperUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectFieldLocalService, _objectRelationshipLocalService)),
-			ObjectRelatedModelsProviderRegistrationUtil.register(
+			ObjectRelatedModelsProviderRegistrarHelperUtil.register(
 				_bundleContext, objectDefinition,
 				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,

@@ -44,4 +44,13 @@ export class GeneralPage {
 		await this.saveButton.click();
 		await waitForAlert(this.page);
 	}
+
+	async resetNavigationFields() {
+		await this.defaultLandingPageField.clear();
+		await this.defaultLogoutPageField.clear();
+		await this.homeUrlField.clear();
+
+		await this.saveButton.click();
+		await waitForAlert(this.page);
+	}
 }

@@ -137,9 +137,7 @@ test.afterEach(async ({browser}) => {
 
 		const generalPage = new GeneralPage(instanceSettingsPage.page);
 
-		await generalPage.editDefaultLandingPage('');
-		await generalPage.editDefaultLogoutPage('');
-		await generalPage.editHomeUrl('');
+		await generalPage.resetNavigationFields();
 
 		await newPage.close();
 	}

@@ -9,21 +9,29 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceAccountModel;
 import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderModel;
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +42,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -65,6 +75,7 @@ public class AccountSelectorTag extends IncludeTag {
 			if (_commerceChannelId == 0) {
 				_accountEntryAllowedTypes = new String[0];
 				_addCommerceOrderURL = StringPool.BLANK;
+				_currencyCode = StringPool.BLANK;
 				_editOrderURL = StringPool.BLANK;
 				_setCurrentAccountURL = StringPool.BLANK;
 
@@ -76,6 +87,12 @@ public class AccountSelectorTag extends IncludeTag {
 				commerceContext.getAccountEntryAllowedTypes();
 			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
 			_commerceOrder = commerceContext.getCommerceOrder();
+
+			CommerceCurrency commerceCurrency =
+				commerceContext.getCommerceCurrency();
+
+			_currencyCode = commerceCurrency.getCode();
+
 			_editOrderURL = _getEditOrderURL(httpServletRequest);
 			_setCurrentAccountURL =
 				PortalUtil.getPortalURL(httpServletRequest) +
@@ -97,6 +114,7 @@ public class AccountSelectorTag extends IncludeTag {
 			_addCommerceOrderURL = null;
 			_commerceChannelId = 0;
 			_commerceOrder = null;
+			_currencyCode = null;
 			_editOrderURL = null;
 			_setCurrentAccountURL = null;
 			_spritemap = null;
@@ -160,6 +178,7 @@ public class AccountSelectorTag extends IncludeTag {
 		_commerceOrder = null;
 		_commerceOrderTypeLocalService = null;
 		_cssClasses = StringPool.BLANK;
+		_currencyCode = null;
 		_editOrderURL = null;
 		_setCurrentAccountURL = null;
 		_spritemap = null;
@@ -230,6 +249,16 @@ public class AccountSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:cssClasses", _cssClasses);
 		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:currencyCode", _currencyCode);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:" +
+				"hasCommerceOpenOrderContentPortlet",
+			_hasCommerceOpenOrderContentPortlet(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-commerce:account-selector:orderTypes",
+			_getCommerceOrderTypesJSONArray(
+				_commerceChannelId, httpServletRequest));
+		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:selectOrderURL", _editOrderURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:setCurrentAccountURL",
@@ -242,36 +271,7 @@ public class AccountSelectorTag extends IncludeTag {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		int commerceOrderTypesCount =
-			_commerceOrderTypeLocalService.getCommerceOrderTypesCount(
-				PortalUtil.getCompanyId(httpServletRequest),
-				CommerceChannel.class.getName(), _commerceChannelId, true);
-
-		if (commerceOrderTypesCount > 1) {
-			httpServletRequest.setAttribute(
-				"liferay-commerce:account-selector:showOrderTypeModal",
-				Boolean.TRUE);
-
-			return PortletURLBuilder.create(
-				_getPortletURL(
-					httpServletRequest,
-					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
-			).setMVCRenderCommandName(
-				"/commerce_order_content/view_commerce_order_order_type_modal"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString();
-		}
-
-		httpServletRequest.setAttribute(
-			"liferay-commerce:account-selector:showOrderTypeModal",
-			Boolean.FALSE);
-
-		long plid = PortalUtil.getPlidFromPortletId(
-			PortalUtil.getScopeGroupId(httpServletRequest),
-			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-		if (plid > 0) {
+		if (_hasCommerceOpenOrderContentPortlet(httpServletRequest)) {
 			return PortletURLBuilder.create(
 				_getPortletURL(
 					httpServletRequest,
@@ -283,7 +283,40 @@ public class AccountSelectorTag extends IncludeTag {
 			).buildString();
 		}
 
-		return StringPool.BLANK;
+		return CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
+			_friendlyURLSeparatorProviderSnapshot.get(), httpServletRequest);
+	}
+
+	private JSONArray _getCommerceOrderTypesJSONArray(
+		long commerceChannelId, HttpServletRequest httpServletRequest) {
+
+		JSONArray commerceOrderTypesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		try {
+			List<CommerceOrderType> commerceOrderTypes =
+				_commerceOrderTypeLocalService.getCommerceOrderTypes(
+					PortalUtil.getCompanyId(httpServletRequest),
+					CommerceChannel.class.getName(), commerceChannelId, true,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
+				commerceOrderTypesJSONArray.put(
+					JSONUtil.put(
+						"name_i18n",
+						commerceOrderType.getName(
+							PortalUtil.getLocale(httpServletRequest))
+					).put(
+						"orderTypeId",
+						commerceOrderType.getCommerceOrderTypeId()
+					));
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return commerceOrderTypesJSONArray;
 	}
 
 	private String _getEditOrderURL(HttpServletRequest httpServletRequest)
@@ -328,10 +361,33 @@ public class AccountSelectorTag extends IncludeTag {
 			httpServletRequest, portletId, PortletRequest.ACTION_PHASE);
 	}
 
+	private boolean _hasCommerceOpenOrderContentPortlet(
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			long plid = PortalUtil.getPlidFromPortletId(
+				PortalUtil.getScopeGroupId(httpServletRequest),
+				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
+
+			if (plid > 0) {
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
+	}
+
 	private static final String _PAGE = "/account_selector/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountSelectorTag.class);
+
+	private static final Snapshot<FriendlyURLSeparatorProvider>
+		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
+			AccountSelectorTag.class, FriendlyURLSeparatorProvider.class);
 
 	private AccountEntry _accountEntry;
 	private String[] _accountEntryAllowedTypes;
@@ -340,6 +396,7 @@ public class AccountSelectorTag extends IncludeTag {
 	private CommerceOrder _commerceOrder;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private String _cssClasses = StringPool.BLANK;
+	private String _currencyCode;
 	private String _editOrderURL;
 	private String _setCurrentAccountURL;
 	private String _spritemap;

@@ -27,17 +27,21 @@
 				).put(
 					"createNewOrderURL", createNewOrderURL
 				).put(
+					"currencyCode", currencyCode
+				).put(
 					"currentCommerceAccount", currentCommerceAccount
 				).put(
 					"currentCommerceOrder", currentCommerceOrder
+				).put(
+					"hasCommerceOpenOrderContentPortlet", hasCommerceOpenOrderContentPortlet
+				).put(
+					"orderTypes", orderTypesJSONArray
 				).put(
 					"refreshPageOnAccountSelected", true
 				).put(
 					"selectOrderURL", selectOrderURL
 				).put(
 					"setCurrentAccountURL", setCurrentAccountURL
-				).put(
-					"showOrderTypeModal", showOrderTypeModal
 				).build()
 			%>'
 			module="{accountSelectorTag} from commerce-frontend-taglib"

@@ -30,9 +30,11 @@ function AccountSelector({
 	alignmentPosition,
 	commerceChannelId,
 	createNewOrderURL,
+	currencyCode,
 	currentCommerceAccount: account,
 	currentCommerceOrder: order,
-	namespace,
+	hasCommerceOpenOrderContentPortlet,
+	orderTypes,
 	refreshPageOnAccountSelected: forceRefresh,
 	selectOrderURL,
 	setCurrentAccountURL,
@@ -134,9 +136,13 @@ function AccountSelector({
 				<OrdersListView
 					commerceChannelId={commerceChannelId}
 					createOrderURL={createNewOrderURL}
+					currencyCode={currencyCode}
 					currentAccount={currentAccount}
 					disabled={!active}
-					namespace={namespace}
+					hasCommerceOpenOrderContentPortlet={
+						hasCommerceOpenOrderContentPortlet
+					}
+					orderTypes={orderTypes}
 					selectOrderURL={selectOrderURL}
 					setCurrentView={setCurrentView}
 					showOrderTypeModal={showOrderTypeModal}
@@ -154,6 +160,7 @@ AccountSelector.propTypes = {
 		PropTypes.string,
 	]),
 	createNewOrderURL: PropTypes.string.isRequired,
+	currencyCode: PropTypes.string.isRequired,
 	currentCommerceAccount: PropTypes.shape({
 		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		logoURL: PropTypes.string,
@@ -165,7 +172,8 @@ AccountSelector.propTypes = {
 			label_i18n: PropTypes.string,
 		}),
 	}),
-	namespace: PropTypes.string,
+	hasCommerceOpenOrderContentPortlet: PropTypes.bool,
+	orderTypes: PropTypes.array,
 	refreshPageOnAccountSelected: PropTypes.bool,
 	selectOrderURL: PropTypes.string.isRequired,
 	setCurrentAccountURL: PropTypes.string.isRequired,

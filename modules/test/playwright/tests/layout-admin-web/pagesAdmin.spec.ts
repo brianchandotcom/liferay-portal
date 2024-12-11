@@ -133,6 +133,24 @@ test.describe('Keyboard movement and navigation', () => {
 
 			await expect(getItem(2)).not.toHaveClass(/drop-middle/);
 
+			// Check we can target source parent if the source item has disappeared
+
+			await enableMovement(0);
+
+			await page.keyboard.press('ArrowLeft');
+
+			await page.keyboard.press('ArrowDown');
+
+			await expect(getItem(0)).not.toBeVisible();
+
+			await page.keyboard.press('ArrowUp');
+
+			await page.keyboard.press('ArrowUp');
+
+			await expect(getItem(0)).toBeVisible();
+
+			await page.keyboard.press('Escape');
+
 			// Check it's possible to move several items at a time
 
 			await page.getByLabel('Select Page 1').click();

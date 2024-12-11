@@ -143,23 +143,21 @@ public class CommerceAccountDisplayContext {
 	}
 
 	public List<User> getAllowedUsers() throws PortalException {
-		List<User> companyUsers = _userService.getCompanyUsers(
-			_commerceAccountRelRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		return TransformUtil.transform(
+			_userService.getCompanyUsers(
+				_commerceAccountRelRequestHelper.getCompanyId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			user -> {
+				if (_accountEntryModelResourcePermission.contains(
+						PermissionCheckerFactoryUtil.create(user), 0,
+						CommerceAccountActionKeys.
+							MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL)) {
 
-		List<User> filteredUsers = new ArrayList<>();
+					return user;
+				}
 
-		for (User user : companyUsers) {
-			if (_accountEntryModelResourcePermission.contains(
-					PermissionCheckerFactoryUtil.create(user), 0,
-					CommerceAccountActionKeys.
-						MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL)) {
-
-				filteredUsers.add(user);
-			}
-		}
-
-		return filteredUsers;
+				return null;
+			});
 	}
 
 	public long getCommerceChannelId() {

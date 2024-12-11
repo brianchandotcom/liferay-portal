@@ -34,6 +34,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly itemsTableRows: () => Promise<Locator[]>;
 	readonly itemsTableRowAction: (sku: string) => Promise<Locator>;
 	readonly keyOrderStatus: (orderStatus: string) => Locator;
+	readonly orderActionsButton: Locator;
 	readonly orderStatusLink: (orderStatus: string) => Locator;
 	readonly page: Page;
 
@@ -109,12 +110,15 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 		};
 		this.keyOrderStatus = (orderStatus: string) =>
 			page.locator('.dnd-table').getByText(orderStatus);
+		this.orderActionsButton = page.getByRole('button', {
+			name: 'Actions',
+		});
 		this.orderStatusLink = (orderStatus: string) =>
 			page.getByRole('link', {exact: true, name: orderStatus});
 		this.page = page;
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceOrders();
+		await this.applicationsMenuPage.goToCommerceOrders(false);
 	}
 }

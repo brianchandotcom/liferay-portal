@@ -100,10 +100,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	@Override
 	public String getStatus() throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
-			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
-				return "failure";
-			}
-			else if (_isPendingModuleUpgrades()) {
+			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+				_isPendingModuleUpgrades()) {
+
 				return "failure";
 			}
 		}

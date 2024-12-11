@@ -16,7 +16,6 @@ export {default as editCommerceReturn} from './editCommerceReturn';
 export {default as editCommerceReturnItem} from './editCommerceReturnItem';
 export {default as InlineEditableOrderField} from './inline_editable_order_field/InlineEditableOrderField';
 export {default as newView} from './newView';
-export {default as createCommerceCart} from './order_data_set/createCommerceCart';
 export {default as OrderDataSetPropsTransformer} from './order_data_set/propsTransformer';
 export {default as preview} from './preview';
 export {default as requestQuote} from './requestQuote';

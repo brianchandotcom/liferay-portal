@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {openModal, openToast} from 'frontend-js-web';
 
-const DeliveryCartAPI = CommerceServiceProvider.DeliveryCartAPI('v1');
+import ServiceProvider from '../ServiceProvider/index';
+import {liferayNavigate} from './index';
+
+const DeliveryCartAPI = ServiceProvider.DeliveryCartAPI('v1');
 
 const openOrderTypeSelectionModal = (orderTypes) =>
 	new Promise((proceed, stop) => {
@@ -66,47 +68,64 @@ const openOrderTypeSelectionModal = (orderTypes) =>
 		});
 	});
 
-const createCommerceCart = async ({
+export function createCommerceCart({
 	accountId,
 	commerceChannelId,
 	currencyCode,
+	hasCommerceOpenOrderContentPortlet,
 	orderDetailURL,
 	orderTypes,
-}) => {
+}) {
 	const onBeforeCreate =
 		orderTypes.length > 1
 			? openOrderTypeSelectionModal
 			: () => Promise.resolve(null);
 
-	onBeforeCreate(orderTypes)
-		.then((orderTypeId) => {
-			const commerceCart = {accountId, currencyCode};
+	const createOrder = hasCommerceOpenOrderContentPortlet
+		? (orderTypeId) => {
+				const createOrderActionURL = new URL(orderDetailURL);
 
-			if (orderTypeId) {
-				commerceCart.orderTypeId = orderTypeId;
-			}
+				if (orderTypeId) {
+					createOrderActionURL.searchParams.set(
+						'commerceOrderTypeId',
+						String(orderTypeId)
+					);
+				}
 
-			return DeliveryCartAPI.createCartByChannelId(
-				commerceChannelId,
-				commerceCart
-			);
-		})
-		.then(({id: cartId = null}) => {
-			if (cartId) {
-				window.location.href = `${orderDetailURL}${cartId}`;
+				return liferayNavigate(createOrderActionURL);
 			}
-		})
-		.catch(({message}) => {
-			if (message !== 'cancel') {
-				openToast({
-					message:
-						message ||
-						Liferay.Language.get('an-unexpected-error-occurred'),
-					type: 'danger',
-				});
-			}
-		});
-};
+		: (orderTypeId) => {
+				const commerceCart = {accountId, currencyCode};
+
+				if (orderTypeId) {
+					commerceCart.orderTypeId = orderTypeId;
+				}
+
+				return DeliveryCartAPI.createCartByChannelId(
+					commerceChannelId,
+					commerceCart
+				)
+					.then(({id: cartId = null}) => {
+						if (cartId && !hasCommerceOpenOrderContentPortlet) {
+							window.location.href = `${orderDetailURL}${cartId}`;
+						}
+					})
+					.catch(({message}) => {
+						if (message !== 'cancel') {
+							openToast({
+								message:
+									message ||
+									Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+								type: 'danger',
+							});
+						}
+					});
+			};
+
+	onBeforeCreate(orderTypes).then(createOrder);
+}
 
 export default function ({additionalProps, orderTypes}) {
 	const handler = () => createCommerceCart({...additionalProps, orderTypes});

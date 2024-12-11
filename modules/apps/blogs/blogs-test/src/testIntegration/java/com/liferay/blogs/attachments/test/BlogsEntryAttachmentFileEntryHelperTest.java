@@ -10,6 +10,7 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.constants.EditorConstants;
@@ -225,23 +226,19 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 				List<FileEntry> tempFileEntries)
 		throws Exception {
 
-		List<BlogsEntryAttachmentFileEntryReference>
-			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
+		return TransformUtil.transform(
+			tempFileEntries,
+			tempFileEntry -> {
+				FileEntry blogsEntryAttachmentFileEntry =
+					_addBlogsEntryAttachmentFileEntry(
+						groupId, userId, blogsEntryId, folderId,
+						tempFileEntry.getTitle(), tempFileEntry.getMimeType(),
+						tempFileEntry.getContentStream());
 
-		for (FileEntry tempFileEntry : tempFileEntries) {
-			FileEntry blogsEntryAttachmentFileEntry =
-				_addBlogsEntryAttachmentFileEntry(
-					groupId, userId, blogsEntryId, folderId,
-					tempFileEntry.getTitle(), tempFileEntry.getMimeType(),
-					tempFileEntry.getContentStream());
-
-			blogsEntryAttachmentFileEntryReferences.add(
-				new BlogsEntryAttachmentFileEntryReference(
+				return new BlogsEntryAttachmentFileEntryReference(
 					tempFileEntry.getFileEntryId(),
-					blogsEntryAttachmentFileEntry));
-		}
-
-		return blogsEntryAttachmentFileEntryReferences;
+					blogsEntryAttachmentFileEntry);
+			});
 	}
 
 	private FileEntry _addBlogsEntryAttachmentFileEntry(

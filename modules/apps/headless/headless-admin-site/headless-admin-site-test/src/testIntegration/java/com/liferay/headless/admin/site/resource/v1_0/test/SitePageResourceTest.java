@@ -13,6 +13,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -23,9 +25,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -168,6 +173,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
 			contentPageSpecification, layout);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			LayoutTestUtil.addTypePortletLayout(testGroup));
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext));
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext));
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext));
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext));
 	}
 
 	@Ignore
@@ -396,6 +420,27 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		_assertContentPageSpecifications(layout, pageSpecifications);
+	}
+
+	private void
+			_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+				Layout layout)
+		throws Exception {
+
+		_assertProblemException(
+			() ->
+				sitePageResource.
+					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode(),
+						new ContentPageSpecification() {
+							{
+								setExternalReferenceCode(
+									layout::getExternalReferenceCode);
+								setStatus(() -> Status.DRAFT);
+								setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+							}
+						}));
 	}
 
 	private void _assertProblemException(

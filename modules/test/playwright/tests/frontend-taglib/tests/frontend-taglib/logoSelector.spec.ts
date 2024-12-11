@@ -5,12 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import getRandomString from '../../../../utils/getRandomString';
+import getFragmentDefinition from '../../../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../../../layout-content-page-editor-web/utils/getPageDefinition';
 import {samplePageTest} from '../../fixtures/samplePageTest';
 
-export const test = mergeTests(
+const test = mergeTests(
+	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
@@ -19,6 +24,8 @@ export const test = mergeTests(
 	samplePageTest
 );
 
+const fragmentName = getRandomString();
+let layout: Layout;
 const linkName = 'Logo Selector';
 
 test(
@@ -59,6 +66,52 @@ test(
 				);
 
 			await expect(secondInput).toHaveValue('Default');
+		});
+	}
+);
+
+test(
+	'Logo Selector can be rendered in a fragment',
+	{tag: '@LPD-43308'},
+	async ({apiHelpers, page, site}) => {
+		await test.step('Create a fragment collection with a custom basic fragment', async () => {
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: getRandomString(),
+					}
+				);
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				fragmentCollectionId,
+				groupId: site.id,
+				html: '<div class="fragment-name">[@liferay_frontend["logo-selector"] currentLogoURL="/image/user_female_portrait.png" defaultLogoURL="/image/user_female_portrait.png"/]</div>',
+				name: fragmentName,
+			});
+		});
+
+		await test.step('Add fragment to a page', async () => {
+			const basicFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: fragmentName,
+			});
+
+			layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([basicFragmentDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Check that logo selector is available on the page', async () => {
+			await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+			const logoSelector = await page.getByRole('img', {
+				name: 'Current Logo',
+			});
+
+			await expect(logoSelector).toBeVisible();
 		});
 	}
 );

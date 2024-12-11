@@ -299,20 +299,6 @@ public class SitePageSerDes {
 			sb.append("\"");
 		}
 
-		if (sitePage.getSiteExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"siteExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sitePage.getSiteExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (sitePage.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -561,15 +547,6 @@ public class SitePageSerDes {
 					sitePage.getParentSitePageExternalReferenceCode()));
 		}
 
-		if (sitePage.getSiteExternalReferenceCode() == null) {
-			map.put("siteExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"siteExternalReferenceCode",
-				String.valueOf(sitePage.getSiteExternalReferenceCode()));
-		}
-
 		if (sitePage.getTaxonomyCategories() == null) {
 			map.put("taxonomyCategories", null);
 		}
@@ -687,11 +664,6 @@ public class SitePageSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName,
 						"parentSitePageExternalReferenceCode")) {
-
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "siteExternalReferenceCode")) {
 
 				return false;
 			}
@@ -878,14 +850,6 @@ public class SitePageSerDes {
 
 				if (jsonParserFieldValue != null) {
 					sitePage.setParentSitePageExternalReferenceCode(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "siteExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					sitePage.setSiteExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

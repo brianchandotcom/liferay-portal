@@ -6,6 +6,9 @@
 package com.liferay.commerce.product.internal.upgrade.v1_6_0;
 
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceCatalogTable;
+import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelRelTable;
+import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelTable;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -230,6 +234,14 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 			preparedStatement2.executeBatch();
 			preparedStatement3.executeBatch();
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			CommerceCatalogTable.create(), CommerceChannelRelTable.create(),
+			CommerceChannelTable.create()
+		};
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

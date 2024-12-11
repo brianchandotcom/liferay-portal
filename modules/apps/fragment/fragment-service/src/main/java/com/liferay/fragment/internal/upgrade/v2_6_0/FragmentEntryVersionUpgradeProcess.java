@@ -5,9 +5,11 @@
 
 package com.liferay.fragment.internal.upgrade.v2_6_0;
 
+import com.liferay.fragment.internal.upgrade.v2_6_0.util.FragmentEntryVersionTable;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Statement;
@@ -22,6 +24,11 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 		_insertIntoFragmentEntryVersion();
 
 		_upgradeFragmentEntryVersionCounter();
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {FragmentEntryVersionTable.create()};
 	}
 
 	private void _insertIntoFragmentEntryVersion() throws Exception {

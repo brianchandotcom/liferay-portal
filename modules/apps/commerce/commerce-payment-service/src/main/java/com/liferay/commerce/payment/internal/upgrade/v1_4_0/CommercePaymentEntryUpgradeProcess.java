@@ -5,10 +5,13 @@
 
 package com.liferay.commerce.payment.internal.upgrade.v1_4_0;
 
+import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryAuditTable;
+import com.liferay.commerce.payment.internal.upgrade.v1_4_0.util.CommercePaymentEntryTable;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.util.Arrays;
 
@@ -32,6 +35,14 @@ public class CommercePaymentEntryUpgradeProcess extends UpgradeProcess {
 		_resourceActionLocalService.checkResourceActions(
 			CommercePaymentEntryAudit.class.getName(),
 			Arrays.asList(_PERMISSIONS), true);
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			CommercePaymentEntryTable.create(),
+			CommercePaymentEntryAuditTable.create()
+		};
 	}
 
 	private static final String[] _PERMISSIONS = {

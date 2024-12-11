@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.internal.upgrade.v2_0_0;
 
+import com.liferay.commerce.product.internal.upgrade.v2_0_0.util.CPInstanceOptionValueRelTable;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -47,6 +48,11 @@ public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 			UpgradeProcessFactory.dropColumns(
 				CPInstanceModelImpl.TABLE_NAME, "json")
 		};
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {CPInstanceOptionValueRelTable.create()};
 	}
 
 	private PreparedStatement _cpDefinitionOptionRelIdPreparedStatement()

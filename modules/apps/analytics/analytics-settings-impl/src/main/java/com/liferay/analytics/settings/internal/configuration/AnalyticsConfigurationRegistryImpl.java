@@ -449,13 +449,17 @@ public class AnalyticsConfigurationRegistryImpl
 					AnalyticsMachineLearningConstants.
 						DISPATCH_TRIGGER_NAME_ASSET_ENTITIES);
 
-				if (_contentRecommenderMostPopularItemsEnabled(dictionary)) {
+				if (_contentRecommenderMostPopularItemsChanged(dictionary) &&
+					_contentRecommenderMostPopularItemsEnabled(dictionary)) {
+
 					refreshDispatchTriggerNames.add(
 						AnalyticsMachineLearningConstants.
 							DISPATCH_TRIGGER_NAME_MOST_VIEWED_RECOMMENDER);
 				}
 
-				if (_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+				if (_contentRecommenderUserPersonalizationChanged(dictionary) &&
+					_contentRecommenderUserPersonalizationEnabled(dictionary)) {
+
 					refreshDispatchTriggerNames.add(
 						AnalyticsMachineLearningConstants.
 							DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER);

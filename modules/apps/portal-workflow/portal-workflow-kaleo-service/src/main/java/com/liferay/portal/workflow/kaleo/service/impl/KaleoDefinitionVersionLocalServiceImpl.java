@@ -430,9 +430,10 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			)
 		);
 
-		for (Object result :
-				kaleoDefinitionVersionPersistence.dslQuery(dslQuery)) {
+		List<Object> entriesValues = kaleoDefinitionVersionPersistence.dslQuery(
+			dslQuery);
 
+		for (Object result : entriesValues) {
 			kaleoDefinitionVersionIds.add((Long)result);
 		}
 

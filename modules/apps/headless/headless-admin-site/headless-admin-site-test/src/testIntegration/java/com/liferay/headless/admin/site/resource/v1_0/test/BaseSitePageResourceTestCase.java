@@ -178,7 +178,6 @@ public abstract class BaseSitePageResourceTestCase {
 		sitePage.setCreatorExternalReferenceCode(regex);
 		sitePage.setExternalReferenceCode(regex);
 		sitePage.setParentSitePageExternalReferenceCode(regex);
-		sitePage.setSiteExternalReferenceCode(regex);
 		sitePage.setUuid(regex);
 
 		String json = SitePageSerDes.toJSON(sitePage);
@@ -191,7 +190,6 @@ public abstract class BaseSitePageResourceTestCase {
 		Assert.assertEquals(regex, sitePage.getExternalReferenceCode());
 		Assert.assertEquals(
 			regex, sitePage.getParentSitePageExternalReferenceCode());
-		Assert.assertEquals(regex, sitePage.getSiteExternalReferenceCode());
 		Assert.assertEquals(regex, sitePage.getUuid());
 	}
 
@@ -697,7 +695,7 @@ public abstract class BaseSitePageResourceTestCase {
 			200,
 			sitePageResource.
 				putSiteSiteByExternalReferenceCodeSitePagePermissionsPageHttpResponse(
-					sitePage.getSiteExternalReferenceCode(),
+					null,
 					new Permission[] {
 						new Permission() {
 							{
@@ -711,7 +709,7 @@ public abstract class BaseSitePageResourceTestCase {
 			404,
 			sitePageResource.
 				putSiteSiteByExternalReferenceCodeSitePagePermissionsPageHttpResponse(
-					sitePage.getSiteExternalReferenceCode(),
+					null,
 					new Permission[] {
 						new Permission() {
 							{
@@ -813,13 +811,13 @@ public abstract class BaseSitePageResourceTestCase {
 			200,
 			sitePageResource.
 				putSiteSiteExternalReferenceCodeSitePagePermissionsPageHttpResponse(
-					sitePage.getSiteExternalReferenceCode(), null));
+					null, null));
 
 		assertHttpResponseStatusCode(
 			404,
 			sitePageResource.
 				putSiteSiteExternalReferenceCodeSitePagePermissionsPageHttpResponse(
-					sitePage.getSiteExternalReferenceCode(), null));
+					null, null));
 	}
 
 	protected SitePage
@@ -1052,16 +1050,6 @@ public abstract class BaseSitePageResourceTestCase {
 					additionalAssertFieldName)) {
 
 				if (sitePage.getParentSitePageExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteExternalReferenceCode", additionalAssertFieldName)) {
-
-				if (sitePage.getSiteExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1444,19 +1432,6 @@ public abstract class BaseSitePageResourceTestCase {
 				if (!Objects.deepEquals(
 						sitePage1.getParentSitePageExternalReferenceCode(),
 						sitePage2.getParentSitePageExternalReferenceCode())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteExternalReferenceCode", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						sitePage1.getSiteExternalReferenceCode(),
-						sitePage2.getSiteExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1940,52 +1915,6 @@ public abstract class BaseSitePageResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("siteExternalReferenceCode")) {
-			Object object = sitePage.getSiteExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("taxonomyCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2105,8 +2034,6 @@ public abstract class BaseSitePageResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				parentSitePageExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				siteExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

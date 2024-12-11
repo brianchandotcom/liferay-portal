@@ -80,6 +80,7 @@ import java.time.temporal.TemporalAccessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -225,7 +226,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return new InputTemplateNode(
 				errorMessage, inputHelpText, inputLabel, localizable, name,
 				readOnly, required, inputShowHelpText, inputShowLabel, "type",
-				StringPool.BLANK);
+				StringPool.BLANK, Collections.emptyMap());
 		}
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
@@ -278,6 +279,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			(Map<String, String>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");
 
+		Map<Locale, String> valueI18n = new HashMap<>();
+
 		if (infoFormParameterMap != null) {
 			label = infoFormParameterMap.get(infoField.getName() + "-label");
 			value = infoFormParameterMap.get(infoField.getName());
@@ -293,6 +296,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				label = keyValuePair.getValue();
 				value = keyValuePair.getKey();
 			}
+			else if (infoFieldValue instanceof Map) {
+				Map<Locale, String> map = (Map<Locale, String>)infoFieldValue;
+
+				value = map.get(locale);
+				valueI18n = map;
+			}
 			else {
 				value = String.valueOf(infoFieldValue);
 			}
@@ -301,7 +310,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
 			errorMessage, inputHelpText, inputLabel, localizable, name,
 			readOnly, required, inputShowHelpText, inputShowLabel,
-			infoFieldType.getName(), value);
+			infoFieldType.getName(), value, valueI18n);
 
 		_addInputTemplateNodeAttributes(
 			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
@@ -951,6 +960,15 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		Object value = infoFieldValue.getValue();
+
+		if (infoField.isLocalizable() &&
+			(value instanceof InfoLocalizedValue)) {
+
+			InfoLocalizedValue<?> infoLocalizedValue =
+				(InfoLocalizedValue<?>)value;
+
+			return infoLocalizedValue.getValues();
+		}
 
 		if (Validator.isNull(value)) {
 			return defaultValue;

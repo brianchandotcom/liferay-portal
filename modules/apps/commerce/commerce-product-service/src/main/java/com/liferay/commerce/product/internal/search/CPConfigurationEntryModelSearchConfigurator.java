@@ -37,9 +37,8 @@ public class CPConfigurationEntryModelSearchConfigurator
 		return new String[] {
 			CPField.ASSET_CATEGORY_NAMES, CPField.EXTERNAL_REFERENCE_CODE,
 			CPField.PRODUCT_TYPE_NAME, CPField.PURCHASABLE, Field.COMPANY_ID,
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.HIDDEN,
-			Field.MODIFIED_DATE, Field.NAME
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
+			Field.HIDDEN, Field.MODIFIED_DATE, Field.NAME
 		};
 	}
 

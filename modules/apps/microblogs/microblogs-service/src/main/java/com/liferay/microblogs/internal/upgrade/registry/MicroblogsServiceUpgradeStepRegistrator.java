@@ -30,10 +30,11 @@ public class MicroblogsServiceUpgradeStepRegistrator
 			"1.0.0", "1.0.1", new UserNotificationEventUpgradeProcess());
 
 		registry.register(
-			"1.0.1", "1.0.2",
+			"1.0.1", "1.0.1.step-1",
 			new com.liferay.microblogs.internal.upgrade.v1_0_2.
-				MicroblogsEntryUpgradeProcess(),
-			new SocialUpgradeProcess());
+				MicroblogsEntryUpgradeProcess());
+
+		registry.register("1.0.1.step-1", "1.0.2", new SocialUpgradeProcess());
 	}
 
 }

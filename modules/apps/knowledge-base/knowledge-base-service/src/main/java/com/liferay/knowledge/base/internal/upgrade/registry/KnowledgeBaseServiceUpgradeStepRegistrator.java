@@ -113,9 +113,12 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 				KBArticleUpgradeProcess());
 
 		registry.register(
-			"1.3.1", "1.3.2",
+			"1.3.1", "1.3.1.step-1",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_2.
-				KBArticleUpgradeProcess(),
+				KBArticleUpgradeProcess());
+
+		registry.register(
+			"1.3.1.step-1", "1.3.2",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_2.
 				KBFolderUpgradeProcess());
 
@@ -125,13 +128,22 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 				KBFolderUpgradeProcess());
 
 		registry.register(
-			"1.3.3", "1.3.4",
+			"1.3.3", "1.3.3.step-1",
 			UpgradeProcessFactory.addColumns(
-				"KBArticle", "sourceURL STRING null"),
+				"KBArticle", "sourceURL STRING null"));
+
+		registry.register(
+			"1.3.3.step-1", "1.3.3.step-2",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.
-				KBCommentUpgradeProcess(),
+				KBCommentUpgradeProcess());
+
+		registry.register(
+			"1.3.3.step-2", "1.3.3.step-3",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.
-				ResourceActionUpgradeProcess(),
+				ResourceActionUpgradeProcess());
+
+		registry.register(
+			"1.3.3.step-3", "1.3.4",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.
 				UpgradePortletPreferences());
 

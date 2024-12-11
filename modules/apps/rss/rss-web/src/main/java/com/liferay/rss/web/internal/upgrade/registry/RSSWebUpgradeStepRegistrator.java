@@ -62,11 +62,14 @@ public class RSSWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			});
 
 		registry.register(
-			"3.0.0", "3.0.1",
+			"3.0.0", "3.0.0.step-1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.rss.web.configuration." +
 					"RSSPortletInstanceConfiguration",
-				RSSPortletInstanceConfiguration.class.getName()),
+				RSSPortletInstanceConfiguration.class.getName()));
+
+		registry.register(
+			"3.0.0.step-1", "3.0.1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
 				RSSWebCacheConfiguration.class.getName()));

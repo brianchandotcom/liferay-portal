@@ -381,10 +381,16 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommerceOrderUpgradeProcess());
 
 		registry.register(
-			"7.1.0", "7.1.2",
+			"7.1.0", "7.1.0.step-1",
 			new CommerceAccountGroupCommerceAccountRelUpgradeProcess(
-				_accountGroupRelLocalService),
-			new CommerceAccountPortletUpgradeProcess(),
+				_accountGroupRelLocalService));
+
+		registry.register(
+			"7.1.0.step-1", "7.1.0.step-2",
+			new CommerceAccountPortletUpgradeProcess());
+
+		registry.register(
+			"7.1.0.step-2", "7.1.2",
 			new com.liferay.commerce.internal.upgrade.v7_1_2.
 				CommerceAccountRoleUpgradeProcess(
 					_accountRoleLocalService, _classNameLocalService,
@@ -467,8 +473,11 @@ public class CommerceServiceUpgradeStepRegistrator
 			CommerceShippingOptionAccountEntryRelTable.create());
 
 		registry.register(
-			"8.4.0", "8.4.1",
-			new AccountGroupUpgradeProcess(_resourceLocalService),
+			"8.4.0", "8.4.0.step-1",
+			new AccountGroupUpgradeProcess(_resourceLocalService));
+
+		registry.register(
+			"8.4.0.step-1", "8.4.1",
 			new com.liferay.commerce.internal.upgrade.v8_4_1.
 				CommerceAccountRoleUpgradeProcess(
 					_companyLocalService, _resourceActionLocalService,
@@ -566,10 +575,13 @@ public class CommerceServiceUpgradeStepRegistrator
 				_roleLocalService));
 
 		registry.register(
-			"8.9.4", "8.9.5",
+			"8.9.4", "8.9.4.step-1",
 			new com.liferay.commerce.internal.upgrade.v8_9_5.
 				AccountEntryUpgradeProcess(
-					_commerceChannelAccountEntryRelLocalService),
+					_commerceChannelAccountEntryRelLocalService));
+
+		registry.register(
+			"8.9.4.step-1", "8.9.5",
 			new com.liferay.commerce.internal.upgrade.v8_9_5.
 				CommerceAccountRoleUpgradeProcess(
 					_companyLocalService, _resourceActionLocalService,

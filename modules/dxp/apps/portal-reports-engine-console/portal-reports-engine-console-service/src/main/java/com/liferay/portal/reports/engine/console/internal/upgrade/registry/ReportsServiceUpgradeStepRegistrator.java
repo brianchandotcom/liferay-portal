@@ -41,14 +41,19 @@ public class ReportsServiceUpgradeStepRegistrator
 				v1_0_0.ReportEntryUpgradeProcess());
 
 		registry.register(
-			"1.0.0", "1.0.1",
+			"1.0.0", "1.0.0.step-1",
 			UpgradeProcessFactory.alterColumnType(
 				"Reports_Definition", "reportParameters", "TEXT null"),
 			UpgradeProcessFactory.alterColumnType(
 				"Reports_Entry", "reportParameters", "TEXT null"),
 			UpgradeProcessFactory.alterColumnType(
-				"Reports_Entry", "errorMessage", "STRING null"),
-			new UpgradeKernelPackage(), new UpgradeLastPublishDate());
+				"Reports_Entry", "errorMessage", "STRING null"));
+
+		registry.register(
+			"1.0.0.step-1", "1.0.0.step-2", new UpgradeKernelPackage());
+
+		registry.register(
+			"1.0.0.step-2", "1.0.1", new UpgradeLastPublishDate());
 	}
 
 	@Reference

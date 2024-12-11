@@ -45,9 +45,12 @@ public class ExportImportServiceUpgradeStepRegistrator
 				_schedulerEngineHelper, _userLocalService));
 
 		registry.register(
-			"1.0.0", "1.0.1",
+			"1.0.0", "1.0.0.step-1",
 			new SystemEventsUpgradeProcess(
-				_groupLocalService, _systemEventLocalService),
+				_groupLocalService, _systemEventLocalService));
+
+		registry.register(
+			"1.0.0.step-1", "1.0.1",
 			new UpgradeBackgroundTaskExecutorClassNames());
 
 		registry.register(

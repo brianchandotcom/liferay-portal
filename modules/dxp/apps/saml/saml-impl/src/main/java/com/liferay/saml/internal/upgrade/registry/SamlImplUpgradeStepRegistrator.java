@@ -30,11 +30,17 @@ public class SamlImplUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.1", "0.0.2",
+			"0.0.1", "0.0.1.step-1",
 			new SamlConfigurationPreferencesUpgradeProcess(
-				_configurationAdmin, _props),
+				_configurationAdmin, _props));
+
+		registry.register(
+			"0.0.1.step-1", "0.0.1.step-2",
 			new SamlKeyStorePropertiesUpgradeProcess(
-				_configurationAdmin, _prefsProps),
+				_configurationAdmin, _prefsProps));
+
+		registry.register(
+			"0.0.1.step-2", "0.0.2",
 			new SamlProviderConfigurationPreferencesUpgradeProcess(
 				_companyLocalService, _prefsProps, _props,
 				_samlProviderConfigurationHelper));

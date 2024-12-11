@@ -66,11 +66,16 @@ public class CalendarServiceUpgradeStepRegistrator
 		registry.register("1.0.3", "1.0.4", new UpgradeClassNames());
 
 		registry.register(
-			"1.0.4", "1.0.5",
+			"1.0.4", "1.0.4.step-1",
 			new CalendarResourceUpgradeProcess(
 				_classNameLocalService, _companyLocalService,
-				_userLocalService),
-			new UpgradeCompanyId(), new UpgradeLastPublishDate());
+				_userLocalService));
+
+		registry.register(
+			"1.0.4.step-1", "1.0.4.step-2", new UpgradeCompanyId());
+
+		registry.register(
+			"1.0.4.step-2", "1.0.5", new UpgradeLastPublishDate());
 
 		registry.register(
 			"1.0.5", "1.0.6",

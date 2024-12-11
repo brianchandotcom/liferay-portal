@@ -57,9 +57,12 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 					"repositoryId = 0"));
 
 		registry.register(
-			"1.0.1", "1.0.2",
+			"1.0.1", "1.0.1.step-1",
 			new DLConfigurationUpgradeProcess(
-				_prefsPropsToConfigurationUpgradeHelper),
+				_prefsPropsToConfigurationUpgradeHelper));
+
+		registry.register(
+			"1.0.1.step-1", "1.0.2",
 			new DLFileEntryConfigurationUpgradeProcess(
 				_prefsPropsToConfigurationUpgradeHelper));
 
@@ -114,7 +117,10 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				StorageQuotaUpgradeProcess());
 
 		registry.register(
-			"3.2.0", "3.2.1", new DDMStructureLinkUpgradeProcess(),
+			"3.2.0", "3.2.0.step-1", new DDMStructureLinkUpgradeProcess());
+
+		registry.register(
+			"3.2.0.step-1", "3.2.1",
 			new com.liferay.document.library.internal.upgrade.v3_2_1.
 				UpgradeDLFileEntryType());
 
@@ -149,15 +155,21 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 					_dlConfigurationUpgradeHelper));
 
 		registry.register(
-			"3.2.8", "3.2.9",
+			"3.2.8", "3.2.8.step-1",
 			new com.liferay.document.library.internal.upgrade.v3_2_9.
 				DLConfigurationUpgradeProcess(
 					_dlConfigurationUpgradeHelper,
-					_prefsPropsToConfigurationUpgradeHelper),
+					_prefsPropsToConfigurationUpgradeHelper));
+
+		registry.register(
+			"3.2.8.step-1", "3.2.8.step-2",
 			new com.liferay.document.library.internal.upgrade.v3_2_9.
 				DLFileEntryConfigurationUpgradeProcess(
 					_dlConfigurationUpgradeHelper,
-					_prefsPropsToConfigurationUpgradeHelper),
+					_prefsPropsToConfigurationUpgradeHelper));
+
+		registry.register(
+			"3.2.8.step-2", "3.2.9",
 			new com.liferay.document.library.internal.upgrade.v3_2_9.
 				DLSizeLimitConfigurationUpgradeProcess(
 					_dlConfigurationUpgradeHelper));

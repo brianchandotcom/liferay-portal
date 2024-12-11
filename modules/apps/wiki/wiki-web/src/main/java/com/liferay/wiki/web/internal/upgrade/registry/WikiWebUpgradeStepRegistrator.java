@@ -40,11 +40,14 @@ public class WikiWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				WikiPortletKeys.WIKI_ADMIN));
 
 		registry.register(
-			"1.0.1", "1.0.2",
+			"1.0.1", "1.0.1.step-1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.wiki.configuration." +
 					"WikiPortletInstanceConfiguration",
-				WikiPortletInstanceConfiguration.class.getName()),
+				WikiPortletInstanceConfiguration.class.getName()));
+
+		registry.register(
+			"1.0.1.step-1", "1.0.2",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.wiki.web.configuration." +
 					"WikiPortletInstanceConfiguration",

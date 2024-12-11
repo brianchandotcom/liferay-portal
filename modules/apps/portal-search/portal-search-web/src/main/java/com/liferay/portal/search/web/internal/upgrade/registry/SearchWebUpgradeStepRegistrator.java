@@ -33,11 +33,14 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register("1.0.0", "2.0.0", new SearchPortletUpgradeProcess());
 
 		registry.register(
-			"2.0.0", "2.0.1",
+			"2.0.0", "2.0.0.step-1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.search.experiences.configuration." +
 					"SemanticSearchConfiguration",
-				SemanticSearchConfiguration.class.getName()),
+				SemanticSearchConfiguration.class.getName()));
+
+		registry.register(
+			"2.0.0.step-1", "2.0.1",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.search.experiences.configuration." +
 					"SemanticSearchConfiguration.scoped",

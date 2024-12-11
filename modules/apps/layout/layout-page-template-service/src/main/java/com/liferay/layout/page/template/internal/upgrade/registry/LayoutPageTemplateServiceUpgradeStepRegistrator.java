@@ -141,15 +141,21 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				"LayoutPageTemplateStructureRel"));
 
 		registry.register(
-			"3.4.0", "3.4.1",
+			"3.4.0", "3.4.0.step-1",
 			new com.liferay.layout.page.template.internal.upgrade.v3_4_1.
-				LayoutPageTemplateEntryUpgradeProcess(_portal),
+				LayoutPageTemplateEntryUpgradeProcess(_portal));
+
+		registry.register(
+			"3.4.0.step-1", "3.4.1",
 			new FragmentEntryLinkEditableValuesUpgradeProcess());
 
 		registry.register(
-			"3.4.1", "3.4.2",
+			"3.4.1", "3.4.1.step-1",
 			new com.liferay.layout.page.template.internal.upgrade.v3_4_2.
-				FragmentEntryLinkEditableValuesUpgradeProcess(),
+				FragmentEntryLinkEditableValuesUpgradeProcess());
+
+		registry.register(
+			"3.4.1.step-1", "3.4.2",
 			new com.liferay.layout.page.template.internal.upgrade.v3_4_2.
 				LayoutPageTemplateStructureRelUpgradeProcess(
 					_fragmentEntryConfigurationParser));

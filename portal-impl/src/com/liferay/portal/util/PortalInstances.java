@@ -60,7 +60,7 @@ public class PortalInstances {
 			UnsafeSupplier<Company, PortalException> unsafeSupplier)
 		throws PortalException {
 
-		try (SafeCloseable safeCloseable1 =
+		try (SafeCloseable safeCloseable =
 				SiteInitializerThreadLocal.setKeyWithSafeCloseable(
 					siteInitializerKey)) {
 

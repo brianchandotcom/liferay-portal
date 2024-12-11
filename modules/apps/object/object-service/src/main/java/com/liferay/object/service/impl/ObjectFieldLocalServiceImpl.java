@@ -1633,7 +1633,9 @@ public class ObjectFieldLocalServiceImpl
 
 				throw new ObjectFieldLocalizedException(
 					StringBundler.concat(
-						"Only ", ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						"Only ", ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+						StringPool.COMMA,
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_DATE,
 						StringPool.COMMA,

@@ -159,9 +159,6 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			return Collections.emptyList();
 		}
 
-		List<HierarchicalInfoItemReference> hierarchicalInfoItemReferences =
-			new ArrayList<>();
-
 		List<InfoItemReference> infoItemReferences = ListUtil.sort(
 			parentCategoryIdInfoItemReferencesMap.get(parentCategoryId),
 			Comparator.comparing(
@@ -173,22 +170,22 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 					return assetCategory.getName();
 				}));
 
-		for (InfoItemReference infoItemReference : infoItemReferences) {
-			HierarchicalInfoItemReference hierarchicalInfoItemReference =
-				new HierarchicalInfoItemReference(
-					infoItemReference.getClassName(),
-					infoItemReference.getInfoItemIdentifier());
+		return TransformUtil.transform(
+			infoItemReferences,
+			infoItemReference -> {
+				HierarchicalInfoItemReference hierarchicalInfoItemReference =
+					new HierarchicalInfoItemReference(
+						infoItemReference.getClassName(),
+						infoItemReference.getInfoItemIdentifier());
 
-			hierarchicalInfoItemReference.
-				setChildrenHierarchicalInfoItemReferences(
-					_getHierarchicalInfoItemReferences(
-						parentCategoryIdInfoItemReferencesMap,
-						_getClassPK(infoItemReference)));
+				hierarchicalInfoItemReference.
+					setChildrenHierarchicalInfoItemReferences(
+						_getHierarchicalInfoItemReferences(
+							parentCategoryIdInfoItemReferencesMap,
+							_getClassPK(infoItemReference)));
 
-			hierarchicalInfoItemReferences.add(hierarchicalInfoItemReference);
-		}
-
-		return hierarchicalInfoItemReferences;
+				return hierarchicalInfoItemReference;
+			});
 	}
 
 	private long _getNearestAncestorCategoryId(

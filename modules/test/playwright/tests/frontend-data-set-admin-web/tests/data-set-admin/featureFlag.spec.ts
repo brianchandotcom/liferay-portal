@@ -25,7 +25,7 @@ test.describe('Data Set Manager with Feature Flag Enabled', () => {
 		page,
 	}) => {
 		await test.step('Navigate to Feature Flag page', async () => {
-			await featureFlagsInstanceSettingsPage.goto('Beta');
+			await featureFlagsInstanceSettingsPage.goto('Release');
 		});
 
 		await test.step('Check that the feature flag description is displayed', async () => {
@@ -177,7 +177,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 		async ({featureFlagsInstanceSettingsPage, page}) => {
 			try {
 				await test.step('Navigate to Feature Flag page', async () => {
-					await featureFlagsInstanceSettingsPage.goto('Beta');
+					await featureFlagsInstanceSettingsPage.goto('Release');
 				});
 
 				await test.step('Enable the Data Set Manager feature flag', async () => {
@@ -213,7 +213,7 @@ disabledTest.describe('Data Set Manager with Feature Flag Disabled', () => {
 			}
 			finally {
 				await test.step('Navigate to Feature Flag page', async () => {
-					await featureFlagsInstanceSettingsPage.goto('Beta');
+					await featureFlagsInstanceSettingsPage.goto('Release');
 				});
 
 				await test.step('Enable the Data Set Manager feature flag', async () => {

@@ -35,6 +35,10 @@ export class FeatureFlagsInstanceSettingsPage {
 			'Feature Flags',
 			featureFlagType
 		);
+
+		await expect(
+			this.page.locator('.loading-animation')
+		).not.toBeInViewport();
 	}
 
 	async search(string) {

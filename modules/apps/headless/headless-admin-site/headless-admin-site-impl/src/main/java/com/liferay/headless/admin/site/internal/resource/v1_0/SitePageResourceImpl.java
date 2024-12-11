@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -182,6 +185,48 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
+	public ContentPageSpecification
+			postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+				String siteExternalReferenceCode,
+				String sitePageExternalReferenceCode,
+				ContentPageSpecification contentPageSpecification)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (!layout.isTypeContent()) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (!Objects.equals(
+				contentPageSpecification.getExternalReferenceCode(),
+				draftLayout.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			layout.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			LayoutUtil.updateLayout(
+				contentPageSpecification, draftLayout, serviceContext));
+	}
+
+	@Override
 	public Page<SitePage> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -239,6 +284,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
+	)
+	private DTOConverter<Layout, PageSpecification>
+		_pageSpecificationDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.SitePageDTOConverter)"

@@ -11,6 +11,7 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -30,6 +31,7 @@ import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	applicationsMenuPageTest,
 	collectionsPagesTest,
 	dataApiHelpersTest,
@@ -44,6 +46,16 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	workflowPagesTest
 );
+
+let siteLanguage = 'en';
+
+test.afterEach(async ({page}) => {
+	if (siteLanguage !== 'en') {
+		await page.goto('en');
+
+		siteLanguage = 'en';
+	}
+});
 
 test.describe('Manage object entries through Page Templates', () => {
 	test('can view all entries related to an object in the relationship field', async ({
@@ -158,6 +170,8 @@ test.describe('Manage object entries through Page Templates', () => {
 		}
 
 		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
+
+		siteLanguage = 'pt';
 
 		await viewObjectEntriesPage.clickAddObjectEntry();
 
@@ -324,7 +338,7 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		await displayPageTemplatesPage.goto();
 
-		await displayPageTemplatesPage.deleteAllDisplayPageTemplates();
+		await displayPageTemplatesPage.deleteTemplate(objectDefinitionLabel);
 	});
 });
 

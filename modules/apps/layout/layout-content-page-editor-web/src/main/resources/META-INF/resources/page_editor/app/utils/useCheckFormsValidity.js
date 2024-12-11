@@ -63,13 +63,13 @@ export default function useCheckFormsValidity() {
 			}
 
 			if (
-				!hasVisibleFormButtonChild(
+				!hasVisibleFormButtonChild({
 					fragmentEntryLinks,
-					form.itemId,
+					itemId: form.itemId,
 					layoutData,
-					'submit',
-					selectedViewportSize
-				)
+					type: 'submit',
+					viewportSize: selectedViewportSize,
+				})
 			) {
 				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
 			}

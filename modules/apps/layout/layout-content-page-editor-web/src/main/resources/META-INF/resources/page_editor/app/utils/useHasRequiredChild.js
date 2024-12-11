@@ -5,7 +5,6 @@
 
 import {useCallback} from 'react';
 
-import {useGlobalContext} from '../contexts/GlobalContext';
 import {
 	useSelector,
 	useSelectorCallback,
@@ -19,8 +18,6 @@ import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
 import useCache from './useCache';
 
 export default function useHasRequiredChild(itemId) {
-	const globalContext = useGlobalContext();
-
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks
@@ -51,13 +48,13 @@ export default function useHasRequiredChild(itemId) {
 		}
 
 		return (
-			hasVisibleFormButtonChild(
-				fragmentEntryLinksRef.current,
+			hasVisibleFormButtonChild({
+				fragmentEntryLinks: fragmentEntryLinksRef.current,
 				itemId,
-				layoutDataRef.current,
-				'submit',
-				selectedViewportSize
-			) ||
+				layoutData: layoutDataRef.current,
+				type: 'submit',
+				viewportSize: selectedViewportSize,
+			}) ||
 			hasRequiredInputChild({
 				formFields,
 				fragmentEntryLinks: fragmentEntryLinksRef.current,
@@ -70,7 +67,6 @@ export default function useHasRequiredChild(itemId) {
 		layoutDataRef,
 		fragmentEntryLinksRef,
 		itemId,
-		globalContext,
 		selectedViewportSize,
 	]);
 }

@@ -53,6 +53,7 @@ export function openAddLocalizationSelect({dispatch, formId}: Props) {
 				},
 			},
 		],
+		center: true,
 		status: 'info',
 		title,
 	});

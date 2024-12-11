@@ -3,14 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropType from 'prop-types';
+import {ETimeZoneBehaviors} from '../constants';
 
-function DateRenderer({options, value}) {
+interface IDateRendererOptions {
+	format?: any;
+	timeZoneBehavior?: ETimeZoneBehaviors;
+}
+
+function DateRenderer({
+	options,
+	value,
+}: {
+	options?: IDateRendererOptions;
+	value: number | string;
+}) {
 	if (!value) {
 		return null;
 	}
 
-	let timestamp = value;
+	let timestamp: number;
 
 	if (typeof value === 'string') {
 		const date = value.split('T')[0];
@@ -26,6 +37,9 @@ function DateRenderer({options, value}) {
 			timestamp = Number(value);
 		}
 	}
+	else {
+		timestamp = value;
+	}
 
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
@@ -36,18 +50,18 @@ function DateRenderer({options, value}) {
 		year: options?.format?.year || 'numeric',
 	};
 
+	if (
+		options?.timeZoneBehavior ===
+		ETimeZoneBehaviors.APPLY_THEME_DISPLAY_TIME_ZONE
+	) {
+		dateOptions.timeZone = Liferay.ThemeDisplay.getTimeZone();
+	}
+
 	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
 		timestamp
 	);
 
 	return formattedDate;
 }
-
-DateRenderer.propTypes = {
-	options: PropType.shape({
-		format: PropType.object,
-	}),
-	value: PropType.string.isRequired,
-};
 
 export default DateRenderer;

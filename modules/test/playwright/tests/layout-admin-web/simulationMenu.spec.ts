@@ -294,11 +294,12 @@ test.describe('Page content', () => {
 						name: documentName,
 					})
 				).toBeVisible({timeout: 1000});
+
 				await expect(
 					simulationPreviewIframe.getByRole('link', {
 						name: blogsEntryName,
 					})
-				).not.toBeVisible();
+				).not.toBeVisible({timeout: 1000});
 
 				// Assert segmented collection
 
@@ -321,11 +322,12 @@ test.describe('Page content', () => {
 						name: blogsEntryName,
 					})
 				).toBeVisible({timeout: 1000});
+
 				await expect(
 					simulationPreviewIframe.getByRole('link', {
 						name: documentName,
 					})
-				).not.toBeVisible();
+				).not.toBeVisible({timeout: 1000});
 			}).toPass();
 		}
 	);

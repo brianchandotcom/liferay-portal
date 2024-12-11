@@ -275,7 +275,7 @@ public class LayoutUtil {
 			}
 		}
 
-		if (MapUtil.isEmpty(settings.getThemeSettings())) {
+		if (MapUtil.isNotEmpty(settings.getThemeSettings())) {
 			unicodeProperties.putAll(
 				(Map<String, ? extends String>)settings.getThemeSettings());
 		}

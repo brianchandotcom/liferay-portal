@@ -20,7 +20,7 @@
 		}
 	}
 
-	.sv-select-all-button, .sv-clear-button {
+	.sv-link {
 		color: var(--color-action-neutral-default);
 		font-size: var(--font-size-sm);
 		font-weight: var(--font-weight-semi-bold);

@@ -5,6 +5,7 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
+import {useState} from 'react';
 import i18n from '~/common/I18n';
 
 import {IProps as IJiraSearch} from '../../hooks/useJiraSearch';
@@ -22,6 +23,10 @@ interface IProps {
 }
 
 const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
+	const [expandedFilters, setExpandedFilters] = useState<{
+		[key in keyof IFilterOptions]?: boolean;
+	}>({});
+
 	const handleFilterChange = (
 		param: keyof IFilterOptions,
 		value: string[]
@@ -49,50 +54,82 @@ const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
 		});
 	};
 
+	const handleViewAll = (filterKey: keyof IFilterOptions) => {
+		setExpandedFilters((prevExpanded) => ({
+			...prevExpanded,
+			[filterKey]: !prevExpanded[filterKey],
+		}));
+	};
+
 	const renderFilterSection = (
 		filterKey: keyof IFilterOptions,
 		languageKey: string
-	) => (
-		<div className="sv-filter-box">
-			<h5>{i18n.translate(languageKey)}</h5>
+	) => {
+		const isExpanded = expandedFilters[filterKey];
 
-			<div className="d-flex my-2">
-				<ClayButton
-					aria-label={i18n.translate('select-all')}
-					className="mr-3 p-0 sv-select-all-button"
-					displayType="link"
-					onClick={() =>
-						handleFilterChange(
-							filterKey,
-							filterOptions[filterKey] as string[]
-						)
-					}
-				>
-					{i18n.translate('select-all')}
-				</ClayButton>
+		const displayedOptions = isExpanded
+			? filterOptions[filterKey]
+			: (filterOptions[filterKey] as string[])?.slice(0, 8);
 
-				<ClayButton
-					aria-label={i18n.translate('clear')}
-					className="p-0 sv-clear-button"
-					displayType="link"
-					onClick={() => handleFilterChange(filterKey, [])}
-				>
-					{i18n.translate('clear')}
-				</ClayButton>
+		return (
+			<div className="sv-filter-box">
+				<h5>{i18n.translate(languageKey)}</h5>
+
+				<div className="d-flex my-2">
+					<ClayButton
+						aria-label={i18n.translate('select-all')}
+						className="mr-3 p-0 sv-link sv-select-all-button"
+						displayType="link"
+						onClick={() =>
+							handleFilterChange(
+								filterKey,
+								filterOptions[filterKey] as string[]
+							)
+						}
+					>
+						{i18n.translate('select-all')}
+					</ClayButton>
+
+					<ClayButton
+						aria-label={i18n.translate('clear')}
+						className="p-0 sv-clear-button sv-link"
+						displayType="link"
+						onClick={() => handleFilterChange(filterKey, [])}
+					>
+						{i18n.translate('clear')}
+					</ClayButton>
+				</div>
+
+				{displayedOptions?.map((value) => (
+					<ClayCheckbox
+						aria-label={i18n.translate(value)}
+						checked={params.getAll(filterKey)[0]?.includes(value)}
+						key={value}
+						label={i18n.translate(value)}
+						onChange={() => handleFilterChange(filterKey, [value])}
+						value={value}
+					/>
+				))}
+
+				{(filterOptions?.[filterKey]?.length ?? 0) > 8 && (
+					<ClayButton
+						aria-label={
+							isExpanded
+								? i18n.translate('view-less')
+								: i18n.translate('view-all')
+						}
+						className="p-0 sv-link sv-view-all-button"
+						displayType="link"
+						onClick={() => handleViewAll(filterKey)}
+					>
+						{isExpanded
+							? i18n.translate('view-less')
+							: i18n.translate('view-all')}
+					</ClayButton>
+				)}
 			</div>
-
-			{(filterOptions[filterKey] as string[])?.map((value) => (
-				<ClayCheckbox
-					aria-label={i18n.translate(value)}
-					checked={params.getAll(filterKey)[0]?.includes(value)}
-					key={value}
-					label={i18n.translate(value)}
-					onChange={() => handleFilterChange(filterKey, [value])}
-					value={value}
-				/>
-			))}
-		</div>
-	);
+		);
+	};
 
 	return (
 		<div className="sv-filter-content">

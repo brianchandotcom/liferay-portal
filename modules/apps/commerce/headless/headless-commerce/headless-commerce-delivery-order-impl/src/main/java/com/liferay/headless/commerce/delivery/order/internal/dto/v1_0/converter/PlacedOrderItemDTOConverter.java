@@ -256,17 +256,16 @@ public class PlacedOrderItemDTOConverter
 
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
-		if (cpInstance == null) {
-			ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-				locale);
-
-			return new String[] {
-				_language.get(
-					resourceBundle, "the-product-is-no-longer-available")
-			};
+		if (cpInstance != null) {
+			return null;
 		}
 
-		return null;
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			locale);
+
+		return new String[] {
+			_language.get(resourceBundle, "the-product-is-no-longer-available")
+		};
 	}
 
 	private Price _getPrice(CommerceOrderItem commerceOrderItem, Locale locale)

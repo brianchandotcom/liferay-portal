@@ -254,12 +254,8 @@ public class SitePageBatchExportImportTaskResourceTest {
 
 		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
-		Assert.assertNotNull(actionsJSONObject);
-
 		JSONObject createBatchJSONObject = actionsJSONObject.getJSONObject(
 			"createBatch");
-
-		Assert.assertNotNull(createBatchJSONObject);
 
 		Assert.assertNotNull(createBatchJSONObject.getString("href"));
 

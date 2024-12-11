@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -114,13 +113,19 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		beforeImportJSONObject = _addViewPermission(
-			JSONUtil.put(
-				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			),
-			role);
+		beforeImportJSONObject = JSONUtil.put(
+			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"permissions",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"actionIds", JSONUtil.putAll("VIEW")
+				).put(
+					"roleName", role.getName()
+				))
+		);
 
 		waitForFinish(
 			"COMPLETED", true,
@@ -164,11 +169,10 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				objectDefinition.getRESTContextPath(),
 				"?nestedFields=permissions",
 				"&restrictFields=dateCreated,dateModified"),
-			Http.Method.POST);
-
-		beforeImportJSONObject = JSONUtil.merge(
-			beforeImportJSONObject,
-			JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray()));
+			Http.Method.POST
+		).put(
+			"permissions", JSONFactoryUtil.createJSONArray()
+		);
 
 		waitForFinish(
 			"COMPLETED", true,
@@ -244,19 +248,29 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		// With "permissions" and "createStrategy" UPSERT
 
-		beforeImportJSONObject = _addViewPermission(
-			HTTPTestUtil.invokeToJSONObject(
+		beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"?nestedFields=permissions",
+				"&restrictFields=dateCreated,dateModified"),
+			Http.Method.POST);
+
+		beforeImportJSONObject = beforeImportJSONObject.put(
+			"permissions",
+			beforeImportJSONObject.getJSONArray(
+				"permissions"
+			).put(
 				JSONUtil.put(
-					OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+					"actionIds", JSONUtil.putAll("VIEW")
 				).put(
-					"externalReferenceCode", RandomTestUtil.randomString()
-				).toString(),
-				StringBundler.concat(
-					objectDefinition.getRESTContextPath(),
-					"?nestedFields=permissions",
-					"&restrictFields=dateCreated,dateModified"),
-				Http.Method.POST),
-			role);
+					"roleName", role.getName()
+				)
+			));
 
 		waitForFinish(
 			"COMPLETED", true,
@@ -307,7 +321,17 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.putAll(
-					_addViewPermission(beforeImportJSONObject, role)
+					beforeImportJSONObject.put(
+						"permissions",
+						beforeImportJSONObject.getJSONArray(
+							"permissions"
+						).put(
+							JSONUtil.put(
+								"actionIds", JSONUtil.putAll("VIEW")
+							).put(
+								"roleName", role.getName()
+							)
+						))
 				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
@@ -340,7 +364,17 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.putAll(
-					_addViewPermission(beforeImportJSONObject, role)
+					beforeImportJSONObject.put(
+						"permissions",
+						beforeImportJSONObject.getJSONArray(
+							"permissions"
+						).put(
+							JSONUtil.put(
+								"actionIds", JSONUtil.putAll("VIEW")
+							).put(
+								"roleName", role.getName()
+							)
+						))
 				).toString(),
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task",
@@ -370,23 +404,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 				objectEntry.getExternalReferenceCode()
 			).toString(),
 			JSONCompareMode.LENIENT);
-	}
-
-	private JSONObject _addViewPermission(JSONObject jsonObject, Role role) {
-		if (!jsonObject.has("permissions")) {
-			jsonObject.put("permissions", JSONFactoryUtil.createJSONArray());
-		}
-
-		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");
-
-		permissionsJSONArray.put(
-			JSONUtil.put(
-				"actionIds", JSONUtil.putAll("VIEW")
-			).put(
-				"roleName", role.getName()
-			));
-
-		return jsonObject;
 	}
 
 	private JSONObject _getJSONObject(String externalReferenceCode)

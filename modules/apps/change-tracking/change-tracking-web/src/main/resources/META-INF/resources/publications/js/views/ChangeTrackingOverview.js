@@ -4,16 +4,36 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-export default function ChangeTrackingOverview({itemsOverview}) {
+import {PublicationScoreLabel} from '../components/PublicationScoreLabel';
+
+export default function ChangeTrackingOverview({
+	itemsOverview,
+	publicationScore,
+}) {
 	return (
 		<ClayPanel
 			collapsable
 			defaultExpanded
-			displayTitle="Publication Overview"
+			displayTitle={
+				<ClayPanel.Title>
+					<ClayLayout.ContentRow className="align-items-center c-gap-2">
+						<ClayLayout.ContentCol className="panel-title">
+							{Liferay.Language.get('publication-overview')}
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<PublicationScoreLabel
+								publicationScore={publicationScore}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</ClayPanel.Title>
+			}
 			displayType="secondary"
 			showCollapseIcon={true}
 		>

@@ -16,7 +16,9 @@
 									"es_ES": "http://www.spanish.com"
 								}
 							}
-						}
+						},
+						"formType": "simple",
+						"numberOfSteps": 0
 					},
 					"indexed": true,
 					"layout": {

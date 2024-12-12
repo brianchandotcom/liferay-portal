@@ -103,7 +103,7 @@ const SVFilter = ({filterOptions, onChange, params, sortOptions}: IProps) => {
 				{displayedOptions?.map((value) => (
 					<ClayCheckbox
 						aria-label={i18n.translate(value)}
-						checked={params.getAll(filterKey)[0]?.includes(value)}
+						checked={!!params.getAll(filterKey)[0]?.includes(value)}
 						key={value}
 						label={i18n.translate(value)}
 						onChange={() => handleFilterChange(filterKey, [value])}

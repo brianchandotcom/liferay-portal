@@ -26,12 +26,12 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			hasUnapprovedChanges,
 			isEmpty,
 			learnLink,
+			learnResolvingConflictsLink,
 			publishURL,
 			redirect,
 			resolvedConflicts,
 			schedule,
 			scheduleURL,
-			showPageOverwriteWarning,
 			spritemap,
 			timeZone,
 			unapprovedChangesAllowed,
@@ -42,12 +42,12 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		this.hasUnapprovedChanges = hasUnapprovedChanges;
 		this.isEmpty = isEmpty;
 		this.learnLink = learnLink;
+		this.learnResolvingConflictsLink = learnResolvingConflictsLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
 		this.resolvedConflicts = resolvedConflicts;
 		this.schedule = schedule;
 		this.scheduleURL = scheduleURL;
-		this.showPageOverwriteWarning = showPageOverwriteWarning;
 		this.spritemap = spritemap;
 		this.timeZone = timeZone;
 		this.unapprovedChangesAllowed = unapprovedChangesAllowed;
@@ -140,15 +140,17 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 							/>
 						)}
 
-					{this.showPageOverwriteWarning && (
-						<ClayAlert
-							displayType="info"
-							spritemap={this.spritemap}
-							title={Liferay.Language.get(
-								"this-publication-contains-changes-to-a-content-page.-publishing-these-changes-will-fully-overwrite-the-page's-content-and-layout-in-production"
-							)}
-						/>
-					)}
+					<ClayAlert
+						displayType="info"
+						spritemap={this.spritemap}
+						title={Liferay.Language.get(
+							'publishing-may-overwrite-changes-made-in-production-after-this-publication-was-created'
+						)}
+					>
+						<a href={this.learnResolvingConflictsLink.url}>
+							{this.learnResolvingConflictsLink.message}
+						</a>
+					</ClayAlert>
 				</div>
 
 				<div className="sheet-section">

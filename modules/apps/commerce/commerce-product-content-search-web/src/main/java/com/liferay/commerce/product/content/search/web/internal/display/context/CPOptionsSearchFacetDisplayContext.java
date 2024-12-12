@@ -51,12 +51,11 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		_renderRequest = _cpRequestHelper.getRenderRequest();
-
 		_cpOptionFacetsPortletInstanceConfiguration =
 			configurationProvider.getPortletInstanceConfiguration(
 				CPOptionFacetsPortletInstanceConfiguration.class,
 				_cpRequestHelper.getThemeDisplay());
+		_renderRequest = _cpRequestHelper.getRenderRequest();
 	}
 
 	public CPOption getCPOption(long companyId, String fieldName) {

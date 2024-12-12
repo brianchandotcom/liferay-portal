@@ -27,20 +27,22 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 	public DLVideoExternalShortcutMetadataHelper
 		getDLVideoExternalShortcutMetadataHelper(FileEntry fileEntry) {
 
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return null;
+		}
 
-			DLVideoExternalShortcutMetadataHelper
-				dlVideoExternalShortcutMetadataHelper =
-					new DLVideoExternalShortcutMetadataHelper(
-						_ddmFormValuesToFieldsConverter,
-						_ddmStorageEngineManager, _ddmStructureLocalService,
-						dlFileEntry, _dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter);
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
-				return dlVideoExternalShortcutMetadataHelper;
-			}
+		DLVideoExternalShortcutMetadataHelper
+			dlVideoExternalShortcutMetadataHelper =
+				new DLVideoExternalShortcutMetadataHelper(
+					_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+					_ddmStructureLocalService, dlFileEntry,
+					_dlFileEntryMetadataLocalService,
+					_fieldsToDDMFormValuesConverter);
+
+		if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
+			return dlVideoExternalShortcutMetadataHelper;
 		}
 
 		return null;
@@ -49,20 +51,22 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 	public DLVideoExternalShortcutMetadataHelper
 		getDLVideoExternalShortcutMetadataHelper(FileVersion fileVersion) {
 
-		if (fileVersion.getModel() instanceof DLFileVersion) {
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+		if (!(fileVersion.getModel() instanceof DLFileVersion)) {
+			return null;
+		}
 
-			DLVideoExternalShortcutMetadataHelper
-				dlVideoExternalShortcutMetadataHelper =
-					new DLVideoExternalShortcutMetadataHelper(
-						_ddmFormValuesToFieldsConverter,
-						_ddmStorageEngineManager, _ddmStructureLocalService,
-						dlFileVersion, _dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter);
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
 
-			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
-				return dlVideoExternalShortcutMetadataHelper;
-			}
+		DLVideoExternalShortcutMetadataHelper
+			dlVideoExternalShortcutMetadataHelper =
+				new DLVideoExternalShortcutMetadataHelper(
+					_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+					_ddmStructureLocalService, dlFileVersion,
+					_dlFileEntryMetadataLocalService,
+					_fieldsToDDMFormValuesConverter);
+
+		if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
+			return dlVideoExternalShortcutMetadataHelper;
 		}
 
 		return null;

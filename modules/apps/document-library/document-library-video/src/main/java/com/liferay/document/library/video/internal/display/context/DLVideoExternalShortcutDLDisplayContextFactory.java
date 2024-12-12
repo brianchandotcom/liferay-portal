@@ -135,15 +135,15 @@ public class DLVideoExternalShortcutDLDisplayContextFactory
 		DLVideoExternalShortcutMetadataHelper
 			dlVideoExternalShortcutMetadataHelper) {
 
-		if (dlVideoExternalShortcutMetadataHelper.containsField(
+		if (!dlVideoExternalShortcutMetadataHelper.containsField(
 				DLVideoConstants.DDM_FIELD_NAME_URL)) {
 
-			return _dlVideoExternalShortcutResolver.resolve(
-				dlVideoExternalShortcutMetadataHelper.getFieldValue(
-					DLVideoConstants.DDM_FIELD_NAME_URL));
+			return null;
 		}
 
-		return null;
+		return _dlVideoExternalShortcutResolver.resolve(
+			dlVideoExternalShortcutMetadataHelper.getFieldValue(
+				DLVideoConstants.DDM_FIELD_NAME_URL));
 	}
 
 	@Reference

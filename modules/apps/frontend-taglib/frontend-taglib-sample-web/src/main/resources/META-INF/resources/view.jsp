@@ -7,9 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
-
 <%
-SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAttribute(SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT);
+SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAttribute(SampleWebKeys.SAMPLE_DISPLAY_CONTEXT);
 %>
 
 <clay:navigation-bar

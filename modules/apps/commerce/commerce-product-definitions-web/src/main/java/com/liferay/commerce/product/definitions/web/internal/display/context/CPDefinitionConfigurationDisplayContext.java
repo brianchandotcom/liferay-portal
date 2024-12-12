@@ -14,6 +14,8 @@ import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
@@ -33,6 +35,7 @@ import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriority
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -173,6 +176,20 @@ public class CPDefinitionConfigurationDisplayContext
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
+	}
+
+	public boolean isPurchasable() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpDefinition.fetchMasterCPConfigurationEntry();
+
+		if (cpConfigurationEntry == null) {
+			return true;
+		}
+
+		return BeanParamUtil.getBoolean(
+			cpConfigurationEntry, httpServletRequest, "purchasable", true);
 	}
 
 	private CPDefinitionInventory _getCPDefinitionInventory()

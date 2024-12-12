@@ -141,8 +141,14 @@ export type TSort = {
 };
 
 export interface IField {
+	actionId?: string;
+	contentRenderer?: string;
+	expand?: boolean;
 	fieldName: string | [];
 	label: string;
+	localizeLabel?: boolean;
+	sortable?: boolean;
+	truncate?: boolean;
 }
 export interface ITableSchema {
 	fields: Array<IField>;

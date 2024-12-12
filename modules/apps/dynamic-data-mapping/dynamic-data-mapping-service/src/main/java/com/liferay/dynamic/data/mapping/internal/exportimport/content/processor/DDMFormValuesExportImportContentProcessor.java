@@ -322,15 +322,17 @@ public class DDMFormValuesExportImportContentProcessor
 
 			groupId = MapUtil.getLong(groupIds, groupId, groupId);
 
-			if ((groupId > 0) && Validator.isNotNull(uuid)) {
-				try {
-					return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to find file entry", portalException);
-					}
+			if ((groupId <= 0) || Validator.isNull(uuid)) {
+				return null;
+			}
+
+			try {
+				return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to find file entry", portalException);
 				}
 			}
 

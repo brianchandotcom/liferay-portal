@@ -39,17 +39,17 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 	private Pattern _getDeprecatedClassPattern() {
 		String deprecatedClass = getDeprecatedClass();
 
-		if (deprecatedClass != null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("\\w+\\s*\\=\\s*.+");
-			sb.append(StringUtil.replace(deprecatedClass, '.', "\\."));
-			sb.append("\\\"\\)");
-
-			return Pattern.compile(sb.toString());
+		if (deprecatedClass == null) {
+			return null;
 		}
 
-		return null;
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("\\w+\\s*\\=\\s*.+");
+		sb.append(StringUtil.replace(deprecatedClass, '.', "\\."));
+		sb.append("\\\"\\)");
+
+		return Pattern.compile(sb.toString());
 	}
 
 	private String _getVariableName(Matcher matcher) {

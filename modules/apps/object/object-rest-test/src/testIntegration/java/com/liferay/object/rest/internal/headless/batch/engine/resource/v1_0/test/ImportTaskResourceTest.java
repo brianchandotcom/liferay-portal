@@ -309,13 +309,13 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
+		// With "restrictedFieldNames" query parameter
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
 		beforeImportJSONObject = _getJSONObject(
 			objectEntry.getExternalReferenceCode());
-
-		// With "restrictedFieldNames" query parameter
 
 		waitForFinish(
 			"COMPLETED", true,

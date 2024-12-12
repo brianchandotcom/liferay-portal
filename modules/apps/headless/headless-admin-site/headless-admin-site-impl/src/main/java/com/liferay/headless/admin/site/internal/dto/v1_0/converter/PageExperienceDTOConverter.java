@@ -10,9 +10,9 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -20,9 +20,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,50 +81,8 @@ public class PageExperienceDTOConverter
 		};
 	}
 
-	private PageElement[] _getChildPageElements(
-			LayoutStructure layoutStructure,
-			LayoutStructureItem layoutStructureItem)
-		throws Exception {
-
-		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
-
-		if (ListUtil.isEmpty(childrenItemIds)) {
-			return null;
-		}
-
-		List<PageElement> pageElements = new ArrayList<>();
-
-		for (int i = 0; i < childrenItemIds.size(); i++) {
-			pageElements.add(
-				_getPageElement(childrenItemIds.get(i), layoutStructure, i));
-		}
-
-		return pageElements.toArray(new PageElement[0]);
-	}
-
-	private PageElement _getPageElement(
-			String itemId, LayoutStructure layoutStructure, int position)
-		throws Exception {
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
-
-		PageElement pageElement = _pageElementDTOConverter.toDTO(
-			layoutStructureItem);
-
-		pageElement.setPageElements(
-			() -> _getChildPageElements(layoutStructure, layoutStructureItem));
-
-		pageElement.setPosition(() -> position);
-
-		return pageElement;
-	}
-
 	private PageElement[] _getPageElements(
-			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel)
-		throws Exception {
-
-		List<PageElement> pageElements = new ArrayList<>();
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
@@ -135,19 +90,11 @@ public class PageExperienceDTOConverter
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
-		for (int i = 0; i < childrenItemIds.size(); i++) {
-			PageElement pageElement = _getPageElement(
-				childrenItemIds.get(i), layoutStructure, i);
-
-			pageElement.setParentExternalReferenceCode(() -> null);
-
-			pageElements.add(pageElement);
-		}
-
-		return pageElements.toArray(new PageElement[0]);
+		return TransformUtil.transformToArray(
+			rootLayoutStructureItem.getChildrenItemIds(),
+			childrenItemId -> _pageElementDTOConverter.toDTO(
+				layoutStructure.getLayoutStructureItem(childrenItemId)),
+			PageElement.class);
 	}
 
 	@Reference

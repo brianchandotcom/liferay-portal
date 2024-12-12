@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -89,6 +90,12 @@ public class PageExperienceDTOConverter
 
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, null, null, null, null);
+
+		dtoConverterContext.setAttribute(
+			LayoutStructure.class.getName(), layoutStructure);
 
 		return TransformUtil.transformToArray(
 			rootLayoutStructureItem.getChildrenItemIds(),

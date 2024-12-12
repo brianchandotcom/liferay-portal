@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -147,7 +149,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new NoSuchLayoutStructureItemException();
 		}
 
-		return _pageElementDTOConverter.toDTO(layoutStructureItem);
+		return _pageElementDTOConverter.toDTO(
+			_getDTOConverterContext(layoutStructure), layoutStructureItem);
 	}
 
 	@Override
@@ -200,6 +203,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				LayoutStructureItemUtil.getChildrenItemIds(
 					layoutStructureItem.getItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
+					_getDTOConverterContext(layoutStructure),
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
 
@@ -248,6 +252,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				LayoutStructureItemUtil.getChildrenItemIds(
 					layoutStructure.getMainItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
+					_getDTOConverterContext(layoutStructure),
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
 
@@ -367,7 +372,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layoutStructure.toString());
 		}
 
-		return _pageElementDTOConverter.toDTO(layoutStructureItem);
+		return _pageElementDTOConverter.toDTO(
+			_getDTOConverterContext(layoutStructure), layoutStructureItem);
 	}
 
 	private void _addChildPageElements(
@@ -409,7 +415,20 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				layout.getGroupId(), layout.getPlid(),
 				layoutStructure.toString());
 
-		return _pageElementDTOConverter.toDTO(layoutStructureItem);
+		return _pageElementDTOConverter.toDTO(
+			_getDTOConverterContext(layoutStructure), layoutStructureItem);
+	}
+
+	private DTOConverterContext _getDTOConverterContext(
+		LayoutStructure layoutStructure) {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, null, null, null, null);
+
+		dtoConverterContext.setAttribute(
+			LayoutStructure.class.getName(), layoutStructure);
+
+		return dtoConverterContext;
 	}
 
 	private static final Map<PageElement.Type, String>

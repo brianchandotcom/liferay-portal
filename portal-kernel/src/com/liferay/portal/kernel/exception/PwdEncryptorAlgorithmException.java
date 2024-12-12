@@ -8,8 +8,7 @@ package com.liferay.portal.kernel.exception;
 /**
  * @author Alvaro Saugar
  */
-public class PwdEncryptorAlgorithmException
-	extends PwdEncryptorException {
+public class PwdEncryptorAlgorithmException extends PwdEncryptorException {
 
 	public PwdEncryptorAlgorithmException() {
 	}

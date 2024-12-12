@@ -96,6 +96,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			nodeExtension.setNodeVersion("16.13.0");
 			nodeExtension.setNpmVersion("8.1.0");
+			nodeExtension.setYarnVersion("1.22.22");
 		}
 	}
 

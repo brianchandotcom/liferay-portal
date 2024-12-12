@@ -1644,11 +1644,34 @@ public class ObjectRelationshipLocalServiceTest {
 			siteRole.getRoleId(),
 			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
 
-		_unbindObjectDefinitionNode("AA", tree);
-
 		ObjectDefinition objectDefinitionAA =
 			_objectDefinitionLocalService.getObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_AA");
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinitionAA.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"secret", "standalone"
+			).put(
+				"url", "https://standalone.com"
+			).build(),
+			false);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinitionAA.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			organizationRole.getRoleId(),
+			new String[] {objectAction.getName()});
+
+		_unbindObjectDefinitionNode("AA", tree);
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
@@ -1657,6 +1680,13 @@ public class ObjectRelationshipLocalServiceTest {
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 				organizationRole.getRoleId(), ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				objectDefinitionAA.getClassName(),
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				organizationRole.getRoleId(), objectAction.getName()));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
 				TestPropsValues.getCompanyId(),

@@ -25,12 +25,15 @@ import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureI
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,14 +61,40 @@ public class PageElementDTOConverter
 			LayoutStructureItem layoutStructureItem)
 		throws Exception {
 
+		if (dtoConverterContext == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutStructure layoutStructure =
+			(LayoutStructure)dtoConverterContext.getAttribute(
+				LayoutStructure.class.getName());
+
+		if (layoutStructure == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return new PageElement() {
 			{
 				setDefinition(() -> _getDefinition(layoutStructureItem));
 				setExternalReferenceCode(layoutStructureItem::getItemId);
-				setPageElements(() -> new PageElement[0]);
+				setPageElements(
+					() -> _getPageElements(
+						dtoConverterContext, layoutStructure,
+						layoutStructureItem));
 				setParentExternalReferenceCode(
 					layoutStructureItem::getParentItemId);
-				setPosition(() -> 0);
+				setPosition(
+					() -> {
+						LayoutStructureItem parentLayoutStructureItem =
+							layoutStructure.getLayoutStructureItem(
+								layoutStructureItem.getParentItemId());
+
+						List<String> childrenItemIds =
+							parentLayoutStructureItem.getChildrenItemIds();
+
+						return childrenItemIds.indexOf(
+							layoutStructureItem.getItemId());
+					});
 				setType(() -> _getType(layoutStructureItem.getItemType()));
 			}
 		};
@@ -168,6 +197,19 @@ public class PageElementDTOConverter
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	private PageElement[] _getPageElements(
+		DTOConverterContext dtoConverterContext,
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem) {
+
+		return TransformUtil.transformToArray(
+			layoutStructureItem.getChildrenItemIds(),
+			childrenItemId -> toDTO(
+				dtoConverterContext,
+				layoutStructure.getLayoutStructureItem(childrenItemId)),
+			PageElement.class);
 	}
 
 	private PageElement.Type _getType(String type) {

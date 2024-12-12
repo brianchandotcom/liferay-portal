@@ -33,6 +33,7 @@ import {CommerceAdminProductConfigurationEntriesPage} from '../pages/commerce/co
 import {CommerceAdminProductConfigurationEntryPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationEntryPage';
 import {CommerceAdminProductConfigurationListPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListPage';
 import {CommerceAdminProductConfigurationListsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductConfigurationListsPage';
+import {CommerceAdminProductDetailsConfigurationPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsConfigurationPage';
 import {CommerceAdminProductDetailsDiagramPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsDiagramPage';
 import {CommerceAdminProductDetailsMediaPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsMediaPage';
 import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsPage';
@@ -65,6 +66,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductConfigurationEntryPage: CommerceAdminProductConfigurationEntryPage;
 	commerceAdminProductConfigurationListPage: CommerceAdminProductConfigurationListPage;
 	commerceAdminProductConfigurationListsPage: CommerceAdminProductConfigurationListsPage;
+	commerceAdminProductDetailsConfigurationPage: CommerceAdminProductDetailsConfigurationPage;
 	commerceAdminProductDetailsDiagramPage: CommerceAdminProductDetailsDiagramPage;
 	commerceAdminProductDetailsMediaPage: CommerceAdminProductDetailsMediaPage;
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
@@ -137,6 +139,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductConfigurationListsPage: async ({page}, use) => {
 		await use(new CommerceAdminProductConfigurationListsPage(page));
+	},
+	commerceAdminProductDetailsConfigurationPage: async ({page}, use) => {
+		await use(new CommerceAdminProductDetailsConfigurationPage(page));
 	},
 	commerceAdminProductDetailsDiagramPage: async ({page}, use) => {
 		await use(new CommerceAdminProductDetailsDiagramPage(page));

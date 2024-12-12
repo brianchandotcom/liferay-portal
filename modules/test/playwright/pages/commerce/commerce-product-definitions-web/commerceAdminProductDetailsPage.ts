@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 export class CommerceAdminProductDetailsPage {
 	readonly page: Page;
+	readonly productConfigurationLink: Locator;
 	readonly productDetailsInput: (inputName: string) => Promise<Locator>;
 	readonly productDiagramLink: Locator;
 	readonly productMediaLink: Locator;
@@ -18,6 +19,9 @@ export class CommerceAdminProductDetailsPage {
 
 	constructor(page: Page) {
 		this.page = page;
+		this.productConfigurationLink = page.getByRole('link', {
+			name: 'Configuration',
+		});
 		this.productDetailsInput = async (inputName: string) =>
 			page.getByLabel(inputName);
 		this.productDiagramLink = page.getByRole('link', {
@@ -39,6 +43,10 @@ export class CommerceAdminProductDetailsPage {
 			name: 'Visibility',
 		});
 		this.publishLink = page.getByRole('link', {name: 'Publish'});
+	}
+
+	async goToProductConfiguration() {
+		await this.productConfigurationLink.click();
 	}
 
 	async goToProductDiagram() {

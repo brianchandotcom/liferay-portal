@@ -515,3 +515,51 @@ test('LPD-43013 Edit configuration template', async ({
 		commerceAdminProductConfigurationListPage.widthInput
 	).toHaveValue('9.0');
 });
+
+test('LPD-37882 Show purchasable field', async ({
+	apiHelpers,
+	commerceAdminProductDetailsConfigurationPage,
+	commerceAdminProductDetailsPage,
+	commerceAdminProductPage,
+	page,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	let product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	expect(product.skus[0].purchasable).toBeTruthy();
+
+	await commerceAdminProductPage.gotoProduct(product.name['en_US'], false);
+
+	await expect(
+		await commerceAdminProductDetailsPage.productSkusLink
+	).toBeVisible();
+
+	await commerceAdminProductDetailsPage.goToProductConfiguration();
+
+	await expect(
+		commerceAdminProductDetailsConfigurationPage.purchasableInput
+	).toBeVisible();
+	await expect(
+		commerceAdminProductDetailsConfigurationPage.purchasableInput
+	).toBeChecked();
+
+	await commerceAdminProductDetailsConfigurationPage.purchasableInput.click();
+	await commerceAdminProductDetailsConfigurationPage.publishLink.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(
+		commerceAdminProductDetailsConfigurationPage.purchasableInput
+	).not.toBeChecked();
+
+	product = await apiHelpers.headlessCommerceAdminCatalog.getProduct(
+		product.productId
+	);
+
+	expect(product.skus[0].purchasable).toBeFalsy();
+});

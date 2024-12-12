@@ -13,8 +13,14 @@ CollectionAppliedFiltersFragmentRendererDisplayContext collectionAppliedFiltersF
 List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRendererDisplayContext.getAppliedFilters();
 %>
 
+<aui:style type="text/css">
+	.applied-filters-show-more-button {
+		line-height: 1.3125;
+	}
+</aui:style>
+
 <div class="align-items-sm-start align-items-stretch d-flex flex-column flex-sm-row py-1" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>">
-	<div class="flex-grow-1 overflow-hidden" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_filterList" style="max-height: 4em;">
+	<div class="flex-grow-1 overflow-hidden" id="<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() %>_filterList">
 		<c:choose>
 			<c:when test="<%= appliedFilters.isEmpty() && collectionAppliedFiltersFragmentRendererDisplayContext.isEditMode() %>">
 				<span class="text-secondary">
@@ -52,12 +58,11 @@ List<Map<String, String>> appliedFilters = collectionAppliedFiltersFragmentRende
 
 	<div class="d-flex flex-grow-1 flex-shrink-0 flex-sm-column-reverse flex-sm-grow-0 justify-content-between justify-content-sm-start ml-sm-2 mt-2 mt-sm-0">
 		<clay:button
-			cssClass="border-0 btn btn-link btn-sm d-none flex-shrink-0 mt-0 mt-sm-2 p-0 text-right text-secondary"
+			cssClass="applied-filters-show-more-button border-0 btn btn-link btn-sm d-none flex-shrink-0 mt-0 mt-sm-2 p-0 text-right text-secondary"
 			data-show-less-label='<%= LanguageUtil.get(request, "show-less") %>'
 			data-show-more-label='<%= LanguageUtil.get(request, "show-more") %>'
 			displayType="secondary"
 			id='<%= collectionAppliedFiltersFragmentRendererDisplayContext.getFragmentEntryLinkNamespace() + "_toggleExpand" %>'
-			style="line-height: 1.3125;"
 		>
 			<span class="inline-item-expand">
 				<liferay-ui:message key="show-more" />

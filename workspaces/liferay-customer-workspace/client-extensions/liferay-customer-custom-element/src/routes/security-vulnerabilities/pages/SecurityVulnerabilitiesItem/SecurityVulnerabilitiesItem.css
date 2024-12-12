@@ -25,6 +25,7 @@
 		}
 
 		.sv-severity {
+			background-color: var(--color-neutral-5);
 			border-radius: var(--border-radius-sm);
 			margin-left: var(--spacer-4);
 			padding: var(--spacer-1) var(--spacer-2);
@@ -36,10 +37,6 @@
 
 		.sv-severity-high {
 			background-color: var(--color-state-warning);
-		}
-
-		.sv-severity-low {
-			background-color: var(--color-neutral-5);
 		}
 
 		.sv-severity-medium {

@@ -8,6 +8,7 @@
 	}
 
 	.sv-severity {
+		background-color: var(--color-neutral-5);
 		border-radius: var(--border-radius-sm);
 		color: var(--color-neutral-0);
 		font-size: var(--font-size-sm);
@@ -20,10 +21,6 @@
 
 	.sv-severity-high {
 		background-color: var(--color-state-warning);
-	}
-
-	.sv-severity-low {
-		background-color: var(--color-neutral-5);
 	}
 
 	.sv-severity-medium {

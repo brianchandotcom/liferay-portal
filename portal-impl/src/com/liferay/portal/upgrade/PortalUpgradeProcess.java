@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedMap;
@@ -152,8 +153,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return _upgradeVersionTreeMap.lastKey();
 	}
 
-	public static SortedMap<Version, UpgradeProcess> getPendingUpgradeProcesses(
-		Version schemaVersion) {
+	public static SortedMap<Version, List<UpgradeProcess>>
+		getPendingUpgradeProcesses(Version schemaVersion) {
 
 		return _upgradeVersionTreeMap.tailMap(schemaVersion, false);
 	}
@@ -347,7 +348,12 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		for (Version pendingSchemaVersion :
 				getPendingSchemaVersions(getCurrentSchemaVersion(connection))) {
 
-			upgrade(_upgradeVersionTreeMap.get(pendingSchemaVersion));
+			List<UpgradeProcess> upgradeProcesses = _upgradeVersionTreeMap.get(
+				pendingSchemaVersion);
+
+			for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+				upgrade(upgradeProcess);
+			}
 
 			updateSchemaVersion(connection, pendingSchemaVersion);
 		}
@@ -356,7 +362,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected Set<Version> getPendingSchemaVersions(Version fromSchemaVersion) {
-		SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
+		SortedMap<Version, List<UpgradeProcess>> pendingUpgradeProcesses =
 			_upgradeVersionTreeMap.tailMap(fromSchemaVersion, false);
 
 		return pendingUpgradeProcesses.keySet();

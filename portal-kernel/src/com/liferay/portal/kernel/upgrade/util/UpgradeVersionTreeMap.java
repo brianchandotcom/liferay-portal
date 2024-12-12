@@ -17,13 +17,16 @@ import java.util.TreeMap;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeProcess> {
+public class UpgradeVersionTreeMap
+	extends TreeMap<Version, List<UpgradeProcess>> {
 
 	@Override
-	public UpgradeProcess put(Version key, UpgradeProcess upgradeProcess) {
-		_put(key, upgradeProcess.getUpgradeSteps());
+	public List<UpgradeProcess> put(
+		Version key, List<UpgradeProcess> upgradeProcesses) {
 
-		return upgradeProcess;
+		_put(key, new ArrayList<>(upgradeProcesses));
+
+		return upgradeProcesses;
 	}
 
 	public void put(Version key, UpgradeProcess... upgradeProcesses) {
@@ -34,26 +37,22 @@ public class UpgradeVersionTreeMap extends TreeMap<Version, UpgradeProcess> {
 				upgradeStepList, upgradeProcess.getUpgradeSteps());
 		}
 
-		_put(key, upgradeStepList.toArray(new UpgradeStep[0]));
+		_put(key, upgradeStepList);
 	}
 
-	private void _put(Version key, UpgradeStep... upgradeProcesses) {
-		for (int i = 0; i < (upgradeProcesses.length - 1); i++) {
-			UpgradeStep upgradeStep = upgradeProcesses[i];
+	private void _put(Version key, List<UpgradeStep> upgradeSteps) {
+		Version version = new Version(
+			key.getMajor(), key.getMinor(), key.getMicro(), key.getQualifier());
 
-			Version stepVersion = new Version(
-				key.getMajor(), key.getMinor(), key.getMicro(),
-				"step-" + (i + 1));
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-			super.put(stepVersion, (UpgradeProcess)upgradeStep);
+		for (UpgradeStep upgradeStep : upgradeSteps) {
+			if (upgradeStep instanceof UpgradeProcess) {
+				upgradeProcesses.add((UpgradeProcess)upgradeStep);
+			}
 		}
 
-		Version finalVersion = new Version(
-			key.getMajor(), key.getMinor(), key.getMicro());
-
-		super.put(
-			finalVersion,
-			(UpgradeProcess)upgradeProcesses[upgradeProcesses.length - 1]);
+		super.put(version, upgradeProcesses);
 	}
 
 }

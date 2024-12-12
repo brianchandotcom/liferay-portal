@@ -218,7 +218,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			Version currentSchemaVersion =
 				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
 
-			SortedMap<Version, UpgradeProcess> pendingUpgradeProcesses =
+			SortedMap<Version, List<UpgradeProcess>> pendingUpgradeProcesses =
 				PortalUpgradeProcess.getPendingUpgradeProcesses(
 					currentSchemaVersion);
 
@@ -238,18 +238,19 @@ public class ReleaseManagerImpl implements ReleaseManager {
 				if (showUpgradeSteps) {
 					sb.append(StringPool.COLON);
 
-					for (SortedMap.Entry<Version, UpgradeProcess> entry :
+					for (SortedMap.Entry<Version, List<UpgradeProcess>> entry :
 							pendingUpgradeProcesses.entrySet()) {
 
 						sb.append(StringPool.NEW_LINE);
 						sb.append(StringPool.TAB);
 
-						UpgradeProcess upgradeProcess = entry.getValue();
+						List<UpgradeProcess> upgradeProcesses =
+							entry.getValue();
 						Version version = entry.getKey();
 
 						sb.append(
 							_getPendingUpgradeProcessMessage(
-								upgradeProcess.getClass(),
+								upgradeProcesses.getClass(),
 								currentSchemaVersion.toString(),
 								version.toString()));
 

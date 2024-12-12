@@ -5,14 +5,12 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.version.Version;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,14 +54,21 @@ public class UpgradeVersionTreeMapTest {
 		UpgradeVersionTreeMap upgradeVersionTreeMap =
 			new UpgradeVersionTreeMap();
 
-		upgradeVersionTreeMap.put(new Version(1, 0, 0), new MultiStepUpgrade());
+		UpgradeProcess upgradeProcess = new MultiStepUpgrade();
 
-		Collection<UpgradeProcess> upgradeProcesses =
-			upgradeVersionTreeMap.values();
+		upgradeVersionTreeMap.put(new Version(1, 0, 0), upgradeProcess);
 
-		_checkTreeMapValues(
-			upgradeVersionTreeMap,
-			upgradeProcesses.toArray(new UpgradeProcess[0]));
+		UpgradeProcess[] upgradeProcesses =
+			new UpgradeProcess[upgradeProcess.getUpgradeSteps().length];
+
+		int i = 0;
+
+		for (UpgradeStep upgradeStep : upgradeProcess.getUpgradeSteps()) {
+			upgradeProcesses[i] = (UpgradeProcess)upgradeStep;
+			i++;
+		}
+
+		_checkTreeMapValues(upgradeVersionTreeMap, upgradeProcesses);
 	}
 
 	private void _checkTreeMapValues(
@@ -71,33 +76,15 @@ public class UpgradeVersionTreeMapTest {
 		UpgradeProcess[] upgradeProcesses) {
 
 		Assert.assertEquals(
-			upgradeVersionTreeMap.toString(), upgradeProcesses.length,
-			upgradeVersionTreeMap.size());
+			upgradeVersionTreeMap.toString(), 1, upgradeVersionTreeMap.size());
 
-		Collection<Version> keys = upgradeVersionTreeMap.keySet();
+		List<UpgradeProcess> upgradeProcesList =
+			upgradeVersionTreeMap.firstEntry(
+			).getValue();
 
-		Iterator<Version> iterator = keys.iterator();
-
-		int i = 0;
-
-		while (iterator.hasNext()) {
-			Version version = iterator.next();
-
-			UpgradeProcess upgradeProcess = upgradeVersionTreeMap.get(version);
-
-			Assert.assertEquals(upgradeProcesses[i], upgradeProcess);
-
-			String step = version.getQualifier();
-
-			if (iterator.hasNext()) {
-				Assert.assertTrue(step.equals("step-" + (i + 1)));
-			}
-			else {
-				Assert.assertTrue(step.equals(StringPool.BLANK));
-			}
-
-			i++;
-		}
+		Assert.assertEquals(
+			upgradeProcesList.toString(), upgradeProcesses.length,
+			upgradeProcesList.size());
 	}
 
 	private class MultiStepUpgrade extends DummyUpgradeProcess {

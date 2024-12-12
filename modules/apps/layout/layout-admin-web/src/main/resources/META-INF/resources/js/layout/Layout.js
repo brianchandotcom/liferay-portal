@@ -106,7 +106,9 @@ const Layout = ({
 					}
 				}
 
-				newLayoutColumns.push(children);
+				newLayoutColumns.push(
+					children.map((child) => ({...child, active: false}))
+				);
 
 				setLayoutColumns(newLayoutColumns);
 			})

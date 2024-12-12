@@ -540,6 +540,8 @@
 	"unlimited-enterprise-wide": "無制限の Enterprise-Wide",
 	"user": "ユーザー",
 	"version": "バージョン",
+	"view-all": "すべてを表示",
+	"view-less": "表示を減らす",
 	"virtual-cluster": "仮想クラスター",
 	"virtual-cluster-x-nodes": "仮想クラスター ({0} ノード)",
 	"we-have-logged-you-out-of-the-customer-portal-due-to-inactivity-to-continue-please-sign-in-again": "We have logged you out of the Customer Portal due to inactivity. To continue, please sign in again.",

@@ -540,6 +540,8 @@
 	"unlimited-enterprise-wide": "Unlimited Enterprise-Wide",
 	"user": "Usuario",
 	"version": "Versión",
+	"view-all": "Ver Todo",
+	"view-less": "Ver Menos",
 	"virtual-cluster": "Clúster virtual",
 	"virtual-cluster-x-nodes": "Clúster virtual ({0} nodos)",
 	"we-have-logged-you-out-of-the-customer-portal-due-to-inactivity-to-continue-please-sign-in-again": "We have logged you out of the Customer Portal due to inactivity. To continue, please sign in again.",

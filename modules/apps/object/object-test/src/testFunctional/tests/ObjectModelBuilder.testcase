@@ -346,8 +346,8 @@ definition {
 			ObjectModelBuilder.openObjectFolderInModelBuilder(objectFolderName = "CustomFolder198088");
 
 			Click(
-				key_connectorLabel = "Relationship",
-				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+				key_buttonName = "Relationship",
+				locator1 = "ObjectModelBuilder#DIAGRAM_OBJECT_RELATIONSHIP_CONNECTOR_BUTTON");
 
 			ClickNoError(locator1 = "Button#TRASH_ENABLED");
 
@@ -361,7 +361,7 @@ definition {
 		task ("Then the relationship is deleted and the object definition cards persist") {
 			AssertElementNotPresent(
 				key_connectorLabel = "Relationship",
-				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+				locator1 = "ObjectModelBuilder#DIAGRAM_OBJECT_RELATIONSHIP_CONNECTOR_BUTTON");
 
 			AssertElementPresent(
 				locator1 = "ObjectModelBuilder#OBJECT_DEFINITION_NODE",

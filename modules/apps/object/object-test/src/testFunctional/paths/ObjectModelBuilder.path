@@ -15,6 +15,11 @@
 		<td>//*[contains(@class,'list-group-item') and contains(.,'${objectDefinition}')] //input</td>
 		<td></td>
 	</tr>
+		<tr>
+		<td>DIAGRAM_OBJECT_RELATIONSHIP_CONNECTOR_BUTTON</td>
+		<td>//*[contains(@class,'react-flow__edge-button ') and contains(.,'${key_buttonName}')]</td>
+		<td></td>
+	</tr>
 	<tr>
 		<td>OBJECT_CARD_LABEL</td>
 		<td>//*[contains(@class,'objectDefinitionNode')][contains(.,'${objectDefinition}')] //*[contains(@class,'label-item')][normalize-space(text())='${labelText}']</td>

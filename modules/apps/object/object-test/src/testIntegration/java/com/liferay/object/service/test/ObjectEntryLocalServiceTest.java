@@ -81,6 +81,7 @@ import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectEntryTreeFactory;
@@ -1851,12 +1852,23 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddObjectEntryWithStandaloneObjectAction()
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Collections.singletonList(objectRelationship));
 
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, null,
+			objectDefinition2.getObjectDefinitionId(), true, null,
 			RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1870,52 +1882,67 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertThat(
 			_resourceActions.getModelResourceActions(
-				objectDefinition.getClassName()),
+				objectDefinition2.getClassName()),
 			CoreMatchers.hasItem(objectAction.getName()));
 		Assert.assertThat(
 			_resourceActions.getModelResourceOwnerDefaultActions(
-				objectDefinition.getClassName()),
+				objectDefinition2.getClassName()),
 			CoreMatchers.hasItem(objectAction.getName()));
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
-			0, objectDefinition.getObjectDefinitionId(),
+			0, objectDefinition1.getObjectDefinitionId(),
 			Collections.emptyMap());
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			0, objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntry1.getObjectEntryId()
+			).build());
 
 		Assert.assertTrue(
 			_hasResourcePermission(
-				objectAction, objectDefinition, objectEntry1));
+				objectAction, objectDefinition2, objectEntry2));
 
 		_objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());
 
 		Assert.assertThat(
 			_resourceActions.getModelResourceActions(
-				objectDefinition.getClassName()),
+				objectDefinition2.getClassName()),
 			CoreMatchers.not(CoreMatchers.hasItem(objectAction.getName())));
 		Assert.assertThat(
 			_resourceActions.getModelResourceOwnerDefaultActions(
-				objectDefinition.getClassName()),
+				objectDefinition2.getClassName()),
 			CoreMatchers.not(CoreMatchers.hasItem(objectAction.getName())));
 		AssertUtils.assertFailure(
 			NoSuchResourceActionException.class,
-			objectDefinition.getClassName() + StringPool.POUND +
+			objectDefinition2.getClassName() + StringPool.POUND +
 				objectAction.getName(),
 			() -> _hasResourcePermission(
-				objectAction, objectDefinition, objectEntry1));
+				objectAction, objectDefinition2, objectEntry2));
 
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			0, objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap());
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			0, objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntry1.getObjectEntryId()
+			).build());
 
 		AssertUtils.assertFailure(
 			NoSuchResourceActionException.class,
-			objectDefinition.getClassName() + StringPool.POUND +
+			objectDefinition2.getClassName() + StringPool.POUND +
 				objectAction.getName(),
 			() -> _hasResourcePermission(
-				objectAction, objectDefinition, objectEntry2));
+				objectAction, objectDefinition2, objectEntry3));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinition1.getName(), objectDefinition2.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

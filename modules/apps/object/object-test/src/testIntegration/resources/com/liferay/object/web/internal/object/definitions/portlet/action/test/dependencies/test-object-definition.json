@@ -147,7 +147,7 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Integer",
 			"businessType": "Text",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -161,7 +161,7 @@
 			"required": false,
 			"state": false,
 			"system": true,
-			"type": "String"
+			"type": "Integer"
 		},
 		{
 			"DBType": "String",

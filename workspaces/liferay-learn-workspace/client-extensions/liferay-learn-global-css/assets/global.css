@@ -306,6 +306,13 @@ pre[class*='language-'] {
 	border-color: var(--color-neutral-10, #282934) !important;
 }
 
+.input-group .search-bar-keywords-input::placeholder {
+	color: var(--color-state-neutral-darken-1,#6C6C75 ) !important;
+	font-size: 1rem !important;
+	font-weight: 400 !important;
+	line-height: 24px !important;
+}
+
 .landing-page,
 .learn-card-container {
 	border-bottom: 1px solid var(--color-neutral-2, #e2e2e4);
@@ -903,8 +910,8 @@ pre[class*='language-'] {
 
 .learn-category div {
 	color: var(--color-neutral-10, #282934);
-  font-weight: 400;
-  line-height: 24px;
+	font-weight: 400;
+	line-height: 24px;
 }
 
 .learn-course-side-nav {
@@ -1104,18 +1111,6 @@ pre[class*='language-'] {
 			background-color: #EDF3FE;
 		}
 	}
-}
-
-.panel-title {
-	color: var(--color-neutral-10, #282934) !important;
-	font-size: 1.125rem;
-	text-transform: none;
-}
-
-.treeview .btn {
-	color: var(--color-neutral-10, #282934) !important;
-	font-size: 13px;
-	font-weight: 400;
 }
 
 .learn-education {
@@ -1471,14 +1466,7 @@ pre[class*='language-'] {
 				}
 			}
 		}
-	} 
-}
-
-.input-group .search-bar-keywords-input::placeholder {
-	color: var(--color-state-neutral-darken-1,#6C6C75 ) !important;
-	font-size: 1rem !important;
-	font-weight: 400 !important;
-	line-height: 24px !important;
+	}
 }
 
 .learn-sites-dropdown {
@@ -1572,6 +1560,12 @@ pre[class*='language-'] {
 	.page-link:hover {
 		background-color: var(--color-action-neutral-hover-10);
 	}
+}
+
+.panel-title {
+	color: var(--color-neutral-10, #282934) !important;
+	font-size: 1.125rem;
+	text-transform: none;
 }
 
 .search-bar-suggestions
@@ -1734,4 +1728,10 @@ pre[class*='language-'] {
 
 .token.entity {
 	cursor: help;
+}
+
+.treeview .btn {
+	color: var(--color-neutral-10, #282934) !important;
+	font-size: 13px;
+	font-weight: 400;
 }

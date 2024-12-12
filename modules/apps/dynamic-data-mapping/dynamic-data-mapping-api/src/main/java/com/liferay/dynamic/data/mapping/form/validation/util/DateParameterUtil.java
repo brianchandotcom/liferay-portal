@@ -198,15 +198,15 @@ public class DateParameterUtil {
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			dateFieldName);
 
-		if (ListUtil.isNotEmpty(ddmFormFieldValues)) {
-			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
-
-			Value value = ddmFormFieldValue.getValue();
-
-			return value.getString(ddmFormValues.getDefaultLocale());
+		if (ListUtil.isEmpty(ddmFormFieldValues)) {
+			return null;
 		}
 
-		return null;
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		return value.getString(ddmFormValues.getDefaultLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

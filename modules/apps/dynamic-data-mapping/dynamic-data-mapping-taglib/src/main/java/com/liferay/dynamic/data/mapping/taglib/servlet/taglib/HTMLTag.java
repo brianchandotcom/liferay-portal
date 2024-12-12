@@ -74,17 +74,18 @@ public class HTMLTag extends BaseHTMLTag {
 		String serializedDDMFormValues = ParamUtil.getString(
 			getRequest(), getDDMFormValuesInputName());
 
-		if (Validator.isNotNull(serializedDDMFormValues)) {
-			DDMForm ddmForm = getDDMForm();
+		if (Validator.isNull(serializedDDMFormValues)) {
+			return null;
+		}
 
-			try {
-				return DDMUtil.getDDMFormValues(
-					ddmForm, serializedDDMFormValues);
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
+		DDMForm ddmForm = getDDMForm();
+
+		try {
+			return DDMUtil.getDDMFormValues(ddmForm, serializedDDMFormValues);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 

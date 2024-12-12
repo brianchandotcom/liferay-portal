@@ -30,9 +30,11 @@ import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
@@ -44,6 +46,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -721,6 +724,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		BigDecimal multipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
 				actionRequest, "multipleOrderQuantity");
+		boolean purchasable = ParamUtil.getBoolean(
+			actionRequest, "purchasable", true);
 		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");
 		double shippingExtraPrice = ParamUtil.getDouble(
 			actionRequest, "shippingExtraPrice");
@@ -748,7 +753,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 				depth, displayAvailability, displayStockQuantity, freeShipping,
 				height, lowStockActivity, maxOrderQuantity, minOrderQuantity,
-				minStockQuantity, multipleOrderQuantity, true, shippable,
+				minStockQuantity, multipleOrderQuantity, purchasable, shippable,
 				shippingExtraPrice, shipSeparately, taxExempt, true, weight,
 				width);
 		}
@@ -760,9 +765,24 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				commerceAvailabilityEstimateId, cpDefinitionInventoryEngine,
 				depth, displayAvailability, displayStockQuantity, freeShipping,
 				height, lowStockActivity, maxOrderQuantity, minOrderQuantity,
-				minStockQuantity, multipleOrderQuantity, true, shippable,
-				shippingExtraPrice, shipSeparately, taxExempt, true, weight,
-				width);
+				minStockQuantity, multipleOrderQuantity, purchasable, shippable,
+				shippingExtraPrice, shipSeparately, taxExempt,
+				cpConfigurationEntry.isVisible(), weight, width);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				cpDefinition.getCompanyId(), "LPD-10889")) {
+
+			List<CPInstance> cpInstances =
+				_cpInstanceLocalService.getCPDefinitionInstances(
+					cpDefinitionId, WorkflowConstants.STATUS_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (CPInstance cpInstance : cpInstances) {
+				cpInstance.setPurchasable(purchasable);
+
+				_cpInstanceLocalService.updateCPInstance(cpInstance);
+			}
 		}
 	}
 
@@ -942,6 +962,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Localization _localization;

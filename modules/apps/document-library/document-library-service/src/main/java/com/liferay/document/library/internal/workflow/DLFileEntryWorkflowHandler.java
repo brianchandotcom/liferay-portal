@@ -98,16 +98,15 @@ public class DLFileEntryWorkflowHandler
 		AssetRendererFactory<DLFileEntry> assetRendererFactory =
 			getAssetRendererFactory();
 
-		if (assetRendererFactory != null) {
-			DLFileVersion dlFileVersion =
-				_dlFileVersionLocalService.getFileVersion(classPK);
-
-			return assetRendererFactory.getAssetRenderer(
-				dlFileVersion.getFileEntryId(),
-				AssetRendererFactory.TYPE_LATEST);
+		if (assetRendererFactory == null) {
+			return null;
 		}
 
-		return null;
+		DLFileVersion dlFileVersion = _dlFileVersionLocalService.getFileVersion(
+			classPK);
+
+		return assetRendererFactory.getAssetRenderer(
+			dlFileVersion.getFileEntryId(), AssetRendererFactory.TYPE_LATEST);
 	}
 
 	@Override

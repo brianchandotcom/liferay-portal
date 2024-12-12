@@ -396,13 +396,14 @@ public class DLURLHelperImpl implements DLURLHelper {
 		DLFileVersionURLProvider dlFileVersionURLProvider =
 			_serviceTrackerMap.getService(type);
 
-		if (dlFileVersionURLProvider != null) {
-			String url = dlFileVersionURLProvider.getURL(
-				fileVersion, themeDisplay);
+		if (dlFileVersionURLProvider == null) {
+			return null;
+		}
 
-			if (Validator.isNotNull(url)) {
-				return url;
-			}
+		String url = dlFileVersionURLProvider.getURL(fileVersion, themeDisplay);
+
+		if (Validator.isNotNull(url)) {
+			return url;
 		}
 
 		return null;

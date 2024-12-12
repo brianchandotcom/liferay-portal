@@ -17,7 +17,9 @@
 								}
 							},
 							"messageType": "Embedded"
-						}
+						},
+						"formType": "simple",
+						"numberOfSteps": 0
 					},
 					"indexed": true,
 					"layout": {

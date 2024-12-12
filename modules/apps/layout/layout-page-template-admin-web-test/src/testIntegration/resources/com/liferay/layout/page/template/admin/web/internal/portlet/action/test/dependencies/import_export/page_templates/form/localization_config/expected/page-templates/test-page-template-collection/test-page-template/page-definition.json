@@ -9,6 +9,7 @@
 							"className": "com.liferay.object.model.ObjectDefinition#00000",
 							"classType": 0
 						},
+						"formType": "simple",
 						"localizationConfig": {
 							"unlocalizedFieldsMessage": {
 								"value_i18n": {
@@ -17,7 +18,8 @@
 								}
 							},
 							"unlocalizedFieldsState": "ReadOnly"
-						}
+						},
+						"numberOfSteps": 0
 					},
 					"indexed": true,
 					"layout": {

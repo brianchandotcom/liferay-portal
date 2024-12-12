@@ -148,15 +148,6 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-properties-none-set");
 	}
 
-	@description = "LPS-163243: The user can execute the upgrade:executeAll command on Gogo shell to execute all remaining upgrade processes"
-	@priority = 3
-	test ExecuteAllPendingUpgradesFromGogoShell {
-		property skip.get.testcase.database.properties = "true";
-		property skip.upgrade-legacy-database = "true";
-
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "execute-all-pending-upgrades-from-gogo-shell");
-	}
-
 	@description = "LPS-168551:  Upgrade client throws error when portal-ext.properties exists in home directory"
 	@priority = 3
 	test HomeExtPropertiesReturnsError {

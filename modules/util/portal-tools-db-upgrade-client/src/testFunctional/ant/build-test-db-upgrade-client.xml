@@ -661,19 +661,6 @@
 		<delete dir="${db.upgrade.client.home}/temp" />
 	</target>
 
-	<target name="execute-all-pending-upgrades-from-gogo-shell">
-		<get-database-upgrade-client-paths />
-
-		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">
-upgrade.database.auto.run=false</echo>
-
-		<run-expect
-			db.upgrade.client.home="${db.upgrade.client.home}"
-			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
-			file.suffix.bat="${file.suffix.bat}"
-		/>
-	</target>
-
 	<target name="execute-upgrade-client-gogoshell">
 		<get-database-upgrade-client-paths />
 

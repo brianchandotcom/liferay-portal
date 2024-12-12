@@ -14164,10 +14164,6 @@ public class ObjectEntryResourceTest {
 			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
 			ContentTypes.TEXT_PLAIN);
 
-		String customFileEntryRelativeUrl = _dlURLHelper.getPreviewURL(
-			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
-			true);
-
 		Company testCompany = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -14179,7 +14175,9 @@ public class ObjectEntryResourceTest {
 				customFileEntry.getTitle(),
 				StringBundler.concat(
 					"http://", testCompany.getVirtualHostname(), ":8080",
-					customFileEntryRelativeUrl),
+					_dlURLHelper.getPreviewURL(
+			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
+			true)),
 				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);

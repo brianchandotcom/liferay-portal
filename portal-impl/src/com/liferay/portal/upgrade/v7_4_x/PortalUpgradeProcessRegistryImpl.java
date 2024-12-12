@@ -69,7 +69,10 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(new Version(9, 2, 0), new UpgradeCountry());
 
 		upgradeVersionTreeMap.put(
-			new Version(9, 2, 1), new UpgradeListType(),
+			new Version(9, 2, 1, "step-1"), new UpgradeListType());
+
+		upgradeVersionTreeMap.put(
+			new Version(9, 2, 1),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.address.impl"}, null));
 
@@ -287,7 +290,7 @@ public class PortalUpgradeProcessRegistryImpl
 				"DLFileVersion", "storeUUID VARCHAR(255) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(25, 3, 1),
+			new Version(25, 3, 1, "step-1"),
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupGroupRole", "userGroupGroupRoleId", "LONG not null"),
 			UpgradeProcessFactory.alterColumnType(
@@ -304,9 +307,10 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"UserGroupRole", "groupId", "LONG null"),
 			UpgradeProcessFactory.alterColumnType(
-				"UserGroupRole", "roleId", "LONG null"),
-			//
-			new UpgradeUsersUserGroups());
+				"UserGroupRole", "roleId", "LONG null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(25, 3, 1), new UpgradeUsersUserGroups());
 
 		upgradeVersionTreeMap.put(new Version(26, 0, 0), new UpgradeUserType());
 
@@ -342,8 +346,11 @@ public class PortalUpgradeProcessRegistryImpl
 				new String[] {"com.liferay.asset.link.service"}, null));
 
 		upgradeVersionTreeMap.put(
+			new Version(27, 0, 0, "step-1"),
+			new UpgradePartitionedControlTable("ClassName_"));
+
+		upgradeVersionTreeMap.put(
 			new Version(27, 0, 0),
-			new UpgradePartitionedControlTable("ClassName_"),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.comment.web"}, null));
 

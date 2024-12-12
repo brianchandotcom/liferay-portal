@@ -5,23 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import performLogin from '../../../../../utils/performLogin';
 import {marketplaceHelper} from '../../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../../fixtures/marketplacePages';
-import {
-	marketplaceSiteFixture,
-	marketplaceSiteFixtureSupplierUser,
-} from '../../fixtures/marketplaceSite';
 import {PublishProductPayload} from '../../types';
 import {products} from '../../utils/constants';
 
-export const testAdmUser = mergeTests(
-	marketplaceSiteFixture,
-	marketplacePagesTest,
-	marketplaceHelper
-);
-
-export const testSuplierUser = mergeTests(
-	marketplaceSiteFixtureSupplierUser,
+export const test = mergeTests(
+	apiHelpersTest,
 	marketplacePagesTest,
 	marketplaceHelper
 );
@@ -32,14 +24,14 @@ let _account;
 let _catalog;
 let _productId;
 
-testAdmUser(
-	'Create account and Catalog',
-	async ({
+test.describe('Publish Marketplace Apps', () => {
+	test(`Publish Marketplace Apps `, async ({
 		apiHelpers,
-		marketplace,
 		marketplaceHelper,
-		publisherSolutionPage,
+		page,
 	}) => {
+		await performLogin(page, 'test');
+
 		const {account, catalog} =
 			await marketplaceHelper.createAccountUserCatalog({
 				accountName,
@@ -66,82 +58,80 @@ testAdmUser(
 			['demo.unprivileged@liferay.com']
 		);
 
-		await publisherSolutionPage.goto(
-			`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
+		const site = await apiHelpers.headlessSite.getSiteByERC(
+			'LIFERAY_MARKETPLACE'
 		);
-	}
-);
 
-testSuplierUser.describe(
-	'Can Publish Marketplace Apps with account suplier',
-	() => {
-		for (const key of Object.keys(products)) {
-			const product = products[key as keyof typeof products];
+		await page.goto(`web${site.friendlyUrlPath}`);
+	});
 
-			testSuplierUser(
-				`can publish "${product.name}"`,
-				async ({
-					apiHelpers,
-					marketplace,
-					page,
-					publisherAppPage,
-					publisherDashboardPage,
-				}) => {
-					publisherAppPage.setPublishProduct(
-						product as unknown as PublishProductPayload
-					);
+	for (const key of Object.keys(products)) {
+		const product = products[key as keyof typeof products];
 
-					// Go to Publisher Dashboard
+		test(`Test all items "${product.name}"`, async ({
+			apiHelpers,
+			page,
+			publisherAppPage,
+			publisherDashboardPage,
+		}) => {
+			await performLogin(page, 'demo.unprivileged');
 
-					await publisherDashboardPage.goto(
-						marketplace.friendlyUrlPath
-					);
-
-					await publisherDashboardPage.selectAccount(accountName);
-
-					await publisherDashboardPage.gotoNewAppPage();
-
-					// Publish the app
-
-					await publisherAppPage.checkHeader({
-						accountName,
-						appName: 'New App',
-					});
-					await publisherAppPage.continue();
-					await publisherAppPage.fillProfile();
-					await publisherAppPage.fillBuild();
-
-					const createdProduct =
-						await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-							new URLSearchParams({
-								filter: `name eq '${product.name}'`,
-							})
-						);
-
-					const productId = createdProduct.items[0].productId;
-
-					_productId = productId;
-
-					const productVirtualSettings =
-						await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
-							productId
-						);
-
-					await expect(
-						productVirtualSettings
-							.productVirtualSettingsFileEntries[0].version ===
-							product.dxpVersions[0]
-					).toBeTruthy();
-
-					await publisherAppPage.fillStoreFront();
-					await publisherAppPage.fillVersion();
-					await publisherAppPage.fillPricing();
-					await publisherAppPage.fillSupport();
-					await publisherAppPage.reviewAndSubmit();
-
-					await expect(page.getByText(product.name)).toBeTruthy();
-				}
+			publisherAppPage.setPublishProduct(
+				product as unknown as PublishProductPayload
 			);
-		}
+
+			// Go to Publisher Dashboard
+
+			const site = await apiHelpers.headlessSite.getSiteByERC(
+				'LIFERAY_MARKETPLACE'
+			);
+
+			await page.goto(`web${site.friendlyUrlPath}`);
+
+			await publisherDashboardPage.goto(site.friendlyUrlPath);
+
+			await publisherDashboardPage.selectAccount(accountName);
+
+			await publisherDashboardPage.gotoNewAppPage();
+
+			// Publish the app
+
+			await publisherAppPage.checkHeader({
+				accountName,
+				appName: 'New App',
+			});
+			await publisherAppPage.continue();
+			await publisherAppPage.fillProfile();
+			await publisherAppPage.fillBuild();
+
+			const createdProduct =
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq '${product.name}'`,
+					})
+				);
+
+			const productId = createdProduct.items[0].productId;
+
+			_productId = productId;
+
+			const productVirtualSettings =
+				await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
+					productId
+				);
+
+			await expect(
+				productVirtualSettings.productVirtualSettingsFileEntries[0]
+					.version === product.dxpVersions[0]
+			).toBeTruthy();
+
+			await publisherAppPage.fillStoreFront();
+			await publisherAppPage.fillVersion();
+			await publisherAppPage.fillPricing();
+			await publisherAppPage.fillSupport();
+			await publisherAppPage.reviewAndSubmit();
+
+			await expect(page.getByText(product.name)).toBeTruthy();
+		});
 	}
-);
+});

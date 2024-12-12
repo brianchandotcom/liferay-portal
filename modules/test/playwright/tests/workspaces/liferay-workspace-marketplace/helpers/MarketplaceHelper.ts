@@ -7,6 +7,7 @@ import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {TProduct} from '../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
+import {userData} from '../../../../utils/performLogin';
 import {
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
@@ -103,10 +104,10 @@ export class MarketplaceHelper {
 			await this.apiHelpers.headlessAdminUser.patchUserAccount(
 				userAccount.items[0],
 				{
-					familyName: 'Unprivileged',
-					givenName: 'Demo',
-					name: 'Demo',
-					password: 'demo',
+					familyName: userData['demo.unprivileged'].surname,
+					givenName: userData['demo.unprivileged'].name,
+					name: userData['demo.unprivileged'].name,
+					password: userData['demo.unprivileged'].password,
 				}
 			);
 

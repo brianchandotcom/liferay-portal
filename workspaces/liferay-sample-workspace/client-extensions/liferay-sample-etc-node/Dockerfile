@@ -1,5 +1,5 @@
 FROM liferay/node-runner:latest
 
-COPY . /opt/liferay
+COPY --chown=liferay:liferay . /opt/liferay
 
 RUN npm install

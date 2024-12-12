@@ -24,6 +24,7 @@ import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -51,6 +52,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -1368,7 +1370,8 @@ public class ObjectRelationshipLocalServiceImpl
 	private void _copyResourcePermissions(
 			List<ResourceAction> sourceResourceActions,
 			List<ResourcePermission> sourceResourcePermissions,
-			String targetName, String targetPrimKey)
+			String targetName, List<String> targetObjectActionNames,
+			String targetPrimKey)
 		throws PortalException {
 
 		for (ResourcePermission sourceResourcePermission :
@@ -1388,6 +1391,16 @@ public class ObjectRelationshipLocalServiceImpl
 				targetResourceActionIds.add(sourceResourceAction.getActionId());
 			}
 
+			if (ListUtil.isNotEmpty(targetObjectActionNames)) {
+				targetResourceActionIds.addAll(
+					_resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							sourceResourcePermission.getCompanyId(), targetName,
+							sourceResourcePermission.getScope(), targetPrimKey,
+							sourceResourcePermission.getRoleId(),
+							targetObjectActionNames));
+			}
+
 			_resourcePermissionLocalService.setResourcePermissions(
 				sourceResourcePermission.getCompanyId(), targetName,
 				sourceResourcePermission.getScope(), targetPrimKey,
@@ -1397,7 +1410,8 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private void _copyResourcePermissions(
-			long companyId, String sourceName, String targetName)
+			long companyId, String sourceName, String targetName,
+			List<String> targetObjectActionNames)
 		throws PortalException {
 
 		List<ResourceAction> resourceActions =
@@ -1408,13 +1422,14 @@ public class ObjectRelationshipLocalServiceImpl
 			_resourcePermissionLocalService.getResourcePermissions(
 				companyId, sourceName, ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(companyId)),
-			targetName, String.valueOf(companyId));
+			targetName, targetObjectActionNames, String.valueOf(companyId));
 		_copyResourcePermissions(
 			resourceActions,
 			_resourcePermissionLocalService.getResourcePermissions(
 				companyId, sourceName, ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID)),
-			targetName, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
+			targetName, targetObjectActionNames,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
 	}
 
 	private void _copyResourcePermissions(
@@ -1432,6 +1447,12 @@ public class ObjectRelationshipLocalServiceImpl
 			_resourceActionLocalService.getResourceActions(
 				objectDefinition1.getClassName());
 
+		List<String> objectActionNames = TransformUtil.transform(
+			_objectActionPersistence.findByO_A_OATK(
+				objectDefinition2.getObjectDefinitionId(), true,
+				ObjectActionTriggerConstants.KEY_STANDALONE),
+			ObjectActionModel::getName);
+
 		_performActions(
 			objectDefinition2.getObjectDefinitionId(), true,
 			(ObjectEntry objectEntry) -> _copyResourcePermissions(
@@ -1441,19 +1462,20 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition1.getClassName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(objectEntry.getRootObjectEntryId())),
-				objectDefinition2.getClassName(),
+				objectDefinition2.getClassName(), objectActionNames,
 				String.valueOf(objectEntry.getObjectEntryId())));
 
 		_copyResourcePermissions(
 			objectDefinition1.getCompanyId(), objectDefinition1.getClassName(),
-			objectDefinition2.getClassName());
+			objectDefinition2.getClassName(), objectActionNames);
+
 		_copyResourcePermissions(
 			objectDefinition1.getCompanyId(), objectDefinition1.getPortletId(),
-			objectDefinition2.getPortletId());
+			objectDefinition2.getPortletId(), null);
 		_copyResourcePermissions(
 			objectDefinition1.getCompanyId(),
 			objectDefinition1.getResourceName(),
-			objectDefinition2.getResourceName());
+			objectDefinition2.getResourceName(), null);
 	}
 
 	private void _deleteObjectFields(

@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,23 +49,22 @@ public class PendingCommerceOrderFDSAPIURLResolver
 				commerceContext.getCommerceChannelId());
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
-		return baseURL.replaceAll(
-			"\\{accountExternalReferenceCode\\}",
-			accountEntry.getExternalReferenceCode()
-		).replaceAll(
-			"\\{accountId\\}", String.valueOf(accountEntry.getAccountEntryId())
-		).replaceAll(
-			"\\{cartId\\}", String.valueOf(commerceOrder.getCommerceOrderId())
-		).replaceAll(
-			"\\{channelExternalReferenceCode\\}",
-			String.valueOf(commerceChannel.getExternalReferenceCode())
-		).replaceAll(
-			"\\{channelId\\}",
-			String.valueOf(commerceContext.getCommerceChannelId())
-		).replaceAll(
-			"\\{externalReferenceCode\\}",
+		String[] placeholders = {
+			"{accountExternalReferenceCode}", "{accountId}", "{cartId}",
+			"{channelExternalReferenceCode}", "{channelId}",
+			"{externalReferenceCode}"
+		};
+
+		String[] replacements = {
+			accountEntry.getExternalReferenceCode(),
+			String.valueOf(accountEntry.getAccountEntryId()),
+			String.valueOf(commerceOrder.getCommerceOrderId()),
+			commerceChannel.getExternalReferenceCode(),
+			String.valueOf(commerceContext.getCommerceChannelId()),
 			commerceOrder.getExternalReferenceCode()
-		);
+		};
+
+		return StringUtil.replace(baseURL, placeholders, replacements);
 	}
 
 	@Reference

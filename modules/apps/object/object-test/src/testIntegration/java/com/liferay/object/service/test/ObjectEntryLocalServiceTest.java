@@ -216,7 +216,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags("LPS-187142")
+@FeatureFlags({"LPD-32050", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class ObjectEntryLocalServiceTest {
 

@@ -6,6 +6,7 @@
 package com.liferay.frontend.taglib.sample.web.internal.portlet;
 
 import com.liferay.frontend.taglib.sample.web.internal.constants.SamplePortletKeys;
+import com.liferay.frontend.taglib.sample.web.internal.constants.SampleWebKeys;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SampleDisplayContext;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchIteratorDisplayContext;
 import com.liferay.frontend.taglib.sample.web.internal.display.context.SearchPaginatorDisplayContext;
@@ -54,14 +55,14 @@ public class SamplePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			SamplePortletKeys.SAMPLE_DISPLAY_CONTEXT,
+			SampleWebKeys.SAMPLE_DISPLAY_CONTEXT,
 			new SampleDisplayContext(renderRequest, renderResponse));
 		renderRequest.setAttribute(
-			SamplePortletKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,
+			SampleWebKeys.SEARCH_ITERATOR_DISPLAY_CONTEXT,
 			new SearchIteratorDisplayContext(
 				_portal, renderRequest, renderResponse));
 		renderRequest.setAttribute(
-			SamplePortletKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
+			SampleWebKeys.SEARCH_PAGINATOR_DISPLAY_CONTEXT,
 			new SearchPaginatorDisplayContext(
 				_portal, renderRequest, renderResponse));
 

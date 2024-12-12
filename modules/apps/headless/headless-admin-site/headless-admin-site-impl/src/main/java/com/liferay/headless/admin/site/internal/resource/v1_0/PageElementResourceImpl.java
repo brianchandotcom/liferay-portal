@@ -16,6 +16,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -373,10 +374,15 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		LayoutStructure layoutStructure, PageElement pageElement) {
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
-			layoutStructure.addLayoutStructureItem(
-				_externalToInternalValuesMap.get(childPageElement.getType()),
-				childPageElement.getParentExternalReferenceCode(),
-				childPageElement.getPosition());
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addLayoutStructureItem(
+					_externalToInternalValuesMap.get(
+						childPageElement.getType()),
+					childPageElement.getParentExternalReferenceCode(),
+					childPageElement.getPosition());
+
+			layoutStructureItem.updateItemConfig(
+				_jsonFactory.createJSONObject());
 
 			_addChildPageElements(layoutStructure, childPageElement);
 		}
@@ -393,6 +399,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				_externalToInternalValuesMap.get(pageElement.getType()),
 				pageElement.getParentExternalReferenceCode(),
 				pageElement.getPosition());
+
+		layoutStructureItem.updateItemConfig(_jsonFactory.createJSONObject());
 
 		_addChildPageElements(layoutStructure, pageElement);
 
@@ -429,6 +437,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		).put(
 			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
 		).build();
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -207,8 +207,6 @@ public class OpenAPIResourceTest {
 		long companyId = jsonObject.getLong("companyId");
 
 		try {
-			
-
 			HTTPTestUtil.customize(
 			).withBaseURL(
 				"http://www.able.com:8080"

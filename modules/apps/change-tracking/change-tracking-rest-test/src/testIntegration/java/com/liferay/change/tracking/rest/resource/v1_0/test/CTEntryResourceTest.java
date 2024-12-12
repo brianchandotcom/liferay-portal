@@ -23,6 +23,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
@@ -190,6 +192,44 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
 		assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
 		assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetCTEntryNotFound() throws Exception {
+		Long irrelevantCtEntryId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			null,
+			JSONUtil.getValue(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cTEntry",
+						HashMapBuilder.<String, Object>put(
+							"ctEntryId", irrelevantCtEntryId
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertEquals(
+			null,
+			JSONUtil.getValue(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"cTEntry",
+							HashMapBuilder.<String, Object>put(
+								"ctEntryId", irrelevantCtEntryId
+							).build(),
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Override

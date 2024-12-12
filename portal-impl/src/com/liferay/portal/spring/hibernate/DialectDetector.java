@@ -80,8 +80,7 @@ public class DialectDetector {
 							"portal-ext.properties."));
 				}
 			}
-
-			if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
+			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
 				dialect = new DB2Dialect();
 			}
 			else if (dbName.startsWith("MariaDB")) {

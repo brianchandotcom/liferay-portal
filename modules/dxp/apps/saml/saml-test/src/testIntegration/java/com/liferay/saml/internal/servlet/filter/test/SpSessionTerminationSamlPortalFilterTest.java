@@ -43,7 +43,7 @@ public class SpSessionTerminationSamlPortalFilterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void doProcessFilter() throws Exception {
+	public void testDoProcessFilter() throws Exception {
 		try (SafeCloseable safeCloseable1 = _setSamlEnabledWithSafeCloseable(
 				true, TestPropsValues.getCompanyId());
 			SafeCloseable safeCloseable2 = _setSamlEnabledWithSafeCloseable(

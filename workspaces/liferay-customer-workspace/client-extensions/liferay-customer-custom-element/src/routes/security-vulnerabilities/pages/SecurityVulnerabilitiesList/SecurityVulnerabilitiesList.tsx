@@ -105,7 +105,7 @@ const SecurityVulnerabilitiesList = () => {
 					<div>
 						<div className="align-items-center d-flex">
 							<div
-								className={`mr-1 px-2 sv-severity sv-severity-${issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]?.toLowerCase()} text-center`}
+								className={`mr-2 px-2 sv-severity sv-severity-${issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]?.toLowerCase()} text-center`}
 							>
 								{issue[JiraEnum.FIELDS]?.[JiraEnum.SEVERITY]}
 							</div>
@@ -161,7 +161,7 @@ const SecurityVulnerabilitiesList = () => {
 
 				<div className="container-fluid container-fluid-max-xl">
 					<div className="row sv-table-content">
-						<div className="col-3">
+						<div className="col-12 col-md-3">
 							<SVFilter
 								filterOptions={{
 									...FILTER_OPTIONS,
@@ -177,7 +177,7 @@ const SecurityVulnerabilitiesList = () => {
 							<SVPanel text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center" />
 						</div>
 
-						<div className="col-9">
+						<div className="col-12 col-md-9">
 							{loading ? (
 								<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
 							) : rows?.length ? (

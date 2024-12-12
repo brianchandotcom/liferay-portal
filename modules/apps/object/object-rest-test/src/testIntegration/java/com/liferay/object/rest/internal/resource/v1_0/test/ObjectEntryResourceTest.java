@@ -14197,7 +14197,7 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
-		// File with URL attachment and malformed url
+		// File with URL attachment and malformed URL
 
 		String malformedFileURL = StringBundler.concat(
 			"http//", company.getVirtualHostname(), ":8080/",
@@ -14217,7 +14217,7 @@ public class ObjectEntryResourceTest {
 
 		// File with URL attachment and resource not found
 
-		String notFoundFileURL = StringBundler.concat(
+		String resourceNotFoundFileURL = StringBundler.concat(
 			"http://", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
@@ -14225,10 +14225,11 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Unable to download file from " + notFoundFileURL
+				"title",
+				"Unable to download file from " + resourceNotFoundFileURL
 			),
 			_toFileEntry(
-				customFileEntry.getTitle(), notFoundFileURL, null,
+				customFileEntry.getTitle(), resourceNotFoundFileURL, null,
 				_group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);

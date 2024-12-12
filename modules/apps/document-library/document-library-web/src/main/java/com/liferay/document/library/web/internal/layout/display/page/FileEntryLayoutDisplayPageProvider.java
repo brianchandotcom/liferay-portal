@@ -128,13 +128,13 @@ public class FileEntryLayoutDisplayPageProvider
 					FileEntry.class.getName(), friendlyURLEntry.getClassPK()));
 		}
 
-		if (Validator.isNumber(urlTitle)) {
-			return getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					FileEntry.class.getName(), GetterUtil.getLong(urlTitle)));
+		if (!Validator.isNumber(urlTitle)) {
+			return null;
 		}
 
-		return null;
+		return getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(
+				FileEntry.class.getName(), GetterUtil.getLong(urlTitle)));
 	}
 
 	@Reference

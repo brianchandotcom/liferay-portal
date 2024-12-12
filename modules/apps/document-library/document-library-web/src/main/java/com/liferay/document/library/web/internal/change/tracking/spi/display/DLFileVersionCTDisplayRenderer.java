@@ -199,34 +199,31 @@ public class DLFileVersionCTDisplayRenderer
 
 		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
 
-		if (videoMimeTypes.contains(mimeType) ||
-			mimeType.equals(
-				ContentTypes.
-					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
+		if ((!videoMimeTypes.contains(mimeType) &&
+			 !mimeType.equals(
+				 ContentTypes.
+					 APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) ||
+			!videoProcessor.hasVideo(fileVersion)) {
 
-			if (!videoProcessor.hasVideo(fileVersion)) {
-				return null;
-			}
-
-			return StringBundler.concat(
-				"<video controls controlsList=\"nodownload\" style=\"",
-				"background-color: #000; display: block; margin: auto; ",
-				"max-height:624px; max-width:",
-				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
-				"px;\"><source src=\"",
-				displayContext.getDownloadURL(
-					_VIDEO_PREVIEW + ",mp4",
-					audioProcessor.getPreviewFileSize(fileVersion, "mp4"),
-					FileUtil.stripExtension(fileName) + ".mp4"),
-				"\" type=\"video/mp4\"/><source src=\"",
-				displayContext.getDownloadURL(
-					_VIDEO_PREVIEW + ",ogv",
-					audioProcessor.getPreviewFileSize(fileVersion, "ogv"),
-					FileUtil.stripExtension(fileName) + ".ogv"),
-				"\" type=\"video/ogv\"/></audio>");
+			return null;
 		}
 
-		return null;
+		return StringBundler.concat(
+			"<video controls controlsList=\"nodownload\" style=\"",
+			"background-color: #000; display: block; margin: auto; ",
+			"max-height:624px; max-width:",
+			PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH,
+			"px;\"><source src=\"",
+			displayContext.getDownloadURL(
+				_VIDEO_PREVIEW + ",mp4",
+				audioProcessor.getPreviewFileSize(fileVersion, "mp4"),
+				FileUtil.stripExtension(fileName) + ".mp4"),
+			"\" type=\"video/mp4\"/><source src=\"",
+			displayContext.getDownloadURL(
+				_VIDEO_PREVIEW + ",ogv",
+				audioProcessor.getPreviewFileSize(fileVersion, "ogv"),
+				FileUtil.stripExtension(fileName) + ".ogv"),
+			"\" type=\"video/ogv\"/></audio>");
 	}
 
 	protected static InputStream getDownloadInputStream(

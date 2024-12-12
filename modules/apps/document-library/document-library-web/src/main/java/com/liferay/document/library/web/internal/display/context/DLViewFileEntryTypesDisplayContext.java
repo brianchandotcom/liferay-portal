@@ -52,25 +52,24 @@ public class DLViewFileEntryTypesDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (DLPermission.contains(
+		if (!DLPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_DOCUMENT_TYPE)) {
 
-			return CreationMenuBuilder.addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						renderResponse.createRenderURL(),
-						"mvcRenderCommandName",
-						"/document_library/edit_file_entry_type", "redirect",
-						PortalUtil.getCurrentURL(_httpServletRequest));
-					dropdownItem.setLabel(
-						LanguageUtil.format(
-							_httpServletRequest, "new-x", "document-type"));
-				}
-			).build();
+			return null;
 		}
 
-		return null;
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/document_library/edit_file_entry_type", "redirect",
+					PortalUtil.getCurrentURL(_httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						_httpServletRequest, "new-x", "document-type"));
+			}
+		).build();
 	}
 
 	public String getSearchActionURL() {

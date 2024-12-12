@@ -54,9 +54,9 @@ public class ReleaseManagerTest {
 
 	@Test
 	public void testSuccessfulUpgrade() throws Exception {
-		Assert.assertEquals("success", _releaseManager.getStatus());
 		Assert.assertTrue(
 			Validator.isBlank(_releaseManager.getShortStatusMessage(false)));
+		Assert.assertEquals("success", _releaseManager.getStatus());
 		Assert.assertTrue(
 			Validator.isBlank(_releaseManager.getStatusMessage(false)));
 	}
@@ -87,10 +87,10 @@ public class ReleaseManagerTest {
 
 				release = _releaseLocalService.updateRelease(release);
 
-				Assert.assertEquals("failure", _releaseManager.getStatus());
 				Assert.assertFalse(
 					Validator.isBlank(
 						_releaseManager.getShortStatusMessage(false)));
+				Assert.assertEquals("failure", _releaseManager.getStatus());
 				Assert.assertFalse(
 					Validator.isBlank(_releaseManager.getStatusMessage(false)));
 			}
@@ -116,10 +116,10 @@ public class ReleaseManagerTest {
 				connection, new Version(0, 0, 0));
 
 			try {
-				Assert.assertEquals("failure", _releaseManager.getStatus());
 				Assert.assertFalse(
 					Validator.isBlank(
 						_releaseManager.getShortStatusMessage(false)));
+				Assert.assertEquals("failure", _releaseManager.getStatus());
 				Assert.assertFalse(
 					Validator.isBlank(_releaseManager.getStatusMessage(false)));
 			}

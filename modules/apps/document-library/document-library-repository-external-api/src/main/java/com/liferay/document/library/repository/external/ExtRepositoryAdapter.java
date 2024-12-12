@@ -131,15 +131,15 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		ExtRepositoryFileVersion extRepositoryFileVersion =
 			_extRepository.cancelCheckOut(extRepositoryFileEntryKey);
 
-		if (extRepositoryFileVersion != null) {
-			ExtRepositoryFileEntryAdapter extRepositoryFileEntryAdapter =
-				getFileEntry(fileEntryId);
-
-			return _toExtRepositoryFileVersionAdapter(
-				extRepositoryFileEntryAdapter, extRepositoryFileVersion);
+		if (extRepositoryFileVersion == null) {
+			return null;
 		}
 
-		return null;
+		ExtRepositoryFileEntryAdapter extRepositoryFileEntryAdapter =
+			getFileEntry(fileEntryId);
+
+		return _toExtRepositoryFileVersionAdapter(
+			extRepositoryFileEntryAdapter, extRepositoryFileVersion);
 	}
 
 	@Override

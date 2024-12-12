@@ -67,20 +67,20 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				DLVideoRenderer dlVideoRenderer =
 					_dlVideoRendererSnapshot.get();
 
-				if (((dlVideoRenderer != null) &&
-					 ArrayUtil.contains(
+				if (((dlVideoRenderer == null) ||
+					 !ArrayUtil.contains(
 						 PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
-						 fileEntry.getMimeType())) ||
-					Objects.equals(
+						 fileEntry.getMimeType())) &&
+					!Objects.equals(
 						ContentTypes.
 							APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,
 						fileEntry.getMimeType())) {
 
-					return dlVideoRenderer.renderHTML(
-						fileEntry.getFileVersion(), themeDisplay.getRequest());
+					return null;
 				}
 
-				return null;
+				return dlVideoRenderer.renderHTML(
+					fileEntry.getFileVersion(), themeDisplay.getRequest());
 			}
 		).put(
 			"size", fileEntry.getSize()

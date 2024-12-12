@@ -17,7 +17,6 @@ import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -138,6 +136,19 @@ public class ViewConflictsDisplayContext {
 				);
 			}
 		).put(
+			"learnResolvingConflictsLink",
+			() -> {
+				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
+					"resolving-conflicts", _themeDisplay.getLanguageId(),
+					"change-tracking-web");
+
+				return JSONUtil.put(
+					"message", learnMessage.getMessage()
+				).put(
+					"url", learnMessage.getURL()
+				);
+			}
+		).put(
 			"publishURL",
 			() -> PortletURLBuilder.createActionURL(
 				_renderResponse
@@ -165,50 +176,6 @@ public class ViewConflictsDisplayContext {
 			).setParameter(
 				"ctCollectionId", _ctCollection.getCtCollectionId()
 			).buildString()
-		).put(
-			"showPageOverwriteWarning",
-			() -> {
-				if (_conflictInfoMap != null) {
-					List<ConflictInfo> layoutConflictInfos =
-						_conflictInfoMap.get(
-							_portal.getClassNameId(Layout.class));
-					List<ConflictInfo>
-						layoutPageTemplateStructureRelConflictInfos =
-							_conflictInfoMap.get(
-								_portal.getClassNameId(
-									LayoutPageTemplateStructureRel.class));
-
-					if ((layoutConflictInfos == null) ||
-						(layoutPageTemplateStructureRelConflictInfos == null)) {
-
-						return false;
-					}
-
-					boolean hasResolvedLayoutConflict = false;
-
-					for (ConflictInfo conflictInfo : layoutConflictInfos) {
-						if (conflictInfo.isResolved()) {
-							hasResolvedLayoutConflict = true;
-
-							break;
-						}
-					}
-
-					if (!hasResolvedLayoutConflict) {
-						return false;
-					}
-
-					for (ConflictInfo conflictInfo :
-							layoutPageTemplateStructureRelConflictInfos) {
-
-						if (conflictInfo.isResolved()) {
-							return true;
-						}
-					}
-				}
-
-				return false;
-			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(

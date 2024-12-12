@@ -32,12 +32,11 @@ public class CommerceWishListServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceWishList addCommerceWishList(
-			String name, boolean defaultWishList,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long groupId, long userId, String name, boolean defaultWishList)
 		throws PortalException {
 
 		return getService().addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, userId, name, defaultWishList);
 	}
 
 	public static void deleteCommerceWishList(long commerceWishListId)

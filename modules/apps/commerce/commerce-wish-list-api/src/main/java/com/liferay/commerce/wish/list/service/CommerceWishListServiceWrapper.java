@@ -31,12 +31,11 @@ public class CommerceWishListServiceWrapper
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
 			addCommerceWishList(
-				String name, boolean defaultWishList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long groupId, long userId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListService.addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, userId, name, defaultWishList);
 	}
 
 	@Override

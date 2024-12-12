@@ -16,13 +16,11 @@ import com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,16 +52,14 @@ public class CommerceWishListItemLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
-
 		_cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
 	}
 
 	@Test
 	public void testAddOrUpdateCommerceWishListItem() throws Exception {
 		_commerceWishList = _commerceWishListService.addCommerceWishList(
-			RandomTestUtil.randomString(), true, _serviceContext);
+			_group.getGroupId(), _user.getUserId(),
+			RandomTestUtil.randomString(), true);
 
 		CPDefinition cpDefinition = _cpInstance.getCPDefinition();
 
@@ -71,9 +67,8 @@ public class CommerceWishListItemLocalServiceTest {
 
 		_commerceWishListItem =
 			_commerceWishListItemLocalService.addOrUpdateCommerceWishListItem(
-				_commerceWishList.getCommerceWishListId(),
-				cProduct.getCProductId(), _cpInstance.getCPInstanceUuid(), "",
-				_serviceContext);
+				_user.getUserId(), _commerceWishList.getCommerceWishListId(),
+				_cpInstance.getCPInstanceUuid(), cProduct.getCProductId(), "");
 
 		Assert.assertEquals(
 			1,
@@ -81,8 +76,8 @@ public class CommerceWishListItemLocalServiceTest {
 				_commerceWishList.getCommerceWishListId()));
 
 		_commerceWishListItemLocalService.addOrUpdateCommerceWishListItem(
-			commerceWishListId, cProduct.getCProductId(),
-			_cpInstance.getCPInstanceUuid(), "", _serviceContext);
+			_user.getUserId(), _commerceWishList.getCommerceWishListId(),
+			_cpInstance.getCPInstanceUuid(), cProduct.getCProductId(), "");
 
 		Assert.assertEquals(
 			1,
@@ -108,6 +103,5 @@ public class CommerceWishListItemLocalServiceTest {
 	private CPInstance _cpInstance;
 
 	private Group _group;
-	private ServiceContext _serviceContext;
 
 }

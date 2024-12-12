@@ -95,8 +95,8 @@ public class CommerceWishListResource {
 
 			if (commerceWishList == null) {
 				commerceWishList = _commerceWishListService.addCommerceWishList(
-					_language.get(serviceContext.getLocale(), "default"), true,
-					serviceContext);
+					groupId, userId,
+					_language.get(serviceContext.getLocale(), "default"), true);
 			}
 
 			CPCatalogEntry cpCatalogEntry =
@@ -122,8 +122,7 @@ public class CommerceWishListResource {
 			if (commerceWishListItemCount == 0) {
 				_commerceWishListItemService.addCommerceWishListItem(
 					commerceAccountId, commerceWishList.getCommerceWishListId(),
-					cpCatalogEntry.getCProductId(), cpInstanceUuid, options,
-					serviceContext);
+					cpInstanceUuid, cpCatalogEntry.getCProductId(), options);
 
 				wishListItemUpdated.setSuccess(true);
 			}

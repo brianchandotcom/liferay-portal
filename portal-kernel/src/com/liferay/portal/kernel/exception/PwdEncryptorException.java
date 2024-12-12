@@ -10,26 +10,6 @@ package com.liferay.portal.kernel.exception;
  */
 public class PwdEncryptorException extends PortalException {
 
-
-	public static class PwdEncryptorAlgorithmException extends PwdEncryptorException {
-
-		public PwdEncryptorAlgorithmException() {
-		}
-
-		public PwdEncryptorAlgorithmException(String msg) {
-			super(msg);
-		}
-
-		public PwdEncryptorAlgorithmException(String msg, Throwable throwable) {
-			super(msg, throwable);
-		}
-
-		public PwdEncryptorAlgorithmException(Throwable throwable) {
-			super(throwable);
-		}
-
-	}
-
 	public PwdEncryptorException() {
 	}
 

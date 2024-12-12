@@ -224,11 +224,7 @@ public class AccountUserDisplaySearchContainerFactory {
 	}
 
 	private static boolean _isReverseOrder(String orderByType) {
-		if (Objects.equals(orderByType, "desc")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(orderByType, "desc");
 	}
 
 	private static final Snapshot<AccountEntryLocalService>

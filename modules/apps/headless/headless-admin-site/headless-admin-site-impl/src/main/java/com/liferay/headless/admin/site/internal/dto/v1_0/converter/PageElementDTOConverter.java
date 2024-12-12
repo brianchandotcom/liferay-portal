@@ -29,6 +29,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -82,7 +83,16 @@ public class PageElementDTOConverter
 						dtoConverterContext, layoutStructure,
 						layoutStructureItem));
 				setParentExternalReferenceCode(
-					layoutStructureItem::getParentItemId);
+					() -> {
+						if (Objects.equals(
+								layoutStructure.getMainItemId(),
+								layoutStructureItem.getParentItemId())) {
+
+							return StringPool.BLANK;
+						}
+
+						return layoutStructureItem.getParentItemId();
+					});
 				setPosition(
 					() -> {
 						LayoutStructureItem parentLayoutStructureItem =

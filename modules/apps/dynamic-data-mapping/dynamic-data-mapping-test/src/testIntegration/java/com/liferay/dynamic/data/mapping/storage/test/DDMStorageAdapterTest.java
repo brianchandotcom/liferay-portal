@@ -229,19 +229,19 @@ public class DDMStorageAdapterTest {
 				DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest)
 			throws StorageException {
 
-			if (Objects.equals(
+			if (!Objects.equals(
 					_DEFAULT_PRIMARY_KEY,
 					ddmStorageAdapterGetRequest.getPrimaryKey())) {
 
-				DDMStorageAdapterGetResponse.Builder
-					ddmStorageAdapterGetResponseBuilder =
-						DDMStorageAdapterGetResponse.Builder.newBuilder(
-							_ddmFormValues);
-
-				return ddmStorageAdapterGetResponseBuilder.build();
+				return null;
 			}
 
-			return null;
+			DDMStorageAdapterGetResponse.Builder
+				ddmStorageAdapterGetResponseBuilder =
+					DDMStorageAdapterGetResponse.Builder.newBuilder(
+						_ddmFormValues);
+
+			return ddmStorageAdapterGetResponseBuilder.build();
 		}
 
 		@Override

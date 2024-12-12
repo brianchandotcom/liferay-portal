@@ -1369,11 +1369,50 @@ public class DefaultObjectEntryManagerImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Object propertyValue = objectEntry.getPropertyValue(
-			objectField.getName());
+		if (objectField.isLocalized()) {
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)objectEntry.getPropertyValue(
+					objectField.getI18nObjectFieldName());
+
+			if (localizedValues == null) {
+				return;
+			}
+
+			for (Map.Entry<String, Serializable> entry :
+					localizedValues.entrySet()) {
+
+				long fileEntryId = _processAttachment(
+					objectDefinition, objectField, entry.getValue(), scopeKey,
+					serviceContext);
+
+				if (fileEntryId > 0) {
+					entry.setValue(fileEntryId);
+				}
+			}
+
+			return;
+		}
+
+		long fileEntryId = _processAttachment(
+			objectDefinition, objectField,
+			objectEntry.getPropertyValue(objectField.getName()), scopeKey,
+			serviceContext);
+
+		if (fileEntryId > 0) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			properties.put(objectField.getName(), fileEntryId);
+		}
+	}
+
+	private long _processAttachment(
+			ObjectDefinition objectDefinition, ObjectField objectField,
+			Object propertyValue, String scopeKey,
+			ServiceContext serviceContext)
+		throws Exception {
 
 		if (propertyValue == null) {
-			return;
+			return 0;
 		}
 
 		FileEntry fileEntry = ObjectMapperUtil.readValue(
@@ -1384,7 +1423,7 @@ public class DefaultObjectEntryManagerImpl
 			 (fileEntry.getFileBase64() == null) &&
 			 (fileEntry.getFileURL() == null))) {
 
-			return;
+			return 0;
 		}
 
 		String fileSource = ObjectFieldSettingUtil.getValue(
@@ -1490,13 +1529,7 @@ public class DefaultObjectEntryManagerImpl
 				objectField.getObjectFieldId(), serviceContext);
 		}
 
-		fileEntry.setFileBase64(() -> (String)null);
-		fileEntry.setFileURL(() -> (String)null);
-		fileEntry.setId(serviceBuilderFileEntry::getFileEntryId);
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		properties.put(objectField.getName(), fileEntry.toString());
+		return serviceBuilderFileEntry.getFileEntryId();
 	}
 
 	private void _processVulcanAggregation(

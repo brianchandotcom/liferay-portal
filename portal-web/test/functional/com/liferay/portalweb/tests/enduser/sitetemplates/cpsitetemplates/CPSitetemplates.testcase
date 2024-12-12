@@ -194,7 +194,7 @@ definition {
 		task ("Then: The widget will appear on the site") {
 			Navigator.openSiteURL(siteName = "Site Name");
 
-			Refresh();
+			Refresh.pauseRefresh();
 
 			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 		}

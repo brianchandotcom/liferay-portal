@@ -173,6 +173,9 @@
 			<url-pattern>/nl-NL/c/portal/protected</url-pattern>
 			<url-pattern>/nl_BE/c/portal/protected</url-pattern>
 			<url-pattern>/nl_NL/c/portal/protected</url-pattern>
+			<url-pattern>/no/c/portal/protected</url-pattern>
+			<url-pattern>/no-NO/c/portal/protected</url-pattern>
+			<url-pattern>/no_NO/c/portal/protected</url-pattern>
 			<url-pattern>/pl/c/portal/protected</url-pattern>
 			<url-pattern>/pl-PL/c/portal/protected</url-pattern>
 			<url-pattern>/pl_PL/c/portal/protected</url-pattern>

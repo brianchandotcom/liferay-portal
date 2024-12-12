@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -81,6 +82,18 @@ public class PageExperienceDTOConverter
 		};
 	}
 
+	private DTOConverterContext _getDTOConverterContext(
+		LayoutStructure layoutStructure) {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, null, null, null, null);
+
+		dtoConverterContext.setAttribute(
+			LayoutStructure.class.getName(), layoutStructure);
+
+		return dtoConverterContext;
+	}
+
 	private PageElement[] _getPageElements(
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 
@@ -93,6 +106,7 @@ public class PageExperienceDTOConverter
 		return TransformUtil.transformToArray(
 			rootLayoutStructureItem.getChildrenItemIds(),
 			childrenItemId -> _pageElementDTOConverter.toDTO(
+				_getDTOConverterContext(layoutStructure),
 				layoutStructure.getLayoutStructureItem(childrenItemId)),
 			PageElement.class);
 	}

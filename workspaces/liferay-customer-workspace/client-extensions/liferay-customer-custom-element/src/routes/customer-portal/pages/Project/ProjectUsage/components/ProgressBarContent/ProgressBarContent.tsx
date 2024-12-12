@@ -44,16 +44,13 @@ const ProgressBarContent: React.FC<IProps> = ({
 							'col-3 empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage &&
-							(isUnlimited
-								? i18n.translate('unlimited')
-								: usedCount.toLocaleString())}
+						{displayUsage && usedCount.toLocaleString()}
 					</h3>
 
 					{displayUsage && (
 						<span className="total-value-text">
 							{isUnlimited
-								? '∞'
+								? i18n.translate('of-unlimited')
 								: `${i18n.translate('of')} ${maxCount.toLocaleString()}`}
 						</span>
 					)}

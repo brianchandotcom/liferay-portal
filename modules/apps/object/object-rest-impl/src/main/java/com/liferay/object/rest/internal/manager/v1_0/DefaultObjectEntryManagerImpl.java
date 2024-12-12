@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1415,14 +1416,7 @@ public class DefaultObjectEntryManagerImpl
 						"Unsupported protocol");
 				}
 
-				URLConnection urlConnection = url.openConnection();
-
-				urlConnection.connect();
-
-				fileContent = StreamUtil.toByteArray(
-					urlConnection.getInputStream());
-
-				fileEntry.setFileURL(() -> (String)null);
+				fileContent = _http.URLtoByteArray(url.toString());
 			}
 			catch (IOException ioException) {
 				throw new IllegalArgumentException(
@@ -1811,6 +1805,9 @@ public class DefaultObjectEntryManagerImpl
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	private FilterFactory<Predicate> _filterFactory;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;

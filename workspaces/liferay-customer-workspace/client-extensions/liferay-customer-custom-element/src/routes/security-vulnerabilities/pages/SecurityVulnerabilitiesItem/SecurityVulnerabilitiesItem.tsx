@@ -209,19 +209,21 @@ const SecurityVulnerabilitiesItem = () => {
 							</div>
 						)}
 
-						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES] && (
-							<div className="mb-4">
-								<h5 className="text-neutral-10">
-									{i18n.translate('category')}
-								</h5>
+						{jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES] &&
+							jiraIssue[JiraEnum.FIELDS]?.[JiraEnum.CATEGORIES]
+								.length > 0 && (
+								<div className="mb-4">
+									<h5 className="text-neutral-10">
+										{i18n.translate('category')}
+									</h5>
 
-								{jiraIssue[JiraEnum.FIELDS]?.[
-									JiraEnum.CATEGORIES
-								]
-									?.map(String)
-									.join(', ')}
-							</div>
-						)}
+									{jiraIssue[JiraEnum.FIELDS]?.[
+										JiraEnum.CATEGORIES
+									]
+										?.map(String)
+										.join(', ')}
+								</div>
+							)}
 
 						{jiraIssue[JiraEnum.FIELDS]?.[
 							JiraEnum.ISSUE_CLASSIFICATION

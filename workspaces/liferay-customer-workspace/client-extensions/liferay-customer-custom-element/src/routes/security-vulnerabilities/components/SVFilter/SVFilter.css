@@ -1,6 +1,6 @@
 .sv-filter-content {
 	.custom-control-input {
-		accent-color:var(--color-action-primary-default);
+		accent-color: var(--color-action-primary-default);
 		opacity: 1;
 	}
 
@@ -17,6 +17,10 @@
 		& label span {
 			color: var(--color-neutral-10);
 			font-size: var(--font-size-sm);
+			left: 0;
+			padding-left: var(--spacer-4);
+			position: absolute;
+			width: 100%;
 		}
 	}
 

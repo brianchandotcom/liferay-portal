@@ -36,84 +36,11 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 	@Test
 	public void testPostImportTask() throws Exception {
 
-		// With empty "permissions" and "createStrategy" INSERT
-
-		JSONObject beforeImportJSONObject = JSONUtil.put(
-			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
-		).put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		).put(
-			"permissions", JSONFactoryUtil.createJSONArray()
-		);
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.putAll(
-					beforeImportJSONObject
-				).toString(),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?createStrategy=INSERT&taskItemDelegateName=",
-					objectDefinition.getName()),
-				Http.Method.POST));
-
-		JSONAssert.assertEquals(
-			JSONUtil.merge(
-				beforeImportJSONObject,
-				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
-			).toString(),
-			_getJSONObject(
-				beforeImportJSONObject.getString("externalReferenceCode")
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		// With no "permissions" and "createStrategy" INSERT
-
-		beforeImportJSONObject = JSONUtil.put(
-			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
-		).put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		);
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.putAll(
-					beforeImportJSONObject
-				).toString(),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?createStrategy=INSERT&taskItemDelegateName=",
-					objectDefinition.getName()),
-				Http.Method.POST));
-
-		JSONAssert.assertEquals(
-			JSONUtil.merge(
-				beforeImportJSONObject,
-				JSONUtil.put(
-					"permissions",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"actionIds",
-							JSONUtil.putAll(
-								"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
-						).put(
-							"roleName", "Owner"
-						)))
-			).toString(),
-			_getJSONObject(
-				beforeImportJSONObject.getString("externalReferenceCode")
-			).toString(),
-			JSONCompareMode.LENIENT);
-
 		// With "permissions" and "createStrategy" INSERT
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		beforeImportJSONObject = JSONUtil.put(
+		JSONObject beforeImportJSONObject = JSONUtil.put(
 			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
 		).put(
 			"externalReferenceCode", RandomTestUtil.randomString()
@@ -150,95 +77,6 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 							"actionIds", JSONUtil.putAll("VIEW")
 						).put(
 							"roleName", role.getName()
-						)))
-			).toString(),
-			_getJSONObject(
-				beforeImportJSONObject.getString("externalReferenceCode")
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		// With empty "permissions" and "createStrategy" UPSERT
-
-		beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).toString(),
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"?nestedFields=permissions",
-				"&restrictFields=dateCreated,dateModified"),
-			Http.Method.POST
-		).put(
-			"permissions", JSONFactoryUtil.createJSONArray()
-		);
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.putAll(
-					beforeImportJSONObject
-				).toString(),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?createStrategy=UPSERT&taskItemDelegateName=",
-					objectDefinition.getName()),
-				Http.Method.POST));
-
-		JSONAssert.assertEquals(
-			JSONUtil.merge(
-				beforeImportJSONObject,
-				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
-			).toString(),
-			_getJSONObject(
-				beforeImportJSONObject.getString("externalReferenceCode")
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		// With no "permissions" and "createStrategy" UPSERT
-
-		beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).toString(),
-			StringBundler.concat(
-				objectDefinition.getRESTContextPath(),
-				"?nestedFields=permissions",
-				"&restrictFields=dateCreated,dateModified"),
-			Http.Method.POST
-		).put(
-			"permissions", (JSONObject)null
-		);
-
-		waitForFinish(
-			"COMPLETED", true,
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.putAll(
-					beforeImportJSONObject
-				).toString(),
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
-					"?createStrategy=UPSERT&taskItemDelegateName=",
-					objectDefinition.getName()),
-				Http.Method.POST));
-
-		JSONAssert.assertEquals(
-			JSONUtil.merge(
-				beforeImportJSONObject,
-				JSONUtil.put(
-					"permissions",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"actionIds",
-							JSONUtil.putAll(
-								"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
-						).put(
-							"roleName", "Owner"
 						)))
 			).toString(),
 			_getJSONObject(
@@ -355,6 +193,168 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			_getJSONObject(
 				objectEntry.getExternalReferenceCode()
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// With empty "permissions" and "createStrategy" INSERT
+
+		beforeImportJSONObject = JSONUtil.put(
+			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		).put(
+			"permissions", JSONFactoryUtil.createJSONArray()
+		);
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.putAll(
+					beforeImportJSONObject
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?createStrategy=INSERT&taskItemDelegateName=",
+					objectDefinition.getName()),
+				Http.Method.POST));
+
+		JSONAssert.assertEquals(
+			JSONUtil.merge(
+				beforeImportJSONObject,
+				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
+			).toString(),
+			_getJSONObject(
+				beforeImportJSONObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// With empty "permissions" and "createStrategy" UPSERT
+
+		beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"?nestedFields=permissions",
+				"&restrictFields=dateCreated,dateModified"),
+			Http.Method.POST
+		).put(
+			"permissions", JSONFactoryUtil.createJSONArray()
+		);
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.putAll(
+					beforeImportJSONObject
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?createStrategy=UPSERT&taskItemDelegateName=",
+					objectDefinition.getName()),
+				Http.Method.POST));
+
+		JSONAssert.assertEquals(
+			JSONUtil.merge(
+				beforeImportJSONObject,
+				JSONUtil.put("permissions", JSONFactoryUtil.createJSONArray())
+			).toString(),
+			_getJSONObject(
+				beforeImportJSONObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// With no "permissions" and "createStrategy" INSERT
+
+		beforeImportJSONObject = JSONUtil.put(
+			OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+		).put(
+			"externalReferenceCode", RandomTestUtil.randomString()
+		);
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.putAll(
+					beforeImportJSONObject
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?createStrategy=INSERT&taskItemDelegateName=",
+					objectDefinition.getName()),
+				Http.Method.POST));
+
+		JSONAssert.assertEquals(
+			JSONUtil.merge(
+				beforeImportJSONObject,
+				JSONUtil.put(
+					"permissions",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"actionIds",
+							JSONUtil.putAll(
+								"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+						).put(
+							"roleName", "Owner"
+						)))
+			).toString(),
+			_getJSONObject(
+				beforeImportJSONObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		// With no "permissions" and "createStrategy" UPSERT
+
+		beforeImportJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).toString(),
+			StringBundler.concat(
+				objectDefinition.getRESTContextPath(),
+				"?nestedFields=permissions",
+				"&restrictFields=dateCreated,dateModified"),
+			Http.Method.POST
+		).put(
+			"permissions", (JSONObject)null
+		);
+
+		waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.putAll(
+					beforeImportJSONObject
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					"?createStrategy=UPSERT&taskItemDelegateName=",
+					objectDefinition.getName()),
+				Http.Method.POST));
+
+		JSONAssert.assertEquals(
+			JSONUtil.merge(
+				beforeImportJSONObject,
+				JSONUtil.put(
+					"permissions",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"actionIds",
+							JSONUtil.putAll(
+								"DELETE", "PERMISSIONS", "UPDATE", "VIEW")
+						).put(
+							"roleName", "Owner"
+						)))
+			).toString(),
+			_getJSONObject(
+				beforeImportJSONObject.getString("externalReferenceCode")
 			).toString(),
 			JSONCompareMode.LENIENT);
 

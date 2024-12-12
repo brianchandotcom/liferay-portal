@@ -10,6 +10,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PwdEncryptorAlgorithmException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -172,7 +173,8 @@ public class PasswordEncryptorUtil {
 	}
 
 	private static String _getEncryptedPasswordAlgorithm(
-		String encryptedPassword) throws PwdEncryptorException{
+			String encryptedPassword)
+		throws PwdEncryptorException {
 
 		String legacyAlgorithm = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY));
@@ -206,10 +208,10 @@ public class PasswordEncryptorUtil {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"You may have forgotten to configure " +
-					"passwords.encryption.algorithm.legacy property");
+						"passwords.encryption.algorithm.legacy property");
 			}
-			throw new PwdEncryptorException.PwdEncryptorAlgorithmException("Indefined algorithm");
 
+			throw new PwdEncryptorAlgorithmException("Undefined algorithm");
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
-import com.liferay.portal.kernel.exception.PwdEncryptorException;
+import com.liferay.portal.kernel.exception.PwdEncryptorAlgorithmException;
 import com.liferay.portal.kernel.exception.UserActiveException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserIdException;
@@ -177,7 +177,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				exception instanceof CookieNotSupportedException ||
 				exception instanceof NoSuchUserException ||
 				exception instanceof PasswordExpiredException ||
-				exception instanceof PwdEncryptorException.PwdEncryptorAlgorithmException ||
+				exception instanceof PwdEncryptorAlgorithmException ||
 				exception instanceof UserEmailAddressException ||
 				exception instanceof UserIdException ||
 				exception instanceof UserLockoutException ||

@@ -13672,7 +13672,7 @@ public class ObjectEntryResourceTest {
 			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
 			true);
 
-		Company testCompany = _companyLocalService.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -13682,7 +13682,7 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8080",
+					"http://", company.getVirtualHostname(), ":8080",
 					customFileEntryRelativeUrl),
 				null, null),
 			httpMethod, null, objectDefinition,
@@ -13692,7 +13692,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and host down
 
 		String hostDownFileURL = StringBundler.concat(
-			"http://", testCompany.getVirtualHostname(), ":8081");
+			"http://", company.getVirtualHostname(), ":8081");
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -13710,7 +13710,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and malformed URL
 
 		String malformedFileURL = StringBundler.concat(
-			"http//", testCompany.getVirtualHostname(), ":8080/",
+			"http//", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -13729,7 +13729,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and resource not found
 
 		String notFoundFileURL = StringBundler.concat(
-			"http://", testCompany.getVirtualHostname(), ":8080/",
+			"http://", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
@@ -13756,7 +13756,7 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
-					"file://", testCompany.getVirtualHostname(), ":8080"),
+					"file://", company.getVirtualHostname(), ":8080"),
 				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -14164,7 +14164,7 @@ public class ObjectEntryResourceTest {
 			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
 			ContentTypes.TEXT_PLAIN);
 
-		Company testCompany = _companyLocalService.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		_testPostCustomObjectEntryWithAttachmentField(
@@ -14174,10 +14174,10 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				customFileEntry.getTitle(),
 				StringBundler.concat(
-					"http://", testCompany.getVirtualHostname(), ":8080",
+					"http://", company.getVirtualHostname(), ":8080",
 					_dlURLHelper.getPreviewURL(
-			customFileEntry, customFileEntry.getFileVersion(), null, "", false,
-			true)),
+						customFileEntry, customFileEntry.getFileVersion(), null,
+						"", false, true)),
 				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
@@ -14185,7 +14185,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and host down
 
 		String hostDownFileURL = StringBundler.concat(
-			"http://", testCompany.getVirtualHostname(), ":8081");
+			"http://", company.getVirtualHostname(), ":8081");
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -14202,7 +14202,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and malformed url
 
 		String malformedFileURL = StringBundler.concat(
-			"http//", testCompany.getVirtualHostname(), ":8080/",
+			"http//", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
 		_testPostCustomObjectEntryWithAttachmentField(
@@ -14220,7 +14220,7 @@ public class ObjectEntryResourceTest {
 		// File with URL attachment and resource not found
 
 		String notFoundFileURL = StringBundler.concat(
-			"http://", testCompany.getVirtualHostname(), ":8080/",
+			"http://", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
 		_testPostCustomObjectEntryWithAttachmentField(
@@ -14246,7 +14246,7 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				customFileEntry.getTitle(),
 				StringBundler.concat(
-					"file://", testCompany.getVirtualHostname(), ":8080"),
+					"file://", company.getVirtualHostname(), ":8080"),
 				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);

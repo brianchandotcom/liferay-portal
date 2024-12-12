@@ -2,6 +2,12 @@
 	showLabel = input.showLabel && input.label?has_content && (layoutMode == "edit" || input.readOnly)
 ]
 
+[@liferay_aui.style]
+	.cke-height {
+		height: 200px
+	}
+[/@]
+
 <div class="rich-text-input [#if !input.showLabel || !input.label?has_content]rich-text-input--hidden-label[/#if]">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !showLabel]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-rich-text-input-label">
@@ -108,7 +114,7 @@
 							</div>
 						</div>
 
-					<div class="cke_contents cke_editable" style="height: 200px"></div>
+					<div class="cke_contents cke_editable cke-height"></div>
 					</div>
 				</div>
 			</div>

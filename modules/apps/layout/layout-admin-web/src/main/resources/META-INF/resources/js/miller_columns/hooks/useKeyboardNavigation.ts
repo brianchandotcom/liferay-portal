@@ -128,10 +128,6 @@ export function useKeyboardNavigation({
 	// Focus element when it's target
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-35220']) {
-			return;
-		}
-
 		if (element && isTarget) {
 
 			// Return if focus is prevented

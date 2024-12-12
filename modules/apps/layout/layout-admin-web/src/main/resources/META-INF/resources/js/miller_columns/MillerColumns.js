@@ -306,10 +306,6 @@ const MillerColumns = ({
 		.map((col) => col.length);
 
 	const onKeyDown = (event) => {
-		if (!Liferay.FeatureFlags['LPD-35220']) {
-			return;
-		}
-
 		const activeElement = document.activeElement;
 		const resizes = document.querySelectorAll('[id*="resize"]');
 

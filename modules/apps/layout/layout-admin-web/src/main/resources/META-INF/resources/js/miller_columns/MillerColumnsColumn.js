@@ -101,16 +101,15 @@ const MillerColumnsColumn = ({
 		0
 	);
 
-	const sizeProps =
-		Liferay.FeatureFlags['LPD-35220'] && columnWidth
-			? {
-					style: {
-						maxWidth: `${columnWidth}px`,
-						minWidth: `${columnWidth}px`,
-						width: `${columnWidth}px`,
-					},
-				}
-			: {lg: '4', md: '6', size: '11'};
+	const sizeProps = columnWidth
+		? {
+				style: {
+					maxWidth: `${columnWidth}px`,
+					minWidth: `${columnWidth}px`,
+					width: `${columnWidth}px`,
+				},
+			}
+		: {lg: '4', md: '6', size: '11'};
 
 	return (
 		<>
@@ -146,22 +145,20 @@ const MillerColumnsColumn = ({
 				))}
 			</ClayLayout.Col>
 
-			{Liferay.FeatureFlags['LPD-35220'] && (
-				<Resizer
-					ariaLabel={sub(
-						Liferay.Language.get('resize-column-x'),
-						index + 1
-					)}
-					id={`resize-${index}`}
-					maxWidth={COLUMN_MAX_WIDTH}
-					minWidth={COLUMN_MIN_WIDTH}
-					resizeStep={COLUMN_WIDTH_RESIZE_STEP}
-					setWidth={setColumnWidth}
-					tabIndex={-1}
-					targetRef={ref}
-					width={columnWidth}
-				/>
-			)}
+			<Resizer
+				ariaLabel={sub(
+					Liferay.Language.get('resize-column-x'),
+					index + 1
+				)}
+				id={`resize-${index}`}
+				maxWidth={COLUMN_MAX_WIDTH}
+				minWidth={COLUMN_MIN_WIDTH}
+				resizeStep={COLUMN_WIDTH_RESIZE_STEP}
+				setWidth={setColumnWidth}
+				tabIndex={-1}
+				targetRef={ref}
+				width={columnWidth}
+			/>
 		</>
 	);
 };

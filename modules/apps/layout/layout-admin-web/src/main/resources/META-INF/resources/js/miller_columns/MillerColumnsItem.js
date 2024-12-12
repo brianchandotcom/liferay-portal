@@ -243,7 +243,7 @@ const MillerColumnsItem = ({
 			isDragging: !!monitor.isDragging(),
 		}),
 		end: ({initialColumns}, monitor) => {
-			if (!monitor.didDrop() && Liferay.FeatureFlags['LPD-35220']) {
+			if (!monitor.didDrop()) {
 				setLayoutColumns(initialColumns);
 			}
 		},
@@ -314,9 +314,7 @@ const MillerColumnsItem = ({
 		rtl,
 	});
 
-	const tabIndex =
-		isNavigationTarget || !Liferay.FeatureFlags['LPD-35220'] ? 0 : -1;
-
+	const tabIndex = isNavigationTarget || -1;
 	const targetPosition = dropPosition || keyboardMovementPosition;
 	const isSource = isDragSource || isKeyboardMovementSource;
 	const isTarget = isOver || isKeyboardMovementTarget;
@@ -411,10 +409,7 @@ const MillerColumnsItem = ({
 							className="drag-handler"
 							displayType="unstyled"
 							onClick={(event) => {
-								if (
-									Liferay.FeatureFlags['LPD-35220'] &&
-									event.detail === 0
-								) {
+								if (event.detail === 0) {
 									const sources = checked
 										? Array.from(items.values()).filter(
 												(item) => item.checked
@@ -483,10 +478,6 @@ const MillerColumnsItem = ({
 
 									return title;
 								})()}
-								className={classNames({
-									'text-truncate':
-										!Liferay.FeatureFlags['LPD-35220'],
-								})}
 								href={viewUrl}
 								tabIndex={tabIndex}
 								target={target}
@@ -494,14 +485,7 @@ const MillerColumnsItem = ({
 								{title}
 							</ClayLink>
 						) : (
-							<span
-								className={classNames({
-									'text-truncate':
-										!Liferay.FeatureFlags['LPD-35220'],
-								})}
-							>
-								{title}
-							</span>
+							<span>{title}</span>
 						)}
 
 						{!hasGuestViewPermission && (
@@ -526,21 +510,10 @@ const MillerColumnsItem = ({
 
 					{description && (
 						<div className="d-flex flex-wrap h5 list-group-subtitle small">
-							<span
-								className={classNames('mr-2', {
-									'text-truncate':
-										!Liferay.FeatureFlags['LPD-35220'],
-								})}
-							>
-								{description}
-							</span>
+							<span className="mr-2">{description}</span>
 
 							{states.map((state) => (
 								<ClayLabel
-									className={classNames({
-										'text-truncate':
-											!Liferay.FeatureFlags['LPD-35220'],
-									})}
 									displayType={ITEM_STATES_COLORS[state.id]}
 									key={state.id}
 								>

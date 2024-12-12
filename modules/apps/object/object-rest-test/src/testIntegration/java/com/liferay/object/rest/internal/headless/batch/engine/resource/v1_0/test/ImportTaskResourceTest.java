@@ -360,6 +360,12 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		// Without "restrictedFieldNames" query parameter
 
+		objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
+
+		beforeImportJSONObject = _getJSONObject(
+			objectEntry.getExternalReferenceCode());
+
 		waitForFinish(
 			"COMPLETED", true,
 			HTTPTestUtil.invokeToJSONObject(

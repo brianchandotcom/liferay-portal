@@ -15,7 +15,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
-import com.liferay.object.exception.ObjectActionActiveException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
@@ -2505,24 +2504,10 @@ public class ObjectRelationshipLocalServiceTest {
 		objectAction = _objectActionLocalService.fetchObjectAction(
 			objectAction.getObjectActionId());
 
+		Assert.assertEquals(
+			objectAction.getObjectActionTriggerKey(),
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
 		Assert.assertFalse(objectAction.isActive());
-
-		ObjectAction finalObjectAction = objectAction;
-
-		AssertUtils.assertFailure(
-			ObjectActionActiveException.class,
-			"Object action trigger is onAfterRootUpdate but object " +
-				"definition is not a root node",
-			() -> _objectActionLocalService.updateObjectAction(
-				finalObjectAction.getExternalReferenceCode(),
-				finalObjectAction.getObjectActionId(), true,
-				finalObjectAction.getConditionExpression(),
-				finalObjectAction.getDescription(),
-				finalObjectAction.getErrorMessageMap(),
-				finalObjectAction.getLabelMap(), finalObjectAction.getName(),
-				finalObjectAction.getObjectActionExecutorKey(),
-				finalObjectAction.getObjectActionTriggerKey(),
-				finalObjectAction.getParametersUnicodeProperties()));
 	}
 
 	private void _unbindObjectDefinitionNode(

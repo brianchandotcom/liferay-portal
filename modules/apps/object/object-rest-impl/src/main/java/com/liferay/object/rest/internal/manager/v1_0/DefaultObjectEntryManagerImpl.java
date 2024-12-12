@@ -50,7 +50,6 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -116,7 +115,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.text.ParseException;
 

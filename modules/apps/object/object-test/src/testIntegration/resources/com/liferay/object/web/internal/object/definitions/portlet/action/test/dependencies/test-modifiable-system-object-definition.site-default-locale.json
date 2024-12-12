@@ -111,7 +111,7 @@
 			"name": "name"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Integer",
 			"businessType": "Text",
 			"label": {
 				"en_US": "Status",

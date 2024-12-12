@@ -25,6 +25,8 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -54,6 +56,7 @@ import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -66,6 +69,7 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -96,6 +100,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -113,7 +118,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -146,6 +153,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -194,6 +202,8 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import javax.crypto.spec.SecretKeySpec;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -1835,6 +1845,77 @@ public class ObjectEntryLocalServiceTest {
 			expectedValues.get("richText"), actualValues.get("richText"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testAddObjectEntryWithStandaloneObjectAction()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build(),
+			false);
+
+		Assert.assertThat(
+			_resourceActions.getModelResourceActions(
+				objectDefinition.getClassName()),
+			CoreMatchers.hasItem(objectAction.getName()));
+		Assert.assertThat(
+			_resourceActions.getModelResourceOwnerDefaultActions(
+				objectDefinition.getClassName()),
+			CoreMatchers.hasItem(objectAction.getName()));
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		Assert.assertTrue(
+			_hasResourcePermission(
+				objectAction, objectDefinition, objectEntry1));
+
+		_objectActionLocalService.deleteObjectAction(
+			objectAction.getObjectActionId());
+
+		Assert.assertThat(
+			_resourceActions.getModelResourceActions(
+				objectDefinition.getClassName()),
+			CoreMatchers.not(CoreMatchers.hasItem(objectAction.getName())));
+		Assert.assertThat(
+			_resourceActions.getModelResourceOwnerDefaultActions(
+				objectDefinition.getClassName()),
+			CoreMatchers.not(CoreMatchers.hasItem(objectAction.getName())));
+		AssertUtils.assertFailure(
+			NoSuchResourceActionException.class,
+			objectDefinition.getClassName() + StringPool.POUND +
+				objectAction.getName(),
+			() -> _hasResourcePermission(
+				objectAction, objectDefinition, objectEntry1));
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		AssertUtils.assertFailure(
+			NoSuchResourceActionException.class,
+			objectDefinition.getClassName() + StringPool.POUND +
+				objectAction.getName(),
+			() -> _hasResourcePermission(
+				objectAction, objectDefinition, objectEntry2));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -3988,6 +4069,21 @@ public class ObjectEntryLocalServiceTest {
 		return values;
 	}
 
+	private boolean _hasResourcePermission(
+			ObjectAction objectAction, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			objectEntry.getCompanyId(), RoleConstants.OWNER);
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			objectEntry.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry.getPrimaryKey()), role.getRoleId(),
+			objectAction.getName());
+	}
+
 	private ObjectDefinition _publishCustomObjectDefinition(
 			boolean enableLocalization, List<ObjectField> objectFields)
 		throws Exception {
@@ -4593,6 +4689,9 @@ public class ObjectEntryLocalServiceTest {
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
+
 	private ObjectDefinition _objectDefinition;
 
 	@Inject
@@ -4629,7 +4728,13 @@ public class ObjectEntryLocalServiceTest {
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Inject
+	private ResourceActions _resourceActions;
+
+	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -36,15 +35,15 @@ public class CommerceWishListServiceImpl
 
 	@Override
 	public CommerceWishList addCommerceWishList(
-			String name, boolean defaultWishList, ServiceContext serviceContext)
+			long groupId, long userId, String name, boolean defaultWishList)
 		throws PortalException {
 
-		if (getUserId() != serviceContext.getUserId()) {
-			_checkManagePermission(serviceContext.getScopeGroupId());
+		if (getUserId() != userId) {
+			_checkManagePermission(groupId);
 		}
 
 		return commerceWishListLocalService.addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, userId, name, defaultWishList);
 	}
 
 	@Override

@@ -23,7 +23,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,43 +45,15 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceWishListItemLocalServiceImpl
 	extends CommerceWishListItemLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
 	public CommerceWishListItem addCommerceWishListItem(
-			long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-			String json, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
-
-		String cpInstanceUuid = null;
-
-		if (cpInstanceId > 0) {
-			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-				cpInstanceId);
-
-			cpInstanceUuid = cpInstance.getCPInstanceUuid();
-		}
-
-		return commerceWishListItemLocalService.addCommerceWishListItem(
-			commerceWishListId, cpDefinition.getCProductId(), cpInstanceUuid,
-			json, serviceContext);
-	}
-
-	@Override
-	public CommerceWishListItem addCommerceWishListItem(
-			long commerceWishListId, long cProductId, String cpInstanceUuid,
-			String json, ServiceContext serviceContext)
+			long userId, long commerceWishListId, String cpInstanceUuid,
+			long cProductId, String json)
 		throws PortalException {
 
 		CommerceWishList commerceWishList =
 			_commerceWishListPersistence.findByPrimaryKey(commerceWishListId);
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(userId);
 
 		_validate(
 			commerceWishListId, cpInstanceUuid, cProductId, user.getUserId());
@@ -104,10 +75,9 @@ public class CommerceWishListItemLocalServiceImpl
 		return commerceWishListItemPersistence.update(commerceWishListItem);
 	}
 
-	@Override
 	public CommerceWishListItem addOrUpdateCommerceWishListItem(
-			long commerceWishListId, long cProductId, String cpInstanceUuid,
-			String json, ServiceContext serviceContext)
+			long userId, long commerceWishListId, String cpInstanceUuid,
+			long cProductId, String json)
 		throws PortalException {
 
 		CommerceWishListItem commerceWishListItem =
@@ -116,8 +86,7 @@ public class CommerceWishListItemLocalServiceImpl
 
 		if (commerceWishListItem == null) {
 			return commerceWishListItemLocalService.addCommerceWishListItem(
-				commerceWishListId, cProductId, cpInstanceUuid, json,
-				serviceContext);
+				userId, commerceWishListId, cpInstanceUuid, cProductId, json);
 		}
 
 		return commerceWishListItemLocalService.updateCommerceWishListItem(

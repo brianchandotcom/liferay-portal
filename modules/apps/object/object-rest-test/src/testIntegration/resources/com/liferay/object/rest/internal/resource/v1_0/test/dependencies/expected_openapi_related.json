@@ -343,8 +343,9 @@
 						"type": "string"
 					},
 					"status": {
+						"format": "int32",
 						"readOnly": true,
-						"type": "string",
+						"type": "integer",
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
 					},
@@ -489,8 +490,9 @@
 						"type": "string"
 					},
 					"status": {
+						"format": "int32",
 						"readOnly": true,
-						"type": "string",
+						"type": "integer",
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
 					},

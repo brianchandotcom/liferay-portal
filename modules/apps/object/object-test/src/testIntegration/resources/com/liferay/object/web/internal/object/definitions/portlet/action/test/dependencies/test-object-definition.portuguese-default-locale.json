@@ -103,7 +103,7 @@
 			"name": "name"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Integer",
 			"businessType": "Text",
 			"label": {
 				"pt_BR": "Estado"

@@ -60,9 +60,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-
 /**
  * @author Rubén Pulido
  */
@@ -138,11 +135,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePage sitePage1 = randomSitePage();
 		SitePage sitePage2 = randomSitePage();
 
-		_assertEquals(
+		assertEquals(
 			sitePage1,
 			sitePageResource.postByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(), sitePage1));
-		_assertEquals(
+		assertEquals(
 			sitePage2,
 			sitePageResource.postByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(), sitePage2));
@@ -160,12 +157,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Assert.assertEquals(2, page.getTotalCount());
 
-			_assertEquals(
+			assertEquals(
 				sitePage1,
 				sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 					_importGroup.getExternalReferenceCode(),
 					sitePage1.getExternalReferenceCode()));
-			_assertEquals(
+			assertEquals(
 				sitePage2,
 				sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 					_importGroup.getExternalReferenceCode(),
@@ -360,14 +357,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		return sitePageResource.postByExternalReferenceCodeSitePage(
 			testGroup.getExternalReferenceCode(), sitePage);
-	}
-
-	private void _assertEquals(
-		SitePage expectedSitePage, SitePage actualSitePage) {
-
-		JSONAssert.assertEquals(
-			expectedSitePage.toString(), actualSitePage.toString(),
-			JSONCompareMode.LENIENT);
 	}
 
 	private void _assertExecuteStatusEquals(

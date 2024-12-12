@@ -16,6 +16,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -371,10 +372,15 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		LayoutStructure layoutStructure, PageElement pageElement) {
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
-			layoutStructure.addLayoutStructureItem(
-				PageElementTypeUtil.toInternalType(childPageElement.getType()),
-				childPageElement.getParentExternalReferenceCode(),
-				childPageElement.getPosition());
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addLayoutStructureItem(
+					PageElementTypeUtil.toInternalType(
+						childPageElement.getType()),
+					childPageElement.getParentExternalReferenceCode(),
+					childPageElement.getPosition());
+
+			layoutStructureItem.updateItemConfig(
+				_jsonFactory.createJSONObject());
 
 			_addChildPageElements(layoutStructure, childPageElement);
 		}
@@ -392,6 +398,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				pageElement.getParentExternalReferenceCode(),
 				pageElement.getPosition());
 
+		layoutStructureItem.updateItemConfig(_jsonFactory.createJSONObject());
+
 		_addChildPageElements(layoutStructure, pageElement);
 
 		_layoutPageTemplateStructureLocalService.
@@ -401,6 +409,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		return _pageElementDTOConverter.toDTO(layoutStructureItem);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -62,13 +62,13 @@ public class EqualsFunction
 	}
 
 	private String _getClassName(Object object) {
-		if (Objects.nonNull(object)) {
-			Class<?> clazz = object.getClass();
-
-			return clazz.getName();
+		if (Objects.isNull(object)) {
+			return null;
 		}
 
-		return null;
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
 	}
 
 	private Object _getValue(Object object) {

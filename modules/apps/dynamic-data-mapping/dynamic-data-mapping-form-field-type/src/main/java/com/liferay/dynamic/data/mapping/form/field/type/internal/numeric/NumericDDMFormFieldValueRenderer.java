@@ -53,17 +53,19 @@ public class NumericDDMFormFieldValueRenderer
 
 		String valueString = value.getString(locale);
 
-		if (Validator.isNotNull(valueString)) {
-			try {
-				DecimalFormat decimalFormat =
-					NumericDDMFormFieldUtil.getDecimalFormat(locale);
+		if (Validator.isNull(valueString)) {
+			return null;
+		}
 
-				return decimalFormat.parse(valueString);
-			}
-			catch (ParseException parseException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(parseException);
-				}
+		try {
+			DecimalFormat decimalFormat =
+				NumericDDMFormFieldUtil.getDecimalFormat(locale);
+
+			return decimalFormat.parse(valueString);
+		}
+		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException);
 			}
 		}
 

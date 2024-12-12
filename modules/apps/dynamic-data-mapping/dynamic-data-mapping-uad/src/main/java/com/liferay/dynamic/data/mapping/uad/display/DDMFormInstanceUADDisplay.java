@@ -65,22 +65,24 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 		Class<?> parentContainerClass, Serializable parentContainerId,
 		Object childObject) {
 
-		if ((childObject instanceof DDMFormInstanceRecord) &&
-			(parentContainerId instanceof Long)) {
+		if (!(childObject instanceof DDMFormInstanceRecord) ||
+			!(parentContainerId instanceof Long)) {
 
-			try {
-				Long ddmFormInstanceParentId = (Long)parentContainerId;
+			return null;
+		}
 
-				if (ddmFormInstanceParentId.longValue() == 0) {
-					DDMFormInstanceRecord ddmFormInstanceRecord =
-						(DDMFormInstanceRecord)childObject;
+		try {
+			Long ddmFormInstanceParentId = (Long)parentContainerId;
 
-					return ddmFormInstanceRecord.getFormInstance();
-				}
+			if (ddmFormInstanceParentId.longValue() == 0) {
+				DDMFormInstanceRecord ddmFormInstanceRecord =
+					(DDMFormInstanceRecord)childObject;
+
+				return ddmFormInstanceRecord.getFormInstance();
 			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 
 		return null;

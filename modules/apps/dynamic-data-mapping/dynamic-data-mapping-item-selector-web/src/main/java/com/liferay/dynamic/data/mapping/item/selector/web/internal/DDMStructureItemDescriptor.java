@@ -67,13 +67,13 @@ public class DDMStructureItemDescriptor
 				Group group = _groupLocalService.fetchGroup(
 					_ddmStructure.getGroupId());
 
-				if (group != null) {
-					return LanguageUtil.get(
-						themeDisplay.getLocale(),
-						group.getScopeLabel(themeDisplay));
+				if (group == null) {
+					return null;
 				}
 
-				return null;
+				return LanguageUtil.get(
+					themeDisplay.getLocale(),
+					group.getScopeLabel(themeDisplay));
 			}
 		).toString();
 	}

@@ -124,7 +124,7 @@ const Layout = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessage, layoutColumns: updatedLayoutColumns}) => {
+			.then(({errorMessage}) => {
 				if (errorMessage) {
 					openToast({
 						message: errorMessage,
@@ -142,12 +142,7 @@ const Layout = ({
 						type: 'success',
 					});
 
-					if (Liferay.FeatureFlags['LPD-35220']) {
-						navigate(redirectURL);
-					}
-					else {
-						setLayoutColumns(updatedLayoutColumns);
-					}
+					navigate(redirectURL);
 				}
 			});
 	};

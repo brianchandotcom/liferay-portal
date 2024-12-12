@@ -16,7 +16,6 @@ import getRandomString from '../../utils/getRandomString';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-35220': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,

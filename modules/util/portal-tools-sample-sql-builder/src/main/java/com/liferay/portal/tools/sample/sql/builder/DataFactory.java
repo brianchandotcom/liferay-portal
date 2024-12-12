@@ -369,17 +369,6 @@ import com.liferay.subscription.constants.SubscriptionConstants;
 import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.util.SimpleCounter;
-import com.liferay.wiki.constants.WikiPageConstants;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiNodeModel;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageModel;
-import com.liferay.wiki.model.WikiPageResourceModel;
-import com.liferay.wiki.model.impl.WikiNodeModelImpl;
-import com.liferay.wiki.model.impl.WikiPageModelImpl;
-import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
-import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -459,7 +448,7 @@ public class DataFactory {
 
 		_assetClassNameIds = new long[] {
 			getClassNameId(BlogsEntry.class),
-			getClassNameId(JournalArticle.class), getClassNameId(WikiPage.class)
+			getClassNameId(JournalArticle.class)
 		};
 
 		_dlDDMStructureContent = _readFile(
@@ -809,10 +798,6 @@ public class DataFactory {
 			MAX_SEGMENTS_ENTRY_SEGMENTS_EXPERIENCE_COUNT;
 	}
 
-	public int getMaxWikiPageCommentCount() {
-		return BenchmarksPropsValues.MAX_WIKI_PAGE_COMMENT_COUNT;
-	}
-
 	public List<Long> getNewUserGroupIds(
 		long groupId, GroupModel guestGroupModel) {
 
@@ -888,10 +873,6 @@ public class DataFactory {
 
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
-	}
-
-	public long getWikiPageClassNameId() {
-		return getClassNameId(WikiPage.class);
 	}
 
 	public void initJournalArticleContent() {
@@ -1209,21 +1190,12 @@ public class DataFactory {
 			journalArticleLocalizationModel.getTitle());
 	}
 
-	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
-		return newAssetEntryModel(
-			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), getClassNameId(WikiPage.class),
-			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
-			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
-	}
-
 	public List<PortletPreferencesModel>
 		newAssetPublisherPortletPreferencesModels(long plid) {
 
 		return ListUtil.fromArray(
 			newPortletPreferencesModel(plid, BlogsPortletKeys.BLOGS),
-			newPortletPreferencesModel(plid, JournalPortletKeys.JOURNAL),
-			newPortletPreferencesModel(plid, WikiPortletKeys.WIKI));
+			newPortletPreferencesModel(plid, JournalPortletKeys.JOURNAL));
 	}
 
 	public List<PortletPreferenceValueModel>
@@ -4417,12 +4389,6 @@ public class DataFactory {
 					groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
 		}
 
-		if (BenchmarksPropsValues.MAX_WIKI_NODE_COUNT != 0) {
-			layoutModels.add(
-				newLayoutModel(
-					groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
-		}
-
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
 			layoutModels.add(newSearchLayoutModel(groupId, false));
 		}
@@ -6340,22 +6306,6 @@ public class DataFactory {
 				_ownerRoleModel.getRoleId(), userModel.getUserId()));
 	}
 
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		WikiNodeModel wikiNodeModel) {
-
-		return newResourcePermissionModels(
-			WikiNode.class.getName(), String.valueOf(wikiNodeModel.getNodeId()),
-			_sampleUserId);
-	}
-
-	public List<ResourcePermissionModel> newResourcePermissionModels(
-		WikiPageModel wikiPageModel) {
-
-		return newResourcePermissionModels(
-			WikiPage.class.getName(),
-			String.valueOf(wikiPageModel.getResourcePrimKey()), _sampleUserId);
-	}
-
 	public List<RoleModel> newRoleModels() {
 		List<RoleModel> roleModels = new ArrayList<>();
 
@@ -6625,12 +6575,7 @@ public class DataFactory {
 		int type = 0;
 		String extraData = null;
 
-		if (classNameId == getClassNameId(WikiPage.class)) {
-			extraData = "{\"version\":1}";
-
-			type = WikiActivityKeys.ADD_PAGE;
-		}
-		else if (classNameId == 0) {
+		if (classNameId == 0) {
 			extraData = "{\"title\":\"" + mbMessageModel.getSubject() + "\"}";
 
 			type = MBActivityKeys.ADD_MESSAGE;
@@ -6660,11 +6605,6 @@ public class DataFactory {
 	public SubscriptionModel newSubscriptionModel(MBThreadModel mBThreadModel) {
 		return newSubscriptionModel(
 			getClassNameId(MBThread.class), mBThreadModel.getThreadId());
-	}
-
-	public SubscriptionModel newSubscriptionModel(WikiPageModel wikiPageModel) {
-		return newSubscriptionModel(
-			getClassNameId(WikiPage.class), wikiPageModel.getResourcePrimKey());
 	}
 
 	public List<UserModel> newUserModels() {
@@ -6714,51 +6654,6 @@ public class DataFactory {
 		virtualHostModel.setDefaultVirtualHost(true);
 
 		return virtualHostModel;
-	}
-
-	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
-		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_WIKI_NODE_COUNT);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_WIKI_NODE_COUNT; i++) {
-			wikiNodeModels.add(newWikiNodeModel(groupId, i));
-		}
-
-		return wikiNodeModels;
-	}
-
-	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
-		List<WikiPageModel> wikiPageModels = new ArrayList<>(
-			BenchmarksPropsValues.MAX_WIKI_PAGE_COUNT);
-
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_WIKI_PAGE_COUNT; i++) {
-			wikiPageModels.add(newWikiPageModel(wikiNodeModel, i));
-		}
-
-		return wikiPageModels;
-	}
-
-	public WikiPageResourceModel newWikiPageResourceModel(
-		WikiPageModel wikiPageModel) {
-
-		WikiPageResourceModel wikiPageResourceModel =
-			new WikiPageResourceModelImpl();
-
-		// PK fields
-
-		wikiPageResourceModel.setResourcePrimKey(
-			wikiPageModel.getResourcePrimKey());
-
-		// Other fields
-
-		wikiPageResourceModel.setNodeId(wikiPageModel.getNodeId());
-		wikiPageResourceModel.setTitle(wikiPageModel.getTitle());
-
-		// Autogenerated fields
-
-		wikiPageResourceModel.setUuid(SequentialUUID.generate());
-
-		return wikiPageResourceModel;
 	}
 
 	public String[] nextUserName(long index) {
@@ -8333,90 +8228,6 @@ public class DataFactory {
 		userModel.setExternalReferenceCode(uuid);
 
 		return userModel;
-	}
-
-	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
-		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
-
-		// PK fields
-
-		wikiNodeModel.setNodeId(_counter.get());
-
-		// Group instance
-
-		wikiNodeModel.setGroupId(groupId);
-
-		// Audit fields
-
-		wikiNodeModel.setCompanyId(_companyId);
-		wikiNodeModel.setUserId(_sampleUserId);
-		wikiNodeModel.setUserName(_SAMPLE_USER_NAME);
-		wikiNodeModel.setCreateDate(new Date());
-		wikiNodeModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		wikiNodeModel.setName("Test Node " + index);
-		wikiNodeModel.setLastPostDate(new Date());
-		wikiNodeModel.setLastPublishDate(new Date());
-		wikiNodeModel.setStatusDate(new Date());
-
-		// Autogenerated fields
-
-		String uuid = SequentialUUID.generate();
-
-		wikiNodeModel.setUuid(uuid);
-		wikiNodeModel.setExternalReferenceCode(uuid);
-
-		return wikiNodeModel;
-	}
-
-	protected WikiPageModel newWikiPageModel(
-		WikiNodeModel wikiNodeModel, int index) {
-
-		WikiPageModel wikiPageModel = new WikiPageModelImpl();
-
-		// PK fields
-
-		wikiPageModel.setPageId(_counter.get());
-
-		// Resource
-
-		wikiPageModel.setResourcePrimKey(_counter.get());
-
-		// Group instance
-
-		wikiPageModel.setGroupId(wikiNodeModel.getGroupId());
-
-		// Audit fields
-
-		wikiPageModel.setCompanyId(_companyId);
-		wikiPageModel.setUserId(_sampleUserId);
-		wikiPageModel.setUserName(_SAMPLE_USER_NAME);
-		wikiPageModel.setCreateDate(new Date());
-		wikiPageModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
-		wikiPageModel.setTitle("Test Page " + index);
-		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
-		wikiPageModel.setContent(
-			StringBundler.concat(
-				"This is Test Page ", index, " of ", wikiNodeModel.getName(),
-				"."));
-		wikiPageModel.setFormat("creole");
-		wikiPageModel.setHead(true);
-		wikiPageModel.setLastPublishDate(new Date());
-
-		// Autogenerated fields
-
-		String uuid = SequentialUUID.generate();
-
-		wikiPageModel.setUuid(uuid);
-		wikiPageModel.setExternalReferenceCode(uuid);
-
-		return wikiPageModel;
 	}
 
 	protected String nextDDLCustomFieldName(

@@ -165,15 +165,6 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_USER_TO_GROUP_COUNT =
 		"sample.sql.max.user.to.group.count";
 
-	public static final String MAX_WIKI_NODE_COUNT =
-		"sample.sql.max.wiki.node.count";
-
-	public static final String MAX_WIKI_PAGE_COMMENT_COUNT =
-		"sample.sql.max.wiki.page.comment.count";
-
-	public static final String MAX_WIKI_PAGE_COUNT =
-		"sample.sql.max.wiki.page.count";
-
 	public static final String OPTIMIZE_BUFFER_SIZE =
 		"sample.sql.optimize.buffer.size";
 

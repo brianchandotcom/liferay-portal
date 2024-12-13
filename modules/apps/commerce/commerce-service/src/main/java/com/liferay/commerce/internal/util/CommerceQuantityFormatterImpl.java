@@ -30,6 +30,13 @@ public class CommerceQuantityFormatterImpl
 	implements CommerceQuantityFormatter {
 
 	@Override
+	public String format(BigDecimal quantity, Locale locale) {
+		DecimalFormat decimalFormat = _getDecimalFormat(locale);
+
+		return decimalFormat.format(quantity);
+	}
+
+	@Override
 	public BigDecimal format(
 		CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey) {
 
@@ -69,13 +76,6 @@ public class CommerceQuantityFormatterImpl
 			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
 				companyId, unitOfMeasureKey, sku),
 			quantity);
-	}
-
-	@Override
-	public String parse(BigDecimal quantity, Locale locale) throws Exception {
-		DecimalFormat decimalFormat = _getDecimalFormat(locale);
-
-		return decimalFormat.format(quantity);
 	}
 
 	private BigDecimal _format(

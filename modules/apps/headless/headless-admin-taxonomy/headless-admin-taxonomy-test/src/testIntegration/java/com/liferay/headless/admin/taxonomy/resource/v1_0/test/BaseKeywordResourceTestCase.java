@@ -194,6 +194,7 @@ public abstract class BaseKeywordResourceTestCase {
 		keyword.setAssetLibraryKey(regex);
 		keyword.setExternalReferenceCode(regex);
 		keyword.setName(regex);
+		keyword.setSiteExternalReferenceCode(regex);
 
 		String json = KeywordSerDes.toJSON(keyword);
 
@@ -204,6 +205,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Assert.assertEquals(regex, keyword.getAssetLibraryKey());
 		Assert.assertEquals(regex, keyword.getExternalReferenceCode());
 		Assert.assertEquals(regex, keyword.getName());
+		Assert.assertEquals(regex, keyword.getSiteExternalReferenceCode());
 	}
 
 	@Test
@@ -2417,6 +2419,16 @@ public abstract class BaseKeywordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (keyword.getSiteExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (keyword.getSubscribed() == null) {
 					valid = false;
@@ -2622,6 +2634,19 @@ public abstract class BaseKeywordResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						keyword1.getName(), keyword2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						keyword1.getSiteExternalReferenceCode(),
+						keyword2.getSiteExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2967,6 +2992,52 @@ public abstract class BaseKeywordResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("siteExternalReferenceCode")) {
+			Object object = keyword.getSiteExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("siteId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3031,6 +3102,8 @@ public abstract class BaseKeywordResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				keywordUsageCount = RandomTestUtil.randomInt();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				siteExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();
 			}

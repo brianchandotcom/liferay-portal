@@ -282,6 +282,13 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().fetchFragmentEntry(groupId, fragmentEntryKey);
 	}
 
+	public static FragmentEntry fetchFragmentEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static FragmentEntry fetchFragmentEntryByUuidAndGroupId(
 		String uuid, long groupId) {
 

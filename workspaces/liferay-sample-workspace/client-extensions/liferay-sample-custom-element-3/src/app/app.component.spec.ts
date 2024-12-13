@@ -14,19 +14,19 @@ describe('AppComponent', () => {
 		})
 	);
 
-	it('should create the app', () => {
+	it('create the app', () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		const app = fixture.componentInstance;
 		expect(app).toBeTruthy();
 	});
 
-	it(`should have as title 'liferay-sample-custom-element-3'`, () => {
+	it(`have as title 'liferay-sample-custom-element-3'`, () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		const app = fixture.componentInstance;
 		expect(app.title).toEqual('liferay-sample-custom-element-3');
 	});
 
-	it('should render title', () => {
+	it('render title', () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		fixture.detectChanges();
 		const compiled = fixture.nativeElement as HTMLElement;

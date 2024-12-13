@@ -196,6 +196,12 @@ public class PageElementDTOConverter
 		).put(
 			LayoutDataItemTypeConstants.TYPE_FORM, PageElement.Type.FORM
 		).put(
+			LayoutDataItemTypeConstants.TYPE_FORM_STEP,
+			PageElement.Type.FORM_STEP
+		).put(
+			LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER,
+			PageElement.Type.FORM_STEP_CONTAINER
+		).put(
 			LayoutDataItemTypeConstants.TYPE_FRAGMENT, PageElement.Type.FRAGMENT
 		).put(
 			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE,

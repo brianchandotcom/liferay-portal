@@ -14,6 +14,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -52,6 +53,7 @@ import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -4161,6 +4163,135 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testPartialUpdateObjectEntryWithLocalizedAttachmentObjectField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new AttachmentObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap("localizedAttachment")
+				).localized(
+					true
+				).name(
+					"localizedAttachment"
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build())
+				).build()));
+
+		long tempFileEntryId1 = _addTempFileEntry(
+			objectDefinition.getPortletId(), StringUtil.randomString());
+		long tempFileEntryId2 = _addTempFileEntry(
+			objectDefinition.getPortletId(), StringUtil.randomString());
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedAttachment_i18n",
+						HashMapBuilder.put(
+							"en_US", tempFileEntryId1
+						).put(
+							"pt_BR", tempFileEntryId2
+						).build()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				tempFileEntryId1, "}"),
+			() -> _dlAppLocalService.getFileEntry(tempFileEntryId1));
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				tempFileEntryId2, "}"),
+			() -> _dlAppLocalService.getFileEntry(tempFileEntryId2));
+
+		objectEntry = _defaultObjectEntryManager.partialUpdateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					properties = Collections.emptyMap();
+				}
+			});
+
+		Map<String, Serializable> localizedValues =
+			(Map<String, Serializable>)objectEntry.getPropertyValue(
+				"localizedAttachment_i18n");
+
+		FileEntry fileEntry1 = (FileEntry)localizedValues.get("en_US");
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(fileEntry1.getId()));
+
+		FileEntry fileEntry2 = (FileEntry)localizedValues.get("pt_BR");
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(fileEntry2.getId()));
+
+		objectEntry = _defaultObjectEntryManager.partialUpdateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedAttachment_i18n",
+						HashMapBuilder.put(
+							"en_US", 0L
+						).put(
+							"pt_BR", fileEntry2.getId()
+						).build()
+					).build();
+				}
+			});
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				fileEntry1.getId(), "}"),
+			() -> _dlAppLocalService.getFileEntry(fileEntry1.getId()));
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(fileEntry2.getId()));
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			objectDefinition, objectEntry.getId());
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				fileEntry2.getId(), "}"),
+			() -> _dlAppLocalService.getFileEntry(fileEntry2.getId()));
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testSearchObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
@@ -5309,6 +5440,19 @@ public class DefaultObjectEntryManagerImplTest
 		return role;
 	}
 
+	private long _addTempFileEntry(String folderName, String title)
+		throws Exception {
+
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry =
+			TempFileEntryUtil.addTempFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+				folderName, TempFileEntryUtil.getTempFileName(title + ".txt"),
+				FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+				ContentTypes.TEXT_PLAIN);
+
+		return fileEntry.getFileEntryId();
+	}
+
 	private User _addUser() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -5927,6 +6071,9 @@ public class DefaultObjectEntryManagerImplTest
 	private AccountRoleLocalService _accountRoleLocalService;
 
 	private Role _buyerRole;
+
+	@Inject
+	private DLAppService _dlAppLocalService;
 
 	@Inject
 	private DLAppService _dlAppService;

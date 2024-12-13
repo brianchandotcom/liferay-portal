@@ -129,15 +129,17 @@ public class ExportImportContentProcessorUtil {
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
-		if (infoItemObjectProvider != null) {
-			try {
-				return infoItemObjectProvider.getInfoItem(
-					new ClassPKInfoItemIdentifier(classPK));
-			}
-			catch (NoSuchInfoItemException noSuchInfoItemException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchInfoItemException);
-				}
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
+		try {
+			return infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
 			}
 		}
 

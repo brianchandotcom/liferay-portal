@@ -633,16 +633,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 				fragmentCollectionId)
 		).and(
 			() -> {
-				if (Validator.isNotNull(name)) {
-					return DSLFunctionFactoryUtil.lower(
-						FragmentCompositionTable.INSTANCE.name
-					).like(
-						_customSQL.keywords(name, true, WildcardMode.SURROUND)
-							[0]
-					);
+				if (Validator.isNull(name)) {
+					return null;
 				}
 
-				return null;
+				return DSLFunctionFactoryUtil.lower(
+					FragmentCompositionTable.INSTANCE.name
+				).like(
+					_customSQL.keywords(name, true, WildcardMode.SURROUND)[0]
+				);
 			}
 		).and(
 			() -> {
@@ -693,16 +692,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			).withParentheses()
 		).and(
 			() -> {
-				if (Validator.isNotNull(name)) {
-					return DSLFunctionFactoryUtil.lower(
-						FragmentEntryTable.INSTANCE.name
-					).like(
-						_customSQL.keywords(name, true, WildcardMode.SURROUND)
-							[0]
-					);
+				if (Validator.isNull(name)) {
+					return null;
 				}
 
-				return null;
+				return DSLFunctionFactoryUtil.lower(
+					FragmentEntryTable.INSTANCE.name
+				).like(
+					_customSQL.keywords(name, true, WildcardMode.SURROUND)[0]
+				);
 			}
 		).and(
 			() -> {

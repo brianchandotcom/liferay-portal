@@ -1487,6 +1487,7 @@
 		<exception>CPAttachmentFileEntryName</exception>
 		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
+		<exception>CPConfigurationEntryQuantity</exception>
 		<exception>CPConfigurationListParentCPConfigurationListGroupId</exception>
 		<exception>CPDefinitionDeliveryMaxSubscriptionCycles</exception>
 		<exception>CPDefinitionDeliverySubscriptionLength</exception>
@@ -1530,6 +1531,7 @@
 		<exception>CPInstanceUnitOfMeasureKey</exception>
 		<exception>CPInstanceUnitOfMeasureName</exception>
 		<exception>CPInstanceUnitOfMeasurePrice</exception>
+		<exception>CPInstanceUnitOfMeasureQuantity</exception>
 		<exception>CPInstanceUnitOfMeasureRate</exception>
 		<exception>CPInstanceUnitOfMeasureSku</exception>
 		<exception>CPInstanceWeight</exception>

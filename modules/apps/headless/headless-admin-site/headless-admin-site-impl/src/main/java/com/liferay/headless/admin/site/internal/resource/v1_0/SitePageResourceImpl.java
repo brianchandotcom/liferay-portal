@@ -209,14 +209,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
-		if (!layout.isPublished() || !layout.isTypeContent()) {
+		if (layout.isDraftLayout() || !layout.isPublished() ||
+			!layout.isTypeContent()) {
+
 			throw new UnsupportedOperationException();
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if ((draftLayout == null) ||
-			(Validator.isNotNull(
+		if ((Validator.isNotNull(
 				contentPageSpecification.getExternalReferenceCode()) &&
 			 !Objects.equals(
 				 contentPageSpecification.getExternalReferenceCode(),

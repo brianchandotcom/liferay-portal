@@ -59,10 +59,26 @@ public class UnsyncFilterOutputStreamTest {
 		Assert.assertTrue(flushCalled.get());
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testCloseNull() throws IOException {
 		UnsyncFilterOutputStream unsyncFilterOutputStream =
 			new UnsyncFilterOutputStream(null);
+
+		try {
+			unsyncFilterOutputStream.close();
+
+			Assert.fail();
+		}
+		catch (NullPointerException nullPointerException) {
+		}
+
+		unsyncFilterOutputStream = new UnsyncFilterOutputStream(null) {
+
+			@Override
+			public void flush() throws IOException {
+			}
+
+		};
 
 		unsyncFilterOutputStream.close();
 	}

@@ -79,7 +79,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Iterates over tokens, separated by the supplied delimeters</description>
+		<description>Iterates over tokens, separated by the supplied delimiters</description>
 		<name>forTokens</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.ForTokensTag</tag-class>
 		<body-content>JSP</body-content>

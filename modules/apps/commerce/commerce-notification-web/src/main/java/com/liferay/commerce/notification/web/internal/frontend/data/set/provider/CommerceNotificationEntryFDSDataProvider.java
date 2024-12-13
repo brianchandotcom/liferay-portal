@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,30 +60,25 @@ public class CommerceNotificationEntryFDSDataProvider
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries =
+		return TransformUtil.transform(
 			_commerceNotificationQueueEntryService.
 				getCommerceNotificationQueueEntries(
 					commerceChannel.getGroupId(),
 					fdsPagination.getStartPosition(),
-					fdsPagination.getEndPosition(), null);
+					fdsPagination.getEndPosition(), null),
+			commerceNotificationQueueEntry -> {
+				CommerceNotificationTemplate commerceNotificationTemplate =
+					_commerceNotificationTemplateService.
+						getCommerceNotificationTemplate(
+							commerceNotificationQueueEntry.
+								getCommerceNotificationTemplateId());
 
-		List<NotificationEntry> notificationEntries = new ArrayList<>();
+				CommerceNotificationType commerceNotificationType =
+					_commerceNotificationTypeRegistry.
+						getCommerceNotificationType(
+							commerceNotificationTemplate.getType());
 
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			CommerceNotificationTemplate commerceNotificationTemplate =
-				_commerceNotificationTemplateService.
-					getCommerceNotificationTemplate(
-						commerceNotificationQueueEntry.
-							getCommerceNotificationTemplateId());
-
-			CommerceNotificationType commerceNotificationType =
-				_commerceNotificationTypeRegistry.getCommerceNotificationType(
-					commerceNotificationTemplate.getType());
-
-			notificationEntries.add(
-				new NotificationEntry(
+				return new NotificationEntry(
 					commerceNotificationQueueEntry.getFromName(),
 					commerceNotificationQueueEntry.
 						getCommerceNotificationQueueEntryId(),
@@ -92,10 +87,8 @@ public class CommerceNotificationEntryFDSDataProvider
 						commerceNotificationQueueEntry, httpServletRequest),
 					commerceNotificationQueueEntry.getToName(),
 					commerceNotificationType.getLabel(
-						themeDisplay.getLocale())));
-		}
-
-		return notificationEntries;
+						themeDisplay.getLocale()));
+			});
 	}
 
 	@Override

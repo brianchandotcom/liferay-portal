@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Locale;
+
 import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
@@ -34,29 +36,18 @@ public class CommerceOrderItemQuantityFormatterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testParsePriceBigDecimal() throws Exception {
+	public void testParseQuantityBigDecimal() throws Exception {
 		String expectedParsedQuantity = "1234567.890";
 
-		Assert.assertEquals(
-			expectedParsedQuantity,
-			_commerceOrderItemQuantityFormatter.parse(
-				null, "1,234,567.890", LocaleUtil.ITALY
-			).toString());
-		Assert.assertEquals(
-			expectedParsedQuantity,
-			_commerceOrderItemQuantityFormatter.parse(
-				null, "1.234.567,890", LocaleUtil.ITALY
-			).toString());
-		Assert.assertEquals(
-			expectedParsedQuantity,
-			_commerceOrderItemQuantityFormatter.parse(
-				null, "1234567,890", LocaleUtil.ITALY
-			).toString());
-		Assert.assertEquals(
-			expectedParsedQuantity,
-			_commerceOrderItemQuantityFormatter.parse(
-				null, "1234567.890", LocaleUtil.ITALY
-			).toString());
+		_assertQuantity(
+			"1,234,567.890", expectedParsedQuantity, LocaleUtil.ITALY);
+		_assertQuantity(
+			"1.234.567,890", expectedParsedQuantity, LocaleUtil.ITALY);
+		_assertQuantity(
+			"1234567,890", expectedParsedQuantity, LocaleUtil.ITALY);
+		_assertQuantity(
+			"1234567.890", expectedParsedQuantity, LocaleUtil.ITALY);
+
 		Assert.assertNotEquals(
 			expectedParsedQuantity,
 			_commerceOrderItemQuantityFormatter.parse(
@@ -66,6 +57,17 @@ public class CommerceOrderItemQuantityFormatterTest {
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
+
+	private void _assertQuantity(
+			String actualQuantity, String expectedQuantity, Locale locale)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedQuantity,
+			_commerceOrderItemQuantityFormatter.parse(
+				null, actualQuantity, locale
+			).toString());
+	}
 
 	@Inject
 	private CommerceOrderItemQuantityFormatter

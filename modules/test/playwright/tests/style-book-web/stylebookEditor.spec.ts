@@ -141,7 +141,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Edit Background Color in Button Primary section', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Buttons');
+		await styleBooksPage.selectTokenCategory('Buttons');
 
 		await styleBooksPage.updateTokenInputColor(
 			'Background Color',
@@ -153,7 +153,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Select Typography in sidebar', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Typography');
+		await styleBooksPage.selectTokenCategory('Typography');
 	});
 
 	await test.step('Edit Heading 1 Font Size in Headings section', async () => {
@@ -167,7 +167,7 @@ test('LPD-35561 Preview StyleBook when edit StyleBook', async ({
 	});
 
 	await test.step('Select Color System in sidebar', async () => {
-		await styleBooksPage.selectFrontendTokenCategory('Color System');
+		await styleBooksPage.selectTokenCategory('Color System');
 	});
 
 	await test.step('Edit the Danger in Theme Colors section', async () => {
@@ -268,7 +268,7 @@ test(
 			await pageEditorPage.addWidget('Community', 'My Sites');
 		});
 
-		await test.step('Add a paragraph fragment to the third page and publish', async () => {
+		await test.step('Add and publish the third page with a paragraph fragment', async () => {
 			await productMenuPage.goToPages();
 
 			await pagesAdminPage.createNewPage({
@@ -283,7 +283,7 @@ test(
 			await pageEditorPage.publishPage();
 		});
 
-		await test.step('Add a heading fragment to the first page and publish', async () => {
+		await test.step('Add and publish the first page with a heading fragment', async () => {
 			await page.getByRole('link', {name: firstPageName}).click();
 
 			await pageEditorPage.addFragment('Basic Components', 'Heading');
@@ -291,7 +291,7 @@ test(
 			await pageEditorPage.publishPage();
 		});
 
-		await test.step('Add a button fragment to the second page and publish', async () => {
+		await test.step('Add and publish the second page with a button fragment', async () => {
 			await page.getByRole('link', {name: secondPageName}).click();
 
 			await pageEditorPage.addFragment('Basic Components', 'Button');
@@ -339,7 +339,7 @@ test(
 		});
 
 		await test.step('Change Body Color in the General frontend token category', async () => {
-			await styleBooksPage.selectFrontendTokenCategory('General');
+			await styleBooksPage.selectTokenCategory('General');
 
 			await styleBooksPage.updateTokenInputColor(
 				'Body Color',
@@ -365,7 +365,7 @@ test(
 		});
 
 		await test.step('Change color of Button Primary in the Buttons frontend token category', async () => {
-			await styleBooksPage.selectFrontendTokenCategory('Buttons');
+			await styleBooksPage.selectTokenCategory('Buttons');
 
 			await styleBooksPage.updateTokenInputColor(
 				'Color',
@@ -389,7 +389,7 @@ test(
 		});
 
 		await test.step('Change Body Color in the General frontend token category', async () => {
-			await styleBooksPage.selectFrontendTokenCategory('General');
+			await styleBooksPage.selectTokenCategory('General');
 
 			await styleBooksPage.updateTokenInputColor(
 				'Body Color',
@@ -415,7 +415,7 @@ test(
 		});
 
 		await test.step('Change Font Family Base in the Typography frontend token category', async () => {
-			await styleBooksPage.selectFrontendTokenCategory('Typography');
+			await styleBooksPage.selectTokenCategory('Typography');
 
 			await styleBooksPage.updateTokenInput(
 				'Font Family Base',

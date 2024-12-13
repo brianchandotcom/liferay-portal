@@ -90,7 +90,7 @@ export class StyleBooksPage {
 		).toBeVisible();
 	}
 
-	async selectFrontendTokenCategory(category: string) {
+	async selectTokenCategory(category: string) {
 		await this.page
 			.locator('.style-book-editor__sidebar-content .form-control-select')
 			.click();

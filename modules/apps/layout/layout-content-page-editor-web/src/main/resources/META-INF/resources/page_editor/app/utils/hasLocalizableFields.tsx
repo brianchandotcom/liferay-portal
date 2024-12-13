@@ -21,6 +21,10 @@ export async function hasLocalizableFields(
 		state.layoutData
 	);
 
+	if (!classNameId) {
+		return false;
+	}
+
 	const cacheKey = getCacheKey([
 		CACHE_KEYS.formFields,
 		classNameId,

@@ -17,6 +17,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,31 +60,19 @@ public class CommerceNotificationTemplateFDSDataProvider
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-		List<CommerceNotificationTemplate> commerceNotificationTemplates =
+		return TransformUtil.transform(
 			_commerceNotificationTemplateService.
 				getCommerceNotificationTemplates(
 					commerceChannel.getGroupId(),
 					fdsPagination.getStartPosition(),
-					fdsPagination.getEndPosition(), null);
-
-		List<NotificationTemplate> notificationTemplates = new ArrayList<>();
-
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				commerceNotificationTemplates) {
-
-			notificationTemplates.add(
-				new NotificationTemplate(
-					_getEnabled(
-						commerceNotificationTemplate, httpServletRequest),
-					commerceNotificationTemplate.getName(),
-					commerceNotificationTemplate.
-						getCommerceNotificationTemplateId(),
-					_getType(
-						commerceNotificationTemplate,
-						themeDisplay.getLocale())));
-		}
-
-		return notificationTemplates;
+					fdsPagination.getEndPosition(), null),
+			commerceNotificationTemplate -> new NotificationTemplate(
+				_getEnabled(commerceNotificationTemplate, httpServletRequest),
+				commerceNotificationTemplate.getName(),
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId(),
+				_getType(
+					commerceNotificationTemplate, themeDisplay.getLocale())));
 	}
 
 	@Override

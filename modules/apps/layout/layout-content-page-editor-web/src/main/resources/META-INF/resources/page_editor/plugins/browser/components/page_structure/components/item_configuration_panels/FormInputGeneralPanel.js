@@ -35,6 +35,7 @@ import useCache from '../../../../../../app/utils/useCache';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
+import LocalizationSelectAlert from './LocalizationSelectAlert';
 
 const DEFAULT_CONFIGURATION_VALUES = {};
 const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
@@ -362,6 +363,9 @@ export function FormInputGeneralPanel({item}) {
 
 	return (
 		<>
+			{allowedInputTypes?.includes('localizationSelect') ? (
+				<LocalizationSelectAlert />
+			) : null}
 			<div className="mb-3 panel-group-sm">
 				<ClayPanel
 					collapsable

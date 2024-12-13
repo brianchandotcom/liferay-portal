@@ -11,10 +11,10 @@ import {dateToInternationalHuman} from '../utils/utils.es';
 
 const BCP47LanguageId = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-const getTextDelimeted = (text, date) => {
-	const delimeter = ' - ';
+const getTextDelimited = (text, date) => {
+	const delimiter = ' - ';
 
-	return `${text} ${delimeter} ${date}`;
+	return `${text} ${delimiter} ${date}`;
 };
 
 const EditedTimestamp = ({
@@ -29,7 +29,7 @@ const EditedTimestamp = ({
 		return null;
 	}
 
-	const selectedText = getTextDelimeted(
+	const selectedText = getTextDelimited(
 		operationText,
 		dateToInternationalHuman(dateCreated, BCP47LanguageId)
 	);

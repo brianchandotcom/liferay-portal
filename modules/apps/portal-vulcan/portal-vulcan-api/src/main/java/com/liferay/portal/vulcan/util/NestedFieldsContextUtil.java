@@ -25,7 +25,7 @@ public class NestedFieldsContextUtil {
 			1);
 	}
 
-	public static List<String> toNestedFields(String nestedFields) {
+	public static List<String> toList(String nestedFields) {
 		if (Validator.isNotNull(nestedFields)) {
 			return Arrays.asList(nestedFields.split("\\s*,\\s*"));
 		}

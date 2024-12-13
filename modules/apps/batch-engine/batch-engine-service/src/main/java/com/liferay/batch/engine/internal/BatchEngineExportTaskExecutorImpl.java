@@ -153,7 +153,7 @@ public class BatchEngineExportTaskExecutorImpl
 						NestedFieldsContextUtil.limitDepth(
 							GetterUtil.getInteger(
 								parameters.get("batchNestedFieldsDepth"))),
-						NestedFieldsContextUtil.toNestedFields(
+						NestedFieldsContextUtil.toList(
 							MapUtil.getString(
 								parameters, "batchNestedFields"))));
 			}

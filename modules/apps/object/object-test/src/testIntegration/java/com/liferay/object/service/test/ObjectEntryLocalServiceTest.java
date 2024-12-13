@@ -4835,71 +4835,103 @@ public class ObjectEntryLocalServiceTest {
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
+				).localized(
+					true
 				).name(
 					"longTextLocalized1"
 				).objectDefinitionId(
 					objectDefinition.getObjectDefinitionId()
-				).localized(
-					true
 				).system(
 					true
 				).build());
 		}
 
 		_addCustomObjectField(
+			new AttachmentObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"localizedAttachment"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.
+							NAME_ACCEPTED_FILE_EXTENSIONS
+					).value(
+						"png"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_FILE_SOURCE
+					).value(
+						ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+					).value(
+						"100"
+					).build())
+			).build());
+		_addCustomObjectField(
 			new IntegerObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"integerLocalized"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).build());
 		_addCustomObjectField(
 			new LongIntegerObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"longIntegerLocalized"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).build());
 		_addCustomObjectField(
 			new LongTextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"longTextLocalized2"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).build());
 		_addCustomObjectField(
 			new RichTextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"richTextLocalized"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).build());
 		_addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"textLocalized"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).objectFieldSettings(
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
@@ -4989,6 +5021,24 @@ public class ObjectEntryLocalServiceTest {
 					"longIntegerLocalized_i18n",
 					HashMapBuilder.put(
 						"en_US", "9223372036854775808"
+					).build()
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidFileExtension.class,
+			"The file extension txt is invalid for object field " +
+				"\"localizedAttachment\"",
+			() -> _addObjectEntry(
+				group.getGroupId(), objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"localizedAttachment_i18n",
+					HashMapBuilder.put(
+						"en_US",
+						() -> {
+							FileEntry fileEntry = _addTempFileEntry(
+								RandomTestUtil.randomString());
+
+							return fileEntry.getFileEntryId();
+						}
 					).build()
 				).build()));
 		AssertUtils.assertFailure(

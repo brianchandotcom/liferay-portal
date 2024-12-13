@@ -1,5 +1,6 @@
 {
 	"dependencies": [
 		"liferaycustomersiteinitializercode"
-	]
+	],
+	"deploy": false
 }

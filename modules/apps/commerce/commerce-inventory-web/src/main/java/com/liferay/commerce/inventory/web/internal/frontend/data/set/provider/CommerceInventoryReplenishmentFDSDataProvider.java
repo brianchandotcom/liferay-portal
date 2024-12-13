@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
@@ -14,6 +13,7 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +51,6 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Replenishment> replenishments = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -66,33 +63,27 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 		String unitOfMeasureKey = ParamUtil.getString(
 			httpServletRequest, "unitOfMeasureKey");
 
-		List<CommerceInventoryReplenishmentItem>
-			commerceInventoryReplenishmentItems =
-				_commerceInventoryReplenishmentItemService.
-					getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
-						_portal.getCompanyId(httpServletRequest), sku,
-						unitOfMeasureKey, fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition());
+		return TransformUtil.transform(
+			_commerceInventoryReplenishmentItemService.
+				getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+					_portal.getCompanyId(httpServletRequest), sku,
+					unitOfMeasureKey, fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition()),
+			commerceInventoryReplenishmentItem -> {
+				CommerceInventoryWarehouse commerceInventoryWarehouse =
+					commerceInventoryReplenishmentItem.
+						getCommerceInventoryWarehouse();
 
-		for (CommerceInventoryReplenishmentItem
-				commerceInventoryReplenishmentItem :
-					commerceInventoryReplenishmentItems) {
+				BigDecimal quantity = BigDecimal.ZERO;
 
-			CommerceInventoryWarehouse commerceInventoryWarehouse =
-				commerceInventoryReplenishmentItem.
-					getCommerceInventoryWarehouse();
+				BigDecimal commerceInventoryWarehouseItemQuantity =
+					commerceInventoryReplenishmentItem.getQuantity();
 
-			BigDecimal quantity = BigDecimal.ZERO;
+				if (commerceInventoryWarehouseItemQuantity != null) {
+					quantity = commerceInventoryWarehouseItemQuantity;
+				}
 
-			BigDecimal commerceInventoryWarehouseItemQuantity =
-				commerceInventoryReplenishmentItem.getQuantity();
-
-			if (commerceInventoryWarehouseItemQuantity != null) {
-				quantity = commerceInventoryWarehouseItemQuantity;
-			}
-
-			replenishments.add(
-				new Replenishment(
+				return new Replenishment(
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryWarehouseId(),
 					commerceInventoryReplenishmentItem.
@@ -107,10 +98,8 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 						quantity, commerceInventoryReplenishmentItem.getSku(),
 						commerceInventoryReplenishmentItem.
 							getUnitOfMeasureKey()),
-					commerceInventoryReplenishmentItem.getUnitOfMeasureKey()));
-		}
-
-		return replenishments;
+					commerceInventoryReplenishmentItem.getUnitOfMeasureKey());
+			});
 	}
 
 	@Override

@@ -6,7 +6,6 @@
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
@@ -14,6 +13,7 @@ import com.liferay.commerce.inventory.web.internal.model.Warehouse;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,70 +45,63 @@ public class CommerceInventoryWarehouseFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Warehouse> warehouses = new ArrayList<>();
-
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 		String unitOfMeasureKey = ParamUtil.getString(
 			httpServletRequest, "unitOfMeasureKey");
 
-		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems =
+		return TransformUtil.transform(
 			_commerceInventoryWarehouseItemService.
 				getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
 					_portal.getCompanyId(httpServletRequest), sku,
 					unitOfMeasureKey, fdsPagination.getStartPosition(),
-					fdsPagination.getEndPosition());
+					fdsPagination.getEndPosition()),
+			commerceInventoryWarehouseItem -> {
+				CommerceInventoryWarehouse commerceInventoryWarehouse =
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouse();
 
-		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
-				commerceInventoryWarehouseItems) {
+				BigDecimal stockQuantity = BigDecimal.ZERO;
 
-			CommerceInventoryWarehouse commerceInventoryWarehouse =
-				commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
+				BigDecimal commerceInventoryWarehouseItemQuantity =
+					commerceInventoryWarehouseItem.getQuantity();
 
-			BigDecimal stockQuantity = BigDecimal.ZERO;
+				if (commerceInventoryWarehouseItemQuantity != null) {
+					stockQuantity = commerceInventoryWarehouseItemQuantity;
+				}
 
-			BigDecimal commerceInventoryWarehouseItemQuantity =
-				commerceInventoryWarehouseItem.getQuantity();
+				BigDecimal reservedQuantity = BigDecimal.ZERO;
 
-			if (commerceInventoryWarehouseItemQuantity != null) {
-				stockQuantity = commerceInventoryWarehouseItemQuantity;
-			}
+				BigDecimal commerceInventoryWarehouseItemReservedQuantity =
+					commerceInventoryWarehouseItem.getReservedQuantity();
 
-			BigDecimal reservedQuantity = BigDecimal.ZERO;
+				if (commerceInventoryWarehouseItemReservedQuantity != null) {
+					reservedQuantity =
+						commerceInventoryWarehouseItemReservedQuantity;
+				}
 
-			BigDecimal commerceInventoryWarehouseItemReservedQuantity =
-				commerceInventoryWarehouseItem.getReservedQuantity();
+				BigDecimal replenishmentQuantity = BigDecimal.ZERO;
 
-			if (commerceInventoryWarehouseItemReservedQuantity != null) {
-				reservedQuantity =
-					commerceInventoryWarehouseItemReservedQuantity;
-			}
+				BigDecimal commerceInventoryReplenishmentItemsCount =
+					_commerceInventoryReplenishmentItemService.
+						getCommerceInventoryReplenishmentItemsCount(
+							commerceInventoryWarehouse.
+								getCommerceInventoryWarehouseId(),
+							sku, unitOfMeasureKey);
 
-			BigDecimal replenishmentQuantity = BigDecimal.ZERO;
+				if (commerceInventoryReplenishmentItemsCount != null) {
+					replenishmentQuantity =
+						commerceInventoryReplenishmentItemsCount;
+				}
 
-			BigDecimal commerceInventoryReplenishmentItemsCount =
-				_commerceInventoryReplenishmentItemService.
-					getCommerceInventoryReplenishmentItemsCount(
-						commerceInventoryWarehouse.
-							getCommerceInventoryWarehouseId(),
-						sku, unitOfMeasureKey);
-
-			if (commerceInventoryReplenishmentItemsCount != null) {
-				replenishmentQuantity =
-					commerceInventoryReplenishmentItemsCount;
-			}
-
-			warehouses.add(
-				new Warehouse(
+				return new Warehouse(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId(),
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
 					commerceInventoryWarehouse.getName(
 						_portal.getLocale(httpServletRequest)),
-					replenishmentQuantity, reservedQuantity, stockQuantity));
-		}
-
-		return warehouses;
+					replenishmentQuantity, reservedQuantity, stockQuantity);
+			});
 	}
 
 	@Override

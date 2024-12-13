@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.BookedQuantity;
@@ -16,6 +15,7 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -31,7 +31,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,41 +56,34 @@ public class CommerceInventoryBookedFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<BookedQuantity> bookedQuantities = new ArrayList<>();
-
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 		String unitOfMeasureKey = ParamUtil.getString(
 			httpServletRequest, "unitOfMeasureKey");
 
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities =
-				_commerceInventoryBookedQuantityService.
-					getCommerceInventoryBookedQuantities(
-						_portal.getCompanyId(httpServletRequest),
-						fdsKeywords.getKeywords(), sku, unitOfMeasureKey,
-						fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition());
+		return TransformUtil.transform(
+			_commerceInventoryBookedQuantityService.
+				getCommerceInventoryBookedQuantities(
+					_portal.getCompanyId(httpServletRequest),
+					fdsKeywords.getKeywords(), sku, unitOfMeasureKey,
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition()),
+			commerceInventoryBookedQuantity -> {
+				CommerceOrderItem commerceOrderItem =
+					_commerceOrderItemLocalService.
+						fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+							commerceInventoryBookedQuantity.
+								getCommerceInventoryBookedQuantityId());
 
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				commerceInventoryBookedQuantities) {
+				BigDecimal bookedQuantity = BigDecimal.ZERO;
 
-			CommerceOrderItem commerceOrderItem =
-				_commerceOrderItemLocalService.
-					fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
-						commerceInventoryBookedQuantity.
-							getCommerceInventoryBookedQuantityId());
+				BigDecimal commerceInventoryWarehouseItemQuantity =
+					commerceInventoryBookedQuantity.getQuantity();
 
-			BigDecimal bookedQuantity = BigDecimal.ZERO;
+				if (commerceInventoryWarehouseItemQuantity != null) {
+					bookedQuantity = commerceInventoryWarehouseItemQuantity;
+				}
 
-			BigDecimal commerceInventoryWarehouseItemQuantity =
-				commerceInventoryBookedQuantity.getQuantity();
-
-			if (commerceInventoryWarehouseItemQuantity != null) {
-				bookedQuantity = commerceInventoryWarehouseItemQuantity;
-			}
-
-			bookedQuantities.add(
-				new BookedQuantity(
+				return new BookedQuantity(
 					_getAccountName(commerceOrderItem),
 					_getCommerceOrderId(commerceOrderItem),
 					_getExpirationDate(
@@ -102,10 +94,8 @@ public class CommerceInventoryBookedFDSDataProvider
 						bookedQuantity,
 						commerceInventoryBookedQuantity.getSku(),
 						commerceInventoryBookedQuantity.getUnitOfMeasureKey()),
-					commerceInventoryBookedQuantity.getUnitOfMeasureKey()));
-		}
-
-		return bookedQuantities;
+					commerceInventoryBookedQuantity.getUnitOfMeasureKey());
+			});
 	}
 
 	@Override

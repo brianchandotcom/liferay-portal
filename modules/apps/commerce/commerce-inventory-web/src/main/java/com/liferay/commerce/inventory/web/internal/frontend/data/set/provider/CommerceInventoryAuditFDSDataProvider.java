@@ -6,7 +6,6 @@
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.frontend.model.TimelineModel;
-import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditService;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
@@ -14,6 +13,7 @@ import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFD
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,8 +53,6 @@ public class CommerceInventoryAuditFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<TimelineModel> timelineModels = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -68,48 +65,44 @@ public class CommerceInventoryAuditFDSDataProvider
 		String unitOfMeasureKey = ParamUtil.getString(
 			httpServletRequest, "unitOfMeasureKey");
 
-		List<CommerceInventoryAudit> commerceInventoryAudits =
+		return TransformUtil.transform(
 			_commerceInventoryAuditService.getCommerceInventoryAudits(
 				_portal.getCompanyId(httpServletRequest), sku, unitOfMeasureKey,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			commerceInventoryAudit -> {
+				StringBundler titleSB = new StringBundler(1);
 
-		for (CommerceInventoryAudit commerceInventoryAudit :
-				commerceInventoryAudits) {
+				try {
+					CommerceInventoryAuditType commerceInventoryAuditType =
+						_commerceInventoryAuditTypeRegistry.
+							getCommerceInventoryAuditType(
+								commerceInventoryAudit.getLogType());
 
-			StringBundler titleSB = new StringBundler(1);
+					Locale locale = _portal.getLocale(httpServletRequest);
 
-			try {
-				CommerceInventoryAuditType commerceInventoryAuditType =
-					_commerceInventoryAuditTypeRegistry.
-						getCommerceInventoryAuditType(
-							commerceInventoryAudit.getLogType());
+					titleSB.append(
+						commerceInventoryAuditType.formatLog(
+							commerceInventoryAudit.getUserId(),
+							commerceInventoryAudit.getLogTypeSettings(),
+							locale));
 
-				Locale locale = _portal.getLocale(httpServletRequest);
+					BigDecimal commerceInventoryWarehouseItemQuantity =
+						commerceInventoryAudit.getQuantity();
 
-				titleSB.append(
-					commerceInventoryAuditType.formatLog(
-						commerceInventoryAudit.getUserId(),
-						commerceInventoryAudit.getLogTypeSettings(), locale));
-
-				BigDecimal commerceInventoryWarehouseItemQuantity =
-					commerceInventoryAudit.getQuantity();
-
-				timelineModels.add(
-					new TimelineModel(
+					return new TimelineModel(
 						commerceInventoryAudit.getCommerceInventoryAuditId(),
 						dateTimeFormat.format(
 							commerceInventoryAudit.getCreateDate()),
 						commerceInventoryAuditType.formatQuantity(
 							commerceInventoryWarehouseItemQuantity, locale),
-						titleSB.toString()));
-			}
-			catch (Exception exception) {
-				throw new PortalException(exception.getMessage(), exception);
-			}
-		}
-
-		return timelineModels;
+						titleSB.toString());
+				}
+				catch (Exception exception) {
+					throw new PortalException(
+						exception.getMessage(), exception);
+				}
+			});
 	}
 
 	@Override

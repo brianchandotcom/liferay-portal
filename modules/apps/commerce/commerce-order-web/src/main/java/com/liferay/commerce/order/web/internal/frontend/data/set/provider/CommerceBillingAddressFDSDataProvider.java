@@ -17,6 +17,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,8 +48,6 @@ public class CommerceBillingAddressFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Address> addresses = new ArrayList<>();
-
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
@@ -60,23 +58,17 @@ public class CommerceBillingAddressFDSDataProvider
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
 
-		List<CommerceAddress> commerceAddresses =
+		return TransformUtil.transform(
 			_commerceAddressService.getBillingCommerceAddresses(
 				commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 				commerceOrder.getCommerceAccountId(),
 				commerceChannel.getCommerceChannelId(),
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), sort);
-
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-			addresses.add(
-				new Address(
-					commerceAddress.getCommerceAddressId(),
-					commerceAddress.getName(),
-					_getDescriptiveCommerceAddress(commerceAddress)));
-		}
-
-		return addresses;
+				fdsPagination.getEndPosition(), sort),
+			commerceAddress -> new Address(
+				commerceAddress.getCommerceAddressId(),
+				commerceAddress.getName(),
+				_getDescriptiveCommerceAddress(commerceAddress)));
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -175,35 +176,36 @@ public class CommerceOrderItemFDSDataProvider
 
 		Locale locale = themeDisplay.getLocale();
 
-		List<OrderItem> orderItems = new ArrayList<>();
+		return TransformUtil.transform(
+			commerceOrderItems,
+			commerceOrderItem -> {
+				Format dateTimeFormat = FastDateFormatFactoryUtil.getDate(
+					locale, themeDisplay.getTimeZone());
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			Format dateTimeFormat = FastDateFormatFactoryUtil.getDate(
-				locale, themeDisplay.getTimeZone());
+				CommerceOrder commerceOrder =
+					commerceOrderItem.getCommerceOrder();
 
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+				CommerceOrderItemPrice commerceOrderItemPrice =
+					_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
+						commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-			CommerceOrderItemPrice commerceOrderItemPrice =
-				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
-					commerceOrder.getCommerceCurrency(), commerceOrderItem);
+				String name = commerceOrderItem.getName(locale);
 
-			String name = commerceOrderItem.getName(locale);
+				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-			StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+				List<KeyValuePair> keyValuePairs =
+					_cpInstanceHelper.getKeyValuePairs(
+						commerceOrderItem.getCPDefinitionId(),
+						commerceOrderItem.getJson(), locale);
 
-			List<KeyValuePair> keyValuePairs =
-				_cpInstanceHelper.getKeyValuePairs(
-					commerceOrderItem.getCPDefinitionId(),
-					commerceOrderItem.getJson(), locale);
+				for (KeyValuePair keyValuePair : keyValuePairs) {
+					stringJoiner.add(keyValuePair.getValue());
+				}
 
-			for (KeyValuePair keyValuePair : keyValuePairs) {
-				stringJoiner.add(keyValuePair.getValue());
-			}
+				String unitOfMeasureKey =
+					commerceOrderItem.getUnitOfMeasureKey();
 
-			String unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
-
-			orderItems.add(
-				new OrderItem(
+				return new OrderItem(
 					commerceOrderItem.getDeliveryGroupName(),
 					_getDiscount(commerceOrderItemPrice, locale),
 					_commerceOrderItemQuantityFormatter.format(
@@ -230,10 +232,8 @@ public class CommerceOrderItemFDSDataProvider
 					_getSubscriptionPeriod(
 						commerceOrderItem, httpServletRequest),
 					_getTotal(commerceOrderItemPrice, locale),
-					unitOfMeasureKey));
-		}
-
-		return orderItems;
+					unitOfMeasureKey);
+			});
 	}
 
 	private String _getPeriodKey(

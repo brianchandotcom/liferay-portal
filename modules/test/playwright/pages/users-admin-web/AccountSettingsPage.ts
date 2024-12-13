@@ -9,27 +9,37 @@ import {waitForAlert} from '../../utils/waitForAlert';
 
 export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
+	private readonly displayMenuItem: Locator;
+	readonly languageSelect: Locator;
 	readonly page: Page;
+	private readonly preferencesNavigationItem: Locator;
 	readonly rolesMenuItem: Locator;
 	readonly saveButton: Locator;
+	private readonly timeZoneSelect: Locator;
 	readonly userDisplayData: Locator;
 	readonly userPersonalMenuButton: Locator;
-	readonly languageSelect: Locator;
 
 	constructor(page: Page) {
 		this.accountSettingsMenuItem = page.getByRole('menuitem', {
 			name: 'Account Settings',
 		});
+		this.displayMenuItem = page.getByRole('link', {
+			name: 'Display Settings',
+		});
+		this.languageSelect = page.getByLabel('Language');
 		this.page = page;
+		this.preferencesNavigationItem = page.locator('.nav-link', {
+			hasText: 'Preferences',
+		});
 		this.rolesMenuItem = page.getByRole('link', {
 			name: 'Roles',
 		});
 		this.saveButton = page.getByRole('button', {
 			name: 'Save',
 		});
+		this.timeZoneSelect = page.getByLabel('Time Zone');
 		this.userDisplayData = page.getByText('User Display Data');
 		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
-		this.languageSelect = page.getByLabel('Language');
 	}
 
 	async goToAccountSettings() {
@@ -52,11 +62,9 @@ export class AccountSettingsPage {
 	async goToDisplaySettings() {
 		await this.goToAccountSettings();
 
-		await this.page.locator('.nav-link', {hasText: 'Preferences'}).click();
+		await this.preferencesNavigationItem.click();
 
-		await this.page
-			.locator('.nav-link', {hasText: 'Display Settings'})
-			.click();
+		await this.displayMenuItem.click();
 	}
 
 	async selectAccountLanguage(option: string) {
@@ -65,11 +73,9 @@ export class AccountSettingsPage {
 	}
 
 	async setTimeZone(timeZone: string) {
-		const timeZoneSelect = this.page.getByLabel('Time Zone');
+		await this.timeZoneSelect.selectOption(timeZone);
 
-		await timeZoneSelect.selectOption(timeZone);
-
-		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.saveButton.click();
 
 		await waitForAlert(this.page);
 	}

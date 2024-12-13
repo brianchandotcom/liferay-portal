@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.search.experiences.internal.info.collection.provider.JournalArticleSXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
@@ -63,9 +62,11 @@ public class
 	protected InfoCollectionProvider<?> createInfoCollectionProvider(
 		SXPBlueprint sxpBlueprint) {
 
-		return new JournalArticleSXPBlueprintInfoCollectionProvider(
-			_assetHelper, _journalArticleService, _searcher,
-			_searchRequestBuilderFactory, sxpBlueprint);
+		//		return new JournalArticleSXPBlueprintInfoCollectionProvider(
+		//			_assetHelper, _journalArticleService, _searcher,
+		//			_searchRequestBuilderFactory, sxpBlueprint);
+
+		return null;
 	}
 
 	@Override

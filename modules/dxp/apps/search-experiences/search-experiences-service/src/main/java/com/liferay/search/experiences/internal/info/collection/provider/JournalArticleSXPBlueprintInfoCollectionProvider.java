@@ -6,6 +6,8 @@
 package com.liferay.search.experiences.internal.info.collection.provider;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -19,7 +21,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -44,13 +50,17 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 			   SingleFormVariationInfoCollectionProvider<JournalArticle> {
 
 	public JournalArticleSXPBlueprintInfoCollectionProvider(
-		AssetHelper assetHelper, JournalArticleService journalArticleService,
-		Searcher searcher,
+		AssetHelper assetHelper, ClassNameLocalService classNameLocalService,
+		DDMStructureService ddmStructureService, GroupService groupService,
+		JournalArticleService journalArticleService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		SXPBlueprint sxpBlueprint) {
 
 		super(assetHelper, searcher, searchRequestBuilderFactory, sxpBlueprint);
 
+		_classNameLocalService = classNameLocalService;
+		_ddmStructureService = ddmStructureService;
+		_groupService = groupService;
 		_journalArticleService = journalArticleService;
 	}
 
@@ -87,11 +97,52 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 		GeneralConfiguration generalConfiguration =
 			configuration.getGeneralConfiguration();
 
-		if (generalConfiguration == null) {
+		String[] searchableAssetTypes =
+			generalConfiguration.getSearchableAssetTypes();
+
+		if (searchableAssetTypes.length != 1) {
 			return "0";
 		}
 
-		return generalConfiguration.getSearchableAssetSubType();
+		String[] searchableAssetTypeWithSubtype = StringUtil.split(
+			searchableAssetTypes[0], StringPool.POUND);
+
+		if (searchableAssetTypeWithSubtype.length < 3) {
+			return "0";
+		}
+
+		Group group;
+
+		try {
+			group = _groupService.fetchGroupByExternalReferenceCode(
+				searchableAssetTypeWithSubtype[1], sxpBlueprint.getCompanyId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get group with external reference code " +
+					searchableAssetTypeWithSubtype[1],
+				portalException);
+
+			return "0";
+		}
+
+		try {
+			DDMStructure ddmStructure =
+				_ddmStructureService.fetchStructureByExternalReferenceCode(
+					searchableAssetTypeWithSubtype[2], group.getGroupId(),
+					_classNameLocalService.getClassNameId(
+						JournalArticle.class));
+
+			return String.valueOf(ddmStructure.getStructureId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get structure with external reference code " +
+					searchableAssetTypeWithSubtype[2],
+				portalException);
+		}
+
+		return "0";
 	}
 
 	@Override
@@ -124,6 +175,9 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleSXPBlueprintInfoCollectionProvider.class);
 
+	private final ClassNameLocalService _classNameLocalService;
+	private final DDMStructureService _ddmStructureService;
+	private final GroupService _groupService;
 	private final JournalArticleService _journalArticleService;
 
 }

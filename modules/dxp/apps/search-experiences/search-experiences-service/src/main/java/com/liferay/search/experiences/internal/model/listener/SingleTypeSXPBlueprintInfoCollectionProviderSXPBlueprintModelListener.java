@@ -9,12 +9,17 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.info.collection.provider.AssetEntrySXPBlueprintInfoCollectionProvider;
@@ -37,14 +42,19 @@ public class
 	public SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
 		BundleContext bundleContext, CompanyLocalService companyLocalService,
 		SXPBlueprintLocalService sxpBlueprintLocalService,
-		AssetHelper assetHelper, DLAppLocalService dlAppLocalService,
+		AssetHelper assetHelper, ClassNameLocalService classNameLocalService,
+		DDMStructureService ddmStructureService,
+		DLAppLocalService dlAppLocalService, GroupService groupService,
 		JournalArticleService journalArticleService, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		super(bundleContext, companyLocalService, sxpBlueprintLocalService);
 
 		_assetHelper = assetHelper;
+		_classNameLocalService = classNameLocalService;
+		_ddmStructureService = ddmStructureService;
 		_dlAppLocalService = dlAppLocalService;
+		_groupService = groupService;
 		_journalArticleService = journalArticleService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
@@ -56,9 +66,10 @@ public class
 			return;
 		}
 
-		if (_hasSingleSearchableAssetType(sxpBlueprint)) {
-			super.onAfterCreate(sxpBlueprint);
-		}
+		_className = _getClassName(sxpBlueprint);
+		_sxpBlueprint = sxpBlueprint;
+
+		super.onAfterCreate(sxpBlueprint);
 	}
 
 	@Override
@@ -67,7 +78,8 @@ public class
 
 		if (_className.equals(JournalArticle.class.getName())) {
 			return new JournalArticleSXPBlueprintInfoCollectionProvider(
-				_assetHelper, _journalArticleService, _searcher,
+				_assetHelper, _classNameLocalService, _ddmStructureService,
+				_groupService, _journalArticleService, _searcher,
 				_searchRequestBuilderFactory, sxpBlueprint);
 		}
 		else if (_className.equals(DLFileEntry.class.getName())) {
@@ -86,7 +98,7 @@ public class
 		return _className;
 	}
 
-	private boolean _hasSingleSearchableAssetType(SXPBlueprint sxpBlueprint) {
+	private String _getClassName(SXPBlueprint sxpBlueprint) {
 		Configuration configuration = Configuration.unsafeToDTO(
 			sxpBlueprint.getConfigurationJSON());
 
@@ -94,28 +106,42 @@ public class
 			configuration.getGeneralConfiguration();
 
 		if (generalConfiguration == null) {
-			return false;
+			return AssetEntry.class.getName();
 		}
 
 		String[] searchableAssetTypes =
 			generalConfiguration.getSearchableAssetTypes();
 
-		if (ArrayUtil.isNotEmpty(searchableAssetTypes) &&
-			(searchableAssetTypes.length == 1)) {
-
-			_className = searchableAssetTypes[0];
-
-			return true;
+		if (ArrayUtil.isEmpty(searchableAssetTypes)) {
+			return AssetEntry.class.getName();
 		}
 
-		return false;
+		String[] searchableAssetTypeWithSubtype = StringUtil.split(
+			searchableAssetTypes[0], StringPool.POUND);
+
+		String className = searchableAssetTypeWithSubtype[0];
+
+		for (int i = 1; i < searchableAssetTypes.length; i++) {
+			searchableAssetTypeWithSubtype = StringUtil.split(
+				searchableAssetTypes[i], StringPool.POUND);
+
+			if (!className.equals(searchableAssetTypeWithSubtype[0])) {
+				return AssetEntry.class.getName();
+			}
+		}
+
+		return className;
 	}
 
 	private final AssetHelper _assetHelper;
 	private String _className = AssetEntry.class.getName();
+	private final ClassNameLocalService _classNameLocalService;
+	private final DDMStructureService _ddmStructureService;
 	private final DLAppLocalService _dlAppLocalService;
+	private final GroupService _groupService;
 	private final JournalArticleService _journalArticleService;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private SXPBlueprint _sxpBlueprint;
 
 }

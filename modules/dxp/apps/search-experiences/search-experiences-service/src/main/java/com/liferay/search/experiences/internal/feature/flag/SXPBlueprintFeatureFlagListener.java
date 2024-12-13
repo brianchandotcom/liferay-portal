@@ -7,10 +7,13 @@ package com.liferay.search.experiences.internal.feature.flag;
 
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.internal.model.listener.InfoCollectionProviderSXPBlueprintModelListener;
@@ -52,7 +55,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 					new SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
 						_bundleContext, _companyLocalService,
 						_sxpBlueprintLocalService, _assetHelper,
-						_dlAppLocalService, _journalArticleService, _searcher,
+						_classNameLocalService, _ddmStructureService,
+						_dlAppLocalService, _groupService,
+						_journalArticleService, _searcher,
 						_searchRequestBuilderFactory);
 
 			infoCollectionProviderSXPBlueprintModelListener.start();
@@ -94,10 +99,19 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 	private BundleContext _bundleContext;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

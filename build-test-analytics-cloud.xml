@@ -20,7 +20,7 @@
 						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
 					/>
 
-					<execute dir="${analytics.cloud.asah.dir}">
+					<execute-analytics-cloud dir="${analytics.cloud.asah.dir}" timeout="600000">
 						./gradlew jar -Dliferay.ci=true
 
 						./gradlew clean assemble -Dliferay.ci=true
@@ -28,7 +28,7 @@
 						docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
 
 						docker images
-					</execute>
+					</execute-analytics-cloud>
 
 					<for list="${analytics.cloud.asah.image.names}" param="analytics.cloud.asah.image.name">
 						<sequential>
@@ -144,7 +144,7 @@
 						replace="\1"
 					/>
 
-					<execute dir="${analytics.cloud.faro.dir}">
+					<execute-analytics-cloud dir="${analytics.cloud.faro.dir}" timeout="600000">
 						${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
 
 						docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
@@ -152,7 +152,7 @@
 						docker rm ${analytics.cloud.faro.container.name}
 
 						docker save --output ${project.dir}/dist/liferay-docker-faro.tar ${analytics.cloud.faro.image.name}
-					</execute>
+					</execute-analytics-cloud>
 				</else>
 			</if>
 		</sequential>
@@ -510,6 +510,59 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="execute-analytics-cloud">
+		<attribute name="dir" />
+		<attribute default="execute.analytics.cloud.result" name="resultproperty" />
+		<attribute default="600000" name="timeout" />
+
+		<text name="commands" trim="true" />
+
+		<sequential>
+			<local name="tstamp.execute" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.execute" />
+			</tstamp>
+
+			<trycatch property="execute.error">
+				<try>
+					<echo file="@{dir}/${tstamp.execute}.sh">
+						@{commands}
+					</echo>
+
+					<local name="execute.path" />
+
+					<local name="java.jdk.home" />
+					<local name="java.jdk.opts" />
+
+					<get-java-jdk-home architecture="x64" type="oracle" version="8" />
+					<get-java-jdk-opts architecture="x64" type="oracle" version="8" />
+
+					<propertyregex
+						input="${env.PATH}"
+						override="true"
+						property="execute.path"
+						regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]+/bin"
+						replace="${java.jdk.home}/bin"
+					/>
+
+					<exec dir="@{dir}" executable="/bin/bash" failonerror="true" resultproperty="@{resultproperty}" timeout="@{timeout}">
+						<arg value="@{dir}/${tstamp.execute}.sh" />
+						<env key="JAVA_HOME" value="${java.jdk.home}" />
+						<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+						<env key="PATH" value="${execute.path}" />
+					</exec>
+				</try>
+				<catch>
+					<fail message="${execute.error}" />
+				</catch>
+				<finally>
+					<delete file="@{dir}/${tstamp.execute}.sh" />
+				</finally>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-analytics-cloud-logs">
 		<sequential>
 			<execute>
@@ -674,41 +727,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 			<create-analytics-cloud-docker-compose start.analytics.cloud="true" />
 
-			<property location="${analytics.cloud.asah.dir}/start_analytics_cloud.sh" name="analytics.cloud.start.sh" />
-
 			<print-file file.name="${analytics.cloud.docker.test.yaml}" />
-
-			<echo file="${analytics.cloud.start.sh}">
-				#!/bin/bash
-
-				touch local.env
-
-				docker system prune --volumes -f
-
-				docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach
-
-				while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
-				do
-					echo "Waiting for docker compose to be healthy."
-
-					sleep 30
-				done
-
-				echo "Docker compose is healthy."
-
-				while [[ -z $(docker logs ${analytics.cloud.faro.container.name} | grep "Completed demo data creation") ]]
-				do
-					echo "Waiting for Faro demo data to be created."
-
-					sleep 15
-				done
-
-				echo "Faro demo data was created."
-
-				docker logs ${analytics.cloud.faro.container.name}
-
-				docker system df
-			</echo>
 
 			<trycatch>
 				<try>
@@ -716,9 +735,37 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 						<try>
 							<local name="analytics.cloud.start.result" />
 
-							<exec dir="${analytics.cloud.asah.dir}" executable="/bin/bash" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
-								<arg value="${analytics.cloud.start.sh}" />
-							</exec>
+							<execute-analytics-cloud dir="${analytics.cloud.asah.dir}" resultproperty="analytics.cloud.start.result" timeout="${analytics.cloud.start.timeout}">
+								#!/bin/bash
+
+								touch local.env
+
+								docker system prune --volumes -f
+
+								docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach
+
+								while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
+								do
+									echo "Waiting for docker compose to be healthy."
+
+									sleep 30
+								done
+
+								echo "Docker compose is healthy."
+
+								while [[ -z $(docker logs ${analytics.cloud.faro.container.name} | grep "Completed demo data creation") ]]
+								do
+									echo "Waiting for Faro demo data to be created."
+
+									sleep 15
+								done
+
+								echo "Faro demo data was created."
+
+								docker logs ${analytics.cloud.faro.container.name}
+
+								docker system df
+							</execute-analytics-cloud>
 
 							<if>
 								<not>
@@ -742,8 +789,6 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					<fail message="${analytics.cloud.error}" />
 				</catch>
 			</trycatch>
-
-			<delete file="${analytics.cloud.start.sh}" />
 		</sequential>
 	</macrodef>
 

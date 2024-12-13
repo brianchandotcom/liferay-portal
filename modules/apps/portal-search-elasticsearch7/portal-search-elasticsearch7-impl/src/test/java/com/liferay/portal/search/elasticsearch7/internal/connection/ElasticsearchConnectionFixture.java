@@ -185,7 +185,8 @@ public class ElasticsearchConnectionFixture
 
 			if (!JavaDetector.isJDK8()) {
 				sidecarJVMOptions =
-					"-Xmx256m|--add-opens=java.base/java.lang=ALL-UNNAMED";
+					"-Xmx256m|--add-opens=java.base/java.lang=ALL-UNNAMED|--" +
+						"add-opens=java.base/java.lang.invoke=ALL-UNNAMED";
 			}
 
 			return HashMapBuilder.<String, Object>put(

@@ -20,6 +20,7 @@ import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -155,67 +155,70 @@ public class CommerceOrderFDSUtil {
 			boolean showCommerceOrderCreateTime, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Order> orders = new ArrayList<>();
-
 		CommerceGroupThreadLocal.set(
 			groupLocalService.fetchGroup(commerceChannelGroupId));
 
-		for (CommerceOrder commerceOrder : commerceOrders) {
-			String amount = StringPool.BLANK;
+		return TransformUtil.transform(
+			commerceOrders,
+			commerceOrder -> {
+				String amount = StringPool.BLANK;
 
-			CommerceMoney totalCommerceMoney = commerceOrder.getTotalMoney();
+				CommerceMoney totalCommerceMoney =
+					commerceOrder.getTotalMoney();
 
-			if (priceDisplayType.equals(
-					CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+				if (priceDisplayType.equals(
+						CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 
-				totalCommerceMoney = commerceOrder.getTotalWithTaxAmountMoney();
-			}
+					totalCommerceMoney =
+						commerceOrder.getTotalWithTaxAmountMoney();
+				}
 
-			if (totalCommerceMoney != null) {
-				amount = totalCommerceMoney.format(themeDisplay.getLocale());
-			}
+				if (totalCommerceMoney != null) {
+					amount = totalCommerceMoney.format(
+						themeDisplay.getLocale());
+				}
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(),
-				CommerceOrderFDSUtil.class);
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language", themeDisplay.getLocale(),
+					CommerceOrderFDSUtil.class);
 
-			String commerceOrderStatusLabel = LanguageUtil.get(
-				resourceBundle,
-				CommerceOrderConstants.getOrderStatusLabel(
-					commerceOrder.getOrderStatus()));
+				String commerceOrderStatusLabel = LanguageUtil.get(
+					resourceBundle,
+					CommerceOrderConstants.getOrderStatusLabel(
+						commerceOrder.getOrderStatus()));
 
-			if (commerceOrderStatusLabel == null) {
-				CommerceOrderStatus commerceOrderStatus =
-					commerceOrderStatusRegistry.getCommerceOrderStatus(
-						commerceOrder.getOrderStatus());
+				if (commerceOrderStatusLabel == null) {
+					CommerceOrderStatus commerceOrderStatus =
+						commerceOrderStatusRegistry.getCommerceOrderStatus(
+							commerceOrder.getOrderStatus());
 
-				commerceOrderStatusLabel = commerceOrderStatus.getLabel(
-					themeDisplay.getLocale());
-			}
+					commerceOrderStatusLabel = commerceOrderStatus.getLabel(
+						themeDisplay.getLocale());
+				}
 
-			String workflowStatusLabel = LanguageUtil.get(
-				resourceBundle,
-				WorkflowConstants.getStatusLabel(commerceOrder.getStatus()));
+				String workflowStatusLabel = LanguageUtil.get(
+					resourceBundle,
+					WorkflowConstants.getStatusLabel(
+						commerceOrder.getStatus()));
 
-			Date orderDate = commerceOrder.getCreateDate();
+				Date orderDate = commerceOrder.getCreateDate();
 
-			if (commerceOrder.getOrderDate() != null) {
-				orderDate = commerceOrder.getOrderDate();
-			}
+				if (commerceOrder.getOrderDate() != null) {
+					orderDate = commerceOrder.getOrderDate();
+				}
 
-			String commerceOrderTypeName = StringPool.BLANK;
+				String commerceOrderTypeName = StringPool.BLANK;
 
-			CommerceOrderType commerceOrderType =
-				commerceOrderTypeService.fetchCommerceOrderType(
-					commerceOrder.getCommerceOrderTypeId());
+				CommerceOrderType commerceOrderType =
+					commerceOrderTypeService.fetchCommerceOrderType(
+						commerceOrder.getCommerceOrderTypeId());
 
-			if (commerceOrderType != null) {
-				commerceOrderTypeName = commerceOrderType.getName(
-					themeDisplay.getLocale());
-			}
+				if (commerceOrderType != null) {
+					commerceOrderTypeName = commerceOrderType.getName(
+						themeDisplay.getLocale());
+				}
 
-			orders.add(
-				new Order(
+				return new Order(
 					commerceOrder.getExternalReferenceCode(),
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountName(), amount,
@@ -227,10 +230,8 @@ public class CommerceOrderFDSUtil {
 					commerceOrder.getName(), commerceOrderStatusLabel,
 					commerceOrderTypeName,
 					commerceOrder.getPurchaseOrderNumber(),
-					workflowStatusLabel));
-		}
-
-		return orders;
+					workflowStatusLabel);
+			});
 	}
 
 	public static String getOrderViewDetailURL(

@@ -106,40 +106,6 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		}
 	}
 
-	@Test
-	public void testPostExportTaskWithFilter() throws Exception {
-		ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "Object3");
-
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
-
-		String filterString =
-			"contains(" + OBJECT_FIELD_NAME_TEXT + ", 'Test')";
-
-		JSONObject jsonObject = _testPostExportTask(
-			"COMPLETED", "filter=" + URLCodec.encodeURL(filterString),
-			objectDefinition);
-
-		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"externalReferenceCode",
-					objectEntry1.getExternalReferenceCode()),
-				JSONUtil.put(
-					"externalReferenceCode",
-					objectEntry2.getExternalReferenceCode())
-			).toString(),
-			_getExportTaskContentJSONArray(
-				jsonObject.getString("externalReferenceCode")
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
 	@FeatureFlags("LPD-29367")
 	@Test
 	public void testPostExportTaskWithBatchNestedFields() throws Exception {
@@ -184,6 +150,40 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertNull(
 			JSONUtil.getValueAsJSONArray(
 				contentJSONArray2, "JSONObject/0", "JSONArray/permissions"));
+	}
+
+	@Test
+	public void testPostExportTaskWithFilter() throws Exception {
+		ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "Object3");
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject1");
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject2");
+
+		String filterString =
+			"contains(" + OBJECT_FIELD_NAME_TEXT + ", 'Test')";
+
+		JSONObject jsonObject = _testPostExportTask(
+			"COMPLETED", "filter=" + URLCodec.encodeURL(filterString),
+			objectDefinition);
+
+		Assert.assertEquals(2, jsonObject.getInt("processedItemsCount"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"externalReferenceCode",
+					objectEntry1.getExternalReferenceCode()),
+				JSONUtil.put(
+					"externalReferenceCode",
+					objectEntry2.getExternalReferenceCode())
+			).toString(),
+			_getExportTaskContentJSONArray(
+				jsonObject.getString("externalReferenceCode")
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private JSONArray _getExportTaskContentJSONArray(

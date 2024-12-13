@@ -31,9 +31,7 @@ public class StringUtil {
 			sb.append(delimiter);
 		}
 
-		int delimiterLength = delimiter.length();
-
-		sb.setLength(sb.length() - delimiterLength);
+		sb.setLength(sb.length() - delimiter.length());
 
 		return sb.toString();
 	}

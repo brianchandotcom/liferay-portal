@@ -18,6 +18,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,30 +65,24 @@ public class CommerceNotificationFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Notification> notifications = new ArrayList<>();
-
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries =
+		return TransformUtil.transform(
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntries(
 					commerceOrder.getGroupId(), CommerceOrder.class.getName(),
 					commerceOrder.getCommerceOrderId(), true,
 					fdsPagination.getStartPosition(),
-					fdsPagination.getEndPosition(), null);
+					fdsPagination.getEndPosition(), null),
+			commerceNotificationQueueEntry -> {
+				User user = _userLocalService.fetchUser(
+					commerceNotificationQueueEntry.getUserId());
 
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			User user = _userLocalService.fetchUser(
-				commerceNotificationQueueEntry.getUserId());
-
-			notifications.add(
-				new Notification(
+				return new Notification(
 					commerceNotificationQueueEntry.
 						getCommerceNotificationQueueEntryId(),
 					new AuthorField(
@@ -106,10 +100,8 @@ public class CommerceNotificationFDSDataProvider
 					_getNotificationPanelURL(
 						commerceNotificationQueueEntry.
 							getCommerceNotificationQueueEntryId(),
-						httpServletRequest)));
-		}
-
-		return notifications;
+						httpServletRequest));
+			});
 	}
 
 	@Override

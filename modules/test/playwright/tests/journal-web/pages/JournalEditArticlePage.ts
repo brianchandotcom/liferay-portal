@@ -149,25 +149,52 @@ export class JournalEditArticlePage {
 		await this.publishArticle();
 	}
 
-	async publishArticle(existingArticle?: boolean) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				name: existingArticle
-					? /publish|publier/i
-					: /publish with permissions|publier avec permissions/i,
-			}),
-			trigger: this.page.getByRole('button', {
-				name: /select and confirm publish settings|sélectionnez et confirmez les/i,
-			}),
-		});
+	async publishArticle(
+		existingArticle?: boolean,
+		viewableBy?: 'Site Members' | 'Owner'
+	) {
+		if (existingArticle) {
+			await expect(async () => {
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: this.page.getByRole('menuitem', {
+						name: /publish|publier/i,
+					}),
+					trigger: this.page.getByRole('button', {
+						name: /select and confirm publish settings|sélectionnez et confirmez les/i,
+					}),
+				});
 
-		if (!existingArticle) {
-			await this.page
-				.locator('[role="dialog"]')
-				.getByRole('button', {name: /publish|publier/i})
-				.click();
+				await waitForAlert(this.page, 'was updated successfully');
+			}).toPass();
+
+			return;
 		}
+
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {
+					name: /publish with permissions|publier avec permissions/i,
+				}),
+				trigger: this.page.getByRole('button', {
+					name: /select and confirm publish settings|sélectionnez et confirmez les/i,
+				}),
+			});
+
+			await expect(this.page.getByLabel('Viewable By')).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass();
+
+		if (viewableBy) {
+			await this.page.getByLabel('Viewable By').selectOption(viewableBy);
+		}
+
+		await this.page
+			.locator('[role="dialog"]')
+			.getByRole('button', {name: /publish|publier/i})
+			.click();
 	}
 
 	async editArticle(title: string) {

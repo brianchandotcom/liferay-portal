@@ -216,7 +216,7 @@ public class TransactionalPortalCacheUtil {
 
 		if (uncommittedBuffer == null) {
 			if (mvcc) {
-				uncommittedBuffer = new UncommittedBuffer(
+				uncommittedBuffer = new MVCCUncommittedBuffer(
 					(PortalCache<Serializable, Object>)portalCache);
 			}
 			else {
@@ -270,7 +270,7 @@ public class TransactionalPortalCacheUtil {
 			ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
 
-	private static class MarkerUncommittedBuffer extends UncommittedBuffer {
+	private static class MarkerUncommittedBuffer extends MVCCUncommittedBuffer {
 
 		@Override
 		public void commit(boolean readOnly) {
@@ -327,7 +327,7 @@ public class TransactionalPortalCacheUtil {
 
 	}
 
-	private static class UncommittedBuffer {
+	private static class MVCCUncommittedBuffer implements UncommittedBuffer {
 
 		public void commit(boolean readOnly) {
 			if (skipCommit(readOnly)) {
@@ -420,7 +420,7 @@ public class TransactionalPortalCacheUtil {
 
 		protected boolean commitByRemove;
 
-		private UncommittedBuffer(
+		private MVCCUncommittedBuffer(
 			PortalCache<Serializable, Object> portalCache) {
 
 			_portalCache = portalCache;
@@ -497,6 +497,18 @@ public class TransactionalPortalCacheUtil {
 		private boolean _skipReplicator;
 		private final int _ttl;
 		private final Object _value;
+
+	}
+
+	private interface UncommittedBuffer {
+
+		public void commit(boolean readOnly);
+
+		public ValueEntry get(Serializable key);
+
+		public void put(Serializable key, ValueEntry valueEntry);
+
+		public void removeAll(boolean skipReplicator);
 
 	}
 

@@ -283,7 +283,7 @@ public class PageElement implements Serializable {
 
 	@JsonGetter("type")
 	@Schema(
-		description = "The page element's type (collection, collection item, column, container, drop zone, form, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
+		description = "The page element's type (collection, collection item, column, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
 	)
 	@Valid
 	public Type getType() {
@@ -329,7 +329,7 @@ public class PageElement implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page element's type (collection, collection item, column, container, drop zone, form, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
+		description = "The page element's type (collection, collection item, column, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
@@ -486,7 +486,8 @@ public class PageElement implements Serializable {
 
 		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
 		COLUMN("Column"), CONTAINER("Container"), DROP_ZONE("DropZone"),
-		FORM("Form"), FRAGMENT("Fragment"),
+		FORM("Form"), FORM_STEP("FormStep"),
+		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
 		FRAGMENT_COMPOSITION("FragmentComposition"),
 		FRAGMENT_DROP_ZONE("FragmentDropZone"), ROW("Row"), WIDGET("Widget");
 

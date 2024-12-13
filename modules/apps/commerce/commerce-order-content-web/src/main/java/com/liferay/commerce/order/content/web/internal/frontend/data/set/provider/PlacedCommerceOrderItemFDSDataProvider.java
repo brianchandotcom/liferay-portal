@@ -28,6 +28,7 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -173,29 +173,29 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			return Collections.emptyList();
 		}
 
-		List<OrderItem> orderItems = new ArrayList<>();
+		return TransformUtil.transform(
+			commerceOrderItems,
+			commerceOrderItem -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				Locale locale = themeDisplay.getLocale();
 
-			Locale locale = themeDisplay.getLocale();
+				CommerceOrder commerceOrder =
+					commerceOrderItem.getCommerceOrder();
 
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+				CommerceOrderItemPrice commerceOrderItemPrice =
+					_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
+						commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-			CommerceOrderItemPrice commerceOrderItemPrice =
-				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
-					commerceOrder.getCommerceCurrency(), commerceOrderItem);
+				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+					_cpInstanceUnitOfMeasureLocalService.
+						fetchCPInstanceUnitOfMeasure(
+							commerceOrderItem.getCPInstanceId(),
+							commerceOrderItem.getUnitOfMeasureKey());
 
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-				_cpInstanceUnitOfMeasureLocalService.
-					fetchCPInstanceUnitOfMeasure(
-						commerceOrderItem.getCPInstanceId(),
-						commerceOrderItem.getUnitOfMeasureKey());
-
-			orderItems.add(
-				new OrderItem(
+				return new OrderItem(
 					commerceOrderItem.getCPInstanceId(),
 					CommerceOrderItemUtil.formatDiscountAmount(
 						commerceOrderItemPrice, locale),
@@ -225,10 +225,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 						commerceOrderItem.getCPInstanceId()),
 					CommerceOrderItemUtil.formatTotalPrice(
 						commerceOrderItemPrice, locale),
-					commerceOrderItem.getUnitOfMeasureKey()));
-		}
-
-		return orderItems;
+					commerceOrderItem.getUnitOfMeasureKey());
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -392,10 +392,10 @@ public class SourceUtil {
 		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
 	}
 
-	public static String stripQuotes(String s, char... delimeters) {
-		List<Character> delimetersList = ListUtil.fromArray(delimeters);
+	public static String stripQuotes(String s, char... delimiters) {
+		List<Character> delimitersList = ListUtil.fromArray(delimiters);
 
-		char delimeter = CharPool.SPACE;
+		char delimiter = CharPool.SPACE;
 		boolean insideQuotes = false;
 
 		StringBundler sb = new StringBundler();
@@ -404,7 +404,7 @@ public class SourceUtil {
 			char c = s.charAt(i);
 
 			if (insideQuotes) {
-				if (c == delimeter) {
+				if (c == delimiter) {
 					int precedingBackSlashCount = 0;
 
 					for (int j = i - 1; j >= 0; j--) {
@@ -423,8 +423,8 @@ public class SourceUtil {
 					}
 				}
 			}
-			else if (delimetersList.contains(c)) {
-				delimeter = c;
+			else if (delimitersList.contains(c)) {
+				delimiter = c;
 				insideQuotes = true;
 			}
 			else {

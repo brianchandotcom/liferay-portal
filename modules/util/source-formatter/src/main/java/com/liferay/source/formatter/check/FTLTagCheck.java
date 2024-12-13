@@ -84,10 +84,10 @@ public class FTLTagCheck extends BaseFileCheck {
 
 			String tabs = matcher.group(2);
 
-			String delimeter = StringPool.SPACE;
+			String delimiter = StringPool.SPACE;
 
 			if (attributesMap.size() > 1) {
-				delimeter = "\n" + tabs + "\t";
+				delimiter = "\n" + tabs + "\t";
 			}
 
 			StringBundler sb = new StringBundler(
@@ -97,7 +97,7 @@ public class FTLTagCheck extends BaseFileCheck {
 
 			sb.append(tagName);
 
-			sb.append(delimeter);
+			sb.append(delimiter);
 
 			for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
 				sb.append(entry.getKey());
@@ -114,7 +114,7 @@ public class FTLTagCheck extends BaseFileCheck {
 				}
 
 				sb.append(entry.getValue());
-				sb.append(delimeter);
+				sb.append(delimiter);
 			}
 
 			sb.setIndex(sb.index() - 1);

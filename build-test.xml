@@ -1233,6 +1233,8 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<isset property="java.jdk.opts.default.runtime" />
 				</and>
 			</condition>
+
+			<var name="java.jdk.opts" value="${java.jdk.opts} -XX:+IgnoreUnrecognizedVMOptions" />
 		</sequential>
 	</macrodef>
 

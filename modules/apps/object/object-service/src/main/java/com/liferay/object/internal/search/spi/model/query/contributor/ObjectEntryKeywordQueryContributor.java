@@ -260,13 +260,19 @@ public class ObjectEntryKeywordQueryContributor
 					_searchLocalizationHelper.getLocalizedFieldNames(
 						new String[] {"nestedFieldArray.value"}, searchContext);
 
+				BooleanQuery nestedLocalizedBooleanQuery =
+					new BooleanQueryImpl();
+
 				for (String localizedFieldName : localizedFieldNames) {
-					nestedBooleanQuery.add(
+					nestedLocalizedBooleanQuery.add(
 						new MatchQuery(localizedFieldName, token),
 						BooleanClauseOccur.SHOULD);
 
 					queryConfig.addHighlightFieldNames(localizedFieldName);
 				}
+
+				nestedBooleanQuery.add(
+					nestedLocalizedBooleanQuery, BooleanClauseOccur.MUST);
 			}
 			else if (Objects.equals(
 						objectField.getIndexedLanguageId(),

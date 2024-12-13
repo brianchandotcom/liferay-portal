@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -216,15 +217,12 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				JSONUtil.put(
 					"warningMessages",
 					() -> {
-						if ((weakMissingReferences != null) &&
-							!weakMissingReferences.isEmpty()) {
-
-							return _staging.getWarningMessagesJSONArray(
-								themeDisplay.getLocale(),
-								weakMissingReferences);
+						if (MapUtil.isEmpty(weakMissingReferences)) {
+							return null;
 						}
 
-						return null;
+						return _staging.getWarningMessagesJSONArray(
+							themeDisplay.getLocale(), weakMissingReferences);
 					}));
 		}
 	}

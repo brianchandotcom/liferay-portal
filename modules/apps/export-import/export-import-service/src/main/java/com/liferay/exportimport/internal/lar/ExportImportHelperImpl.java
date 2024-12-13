@@ -1520,25 +1520,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				className);
 
-		if ((stagedModelDataHandler == null) ||
-			!stagedModelDataHandler.validateReference(
+		if ((stagedModelDataHandler != null) &&
+			stagedModelDataHandler.validateReference(
 				portletDataContext, element)) {
 
-			MissingReference missingReference = new MissingReference(element);
-
-			Map<Long, Long> groupIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Group.class);
-
-			missingReference.setGroupId(
-				MapUtil.getLong(
-					groupIds,
-					GetterUtil.getLong(element.attributeValue("group-id"))));
-
-			return missingReference;
+			return null;
 		}
 
-		return null;
+		MissingReference missingReference = new MissingReference(element);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		missingReference.setGroupId(
+			MapUtil.getLong(
+				groupIds,
+				GetterUtil.getLong(element.attributeValue("group-id"))));
+
+		return missingReference;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

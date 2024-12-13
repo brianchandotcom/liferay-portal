@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -279,15 +280,12 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 				JSONUtil.put(
 					"warningMessages",
 					() -> {
-						if ((weakMissingReferences != null) &&
-							!weakMissingReferences.isEmpty()) {
-
-							return _staging.getWarningMessagesJSONArray(
-								themeDisplay.getLocale(),
-								weakMissingReferences);
+						if (MapUtil.isEmpty(weakMissingReferences)) {
+							return null;
 						}
 
-						return null;
+						return _staging.getWarningMessagesJSONArray(
+							themeDisplay.getLocale(), weakMissingReferences);
 					}));
 		}
 	}

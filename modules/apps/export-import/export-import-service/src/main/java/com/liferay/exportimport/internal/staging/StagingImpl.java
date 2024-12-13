@@ -2016,19 +2016,17 @@ public class StagingImpl implements Staging {
 				JSONUtil.put(
 					"info",
 					() -> {
-						if (Validator.isNotNull(
-								missingReference.getClassName())) {
-
-							return _language.format(
-								locale,
-								"the-original-x-does-not-exist-in-the-" +
-									"current-environment",
-								ResourceActionsUtil.getModelResource(
-									locale, missingReference.getClassName()),
-								false);
+						if (Validator.isNull(missingReference.getClassName())) {
+							return null;
 						}
 
-						return null;
+						return _language.format(
+							locale,
+							"the-original-x-does-not-exist-in-the-current-" +
+								"environment",
+							ResourceActionsUtil.getModelResource(
+								locale, missingReference.getClassName()),
+							false);
 					}
 				).put(
 					"size",

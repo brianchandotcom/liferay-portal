@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -144,6 +145,21 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		_journalArticle = _addJournalArticle(
 			_assetCategory, _assetTag, _serviceContext, _user);
+
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			true,
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).indexed(
+					true
+				).name(
+					"localizedTextObjectFieldName"
+				).localized(
+					true
+				).build()));
 	}
 
 	@Override
@@ -1156,46 +1172,36 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithLocalizedTextObjectField()
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_user.getUserId(), 0, null, false, true, true, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).indexed(
-						true
-					).name(
-						"localizedTextObjectFieldName"
-					).localized(
-						true
-					).build()));
-
-		objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_user.getUserId(), objectDefinition.getObjectDefinitionId());
-
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
 				false, Collections.emptyMap(), _dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
 		_objectEntryManager.addObjectEntry(
-			dtoConverterContext, objectDefinition,
+			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"localizedTextObjectFieldName_i18n",
 						HashMapBuilder.put(
-							"en_US", "en_US localizedTextObjectFieldValue"
+							"en_US", "Paul"
 						).put(
-							"pt_BR", "pt_BR localizedTextObjectFieldValue"
+							"pt_BR", "Paulo"
+						).build()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "Peter"
+						).put(
+							"pt_BR", "Pedro"
 						).build()
 					).build();
 				}
@@ -1203,16 +1209,24 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(
-			objectDefinition.getClassName(), null, "pt_BR", "embedded", "0",
+			_objectDefinition.getClassName(), null, "Paulo", "embedded", "0",
 			new SearchRequestBody());
 
 		List<SearchResult> searchResults = ListUtil.fromCollection(
 			searchPage.getItems());
 
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
 		Assert.assertTrue(
 			searchResults.toString(
 			).contains(
-				"en_US localizedTextObjectFieldValue"
+				"Paul"
+			));
+
+		Assert.assertFalse(
+			searchResults.toString(
+			).contains(
+				"Peter"
 			));
 	}
 
@@ -1394,6 +1408,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private JSONFactory _jsonFactory;
 
 	private Locale _locale;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
+
 	private SearchEngine _searchEngine;
 
 	@Inject

@@ -7537,8 +7537,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<if>
 				<or>
-					<contains string="@{name}" substring="orcllinux" />
+					<contains string="@{name}" substring="amazonlinux-2022" />
 					<contains string="@{name}" substring="debian" />
+					<contains string="@{name}" substring="orcllinux" />
+					<contains string="@{name}" substring="redhat" />
+					<contains string="@{name}" substring="rockylinux" />
 				</or>
 				<then>
 					<echo file="${docker.start.script}">

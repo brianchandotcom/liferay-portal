@@ -122,4 +122,20 @@ definition {
 		Smoke.runSmoke();
 	}
 
+	@description = "LPD-33643 Verify Glowroot works with non root context."
+	@priority = 5
+	test VisitGlowrootWithNonRootContext {
+		property portal.acceptance = "true";
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Visit Glowroot page with non root context") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/liferay/o/glowroot");
+
+			AssertElementPresent(locator1 = "Home#GLOWROOT-NON-ROOT-CONTEXT-PATH");
+		}
+	}
+
 }

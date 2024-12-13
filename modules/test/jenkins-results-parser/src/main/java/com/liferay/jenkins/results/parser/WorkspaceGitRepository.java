@@ -14,6 +14,8 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public void addPropertyOption(String propertyOption);
 
+	public void fetchGitHubDevBranch();
+
 	public String getBaseBranchSHA();
 
 	public String getBranchName();

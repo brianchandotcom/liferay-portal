@@ -38,6 +38,17 @@ public class RootCauseAnalysisBatchBuildRunner<T extends PortalBatchBuildData>
 			workspaceGitRepository.getGitWorkingDirectory();
 
 		for (String portalCherryPickSHA : portalCherryPickSHAs) {
+			if (!gitWorkingDirectory.localSHAExists(portalCherryPickSHA)) {
+				workspaceGitRepository.fetchGitHubDevBranch();
+			}
+
+			if (gitWorkingDirectory.refContainsSHA(
+					gitWorkingDirectory.getCurrentBranchName(),
+					portalCherryPickSHA)) {
+
+				continue;
+			}
+
 			gitWorkingDirectory.cherryPick(portalCherryPickSHA);
 		}
 	}

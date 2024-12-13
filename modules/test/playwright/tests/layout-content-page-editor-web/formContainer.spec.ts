@@ -1463,11 +1463,11 @@ test.describe('Form Localization', () => {
 		await page.getByLabel('Long Text').fill('long text english');
 
 		await page.getByLabel('Text', {exact: true}).fill('text english');
-		await page.evaluate(() =>
-			(window as any).CKEDITOR.instances['richText'].setData(
-				'rich text english'
-			)
-		);
+		await page.evaluate(() => {
+			Object.values((window as any).CKEDITOR.instances).forEach(
+				(editor: any) => editor.setData('rich text english')
+			);
+		});
 
 		// Add translations and check translation status
 
@@ -1495,11 +1495,11 @@ test.describe('Form Localization', () => {
 
 		await option.click();
 
-		await page.evaluate(() =>
-			(window as any).CKEDITOR.instances['richText'].setData(
-				'rich text español'
-			)
-		);
+		await page.evaluate(() => {
+			Object.values((window as any).CKEDITOR.instances).forEach(
+				(editor: any) => editor.setData('rich text español')
+			);
+		});
 
 		await translationSelector.click();
 
@@ -1701,11 +1701,11 @@ test.describe('Form Localization', () => {
 		await page.getByLabel('Long Text').fill('long text english 1');
 
 		await page.getByLabel('Text', {exact: true}).fill('text english 1');
-		await page.evaluate(() =>
-			(window as any).CKEDITOR.instances['richText'].setData(
-				'rich text english 1'
-			)
-		);
+		await page.evaluate(() => {
+			Object.values((window as any).CKEDITOR.instances).forEach(
+				(editor: any) => editor.setData('rich text english 1')
+			);
+		});
 
 		// Assert spanish translation is correct
 
@@ -1733,11 +1733,11 @@ test.describe('Form Localization', () => {
 
 		await page.getByLabel('Long Text').fill('long text spanish 1');
 		await page.getByLabel('Text', {exact: true}).fill('text spanish 1');
-		await page.evaluate(() =>
-			(window as any).CKEDITOR.instances['richText'].setData(
-				'rich text spanish 1'
-			)
-		);
+		await page.evaluate(() => {
+			Object.values((window as any).CKEDITOR.instances).forEach(
+				(editor: any) => editor.setData('rich text spanish 1')
+			);
+		});
 
 		// Edit the object
 

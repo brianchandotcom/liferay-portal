@@ -47,8 +47,8 @@ public class RankingGetSearchResultsBuilderTest
 		setUpSearchRequestBuilderFactory(setUpSearchRequestBuilder());
 
 		Assert.assertEquals(
-			mapper.readTree(_getExpectedDocumentsString()),
-			mapper.readTree(
+			objectMapper.readTree(_getExpectedDocumentsString()),
+			objectMapper.readTree(
 				_rankingGetSearchResultsBuilder.build(
 				).toJSONString()));
 	}

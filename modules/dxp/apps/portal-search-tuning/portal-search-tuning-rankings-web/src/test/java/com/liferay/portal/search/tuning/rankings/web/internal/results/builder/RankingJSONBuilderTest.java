@@ -41,8 +41,8 @@ public class RankingJSONBuilderTest extends BaseRankingResultsBuilderTestCase {
 		setUpFastDateFormatFactory();
 
 		Assert.assertEquals(
-			mapper.readTree(_getExpectedDocumentsString()),
-			mapper.readTree(
+			objectMapper.readTree(_getExpectedDocumentsString()),
+			objectMapper.readTree(
 				_rankingJSONBuilder.build(
 				).toJSONString()));
 	}

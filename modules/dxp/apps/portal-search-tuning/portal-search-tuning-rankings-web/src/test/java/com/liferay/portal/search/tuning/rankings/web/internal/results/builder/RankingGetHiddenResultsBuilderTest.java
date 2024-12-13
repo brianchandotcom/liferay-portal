@@ -67,8 +67,8 @@ public class RankingGetHiddenResultsBuilderTest
 				setUpDocumentWithGetString(), setUpGetDocumentResponse()));
 
 		Assert.assertEquals(
-			mapper.readTree(_getExpectedDocumentsString()),
-			mapper.readTree(
+			objectMapper.readTree(_getExpectedDocumentsString()),
+			objectMapper.readTree(
 				_rankingGetHiddenResultsBuilder.build(
 				).toJSONString()));
 	}

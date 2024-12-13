@@ -113,7 +113,16 @@
 				</div>
 			</div>
 		[#else]
-			[@liferay_editor["editor"] contents=input.value editorName="ckeditor" name=fragmentEntryLinkNamespace + "-" + input.name placeholder=input.label required=input.required /]
+			<div class="d-flex">
+				<div class="flex-grow-1">
+					[@liferay_editor["editor"] contents=input.value editorName="ckeditor" name=fragmentEntryLinkNamespace + "-" + input.name placeholder=input.label required=input.required /]
+				</div>
+				[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+					<div class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info">
+						[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+					</div>
+				[/#if]
+			</div>
 		[/#if]
 
 		[#if input.errorMessage?has_content]

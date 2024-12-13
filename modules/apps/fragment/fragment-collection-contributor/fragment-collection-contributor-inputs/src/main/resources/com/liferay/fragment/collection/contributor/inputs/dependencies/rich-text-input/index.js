@@ -33,18 +33,18 @@ else if (layoutMode !== 'edit' && input.localizable) {
 					languageId: currentLanguageId,
 				});
 			});
+
+			Liferay.on('localizationSelect:localeChanged', (event) => {
+				currentLanguageId = event.languageId;
+
+				const translationInput =
+					getOrCreateTranslationInput(currentLanguageId);
+
+				if (translationInput.getAttribute('value') !== null) {
+					editorEvent.editor.setData(translationInput.value);
+				}
+			});
 		}
-
-		Liferay.on('localizationSelect:localeChanged', (event) => {
-			currentLanguageId = event.languageId;
-
-			const translationInput =
-				getOrCreateTranslationInput(currentLanguageId);
-
-			if (translationInput.getAttribute('value') !== null) {
-				editorEvent.editor.setData(translationInput.value);
-			}
-		});
 	});
 
 	if (input.valueI18n) {
@@ -54,6 +54,31 @@ else if (layoutMode !== 'edit' && input.localizable) {
 			translationInput.value = value;
 		});
 	}
+}
+else if (Liferay.FeatureFlags['LPD-37927']) {
+	CKEDITOR.on('instanceReady', (editorEvent) => {
+		if (editorEvent.editor.name === input.name) {
+			Liferay.on('localizationSelect:localeChanged', (event) => {
+				const isDefaultLanguage =
+					event.languageId === themeDisplay.getDefaultLanguageId();
+
+				const unlocalizedInfo = document.getElementById(
+					`${fragmentNamespace}-unlocalized-info`
+				);
+
+				if (isDefaultLanguage) {
+					editorEvent.editor.setReadOnly(false);
+
+					unlocalizedInfo?.classList.add('d-none');
+				}
+				else {
+					editorEvent.editor.setReadOnly(true);
+
+					unlocalizedInfo?.classList.remove('d-none');
+				}
+			});
+		}
+	});
 }
 
 function getOrCreateTranslationInput(languageId) {

@@ -76,6 +76,36 @@ function main() {
 				if (translationInput.getAttribute('value') !== null) {
 					inputElement.value = translationInput.value;
 				}
+
+				if (Liferay.FeatureFlags['LPD-37927'] && !input.localizable) {
+					if (
+						currentLanguageId ===
+						themeDisplay.getDefaultLanguageId()
+					) {
+						const unlocalizedInfo = document.getElementById(
+							`${fragmentNamespace}-unlocalized-info`
+						);
+
+						unlocalizedInfo.classList.add('d-none');
+					}
+					else {
+						if (
+							input.attributes.unlocalizedFieldsState ===
+							'disabled'
+						) {
+							inputElement.setAttribute('disabled', '');
+						}
+						else {
+							inputElement.setAttribute('readonly', '');
+						}
+
+						const unlocalizedInfo = document.getElementById(
+							`${fragmentNamespace}-unlocalized-info`
+						);
+
+						unlocalizedInfo.classList.remove('d-none');
+					}
+				}
 			});
 
 			inputElement.addEventListener('input', (event) => {
@@ -103,6 +133,36 @@ function main() {
 					}
 				);
 			}
+		}
+		else if (Liferay.FeatureFlags['LPD-37927']) {
+			Liferay.on('localizationSelect:localeChanged', (event) => {
+				const isDefaultLanguage =
+					event.languageId === themeDisplay.getDefaultLanguageId();
+
+				const unlocalizedInfo = document.getElementById(
+					`${fragmentNamespace}-unlocalized-info`
+				);
+
+				if (isDefaultLanguage) {
+					inputElement.removeAttribute(
+						input.attributes.unlocalizedFieldsState === 'disabled'
+							? 'disabled'
+							: 'readonly'
+					);
+
+					unlocalizedInfo?.classList.add('d-none');
+				}
+				else {
+					inputElement.setAttribute(
+						input.attributes.unlocalizedFieldsState === 'disabled'
+							? 'disabled'
+							: 'readonly',
+						''
+					);
+
+					unlocalizedInfo?.classList.remove('d-none');
+				}
+			});
 		}
 	}
 }

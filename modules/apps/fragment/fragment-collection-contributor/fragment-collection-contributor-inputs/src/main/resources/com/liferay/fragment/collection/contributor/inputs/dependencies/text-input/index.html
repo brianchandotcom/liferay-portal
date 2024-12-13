@@ -2,7 +2,15 @@
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
 		<label data-localizable="${input.localizable?string('true', 'false')}" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input" id="${fragmentEntryLinkNamespace}-text-input-label">${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-		<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+		<div class="d-flex">
+			<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-text-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-text-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
 
 		<p class="mt-1 text-secondary [#if !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
 			<span class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">

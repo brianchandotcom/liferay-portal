@@ -6,6 +6,8 @@ const inputLabelElement = document.getElementById(
 	`${fragmentEntryLinkNamespace}-rich-text-input-label`
 );
 
+const editorName = `${fragmentEntryLinkNamespace}-${input.name}`
+
 let currentLanguageId = themeDisplay.getDefaultLanguageId();
 
 if (input.attributes?.readOnly) {
@@ -20,7 +22,7 @@ else if (layoutMode === 'edit') {
 }
 else if (layoutMode !== 'edit' && input.localizable) {
 	CKEDITOR.on('instanceReady', (editorEvent) => {
-		if (editorEvent.editor.name === input.name) {
+		if (editorEvent.editor.name === editorName) {
 			editorEvent.editor.on('change', () => {
 				const value = editorEvent.editor.getData();
 
@@ -57,7 +59,7 @@ else if (layoutMode !== 'edit' && input.localizable) {
 }
 else if (Liferay.FeatureFlags['LPD-37927']) {
 	CKEDITOR.on('instanceReady', (editorEvent) => {
-		if (editorEvent.editor.name === input.name) {
+		if (editorEvent.editor.name === editorName) {
 			Liferay.on('localizationSelect:localeChanged', (event) => {
 				const isDefaultLanguage =
 					event.languageId === themeDisplay.getDefaultLanguageId();

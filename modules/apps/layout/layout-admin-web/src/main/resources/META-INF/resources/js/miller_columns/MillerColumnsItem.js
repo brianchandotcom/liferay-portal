@@ -150,6 +150,8 @@ const MillerColumnsItem = ({
 
 	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
 
+	const [itemActionsActive, setItemActionsActive] = useState(false);
+
 	const [dropdownActions, setDropdownActions] = useState([]);
 
 	const loadPromiseRef = useRef();
@@ -379,7 +381,9 @@ const MillerColumnsItem = ({
 			})}
 			containerElement="li"
 			data-actions={bulkActions}
-			onKeyDown={onKeyDown}
+			onKeyDown={
+				layoutActionsActive || itemActionsActive ? null : onKeyDown
+			}
 			ref={ref}
 			role="none"
 			verticalAlign="center"
@@ -584,6 +588,7 @@ const MillerColumnsItem = ({
 				{!!getItemActionsURL && itemId !== '0' ? (
 					<ClayLayout.ContentCol className="miller-columns-item-actions">
 						<ClayDropDownWithItems
+							active={itemActionsActive}
 							caption={
 								!loadPromiseRef.current ? (
 									<ClayLoadingIndicator />
@@ -592,6 +597,7 @@ const MillerColumnsItem = ({
 								)
 							}
 							items={dropdownActions}
+							onActiveChange={setItemActionsActive}
 							onKeyDown={(event) => event.stopPropagation()}
 							trigger={
 								<ClayButtonWithIcon

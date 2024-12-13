@@ -206,7 +206,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
-				true, contextCompany.getCompanyId(),
+				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
 		if (layout.isDraftLayout() || !layout.isPublished() ||

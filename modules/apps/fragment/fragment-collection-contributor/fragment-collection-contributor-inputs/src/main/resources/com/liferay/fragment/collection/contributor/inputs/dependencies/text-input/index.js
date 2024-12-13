@@ -76,6 +76,9 @@ function main() {
 				if (translationInput.getAttribute('value') !== null) {
 					inputElement.value = translationInput.value;
 				}
+				else {
+					inputElement.value = getDefaultLanguageValue();
+				}
 
 				if (Liferay.FeatureFlags['LPD-37927'] && !input.localizable) {
 					if (
@@ -165,6 +168,14 @@ function main() {
 			});
 		}
 	}
+}
+
+function getDefaultLanguageValue() {
+	const defaultLanguageInput = getOrCreateTranslationInput(
+		themeDisplay.getDefaultLanguageId()
+	);
+
+	return defaultLanguageInput.value;
 }
 
 function getOrCreateTranslationInput(languageId) {

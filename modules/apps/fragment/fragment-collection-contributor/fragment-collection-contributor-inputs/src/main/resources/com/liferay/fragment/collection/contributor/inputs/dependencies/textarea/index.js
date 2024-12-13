@@ -75,6 +75,9 @@ function main() {
 				if (translationInput.getAttribute('value') !== null) {
 					textarea.value = translationInput.value;
 				}
+				else {
+					textarea.value = getDefaultLanguageValue();
+				}
 			});
 
 			textarea.addEventListener('input', (event) => {
@@ -134,6 +137,14 @@ function main() {
 			});
 		}
 	}
+}
+
+function getDefaultLanguageValue() {
+	const defaultLanguageInput = getOrCreateTranslationInput(
+		themeDisplay.getDefaultLanguageId()
+	);
+
+	return defaultLanguageInput.value;
 }
 
 function getOrCreateTranslationInput(languageId) {

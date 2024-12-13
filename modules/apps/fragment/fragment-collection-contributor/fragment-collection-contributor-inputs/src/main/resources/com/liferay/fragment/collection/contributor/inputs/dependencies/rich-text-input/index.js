@@ -6,7 +6,7 @@ const inputLabelElement = document.getElementById(
 	`${fragmentEntryLinkNamespace}-rich-text-input-label`
 );
 
-const editorName = `${fragmentEntryLinkNamespace}-${input.name}`
+const editorName = `${fragmentEntryLinkNamespace}-${input.name}`;
 
 let currentLanguageId = themeDisplay.getDefaultLanguageId();
 
@@ -45,6 +45,9 @@ else if (layoutMode !== 'edit' && input.localizable) {
 				if (translationInput.getAttribute('value') !== null) {
 					editorEvent.editor.setData(translationInput.value);
 				}
+				else {
+					editorEvent.editor.setData(getDefaultLanguageValue());
+				}
 			});
 		}
 	});
@@ -81,6 +84,14 @@ else if (Liferay.FeatureFlags['LPD-37927']) {
 			});
 		}
 	});
+}
+
+function getDefaultLanguageValue() {
+	const defaultLanguageInput = getOrCreateTranslationInput(
+		themeDisplay.getDefaultLanguageId()
+	);
+
+	return defaultLanguageInput.value;
 }
 
 function getOrCreateTranslationInput(languageId) {

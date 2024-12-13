@@ -536,9 +536,21 @@ public class DDMIndexerImpl implements DDMIndexer {
 			StringBundler sb, String type, String valueString)
 		throws Exception {
 
-		if (type.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
-			type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE) ||
-			type.equals(DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
+		if (type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE)) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
+
+			if ((jsonObject != null) && jsonObject.has("titleMap")) {
+				JSONObject titleMapJSONObject = jsonObject.getJSONObject(
+					"titleMap");
+
+				for (String key : titleMapJSONObject.keySet()) {
+					sb.append(titleMapJSONObject.getString(key));
+					sb.append(StringPool.SPACE);
+				}
+			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
+				 type.equals(DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
 

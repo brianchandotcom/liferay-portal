@@ -359,8 +359,8 @@ public class AnalyticsConfigurationRegistryImpl
 				dictionary.get(
 					"previousContentRecommenderMostPopularItemsEnabled"));
 
-		if (previousContentRecommenderMostPopularItemsEnabled !=
-				contentRecommenderMostPopularItemsEnabled) {
+		if (contentRecommenderMostPopularItemsEnabled !=
+				previousContentRecommenderMostPopularItemsEnabled) {
 
 			return true;
 		}
@@ -386,8 +386,8 @@ public class AnalyticsConfigurationRegistryImpl
 				dictionary.get(
 					"previousContentRecommenderUserPersonalizationEnabled"));
 
-		if (previousContentRecommenderUserPersonalizationEnabled !=
-				contentRecommenderUserPersonalizationEnabled) {
+		if (contentRecommenderUserPersonalizationEnabled !=
+				previousContentRecommenderUserPersonalizationEnabled) {
 
 			return true;
 		}
@@ -542,15 +542,15 @@ public class AnalyticsConfigurationRegistryImpl
 
 		Arrays.sort(previousSyncedOrganizationIds);
 
-		String[] previousSyncedUserGroupIds = GetterUtil.getStringValues(
-			dictionary.get("previousSyncedUserGroupIds"));
-
-		Arrays.sort(previousSyncedUserGroupIds);
-
 		String[] syncedOrganizationIds = GetterUtil.getStringValues(
 			dictionary.get("syncedOrganizationIds"));
 
 		Arrays.sort(syncedOrganizationIds);
+
+		String[] previousSyncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedUserGroupIds"));
+
+		Arrays.sort(previousSyncedUserGroupIds);
 
 		String[] syncedUserGroupIds = GetterUtil.getStringValues(
 			dictionary.get("syncedUserGroupIds"));
@@ -658,9 +658,9 @@ public class AnalyticsConfigurationRegistryImpl
 		if ((previousSyncedContactFieldNames.length != 0) &&
 			(previousSyncedUserFieldNames.length != 0) &&
 			(!Arrays.equals(
-				previousSyncedUserFieldNames, syncedUserFieldNames) ||
+				previousSyncedContactFieldNames, syncedContactFieldNames) ||
 			 !Arrays.equals(
-				 previousSyncedContactFieldNames, syncedContactFieldNames))) {
+				 previousSyncedUserFieldNames, syncedUserFieldNames))) {
 
 			return true;
 		}
@@ -672,39 +672,6 @@ public class AnalyticsConfigurationRegistryImpl
 		try {
 			Set<String> refreshDispatchTriggerNames = new HashSet<>();
 			Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
-
-			if (_isSyncedCommerceSettingsChanged(dictionary)) {
-				if (_isSyncedCommerceSettingsEnabled(dictionary)) {
-					Collections.addAll(
-						refreshDispatchTriggerNames,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_ORDER,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_PRODUCT);
-				}
-				else {
-					Collections.addAll(
-						unscheduleDispatchTriggerNames,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_ORDER,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_PRODUCT);
-				}
-			}
-
-			if (_isSyncedCommerceSettingsEnabled(dictionary)) {
-				if (_isSyncedOrderFieldsChanged(dictionary)) {
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_ORDER);
-				}
-
-				if (_isSyncedProductFieldsChanged(dictionary)) {
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_PRODUCT);
-				}
-			}
 
 			if ((_isContentRecommenderMostPopularItemsChanged(dictionary) &&
 				 _isContentRecommenderMostPopularItemsEnabled(dictionary)) ||
@@ -748,22 +715,43 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 			}
 
+			if (_isSyncedCommerceSettingsChanged(dictionary)) {
+				if (_isSyncedCommerceSettingsEnabled(dictionary)) {
+					Collections.addAll(
+						refreshDispatchTriggerNames,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_ORDER,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
+				}
+				else {
+					Collections.addAll(
+						unscheduleDispatchTriggerNames,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_ORDER,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
+				}
+			}
+
+			if (_isSyncedCommerceSettingsEnabled(dictionary)) {
+				if (_isSyncedOrderFieldsChanged(dictionary)) {
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_ORDER);
+				}
+
+				if (_isSyncedProductFieldsChanged(dictionary)) {
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
+				}
+			}
+
 			if (!refreshDispatchTriggerNames.isEmpty()) {
 				_analyticsDXPEntityBatchExporter.refreshExportTriggers(
 					companyId,
 					refreshDispatchTriggerNames.toArray(new String[0]));
-
-				if (refreshDispatchTriggerNames.contains(
-						AnalyticsMachineLearningConstants.
-							DISPATCH_TRIGGER_NAME_ASSET_ENTITIES)) {
-
-					_analyticsDXPEntityBatchExporter.export(
-						companyId,
-						new String[] {
-							AnalyticsMachineLearningConstants.
-								DISPATCH_TRIGGER_NAME_ASSET_ENTITIES
-						});
-				}
 
 				if (refreshDispatchTriggerNames.contains(
 						AnalyticsDXPEntityBatchExporterConstants.
@@ -776,14 +764,18 @@ public class AnalyticsConfigurationRegistryImpl
 								DISPATCH_TRIGGER_NAME_DXP_ENTITIES
 						});
 				}
-			}
 
-			if (!_isSyncedAccountSettingsEnabled(dictionary) &&
-				!_isSyncedContactSettingsEnabled(dictionary)) {
+				if (refreshDispatchTriggerNames.contains(
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_ASSET_ENTITIES)) {
 
-				unscheduleDispatchTriggerNames.add(
-					AnalyticsDXPEntityBatchExporterConstants.
-						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+					_analyticsDXPEntityBatchExporter.export(
+						companyId,
+						new String[] {
+							AnalyticsMachineLearningConstants.
+								DISPATCH_TRIGGER_NAME_ASSET_ENTITIES
+						});
+				}
 			}
 
 			if (!_isContentRecommenderMostPopularItemsEnabled(dictionary) &&
@@ -808,6 +800,14 @@ public class AnalyticsConfigurationRegistryImpl
 				unscheduleDispatchTriggerNames.add(
 					AnalyticsMachineLearningConstants.
 						DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER);
+			}
+
+			if (!_isSyncedAccountSettingsEnabled(dictionary) &&
+				!_isSyncedContactSettingsEnabled(dictionary)) {
+
+				unscheduleDispatchTriggerNames.add(
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 			}
 
 			if (!unscheduleDispatchTriggerNames.isEmpty()) {

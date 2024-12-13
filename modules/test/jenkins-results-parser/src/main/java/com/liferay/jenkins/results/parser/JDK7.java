@@ -12,7 +12,8 @@ public class JDK7 extends BaseJDK {
 
 	@Override
 	public String getAntOpts() {
-		String antOpts = System.getenv("ANT_OPTS") + " -XX:+IgnoreUnrecognizedVMOptions";
+		String antOpts = JenkinsResultsParserUtil.combine(
+			System.getenv("ANT_OPTS"), " -XX:+IgnoreUnrecognizedVMOptions");
 
 		return antOpts.replace("MetaspaceSize", "PermSize");
 	}

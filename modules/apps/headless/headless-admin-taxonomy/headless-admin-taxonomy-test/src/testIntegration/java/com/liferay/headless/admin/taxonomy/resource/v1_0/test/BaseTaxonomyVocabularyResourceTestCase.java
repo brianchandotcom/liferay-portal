@@ -197,6 +197,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		taxonomyVocabulary.setDescription(regex);
 		taxonomyVocabulary.setExternalReferenceCode(regex);
 		taxonomyVocabulary.setName(regex);
+		taxonomyVocabulary.setSiteExternalReferenceCode(regex);
 
 		String json = TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary);
 
@@ -209,6 +210,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertEquals(
 			regex, taxonomyVocabulary.getExternalReferenceCode());
 		Assert.assertEquals(regex, taxonomyVocabulary.getName());
+		Assert.assertEquals(
+			regex, taxonomyVocabulary.getSiteExternalReferenceCode());
 	}
 
 	@Test
@@ -2743,6 +2746,16 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (taxonomyVocabulary.getSiteExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (taxonomyVocabulary.getViewableBy() == null) {
 					valid = false;
@@ -3016,6 +3029,19 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				if (!Objects.deepEquals(
 						taxonomyVocabulary1.getNumberOfTaxonomyCategories(),
 						taxonomyVocabulary2.getNumberOfTaxonomyCategories())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"siteExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						taxonomyVocabulary1.getSiteExternalReferenceCode(),
+						taxonomyVocabulary2.getSiteExternalReferenceCode())) {
 
 					return false;
 				}
@@ -3433,6 +3459,52 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("siteExternalReferenceCode")) {
+			Object object = taxonomyVocabulary.getSiteExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("siteId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3499,6 +3571,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				numberOfTaxonomyCategories = RandomTestUtil.randomInt();
+				siteExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
 			}
 		};

@@ -669,6 +669,53 @@ public class TaxonomyCategory implements Serializable {
 		_parentTaxonomyVocabularySupplier;
 
 	@Schema(
+		description = "The external reference code of the site to which this category is scoped."
+	)
+	public String getSiteExternalReferenceCode() {
+		if (_siteExternalReferenceCodeSupplier != null) {
+			siteExternalReferenceCode =
+				_siteExternalReferenceCodeSupplier.get();
+
+			_siteExternalReferenceCodeSupplier = null;
+		}
+
+		return siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
+
+		_siteExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
+
+		_siteExternalReferenceCodeSupplier = () -> {
+			try {
+				return siteExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The external reference code of the site to which this category is scoped."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String siteExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _siteExternalReferenceCodeSupplier;
+
+	@Schema(
 		description = "The ID of the site to which this category is scoped."
 	)
 	public Long getSiteId() {
@@ -1144,6 +1191,22 @@ public class TaxonomyCategory implements Serializable {
 			sb.append("\"parentTaxonomyVocabulary\": ");
 
 			sb.append(String.valueOf(parentTaxonomyVocabulary));
+		}
+
+		String siteExternalReferenceCode = getSiteExternalReferenceCode();
+
+		if (siteExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(siteExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long siteId = getSiteId();

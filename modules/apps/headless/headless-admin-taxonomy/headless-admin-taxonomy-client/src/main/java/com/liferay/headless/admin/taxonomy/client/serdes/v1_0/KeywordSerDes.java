@@ -161,6 +161,20 @@ public class KeywordSerDes {
 			sb.append("\"");
 		}
 
+		if (keyword.getSiteExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(keyword.getSiteExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (keyword.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +289,15 @@ public class KeywordSerDes {
 			map.put("name", String.valueOf(keyword.getName()));
 		}
 
+		if (keyword.getSiteExternalReferenceCode() == null) {
+			map.put("siteExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteExternalReferenceCode",
+				String.valueOf(keyword.getSiteExternalReferenceCode()));
+		}
+
 		if (keyword.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -333,6 +356,11 @@ public class KeywordSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
@@ -401,6 +429,14 @@ public class KeywordSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					keyword.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					keyword.setSiteExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

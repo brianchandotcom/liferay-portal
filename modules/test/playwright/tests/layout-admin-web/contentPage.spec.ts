@@ -3,9 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectDefinitionApi,
+	ObjectField,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -19,6 +24,7 @@ import {
 	enableSystemFeatureFlag,
 } from '../../utils/systemFeatureFlag';
 import {waitForAlert} from '../../utils/waitForAlert';
+import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -26,6 +32,7 @@ import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -346,5 +353,111 @@ test(
 			title: 'Featured Content Fragment Set',
 			type: 'Deprecation',
 		});
+	}
+);
+
+test(
+	'Having a rich text field named "Content" does not break the page in view mode',
+	{
+		tag: '@LPD-42061',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create the object definition
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'papaERC',
+				label: {
+					en_US: 'Papa',
+				},
+				name: 'Papa',
+				objectFields: [
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'nameERC',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Name',
+						},
+						name: 'name',
+						required: false,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Clob,
+						businessType: ObjectField.BusinessTypeEnum.RichText,
+						externalReferenceCode: 'contentERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'content',
+						},
+						name: 'content',
+						required: false,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Papas',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create a content page with a form container and go to edit mode
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const pageName = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: site.id,
+			title: pageName,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Go to edit mode and map the form container to the object
+
+		await pageEditorPage.mapFormFragment(formId, 'Papa');
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode of page and check both fields are shown
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(
+			page.locator('.control-label', {hasText: 'Content'})
+		).toBeVisible();
+
+		await expect(page.locator('.cke_contents')).toBeVisible();
+
+		await expect(page.getByLabel('Name')).toBeVisible();
+
+		// Wait for five seconds and check Name field does not disappear
+
+		await page.waitForTimeout(5000);
+
+		await expect(page.getByLabel('Name')).toBeVisible();
 	}
 );

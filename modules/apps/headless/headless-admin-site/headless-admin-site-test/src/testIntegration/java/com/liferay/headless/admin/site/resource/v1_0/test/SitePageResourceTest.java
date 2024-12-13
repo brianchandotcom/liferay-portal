@@ -347,7 +347,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
 			pageSpecification1.getType());
 
-		PageSpecification pageSpecification2 = pageSpecifications[0];
+		PageSpecification pageSpecification2 = pageSpecifications[1];
 
 		Assert.assertEquals(
 			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,

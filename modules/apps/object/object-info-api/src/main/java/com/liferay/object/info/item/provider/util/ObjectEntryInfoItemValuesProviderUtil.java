@@ -422,12 +422,8 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 		if (value instanceof Map) {
 			Map<String, String> map = (Map<String, String>)value;
 
-			if ((themeDisplay != null) &&
-				map.containsKey(themeDisplay.getLanguageId())) {
-
-				infoFieldValue = InfoLocalizedValue.function(
-					locale -> map.get(LanguageUtil.getLanguageId(locale)));
-			}
+			infoFieldValue = InfoLocalizedValue.function(
+				locale -> map.get(LanguageUtil.getLanguageId(locale)));
 		}
 
 		infoFieldValues.add(

@@ -2134,15 +2134,6 @@ public class ObjectEntryLocalServiceImpl
 				oldValues = oldValuesSupplier.get();
 			}
 
-			String objectFieldName = objectField.getName();
-
-			if (Objects.equals(
-					GetterUtil.getLong(newValues.get(objectFieldName)),
-					GetterUtil.getLong(oldValues.get(objectFieldName)))) {
-
-				continue;
-			}
-
 			ObjectFieldSetting objectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
 					objectField.getObjectFieldId(), "fileSource");
@@ -2162,9 +2153,59 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			try {
-				_dlFileEntryLocalService.deleteFileEntry(
+			List<Long> orphanedFileEntryIds = new ArrayList<>();
+
+			if (objectField.isLocalized()) {
+				Map<String, Serializable> oldLocalizedValues =
+					(Map<String, Serializable>)oldValues.get(
+						objectField.getI18nObjectFieldName());
+
+				if (oldLocalizedValues == null) {
+					continue;
+				}
+
+				Map<String, Serializable> newLocalizedValues =
+					(Map<String, Serializable>)newValues.getOrDefault(
+						objectField.getI18nObjectFieldName(),
+						(Serializable)Collections.emptyMap());
+
+				for (Map.Entry<String, Serializable> entry :
+						oldLocalizedValues.entrySet()) {
+
+					if (Objects.equals(
+							entry.getValue(),
+							newLocalizedValues.get(entry.getKey()))) {
+
+						continue;
+					}
+
+					orphanedFileEntryIds.add(
+						GetterUtil.getLong(entry.getValue()));
+				}
+			}
+			else {
+				String objectFieldName = objectField.getName();
+
+				if (Objects.equals(
+						GetterUtil.getLong(newValues.get(objectFieldName)),
+						GetterUtil.getLong(oldValues.get(objectFieldName)))) {
+
+					continue;
+				}
+
+				orphanedFileEntryIds.add(
 					GetterUtil.getLong(oldValues.get(objectFieldName)));
+			}
+
+			try {
+				for (Long orphanedFileEntryId : orphanedFileEntryIds) {
+					if (orphanedFileEntryId == 0) {
+						continue;
+					}
+
+					_dlFileEntryLocalService.deleteFileEntry(
+						orphanedFileEntryId);
+				}
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

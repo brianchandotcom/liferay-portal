@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -194,9 +195,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443") ||
-			!Objects.equals(
-				contentPageSpecification.getStatus(),
-				PageSpecification.Status.DRAFT)) {
+			(Validator.isNotNull(contentPageSpecification.getStatus()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getStatus(),
+				 PageSpecification.Status.DRAFT))) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -214,9 +216,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if ((draftLayout == null) ||
-			!Objects.equals(
-				contentPageSpecification.getExternalReferenceCode(),
-				draftLayout.getExternalReferenceCode()) ||
+			(Validator.isNotNull(
+				contentPageSpecification.getExternalReferenceCode()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getExternalReferenceCode(),
+				 draftLayout.getExternalReferenceCode())) ||
 			!Objects.equals(
 				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
 

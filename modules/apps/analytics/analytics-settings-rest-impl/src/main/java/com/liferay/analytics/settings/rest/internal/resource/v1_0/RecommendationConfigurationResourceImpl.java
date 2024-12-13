@@ -60,7 +60,6 @@ public class RecommendationConfigurationResourceImpl
 							setEnabled(
 								analyticsConfiguration::
 									contentRecommenderMostPopularItemsEnabled);
-
 							setStatus(
 								() -> _getStatus(
 									"analytics-download-most-viewed-content-" +
@@ -73,7 +72,6 @@ public class RecommendationConfigurationResourceImpl
 							setEnabled(
 								analyticsConfiguration::
 									contentRecommenderUserPersonalizationEnabled);
-
 							setStatus(
 								() -> _getStatus(
 									"analytics-download-user-content-" +

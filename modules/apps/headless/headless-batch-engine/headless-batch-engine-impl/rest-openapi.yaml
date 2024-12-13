@@ -222,6 +222,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: batchNestedFields
+                  schema:
+                      type: string
+                - in: query
                   name: callbackURL
                   schema:
                       type: string
@@ -231,10 +235,6 @@ paths:
                       type: string
                 - in: query
                   name: fieldNames
-                  schema:
-                      type: string
-                - in: query
-                  name: batchNestedFields
                   schema:
                       type: string
                 - in: query

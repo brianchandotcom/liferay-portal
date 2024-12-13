@@ -1,5 +1,27 @@
 [
 	{
+		"key": "asiaPacific",
+		"name": "Asia Pacific",
+		"name_i18n": {
+			"en-US": "Asia Pacific",
+			"es_ES": "Asia-Pacífico",
+			"ja_JP": "アジア太平洋",
+			"pt_BR": "Ásia-Pacífico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "eastAsia",
+		"name": "East Asia",
+		"name_i18n": {
+			"en-US": "East Asia",
+			"es_ES": "Asia Oriental",
+			"ja_JP": "東アジア",
+			"pt_BR": "Leste Asiático"
+		},
+		"type": "string"
+	},
+	{
 		"key": "europe",
 		"name": "Europe",
 		"name_i18n": {

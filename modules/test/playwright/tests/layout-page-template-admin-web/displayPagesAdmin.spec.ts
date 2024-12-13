@@ -20,7 +20,6 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../utils/waitForAlert';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
@@ -61,16 +60,17 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 
 	await journalEditArticlePage.editArticle(journalArticleTitle);
 
+	await page.getByLabel('Select a language').waitFor();
+
+	await page
+		.locator('.sheet-subtitle', {hasText: 'Basic Information'})
+		.waitFor();
+
 	await journalEditArticlePage.selectSpecificDisplayPage(
 		displayPageTemplateName
 	);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
-
-	await waitForAlert(
-		page,
-		`Success:${journalArticleTitle} was updated successfully.`
-	);
+	await journalEditArticlePage.publishArticle(true);
 }
 
 async function addDefaultJournalArticleDisplayPageLayoutPageTemplateEntry(

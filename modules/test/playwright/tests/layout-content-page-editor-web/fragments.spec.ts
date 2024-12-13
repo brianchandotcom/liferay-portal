@@ -110,24 +110,34 @@ test.describe('Content Display Fragment', () => {
 	test('Does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
 		apiHelpers,
 		browser,
+		journalEditArticlePage,
 		journalPage,
 		page,
 		pageEditorPage,
 		site,
 	}) => {
 
-		// Create a web content restricted to site members
+		// Create a web content
 
 		await journalPage.goto(site.friendlyUrlPath);
 		await journalPage.goToCreateArticle();
 
-		await journalPage.setArticleViewableBy('Site Members');
+		// Wait for editor to be loaded
+
+		await page.getByLabel('Select a language').waitFor();
+
+		await page
+			.locator('.sheet-subtitle', {hasText: 'Basic Information'})
+			.waitFor();
+
+		// Fill article data and publish for Site Members
 
 		const articleTitle = getRandomString();
 		const articleContent = 'My article';
 
 		await journalPage.fillArticleData(articleTitle, articleContent);
-		await journalPage.publishArticle();
+
+		await journalEditArticlePage.publishArticle(false, 'Site Members');
 
 		await expect(
 			page.getByLabel('Not Visible to Guest Users')
@@ -501,11 +511,19 @@ test.describe('Related Asset Fragment', () => {
 
 			await journalEditArticlePage.editArticle(journalArticleTitle1);
 
-			await journalEditArticlePage.openRelatedAsset('Basic Web Content');
-
 			const row = page
 				.frameLocator('iframe[title="Select Basic Web Content"]')
 				.locator('.list-group-item', {hasText: journalArticleTitle2});
+
+			await expect(async () => {
+				await journalEditArticlePage.openRelatedAsset(
+					'Basic Web Content'
+				);
+
+				await expect(
+					page.getByText('Select Basic Web Content')
+				).toBeVisible({timeout: 3000});
+			}).toPass();
 
 			await row.getByRole('checkbox').check({trial: true});
 
@@ -516,9 +534,7 @@ test.describe('Related Asset Fragment', () => {
 				trigger: page.getByRole('button', {name: 'Done'}),
 			});
 
-			await page
-				.getByRole('button', {exact: true, name: 'Publish'})
-				.click();
+			await journalEditArticlePage.publishArticle(true);
 
 			await waitForAlert(page, `was updated successfully.`);
 

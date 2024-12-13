@@ -401,7 +401,12 @@ test(
 		tag: '@LPD-42737',
 	},
 
-	async ({apiHelpers, documentLibraryPage, site}) => {
+	async ({
+		apiHelpers,
+		documentLibraryPage,
+		documentLibraryViewFilePage,
+		site,
+	}) => {
 		const documentTitle = 'Title' + getRandomString();
 
 		const documentId =
@@ -501,12 +506,17 @@ test(
 		await test.step('Check that category, related asset and tag are visible in document view page', async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
 			await documentLibraryPage.goToViewFileEntry(documentTitle);
-			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
-			await documentLibraryPage.assertInfoPanelCategories([categoryName]);
-			await documentLibraryPage.assertInfoPanelRelatedAssets([
+			await documentLibraryViewFilePage.openInfoPanel(
+				documentTitle,
+				'Details'
+			);
+			await documentLibraryViewFilePage.assertInfoPanelCategories([
+				categoryName,
+			]);
+			await documentLibraryViewFilePage.assertInfoPanelRelatedAssets([
 				structuredContentTitle,
 			]);
-			await documentLibraryPage.assertInfoPanelTags([keyword]);
+			await documentLibraryViewFilePage.assertInfoPanelTags([keyword]);
 		});
 	}
 );

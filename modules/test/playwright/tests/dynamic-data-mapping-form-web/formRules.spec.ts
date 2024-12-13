@@ -52,6 +52,10 @@ test.afterEach(async ({formsPage, page, systemSettingsPage}) => {
 	await expect(page.getByText('Success:Your request')).toBeVisible();
 });
 
+test.beforeEach(({page}) => {
+	page.setViewportSize({height: 1080, width: 1920});
+});
+
 test('Select from list with multiple selections allowed is auto-filled by data provider defined in rule', async ({
 	apiHelpers,
 	dataProviderPage,
@@ -268,6 +272,8 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	await expect(
 		formPreviewPage.getByRole('option', {name: 'France'})
 	).toBeVisible();
+
+	await formPreviewPage.close();
 });
 
 test('Assert that Show action rule is not triggered when typing into an unrelated field', async ({

@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +58,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			HttpServletRequest httpServletRequest,
 			AssetCategoryService assetCategoryService,
 			AssetVocabularyService assetVocabularyService,
+			AssetVocabularyLocalService assetVocabularyLocalService,
 			CommerceMediaResolver commerceMediaResolver,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPFriendlyURL cpFriendlyURL,
@@ -65,6 +69,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_assetCategoryService = assetCategoryService;
 		_assetVocabularyService = assetVocabularyService;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_commerceMediaResolver = commerceMediaResolver;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpFriendlyURL = cpFriendlyURL;
@@ -141,10 +146,18 @@ public class CPAssetCategoriesNavigationDisplayContext {
 
 		if (Validator.isNotNull(assetVocabularyExternalReferenceCode)) {
 			_assetVocabulary =
-				_assetVocabularyService.
+				_assetVocabularyLocalService.
 					getAssetVocabularyByExternalReferenceCode(
-						_themeDisplay.getCompanyGroupId(),
-						assetVocabularyExternalReferenceCode);
+						assetVocabularyExternalReferenceCode,
+						_themeDisplay.getCompanyGroupId());
+		}
+
+		if ((_assetVocabulary != null) &&
+			!AssetVocabularyPermission.contains(
+				_themeDisplay.getPermissionChecker(), _assetVocabulary,
+				ActionKeys.VIEW)) {
+
+			_assetVocabulary = null;
 		}
 
 		return _assetVocabulary;
@@ -426,6 +439,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final AssetCategoryService _assetCategoryService;
 	private List<AssetVocabulary> _assetVocabularies;
 	private AssetVocabulary _assetVocabulary;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final AssetVocabularyService _assetVocabularyService;
 	private final CommerceMediaResolver _commerceMediaResolver;
 	private final CPAssetCategoriesNavigationPortletInstanceConfiguration

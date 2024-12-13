@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.asset.categories.navigation.web.internal.display.context.CPAssetCategoriesNavigationDisplayContext;
@@ -43,10 +44,10 @@ public class CPAssetCategoriesNavigationConfigurationAction
 				cpAssetCategoryNavigationDisplayContext =
 					new CPAssetCategoriesNavigationDisplayContext(
 						httpServletRequest, _assetCategoryService,
-						_assetVocabularyService, _commerceMediaResolver,
-						_cpAttachmentFileEntryService, _cpFriendlyURL,
-						_friendlyURLEntryLocalService, _groupLocalService,
-						_portal);
+						_assetVocabularyService, _assetVocabularyLocalService,
+						_commerceMediaResolver, _cpAttachmentFileEntryService,
+						_cpFriendlyURL, _friendlyURLEntryLocalService,
+						_groupLocalService, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -64,6 +65,9 @@ public class CPAssetCategoriesNavigationConfigurationAction
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;

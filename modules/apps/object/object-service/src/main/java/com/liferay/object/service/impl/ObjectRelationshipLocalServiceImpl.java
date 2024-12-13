@@ -1949,12 +1949,12 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition2.getShortName()),
 				String.format(
 					"The scope of \"%s\" is not the same as \"%s\". To " +
-						"enable inheritance, the objects must have the same " +
-							"scope",
+						"enable inheritance, the object definitions must " +
+							"have the same scope",
 					objectDefinition1.getShortName(),
 					objectDefinition2.getShortName()),
 				"the-scope-of-x-is-not-the-same-as-x-to-enable-inheritance-" +
-					"the-objects-must-have-the-same-scope");
+					"the-object-definitions-must-have-the-same-scope");
 		}
 	}
 

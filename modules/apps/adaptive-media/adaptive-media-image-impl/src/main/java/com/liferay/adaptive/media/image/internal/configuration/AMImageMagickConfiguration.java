@@ -22,8 +22,7 @@ public interface AMImageMagickConfiguration {
 
 	@Meta.AD(
 		description = "adaptive-media-imagemagick-supported-mime-types-key-description",
-		name = "supported-mime-type",
-		required = false
+		name = "supported-mime-type", required = false
 	)
 	public String[] mimeTypes();
 

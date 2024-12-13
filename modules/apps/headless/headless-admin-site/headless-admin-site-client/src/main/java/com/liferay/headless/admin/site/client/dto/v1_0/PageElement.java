@@ -196,7 +196,8 @@ public class PageElement implements Cloneable, Serializable {
 
 		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
 		COLUMN("Column"), CONTAINER("Container"), DROP_ZONE("DropZone"),
-		FORM("Form"), FRAGMENT("Fragment"),
+		FORM("Form"), FORM_STEP("FormStep"),
+		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
 		FRAGMENT_COMPOSITION("FragmentComposition"),
 		FRAGMENT_DROP_ZONE("FragmentDropZone"), ROW("Row"), WIDGET("Widget");
 

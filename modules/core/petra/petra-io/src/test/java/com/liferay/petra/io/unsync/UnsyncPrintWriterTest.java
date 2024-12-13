@@ -595,9 +595,16 @@ public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 		Assert.assertEquals("abcdefghijklmnopqr", stringWriter.toString());
 	}
 
+	@Test
+	public void testWriteNullString() throws Exception {
+		Writer writer = getWriter();
+
+		writer.write((String)null, 0, 1);
+	}
+
 	@Override
 	protected Writer getWriter() {
-		return new UnsyncPrintWriter(new StringWriter());
+		return new UnsyncPrintWriter(new UnsyncStringWriter());
 	}
 
 	private Writer _getOut(UnsyncPrintWriter unsyncPrintWriter) {

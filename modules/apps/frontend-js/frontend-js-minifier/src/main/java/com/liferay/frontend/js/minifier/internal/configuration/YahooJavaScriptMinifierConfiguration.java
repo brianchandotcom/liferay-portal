@@ -11,7 +11,7 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Iván Zaera Avellón
  */
 @Meta.OCD(
-	id = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
+	id = "com.liferay.frontend.js.minifier.internal.configuration.YahooJavaScriptMinifierConfiguration",
 	localization = "content/Language",
 	name = "yahoo-js-minifier-configuration-name"
 )

@@ -13,6 +13,9 @@ module.exports = {
 	entry: {
 		index: './assets/index.js',
 	},
+	experiments: {
+		outputModule: true,
+	},
 	externals: {
 
 		// Add all @clayui dependencies of your project below here (as done for `@clayui/badge`)
@@ -20,9 +23,6 @@ module.exports = {
 		'@clayui/badge': '@clayui/badge',
 		'react': 'react',
 		'react-dom': 'react-dom',
-	},
-	experiments: {
-		outputModule: true,
 	},
 	mode: DEVELOPMENT ? 'development' : 'production',
 	optimization: {

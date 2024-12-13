@@ -19,7 +19,7 @@ public class CommerceOrderAccountNotificationTermProvider
 	@Override
 	public Map<String, String> getNotificationTerms() {
 		return HashMapBuilder.put(
-			"commerce-order-account-name", "[%COMMERCEORDER_ACCOUNT_NAME%]"
+			"account-name", "[%COMMERCEORDER_ACCOUNT_NAME%]"
 		).build();
 	}
 

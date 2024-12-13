@@ -6,6 +6,7 @@
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
 import com.liferay.commerce.exception.NoSuchWarehouseItemException;
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -60,6 +61,16 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
+			else if (exception instanceof
+						CommerceInventoryWarehouseItemQuantityException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 			else {
 				throw exception;
 			}
@@ -76,7 +87,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			actionRequest, "commerceInventoryWarehouseItemId");
 
 		BigDecimal quantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "quantity");
+			actionRequest, CommerceInventoryWarehouseItem.class.getName(),
+			"quantity");
 		String unitOfMeasureKey = ParamUtil.getString(
 			actionRequest, "unitOfMeasureKey");
 

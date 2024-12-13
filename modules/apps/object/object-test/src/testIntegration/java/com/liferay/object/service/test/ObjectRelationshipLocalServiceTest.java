@@ -1041,6 +1041,32 @@ public class ObjectRelationshipLocalServiceTest {
 						objectDefinition1.getObjectDefinitionId()),
 					_objectDefinitionLocalService));
 
+		// Object definitions must have the same scope to enable inheritance
+
+		ObjectDefinition siteObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			String.format(
+				"The scope of \"%s\" is not the same as \"%s\". To enable " +
+					"inheritance, the object definitions must have the same " +
+						"scope",
+				objectDefinitionB.getShortName(),
+				siteObjectDefinition.getShortName()),
+			() -> _bindObjectDefinitions(
+				objectDefinitionB.getObjectDefinitionId(),
+				siteObjectDefinition.getObjectDefinitionId()));
+
 		// Unable to bind the object definitions because the object relationship
 		// must not create a circular reference in a root context
 
@@ -1086,31 +1112,6 @@ public class ObjectRelationshipLocalServiceTest {
 			() -> _bindObjectDefinitions(
 				objectDefinitionB.getObjectDefinitionId(),
 				objectDefinitionCC.getObjectDefinitionId()));
-
-		// Unable to bind the object definitions when they have different scopes
-
-		ObjectDefinition siteObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_SITE);
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			String.format(
-				"The scope of \"%s\" is not the same as \"%s\". To enable " +
-					"inheritance, the objects must have the same scope",
-				objectDefinitionB.getShortName(),
-				siteObjectDefinition.getShortName()),
-			() -> _bindObjectDefinitions(
-				objectDefinitionB.getObjectDefinitionId(),
-				siteObjectDefinition.getObjectDefinitionId()));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,

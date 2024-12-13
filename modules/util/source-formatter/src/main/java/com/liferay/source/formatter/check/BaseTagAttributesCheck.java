@@ -289,10 +289,10 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 				}
 			}
 
-			char delimeter = s.charAt(0);
+			char delimiter = s.charAt(0);
 
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
+			if ((delimiter != CharPool.APOSTROPHE) &&
+				(delimiter != CharPool.QUOTE)) {
 
 				return null;
 			}
@@ -302,7 +302,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 			x = -1;
 
 			while (true) {
-				x = s.indexOf(delimeter, x + 1);
+				x = s.indexOf(delimiter, x + 1);
 
 				if (x == -1) {
 					return null;
@@ -472,19 +472,19 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 
 				sb.append(StringPool.EQUAL);
 
-				String delimeter = null;
+				String delimiter = null;
 
 				if (_escapeQuotes ||
 					!attributeValue.contains(StringPool.QUOTE) ||
 					!_fullName.contains(StringPool.COLON)) {
 
-					delimeter = StringPool.QUOTE;
+					delimiter = StringPool.QUOTE;
 				}
 				else {
-					delimeter = StringPool.APOSTROPHE;
+					delimiter = StringPool.APOSTROPHE;
 				}
 
-				sb.append(delimeter);
+				sb.append(delimiter);
 
 				if (!_escapeQuotes) {
 					sb.append(attributeValue);
@@ -495,7 +495,7 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 							attributeValue, CharPool.QUOTE, "&quot;"));
 				}
 
-				sb.append(delimeter);
+				sb.append(delimiter);
 			}
 
 			if (_multiLine) {

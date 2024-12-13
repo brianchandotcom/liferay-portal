@@ -37,6 +37,52 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void fetchGitHubDevBranch() {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		List<GitRemote> gitHubDevGitRemotes =
+			GitHubDevSyncUtil.getGitHubDevGitRemotes(gitWorkingDirectory);
+
+		for (int i = 0; i < 3; i++) {
+			if (gitHubDevGitRemotes.isEmpty()) {
+				break;
+			}
+
+			GitRemote randomGitRemote =
+				JenkinsResultsParserUtil.getRandomListItem(gitHubDevGitRemotes);
+
+			gitHubDevGitRemotes.remove(randomGitRemote);
+
+			String remoteGitBranchSHA = null;
+
+			try {
+				RemoteGitBranch remoteGitBranch =
+					gitWorkingDirectory.getRemoteGitBranch(
+						getGitHubDevBranchName(), randomGitRemote);
+
+				if (remoteGitBranch == null) {
+					continue;
+				}
+
+				remoteGitBranchSHA = remoteGitBranch.getSHA();
+
+				gitWorkingDirectory.fetch(remoteGitBranch);
+			}
+			catch (Exception exception) {
+				continue;
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(remoteGitBranchSHA) ||
+				!gitWorkingDirectory.localSHAExists(remoteGitBranchSHA)) {
+
+				continue;
+			}
+
+			break;
+		}
+	}
+
+	@Override
 	public String getBaseBranchSHA() {
 		return getString("base_branch_sha");
 	}

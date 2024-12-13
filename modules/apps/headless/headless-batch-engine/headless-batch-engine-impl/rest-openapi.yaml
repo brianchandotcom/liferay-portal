@@ -234,7 +234,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: nestedFieldNames
+                  name: batchNestedFields
                   schema:
                       type: string
                 - in: query

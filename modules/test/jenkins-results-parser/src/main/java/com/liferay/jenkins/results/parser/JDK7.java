@@ -12,7 +12,7 @@ public class JDK7 extends BaseJDK {
 
 	@Override
 	public String getAntOpts() {
-		String antOpts = System.getenv("ANT_OPTS");
+		String antOpts = System.getenv("ANT_OPTS") + " -XX:+IgnoreUnrecognizedVMOptions";
 
 		return antOpts.replace("MetaspaceSize", "PermSize");
 	}

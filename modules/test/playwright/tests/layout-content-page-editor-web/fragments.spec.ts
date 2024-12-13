@@ -1322,6 +1322,7 @@ testWithPrivatePages.describe('Menu Display Fragment', () => {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: iframe.getByText(name),
+			timeout: 3000,
 			trigger: page.getByLabel('Change Source'),
 		});
 

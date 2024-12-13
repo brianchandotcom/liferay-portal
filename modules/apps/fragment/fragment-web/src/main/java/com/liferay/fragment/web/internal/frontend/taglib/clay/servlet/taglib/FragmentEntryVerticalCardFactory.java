@@ -29,12 +29,12 @@ public class FragmentEntryVerticalCardFactory {
 		FragmentComposition fragmentComposition, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker, String type) {
 
-		if (Objects.equals(type, FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
-			return new BasicFragmentCompositionVerticalCard(
-				fragmentComposition, renderRequest, renderResponse, rowChecker);
+		if (!Objects.equals(type, FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
+			return null;
 		}
 
-		return null;
+		return new BasicFragmentCompositionVerticalCard(
+			fragmentComposition, renderRequest, renderResponse, rowChecker);
 	}
 
 	public VerticalCard getVerticalCard(
@@ -46,14 +46,14 @@ public class FragmentEntryVerticalCardFactory {
 				fragmentEntry, renderRequest, renderResponse, rowChecker);
 		}
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				type, FragmentTypeConstants.INHERITED_FRAGMENT_TYPE)) {
 
-			return new InheritedFragmentEntryVerticalCard(
-				fragmentEntry, renderRequest, renderResponse, rowChecker);
+			return null;
 		}
 
-		return null;
+		return new InheritedFragmentEntryVerticalCard(
+			fragmentEntry, renderRequest, renderResponse, rowChecker);
 	}
 
 	private FragmentEntryVerticalCardFactory() {

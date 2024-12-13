@@ -48,12 +48,12 @@ public class FragmentEntryLinkCTDisplayRender
 		String name = _fragmentEntryLinkHelper.getFragmentEntryName(
 			fragmentEntryLink, locale);
 
-		if ((layout != null) && !name.equals(StringPool.BLANK)) {
-			return _language.format(
-				locale, "x-for-x", new String[] {name, layout.getName(locale)});
+		if ((layout == null) || name.equals(StringPool.BLANK)) {
+			return null;
 		}
 
-		return null;
+		return _language.format(
+			locale, "x-for-x", new String[] {name, layout.getName(locale)});
 	}
 
 	@Override

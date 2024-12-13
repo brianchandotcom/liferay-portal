@@ -37,15 +37,15 @@ public class FragmentManagementToolbarDisplayContextFactory {
 				liferayPortletResponse, fragmentDisplayContext);
 		}
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				type, FragmentTypeConstants.INHERITED_FRAGMENT_TYPE)) {
 
-			return new InheritedFragmentManagementToolbarDisplayContext(
-				httpServletRequest, liferayPortletRequest,
-				liferayPortletResponse, fragmentDisplayContext);
+			return null;
 		}
 
-		return null;
+		return new InheritedFragmentManagementToolbarDisplayContext(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentDisplayContext);
 	}
 
 	private FragmentManagementToolbarDisplayContextFactory() {

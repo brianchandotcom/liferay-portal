@@ -59,26 +59,28 @@ public class FragmentEntryMenuDisplayConfiguration {
 	}
 
 	public String getRootItemId() {
-		if (_source instanceof SiteNavigationMenuSource) {
-			SiteNavigationMenuSource siteNavigationMenuSource =
-				(SiteNavigationMenuSource)_source;
-
-			long parentSiteNavigationMenuItemId =
-				siteNavigationMenuSource.getParentSiteNavigationMenuItemId();
-
-			if (parentSiteNavigationMenuItemId > 0) {
-				if (siteNavigationMenuSource.getSiteNavigationMenuId() == 0) {
-					Layout layout = LayoutLocalServiceUtil.fetchLayout(
-						parentSiteNavigationMenuItemId);
-
-					return layout.getUuid();
-				}
-
-				return String.valueOf(parentSiteNavigationMenuItemId);
-			}
+		if (!(_source instanceof SiteNavigationMenuSource)) {
+			return null;
 		}
 
-		return null;
+		SiteNavigationMenuSource siteNavigationMenuSource =
+			(SiteNavigationMenuSource)_source;
+
+		long parentSiteNavigationMenuItemId =
+			siteNavigationMenuSource.getParentSiteNavigationMenuItemId();
+
+		if (parentSiteNavigationMenuItemId <= 0) {
+			return null;
+		}
+
+		if (siteNavigationMenuSource.getSiteNavigationMenuId() == 0) {
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				parentSiteNavigationMenuItemId);
+
+			return layout.getUuid();
+		}
+
+		return String.valueOf(parentSiteNavigationMenuItemId);
 	}
 
 	public int getRootItemLevel() {

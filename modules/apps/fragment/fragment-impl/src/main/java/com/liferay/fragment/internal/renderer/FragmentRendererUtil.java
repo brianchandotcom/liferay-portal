@@ -61,12 +61,12 @@ public class FragmentRendererUtil {
 
 		Class<?> superClass = clazz.getSuperclass();
 
-		if (superClass != null) {
-			return getInfoItemRenderers(
-				className, superClass, infoItemRendererRegistry);
+		if (superClass == null) {
+			return null;
 		}
 
-		return null;
+		return getInfoItemRenderers(
+			className, superClass, infoItemRendererRegistry);
 	}
 
 	public static void printPortletMessageInfo(

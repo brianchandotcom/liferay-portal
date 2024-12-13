@@ -143,23 +143,6 @@ public class InfoRequestFieldValuesProviderHelper {
 				continue;
 			}
 
-			List<String> regularParameters = regularParameterMap.get(
-				infoField.getName());
-
-			if (regularParameters == null) {
-				if ((infoField.getInfoFieldType() instanceof
-						BooleanInfoFieldType) &&
-					ArrayUtil.contains(checkboxNames, infoField.getName())) {
-
-					infoFieldValues.put(
-						infoField.getUniqueId(),
-						_getInfoFieldValue(
-							infoField, themeDisplay.getLocale(), false));
-				}
-
-				continue;
-			}
-
 			if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &&
 				infoField.isLocalizable() &&
 				(infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
@@ -196,6 +179,23 @@ public class InfoRequestFieldValuesProviderHelper {
 								}
 							}
 						).build()));
+
+				continue;
+			}
+
+			List<String> regularParameters = regularParameterMap.get(
+				infoField.getName());
+
+			if (regularParameters == null) {
+				if ((infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) &&
+					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+
+					infoFieldValues.put(
+						infoField.getUniqueId(),
+						_getInfoFieldValue(
+							infoField, themeDisplay.getLocale(), false));
+				}
 
 				continue;
 			}

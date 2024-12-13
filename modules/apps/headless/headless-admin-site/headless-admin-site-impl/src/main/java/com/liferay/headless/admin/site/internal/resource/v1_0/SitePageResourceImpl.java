@@ -213,7 +213,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if (!Objects.equals(
+		if ((draftLayout == null) ||
+			!Objects.equals(
 				contentPageSpecification.getExternalReferenceCode(),
 				draftLayout.getExternalReferenceCode()) ||
 			!Objects.equals(

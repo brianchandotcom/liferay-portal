@@ -1666,9 +1666,10 @@ components:
                 type:
                     # @review
                     description:
-                        The page element's type (collection, collection item, column, container, drop zone, form,
-                        fragment, fragment composition, fragment drop zone, row, widget or widget section).
-                    enum: [Collection, CollectionItem, Column, Container, DropZone, Form, Fragment, FragmentComposition, FragmentDropZone, Row, Widget]
+                        The page element's type (collection, collection item, column, container, drop zone, form, form
+                        step, form step container, fragment, fragment composition, fragment drop zone, row, widget or
+                        widget section).
+                    enum: [Collection, CollectionItem, Column, Container, DropZone, Form, FormStep, FormStepContainer, Fragment, FragmentComposition, FragmentDropZone, Row, Widget]
                     type: string
         PageExperience:
             description:

@@ -490,7 +490,7 @@
 		/**
 		 * @deprecated As of Cavanaugh (7.4.x), replaced by `import {getSelectedOptionValues} from 'frontend-js-web';`
 		 */
-		listSelect(select, delimeter) {
+		listSelect(select, delimiter) {
 			select = Util.getElement(select);
 
 			return Array.from(select.querySelectorAll('option'))
@@ -503,7 +503,7 @@
 
 					return prev;
 				}, [])
-				.join(delimeter || ',');
+				.join(delimiter || ',');
 		},
 
 		/**

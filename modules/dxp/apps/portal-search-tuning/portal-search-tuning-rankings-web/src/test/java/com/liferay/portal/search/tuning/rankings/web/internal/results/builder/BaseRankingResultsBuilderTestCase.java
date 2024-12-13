@@ -31,7 +31,7 @@ public abstract class BaseRankingResultsBuilderTestCase
 		);
 	}
 
-	protected static ObjectMapper mapper = new ObjectMapper();
+	protected static ObjectMapper objectMapper = new ObjectMapper();
 
 	protected RankingIndexName rankingIndexName = Mockito.mock(
 		RankingIndexName.class);

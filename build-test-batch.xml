@@ -2776,7 +2776,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							<condition else="portal" property="playwright.project.name" value="${env.PLAYWRIGHT_PROJECT_NAME}">
 								<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
 							</condition>
-							
+
 							<local name="execute.path" />
 							<local name="java.jdk.home" />
 							<local name="java.jdk.opts" />

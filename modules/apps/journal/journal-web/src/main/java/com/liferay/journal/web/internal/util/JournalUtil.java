@@ -89,7 +89,7 @@ public class JournalUtil {
 
 		for (JournalArticle article : articles) {
 			DiffVersion diffVersion = new DiffVersion(
-				article.getUserId(), article.getVersion(),
+				article.getStatusByUserId(), article.getVersion(),
 				article.getModifiedDate());
 
 			diffVersions.add(diffVersion);

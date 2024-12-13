@@ -188,7 +188,7 @@ public class LangBuilder {
 		_createProperties(content, "mk"); // Macedonian
 		_createProperties(content, "ms"); // Malay
 		_createProperties(content, "nb"); // Norwegian Bokmål
-		_createProperties(content, "no_NO"); // Norwegian (Norway)
+		_createProperties(content, "no"); // Norwegian (Norway)
 		_createProperties(content, "fa"); // Persian
 		_createProperties(content, "pl"); // Polish
 		_createProperties(content, "pt_BR"); // Portuguese (Brazil)

@@ -162,17 +162,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		ContentPageSpecification contentPageSpecification =
-			_getContentPageSpecification(
-				layout.fetchDraftLayout(), layout.getExternalReferenceCode());
-
-		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-			contentPageSpecification, layout);
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			layout);
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
+			layout.fetchDraftLayout());
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-			contentPageSpecification, layout);
+			layout);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -529,14 +527,28 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private void
 			_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				ContentPageSpecification contentPageSpecification,
 				Layout layout)
 		throws Exception {
+
+		ContentPageSpecification contentPageSpecification =
+			_getContentPageSpecification(
+				layout, layout.getExternalReferenceCode());
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		Assert.assertEquals(
 			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			draftLayout.getExternalReferenceCode());
+
+		_assertProblemException(
+			() ->
+				sitePageResource.
+					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode(),
+						contentPageSpecification));
 
 		contentPageSpecification.setExternalReferenceCode(
 			layout.getExternalReferenceCode());
@@ -551,6 +563,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		contentPageSpecification.setExternalReferenceCode(
 			draftLayout.getExternalReferenceCode());
+
+		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		_assertContentPageSpecification(
 			draftLayout,
@@ -564,20 +578,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertEquals(
 			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
-
-		contentPageSpecification.setExternalReferenceCode(
-			layout.getExternalReferenceCode());
-
-		_assertProblemException(
-			() ->
-				sitePageResource.
-					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(),
-						contentPageSpecification));
-
-		contentPageSpecification.setExternalReferenceCode(
-			draftLayout.getExternalReferenceCode());
 
 		_assertProblemException(
 			() ->

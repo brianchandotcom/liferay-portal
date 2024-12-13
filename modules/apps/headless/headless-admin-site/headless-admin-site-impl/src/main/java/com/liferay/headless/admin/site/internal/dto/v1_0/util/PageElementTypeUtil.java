@@ -60,6 +60,12 @@ public class PageElementTypeUtil {
 		).put(
 			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
 		).put(
+			PageElement.Type.FORM_STEP,
+			LayoutDataItemTypeConstants.TYPE_FORM_STEP
+		).put(
+			PageElement.Type.FORM_STEP_CONTAINER,
+			LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER
+		).put(
 			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
 		).put(
 			PageElement.Type.FRAGMENT_DROP_ZONE,

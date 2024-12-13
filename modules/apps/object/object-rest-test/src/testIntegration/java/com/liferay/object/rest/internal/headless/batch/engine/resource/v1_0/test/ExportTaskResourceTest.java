@@ -142,14 +142,14 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 
 	@FeatureFlags("LPD-29367")
 	@Test
-	public void testPostExportTaskWithNestedFieldNames() throws Exception {
+	public void testPostExportTaskWithBatchNestedFields() throws Exception {
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
-		// With "nestedFieldNames" query parameter
+		// With "batchNestedFields" query parameter
 
 		JSONObject jsonObject1 = _testPostExportTask(
-			"COMPLETED", "nestedFieldNames=permissions", objectDefinition);
+			"COMPLETED", "batchNestedFields=permissions", objectDefinition);
 
 		Assert.assertEquals(1, jsonObject1.getInt("processedItemsCount"));
 
@@ -171,7 +171,7 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 			),
 			permissionsJSONArray.toString(), JSONCompareMode.LENIENT);
 
-		// Without "nestedFieldNames" query parameter
+		// Without "batchNestedFields" query parameter
 
 		JSONObject jsonObject2 = _testPostExportTask(
 			"COMPLETED", null, objectDefinition);

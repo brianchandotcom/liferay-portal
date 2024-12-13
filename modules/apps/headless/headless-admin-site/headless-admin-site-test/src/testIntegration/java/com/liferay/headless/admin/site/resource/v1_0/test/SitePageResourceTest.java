@@ -169,12 +169,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
-		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-			layout);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+			layout, serviceContext);
 
 		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
 			LayoutTestUtil.addTypePortletLayout(testGroup));
@@ -419,6 +419,53 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void
+			_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+				ContentPageSpecification contentPageSpecification,
+				String externalReferenceCode, Layout layout,
+				ServiceContext serviceContext)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		contentPageSpecification.setExternalReferenceCode(
+			externalReferenceCode);
+
+		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
+		PageSpecificationsTestUtil.assertContentPageSpecification(
+			draftLayout,
+			sitePageResource.
+				postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(),
+					contentPageSpecification));
+
+		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+
+		draftLayout = _layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		contentPageSpecification.setStatus((PageSpecification.Status)null);
+
+		_assertContentPageSpecification(
+			draftLayout,
+			sitePageResource.
+				postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+					testGroup.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(),
+					contentPageSpecification));
+
+		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+	}
+
+	private void
 			_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
 				Layout layout)
 		throws Exception {
@@ -527,7 +574,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private void
 			_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				Layout layout)
+				Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
 		ContentPageSpecification contentPageSpecification =
@@ -561,23 +608,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						layout.getExternalReferenceCode(),
 						contentPageSpecification));
 
-		contentPageSpecification.setExternalReferenceCode(
-			draftLayout.getExternalReferenceCode());
-
-		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
-
-		_assertContentPageSpecification(
-			draftLayout,
-			sitePageResource.
-				postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode(),
-					contentPageSpecification));
-
-		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
-
-		Assert.assertEquals(
-			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+			contentPageSpecification, draftLayout.getExternalReferenceCode(),
+			layout, serviceContext);
 
 		_assertProblemException(
 			() ->

@@ -10,6 +10,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.CommerceOrderItemPriceException;
+import com.liferay.commerce.exception.CommerceOrderItemQuantityException;
 import com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -81,6 +82,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof CommerceOrderItemPriceException ||
+				throwable instanceof CommerceOrderItemQuantityException ||
 				throwable instanceof
 					CommerceOrderItemRequestedDeliveryDateException) {
 
@@ -193,7 +195,8 @@ public class EditCommerceOrderItemMVCActionCommand
 			actionRequest, "cpMeasurementUnitId");
 
 		BigDecimal decimalQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "decimalQuantity");
+			actionRequest, CommerceOrderItem.class.getName(),
+			"decimalQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);

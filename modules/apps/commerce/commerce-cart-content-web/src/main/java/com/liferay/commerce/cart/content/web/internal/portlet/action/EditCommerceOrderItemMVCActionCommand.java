@@ -69,7 +69,8 @@ public class EditCommerceOrderItemMVCActionCommand
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceOrderItem.getJson(),
 					_commerceOrderItemQuantityFormatter.parse(
-						actionRequest, "quantity"),
+						actionRequest, CommerceOrderItem.class.getName(),
+						"quantity"),
 					commerceContext,
 					ServiceContextFactory.getInstance(
 						CommerceOrderItem.class.getName(), actionRequest));

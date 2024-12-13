@@ -6,6 +6,7 @@
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
 import com.liferay.commerce.exception.DuplicateCommerceShipmentItemExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
@@ -95,7 +96,9 @@ public class EditCommerceShipmentItemMVCActionCommand
 							"mvcPath", "/error.jsp");
 					}
 					else if (exception instanceof
-								DuplicateCommerceShipmentItemException ||
+								CommerceShipmentItemQuantityException ||
+							 exception instanceof
+								 DuplicateCommerceShipmentItemException ||
 							 exception instanceof NoSuchShipmentException) {
 
 						hideDefaultErrorMessage(actionRequest);
@@ -268,7 +271,8 @@ public class EditCommerceShipmentItemMVCActionCommand
 					commerceInventoryWarehouseId);
 
 			BigDecimal quantity = _commerceOrderItemQuantityFormatter.parse(
-				actionRequest, commerceInventoryWarehouseId + "_quantity");
+				actionRequest, CommerceShipmentItem.class.getName(),
+				commerceInventoryWarehouseId + "_quantity");
 
 			if ((initialCommerceShipmentItem != null) &&
 				BigDecimalUtil.gt(quantity, BigDecimal.ZERO)) {

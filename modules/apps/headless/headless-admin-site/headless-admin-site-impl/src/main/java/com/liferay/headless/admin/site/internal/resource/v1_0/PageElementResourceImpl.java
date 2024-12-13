@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -361,7 +362,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 			layoutStructure.moveLayoutStructureItem(
 				layoutStructureItem.getItemId(),
-				pageElement.getParentExternalReferenceCode(),
+				_getParentExternalReferenceCode(pageElement, layoutStructure),
 				pageElement.getPosition());
 
 			_layoutPageTemplateStructureLocalService.
@@ -401,7 +402,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutStructure.addLayoutStructureItem(
 				pageElement.getExternalReferenceCode(),
 				PageElementTypeUtil.toInternalType(pageElement.getType()),
-				pageElement.getParentExternalReferenceCode(),
+				_getParentExternalReferenceCode(pageElement, layoutStructure),
 				pageElement.getPosition());
 
 		layoutStructureItem.updateItemConfig(_jsonFactory.createJSONObject());
@@ -427,6 +428,19 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			LayoutStructure.class.getName(), layoutStructure);
 
 		return dtoConverterContext;
+	}
+
+	private String _getParentExternalReferenceCode(
+		PageElement pageElement, LayoutStructure layoutStructure) {
+
+		String parentExternalReferenceCode =
+			pageElement.getParentExternalReferenceCode();
+
+		if (Validator.isNotNull(parentExternalReferenceCode)) {
+			return parentExternalReferenceCode;
+		}
+
+		return layoutStructure.getMainItemId();
 	}
 
 	@Reference

@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.commerce.product.model.CPConfigurationEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.CPDefinitionTable;
@@ -33,6 +34,9 @@ public class CPDefinitionTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.assetEntryReference(
 			CPDefinitionTable.INSTANCE.CPDefinitionId, CPDefinition.class
+		).classNameReference(
+			CPDefinitionTable.INSTANCE.CPDefinitionId,
+			CPConfigurationEntryTable.INSTANCE.classPK, CPDefinition.class
 		).singleColumnReference(
 			CPDefinitionTable.INSTANCE.CPDefinitionId,
 			CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId

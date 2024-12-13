@@ -10,7 +10,6 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.commerce.product.model.CPConfigurationEntryTable;
 import com.liferay.commerce.product.model.CPConfigurationListTable;
-import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.service.persistence.CPConfigurationEntryPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -28,10 +27,6 @@ public class CPConfigurationEntryTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<CPConfigurationEntryTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.singleColumnReference(
-			CPConfigurationEntryTable.INSTANCE.classPK,
-			CPDefinitionTable.INSTANCE.CPDefinitionId);
 	}
 
 	@Override

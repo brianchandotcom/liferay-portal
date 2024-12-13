@@ -17,6 +17,8 @@ import java.util.Locale;
  */
 public interface CommerceQuantityFormatter {
 
+	public String format(BigDecimal quantity, Locale locale) throws Exception;
+
 	public BigDecimal format(
 		CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey);
 
@@ -29,7 +31,5 @@ public interface CommerceQuantityFormatter {
 	public BigDecimal format(
 		long companyId, BigDecimal quantity, String sku,
 		String unitOfMeasureKey);
-
-	public String parse(BigDecimal quantity, Locale locale) throws Exception;
 
 }

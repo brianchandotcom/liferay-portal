@@ -10,6 +10,8 @@ const editorName = `${fragmentEntryLinkNamespace}-${input.name}`;
 
 let currentLanguageId = themeDisplay.getDefaultLanguageId();
 
+document.getElementById(editorName).name = input.name;
+
 if (input.attributes?.readOnly) {
 	if (inputElement) {
 		inputElement.innerHTML = input.value;

@@ -10,6 +10,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.CollectionItemLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.CollectionLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.ColumnLayoutStructureItemImporter;
@@ -33,7 +34,6 @@ import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemExce
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -383,7 +383,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 			layoutStructure.moveLayoutStructureItem(
 				layoutStructureItem.getItemId(),
-				_getParentExternalReferenceCode(pageElement, layoutStructure),
+				LayoutStructureUtil.getParentExternalReferenceCode(
+					pageElement, layoutStructure),
 				pageElement.getPosition());
 
 			_layoutPageTemplateStructureLocalService.
@@ -486,19 +487,6 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			LayoutStructure.class.getName(), layoutStructure);
 
 		return dtoConverterContext;
-	}
-
-	private String _getParentExternalReferenceCode(
-		PageElement pageElement, LayoutStructure layoutStructure) {
-
-		String parentExternalReferenceCode =
-			pageElement.getParentExternalReferenceCode();
-
-		if (Validator.isNotNull(parentExternalReferenceCode)) {
-			return parentExternalReferenceCode;
-		}
-
-		return layoutStructure.getMainItemId();
 	}
 
 	@Reference

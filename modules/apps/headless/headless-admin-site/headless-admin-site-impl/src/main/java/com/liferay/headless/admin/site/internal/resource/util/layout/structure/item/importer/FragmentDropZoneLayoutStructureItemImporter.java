@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.util.layout.structure.
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageFragmentDropZoneDefinition;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -31,7 +32,8 @@ public class FragmentDropZoneLayoutStructureItemImporter
 				(FragmentDropZoneLayoutStructureItem)
 					layoutStructure.addFragmentDropZoneLayoutStructureItem(
 						pageElement.getExternalReferenceCode(),
-						pageElement.getParentExternalReferenceCode(),
+						LayoutStructureUtil.getParentExternalReferenceCode(
+							pageElement, layoutStructure),
 						pageElement.getPosition());
 
 		PageFragmentDropZoneDefinition pageFragmentDropZoneDefinition =

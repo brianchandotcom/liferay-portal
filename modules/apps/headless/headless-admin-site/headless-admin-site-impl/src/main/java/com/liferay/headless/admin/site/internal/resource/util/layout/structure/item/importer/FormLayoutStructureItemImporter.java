@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.util.layout.structure.
 import com.liferay.headless.admin.site.dto.v1_0.FormConfig;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageFormDefinition;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
@@ -37,7 +38,8 @@ public class FormLayoutStructureItemImporter
 			(FormStyledLayoutStructureItem)
 				layoutStructure.addFormStyledLayoutStructureItem(
 					pageElement.getExternalReferenceCode(),
-					pageElement.getParentExternalReferenceCode(),
+					LayoutStructureUtil.getParentExternalReferenceCode(
+						pageElement, layoutStructure),
 					pageElement.getPosition());
 
 		PageFormDefinition pageFormDefinition =

@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -26,7 +27,8 @@ public class DropZoneLayoutStructureItemImporter
 
 		return layoutStructure.addDropZoneLayoutStructureItem(
 			pageElement.getExternalReferenceCode(),
-			pageElement.getParentExternalReferenceCode(),
+			LayoutStructureUtil.getParentExternalReferenceCode(
+				pageElement, layoutStructure),
 			pageElement.getPosition());
 	}
 

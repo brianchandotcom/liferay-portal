@@ -155,7 +155,7 @@
 		id: '<portlet:namespace />calendarsMenu',
 		items: [
 			{
-				caption: '<liferay-ui:message key="add-calendar-booking" />',
+				caption: '<liferay-ui:message key="add-event" />',
 				fn: function (event) {
 					var instance = this;
 

@@ -29,7 +29,7 @@ AUI.add(
 		const TPL_ICON_ADD_EVENT_NODE =
 			'<div class="btn-group">' +
 			'<button class="btn btn-primary calendar-add-event-btn" type="button">' +
-			Liferay.Language.get('add-calendar-booking') +
+			Liferay.Language.get('add-event') +
 			'</button>' +
 			'</div>';
 

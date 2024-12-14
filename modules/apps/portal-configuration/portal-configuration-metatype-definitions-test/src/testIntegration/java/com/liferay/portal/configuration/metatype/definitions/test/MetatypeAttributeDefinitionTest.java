@@ -45,7 +45,7 @@ public class MetatypeAttributeDefinitionTest {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			extendedMetaTypeInformation.getObjectClassDefinition(
 				"com.liferay.portal.configuration.metatype.definitions.test." +
-					"TestConfiguration",
+					"MetatypeAttributeDefinitionTest",
 				null);
 
 		Assert.assertArrayEquals(

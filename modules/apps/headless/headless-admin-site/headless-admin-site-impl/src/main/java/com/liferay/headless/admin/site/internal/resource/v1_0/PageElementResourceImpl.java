@@ -22,19 +22,17 @@ import com.liferay.headless.admin.site.internal.resource.util.layout.structure.i
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.FragmentLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.LayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.RowLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -45,7 +43,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
@@ -316,7 +313,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceId()));
 
-		return _addPageElement(layout, layoutStructure, pageElement);
+		return _addPageElement(
+			groupId, layout, layoutStructure, pageElement,
+			segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override
@@ -364,7 +363,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				pageElementExternalReferenceCode);
 
 		if (layoutStructureItem == null) {
-			return _addPageElement(layout, layoutStructure, pageElement);
+			return _addPageElement(
+				groupId, layout, layoutStructure, pageElement,
+				segmentsExperience.getSegmentsExperienceId());
 		}
 
 		LayoutStructureItem parentLayoutStructureItem =
@@ -431,39 +432,40 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			PageElement.Type.ROW, new RowLayoutStructureItemImporter());
 	}
 
-	private void _addChildPageElements(
-		LayoutStructure layoutStructure, PageElement pageElement) {
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.addLayoutStructureItem(
-					_externalToInternalValuesMap.get(
-						childPageElement.getType()),
-					childPageElement.getParentExternalReferenceCode(),
-					childPageElement.getPosition());
-
-			layoutStructureItem.updateItemConfig(
-				_jsonFactory.createJSONObject());
-
-			_addChildPageElements(layoutStructure, childPageElement);
-		}
-	}
-
-	private PageElement _addPageElement(
-			Layout layout, LayoutStructure layoutStructure,
+	private LayoutStructureItem _addLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
 			PageElement pageElement)
 		throws Exception {
 
+		LayoutStructureItemImporter layoutStructureItemImporter =
+			_layoutStructureItemImporters.get(pageElement.getType());
+
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.addLayoutStructureItem(
-				pageElement.getExternalReferenceCode(),
-				_externalToInternalValuesMap.get(pageElement.getType()),
-				_getParentExternalReferenceCode(pageElement, layoutStructure),
-				pageElement.getPosition());
+			layoutStructureItemImporter.addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				pageElement);
 
-		layoutStructureItem.updateItemConfig(_jsonFactory.createJSONObject());
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			_addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				childPageElement);
+		}
 
-		_addChildPageElements(layoutStructure, pageElement);
+		return layoutStructureItem;
+	}
+
+	private PageElement _addPageElement(
+			long groupId, Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, long segmentsExperienceId)
+		throws Exception {
+
+		LayoutStructureItem layoutStructureItem = _addLayoutStructureItem(
+			layoutStructure,
+			new LayoutStructureItemImporterContext(
+				groupId, layout, segmentsExperienceId, contextUser.getUserId()),
+			pageElement);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -499,32 +501,6 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		return layoutStructure.getMainItemId();
 	}
 
-	private static final Map<PageElement.Type, String>
-		_externalToInternalValuesMap = HashMapBuilder.put(
-			PageElement.Type.COLLECTION,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION
-		).put(
-			PageElement.Type.COLLECTION_ITEM,
-			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM
-		).put(
-			PageElement.Type.COLUMN, LayoutDataItemTypeConstants.TYPE_COLUMN
-		).put(
-			PageElement.Type.CONTAINER,
-			LayoutDataItemTypeConstants.TYPE_CONTAINER
-		).put(
-			PageElement.Type.DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
-		).put(
-			PageElement.Type.FORM, LayoutDataItemTypeConstants.TYPE_FORM
-		).put(
-			PageElement.Type.FRAGMENT, LayoutDataItemTypeConstants.TYPE_FRAGMENT
-		).put(
-			PageElement.Type.FRAGMENT_DROP_ZONE,
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE
-		).put(
-			PageElement.Type.ROW, LayoutDataItemTypeConstants.TYPE_ROW
-		).build();
-
 	@Reference
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
@@ -534,9 +510,6 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

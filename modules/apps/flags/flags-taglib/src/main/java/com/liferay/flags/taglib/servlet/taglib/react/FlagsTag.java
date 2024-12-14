@@ -248,13 +248,13 @@ public class FlagsTag extends IncludeTag {
 		).put(
 			namespace + "reporterEmailAddress",
 			() -> {
-				if (themeDisplay.isSignedIn()) {
-					User user = themeDisplay.getUser();
-
-					return user.getEmailAddress();
+				if (!themeDisplay.isSignedIn()) {
+					return null;
 				}
 
-				return null;
+				User user = themeDisplay.getUser();
+
+				return user.getEmailAddress();
 			}
 		);
 	}

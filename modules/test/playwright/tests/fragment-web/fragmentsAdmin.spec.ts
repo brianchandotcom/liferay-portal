@@ -1345,9 +1345,7 @@ test(
 		await page.getByRole('button', {name: 'Deprecated'}).click();
 
 		await expect(
-			page.getByText(
-				'This feature is deprecated. Learn more about deprecated features.'
-			)
+			page.getByText('This feature is deprecated.')
 		).toBeVisible();
 
 		// Disable feature flag

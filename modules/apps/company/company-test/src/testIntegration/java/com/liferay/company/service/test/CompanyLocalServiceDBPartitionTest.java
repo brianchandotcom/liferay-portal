@@ -67,7 +67,6 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleListener;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
@@ -225,12 +224,14 @@ public class CompanyLocalServiceDBPartitionTest
 		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
 
+		String pid = configuration.getPid();
+
 		companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
 		boolean standaloneDBPartition = true;
 
 		try {
-			_assertConfiguration(configuration.getPid(), false);
+			_assertConfiguration(pid, false);
 
 			String name = "new" + company.getName();
 			String virtualHostName = "new" + company.getVirtualHostname();
@@ -253,7 +254,7 @@ public class CompanyLocalServiceDBPartitionTest
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						company.getCompanyId())) {
 
-				_assertConfiguration(configuration.getPid(), true);
+				_assertConfiguration(pid, true);
 			}
 		}
 		finally {
@@ -518,6 +519,8 @@ public class CompanyLocalServiceDBPartitionTest
 		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
 
+		String pid = configuration.getPid();
+
 		int dbPartitionsCount = _getDBPartitionsCount();
 
 		companyLocalService.deleteCompany(company);
@@ -537,7 +540,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertTrue(serviceReferences.isEmpty());
 
-		_assertConfiguration(configuration.getPid(), false);
+		_assertConfiguration(pid, false);
 	}
 
 	@Test
@@ -580,6 +583,8 @@ public class CompanyLocalServiceDBPartitionTest
 			Configuration configuration = _createFactoryConfiguration(
 				company.getCompanyId());
 
+			String pid = configuration.getPid();
+
 			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
@@ -604,7 +609,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			Assert.assertTrue(serviceReferences.isEmpty());
 
-			_assertConfiguration(configuration.getPid(), false);
+			_assertConfiguration(pid, false);
 		}
 		finally {
 			if (standaloneDBPartition) {

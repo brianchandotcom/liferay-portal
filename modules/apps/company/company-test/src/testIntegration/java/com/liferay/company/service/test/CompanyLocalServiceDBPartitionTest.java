@@ -703,16 +703,13 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	private void _assertConfiguration(String pid, boolean exists) {
-		BundleListener configurationManager = ReflectionTestUtil.invoke(
-			_configurationAdmin, "getConfigurationManager", new Class<?>[0],
-			null);
+	private void _assertConfiguration(String pid, boolean exists)
+		throws Exception {
 
 		if (exists) {
 			Assert.assertNotNull(
-				ReflectionTestUtil.invoke(
-					configurationManager, "getConfiguration",
-					new Class<?>[] {String.class}, pid));
+				_configurationAdmin.listConfigurations(
+					"(service.pid=" + pid + ")"));
 
 			Assert.assertTrue(_persistenceManager.exists(pid));
 
@@ -720,9 +717,8 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		Assert.assertNull(
-			ReflectionTestUtil.invoke(
-				configurationManager, "getConfiguration",
-				new Class<?>[] {String.class}, pid));
+			_configurationAdmin.listConfigurations(
+				"(service.pid=" + pid + ")"));
 
 		Assert.assertFalse(_persistenceManager.exists(pid));
 	}

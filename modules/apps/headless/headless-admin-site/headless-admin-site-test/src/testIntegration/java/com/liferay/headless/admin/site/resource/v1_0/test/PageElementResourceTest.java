@@ -12,6 +12,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -223,14 +224,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	protected PageElement randomPageElement() throws Exception {
-		LayoutStructure layoutStructure = _getLayoutStructure();
-
 		PageElement pageElement = super.randomPageElement();
 
 		pageElement.setType(PageElement.Type.CONTAINER);
 		pageElement.setPageElements(new PageElement[0]);
-		pageElement.setParentExternalReferenceCode(
-			layoutStructure.getMainItemId());
+		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
 		pageElement.setPosition(0);
 
 		return pageElement;

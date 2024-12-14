@@ -26,6 +26,10 @@ public interface SystemFDSEntry {
 
 	public String getName();
 
+	public default String getPropsTransformer() {
+		return null;
+	}
+
 	public String getRESTApplication();
 
 	public String getRESTEndpoint();

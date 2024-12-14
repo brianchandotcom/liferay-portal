@@ -43,6 +43,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_draftLayout = _layout;
+
+		_position = 0;
 	}
 
 	@Override
@@ -229,7 +231,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setType(PageElement.Type.CONTAINER);
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
-		pageElement.setPosition(0);
+		pageElement.setPosition(_position++);
 
 		return pageElement;
 	}
@@ -379,6 +381,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private int _position;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

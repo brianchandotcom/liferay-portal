@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.util.layout.structure.
 
 import com.liferay.headless.admin.site.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -30,7 +31,8 @@ public class ColumnLayoutStructureItemImporter
 			(ColumnLayoutStructureItem)
 				layoutStructure.addColumnLayoutStructureItem(
 					pageElement.getExternalReferenceCode(),
-					pageElement.getParentExternalReferenceCode(),
+					LayoutStructureUtil.getParentExternalReferenceCode(
+						pageElement, layoutStructure),
 					pageElement.getPosition());
 
 		PageColumnDefinition pageColumnDefinition =

@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.util.layout.structure.
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.resource.util.layout.structure.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.util.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -36,7 +37,8 @@ public class CollectionLayoutStructureItemImporter
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.addCollectionStyledLayoutStructureItem(
 						pageElement.getExternalReferenceCode(),
-						pageElement.getParentExternalReferenceCode(),
+						LayoutStructureUtil.getParentExternalReferenceCode(
+							pageElement, layoutStructure),
 						pageElement.getPosition());
 
 		PageCollectionDefinition pageCollectionDefinition =

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Modified;
  * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Component(
-	configurationPid = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
+	configurationPid = "com.liferay.frontend.js.minifier.internal.configuration.YahooJavaScriptMinifierConfiguration",
 	service = JavaScriptMinifier.class
 )
 @Deprecated

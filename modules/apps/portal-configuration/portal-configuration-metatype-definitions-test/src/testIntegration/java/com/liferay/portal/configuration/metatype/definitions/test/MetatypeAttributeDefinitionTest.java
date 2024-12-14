@@ -84,7 +84,7 @@ public class MetatypeAttributeDefinitionTest {
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 	@Meta.OCD(
-		id = "com.liferay.portal.configuration.metatype.definitions.test.TestConfiguration"
+		id = "com.liferay.portal.configuration.metatype.definitions.test.MetatypeAttributeDefinitionTest"
 	)
 	private interface TestConfiguration {
 

@@ -226,14 +226,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	protected PageElement randomPageElement() throws Exception {
-		PageElement pageElement = super.randomPageElement();
-
-		pageElement.setType(PageElement.Type.CONTAINER);
-		pageElement.setPageElements(new PageElement[0]);
-		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
-		pageElement.setPosition(_position++);
-
-		return pageElement;
+		return _randomPageElement(PageElement.Type.CONTAINER);
 	}
 
 	@Override
@@ -370,6 +363,19 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
+	private PageElement _randomPageElement(PageElement.Type type)
+		throws Exception {
+
+		PageElement pageElement = super.randomPageElement();
+
+		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
+		pageElement.setPosition(_position++);
+		pageElement.setType(type);
+
+		return pageElement;
 	}
 
 	private Layout _draftLayout;

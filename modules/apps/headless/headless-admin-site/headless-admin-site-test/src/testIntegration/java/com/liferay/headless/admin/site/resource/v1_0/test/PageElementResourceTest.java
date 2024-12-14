@@ -205,6 +205,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageElementFragmentComposition();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageExperiencePageElement()

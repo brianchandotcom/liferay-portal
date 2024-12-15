@@ -74,6 +74,10 @@ public class IfStatementCheck extends BaseFileCheck {
 
 				String clause = ifStatement1.getClause();
 
+				if (clause.contains("instanceof")) {
+					continue;
+				}
+
 				int x = StringUtil.indexOfAny(
 					clause, new String[] {"&", "<", "=", ">", "|", "^"});
 

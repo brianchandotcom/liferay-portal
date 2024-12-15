@@ -248,6 +248,119 @@ test.describe('Form Configuration', () => {
 			}).toPass();
 		}
 	);
+
+	test(
+		'Success notification with toast message must be compatible with go to entry display page redirect option',
+		{
+			tag: '@LPS-188036',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a default display page for lemon object
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Create a page with a form fragment
+
+			const formId = getRandomString();
+
+			const textDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName,
+				pageElements: [textDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and change form configuration
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Success Action',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Go to Entry Display Page',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Display Page',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Default',
+			});
+
+			await page
+				.getByLabel('Show Notification After Submit', {exact: true})
+				.check();
+
+			await page
+				.getByLabel('Success Notification Text', {exact: true})
+				.fill('Request received correctly');
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and submit form
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Assert success notification
+
+			await waitForAlert(page, 'Request received correctly');
+		}
+	);
 });
 
 test.describe('Captcha Fragment', () => {

@@ -62,6 +62,20 @@ export function LocalizationSelect({
 		};
 	}, [locales]);
 
+	useEffect(() => {
+		const onLocaleChanged = ({languageId}) => {
+			if (selectedLocaleId !== languageId) {
+				setSelectedLocaleId(languageId);
+			}
+		};
+
+		Liferay.on('localizationSelect:localeChanged', onLocaleChanged);
+
+		return () => {
+			Liferay.detach('localizationSelect:localeChanged', onLocaleChanged);
+		};
+	}, [selectedLocaleId]);
+
 	return (
 		<Picker
 			active={active}

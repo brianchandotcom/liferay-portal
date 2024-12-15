@@ -5175,3 +5175,131 @@ test.describe('Edit mode form errors', () => {
 		}
 	);
 });
+
+test.describe('View mode form errors', () => {
+	test(
+		'Show only the first error message when multiple validation issues happen after submitting a form',
+		{
+			tag: '@LPS-151402',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a default display page for lemon object
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Create a page with a form fragment
+
+			const formId = getRandomString();
+
+			const textInputDefinition1 = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const textInputDefinition2 = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonWeight',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName,
+				pageElements: [
+					textInputDefinition1,
+					textInputDefinition2,
+					submitFragmentDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert first error message is shown when there are multiple error messages
+
+			await page.getByLabel('Lemon Size').click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await page.getByLabel('Lemon Weight').fill(getRandomString());
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).toBeVisible();
+
+			await expect(
+				page.getByText('The lemon weight must be greater than 0')
+			).not.toBeVisible();
+
+			// Assert second error message
+
+			await page.getByLabel('Lemon Size').clear();
+
+			await page.getByLabel('Lemon Weight').fill('-1');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).not.toBeVisible();
+
+			await expect(
+				page.getByText('The lemon weight must be greater than 0')
+			).toBeVisible();
+		}
+	);
+});

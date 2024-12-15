@@ -150,7 +150,7 @@ test.describe('Form Configuration', () => {
 	test(
 		'Show success message only one time',
 		{
-			tag: '@LPD-37435',
+			tag: ['@LPD-37435', '@LPS-188036'],
 		},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 

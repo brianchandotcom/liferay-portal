@@ -24,6 +24,7 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -4742,6 +4743,70 @@ test.describe('Edit mode form errors', () => {
 			trigger: page.getByRole('button', {name: 'Cancel'}),
 		});
 	}
+
+	test(
+		'Can only drop form fragments inside a mapped form container',
+		{
+			tag: ['@LPS-149984', '@LPS-157740'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a content page
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition(),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Assert form fragments can only be dropped inside a mapped form container
+
+			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+			const header = page.getByRole('menuitem', {
+				exact: true,
+				name: 'Form Components',
+			});
+
+			await expandSection(header);
+
+			await page.getByLabel(`Add Textarea`).focus();
+
+			await page.keyboard.press('Enter');
+
+			await waitForAlert(
+				page,
+				'Error:Form components can only be placed inside a mapped form container.',
+				{type: 'danger'}
+			);
+
+			// Assert form fragments cannot be placed inside an unmapped form container
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Stepper',
+				page.locator('.page-editor__form .page-editor__container')
+			);
+
+			await waitForAlert(
+				page,
+				'Error:Fragments cannot be placed inside an unmapped form container.',
+				{type: 'danger'}
+			);
+		}
+	);
 
 	test(
 		'Show a warning message when there is a form with unmapped input fragments, hidden required input fragments, missing required input fragments, hidden submit button or missing submit button',

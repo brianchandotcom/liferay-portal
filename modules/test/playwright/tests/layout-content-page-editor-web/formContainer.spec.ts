@@ -349,15 +349,33 @@ test.describe('Form Configuration', () => {
 
 			await pageEditorPage.publishPage();
 
-			// Go to view mode and submit form
+			// Go to view mode
 
 			await page.goto(
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await page.getByRole('button', {name: 'Submit'}).click();
+			// Assert form is not redirected if there are validation errors
 
-			// Assert success notification
+			const input = page.getByLabel('Lemon Size');
+
+			await input.click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).toBeVisible();
+
+			// Clear input and assert success notification
+
+			await input.clear();
+
+			await page.getByText('Submit', {exact: true}).click();
 
 			await waitForAlert(page, 'Request received correctly');
 		}

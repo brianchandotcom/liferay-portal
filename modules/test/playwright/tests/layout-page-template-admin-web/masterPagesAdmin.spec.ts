@@ -4,6 +4,7 @@
  */
 
 import {Locator, expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -384,3 +385,88 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 		expect(headingFragment.getAttribute('inert')).toBeDefined();
 	});
 });
+
+test(
+	'Importing master page templates',
+	{
+		tag: '@LPS-173150',
+	},
+	async ({masterPagesPage, page, site}) => {
+
+		// Go to master page administration
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		// Open import view
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Import'}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		// Assert import view
+
+		await expect(
+			page.getByRole('heading', {name: 'Import File'})
+		).toBeVisible();
+
+		await expect(
+			page.getByText(
+				'Select a ZIP file containing one or multiple entries.Read more about exporting and importing page templates.'
+			)
+		).toBeVisible();
+
+		expect(
+			await page
+				.getByText(
+					'Read more about exporting and importing page templates.'
+				)
+				.getAttribute('href')
+		).toBe(
+			'https://learn.liferay.com/en/w/dxp/site-building/creating-pages/adding-pages/exporting-and-importing-page-templates'
+		);
+
+		// Import master page
+
+		await masterPagesPage.importFile(
+			'master-page-with-fragments.zip',
+			path.join(__dirname, '/dependencies/master-page-with-fragments.zip')
+		);
+
+		// Assert import message
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Upload another file
+
+		await page.getByRole('button', {name: 'Upload Another File'}).click();
+
+		await masterPagesPage.importFile(
+			'master-page-with-widgets.zip',
+			path.join(__dirname, '/dependencies/master-page-with-widgets.zip')
+		);
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Assert imported entries
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('link', {name: 'Master Page With Fragments'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: 'Master Page With Widgets'})
+		).toBeVisible();
+	}
+);

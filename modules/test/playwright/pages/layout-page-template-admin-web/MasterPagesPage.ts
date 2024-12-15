@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {zipFolder} from '../../utils/zip';
 import {PagesAdminPage} from '../layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
@@ -92,6 +93,26 @@ export class MasterPagesPage {
 		await this.getMasterCard(name).getByRole('link', {name}).click();
 
 		await this.page.getByText('Configure Allowed Fragments').waitFor();
+	}
+
+	async importFile(fileName: string, folderPath: string) {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Select File'})
+			.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(await zipFolder(folderPath));
+
+		await this.page.getByText(fileName).waitFor();
+
+		await expect(
+			this.page.getByRole('button', {name: 'Replace File'})
+		).toBeVisible();
+
+		await this.page.getByRole('button', {name: 'Import'}).click();
 	}
 
 	async openMasterActionsMenu(name: string) {

@@ -35,8 +35,8 @@ HTML references with single quotes:
 
 JSON configurations of document fragment entry:
 
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": { "X-link": { "defaultValue": "", "config": { "href": { "en_US": "/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]" } } } }}
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": { "X-link": { "defaultValue": "", "config": { "href": { "en_US": "[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]" } } } }}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {"X-link": {"defaultValue": "", "config": {"href": {"en_US": "/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]"}}}}}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {"X-link": {"defaultValue": "", "config": {"href": {"en_US": "[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/d/[$GROUP_NAME$]/[$FILE_ENTRY_FRIENDLY_URL$]"}}}}}
 
 JSON configurations of image fragment entry:
 

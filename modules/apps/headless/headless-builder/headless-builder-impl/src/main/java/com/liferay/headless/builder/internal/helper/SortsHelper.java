@@ -66,15 +66,15 @@ public class SortsHelper {
 
 		APIApplication.Sort sort = endpoint.getSort();
 
-		if (sort != null) {
-			return SortUtil.getSorts(
-				acceptLanguage, _getEntityModel(companyId, responseSchema),
-				_sortParserProvider.provide(
-					_getEntityModel(companyId, responseSchema)),
-				sort.getODataSortString());
+		if (sort == null) {
+			return null;
 		}
 
-		return null;
+		return SortUtil.getSorts(
+			acceptLanguage, _getEntityModel(companyId, responseSchema),
+			_sortParserProvider.provide(
+				_getEntityModel(companyId, responseSchema)),
+			sort.getODataSortString());
 	}
 
 	private EntityModel _getEntityModel(

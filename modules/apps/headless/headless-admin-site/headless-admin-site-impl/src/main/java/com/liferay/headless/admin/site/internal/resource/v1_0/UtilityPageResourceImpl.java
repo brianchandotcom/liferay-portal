@@ -5,8 +5,11 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.UtilityPageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -14,18 +17,22 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,6 +119,62 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode),
 			utilityPage);
+	}
+
+	@Override
+	public ContentPageSpecification
+			postSiteSiteByExternalReferenceCodeUtilityPagePageSpecification(
+				String siteExternalReferenceCode,
+				String utilityPageExternalReferenceCode,
+				ContentPageSpecification contentPageSpecification)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443") ||
+			(Validator.isNotNull(contentPageSpecification.getStatus()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getStatus(),
+				 PageSpecification.Status.DRAFT))) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPageExternalReferenceCode,
+					GroupUtil.getGroupId(
+						false, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		if (layout.isDraftLayout() || !layout.isPublished()) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if ((Validator.isNotNull(
+				contentPageSpecification.getExternalReferenceCode()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getExternalReferenceCode(),
+				 draftLayout.getExternalReferenceCode())) ||
+			!Objects.equals(
+				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			layout.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			LayoutUtil.updateLayout(
+				contentPageSpecification, draftLayout, serviceContext));
 	}
 
 	@Override
@@ -223,7 +286,16 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		).build();
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
+	)
+	private DTOConverter<Layout, PageSpecification>
+		_pageSpecificationDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.UtilityPageDTOConverter)"

@@ -1215,19 +1215,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		List<SearchResult> searchResults = ListUtil.fromCollection(
 			searchPage.getItems());
 
-		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+		String searchResultsString = searchResults.toString();
 
-		Assert.assertTrue(
-			searchResults.toString(
-			).contains(
-				"Paul"
-			));
-
-		Assert.assertFalse(
-			searchResults.toString(
-			).contains(
-				"Peter"
-			));
+		Assert.assertEquals(searchResultsString, 1, searchResults.size());
+		Assert.assertTrue(searchResultsString.contains("Paul"));
+		Assert.assertFalse(searchResultsString.contains("Peter"));
 	}
 
 	private void _testPostSearchPageWithMultipleGroupIdsScope()

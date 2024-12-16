@@ -332,8 +332,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (!localizable && FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
 			_addLocalizationOptionsAttributes(
-				fragmentEntryLink, httpServletRequest, inputTemplateNode,
-				locale);
+				fragmentEntryLink, httpServletRequest, inputLabel,
+				inputTemplateNode, locale);
 		}
 
 		return inputTemplateNode;
@@ -490,7 +490,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	private void _addLocalizationOptionsAttributes(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, String inputLabel,
 		InputTemplateNode inputTemplateNode, Locale locale) {
 
 		LayoutStructure layoutStructure = null;
@@ -538,7 +538,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (localizationConfigJSONObject == null) {
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsMessage",
-				_language.get(locale, "this-field-cannot-be-localized"));
+				_language.format(locale, "x-field-cannot-be-localized", inputLabel));
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsState", "disabled");
 

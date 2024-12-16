@@ -326,6 +326,20 @@ export class DocumentLibraryPage {
 		await fileEntryCheckbox.check();
 	}
 
+	async selectFolder(folderName: string) {
+		const folderCheckbox = this.page
+			.locator(`label:has-text('${folderName}')`)
+			.getByRole('checkbox');
+
+		if (await folderCheckbox.isHidden()) {
+			await this.search(folderName);
+
+			await expect(folderCheckbox).toBeVisible();
+		}
+
+		await folderCheckbox.check();
+	}
+
 	async assertFileEntryPermissions(
 		permissions: {enabled: boolean; locator: string}[],
 		title: string

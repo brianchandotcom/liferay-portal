@@ -1,6 +1,5 @@
 [#assign
 	localFileUploaded = false
-	readOnly = input.attributes.readOnly?? && input.attributes.readOnly
 	showDocumentLibrarySelector = input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary
 ]
 
@@ -10,9 +9,9 @@
 
 <div class="file-upload">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-file-upload-label">${htmlUtil.escape(input.label)} [#if readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-file-upload-label">${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-		[#if readOnly]
+		[#if input.readOnly]
 			<input class="form-control" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label" class="form-control" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" placeholder="${languageUtil.get(locale, "no-file-selected")}" readonly type="text" [#if input.attributes.fileName??]value="${htmlUtil.escape(input.attributes.fileName)}"[/#if] />
 		[#else]
 			<div class="align-items-center d-flex">
@@ -48,7 +47,7 @@
 			</p>
 		[/#if]
 
-		[#if !readOnly && ((input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??))]
+		[#if !input.readOnly && ((input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??))]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${configuration.showSupportedFileInfo?then(languageUtil.format(locale, "upload-a-x-no-larger-than-x-mb", [input.attributes.allowedFileExtensions!"", input.attributes.maxFileSize!""]), '' )} ${input.showHelpText?then(htmlUtil.escape(input.helpText), '' )}</p>
 		[/#if]
 	</div>

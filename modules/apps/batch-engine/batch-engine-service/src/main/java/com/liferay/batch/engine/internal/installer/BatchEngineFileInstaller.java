@@ -90,13 +90,8 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	}
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith(
-				BatchEngineTaskContentType.JSONT.getFileExtension())) {
-
-			return true;
-		}
-
-		return false;
+		return zipEntryName.endsWith(
+			BatchEngineTaskContentType.JSONT.getFileExtension());
 	}
 
 	@Override

@@ -184,13 +184,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 	}
 
 	private boolean _isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith(
-				BatchEngineTaskContentType.JSONT.getFileExtension())) {
-
-			return true;
-		}
-
-		return false;
+		return zipEntryName.endsWith(
+			BatchEngineTaskContentType.JSONT.getFileExtension());
 	}
 
 	private List<BatchEngineUnit> _loadBatchEngineUnits(Bundle bundle) {

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -47,6 +49,8 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBa
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -349,11 +353,29 @@ public class SearchBarPortletDisplayContextFactory {
 		Layout layout = fetchLayoutByFriendlyURL(
 			themeDisplay.getScopeGroupId(), _slashify(destinationString));
 
-		if (layout == null) {
-			return null;
+		if (layout != null) {
+			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 
-		return getLayoutFriendlyURL(layout, themeDisplay);
+		User user = themeDisplay.getUser();
+
+		List<UserGroup> userGroupList = user.getUserGroups();
+
+		for (UserGroup userGroup : userGroupList) {
+			try {
+				layout = fetchLayoutByFriendlyURL(
+					userGroup.getGroupId(), _slashify(destinationString));
+
+				if (layout != null) {
+					return getLayoutFriendlyURL(layout, themeDisplay);
+				}
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private String _getKeywordsParameterName(

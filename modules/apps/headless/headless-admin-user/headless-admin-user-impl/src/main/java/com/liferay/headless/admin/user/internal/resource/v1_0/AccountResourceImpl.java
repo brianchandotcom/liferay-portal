@@ -916,15 +916,15 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			}
 		}
 
-		if ((logoId > 0) &&
-			((accountEntry == null) || (accountEntry.getLogoId() != logoId))) {
+		if ((logoId <= 0) ||
+			((accountEntry != null) && (accountEntry.getLogoId() == logoId))) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(logoId);
-
-			return _file.getBytes(fileEntry.getContentStream());
+			return null;
 		}
 
-		return null;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(logoId);
+
+		return _file.getBytes(fileEntry.getContentStream());
 	}
 
 	private Page<Account> _getOrganizationAccountsPage(

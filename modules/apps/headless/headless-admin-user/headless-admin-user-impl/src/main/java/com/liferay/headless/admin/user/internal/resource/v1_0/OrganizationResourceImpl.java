@@ -886,16 +886,16 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			}
 		}
 
-		if ((imageId > 0) &&
-			((serviceBuilderOrganization == null) ||
-			 (serviceBuilderOrganization.getLogoId() != imageId))) {
+		if ((imageId <= 0) ||
+			((serviceBuilderOrganization != null) &&
+			 (serviceBuilderOrganization.getLogoId() == imageId))) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
-
-			return _file.getBytes(fileEntry.getContentStream());
+			return null;
 		}
 
-		return null;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
+
+		return _file.getBytes(fileEntry.getContentStream());
 	}
 
 	private Page<Organization> _getOrganizationsPage(

@@ -1429,15 +1429,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			}
 		}
 
-		if ((imageId > 0) &&
-			((user == null) || (user.getPortraitId() != imageId))) {
+		if ((imageId <= 0) ||
+			((user != null) && (user.getPortraitId() == imageId))) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
-
-			return _file.getBytes(fileEntry.getContentStream());
+			return null;
 		}
 
-		return null;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(imageId);
+
+		return _file.getBytes(fileEntry.getContentStream());
 	}
 
 	private long _getPrefixId(Contact contact, UserAccount userAccount) {

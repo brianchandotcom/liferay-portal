@@ -5,8 +5,12 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
+import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.MasterPageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -15,8 +19,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -126,6 +132,44 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
+	public ContentPageSpecification
+			postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
+				String siteExternalReferenceCode,
+				String pageTemplateExternalReferenceCode,
+				ContentPageSpecification contentPageSpecification)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode,
+					GroupUtil.getGroupId(
+						false, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			LayoutUtil.addDraftToPublishedLayout(
+				contentPageSpecification,
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				ServiceContextUtil.createServiceContext(
+					contextHttpServletRequest,
+					layoutPageTemplateEntry.getGroupId(),
+					contextUser.getUserId())));
+	}
+
+	@Override
 	public MasterPage putSiteSiteByExternalReferenceCodeMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode, MasterPage masterPage)
@@ -193,6 +237,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference(
@@ -200,5 +247,11 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	)
 	private DTOConverter<LayoutPageTemplateEntry, MasterPage>
 		_masterPageDTOConverter;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageSpecificationDTOConverter)"
+	)
+	private DTOConverter<Layout, PageSpecification>
+		_pageSpecificationDTOConverter;
 
 }

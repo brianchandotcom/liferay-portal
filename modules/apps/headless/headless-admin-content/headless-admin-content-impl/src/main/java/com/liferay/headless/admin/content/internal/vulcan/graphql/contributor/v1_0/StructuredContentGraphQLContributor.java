@@ -48,14 +48,16 @@ public class StructuredContentGraphQLContributor implements GraphQLContributor {
 
 			@GraphQLField
 			public Version version() {
-				if (_structuredContent instanceof ExtensionStructuredContent) {
-					ExtensionStructuredContent extensionStructuredContent =
-						(ExtensionStructuredContent)_structuredContent;
+				if (!(_structuredContent instanceof
+						ExtensionStructuredContent)) {
 
-					return extensionStructuredContent.getVersion();
+					return null;
 				}
 
-				return null;
+				ExtensionStructuredContent extensionStructuredContent =
+					(ExtensionStructuredContent)_structuredContent;
+
+				return extensionStructuredContent.getVersion();
 			}
 
 			private final StructuredContent _structuredContent;

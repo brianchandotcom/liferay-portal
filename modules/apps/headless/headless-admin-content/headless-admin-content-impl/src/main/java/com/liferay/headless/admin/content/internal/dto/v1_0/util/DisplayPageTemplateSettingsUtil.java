@@ -84,12 +84,11 @@ public class DisplayPageTemplateSettingsUtil {
 				layoutPageTemplateEntry.getGroupId(),
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
-		if (infoItemFormVariation != null) {
-			return infoItemFormVariation.getLabel(
-				dtoConverterContext.getLocale());
+		if (infoItemFormVariation == null) {
+			return null;
 		}
 
-		return null;
+		return infoItemFormVariation.getLabel(dtoConverterContext.getLocale());
 	}
 
 	private static OpenGraphSettingsMapping _getOpenGraphSettingsMapping(

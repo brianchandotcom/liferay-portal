@@ -8,7 +8,7 @@ package com.liferay.frontend.data.set.sample.web.internal.view;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviors;
+import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
@@ -170,7 +170,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		);
 
 		dateFDSTableSchemaField.setTimeZoneBehavior(
-			FDSTimeZoneBehaviors.APPLY_THEME_DISPLAY_TIME_ZONE);
+			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
 
 		return dateFDSTableSchemaField;
 	}

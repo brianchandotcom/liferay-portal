@@ -195,13 +195,13 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(true);
-			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					})) {
+					});
+			SafeCloseable safeCloseable2 =
+				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = _createUser(true, "abc");
 
@@ -222,13 +222,13 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(false);
-			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					})) {
+					});
+			SafeCloseable safeCloseable2 =
+				_setLDAPAuthConfigurationWithSafeCloseable(false)) {
 
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
@@ -244,13 +244,13 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(true);
-			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setChangeRequired(true);
 						passwordPolicy.setCheckSyntax(true);
-					})) {
+					});
+			SafeCloseable safeCloseable2 =
+				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
@@ -270,7 +270,7 @@ public class UserLocalServiceTest {
 			user.getUserId(), "password", "password", false, true);
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setExpireable(true);
 						passwordPolicy.setMaxAge(0);
@@ -299,7 +299,7 @@ public class UserLocalServiceTest {
 		}
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setExpireable(false);
 						passwordPolicy.setMaxAge(0);
@@ -327,10 +327,10 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(true);
+				_setDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> passwordPolicy.setLockout(true));
 			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true))) {
+				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -349,10 +349,10 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(false);
+				_setDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> passwordPolicy.setLockout(true));
 			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true))) {
+				_setLDAPAuthConfigurationWithSafeCloseable(false)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -373,10 +373,10 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(true);
+				_setDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> passwordPolicy.setLockout(true));
 			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setLockout(true))) {
+				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -394,10 +394,10 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(true);
+				_setDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> passwordPolicy.setChangeRequired(true));
 			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setChangeRequired(true))) {
+				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = _createUser(true, "Liferay123");
 
@@ -416,10 +416,10 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
-				_setLDAPAuthConfigurationWithSafeCloseable(false);
+				_setDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> passwordPolicy.setChangeRequired(true));
 			SafeCloseable safeCloseable2 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> passwordPolicy.setChangeRequired(true))) {
+				_setLDAPAuthConfigurationWithSafeCloseable(false)) {
 
 			User user = _createUser(true, "Liferay123");
 
@@ -441,7 +441,7 @@ public class UserLocalServiceTest {
 			User user;
 
 			try (SafeCloseable safeCloseable2 =
-					_updateDefaultPasswordPolicyWithSafeCloseable(
+					_setDefaultPasswordPolicyWithSafeCloseable(
 						passwordPolicy -> passwordPolicy.setChangeRequired(
 							false))) {
 
@@ -451,7 +451,7 @@ public class UserLocalServiceTest {
 			}
 
 			try (SafeCloseable safeCloseable2 =
-					_updateDefaultPasswordPolicyWithSafeCloseable(
+					_setDefaultPasswordPolicyWithSafeCloseable(
 						passwordPolicy -> passwordPolicy.setChangeRequired(
 							true))) {
 
@@ -757,7 +757,7 @@ public class UserLocalServiceTest {
 				null, null));
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setLockout(true);
 						passwordPolicy.setMaxFailure(1);
@@ -796,7 +796,7 @@ public class UserLocalServiceTest {
 		}
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> passwordPolicy.setLockout(false))) {
 
 			Assert.assertEquals(
@@ -812,7 +812,7 @@ public class UserLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setHistory(true);
 						passwordPolicy.setHistoryCount(2);
@@ -867,7 +867,7 @@ public class UserLocalServiceTest {
 					PasswordEncryptorUtil.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
 			SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setHistory(true);
 						passwordPolicy.setHistoryCount(2);
@@ -1133,7 +1133,7 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setLockout(false);
 						passwordPolicy.setResetFailureCount(3L);
@@ -1168,7 +1168,7 @@ public class UserLocalServiceTest {
 	@Test
 	public void testUnlockoutUserWithStaleLockoutDate() throws Exception {
 		try (SafeCloseable safeCloseable =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
+				_setDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {
 						passwordPolicy.setLockout(true);
 						passwordPolicy.setMaxFailure(0);
@@ -1469,37 +1469,7 @@ public class UserLocalServiceTest {
 			new long[] {TestPropsValues.getGroupId()}, serviceContext);
 	}
 
-	private SafeCloseable _setLDAPAuthConfigurationWithSafeCloseable(
-			boolean passwordPolicyEnabled)
-		throws PortalException {
-
-		long companyId = TestPropsValues.getCompanyId();
-
-		Dictionary<String, Object> configurationProperties =
-			_ldapAuthConfigurationProvider.getConfigurationProperties(
-				companyId);
-
-		Object existingValue = configurationProperties.put(
-			"passwordPolicyEnabled", passwordPolicyEnabled);
-
-		_ldapAuthConfigurationProvider.updateProperties(
-			companyId, configurationProperties);
-
-		return () -> {
-			if (existingValue != null) {
-				configurationProperties.put(
-					"passwordPolicyEnabled", existingValue);
-			}
-			else {
-				configurationProperties.remove("passwordPolicyEnabled");
-			}
-
-			_ldapAuthConfigurationProvider.updateProperties(
-				companyId, configurationProperties);
-		};
-	}
-
-	private SafeCloseable _updateDefaultPasswordPolicyWithSafeCloseable(
+	private SafeCloseable _setDefaultPasswordPolicyWithSafeCloseable(
 			Consumer<PasswordPolicy> consumer)
 		throws PortalException {
 
@@ -1540,6 +1510,36 @@ public class UserLocalServiceTest {
 
 			_passwordPolicyLocalService.updatePasswordPolicy(
 				updatedPasswordPolicy);
+		};
+	}
+
+	private SafeCloseable _setLDAPAuthConfigurationWithSafeCloseable(
+			boolean passwordPolicyEnabled)
+		throws PortalException {
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		Dictionary<String, Object> configurationProperties =
+			_ldapAuthConfigurationProvider.getConfigurationProperties(
+				companyId);
+
+		Object existingValue = configurationProperties.put(
+			"passwordPolicyEnabled", passwordPolicyEnabled);
+
+		_ldapAuthConfigurationProvider.updateProperties(
+			companyId, configurationProperties);
+
+		return () -> {
+			if (existingValue != null) {
+				configurationProperties.put(
+					"passwordPolicyEnabled", existingValue);
+			}
+			else {
+				configurationProperties.remove("passwordPolicyEnabled");
+			}
+
+			_ldapAuthConfigurationProvider.updateProperties(
+				companyId, configurationProperties);
 		};
 	}
 

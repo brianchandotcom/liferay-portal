@@ -46,11 +46,7 @@ public class GroupModelListener
 
 	@Override
 	protected boolean isTracked(Group group) {
-		if (group.isSite()) {
-			return true;
-		}
-
-		return false;
+		return group.isSite();
 	}
 
 	@Reference

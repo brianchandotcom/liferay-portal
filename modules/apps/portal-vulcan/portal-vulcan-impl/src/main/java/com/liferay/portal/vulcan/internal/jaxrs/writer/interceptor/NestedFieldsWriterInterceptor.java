@@ -632,9 +632,16 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			String fieldName, Class<?> itemClass,
 			NestedFieldsContext nestedFieldsContext) {
 
-		Class<?>[] parentClasses = new Class<?>[] {
-			Void.class, itemClass, itemClass.getSuperclass()
-		};
+		List<Class<?>> parentClasses = ListUtil.fromArray(
+			Void.class, itemClass);
+
+		Class<?> superClass = itemClass.getSuperclass();
+
+		while (superClass != null) {
+			parentClasses.add(superClass);
+
+			superClass = superClass.getSuperclass();
+		}
 
 		for (Class<?> parentClass : parentClasses) {
 			FactoryKey factoryKey = new FactoryKey(

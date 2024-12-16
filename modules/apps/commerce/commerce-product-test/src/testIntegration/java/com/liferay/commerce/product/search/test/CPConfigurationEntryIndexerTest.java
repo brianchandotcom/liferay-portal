@@ -118,7 +118,8 @@ public class CPConfigurationEntryIndexerTest {
 
 		CPConfigurationList cpConfigurationList2 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, commerceCatalog.getGroupId(), _user.getUserId(), 0, false,
+				null, commerceCatalog.getGroupId(), _user.getUserId(),
+				cpConfigurationList1.getCPConfigurationListId(), false,
 				"Test List", 0D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,

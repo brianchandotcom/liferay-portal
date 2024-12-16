@@ -5,6 +5,10 @@
 
 package com.liferay.document.library.convert.test;
 
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.model.AMImageEntry;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.content.exception.NoSuchContentException;
@@ -23,14 +27,18 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -45,6 +53,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -53,7 +62,10 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.DLStoreImpl;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,12 +104,23 @@ public class DocumentLibraryConvertProcessTest {
 		DLStoreImpl.setStore(_fileSystemStore);
 
 		_companyLocalService.forEachCompanyId(
-			companyId -> _groups.add(
-				GroupTestUtil.addGroupToCompany(companyId)));
+			companyId -> {
+				_groups.add(GroupTestUtil.addGroupToCompany(companyId));
+
+				_amImageConfigurationEntries.put(
+					companyId, _deleteAMImageConfigurationEntries(companyId));
+			});
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				_deleteAMImageConfigurationEntries(companyId);
+				_addAMImageConfigurationEntries(
+					companyId, _amImageConfigurationEntries.get(companyId));
+			});
+
 		ReflectionTestUtil.setFieldValue(_convertProcess, "_store", _dbStore);
 
 		DLStoreImpl.setStore(_dbStore);
@@ -118,6 +141,57 @@ public class DocumentLibraryConvertProcessTest {
 
 			DLStoreImpl.setStore(_defaultStore);
 		}
+	}
+
+	@Test
+	public void testMigrateAMImageEntries() throws Exception {
+		List<AMImageEntry> amImageEntries = new ArrayList<>();
+
+		_forEach(
+			_groups,
+			group -> {
+				User user = UserTestUtil.getAdminUser(group.getCompanyId());
+
+				byte[] bytes = FileUtil.getBytes(
+					getClass(), "dependencies/liferay.jpg");
+
+				FileEntry fileEntry = _addFileEntry(
+					group, user, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString() + ".jpg",
+					ContentTypes.IMAGE_JPEG, bytes);
+
+				AMImageConfigurationEntry amImageConfigurationEntry =
+					_amImageConfigurationHelper.addAMImageConfigurationEntry(
+						group.getCompanyId(), RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(),
+						HashMapBuilder.put(
+							"max-height", String.valueOf(100)
+						).put(
+							"max-width", String.valueOf(200)
+						).build());
+
+				amImageEntries.add(
+					_amImageEntryLocalService.addAMImageEntry(
+						amImageConfigurationEntry, fileEntry.getFileVersion(),
+						100, 200, new UnsyncByteArrayInputStream(bytes),
+						12345));
+			});
+
+		_convertProcess.convert();
+
+		_forEach(
+			amImageEntries,
+			amImageEntry -> {
+				FileVersion fileVersion = _dlAppLocalService.getFileVersion(
+					amImageEntry.getFileVersionId());
+
+				_dlContentLocalService.getContent(
+					amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
+					_getFileVersionPath(
+						fileVersion, amImageEntry.getConfigurationUuid()),
+					fileVersion.getVersion());
+			});
 	}
 
 	@Test
@@ -247,6 +321,22 @@ public class DocumentLibraryConvertProcessTest {
 		Assert.assertEquals(_CLASS_NAME_DB_STORE, PropsValues.DL_STORE_IMPL);
 	}
 
+	private void _addAMImageConfigurationEntries(
+			long companyId,
+			Collection<AMImageConfigurationEntry> amImageConfigurationEntries)
+		throws IOException, PortalException {
+
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
+
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				companyId, amImageConfigurationEntry.getName(),
+				amImageConfigurationEntry.getDescription(),
+				amImageConfigurationEntry.getUUID(),
+				amImageConfigurationEntry.getProperties());
+		}
+	}
+
 	private FileEntry _addFileEntry(
 			Group group, User user, long folderId, String fileName,
 			String mimeType, byte[] bytes)
@@ -279,6 +369,24 @@ public class DocumentLibraryConvertProcessTest {
 				"OSX_Test.docx", getClass(), StringPool.BLANK),
 			false, 0, false,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	private Collection<AMImageConfigurationEntry>
+			_deleteAMImageConfigurationEntries(long companyId)
+		throws IOException {
+
+		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
+			_amImageConfigurationHelper.getAMImageConfigurationEntries(
+				companyId);
+
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
+
+			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
+				companyId, amImageConfigurationEntry.getUUID());
+		}
+
+		return amImageConfigurationEntries;
 	}
 
 	private <T extends ShardedModel> void _forEach(
@@ -324,6 +432,15 @@ public class DocumentLibraryConvertProcessTest {
 
 		return _dlFileEntryLocalService.getDLFileEntry(
 			fileEntry.getFileEntryId());
+	}
+
+	private String _getFileVersionPath(
+		FileVersion fileVersion, String configurationUuid) {
+
+		return StringBundler.concat(
+			"adaptive/", configurationUuid, "/", fileVersion.getGroupId(), "/",
+			fileVersion.getRepositoryId(), "/", fileVersion.getFileEntryId(),
+			"/", fileVersion.getFileVersionId(), "/");
 	}
 
 	private void _testMigrateAndCheckOldRepositoryFiles(Boolean delete)
@@ -390,6 +507,15 @@ public class DocumentLibraryConvertProcessTest {
 		"com.liferay.portal.store.file.system.FileSystemStore";
 
 	private static final long _REPOSITORY_ID = 0;
+
+	private final Map<Long, Collection<AMImageConfigurationEntry>>
+		_amImageConfigurationEntries = new HashMap<>();
+
+	@Inject
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Inject
+	private AMImageEntryLocalService _amImageEntryLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

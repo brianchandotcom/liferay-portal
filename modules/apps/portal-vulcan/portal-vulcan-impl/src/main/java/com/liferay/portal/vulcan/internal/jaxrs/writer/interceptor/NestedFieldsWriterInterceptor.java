@@ -626,15 +626,14 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			String fieldName, Class<?> itemClass,
 			NestedFieldsContext nestedFieldsContext) {
 
-		List<Class<?>> parentClasses = ListUtil.fromArray(
-			Void.class, itemClass);
+		List<Class<?>> parentClasses = ListUtil.fromArray(Void.class);
 
-		Class<?> superClass = itemClass.getSuperclass();
+		Class<?> clazz = itemClass;
 
-		while (superClass != null) {
-			parentClasses.add(superClass);
+		while (clazz != null) {
+			parentClasses.add(clazz);
 
-			superClass = superClass.getSuperclass();
+			clazz = clazz.getSuperclass();
 		}
 
 		for (Class<?> parentClass : parentClasses) {

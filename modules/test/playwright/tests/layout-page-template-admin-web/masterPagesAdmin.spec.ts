@@ -470,3 +470,116 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Importing master page templates with overwrite existing entries',
+	{
+		tag: '@LPS-102207',
+	},
+	async ({masterPagesPage, page, site}) => {
+
+		// Go to master page administration
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		// Open import view
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Import'}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		// Import master page
+
+		await masterPagesPage.importFile(
+			'master-page-with-fragments.zip',
+			path.join(__dirname, '/dependencies/master-page-with-fragments.zip')
+		);
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Change thumbnail
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		const pageTemplateName = 'Master Page With Fragments';
+
+		await masterPagesPage.clickAction('Change Thumbnail', pageTemplateName);
+
+		const iframe = page.frameLocator(
+			'iframe[title="Master Page Thumbnail"]'
+		);
+
+		await expect(
+			iframe.getByText('Drag & Drop Your Files or Browse to Upload')
+		).toBeVisible();
+
+		await iframe
+			.getByText('Drag & Drop Your Files or Browse to Upload')
+			.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image.jpg')
+		);
+
+		await iframe.getByRole('button', {exact: true, name: 'Add'}).click();
+
+		await expect(
+			page
+				.locator('.card-type-asset')
+				.filter({hasText: pageTemplateName})
+				.locator('img')
+		).toBeAttached();
+
+		// Open import view
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Import'}),
+			trigger: page
+				.locator('.control-menu-nav-item')
+				.getByLabel('Options', {exact: true}),
+		});
+
+		// Import master page and override
+
+		await masterPagesPage.importFile(
+			'master-page-with-fragments.zip',
+			path.join(__dirname, '/dependencies/master-page-with-fragments.zip')
+		);
+
+		const dialog = page.locator('.modal-dialog');
+
+		await dialog.getByLabel('Overwrite Existing Items').check();
+
+		await dialog.getByRole('button', {name: 'Import'}).click();
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Assert thumbnail is not present
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page
+				.locator('.card-type-asset')
+				.filter({hasText: pageTemplateName})
+				.locator('img')
+		).not.toBeAttached();
+	}
+);

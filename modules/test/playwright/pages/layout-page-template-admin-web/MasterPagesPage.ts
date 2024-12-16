@@ -71,6 +71,17 @@ export class MasterPagesPage {
 		});
 	}
 
+	async clickAction(action: string, title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.page
+				.locator('.card-type-asset')
+				.filter({hasText: title})
+				.getByLabel('More actions'),
+		});
+	}
+
 	async createNewMaster(name: string) {
 		await clickAndExpectToBeVisible({
 			target: this.page.getByLabel('Name'),

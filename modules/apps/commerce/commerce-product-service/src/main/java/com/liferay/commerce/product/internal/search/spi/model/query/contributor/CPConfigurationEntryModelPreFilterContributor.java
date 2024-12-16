@@ -40,7 +40,9 @@ public class CPConfigurationEntryModelPreFilterContributor
 			searchContext.getAttribute(CPField.CP_CONFIGURATION_LIST_ID));
 
 		if (cpConfigurationListId > 0) {
-			booleanFilter.add(
+			BooleanFilter cpConfigurationListFilter = new BooleanFilter();
+
+			cpConfigurationListFilter.add(
 				new TermFilter(
 					CPField.CP_CONFIGURATION_LIST_ID,
 					String.valueOf(cpConfigurationListId)),
@@ -51,7 +53,11 @@ public class CPConfigurationEntryModelPreFilterContributor
 
 			termsFilter.addValue(String.valueOf(cpConfigurationListId));
 
-			booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
+			cpConfigurationListFilter.add(
+				termsFilter, BooleanClauseOccur.SHOULD);
+
+			booleanFilter.add(
+				cpConfigurationListFilter, BooleanClauseOccur.MUST);
 		}
 
 		long classNameId = GetterUtil.getLong(

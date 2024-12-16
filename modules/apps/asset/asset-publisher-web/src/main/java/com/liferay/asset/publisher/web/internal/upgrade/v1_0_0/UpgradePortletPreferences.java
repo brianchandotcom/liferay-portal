@@ -192,11 +192,7 @@ public class UpgradePortletPreferences
 	}
 
 	private boolean _isOldDDMPreferenceValueFormat(String value) {
-		if (value.startsWith(_DDM_FIELD_OLD_PREFIX)) {
-			return true;
-		}
-
-		return false;
+		return value.startsWith(_DDM_FIELD_OLD_PREFIX);
 	}
 
 	private void _transformDateFieldValue(PortletPreferences portletPreferences)

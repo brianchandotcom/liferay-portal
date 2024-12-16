@@ -1075,11 +1075,7 @@ public class EditAssetListDisplayContext {
 	public Boolean isNoAssetTypeSelected() {
 		String anyAssetType = _unicodeProperties.getProperty("anyAssetType");
 
-		if (Validator.isNull(anyAssetType)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(anyAssetType);
 	}
 
 	public boolean isSegmentationEnabled(long companyId) {

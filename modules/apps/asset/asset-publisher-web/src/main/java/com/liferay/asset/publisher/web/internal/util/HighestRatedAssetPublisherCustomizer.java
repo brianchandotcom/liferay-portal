@@ -77,11 +77,7 @@ public class HighestRatedAssetPublisherCustomizer
 	public boolean isShowSubtypeFieldsFilter(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
-			return false;
-		}
-
-		return true;
+		return assetPublisherWebConfiguration.searchWithIndex();
 	}
 
 }

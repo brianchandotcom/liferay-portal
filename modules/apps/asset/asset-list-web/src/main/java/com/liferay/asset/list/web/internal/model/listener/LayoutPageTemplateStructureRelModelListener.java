@@ -91,11 +91,7 @@ public class LayoutPageTemplateStructureRelModelListener
 			return false;
 		}
 
-		if (layoutStructure.isItemMarkedForDeletion(itemId)) {
-			return false;
-		}
-
-		return true;
+		return !layoutStructure.isItemMarkedForDeletion(itemId);
 	}
 
 	private void _updateAssetListEntryUsages(

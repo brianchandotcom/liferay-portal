@@ -76,15 +76,9 @@ public class SitesThatIAdministerItemSelectorView
 			return false;
 		}
 
-		if (PrefsPropsUtil.getBoolean(
-				themeDisplay.getCompanyId(),
-				PropsKeys.
-					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
-
-			return true;
-		}
-
-		return false;
+		return PrefsPropsUtil.getBoolean(
+			themeDisplay.getCompanyId(),
+			PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED);
 	}
 
 	@Override

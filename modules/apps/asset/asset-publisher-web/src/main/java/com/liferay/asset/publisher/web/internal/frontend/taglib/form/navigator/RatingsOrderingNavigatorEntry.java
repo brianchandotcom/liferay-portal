@@ -64,14 +64,9 @@ public class RatingsOrderingNavigatorEntry
 		Portlet portlet = _portletLocalService.getPortletById(
 			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
 
-		if (Objects.equals(
-				portlet.getRootPortletId(),
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			portlet.getRootPortletId(),
+			AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS);
 	}
 
 	@Override

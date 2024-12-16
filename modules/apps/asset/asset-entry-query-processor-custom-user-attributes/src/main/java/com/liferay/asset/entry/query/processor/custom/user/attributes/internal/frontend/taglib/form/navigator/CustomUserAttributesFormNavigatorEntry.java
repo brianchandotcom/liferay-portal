@@ -103,11 +103,7 @@ public class CustomUserAttributesFormNavigatorEntry
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null));
 
-		if (Objects.equals(selectionStyle, "dynamic")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(selectionStyle, "dynamic");
 	}
 
 	@Reference

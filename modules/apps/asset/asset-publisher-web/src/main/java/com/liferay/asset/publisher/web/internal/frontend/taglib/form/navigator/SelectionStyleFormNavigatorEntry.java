@@ -79,13 +79,8 @@ public class SelectionStyleFormNavigatorEntry
 			_assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 				portlet.getRootPortletId());
 
-		if (assetPublisherCustomizer.isSelectionStyleEnabled(
-				httpServletRequest)) {
-
-			return true;
-		}
-
-		return false;
+		return assetPublisherCustomizer.isSelectionStyleEnabled(
+			httpServletRequest);
 	}
 
 	@Activate

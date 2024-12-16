@@ -64,15 +64,9 @@ public class AssetListFormNavigatorEntry
 	}
 
 	private boolean _isAssetListProviderSelection() {
-		if (Objects.equals(
-				getSelectionStyle(),
-				AssetPublisherSelectionStyleConstants.
-					TYPE_ASSET_LIST_PROVIDER)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getSelectionStyle(),
+			AssetPublisherSelectionStyleConstants.TYPE_ASSET_LIST_PROVIDER);
 	}
 
 	@Reference(

@@ -32,11 +32,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 		AssetTag tag = (AssetTag)object;
 
-		if (!ArrayUtil.contains(_selectedTagNames, tag.getName())) {
-			return false;
-		}
-
-		return true;
+		return ArrayUtil.contains(_selectedTagNames, tag.getName());
 	}
 
 	private final String[] _selectedTagNames;

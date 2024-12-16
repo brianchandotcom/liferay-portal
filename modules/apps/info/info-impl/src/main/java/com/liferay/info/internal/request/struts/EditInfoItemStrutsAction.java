@@ -32,6 +32,7 @@ import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebURL;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.provider.LayoutStructureProvider;
@@ -357,7 +358,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		}
 
 		if (!success && (infoFieldValues != null)) {
-			Map<String, String> infoFormParameterMap = new HashMap<>();
+			Map<String, Object> infoFormParameterMap = new HashMap<>();
 
 			for (InfoFieldValue<Object> infoFieldValue :
 					infoFieldValues.values()) {
@@ -540,7 +541,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
 	}
 
-	private String _getValue(InfoFieldValue<?> infoFieldValue) {
+	private Object _getValue(InfoFieldValue<?> infoFieldValue) {
 		if (infoFieldValue == null) {
 			return null;
 		}
@@ -567,6 +568,13 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 		if (value instanceof List) {
 			return ListUtil.toString((List<?>)value, StringPool.BLANK);
+		}
+
+		if (value instanceof InfoLocalizedValue) {
+			InfoLocalizedValue<String> infoLocalizedValue =
+				(InfoLocalizedValue<String>)value;
+
+			return infoLocalizedValue.getValues();
 		}
 
 		return String.valueOf(value);

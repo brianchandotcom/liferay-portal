@@ -277,13 +277,27 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		Map<Locale, String> valueI18n = new HashMap<>();
 
-		Map<String, String> infoFormParameterMap =
-			(Map<String, String>)SessionMessages.get(
+		Map<String, Object> infoFormParameterMap =
+			(Map<String, Object>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");
 
 		if (infoFormParameterMap != null) {
-			label = infoFormParameterMap.get(infoField.getName() + "-label");
-			value = infoFormParameterMap.get(infoField.getName());
+			label = String.valueOf(
+				infoFormParameterMap.get(infoField.getName() + "-label"));
+
+			Object infoParameterMapValue = infoFormParameterMap.get(
+				infoField.getName());
+
+			if (infoParameterMapValue instanceof Map) {
+				Map<Locale, String> map =
+					(Map<Locale, String>)infoParameterMapValue;
+
+				value = map.get(locale);
+				valueI18n = map;
+			}
+			else {
+				value = String.valueOf(infoParameterMapValue);
+			}
 		}
 		else {
 			Object infoFieldValue = _getValue(

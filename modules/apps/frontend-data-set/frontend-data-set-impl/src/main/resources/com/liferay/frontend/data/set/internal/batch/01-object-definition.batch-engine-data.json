@@ -21,6 +21,22 @@
 			"name": "DataSet",
 			"objectFields": [
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "ADDITIONAL_API_URL_PARAMETERS",
@@ -399,6 +415,22 @@
 			"name": "DataSetAction",
 			"objectFields": [
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "CONFIRMATION_MESSAGE",
@@ -711,6 +743,22 @@
 			"name": "DataSetClientExtensionFilter",
 			"objectFields": [
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "CLIENT_EXTENSION_ENTRY_ERC",
@@ -780,6 +828,22 @@
 			"modifiable": true,
 			"name": "DataSetDateFilter",
 			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
@@ -948,6 +1012,22 @@
 			"modifiable": true,
 			"name": "DataSetSelectionFilter",
 			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
 				{
 					"DBType": "String",
 					"businessType": "Text",
@@ -1162,6 +1242,22 @@
 			"modifiable": true,
 			"name": "DataSetSort",
 			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Inactive"
+					},
+					"localized": false,
+					"name": "inactive",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",

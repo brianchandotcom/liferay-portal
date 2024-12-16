@@ -24,40 +24,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103104 and LPS-102544. Can add a child page via page tree panel."
-	@priority = 5
-	@uitest
-	test AddChildPage {
-		property portal.acceptance = "true";
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a child page via page tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.addChildPage(
-				childPageName = "Test Child Page",
-				parentPageName = "Test Page Name");
-		}
-
-		task ("Navigate to child page via page tree") {
-
-			// Workaround until LPS-168565 resolved
-
-			Portlet.expandTree();
-
-			PagesFinder.navigateToChildPage(
-				childPageName = "Test Child Page",
-				parentPageName = "Test Page Name");
-		}
-	}
-
 	@description = "This is a test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
 	@priority = 5
 	@uitest

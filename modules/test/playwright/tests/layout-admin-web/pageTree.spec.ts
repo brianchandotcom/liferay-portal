@@ -33,6 +33,14 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
+const testWithPrivatePages = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-38869': true,
+		'LPS-178052': true,
+	})
+);
+
 test(
 	'Add child page',
 	{
@@ -94,6 +102,101 @@ test(
 		await expect(
 			page.getByRole('link', {name: childLayoutTitle})
 		).toBeVisible();
+	}
+);
+
+testWithPrivatePages(
+	'Can navigate to pages through pages hierarchy and navigation menus',
+	{
+		tag: ['@LPS-102544', '@LPS-133709'],
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Add navigation menu
+
+		const siteNavigationMenuName = getRandomString();
+
+		await apiHelpers.jsonWebServicesSiteNavigationMenu.addSiteNavigationMenu(
+			site.id,
+			siteNavigationMenuName
+		);
+
+		// Create a public page and a private page
+
+		const publicLayoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: publicLayoutTitle,
+		});
+
+		const privateLayoutTitle = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			privateLayout: 'true',
+			title: privateLayoutTitle,
+		});
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Assert private page
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'Private Pages'}),
+			trigger: page.getByLabel('Pages Type'),
+		});
+
+		await expect(
+			page.getByRole('link', {name: publicLayoutTitle})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: privateLayoutTitle})
+		).toBeVisible();
+
+		// Assert navigation menu
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: siteNavigationMenuName}),
+			trigger: page.getByLabel('Pages Type'),
+		});
+
+		await expect(
+			page.getByRole('link', {name: publicLayoutTitle})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: privateLayoutTitle})
+		).not.toBeVisible();
+
+		// Assert public page
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {name: 'Public Pages'}),
+			trigger: page.getByLabel('Pages Type'),
+		});
+
+		await expect(
+			page.getByRole('link', {name: publicLayoutTitle})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: privateLayoutTitle})
+		).not.toBeVisible();
 	}
 );
 

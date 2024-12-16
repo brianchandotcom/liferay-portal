@@ -157,42 +157,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
-	@priority = 5
-	test NavigateToBothPageTypes {
-		property portal.acceptance = "true";
-
-		task ("Enable private pages") {
-			PagesAdmin.enablePrivatePages();
-		}
-
-		task ("Add a public and private pages") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Public Page");
-
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Private Page");
-		}
-
-		task ("Navigate to public page via page tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.selectPageType(optionValue = "Public Pages");
-
-			PagesFinder.navigateToPage(pageName = "Test Public Page");
-		}
-
-		task ("Navigate to private page via page tree") {
-			PagesFinder.selectPageType(optionValue = "Private Pages");
-
-			PagesFinder.navigateToPage(pageName = "Test Private Page");
-		}
-	}
-
 	@description = "This is a test for LPS-139064. Users can see the preview draft when the content page at draft status."
 	@priority = 5
 	test PreviewDraftWhenContentPageAtDraftStatus {
@@ -423,92 +387,6 @@ definition {
 
 			for (var i : list "1,2") {
 				PagesFinder.viewPageNameInPagesFinder(pageName = "Child Page Name ${i}");
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
-	@priority = 4
-	test SwitchNavigationMenusViaPageTypeSelector {
-		task ("Enable private pages") {
-			PagesAdmin.enablePrivatePages();
-		}
-
-		task ("Add two public pages") {
-			for (var n : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Public Page ${n}");
-			}
-		}
-
-		task ("Add two private pages") {
-			for (var n : list "1,2") {
-				JSONLayout.addPrivateLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Private Page ${n}");
-			}
-		}
-
-		task ("Add the first navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${randomSiteName},
-				siteNavigationMenuName = "Navigation Menu Name 1");
-		}
-
-		task ("Add two public pages to the first navigation menu") {
-			for (var n : list "1,2") {
-				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = ${randomSiteName},
-					privateLayout = "false",
-					siteNavigationMenuItemName = "Test Public Page ${n}",
-					siteNavigationMenuName = "Navigation Menu Name 1",
-					type = "layout");
-			}
-		}
-
-		task ("Add the second navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${randomSiteName},
-				siteNavigationMenuName = "Navigation Menu Name 2");
-		}
-
-		task ("Add two private pages to the second navigation menu") {
-			for (var n : list "1,2") {
-				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = ${randomSiteName},
-					privateLayout = "true",
-					siteNavigationMenuItemName = "Test Private Page ${n}",
-					siteNavigationMenuName = "Navigation Menu Name 2",
-					type = "layout");
-			}
-		}
-
-		task ("Select the first navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.selectPageType(optionValue = "Navigation Menu Name 1");
-		}
-
-		task ("Navigate to each page via Page Tree") {
-			for (var pageName : list "Test Public Page 1,Test Public Page 2") {
-				PagesFinder.navigateToPage(pageName = ${pageName});
-			}
-		}
-
-		task ("Select the second navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.selectPageType(optionValue = "Navigation Menu Name 2");
-		}
-
-		task ("Navigate to each page via Page Tree") {
-			for (var pageName : list "Test Private Page 1,Test Private Page 2") {
-				PagesFinder.navigateToPage(pageName = ${pageName});
 			}
 		}
 	}

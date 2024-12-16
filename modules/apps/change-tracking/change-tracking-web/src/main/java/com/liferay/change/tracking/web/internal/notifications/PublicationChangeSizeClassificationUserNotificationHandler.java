@@ -11,11 +11,14 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 
@@ -44,7 +47,21 @@ public class PublicationChangeSizeClassificationUserNotificationHandler
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		return "the-publication-x-is-now-a-x";
+		long ctCollectionId = jsonObject.getLong("ctCollectionId");
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		Locale locale = serviceContext.getLocale();
+
+		return _language.format(
+			locale, "the-publication-x-is-now-a-x",
+			new Object[] {
+				ctCollection.getName(),
+				_language.get(
+					locale, jsonObject.getString("sizeClassification"))
+			},
+			false);
 	}
 
 	@Override
@@ -81,6 +98,9 @@ public class PublicationChangeSizeClassificationUserNotificationHandler
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -27,6 +27,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -62,12 +64,15 @@ public class ObjectEntryUtil {
 			dtoConverterType = dtoConverter.getContentType();
 		}
 
+		Map<String, Serializable> originalExtendedProperties =
+			ObjectEntryLocalServiceUtil.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition,
+					GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
+
 		Map<String, Object> extendedProperties =
 			HashMapBuilder.<String, Object>putAll(
-				ObjectEntryLocalServiceUtil.
-					getExtensionDynamicObjectDefinitionTableValues(
-						objectDefinition,
-						GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+				originalExtendedProperties
 			).putAll(
 				EntityExtensionThreadLocal.getExtendedProperties()
 			).build();
@@ -105,6 +110,8 @@ public class ObjectEntryUtil {
 					originalBaseModel, dtoConverter, dtoConverterRegistry,
 					Collections.emptyMap(), jsonFactory, modelClass, userId);
 			}
+		).put(
+			"originalExtendedProperties", originalExtendedProperties
 		);
 	}
 

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
@@ -17,6 +18,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -375,19 +379,44 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					pageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
 		PageSpecificationsTestUtil.
 			testPostSiteSiteByExternalReferenceCodePageSpecification(
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
-				pageTemplate.getPageSpecifications(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				pageTemplate.getPageSpecifications(), serviceContext,
 				curContentPageSpecification ->
 					pageTemplateResource.
 						postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							pageTemplate.getExternalReferenceCode(),
 							curContentPageSpecification));
+
+		PageTemplate widgetPageTemplate =
+			curPageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					_getWidgetPageTemplate(testGroup));
+
+		_assertPostSiteSiteByExternalReferenceCodePageTemplatePageSpecificationProblemException(
+			widgetPageTemplate.getExternalReferenceCode());
+
+		layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntry(serviceContext);
+
+		_assertPostSiteSiteByExternalReferenceCodePageTemplatePageSpecificationProblemException(
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_DRAFT);
+
+		_assertPostSiteSiteByExternalReferenceCodePageTemplatePageSpecificationProblemException(
+			layoutPageTemplateEntry.getExternalReferenceCode());
 	}
 
 	@Override
@@ -641,6 +670,25 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		Assert.assertEquals(
 			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
 			pageSpecification.getType());
+	}
+
+	private void
+			_assertPostSiteSiteByExternalReferenceCodePageTemplatePageSpecificationProblemException(
+				String pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageTemplateResource.
+					postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						pageTemplateExternalReferenceCode,
+						new ContentPageSpecification() {
+							{
+								setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+							}
+						}));
 	}
 
 	private void _assertProblemException(

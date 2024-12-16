@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassSubtypeReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
@@ -17,6 +18,7 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -332,19 +335,29 @@ public class DisplayPageTemplateResourceTest
 					displayPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
 		PageSpecificationsTestUtil.
 			testPostSiteSiteByExternalReferenceCodePageSpecification(
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
-				displayPageTemplate.getPageSpecifications(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				displayPageTemplate.getPageSpecifications(), serviceContext,
 				curContentPageSpecification ->
 					displayPageTemplateResource.
 						postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							displayPageTemplate.getExternalReferenceCode(),
 							curContentPageSpecification));
+
+		_assertPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
+				serviceContext));
+
+		_assertPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
+				serviceContext, WorkflowConstants.STATUS_DRAFT));
 	}
 
 	@Override
@@ -533,6 +546,25 @@ public class DisplayPageTemplateResourceTest
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			layout, displayPageTemplate.getPageSpecifications());
+	}
+
+	private void
+			_assertPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationProblemException(
+				LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				displayPageTemplateResource.
+					postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode(),
+						new ContentPageSpecification() {
+							{
+								setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+							}
+						}));
 	}
 
 	private void _assertProblemException(

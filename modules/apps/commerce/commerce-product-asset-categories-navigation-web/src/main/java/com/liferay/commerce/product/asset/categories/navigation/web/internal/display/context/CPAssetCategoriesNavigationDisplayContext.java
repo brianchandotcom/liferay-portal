@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,17 +53,16 @@ import javax.servlet.http.HttpServletRequest;
 public class CPAssetCategoriesNavigationDisplayContext {
 
 	public CPAssetCategoriesNavigationDisplayContext(
-			HttpServletRequest httpServletRequest,
 			AssetCategoryService assetCategoryService,
 			AssetVocabularyService assetVocabularyService,
 			CommerceMediaResolver commerceMediaResolver,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPFriendlyURL cpFriendlyURL,
 			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
-			GroupLocalService groupLocalService, Portal portal)
+			GroupLocalService groupLocalService,
+			HttpServletRequest httpServletRequest, Portal portal)
 		throws ConfigurationException {
 
-		_httpServletRequest = httpServletRequest;
 		_assetCategoryService = assetCategoryService;
 		_assetVocabularyService = assetVocabularyService;
 		_commerceMediaResolver = commerceMediaResolver;
@@ -70,6 +70,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		_cpFriendlyURL = cpFriendlyURL;
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 		_groupLocalService = groupLocalService;
+		_httpServletRequest = httpServletRequest;
 		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -139,12 +140,21 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			_cpAssetCategoriesNavigationPortletInstanceConfiguration.
 				assetVocabularyExternalReferenceCode();
 
-		if (Validator.isNotNull(assetVocabularyExternalReferenceCode)) {
+		if (Validator.isNull(assetVocabularyExternalReferenceCode)) {
+			return _assetVocabulary;
+		}
+
+		try {
 			_assetVocabulary =
 				_assetVocabularyService.
 					getAssetVocabularyByExternalReferenceCode(
 						_themeDisplay.getCompanyGroupId(),
 						assetVocabularyExternalReferenceCode);
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
 		}
 
 		return _assetVocabulary;

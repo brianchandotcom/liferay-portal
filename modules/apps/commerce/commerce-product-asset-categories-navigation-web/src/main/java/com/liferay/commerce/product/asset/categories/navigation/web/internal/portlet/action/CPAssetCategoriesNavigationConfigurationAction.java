@@ -42,11 +42,10 @@ public class CPAssetCategoriesNavigationConfigurationAction
 			CPAssetCategoriesNavigationDisplayContext
 				cpAssetCategoryNavigationDisplayContext =
 					new CPAssetCategoriesNavigationDisplayContext(
-						httpServletRequest, _assetCategoryService,
-						_assetVocabularyService, _commerceMediaResolver,
-						_cpAttachmentFileEntryService, _cpFriendlyURL,
-						_friendlyURLEntryLocalService, _groupLocalService,
-						_portal);
+						_assetCategoryService, _assetVocabularyService,
+						_commerceMediaResolver, _cpAttachmentFileEntryService,
+						_cpFriendlyURL, _friendlyURLEntryLocalService,
+						_groupLocalService, httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

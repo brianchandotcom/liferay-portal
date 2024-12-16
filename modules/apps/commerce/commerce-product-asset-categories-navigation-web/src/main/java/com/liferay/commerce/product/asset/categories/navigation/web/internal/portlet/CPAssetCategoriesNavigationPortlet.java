@@ -68,11 +68,11 @@ public class CPAssetCategoriesNavigationPortlet extends MVCPortlet {
 			CPAssetCategoriesNavigationDisplayContext
 				cpAssetCategoryNavigationDisplayContext =
 					new CPAssetCategoriesNavigationDisplayContext(
-						_portal.getHttpServletRequest(renderRequest),
 						_assetCategoryService, _assetVocabularyService,
 						_commerceMediaResolver, _cpAttachmentFileEntryService,
 						_cpFriendlyURL, _friendlyURLEntryLocalService,
-						_groupLocalService, _portal);
+						_groupLocalService,
+						_portal.getHttpServletRequest(renderRequest), _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

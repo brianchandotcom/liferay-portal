@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -54,27 +53,25 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_jsImportMapsConfiguration.enableImportMaps()) {
-			String importMaps = _jsImportMapsCache.getImportMaps(
-				_portal.getCompanyId(httpServletRequest));
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					httpServletRequest));
+			printWriter.print(" type=\"");
 
-			if (!Validator.isBlank(importMaps)) {
-				printWriter.print("<script");
-				printWriter.write(
-					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-						httpServletRequest));
-				printWriter.print(" type=\"");
-
-				if (_jsImportMapsConfiguration.enableESModuleShims()) {
-					printWriter.print("importmap-shim");
-				}
-				else {
-					printWriter.print("importmap");
-				}
-
-				printWriter.print("\">");
-				printWriter.print(importMaps);
-				printWriter.print("</script>");
+			if (_jsImportMapsConfiguration.enableESModuleShims()) {
+				printWriter.print("importmap-shim");
 			}
+			else {
+				printWriter.print("importmap");
+			}
+
+			printWriter.print("\">");
+
+			_jsImportMapsCache.writeImportMaps(
+				_portal.getCompanyId(httpServletRequest), printWriter);
+
+			printWriter.print("</script>");
 		}
 
 		if (_jsImportMapsConfiguration.enableESModuleShims()) {

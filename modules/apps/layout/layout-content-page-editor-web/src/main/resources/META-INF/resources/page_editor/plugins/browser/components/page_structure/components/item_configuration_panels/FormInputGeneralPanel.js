@@ -30,12 +30,12 @@ import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import getMappedRelationship from '../../../../../../app/utils/editable_value/getMappedRelationship';
+import {hasLocalizableFields} from '../../../../../../app/utils/hasLocalizableFields';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import useCache from '../../../../../../app/utils/useCache';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
-import LocalizationSelectAlert from './LocalizationSelectAlert';
 
 const DEFAULT_CONFIGURATION_VALUES = {};
 const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
@@ -360,15 +360,20 @@ export function FormInputGeneralPanel({item}) {
 		);
 	};
 
-	if (isSpecialInput && !configFields.length) {
-		return <FragmentGeneralPanel item={item} />;
+	if (isSpecialInput) {
+		return (
+			<SpecialFormInputGeneralPanel
+				allowedInputTypes={allowedInputTypes}
+				fields={configFields}
+				handleValueSelect={handleValueSelect}
+				item={item}
+				values={configurationValues}
+			/>
+		);
 	}
 
 	return (
 		<>
-			{allowedInputTypes?.includes('localizationSelect') ? (
-				<LocalizationSelectAlert />
-			) : null}
 			<div className="mb-3 panel-group-sm">
 				<ClayPanel
 					collapsable
@@ -381,22 +386,19 @@ export function FormInputGeneralPanel({item}) {
 					showCollapseIcon
 				>
 					<ClayPanel.Body>
-						{!isSpecialInput && (
-							<FormInputMappingOptions
-								configurationValues={configurationValues}
-								filterFields={filterFields}
-								form={{
-									classNameId,
-									classTypeId,
-									fields: formFields,
-								}}
-								item={item}
-								onValueSelect={handleValueSelect}
-							/>
-						)}
+						<FormInputMappingOptions
+							configurationValues={configurationValues}
+							filterFields={filterFields}
+							form={{
+								classNameId,
+								classTypeId,
+								fields: formFields,
+							}}
+							item={item}
+							onValueSelect={handleValueSelect}
+						/>
 
-						{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
-							isSpecialInput) && (
+						{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
 							<>
 								<span className="sr-only">
 									{sub(
@@ -422,6 +424,114 @@ export function FormInputGeneralPanel({item}) {
 					</ClayPanel.Body>
 				</ClayPanel>
 			</div>
+
+			<FragmentGeneralPanel item={item} />
+		</>
+	);
+}
+
+function SpecialFormInputGeneralPanel({
+	allowedInputTypes,
+	fields,
+	fragmentName,
+	handleValueSelect,
+	item,
+	values,
+}) {
+	const languageId = useSelector(selectLanguageId);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+
+	const [loading, setLoading] = useState(true);
+	const [containsLocalizableFields, setContainsLocalizableFields] =
+		useState(false);
+	const state = useSelector((state) => state);
+
+	useEffect(() => {
+		const compute = async () => {
+			for (const item of Object.values(state.layoutData.items)) {
+				if (item.type === LAYOUT_DATA_ITEM_TYPES.form) {
+					if (await hasLocalizableFields(state, item.itemId)) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+		};
+
+		compute().then((result) => {
+			setContainsLocalizableFields(result);
+			setLoading(false);
+		});
+	}, [state]);
+
+	const isLocalizationSelect =
+		allowedInputTypes?.includes('localizationSelect');
+
+	if (!fields.length || loading) {
+		return <FragmentGeneralPanel item={item} />;
+	}
+
+	return (
+		<>
+			{isLocalizationSelect ? (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{containsLocalizableFields
+						? Liferay.Language.get(
+								'localization-applies-to-all-form-fields-on-the-page-defined-as-localizable'
+							)
+						: Liferay.Language.get(
+								'display-at-least-one-localizable-form-field-on-the-page-to-activate-this-configuration'
+							)}
+				</ClayAlert>
+			) : null}
+
+			{!isLocalizationSelect || containsLocalizableFields ? (
+				<div className="mb-3 panel-group-sm">
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={sub(
+							Liferay.Language.get('x-options'),
+							fragmentName
+						)}
+						displayType="unstyled"
+						showCollapseIcon
+					>
+						<ClayPanel.Body>
+							<span className="sr-only">
+								{sub(
+									Liferay.Language.get('x-configuration'),
+									fragmentName
+								)}
+							</span>
+
+							<FieldSet
+								fields={fields}
+								fragmentEntryLinks={
+									fragmentEntryLinksRef.current
+								}
+								item={item}
+								label=""
+								languageId={languageId}
+								onValueSelect={handleValueSelect}
+								selectedViewportSize={selectedViewportSize}
+								values={values}
+							/>
+						</ClayPanel.Body>
+					</ClayPanel>
+				</div>
+			) : null}
 
 			<FragmentGeneralPanel item={item} />
 		</>

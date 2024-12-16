@@ -469,7 +469,7 @@ public class PageSpecificationResourceImpl
 	}
 
 	private boolean _isPageSpecificationSupported(Layout layout) {
-		if (_isPublished(layout)) {
+		if (LayoutUtil.isPublished(layout)) {
 			if (!layout.isApproved() || !layout.isDraftLayout()) {
 				return true;
 			}
@@ -482,22 +482,6 @@ public class PageSpecificationResourceImpl
 		}
 
 		return false;
-	}
-
-	private boolean _isPublished(Layout layout) {
-		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
-			return true;
-		}
-
-		if (layout.isDraftLayout()) {
-			return GetterUtil.getBoolean(
-				layout.getTypeSettingsProperty("published"));
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		return GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty("published"));
 	}
 
 	private void _preparePatch(
@@ -525,7 +509,7 @@ public class PageSpecificationResourceImpl
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if (_isPublished(layout)) {
+		if (LayoutUtil.isPublished(layout)) {
 			if ((draftLayout != null) && !draftLayout.isApproved()) {
 				return ListUtil.fromArray(
 					_pageSpecificationDTOConverter.toDTO(layout),

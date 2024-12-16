@@ -61,7 +61,7 @@ public class LayoutUtil {
 			 !Objects.equals(
 				 contentPageSpecification.getStatus(),
 				 PageSpecification.Status.DRAFT)) ||
-			layout.isDraftLayout() || !layout.isPublished()) {
+			layout.isDraftLayout() || !isPublished(layout)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -81,6 +81,22 @@ public class LayoutUtil {
 
 		return updateLayout(
 			contentPageSpecification, draftLayout, serviceContext);
+	}
+
+	public static boolean isPublished(Layout layout) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			return true;
+		}
+
+		if (layout.isDraftLayout()) {
+			return GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty("published"));
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
 	}
 
 	public static Layout updateLayout(

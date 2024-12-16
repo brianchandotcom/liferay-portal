@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -78,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -258,6 +260,134 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		}
 	}
 
+	@Test
+	public void testGetRichTextSelectInfoFieldTypeValueWithInfoParametersMap()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomLong(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("inputFieldId", "myRichText")
+				).toString(),
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_INPUT,
+				ServiceContextTestUtil.getServiceContext());
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		Map<Locale, String> localeMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		SessionMessages.add(
+			httpServletRequest, "infoFormParameterMap",
+			HashMapBuilder.<String, Object>put(
+				"myRichText", localeMap
+			).build());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(httpServletRequest);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _objectDefinition.getClassName());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			InputTemplateNode inputTemplateNode =
+				_fragmentEntryInputTemplateNodeContextHelper.
+					toInputTemplateNode(
+						"Default", fragmentEntryLink, httpServletRequest,
+						infoItemFormProvider.getInfoForm(
+							StringPool.BLANK, _group.getGroupId()),
+						LocaleUtil.getSiteDefault());
+
+			Assert.assertEquals(
+				localeMap.get(LocaleUtil.getSiteDefault()),
+				inputTemplateNode.getInputValue());
+			Assert.assertEquals(localeMap, inputTemplateNode.getValueI18n());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetTextSelectInfoFieldTypeValueWithInfoParametersMap()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomLong(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("inputFieldId", "myText")
+				).toString(),
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_INPUT,
+				ServiceContextTestUtil.getServiceContext());
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		String value = RandomTestUtil.randomString();
+
+		SessionMessages.add(
+			httpServletRequest, "infoFormParameterMap",
+			HashMapBuilder.<String, Object>put(
+				"myText", value
+			).build());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(httpServletRequest);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _objectDefinition.getClassName());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			InputTemplateNode inputTemplateNode =
+				_fragmentEntryInputTemplateNodeContextHelper.
+					toInputTemplateNode(
+						"Default", fragmentEntryLink, httpServletRequest,
+						infoItemFormProvider.getInfoForm(
+							StringPool.BLANK, _group.getGroupId()),
+						LocaleUtil.getSiteDefault());
+
+			Assert.assertEquals(value, inputTemplateNode.getInputValue());
+
+			Assert.assertEquals(
+				Collections.emptyMap(), inputTemplateNode.getValueI18n());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -284,6 +414,13 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				false, _listTypeEntries);
+
+		ObjectField myRichText = ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, RandomTestUtil.randomString(),
+			"myRichText", false);
+
+		myRichText.setLocalized(true);
 
 		List<ObjectField> objectFields = Arrays.asList(
 			new AttachmentObjectFieldBuilder(
@@ -348,14 +485,11 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
 				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL,
 				RandomTestUtil.randomString(), "myPrecisionDecimal", false),
-			ObjectFieldUtil.createObjectField(
-				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING,
-				RandomTestUtil.randomString(), "myRichText", false));
+			myRichText);
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, true, false, true,
+				TestPropsValues.getUserId(), 0, null, false, true, true, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"CustomObjectDefinition", null, "control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

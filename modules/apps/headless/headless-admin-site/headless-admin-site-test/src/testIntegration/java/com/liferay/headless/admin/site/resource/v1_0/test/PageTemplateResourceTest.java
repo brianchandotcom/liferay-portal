@@ -115,7 +115,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate(
 				randomPageTemplate());
 
-		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
 
 		_assertProblemException(
 			"NOT_FOUND",
@@ -127,7 +127,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_enableLocalStaging();
 
-		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
 
 		_withCompanyGroupWidgetPageTemplate(
 			(group, widgetPageTemplate) ->
@@ -819,7 +819,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						pageTemplateExternalReferenceCode));
 	}
 
-	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
+	private void _testGetSiteSiteByExternalReferenceCodePageTemplate(
 			PageTemplate pageTemplate)
 		throws Exception {
 

@@ -18,17 +18,17 @@ import java.util.Map;
  */
 public class NestedFieldsSupplier<T> {
 
-	public static void addFieldName(String fieldName) {
+	public static void addNestedField(String nestedField) {
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
 		if (nestedFieldsContext != null) {
-			nestedFieldsContext.addFieldName(fieldName);
+			nestedFieldsContext.addNestedField(nestedField);
 		}
 	}
 
 	public static <T> T supply(
-			String fieldName,
+			String nestedField,
 			UnsafeFunction<String, T, Exception> unsafeFunction)
 		throws Exception {
 
@@ -39,16 +39,16 @@ public class NestedFieldsSupplier<T> {
 			return null;
 		}
 
-		List<String> fieldNames = nestedFieldsContext.getFieldNames();
+		List<String> nestedFields = nestedFieldsContext.getNestedFields();
 
-		if (!fieldNames.contains(fieldName)) {
+		if (!nestedFields.contains(nestedField)) {
 			return null;
 		}
 
 		nestedFieldsContext.incrementCurrentDepth();
 
 		try {
-			return unsafeFunction.apply(fieldName);
+			return unsafeFunction.apply(nestedField);
 		}
 		finally {
 			nestedFieldsContext.decrementCurrentDepth();
@@ -70,11 +70,11 @@ public class NestedFieldsSupplier<T> {
 
 		nestedFieldsContext.incrementCurrentDepth();
 
-		for (String fieldName : nestedFieldsContext.getFieldNames()) {
-			T value = unsafeFunction.apply(fieldName);
+		for (String nestedField : nestedFieldsContext.getNestedFields()) {
+			T value = unsafeFunction.apply(nestedField);
 
 			if (value != null) {
-				nestedFieldValues.put(fieldName, value);
+				nestedFieldValues.put(nestedField, value);
 			}
 		}
 
@@ -105,16 +105,16 @@ public class NestedFieldsSupplier<T> {
 		NestedFieldsContext clonedNestedFieldsContext =
 			nestedFieldsContext.clone();
 
-		for (String fieldName : nestedFieldsContext.getFieldNames()) {
+		for (String nestedField : nestedFieldsContext.getNestedFields()) {
 			UnsafeSupplier<Object, Exception> unsafeSupplier =
-				unsafeFunction.apply(fieldName);
+				unsafeFunction.apply(nestedField);
 
 			if (unsafeSupplier == null) {
 				continue;
 			}
 
 			nestedFieldUnsafeSuppliers.put(
-				fieldName,
+				nestedField,
 				() -> {
 					NestedFieldsContext oldNestedFieldsContext =
 						NestedFieldsContextThreadLocal.
@@ -142,7 +142,7 @@ public class NestedFieldsSupplier<T> {
 		if ((nestedFieldsContext != null) &&
 			(nestedFieldsContext.getCurrentDepth() <
 				nestedFieldsContext.getDepth()) &&
-			ListUtil.isNotEmpty(nestedFieldsContext.getFieldNames())) {
+			ListUtil.isNotEmpty(nestedFieldsContext.getNestedFields())) {
 
 			return true;
 		}

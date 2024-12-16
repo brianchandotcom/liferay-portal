@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -16,7 +15,6 @@ import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
-import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
@@ -37,14 +35,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 
@@ -161,19 +157,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
-			layout);
-		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
-			layout.fetchDraftLayout());
+		SitePageResource curSitePageResource = _getSitePageResource();
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		SitePage sitePage =
+			curSitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-			layout, serviceContext);
+		PageSpecificationsTestUtil.
+			testPostSiteSiteByExternalReferenceCodePageSpecification(
+				layout, sitePage.getPageSpecifications(), serviceContext,
+				curContentPageSpecification ->
+					sitePageResource.
+						postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
+							testGroup.getExternalReferenceCode(),
+							layout.getExternalReferenceCode(),
+							curContentPageSpecification));
 
 		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
 			LayoutTestUtil.addTypePortletLayout(testGroup));
@@ -316,53 +319,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void
-			_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				ContentPageSpecification contentPageSpecification,
-				String externalReferenceCode, Layout layout,
-				ServiceContext serviceContext)
-		throws Exception {
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		contentPageSpecification.setExternalReferenceCode(
-			externalReferenceCode);
-
-		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
-
-		PageSpecificationsTestUtil.assertContentPageSpecification(
-			draftLayout,
-			sitePageResource.
-				postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode(),
-					contentPageSpecification));
-
-		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
-
-		Assert.assertEquals(
-			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
-
-		draftLayout = _layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		contentPageSpecification.setStatus((PageSpecification.Status)null);
-
-		PageSpecificationsTestUtil.assertContentPageSpecification(
-			draftLayout,
-			sitePageResource.
-				postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-					testGroup.getExternalReferenceCode(),
-					layout.getExternalReferenceCode(),
-					contentPageSpecification));
-
-		draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
-
-		Assert.assertEquals(
-			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
-	}
-
-	private void
 			_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecificationProblemException(
 				Layout layout)
 		throws Exception {
@@ -399,31 +355,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
-	private ContentPageSpecification _getContentPageSpecification(
-			Layout layout, String sitePageExternalReferenceCode)
-		throws Exception {
-
-		SitePageResource curSitePageResource = _getSitePageResource();
-
-		SitePage sitePage =
-			curSitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePageExternalReferenceCode);
-
-		PageSpecification[] pageSpecifications =
-			sitePage.getPageSpecifications();
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
-
-		PageSpecification pageSpecification = pageSpecifications[0];
-
-		PageSpecificationsTestUtil.assertContentPageSpecification(
-			layout, pageSpecification);
-
-		return (ContentPageSpecification)pageSpecification;
-	}
-
 	private SitePageResource _getSitePageResource() throws Exception {
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
@@ -450,55 +381,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			curSitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode()));
-	}
-
-	private void
-			_testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-				Layout layout, ServiceContext serviceContext)
-		throws Exception {
-
-		ContentPageSpecification contentPageSpecification =
-			_getContentPageSpecification(
-				layout, layout.getExternalReferenceCode());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertEquals(
-			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
-
-		contentPageSpecification.setExternalReferenceCode(
-			draftLayout.getExternalReferenceCode());
-
-		_assertProblemException(
-			() ->
-				sitePageResource.
-					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(),
-						contentPageSpecification));
-
-		contentPageSpecification.setExternalReferenceCode(
-			layout.getExternalReferenceCode());
-
-		_assertProblemException(
-			() ->
-				sitePageResource.
-					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(),
-						contentPageSpecification));
-
-		_assertPostSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-			contentPageSpecification, draftLayout.getExternalReferenceCode(),
-			layout, serviceContext);
-
-		_assertProblemException(
-			() ->
-				sitePageResource.
-					postSiteSiteByExternalReferenceCodeSitePagePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode(),
-						contentPageSpecification));
 	}
 
 	@Inject

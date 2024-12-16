@@ -322,14 +322,13 @@ public class ExportImportTaskResourcePerformanceTest {
 				).put(
 					"taskItemDelegateName",
 					() -> {
-						if (classNamePartsMap.containsKey(
+						if (!classNamePartsMap.containsKey(
 								"taskItemDelegateName")) {
 
-							return classNamePartsMap.get(
-								"taskItemDelegateName");
+							return null;
 						}
 
-						return null;
+						return classNamePartsMap.get("taskItemDelegateName");
 					}
 				).build());
 
@@ -379,14 +378,13 @@ public class ExportImportTaskResourcePerformanceTest {
 				).put(
 					"taskItemDelegateName",
 					() -> {
-						if (classNamePartsMap.containsKey(
+						if (!classNamePartsMap.containsKey(
 								"taskItemDelegateName")) {
 
-							return classNamePartsMap.get(
-								"taskItemDelegateName");
+							return null;
 						}
 
-						return null;
+						return classNamePartsMap.get("taskItemDelegateName");
 					}
 				).build());
 

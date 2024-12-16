@@ -111,7 +111,8 @@ public class MultiselectPicklistObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Object value = values.get(objectField.getName());
+		Object value = ObjectFieldBusinessType.super.getValue(
+			objectField, userId, values);
 
 		if (value instanceof List) {
 			List<String> keys = new ArrayList<>();
@@ -132,6 +133,8 @@ public class MultiselectPicklistObjectFieldBusinessType
 			}
 
 			values.put(objectField.getName(), keys);
+
+			return keys;
 		}
 		else if (value instanceof String) {
 			String valueString = GetterUtil.getString(value);
@@ -141,11 +144,13 @@ public class MultiselectPicklistObjectFieldBusinessType
 					objectField.getName(),
 					ListUtil.fromString(
 						valueString, StringPool.COMMA_AND_SPACE));
+
+				return ListUtil.fromString(
+					valueString, StringPool.COMMA_AND_SPACE);
 			}
 		}
 
-		return ObjectFieldBusinessType.super.getValue(
-			objectField, userId, values);
+		return value;
 	}
 
 	@Override

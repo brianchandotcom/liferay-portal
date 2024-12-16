@@ -7,12 +7,15 @@ package com.liferay.portal.kernel.cache.transactional;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionDefinition;
@@ -30,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * @author Shuyang Zhou
@@ -216,12 +220,29 @@ public class TransactionalPortalCacheUtil {
 
 		if (uncommittedBuffer == null) {
 			if (mvcc) {
-				uncommittedBuffer = new MVCCUncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
+				if (portalCache.isSharded()) {
+					uncommittedBuffer = new ShardedUncommittedBuffer(
+						(PortalCache<Serializable, Object>)portalCache,
+						(companyId, targetPortalCache) ->
+							new MVCCUncommittedBuffer(targetPortalCache));
+				}
+				else {
+					uncommittedBuffer = new MVCCUncommittedBuffer(
+						(PortalCache<Serializable, Object>)portalCache);
+				}
 			}
 			else {
-				uncommittedBuffer = new MarkerUncommittedBuffer(
-					(PortalCache<Serializable, Object>)portalCache);
+				if (portalCache.isSharded()) {
+					uncommittedBuffer = new ShardedUncommittedBuffer(
+						(PortalCache<Serializable, Object>)portalCache,
+						(companyId, targetPortalCache) ->
+							new MarkerUncommittedBuffer(
+								companyId, targetPortalCache));
+				}
+				else {
+					uncommittedBuffer = new MarkerUncommittedBuffer(
+						(PortalCache<Serializable, Object>)portalCache);
+				}
 			}
 
 			portalCacheMap.put(portalCache, uncommittedBuffer);
@@ -305,6 +326,19 @@ public class TransactionalPortalCacheUtil {
 			if (oldValueEntry != null) {
 				oldValueEntry.merge(valueEntry);
 			}
+		}
+
+		private MarkerUncommittedBuffer(
+			long companyId, PortalCache<Serializable, Object> portalCache) {
+
+			super(portalCache);
+
+			_portalCacheName =
+				portalCache.getPortalCacheName() + StringPool.UNDERLINE +
+					companyId;
+
+			_marker = _markers.computeIfAbsent(
+				_portalCacheName, key -> new Object());
 		}
 
 		private MarkerUncommittedBuffer(
@@ -431,6 +465,80 @@ public class TransactionalPortalCacheUtil {
 		private boolean _skipReplicator = true;
 		private final Map<Serializable, ValueEntry> _uncommittedMap =
 			new HashMap<>();
+
+	}
+
+	private static class ShardedUncommittedBuffer implements UncommittedBuffer {
+
+		@Override
+		public void commit(boolean readOnly) {
+			for (Map.Entry<Long, UncommittedBuffer> entry :
+					_shardedUncommittedBuffers.entrySet()) {
+
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							entry.getKey())) {
+
+					UncommittedBuffer uncommittedBuffer = entry.getValue();
+
+					uncommittedBuffer.commit(readOnly);
+				}
+			}
+
+			_shardedUncommittedBuffers.clear();
+		}
+
+		@Override
+		public ValueEntry get(Serializable key) {
+			UncommittedBuffer uncommittedBuffer =
+				_shardedUncommittedBuffers.get(
+					CompanyThreadLocal.getNonsystemCompanyId());
+
+			if (uncommittedBuffer == null) {
+				return null;
+			}
+
+			return uncommittedBuffer.get(key);
+		}
+
+		@Override
+		public void put(Serializable key, ValueEntry valueEntry) {
+			UncommittedBuffer uncommittedBuffer =
+				_shardedUncommittedBuffers.computeIfAbsent(
+					CompanyThreadLocal.getNonsystemCompanyId(),
+					companyId -> _uncommittedBufferFunction.apply(
+						companyId, _portalCache));
+
+			uncommittedBuffer.put(key, valueEntry);
+		}
+
+		@Override
+		public void removeAll(boolean skipReplicator) {
+			UncommittedBuffer uncommittedBuffer =
+				_shardedUncommittedBuffers.computeIfAbsent(
+					CompanyThreadLocal.getNonsystemCompanyId(),
+					companyId -> _uncommittedBufferFunction.apply(
+						companyId, _portalCache));
+
+			uncommittedBuffer.removeAll(skipReplicator);
+		}
+
+		private ShardedUncommittedBuffer(
+			PortalCache<Serializable, Object> portalCache,
+			BiFunction
+				<Long, PortalCache<Serializable, Object>, UncommittedBuffer>
+					uncommittedBufferFunction) {
+
+			_portalCache = portalCache;
+			_uncommittedBufferFunction = uncommittedBufferFunction;
+		}
+
+		private final PortalCache<Serializable, Object> _portalCache;
+		private final Map<Long, UncommittedBuffer> _shardedUncommittedBuffers =
+			new HashMap<>();
+		private final BiFunction
+			<Long, PortalCache<Serializable, Object>, UncommittedBuffer>
+				_uncommittedBufferFunction;
 
 	}
 

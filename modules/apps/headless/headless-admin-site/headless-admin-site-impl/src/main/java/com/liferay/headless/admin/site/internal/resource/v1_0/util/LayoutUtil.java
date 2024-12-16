@@ -121,6 +121,11 @@ public class LayoutUtil {
 
 		layout = _updateLookAndFeel(layout, settings);
 
+		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
+			serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+		}
+
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getParentLayoutId(), layout.getNameMap(),

@@ -5,8 +5,16 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -54,6 +62,98 @@ public class PageSpecificationsTestUtil {
 		}
 
 		_assertContentPageSpecifications(layout, pageSpecifications);
+	}
+
+	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(
+			Layout layout, PageSpecification[] pageSpecifications,
+			ServiceContext serviceContext,
+			UnsafeFunction
+				<ContentPageSpecification, ContentPageSpecification, Exception>
+					unsafeFunction)
+		throws Exception {
+
+		assertPageSpecifications(layout, pageSpecifications);
+
+		ContentPageSpecification contentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		Assert.assertFalse(layout.isPublished());
+
+		Assert.assertEquals(
+			contentPageSpecification.getStatus(),
+			PageSpecification.Status.DRAFT);
+
+		contentPageSpecification.setExternalReferenceCode(
+			layout.getExternalReferenceCode());
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			draftLayout.getExternalReferenceCode());
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		contentPageSpecification.setExternalReferenceCode(
+			draftLayout.getExternalReferenceCode());
+
+		contentPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
+
+		contentPageSpecification.setExternalReferenceCode(
+			layout.getExternalReferenceCode());
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
+
+		contentPageSpecification.setExternalReferenceCode(
+			draftLayout.getExternalReferenceCode());
+
+		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
+		assertContentPageSpecification(
+			draftLayout, unsafeFunction.apply(contentPageSpecification));
+
+		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
+
+		draftLayout = LayoutLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		contentPageSpecification.setExternalReferenceCode((String)null);
+		contentPageSpecification.setStatus((PageSpecification.Status)null);
+
+		assertContentPageSpecification(
+			draftLayout, unsafeFunction.apply(contentPageSpecification));
+
+		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+
+		_assertProblemException(
+			() -> unsafeFunction.apply(contentPageSpecification));
 	}
 
 	private static void _assertContentPageSpecifications(
@@ -124,6 +224,22 @@ public class PageSpecificationsTestUtil {
 			pageSpecification2.getExternalReferenceCode());
 		Assert.assertEquals(
 			PageSpecification.Status.APPROVED, pageSpecification2.getStatus());
+	}
+
+	private static void _assertProblemException(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	private static void _assertWidgetPageSpecifications(

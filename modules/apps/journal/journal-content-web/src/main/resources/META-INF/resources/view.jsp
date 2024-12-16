@@ -25,7 +25,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 <c:choose>
 	<c:when test="<%= article == null %>">
 		<c:choose>
-			<c:when test='<%= (FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-27566") && Validator.isNull(journalContentDisplayContext.getArticleExternalReferenceCode())) || (!FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-27566") && Validator.isNull(journalContentDisplayContext.getArticleId())) %>'>
+			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleExternalReferenceCode()) %>">
 				<clay:alert
 					displayType="info"
 				>
@@ -110,7 +110,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 					message="you-do-not-have-the-roles-required-to-access-this-web-content-entry"
 				/>
 			</c:when>
-			<c:when test='<%= (FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-27566") && Validator.isNotNull(journalContentDisplayContext.getArticleExternalReferenceCode())) || (!FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-27566") && Validator.isNotNull(journalContentDisplayContext.getArticleId())) %>'>
+			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleExternalReferenceCode()) %>">
 				<c:choose>
 					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
 						<clay:alert

@@ -15,7 +15,6 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.portlet.preferences.updater.PortletPreferencesUpdater;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -58,27 +57,14 @@ public class JournalContentPortletPreferencesUpdater
 
 		JournalArticle article = articleAssetRenderer.getAssetObject();
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
+		portletPreferences.setValue(
+			"articleExternalReferenceCode", article.getExternalReferenceCode());
 
-			portletPreferences.setValue(
-				"articleExternalReferenceCode",
-				article.getExternalReferenceCode());
+		Group group = _groupLocalService.fetchGroup(article.getGroupId());
 
-			Group group = _groupLocalService.fetchGroup(article.getGroupId());
-
-			if (group != null) {
-				portletPreferences.setValue(
-					"groupExternalReferenceCode",
-					group.getExternalReferenceCode());
-			}
-		}
-		else {
-			portletPreferences.setValue("articleId", article.getArticleId());
+		if (group != null) {
 			portletPreferences.setValue(
-				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-			portletPreferences.setValue(
-				"groupId", String.valueOf(article.getGroupId()));
+				"groupExternalReferenceCode", group.getExternalReferenceCode());
 		}
 
 		_addLayoutClassedModelUsage(

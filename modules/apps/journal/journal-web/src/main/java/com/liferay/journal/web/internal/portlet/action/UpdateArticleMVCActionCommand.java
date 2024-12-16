@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -24,7 +23,6 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -126,9 +123,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		// Journal content
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
 		long refererPlid = ParamUtil.getLong(actionRequest, "refererPlid");
@@ -146,30 +140,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				portletPreferences.setValue(
 					"groupId", String.valueOf(article.getGroupId()));
 
-				Portlet portlet = _portletLocalService.getPortletById(
-					portletResource);
-
-				if (!FeatureFlagManagerUtil.isEnabled(
-						themeDisplay.getCompanyId(), "LPD-27566") ||
-					(portlet == null) ||
-					!Objects.equals(
-						portlet.getPortletName(),
-						JournalContentPortletKeys.JOURNAL_CONTENT)) {
-
-					portletPreferences.setValue(
-						"articleId", article.getArticleId());
-
-					if (assetEntry != null) {
-						portletPreferences.setValue(
-							"assetEntryId",
-							String.valueOf(assetEntry.getEntryId()));
-					}
-				}
-				else {
-					portletPreferences.setValue(
-						"articleExternalReferenceCode",
-						article.getExternalReferenceCode());
-				}
+				portletPreferences.setValue(
+					"articleExternalReferenceCode",
+					article.getExternalReferenceCode());
 
 				portletPreferences.store();
 			}
@@ -211,6 +184,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (article.isPending()) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				User user = themeDisplay.getUser();
 
 				Date displayDate = _portal.getDate(
@@ -643,8 +620,5 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 }

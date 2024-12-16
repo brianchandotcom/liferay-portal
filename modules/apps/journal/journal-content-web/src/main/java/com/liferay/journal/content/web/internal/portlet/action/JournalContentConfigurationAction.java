@@ -23,7 +23,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -115,17 +114,9 @@ public class JournalContentConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
-
-			setPreference(
-				actionRequest, "articleExternalReferenceCode",
-				_getArticleExternalReferenceCode(actionRequest));
-		}
-		else {
-			setPreference(
-				actionRequest, "articleId", _getArticleId(actionRequest));
-		}
+		setPreference(
+			actionRequest, "articleExternalReferenceCode",
+			_getArticleExternalReferenceCode(actionRequest));
 
 		String[] contentMetadataAssetAddonEntryKeys =
 			ParamUtil.getParameterValues(
@@ -138,45 +129,34 @@ public class JournalContentConfigurationAction
 		String ddmTemplateKey = ParamUtil.getString(
 			actionRequest, "ddmTemplateKey");
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
+		String ddmTemplateExternalReferenceCode = StringPool.BLANK;
 
-			String ddmTemplateExternalReferenceCode = StringPool.BLANK;
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+				themeDisplay.getScopeGroupId(),
+				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey,
+				true);
 
-			if (Validator.isNotNull(ddmTemplateKey)) {
-				DDMTemplate ddmTemplate =
-					_ddmTemplateLocalService.fetchTemplate(
-						themeDisplay.getScopeGroupId(),
-						_portal.getClassNameId(DDMStructure.class),
-						ddmTemplateKey, true);
-
-				if (ddmTemplate != null) {
-					ddmTemplateExternalReferenceCode =
-						ddmTemplate.getExternalReferenceCode();
-				}
-			}
-
-			setPreference(
-				actionRequest, "ddmTemplateExternalReferenceCode",
-				ddmTemplateExternalReferenceCode);
-
-			long groupId = _getArticleGroupId(actionRequest);
-
-			if (groupId > 0) {
-				Group group = _groupLocalService.fetchGroup(groupId);
-
-				if (group != null) {
-					setPreference(
-						actionRequest, "groupExternalReferenceCode",
-						group.getExternalReferenceCode());
-				}
+			if (ddmTemplate != null) {
+				ddmTemplateExternalReferenceCode =
+					ddmTemplate.getExternalReferenceCode();
 			}
 		}
-		else {
-			setPreference(actionRequest, "ddmTemplateKey", ddmTemplateKey);
-			setPreference(
-				actionRequest, "groupId",
-				String.valueOf(_getArticleGroupId(actionRequest)));
+
+		setPreference(
+			actionRequest, "ddmTemplateExternalReferenceCode",
+			ddmTemplateExternalReferenceCode);
+
+		long groupId = _getArticleGroupId(actionRequest);
+
+		if (groupId > 0) {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group != null) {
+				setPreference(
+					actionRequest, "groupExternalReferenceCode",
+					group.getExternalReferenceCode());
+			}
 		}
 
 		String[] userToolAssetAddonEntryKeys = ParamUtil.getParameterValues(
@@ -186,32 +166,20 @@ public class JournalContentConfigurationAction
 			actionRequest, "userToolAssetAddonEntryKeys",
 			StringUtil.merge(userToolAssetAddonEntryKeys));
 
-		_addDDMTemplateLinks(actionRequest, themeDisplay);
+		_addDDMTemplateLinks(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	private void _addDDMTemplateLinks(
-			ActionRequest actionRequest, ThemeDisplay themeDisplay)
+	private void _addDDMTemplateLinks(ActionRequest actionRequest)
 		throws Exception {
 
-		JournalArticle journalArticle = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
-
-			journalArticle =
-				_journalArticleLocalService.
-					fetchLatestArticleByExternalReferenceCode(
-						_getArticleGroupId(actionRequest),
-						_getArticleExternalReferenceCode(actionRequest),
-						WorkflowConstants.STATUS_APPROVED, true);
-		}
-		else {
-			journalArticle = _journalArticleLocalService.fetchArticle(
-				_getArticleGroupId(actionRequest),
-				_getArticleId(actionRequest));
-		}
+		JournalArticle journalArticle =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					_getArticleGroupId(actionRequest),
+					_getArticleExternalReferenceCode(actionRequest),
+					WorkflowConstants.STATUS_APPROVED, true);
 
 		if (journalArticle == null) {
 			return;
@@ -223,7 +191,7 @@ public class JournalContentConfigurationAction
 		_ddmTemplateLinkLocalService.deleteTemplateLink(
 			_portal.getClassNameId(compositeClassName), journalArticle.getId());
 
-		long ddmTemplateId = _getDDMTemplateId(actionRequest, themeDisplay);
+		long ddmTemplateId = _getDDMTemplateId(actionRequest);
 
 		if (ddmTemplateId == 0) {
 			return;
@@ -283,75 +251,18 @@ public class JournalContentConfigurationAction
 		return assetEntry.getGroupId();
 	}
 
-	private String _getArticleId(PortletRequest portletRequest)
-		throws Exception {
+	private long _getDDMTemplateId(PortletRequest portletRequest) {
+		String ddmTemplateExternalReferenceCode = getParameter(
+			portletRequest, "ddmTemplateExternalReferenceCode");
 
-		long assetEntryId = GetterUtil.getLong(
-			getParameter(portletRequest, "assetEntryId"));
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			assetEntryId);
-
-		if (assetEntry == null) {
-			return StringPool.BLANK;
+		if (Validator.isNull(ddmTemplateExternalReferenceCode)) {
+			return 0;
 		}
 
-		AssetRendererFactory<JournalArticle> articleAssetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		if (articleAssetRendererFactory == null) {
-			return StringPool.BLANK;
-		}
-
-		AssetRenderer<JournalArticle> articleAssetRenderer =
-			articleAssetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
-
-		if (articleAssetRenderer == null) {
-			return StringPool.BLANK;
-		}
-
-		JournalArticle article = articleAssetRenderer.getAssetObject();
-
-		return StringUtil.toUpperCase(article.getArticleId());
-	}
-
-	private long _getDDMTemplateId(
-			PortletRequest portletRequest, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		DDMTemplate ddmTemplate = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
-
-			String ddmTemplateExternalReferenceCode = getParameter(
-				portletRequest, "ddmTemplateExternalReferenceCode");
-
-			if (Validator.isNull(ddmTemplateExternalReferenceCode)) {
-				return 0;
-			}
-
-			ddmTemplate =
-				_ddmTemplateLocalService.
-					fetchDDMTemplateByExternalReferenceCode(
-						ddmTemplateExternalReferenceCode,
-						_getArticleGroupId(portletRequest), true);
-		}
-		else {
-			String ddmTemplateKey = getParameter(
-				portletRequest, "ddmTemplateKey");
-
-			if (Validator.isNull(ddmTemplateKey)) {
-				return 0;
-			}
-
-			ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-				_getArticleGroupId(portletRequest),
-				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey,
-				true);
-		}
+		DDMTemplate ddmTemplate =
+			_ddmTemplateLocalService.fetchDDMTemplateByExternalReferenceCode(
+				ddmTemplateExternalReferenceCode,
+				_getArticleGroupId(portletRequest), true);
 
 		if (ddmTemplate == null) {
 			return 0;

@@ -33,7 +33,6 @@ page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@

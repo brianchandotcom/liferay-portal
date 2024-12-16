@@ -14,7 +14,6 @@ import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -191,27 +190,22 @@ public class AssetCategoriesNavigationDisplayContext {
 			_assetCategoriesNavigationPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-27566")) {
+		PortletPreferences portletPreferences = _renderRequest.getPreferences();
 
-			PortletPreferences portletPreferences =
-				_renderRequest.getPreferences();
+		String displayStyleGroupExternalReferenceCode =
+			portletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode",
+				_assetCategoriesNavigationPortletInstanceConfiguration.
+					displayStyleGroupExternalReferenceCode());
 
-			String displayStyleGroupExternalReferenceCode =
-				portletPreferences.getValue(
-					"displayStyleGroupExternalReferenceCode",
-					_assetCategoriesNavigationPortletInstanceConfiguration.
-						displayStyleGroupExternalReferenceCode());
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			Group group =
+				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+					displayStyleGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
 
-			if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-				Group group =
-					GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-						displayStyleGroupExternalReferenceCode,
-						_themeDisplay.getCompanyId());
-
-				if (group != null) {
-					displayStyleGroupId = group.getGroupId();
-				}
+			if (group != null) {
+				displayStyleGroupId = group.getGroupId();
 			}
 		}
 
@@ -229,13 +223,6 @@ public class AssetCategoriesNavigationDisplayContext {
 	}
 
 	private String[] _getAssetVocabularyIds() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-27566")) {
-
-			return _assetCategoriesNavigationPortletInstanceConfiguration.
-				assetVocabularyIds();
-		}
-
 		List<Long> assetVocabularyIds = new ArrayList<>();
 
 		PortletPreferences portletPreferences = _renderRequest.getPreferences();

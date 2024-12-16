@@ -9,7 +9,6 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -38,43 +37,37 @@ public class JournalContentDisplayInformationProvider
 
 	@Override
 	public String getClassPK(PortletPreferences portletPreferences) {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
+		String articleExternalReferenceCode = portletPreferences.getValue(
+			"articleExternalReferenceCode", StringPool.BLANK);
 
-			String articleExternalReferenceCode = portletPreferences.getValue(
-				"articleExternalReferenceCode", StringPool.BLANK);
-
-			if (Validator.isNull(articleExternalReferenceCode)) {
-				return StringPool.BLANK;
-			}
-
-			String groupExternalReferenceCode = portletPreferences.getValue(
-				"groupExternalReferenceCode", null);
-
-			if (Validator.isNull(groupExternalReferenceCode)) {
-				return StringPool.BLANK;
-			}
-
-			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				groupExternalReferenceCode, CompanyThreadLocal.getCompanyId());
-
-			if (group == null) {
-				return StringPool.BLANK;
-			}
-
-			JournalArticle article =
-				_journalArticleLocalService.
-					fetchLatestArticleByExternalReferenceCode(
-						group.getGroupId(), articleExternalReferenceCode);
-
-			if (article == null) {
-				return StringPool.BLANK;
-			}
-
-			return article.getArticleId();
+		if (Validator.isNull(articleExternalReferenceCode)) {
+			return StringPool.BLANK;
 		}
 
-		return portletPreferences.getValue("articleId", StringPool.BLANK);
+		String groupExternalReferenceCode = portletPreferences.getValue(
+			"groupExternalReferenceCode", null);
+
+		if (Validator.isNull(groupExternalReferenceCode)) {
+			return StringPool.BLANK;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, CompanyThreadLocal.getCompanyId());
+
+		if (group == null) {
+			return StringPool.BLANK;
+		}
+
+		JournalArticle article =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					group.getGroupId(), articleExternalReferenceCode);
+
+		if (article == null) {
+			return StringPool.BLANK;
+		}
+
+		return article.getArticleId();
 	}
 
 	@Reference

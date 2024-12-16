@@ -15,9 +15,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.internal.configuration.JournalContentWebConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import javax.portlet.PortletPreferences;
 
@@ -98,21 +96,12 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-27566")) {
-
-			portletPreferences.setValue(
-				"articleExternalReferenceCode", StringPool.BLANK);
-			portletPreferences.setValue(
-				"ddmTemplateExternalReferenceCode", StringPool.BLANK);
-			portletPreferences.setValue(
-				"groupExternalReferenceCode", StringPool.BLANK);
-		}
-		else {
-			portletPreferences.setValue("articleId", StringPool.BLANK);
-			portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
-			portletPreferences.setValue("groupId", StringPool.BLANK);
-		}
+		portletPreferences.setValue(
+			"articleExternalReferenceCode", StringPool.BLANK);
+		portletPreferences.setValue(
+			"ddmTemplateExternalReferenceCode", StringPool.BLANK);
+		portletPreferences.setValue(
+			"groupExternalReferenceCode", StringPool.BLANK);
 
 		return portletPreferences;
 	}

@@ -14,7 +14,6 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -182,31 +181,6 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		_updatePortletPreferencesExternalReferenceCodes(
 			portlet, portletDataContext, portletPreferences);
 
-		Enumeration<String> enumeration = portletPreferences.getNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					portletDataContext.getCompanyId(), "LPD-27566") &&
-				(StringUtil.startsWith(
-					name, "assetVocabularyExternalReferenceCodes_") ||
-				 StringUtil.startsWith(
-					 name, "assetVocabularyGroupExternalReferenceCodes"))) {
-
-				continue;
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled(
-					portletDataContext.getCompanyId(), "LPD-27566") &&
-				Objects.equals(name, "assetVocabularyIds")) {
-
-				updateExportPortletPreferencesClassPKs(
-					portletDataContext, portlet, portletPreferences, name,
-					AssetVocabulary.class.getName());
-			}
-		}
-
 		return portletPreferences;
 	}
 
@@ -239,12 +213,6 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			Portlet portlet, PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				portletDataContext.getCompanyId(), "LPD-27566")) {
-
-			return;
-		}
 
 		String[] assetVocabularyGroupExternalReferenceCodes =
 			portletPreferences.getValues(

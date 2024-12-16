@@ -18,7 +18,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.ExportArticleHelper;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -104,38 +103,24 @@ public class JournalContentPortlet extends MVCPortlet {
 
 		long articleGroupId = 0;
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-27566")) {
+		String articleGroupExternalReferenceCode = PrefsParamUtil.getString(
+			portletPreferences, renderRequest, "groupExternalReferenceCode");
 
-			String articleGroupExternalReferenceCode = PrefsParamUtil.getString(
-				portletPreferences, renderRequest,
-				"groupExternalReferenceCode");
+		if (Validator.isNotNull(articleGroupExternalReferenceCode)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				articleGroupExternalReferenceCode, themeDisplay.getCompanyId());
 
-			if (Validator.isNotNull(articleGroupExternalReferenceCode)) {
-				Group group =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						articleGroupExternalReferenceCode,
-						themeDisplay.getCompanyId());
-
-				if (group != null) {
-					articleGroupId = group.getGroupId();
-				}
-			}
-
-			if (articleGroupId == 0) {
-				articleGroupId = themeDisplay.getScopeGroupId();
+			if (group != null) {
+				articleGroupId = group.getGroupId();
 			}
 		}
-		else {
-			articleGroupId = PrefsParamUtil.getLong(
-				portletPreferences, renderRequest, "groupId",
-				themeDisplay.getScopeGroupId());
+
+		if (articleGroupId == 0) {
+			articleGroupId = themeDisplay.getScopeGroupId();
 		}
 
 		String articleExternalReferenceCode = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleExternalReferenceCode");
-		String articleId = PrefsParamUtil.getString(
-			portletPreferences, renderRequest, "articleId");
 
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
@@ -158,74 +143,42 @@ public class JournalContentPortlet extends MVCPortlet {
 			}
 		}
 		else if ((articleGroupId > 0) &&
-				 ((Validator.isNotNull(articleExternalReferenceCode) &&
-				   FeatureFlagManagerUtil.isEnabled(
-					   themeDisplay.getCompanyId(), "LPD-27566")) ||
-				  (Validator.isNotNull(articleId) &&
-				   !FeatureFlagManagerUtil.isEnabled(
-					   themeDisplay.getCompanyId(), "LPD-27566")))) {
+				 Validator.isNotNull(articleExternalReferenceCode)) {
 
 			String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 			String languageId = _language.getLanguageId(renderRequest);
 			int page = ParamUtil.getInteger(renderRequest, "page", 1);
 
-			if (FeatureFlagManagerUtil.isEnabled(
-					themeDisplay.getCompanyId(), "LPD-27566")) {
-
-				article =
-					_journalArticleLocalService.
-						fetchLatestArticleByExternalReferenceCode(
-							articleGroupId, articleExternalReferenceCode,
-							WorkflowConstants.STATUS_APPROVED, false);
-			}
-			else {
-				article = _journalArticleLocalService.fetchLatestArticle(
-					articleGroupId, articleId,
-					WorkflowConstants.STATUS_APPROVED);
-			}
+			article =
+				_journalArticleLocalService.
+					fetchLatestArticleByExternalReferenceCode(
+						articleGroupId, articleExternalReferenceCode,
+						WorkflowConstants.STATUS_APPROVED, false);
 
 			try {
 				if (article == null) {
-					if (FeatureFlagManagerUtil.isEnabled(
-							themeDisplay.getCompanyId(), "LPD-27566")) {
-
-						article =
-							_journalArticleLocalService.
-								getLatestArticleByExternalReferenceCode(
-									articleGroupId,
-									articleExternalReferenceCode,
-									WorkflowConstants.STATUS_ANY, false);
-					}
-					else {
-						article = _journalArticleLocalService.getLatestArticle(
-							articleGroupId, articleId,
-							WorkflowConstants.STATUS_ANY);
-					}
+					article =
+						_journalArticleLocalService.
+							getLatestArticleByExternalReferenceCode(
+								articleGroupId, articleExternalReferenceCode,
+								WorkflowConstants.STATUS_ANY, false);
 				}
 
 				String ddmTemplateKey = null;
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						themeDisplay.getCompanyId(), "LPD-27566")) {
+				String ddmTemplateExternalReferenceCode =
+					PrefsParamUtil.getString(
+						portletPreferences, renderRequest,
+						"ddmTemplateExternalReferenceCode");
 
-					String ddmTemplateExternalReferenceCode =
-						PrefsParamUtil.getString(
-							portletPreferences, renderRequest,
-							"ddmTemplateExternalReferenceCode");
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.
+						fetchDDMTemplateByExternalReferenceCode(
+							ddmTemplateExternalReferenceCode,
+							article.getGroupId(), true);
 
-					DDMTemplate ddmTemplate =
-						_ddmTemplateLocalService.
-							fetchDDMTemplateByExternalReferenceCode(
-								ddmTemplateExternalReferenceCode,
-								article.getGroupId(), true);
-
-					if (ddmTemplate != null) {
-						ddmTemplateKey = ddmTemplate.getTemplateKey();
-					}
-				}
-				else {
-					ddmTemplateKey = PrefsParamUtil.getString(
-						portletPreferences, renderRequest, "ddmTemplateKey");
+				if (ddmTemplate != null) {
+					ddmTemplateKey = ddmTemplate.getTemplateKey();
 				}
 
 				if (Validator.isNull(ddmTemplateKey)) {

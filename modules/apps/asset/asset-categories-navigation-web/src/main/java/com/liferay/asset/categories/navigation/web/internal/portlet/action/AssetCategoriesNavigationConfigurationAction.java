@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -58,10 +57,6 @@ public class AssetCategoriesNavigationConfigurationAction
 		throws PortalException {
 
 		super.postProcess(companyId, portletRequest, portletPreferences);
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-27566")) {
-			return;
-		}
 
 		boolean allAssetVocabularies = GetterUtil.getBoolean(
 			portletPreferences.getValue("allAssetVocabularies", null));

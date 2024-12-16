@@ -10,8 +10,7 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.commerce.product.model.CPConfigurationEntrySettingTable;
 import com.liferay.commerce.product.model.CPConfigurationEntryTable;
-import com.liferay.commerce.product.model.CPConfigurationListTable;
-import com.liferay.commerce.product.service.persistence.CPConfigurationEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPConfigurationEntrySettingPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -21,41 +20,37 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(service = TableReferenceDefinition.class)
-public class CPConfigurationEntryTableReferenceDefinition
-	implements TableReferenceDefinition<CPConfigurationEntryTable> {
+public class CPConfigurationEntrySettingTableReferenceDefinition
+	implements TableReferenceDefinition<CPConfigurationEntrySettingTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<CPConfigurationEntryTable>
+		ChildTableReferenceInfoBuilder<CPConfigurationEntrySettingTable>
 			childTableReferenceInfoBuilder) {
-
-		childTableReferenceInfoBuilder.singleColumnReference(
-			CPConfigurationEntryTable.INSTANCE.CPConfigurationEntryId,
-			CPConfigurationEntrySettingTable.INSTANCE.CPConfigurationEntryId
-		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<CPConfigurationEntryTable>
+		ParentTableReferenceInfoBuilder<CPConfigurationEntrySettingTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			CPConfigurationEntryTable.INSTANCE.CPConfigurationListId,
-			CPConfigurationListTable.INSTANCE.CPConfigurationListId);
+			CPConfigurationEntrySettingTable.INSTANCE.CPConfigurationEntryId,
+			CPConfigurationEntryTable.INSTANCE.CPConfigurationEntryId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _cpConfigurationEntryPersistence;
+		return _cpConfigurationEntrySettingPersistence;
 	}
 
 	@Override
-	public CPConfigurationEntryTable getTable() {
-		return CPConfigurationEntryTable.INSTANCE;
+	public CPConfigurationEntrySettingTable getTable() {
+		return CPConfigurationEntrySettingTable.INSTANCE;
 	}
 
 	@Reference
-	private CPConfigurationEntryPersistence _cpConfigurationEntryPersistence;
+	private CPConfigurationEntrySettingPersistence
+		_cpConfigurationEntrySettingPersistence;
 
 }

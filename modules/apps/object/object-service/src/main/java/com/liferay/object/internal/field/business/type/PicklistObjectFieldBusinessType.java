@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -79,6 +80,29 @@ public class PicklistObjectFieldBusinessType
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "picklist");
+	}
+
+	@Override
+	public Map<Locale, Object> getLocalizedValues(
+			ObjectField objectField, Long userId, Map<String, Object> values)
+		throws PortalException {
+
+		Map<Locale, Object> localizedValues =
+			ObjectFieldBusinessType.super.getLocalizedValues(
+				objectField, userId, values);
+
+		if (localizedValues == null) {
+			return null;
+		}
+
+		for (Map.Entry<Locale, Object> entry : localizedValues.entrySet()) {
+			localizedValues.put(
+				entry.getKey(),
+				_getValue(
+					objectField.getName(), entry.getValue(), new HashMap<>()));
+		}
+
+		return localizedValues;
 	}
 
 	@Override
@@ -135,25 +159,10 @@ public class PicklistObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Object value = ObjectFieldBusinessType.super.getValue(
-			objectField, userId, values);
-
-		if (value instanceof ListEntry) {
-			ListEntry listEntry = (ListEntry)value;
-
-			values.put(objectField.getName(), listEntry.getKey());
-
-			return listEntry.getKey();
-		}
-		else if (value instanceof Map) {
-			values.put(
-				objectField.getName(),
-				MapUtil.getString((Map<String, String>)value, "key"));
-
-			return MapUtil.getString((Map<String, String>)value, "key");
-		}
-
-		return value;
+		return _getValue(
+			objectField.getName(),
+			ObjectFieldBusinessType.super.getValue(objectField, userId, values),
+			values);
 	}
 
 	@Override
@@ -330,6 +339,27 @@ public class PicklistObjectFieldBusinessType
 				objectState.getListTypeEntryId()));
 
 		return listTypeEntries;
+	}
+
+	private Object _getValue(
+		String objectFieldName, Object value, Map<String, Object> values) {
+
+		if (value instanceof ListEntry) {
+			ListEntry listEntry = (ListEntry)value;
+
+			values.put(objectFieldName, listEntry.getKey());
+
+			return listEntry.getKey();
+		}
+		else if (value instanceof Map) {
+			String key = MapUtil.getString((Map<String, String>)value, "key");
+
+			values.put(objectFieldName, key);
+
+			return key;
+		}
+
+		return value;
 	}
 
 	@Reference

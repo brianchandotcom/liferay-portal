@@ -378,6 +378,15 @@ test.describe('Form Configuration', () => {
 			await page.getByText('Submit', {exact: true}).click();
 
 			await waitForAlert(page, 'Request received correctly');
+
+			// Delete the display page
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
 		}
 	);
 });
@@ -5298,6 +5307,15 @@ test.describe('View mode form errors', () => {
 			await expect(
 				page.getByText('The lemon weight must be greater than 0')
 			).toBeVisible();
+
+			// Delete the display page
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
 		}
 	);
 });

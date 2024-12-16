@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,19 +77,17 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			String[] fileTypes = _getValidExtensions(jsonObject);
 
 			for (String fileType : fileTypes) {
-				if (_hasValidUpgradeFiles(issueKey, fileType)) {
-					issueKeyFileTypesMap.compute(
-						issueKey,
-						(key, value) -> {
-							if (value == null) {
-								value = new HashSet<>();
-							}
+				issueKeyFileTypesMap.compute(
+					issueKey,
+					(key, value) -> {
+						if (value == null) {
+							value = new HashSet<>();
+						}
 
-							value.add(fileType);
+						value.add(fileType);
 
-							return value;
-						});
-				}
+						return value;
+					});
 			}
 		}
 
@@ -125,10 +125,14 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			StringUtil.replace(_issueKey, CharPool.DASH, CharPool.UNDERLINE) +
 				".test" + _fileType;
 
-		if (_hasValidUpgradeFiles(_issueKey, _fileType)) {
-			_testUpgradeCatchAllCheck(
-				"upgrade/upgrade-catch-all-check/" + fileName);
-		}
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Missing unit test in replacements.json of issueKey: ",
+				_issueKey, ", fileType: ", _fileType),
+			_hasValidUpgradeFiles(_issueKey, _fileType));
+
+		_testUpgradeCatchAllCheck(
+			"upgrade/upgrade-catch-all-check/" + fileName);
 	}
 
 	@Override

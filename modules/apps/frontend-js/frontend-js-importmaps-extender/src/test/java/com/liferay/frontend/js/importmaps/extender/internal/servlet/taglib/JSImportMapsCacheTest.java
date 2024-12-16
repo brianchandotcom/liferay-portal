@@ -9,10 +9,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
+
+import java.util.concurrent.ConcurrentMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +36,30 @@ public class JSImportMapsCacheTest {
 	@Before
 	public void setUp() {
 		_jsImportMapsCache = new JSImportMapsCache();
+	}
+
+	@Test
+	public void testCompanyCleanUp() throws JSONException {
+		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject(
+			"{\"react\":\"https://unpkg.com/react@19.0.0/index.js\"}");
+
+		JSImportMapsRegistration jsImportMapsRegistration =
+			_jsImportMapsCache.register(1, jsonObject, null);
+
+		ConcurrentMap<Long, ConcurrentMap<Long, String>>
+			globalImportMapsValuesMap = ReflectionTestUtil.getFieldValue(
+				_jsImportMapsCache, "_globalImportMapsValuesMap");
+
+		ConcurrentMap<Long, String> globalImportMapsValues =
+			globalImportMapsValuesMap.get(1L);
+
+		Assert.assertNotNull(globalImportMapsValues);
+
+		jsImportMapsRegistration.unregister();
+
+		globalImportMapsValues = globalImportMapsValuesMap.get(1L);
+
+		Assert.assertNull(globalImportMapsValues);
 	}
 
 	@Test

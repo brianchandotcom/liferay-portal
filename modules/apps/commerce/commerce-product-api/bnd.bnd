@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.commerce.product.configuration,\
 	com.liferay.commerce.product.constants,\
 	com.liferay.commerce.product.data.source,\
+	com.liferay.commerce.product.discovery,\
 	com.liferay.commerce.product.display.context,\
 	com.liferay.commerce.product.display.context.helper,\
 	com.liferay.commerce.product.display.context.util,\

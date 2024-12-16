@@ -801,7 +801,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(it, rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
+						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -817,7 +817,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.compileClasspath.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(it, rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"))
+						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(configurations.compileClasspath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -942,7 +942,7 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	return true
 }
 
-private void _transformToJakarta(Task task, FileCollection jakartaClasspath, FileCollection jarFiles, File outputDir) {
+private void _transformToJakarta(FileCollection jakartaClasspath, FileCollection jarFiles, File outputDir, Task task) {
 	jarFiles.files.each {
 		File jarFile ->
 

@@ -23,7 +23,7 @@ String name = ParamUtil.getString(request, "name");
 			<div class="clay-color input-group">
 				<div class="input-group-item input-group-item-shrink input-group-prepend">
 					<div class="input-group-text">
-						<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= color %>" type="button" />
+						<button class="btn clay-color-btn clay-color-btn-bordered dropdown-toggle" title="<%= color %>" type="button" />
 					</div>
 				</div>
 

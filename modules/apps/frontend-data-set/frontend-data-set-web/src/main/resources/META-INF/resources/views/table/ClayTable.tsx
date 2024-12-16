@@ -260,7 +260,7 @@ export function ClayTable({
 			</Head>
 
 			<Body
-				defaultItems={
+				items={
 					inlineAddingSettings
 						? [...filteredItems, defaultAddItem]
 						: items

@@ -29,36 +29,16 @@ public class DLSubscriptionUtil {
 			long companyId, long groupId, long userId, long fileEntryId)
 		throws PortalException {
 
-		List<Long> ancestorFolderIds = new ArrayList<>();
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		if (SubscriptionLocalServiceUtil.isSubscribed(
+				companyId, userId, DLFileEntry.class.getName(), fileEntryId)) {
 
-		if (fileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			Folder folder = DLAppLocalServiceUtil.getFolder(
-				fileEntry.getFolderId());
-
-			ancestorFolderIds.add(fileEntry.getFolderId());
-
-			ancestorFolderIds.addAll(folder.getAncestorFolderIds());
-		}
-
-		ancestorFolderIds.add(groupId);
-
-		long[] folderIdsArray = ArrayUtil.toLongArray(ancestorFolderIds);
-
-		boolean subscribedToAncestor =
-			SubscriptionLocalServiceUtil.isSubscribed(
-				companyId, userId, DLFolder.class.getName(), folderIdsArray);
-
-		boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, DLFileEntry.class.getName(), fileEntryId);
-
-		if (subscribed || subscribedToAncestor) {
 			return true;
 		}
 
-		return false;
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+
+		return isSubscribedToFolder(
+			companyId, groupId, userId, fileEntry.getFolderId());
 	}
 
 	public static boolean isSubscribedToFileEntryType(

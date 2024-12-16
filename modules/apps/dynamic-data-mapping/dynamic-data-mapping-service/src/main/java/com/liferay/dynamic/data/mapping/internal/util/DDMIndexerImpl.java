@@ -70,6 +70,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -577,9 +578,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 				JSONObject titleMapJSONObject = jsonObject.getJSONObject(
 					"titleMap");
 
-				for (String key : titleMapJSONObject.keySet()) {
-					sb.append(titleMapJSONObject.getString(key));
-					sb.append(StringPool.SPACE);
+				Iterator<String> iterator = titleMapJSONObject.keys();
+
+				while (iterator.hasNext()) {
+					sb.append(titleMapJSONObject.getString(iterator.next()));
+
+					if (iterator.hasNext()) {
+						sb.append(StringPool.SPACE);
+					}
 				}
 			}
 			else if (jsonObject.has("title")) {

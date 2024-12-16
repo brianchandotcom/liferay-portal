@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
@@ -74,10 +75,14 @@ public class PageSpecificationsTestUtil {
 
 		assertPageSpecifications(layout, pageSpecifications);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertFalse(_isPublished(draftLayout));
+
+		assertPageSpecifications(layout, pageSpecifications);
+
 		ContentPageSpecification contentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
-
-		Assert.assertFalse(layout.isPublished());
 
 		Assert.assertEquals(
 			contentPageSpecification.getStatus(),
@@ -88,8 +93,6 @@ public class PageSpecificationsTestUtil {
 
 		_assertProblemException(
 			() -> unsafeFunction.apply(contentPageSpecification));
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		Assert.assertEquals(
 			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
@@ -161,7 +164,7 @@ public class PageSpecificationsTestUtil {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if (!layout.isPublished()) {
+		if (!_isPublished(draftLayout)) {
 			Assert.assertEquals(
 				Arrays.toString(pageSpecifications), 1,
 				pageSpecifications.length);
@@ -258,6 +261,16 @@ public class PageSpecificationsTestUtil {
 		Assert.assertEquals(
 			PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
 			pageSpecification.getType());
+	}
+
+	private static boolean _isPublished(Layout draftLayout) {
+		if (GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

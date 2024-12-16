@@ -312,14 +312,39 @@ public class DisplayPageTemplateResourceTest
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderDisplayPageTemplate();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification()
 		throws Exception {
 
-		super.
-			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification();
+		DisplayPageTemplateResource curDisplayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		DisplayPageTemplate displayPageTemplate =
+			curDisplayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.
+			testPostSiteSiteByExternalReferenceCodePageSpecification(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				displayPageTemplate.getPageSpecifications(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				curContentPageSpecification ->
+					displayPageTemplateResource.
+						postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
+							testGroup.getExternalReferenceCode(),
+							displayPageTemplate.getExternalReferenceCode(),
+							curContentPageSpecification));
 	}
 
 	@Override

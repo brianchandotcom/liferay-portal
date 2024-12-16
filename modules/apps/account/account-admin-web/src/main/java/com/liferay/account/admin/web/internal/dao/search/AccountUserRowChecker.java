@@ -54,13 +54,8 @@ public class AccountUserRowChecker extends EmptyOnClickRowChecker {
 				accountEntry.getCompanyId(), accountEntry.getDomainsArray());
 		AccountUserDisplay accountUserDisplay = (AccountUserDisplay)object;
 
-		if (accountEntryEmailAddressValidator.isValidDomain(
-				accountUserDisplay.getEmailAddress())) {
-
-			return false;
-		}
-
-		return true;
+		return !accountEntryEmailAddressValidator.isValidDomain(
+			accountUserDisplay.getEmailAddress());
 	}
 
 	private final long _accountEntryId;

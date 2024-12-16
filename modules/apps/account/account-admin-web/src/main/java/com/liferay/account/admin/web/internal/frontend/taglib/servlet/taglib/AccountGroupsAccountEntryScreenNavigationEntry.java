@@ -46,14 +46,9 @@ public class AccountGroupsAccountEntryScreenNavigationEntry
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		if (AccountEntryPermission.contains(
-				permissionChecker, accountEntry.getAccountEntryId(),
-				AccountActionKeys.VIEW_ACCOUNT_GROUPS)) {
-
-			return true;
-		}
-
-		return false;
+		return AccountEntryPermission.contains(
+			permissionChecker, accountEntry.getAccountEntryId(),
+			AccountActionKeys.VIEW_ACCOUNT_GROUPS);
 	}
 
 }

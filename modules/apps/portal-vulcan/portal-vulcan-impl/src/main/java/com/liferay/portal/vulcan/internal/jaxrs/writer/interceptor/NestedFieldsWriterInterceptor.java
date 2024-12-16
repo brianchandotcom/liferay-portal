@@ -585,7 +585,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	private Field _getField(Class<?> entityClass, String fieldName) {
 		Class<?> clazz = entityClass;
 
-		while (clazz != null) {
+		while ((clazz != null) && (clazz != Object.class)) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (Objects.equals(field.getName(), fieldName) ||
 					Objects.equals(field.getName(), "_" + fieldName)) {

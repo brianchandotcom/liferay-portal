@@ -22,7 +22,9 @@ export default function useGetPrimaryRegionList() {
 				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
 					name: string;
 				}[]
-			).map(({name}) => ({label: name, value: name})),
+			)
+				.map(({name}) => ({label: name, value: name}))
+				.sort((a, b) => a.label.localeCompare(b.label)),
 		[data?.listTypeDefinitions?.items]
 	);
 

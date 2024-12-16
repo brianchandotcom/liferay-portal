@@ -538,7 +538,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (localizationConfigJSONObject == null) {
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsMessage",
-				_language.format(locale, "x-field-cannot-be-localized", inputLabel));
+				_language.format(
+					locale, "x-field-cannot-be-localized", inputLabel));
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsState", "disabled");
 

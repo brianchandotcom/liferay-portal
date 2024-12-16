@@ -1565,6 +1565,7 @@ assetPublisherDeprecationTest(
 		tag: '@LPD-35348',
 	},
 	async ({
+		apiHelpers,
 		journalEditArticlePage,
 		journalPage,
 		page,
@@ -1588,11 +1589,12 @@ assetPublisherDeprecationTest(
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		const name = getRandomString();
-		await pagesAdminPage.addWidgetPage({name});
+		const widgetLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-		await page.getByLabel(name, {exact: true}).click();
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
 		await widgetPagePage.addPortlet('Asset Publisher');
 		await page
@@ -1621,8 +1623,7 @@ assetPublisherDeprecationTest(
 		await configurationFrame.getByRole('button', {name: 'Save'}).click();
 		await page.getByLabel('close', {exact: true}).click();
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-		await page.getByLabel(name, {exact: true}).click();
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
 		await page.getByLabel('Go to page, 2').click();
 

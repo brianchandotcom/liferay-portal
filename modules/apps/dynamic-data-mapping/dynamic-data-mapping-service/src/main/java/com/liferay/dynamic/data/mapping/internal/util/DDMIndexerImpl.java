@@ -569,7 +569,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else if (type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE)) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
 
-			if ((jsonObject != null) && jsonObject.has("titleMap")) {
+			if (jsonObject == null) {
+				return;
+			}
+
+			if (jsonObject.has("titleMap")) {
 				JSONObject titleMapJSONObject = jsonObject.getJSONObject(
 					"titleMap");
 
@@ -577,6 +581,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					sb.append(titleMapJSONObject.getString(key));
 					sb.append(StringPool.SPACE);
 				}
+			}
+			else if (jsonObject.has("title")) {
+				sb.append(jsonObject.getString("title"));
 			}
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {

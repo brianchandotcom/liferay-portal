@@ -494,7 +494,7 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private boolean _isJSONReference(String content, int beginPos) {
-		String[] jsonAttributes = {"\"url\"", "\"href\""};
+		String[] jsonAttributes = {"\"href\"", "\"url\""};
 
 		int position = StringUtil.lastIndexOfAny(
 			content, jsonAttributes, beginPos);
@@ -1005,7 +1005,7 @@ public class DLReferencesExportImportContentProcessor
 	private static final Pattern _jsonAttributePattern = Pattern.compile(
 		"\\\"[^\"\\\\\\\\]*\\\"\\s*:\\s*\\\"");
 	private static final Pattern _jsonLocalizedPattern = Pattern.compile(
-		"\\\"[^\"\\\\]*\\\"\\s*:\\s*\\{\\s*\\\"[a-zA-Z_]+" +
+		"\\\"[^\"\\\\]*\\\"\\s*:\\s*\\{\\\"[a-zA-Z_]+" +
 			"\\\"\\s*:\\s*\\\"[^\"\\\\]*");
 	private static final Pattern _uuidPattern = Pattern.compile(
 		"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-" +

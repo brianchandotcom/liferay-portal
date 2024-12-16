@@ -415,7 +415,7 @@ public class CompanyLocalServiceDBPartitionTest
 				rulesCount,
 				_getRulesCount(getPartitionName(copiedCompany.getCompanyId())));
 
-			_checkCompanyIdValue(
+			_assertCopyDBPartitionCompanyId(
 				company.getCompanyId(), copiedCompany.getCompanyId());
 
 			SafeCloseable safeCloseable =
@@ -747,7 +747,8 @@ public class CompanyLocalServiceDBPartitionTest
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
 	}
 
-	private void _checkCompanyIdValue(long fromCompanyId, long toCompanyId)
+	private void _assertCopyDBPartitionCompanyId(
+			long fromCompanyId, long toCompanyId)
 		throws Exception {
 
 		List<String> tableNames = new ArrayList<>();

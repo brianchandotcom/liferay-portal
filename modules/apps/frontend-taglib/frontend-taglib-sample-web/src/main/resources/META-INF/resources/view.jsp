@@ -16,10 +16,13 @@ SampleDisplayContext sampleDisplayContext = (SampleDisplayContext)request.getAtt
 />
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "search-iterator");
+String navigation = ParamUtil.getString(request, "navigation", "fieldset");
 %>
 
 <c:choose>
+	<c:when test='<%= navigation.equals("fieldset") %>'>
+		<liferay-util:include page="/partials/fieldset.jsp" servletContext="<%= application %>" />
+	</c:when>
 	<c:when test='<%= navigation.equals("search-iterator") %>'>
 		<liferay-util:include page="/partials/search_iterator.jsp" servletContext="<%= application %>" />
 	</c:when>

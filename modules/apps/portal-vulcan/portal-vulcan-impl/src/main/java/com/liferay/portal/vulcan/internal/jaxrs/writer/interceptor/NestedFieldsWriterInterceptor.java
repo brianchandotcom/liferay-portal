@@ -630,7 +630,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		Class<?> clazz = itemClass;
 
-		while (clazz != null) {
+		while ((clazz != null) && (clazz != Object.class)) {
 			parentClasses.add(clazz);
 
 			clazz = clazz.getSuperclass();

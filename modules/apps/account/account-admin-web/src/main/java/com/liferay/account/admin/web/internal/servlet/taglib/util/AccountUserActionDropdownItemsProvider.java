@@ -52,12 +52,10 @@ public class AccountUserActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
-			() -> {
-				return AccountUserPermission.hasEditUserPermission(
-					_permissionChecker,
-					PortalUtil.getPortletId(_httpServletRequest),
-					_accountEntryDisplay, _accountUserDisplay.getUser());
-			},
+			() -> AccountUserPermission.hasEditUserPermission(
+				_permissionChecker,
+				PortalUtil.getPortletId(_httpServletRequest),
+				_accountEntryDisplay, _accountUserDisplay.getUser()),
 			dropdownItem -> {
 				dropdownItem.setHref(getEditAccountUserURL());
 				dropdownItem.setLabel(

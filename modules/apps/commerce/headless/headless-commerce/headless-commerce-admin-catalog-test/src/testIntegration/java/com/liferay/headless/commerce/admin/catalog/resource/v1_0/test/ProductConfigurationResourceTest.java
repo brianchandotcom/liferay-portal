@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -363,6 +364,10 @@ public class ProductConfigurationResourceTest
 			CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 				_commerceCatalog.getGroupId(), "simple");
 
+			_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinition.getCPDefinitionId());
+
 			CProduct cProduct = cpDefinition.getCProduct();
 
 			return new ProductConfiguration() {
@@ -603,6 +608,9 @@ public class ProductConfigurationResourceTest
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductConfigurationResourceTest.class);
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;

@@ -70,9 +70,17 @@ public class CPConfigurationEntryLocalServiceTest {
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), "USD", "en_US", _serviceContext);
 
-		_cpConfigurationList =
+		CPConfigurationList masterCPConfigurationList =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				_commerceCatalog.getGroupId());
+
+		_cpConfigurationList =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
+				_user.getUserId(),
+				masterCPConfigurationList.getCPConfigurationListId(), false,
+				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
+				0, true);
 
 		_cpDefinition = CPTestUtil.addCPDefinition(
 			_commerceCatalog.getGroupId());
@@ -89,7 +97,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		frutillaRule.scenario(
 			"Add Product Configuration Entry"
 		).given(
-			"There is a Commerce Catalog and its master configuration"
+			"There is a Commerce Catalog and a configuration"
 		).when(
 			"A Configuration Entry is added"
 		).then(

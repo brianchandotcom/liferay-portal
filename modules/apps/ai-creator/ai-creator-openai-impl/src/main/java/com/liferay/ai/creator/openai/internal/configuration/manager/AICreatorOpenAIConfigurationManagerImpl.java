@@ -75,13 +75,8 @@ public class AICreatorOpenAIConfigurationManagerImpl
 				_configurationProvider.getCompanyConfiguration(
 					AICreatorOpenAICompanyConfiguration.class, companyId);
 
-		if (aiCreatorOpenAICompanyConfiguration.
-				enableChatGPTToCreateContent()) {
-
-			return true;
-		}
-
-		return false;
+		return aiCreatorOpenAICompanyConfiguration.
+			enableChatGPTToCreateContent();
 	}
 
 	@Override
@@ -96,11 +91,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			_configurationProvider.getGroupConfiguration(
 				AICreatorOpenAIGroupConfiguration.class, groupId);
 
-		if (aiCreatorOpenAIGroupConfiguration.enableChatGPTToCreateContent()) {
-			return true;
-		}
-
-		return false;
+		return aiCreatorOpenAIGroupConfiguration.enableChatGPTToCreateContent();
 	}
 
 	@Override
@@ -112,11 +103,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 				_configurationProvider.getCompanyConfiguration(
 					AICreatorOpenAICompanyConfiguration.class, companyId);
 
-		if (aiCreatorOpenAICompanyConfiguration.enableDALLEToCreateImages()) {
-			return true;
-		}
-
-		return false;
+		return aiCreatorOpenAICompanyConfiguration.enableDALLEToCreateImages();
 	}
 
 	@Override
@@ -131,11 +118,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			_configurationProvider.getGroupConfiguration(
 				AICreatorOpenAIGroupConfiguration.class, groupId);
 
-		if (aiCreatorOpenAIGroupConfiguration.enableDALLEToCreateImages()) {
-			return true;
-		}
-
-		return false;
+		return aiCreatorOpenAIGroupConfiguration.enableDALLEToCreateImages();
 	}
 
 	@Override

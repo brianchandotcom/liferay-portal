@@ -61,14 +61,9 @@ public class AccessibilityMenuPersonalMenuEntry extends BasePersonalMenuEntry {
 	public boolean isShow(
 		PortletRequest portletRequest, PermissionChecker permissionChecker) {
 
-		if (AccessibilitySettingsUtil.isAccessibilityMenuEnabled(
-				_portal.getHttpServletRequest(portletRequest),
-				_configurationProvider)) {
-
-			return true;
-		}
-
-		return false;
+		return AccessibilitySettingsUtil.isAccessibilityMenuEnabled(
+			_portal.getHttpServletRequest(portletRequest),
+			_configurationProvider);
 	}
 
 	@Reference

@@ -156,35 +156,20 @@ public class AccountEntryImpl extends AccountEntryBaseImpl {
 
 	@Override
 	public boolean isBusinessAccount() {
-		if (StringUtil.equals(
-				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 	}
 
 	@Override
 	public boolean isGuestAccount() {
-		if (StringUtil.equals(
-				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST);
 	}
 
 	@Override
 	public boolean isPersonalAccount() {
-		if (StringUtil.equals(
-				getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
 	}
 
 	private Group _getAccountEntryGroup() {

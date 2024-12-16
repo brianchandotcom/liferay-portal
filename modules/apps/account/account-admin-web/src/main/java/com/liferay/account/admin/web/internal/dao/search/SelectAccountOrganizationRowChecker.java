@@ -29,14 +29,9 @@ public class SelectAccountOrganizationRowChecker
 	public boolean isChecked(Object object) {
 		Organization organization = (Organization)object;
 
-		if (AccountEntryOrganizationRelLocalServiceUtil.
-				hasAccountEntryOrganizationRel(
-					_accountEntryId, organization.getOrganizationId())) {
-
-			return true;
-		}
-
-		return false;
+		return AccountEntryOrganizationRelLocalServiceUtil.
+			hasAccountEntryOrganizationRel(
+				_accountEntryId, organization.getOrganizationId());
 	}
 
 	@Override

@@ -1366,11 +1366,7 @@ public class AccountEntryLocalServiceTest {
 			accountEntry.getCompanyId(), AccountEntry.class.getName(),
 			accountEntry.getAccountEntryId());
 
-		if (addresses.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !addresses.isEmpty();
 	}
 
 	private boolean _hasWorkflowInstance(AccountEntry accountEntry)

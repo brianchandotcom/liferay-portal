@@ -40,15 +40,9 @@ public class SelectAccountRoleUserRowChecker extends EmptyOnClickRowChecker {
 		AccountRole accountRole = AccountRoleLocalServiceUtil.fetchAccountRole(
 			_accountRoleId);
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				accountUserDisplay.getUserId(),
-				accountEntry.getAccountEntryGroupId(),
-				accountRole.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			accountUserDisplay.getUserId(),
+			accountEntry.getAccountEntryGroupId(), accountRole.getRoleId());
 	}
 
 	@Override

@@ -90,11 +90,7 @@ public class AccountRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAutomaticallyAssigned(Role role) {
-		if (AccountRoleConstants.isImpliedRole(role)) {
-			return true;
-		}
-
-		return false;
+		return AccountRoleConstants.isImpliedRole(role);
 	}
 
 	@Override

@@ -36,14 +36,9 @@ public class SelectAccountUserAccountRoleRowChecker
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.fetchAccountEntry(_accountEntryId);
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				_accountUserId, accountEntry.getAccountEntryGroupId(),
-				accountRoleDisplay.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			_accountUserId, accountEntry.getAccountEntryGroupId(),
+			accountRoleDisplay.getRoleId());
 	}
 
 	private final long _accountEntryId;

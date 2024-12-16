@@ -7,11 +7,14 @@ package com.liferay.commerce.product.service.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -24,13 +27,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.frutilla.FrutillaRule;
@@ -134,6 +142,192 @@ public class CPConfigurationEntryLocalServiceTest {
 			cpConfigurationEntry2.getCPConfigurationEntryId());
 	}
 
+	@Test
+	public void testAddCPConfigurationEntryAndDeleteInheritance()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Add Product Configuration Entry to child Configuration List"
+		).given(
+			"There is a Commerce Catalog and its master configuration"
+		).when(
+			"A Configuration Entry is added"
+		).and(
+			"The Configuration Entry is created"
+		).and(
+			"A child Configuration List is added"
+		).and(
+			"A new Configuration Entry is added"
+		).then(
+			"The Configuration Entry is inherited is substituted by the new one"
+		);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		CPConfigurationEntry cpConfigurationEntry1 =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				externalReferenceCode, _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		Assert.assertNotNull(cpConfigurationEntry1);
+		Assert.assertEquals(
+			externalReferenceCode,
+			cpConfigurationEntry1.getExternalReferenceCode());
+
+		Date date = new Date();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
+
+		int displayDateHour = calendar.get(Calendar.HOUR);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				_cpConfigurationList.getCPConfigurationListId(), false,
+				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), displayDateHour,
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+					cpConfigurationList.getCPConfigurationListId())));
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList.getCPConfigurationListId())));
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		CPConfigurationEntry cpConfigurationEntry2 =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				externalReferenceCode, _user.getUserId(),
+				cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		Assert.assertFalse(
+			ListUtil.isEmpty(
+				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+					cpConfigurationList.getCPConfigurationListId())));
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+
+		Assert.assertFalse(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList.getCPConfigurationListId())));
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			cpConfigurationEntry2.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testInheritCPConfigurationEntry() throws Exception {
+		frutillaRule.scenario(
+			"Inherit Product Configuration Entry"
+		).given(
+			"There is a Commerce Catalog and its master configuration"
+		).when(
+			"A Configuration Entry is added"
+		).and(
+			"The Configuration Entry is created"
+		).and(
+			"A child Configuration List is added"
+		).then(
+			"The Configuration Entry is inherited"
+		);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				externalReferenceCode, _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		Assert.assertNotNull(cpConfigurationEntry);
+		Assert.assertEquals(
+			externalReferenceCode,
+			cpConfigurationEntry.getExternalReferenceCode());
+
+		Date date = new Date();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
+
+		int displayDateHour = calendar.get(Calendar.HOUR);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				_cpConfigurationList.getCPConfigurationListId(), false,
+				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), displayDateHour,
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+					cpConfigurationList.getCPConfigurationListId())));
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList.getCPConfigurationListId())));
+	}
+
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 
@@ -144,6 +338,10 @@ public class CPConfigurationEntryLocalServiceTest {
 
 	@Inject
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Inject
+	private CPConfigurationEntrySettingLocalService
+		_cpConfigurationEntrySettingLocalService;
 
 	private CPConfigurationList _cpConfigurationList;
 

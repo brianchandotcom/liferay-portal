@@ -750,41 +750,38 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				String clientExtensionEntryERC = MapUtil.getString(
 					properties, "clientExtensionEntryERC");
 
-				if (Validator.isNotNull(clientExtensionEntryERC)) {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					FDSFilterCET fdsFilterCET =
-						(FDSFilterCET)_cetManager.getCET(
-							themeDisplay.getCompanyId(),
-							clientExtensionEntryERC);
-
-					if (fdsFilterCET == null) {
-						_log.error(
-							StringBundler.concat(
-								"No frontend data set filter client extension ",
-								"exists with the external reference code ",
-								clientExtensionEntryERC));
-
-						return null;
-					}
-
-					return JSONUtil.put(
-						"clientExtensionFilterURL", fdsFilterCET.getURL()
-					).put(
-						"entityFieldType", FDSEntityFieldTypes.STRING
-					).put(
-						"id", fieldName
-					).put(
-						"label",
-						_getLabelValue("label", "fieldName", properties)
-					).put(
-						"type", "clientExtension"
-					);
+				if (Validator.isNull(clientExtensionEntryERC)) {
+					return null;
 				}
 
-				return null;
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				FDSFilterCET fdsFilterCET = (FDSFilterCET)_cetManager.getCET(
+					themeDisplay.getCompanyId(), clientExtensionEntryERC);
+
+				if (fdsFilterCET == null) {
+					_log.error(
+						StringBundler.concat(
+							"No frontend data set filter client extension ",
+							"exists with the external reference code ",
+							clientExtensionEntryERC));
+
+					return null;
+				}
+
+				return JSONUtil.put(
+					"clientExtensionFilterURL", fdsFilterCET.getURL()
+				).put(
+					"entityFieldType", FDSEntityFieldTypes.STRING
+				).put(
+					"id", fieldName
+				).put(
+					"label", _getLabelValue("label", "fieldName", properties)
+				).put(
+					"type", "clientExtension"
+				);
 			});
 	}
 

@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
@@ -50,6 +51,37 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class LayoutUtil {
+
+	public static Layout addDraftToPublishedLayout(
+			ContentPageSpecification contentPageSpecification, Layout layout,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if ((Validator.isNotNull(contentPageSpecification.getStatus()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getStatus(),
+				 PageSpecification.Status.DRAFT)) ||
+			layout.isDraftLayout() || !layout.isPublished()) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if ((Validator.isNotNull(
+				contentPageSpecification.getExternalReferenceCode()) &&
+			 !Objects.equals(
+				 contentPageSpecification.getExternalReferenceCode(),
+				 draftLayout.getExternalReferenceCode())) ||
+			!Objects.equals(
+				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return updateLayout(
+			contentPageSpecification, draftLayout, serviceContext);
+	}
 
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,

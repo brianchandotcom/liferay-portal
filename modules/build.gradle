@@ -960,7 +960,7 @@ private void _transformToJakarta(Task task, FileCollection jakartaClasspath, Fil
 			standardOutput = new ByteArrayOutputStream()
 		}
 
-		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${jarFile.name} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
 	}
 }
 

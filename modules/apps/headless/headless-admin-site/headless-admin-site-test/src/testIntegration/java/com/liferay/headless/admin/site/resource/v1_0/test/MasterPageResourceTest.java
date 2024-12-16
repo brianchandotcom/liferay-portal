@@ -7,15 +7,18 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -260,19 +263,29 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					masterPage.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
 		PageSpecificationsTestUtil.
 			testPostSiteSiteByExternalReferenceCodePageSpecification(
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
-				masterPage.getPageSpecifications(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				masterPage.getPageSpecifications(), serviceContext,
 				curContentPageSpecification ->
 					masterPageResource.
 						postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							masterPage.getExternalReferenceCode(),
 							curContentPageSpecification));
+
+		_assertPostSiteSiteByExternalReferenceCodeMasterPagePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
+				serviceContext));
+
+		_assertPostSiteSiteByExternalReferenceCodeMasterPagePageSpecificationProblemException(
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntry(serviceContext));
 	}
 
 	@Override
@@ -367,6 +380,25 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		return testGetSiteSiteByExternalReferenceCodeMasterPagesPage_addMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);
+	}
+
+	private void
+			_assertPostSiteSiteByExternalReferenceCodeMasterPagePageSpecificationProblemException(
+				LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				masterPageResource.
+					postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode(),
+						new ContentPageSpecification() {
+							{
+								setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+							}
+						}));
 	}
 
 	private void _assertProblemException(

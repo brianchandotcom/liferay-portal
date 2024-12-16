@@ -5,7 +5,10 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
@@ -16,9 +19,19 @@ import com.liferay.commerce.product.exception.RequiredCPConfigurationListExcepti
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CPConfigurationListRelTable;
+import com.liferay.commerce.product.model.CPConfigurationListTable;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.base.CPConfigurationListLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -29,10 +42,12 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
@@ -287,6 +302,22 @@ public class CPConfigurationListLocalServiceImpl
 	}
 
 	@Override
+	public List<CPConfigurationList> getCPConfigurationLists(
+		long companyId, long groupId, long accountEntryId,
+		long[] accountGroupIds, long commerceChannelId,
+		long commerceOrderTypeId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				companyId, groupId, accountEntryId, accountGroupIds,
+				commerceChannelId, commerceOrderTypeId,
+				DSLQueryFactoryUtil.select(CPConfigurationListTable.INSTANCE)
+			).orderBy(
+				CPConfigurationListTable.INSTANCE.priority.ascending()
+			));
+	}
+
+	@Override
 	public CPConfigurationList getMasterCPConfigurationList(long groupId)
 		throws NoSuchCPConfigurationListException {
 
@@ -343,6 +374,145 @@ public class CPConfigurationListLocalServiceImpl
 		return cpConfigurationListPersistence.update(cpConfigurationList);
 	}
 
+	private GroupByStep _getGroupByStep(
+		long companyId, long groupId, Long accountEntryId,
+		long[] accountGroupIds, Long commerceChannelId,
+		Long commerceOrderTypeId, FromStep fromStep) {
+
+		CPConfigurationListRelTable accountEntryCPConfigurationListRel =
+			CPConfigurationListRelTable.INSTANCE.as(
+				"accountEntryCPConfigurationListRel");
+		CPConfigurationListRelTable accountGroupCPConfigurationListRel =
+			CPConfigurationListRelTable.INSTANCE.as(
+				"accountGroupCPConfigurationListRel");
+		CPConfigurationListRelTable commerceOrderTypeCPConfigurationListRel =
+			CPConfigurationListRelTable.INSTANCE.as(
+				"commerceOrderTypeCPConfigurationListRel");
+
+		JoinStep joinStep = fromStep.from(
+			CPConfigurationListTable.INSTANCE
+		).leftJoinOn(
+			accountEntryCPConfigurationListRel,
+			_getPredicate(
+				AccountEntry.class.getName(),
+				accountEntryCPConfigurationListRel.classNameId,
+				accountEntryCPConfigurationListRel.CPConfigurationListId)
+		).leftJoinOn(
+			accountGroupCPConfigurationListRel,
+			_getPredicate(
+				AccountGroup.class.getName(),
+				accountGroupCPConfigurationListRel.classNameId,
+				accountGroupCPConfigurationListRel.CPConfigurationListId)
+		).leftJoinOn(
+			CommerceChannelRelTable.INSTANCE,
+			CommerceChannelRelTable.INSTANCE.classPK.eq(
+				CPConfigurationListTable.INSTANCE.CPConfigurationListId
+			).and(
+				CommerceChannelRelTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						CPConfigurationList.class))
+			)
+		).leftJoinOn(
+			commerceOrderTypeCPConfigurationListRel,
+			_getPredicate(
+				CommerceOrderType.class.getName(),
+				commerceOrderTypeCPConfigurationListRel.classNameId,
+				commerceOrderTypeCPConfigurationListRel.CPConfigurationListId)
+		);
+
+		Predicate predicate = CPConfigurationListTable.INSTANCE.status.eq(
+			WorkflowConstants.STATUS_APPROVED
+		).and(
+			CPConfigurationListTable.INSTANCE.companyId.eq(companyId)
+		).and(
+			CPConfigurationListTable.INSTANCE.groupId.eq(groupId)
+		).and(
+			CPConfigurationListTable.INSTANCE.masterCPConfigurationList.eq(
+				false)
+		).and(
+			() -> {
+				if (accountEntryId != null) {
+					return accountEntryCPConfigurationListRel.classPK.eq(
+						accountEntryId
+					).or(
+						accountEntryCPConfigurationListRel.
+							CPConfigurationListId.isNull()
+					).withParentheses();
+				}
+
+				return accountEntryCPConfigurationListRel.CPConfigurationListId.
+					isNull();
+			}
+		);
+
+		if (accountGroupIds != null) {
+			if (accountGroupIds.length == 0) {
+				accountGroupIds = new long[] {0};
+			}
+
+			List<Long> accountGroupIdsList = TransformUtil.transformToList(
+				accountGroupIds, Long::valueOf);
+
+			predicate = predicate.and(
+				accountGroupCPConfigurationListRel.classPK.in(
+					accountGroupIdsList.toArray(new Long[0])
+				).or(
+					accountGroupCPConfigurationListRel.CPConfigurationListId.
+						isNull()
+				).withParentheses());
+		}
+		else {
+			predicate = predicate.and(
+				accountGroupCPConfigurationListRel.CPConfigurationListId.
+					isNull());
+		}
+
+		return joinStep.where(
+			predicate.and(
+				() -> {
+					if (commerceChannelId != null) {
+						return CommerceChannelRelTable.INSTANCE.
+							commerceChannelId.eq(
+								commerceChannelId
+							).or(
+								CommerceChannelRelTable.INSTANCE.classPK.
+									isNull()
+							).withParentheses();
+					}
+
+					return CommerceChannelRelTable.INSTANCE.classPK.isNull();
+				}
+			).and(
+				() -> {
+					if (commerceOrderTypeId != null) {
+						return commerceOrderTypeCPConfigurationListRel.classPK.
+							eq(
+								commerceOrderTypeId
+							).or(
+								commerceOrderTypeCPConfigurationListRel.
+									CPConfigurationListId.isNull()
+							).withParentheses();
+					}
+
+					return commerceOrderTypeCPConfigurationListRel.
+						CPConfigurationListId.isNull();
+				}
+			));
+	}
+
+	private Predicate _getPredicate(
+		String className,
+		Column<CPConfigurationListRelTable, Long> classNameIdColumn,
+		Column<CPConfigurationListRelTable, Long> cpConfigurationListIdColumn) {
+
+		return classNameIdColumn.eq(
+			_classNameLocalService.getClassNameId(className)
+		).and(
+			cpConfigurationListIdColumn.eq(
+				CPConfigurationListTable.INSTANCE.CPConfigurationListId)
+		);
+	}
+
 	private void _validate(
 			long groupId, long cpConfigurationListId,
 			boolean masterConfigurationList, long parentCPConfigurationListId)
@@ -377,6 +547,9 @@ public class CPConfigurationListLocalServiceImpl
 			}
 		}
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;

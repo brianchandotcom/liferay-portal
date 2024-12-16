@@ -6,13 +6,22 @@
 import {saveViewSettings} from '../utils/saveViewSettings';
 import {VIEWS_ACTION_TYPES} from '../views/viewsReducer';
 
+export type VisibleFieldNames = {
+	[fieldName: string]: boolean;
+};
+
 export default function persistVisibleFieldNames({
 	appURL,
 	id,
 	portletId,
 	visibleFieldNames,
+}: {
+	appURL: string;
+	id: string;
+	portletId: string;
+	visibleFieldNames: VisibleFieldNames;
 }) {
-	return (viewsDispatch) => {
+	return (viewsDispatch: any) => {
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES,
 			value: visibleFieldNames,

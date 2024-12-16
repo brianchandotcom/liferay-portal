@@ -32,7 +32,6 @@ import java.lang.reflect.Parameter;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -584,23 +583,18 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Field _getField(Class<?> entityClass, String fieldName) {
-		List<Field> fields = new ArrayList<>(
-			Arrays.asList(entityClass.getDeclaredFields()));
+		Class<?> clazz = entityClass;
 
-		Class<?> superClass = entityClass.getSuperclass();
+		while (clazz != null) {
+			for (Field field : clazz.getDeclaredFields()) {
+				if (Objects.equals(field.getName(), fieldName) ||
+					Objects.equals(field.getName(), "_" + fieldName)) {
 
-		while (superClass != null) {
-			Collections.addAll(fields, superClass.getDeclaredFields());
-
-			superClass = superClass.getSuperclass();
-		}
-
-		for (Field field : fields) {
-			if (Objects.equals(field.getName(), fieldName) ||
-				Objects.equals(field.getName(), "_" + fieldName)) {
-
-				return field;
+					return field;
+				}
 			}
+
+			clazz = clazz.getSuperclass();
 		}
 
 		return null;

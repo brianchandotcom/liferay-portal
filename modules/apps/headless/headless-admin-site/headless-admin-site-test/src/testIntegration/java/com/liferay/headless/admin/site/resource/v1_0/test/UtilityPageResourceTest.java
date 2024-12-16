@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -367,6 +368,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			Assert.assertEquals(
 				jsonArray.toString(), entry.getValue(), jsonArray.getString(0));
 		}
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			layout, utilityPage.getPageSpecifications());
 	}
 
 	private UtilityPage _getUtilityPage(
@@ -407,7 +411,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory"
+			"nestedFields", "friendlyUrlHistory,pageSpecifications"
 		).build();
 	}
 

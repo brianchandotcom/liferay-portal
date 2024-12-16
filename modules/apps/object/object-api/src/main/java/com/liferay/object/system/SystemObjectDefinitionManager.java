@@ -151,6 +151,11 @@ public interface SystemObjectDefinitionManager {
 		Map<String, Object> extendedProperties =
 			(Map<String, Object>)payloadJSONObject.get("extendedProperties");
 
+		if (oldValues) {
+			extendedProperties = (Map<String, Object>)payloadJSONObject.get(
+				"originalExtendedProperties");
+		}
+
 		if (extendedProperties != null) {
 			variables.putAll(extendedProperties);
 		}

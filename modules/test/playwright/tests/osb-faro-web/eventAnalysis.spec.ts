@@ -101,48 +101,40 @@ test(
 		tag: '@LRAC-6280',
 	},
 
-	async ({
-		apiHelpers,
-		page,
-		pageConfigurationPage,
-		pageEditorPage,
-		pagesAdminPage,
-	}) => {
+	async ({apiHelpers, page, pageEditorPage}) => {
 		await test.step('Go to configure My Page and create a custom event', async () => {
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			await pageConfigurationPage.goToSection(pageTitle, 'Design');
-
-			await page.getByRole('tab', {name: 'JavaScript'}).click();
-
-			const customEventContent = `Analytics.track('pageTitleEvent', {
+			const customEventContent = `<h1>My Custom Events</h1>
+<script>window.onload = (event) => {
+Analytics.track('customEvent', {
 birthdate: "2021-11-25T14:36:30.685Z",
 category: "wetsuit",
 duration: "3600000",
 like: "true",
 price: "259.95",
-temp: "11",
-});`;
+temp: "11"
+});
+};</script>`;
 
-			await page.getByPlaceholder('JavaScript').fill(customEventContent);
-
-			await pageConfigurationPage.save();
+			await createPageWithHTMLFragment({
+				htmlContent: customEventContent,
+				page,
+			});
 		});
 
-		await test.step('Publish My Page and generate a custom event with attributes of different types', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await pageEditorPage.publishPage();
-
+		await test.step('Generate a custom event with attributes of different types', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
 				siteName,
 			});
 
+			await page.waitForTimeout(2000);
+
 			await page.reload();
 
-			await page.waitForTimeout(5000);
+			await page.waitForTimeout(3000);
 
 			await closeSessions(apiHelpers, page);
 		});
@@ -169,7 +161,7 @@ temp: "11",
 
 		await test.step('Add the custom event to the analysis', async () => {
 			await addCustomEvent({
-				customEventName: 'pageTitleEvent',
+				customEventName: 'customEvent',
 				page,
 			});
 		});

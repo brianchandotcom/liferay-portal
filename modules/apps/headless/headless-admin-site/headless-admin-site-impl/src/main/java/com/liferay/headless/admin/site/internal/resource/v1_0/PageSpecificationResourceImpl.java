@@ -329,11 +329,6 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
-			serviceContext.setAttribute(
-				"layout.instanceable.allowed", Boolean.TRUE);
-		}
-
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
 				(ContentPageSpecification)pageSpecification, layout,

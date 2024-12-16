@@ -126,8 +126,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				randomPageTemplate());
 
 		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
-		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields(
-			pageTemplate);
+
+		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields();
 
 		_assertProblemException(
 			"NOT_FOUND",
@@ -885,13 +885,17 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		assertValid(getPageTemplate);
 	}
 
-	private void
-			_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields(
-				PageTemplate pageTemplate)
+	private void _testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields()
 		throws Exception {
 
 		PageTemplateResource curPageTemplateResource =
 			_getPageTemplateResource();
+
+		PageTemplate pageTemplate =
+			curPageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					_getContentPageTemplate(testGroup));
 
 		PageTemplate getPageTemplate =
 			curPageTemplateResource.
@@ -905,12 +909,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					pageTemplate.getExternalReferenceCode(),
+					getPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
 		_assertPageSpecifications(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
-			pageTemplate.getPageSpecifications());
+			getPageTemplate.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageTemplate(

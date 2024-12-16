@@ -135,21 +135,25 @@ public class PicklistObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Object value = values.get(objectField.getName());
+		Object value = ObjectFieldBusinessType.super.getValue(
+			objectField, userId, values);
 
 		if (value instanceof ListEntry) {
 			ListEntry listEntry = (ListEntry)value;
 
 			values.put(objectField.getName(), listEntry.getKey());
+
+			return listEntry.getKey();
 		}
 		else if (value instanceof Map) {
 			values.put(
 				objectField.getName(),
 				MapUtil.getString((Map<String, String>)value, "key"));
+
+			return MapUtil.getString((Map<String, String>)value, "key");
 		}
 
-		return ObjectFieldBusinessType.super.getValue(
-			objectField, userId, values);
+		return value;
 	}
 
 	@Override

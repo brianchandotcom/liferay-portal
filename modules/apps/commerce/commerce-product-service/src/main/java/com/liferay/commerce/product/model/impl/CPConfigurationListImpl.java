@@ -9,7 +9,9 @@ import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPConfigurationListLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
@@ -28,6 +30,13 @@ public class CPConfigurationListImpl extends CPConfigurationListBaseImpl {
 		return CPConfigurationEntryLocalServiceUtil.fetchCPConfigurationEntry(
 			PortalUtil.getClassNameId(CPConfigurationList.class),
 			getCPConfigurationListId(), getCPConfigurationListId());
+	}
+
+	public CPConfigurationList getParentCPConfigurationList()
+		throws PortalException {
+
+		return CPConfigurationListLocalServiceUtil.getCPConfigurationList(
+			getParentCPConfigurationListId());
 	}
 
 	@Override

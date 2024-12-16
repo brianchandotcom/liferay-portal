@@ -8,14 +8,18 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
+import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.exception.CPConfigurationListParentCPConfigurationListGroupIdException;
 import com.liferay.commerce.product.exception.DuplicateCPConfigurationListException;
 import com.liferay.commerce.product.exception.NoSuchCPConfigurationListException;
 import com.liferay.commerce.product.exception.RequiredCPConfigurationListException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.base.CPConfigurationListLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,20 +111,63 @@ public class CPConfigurationListLocalServiceImpl
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					CPConfigurationEntry.class);
 
-			for (CPConfigurationEntry cpConfigurationEntry :
-					_cpConfigurationEntryLocalService.getCPConfigurationEntries(
-						parentCPConfigurationListId)) {
+			while (parentCPConfigurationListId > 0) {
+				for (CPConfigurationEntry cpConfigurationEntry :
+						_cpConfigurationEntryLocalService.
+							getCPConfigurationEntries(
+								parentCPConfigurationListId)) {
 
-				if (Objects.equals(
-						cpConfigurationEntry.getClassName(),
-						CPConfigurationList.class.getName())) {
+					if (Objects.equals(
+							cpConfigurationEntry.getClassName(),
+							CPConfigurationList.class.getName())) {
 
-					continue;
+						continue;
+					}
+
+					CPConfigurationEntrySetting cpConfigurationEntrySetting =
+						_cpConfigurationEntrySettingLocalService.
+							fetchCPConfigurationEntrySetting(
+								cpConfigurationEntry.
+									getCPConfigurationEntryId(),
+								CPConfigurationEntrySettingConstants.
+									TYPE_INDEX_IDS);
+
+					if (cpConfigurationEntrySetting == null) {
+						_cpConfigurationEntrySettingLocalService.
+							addCPConfigurationEntrySetting(
+								userId, groupId,
+								cpConfigurationEntry.
+									getCPConfigurationEntryId(),
+								String.valueOf(
+									cpConfigurationList.
+										getCPConfigurationListId()),
+								CPConfigurationEntrySettingConstants.
+									TYPE_INDEX_IDS);
+					}
+					else {
+						cpConfigurationEntrySetting.setSetting(
+							StringBundler.concat(
+								cpConfigurationEntrySetting.getSetting(),
+								StringPool.COMMA,
+								cpConfigurationList.
+									getCPConfigurationListId()));
+
+						_cpConfigurationEntrySettingLocalService.
+							updateCPConfigurationEntrySetting(
+								cpConfigurationEntrySetting);
+					}
+
+					indexer.reindex(
+						CPConfigurationEntry.class.getName(),
+						cpConfigurationEntry.getCPConfigurationEntryId());
 				}
 
-				indexer.reindex(
-					CPConfigurationEntry.class.getName(),
-					cpConfigurationEntry.getCPConfigurationEntryId());
+				CPConfigurationList parentCPConfigurationList =
+					cpConfigurationListLocalService.getCPConfigurationList(
+						parentCPConfigurationListId);
+
+				parentCPConfigurationListId =
+					parentCPConfigurationList.getParentCPConfigurationListId();
 			}
 		}
 		else if (masterCPConfigurationList) {
@@ -215,7 +262,9 @@ public class CPConfigurationListLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPConfigurationLists(long companyId) {
+	public void deleteCPConfigurationLists(long companyId)
+		throws PortalException {
+
 		List<CPConfigurationList> cpConfigurationLists =
 			cpConfigurationListPersistence.findByCompanyId(companyId);
 
@@ -229,15 +278,13 @@ public class CPConfigurationListLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPConfigurationList forceDeleteCPConfigurationList(
-		CPConfigurationList cpConfigurationList) {
-
-		cpConfigurationList = cpConfigurationListPersistence.remove(
-			cpConfigurationList);
+			CPConfigurationList cpConfigurationList)
+		throws PortalException {
 
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			cpConfigurationList.getCPConfigurationListId());
 
-		return cpConfigurationList;
+		return cpConfigurationListPersistence.remove(cpConfigurationList);
 	}
 
 	@Override
@@ -342,6 +389,10 @@ public class CPConfigurationListLocalServiceImpl
 
 	@Reference
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationEntrySettingLocalService
+		_cpConfigurationEntrySettingLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -6,10 +6,12 @@
 package com.liferay.commerce.product.internal.search.spi.model.index.contributor;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringUtil;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,23 +49,18 @@ public class CPConfigurationEntryModelDocumentContributor
 			document.addKeyword(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				cpConfigurationEntry.getCPConfigurationListId());
-			document.addNumber(
-				CPField.CP_CONFIGURATION_LIST_IDS,
-				TransformUtil.transformToArray(
-					_cpConfigurationListLocalService.getCPConfigurationLists(
-						cpConfigurationEntry.getGroupId(),
-						cpConfigurationEntry.getCompanyId()),
-					cpConfigurationList -> {
-						if (cpConfigurationList.getCPConfigurationListId() ==
-								cpConfigurationEntry.
-									getCPConfigurationListId()) {
 
-							return null;
-						}
+			long[] cpConfigurationListIds = _getCPConfigurationListIds(
+				cpConfigurationEntry);
 
-						return cpConfigurationEntry.getCPConfigurationListId();
-					},
-					Long.class));
+			if (ArrayUtil.isEmpty(cpConfigurationListIds)) {
+				document.addNumber(CPField.CP_CONFIGURATION_LIST_IDS, -1);
+			}
+			else {
+				document.addNumber(
+					CPField.CP_CONFIGURATION_LIST_IDS, cpConfigurationListIds);
+			}
+
 			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cpConfigurationEntry.getExternalReferenceCode());
@@ -118,6 +116,24 @@ public class CPConfigurationEntryModelDocumentContributor
 		}
 	}
 
+	private long[] _getCPConfigurationListIds(
+		CPConfigurationEntry cpConfigurationEntry) {
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		if (cpConfigurationEntrySetting == null) {
+			return null;
+		}
+
+		return TransformUtil.transformToLongArray(
+			StringUtil.split(cpConfigurationEntrySetting.getSetting()),
+			Long::valueOf);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPConfigurationEntryModelDocumentContributor.class);
 
@@ -125,7 +141,8 @@ public class CPConfigurationEntryModelDocumentContributor
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
-	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+	private CPConfigurationEntrySettingLocalService
+		_cpConfigurationEntrySettingLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

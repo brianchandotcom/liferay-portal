@@ -24,7 +24,7 @@ import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRende
 
 // @ts-ignore
 
-import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
+import persistVisibleFieldNames, {VisibleFieldNames} from '../../thunks/persistVisibleFieldNames';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
@@ -158,7 +158,17 @@ export function ClayTable({
 			}}
 			nestedKey={nestedItemsReferenceKey}
 			onSortChange={setSort}
-			onVisibleColumnsChange={(columns) => {
+			onVisibleColumnsChange={(visibleColumns) => {
+				const visibleFieldNames: VisibleFieldNames = {};
+
+				fields.forEach(({fieldName}) => {
+					visibleFieldNames[fieldName] = false;
+				});
+
+				visibleColumns.forEach((value, key) => {
+					visibleFieldNames[key] = true;
+				});
+
 				viewsDispatch(
 					persistVisibleFieldNames({
 						appURL,

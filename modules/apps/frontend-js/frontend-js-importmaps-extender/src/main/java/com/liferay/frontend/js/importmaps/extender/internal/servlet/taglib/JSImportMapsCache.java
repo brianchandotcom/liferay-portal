@@ -11,6 +11,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.IOException;
+import java.io.Writer;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -22,55 +25,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
-
-	public String getImportMaps(long companyId) {
-		if (companyId == COMPANY_ID_ALL) {
-			throw new IllegalArgumentException(
-				"Do not pass COMPANY_ID_ALL as companyId");
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("{\"imports\":{");
-
-		Map<Long, String> globalImportMapsValues1 = _getGlobalImportMapsValues(
-			COMPANY_ID_ALL);
-
-		_putImports(sb, globalImportMapsValues1);
-
-		Map<Long, String> globalImportMapsValues2 = _getGlobalImportMapsValues(
-			companyId);
-
-		if (!globalImportMapsValues1.isEmpty() &&
-			!globalImportMapsValues2.isEmpty()) {
-
-			sb.append(StringPool.COMMA);
-		}
-
-		_putImports(sb, globalImportMapsValues2);
-
-		sb.append("},\"scopes\":{");
-
-		Map<String, String> scopedImportMapsValues1 =
-			_getScopedImportMapsValues(COMPANY_ID_ALL);
-
-		_putScopes(sb, scopedImportMapsValues1);
-
-		Map<String, String> scopedImportMapsValues2 =
-			_getScopedImportMapsValues(companyId);
-
-		if (!scopedImportMapsValues1.isEmpty() &&
-			!scopedImportMapsValues2.isEmpty()) {
-
-			sb.append(StringPool.COMMA);
-		}
-
-		_putScopes(sb, scopedImportMapsValues2);
-
-		sb.append("}}");
-
-		return sb.toString();
-	}
 
 	public JSImportMapsRegistration register(
 		long companyId, JSONObject jsonObject, String scope) {
@@ -110,6 +64,53 @@ public class JSImportMapsCache {
 		return () -> scopedImportMapsValues.remove(scope);
 	}
 
+	public void writeImportMaps(long companyId, Writer writer)
+		throws IOException {
+
+		if (companyId == COMPANY_ID_ALL) {
+			throw new IllegalArgumentException(
+				"Do not pass COMPANY_ID_ALL as companyId");
+		}
+
+		writer.write("{\"imports\":{");
+
+		Map<Long, String> globalImportMapsValues1 = _getGlobalImportMapsValues(
+			COMPANY_ID_ALL);
+
+		_writeImports(writer, globalImportMapsValues1);
+
+		Map<Long, String> globalImportMapsValues2 = _getGlobalImportMapsValues(
+			companyId);
+
+		if (!globalImportMapsValues1.isEmpty() &&
+			!globalImportMapsValues2.isEmpty()) {
+
+			writer.write(StringPool.COMMA);
+		}
+
+		_writeImports(writer, globalImportMapsValues2);
+
+		writer.write("},\"scopes\":{");
+
+		Map<String, String> scopedImportMapsValues1 =
+			_getScopedImportMapsValues(COMPANY_ID_ALL);
+
+		_writeScopes(writer, scopedImportMapsValues1);
+
+		Map<String, String> scopedImportMapsValues2 =
+			_getScopedImportMapsValues(companyId);
+
+		if (!scopedImportMapsValues1.isEmpty() &&
+			!scopedImportMapsValues2.isEmpty()) {
+
+			writer.write(StringPool.COMMA);
+		}
+
+		_writeScopes(writer, scopedImportMapsValues2);
+
+		writer.write("}}");
+	}
+
 	private ConcurrentMap<Long, String> _getGlobalImportMapsValues(
 		Long companyId) {
 
@@ -142,25 +143,27 @@ public class JSImportMapsCache {
 		return _scopedImportMapsValuesMap.get(companyId);
 	}
 
-	private void _putImports(
-		StringBundler sb, Map<Long, String> globalImportMapsValues) {
+	private void _writeImports(
+			Writer writer, Map<Long, String> globalImportMapsValues)
+		throws IOException {
 
 		boolean first = true;
 
 		for (String value : globalImportMapsValues.values()) {
 			if (!first) {
-				sb.append(StringPool.COMMA);
+				writer.write(StringPool.COMMA);
 			}
 			else {
 				first = false;
 			}
 
-			sb.append(value);
+			writer.write(value);
 		}
 	}
 
-	private void _putScopes(
-		StringBundler sb, Map<String, String> scopedImportMapsValues) {
+	private void _writeScopes(
+			Writer writer, Map<String, String> scopedImportMapsValues)
+		throws IOException {
 
 		boolean first = true;
 
@@ -168,16 +171,16 @@ public class JSImportMapsCache {
 				scopedImportMapsValues.entrySet()) {
 
 			if (!first) {
-				sb.append(StringPool.COMMA);
+				writer.write(StringPool.COMMA);
 			}
 			else {
 				first = false;
 			}
 
-			sb.append(StringPool.QUOTE);
-			sb.append(entry.getKey());
-			sb.append("\":");
-			sb.append(entry.getValue());
+			writer.write(StringPool.QUOTE);
+			writer.write(entry.getKey());
+			writer.write("\":");
+			writer.write(entry.getValue());
 		}
 	}
 

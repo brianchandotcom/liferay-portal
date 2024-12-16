@@ -2190,7 +2190,7 @@ test.describe('Tags Fragment', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await page.getByLabel('Lemon Size').fill('Tags test');
+		await page.getByLabel('Lemon Size', {exact: true}).fill('Tags test');
 
 		await page.getByRole('combobox').first().click();
 		await page.getByRole('option', {exact: true, name: 'Dogs'}).click();

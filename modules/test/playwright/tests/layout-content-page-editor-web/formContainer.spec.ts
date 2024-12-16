@@ -2147,7 +2147,7 @@ test.describe('Text input field', () => {
 				'Value exceeds maximum length of 280 for field Lemon Size.'
 			);
 
-			await page.getByLabel('Lemon Size').click();
+			await page.getByLabel('Lemon Size', {exact: true}).click();
 
 			await page.keyboard.type('a'.repeat(290));
 
@@ -2223,9 +2223,9 @@ test.describe('Text input field', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await expect(page.getByLabel('Potato Origin')).toHaveAttribute(
-				'required'
-			);
+			await expect(
+				page.getByLabel('Potato Origin', {exact: true})
+			).toHaveAttribute('required');
 		}
 	);
 });
@@ -2823,7 +2823,7 @@ test.describe('Textarea input field', () => {
 				'Maximum Number of Characters Exceeded: 310 / 300'
 			);
 
-			await page.getByLabel('Lemon History').click();
+			await page.getByLabel('Lemon History', {exact: true}).click();
 
 			await page.keyboard.type('a'.repeat(310));
 
@@ -4363,7 +4363,7 @@ test.describe('Multistep', () => {
 
 			// Try to submit and check it takes to step 2 because field is required
 
-			const field = page.getByLabel('Potato Origin');
+			const field = page.getByLabel('Potato Origin', {exact: true});
 
 			await submitForm();
 
@@ -4381,7 +4381,9 @@ test.describe('Multistep', () => {
 
 			// Fill field with correct value, submit and check it submits
 
-			await page.getByLabel('Potato Origin').fill('Canary Islands');
+			await page
+				.getByLabel('Potato Origin', {exact: true})
+				.fill('Canary Islands');
 
 			await submitForm();
 
@@ -4560,11 +4562,11 @@ test.describe('Edit mode language changes', () => {
 
 		await pageEditorPage.switchLanguage('en-US');
 
-		const englishLabel = page.getByLabel('English Label');
+		const englishLabel = page.getByLabel('English Label', {exact: true});
 		const englishHelpText = page.getByText('English Help Text');
 		const englishPlaceholder = page.getByPlaceholder('English Placeholder');
 
-		const spanishLabel = page.getByLabel('Spanish Label');
+		const spanishLabel = page.getByLabel('Spanish Label', {exact: true});
 		const spanishHelpText = page.getByText('Spanish Help Text');
 		const spanishPlaceholder = page.getByPlaceholder('Spanish Placeholder');
 

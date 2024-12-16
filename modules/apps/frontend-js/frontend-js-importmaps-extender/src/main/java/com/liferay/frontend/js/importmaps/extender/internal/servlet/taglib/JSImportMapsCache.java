@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,64 +19,53 @@ public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
 
-	public JSImportMapsCache(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	public synchronized String getImportMaps(long companyId) {
 		if (companyId == COMPANY_ID_ALL) {
 			throw new IllegalArgumentException(
 				"Do not pass COMPANY_ID_ALL as companyId");
 		}
 
-		String importMaps = _importMapsMap.get(companyId);
+		StringBundler sb = new StringBundler();
 
-		if (importMaps == null) {
-			importMaps = JSONUtil.put(
-				"imports",
-				() -> {
-					JSONObject importsJSONObject =
-						_jsonFactory.createJSONObject();
+		sb.append("{\"imports\":{");
 
-					_putImports(
-						importsJSONObject,
-						_getGlobalImportMapsJSONObjects(COMPANY_ID_ALL));
-					_putImports(
-						importsJSONObject,
-						_getGlobalImportMapsJSONObjects(companyId));
+		Map<Long, JSONObject> globalImportMapsJSONObjects1 =
+			_getGlobalImportMapsJSONObjects(COMPANY_ID_ALL);
 
-					return importsJSONObject;
-				}
-			).put(
-				"scopes",
-				() -> {
-					JSONObject scopesJSONObject =
-						_jsonFactory.createJSONObject();
+		_putImports(sb, globalImportMapsJSONObjects1);
 
-					_putScopes(
-						scopesJSONObject,
-						_getScopedImportMapsJSONObjects(COMPANY_ID_ALL));
-					_putScopes(
-						scopesJSONObject,
-						_getScopedImportMapsJSONObjects(companyId));
+		Map<Long, JSONObject> globalImportMapsJSONObjects2 =
+			_getGlobalImportMapsJSONObjects(companyId);
 
-					return scopesJSONObject;
-				}
-			).toString();
+		if (!globalImportMapsJSONObjects1.isEmpty() &&
+			!globalImportMapsJSONObjects2.isEmpty()) {
 
-			_importMapsMap.put(companyId, importMaps);
+			sb.append(StringPool.COMMA);
 		}
 
-		return importMaps;
-	}
+		_putImports(sb, globalImportMapsJSONObjects2);
 
-	public synchronized void invalidate(long companyId) {
-		if (companyId == COMPANY_ID_ALL) {
-			_importMapsMap.clear();
+		sb.append("},\"scopes\":{");
+
+		Map<String, JSONObject> scopedImportMapsJSONObjects1 =
+			_getScopedImportMapsJSONObjects(COMPANY_ID_ALL);
+
+		_putScopes(sb, scopedImportMapsJSONObjects1);
+
+		Map<String, JSONObject> scopedImportMapsJSONObjects2 =
+			_getScopedImportMapsJSONObjects(companyId);
+
+		if (!scopedImportMapsJSONObjects1.isEmpty() &&
+			!scopedImportMapsJSONObjects2.isEmpty()) {
+
+			sb.append(StringPool.COMMA);
 		}
-		else {
-			_importMapsMap.remove(companyId);
-		}
+
+		_putScopes(sb, scopedImportMapsJSONObjects2);
+
+		sb.append("}}");
+
+		return sb.toString();
 	}
 
 	public synchronized JSImportMapsRegistration register(
@@ -90,13 +79,9 @@ public class JSImportMapsCache {
 
 			globalImportMapsJSONObjects.put(globalId, jsonObject);
 
-			invalidate(companyId);
-
 			return () -> {
 				synchronized (JSImportMapsCache.this) {
 					globalImportMapsJSONObjects.remove(globalId);
-
-					invalidate(companyId);
 				}
 			};
 		}
@@ -106,13 +91,9 @@ public class JSImportMapsCache {
 
 		scopedImportMapsJSONObjects.put(scope, jsonObject);
 
-		invalidate(companyId);
-
 		return () -> {
 			synchronized (JSImportMapsCache.this) {
 				scopedImportMapsJSONObjects.remove(scope);
-
-				invalidate(companyId);
 			}
 		};
 	}
@@ -164,31 +145,52 @@ public class JSImportMapsCache {
 	}
 
 	private void _putImports(
-		JSONObject importsJSONObject,
-		Map<Long, JSONObject> globalImportMapsJSONObjects) {
+		StringBundler sb, Map<Long, JSONObject> globalImportMapsJSONObjects) {
+
+		boolean first = true;
 
 		for (JSONObject jsonObject : globalImportMapsJSONObjects.values()) {
 			for (String key : jsonObject.keySet()) {
-				importsJSONObject.put(key, jsonObject.getString(key));
+				if (!first) {
+					sb.append(StringPool.COMMA);
+				}
+				else {
+					first = false;
+				}
+
+				sb.append(StringPool.QUOTE);
+				sb.append(key);
+				sb.append("\":\"");
+				sb.append(jsonObject.getString(key));
+				sb.append(StringPool.QUOTE);
 			}
 		}
 	}
 
 	private void _putScopes(
-		JSONObject scopesJSONObject,
-		Map<String, JSONObject> scopedImportMapsJSONObjects) {
+		StringBundler sb, Map<String, JSONObject> scopedImportMapsJSONObjects) {
+
+		boolean first = true;
 
 		for (Map.Entry<String, JSONObject> entry :
 				scopedImportMapsJSONObjects.entrySet()) {
 
-			scopesJSONObject.put(entry.getKey(), entry.getValue());
+			if (!first) {
+				sb.append(StringPool.COMMA);
+			}
+			else {
+				first = false;
+			}
+
+			sb.append(StringPool.QUOTE);
+			sb.append(entry.getKey());
+			sb.append("\":");
+			sb.append(entry.getValue());
 		}
 	}
 
 	private final Map<Long, Map<Long, JSONObject>>
 		_globalImportMapsJSONObjectsMap = new HashMap<>();
-	private final Map<Long, String> _importMapsMap = new HashMap<>();
-	private final JSONFactory _jsonFactory;
 	private volatile long _nextGlobalId;
 	private final Map<Long, Map<String, JSONObject>>
 		_scopedImportMapsJSONObjectsMap = new HashMap<>();

@@ -165,7 +165,9 @@ export class JournalEditArticlePage {
 					}),
 				});
 
-				await waitForAlert(this.page, 'was updated successfully');
+				await waitForAlert(this.page, 'was updated successfully', {
+					timeout: 2000,
+				});
 			}).toPass();
 
 			return;

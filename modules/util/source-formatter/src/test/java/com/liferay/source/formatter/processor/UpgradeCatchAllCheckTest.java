@@ -168,7 +168,15 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
 				"/upgrade/upgrade-catch-all-check/" + fileName);
 
-		return Files.exists(filePath);
+		Path expectedFilePath = Paths.get(
+			"src/test/resources/com/liferay/source/formatter/dependencies" +
+				"/expected/upgrade/upgrade-catch-all-check/" + fileName);
+
+		if (Files.exists(filePath) && Files.exists(expectedFilePath)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _testUpgradeCatchAllCheck(String fileName) throws Exception {

@@ -8,7 +8,9 @@ package com.liferay.journal.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -126,6 +128,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.io.InputStream;
 
@@ -169,6 +172,55 @@ public class JournalArticleLocalServiceTest {
 		_journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
 		_themeDisplay = _getThemeDisplay();
+	}
+
+	@Test(expected = AssetCategoryException.class)
+	public void testAddArticleWithCategoriesFromVocabularyNonmultiValued()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper(
+				false, new long[] {AssetCategoryConstants.ALL_CLASS_NAME_ID},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
+				new boolean[] {false}, new boolean[] {false});
+
+		Assert.assertFalse(assetVocabularySettingsHelper.isMultiValued());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabularySettingsHelper.toString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
+			false, serviceContext);
 	}
 
 	@Test
@@ -2093,6 +2145,62 @@ public class JournalArticleLocalServiceTest {
 		}
 	}
 
+	@Test(expected = AssetCategoryException.class)
+	public void testUpdateArticleWithCategoriesFromVocabularyNonmultiValued()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			_getAssetVocabularySettingsHelper(
+				false, new long[] {AssetCategoryConstants.ALL_CLASS_NAME_ID},
+				new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
+				new boolean[] {false}, new boolean[] {false});
+
+		Assert.assertFalse(assetVocabularySettingsHelper.isMultiValued());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabularySettingsHelper.toString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory1.getCategoryId()});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
+			false, serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		JournalTestUtil.updateArticle(
+			journalArticle, RandomTestUtil.randomString(),
+			journalArticle.getContent(), true, true, serviceContext);
+	}
+
 	@Test
 	public void testUpdateDDMStructurePredefinedValues() throws Exception {
 		Tuple tuple = _createJournalArticleWithPredefinedValues("Test Article");
@@ -2285,6 +2393,20 @@ public class JournalArticleLocalServiceTest {
 				serviceContext);
 
 		return new Tuple(journalArticle, ddmStructure);
+	}
+
+	private AssetVocabularySettingsHelper _getAssetVocabularySettingsHelper(
+		boolean multiValued, long[] classNameIds, long[] classTypePKs,
+		boolean[] depotRequireds, boolean[] requireds) {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			classNameIds, classTypePKs, depotRequireds, requireds);
+		assetVocabularySettingsHelper.setMultiValued(multiValued);
+
+		return assetVocabularySettingsHelper;
 	}
 
 	private String _getNewTitle(String title) {

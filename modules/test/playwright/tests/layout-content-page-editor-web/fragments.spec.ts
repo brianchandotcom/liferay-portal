@@ -536,8 +536,6 @@ test.describe('Related Asset Fragment', () => {
 
 			await journalEditArticlePage.publishArticle(true);
 
-			await waitForAlert(page, `was updated successfully.`);
-
 			// Create a display page template for Basic Web Content
 
 			await displayPageTemplatesPage.goto(

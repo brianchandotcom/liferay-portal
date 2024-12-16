@@ -29,9 +29,7 @@ public class JSImportMapsCacheTest {
 
 	@Before
 	public void setUp() {
-		_jsonFactoryImpl = new JSONFactoryImpl();
-
-		_jsImportMapsCache = new JSImportMapsCache(_jsonFactoryImpl);
+		_jsImportMapsCache = new JSImportMapsCache();
 	}
 
 	@Test
@@ -124,17 +122,17 @@ public class JSImportMapsCacheTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"{\"imports\":{\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\",\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"}",
+				"{\"imports\":{\"jquery\":",
+				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
+				"\"https://unpkg.com/react@19.0.0/index.js\"}",
 				",\"scopes\":{}}"),
 			_jsImportMapsCache.getImportMaps(1));
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"{\"imports\":{\"lodash\":",
-				"\"https://unpkg.com/lodash@4.17.21/lodash.js\",\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"},",
+				"{\"imports\":{\"jquery\":",
+				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"lodash\":",
+				"\"https://unpkg.com/lodash@4.17.21/lodash.js\"},",
 				"\"scopes\":{}}"),
 			_jsImportMapsCache.getImportMaps(2));
 
@@ -142,10 +140,10 @@ public class JSImportMapsCacheTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"{\"imports\":{\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\",\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"},",
-				"\"scopes\":{}}"),
+				"{\"imports\":{\"jquery\":",
+				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
+				"\"https://unpkg.com/react@19.0.0/index.js\"}",
+				",\"scopes\":{}}"),
 			_jsImportMapsCache.getImportMaps(1));
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -171,6 +169,6 @@ public class JSImportMapsCacheTest {
 	}
 
 	private JSImportMapsCache _jsImportMapsCache;
-	private JSONFactoryImpl _jsonFactoryImpl;
+	private final JSONFactoryImpl _jsonFactoryImpl = new JSONFactoryImpl();
 
 }

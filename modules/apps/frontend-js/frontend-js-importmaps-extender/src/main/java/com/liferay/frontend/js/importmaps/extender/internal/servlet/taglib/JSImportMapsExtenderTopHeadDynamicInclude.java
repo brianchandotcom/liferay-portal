@@ -10,7 +10,6 @@ import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImpo
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -52,30 +51,30 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String importMaps = _jsImportMapsCache.getImportMaps(
-			_portal.getCompanyId(httpServletRequest));
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		if (_jsImportMapsConfiguration.enableImportMaps() &&
-			!Validator.isBlank(importMaps)) {
+		if (_jsImportMapsConfiguration.enableImportMaps()) {
+			String importMaps = _jsImportMapsCache.getImportMaps(
+				_portal.getCompanyId(httpServletRequest));
 
-			printWriter.print("<script");
-			printWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					httpServletRequest));
-			printWriter.print(" type=\"");
+			if (!Validator.isBlank(importMaps)) {
+				printWriter.print("<script");
+				printWriter.write(
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+						httpServletRequest));
+				printWriter.print(" type=\"");
 
-			if (_jsImportMapsConfiguration.enableESModuleShims()) {
-				printWriter.print("importmap-shim");
+				if (_jsImportMapsConfiguration.enableESModuleShims()) {
+					printWriter.print("importmap-shim");
+				}
+				else {
+					printWriter.print("importmap");
+				}
+
+				printWriter.print("\">");
+				printWriter.print(importMaps);
+				printWriter.print("</script>");
 			}
-			else {
-				printWriter.print("importmap");
-			}
-
-			printWriter.print("\">");
-			printWriter.print(importMaps);
-			printWriter.print("</script>");
 		}
 
 		if (_jsImportMapsConfiguration.enableESModuleShims()) {
@@ -104,10 +103,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		}
 	}
 
-	public void invalidateCache(long companyId) {
-		_jsImportMapsCache.invalidate(companyId);
-	}
-
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
@@ -119,7 +114,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		modified();
 
-		_jsImportMapsCache = new JSImportMapsCache(_jsonFactory);
+		_jsImportMapsCache = new JSImportMapsCache();
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
@@ -163,9 +158,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	private volatile BundleContext _bundleContext;
 	private JSImportMapsCache _jsImportMapsCache;
 	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

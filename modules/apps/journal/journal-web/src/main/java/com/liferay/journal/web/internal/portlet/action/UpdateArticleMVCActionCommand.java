@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -137,8 +138,14 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					portletResource);
 
 			if (portletPreferences != null) {
-				portletPreferences.setValue(
-					"groupId", String.valueOf(article.getGroupId()));
+				Group group = _groupLocalService.fetchGroup(
+					article.getGroupId());
+
+				if (group != null) {
+					portletPreferences.setValue(
+						"groupExternalReferenceCode",
+						group.getExternalReferenceCode());
+				}
 
 				portletPreferences.setValue(
 					"articleExternalReferenceCode",
@@ -592,6 +599,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

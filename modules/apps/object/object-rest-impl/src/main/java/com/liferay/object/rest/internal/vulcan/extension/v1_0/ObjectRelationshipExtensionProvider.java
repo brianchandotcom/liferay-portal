@@ -248,7 +248,7 @@ public class ObjectRelationshipExtensionProvider
 						nestedObjectEntry, userId));
 			}
 
-			NestedFieldsSupplier.addFieldName(entry.getKey());
+			NestedFieldsSupplier.addNestedField(entry.getKey());
 		}
 	}
 

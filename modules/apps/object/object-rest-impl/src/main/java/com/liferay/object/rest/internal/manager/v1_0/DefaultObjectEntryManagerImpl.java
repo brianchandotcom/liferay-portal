@@ -970,7 +970,7 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			if (properties.containsKey(entry.getKey())) {
-				NestedFieldsSupplier.addFieldName(entry.getKey());
+				NestedFieldsSupplier.addNestedField(entry.getKey());
 			}
 		}
 

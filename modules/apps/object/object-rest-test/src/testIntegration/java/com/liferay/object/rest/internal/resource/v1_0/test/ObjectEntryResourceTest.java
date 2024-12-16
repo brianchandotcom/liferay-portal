@@ -12762,7 +12762,7 @@ public class ObjectEntryResourceTest {
 
 	private NestedFieldsContext _getNestedFieldsContext(String nestedFields) {
 		return new NestedFieldsContext(
-			1, ListUtil.fromString(nestedFields, StringPool.COMMA), null, null,
+			1, null, ListUtil.fromString(nestedFields, StringPool.COMMA), null,
 			null, null);
 	}
 

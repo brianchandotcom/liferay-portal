@@ -89,9 +89,9 @@ public class NestedFieldsContainerRequestFilterTest {
 		nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		List<String> fieldNames = nestedFieldsContext.getFieldNames();
+		List<String> nestedFields = nestedFieldsContext.getNestedFields();
 
-		Assert.assertEquals(fieldNames.toString(), 2, fieldNames.size());
+		Assert.assertEquals(nestedFields.toString(), 2, nestedFields.size());
 	}
 
 }

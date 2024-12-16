@@ -680,13 +680,13 @@ public class DefaultObjectEntryManagerImplTest
 
 		NestedFieldsContextThreadLocal.setNestedFieldsContext(
 			new NestedFieldsContext(
-				1,
+				1, null,
 				Arrays.asList(
 					StringUtil.removeLast(
 						StringUtil.removeFirst(
 							_objectDefinition1.getPKObjectFieldName(), "c_"),
 						"Id")),
-				null, null, null, null));
+				null, null, null));
 
 		_tree = TreeTestUtil.createObjectDefinitionTree(
 			objectDefinitionLocalService, _objectRelationshipLocalService, true,

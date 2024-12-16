@@ -44,11 +44,11 @@ public class NestedFieldsContainerRequestFilter
 				NestedFieldsContextUtil.limitDepth(
 					GetterUtil.getInteger(
 						queryParameters.getFirst("nestedFieldsDepth"))),
+				JAXRSUtils.getCurrentMessage(),
 				NestedFieldsContextUtil.toList(
 					queryParameters.getFirst("nestedFields")),
-				JAXRSUtils.getCurrentMessage(), uriInfo.getPathParameters(),
-				_getResourceVersion(uriInfo.getPathSegments()),
-				queryParameters));
+				uriInfo.getPathParameters(), queryParameters,
+				_getResourceVersion(uriInfo.getPathSegments())));
 	}
 
 	private String _getResourceVersion(List<PathSegment> pathSegments) {

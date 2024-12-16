@@ -9,7 +9,10 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.commerce.product.model.CPSpecificationOptionListTypeDefinitionRelTable;
+import com.liferay.commerce.product.model.CPSpecificationOptionTable;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionListTypeDefinitionRelPersistence;
+import com.liferay.list.type.model.ListTypeDefinitionTable;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,6 +38,19 @@ public class CPSOListTypeDefinitionRelTableReferenceDefinition
 		ParentTableReferenceInfoBuilder
 			<CPSpecificationOptionListTypeDefinitionRelTable>
 				parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			CPSpecificationOptionListTypeDefinitionRelTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId
+		).singleColumnReference(
+			CPSpecificationOptionListTypeDefinitionRelTable.INSTANCE.
+				CPSpecificationOptionId,
+			CPSpecificationOptionTable.INSTANCE.CPSpecificationOptionId
+		).singleColumnReference(
+			CPSpecificationOptionListTypeDefinitionRelTable.INSTANCE.
+				listTypeDefinitionId,
+			ListTypeDefinitionTable.INSTANCE.listTypeDefinitionId
+		);
 	}
 
 	@Override

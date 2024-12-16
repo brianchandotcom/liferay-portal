@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.product.internal.change.tracking.spi.reference;
+package com.liferay.list.type.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.commerce.product.model.CPConfigurationListRelTable;
-import com.liferay.commerce.product.model.CPConfigurationListTable;
-import com.liferay.commerce.product.service.persistence.CPConfigurationListRelPersistence;
+import com.liferay.list.type.model.ListTypeDefinitionTable;
+import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -21,41 +20,36 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cheryl Tang
  */
 @Component(service = TableReferenceDefinition.class)
-public class CPConfigurationListRelTableReferenceDefinition
-	implements TableReferenceDefinition<CPConfigurationListRelTable> {
+public class ListTypeDefinitionTableReferenceDefinition
+	implements TableReferenceDefinition<ListTypeDefinitionTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<CPConfigurationListRelTable>
+		ChildTableReferenceInfoBuilder<ListTypeDefinitionTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<CPConfigurationListRelTable>
+		ParentTableReferenceInfoBuilder<ListTypeDefinitionTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			CPConfigurationListRelTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			CPConfigurationListRelTable.INSTANCE.CPConfigurationListId,
-			CPConfigurationListTable.INSTANCE.CPConfigurationListId
-		);
+			ListTypeDefinitionTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _cpConfigurationListRelPersistence;
+		return _listTypeDefinitionPersistence;
 	}
 
 	@Override
-	public CPConfigurationListRelTable getTable() {
-		return CPConfigurationListRelTable.INSTANCE;
+	public ListTypeDefinitionTable getTable() {
+		return ListTypeDefinitionTable.INSTANCE;
 	}
 
 	@Reference
-	private CPConfigurationListRelPersistence
-		_cpConfigurationListRelPersistence;
+	private ListTypeDefinitionPersistence _listTypeDefinitionPersistence;
 
 }

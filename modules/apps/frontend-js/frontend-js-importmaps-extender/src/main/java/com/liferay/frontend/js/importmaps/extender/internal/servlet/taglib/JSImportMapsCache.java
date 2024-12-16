@@ -8,9 +8,13 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Iván Zaera Avellón
@@ -19,7 +23,7 @@ public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
 
-	public synchronized String getImportMaps(long companyId) {
+	public String getImportMaps(long companyId) {
 		if (companyId == COMPANY_ID_ALL) {
 			throw new IllegalArgumentException(
 				"Do not pass COMPANY_ID_ALL as companyId");
@@ -68,80 +72,69 @@ public class JSImportMapsCache {
 		return sb.toString();
 	}
 
-	public synchronized JSImportMapsRegistration register(
+	public JSImportMapsRegistration register(
 		long companyId, JSONObject jsonObject, String scope) {
 
 		if (scope == null) {
-			Map<Long, JSONObject> globalImportMapsJSONObjects =
+			ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects =
 				_getGlobalImportMapsJSONObjects(companyId);
 
-			long globalId = _nextGlobalId++;
+			long globalId = _nextGlobalId.getAndIncrement();
 
 			globalImportMapsJSONObjects.put(globalId, jsonObject);
 
+			return () -> globalImportMapsJSONObjects.remove(globalId);
+		}
+
+		ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects =
+			_getScopedImportMapsJSONObjects(companyId);
+
+		if (scopedImportMapsJSONObjects.putIfAbsent(scope, jsonObject) !=
+				null) {
+
+			_log.error(
+				StringBundler.concat(
+					"Import map ", jsonObject, " for scope ", scope,
+					" will be ignored because there is already an import map ",
+					"registered under that scope."));
+
 			return () -> {
-				synchronized (JSImportMapsCache.this) {
-					globalImportMapsJSONObjects.remove(globalId);
-				}
 			};
 		}
 
-		Map<String, JSONObject> scopedImportMapsJSONObjects =
-			_getScopedImportMapsJSONObjects(companyId);
-
-		scopedImportMapsJSONObjects.put(scope, jsonObject);
-
-		return () -> {
-			synchronized (JSImportMapsCache.this) {
-				scopedImportMapsJSONObjects.remove(scope);
-			}
-		};
+		return () -> scopedImportMapsJSONObjects.remove(scope);
 	}
 
-	private Map<Long, JSONObject> _getGlobalImportMapsJSONObjects(
+	private ConcurrentMap<Long, JSONObject> _getGlobalImportMapsJSONObjects(
 		Long companyId) {
 
-		Map<Long, JSONObject> globalImportMapsJSONObjects1 =
+		ConcurrentMap<Long, JSONObject> globalImportMapsJSONObjects1 =
 			_globalImportMapsJSONObjectsMap.get(companyId);
 
 		if (globalImportMapsJSONObjects1 != null) {
 			return globalImportMapsJSONObjects1;
 		}
 
-		Map<Long, JSONObject> globalImportMapsJSONObjects2 = new HashMap<>();
+		_globalImportMapsJSONObjectsMap.putIfAbsent(
+			companyId, new ConcurrentHashMap<>());
 
-		globalImportMapsJSONObjects1 =
-			_globalImportMapsJSONObjectsMap.putIfAbsent(
-				companyId, globalImportMapsJSONObjects2);
-
-		if (globalImportMapsJSONObjects1 != null) {
-			return globalImportMapsJSONObjects1;
-		}
-
-		return globalImportMapsJSONObjects2;
+		return _globalImportMapsJSONObjectsMap.get(companyId);
 	}
 
-	private Map<String, JSONObject> _getScopedImportMapsJSONObjects(
+	private ConcurrentMap<String, JSONObject> _getScopedImportMapsJSONObjects(
 		Long companyId) {
 
-		Map<String, JSONObject> scopedImportMapsJSONObjects1 =
+		ConcurrentMap<String, JSONObject> scopedImportMapsJSONObjects1 =
 			_scopedImportMapsJSONObjectsMap.get(companyId);
 
 		if (scopedImportMapsJSONObjects1 != null) {
 			return scopedImportMapsJSONObjects1;
 		}
 
-		Map<String, JSONObject> scopedImportMapsJSONObjects2 = new HashMap<>();
+		_scopedImportMapsJSONObjectsMap.putIfAbsent(
+			companyId, new ConcurrentHashMap<>());
 
-		scopedImportMapsJSONObjects1 =
-			_scopedImportMapsJSONObjectsMap.putIfAbsent(
-				companyId, scopedImportMapsJSONObjects2);
-
-		if (scopedImportMapsJSONObjects1 != null) {
-			return scopedImportMapsJSONObjects1;
-		}
-
-		return scopedImportMapsJSONObjects2;
+		return _scopedImportMapsJSONObjectsMap.get(companyId);
 	}
 
 	private void _putImports(
@@ -189,10 +182,13 @@ public class JSImportMapsCache {
 		}
 	}
 
-	private final Map<Long, Map<Long, JSONObject>>
-		_globalImportMapsJSONObjectsMap = new HashMap<>();
-	private volatile long _nextGlobalId;
-	private final Map<Long, Map<String, JSONObject>>
-		_scopedImportMapsJSONObjectsMap = new HashMap<>();
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSImportMapsCache.class);
+
+	private final ConcurrentMap<Long, ConcurrentMap<Long, JSONObject>>
+		_globalImportMapsJSONObjectsMap = new ConcurrentHashMap<>();
+	private final AtomicLong _nextGlobalId = new AtomicLong();
+	private final ConcurrentMap<Long, ConcurrentMap<String, JSONObject>>
+		_scopedImportMapsJSONObjectsMap = new ConcurrentHashMap<>();
 
 }

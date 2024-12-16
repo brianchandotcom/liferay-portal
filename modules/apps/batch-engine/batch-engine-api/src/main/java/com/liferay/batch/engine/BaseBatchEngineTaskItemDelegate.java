@@ -76,20 +76,12 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 	@Override
 	public boolean hasCreateStrategy(String createStrategy) {
-		if (_availableCreateStrategies.contains(createStrategy)) {
-			return true;
-		}
-
-		return false;
+		return _availableCreateStrategies.contains(createStrategy);
 	}
 
 	@Override
 	public boolean hasUpdateStrategy(String updateStrategy) {
-		if (_availableUpdateStrategies.contains(updateStrategy)) {
-			return true;
-		}
-
-		return false;
+		return _availableUpdateStrategies.contains(updateStrategy);
 	}
 
 	@Override

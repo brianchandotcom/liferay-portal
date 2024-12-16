@@ -76,70 +76,97 @@ test(
 	}
 );
 
-test('Able to drag and drop images', {tag: '@LPD-41443'}, async ({page}) => {
-	await test.step('Drag and drop image', async () => {
-		const ckeditorEditorBody = page
-			.frameLocator('iframe[title="editor"]')
-			.getByRole('heading', {name: 'Classic Editor'});
+test(
+	'Able to drag and drop images with the right width',
+	{tag: ['@LPD-41443', '@LPD-42473']},
+	async ({page}) => {
+		await test.step('Drag and drop image', async () => {
+			const ckeditorEditorBody = page
+				.frameLocator('iframe[title="editor"]')
+				.getByRole('heading', {name: 'Classic Editor'});
 
-		await ckeditorEditorBody.click();
+			await ckeditorEditorBody.click();
 
-		await page.keyboard.press('Enter');
+			await page.keyboard.press('Enter');
 
-		const imageButton = page.getByLabel('Image', {exact: true});
+			const imageButton = page.getByLabel('Image', {exact: true});
 
-		await imageButton.waitFor({state: 'visible'});
-		await imageButton.click();
+			await imageButton.waitFor({state: 'visible'});
+			await imageButton.click();
 
-		const siteAndLibrariesLink = page
-			.frameLocator('iframe[title="Select Item"]')
-			.getByRole('link', {name: 'Sites and Libraries'});
+			const siteAndLibrariesLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Sites and Libraries'});
 
-		await siteAndLibrariesLink.waitFor({state: 'visible'});
-		await siteAndLibrariesLink.click();
+			await siteAndLibrariesLink.waitFor({state: 'visible'});
+			await siteAndLibrariesLink.click();
 
-		const liferayLink = page
-			.frameLocator('iframe[title="Select Item"]')
-			.getByRole('link', {name: 'Liferay'});
+			const liferayLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Liferay'});
 
-		await liferayLink.waitFor({state: 'visible'});
-		await liferayLink.click();
+			await liferayLink.waitFor({state: 'visible'});
+			await liferayLink.click();
 
-		const liferayImagesLink = page
-			.frameLocator('iframe[title="Select Item"]')
-			.getByRole('link', {name: 'Provided by Liferay'});
+			const liferayImagesLink = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByRole('link', {name: 'Provided by Liferay'});
 
-		await liferayImagesLink.waitFor({state: 'visible'});
-		await liferayImagesLink.click();
+			await liferayImagesLink.waitFor({state: 'visible'});
+			await liferayImagesLink.click();
 
-		const astronautImage = page
-			.frameLocator('iframe[title="Select Item"]')
-			.getByText('astronaut.png');
+			const astronautImage = page
+				.frameLocator('iframe[title="Select Item"]')
+				.getByText('astronaut.png');
 
-		await astronautImage.waitFor({state: 'visible'});
-		await astronautImage.click();
+			await astronautImage.waitFor({state: 'visible'});
+			await astronautImage.click();
 
-		const astronautEditorImage = page
-			.getByRole('application', {name: 'Rich Text Editor,'})
-			.frameLocator('iframe[title="editor"]')
-			.locator('img')
-			.first();
+			const astronautEditorImage = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('img')
+				.first();
 
-		await astronautEditorImage.waitFor({state: 'visible'});
-		await astronautEditorImage.hover();
+			await astronautEditorImage.waitFor({state: 'visible'});
+			await astronautEditorImage.hover();
 
-		const dragAndDropButton = page
-			.getByRole('application', {name: 'Rich Text Editor,'})
-			.frameLocator('iframe[title="editor"]')
-			.getByTitle('Click and drag to move');
+			const dragAndDropButton = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.getByTitle('Click and drag to move');
 
-		await dragAndDropButton.dragTo(ckeditorEditorBody);
+			await dragAndDropButton.dragTo(ckeditorEditorBody);
 
-		const astronautImageElement = page
-			.getByRole('application', {name: 'Rich Text Editor,'})
-			.frameLocator('iframe[title="editor"]')
-			.locator('h1 > * > img.cke_widget_element');
+			const astronautImageElement = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('h1 > * > img.cke_widget_element');
 
-		await expect(astronautImageElement).toBeVisible();
-	});
-});
+			await expect(astronautImageElement).toBeVisible();
+		});
+
+		await test.step('Check image is not occupying the whole editor width', async () => {
+			const astronautImageElement = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('h1 > * > img.cke_widget_element');
+
+			const astronautImageElementBoundingBox =
+				await astronautImageElement.boundingBox();
+			const astronautImageElementWidth =
+				astronautImageElementBoundingBox.width;
+
+			const imageContainer = page
+				.getByRole('application', {name: 'Rich Text Editor,'})
+				.frameLocator('iframe[title="editor"]')
+				.locator('h1 > span.cke_widget_wrapper');
+
+			const imageContainerBoundingBox =
+				await imageContainer.boundingBox();
+			const imageContainerWidth = imageContainerBoundingBox.width;
+
+			await expect(astronautImageElementWidth).toBe(imageContainerWidth);
+		});
+	}
+);

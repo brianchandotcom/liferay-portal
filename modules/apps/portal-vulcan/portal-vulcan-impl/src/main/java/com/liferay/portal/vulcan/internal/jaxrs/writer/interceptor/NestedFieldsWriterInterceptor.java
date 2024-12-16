@@ -589,8 +589,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		Class<?> superClass = entityClass.getSuperclass();
 
-		if (superClass != null) {
+		while (superClass != null) {
 			Collections.addAll(fields, superClass.getDeclaredFields());
+
+			superClass = superClass.getSuperclass();
 		}
 
 		for (Field field : fields) {

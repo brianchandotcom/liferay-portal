@@ -153,6 +153,11 @@ public class PicklistObjectFieldBusinessType
 	}
 
 	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
+	@Override
 	public void predefineObjectFieldSettings(
 			ObjectField newObjectField, ObjectField oldObjectField,
 			List<ObjectFieldSetting> objectFieldSettings)

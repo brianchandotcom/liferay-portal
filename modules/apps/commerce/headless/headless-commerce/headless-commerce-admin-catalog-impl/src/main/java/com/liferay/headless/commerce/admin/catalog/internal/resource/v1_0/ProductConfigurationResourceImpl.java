@@ -162,8 +162,7 @@ public class ProductConfigurationResourceImpl
 		return SearchUtil.search(
 			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
 			CPConfigurationEntry.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
+			queryConfig -> queryConfig.setSelectedFieldNames(Field.CLASS_PK),
 			object -> {
 				SearchContext searchContext = (SearchContext)object;
 
@@ -177,7 +176,8 @@ public class ProductConfigurationResourceImpl
 			},
 			sorts,
 			document -> _toProductConfiguration(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+				_cpConfigurationEntryService.getCPConfigurationEntry(
+					GetterUtil.getLong(document.get(Field.CLASS_PK)))));
 	}
 
 	@NestedField(parentClass = Product.class, value = "productConfiguration")

@@ -809,9 +809,8 @@ public class CompanyLocalServiceDBPartitionTest
 							Assert.fail(
 								StringBundler.concat(
 									"Company ID ", fromCompanyId,
-									" is present in database for company ",
-									toCompanyId, " at table ", tableName,
-									" column ", columnName, "."));
+									" is present in database at ", tableName,
+									StringPool.PERIOD, columnName));
 						}
 					}
 				}

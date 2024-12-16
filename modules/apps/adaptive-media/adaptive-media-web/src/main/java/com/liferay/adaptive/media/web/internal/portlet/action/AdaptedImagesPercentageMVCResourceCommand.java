@@ -119,11 +119,7 @@ public class AdaptedImagesPercentageMVCResourceCommand
 				getName(),
 			BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-		if (ListUtil.isNotEmpty(backgroundTasks)) {
-			return true;
-		}
-
-		return false;
+		return ListUtil.isNotEmpty(backgroundTasks);
 	}
 
 	@Reference

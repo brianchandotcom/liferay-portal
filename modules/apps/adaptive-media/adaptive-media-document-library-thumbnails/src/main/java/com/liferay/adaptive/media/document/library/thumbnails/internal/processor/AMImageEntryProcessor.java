@@ -377,13 +377,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			adaptiveMedias.get(0);
 
-		if (_amImageValidator.isProcessingRequired(
-				adaptiveMedia, fileVersion)) {
-
-			return true;
-		}
-
-		return false;
+		return _amImageValidator.isProcessingRequired(
+			adaptiveMedia, fileVersion);
 	}
 
 	private boolean _previewGenerationRequired(FileVersion fileVersion) {

@@ -182,11 +182,7 @@ public class AMImageQueryBuilderImpl
 	}
 
 	private boolean _hasConfiguration() {
-		if (Validator.isNotNull(_configurationUuid)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_configurationUuid);
 	}
 
 	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>

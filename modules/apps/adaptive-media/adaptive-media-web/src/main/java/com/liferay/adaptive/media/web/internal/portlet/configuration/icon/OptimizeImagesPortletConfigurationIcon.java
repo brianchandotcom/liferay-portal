@@ -93,11 +93,7 @@ public class OptimizeImagesPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin()) {
-			return false;
-		}
-
-		return true;
+		return permissionChecker.isCompanyAdmin();
 	}
 
 	private boolean _isDisabled(long companyId) {

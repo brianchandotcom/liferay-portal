@@ -31,9 +31,16 @@ public class SampleDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		String navigation = ParamUtil.getString(
 			PortalUtil.getHttpServletRequest(_renderRequest), "navigation",
-			"search-iterator");
+			"fieldset");
 
 		return NavigationItemList.of(
+			NavigationItemBuilder.setActive(
+				navigation.equals("fieldset")
+			).setHref(
+				_renderResponse.createRenderURL(), "navigation", "fieldset"
+			).setLabel(
+				"Fieldset"
+			).build(),
 			NavigationItemBuilder.setActive(
 				navigation.equals("search-iterator")
 			).setHref(

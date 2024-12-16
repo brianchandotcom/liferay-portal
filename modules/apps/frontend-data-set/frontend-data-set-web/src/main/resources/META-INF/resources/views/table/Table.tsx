@@ -420,11 +420,7 @@ const Table = ({
 
 	if (Liferay.FeatureFlags['LPS-193005']) {
 		return (
-			<DndTable.TableContextProvider
-				columnNames={visibleFields.map((field) =>
-					String(field.fieldName)
-				)}
-			>
+			<DndTable.TableContextProvider columnNames={columnNames}>
 				<ClayTable
 					fields={schema.fields as any}
 					inlineAddingSettings={inlineAddingSettings}
@@ -438,6 +434,7 @@ const Table = ({
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
+					visibleFields={visibleFields}
 				/>
 			</DndTable.TableContextProvider>
 		);

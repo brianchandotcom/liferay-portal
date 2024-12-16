@@ -24,7 +24,9 @@ import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRende
 
 // @ts-ignore
 
-import persistVisibleFieldNames, {VisibleFieldNames} from '../../thunks/persistVisibleFieldNames';
+import persistVisibleFieldNames, {
+	VisibleFieldNames,
+} from '../../thunks/persistVisibleFieldNames';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
@@ -68,6 +70,7 @@ type Props = {
 	selectedItemsKey: string;
 	selectedItemsValue: any;
 	selectionType?: string;
+	visibleFields: Array<Field>;
 };
 
 type Sorting = {
@@ -96,11 +99,12 @@ export function ClayTable({
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
+	visibleFields,
 }: Props) {
 	const {appURL, id, itemsChanges, portletId, updateItem} = useContext(
 		FrontendDataSetContext
 	);
-	const [{visibleFieldNames}, viewsDispatch] = useContext(ViewsContext);
+	const [, viewsDispatch] = useContext(ViewsContext);
 	const [sort, setSort] = useState<Sorting | null>(null);
 
 	const filteredItems = useMemo(() => {
@@ -174,12 +178,12 @@ export function ClayTable({
 						appURL,
 						id,
 						portletId,
-						visibleFieldNames: Object.fromEntries(columns),
+						visibleFieldNames,
 					})
 				);
 			}}
 			sort={sort}
-			visibleColumns={new Map(Object.entries(visibleFieldNames))}
+			visibleColumns={getVisibleFieldsMap(visibleFields, selectable)}
 		>
 			<Head
 				items={selectable ? [{fieldName: 'select'}, ...fields] : fields}
@@ -273,14 +277,17 @@ export function ClayTable({
 					(item) => {
 						const id = item[selectedItemsKey ?? 'id'];
 
-						const items = [...fields, {fieldName: 'actions'}];
+						const columns = [
+							...visibleFields,
+							{fieldName: 'actions'},
+						];
 
 						return (
 							<Row
 								items={
 									selectable
-										? [{fieldName: 'select'}, ...items]
-										: items
+										? [{fieldName: 'select'}, ...columns]
+										: columns
 								}
 							>
 								{
@@ -492,6 +499,26 @@ export function ClayTable({
 			</Body>
 		</Table>
 	);
+}
+
+function getVisibleFieldsMap(
+	visibleFields: Array<Field>,
+	selectable?: boolean
+) {
+	const visibleFieldsMap = new Map();
+
+	if (selectable) {
+		visibleFieldsMap.set('select', 0);
+	}
+
+	visibleFields.forEach((field, index) =>
+		visibleFieldsMap.set(
+			String(field.fieldName),
+			selectable ? index + 1 : index
+		)
+	);
+
+	return visibleFieldsMap;
 }
 
 /**

@@ -150,22 +150,22 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testExtractIndexableJournalAttributes() {
+	public void testExtractIndexableAttributesWithJournalArticleField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US),
 			LocaleUtil.BRAZIL);
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			_FIELD_NAME, RandomTestUtil.randomString(),
-			DDMFormFieldTypeConstants.JOURNAL_ARTICLE, "journal-article", false,
-			false, false);
+			DDMFormFieldTypeConstants.JOURNAL_ARTICLE,
+			DDMFormFieldTypeConstants.JOURNAL_ARTICLE, false, false, false);
 
 		ddmFormField.setIndexType("keyword");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
 		Assert.assertEquals(
-			"Child Filho ",
+			"Title",
 			_ddmIndexer.extractIndexableAttributes(
 				_createDDMStructure(ddmForm),
 				_createDDMFormValues(
@@ -173,14 +173,28 @@ public class DDMIndexerImplTest {
 					DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 						_FIELD_NAME,
 						JSONUtil.put(
+							"title", "Title"
+						).toString())),
+				null));
+		Assert.assertEquals(
+			"Title Título",
+			_ddmIndexer.extractIndexableAttributes(
+				_createDDMStructure(ddmForm),
+				_createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+						_FIELD_NAME,
+						JSONUtil.put(
+							"title", "Title"
+						).put(
 							"titleMap",
 							JSONUtil.put(
-								"en_US", "Child"
+								"en_US", "Title"
 							).put(
-								"pt_BR", "Filho"
+								"pt_BR", "Título"
 							)
 						).toString())),
-				LocaleUtil.US));
+				null));
 	}
 
 	@Test

@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -354,14 +355,39 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testPostSiteSiteByExternalReferenceCodePageTemplate();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSiteSiteByExternalReferenceCodePageTemplatePageSpecification()
 		throws Exception {
 
-		super.
-			testPostSiteSiteByExternalReferenceCodePageTemplatePageSpecification();
+		PageTemplateResource curPageTemplateResource =
+			_getPageTemplateResource();
+
+		PageTemplate pageTemplate =
+			curPageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					_getContentPageTemplate(testGroup));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.
+			testPostSiteSiteByExternalReferenceCodePageSpecification(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				pageTemplate.getPageSpecifications(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				curContentPageSpecification ->
+					pageTemplateResource.
+						postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
+							testGroup.getExternalReferenceCode(),
+							pageTemplate.getExternalReferenceCode(),
+							curContentPageSpecification));
 	}
 
 	@Override

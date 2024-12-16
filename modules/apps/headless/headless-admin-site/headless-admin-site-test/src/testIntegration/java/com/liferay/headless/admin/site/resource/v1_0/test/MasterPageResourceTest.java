@@ -243,14 +243,36 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 							liveGroupMasterPage.getExternalReferenceCode())));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSiteSiteByExternalReferenceCodeMasterPagePageSpecification()
 		throws Exception {
 
-		super.
-			testPostSiteSiteByExternalReferenceCodeMasterPagePageSpecification();
+		MasterPageResource curMasterPageResource = _getMasterPageResource();
+
+		MasterPage masterPage =
+			curMasterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(), randomMasterPage());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					masterPage.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.
+			testPostSiteSiteByExternalReferenceCodePageSpecification(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				masterPage.getPageSpecifications(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()),
+				curContentPageSpecification ->
+					masterPageResource.
+						postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
+							testGroup.getExternalReferenceCode(),
+							masterPage.getExternalReferenceCode(),
+							curContentPageSpecification));
 	}
 
 	@Override
@@ -434,7 +456,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
-			masterPage.getPageSpecifications());
+			getMasterPage.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeMasterPage(

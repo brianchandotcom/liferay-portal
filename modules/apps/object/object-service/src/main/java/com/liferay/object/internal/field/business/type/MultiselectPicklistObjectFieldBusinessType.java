@@ -148,6 +148,11 @@ public class MultiselectPicklistObjectFieldBusinessType
 			objectField, userId, values);
 	}
 
+	@Override
+	public boolean isLocalizable() {
+		return true;
+	}
+
 	@Reference
 	private Language _language;
 

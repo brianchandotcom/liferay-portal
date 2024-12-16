@@ -38,6 +38,7 @@ import com.liferay.commerce.product.internal.upgrade.v5_21_0.util.CPConfiguratio
 import com.liferay.commerce.product.internal.upgrade.v5_21_0.util.CPConfigurationListTable;
 import com.liferay.commerce.product.internal.upgrade.v5_22_0.CPSpecificationOptionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_25_0.util.CPConfigurationListRelTable;
+import com.liferay.commerce.product.internal.upgrade.v5_26_0.util.CPConfigurationEntrySettingTable;
 import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.counter.kernel.service.CounterLocalService;
@@ -650,6 +651,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"5.25.1", "5.26.0", CPConfigurationEntrySettingTable.create());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

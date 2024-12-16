@@ -379,6 +379,46 @@
 			<finder-column name="visible" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CPConfigurationEntrySetting" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPConfigurationEntrySettingId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPConfigurationEntryId" type="long" />
+		<column name="setting" type="String" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="C_T" return-type="CPConfigurationEntrySetting">
+			<finder-column name="CPConfigurationEntryId" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
 	<entity external-reference-code="company" local-service="true" name="CPConfigurationList" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

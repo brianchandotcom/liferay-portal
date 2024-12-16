@@ -331,7 +331,10 @@ export function FormInputGeneralPanel({item}) {
 				nextValue = {};
 			}
 
-			nextValue[languageId] = value;
+			nextValue = {
+				...nextValue,
+				[languageId]: value,
+			};
 
 			configurationValues = {
 				...configurationValues,

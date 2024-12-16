@@ -84,7 +84,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
 		if ((nestedFieldsContext == null) ||
-			ListUtil.isEmpty(nestedFieldsContext.getFieldNames())) {
+			ListUtil.isEmpty(nestedFieldsContext.getNestedFields())) {
 
 			writerInterceptorContext.proceed();
 
@@ -94,7 +94,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		try {
 			_setFieldValues(
 				writerInterceptorContext.getEntity(),
-				nestedFieldsContext.getFieldNames(), nestedFieldsContext);
+				nestedFieldsContext.getNestedFields(), nestedFieldsContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -661,27 +661,27 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private void _setFieldValues(
-			Object entity, List<String> fieldNames,
+			Object entity, List<String> nestedFields,
 			NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
 		List<Object> items = _getItems(entity);
 
-		for (String fieldName : fieldNames) {
-			String nestedField = null;
+		for (String nestedField : nestedFields) {
+			String childNestedField = null;
 
-			int index = fieldName.indexOf(".");
+			int index = nestedField.indexOf(".");
 
 			if (index != -1) {
-				nestedField = fieldName.substring(index + 1);
+				childNestedField = nestedField.substring(index + 1);
 
-				fieldName = fieldName.substring(0, index);
+				nestedField = nestedField.substring(0, index);
 			}
 
 			for (Object item : items) {
 				Class<?> itemClass = item.getClass();
 
-				Field field = _getField(itemClass, fieldName);
+				Field field = _getField(itemClass, nestedField);
 
 				if (field == null) {
 					continue;
@@ -691,7 +691,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				UnsafeTriFunction<String, Object, NestedFieldsContext, Object>
 					unsafeTriFunction = _getUnsafeTriFunction(
-						fieldName, itemClass, nestedFieldsContext);
+						nestedField, itemClass, nestedFieldsContext);
 
 				if (unsafeTriFunction == null) {
 					continue;
@@ -700,13 +700,13 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				Object value = _adaptToFieldType(
 					field.getType(),
 					unsafeTriFunction.apply(
-						fieldName, item, nestedFieldsContext));
+						nestedField, item, nestedFieldsContext));
 
 				field.set(item, value);
 
-				if (nestedField != null) {
+				if (childNestedField != null) {
 					_setFieldValues(
-						value, Collections.singletonList(nestedField),
+						value, Collections.singletonList(childNestedField),
 						nestedFieldsContext);
 				}
 			}

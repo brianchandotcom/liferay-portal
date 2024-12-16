@@ -13,6 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
@@ -215,6 +216,16 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 	await expect(page.getByLabel('Template', {exact: true})).toHaveValue(
 		'Default Template'
 	);
+
+	// Close sidebar
+
+	await clickAndExpectToBeHidden({
+		target: page.locator('header', {hasText: 'Fragments and Widgets'}),
+		trigger: page.getByRole('tab', {
+			exact: true,
+			name: 'Fragments and Widgets',
+		}),
+	});
 
 	// Check that the Content Ratings is shown in each item and the Field input has the corresponding name
 

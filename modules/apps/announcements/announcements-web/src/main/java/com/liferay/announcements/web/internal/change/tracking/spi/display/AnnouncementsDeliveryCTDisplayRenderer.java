@@ -93,11 +93,7 @@ public class AnnouncementsDeliveryCTDisplayRenderer
 
 	@Override
 	public boolean isHideable(AnnouncementsDelivery announcementsDelivery) {
-		if (announcementsDelivery.isEmail()) {
-			return false;
-		}
-
-		return true;
+		return !announcementsDelivery.isEmail();
 	}
 
 	@Override

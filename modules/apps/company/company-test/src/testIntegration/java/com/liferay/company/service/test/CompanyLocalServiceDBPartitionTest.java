@@ -411,12 +411,12 @@ public class CompanyLocalServiceDBPartitionTest
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
 
+			_assertCopyDBPartitionCompanyId(
+				company.getCompanyId(), copiedCompany.getCompanyId());
+
 			Assert.assertEquals(
 				rulesCount,
 				_getRulesCount(getPartitionName(copiedCompany.getCompanyId())));
-
-			_assertCopyDBPartitionCompanyId(
-				company.getCompanyId(), copiedCompany.getCompanyId());
 
 			SafeCloseable safeCloseable =
 				PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(

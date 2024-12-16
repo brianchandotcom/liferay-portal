@@ -748,7 +748,7 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	private void _assertCopyDBPartitionCompanyId(
-			long fromCompanyId, long toCompanyId)
+			long companyId, long copiedCompanyId)
 		throws Exception {
 
 		List<String> tableNames = new ArrayList<>();
@@ -758,9 +758,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				dbPartitionDB.getCatalog(
-					connection, getPartitionName(toCompanyId)),
+					connection, getPartitionName(copiedCompanyId)),
 				dbPartitionDB.getCatalog(
-					connection, getPartitionName(toCompanyId)),
+					connection, getPartitionName(copiedCompanyId)),
 				null, new String[] {"TABLE"})) {
 
 			while (resultSet.next()) {
@@ -777,9 +777,9 @@ public class CompanyLocalServiceDBPartitionTest
 		for (String tableName : tableNames) {
 			try (ResultSet resultSet = databaseMetaData.getColumns(
 					dbPartitionDB.getCatalog(
-						connection, getPartitionName(toCompanyId)),
+						connection, getPartitionName(copiedCompanyId)),
 					dbPartitionDB.getCatalog(
-						connection, getPartitionName(toCompanyId)),
+						connection, getPartitionName(copiedCompanyId)),
 					tableName, null)) {
 
 				while (resultSet.next()) {
@@ -798,9 +798,10 @@ public class CompanyLocalServiceDBPartitionTest
 						connection.prepareStatement(
 							StringBundler.concat(
 								"select ", columnName, " from ",
-								DBPartitionUtil.getPartitionName(toCompanyId),
+								DBPartitionUtil.getPartitionName(
+									copiedCompanyId),
 								StringPool.PERIOD, tableName, " where ",
-								columnName, " like '%", fromCompanyId, "%'"));
+								columnName, " like '%", companyId, "%'"));
 
 					try (ResultSet resultSet2 =
 							preparedStatement.executeQuery()) {
@@ -808,9 +809,9 @@ public class CompanyLocalServiceDBPartitionTest
 						if (resultSet2.next()) {
 							Assert.fail(
 								StringBundler.concat(
-									"Company ID ", fromCompanyId,
-									" is present in database at ", tableName,
-									StringPool.PERIOD, columnName));
+									"Company ID ", companyId,
+									" is present in copied database schema at ",
+									tableName, StringPool.PERIOD, columnName));
 						}
 					}
 				}

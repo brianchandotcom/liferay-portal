@@ -162,14 +162,14 @@ public class DocumentDTOConverter
 				setDescription(fileEntry::getDescription);
 				setDocumentFolderExternalReferenceCode(
 					() -> {
-						if (fileEntry.getFolderId() > 0) {
-							Folder folder = _dlAppService.getFolder(
-								fileEntry.getFolderId());
-
-							return folder.getExternalReferenceCode();
+						if (fileEntry.getFolderId() <= 0) {
+							return null;
 						}
 
-						return null;
+						Folder folder = _dlAppService.getFolder(
+							fileEntry.getFolderId());
+
+						return folder.getExternalReferenceCode();
 					});
 				setDocumentFolderId(fileEntry::getFolderId);
 				setDocumentType(

@@ -474,16 +474,16 @@ public class ContainerLayoutStructureItemMapper
 						String widthType =
 							containerStyledLayoutStructureItem.getWidthType();
 
-						if (Validator.isNotNull(widthType) &&
-							!Objects.equals(
+						if (Validator.isNull(widthType) ||
+							Objects.equals(
 								widthType,
 								StyledLayoutStructureConstants.WIDTH_TYPE)) {
 
-							return WidthType.create(
-								StringUtil.upperCaseFirstLetter(widthType));
+							return null;
 						}
 
-						return null;
+						return WidthType.create(
+							StringUtil.upperCaseFirstLetter(widthType));
 					});
 			}
 		};

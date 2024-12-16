@@ -182,27 +182,27 @@ public class FormLayoutStructureItemMapper
 				{
 					setMessage(
 						() -> {
-							if (successMessageJSONObject.has(
+							if (!successMessageJSONObject.has(
 									"notificationText")) {
 
-								return _toFragmentInlineValue(
-									successMessageJSONObject.getJSONObject(
-										"notificationText"));
+								return null;
 							}
 
-							return null;
+							return _toFragmentInlineValue(
+								successMessageJSONObject.getJSONObject(
+									"notificationText"));
 						});
 					setMessageType(() -> MessageType.NONE);
 					setShowNotification(
 						() -> {
-							if (successMessageJSONObject.has(
+							if (!successMessageJSONObject.has(
 									"showNotification")) {
 
-								return successMessageJSONObject.getBoolean(
-									"showNotification");
+								return null;
 							}
 
-							return null;
+							return successMessageJSONObject.getBoolean(
+								"showNotification");
 						});
 				}
 			};
@@ -218,23 +218,22 @@ public class FormLayoutStructureItemMapper
 			};
 		}
 
-		if (saveMappingConfiguration &&
-			successMessageJSONObject.has("layout")) {
+		if (!saveMappingConfiguration ||
+			!successMessageJSONObject.has("layout")) {
 
-			JSONObject layoutJSONObject =
-				successMessageJSONObject.getJSONObject("layout");
-
-			return new SitePageFormSubmissionResult() {
-				{
-					setItemReference(
-						() ->
-							FragmentMappedValueUtil.
-								toLayoutClassFieldsReference(layoutJSONObject));
-				}
-			};
+			return null;
 		}
 
-		return null;
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		return new SitePageFormSubmissionResult() {
+			{
+				setItemReference(
+					() -> FragmentMappedValueUtil.toLayoutClassFieldsReference(
+						layoutJSONObject));
+			}
+		};
 	}
 
 	private FormConfig.FormType _toFormType(
@@ -316,16 +315,16 @@ public class FormLayoutStructureItemMapper
 						String widthType =
 							formStyledLayoutStructureItem.getWidthType();
 
-						if (Validator.isNotNull(widthType) &&
-							!Objects.equals(
+						if (Validator.isNull(widthType) ||
+							Objects.equals(
 								widthType,
 								StyledLayoutStructureConstants.WIDTH_TYPE)) {
 
-							return WidthType.create(
-								StringUtil.upperCaseFirstLetter(widthType));
+							return null;
 						}
 
-						return null;
+						return WidthType.create(
+							StringUtil.upperCaseFirstLetter(widthType));
 					});
 			}
 		};

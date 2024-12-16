@@ -14,11 +14,13 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.exception.CPDefinitionInventoryMaxOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMinOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMultipleOrderQuantityException;
+import com.liferay.commerce.exception.CPDefinitionInventoryQuantityException;
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPConfigurationEntryQuantityException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
@@ -229,6 +231,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (throwable instanceof AssetCategoryException ||
 					 throwable instanceof AssetTagException ||
+					 throwable instanceof
+						 CPConfigurationEntryQuantityException ||
 					 throwable instanceof CPDefinitionExpirationDateException ||
 					 throwable instanceof
 						 CPDefinitionInventoryMaxOrderQuantityException ||
@@ -236,6 +240,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 						 CPDefinitionInventoryMinOrderQuantityException ||
 					 throwable instanceof
 						 CPDefinitionInventoryMultipleOrderQuantityException ||
+					 throwable instanceof
+						 CPDefinitionInventoryQuantityException ||
 					 throwable instanceof
 						 CPDefinitionMetaDescriptionException ||
 					 throwable instanceof CPDefinitionMetaKeywordsException ||
@@ -655,14 +661,18 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "displayStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
 		BigDecimal minStockQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minStockQuantity");
+			actionRequest, CPDefinitionInventory.class.getName(),
+			"minStockQuantity");
 		BigDecimal minOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minOrderQuantity");
+			actionRequest, CPDefinitionInventory.class.getName(),
+			"minOrderQuantity");
 		BigDecimal maxOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "maxOrderQuantity");
+			actionRequest, CPDefinitionInventory.class.getName(),
+			"maxOrderQuantity");
 		BigDecimal multipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "multipleOrderQuantity");
+				actionRequest, CPDefinitionInventory.class.getName(),
+				"multipleOrderQuantity");
 
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
@@ -716,14 +726,18 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String lowStockActivity = ParamUtil.getString(
 			actionRequest, "lowStockActivity");
 		BigDecimal maxOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "maxOrderQuantity");
+			actionRequest, CPConfigurationEntry.class.getName(),
+			"maxOrderQuantity");
 		BigDecimal minOrderQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minOrderQuantity");
+			actionRequest, CPConfigurationEntry.class.getName(),
+			"minOrderQuantity");
 		BigDecimal minStockQuantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "minStockQuantity");
+			actionRequest, CPConfigurationEntry.class.getName(),
+			"minStockQuantity");
 		BigDecimal multipleOrderQuantity =
 			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "multipleOrderQuantity");
+				actionRequest, CPConfigurationEntry.class.getName(),
+				"multipleOrderQuantity");
 		boolean purchasable = ParamUtil.getBoolean(
 			actionRequest, "purchasable", true);
 		boolean shippable = ParamUtil.getBoolean(actionRequest, "shippable");

@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
@@ -49,7 +51,10 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof PrincipalException.MustHavePermission) {
+			if (exception instanceof
+					CommerceInventoryWarehouseItemQuantityException ||
+				exception instanceof PrincipalException.MustHavePermission) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
@@ -72,7 +77,8 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 		_commerceInventoryWarehouseItemService.moveQuantitiesBetweenWarehouses(
 			fromCommerceInventoryWarehouseId, toCommerceInventoryWarehouseId,
 			_commerceOrderItemQuantityFormatter.parse(
-				actionRequest, "quantity"),
+				actionRequest, CommerceInventoryWarehouseItem.class.getName(),
+				"quantity"),
 			ParamUtil.getString(actionRequest, "sku"),
 			ParamUtil.getString(actionRequest, "unitOfMeasureKey"));
 	}

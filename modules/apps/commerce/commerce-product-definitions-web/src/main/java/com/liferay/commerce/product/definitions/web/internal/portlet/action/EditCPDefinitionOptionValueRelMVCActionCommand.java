@@ -219,7 +219,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 					"price"),
 				priority,
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "quantity"),
+					actionRequest, CPDefinitionOptionValueRel.class.getName(),
+					"quantity"),
 				unitOfMeasureKey, serviceContext);
 	}
 

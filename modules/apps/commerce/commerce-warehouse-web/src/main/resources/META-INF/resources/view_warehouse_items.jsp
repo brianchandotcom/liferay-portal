@@ -44,6 +44,8 @@ if (Validator.isNotNull(backURL)) {
 				<aui:input name="unitOfMeasureKey" type="hidden" />
 				<aui:input name="mvccVersion" type="hidden" />
 
+				<liferay-ui:error exception="<%= CommerceInventoryWarehouseItemQuantityException.class %>" message="please-enter-a-valid-quantity" />
+
 				<table class="show-quick-actions-on-hover table table-autofit table-list table-responsive-lg">
 					<thead>
 						<tr>

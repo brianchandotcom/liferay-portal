@@ -27,6 +27,7 @@ page import="com.liferay.commerce.constants.CommerceShipmentFDSNames" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderBillingAddressException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderItemPriceException" %><%@
+page import="com.liferay.commerce.exception.CommerceOrderItemQuantityException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderPaymentMethodException" %><%@

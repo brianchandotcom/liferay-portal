@@ -5,7 +5,9 @@
 
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException;
 import com.liferay.commerce.inventory.exception.MVCCException;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
@@ -53,7 +55,10 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof MVCCException) {
+			if (exception instanceof
+					CommerceInventoryWarehouseItemQuantityException ||
+				exception instanceof MVCCException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
@@ -90,9 +95,12 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItemId,
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "quantity"),
+					actionRequest,
+					CommerceInventoryWarehouseItem.class.getName(), "quantity"),
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "reservedQuantity"),
+					actionRequest,
+					CommerceInventoryWarehouseItem.class.getName(),
+					"reservedQuantity"),
 				ParamUtil.getLong(actionRequest, "mvccVersion"));
 	}
 

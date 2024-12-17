@@ -208,19 +208,19 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.isCompanyAdmin()) {
-			String configurationPid =
-				"com.liferay.layout.seo.internal.configuration." +
-					"LayoutSEOCompanyConfiguration";
-
-			return HttpComponentsUtil.addParameters(
-				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/layout_reports/get_layout_reports_issues",
-				"redirect", _getCompleteURL(themeDisplay), "factoryPid",
-				configurationPid, "pid", configurationPid);
+		if (!permissionChecker.isCompanyAdmin()) {
+			return null;
 		}
 
-		return null;
+		String configurationPid =
+			"com.liferay.layout.seo.internal.configuration." +
+				"LayoutSEOCompanyConfiguration";
+
+		return HttpComponentsUtil.addParameters(
+			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+				"/layout_reports/get_layout_reports_issues",
+			"redirect", _getCompleteURL(themeDisplay), "factoryPid",
+			configurationPid, "pid", configurationPid);
 	}
 
 	private JSONObject _getLayoutReportIssuesResponseJSONObject(

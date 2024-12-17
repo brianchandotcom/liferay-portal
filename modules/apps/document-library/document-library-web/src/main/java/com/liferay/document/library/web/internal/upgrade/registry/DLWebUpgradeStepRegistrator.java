@@ -6,11 +6,13 @@
 package com.liferay.document.library.web.internal.upgrade.registry;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradeAdminPortlets;
 import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.document.library.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseStagingGroupTypeSettingsUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -40,13 +42,26 @@ public class DLWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));
 
 		registry.register("1.0.1", "1.0.2", new UpgradePortletPreferences());
+
+		registry.register(
+			"1.0.2", "1.1.0",
+			new com.liferay.document.library.web.internal.upgrade.v1_1_0.
+				UpgradePortletPreferences(
+					_dlAppLocalService, _groupLocalService,
+					_repositoryLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

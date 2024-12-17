@@ -20,7 +20,6 @@ export class AssetCategoriesEditPage {
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
-		this.addButton = page.getByRole('button', {name: 'Add'});
 		this.assetCategoriesAdminPage = new AssetCategoriesAdminPage(page);
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
@@ -78,12 +77,29 @@ export class AssetCategoriesEditPage {
 		await this.propertiesTab.click();
 	}
 
-	async moveCategory(categoryName: string, vocabularyName: string) {
+	async moveCategory({
+		categoryName,
+		expandName,
+		targetName,
+	}: {
+		categoryName: string;
+		expandName?: string;
+		targetName: string;
+	}) {
+		const moveIframe = this.page.frameLocator(
+			`iframe[title="Move ${categoryName}"]`
+		);
+
+		if (expandName) {
+			await moveIframe.getByLabel(expandName).getByRole('button').click();
+		}
+
+		await moveIframe.getByText(targetName).click();
 		await this.page
-			.frameLocator(`iframe[title="Move ${categoryName}"]`)
-			.getByText(vocabularyName)
+			.getByLabel(`Move ${categoryName}`)
+			.getByRole('button', {name: 'Add'})
 			.click();
-		await this.addButton.click();
+
 		await waitForAlert(this.page);
 	}
 

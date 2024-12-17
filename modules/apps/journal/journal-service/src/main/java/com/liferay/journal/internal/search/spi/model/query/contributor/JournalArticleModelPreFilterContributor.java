@@ -5,16 +5,22 @@
 
 package com.liferay.journal.internal.search.spi.model.query.contributor;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,6 +38,8 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -119,6 +127,47 @@ public class JournalArticleModelPreFilterContributor
 			booleanFilter.addRequiredTerm("ddmStructureKey", ddmStructureKey);
 		}
 
+		HashMap<String, List<String[]>> searchableAssetSubtypesMap =
+			(HashMap<String, List<String[]>>)searchContext.getAttribute(
+				"searchableAssetSubtypesMap");
+
+		if ((searchableAssetSubtypesMap != null) &&
+			searchableAssetSubtypesMap.containsKey(
+				JournalArticle.class.getName())) {
+
+			List<String[]> searchableAssetSubtypeIdentifiers =
+				searchableAssetSubtypesMap.get(JournalArticle.class.getName());
+
+			for (String[] searchableAssetSubtypeIdentifier :
+					searchableAssetSubtypeIdentifiers) {
+
+				try {
+					Group group =
+						_groupLocalService.getGroupByExternalReferenceCode(
+							searchableAssetSubtypeIdentifier[1],
+							searchContext.getCompanyId());
+
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.
+							fetchStructureByExternalReferenceCode(
+								searchableAssetSubtypeIdentifier[2],
+								group.getGroupId(),
+								_classNameLocalService.getClassNameId(
+									JournalArticle.class));
+
+					booleanFilter.addRequiredTerm(
+						"ddmStructureKey", ddmStructure.getStructureKey());
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Could not add web content structure filter",
+							exception);
+					}
+				}
+			}
+		}
+
 		String ddmTemplateKey = (String)searchContext.getAttribute(
 			"ddmTemplateKey");
 
@@ -195,10 +244,19 @@ public class JournalArticleModelPreFilterContributor
 		JournalArticleModelPreFilterContributor.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private DDMIndexer _ddmIndexer;
 
 	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private FilterBuilders _filterBuilders;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -146,6 +146,15 @@ public class CPConfigurationListRelServiceWrapper
 	}
 
 	@Override
+	public CPConfigurationListRel getCPConfigurationListRel(
+			long cpConfigurationListRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListRelService.getCPConfigurationListRel(
+			cpConfigurationListRelId);
+	}
+
+	@Override
 	public java.util.List<CPConfigurationListRel> getCPConfigurationListRels(
 			long cpConfigurationListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -166,11 +175,40 @@ public class CPConfigurationListRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListRelService.getCPConfigurationListRels(
+			className, cpConfigurationListId);
+	}
+
+	@Override
+	public java.util.List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPConfigurationListRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListRelService.getCPConfigurationListRels(
+			className, cpConfigurationListId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationListRelService.getCPConfigurationListRelsCount(
 			cpConfigurationListId);
+	}
+
+	@Override
+	public int getCPConfigurationListRelsCount(
+			String className, long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpConfigurationListRelService.getCPConfigurationListRelsCount(
+			className, cpConfigurationListId);
 	}
 
 	/**

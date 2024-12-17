@@ -239,6 +239,50 @@ public class CPConfigurationListServiceHttp {
 	}
 
 	public static com.liferay.commerce.product.model.CPConfigurationList
+			fetchCPConfigurationListByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPConfigurationListServiceUtil.class,
+				"fetchCPConfigurationListByExternalReferenceCode",
+				_fetchCPConfigurationListByExternalReferenceCodeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPConfigurationList)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPConfigurationList
 			forceDeleteCPConfigurationList(
 				HttpPrincipal httpPrincipal,
 				com.liferay.commerce.product.model.CPConfigurationList
@@ -249,7 +293,7 @@ public class CPConfigurationListServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class,
 				"forceDeleteCPConfigurationList",
-				_forceDeleteCPConfigurationListParameterTypes4);
+				_forceDeleteCPConfigurationListParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpConfigurationList);
@@ -291,7 +335,7 @@ public class CPConfigurationListServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class, "getCPConfigurationList",
-				_getCPConfigurationListParameterTypes5);
+				_getCPConfigurationListParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpConfigurationLisId);
@@ -335,7 +379,7 @@ public class CPConfigurationListServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class,
 				"getCPConfigurationListByExternalReferenceCode",
-				_getCPConfigurationListByExternalReferenceCodeParameterTypes6);
+				_getCPConfigurationListByExternalReferenceCodeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -378,7 +422,7 @@ public class CPConfigurationListServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class, "getCPConfigurationLists",
-				_getCPConfigurationListsParameterTypes7);
+				_getCPConfigurationListsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, companyId);
@@ -422,7 +466,7 @@ public class CPConfigurationListServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class,
 				"getMasterCPConfigurationList",
-				_getMasterCPConfigurationListParameterTypes8);
+				_getMasterCPConfigurationListParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -472,7 +516,7 @@ public class CPConfigurationListServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPConfigurationListServiceUtil.class,
 				"updateCPConfigurationList",
-				_updateCPConfigurationListParameterTypes9);
+				_updateCPConfigurationListParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpConfigurationListId,
@@ -534,19 +578,22 @@ public class CPConfigurationListServiceHttp {
 	private static final Class<?>[] _deleteCPConfigurationListParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_forceDeleteCPConfigurationListParameterTypes4 = new Class[] {
+		_fetchCPConfigurationListByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_forceDeleteCPConfigurationListParameterTypes5 = new Class[] {
 			com.liferay.commerce.product.model.CPConfigurationList.class
 		};
-	private static final Class<?>[] _getCPConfigurationListParameterTypes5 =
+	private static final Class<?>[] _getCPConfigurationListParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getCPConfigurationListByExternalReferenceCodeParameterTypes6 =
+		_getCPConfigurationListByExternalReferenceCodeParameterTypes7 =
 			new Class[] {String.class, long.class};
-	private static final Class<?>[] _getCPConfigurationListsParameterTypes7 =
+	private static final Class<?>[] _getCPConfigurationListsParameterTypes8 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_getMasterCPConfigurationListParameterTypes8 = new Class[] {long.class};
-	private static final Class<?>[] _updateCPConfigurationListParameterTypes9 =
+		_getMasterCPConfigurationListParameterTypes9 = new Class[] {long.class};
+	private static final Class<?>[] _updateCPConfigurationListParameterTypes10 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, boolean.class,
 			String.class, double.class, int.class, int.class, int.class,

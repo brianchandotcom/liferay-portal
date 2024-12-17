@@ -143,15 +143,21 @@ test(
 			await editCriteriaAttributeValue({
 				attributeValue: individualName,
 				page,
-			});		
-			
+			});
+
 			await page.waitForTimeout(3000);
 
-			const dropdownItems = await page.locator('.dropdown-menu.dropdown-menu-select.show .dropdown-item').all();
+			const dropdownItems = await page
+				.locator(
+					'.dropdown-menu.dropdown-menu-select.show .dropdown-item'
+				)
+				.all();
 
 			expect(dropdownItems.length).toBe(1);
 
-			expect(await dropdownItems[0].textContent()).toBe(`${individualName}@liferay.com`);
+			expect(await dropdownItems[0].textContent()).toBe(
+				`${individualName}@liferay.com`
+			);
 		});
 	}
 );

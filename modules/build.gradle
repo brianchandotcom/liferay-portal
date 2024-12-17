@@ -822,6 +822,34 @@ gradle.beforeProject {
 						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
 				}
+
+				tasks.named("compileTestJava") {
+					configurations.testImplementation.allDependencies.withType(ProjectDependency) {
+						compileTestJava.dependsOn "${it.dependencyProject.path}:jar"
+					}
+
+					doFirst {
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+
+						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+
+						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+					}
+				}
+
+				tasks.named("compileTestIntegrationJava") {
+					configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
+						compileTestIntegrationJava.dependsOn "${it.dependencyProject.path}:jar"
+					}
+
+					doFirst {
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+
+						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+
+						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+					}
+				}
 			}
 		}
 	}

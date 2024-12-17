@@ -1553,597 +1553,634 @@ test.describe('File Upload Fragment', () => {
 });
 
 test.describe('Form Localization', () => {
-	test('Can translate form fields', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
+	test(
+		'Can translate form fields',
+		{tag: '@LPD-37927'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
-		// Create a page with a Form fragment
+			// Create a page with a Form fragment
 
-		const formId = getRandomString();
+			const formId = getRandomString();
 
-		const formDefinition = getFormContainerDefinition({
-			id: formId,
-		});
-
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: pageManagementSite.id,
-			title: getRandomString(),
-		});
-
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
-
-		// Map the form to the All Fields object and publish the page
-
-		await pageEditorPage.mapFormFragment(formId, 'All Fields');
-
-		// Add a Localization Select from the modal
-
-		await page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Add Localization Select'})
-			.click();
-
-		await expect(
-			page.locator('[data-name="Localization Select"]')
-		).toBeAttached();
-
-		await pageEditorPage.publishPage();
-
-		// Go to view mode and fill the form
-
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
-
-		await page.locator('iframe[title="editor"]').waitFor();
-
-		await page.getByLabel('Long Text').fill('long text english');
-
-		await page.getByLabel('Text', {exact: true}).fill('text english');
-		await page.evaluate(() => {
-			Object.values((window as any).CKEDITOR.instances).forEach(
-				(editor: any) => editor.setData('rich text english')
-			);
-		});
-
-		// Add translations and check translation status
-
-		const translationSelector = page.getByLabel(
-			'Select a language, current language:'
-		);
-
-		await translationSelector.click();
-
-		const option = page.getByRole('option', {
-			name: 'Spanish (Spain) Language',
-		});
-
-		await expect(option).toContainText(/Not Translated/);
-
-		await option.click();
-
-		await page.getByLabel('Long Text').fill('long text español');
-
-		await page.getByLabel('Text', {exact: true}).fill('text español');
-
-		await translationSelector.click();
-
-		await expect(option).toContainText(/Translating 2\/3/);
-
-		await option.click();
-
-		await page.evaluate(() => {
-			Object.values((window as any).CKEDITOR.instances).forEach(
-				(editor: any) => editor.setData('rich text español')
-			);
-		});
-
-		await translationSelector.click();
-
-		await expect(option).toContainText(/Translated/);
-
-		await option.click();
-
-		// Publish the form
-
-		await page.getByRole('button', {name: 'Submit'}).click();
-
-		await expect(
-			page.getByText(
-				'Thank you. Your information was successfully received.'
-			)
-		).toBeVisible();
-
-		// Go to custom object admin an check the values
-
-		await goToObjectEntity({
-			entityName: 'All Fields',
-			page,
-		});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'View',
-			}),
-			trigger: page.locator('.dnd-tbody .item-actions').last(),
-		});
-
-		await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
-
-		await expect(page.getByText('long text english')).toBeVisible();
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text english')
-		).toBeVisible();
-
-		await expect(page.locator('input.ddm-field-text')).toHaveValue(
-			'text english'
-		);
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Español',
-			}),
-			trigger: page.getByTestId('triggerButton').first(),
-		});
-
-		await expect(page.getByText('long text español')).toBeVisible();
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text español')
-		).toBeVisible();
-		await expect(page.locator('input.ddm-field-text')).toHaveValue(
-			'text español'
-		);
-	});
-
-	test('Shows a warning modal when the page is published and there is a Localization Select fragment but no localizable fields', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
-
-		// Create a page with a Form fragment and Localication Select
-
-		const formId = getRandomString();
-
-		const formDefinition = getFormContainerDefinition({
-			id: formId,
-		});
-
-		const localizationSelectDefinition = getFragmentDefinition({
-			id: getRandomString(),
-			key: 'localization-select',
-		});
-
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([
-				localizationSelectDefinition,
-				formDefinition,
-			]),
-			siteId: pageManagementSite.id,
-			title: getRandomString(),
-		});
-
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
-
-		// Map the form to the All Fields, only the Boolean field
-
-		await pageEditorPage.mapFormFragment(formId, 'All Fields', ['Boolean']);
-
-		// Publish and check the warning modal
-
-		await pageEditorPage.publishButton.click();
-
-		await expect(
-			page.getByText('Localizable Fields Hidden or Missing')
-		).toBeVisible();
-	});
-
-	test('Disable unlocalized fields when changing language', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
-
-		// Create object definition
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				enableLocalization: true,
-				externalReferenceCode: 'plantERC',
-				label: {
-					en_US: 'Plant',
-				},
-				name: 'Plant',
-				objectFields: [
-					{
-						DBType: ObjectField.DBTypeEnum.String,
-						businessType: ObjectField.BusinessTypeEnum.Text,
-						externalReferenceCode: 'countryERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'Country',
-						},
-						localized: false,
-						name: 'country',
-						required: false,
-					},
-					{
-						DBType: ObjectField.DBTypeEnum.Clob,
-						businessType: ObjectField.BusinessTypeEnum.RichText,
-						externalReferenceCode: 'descriptionERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'Description',
-						},
-						localized: false,
-						name: 'description',
-						required: false,
-					},
-					{
-						DBType: ObjectField.DBTypeEnum.Clob,
-						businessType: ObjectField.BusinessTypeEnum.LongText,
-						externalReferenceCode: 'nameERC',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'Name',
-						},
-						localized: false,
-						name: 'name',
-						required: false,
-					},
-					{
-						DBType: ObjectField.DBTypeEnum.String,
-						businessType: ObjectField.BusinessTypeEnum.Text,
-						externalReferenceCode: 'scientificName',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'Scientific Name',
-						},
-						localized: true,
-						name: 'scientificName',
-						required: false,
-					},
-				],
-				pluralLabel: {
-					en_US: 'Plants',
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
 
-		// Create a page with a Form fragment
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
 
-		const formId = getRandomString();
+			// Map the form to the All Fields object and publish the page
 
-		const formDefinition = getFormContainerDefinition({
-			id: formId,
-		});
+			await pageEditorPage.mapFormFragment(formId, 'All Fields');
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([formDefinition]),
-			siteId: pageManagementSite.id,
-			title: getRandomString(),
-		});
+			// Add a Localization Select from the modal
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
-
-		// Map the form to the Plant object and publish the page
-
-		await pageEditorPage.mapFormFragment(formId, 'Plant');
-
-		await page.getByText('Add Localization Select', {exact: true}).click();
-
-		await pageEditorPage.publishPage();
-
-		// Go to view mode
-
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
-
-		// Check that unlocalized fields are disabled
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			}),
-			trigger: page.getByLabel('Select a language, current language:'),
-		});
-
-		await expect(
-			page.getByLabel('Country field cannot be localized')
-		).toBeVisible();
-		await expect(
-			page.getByLabel('Description field cannot be localized')
-		).toBeVisible();
-		await expect(
-			page.getByLabel('Name field cannot be localized')
-		).toBeVisible();
-
-		await expect(page.getByLabel('Country', {exact: true})).toBeDisabled();
-		expect(
 			await page
-				.frameLocator('iframe[title="editor"]')
-				.locator('body')
-				.evaluate((element) => element.ariaReadOnly)
-		).toBe('true');
-		await expect(page.getByLabel('Name', {exact: true})).toBeDisabled();
+				.getByRole('dialog')
+				.getByRole('button', {name: 'Add Localization Select'})
+				.click();
 
-		// Go to edit mode and change unlocalized field configuration
+			await expect(
+				page.locator('[data-name="Localization Select"]')
+			).toBeAttached();
 
-		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+			await pageEditorPage.publishPage();
 
-		await pageEditorPage.selectFragment(
-			await pageEditorPage.getFragmentId('Form Container')
-		);
+			// Go to view mode and fill the form
 
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Unlocalizable Fields State',
-			tab: 'General',
-			value: 'read-only',
-		});
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
-		await pageEditorPage.changeConfiguration({
-			fieldLabel: 'Unlocalizable Fields Message',
-			tab: 'General',
-			value: 'field is not localizable message',
-		});
+			await page.locator('iframe[title="editor"]').waitFor();
 
-		await pageEditorPage.publishPage();
+			await page.getByLabel('Long Text').fill('long text english');
 
-		// Go to view mode and check that the config is applied
+			await page.getByLabel('Text', {exact: true}).fill('text english');
+			await page.evaluate(() => {
+				Object.values((window as any).CKEDITOR.instances).forEach(
+					(editor: any) => editor.setData('rich text english')
+				);
+			});
 
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+			// Add translations and check translation status
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
+			const translationSelector = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			await translationSelector.click();
+
+			const option = page.getByRole('option', {
 				name: 'Spanish (Spain) Language',
-			}),
-			trigger: page.getByLabel('Select a language, current language:'),
-		});
+			});
 
-		await expect(
-			page.getByLabel('field is not localizable message')
-		).toHaveCount(3);
+			await expect(option).toContainText(/Not Translated/);
 
-		await expect(page.getByLabel('Country', {exact: true})).toHaveAttribute(
-			'readonly'
-		);
-		expect(
+			await option.click();
+
+			await page.getByLabel('Long Text').fill('long text español');
+
+			await page.getByLabel('Text', {exact: true}).fill('text español');
+
+			await translationSelector.click();
+
+			await expect(option).toContainText(/Translating 2\/3/);
+
+			await option.click();
+
+			await page.evaluate(() => {
+				Object.values((window as any).CKEDITOR.instances).forEach(
+					(editor: any) => editor.setData('rich text español')
+				);
+			});
+
+			await translationSelector.click();
+
+			await expect(option).toContainText(/Translated/);
+
+			await option.click();
+
+			// Publish the form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Go to custom object admin an check the values
+
+			await goToObjectEntity({
+				entityName: 'All Fields',
+				page,
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					exact: true,
+					name: 'View',
+				}),
+				trigger: page.locator('.dnd-tbody .item-actions').last(),
+			});
+
+			await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
+
+			await expect(page.getByText('long text english')).toBeVisible();
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text english')
+			).toBeVisible();
+
+			await expect(page.locator('input.ddm-field-text')).toHaveValue(
+				'text english'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Español',
+				}),
+				trigger: page.getByTestId('triggerButton').first(),
+			});
+
+			await expect(page.getByText('long text español')).toBeVisible();
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text español')
+			).toBeVisible();
+			await expect(page.locator('input.ddm-field-text')).toHaveValue(
+				'text español'
+			);
+		}
+	);
+
+	test(
+		'Shows a warning modal when the page is published and there is a Localization Select fragment but no localizable fields',
+		{tag: '@LPD-37927'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment and Localication Select
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const localizationSelectDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'localization-select',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					localizationSelectDefinition,
+					formDefinition,
+				]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the All Fields, only the Boolean field
+
+			await pageEditorPage.mapFormFragment(formId, 'All Fields', [
+				'Boolean',
+			]);
+
+			// Publish and check the warning modal
+
+			await pageEditorPage.publishButton.click();
+
+			await expect(
+				page.getByText('Localizable Fields Hidden or Missing')
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Disable unlocalized fields when changing language',
+		{tag: '@LPD-37927'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'plantERC',
+					label: {
+						en_US: 'Plant',
+					},
+					name: 'Plant',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'countryERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Country',
+							},
+							localized: false,
+							name: 'country',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Clob,
+							businessType: ObjectField.BusinessTypeEnum.RichText,
+							externalReferenceCode: 'descriptionERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Description',
+							},
+							localized: false,
+							name: 'description',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Clob,
+							businessType: ObjectField.BusinessTypeEnum.LongText,
+							externalReferenceCode: 'nameERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Name',
+							},
+							localized: false,
+							name: 'name',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'scientificName',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Scientific Name',
+							},
+							localized: true,
+							name: 'scientificName',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Plants',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the Plant object and publish the page
+
+			await pageEditorPage.mapFormFragment(formId, 'Plant');
+
 			await page
-				.frameLocator('iframe[title="editor"]')
-				.locator('body')
-				.evaluate((element) => element.ariaReadOnly)
-		).toBe('true');
-		await expect(page.getByLabel('Name', {exact: true})).toHaveAttribute(
-			'readonly'
-		);
-	});
+				.getByText('Add Localization Select', {exact: true})
+				.click();
 
-	test('Can visualize and edit translations', async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		pageEditorPage,
-		pageManagementSite,
-	}) => {
+			await pageEditorPage.publishPage();
 
-		// Create an object with translations
+			// Go to view mode
 
-		const objectDefinitionApiClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				longText_i18n: {
-					en_US: 'long text english',
-					es_ES: 'long text spanish',
-				},
-				richText_i18n: {
-					en_US: 'rich text english',
-					es_ES: 'rich text spanish',
-				},
-				text_i18n: {
-					en_US: 'text english',
-					es_ES: 'text spanish',
-				},
-			},
-			'c/allfieldses',
-			pageManagementSite.key
-		);
-
-		// Create a display page and add a form container with localization select
-
-		const displayPageTemplateName = getRandomString();
-
-		const {className: objectDefinitionClassName} = (
-			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-				getObjectERC('All Fields')
-			)
-		).body;
-
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectDefinitionClassName
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				classTypeId: '0',
-				groupId: pageManagementSite.id,
-				name: displayPageTemplateName,
-			}
-		);
+			// Check that unlocalized fields are disabled
 
-		// Go to edit display page template
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
 
-		await displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+			await expect(
+				page.getByLabel('Country field cannot be localized')
+			).toBeVisible();
+			await expect(
+				page.getByLabel('Description field cannot be localized')
+			).toBeVisible();
+			await expect(
+				page.getByLabel('Name field cannot be localized')
+			).toBeVisible();
 
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+			await expect(
+				page.getByLabel('Country', {exact: true})
+			).toBeDisabled();
+			expect(
+				await page
+					.frameLocator('iframe[title="editor"]')
+					.locator('body')
+					.evaluate((element) => element.ariaReadOnly)
+			).toBe('true');
+			await expect(page.getByLabel('Name', {exact: true})).toBeDisabled();
 
-		await pageEditorPage.addFragment('Form Components', 'Form Container');
+			// Go to edit mode and change unlocalized field configuration
 
-		const formId = await pageEditorPage.getFragmentId('Form Container');
-
-		await pageEditorPage.mapFormFragment(formId, 'All Fields (Default)');
-
-		await page.getByText('Add Localization Select', {exact: true}).click();
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		// Go to the object display page
-
-		await page.goto(
-			`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
-		);
-
-		// Assert that translation is displayed correctly
-
-		await expect(
-			page.getByRole('textbox', {exact: true, name: 'Long Text'})
-		).toHaveValue('long text english');
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text english')
-		).toBeVisible();
-		await expect(
-			page.getByRole('textbox', {exact: true, name: 'Text'})
-		).toHaveValue('text english');
-
-		// Fill new values for the translation
-
-		await page.getByLabel('Long Text').fill('long text english 1');
-
-		await page.getByLabel('Text', {exact: true}).fill('text english 1');
-		await page.evaluate(() => {
-			Object.values((window as any).CKEDITOR.instances).forEach(
-				(editor: any) => editor.setData('rich text english 1')
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
 			);
-		});
 
-		// Assert spanish translation is correct
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			}),
-			trigger: page.getByLabel('Select a language, current language:'),
-		});
-
-		await expect(
-			page.getByRole('textbox', {exact: true, name: 'Long Text'})
-		).toHaveValue('long text spanish');
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text spanish')
-		).toBeVisible();
-		await expect(
-			page.getByRole('textbox', {exact: true, name: 'Text'})
-		).toHaveValue('text spanish');
-
-		// Fill new values
-
-		await page.getByLabel('Long Text').fill('long text spanish 1');
-		await page.getByLabel('Text', {exact: true}).fill('text spanish 1');
-		await page.evaluate(() => {
-			Object.values((window as any).CKEDITOR.instances).forEach(
-				(editor: any) => editor.setData('rich text spanish 1')
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Form Container')
 			);
-		});
 
-		// Edit the object
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Unlocalizable Fields State',
+				tab: 'General',
+				value: 'read-only',
+			});
 
-		await page.getByRole('button', {name: 'Submit'}).click();
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Unlocalizable Fields Message',
+				tab: 'General',
+				value: 'field is not localizable message',
+			});
 
-		await expect(
-			page.getByText(
-				'Thank you. Your information was successfully received.'
-			)
-		).toBeVisible();
+			await pageEditorPage.publishPage();
 
-		// Go to custom object admin an check the values
+			// Go to view mode and check that the config is applied
 
-		await goToObjectEntity({
-			entityName: 'All Fields',
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await expect(
+				page.getByLabel('field is not localizable message')
+			).toHaveCount(3);
+
+			await expect(
+				page.getByLabel('Country', {exact: true})
+			).toHaveAttribute('readonly');
+			expect(
+				await page
+					.frameLocator('iframe[title="editor"]')
+					.locator('body')
+					.evaluate((element) => element.ariaReadOnly)
+			).toBe('true');
+			await expect(
+				page.getByLabel('Name', {exact: true})
+			).toHaveAttribute('readonly');
+		}
+	);
+
+	test(
+		'Can visualize and edit translations',
+		{tag: '@LPD-37927'},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
 			page,
-		});
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'View',
-			}),
-			trigger: page.locator('.dnd-tbody .item-actions').last(),
-		});
+			// Create an object with translations
 
-		await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		await expect(page.getByText('long text english 1')).toBeVisible();
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text english 1')
-		).toBeVisible();
-		await expect(page.locator('input.ddm-field-text')).toHaveValue(
-			'text english 1'
-		);
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					longText_i18n: {
+						en_US: 'long text english',
+						es_ES: 'long text spanish',
+					},
+					richText_i18n: {
+						en_US: 'rich text english',
+						es_ES: 'rich text spanish',
+					},
+					text_i18n: {
+						en_US: 'text english',
+						es_ES: 'text spanish',
+					},
+				},
+				'c/allfieldses',
+				pageManagementSite.key
+			);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Español',
-			}),
-			trigger: page.getByTestId('triggerButton').first(),
-		});
+			// Create a display page and add a form container with localization select
 
-		await expect(page.getByText('long text spanish 1')).toBeVisible();
-		await expect(
-			page
-				.frameLocator('iframe[title="editor"]')
-				.getByText('rich text spanish 1')
-		).toBeVisible();
-		await expect(page.locator('input.ddm-field-text')).toHaveValue(
-			'text spanish 1'
-		);
-	});
+			const displayPageTemplateName = getRandomString();
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeId: '0',
+					groupId: pageManagementSite.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			// Go to edit display page template
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			const formId = await pageEditorPage.getFragmentId('Form Container');
+
+			await pageEditorPage.mapFormFragment(
+				formId,
+				'All Fields (Default)'
+			);
+
+			await page
+				.getByText('Add Localization Select', {exact: true})
+				.click();
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to the object display page
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			// Assert that translation is displayed correctly
+
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'Long Text'})
+			).toHaveValue('long text english');
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text english')
+			).toBeVisible();
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'Text'})
+			).toHaveValue('text english');
+
+			// Fill new values for the translation
+
+			await page.getByLabel('Long Text').fill('long text english 1');
+
+			await page.getByLabel('Text', {exact: true}).fill('text english 1');
+			await page.evaluate(() => {
+				Object.values((window as any).CKEDITOR.instances).forEach(
+					(editor: any) => editor.setData('rich text english 1')
+				);
+			});
+
+			// Assert spanish translation is correct
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'Long Text'})
+			).toHaveValue('long text spanish');
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text spanish')
+			).toBeVisible();
+			await expect(
+				page.getByRole('textbox', {exact: true, name: 'Text'})
+			).toHaveValue('text spanish');
+
+			// Fill new values
+
+			await page.getByLabel('Long Text').fill('long text spanish 1');
+			await page.getByLabel('Text', {exact: true}).fill('text spanish 1');
+			await page.evaluate(() => {
+				Object.values((window as any).CKEDITOR.instances).forEach(
+					(editor: any) => editor.setData('rich text spanish 1')
+				);
+			});
+
+			// Edit the object
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Go to custom object admin an check the values
+
+			await goToObjectEntity({
+				entityName: 'All Fields',
+				page,
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					exact: true,
+					name: 'View',
+				}),
+				trigger: page.locator('.dnd-tbody .item-actions').last(),
+			});
+
+			await page.getByRole('textbox', {name: 'Long Text'}).waitFor();
+
+			await expect(page.getByText('long text english 1')).toBeVisible();
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text english 1')
+			).toBeVisible();
+			await expect(page.locator('input.ddm-field-text')).toHaveValue(
+				'text english 1'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Español',
+				}),
+				trigger: page.getByTestId('triggerButton').first(),
+			});
+
+			await expect(page.getByText('long text spanish 1')).toBeVisible();
+			await expect(
+				page
+					.frameLocator('iframe[title="editor"]')
+					.getByText('rich text spanish 1')
+			).toBeVisible();
+			await expect(page.locator('input.ddm-field-text')).toHaveValue(
+				'text spanish 1'
+			);
+		}
+	);
 });
 
 test.describe('Numeric input field', () => {

@@ -222,14 +222,14 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				(createStrategy == CreateStrategy.UPSERT)) {
 
 				importTaskResource.postImportTask(
-					batchPlannerPlan.getInternalClassName(), null,
+					batchPlannerPlan.getInternalClassName(), null, null,
 					createStrategy.name(),
 					String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
 					_getFieldNameMapping(
 						_batchPlannerMappingLocalService.
 							getBatchPlannerMappings(
 								batchPlannerPlan.getBatchPlannerPlanId())),
-					_getImportErrorStrategy(batchPlannerPlan), null,
+					_getImportErrorStrategy(batchPlannerPlan),
 					batchPlannerPlan.getTaskItemDelegateName(),
 					MultipartBody.of(
 						Collections.singletonMap(

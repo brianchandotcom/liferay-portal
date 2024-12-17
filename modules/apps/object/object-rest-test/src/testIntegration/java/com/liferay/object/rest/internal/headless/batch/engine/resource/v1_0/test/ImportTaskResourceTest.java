@@ -147,7 +147,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// With "restrictedFieldNames" query parameter
+		// With "batchRestrictFields" query parameter
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
@@ -175,7 +175,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 					"headless-batch-engine/v1.0/import-task",
 					"/com.liferay.object.rest.dto.v1_0.ObjectEntry",
 					"?taskItemDelegateName=", objectDefinition.getName(),
-					"&createStrategy=UPSERT&restrictedFieldNames=permissions,",
+					"&createStrategy=UPSERT&batchRestrictFields=permissions,",
 					OBJECT_FIELD_NAME_TEXT),
 				Http.Method.POST));
 
@@ -358,7 +358,7 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		// Without "restrictedFieldNames" query parameter
+		// Without "batchRestrictFields" query parameter
 
 		objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");

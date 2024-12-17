@@ -49,7 +49,7 @@ public class BatchEngineOpenAPIContributor implements OpenAPIContributor {
 			"batchNestedFields",
 			paths.get("/v1.0/export-task/{className}/{contentType}"));
 		_removeParameter(
-			"restrictedFieldNames", paths.get("/v1.0/import-task/{className}"));
+			"batchRestrictFields", paths.get("/v1.0/import-task/{className}"));
 	}
 
 	private void _removeParameter(String parameterName, PathItem pathItem) {

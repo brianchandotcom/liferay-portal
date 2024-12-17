@@ -5,10 +5,14 @@
 
 package com.liferay.captcha.util;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -24,49 +28,116 @@ import javax.servlet.http.HttpServletResponse;
 public class CaptchaUtil {
 
 	public static void check(HttpServletRequest httpServletRequest)
-		throws CaptchaException {
+		throws CaptchaConfigurationException, CaptchaException {
 
-		getCaptcha().check(httpServletRequest);
+		getCaptcha(
+			httpServletRequest
+		).check(
+			httpServletRequest
+		);
 	}
 
 	public static void check(PortletRequest portletRequest)
-		throws CaptchaException {
+		throws CaptchaConfigurationException, CaptchaException {
 
-		getCaptcha().check(portletRequest);
+		getCaptcha(
+			portletRequest
+		).check(
+			portletRequest
+		);
 	}
 
-	public static void enforceCaptcha(HttpServletRequest httpServletRequest) {
-		getCaptcha().enforceCaptcha(httpServletRequest);
+	public static void enforceCaptcha(HttpServletRequest httpServletRequest)
+		throws CaptchaConfigurationException {
+
+		getCaptcha(
+			httpServletRequest
+		).enforceCaptcha(
+			httpServletRequest
+		);
 	}
 
-	public static void enforceCaptcha(PortletRequest portletRequest) {
-		getCaptcha().enforceCaptcha(portletRequest);
+	public static void enforceCaptcha(PortletRequest portletRequest)
+		throws CaptchaConfigurationException {
+
+		getCaptcha(
+			portletRequest
+		).enforceCaptcha(
+			portletRequest
+		);
 	}
 
-	public static Captcha getCaptcha() {
-		CaptchaProvider captchaProvider = _captchaProviderSnapshot.get();
+	public static Captcha getCaptcha(HttpServletRequest httpServletRequest)
+		throws CaptchaConfigurationException {
 
-		return captchaProvider.getCaptcha();
+		try {
+			CaptchaConfiguration captchaConfiguration =
+				(CaptchaConfiguration)
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						CaptchaConfiguration.class,
+						PortalUtil.getCompanyId(httpServletRequest));
+
+			CaptchaProvider captchaProvider = _captchaProviderSnapshot.get();
+
+			return captchaProvider.getCaptcha(captchaConfiguration);
+		}
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
+		}
 	}
 
-	public static String getTaglibPath() {
-		return getCaptcha().getTaglibPath();
+	public static Captcha getCaptcha(PortletRequest portletRequest)
+		throws CaptchaConfigurationException {
+
+		return getCaptcha(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static boolean isEnabled(HttpServletRequest httpServletRequest) {
-		return getCaptcha().isEnabled(httpServletRequest);
+	public static String getTaglibPath(HttpServletRequest httpServletRequest)
+		throws CaptchaConfigurationException {
+
+		return getCaptcha(
+			httpServletRequest
+		).getTaglibPath();
 	}
 
-	public static boolean isEnabled(PortletRequest portletRequest) {
-		return getCaptcha().isEnabled(portletRequest);
+	public static String getTaglibPath(PortletRequest portletRequest)
+		throws CaptchaConfigurationException {
+
+		return getCaptcha(
+			portletRequest
+		).getTaglibPath();
+	}
+
+	public static boolean isEnabled(HttpServletRequest httpServletRequest)
+		throws CaptchaConfigurationException {
+
+		return getCaptcha(
+			httpServletRequest
+		).isEnabled(
+			httpServletRequest
+		);
+	}
+
+	public static boolean isEnabled(PortletRequest portletRequest)
+		throws CaptchaConfigurationException {
+
+		return getCaptcha(
+			portletRequest
+		).isEnabled(
+			portletRequest
+		);
 	}
 
 	public static void serveImage(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException {
+		throws CaptchaConfigurationException, IOException {
 
-		getCaptcha().serveImage(httpServletRequest, httpServletResponse);
+		getCaptcha(
+			httpServletRequest
+		).serveImage(
+			httpServletRequest, httpServletResponse
+		);
 	}
 
 	private static final Snapshot<CaptchaProvider> _captchaProviderSnapshot =

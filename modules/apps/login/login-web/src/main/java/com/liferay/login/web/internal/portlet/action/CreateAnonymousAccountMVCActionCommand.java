@@ -190,12 +190,14 @@ public class CreateAnonymousAccountMVCActionCommand
 		}
 	}
 
-	protected CaptchaConfiguration getCaptchaConfiguration()
+	protected CaptchaConfiguration getCaptchaConfiguration(
+			ActionRequest actionRequest)
 		throws CaptchaConfigurationException {
 
 		try {
-			return _configurationProvider.getSystemConfiguration(
-				CaptchaConfiguration.class);
+			return _configurationProvider.getCompanyConfiguration(
+				CaptchaConfiguration.class,
+				_portal.getCompanyId(actionRequest));
 		}
 		catch (Exception exception) {
 			throw new CaptchaConfigurationException(exception);
@@ -291,7 +293,8 @@ public class CreateAnonymousAccountMVCActionCommand
 
 		serviceContext.setAttribute("anonymousUser", Boolean.TRUE);
 
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration(
+			actionRequest);
 
 		if (captchaConfiguration.createAccountCaptchaEnabled()) {
 			CaptchaUtil.check(actionRequest);

@@ -9,7 +9,6 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Lily Chi
@@ -30,8 +28,8 @@ import org.osgi.service.component.annotations.Modified;
 public class CaptchaProviderImpl implements CaptchaProvider {
 
 	@Override
-	public Captcha getCaptcha() {
-		String captchaClassName = _captchaConfiguration.captchaEngine();
+	public Captcha getCaptcha(CaptchaConfiguration captchaConfiguration) {
+		String captchaClassName = captchaConfiguration.captchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
 	}
@@ -39,8 +37,6 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
-
-		modified(properties);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Captcha.class, "captcha.engine.impl");
@@ -51,13 +47,6 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 		_serviceTrackerMap.close();
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_captchaConfiguration = ConfigurableUtil.createConfigurable(
-			CaptchaConfiguration.class, properties);
-	}
-
-	private volatile CaptchaConfiguration _captchaConfiguration;
 	private ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 
 }

@@ -56,9 +56,13 @@ const SpacingBoxTest = ({
 	canSetCustomValue = true,
 	onChange = () => {},
 	value = {},
-	getState = () => ({}),
+	selectedViewportSize = VIEWPORT_SIZES.desktop,
 }) => (
-	<StoreMother.Component getState={getState}>
+	<StoreMother.Component
+		getState={() => ({
+			selectedViewportSize,
+		})}
+	>
 		<StyleBookContextProvider>
 			<SpacingBox
 				canSetCustomValue={canSetCustomValue}
@@ -340,11 +344,9 @@ describe('SpacingBox', () => {
 
 			render(
 				<SpacingBoxTest
-					getState={() => ({
-						selectedViewportSize: VIEWPORT_SIZES.tablet,
-					})}
 					itemConfig={{marginTop: '2px'}}
 					onChange={onChange}
+					selectedViewportSize={VIEWPORT_SIZES.tablet}
 					value={{marginTop: '10'}}
 				/>
 			);
@@ -361,11 +363,9 @@ describe('SpacingBox', () => {
 
 			render(
 				<SpacingBoxTest
-					getState={() => ({
-						selectedViewportSize: VIEWPORT_SIZES.landscapeMobile,
-					})}
 					itemConfig={{marginTop: '2px'}}
 					onChange={onChange}
+					selectedViewportSize={VIEWPORT_SIZES.landscapeMobile}
 					value={{marginTop: '10'}}
 				/>
 			);
@@ -382,11 +382,9 @@ describe('SpacingBox', () => {
 
 			render(
 				<SpacingBoxTest
-					getState={() => ({
-						selectedViewportSize: VIEWPORT_SIZES.portraitMobile,
-					})}
 					itemConfig={{marginTop: '2px'}}
 					onChange={onChange}
+					selectedViewportSize={VIEWPORT_SIZES.portraitMobile}
 					value={{marginTop: '10'}}
 				/>
 			);

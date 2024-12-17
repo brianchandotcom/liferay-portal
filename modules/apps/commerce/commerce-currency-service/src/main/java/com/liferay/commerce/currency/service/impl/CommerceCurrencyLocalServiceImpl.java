@@ -186,6 +186,11 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	@Override
+	public CommerceCurrency fetchCommerceCurrency(long companyId, String code) {
+		return commerceCurrencyPersistence.fetchByC_C(companyId, code);
+	}
+
+	@Override
 	public CommerceCurrency fetchPrimaryCommerceCurrency(long companyId) {
 		return commerceCurrencyPersistence.fetchByC_P_A_First(
 			companyId, true, true,

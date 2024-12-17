@@ -67,6 +67,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
@@ -1957,6 +1959,74 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testExecuteObjectActionWithConditionExpressionInSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				TestPropsValues.getCompanyId(), "User");
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"name"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true,
+			"oldValue(\"name\") == \"Paul\"", RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			new UnicodeProperties(), false);
+
+		Map<String, Object> values = HashMapBuilder.<String, Object>put(
+			"alternateName", RandomTestUtil.randomString()
+		).put(
+			"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
+		).put(
+			"familyName", RandomTestUtil.randomString()
+		).put(
+			"givenName", RandomTestUtil.randomString()
+		).build();
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		long userId = systemObjectDefinitionManager.addBaseModel(
+			TestPropsValues.getUser(),
+			HashMapBuilder.putAll(
+				values
+			).put(
+				"name", "Paul"
+			).build());
+
+		Assert.assertNull(_argumentsList.poll());
+
+		systemObjectDefinitionManager.updateBaseModel(
+			userId, TestPropsValues.getUser(),
+			HashMapBuilder.putAll(
+				values
+			).put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		Assert.assertNotNull(_argumentsList.poll());
+
+		_objectFieldLocalService.deleteObjectField(objectField);
+	}
+
+	@Test
 	public void testExecuteObjectActionWithUsePreferredLanguageForGuestsParameter()
 		throws Exception {
 
@@ -3360,6 +3430,10 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
 
 	private User _user;
 

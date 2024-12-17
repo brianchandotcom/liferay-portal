@@ -72,6 +72,91 @@ let channel;
 let project;
 
 test(
+	'Add a dynamic segment using an individual property',
+	{
+		tag: '@LRAC-11460',
+	},
+	async ({apiHelpers, page}) => {
+		const individualName = 'ac';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create new Individual', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
+			});
+		});
+
+		const date = new Date();
+		await test.step('Create Individual Event', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'Liferay',
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+		});
+
+		await test.step('Create Individual Session', async () => {
+			const sessions = individuals.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
+		});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createDynamicSegment(page);
+
+		await test.step('Add email criteria and fill in', async () => {
+			await addSegmentField({
+				criterionName: 'email',
+				criterionType: 'Individual Attributes',
+				page,
+			});
+
+			await selectOperator({
+				operator: 'contains',
+				operatorField: SegmentConditions.criteriaCondition,
+				page,
+			});
+
+			await editCriteriaAttributeValue({
+				attributeValue: individualName,
+				page,
+			});		
+			
+			await page.waitForTimeout(3000);
+
+			const dropdownItems = await page.locator('.dropdown-menu.dropdown-menu-select.show .dropdown-item').all();
+
+			expect(dropdownItems.length).toBe(1);
+
+			expect(await dropdownItems[0].textContent()).toBe(`${individualName}@liferay.com`);
+		});
+	}
+);
+
+test(
 	'Check events criteria shows which data source data came from',
 	{
 		tag: '@LRAC-8233',

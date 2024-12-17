@@ -57,6 +57,12 @@ public class
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
+
+		String portletId =
+			"com_liferay_commerce_dashboard_web_internal_portlet_" +
+				"CommerceDashboardForecastsChartPortlet";
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				serviceContext.getUserId(), group.getGroupId(),
@@ -67,16 +73,10 @@ public class
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
-
 		String defaultPreferences = StringBundler.concat(
 			"<portlet-preferences><preference><name>assetCategoryIds",
 			"</name><value>", assetCategory.getCategoryId(),
 			"</value></preference></portlet-preferences>");
-
-		String portletId =
-			"com_liferay_commerce_dashboard_web_internal_portlet_" +
-				"CommerceDashboardForecastsChartPortlet";
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.addPortletPreferences(

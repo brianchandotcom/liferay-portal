@@ -462,7 +462,7 @@ definition {
 				webContentColor = "FFFFFF",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("View web contnet is shown in web content admin") {

@@ -55,8 +55,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_draftLayout = _layout;
-
-		_position = 0;
 	}
 
 	@Override

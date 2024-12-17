@@ -86,10 +86,7 @@ public class CommerceDashboardForecastsChartExportImportTest
 					assetCategory.getExternalReferenceCode(),
 					layout.getGroupId());
 
-		Assert.assertNotNull(importedAssetCategory);
-
 		Assert.assertEquals(assetCategory, importedAssetCategory);
-
 		Assert.assertEquals(
 			importedAssetCategory.getExternalReferenceCode(),
 			portletPreferences.getValue(

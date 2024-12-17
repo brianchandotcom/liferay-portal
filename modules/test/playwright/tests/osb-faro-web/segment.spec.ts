@@ -68,18 +68,15 @@ export const test = mergeTests(
 	loginTest()
 );
 
+let channel;
+let project;
+
 test(
 	'Check if updated custom event displayName is shown on segment criteria card',
 	{
 		tag: '@LPD-27065',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const customEventName = 'CustomEvent' + new Date().getTime();
 
 		await test.step('Send a custom event', async () => {
@@ -252,12 +249,6 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const firstIndividualsName = 'ac';
 		const secondIndividualsName = 'dxp';
 		const knownIndividuals = [
@@ -370,13 +361,6 @@ test(
 				)
 			).toBeVisible();
 		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -387,12 +371,6 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -617,13 +595,6 @@ test(
 
 			await expect(activePorcentage).toHaveText('50%');
 		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -634,12 +605,6 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -829,13 +794,6 @@ test(
 				page,
 			});
 		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -845,12 +803,6 @@ test(
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const firstIndividualName = 'ac';
 		const secondndividualName = 'dxp';
 		const individuals = [
@@ -967,13 +919,6 @@ test(
 				page,
 			});
 		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 
@@ -983,12 +928,6 @@ test(
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -1064,13 +1003,6 @@ test(
 				maxCount: '1',
 				page,
 			});
-		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
 		});
 	}
 );
@@ -1163,12 +1095,6 @@ test(
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		await test.step('Create dynamic segment with a nested criterion', async () => {
 			await navigateToACPageViaURL({
 				acPage: ACPage.segmentPage,
@@ -1268,13 +1194,6 @@ test(
 				page,
 				parent: page.locator('.criteria-group').nth(1),
 			});
-		});
-
-		await test.step('Delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
 		});
 	}
 );
@@ -1401,13 +1320,6 @@ test.skip(
 				itemNames: 'Test',
 				page,
 			});
-		});
-
-		await test.step('Delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
 		});
 	}
 );
@@ -1547,12 +1459,26 @@ test.skip(
 				page,
 			});
 		});
-
-		await test.step('Delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
+
+test.beforeEach(async ({apiHelpers}) => {
+	const channelName = 'My Property - ' + getRandomString();
+
+	const result = await createChannel({
+		apiHelpers,
+		channelName,
+	});
+
+	channel = result.channel;
+	project = result.project;
+});
+
+test.afterEach(async ({apiHelpers}) => {
+	await test.step('Delete channel and delete site on the DXP side', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
+});

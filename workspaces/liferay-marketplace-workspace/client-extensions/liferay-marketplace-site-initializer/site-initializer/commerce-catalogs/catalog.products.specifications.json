@@ -1,11 +1,11 @@
 [
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "MKT-DOWNLOADABLE-CLOUD",
-		"description": "Download Cloud Apps",
+		"cpDefinitionExternalReferenceCode": "MKP-APP-SETTINGS",
+		"description": "Define your app settings.",
 		"facetable": false,
-		"key": "downloadable-cloud-app",
-		"title": "Downloadable Cloud"
+		"key": "app-settings",
+		"title": "App Settings"
 	},
 	{
 		"categoryKey": "product-metadata",

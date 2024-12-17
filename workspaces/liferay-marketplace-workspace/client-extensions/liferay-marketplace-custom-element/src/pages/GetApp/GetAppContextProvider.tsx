@@ -11,6 +11,7 @@ import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import zodSchema from '../../schema/zod';
 import {getUrlParam} from '../../utils/getUrlParam';
 import {isCloudProduct} from '../../utils/productUtils';
+import {safeJSONParse} from '../../utils/util';
 import {StepType} from './enums/stepType';
 import useGetResourceInfo from './hooks/useGetResourceInfo';
 
@@ -44,6 +45,7 @@ type InitialState = {
 	};
 	product: DeliveryProduct;
 	project?: string;
+	requiresResources: boolean;
 	stepState: {
 		onNext: () => void;
 		onPrevious: () => void;
@@ -83,6 +85,7 @@ const initialState: InitialState = {
 		method: 'pay',
 	},
 	product: {} as DeliveryProduct,
+	requiresResources: true,
 	stepState: {} as InitialState['stepState'],
 	steps: [
 		{
@@ -262,12 +265,27 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 				value === 'Free'
 		) ?? false;
 
+	const requiresResources = !!product?.productSpecifications.some(
+		(specification) => {
+			if (
+				specification.specificationKey ===
+				PRODUCT_SPECIFICATION_KEY.APP_SETTINGS
+			) {
+				return safeJSONParse(specification.value, {
+					resourceRequirements: false,
+				}).resourceRequirements;
+			}
+
+			return false;
+		}
+	);
+
 	const steps = useMemo(
 		() =>
 			state.steps.filter(({id}) =>
-				isCloudApp ? true : id !== StepType.PROJECT
+				isCloudApp && requiresResources ? true : id !== StepType.PROJECT
 			),
-		[isCloudApp, state.steps]
+		[isCloudApp, requiresResources, state.steps]
 	);
 
 	const isValid = useMemo(() => {
@@ -345,6 +363,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 					},
 					isCloudApp,
 					product: product as DeliveryProduct,
+					requiresResources,
 					stepState: {
 						onNext() {
 							dispatch({

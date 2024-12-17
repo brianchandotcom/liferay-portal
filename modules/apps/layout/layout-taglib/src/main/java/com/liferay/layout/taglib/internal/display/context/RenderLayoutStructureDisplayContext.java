@@ -410,23 +410,22 @@ public class RenderLayoutStructureDisplayContext {
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
-		if (infoItemFormProvider != null) {
-			try {
-				return infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()),
-					_themeDisplay.getScopeGroupId());
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-
-				return null;
-			}
+		if (infoItemFormProvider == null) {
+			return null;
 		}
 
-		return null;
+		try {
+			return infoItemFormProvider.getInfoForm(
+				String.valueOf(formStyledLayoutStructureItem.getClassTypeId()),
+				_themeDisplay.getScopeGroupId());
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+
+			return null;
+		}
 	}
 
 	public String getInfoFormCheckboxNames(InfoForm infoForm) {

@@ -265,17 +265,17 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 			PanelCategoryKeys.SITE_ADMINISTRATION,
 			_themeDisplay.getPermissionChecker(), group);
 
-		if (Validator.isNotNull(portletId)) {
-			return PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					_httpServletRequest, group, portletId, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setRedirect(
-				_themeDisplay.getURLCurrent()
-			).buildPortletURL();
+		if (Validator.isNull(portletId)) {
+			return null;
 		}
 
-		return null;
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, group, portletId, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).buildPortletURL();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -1039,49 +1039,49 @@ public class LayoutPageTemplateEntryServiceImpl
 				groupId
 			).and(
 				() -> {
-					if (layoutPageTemplateCollectionId >= 0) {
-						return LayoutPageTemplateEntryTable.INSTANCE.
-							layoutPageTemplateCollectionId.eq(
-								layoutPageTemplateCollectionId);
+					if (layoutPageTemplateCollectionId < 0) {
+						return null;
 					}
 
-					return null;
+					return LayoutPageTemplateEntryTable.INSTANCE.
+						layoutPageTemplateCollectionId.eq(
+							layoutPageTemplateCollectionId);
 				}
 			).and(
 				() -> {
-					if (classNameId > 0) {
-						return LayoutPageTemplateEntryTable.INSTANCE.
-							classNameId.eq(classNameId);
+					if (classNameId <= 0) {
+						return null;
 					}
 
-					return null;
+					return LayoutPageTemplateEntryTable.INSTANCE.classNameId.eq(
+						classNameId);
 				}
 			).and(
 				() -> {
-					if (classTypeId > 0) {
-						return LayoutPageTemplateEntryTable.INSTANCE.
-							classTypeId.eq(classTypeId);
+					if (classTypeId <= 0) {
+						return null;
 					}
 
-					return null;
+					return LayoutPageTemplateEntryTable.INSTANCE.classTypeId.eq(
+						classTypeId);
 				}
 			).and(
 				() -> {
-					if (Validator.isNotNull(name)) {
-						return LayoutPageTemplateEntryTable.INSTANCE.name.like(
-							StringUtil.quote(name, CharPool.PERCENT));
+					if (Validator.isNull(name)) {
+						return null;
 					}
 
-					return null;
+					return LayoutPageTemplateEntryTable.INSTANCE.name.like(
+						StringUtil.quote(name, CharPool.PERCENT));
 				}
 			).and(
 				() -> {
-					if (status >= 0) {
-						return LayoutPageTemplateEntryTable.INSTANCE.status.eq(
-							status);
+					if (status < 0) {
+						return null;
 					}
 
-					return null;
+					return LayoutPageTemplateEntryTable.INSTANCE.status.eq(
+						status);
 				}
 			).and(
 				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
@@ -1105,23 +1105,22 @@ public class LayoutPageTemplateEntryServiceImpl
 					groupId
 				).and(
 					() -> {
-						if (layoutPageTemplateCollectionId >= 0) {
-							return LayoutPageTemplateCollectionTable.INSTANCE.
-								parentLayoutPageTemplateCollectionId.eq(
-									layoutPageTemplateCollectionId);
+						if (layoutPageTemplateCollectionId < 0) {
+							return null;
 						}
 
-						return null;
+						return LayoutPageTemplateCollectionTable.INSTANCE.
+							parentLayoutPageTemplateCollectionId.eq(
+								layoutPageTemplateCollectionId);
 					}
 				).and(
 					() -> {
-						if (Validator.isNotNull(name)) {
-							return LayoutPageTemplateCollectionTable.INSTANCE.
-								name.like(
-									StringUtil.quote(name, CharPool.PERCENT));
+						if (Validator.isNull(name)) {
+							return null;
 						}
 
-						return null;
+						return LayoutPageTemplateCollectionTable.INSTANCE.name.
+							like(StringUtil.quote(name, CharPool.PERCENT));
 					}
 				).and(
 					LayoutPageTemplateCollectionTable.INSTANCE.type.eq(type)

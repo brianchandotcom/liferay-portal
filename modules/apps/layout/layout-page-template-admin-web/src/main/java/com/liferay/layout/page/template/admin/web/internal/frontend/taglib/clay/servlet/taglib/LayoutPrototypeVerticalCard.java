@@ -143,12 +143,12 @@ public class LayoutPrototypeVerticalCard
 
 	@Override
 	public String getTitle() {
-		if (_layoutPrototype != null) {
-			return HtmlUtil.escape(
-				_layoutPrototype.getName(_themeDisplay.getLocale()));
+		if (_layoutPrototype == null) {
+			return null;
 		}
 
-		return null;
+		return HtmlUtil.escape(
+			_layoutPrototype.getName(_themeDisplay.getLocale()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

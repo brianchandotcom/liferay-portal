@@ -218,7 +218,7 @@ export interface IFrontendDataSetProps {
 	nestedItemsReferenceKey?: string;
 	onActionDropdownItemClick?: any;
 	onBulkActionItemClick?: any;
-	onSelect?: Function;
+	onSelect?: ({selectedItems}: {selectedItems: Array<any>}) => void;
 	overrideEmptyResultView?: boolean;
 	pagination?: {
 		deltas?: TDelta[];

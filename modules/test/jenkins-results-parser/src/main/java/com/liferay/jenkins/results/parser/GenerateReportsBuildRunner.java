@@ -128,12 +128,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_mergeHTMLFiles(filePath);
 
 		JenkinsResultsParserUtil.rsync(
-			"test-1-0",
-			_REPORT_RSYNC_DESTINATION_DIR_PATH + "archived-reports/" +
-				_CURRENT_DATE_STRING,
-			null, filePath);
-
-		JenkinsResultsParserUtil.rsync(
 			null, _ARCHIVE_BASE_DIR_PATH + "/reports/" + _CURRENT_DATE_STRING,
 			null, filePath);
 
@@ -393,19 +387,31 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				filePath + "/js/testray-data.js",
 				_getBuildProperty("ci.system.status.report.job.name"),
 				_getBuildProperty("ci.system.status.report.test.suite.name"));
-		}
-		else {
-			JenkinsResultsParserUtil.rsync(
-				null, filePath + "/js/testray-data.js", "test-1-0",
+
+			CloudStorageSyncUtil.copyGCPFile(
+				filePath + "/js/testray-data.js",
 				JenkinsResultsParserUtil.combine(
-					_REPORT_RSYNC_DESTINATION_DIR_PATH, "/",
-					_getReportDirName(Report.CI_SYSTEM_STATUS.toString()),
-					"/js/testray-data.js"));
+					CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA,
+					"/data/", _getReportDirName(reportName),
+					"/testray-data.js"));
 		}
 
 		_updateReport(filePath);
 
 		_updateNodeDataFile(filePath);
+
+		String testrayDataJSFilePath = filePath + "/js/testray-data.js";
+
+		File testrayDataJSFile = new File(testrayDataJSFilePath);
+
+		if (!testrayDataJSFile.exists()) {
+			CloudStorageSyncUtil.copyGCPFile(
+				JenkinsResultsParserUtil.combine(
+					CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA,
+					"/data/", _getReportDirName(reportName),
+					"/testray-data.js"),
+				filePath + "/js/testray-data.js");
+		}
 
 		_archiveReport(filePath);
 	}

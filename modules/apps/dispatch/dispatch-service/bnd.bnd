@@ -1,6 +1,14 @@
 Bundle-Name: Liferay Dispatch Service
 Bundle-SymbolicName: com.liferay.dispatch.service
 Bundle-Version: 3.0.74
+Import-Package:\
+	!com.mchange.v2.c3p0.*,\
+	\
+	!javax.ejb.*,\
+	\
+	!javax.jms.*,\
+	\
+	*
 Liferay-Require-SchemaVersion: 4.3.0
 Liferay-Service: true
 -dsannotations-options: inherit

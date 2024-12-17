@@ -12,6 +12,7 @@ import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -134,6 +136,23 @@ public class ObjectEntryModelDocumentContributor
 
 			fieldValue = ObjectEntryValuesUtil.getValueString(
 				objectField, values);
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) &&
+				 (fieldValue instanceof List)) {
+
+			fieldValue = ListUtil.toString(
+				(List)fieldValue, (String)null, StringPool.COMMA_AND_SPACE);
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				 (fieldValue instanceof ListEntry)) {
+
+			ListEntry listEntry = (ListEntry)fieldValue;
+
+			fieldValue = listEntry.getKey();
 		}
 		else if (StringUtil.equals(
 					objectField.getBusinessType(),

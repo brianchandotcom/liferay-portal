@@ -56,8 +56,6 @@ public class FormLayoutStructureItemImporter
 
 		FormConfig formConfig = pageFormDefinition.getFormConfig();
 
-		formConfig.getFormReference();
-
 		if (formConfig.getFormReference() instanceof ContextReference) {
 			formStyledLayoutStructureItem.setFormConfig(
 				FormStyledLayoutStructureItem.

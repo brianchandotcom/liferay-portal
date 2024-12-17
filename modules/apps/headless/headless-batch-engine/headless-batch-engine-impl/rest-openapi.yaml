@@ -450,7 +450,7 @@ paths:
                       enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
                       type: string
                 - in: query
-                  name: restrictedFieldNames
+                  name: batchRestrictFields
                   schema:
                       type: string
                 - in: query

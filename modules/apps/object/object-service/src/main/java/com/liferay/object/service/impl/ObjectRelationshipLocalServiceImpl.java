@@ -1444,15 +1444,14 @@ public class ObjectRelationshipLocalServiceImpl
 			return;
 		}
 
-		List<ResourceAction> resourceActions =
-			_resourceActionLocalService.getResourceActions(
-				objectDefinition1.getClassName());
-
 		List<String> objectActionNames = TransformUtil.transform(
 			_objectActionPersistence.findByO_A_OATK(
 				objectDefinition2.getObjectDefinitionId(), true,
 				ObjectActionTriggerConstants.KEY_STANDALONE),
 			ObjectActionModel::getName);
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(
+				objectDefinition1.getClassName());
 
 		_performActions(
 			objectDefinition2.getObjectDefinitionId(), true,

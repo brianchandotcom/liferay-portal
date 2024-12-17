@@ -1892,7 +1892,6 @@ public class ObjectEntryLocalServiceTest {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			0, objectDefinition1.getObjectDefinitionId(),
 			Collections.emptyMap());
-
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectRelationship.getObjectFieldId2());
 

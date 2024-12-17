@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListAccount;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListChannel;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListOrderType;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroupProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -57,6 +58,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelR
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListChannelResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListOrderTypeResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupProductResource;
@@ -278,6 +280,15 @@ public class Mutation {
 
 		_productConfigurationListChannelResourceComponentServiceObjects =
 			productConfigurationListChannelResourceComponentServiceObjects;
+	}
+
+	public static void
+		setProductConfigurationListOrderTypeResourceComponentServiceObjects(
+			ComponentServiceObjects<ProductConfigurationListOrderTypeResource>
+				productConfigurationListOrderTypeResourceComponentServiceObjects) {
+
+		_productConfigurationListOrderTypeResourceComponentServiceObjects =
+			productConfigurationListOrderTypeResourceComponentServiceObjects;
 	}
 
 	public static void setProductGroupResourceComponentServiceObjects(
@@ -2383,6 +2394,92 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteProductConfigurationListOrderType(
+			@GraphQLName("productConfigurationListOrderTypeId") Long
+				productConfigurationListOrderTypeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productConfigurationListOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConfigurationListOrderTypeResource ->
+				productConfigurationListOrderTypeResource.
+					deleteProductConfigurationListOrderType(
+						productConfigurationListOrderTypeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteProductConfigurationListOrderTypeBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConfigurationListOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConfigurationListOrderTypeResource ->
+				productConfigurationListOrderTypeResource.
+					deleteProductConfigurationListOrderTypeBatch(
+						callbackURL, object));
+	}
+
+	@GraphQLField
+	public ProductConfigurationListOrderType
+			createProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("productConfigurationListOrderType")
+					ProductConfigurationListOrderType
+						productConfigurationListOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConfigurationListOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConfigurationListOrderTypeResource ->
+				productConfigurationListOrderTypeResource.
+					postProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
+						externalReferenceCode,
+						productConfigurationListOrderType));
+	}
+
+	@GraphQLField
+	public ProductConfigurationListOrderType
+			createProductConfigurationListIdProductConfigurationListOrderType(
+				@GraphQLName("id") Long id,
+				@GraphQLName("productConfigurationListOrderType")
+					ProductConfigurationListOrderType
+						productConfigurationListOrderType)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConfigurationListOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConfigurationListOrderTypeResource ->
+				productConfigurationListOrderTypeResource.
+					postProductConfigurationListIdProductConfigurationListOrderType(
+						id, productConfigurationListOrderType));
+	}
+
+	@GraphQLField
+	public Response
+			createProductConfigurationListIdProductConfigurationListOrderTypeBatch(
+				@GraphQLName("callbackURL") String callbackURL,
+				@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConfigurationListOrderTypeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConfigurationListOrderTypeResource ->
+				productConfigurationListOrderTypeResource.
+					postProductConfigurationListIdProductConfigurationListOrderTypeBatch(
+						callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response createProductGroupsPageExportBatch(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -3991,6 +4088,34 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ProductConfigurationListOrderTypeResource
+				productConfigurationListOrderTypeResource)
+		throws Exception {
+
+		productConfigurationListOrderTypeResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		productConfigurationListOrderTypeResource.setContextCompany(_company);
+		productConfigurationListOrderTypeResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		productConfigurationListOrderTypeResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		productConfigurationListOrderTypeResource.setContextUriInfo(_uriInfo);
+		productConfigurationListOrderTypeResource.setContextUser(_user);
+		productConfigurationListOrderTypeResource.setGroupLocalService(
+			_groupLocalService);
+		productConfigurationListOrderTypeResource.setRoleLocalService(
+			_roleLocalService);
+
+		productConfigurationListOrderTypeResource.
+			setVulcanBatchEngineExportTaskResource(
+				_vulcanBatchEngineExportTaskResource);
+
+		productConfigurationListOrderTypeResource.
+			setVulcanBatchEngineImportTaskResource(
+				_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			ProductGroupResource productGroupResource)
 		throws Exception {
 
@@ -4341,6 +4466,9 @@ public class Mutation {
 	private static ComponentServiceObjects
 		<ProductConfigurationListChannelResource>
 			_productConfigurationListChannelResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<ProductConfigurationListOrderTypeResource>
+			_productConfigurationListOrderTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductGroupResource>
 		_productGroupResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductGroupProductResource>

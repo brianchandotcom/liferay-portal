@@ -6394,6 +6394,7 @@ paths:
             tags: ["ProductChannel"]
     "/product-configuration-list-account-groups/{productConfigurationListAccountGroupId}":
         delete:
+            operationId: deleteProductConfigurationListAccountGroup
             parameters:
                 - in: path
                   explode: false
@@ -6804,6 +6805,7 @@ paths:
             tags: ["ProductConfigurationList"]
     "/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-account-groups":
         get:
+            operationId: getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage
             parameters:
                 - in: path
                   explode: false
@@ -6883,6 +6885,7 @@ paths:
             summary: Gets a list of product configuration list account groups.
             tags: ["ProductConfigurationListAccountGroup"]
         post:
+            operationId: postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup
             parameters:
                 - in: path
                   explode: false
@@ -7476,6 +7479,7 @@ paths:
             tags: ["ProductConfigurationList"]
     "/product-configuration-lists/{id}/product-configuration-list-account-groups":
         get:
+            operationId: getProductConfigurationListIdProductConfigurationListAccountGroupsPage
             parameters:
                 - in: path
                   explode: false
@@ -7567,6 +7571,7 @@ paths:
             summary: Gets a list of product configuration list account groups.
             tags: ["ProductConfigurationListAccountGroup"]
         post:
+            operationId: postProductConfigurationListIdProductConfigurationListAccountGroup
             parameters:
                 - in: path
                   explode: false

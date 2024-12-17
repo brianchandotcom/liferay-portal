@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Option
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.PinResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductChannelResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListAccountResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationResourceImpl;
@@ -60,6 +61,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueReso
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
@@ -145,6 +147,9 @@ public class ServletDataImpl implements ServletData {
 		Mutation.
 			setProductConfigurationListAccountResourceComponentServiceObjects(
 				_productConfigurationListAccountResourceComponentServiceObjects);
+		Mutation.
+			setProductConfigurationListAccountGroupResourceComponentServiceObjects(
+				_productConfigurationListAccountGroupResourceComponentServiceObjects);
 		Mutation.setProductGroupResourceComponentServiceObjects(
 			_productGroupResourceComponentServiceObjects);
 		Mutation.setProductGroupProductResourceComponentServiceObjects(
@@ -216,6 +221,9 @@ public class ServletDataImpl implements ServletData {
 			_productConfigurationListResourceComponentServiceObjects);
 		Query.setProductConfigurationListAccountResourceComponentServiceObjects(
 			_productConfigurationListAccountResourceComponentServiceObjects);
+		Query.
+			setProductConfigurationListAccountGroupResourceComponentServiceObjects(
+				_productConfigurationListAccountGroupResourceComponentServiceObjects);
 		Query.setProductGroupResourceComponentServiceObjects(
 			_productGroupResourceComponentServiceObjects);
 		Query.setProductGroupProductResourceComponentServiceObjects(
@@ -908,6 +916,36 @@ public class ServletDataImpl implements ServletData {
 							ProductConfigurationListAccountResourceImpl.class,
 							"postProductConfigurationListIdProductConfigurationListAccountBatch"));
 					put(
+						"mutation#deleteProductConfigurationListAccountGroup",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"deleteProductConfigurationListAccountGroup"));
+					put(
+						"mutation#deleteProductConfigurationListAccountGroupBatch",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"deleteProductConfigurationListAccountGroupBatch"));
+					put(
+						"mutation#createProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"postProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup"));
+					put(
+						"mutation#createProductConfigurationListIdProductConfigurationListAccountGroup",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"postProductConfigurationListIdProductConfigurationListAccountGroup"));
+					put(
+						"mutation#createProductConfigurationListIdProductConfigurationListAccountGroupBatch",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"postProductConfigurationListIdProductConfigurationListAccountGroupBatch"));
+					put(
 						"mutation#createProductGroupsPageExportBatch",
 						new ObjectValuePair<>(
 							ProductGroupResourceImpl.class,
@@ -1570,6 +1608,18 @@ public class ServletDataImpl implements ServletData {
 							ProductConfigurationListAccountResourceImpl.class,
 							"getProductConfigurationListIdProductConfigurationListAccountsPage"));
 					put(
+						"query#productConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroups",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage"));
+					put(
+						"query#productConfigurationListIdProductConfigurationListAccountGroups",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"getProductConfigurationListIdProductConfigurationListAccountGroupsPage"));
+					put(
 						"query#productGroups",
 						new ObjectValuePair<>(
 							ProductGroupResourceImpl.class,
@@ -1814,6 +1864,12 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CurrencyResourceImpl.class,
 							"getCurrencyByExternalReferenceCode"));
+					put(
+						"query#Attachment.productConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroups",
+						new ObjectValuePair<>(
+							ProductConfigurationListAccountGroupResourceImpl.
+								class,
+							"getProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage"));
 					put(
 						"query#Attachment.productByExternalReferenceCodeProductChannels",
 						new ObjectValuePair<>(
@@ -2072,6 +2128,11 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductConfigurationListAccountResource>
 		_productConfigurationListAccountResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects
+		<ProductConfigurationListAccountGroupResource>
+			_productConfigurationListAccountGroupResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductGroupResource>

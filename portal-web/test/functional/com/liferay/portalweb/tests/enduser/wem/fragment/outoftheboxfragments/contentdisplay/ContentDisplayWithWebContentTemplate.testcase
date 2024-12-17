@@ -426,7 +426,7 @@ definition {
 				webContentColor = "FF0D0D",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -489,7 +489,7 @@ definition {
 				webContentDate = "10/10/2020",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -550,7 +550,7 @@ definition {
 
 			WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -612,7 +612,7 @@ definition {
 				webContentGrid = "true",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to page") {
@@ -678,7 +678,7 @@ definition {
 				webContentImage = "Document_3.png",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -747,7 +747,7 @@ definition {
 				webContentLinkToPage = "Test Page Name",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -807,7 +807,7 @@ definition {
 				webContentMultipleSelection = "Option 1",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -870,7 +870,7 @@ definition {
 				webContentNumeric = 9,
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -933,7 +933,7 @@ definition {
 				webContentRichText = "This is a Rich Text field",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {
@@ -994,7 +994,7 @@ definition {
 				webContentSelectFromList = "Option 2",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Content Display to a content page") {

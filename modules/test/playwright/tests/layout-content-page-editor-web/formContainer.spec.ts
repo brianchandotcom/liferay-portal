@@ -6,6 +6,7 @@
 import {
 	ObjectDefinitionApi,
 	ObjectField,
+	ObjectFieldApi,
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
@@ -5321,3 +5322,231 @@ test.describe('View mode form errors', () => {
 		}
 	);
 });
+
+test(
+	'Check read-only fields',
+	{tag: ['@LPD-44528']},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a new object definition with all fields
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				externalReferenceCode: 'readonly-object-erc',
+				label: {
+					en_US: 'Read Only Object',
+				},
+				name: 'ReadOnlyObject',
+				objectFields: [
+					{
+						DBType: ObjectField.DBTypeEnum.Boolean,
+						externalReferenceCode: 'boolean-erc',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Boolean',
+						},
+						name: 'boolean',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.DateTime,
+						externalReferenceCode: 'date-time-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Date And Time',
+						},
+						name: 'dateAndTime',
+						objectFieldSettings: [
+							{
+								name: 'timeStorage',
+								value: {},
+							},
+						],
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Date,
+						externalReferenceCode: 'date-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Date',
+						},
+						name: 'date',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Clob,
+						externalReferenceCode: 'long-text-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Long Text',
+						},
+						name: 'longText',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Long,
+						businessType: ObjectField.BusinessTypeEnum.Attachment,
+						externalReferenceCode: 'dl-file-upload-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'DL File',
+						},
+						localized: false,
+						name: 'dlFileUpload',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'pdf',
+							},
+							{
+								name: 'maximumFileSize',
+								value: 100,
+							},
+							{
+								name: 'fileSource',
+								value: 'documentsAndMedia',
+							},
+						] as any,
+						type: ObjectField.TypeEnum.Long,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						externalReferenceCode: 'text-erc',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Text',
+						},
+						name: 'text',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Clob,
+						businessType: ObjectField.BusinessTypeEnum.RichText,
+						externalReferenceCode: 'rich-text-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Rich Text',
+						},
+						name: 'richText',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Picklist,
+						externalReferenceCode: 'picklist-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Picklist',
+						},
+						listTypeDefinitionExternalReferenceCode:
+							'lemon-dimensions-picklist-erc',
+						name: 'picklist',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType:
+							ObjectField.BusinessTypeEnum.MultiselectPicklist,
+						externalReferenceCode: 'multiselect-picklist-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'MultiSelect Picklist',
+						},
+						listTypeDefinitionExternalReferenceCode:
+							'lemon-dimensions-picklist-erc',
+						name: 'multiSelectPicklist',
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Integer,
+						externalReferenceCode: 'numeric-erc',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'Numeric',
+						},
+						name: 'numeric',
+					},
+				],
+				pluralLabel: {
+					en_US: 'ReadOnlyObjects',
+				},
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		// Set readOnly to true for all fields
+
+		const objectFieldApiClient =
+			await apiHelpers.buildRestClient(ObjectFieldApi);
+
+		for (const objectField of objectDefinition.objectFields) {
+			await objectFieldApiClient.putObjectField(objectField.id, {
+				...objectField,
+				readOnly: ObjectField.ReadOnlyEnum.True,
+			});
+		}
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create a page with a form mapped to 'Read Only Object'
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(formId, 'Read Only Object');
+
+		// Check that all fields have the corresponding attribute and label
+
+		[
+			'Boolean (Read Only)',
+			'Date (Read Only)',
+			'Date And Time (Read Only)',
+			'Long Text (Read Only)',
+			'DL File (Read Only)',
+			'Text (Read Only)',
+			'Picklist (Read Only)',
+			'Numeric (Read Only)',
+		].forEach(async (label) => {
+			await expect(page.getByLabel(label, {exact: true})).toHaveAttribute(
+				'readonly',
+				''
+			);
+		});
+
+		await expect(
+			page.getByLabel('Rich Text (Read Only)', {exact: true})
+		).toHaveAttribute('aria-readonly', 'true');
+
+		(
+			await page
+				.getByLabel('MultiSelect Picklist (Read Only)')
+				.locator('input')
+				.all()
+		).forEach(async (input) => {
+			await expect(input).toHaveAttribute('readonly', '');
+		});
+	}
+);

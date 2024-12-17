@@ -102,7 +102,7 @@ page import="java.util.Date" %>
 <%
 String authType = portletPreferences.getValue("authType", StringPool.BLANK);
 
-CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)ConfigurationProviderUtil.getSystemConfiguration(CaptchaConfiguration.class);
+CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)ConfigurationProviderUtil.getCompanyConfiguration(CaptchaConfiguration.class, company.getCompanyId());
 %>
 
 <%@ include file="/init-ext.jsp" %>

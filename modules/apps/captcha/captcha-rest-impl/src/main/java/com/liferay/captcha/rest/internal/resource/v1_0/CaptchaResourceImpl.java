@@ -43,7 +43,7 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 		_checkCaptchaConfiguration();
 
 		com.liferay.portal.kernel.captcha.Captcha kernelCaptcha =
-			CaptchaUtil.getCaptcha();
+			CaptchaUtil.getCaptcha(contextHttpServletRequest);
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream()) {
@@ -108,8 +108,8 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 
 	private void _checkCaptchaConfiguration() throws Exception {
 		CaptchaConfiguration captchaConfiguration =
-			_configurationProvider.getSystemConfiguration(
-				CaptchaConfiguration.class);
+			_configurationProvider.getCompanyConfiguration(
+				CaptchaConfiguration.class, contextCompany.getCompanyId());
 
 		if (!StringUtil.equalsIgnoreCase(
 				captchaConfiguration.captchaEngine(),

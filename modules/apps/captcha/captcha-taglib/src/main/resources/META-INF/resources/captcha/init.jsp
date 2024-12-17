@@ -25,7 +25,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="javax.portlet.PortletRequest" %>
 
 <%
-CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)ConfigurationProviderUtil.getSystemConfiguration(CaptchaConfiguration.class);
+CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)ConfigurationProviderUtil.getCompanyConfiguration(CaptchaConfiguration.class, company.getCompanyId());
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
 boolean captchaEnabled = false;

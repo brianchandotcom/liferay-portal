@@ -122,6 +122,9 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 						return user.getEmailAddress();
 					});
 				setCurrencyCode(commerceCurrency::getCode);
+				setCurrencyExternalReferenceCode(
+					commerceCurrency::getExternalReferenceCode);
+				setCurrencyId(commerceCurrency::getCommerceCurrencyId);
 				setCustomFields(
 					() -> {
 						ExpandoBridge expandoBridge =

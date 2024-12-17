@@ -410,18 +410,17 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		JSONObject jsonObject = JSONUtil.put(
 			"actions",
 			() -> {
-				if (includeActions) {
-					LayoutActionProvider layoutActionProvider =
-						new LayoutActionProvider(
-							_groupProvider, httpServletRequest, _language,
-							layoutActionsHelper,
-							_siteNavigationMenuLocalService);
-
-					return layoutActionProvider.getActionsJSONArray(
-						layout, afterDeleteSelectedLayout);
+				if (!includeActions) {
+					return null;
 				}
 
-				return null;
+				LayoutActionProvider layoutActionProvider =
+					new LayoutActionProvider(
+						_groupProvider, httpServletRequest, _language,
+						layoutActionsHelper, _siteNavigationMenuLocalService);
+
+				return layoutActionProvider.getActionsJSONArray(
+					layout, afterDeleteSelectedLayout);
 			}
 		).put(
 			"children",

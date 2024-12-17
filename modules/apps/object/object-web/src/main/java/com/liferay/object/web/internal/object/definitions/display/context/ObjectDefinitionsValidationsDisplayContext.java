@@ -174,7 +174,8 @@ public class ObjectDefinitionsValidationsDisplayContext
 	}
 
 	private List<Map<String, Object>> _createObjectValidationRuleElements(
-		String engine) {
+			String engine)
+		throws PortalException {
 
 		boolean includeDDMExpressionBuilderElements = false;
 
@@ -183,7 +184,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		}
 
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			includeDDMExpressionBuilderElements, true,
+			includeDDMExpressionBuilderElements, true, true,
 			objectRequestHelper.getLocale(), getObjectDefinitionId(),
 			objectField -> !objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));

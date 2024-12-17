@@ -122,9 +122,11 @@ public class ObjectDefinitionsActionsDisplayContext
 			ObjectWebKeys.OBJECT_ACTION);
 	}
 
-	public List<Map<String, Object>> getObjectActionCodeEditorElements() {
+	public List<Map<String, Object>> getObjectActionCodeEditorElements()
+		throws PortalException {
+
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			true, true, objectRequestHelper.getLocale(),
+			true, true, false, objectRequestHelper.getLocale(),
 			getObjectDefinitionId(),
 			objectField -> !objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));

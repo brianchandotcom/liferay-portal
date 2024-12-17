@@ -5,12 +5,24 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context.util;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,28 +40,34 @@ import java.util.function.Predicate;
 public class ObjectCodeEditorUtil {
 
 	public static List<Map<String, Object>> getCodeEditorElements(
-		boolean includeDDMExpressionBuilderElements,
-		boolean includeGeneralVariables, Locale locale, long objectDefinitionId,
-		Predicate<ObjectField> objectFieldPredicate) {
+			boolean includeDDMExpressionBuilderElements,
+			boolean includeGeneralVariables, boolean includeRelatedObjectFields,
+			Locale locale, long objectDefinitionId,
+			Predicate<ObjectField> objectFieldPredicate)
+		throws PortalException {
 
 		if (includeDDMExpressionBuilderElements) {
 			return getCodeEditorElements(
 				ddmExpressionFunctionPredicate -> true,
 				ddmExpressionOperatorPredicate -> true, includeGeneralVariables,
-				locale, objectDefinitionId, objectFieldPredicate);
+				includeRelatedObjectFields, locale, objectDefinitionId,
+				objectFieldPredicate);
 		}
 
 		return getCodeEditorElements(
 			ddmExpressionFunctionPredicate -> false,
 			ddmExpressionOperatorPredicate -> false, includeGeneralVariables,
-			locale, objectDefinitionId, objectFieldPredicate);
+			includeRelatedObjectFields, locale, objectDefinitionId,
+			objectFieldPredicate);
 	}
 
 	public static List<Map<String, Object>> getCodeEditorElements(
-		Predicate<DDMExpressionFunction> ddmExpressionFunctionPredicate,
-		Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
-		boolean includeGeneralVariables, Locale locale, long objectDefinitionId,
-		Predicate<ObjectField> objectFieldPredicate) {
+			Predicate<DDMExpressionFunction> ddmExpressionFunctionPredicate,
+			Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
+			boolean includeGeneralVariables, boolean includeRelatedObjectFields,
+			Locale locale, long objectDefinitionId,
+			Predicate<ObjectField> objectFieldPredicate)
+		throws PortalException {
 
 		List<Map<String, Object>> codeEditorElements = new ArrayList<>();
 
@@ -111,6 +129,14 @@ public class ObjectCodeEditorUtil {
 			codeEditorElements.add(
 				_createCodeEditorElement(
 					ddmExpressionFunctions, "functions", locale));
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-43542") &&
+			includeRelatedObjectFields) {
+
+			_includeRelatedObjectFields(
+				codeEditorElements, locale, objectDefinitionId,
+				objectFieldPredicate);
 		}
 
 		return codeEditorElements;
@@ -364,6 +390,63 @@ public class ObjectCodeEditorUtil {
 		).put(
 			"label", LanguageUtil.get(locale, key)
 		).build();
+	}
+
+	private static void _includeRelatedObjectFields(
+			List<Map<String, Object>> codeEditorElements, Locale locale,
+			long objectDefinitionId,
+			Predicate<ObjectField> objectFieldPredicate)
+		throws PortalException {
+
+		ModelResourcePermission<ObjectDefinition> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				ObjectDefinition.class.getName());
+
+		for (ObjectRelationship objectRelationship :
+				ObjectRelationshipLocalServiceUtil.
+					getObjectRelationshipsByObjectDefinitionId2(
+						objectDefinitionId)) {
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (!modelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(),
+					objectDefinition.getObjectDefinitionId(),
+					ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			ObjectField relationshipObjectField =
+				ObjectFieldLocalServiceUtil.fetchObjectField(
+					objectRelationship.getObjectFieldId2());
+
+			codeEditorElements.add(
+				HashMapBuilder.<String, Object>put(
+					"items",
+					TransformUtil.transform(
+						ListUtil.filter(
+							ObjectFieldLocalServiceUtil.getObjectFields(
+								objectDefinition.getObjectDefinitionId()),
+							objectFieldPredicate),
+						objectField -> HashMapBuilder.put(
+							"content",
+							StringBundler.concat(
+								relationshipObjectField.getName(),
+								StringPool.UNDERLINE, objectField.getName())
+						).put(
+							"helpText", StringPool.BLANK
+						).put(
+							"label", objectField.getLabel(locale)
+						).build())
+				).put(
+					"label",
+					LanguageUtil.format(
+						locale, "x-fields", objectDefinition.getLabel(locale))
+				).build());
+		}
 	}
 
 	private static final Snapshot<ObjectFieldLocalService>

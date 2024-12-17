@@ -109,7 +109,7 @@ public class GetObjectFieldInfoMVCResourceCommand
 					ddmExpressionFunction ->
 						!ObjectCodeEditorUtil.DDMExpressionFunction.OLD_VALUE.
 							equals(ddmExpressionFunction),
-					ddmExpressionOperator -> true, true, locale,
+					ddmExpressionOperator -> true, true, false, locale,
 					objectDefinition.getObjectDefinitionId(),
 					objectField1 -> !objectField1.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION))
@@ -125,14 +125,15 @@ public class GetObjectFieldInfoMVCResourceCommand
 							ddmExpressionOperator ->
 								_filterableDDMExpressionOperators.contains(
 									ddmExpressionOperator),
-							false, locale, objectField.getObjectDefinitionId(),
+							false, false, locale,
+							objectField.getObjectDefinitionId(),
 							objectField2 ->
 								_filterableObjectFieldBusinessTypes.contains(
 									objectField2.getBusinessType()));
 					}
 
 					return ObjectCodeEditorUtil.getCodeEditorElements(
-						true, false, locale,
+						true, false, false, locale,
 						objectField.getObjectDefinitionId(),
 						objectField3 -> !objectField3.isSystem());
 				}

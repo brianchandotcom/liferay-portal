@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -69,6 +70,18 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getNameMap()));
 				setPageSettings(() -> _toPageSettings(layout));
+				setParentSitePageExternalReferenceCode(
+					() -> {
+						if (layout.getParentLayoutId() == 0) {
+							return null;
+						}
+
+						Layout parentLayout = _layoutLocalService.getLayout(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							layout.getParentLayoutId());
+
+						return parentLayout.getExternalReferenceCode();
+					});
 				setType(
 					() -> SitePageTypeUtil.toExternalType(layout.getType()));
 				setUuid(layout::getUuid);
@@ -196,5 +209,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

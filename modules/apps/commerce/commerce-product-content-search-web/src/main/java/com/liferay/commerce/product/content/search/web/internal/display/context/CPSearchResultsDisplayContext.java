@@ -21,6 +21,7 @@ import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -346,15 +346,10 @@ public class CPSearchResultsDisplayContext {
 	private List<CPCatalogEntry> _getCPCatalogEntries(
 		List<Document> documents) {
 
-		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
-
-		for (Document document : documents) {
-			cpCatalogEntries.add(
-				_cpDefinitionHelper.getCPCatalogEntry(
-					document, _cpRequestHelper.getLocale()));
-		}
-
-		return cpCatalogEntries;
+		return TransformUtil.transform(
+			documents,
+			document -> _cpDefinitionHelper.getCPCatalogEntry(
+				document, _cpRequestHelper.getLocale()));
 	}
 
 	private PortletURL _getPortletURL() {

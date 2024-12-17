@@ -15,16 +15,18 @@ public enum RecommendationNotificationType {
 			"is-now-available-in-the-collection-display",
 		0),
 	CONTENT_RECOMMENDER_MOST_POPULAR_ITEMS_FAILED(
-		"most-popular-content-recommendations-could-not-be-enabled.-go-to-" +
-			"instance-settings-analytics-cloud-and-try-again",
+		"an-unexpected-error-occurred-while-enabling-the-most-popular-" +
+			"content-recommendations-model.-go-to-instance-settings-" +
+				"analytics-cloud-and-try-again",
 		1),
 	CONTENT_RECOMMENDER_USER_PERSONALIZATION_ENABLED(
 		"user's-personalized-content-recommendations-was-enabled-" +
 			"successfully-and-is-now-available-in-the-collection-display",
 		2),
 	CONTENT_RECOMMENDER_USER_PERSONALIZATION_FAILED(
-		"user's-personalized-content-recommendations-could-not-be-enabled.-" +
-			"go-to-instance-settings-analytics-cloud-and-try-again",
+		"an-unexpected-error-occurred-while-enabling-the-user's-personalized-" +
+			"content-recommendations-model.-go-to-instance-settings-" +
+				"analytics-cloud-and-try-again",
 		3);
 
 	public static RecommendationNotificationType fromNotificationTypeCode(

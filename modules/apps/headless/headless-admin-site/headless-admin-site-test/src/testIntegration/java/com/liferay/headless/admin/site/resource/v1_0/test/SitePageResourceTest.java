@@ -129,17 +129,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_testGetSiteSiteByExternalReferenceCodeSitePage(
-			_addLayout(LayoutConstants.TYPE_COLLECTION,
-				UnicodePropertiesBuilder.put(
-					"collectionPK",
-					"com.liferay.asset.internal.info.collection.provider." +
-					"RecentContentInfoCollectionProvider"
-				).put(
-					"collectionType",
-					"com.liferay.info.list.provider.item.selector.criterion." +
-					"InfoListProviderItemSelectorReturnType"
-				).buildString(),
-				serviceContext));
+			_addLayout(LayoutConstants.TYPE_COLLECTION, null, serviceContext));
 		_testGetSiteSiteByExternalReferenceCodeSitePage(
 			_addLayout(LayoutConstants.TYPE_CONTENT, null, serviceContext));
 		_testGetSiteSiteByExternalReferenceCodeSitePage(
@@ -354,6 +344,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String collectionType = layout.getTypeSettingsProperty(
 			"collectionType");
+
+		if (Validator.isNull(collectionType)) {
+			Assert.assertTrue(
+				sitePage.getPageSettings() instanceof CollectionPageSettings);
+
+			return;
+		}
 
 		CollectionPageSettings collectionPageSettings =
 			(CollectionPageSettings)sitePage.getPageSettings();

@@ -296,12 +296,12 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			return layoutPageTemplateEntry;
 		}
 
-		if (layout.isDraftLayout()) {
-			return _layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		if (!layout.isDraftLayout()) {
+			return null;
 		}
 
-		return null;
+		return _layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 	}
 
 	private String _getDraftLayoutFullURL(

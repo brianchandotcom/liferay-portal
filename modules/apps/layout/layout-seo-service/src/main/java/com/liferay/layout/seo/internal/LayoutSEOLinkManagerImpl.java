@@ -194,7 +194,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			siteDefaultLocale);
 		String alternateCanonicalURL = layoutSEOEntry.getCanonicalURL(locale);
 
-		if (currentCanonicalURL.equals(alternateCanonicalURL)) {
+		if (!locale.equals(siteDefaultLocale) &&
+			currentCanonicalURL.equals(alternateCanonicalURL)) {
+
 			return alternateURL;
 		}
 

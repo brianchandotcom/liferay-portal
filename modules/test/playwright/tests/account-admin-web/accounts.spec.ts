@@ -360,3 +360,74 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 		page.getByText('"emailAddress": "' + emailAddress)
 	).toBeVisible();
 });
+
+test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	const accounts = [];
+
+	for (let i = 1; i < 7; i++) {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: `Account ${i}`,
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+		accounts.push(account);
+	}
+
+	await accountsPage.goto();
+
+	const accountNames: string[] = [
+		accounts[0].name,
+		accounts[2].name,
+		accounts[4].name,
+	];
+
+	for (const name of accountNames) {
+		await (await accountsPage.accountsTableRowCheckBox(name)).click();
+	}
+
+	page.on('dialog', async (dialog) => await dialog.accept());
+
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	for (const name of accountNames) {
+		try {
+			await accountsPage.accountsTableRowLink(name);
+		}
+		catch (error) {
+			expect(error).toBeDefined();
+		}
+	}
+
+	await accountsPage.changeFilter('Inactive');
+
+	for (const name of accountNames) {
+		await expect(
+			(await accountsPage.accountsTableRow(1, name, true)).row
+		).toBeVisible();
+	}
+
+	for (const name of accountNames) {
+		await (await accountsPage.accountsTableRowCheckBox(name)).click();
+	}
+
+	await accountsPage.activateButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.noAccountsMessage).toBeVisible();
+
+	await accountsPage.changeFilter('Active');
+
+	for (const account of accounts) {
+		await expect(
+			(await accountsPage.accountsTableRow(1, account.name, true)).row
+		).toBeVisible();
+	}
+});

@@ -282,16 +282,16 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			).put(
 				"error",
 				() -> {
-					if (portalException instanceof ImageTypeException) {
-						return JSONUtil.put(
-							"errorType",
-							ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
-						).put(
-							"message", StringPool.BLANK
-						);
+					if (!(portalException instanceof ImageTypeException)) {
+						return null;
 					}
 
-					return null;
+					return JSONUtil.put(
+						"errorType",
+						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
+					).put(
+						"message", StringPool.BLANK
+					);
 				}
 			);
 		}

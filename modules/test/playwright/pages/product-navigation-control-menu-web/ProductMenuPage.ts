@@ -15,6 +15,7 @@ export class ProductMenuPage {
 	readonly formsButton: Locator;
 	readonly importButton: Locator;
 	readonly membershipsButton: Locator;
+	readonly segmentsButton: Locator;
 	readonly openProductMenuButton: Locator;
 	readonly page: Page;
 	readonly pagesButton: Locator;
@@ -46,6 +47,9 @@ export class ProductMenuPage {
 		});
 		this.membershipsButton = page.getByRole('menuitem', {
 			name: 'Memberships',
+		});
+		this.segmentsButton = page.getByRole('menuitem', {
+			name: 'Segments',
 		});
 		this.page = page;
 		this.pagesButton = page.getByRole('menuitem', {name: 'Pages'});
@@ -122,6 +126,11 @@ export class ProductMenuPage {
 	async goToPublishingImport() {
 		await this.publishingButton.click();
 		await this.importButton.click();
+	}
+
+	async goToSegments() {
+		await this.peopleButton.click();
+		await this.segmentsButton.click();
 	}
 
 	async goToSiteSettings() {

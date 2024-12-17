@@ -901,13 +901,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			_themeLocalService.getThemes(companyId),
 			theme -> Objects.equals(theme.getName(), themeName));
 
-		if (ListUtil.isNotEmpty(themes)) {
-			Theme theme = themes.get(0);
-
-			return theme.getThemeId();
+		if (ListUtil.isEmpty(themes)) {
+			return null;
 		}
 
-		return null;
+		Theme theme = themes.get(0);
+
+		return theme.getThemeId();
 	}
 
 	private Thumbnail _getThumbnail(String fileName, ZipReader zipReader) {

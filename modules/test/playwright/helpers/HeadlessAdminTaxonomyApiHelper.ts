@@ -11,6 +11,12 @@ interface postSiteTaxonomyVocabularyProps {
 	siteId: string;
 }
 
+export interface postTaxonomyCategoryTaxonomyCategory {
+	name: string;
+	name_i18n?: {['ES-es']: string};
+	parentTaxonomyCategoryId: number;
+}
+
 export interface postTaxonomyVocabularyTaxonomyCategoryProps {
 	name: string;
 	name_i18n?: {['ES-es']: string};
@@ -82,6 +88,24 @@ export class HeadlessAdminTaxonomyApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`,
 			{data: {assetTypes, name}}
+		);
+	}
+
+	/**
+	 * It allows creating a subcategory inside a category.
+	 *
+	 * @param name the name of the subcategory
+	 * @param vocabularyId the parent vocabulary id
+	 */
+
+	async postTaxonomyCategoryTaxonomyCategory({
+		name,
+		name_i18n,
+		parentTaxonomyCategoryId,
+	}: postTaxonomyCategoryTaxonomyCategory): Promise<{id: number}> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-categories/${parentTaxonomyCategoryId}/taxonomy-categories`,
+			{data: {name, name_i18n}}
 		);
 	}
 

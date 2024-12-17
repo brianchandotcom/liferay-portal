@@ -141,31 +141,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "HTTP_METHOD_PICKLIST",
 					"name": "httpMethod",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "get",
-										"objectStateTransitions": [
-											{
-												"key": "post"
-											}
-										]
-									},
-									{
-										"key": "post",
-										"objectStateTransitions": [
-											{
-												"key": "get"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": true,
 					"system": true,
@@ -243,31 +218,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
 					"name": "retrieveType",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "collection",
-										"objectStateTransitions": [
-											{
-												"key": "singleElement"
-											}
-										]
-									},
-									{
-										"key": "singleElement",
-										"objectStateTransitions": [
-											{
-												"key": "collection"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": true,
 					"system": true,
@@ -285,31 +235,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "SCOPE_PICKLIST",
 					"name": "scope",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "company",
-										"objectStateTransitions": [
-											{
-												"key": "site"
-											}
-										]
-									},
-									{
-										"key": "site",
-										"objectStateTransitions": [
-											{
-												"key": "company"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": true,
 					"system": true,
@@ -621,31 +546,6 @@
 					},
 					"listTypeDefinitionExternalReferenceCode": "APPLICATION_STATUS_PICKLIST",
 					"name": "applicationStatus",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "published",
-										"objectStateTransitions": [
-											{
-												"key": "unpublished"
-											}
-										]
-									},
-									{
-										"key": "unpublished",
-										"objectStateTransitions": [
-											{
-												"key": "published"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
 					"required": true,
 					"state": true,
 					"system": true,

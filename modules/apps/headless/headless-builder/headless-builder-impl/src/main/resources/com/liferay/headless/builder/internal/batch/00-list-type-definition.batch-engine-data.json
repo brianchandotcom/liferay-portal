@@ -14,6 +14,60 @@
 	"items": [
 		{
 			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "HTTP_METHOD_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "GET",
+					"key": "get",
+					"name": "get"
+				},
+				{
+					"externalReferenceCode": "POST",
+					"key": "post",
+					"name": "post"
+				}
+			],
+			"name": "HTTP Method",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "COLLECTION",
+					"key": "collection",
+					"name": "collection"
+				},
+				{
+					"externalReferenceCode": "SINGLE_ELEMENT",
+					"key": "singleElement",
+					"name": "singleElement"
+				}
+			],
+			"name": "Retrieve Type",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "SCOPE_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "COMPANY",
+					"key": "company",
+					"name": "company"
+				},
+				{
+					"externalReferenceCode": "SITE",
+					"key": "site",
+					"name": "site"
+				}
+			],
+			"name": "Scope",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
 			"externalReferenceCode": "L_API_PROPERTY_TYPES",
 			"listTypeEntries": [
 				{
@@ -28,6 +82,24 @@
 				}
 			],
 			"name": "API Property Types",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "APPLICATION_STATUS_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "PUBLISHED",
+					"key": "published",
+					"name": "published"
+				},
+				{
+					"externalReferenceCode": "UNPUBLISHED",
+					"key": "unpublished",
+					"name": "unpublished"
+				}
+			],
+			"name": "Application Status",
 			"system": true
 		}
 	]

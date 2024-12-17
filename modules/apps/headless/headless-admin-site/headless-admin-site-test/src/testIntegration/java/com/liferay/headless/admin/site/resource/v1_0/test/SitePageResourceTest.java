@@ -577,11 +577,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testGetSiteSiteByExternalReferenceCodeSitePage(Layout layout)
 		throws Exception {
 
-		_assertSitePage(
-			layout,
+		SitePage sitePage =
 			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
-				layout.getExternalReferenceCode()));
+				layout.getExternalReferenceCode());
+
+		_assertSitePage(layout, sitePage);
+		_testGetSiteSiteByExternalReferenceCodeSitePageWithNestedFields(
+			sitePage);
 	}
 
 	private void

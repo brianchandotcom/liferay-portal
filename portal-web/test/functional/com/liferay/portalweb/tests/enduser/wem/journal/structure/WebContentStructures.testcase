@@ -746,7 +746,7 @@ definition {
 				predefinedValue = "true",
 				webContentLinkToPage = "Test Great Grand Child Page");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a Web Content Display to parent page") {

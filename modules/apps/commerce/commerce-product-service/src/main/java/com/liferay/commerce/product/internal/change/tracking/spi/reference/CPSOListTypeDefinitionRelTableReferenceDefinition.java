@@ -39,7 +39,7 @@ public class CPSOListTypeDefinitionRelTableReferenceDefinition
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _cpsoListTypeDefinitionRelPersistence;
+		return _cpSpecificationOptionListTypeDefinitionRelPersistence;
 	}
 
 	@Override
@@ -49,6 +49,6 @@ public class CPSOListTypeDefinitionRelTableReferenceDefinition
 
 	@Reference
 	private CPSpecificationOptionListTypeDefinitionRelPersistence
-		_cpsoListTypeDefinitionRelPersistence;
+		_cpSpecificationOptionListTypeDefinitionRelPersistence;
 
 }

@@ -246,35 +246,33 @@ public class FormLayoutStructureItemImporter
 		return JSONUtil.put(
 			"unlocalizedFieldsMessage",
 			() -> {
-				if (localizationConfigResultMap.containsKey(
+				if (!localizationConfigResultMap.containsKey(
 						"unlocalizedFieldsMessage")) {
 
-					return _getLocalizedValuesJSONObject(
-						"unlocalizedFieldsMessage",
-						localizationConfigResultMap);
+					return null;
 				}
 
-				return null;
+				return _getLocalizedValuesJSONObject(
+					"unlocalizedFieldsMessage", localizationConfigResultMap);
 			}
 		).put(
 			"unlocalizedFieldsState",
 			() -> {
-				if (localizationConfigResultMap.containsKey(
+				if (!localizationConfigResultMap.containsKey(
 						"unlocalizedFieldsState")) {
 
-					if (Objects.equals(
-							localizationConfigResultMap.get(
-								"unlocalizedFieldsState"),
-							LocalizationConfig.UnlocalizedFieldsState.
-								DISABLED)) {
-
-						return "disabled";
-					}
-
-					return "read-only";
+					return null;
 				}
 
-				return null;
+				if (Objects.equals(
+						localizationConfigResultMap.get(
+							"unlocalizedFieldsState"),
+						LocalizationConfig.UnlocalizedFieldsState.DISABLED)) {
+
+					return "disabled";
+				}
+
+				return "read-only";
 			}
 		);
 	}
@@ -345,15 +343,15 @@ public class FormLayoutStructureItemImporter
 				).put(
 					"showNotification",
 					() -> {
-						if (formSuccessSubmissionResultMap.containsKey(
+						if (!formSuccessSubmissionResultMap.containsKey(
 								"showNotification")) {
 
-							return GetterUtil.getBoolean(
-								formSuccessSubmissionResultMap.get(
-									"showNotification"));
+							return null;
 						}
 
-						return null;
+						return GetterUtil.getBoolean(
+							formSuccessSubmissionResultMap.get(
+								"showNotification"));
 					}
 				).put(
 					"type", "none"

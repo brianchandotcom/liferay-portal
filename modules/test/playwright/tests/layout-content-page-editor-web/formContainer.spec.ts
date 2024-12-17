@@ -1750,6 +1750,209 @@ test.describe('Form Localization', () => {
 		).toBeVisible();
 	});
 
+	test('Disable unlocalized fields when changing language', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create object definition
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				externalReferenceCode: 'plantERC',
+				label: {
+					en_US: 'Plant',
+				},
+				name: 'Plant',
+				objectFields: [
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'countryERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Country',
+						},
+						localized: false,
+						name: 'country',
+						required: false,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Clob,
+						businessType: ObjectField.BusinessTypeEnum.RichText,
+						externalReferenceCode: 'descriptionERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Description',
+						},
+						localized: false,
+						name: 'description',
+						required: false,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.Clob,
+						businessType: ObjectField.BusinessTypeEnum.LongText,
+						externalReferenceCode: 'nameERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Name',
+						},
+						localized: false,
+						name: 'name',
+						required: false,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'scientificName',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Scientific Name',
+						},
+						localized: true,
+						name: 'scientificName',
+						required: false,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Plants',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map the form to the Plant object and publish the page
+
+		await pageEditorPage.mapFormFragment(formId, 'Plant');
+
+		await page.getByText('Add Localization Select', {exact: true}).click();
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Check that unlocalized fields are disabled
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			}),
+			trigger: page.getByLabel('Select a language, current language:'),
+		});
+
+		await expect(
+			page.getByLabel('Country field cannot be localized')
+		).toBeVisible();
+		await expect(
+			page.getByLabel('Description field cannot be localized')
+		).toBeVisible();
+		await expect(
+			page.getByLabel('Name field cannot be localized')
+		).toBeVisible();
+
+		await expect(page.getByLabel('Country', {exact: true})).toBeDisabled();
+		expect(
+			await page
+				.frameLocator('iframe[title="editor"]')
+				.locator('body')
+				.evaluate((element) => element.ariaReadOnly)
+		).toBe('true');
+		await expect(page.getByLabel('Name', {exact: true})).toBeDisabled();
+
+		// Go to edit mode and change unlocalized field configuration
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(
+			await pageEditorPage.getFragmentId('Form Container')
+		);
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Unlocalizable Fields State',
+			tab: 'General',
+			value: 'read-only',
+		});
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Unlocalizable Fields Message',
+			tab: 'General',
+			value: 'field is not localizable message',
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode and check that the config is applied
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			}),
+			trigger: page.getByLabel('Select a language, current language:'),
+		});
+
+		await expect(
+			page.getByLabel('field is not localizable message')
+		).toHaveCount(3);
+
+		await expect(page.getByLabel('Country', {exact: true})).toHaveAttribute(
+			'readonly'
+		);
+		expect(
+			await page
+				.frameLocator('iframe[title="editor"]')
+				.locator('body')
+				.evaluate((element) => element.ariaReadOnly)
+		).toBe('true');
+		await expect(page.getByLabel('Name', {exact: true})).toHaveAttribute(
+			'readonly'
+		);
+	});
+
 	test('Can visualize and edit translations', async ({
 		apiHelpers,
 		displayPageTemplatesPage,

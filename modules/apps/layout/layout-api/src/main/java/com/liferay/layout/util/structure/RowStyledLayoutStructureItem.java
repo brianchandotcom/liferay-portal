@@ -214,22 +214,21 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			).put(
 				"reverseOrder",
 				() -> {
-					if (configurationJSONObject.has("reverseOrder")) {
-						return configurationJSONObject.getBoolean(
-							"reverseOrder");
+					if (!configurationJSONObject.has("reverseOrder")) {
+						return null;
 					}
 
-					return null;
+					return configurationJSONObject.getBoolean("reverseOrder");
 				}
 			).put(
 				"verticalAlignment",
 				() -> {
-					if (configurationJSONObject.has("verticalAlignment")) {
-						return configurationJSONObject.getString(
-							"verticalAlignment");
+					if (!configurationJSONObject.has("verticalAlignment")) {
+						return null;
 					}
 
-					return null;
+					return configurationJSONObject.getString(
+						"verticalAlignment");
 				}
 			));
 	}

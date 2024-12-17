@@ -36,12 +36,12 @@ public class EmptyCollectionOptions {
 					});
 				setMessage(
 					() -> {
-						if (jsonObject.has("message")) {
-							return JSONUtil.toStringMap(
-								jsonObject.getJSONObject("message"));
+						if (!jsonObject.has("message")) {
+							return null;
 						}
 
-						return null;
+						return JSONUtil.toStringMap(
+							jsonObject.getJSONObject("message"));
 					});
 			}
 		};

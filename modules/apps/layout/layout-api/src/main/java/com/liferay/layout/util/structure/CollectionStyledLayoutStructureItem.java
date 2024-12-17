@@ -395,12 +395,11 @@ public class CollectionStyledLayoutStructureItem
 			).put(
 				"numberOfColumns",
 				() -> {
-					if (configurationJSONObject.has("numberOfColumns")) {
-						return configurationJSONObject.getInt(
-							"numberOfColumns");
+					if (!configurationJSONObject.has("numberOfColumns")) {
+						return null;
 					}
 
-					return null;
+					return configurationJSONObject.getInt("numberOfColumns");
 				}
 			));
 	}

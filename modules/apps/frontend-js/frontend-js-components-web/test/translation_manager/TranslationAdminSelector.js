@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, within} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom';
+
+import '@testing-library/jest-dom/extend-expect';
 
 import TranslationAdminSelector from '../../src/main/resources/META-INF/resources/translation_manager/TranslationAdminSelector';
 
@@ -274,7 +276,9 @@ describe('TranslationAdminSelector', () => {
 	});
 
 	it('calls onSelectedLocaleChange callback on dropdown locale selection', () => {
-		const {getByTitle} = render(<TranslationAdminSelector {...props} />);
+		const {getByRole, getByTitle} = render(
+			<TranslationAdminSelector {...props} />
+		);
 
 		const trigger = getByTitle('select-a-language');
 
@@ -298,6 +302,10 @@ describe('TranslationAdminSelector', () => {
 		expect(props.onSelectedLanguageIdChange).toHaveBeenLastCalledWith(
 			'ca_ES'
 		);
+
+		const languageSelector = getByRole('combobox');
+
+		expect(within(languageSelector).getByText('ca-ES')).toBeInTheDocument();
 	});
 
 	it('is used as a controlled component', () => {

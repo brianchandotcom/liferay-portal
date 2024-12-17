@@ -217,9 +217,7 @@ export default function TranslationAdminSelector({
 					});
 				}}
 				selectedItem={activeLocales.find(
-					(locale) =>
-						locale.id === selectedLanguageId ||
-						locale.id === defaultLanguageId
+					(locale) => locale.id === selectedLanguageId
 				)}
 				selectedKey={selectedLanguageId}
 			>

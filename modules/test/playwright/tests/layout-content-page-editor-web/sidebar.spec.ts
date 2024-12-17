@@ -1820,7 +1820,33 @@ test.describe('Rules Panel', () => {
 
 			await modal.getByLabel('Rule Name').fill(ruleName);
 
-			// Condition
+			// Check empty rules are not allowed
+
+			await modal
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await expect(
+				modal.getByText('The rule is incomplete')
+			).toBeVisible();
+
+			// Start adding a condition
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'User'}),
+				trigger: page.getByLabel('Select Item for the Condition'),
+			});
+
+			// Check we can delete the condition
+
+			await page.getByLabel('Delete Condition').click();
+
+			await expect(
+				page.getByLabel('Select Item for the Condition')
+			).not.toHaveText('User');
+
+			// Continue adding the condition
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,

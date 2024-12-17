@@ -19,5 +19,5 @@
 
 	${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutPageTemplateStructureModel, objectDefinitionModel))}
 
-	${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + groupId + "," + layoutModel.getFriendlyURL() + "," + objectDefinitionModel.getObjectDefinitionId() + "\n")}
+	${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.getFriendlyURL() + "\n")}
 </#list>

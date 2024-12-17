@@ -299,6 +299,43 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	@Test
+	public void testScheduleWithLaterCronExpressionSet() throws Exception {
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				UserTestUtil.addUser(), _getRandomDispatchExecutorType(), 1));
+
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode());
+
+		Calendar calendarStart = CalendarFactoryUtil.getCalendar(
+			new Date(
+			).getTime());
+
+		calendarStart.add(Calendar.DAY_OF_YEAR, -1);
+
+		Calendar calendarEnd = CalendarFactoryUtil.getCalendar(
+			new Date(
+			).getTime());
+
+		calendarEnd.add(Calendar.DAY_OF_YEAR, 1);
+
+		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId(), true, "0 0 3 * * ? *",
+			dispatchTaskClusterMode, calendarEnd.get(Calendar.MONTH),
+			calendarEnd.get(Calendar.DAY_OF_MONTH),
+			calendarEnd.get(Calendar.YEAR), 23, 59, false, true,
+			calendarStart.get(Calendar.MONTH),
+			calendarStart.get(Calendar.DAY_OF_MONTH),
+			calendarStart.get(Calendar.YEAR), 23, 59, "UTC");
+
+		Assert.assertEquals(
+			0,
+			_dispatchLogLocalService.getDispatchLogsCount(
+				dispatchTrigger.getDispatchTriggerId()));
+	}
+
+	@Test
 	public void testUpdateDispatchTrigger() throws Exception {
 		User user = UserTestUtil.addUser();
 

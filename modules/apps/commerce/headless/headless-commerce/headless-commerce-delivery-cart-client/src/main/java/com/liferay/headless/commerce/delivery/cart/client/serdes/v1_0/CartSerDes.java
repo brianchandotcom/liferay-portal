@@ -218,6 +218,30 @@ public class CartSerDes {
 			sb.append("\"");
 		}
 
+		if (cart.getCurrencyExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cart.getCurrencyExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (cart.getCurrencyId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyId\": ");
+
+			sb.append(cart.getCurrencyId());
+		}
+
 		if (cart.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -821,6 +845,22 @@ public class CartSerDes {
 			map.put("currencyCode", String.valueOf(cart.getCurrencyCode()));
 		}
 
+		if (cart.getCurrencyExternalReferenceCode() == null) {
+			map.put("currencyExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"currencyExternalReferenceCode",
+				String.valueOf(cart.getCurrencyExternalReferenceCode()));
+		}
+
+		if (cart.getCurrencyId() == null) {
+			map.put("currencyId", null);
+		}
+		else {
+			map.put("currencyId", String.valueOf(cart.getCurrencyId()));
+		}
+
 		if (cart.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -1177,6 +1217,14 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return true;
 			}
@@ -1410,6 +1458,20 @@ public class CartSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				if (jsonParserFieldValue != null) {
 					cart.setCurrencyCode((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					cart.setCurrencyExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				if (jsonParserFieldValue != null) {
+					cart.setCurrencyId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

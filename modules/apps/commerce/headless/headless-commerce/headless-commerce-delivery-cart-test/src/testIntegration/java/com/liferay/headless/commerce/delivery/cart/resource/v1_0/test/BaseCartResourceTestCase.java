@@ -177,6 +177,7 @@ public abstract class BaseCartResourceTestCase {
 		cart.setBillingAddressExternalReferenceCode(regex);
 		cart.setCouponCode(regex);
 		cart.setCurrencyCode(regex);
+		cart.setCurrencyExternalReferenceCode(regex);
 		cart.setDeliveryTermLabel(regex);
 		cart.setExternalReferenceCode(regex);
 		cart.setFriendlyURLSeparator(regex);
@@ -207,6 +208,7 @@ public abstract class BaseCartResourceTestCase {
 			regex, cart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getCouponCode());
 		Assert.assertEquals(regex, cart.getCurrencyCode());
+		Assert.assertEquals(regex, cart.getCurrencyExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getDeliveryTermLabel());
 		Assert.assertEquals(regex, cart.getExternalReferenceCode());
 		Assert.assertEquals(regex, cart.getFriendlyURLSeparator());
@@ -1775,6 +1777,25 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (cart.getCurrencyExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (cart.getCurrencyId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (cart.getCustomFields() == null) {
 					valid = false;
@@ -2333,6 +2354,30 @@ public abstract class BaseCartResourceTestCase {
 			if (Objects.equals("currencyCode", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getCurrencyCode(), cart2.getCurrencyCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getCurrencyExternalReferenceCode(),
+						cart2.getCurrencyExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cart1.getCurrencyId(), cart2.getCurrencyId())) {
 
 					return false;
 				}
@@ -3152,6 +3197,57 @@ public abstract class BaseCartResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("currencyExternalReferenceCode")) {
+			Object object = cart.getCurrencyExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("currencyId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("customFields")) {
@@ -4178,6 +4274,9 @@ public abstract class BaseCartResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				currencyExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				currencyId = RandomTestUtil.randomLong();
 				deliveryTermId = RandomTestUtil.randomLong();
 				deliveryTermLabel = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -732,7 +732,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedParentLayout);
 		Assert.assertEquals(
 			0,
 			_getLayoutPortletIds(
@@ -743,7 +742,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedChildLayout);
 		Assert.assertEquals(
 			0,
 			_getLayoutPortletIds(
@@ -864,7 +862,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedParentLayout);
 		Assert.assertEquals(
 			0,
 			_getLayoutPortletIds(
@@ -875,7 +872,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedChildLayout);
 		Assert.assertEquals(
 			0,
 			_getLayoutPortletIds(
@@ -1097,13 +1093,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedParentLayout);
-
 		Layout importedChildLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
-		Assert.assertNotNull(importedChildLayout);
 		Assert.assertEquals(
 			importedChildLayout.getParentLayoutId(),
 			importedParentLayout.getLayoutId());

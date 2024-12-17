@@ -82,10 +82,7 @@ public class CommerceOrganizationExportImportTest
 					"rootOrganizationExternalReferenceCode", null),
 				organization.getCompanyId());
 
-		Assert.assertNotNull(importedOrganization);
-
 		Assert.assertNotEquals(layout.getGroupId(), importedGroup.getGroupId());
-
 		Assert.assertEquals(
 			importedOrganization.getExternalReferenceCode(),
 			portletPreferences.getValue(

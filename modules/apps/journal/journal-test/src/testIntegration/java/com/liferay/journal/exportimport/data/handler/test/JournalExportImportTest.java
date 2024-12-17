@@ -264,8 +264,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		JournalArticle importedArticle = (JournalArticle)getStagedModel(
 			article.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedArticle);
-
 		Assert.assertEquals(
 			1,
 			JournalArticleLocalServiceUtil.getArticlesCount(
@@ -811,8 +809,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticle importedArticle = (JournalArticle)getStagedModel(
 				article.getUuid(), importedGroup.getGroupId());
 
-			Assert.assertNotNull(importedArticle);
-
 			validateImportedStagedModel(article, importedArticle);
 		}
 	}
@@ -823,8 +819,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		JournalArticle importedArticle =
 			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
 				uuid, importedGroup.getGroupId());
-
-		Assert.assertNotNull(importedArticle);
 
 		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(

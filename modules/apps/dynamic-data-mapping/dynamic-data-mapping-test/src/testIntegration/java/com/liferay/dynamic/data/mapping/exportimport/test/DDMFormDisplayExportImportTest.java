@@ -96,8 +96,6 @@ public class DDMFormDisplayExportImportTest
 				fetchDDMFormInstanceByUuidAndGroupId(
 					ddmFormInstance.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedDDMFormInstance);
-
 		Assert.assertEquals(
 			String.valueOf(importedDDMFormInstance.getFormInstanceId()),
 			importedPortletPreferences.getValue(

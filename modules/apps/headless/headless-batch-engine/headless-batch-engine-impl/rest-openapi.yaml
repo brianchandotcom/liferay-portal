@@ -428,6 +428,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: batchRestrictFields
+                  schema:
+                      type: string
+                - in: query
                   name: callbackURL
                   schema:
                       type: string
@@ -448,10 +452,6 @@ paths:
                   name: importStrategy
                   schema:
                       enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
-                - in: query
-                  name: batchRestrictFields
-                  schema:
                       type: string
                 - in: query
                   name: taskItemDelegateName

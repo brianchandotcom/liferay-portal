@@ -6,7 +6,6 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -48,32 +46,26 @@ public class CommerceProductAccountGroupFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<CProductAccountGroup> cProductAccountGroups = new ArrayList<>();
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<AccountGroupRel> accountGroupRels =
+		return TransformUtil.transform(
 			_accountGroupRelLocalService.getAccountGroupRels(
 				TransformUtil.transformToLongArray(
 					_getAccountGroups(httpServletRequest),
 					AccountGroup::getAccountGroupId),
 				CPDefinition.class.getName(), cpDefinitionId,
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			accountGroupRel -> {
+				AccountGroup accountGroup =
+					_accountGroupLocalService.getAccountGroup(
+						accountGroupRel.getAccountGroupId());
 
-		for (AccountGroupRel accountGroupRel : accountGroupRels) {
-			AccountGroup accountGroup =
-				_accountGroupLocalService.getAccountGroup(
-					accountGroupRel.getAccountGroupId());
-
-			cProductAccountGroups.add(
-				new CProductAccountGroup(
+				return new CProductAccountGroup(
 					accountGroupRel.getAccountGroupRelId(),
-					accountGroup.getName()));
-		}
-
-		return cProductAccountGroups;
+					accountGroup.getName());
+			});
 	}
 
 	@Override

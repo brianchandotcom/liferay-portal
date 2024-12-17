@@ -16,6 +16,7 @@ import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,40 +50,31 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<ProductSpecification> productSpecifications = new ArrayList<>();
-
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getLocale(httpServletRequest));
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				_cpDefinitionSpecificationOptionValueService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinitionId, fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition(), null);
+		return TransformUtil.transform(
+			_cpDefinitionSpecificationOptionValueService.
+				getCPDefinitionSpecificationOptionValues(
+					cpDefinitionId, fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null),
+			cpDefinitionSpecificationOptionValue -> {
+				CPSpecificationOption cpSpecificationOption =
+					cpDefinitionSpecificationOptionValue.
+						getCPSpecificationOption();
 
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			CPSpecificationOption cpSpecificationOption =
-				cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-
-			productSpecifications.add(
-				new ProductSpecification(
+				return new ProductSpecification(
 					cpDefinitionSpecificationOptionValue.
 						getCPDefinitionSpecificationOptionValueId(),
 					cpSpecificationOption.getTitle(languageId),
 					cpDefinitionSpecificationOptionValue.getValue(languageId),
 					_getCPOptionCategoryTitle(
 						cpDefinitionSpecificationOptionValue, languageId),
-					cpDefinitionSpecificationOptionValue.getPriority()));
-		}
-
-		return productSpecifications;
+					cpDefinitionSpecificationOptionValue.getPriority());
+			});
 	}
 
 	@Override

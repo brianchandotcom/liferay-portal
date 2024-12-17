@@ -7,4 +7,11 @@
 
 <%@ include file="/captcha/init.jsp" %>
 
-<liferay-util:include page="<%= CaptchaUtil.getTaglibPath() %>" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= portletRequest != null %>">
+		<liferay-util:include page="<%= CaptchaUtil.getTaglibPath(portletRequest) %>" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="<%= CaptchaUtil.getTaglibPath(request) %>" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

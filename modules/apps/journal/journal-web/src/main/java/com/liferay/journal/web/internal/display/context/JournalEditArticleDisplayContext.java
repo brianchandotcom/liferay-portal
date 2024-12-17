@@ -610,25 +610,26 @@ public class JournalEditArticleDisplayContext {
 			return _ddmTemplate;
 		}
 
-		if ((_article == null) && (_ddmTemplate == null)) {
-			DDMStructure ddmStructure = getDDMStructure();
-
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateServiceUtil.getTemplates(
-					_themeDisplay.getCompanyId(), ddmStructure.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class),
-					ddmStructure.getStructureId(),
-					PortalUtil.getClassNameId(JournalArticle.class), true,
-					WorkflowConstants.STATUS_APPROVED);
-
-			if (!ddmTemplates.isEmpty()) {
-				_ddmTemplate = ddmTemplates.get(0);
-
-				return _ddmTemplate;
-			}
+		if ((_article != null) || (_ddmTemplate != null)) {
+			return null;
 		}
 
-		return null;
+		DDMStructure ddmStructure = getDDMStructure();
+
+		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(
+			_themeDisplay.getCompanyId(), ddmStructure.getGroupId(),
+			PortalUtil.getClassNameId(DDMStructure.class),
+			ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class), true,
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (ddmTemplates.isEmpty()) {
+			return null;
+		}
+
+		_ddmTemplate = ddmTemplates.get(0);
+
+		return _ddmTemplate;
 	}
 
 	public String getDDMTemplateKey() {
@@ -1129,18 +1130,17 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"displayDate",
 			() -> {
-				if ((_article != null) && (_article.getDisplayDate() != null) &&
-					(_article.isPending() || _article.isScheduled())) {
+				if ((_article == null) || (_article.getDisplayDate() == null) ||
+					(!_article.isPending() && !_article.isScheduled())) {
 
-					Format format =
-						FastDateFormatFactoryUtil.getSimpleDateFormat(
-							"yyyy-MM-dd HH:mm", _themeDisplay.getLocale(),
-							_themeDisplay.getTimeZone());
-
-					return format.format(_article.getDisplayDate());
+					return null;
 				}
 
-				return null;
+				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd HH:mm", _themeDisplay.getLocale(),
+					_themeDisplay.getTimeZone());
+
+				return format.format(_article.getDisplayDate());
 			}
 		).put(
 			"editingDefaultValues",

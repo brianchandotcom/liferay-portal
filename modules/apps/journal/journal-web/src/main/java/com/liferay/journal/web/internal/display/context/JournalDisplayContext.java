@@ -1924,14 +1924,14 @@ public class JournalDisplayContext {
 			return new Sort(null, Sort.SCORE_TYPE, false);
 		}
 
-		if (Objects.equals(getOrderByCol(), "title")) {
-			return new Sort(
-				Field.getSortableFieldName(
-					"localized_title_" + _themeDisplay.getLanguageId()),
-				!orderByAsc);
+		if (!Objects.equals(getOrderByCol(), "title")) {
+			return null;
 		}
 
-		return null;
+		return new Sort(
+			Field.getSortableFieldName(
+				"localized_title_" + _themeDisplay.getLanguageId()),
+			!orderByAsc);
 	}
 
 	private String _getSubtitle(

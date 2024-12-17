@@ -101,15 +101,15 @@ public class JournalArticleAssetRendererFactory
 					WorkflowConstants.STATUS_IN_TRASH
 				});
 
-		if ((latestJournalArticle == null) ||
-			Objects.equals(
+		if ((latestJournalArticle != null) &&
+			!Objects.equals(
 				journalArticle.getId(), latestJournalArticle.getId())) {
 
-			return _assetEntryLocalService.fetchEntry(
-				getClassName(), journalArticle.getResourcePrimKey());
+			return null;
 		}
 
-		return null;
+		return _assetEntryLocalService.fetchEntry(
+			getClassName(), journalArticle.getResourcePrimKey());
 	}
 
 	@Override

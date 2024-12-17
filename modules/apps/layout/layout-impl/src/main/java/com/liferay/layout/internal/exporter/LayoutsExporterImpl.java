@@ -145,13 +145,13 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					StringPool.BLANK, zipWriter));
 		}
 
-		if (LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT == type) {
-			return _exportLayoutPageTemplateEntries(
-				layoutPageTemplateEntryIds, type,
-				this::_populateMasterLayoutsZipWriter);
+		if (LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT != type) {
+			return null;
 		}
 
-		return null;
+		return _exportLayoutPageTemplateEntries(
+			layoutPageTemplateEntryIds, type,
+			this::_populateMasterLayoutsZipWriter);
 	}
 
 	@Override

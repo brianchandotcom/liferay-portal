@@ -346,15 +346,14 @@ public class CollectionLayoutStructureItemImporter
 			{
 				setDisplayMessage(
 					() -> {
-						if (emptyCollectionConfig.containsKey(
+						if (!emptyCollectionConfig.containsKey(
 								"displayMessage")) {
 
-							return GetterUtil.getBoolean(
-								emptyCollectionConfig.get("displayMessage"),
-								true);
+							return null;
 						}
 
-						return null;
+						return GetterUtil.getBoolean(
+							emptyCollectionConfig.get("displayMessage"), true);
 					});
 				setMessage(
 					() -> (Map<String, String>)emptyCollectionConfig.get(
@@ -366,19 +365,18 @@ public class CollectionLayoutStructureItemImporter
 	private String _getItemSubtype(
 		InfoCollectionProvider<?> infoCollectionProvider) {
 
-		if (infoCollectionProvider instanceof
-				SingleFormVariationInfoCollectionProvider) {
+		if (!(infoCollectionProvider instanceof
+				SingleFormVariationInfoCollectionProvider)) {
 
-			SingleFormVariationInfoCollectionProvider<?>
-				singleFormVariationInfoCollectionProvider =
-					(SingleFormVariationInfoCollectionProvider<?>)
-						infoCollectionProvider;
-
-			return singleFormVariationInfoCollectionProvider.
-				getFormVariationKey();
+			return null;
 		}
 
-		return null;
+		SingleFormVariationInfoCollectionProvider<?>
+			singleFormVariationInfoCollectionProvider =
+				(SingleFormVariationInfoCollectionProvider<?>)
+					infoCollectionProvider;
+
+		return singleFormVariationInfoCollectionProvider.getFormVariationKey();
 	}
 
 	private void _processCollectionViewportDefinition(
@@ -391,15 +389,14 @@ public class CollectionLayoutStructureItemImporter
 			JSONUtil.put(
 				"numberOfColumns",
 				() -> {
-					if (collectionViewportDefinitionMap.containsKey(
+					if (!collectionViewportDefinitionMap.containsKey(
 							"numberOfColumns")) {
 
-						return GetterUtil.getInteger(
-							collectionViewportDefinitionMap.get(
-								"numberOfColumns"));
+						return null;
 					}
 
-					return null;
+					return GetterUtil.getInteger(
+						collectionViewportDefinitionMap.get("numberOfColumns"));
 				}));
 	}
 

@@ -91,12 +91,12 @@ public class ColumnLayoutStructureItemImporter
 			JSONUtil.put(
 				"size",
 				() -> {
-					if (columnViewportDefinitionMap.containsKey("size")) {
-						return GetterUtil.getInteger(
-							columnViewportDefinitionMap.get("size"));
+					if (!columnViewportDefinitionMap.containsKey("size")) {
+						return null;
 					}
 
-					return null;
+					return GetterUtil.getInteger(
+						columnViewportDefinitionMap.get("size"));
 				}));
 	}
 

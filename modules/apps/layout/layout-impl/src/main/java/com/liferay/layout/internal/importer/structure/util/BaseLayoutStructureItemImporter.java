@@ -273,15 +273,15 @@ public abstract class BaseLayoutStructureItemImporter {
 				() -> {
 					Object hidden = fragmentViewportStyle.get("hidden");
 
-					if (hidden != null) {
-						if (GetterUtil.getBoolean(hidden)) {
-							return "none";
-						}
-
-						return "block";
+					if (hidden == null) {
+						return null;
 					}
 
-					return null;
+					if (GetterUtil.getBoolean(hidden)) {
+						return "none";
+					}
+
+					return "block";
 				}
 			).put(
 				"fontFamily", fragmentViewportStyle.get("fontFamily")

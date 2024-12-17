@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Deactivate;
 		"com.liferay.portlet.application-type=full-page-application",
 		"com.liferay.portlet.css-class-wrapper=portlet-mfa-verify",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.preferences-company-wide=true",
 		"javax.portlet.display-name=Multi Factor Authentication Verify",
 		"javax.portlet.init-param.mvc-command-names-default-views=/mfa_verify/view",

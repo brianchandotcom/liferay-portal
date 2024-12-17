@@ -19,8 +19,8 @@ const GetAppPage = () => {
 		{
 			account,
 			formState: {isValid},
-			isCloudApp,
 			product,
+			requiresResources,
 			stepState,
 		},
 		dispatch,
@@ -29,7 +29,7 @@ const GetAppPage = () => {
 	const {isFreeApp} = getProductPriceModel(product);
 	const {myUserAccount} = useMarketplaceContext();
 
-	const isFreeDXPApp = isFreeApp && !isCloudApp;
+	const isFreeAppWithoutResources = isFreeApp && !requiresResources;
 
 	return (
 		<Container
@@ -37,11 +37,11 @@ const GetAppPage = () => {
 			footerProps={{
 				primaryButtonProps: {
 					children: i18n.translate(
-						isFreeDXPApp ? 'get-app' : 'continue'
+						isFreeAppWithoutResources ? 'get-app' : 'continue'
 					),
 					disabled: !isValid || loading,
 					onClick: () => {
-						if (isFreeDXPApp) {
+						if (isFreeAppWithoutResources) {
 							return handleGetApp();
 						}
 

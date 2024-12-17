@@ -7,12 +7,13 @@ import {useGetAppContext} from '../GetAppContextProvider';
 import {StepWizardRevamp} from '../components/StepWizard/StepWizard';
 
 const ProductStepWizard = () => {
-	const [{currentStep, isCloudApp, steps}] = useGetAppContext();
+	const [{currentStep, isCloudApp, requiresResources, steps}] =
+		useGetAppContext();
 
 	return (
 		<div className="d-flex justify-content-center mb-6">
 			<StepWizardRevamp
-				className={isCloudApp ? 'col-10' : 'col-8'}
+				className={isCloudApp && requiresResources ? 'col-10' : 'col-8'}
 				currentStep={steps[currentStep]}
 				stepIndex={currentStep}
 				steps={steps}

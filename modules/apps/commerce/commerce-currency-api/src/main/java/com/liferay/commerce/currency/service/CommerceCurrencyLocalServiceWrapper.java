@@ -263,6 +263,14 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency
+		fetchCommerceCurrency(long companyId, String code) {
+
+		return _commerceCurrencyLocalService.fetchCommerceCurrency(
+			companyId, code);
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency
 		fetchCommerceCurrencyByExternalReferenceCode(
 			String externalReferenceCode, long companyId) {
 

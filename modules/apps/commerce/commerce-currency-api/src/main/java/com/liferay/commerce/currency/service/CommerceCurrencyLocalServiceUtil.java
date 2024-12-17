@@ -230,6 +230,12 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService().fetchCommerceCurrency(commerceCurrencyId);
 	}
 
+	public static CommerceCurrency fetchCommerceCurrency(
+		long companyId, String code) {
+
+		return getService().fetchCommerceCurrency(companyId, code);
+	}
+
 	public static CommerceCurrency fetchCommerceCurrencyByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

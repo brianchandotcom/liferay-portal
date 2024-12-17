@@ -219,6 +219,9 @@ public interface CommerceCurrencyLocalService
 	public CommerceCurrency fetchCommerceCurrency(long commerceCurrencyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency fetchCommerceCurrency(long companyId, String code);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCurrency fetchCommerceCurrencyByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 

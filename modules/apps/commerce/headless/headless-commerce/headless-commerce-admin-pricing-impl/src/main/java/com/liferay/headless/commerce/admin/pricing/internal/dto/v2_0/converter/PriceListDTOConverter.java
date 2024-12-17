@@ -46,6 +46,9 @@ public class PriceListDTOConverter
 			_commercePriceListService.getCommercePriceList(
 				(Long)dtoConverterContext.getId());
 
+		CommerceCurrency commerceCurrency =
+			commercePriceList.getCommerceCurrency();
+
 		return new PriceList() {
 			{
 				setActions(dtoConverterContext::getActions);
@@ -56,13 +59,10 @@ public class PriceListDTOConverter
 				setCatalogId(() -> _getCatalogId(commercePriceList));
 				setCatalogName(() -> _getCatalogName(commercePriceList));
 				setCreateDate(commercePriceList::getCreateDate);
-				setCurrencyCode(
-					() -> {
-						CommerceCurrency commerceCurrency =
-							commercePriceList.getCommerceCurrency();
-
-						return commerceCurrency.getCode();
-					});
+				setCurrencyCode(commerceCurrency::getCode);
+				setCurrencyExternalReferenceCode(
+					commerceCurrency::getExternalReferenceCode);
+				setCurrencyId(commerceCurrency::getCommerceCurrencyId);
 				setCustomFields(
 					() -> {
 						ExpandoBridge expandoBridge =

@@ -38,14 +38,14 @@ public class JournalArticleTermsOfUseDisplayContext {
 			getTermsOfUseJournalArticleGroupId();
 		String termsOfUseJournalArticleId = getTermsOfUseJournalArticleId();
 
-		if ((termsOfUseJournalArticleGroupId > 0) &&
-			Validator.isNotNull(termsOfUseJournalArticleId)) {
+		if ((termsOfUseJournalArticleGroupId <= 0) ||
+			Validator.isNull(termsOfUseJournalArticleId)) {
 
-			return JournalArticleLocalServiceUtil.fetchArticle(
-				termsOfUseJournalArticleGroupId, termsOfUseJournalArticleId);
+			return null;
 		}
 
-		return null;
+		return JournalArticleLocalServiceUtil.fetchArticle(
+			termsOfUseJournalArticleGroupId, termsOfUseJournalArticleId);
 	}
 
 	public long getTermsOfUseJournalArticleGroupId() {

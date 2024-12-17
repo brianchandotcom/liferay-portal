@@ -10,10 +10,13 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import getContainerDefinition from './utils/getContainerDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
@@ -23,6 +26,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageManagementSiteTest,
 	pageEditorPagesTest
 );
 
@@ -171,5 +175,91 @@ test(
 		await expect(
 			page.getByRole('tab', {exact: true, name: 'Advanced'})
 		).not.toBeAttached();
+	}
+);
+
+test(
+	'User without permissions for Journal can not access the web content editor from page editor',
+	{
+		tag: '@LPS-96795',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create user with correct permissions
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		// Create a page and go to edit mode as new user
+
+		const headingId = getRandomString();
+
+		const headingFragment = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingFragment]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(
+			layout,
+			pageManagementSite.friendlyUrlPath,
+			user.id
+		);
+
+		// Map the editable
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await pageEditorPage.setMappingConfiguration({
+			mapping: {
+				entity: 'Web Content',
+				entry: 'Animal 01 - Dogs and Cats categories',
+				field: 'Title',
+				folder: 'Animals',
+			},
+		});
+
+		// Go to contents panel and check user can not edit the web content
+
+		await pageEditorPage.goToSidebarTab('Page Content');
+
+		const panel = page.getByLabel('Page Content Panel');
+
+		const content = panel.locator(
+			'.page-editor__page-contents__page-content'
+		);
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: content.getByTitle('Open Actions Menu'),
+			trigger: content,
+		});
+
+		await expect(
+			page.getByRole('menuitem', {name: 'View Usages'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Edit'})
+		).not.toBeVisible();
 	}
 );

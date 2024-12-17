@@ -19,6 +19,7 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,46 +67,39 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		List<InstanceTierPriceEntry> instanceTierPriceEntries =
-			new ArrayList<>();
-
 		long commercePriceEntryId = ParamUtil.getLong(
 			httpServletRequest, "commercePriceEntryId");
 
-		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+		return TransformUtil.transform(
 			_commerceTierPriceEntryService.getCommerceTierPriceEntries(
 				commercePriceEntryId, fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			commerceTierPriceEntry -> {
+				CommercePriceEntry commercePriceEntry =
+					commerceTierPriceEntry.getCommercePriceEntry();
 
-		for (CommerceTierPriceEntry commerceTierPriceEntry :
-				commerceTierPriceEntries) {
+				CommercePriceList commercePriceList =
+					commercePriceEntry.getCommercePriceList();
 
-			CommercePriceEntry commercePriceEntry =
-				commerceTierPriceEntry.getCommercePriceEntry();
+				CommerceCurrency commerceCurrency =
+					commercePriceList.getCommerceCurrency();
 
-			CommercePriceList commercePriceList =
-				commercePriceEntry.getCommercePriceList();
+				CommerceMoney priceCommerceMoney =
+					commerceTierPriceEntry.getPriceCommerceMoney(
+						commerceCurrency.getCommerceCurrencyId());
 
-			CommerceCurrency commerceCurrency =
-				commercePriceList.getCommerceCurrency();
+				Date createDate = commerceTierPriceEntry.getCreateDate();
 
-			CommerceMoney priceCommerceMoney =
-				commerceTierPriceEntry.getPriceCommerceMoney(
-					commerceCurrency.getCommerceCurrencyId());
+				String createDateDescription = _language.getTimeDescription(
+					httpServletRequest,
+					System.currentTimeMillis() - createDate.getTime(), true);
 
-			Date createDate = commerceTierPriceEntry.getCreateDate();
+				CPInstance cpInstance =
+					_cpInstanceLocalService.fetchCProductInstance(
+						commercePriceEntry.getCProductId(),
+						commercePriceEntry.getCPInstanceUuid());
 
-			String createDateDescription = _language.getTimeDescription(
-				httpServletRequest,
-				System.currentTimeMillis() - createDate.getTime(), true);
-
-			CPInstance cpInstance =
-				_cpInstanceLocalService.fetchCProductInstance(
-					commercePriceEntry.getCProductId(),
-					commercePriceEntry.getCPInstanceUuid());
-
-			instanceTierPriceEntries.add(
-				new InstanceTierPriceEntry(
+				return new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 					_language.format(
 						httpServletRequest, "x-ago", createDateDescription,
@@ -119,10 +112,8 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 						commercePriceEntry.getUnitOfMeasureKey()),
 					HtmlUtil.escape(
 						priceCommerceMoney.format(
-							_portal.getLocale(httpServletRequest)))));
-		}
-
-		return instanceTierPriceEntries;
+							_portal.getLocale(httpServletRequest))));
+			});
 	}
 
 	@Override

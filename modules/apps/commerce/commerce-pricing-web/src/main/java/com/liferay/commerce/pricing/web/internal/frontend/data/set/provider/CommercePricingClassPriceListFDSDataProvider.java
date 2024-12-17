@@ -15,6 +15,7 @@ import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +52,6 @@ public class CommercePricingClassPriceListFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<PricingClassPriceList> pricingClassPriceLists = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -65,37 +63,35 @@ public class CommercePricingClassPriceListFDSDataProvider
 		long commercePricingClassId = ParamUtil.getLong(
 			httpServletRequest, "commercePricingClassId");
 
-		List<CommercePriceList> commercePriceLists =
+		return TransformUtil.transform(
 			_commercePriceListService.searchByCommercePricingClassId(
 				commercePricingClassId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			commercePriceList -> {
+				CommerceCatalog commerceCatalog =
+					_commerceCatalogService.fetchCommerceCatalogByGroupId(
+						commercePriceList.getGroupId());
 
-		for (CommercePriceList commercePriceList : commercePriceLists) {
-			CommerceCatalog commerceCatalog =
-				_commerceCatalogService.fetchCommerceCatalogByGroupId(
-					commercePriceList.getGroupId());
+				String statusDisplayStyle = StringPool.BLANK;
 
-			String statusDisplayStyle = StringPool.BLANK;
+				if (commercePriceList.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
 
-			if (commercePriceList.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
+					statusDisplayStyle = "success";
+				}
+				else if (commercePriceList.getStatus() ==
+							WorkflowConstants.STATUS_DRAFT) {
 
-				statusDisplayStyle = "success";
-			}
-			else if (commercePriceList.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT) {
+					statusDisplayStyle = "secondary";
+				}
+				else if (commercePriceList.getStatus() ==
+							WorkflowConstants.STATUS_EXPIRED) {
 
-				statusDisplayStyle = "secondary";
-			}
-			else if (commercePriceList.getStatus() ==
-						WorkflowConstants.STATUS_EXPIRED) {
+					statusDisplayStyle = "warning";
+				}
 
-				statusDisplayStyle = "warning";
-			}
-
-			pricingClassPriceLists.add(
-				new PricingClassPriceList(
+				return new PricingClassPriceList(
 					commercePriceList.getCommercePriceListId(),
 					commercePriceList.getName(), commerceCatalog.getName(),
 					dateTimeFormat.format(commercePriceList.getCreateDate()),
@@ -105,10 +101,8 @@ public class CommercePricingClassPriceListFDSDataProvider
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
 								commercePriceList.getStatus()))),
-					_getIsActive(commercePriceList)));
-		}
-
-		return pricingClassPriceLists;
+					_getIsActive(commercePriceList));
+			});
 	}
 
 	@Override

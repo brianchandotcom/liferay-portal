@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
-import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
@@ -13,13 +12,13 @@ import com.liferay.commerce.pricing.web.internal.model.ProductPricingClass;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +42,6 @@ public class CommerceProductPricingClassFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<ProductPricingClass> productPricingClasses = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -52,26 +49,18 @@ public class CommerceProductPricingClassFDSDataProvider
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<CommercePricingClass> commercePricingClasses =
+		return TransformUtil.transform(
 			_commercePricingClassService.searchByCPDefinitionId(
 				cpDefinitionId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
-
-		for (CommercePricingClass commercePricingClass :
-				commercePricingClasses) {
-
-			productPricingClasses.add(
-				new ProductPricingClass(
-					cpDefinitionId,
-					commercePricingClass.getCommercePricingClassId(),
-					commercePricingClass.getTitle(themeDisplay.getLocale()),
-					_commercePricingClassCPDefinitionRelService.
-						getCommercePricingClassCPDefinitionRelsCount(
-							commercePricingClass.getCommercePricingClassId())));
-		}
-
-		return productPricingClasses;
+				fdsPagination.getEndPosition()),
+			commercePricingClass -> new ProductPricingClass(
+				cpDefinitionId,
+				commercePricingClass.getCommercePricingClassId(),
+				commercePricingClass.getTitle(themeDisplay.getLocale()),
+				_commercePricingClassCPDefinitionRelService.
+					getCommercePricingClassCPDefinitionRelsCount(
+						commercePricingClass.getCommercePricingClassId())));
 	}
 
 	@Override

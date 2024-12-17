@@ -12,6 +12,7 @@ import com.liferay.commerce.pricing.web.internal.model.PriceModifier;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,8 +50,6 @@ public class CommercePriceModifierFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<PriceModifier> priceModifiers = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -66,29 +64,19 @@ public class CommercePriceModifierFDSDataProvider
 		long commercePriceListId = ParamUtil.getLong(
 			httpServletRequest, "commercePriceListId");
 
-		List<CommercePriceModifier> commercePriceModifiers =
+		return TransformUtil.transform(
 			_commercePriceModifierService.getCommercePriceModifiers(
 				commercePriceListId, fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
-
-		for (CommercePriceModifier commercePriceModifier :
-				commercePriceModifiers) {
-
-			priceModifiers.add(
-				new PriceModifier(
-					_getEndDate(commercePriceModifier, dateTimeFormat),
-					_language.get(
-						resourceBundle,
-						commercePriceModifier.getModifierType()),
-					commercePriceModifier.getTitle(),
-					commercePriceModifier.getCommercePriceModifierId(),
-					dateTimeFormat.format(
-						commercePriceModifier.getDisplayDate()),
-					_language.get(
-						resourceBundle, commercePriceModifier.getTarget())));
-		}
-
-		return priceModifiers;
+				fdsPagination.getEndPosition(), null),
+			commercePriceModifier -> new PriceModifier(
+				_getEndDate(commercePriceModifier, dateTimeFormat),
+				_language.get(
+					resourceBundle, commercePriceModifier.getModifierType()),
+				commercePriceModifier.getTitle(),
+				commercePriceModifier.getCommercePriceModifierId(),
+				dateTimeFormat.format(commercePriceModifier.getDisplayDate()),
+				_language.get(
+					resourceBundle, commercePriceModifier.getTarget())));
 	}
 
 	@Override

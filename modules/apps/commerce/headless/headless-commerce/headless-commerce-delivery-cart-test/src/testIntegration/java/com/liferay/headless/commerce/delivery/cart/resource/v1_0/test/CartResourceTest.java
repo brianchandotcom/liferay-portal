@@ -236,6 +236,9 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 				billingAddressId = commerceOrder.getBillingAddressId();
 				couponCode = commerceOrder.getCouponCode();
 				currencyCode = _commerceCurrency.getCode();
+				currencyExternalReferenceCode =
+					_commerceCurrency.getExternalReferenceCode();
+				currencyId = _commerceCurrency.getCommerceCurrencyId();
 				externalReferenceCode =
 					commerceOrder.getExternalReferenceCode();
 				id = commerceOrder.getCommerceOrderId();

@@ -6,14 +6,217 @@
 package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 
+import java.util.Date;
+
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zoltán Takács
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class PriceListResourceTest extends BasePriceListResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		User user = UserTestUtil.addUser();
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			testGroup.getCompanyId());
+
+		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			user.getUserId(), _commerceCurrency.getCode());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPriceListsPageWithFilterDateTimeEquals()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPriceListsPageWithFilterStringContains()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPriceListsPageWithFilterStringEquals() throws Exception {
+		super.testGetPriceListsPageWithFilterStringEquals();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPriceListsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		super.testGetPriceListsPageWithFilterStringStartsWith();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetPriceListsPageWithSortString() throws Exception {
+		super.testGetPriceListsPageWithSortString();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetPriceList() throws Exception {
+		super.testGraphQLGetPriceList();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetPriceListByExternalReferenceCode()
+		throws Exception {
+
+		super.testGraphQLGetPriceListByExternalReferenceCode();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetPriceListByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		super.testGraphQLGetPriceListByExternalReferenceCodeNotFound();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetPriceListNotFound() throws Exception {
+		super.testGraphQLGetPriceListNotFound();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetPriceListsPage() throws Exception {
+		super.testGraphQLGetPriceListsPage();
+	}
+
+	@Override
+	protected PriceList randomPriceList() throws Exception {
+		long time = System.currentTimeMillis();
+
+		return new PriceList() {
+			{
+				active = Boolean.TRUE;
+				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				catalogBasePriceList = Boolean.FALSE;
+				catalogId = _commerceCatalog.getCommerceCatalogId();
+				catalogName = _commerceCatalog.getName();
+				createDate = RandomTestUtil.nextDate();
+				currencyCode = _commerceCurrency.getCode();
+				currencyExternalReferenceCode =
+					_commerceCurrency.getExternalReferenceCode();
+				currencyId = _commerceCurrency.getCommerceCurrencyId();
+				displayDate = new Date(time - Time.HOUR);
+				expirationDate = new Date(time + Time.DAY);
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				netPrice = RandomTestUtil.randomBoolean();
+				neverExpire = RandomTestUtil.randomBoolean();
+				parentPriceListId = 0L;
+				priority = RandomTestUtil.randomDouble();
+				type = Type.create(CommercePriceListConstants.TYPE_PRICE_LIST);
+			}
+		};
+	}
+
+	@Override
+	protected PriceList testDeletePriceList_addPriceList() throws Exception {
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList
+			testDeletePriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testGetPriceList_addPriceList() throws Exception {
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testGetPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testGetPriceListsPage_addPriceList(PriceList priceList)
+		throws Exception {
+
+		return priceListResource.postPriceList(priceList);
+	}
+
+	@Override
+	protected PriceList testGraphQLPriceList_addPriceList() throws Exception {
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testPatchPriceList_addPriceList() throws Exception {
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testPatchPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	@Override
+	protected PriceList testPostPriceList_addPriceList(PriceList priceList)
+		throws Exception {
+
+		return priceListResource.postPriceList(priceList);
+	}
+
+	@Override
+	protected PriceList testPutPriceListByExternalReferenceCode_addPriceList()
+		throws Exception {
+
+		return priceListResource.postPriceList(randomPriceList());
+	}
+
+	private CommerceCatalog _commerceCatalog;
+	private CommerceCurrency _commerceCurrency;
+
 }

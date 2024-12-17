@@ -146,7 +146,8 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		modifiableSettings.setValue("showSeparateOrderItems", "true");
+		modifiableSettings.setValue(
+			"showSeparateOrderItems", Boolean.TRUE.toString());
 
 		modifiableSettings.store();
 

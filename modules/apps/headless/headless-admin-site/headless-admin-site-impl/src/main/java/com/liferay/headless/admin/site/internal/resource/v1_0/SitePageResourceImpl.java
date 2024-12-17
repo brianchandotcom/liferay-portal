@@ -15,6 +15,8 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -93,6 +95,20 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
+		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
+			layout.isTypeUtility()) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toSitePage(layout);
 	}
 
@@ -127,10 +143,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(Field.TITLE, search);
 				searchContext.setAttribute(
-					Field.TYPE, new String[] {
+					Field.TYPE,
+					new String[] {
 						LayoutConstants.TYPE_COLLECTION,
 						LayoutConstants.TYPE_CONTENT,
-						LayoutConstants.TYPE_PORTLET});
+						LayoutConstants.TYPE_PORTLET
+					});
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());
 				searchContext.setCompanyId(contextCompany.getCompanyId());
@@ -259,6 +277,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

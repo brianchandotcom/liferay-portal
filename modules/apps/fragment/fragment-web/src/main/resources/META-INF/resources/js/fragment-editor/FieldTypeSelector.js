@@ -9,7 +9,12 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
-const UNIQUE_INPUT_TYPES = new Set(['captcha', 'formButton', 'stepper']);
+const UNIQUE_INPUT_TYPES = new Set([
+	'captcha',
+	'formButton',
+	'localizationSelect',
+	'stepper',
+]);
 
 export function FieldTypeSelector({
 	availableFieldTypes,

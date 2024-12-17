@@ -2292,7 +2292,7 @@ definition {
 				webContentRichTextFieldLabel = "HTML",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Then the reserved-article-id should be available on web content") {

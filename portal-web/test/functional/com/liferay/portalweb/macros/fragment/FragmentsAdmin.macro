@@ -158,7 +158,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Feature Flags",
 			configurationName = "Deprecation",
-			configurationScope = "Virtual Instance Scope");
+			configurationScope = "System Scope");
 
 		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Featured Content Fragment Set", toggle_state = "Disabled")) {
 			Check.checkToggleSwitch(

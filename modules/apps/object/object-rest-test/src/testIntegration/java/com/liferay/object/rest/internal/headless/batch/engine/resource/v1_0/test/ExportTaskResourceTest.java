@@ -5,6 +5,8 @@
 
 package com.liferay.object.rest.internal.headless.batch.engine.resource.v1_0.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -109,10 +111,11 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 	@FeatureFlags("LPD-29367")
 	@Test
 	public void testPostExportTaskWithBatchNestedFields() throws Exception {
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
 		// With "batchNestedFields" query parameter
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, OBJECT_FIELD_NAME_TEXT, "TestObject");
 
 		JSONObject jsonObject1 = _testPostExportTask(
 			"COMPLETED", "batchNestedFields=permissions", objectDefinition);
@@ -125,16 +128,16 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		JSONArray permissionsJSONArray = JSONUtil.getValueAsJSONArray(
 			contentJSONArray1, "JSONObject/0", "JSONArray/permissions");
 
+		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
+
 		JSONAssert.assertEquals(
-			ObjectMapperProviderUtil.getObjectMapper(
-			).writeValueAsString(
+			objectMapper.writeValueAsString(
 				PermissionUtil.getPermissions(
 					objectDefinition.getCompanyId(),
 					ResourceActionLocalServiceUtil.getResourceActions(
 						objectDefinition.getClassName()),
 					objectEntry.getObjectEntryId(),
-					objectDefinition.getClassName(), null)
-			),
+					objectDefinition.getClassName(), null)),
 			permissionsJSONArray.toString(), JSONCompareMode.LENIENT);
 
 		// Without "batchNestedFields" query parameter

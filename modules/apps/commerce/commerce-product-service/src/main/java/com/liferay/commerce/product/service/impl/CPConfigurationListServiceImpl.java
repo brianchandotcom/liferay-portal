@@ -114,6 +114,24 @@ public class CPConfigurationListServiceImpl
 			cpConfigurationList);
 	}
 
+	@Override
+	public CPConfigurationList fetchCPConfigurationListByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPConfigurationList cpConfigurationList =
+			cpConfigurationListLocalService.
+				fetchCPConfigurationListByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (cpConfigurationList != null) {
+			_checkCommerceCatalog(
+				cpConfigurationList.getGroupId(), ActionKeys.VIEW);
+		}
+
+		return cpConfigurationList;
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

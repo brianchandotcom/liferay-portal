@@ -233,6 +233,18 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async assertFileEntryAction(action: string, entryTitle: string) {
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: this.page
+				.locator(`.card-body:has-text('${entryTitle}')`)
+				.getByLabel('Actions'),
+		});
+	}
+
 	async openBulkEditCategoriesModal(titles: string[]) {
 		await this.selectFileEntries(titles);
 		await this.page.getByRole('button', {name: 'Edit Categories'}).click();

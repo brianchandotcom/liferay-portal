@@ -53,6 +53,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 		_entityFieldsMap = _getStringEntityFieldsMap(
 			objectDefinition, objectFields);
 
+		_entityFieldsMaps.put(
+			objectDefinition.getObjectDefinitionId(), _entityFieldsMap);
+
 		List<ObjectRelationship> objectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
 				objectDefinition.getObjectDefinitionId());

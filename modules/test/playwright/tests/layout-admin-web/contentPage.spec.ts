@@ -18,6 +18,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
 import {
 	disableSystemFeatureFlag,
@@ -459,5 +460,133 @@ test(
 		await page.waitForTimeout(5000);
 
 		await expect(page.getByLabel('Name')).toBeVisible();
+	}
+);
+
+test(
+	'Check users with Update-Limited and Update-Basic permissions can access configuration of page',
+	{
+		tag: '@LPS-181272',
+	},
+	async ({apiHelpers, page, site}) => {
+
+		// Add new user with 'Update - Limited' permission
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const userWithLimited = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE_LAYOUT_LIMITED'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		// Add new user with 'Update - Basic' permission
+
+		const userWithBasic = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE_LAYOUT_BASIC'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		// Add new user without permission
+
+		const userWithoutPermissions = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: [],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		// Create a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to view mode as users with permissions and check options are available
+
+		const checkOptionsAvailable = async () => {
+			await expect(
+				page.locator('.control-menu-nav').getByTitle('Edit')
+			).toBeVisible();
+
+			await expect(
+				page.locator('.control-menu-nav').getByLabel('Configure Page')
+			).toBeVisible();
+
+			await expect(
+				page
+					.locator('.control-menu-nav')
+					.getByLabel('Content Performance')
+			).toBeVisible();
+
+			await expect(
+				page.locator('.control-menu-nav').getByLabel('A/B Test')
+			).toBeVisible();
+
+			await expect(
+				page.locator('.control-menu-nav').getByLabel('Page Audit')
+			).toBeVisible();
+		};
+
+		await page.goto(
+			`/web/${site.name}/${layout.friendlyUrlPath}?doAsUserId=${userWithLimited.id}`
+		);
+
+		await checkOptionsAvailable();
+
+		await page.goto(
+			`/web/${site.name}/${layout.friendlyUrlPath}?doAsUserId=${userWithBasic.id}`
+		);
+
+		await checkOptionsAvailable();
+
+		// Go as user without permissions and check options are not available
+
+		await page.goto(
+			`/web/${site.name}/${layout.friendlyUrlPath}?doAsUserId=${userWithoutPermissions.id}`
+		);
+
+		await expect(
+			page.locator('.control-menu-nav').getByTitle('Edit')
+		).not.toBeVisible();
+
+		await expect(
+			page.locator('.control-menu-nav').getByLabel('Configure Page')
+		).not.toBeVisible();
+
+		await expect(
+			page.locator('.control-menu-nav').getByLabel('Content Performance')
+		).not.toBeVisible();
+
+		await expect(
+			page.locator('.control-menu-nav').getByLabel('A/B Test')
+		).not.toBeVisible();
+
+		await expect(
+			page.locator('.control-menu-nav').getByLabel('Page Audit')
+		).not.toBeVisible();
 	}
 );

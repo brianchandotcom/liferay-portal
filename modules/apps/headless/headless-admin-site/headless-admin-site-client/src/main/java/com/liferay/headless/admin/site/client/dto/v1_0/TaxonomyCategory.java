@@ -331,6 +331,29 @@ public class TaxonomyCategory implements Cloneable, Serializable {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	public String getSiteExternalReferenceCode() {
+		return siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(String siteExternalReferenceCode) {
+		this.siteExternalReferenceCode = siteExternalReferenceCode;
+	}
+
+	public void setSiteExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			siteExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			siteExternalReferenceCode =
+				siteExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String siteExternalReferenceCode;
+
 	public Long getSiteId() {
 		return siteId;
 	}

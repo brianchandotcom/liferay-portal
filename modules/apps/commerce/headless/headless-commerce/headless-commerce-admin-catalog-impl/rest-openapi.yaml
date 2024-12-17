@@ -6530,6 +6530,7 @@ paths:
             tags: ["ProductConfigurationListAccount"]
     "/product-configuration-list-channels/{productConfigurationListChannelId}":
         delete:
+            operationId: deleteProductConfigurationListChannel
             parameters:
                 - in: path
                   explode: false
@@ -7224,6 +7225,7 @@ paths:
             tags: ["ProductConfigurationListAccount"]
     "/product-configuration-lists/by-externalReferenceCode/{externalReferenceCode}/product-configuration-list-channels":
         get:
+            operationId: getProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage
             parameters:
                 - in: path
                   explode: false
@@ -7303,6 +7305,7 @@ paths:
             summary: Gets a list of product configuration list channels.
             tags: ["ProductConfigurationListChannel"]
         post:
+            operationId: postProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel
             parameters:
                 - in: path
                   explode: false
@@ -8083,6 +8086,7 @@ paths:
             tags: ["ProductConfigurationListAccount"]
     "/product-configuration-lists/{id}/product-configuration-list-channels":
         get:
+            operationId: getProductConfigurationListIdProductConfigurationListChannelsPage
             parameters:
                 - in: path
                   explode: false
@@ -8174,6 +8178,7 @@ paths:
             summary: Gets a list of product configuration list channels.
             tags: ["ProductConfigurationListChannel"]
         post:
+            operationId: postProductConfigurationListIdProductConfigurationListChannel
             parameters:
                 - in: path
                   explode: false

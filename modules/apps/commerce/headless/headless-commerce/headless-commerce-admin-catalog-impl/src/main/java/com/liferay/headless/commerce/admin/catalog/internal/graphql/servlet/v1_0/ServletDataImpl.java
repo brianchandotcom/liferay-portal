@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Produc
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductChannelResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListAccountResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListChannelResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationListResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductConfigurationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ProductGroupProductResourceImpl;
@@ -63,6 +64,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountG
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountGroupResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListAccountResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListChannelResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationListResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupProductResource;
@@ -150,6 +152,9 @@ public class ServletDataImpl implements ServletData {
 		Mutation.
 			setProductConfigurationListAccountGroupResourceComponentServiceObjects(
 				_productConfigurationListAccountGroupResourceComponentServiceObjects);
+		Mutation.
+			setProductConfigurationListChannelResourceComponentServiceObjects(
+				_productConfigurationListChannelResourceComponentServiceObjects);
 		Mutation.setProductGroupResourceComponentServiceObjects(
 			_productGroupResourceComponentServiceObjects);
 		Mutation.setProductGroupProductResourceComponentServiceObjects(
@@ -224,6 +229,8 @@ public class ServletDataImpl implements ServletData {
 		Query.
 			setProductConfigurationListAccountGroupResourceComponentServiceObjects(
 				_productConfigurationListAccountGroupResourceComponentServiceObjects);
+		Query.setProductConfigurationListChannelResourceComponentServiceObjects(
+			_productConfigurationListChannelResourceComponentServiceObjects);
 		Query.setProductGroupResourceComponentServiceObjects(
 			_productGroupResourceComponentServiceObjects);
 		Query.setProductGroupProductResourceComponentServiceObjects(
@@ -946,6 +953,31 @@ public class ServletDataImpl implements ServletData {
 								class,
 							"postProductConfigurationListIdProductConfigurationListAccountGroupBatch"));
 					put(
+						"mutation#deleteProductConfigurationListChannel",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"deleteProductConfigurationListChannel"));
+					put(
+						"mutation#deleteProductConfigurationListChannelBatch",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"deleteProductConfigurationListChannelBatch"));
+					put(
+						"mutation#createProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"postProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel"));
+					put(
+						"mutation#createProductConfigurationListIdProductConfigurationListChannel",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"postProductConfigurationListIdProductConfigurationListChannel"));
+					put(
+						"mutation#createProductConfigurationListIdProductConfigurationListChannelBatch",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"postProductConfigurationListIdProductConfigurationListChannelBatch"));
+					put(
 						"mutation#createProductGroupsPageExportBatch",
 						new ObjectValuePair<>(
 							ProductGroupResourceImpl.class,
@@ -1620,6 +1652,16 @@ public class ServletDataImpl implements ServletData {
 								class,
 							"getProductConfigurationListIdProductConfigurationListAccountGroupsPage"));
 					put(
+						"query#productConfigurationListByExternalReferenceCodeProductConfigurationListChannels",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"getProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage"));
+					put(
+						"query#productConfigurationListIdProductConfigurationListChannels",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"getProductConfigurationListIdProductConfigurationListChannelsPage"));
+					put(
 						"query#productGroups",
 						new ObjectValuePair<>(
 							ProductGroupResourceImpl.class,
@@ -2001,6 +2043,11 @@ public class ServletDataImpl implements ServletData {
 							MappedProductResourceImpl.class,
 							"getProductByExternalReferenceCodeMappedProductBySequence"));
 					put(
+						"query#Attachment.productConfigurationListByExternalReferenceCodeProductConfigurationListChannels",
+						new ObjectValuePair<>(
+							ProductConfigurationListChannelResourceImpl.class,
+							"getProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage"));
+					put(
 						"query#Attachment.productConfigurationListByExternalReferenceCodeProductConfigurationListAccounts",
 						new ObjectValuePair<>(
 							ProductConfigurationListAccountResourceImpl.class,
@@ -2133,6 +2180,10 @@ public class ServletDataImpl implements ServletData {
 	private ComponentServiceObjects
 		<ProductConfigurationListAccountGroupResource>
 			_productConfigurationListAccountGroupResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductConfigurationListChannelResource>
+		_productConfigurationListChannelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductGroupResource>

@@ -642,12 +642,14 @@ public class LayoutLocalServiceWrapper
 				_layoutFriendlyURLEntryHelper.getClassNameId(privateLayout),
 				friendlyURL);
 
-		if (friendlyURLEntry != null) {
-			Layout layout = fetchLayout(friendlyURLEntry.getClassPK());
+		if (friendlyURLEntry == null) {
+			return null;
+		}
 
-			if (layout != null) {
-				return layout;
-			}
+		Layout layout = fetchLayout(friendlyURLEntry.getClassPK());
+
+		if (layout != null) {
+			return layout;
 		}
 
 		return null;

@@ -181,12 +181,12 @@ public class OpenGraphImageProvider {
 		String imageAltMappingFieldKey = layout.getTypeSettingsProperty(
 			"mapped-openGraphImageAlt", null);
 
-		if (Validator.isNotNull(imageAltMappingFieldKey)) {
-			return _layoutSEOTemplateProcessor.processTemplate(
-				imageAltMappingFieldKey, infoItemFieldValues, locale);
+		if (Validator.isNull(imageAltMappingFieldKey)) {
+			return null;
 		}
 
-		return null;
+		return _layoutSEOTemplateProcessor.processTemplate(
+			imageAltMappingFieldKey, infoItemFieldValues, locale);
 	}
 
 	private OpenGraphImage _getMappedOpenGraphImage(
@@ -197,52 +197,50 @@ public class OpenGraphImageProvider {
 			null, "openGraphImage", infoItemFieldValues, layout,
 			themeDisplay.getLocale());
 
-		if (mappedImageObject instanceof WebImage) {
-			WebImage mappedWebImage = (WebImage)mappedImageObject;
-
-			return new OpenGraphImage() {
-
-				@Override
-				public String getAlt() {
-					String openGraphImageAlt = _getImageAltTagValue(
-						infoItemFieldValues, layout, layoutSEOEntry,
-						themeDisplay.getLocale());
-
-					if (Validator.isNotNull(openGraphImageAlt)) {
-						return openGraphImageAlt;
-					}
-
-					InfoLocalizedValue<String> altInfoLocalizedValue =
-						mappedWebImage.getAltInfoLocalizedValue();
-
-					if (altInfoLocalizedValue != null) {
-						return altInfoLocalizedValue.getValue(
-							themeDisplay.getLocale());
-					}
-
-					return null;
-				}
-
-				@Override
-				public Iterable<KeyValuePair> getMetadataTagKeyValuePairs() {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public String getMimeType() {
-					return null;
-				}
-
-				@Override
-				public String getURL() {
-					return _getAbsoluteURL(
-						themeDisplay, mappedWebImage.getURL());
-				}
-
-			};
+		if (!(mappedImageObject instanceof WebImage)) {
+			return null;
 		}
 
-		return null;
+		WebImage mappedWebImage = (WebImage)mappedImageObject;
+
+		return new OpenGraphImage() {
+
+			@Override
+			public String getAlt() {
+				String openGraphImageAlt = _getImageAltTagValue(
+					infoItemFieldValues, layout, layoutSEOEntry,
+					themeDisplay.getLocale());
+
+				if (Validator.isNotNull(openGraphImageAlt)) {
+					return openGraphImageAlt;
+				}
+
+				InfoLocalizedValue<String> altInfoLocalizedValue =
+					mappedWebImage.getAltInfoLocalizedValue();
+
+				if (altInfoLocalizedValue == null) {
+					return null;
+				}
+
+				return altInfoLocalizedValue.getValue(themeDisplay.getLocale());
+			}
+
+			@Override
+			public Iterable<KeyValuePair> getMetadataTagKeyValuePairs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public String getMimeType() {
+				return null;
+			}
+
+			@Override
+			public String getURL() {
+				return _getAbsoluteURL(themeDisplay, mappedWebImage.getURL());
+			}
+
+		};
 	}
 
 	private String _getMappedStringValue(

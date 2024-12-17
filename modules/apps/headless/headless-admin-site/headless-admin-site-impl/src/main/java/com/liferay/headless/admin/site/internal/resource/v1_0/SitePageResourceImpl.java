@@ -127,7 +127,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(Field.TITLE, search);
 				searchContext.setAttribute(
-					Field.TYPE, new String[] {LayoutConstants.TYPE_PORTLET});
+					Field.TYPE, new String[] {
+						LayoutConstants.TYPE_COLLECTION,
+						LayoutConstants.TYPE_CONTENT,
+						LayoutConstants.TYPE_PORTLET});
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());
 				searchContext.setCompanyId(contextCompany.getCompanyId());

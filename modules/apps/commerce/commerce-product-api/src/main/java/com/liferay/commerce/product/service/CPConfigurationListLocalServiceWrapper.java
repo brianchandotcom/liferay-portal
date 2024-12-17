@@ -395,6 +395,17 @@ public class CPConfigurationListLocalServiceWrapper
 			groupId, companyId);
 	}
 
+	@Override
+	public java.util.List<CPConfigurationList> getCPConfigurationLists(
+		long companyId, long groupId, long accountEntryId,
+		long[] accountGroupIds, long commerceChannelId,
+		long commerceOrderTypeId) {
+
+		return _cpConfigurationListLocalService.getCPConfigurationLists(
+			companyId, groupId, accountEntryId, accountGroupIds,
+			commerceChannelId, commerceOrderTypeId);
+	}
+
 	/**
 	 * Returns all the cp configuration lists matching the UUID and company.
 	 *

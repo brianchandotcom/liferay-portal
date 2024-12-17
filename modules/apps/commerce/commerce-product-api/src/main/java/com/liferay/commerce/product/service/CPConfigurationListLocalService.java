@@ -308,6 +308,12 @@ public interface CPConfigurationListLocalService
 	public List<CPConfigurationList> getCPConfigurationLists(
 		long groupId, long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationList> getCPConfigurationLists(
+		long companyId, long groupId, long accountEntryId,
+		long[] accountGroupIds, long commerceChannelId,
+		long commerceOrderTypeId);
+
 	/**
 	 * Returns all the cp configuration lists matching the UUID and company.
 	 *

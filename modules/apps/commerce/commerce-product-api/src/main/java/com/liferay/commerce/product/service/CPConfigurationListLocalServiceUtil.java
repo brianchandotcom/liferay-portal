@@ -352,6 +352,16 @@ public class CPConfigurationListLocalServiceUtil {
 		return getService().getCPConfigurationLists(groupId, companyId);
 	}
 
+	public static List<CPConfigurationList> getCPConfigurationLists(
+		long companyId, long groupId, long accountEntryId,
+		long[] accountGroupIds, long commerceChannelId,
+		long commerceOrderTypeId) {
+
+		return getService().getCPConfigurationLists(
+			companyId, groupId, accountEntryId, accountGroupIds,
+			commerceChannelId, commerceOrderTypeId);
+	}
+
 	/**
 	 * Returns all the cp configuration lists matching the UUID and company.
 	 *

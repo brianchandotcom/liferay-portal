@@ -528,14 +528,14 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "resourcePrimKey",
 			KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY);
 
-		if (resourcePrimKey !=
+		if (resourcePrimKey ==
 				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) {
 
-			return KBArticleServiceUtil.getLatestKBArticle(
-				resourcePrimKey, WorkflowConstants.STATUS_ANY);
+			return null;
 		}
 
-		return null;
+		return KBArticleServiceUtil.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 	}
 
 	private boolean _isKBArticleSelected() {

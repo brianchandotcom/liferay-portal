@@ -177,16 +177,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return getSmallImageURL();
 		}
 
-		if (getSmallImageSource() ==
+		if (getSmallImageSource() !=
 				JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) {
 
-			return StringBundler.concat(
-				themeDisplay.getPathImage(), "/journal/article?img_id=",
-				getSmallImageId(), "&t=",
-				WebServerServletTokenUtil.getToken(getSmallImageId()));
+			return null;
 		}
 
-		return null;
+		return StringBundler.concat(
+			themeDisplay.getPathImage(), "/journal/article?img_id=",
+			getSmallImageId(), "&t=",
+			WebServerServletTokenUtil.getToken(getSmallImageId()));
 	}
 
 	@Override

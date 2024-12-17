@@ -601,12 +601,12 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				orderByComparator.isAscending());
 		}
 
-		if (ArrayUtil.contains(orderByComparator.getOrderByFields(), "name")) {
-			return new StructureLinkStructureNameComparator(
-				orderByComparator.isAscending());
+		if (!ArrayUtil.contains(orderByComparator.getOrderByFields(), "name")) {
+			return null;
 		}
 
-		return null;
+		return new StructureLinkStructureNameComparator(
+			orderByComparator.isAscending());
 	}
 
 	@Reference

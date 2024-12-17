@@ -98,12 +98,12 @@ public class ImageImportDDMFormFieldValueTransformer
 			Long classPK = fileEntryPKs.get(oldClassPK);
 
 			if (classPK == null) {
-				if (Validator.isNotNull(uuid)) {
-					return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-						uuid, portletDataContext.getScopeGroupId());
+				if (Validator.isNull(uuid)) {
+					return null;
 				}
 
-				return null;
+				return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+					uuid, portletDataContext.getScopeGroupId());
 			}
 
 			return _dlAppLocalService.getFileEntry(classPK);

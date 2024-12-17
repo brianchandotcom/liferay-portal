@@ -107,6 +107,19 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			groupId = stagingGroupId;
 		}
 
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (group.isLayoutSetPrototype()) {
+			_updateLookAndFeel(
+				actionRequest, companyId, groupId, true,
+				typeSettingsUnicodeProperties);
+			_updateLookAndFeel(
+				actionRequest, companyId, groupId, false,
+				typeSettingsUnicodeProperties);
+
+			return;
+		}
+
 		_updateLookAndFeel(
 			actionRequest, companyId, groupId, privateLayout,
 			typeSettingsUnicodeProperties);
@@ -114,8 +127,6 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		if (privateLayout) {
 			return;
 		}
-
-		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.hasPrivateLayouts()) {
 			_updateLookAndFeel(

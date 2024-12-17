@@ -151,8 +151,16 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsForMultipleItems() throws Exception {
-		Product product1 = _toProduct(1L, null);
-		Product product2 = _toProduct(2L, null);
+		_testGetNestedFieldsForMultipleItems(false);
+		_testGetNestedFieldsForMultipleItems(true);
+	}
+
+	private void _testGetNestedFieldsForMultipleItems(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product1 = _toProduct(null, 1L, inlineInitialization);
+		Product product2 = _toProduct(null, 2L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -189,7 +197,14 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsForSingleItem() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsForSingleItem(false);
+		_testGetNestedFieldsForSingleItem(true);
+	}
+
+	private void _testGetNestedFieldsForSingleItem(boolean inlineInitialization)
+		throws Exception {
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -225,8 +240,16 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithDeeplyNestedFields() throws Exception {
-		Product product1 = _toProduct(1L, null);
-		Product product2 = _toProduct(2L, null);
+		_testGetNestedFieldsWithDeeplyNestedFields(false);
+		_testGetNestedFieldsWithDeeplyNestedFields(true);
+	}
+
+	private void _testGetNestedFieldsWithDeeplyNestedFields(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product1 = _toProduct(null, 1L, inlineInitialization);
+		Product product2 = _toProduct(null, 2L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -280,7 +303,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithNestedFieldId() throws Exception {
-		Product product = _toProduct(1L, "externalCode");
+		_testGetNestedFieldsWithNestedFieldId(false);
+		_testGetNestedFieldsWithNestedFieldId(true);
+	}
+
+	private void _testGetNestedFieldsWithNestedFieldId(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product = _toProduct("externalCode", 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -322,7 +353,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithNonexistendFieldName() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsWithNonexistendFieldName(false);
+		_testGetNestedFieldsWithNonexistendFieldName(true);
+	}
+
+	private void _testGetNestedFieldsWithNonexistendFieldName(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -351,7 +390,17 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithoutContextAnnotation() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsWithoutContextAnnotation(false);
+		_testGetNestedFieldsWithoutContextAnnotation(true);
+	}
+
+	private void _testGetNestedFieldsWithoutContextAnnotation(
+		boolean inlineInitialization)
+		throws Exception {
+
+		_productResource_v1_0_Impl.contextThemeDisplay = null;
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -384,7 +433,15 @@ public class NestedFieldsWriterInterceptorTest {
 	public void testGetNestedFieldsWithoutOverridingMethod()
 		throws IOException {
 
-		Product product = _toProduct(1L, "externalCode");
+		_testGetNestedFieldsWithoutOverridingMethod(false);
+		_testGetNestedFieldsWithoutOverridingMethod(true);
+	}
+
+	private void _testGetNestedFieldsWithoutOverridingMethod(
+		boolean inlineInitialization)
+		throws IOException {
+
+		Product product = _toProduct("externalCode", 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -420,7 +477,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithPagination() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsWithPagination(false);
+		_testGetNestedFieldsWithPagination(true);
+	}
+
+	private void _testGetNestedFieldsWithPagination(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -431,8 +496,8 @@ public class NestedFieldsWriterInterceptorTest {
 		Mockito.doReturn(
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest(
-					"skus", "page", String.valueOf(1), "pageSize",
-					String.valueOf(2))
+				"skus", "page", String.valueOf(1), "pageSize",
+				String.valueOf(2))
 		).when(
 			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
@@ -453,7 +518,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithQueryParameter() throws IOException {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsWithQueryParameter(false);
+		_testGetNestedFieldsWithQueryParameter(true);
+	}
+
+	private void _testGetNestedFieldsWithQueryParameter(
+		boolean inlineInitialization)
+		throws IOException {
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -500,7 +573,15 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithResourceVersioning() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testGetNestedFieldsWithResourceVersioning(false);
+		_testGetNestedFieldsWithResourceVersioning(true);
+	}
+
+	private void _testGetNestedFieldsWithResourceVersioning(
+		boolean inlineInitialization)
+		throws Exception {
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -531,7 +612,14 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testGetNestedFieldsWithSubitem() throws Exception {
-		Subproduct subproduct = _toSubproduct(1L, null);
+		_testGetNestedFieldsWithSubitem(false);
+		_testGetNestedFieldsWithSubitem(true);
+	}
+
+	private void _testGetNestedFieldsWithSubitem(boolean inlineInitialization)
+		throws Exception {
+
+		Subproduct subproduct = _toSubproduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -562,7 +650,16 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Test
 	public void testInjectResourceContexts() throws Exception {
-		Product product = _toProduct(1L, null);
+		_testInjectResourceContexts(false);
+		_testInjectResourceContexts(true);
+	}
+
+	private void _testInjectResourceContexts(boolean inlineInitialization)
+		throws Exception {
+
+		_productResource_v1_0_Impl.themeDisplay = null;
+
+		Product product = _toProduct(null, 1L, inlineInitialization);
 
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -599,7 +696,18 @@ public class NestedFieldsWriterInterceptorTest {
 		return category;
 	}
 
-	private static Product _toProduct(long id, String externalCode) {
+	private static Product _toProduct(
+		String externalCode, long id, boolean inlineInitialization) {
+
+		if (inlineInitialization) {
+			return new Product() {
+				{
+					setExternalCode(externalCode);
+					setId(id);
+				}
+			};
+		}
+
 		Product product = new Product();
 
 		product.setExternalCode(externalCode);
@@ -649,7 +757,18 @@ public class NestedFieldsWriterInterceptorTest {
 		};
 	}
 
-	private Subproduct _toSubproduct(long id, String externalCode) {
+	private Subproduct _toSubproduct(
+		String externalCode, long id, boolean inlineInitialization) {
+
+		if (inlineInitialization) {
+			return new Subproduct() {
+				{
+					setExternalCode(externalCode);
+					setId(id);
+				}
+			};
+		}
+
 		Subproduct subproduct = new Subproduct();
 
 		subproduct.setExternalCode(externalCode);
@@ -834,98 +953,98 @@ public class NestedFieldsWriterInterceptorTest {
 	private static class Product {
 
 		public Category[] getCategories() {
-			return categories;
+			return _categories;
 		}
 
 		public String getExternalCode() {
-			return externalCode;
+			return _externalCode;
 		}
 
 		public Long getId() {
-			return id;
+			return _id;
 		}
 
 		public ProductOption[] getProductOptions() {
-			return productOptions;
+			return _productOptions;
 		}
 
 		public Sku[] getSkus() {
-			return skus;
+			return _skus;
 		}
 
 		public void setCategories(Category[] categories) {
-			this.categories = categories;
+			_categories = categories;
 		}
 
 		public void setExternalCode(String externalCode) {
-			this.externalCode = externalCode;
+			_externalCode = externalCode;
 		}
 
 		public void setId(Long id) {
-			this.id = id;
+			_id = id;
 		}
 
 		public void setProductOptions(ProductOption[] productOptions) {
-			this.productOptions = productOptions;
+			_productOptions = productOptions;
 		}
 
 		public void setSkus(Sku[] skus) {
-			this.skus = skus;
+			_skus = skus;
 		}
 
-		protected Category[] categories;
-		protected String externalCode;
-		protected Long id;
-		protected ProductOption[] productOptions;
-		protected Sku[] skus;
+		private Category[] _categories;
+		private String _externalCode;
+		private Long _id;
+		private ProductOption[] _productOptions;
+		private Sku[] _skus;
 
 	}
 
 	private static class ProductOption {
 
 		public Long getId() {
-			return id;
+			return _id;
 		}
 
 		public String getName() {
-			return name;
+			return _name;
 		}
 
 		public ProductOptionValue[] getProductOptionValues() {
-			return productOptionValues;
+			return _productOptionValues;
 		}
 
 		public void setId(Long id) {
-			this.id = id;
+			_id = id;
 		}
 
 		public void setName(String name) {
-			this.name = name;
+			_name = name;
 		}
 
 		public void setProductOptionValues(
 			ProductOptionValue[] productOptionValues) {
 
-			this.productOptionValues = productOptionValues;
+			_productOptionValues = productOptionValues;
 		}
 
-		protected Long id;
-		protected String name;
-		protected ProductOptionValue[] productOptionValues;
+		private Long _id;
+		private String _name;
+		private ProductOptionValue[] _productOptionValues;
 
 	}
 
 	private static class ProductOptionValue {
 
 		public Long getId() {
-			return id;
+			return _id;
 		}
 
 		public void setId(Long id) {
-			this.id = id;
+			_id = id;
 		}
 
-		protected Long id;
+		private Long _id;
 
 	}
 
@@ -972,7 +1091,8 @@ public class NestedFieldsWriterInterceptorTest {
 		@Path("/products")
 		@Produces("application/*")
 		public List<Product> getProducts() {
-			return Arrays.asList(_toProduct(1, null), _toProduct(2, null));
+			return Arrays.asList(
+				_toProduct(null, 1, false), _toProduct(null, 2, false));
 		}
 
 		@NestedField("skus")
@@ -1061,7 +1181,8 @@ public class NestedFieldsWriterInterceptorTest {
 		@Path("/products")
 		@Produces("application/*")
 		public List<Product> getProducts() {
-			return Arrays.asList(_toProduct(1, null), _toProduct(2, null));
+			return Arrays.asList(
+				_toProduct(null, 1, false), _toProduct(null, 2, false));
 		}
 
 		@NestedField(parentClass = Product.class, value = "skus")
@@ -1099,14 +1220,14 @@ public class NestedFieldsWriterInterceptorTest {
 	private static class Sku {
 
 		public Long getId() {
-			return id;
+			return _id;
 		}
 
 		public void setId(Long id) {
-			this.id = id;
+			_id = id;
 		}
 
-		protected Long id;
+		private Long _id;
 
 	}
 

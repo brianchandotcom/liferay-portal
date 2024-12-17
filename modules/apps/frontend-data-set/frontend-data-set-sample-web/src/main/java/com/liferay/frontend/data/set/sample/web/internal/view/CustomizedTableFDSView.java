@@ -66,7 +66,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		).add(
 			"description", "description"
 		).add(
-			_addDateFDSTableSchemaField()
+			_addDateTimeFDSTableSchemaField()
 		).add(
 			"color", "color",
 			fdsTableSchemaField -> {
@@ -157,7 +157,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		return true;
 	}
 
-	private DateTimeFDSTableSchemaField _addDateFDSTableSchemaField() {
+	private DateTimeFDSTableSchemaField _addDateTimeFDSTableSchemaField() {
 		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
 			new DateTimeFDSTableSchemaField();
 

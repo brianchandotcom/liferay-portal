@@ -105,12 +105,12 @@ public class SearchPortlet extends BaseKBPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			renderRequest, "resourcePrimKey");
 
-		if (resourcePrimKey > 0) {
-			return kbArticleService.getLatestKBArticle(
-				resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+		if (resourcePrimKey <= 0) {
+			return null;
 		}
 
-		return null;
+		return kbArticleService.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Reference(

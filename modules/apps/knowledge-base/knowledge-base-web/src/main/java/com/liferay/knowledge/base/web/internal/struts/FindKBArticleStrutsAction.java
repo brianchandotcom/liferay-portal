@@ -390,18 +390,17 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 	}
 
 	private String _getKBFolderUrlTitle(KBArticle kbArticle) throws Exception {
-		if ((kbArticle != null) &&
-			Validator.isNotNull(kbArticle.getUrlTitle()) &&
-			(kbArticle.getKbFolderId() !=
+		if ((kbArticle == null) || Validator.isNull(kbArticle.getUrlTitle()) ||
+			(kbArticle.getKbFolderId() ==
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
-				kbArticle.getKbFolderId());
-
-			return kbFolder.getUrlTitle();
+			return null;
 		}
 
-		return null;
+		KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
+			kbArticle.getKbFolderId());
+
+		return kbFolder.getUrlTitle();
 	}
 
 	private String _getPortletId(long plid) throws Exception {

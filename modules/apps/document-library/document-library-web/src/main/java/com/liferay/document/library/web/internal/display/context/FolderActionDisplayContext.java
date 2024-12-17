@@ -310,7 +310,8 @@ public class FolderActionDisplayContext {
 			parentFolderId = folder.getParentFolderId();
 		}
 
-		if (!DLSubscriptionUtil.isSubscribedToFolder(
+		if ((folder == null) ||
+			!DLSubscriptionUtil.isSubscribedToFolder(
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 				_themeDisplay.getUserId(), parentFolderId)) {
 

@@ -32,7 +32,7 @@ boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryA
 	if (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
 		subscribed = DLSubscriptionUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
 
-		if (subscribed && DLSubscriptionUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folder.getParentFolderId())) {
+		if (subscribed && (folder != null) && DLSubscriptionUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folder.getParentFolderId())) {
 			unsubscribable = false;
 		}
 	}

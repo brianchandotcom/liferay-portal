@@ -28,7 +28,7 @@
 		<c:when test="<%= type == AlertType.SUCCESS.getAlertCode() %>">
 			<i class="icon-ok-sign"></i>
 
-			<strong class="lead"><liferay-ui:message key="alert-helper-success" />: </strong>
+			<strong class="lead"><liferay-ui:message key="success" />: </strong>
 		</c:when>
 		<c:when test="<%= type == AlertType.WARNING.getAlertCode() %>">
 			<i class="icon-warning-sign"></i>

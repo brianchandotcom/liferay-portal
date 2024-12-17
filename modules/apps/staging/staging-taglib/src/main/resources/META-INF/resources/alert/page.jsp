@@ -33,7 +33,7 @@
 		<c:when test="<%= type == AlertType.WARNING.getAlertCode() %>">
 			<i class="icon-warning-sign"></i>
 
-			<strong class="lead"><liferay-ui:message key="alert-helper-warning" />: </strong>
+			<strong class="lead"><liferay-ui:message key="warning" />: </strong>
 		</c:when>
 	</c:choose>
 </liferay-util:buffer>

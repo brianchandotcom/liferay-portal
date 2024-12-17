@@ -393,6 +393,24 @@ public class CPConfigurationListRelLocalServiceWrapper
 			cpConfigurationListId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId) {
+
+		return _cpConfigurationListRelLocalService.getCPConfigurationListRels(
+			className, cpConfigurationListId);
+	}
+
+	@Override
+	public java.util.List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPConfigurationListRel>
+			orderByComparator) {
+
+		return _cpConfigurationListRelLocalService.getCPConfigurationListRels(
+			className, cpConfigurationListId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of cp configuration list rels.
 	 *
@@ -408,6 +426,14 @@ public class CPConfigurationListRelLocalServiceWrapper
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId) {
 		return _cpConfigurationListRelLocalService.
 			getCPConfigurationListRelsCount(cpConfigurationListId);
+	}
+
+	@Override
+	public int getCPConfigurationListRelsCount(
+		String className, long cpConfigurationListId) {
+
+		return _cpConfigurationListRelLocalService.
+			getCPConfigurationListRelsCount(className, cpConfigurationListId);
 	}
 
 	@Override

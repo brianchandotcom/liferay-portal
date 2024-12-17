@@ -128,6 +128,13 @@ public class CPConfigurationListRelServiceUtil {
 			cpConfigurationListId, keywords);
 	}
 
+	public static CPConfigurationListRel getCPConfigurationListRel(
+			long cpConfigurationListRelId)
+		throws PortalException {
+
+		return getService().getCPConfigurationListRel(cpConfigurationListRelId);
+	}
+
 	public static List<CPConfigurationListRel> getCPConfigurationListRels(
 			long cpConfigurationListId)
 		throws PortalException {
@@ -144,12 +151,37 @@ public class CPConfigurationListRelServiceUtil {
 			cpConfigurationListId, start, end, orderByComparator);
 	}
 
+	public static List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId)
+		throws PortalException {
+
+		return getService().getCPConfigurationListRels(
+			className, cpConfigurationListId);
+	}
+
+	public static List<CPConfigurationListRel> getCPConfigurationListRels(
+			String className, long cpConfigurationListId, int start, int end,
+			OrderByComparator<CPConfigurationListRel> orderByComparator)
+		throws PortalException {
+
+		return getService().getCPConfigurationListRels(
+			className, cpConfigurationListId, start, end, orderByComparator);
+	}
+
 	public static int getCPConfigurationListRelsCount(
 			long cpConfigurationListId)
 		throws PortalException {
 
 		return getService().getCPConfigurationListRelsCount(
 			cpConfigurationListId);
+	}
+
+	public static int getCPConfigurationListRelsCount(
+			String className, long cpConfigurationListId)
+		throws PortalException {
+
+		return getService().getCPConfigurationListRelsCount(
+			className, cpConfigurationListId);
 	}
 
 	/**

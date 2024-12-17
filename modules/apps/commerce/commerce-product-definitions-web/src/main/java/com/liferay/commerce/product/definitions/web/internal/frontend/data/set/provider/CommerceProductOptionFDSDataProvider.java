@@ -16,6 +16,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,28 +48,22 @@ public class CommerceProductOptionFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<ProductOption> productOptions = new ArrayList<>();
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+		return TransformUtil.transform(
 			_getCPDefinitionOptionRels(
 				cpDefinitionId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), sort);
+				fdsPagination.getEndPosition(), sort),
+			cpDefinitionOptionRel -> {
+				CommerceOptionType commerceOptionType =
+					_commerceOptionTypeRegistry.getCommerceOptionType(
+						cpDefinitionOptionRel.getCommerceOptionTypeKey());
 
-		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-				cpDefinitionOptionRels) {
-
-			CommerceOptionType commerceOptionType =
-				_commerceOptionTypeRegistry.getCommerceOptionType(
-					cpDefinitionOptionRel.getCommerceOptionTypeKey());
-
-			productOptions.add(
-				new ProductOption(
+				return new ProductOption(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 					commerceOptionType.getLabel(locale),
 					cpDefinitionOptionRel.getName(
@@ -83,10 +77,8 @@ public class CommerceProductOptionFDSDataProvider
 						cpDefinitionOptionRel.isSkuContributor() ? "yes" :
 							"no"),
 					cpDefinitionOptionRel.
-						getCPDefinitionOptionValueRelsCount()));
-		}
-
-		return productOptions;
+						getCPDefinitionOptionValueRelsCount());
+			});
 	}
 
 	@Override

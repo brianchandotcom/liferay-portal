@@ -20,6 +20,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -50,10 +52,12 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -93,6 +97,37 @@ public class LayoutSEOLinkManagerTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testGetCanonicalLocalizedLayoutSEOLinksWithDefaultLocale()
+		throws Exception {
+
+		_setupForTestingContentLocalizedLayoutSEOLinks();
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> canonicalURLMap = Collections.singletonMap(
+			siteDefaultLocale, RandomTestUtil.randomString());
+
+		LayoutSEOEntry layoutSEOEntry = _updateLayoutSEOEntry(canonicalURLMap);
+
+		List<LayoutSEOLink> layoutSEOLinks =
+			_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+				_layout, siteDefaultLocale, _canonicalURL,
+				_expectedFriendlyURLs.keySet());
+
+		for (LayoutSEOLink layoutSEOLink : layoutSEOLinks) {
+			String hrefLang = layoutSEOLink.getHrefLang();
+
+			if (Validator.isNull(hrefLang) ||
+				hrefLang.equals(siteDefaultLocale.toLanguageTag())) {
+
+				Assert.assertEquals(
+					layoutSEOLink.getHref(),
+					layoutSEOEntry.getCanonicalURL(siteDefaultLocale));
+			}
+		}
 	}
 
 	@Test
@@ -542,6 +577,17 @@ public class LayoutSEOLinkManagerTest {
 		}
 	}
 
+	private LayoutSEOEntry _updateLayoutSEOEntry(
+			Map<Locale, String> canonicalURLMap)
+		throws Exception {
+
+		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true, canonicalURLMap,
+			ServiceContextTestUtil.getServiceContext(
+				_layout.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	private static final String _LAYOUT_SEO_CONFIGURATION_PID =
 		"com.liferay.layout.seo.internal.configuration." +
 			"LayoutSEOCompanyConfiguration";
@@ -590,6 +636,9 @@ public class LayoutSEOLinkManagerTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Inject
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

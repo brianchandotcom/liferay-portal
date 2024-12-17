@@ -12,7 +12,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -43,6 +42,7 @@ import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUti
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.headless.commerce.core.util.ActionUtil;
+import com.liferay.headless.commerce.core.util.CommerceCurrencyUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -326,9 +326,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			throw new NoSuchEntryException();
 		}
 
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.getCommerceCurrency(
-				commerceChannel.getCompanyId(), order.getCurrencyCode());
+		CommerceCurrency commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
+			commerceChannel.getCompanyId(), order.getCurrencyCode(),
+			order.getCurrencyExternalReferenceCode(), order.getCurrencyId());
 
 		long commerceShippingMethodId = 0;
 
@@ -1011,9 +1011,6 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
-
-	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;

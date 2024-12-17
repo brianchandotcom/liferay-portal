@@ -18,7 +18,6 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.exception.CommerceOrderPriceException;
@@ -55,6 +54,7 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.headless.commerce.core.util.CommerceCurrencyUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -501,15 +501,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			Cart cart, long commerceChannelGroupId)
 		throws Exception {
 
-		String commerceCurrencyCode = null;
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.getCommerceCurrency(
-				contextCompany.getCompanyId(), cart.getCurrencyCode());
-
-		if (commerceCurrency != null) {
-			commerceCurrencyCode = commerceCurrency.getCode();
-		}
+		CommerceCurrency commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
+			contextCompany.getCompanyId(), cart.getCurrencyCode(),
+			cart.getCurrencyExternalReferenceCode(), cart.getCurrencyId());
 
 		AccountEntry accountEntry = null;
 
@@ -524,7 +518,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		return _commerceOrderService.addCommerceOrder(
 			commerceChannelGroupId, accountEntry.getAccountEntryId(),
-			commerceCurrencyCode, _getCommerceOrderTypeId(cart));
+			commerceCurrency.getCode(), _getCommerceOrderTypeId(cart));
 	}
 
 	private void _addOrUpdateBillingAddress(
@@ -1356,9 +1350,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommerceOrderEngine _commerceOrderEngine;

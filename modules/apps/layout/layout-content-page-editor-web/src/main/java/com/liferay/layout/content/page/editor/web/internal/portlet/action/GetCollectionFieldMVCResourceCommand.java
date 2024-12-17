@@ -202,15 +202,15 @@ public class GetCollectionFieldMVCResourceCommand
 
 		// LPS-133832
 
-		if (listObjectReference instanceof ClassedModelListObjectReference) {
-			ClassedModelListObjectReference classedModelListObjectReference =
-				(ClassedModelListObjectReference)listObjectReference;
-
-			return _assetListEntryLocalService.fetchAssetListEntry(
-				classedModelListObjectReference.getClassPK());
+		if (!(listObjectReference instanceof ClassedModelListObjectReference)) {
+			return null;
 		}
 
-		return null;
+		ClassedModelListObjectReference classedModelListObjectReference =
+			(ClassedModelListObjectReference)listObjectReference;
+
+		return _assetListEntryLocalService.fetchAssetListEntry(
+			classedModelListObjectReference.getClassPK());
 	}
 
 	private JSONObject _getCollectionFieldsJSONObject(
@@ -505,26 +505,28 @@ public class GetCollectionFieldMVCResourceCommand
 		).put(
 			"classPK",
 			() -> {
-				if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-					ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-						(ClassPKInfoItemIdentifier)infoItemIdentifier;
+				if (!(infoItemIdentifier instanceof
+						ClassPKInfoItemIdentifier)) {
 
-					return classPKInfoItemIdentifier.getClassPK();
+					return null;
 				}
 
-				return null;
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+				return classPKInfoItemIdentifier.getClassPK();
 			}
 		).put(
 			"externalReferenceCode",
 			() -> {
-				if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
-					ERCInfoItemIdentifier ercInfoItemIdentifier =
-						(ERCInfoItemIdentifier)infoItemIdentifier;
-
-					return ercInfoItemIdentifier.getExternalReferenceCode();
+				if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+					return null;
 				}
 
-				return null;
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				return ercInfoItemIdentifier.getExternalReferenceCode();
 			}
 		);
 

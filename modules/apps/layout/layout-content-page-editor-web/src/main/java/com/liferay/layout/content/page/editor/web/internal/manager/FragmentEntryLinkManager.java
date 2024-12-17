@@ -192,12 +192,12 @@ public class FragmentEntryLinkManager {
 											fragmentEntryLink.
 												getFragmentEntryLinkId());
 
-						if (fragmentStyledLayoutStructureItem != null) {
-							return fragmentStyledLayoutStructureItem.
-								getFragmentEntryLinkCssClass(fragmentEntryLink);
+						if (fragmentStyledLayoutStructureItem == null) {
+							return null;
 						}
 
-						return null;
+						return fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkCssClass(fragmentEntryLink);
 					}
 				).put(
 					"defaultConfigurationValues",
@@ -266,12 +266,12 @@ public class FragmentEntryLinkManager {
 										fragmentEntryLink.
 											getFragmentEntryLinkId());
 
-					if (fragmentStyledLayoutStructureItem != null) {
-						return fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkCssClass(fragmentEntryLink);
+					if (fragmentStyledLayoutStructureItem == null) {
+						return null;
 					}
 
-					return null;
+					return fragmentStyledLayoutStructureItem.
+						getFragmentEntryLinkCssClass(fragmentEntryLink);
 				}
 			).put(
 				"defaultConfigurationValues",
@@ -634,23 +634,22 @@ public class FragmentEntryLinkManager {
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
-		if (infoItemFormProvider != null) {
-			try {
-				return infoItemFormProvider.getInfoForm(
-					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()),
-					groupId);
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-
-				return null;
-			}
+		if (infoItemFormProvider == null) {
+			return null;
 		}
 
-		return null;
+		try {
+			return infoItemFormProvider.getInfoForm(
+				String.valueOf(formStyledLayoutStructureItem.getClassTypeId()),
+				groupId);
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+
+			return null;
+		}
 	}
 
 	private InfoForm _getInfoForm(

@@ -430,19 +430,19 @@ public class ContentPageLayoutEditorDisplayContext
 			JSONUtil.put(
 				"itemSubtype",
 				() -> {
-					if (infoCollectionProvider instanceof
-							SingleFormVariationInfoCollectionProvider) {
+					if (!(infoCollectionProvider instanceof
+							SingleFormVariationInfoCollectionProvider)) {
 
-						SingleFormVariationInfoCollectionProvider<?>
-							singleFormVariationInfoCollectionProvider =
-								(SingleFormVariationInfoCollectionProvider<?>)
-									infoCollectionProvider;
-
-						return singleFormVariationInfoCollectionProvider.
-							getFormVariationKey();
+						return null;
 					}
 
-					return null;
+					SingleFormVariationInfoCollectionProvider<?>
+						singleFormVariationInfoCollectionProvider =
+							(SingleFormVariationInfoCollectionProvider<?>)
+								infoCollectionProvider;
+
+					return singleFormVariationInfoCollectionProvider.
+						getFormVariationKey();
 				}
 			).put(
 				"itemType", infoCollectionProvider.getCollectionItemClassName()

@@ -1014,7 +1014,7 @@ definition {
 				webContentDateFieldLabel = "Date and Time",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When we have a display page with a date fragment") {

@@ -110,7 +110,7 @@ describe('ScriptManagementContainer component', () => {
 			/>
 		);
 
-		const alertHelperInfo = getByText('alert-helper-info:');
+		const alertHelperInfo = getByText('info:');
 		const alertText = getByText(
 			'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
 		);
@@ -130,7 +130,7 @@ describe('ScriptManagementContainer component', () => {
 			/>
 		);
 
-		const alertHelperInfo = queryByText('alert-helper-info:');
+		const alertHelperInfo = queryByText('info:');
 		const alertText = queryByText(
 			'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
 		);

@@ -265,8 +265,36 @@ public class CPConfigurationListRelLocalServiceImpl
 	}
 
 	@Override
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId) {
+
+		return cpConfigurationListRelPersistence.findByC_C(
+			_classNameLocalService.getClassNameId(className),
+			cpConfigurationListId);
+	}
+
+	@Override
+	public List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationListRel> orderByComparator) {
+
+		return cpConfigurationListRelPersistence.findByC_C(
+			_classNameLocalService.getClassNameId(className),
+			cpConfigurationListId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCPConfigurationListRelsCount(long cpConfigurationListId) {
 		return cpConfigurationListRelPersistence.countByCPConfigurationListId(
+			cpConfigurationListId);
+	}
+
+	@Override
+	public int getCPConfigurationListRelsCount(
+		String className, long cpConfigurationListId) {
+
+		return cpConfigurationListRelPersistence.countByC_C(
+			_classNameLocalService.getClassNameId(className),
 			cpConfigurationListId);
 	}
 

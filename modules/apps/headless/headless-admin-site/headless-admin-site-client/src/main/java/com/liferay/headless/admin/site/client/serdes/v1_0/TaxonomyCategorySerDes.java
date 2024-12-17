@@ -233,6 +233,20 @@ public class TaxonomyCategorySerDes {
 			sb.append(taxonomyCategory.getParentTaxonomyVocabulary());
 		}
 
+		if (taxonomyCategory.getSiteExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taxonomyCategory.getSiteExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (taxonomyCategory.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -445,6 +459,16 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getParentTaxonomyVocabulary()));
 		}
 
+		if (taxonomyCategory.getSiteExternalReferenceCode() == null) {
+			map.put("siteExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"siteExternalReferenceCode",
+				String.valueOf(
+					taxonomyCategory.getSiteExternalReferenceCode()));
+		}
+
 		if (taxonomyCategory.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -556,6 +580,11 @@ public class TaxonomyCategorySerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "parentTaxonomyVocabulary")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
 
 				return false;
 			}
@@ -681,6 +710,14 @@ public class TaxonomyCategorySerDes {
 					taxonomyCategory.setParentTaxonomyVocabulary(
 						ParentTaxonomyVocabularySerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "siteExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategory.setSiteExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

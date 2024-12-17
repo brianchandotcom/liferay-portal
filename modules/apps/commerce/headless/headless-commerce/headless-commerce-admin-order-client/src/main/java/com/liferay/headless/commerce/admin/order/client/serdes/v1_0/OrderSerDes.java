@@ -235,6 +235,30 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getCurrencyExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getCurrencyExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (order.getCurrencyId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyId\": ");
+
+			sb.append(order.getCurrencyId());
+		}
+
 		if (order.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1461,6 +1485,22 @@ public class OrderSerDes {
 			map.put("currencyCode", String.valueOf(order.getCurrencyCode()));
 		}
 
+		if (order.getCurrencyExternalReferenceCode() == null) {
+			map.put("currencyExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"currencyExternalReferenceCode",
+				String.valueOf(order.getCurrencyExternalReferenceCode()));
+		}
+
+		if (order.getCurrencyId() == null) {
+			map.put("currencyId", null);
+		}
+		else {
+			map.put("currencyId", String.valueOf(order.getCurrencyId()));
+		}
+
 		if (order.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
@@ -2352,6 +2392,14 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return true;
 			}
@@ -2892,6 +2940,20 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				if (jsonParserFieldValue != null) {
 					order.setCurrencyCode((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setCurrencyExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				if (jsonParserFieldValue != null) {
+					order.setCurrencyId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {

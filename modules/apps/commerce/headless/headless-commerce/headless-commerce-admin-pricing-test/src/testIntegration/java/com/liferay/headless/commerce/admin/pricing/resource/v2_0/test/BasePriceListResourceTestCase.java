@@ -175,6 +175,7 @@ public abstract class BasePriceListResourceTestCase {
 		priceList.setAuthor(regex);
 		priceList.setCatalogName(regex);
 		priceList.setCurrencyCode(regex);
+		priceList.setCurrencyExternalReferenceCode(regex);
 		priceList.setExternalReferenceCode(regex);
 		priceList.setName(regex);
 
@@ -187,6 +188,8 @@ public abstract class BasePriceListResourceTestCase {
 		Assert.assertEquals(regex, priceList.getAuthor());
 		Assert.assertEquals(regex, priceList.getCatalogName());
 		Assert.assertEquals(regex, priceList.getCurrencyCode());
+		Assert.assertEquals(
+			regex, priceList.getCurrencyExternalReferenceCode());
 		Assert.assertEquals(regex, priceList.getExternalReferenceCode());
 		Assert.assertEquals(regex, priceList.getName());
 	}
@@ -1238,6 +1241,25 @@ public abstract class BasePriceListResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (priceList.getCurrencyExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (priceList.getCurrencyId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (priceList.getCustomFields() == null) {
 					valid = false;
@@ -1595,6 +1617,31 @@ public abstract class BasePriceListResourceTestCase {
 				if (!Objects.deepEquals(
 						priceList1.getCurrencyCode(),
 						priceList2.getCurrencyCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceList1.getCurrencyExternalReferenceCode(),
+						priceList2.getCurrencyExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceList1.getCurrencyId(),
+						priceList2.getCurrencyId())) {
 
 					return false;
 				}
@@ -2118,6 +2165,57 @@ public abstract class BasePriceListResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("currencyExternalReferenceCode")) {
+			Object object = priceList.getCurrencyExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("currencyId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2402,6 +2500,9 @@ public abstract class BasePriceListResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				currencyExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				currencyId = RandomTestUtil.randomLong();
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

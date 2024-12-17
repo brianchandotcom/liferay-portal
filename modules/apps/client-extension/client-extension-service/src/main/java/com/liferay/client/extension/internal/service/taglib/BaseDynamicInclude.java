@@ -133,8 +133,8 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to inject global JavaScript client extensions for " +
-					"company " + themeDisplay.getCompanyId(),
+				"Unable to inject JavaScript client extensions for company " +
+					themeDisplay.getCompanyId(),
 				exception);
 		}
 	}

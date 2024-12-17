@@ -56,10 +56,12 @@ interface NewDateRangeFilterForm extends NewFilterForm {
 }
 
 export class FiltersPage {
+	readonly activeToggle: Locator;
 	private readonly dataSetPage: DataSetPage;
 	readonly fieldSelectModalPage: FieldSelectModalPage;
 
 	readonly filterTable: Locator;
+	readonly inactiveToggle: Locator;
 	readonly newClientExtensionFilterForm: NewClientExtensionFilterForm;
 	readonly newDateRangeFilterForm: NewDateRangeFilterForm;
 	readonly newFilterButton: Locator;
@@ -70,9 +72,13 @@ export class FiltersPage {
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
+		this.activeToggle = page.getByLabel('Active', {exact: true});
 		this.dataSetPage = new DataSetPage(page);
 		this.fieldSelectModalPage = new FieldSelectModalPage(page);
 		this.filterTable = page.getByRole('table');
+		this.inactiveToggle = page.getByLabel('Inactive', {
+			exact: true,
+		});
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
@@ -188,6 +194,7 @@ export class FiltersPage {
 			filterData.name,
 			filterData.fieldName,
 			filterData.type,
+			filterData.status,
 		];
 
 		await expect(tableRowContent).toContainText(expectedRowContent);

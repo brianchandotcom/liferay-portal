@@ -157,6 +157,7 @@ export interface IListTypeEntry {
 export interface IOrderable {
 	active: boolean;
 	dateCreated: string;
+	externalReferenceCode: string;
 	id: number;
 }
 

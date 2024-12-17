@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
@@ -326,12 +327,14 @@ test('Date filters can be reordered', async ({
 	const createdDateFilterData = {
 		fieldName: DATE_FIELD_NAME,
 		name: DATE_FILTER_NAME,
+		status: 'Active',
 		type: 'Date Filter',
 	};
 
 	const updatedDateFilterData = {
 		fieldName: 'dateModified',
 		name: 'Update date',
+		status: 'Active',
 		type: 'Date Filter',
 	};
 
@@ -414,3 +417,55 @@ test('Date filters can be reordered', async ({
 		});
 	});
 });
+
+test(
+	'Can deactivate and activate Date filters',
+	{tag: '@LPD-39965'},
+	async ({dataSetManagerApiHelpers, filtersPage, page}) => {
+		const createdDateFilterData = {
+			fieldName: DATE_FIELD_NAME,
+			name: DATE_FILTER_NAME,
+			status: 'Active',
+			type: 'Date Filter',
+		};
+
+		await test.step('Create a date filter', async () => {
+			await dataSetManagerApiHelpers.createDataSetDateFilter({
+				dataSetERC,
+				fieldName: createdDateFilterData.fieldName,
+				from: '2020-01-01',
+				label_i18n: {en_US: createdDateFilterData.name},
+				to: '3020-01-02',
+				type: 'date-time',
+			});
+		});
+
+		await test.step('Date filter is displayed on the table and is "Active" by default', async () => {
+			await filtersPage.goto({dataSetLabel});
+
+			await filtersPage.assertTableCellContent({
+				filterData: createdDateFilterData,
+				page: filtersPage.page,
+				rowIndex: 0,
+			});
+
+			await expect(filtersPage.activeToggle.last()).toBeVisible();
+		});
+
+		await test.step('Deactivate date filter', async () => {
+			await filtersPage.activeToggle.last().click();
+
+			await waitForAlert(page);
+
+			await expect(filtersPage.inactiveToggle.last()).toBeVisible();
+		});
+
+		await test.step('Activate date filter', async () => {
+			await filtersPage.inactiveToggle.last().click();
+
+			await waitForAlert(page);
+
+			await expect(filtersPage.activeToggle.last()).toBeVisible();
+		});
+	}
+);

@@ -6,6 +6,7 @@
 import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
+import ToggleStatus from '../../../components/ToggleStatus';
 import {EFilterType, IFilter, IFilterTypeProps} from '../../../utils/types';
 
 const FilterList = ({
@@ -14,6 +15,7 @@ const FilterList = ({
 	editFilter,
 	filterTypes,
 	filters,
+	toggleChange,
 	updateFiltersOrder,
 }: {
 	createFilter: (filterType: EFilterType) => void;
@@ -21,6 +23,7 @@ const FilterList = ({
 	editFilter: ({item}: {item: IFilter}) => void;
 	filterTypes: Record<EFilterType, IFilterTypeProps>;
 	filters: IFilter[];
+	toggleChange: (item: IFilter) => void;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
 	return (
@@ -55,6 +58,17 @@ const FilterList = ({
 				{
 					label: Liferay.Language.get('type'),
 					name: 'displayType',
+				},
+				{
+					contentRenderer: {
+						component: ({item}) =>
+							ToggleStatus({
+								item,
+								toggleChange,
+							}),
+					},
+					label: Liferay.Language.get('status'),
+					name: 'active',
 				},
 			]}
 			items={filters}

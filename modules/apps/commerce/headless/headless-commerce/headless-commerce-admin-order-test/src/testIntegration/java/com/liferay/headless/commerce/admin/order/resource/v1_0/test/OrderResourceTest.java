@@ -356,6 +356,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = _commerceCurrency.getCode();
+				currencyExternalReferenceCode =
+					_commerceCurrency.getExternalReferenceCode();
+				currencyId = _commerceCurrency.getCommerceCurrencyId();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

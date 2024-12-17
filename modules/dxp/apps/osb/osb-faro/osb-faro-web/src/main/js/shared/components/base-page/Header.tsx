@@ -18,6 +18,7 @@ import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {pickBy} from 'lodash';
 
 type NavBarItem = {
+	deprecated?: boolean;
 	exact: boolean;
 	label: string;
 	route: string;
@@ -44,7 +45,7 @@ const NavBar: React.FC<INavBarProps> = ({
 	return (
 		<div className='row'>
 			<ClayNavigationBar triggerLabel={activeLabel}>
-				{items.map(({label, route}) => (
+				{items.map(({deprecated, label, route}) => (
 					<ClayNavigationBar.Item
 						active={matchedRoute === route}
 						key={label}
@@ -57,6 +58,17 @@ const NavBar: React.FC<INavBarProps> = ({
 							onClick={() => setActiveLabel(label)}
 						>
 							{label}
+
+							{deprecated && (
+								<ClayBadge
+									className='ml-1'
+									displayType='warning'
+									label={Liferay.Language.get(
+										'deprecated'
+									).toUpperCase()}
+									translucent
+								/>
+							)}
 						</ClayLink>
 					</ClayNavigationBar.Item>
 				))}

@@ -62,6 +62,7 @@ const NAV_ITEMS = [
 		route: Routes.ASSETS_WEB_CONTENT
 	},
 	{
+		deprecated: true,
 		exact: true,
 		label: Liferay.Language.get('custom'),
 		route: Routes.ASSETS_CUSTOM

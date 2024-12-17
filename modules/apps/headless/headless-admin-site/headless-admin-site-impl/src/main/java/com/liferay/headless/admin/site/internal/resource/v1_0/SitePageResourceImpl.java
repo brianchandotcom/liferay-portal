@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import javax.ws.rs.NotSupportedException;
 
@@ -170,7 +170,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
 				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
-				null, null, _toType(sitePage.getType()),
+				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
 				UnicodePropertiesBuilder.create(
 					true
 				).setProperty(
@@ -246,20 +246,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			layout);
-	}
-
-	private String _toType(SitePage.Type type) {
-		if (Objects.equals(type, SitePage.Type.COLLECTION_PAGE)) {
-			return LayoutConstants.TYPE_COLLECTION;
-		}
-		else if (Objects.equals(type, SitePage.Type.CONTENT_PAGE)) {
-			return LayoutConstants.TYPE_CONTENT;
-		}
-		else if (Objects.equals(type, SitePage.Type.WIDGET_PAGE)) {
-			return LayoutConstants.TYPE_PORTLET;
-		}
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Reference

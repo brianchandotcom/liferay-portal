@@ -87,15 +87,23 @@ const inlineText = {
 	title: 'Heading Example',
 };
 
-const renderPageContent = (props = contents[0]) =>
+const renderPageContent = (
+	{content = contents[0], hasUpdatePermissions = true} = {
+		content: contents[0],
+		hasUpdatePermissions: true,
+	}
+) =>
 	render(
 		<StoreContextProvider
 			initialState={{
 				layoutData: {items: {}},
-				permissions: {UPDATE: true, UPDATE_LAYOUT_CONTENT: true},
+				permissions: {
+					UPDATE: hasUpdatePermissions,
+					UPDATE_LAYOUT_CONTENT: true,
+				},
 			}}
 		>
-			<PageContent {...props} />
+			<PageContent {...content} />
 		</StoreContextProvider>
 	);
 
@@ -122,7 +130,7 @@ describe('PageContent', () => {
 			'view-items',
 			'view-usages',
 		];
-		renderPageContent(contents[1]);
+		renderPageContent({content: contents[1]});
 
 		fireEvent.click(screen.getByTitle('open-actions-menu'));
 
@@ -133,7 +141,7 @@ describe('PageContent', () => {
 	});
 
 	it('shows all items to be added when the Add Item action is clicked', () => {
-		renderPageContent(contents[1]);
+		renderPageContent({content: contents[1]});
 
 		fireEvent.click(screen.getByTitle('open-actions-menu'));
 		fireEvent.click(screen.queryByText('add-items'));
@@ -144,7 +152,7 @@ describe('PageContent', () => {
 	});
 
 	it('open image editor modal when the Edit Image action is clicked', () => {
-		const {baseElement} = renderPageContent(contents[2]);
+		const {baseElement} = renderPageContent({content: contents[2]});
 
 		fireEvent.click(screen.getByTitle('open-actions-menu'));
 		fireEvent.click(screen.getByText('edit-image'));
@@ -155,14 +163,14 @@ describe('PageContent', () => {
 	});
 
 	it('shows the edit button if the content is inline text', () => {
-		renderPageContent(inlineText);
+		renderPageContent({content: inlineText});
 
 		expect(screen.getByLabelText('edit-inline-text-x')).toBeInTheDocument();
 	});
 
 	it('selects the corresponding element on the page when inline text item is clicked', () => {
 		const selectItem = useSelectItem();
-		renderPageContent(inlineText);
+		renderPageContent({content: inlineText});
 
 		fireEvent.click(screen.getByLabelText(`select ${inlineText.title}`));
 
@@ -177,7 +185,13 @@ describe('PageContent', () => {
 			() => '11113-element-text'
 		);
 
-		renderPageContent(inlineText);
+		renderPageContent({content: inlineText});
+
+		expect(screen.getByLabelText('edit-inline-text-x')).toBeDisabled();
+	});
+
+	it('disables edit button when user has no update permission', () => {
+		renderPageContent({content: inlineText, hasUpdatePermissions: false});
 
 		expect(screen.getByLabelText('edit-inline-text-x')).toBeDisabled();
 	});

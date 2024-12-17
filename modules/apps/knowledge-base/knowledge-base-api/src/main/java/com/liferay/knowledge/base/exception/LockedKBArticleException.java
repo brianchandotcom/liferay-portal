@@ -66,14 +66,14 @@ public class LockedKBArticleException extends PortalException {
 	}
 
 	private Lock _getLock(Throwable throwable) {
-		if (throwable instanceof DuplicateLockException) {
-			DuplicateLockException duplicateLockException =
-				(DuplicateLockException)throwable;
-
-			return duplicateLockException.getLock();
+		if (!(throwable instanceof DuplicateLockException)) {
+			return null;
 		}
 
-		return null;
+		DuplicateLockException duplicateLockException =
+			(DuplicateLockException)throwable;
+
+		return duplicateLockException.getLock();
 	}
 
 	private String _actionURL;

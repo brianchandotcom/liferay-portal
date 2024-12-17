@@ -242,4 +242,42 @@ describe('Collection', () => {
 			)
 		).toBeInTheDocument();
 	});
+
+	it('shows a permission restriction message when user does not have update permissions', async () => {
+		const items = [
+			{content: 'Item 1 Content', title: 'Item 1 Title'},
+			{content: 'Item 2 Content', title: 'Item 2 Title'},
+			{content: 'Item 3 Content', title: 'Item 3 Title'},
+		];
+
+		CollectionService.getCollectionField.mockImplementation(() =>
+			Promise.resolve({
+				isRestricted: true,
+				items,
+				length: 3,
+				totalNumberOfItems: 3,
+			})
+		);
+
+		await act(async () => {
+			renderCollection({
+				collection: {
+					classNameId: '1',
+					classPK: '1',
+					title: 'collection1',
+				},
+				numberOfItems: 3,
+				numberOfPages: 1,
+				paginationType: 'none',
+			});
+
+			jest.runAllTimers();
+		});
+
+		expect(
+			screen.getByText(
+				'this-content-cannot-be-displayed-due-to-permission-restrictions'
+			)
+		).toBeInTheDocument();
+	});
 });

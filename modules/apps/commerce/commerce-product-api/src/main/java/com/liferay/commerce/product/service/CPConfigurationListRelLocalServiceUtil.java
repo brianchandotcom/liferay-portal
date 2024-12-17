@@ -342,6 +342,21 @@ public class CPConfigurationListRelLocalServiceUtil {
 			cpConfigurationListId, start, end, orderByComparator);
 	}
 
+	public static List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId) {
+
+		return getService().getCPConfigurationListRels(
+			className, cpConfigurationListId);
+	}
+
+	public static List<CPConfigurationListRel> getCPConfigurationListRels(
+		String className, long cpConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationListRel> orderByComparator) {
+
+		return getService().getCPConfigurationListRels(
+			className, cpConfigurationListId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of cp configuration list rels.
 	 *
@@ -356,6 +371,13 @@ public class CPConfigurationListRelLocalServiceUtil {
 
 		return getService().getCPConfigurationListRelsCount(
 			cpConfigurationListId);
+	}
+
+	public static int getCPConfigurationListRelsCount(
+		String className, long cpConfigurationListId) {
+
+		return getService().getCPConfigurationListRelsCount(
+			className, cpConfigurationListId);
 	}
 
 	public static

@@ -80,6 +80,11 @@ public interface CPConfigurationListService extends BaseService {
 			long cpConfigurationListId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPConfigurationList fetchCPConfigurationListByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPConfigurationList forceDeleteCPConfigurationList(

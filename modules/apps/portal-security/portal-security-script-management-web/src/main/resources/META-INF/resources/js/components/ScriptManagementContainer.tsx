@@ -114,7 +114,7 @@ export default function ScriptManagementContainer({
 			{!isScriptManagementConfigurationDefined && (
 				<ClayAlert
 					displayType="info"
-					title={`${Liferay.Language.get('alert-helper-info')}:`}
+					title={`${Liferay.Language.get('info')}:`}
 				>
 					{Liferay.Language.get(
 						'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'

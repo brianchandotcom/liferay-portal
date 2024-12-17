@@ -250,6 +250,10 @@ public class DefaultObjectEntryManagerImplTest
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				false, Collections.emptyList());
+
+		_listTypeEntryKey1 = _addListTypeEntry();
+		_listTypeEntryKey2 = _addListTypeEntry();
+
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
 			"localizedBooleanObjectFieldName_i18n",
 			HashMapBuilder.put(
@@ -298,6 +302,19 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US", "en_US localizedLongTextObjectFieldValue"
 			).put(
 				"pt_BR", "pt_BR localizedLongTextObjectFieldValue"
+			).build()
+		).put(
+			"localizedPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US",
+				HashMapBuilder.put(
+					"key", _listTypeEntryKey1
+				).build()
+			).put(
+				"pt_BR",
+				HashMapBuilder.put(
+					"key", _listTypeEntryKey2
+				).build()
 			).build()
 		).put(
 			"localizedPrecisionDecimalObjectFieldName_i18n",
@@ -508,6 +525,19 @@ public class DefaultObjectEntryManagerImplTest
 					listTypeDefinition.getListTypeDefinitionId()
 				).name(
 					"multiselectPicklistObjectFieldName"
+				).build(),
+				new PicklistObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					listTypeDefinition.getListTypeDefinitionId()
+				).localized(
+					true
+				).name(
+					"localizedPicklistObjectFieldName"
 				).build(),
 				new PicklistObjectFieldBuilder(
 				).indexed(
@@ -2330,6 +2360,8 @@ public class DefaultObjectEntryManagerImplTest
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
 					).put(
+						"localizedPicklistObjectFieldName", _listTypeEntryKey1
+					).put(
 						"localizedPrecisionDecimalObjectFieldName",
 						new BigDecimal("0.18775433729")
 					).put(
@@ -2412,6 +2444,19 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US", 100L
 			).put(
 				"pt_BR", 54L
+			).build()
+		).put(
+			"localizedPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US",
+				HashMapBuilder.put(
+					"key", _listTypeEntryKey2
+				).build()
+			).put(
+				"pt_BR",
+				HashMapBuilder.put(
+					"key", _listTypeEntryKey1
+				).build()
 			).build()
 		).put(
 			"localizedPrecisionDecimalObjectFieldName_i18n",
@@ -2652,6 +2697,13 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				buildEqualsExpressionFilterString(
+					"localizedPicklistObjectFieldName", _listTypeEntryKey1)
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
 					"localizedPrecisionDecimalObjectFieldName",
 					new BigDecimal("0.18775433729"))
 			).build(),
@@ -2799,6 +2851,16 @@ public class DefaultObjectEntryManagerImplTest
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", String.valueOf(childObjectEntry2.getId())
+			).build(),
+			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", _listTypeEntryKey1
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", _listTypeEntryKey2
 			).build(),
 			childObjectEntry2);
 		testGetObjectEntries(
@@ -4077,6 +4139,8 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
+				"localizedPicklistObjectFieldName", _listTypeEntryKey1
+			).put(
 				"localizedRichTextObjectFieldName",
 				"en_US <i>localizedRichTextObjectFieldValue</i>"
 			).put(
@@ -4099,6 +4163,8 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedLongTextObjectFieldName",
 				"pt_BR localizedLongTextObjectFieldValue"
+			).put(
+				"localizedPicklistObjectFieldName", _listTypeEntryKey2
 			).put(
 				"localizedRichTextObjectFieldName",
 				"pt_BR <i>localizedRichTextObjectFieldValue</i>"
@@ -4225,6 +4291,13 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", ""
 			).build()
 		).put(
+			"localizedPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", _listTypeEntryKey2
+			).put(
+				"pt_BR", _listTypeEntryKey1
+			).build()
+		).put(
 			"localizedRichTextObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"ar_SA", "ar_SA localizedRichTextObjectFieldValue"
@@ -4301,6 +4374,8 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
+				"localizedPicklistObjectFieldName", _listTypeEntryKey2
+			).put(
 				"localizedRichTextObjectFieldName",
 				"en_US <i>localizedRichTextObjectFieldValue</i>"
 			).put(
@@ -4323,6 +4398,8 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
+			).put(
+				"localizedPicklistObjectFieldName", _listTypeEntryKey1
 			).put(
 				"localizedRichTextObjectFieldName",
 				"en_US <i>localizedRichTextObjectFieldValue</i>"
@@ -4796,7 +4873,10 @@ public class DefaultObjectEntryManagerImplTest
 			}
 		}
 		else if (Objects.equals(
-					expectedEntry.getKey(), "picklistObjectFieldName")) {
+					expectedEntry.getKey(),
+					"localizedPicklistObjectFieldName") ||
+				 Objects.equals(
+					 expectedEntry.getKey(), "picklistObjectFieldName")) {
 
 			ListEntry listEntry = (ListEntry)actualObjectEntryProperties.get(
 				expectedEntry.getKey());
@@ -4807,6 +4887,28 @@ public class DefaultObjectEntryManagerImplTest
 			}
 			else {
 				Assert.assertEquals(expectedEntry.getValue(), listEntry);
+			}
+		}
+		else if (Objects.equals(
+					expectedEntry.getKey(),
+					"localizedPicklistObjectFieldName_i18n")) {
+
+			Map<String, Object> actualValues =
+				(Map<String, Object>)actualObjectEntryProperties.get(
+					expectedEntry.getKey());
+			Map<String, Object> expectedValues =
+				(Map<String, Object>)expectedEntry.getValue();
+
+			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
+				ListEntry listEntry = (ListEntry)actualValues.get(
+					entry.getKey());
+
+				if (entry.getValue() instanceof String) {
+					Assert.assertEquals(entry.getValue(), listEntry.getKey());
+				}
+				else {
+					Assert.assertEquals(entry.getValue(), listEntry);
+				}
 			}
 		}
 		else if (Objects.equals(
@@ -5628,6 +5730,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	private String _listTypeEntryKey1;
+	private String _listTypeEntryKey2;
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

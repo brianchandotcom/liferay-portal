@@ -319,7 +319,7 @@ definition {
 					index = 2);
 			}
 
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Remove duplicates") {
@@ -432,7 +432,7 @@ definition {
 
 			Button.clickSaveAsDraft();
 
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -484,7 +484,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 	}
 

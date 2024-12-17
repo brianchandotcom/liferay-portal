@@ -4054,7 +4054,7 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
-					properties = _localizedObjectFieldI18nValues;
+					properties = new HashMap<>(_localizedObjectFieldI18nValues);
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4672,7 +4672,7 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry2.getId(),
 				new ObjectEntry() {
 					{
-						properties = customObjectEntryProperties;
+						properties = new HashMap<>(customObjectEntryProperties);
 					}
 				}),
 			new ObjectEntry() {
@@ -4986,7 +4986,7 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					properties = values;
+					properties = new HashMap<>(values);
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -5160,7 +5160,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2, objectEntryId),
 			new ObjectEntry() {
 				{
-					properties = expectedLocalizedValues;
+					properties = new HashMap<>(expectedLocalizedValues);
 				}
 			});
 
@@ -5181,7 +5181,7 @@ public class DefaultObjectEntryManagerImplTest
 					_objectDefinition2, objectEntryId),
 				new ObjectEntry() {
 					{
-						properties = expectedLocalizedValues;
+						properties = new HashMap<>(expectedLocalizedValues);
 					}
 				});
 		}
@@ -5574,7 +5574,7 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition, objectEntryId,
 			new ObjectEntry() {
 				{
-					properties = values;
+					properties = new HashMap<>(values);
 				}
 			});
 	}

@@ -814,32 +814,32 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
-	public Map<Long, List<ObjectRelationship>>
-		getObjectRelationshipsByCompanyId(long companyId) {
+	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
+		long objectDefinitionId2) {
 
-		Map<Long, List<ObjectRelationship>> partitionedObjectRelationships =
+		return objectRelationshipPersistence.findByObjectDefinitionId2(
+			objectDefinitionId2);
+	}
+
+	@Override
+	public Map<Long, List<ObjectRelationship>> getObjectRelationshipsMap(
+		long companyId) {
+
+		Map<Long, List<ObjectRelationship>> objectRelationshipsMap =
 			new HashMap<>();
 
 		for (ObjectRelationship objectRelationship :
 				objectRelationshipPersistence.findByCompanyId(companyId)) {
 
 			List<ObjectRelationship> objectRelationships =
-				partitionedObjectRelationships.computeIfAbsent(
+				objectRelationshipsMap.computeIfAbsent(
 					objectRelationship.getObjectDefinitionId1(),
 					key -> new ArrayList<>());
 
 			objectRelationships.add(objectRelationship);
 		}
 
-		return partitionedObjectRelationships;
-	}
-
-	@Override
-	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
-		long objectDefinitionId2) {
-
-		return objectRelationshipPersistence.findByObjectDefinitionId2(
-			objectDefinitionId2);
+		return objectRelationshipsMap;
 	}
 
 	@Override

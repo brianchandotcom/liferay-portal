@@ -45,22 +45,6 @@ public class CPConfigurationEntryImpl extends CPConfigurationEntryBaseImpl {
 	}
 
 	@Override
-	public CPConfigurationList getCPParentConfigurationList()
-		throws PortalException {
-
-		CPConfigurationList cpConfigurationList =
-			CPConfigurationListLocalServiceUtil.getCPConfigurationList(
-				getCPConfigurationListId());
-
-		if (cpConfigurationList.getParentCPConfigurationListId() == 0) {
-			return null;
-		}
-
-		return CPConfigurationListLocalServiceUtil.getCPConfigurationList(
-			cpConfigurationList.getParentCPConfigurationListId());
-	}
-
-	@Override
 	public CPTaxCategory getCPTaxCategory() throws PortalException {
 		if (getCPTaxCategoryId() > 0) {
 			return CPTaxCategoryLocalServiceUtil.getCPTaxCategory(
@@ -68,6 +52,17 @@ public class CPConfigurationEntryImpl extends CPConfigurationEntryBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public CPConfigurationList getParentCPConfigurationList()
+		throws PortalException {
+
+		CPConfigurationList cpConfigurationList =
+			CPConfigurationListLocalServiceUtil.getCPConfigurationList(
+				getCPConfigurationListId());
+
+		return cpConfigurationList.getParentCPConfigurationList();
 	}
 
 }

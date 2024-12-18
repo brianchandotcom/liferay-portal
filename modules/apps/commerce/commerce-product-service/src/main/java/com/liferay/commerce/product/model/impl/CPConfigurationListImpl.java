@@ -35,6 +35,10 @@ public class CPConfigurationListImpl extends CPConfigurationListBaseImpl {
 	public CPConfigurationList getParentCPConfigurationList()
 		throws PortalException {
 
+		if (getParentCPConfigurationListId() == 0) {
+			return null;
+		}
+
 		return CPConfigurationListLocalServiceUtil.getCPConfigurationList(
 			getParentCPConfigurationListId());
 	}

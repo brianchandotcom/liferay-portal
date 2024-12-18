@@ -31,8 +31,7 @@ public class CPConfigurationEntryTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.singleColumnReference(
 			CPConfigurationEntryTable.INSTANCE.CPConfigurationEntryId,
-			CPConfigurationEntrySettingTable.INSTANCE.CPConfigurationEntryId
-		);
+			CPConfigurationEntrySettingTable.INSTANCE.CPConfigurationEntryId);
 	}
 
 	@Override

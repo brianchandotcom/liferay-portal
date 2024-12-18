@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -110,12 +111,17 @@ public class CPConfigurationEntryLocalServiceImpl
 			_reindexCPDefinition(classPK);
 		}
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
+		_cpConfigurationEntrySettingLocalService.addCPConfigurationEntrySetting(
+			userId, groupId, cpConfigurationEntry.getCPConfigurationEntryId(),
+			StringPool.BLANK,
+			CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
-		if (cpConfigurationEntrySetting == null) {
+		if (cpConfigurationEntry.getParentCPConfigurationList() == null) {
 			return cpConfigurationEntry;
 		}
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
 
 		cpConfigurationEntrySetting.setSetting(
 			StringUtil.merge(
@@ -142,12 +148,9 @@ public class CPConfigurationEntryLocalServiceImpl
 	public void deleteCPConfigurationEntries(long cpConfigurationListId)
 		throws PortalException {
 
-		List<CPConfigurationEntry> cpConfigurationEntries =
-			cpConfigurationEntryLocalService.getCPConfigurationEntries(
-				cpConfigurationListId);
-
 		for (CPConfigurationEntry cpConfigurationEntry :
-				cpConfigurationEntries) {
+				cpConfigurationEntryLocalService.getCPConfigurationEntries(
+					cpConfigurationListId)) {
 
 			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 				cpConfigurationEntry);
@@ -174,26 +177,43 @@ public class CPConfigurationEntryLocalServiceImpl
 			CPConfigurationEntry cpConfigurationEntry)
 		throws PortalException {
 
-		cpConfigurationEntry = super.deleteCPConfigurationEntry(
-			cpConfigurationEntry);
+		cpConfigurationEntry = super.deleteCPConfigurationEntry(cpConfigurationEntry);
 
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+		CPConfigurationEntrySetting parentCPConfigurationEntrySetting =
 			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
 
-		if (cpConfigurationEntrySetting == null) {
+		if (parentCPConfigurationEntrySetting == null) {
 			return cpConfigurationEntry;
 		}
 
-		String parentCPConfigurationEntrySettingSetting =
-			cpConfigurationEntrySetting.getSetting();
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
-		cpConfigurationEntrySetting.setSetting(
+		String setting = String.valueOf(
+			cpConfigurationEntry.getCPConfigurationListId());
+
+		if ((cpConfigurationEntrySetting != null) &&
+			Validator.isNotNull(cpConfigurationEntrySetting.getSetting())) {
+
+			setting = StringBundler.concat(
+				setting, StringPool.COMMA,
+				cpConfigurationEntrySetting.getSetting());
+		}
+
+		String parentCPConfigurationEntrySettingSetting =
+			parentCPConfigurationEntrySetting.getSetting();
+
+		parentCPConfigurationEntrySetting.setSetting(
 			StringBundler.concat(
 				parentCPConfigurationEntrySettingSetting, StringPool.COMMA,
-				cpConfigurationEntrySetting.getSetting()));
+				setting));
 
 		_cpConfigurationEntrySettingLocalService.
-			updateCPConfigurationEntrySetting(cpConfigurationEntrySetting);
+			updateCPConfigurationEntrySetting(
+				parentCPConfigurationEntrySetting);
 
 		return cpConfigurationEntry;
 	}
@@ -204,6 +224,29 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		return cpConfigurationEntryPersistence.fetchByC_C_C(
 			classNameId, classPK, cpConfigurationListId);
+	}
+
+	@Override
+	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
+		CPConfigurationEntry cpConfigurationEntry) {
+
+		cpConfigurationEntry = cpConfigurationEntryPersistence.remove(
+			cpConfigurationEntry);
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		if (cpConfigurationEntrySetting == null) {
+			return cpConfigurationEntry;
+		}
+
+		_cpConfigurationEntrySettingLocalService.
+			deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
+
+		return cpConfigurationEntry;
 	}
 
 	@Override
@@ -285,35 +328,46 @@ public class CPConfigurationEntryLocalServiceImpl
 			CPConfigurationEntry cpConfigurationEntry)
 		throws PortalException {
 
-		CPConfigurationList cpParentConfigurationList =
-			cpConfigurationEntry.getCPParentConfigurationList();
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
-		if (cpParentConfigurationList == null) {
-			return null;
+		CPConfigurationList parentCPConfigurationList =
+			cpConfigurationEntry.getParentCPConfigurationList();
+
+		if ((cpConfigurationEntrySetting != null) &&
+			(parentCPConfigurationList == null)) {
+
+			return cpConfigurationEntrySetting;
 		}
 
-		CPConfigurationEntry cpParentConfigurationEntry = null;
+		long cpConfigurationListId =
+			parentCPConfigurationList.getCPConfigurationListId();
 
-		while (cpParentConfigurationEntry == null) {
-			cpParentConfigurationEntry =
+		CPConfigurationEntry parentCPConfigurationEntry = null;
+
+		while (parentCPConfigurationEntry == null) {
+			parentCPConfigurationEntry =
 				cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
 					cpConfigurationEntry.getClassNameId(),
-					cpConfigurationEntry.getClassPK(),
-					cpParentConfigurationList.getCPConfigurationListId());
+					cpConfigurationEntry.getClassPK(), cpConfigurationListId);
 
-			if (cpParentConfigurationList.getParentCPConfigurationListId() ==
-					0) {
+			parentCPConfigurationList =
+				parentCPConfigurationList.getParentCPConfigurationList();
 
+			if (parentCPConfigurationList == null) {
 				break;
 			}
 
-			cpParentConfigurationList =
-				cpParentConfigurationList.getParentCPConfigurationList();
+			cpConfigurationListId =
+				parentCPConfigurationList.getCPConfigurationListId();
 		}
 
 		return _cpConfigurationEntrySettingLocalService.
 			fetchCPConfigurationEntrySetting(
-				cpParentConfigurationEntry.getCPConfigurationEntryId(),
+				parentCPConfigurationEntry.getCPConfigurationEntryId(),
 				CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 	}
 

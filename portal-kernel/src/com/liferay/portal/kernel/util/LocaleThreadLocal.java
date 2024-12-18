@@ -8,7 +8,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.Locale;
@@ -53,7 +53,7 @@ public class LocaleThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<Locale> _defaultLocale =
-		new CentralizedCompanyThreadLocal<>(
+		new CompanyCentralizedThreadLocal<>(
 			LocaleThreadLocal.class + "._defaultLocale",
 			() -> {
 				User guestUser = CompanyThreadLocal.fetchGuestUser();

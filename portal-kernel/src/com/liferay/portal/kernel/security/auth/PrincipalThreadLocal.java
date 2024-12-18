@@ -75,10 +75,10 @@ public class PrincipalThreadLocal {
 		PrincipalThreadLocal.class);
 
 	private static final ThreadLocal<String> _name =
-		new CentralizedCompanyThreadLocal<>(
+		new CompanyCentralizedThreadLocal<>(
 			PrincipalThreadLocal.class + "._name");
 	private static final ThreadLocal<String> _password =
-		new CentralizedCompanyThreadLocal<>(
+		new CompanyCentralizedThreadLocal<>(
 			PrincipalThreadLocal.class + "._password");
 
 }

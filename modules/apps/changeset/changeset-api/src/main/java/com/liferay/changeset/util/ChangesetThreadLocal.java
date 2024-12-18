@@ -5,7 +5,7 @@
 
 package com.liferay.changeset.util;
 
-import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +38,7 @@ public class ChangesetThreadLocal {
 	}
 
 	private static final ThreadLocal<Set<Long>> _exportedChangesetEntryIds =
-		new CentralizedCompanyThreadLocal<>(
+		new CompanyCentralizedThreadLocal<>(
 			ChangesetThreadLocal.class + "._exportedChangesetEntryIds",
 			HashSet::new);
 

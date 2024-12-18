@@ -8,7 +8,7 @@ package com.liferay.portlet.asset.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
@@ -38,7 +38,7 @@ public class DeletedAssetEntryThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<AssetEntry>
-		_assetEntryThreadLocal = new CentralizedCompanyThreadLocal<>(
+		_assetEntryThreadLocal = new CompanyCentralizedThreadLocal<>(
 			DeletedAssetEntryThreadLocal.class + "._assetEntryThreadLocal");
 
 }

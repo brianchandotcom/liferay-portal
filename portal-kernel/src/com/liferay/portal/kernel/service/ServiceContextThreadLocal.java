@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 
 import java.util.LinkedList;
 
@@ -49,7 +49,7 @@ public class ServiceContextThreadLocal {
 	}
 
 	private static final ThreadLocal<LinkedList<ServiceContext>>
-		_serviceContextThreadLocal = new CentralizedCompanyThreadLocal<>(
+		_serviceContextThreadLocal = new CompanyCentralizedThreadLocal<>(
 			ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
 			LinkedList::new,
 			serviceContexts -> {

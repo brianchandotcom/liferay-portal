@@ -7,7 +7,7 @@ package com.liferay.commerce.context;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.security.auth.CentralizedCompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 
 /**
  * @author Alessio Antonio Rendina
@@ -29,7 +29,7 @@ public class CommerceContextThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<CommerceContext>
-		_commerceContext = new CentralizedCompanyThreadLocal<>(
+		_commerceContext = new CompanyCentralizedThreadLocal<>(
 			CommerceContextThreadLocal.class + "._commerceContext");
 
 }

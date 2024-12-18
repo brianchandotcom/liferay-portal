@@ -16,40 +16,40 @@ import java.util.function.Supplier;
 /**
  * @author Alberto Chaparro
  */
-public class CentralizedCompanyThreadLocal<T>
+public class CompanyCentralizedThreadLocal<T>
 	extends CentralizedThreadLocal<T> {
 
-	public static List<CentralizedCompanyThreadLocal<?>>
-		getCentralizedCompanyThreadLocals() {
+	public static List<CompanyCentralizedThreadLocal<?>>
+		getCompanyCentralizedThreadLocals() {
 
-		return _centralizedCompanyThreadLocals;
+		return _companyCentralizedThreadLocals;
 	}
 
-	public CentralizedCompanyThreadLocal(boolean shortLived) {
+	public CompanyCentralizedThreadLocal(boolean shortLived) {
 		this(null, () -> null, shortLived);
 	}
 
-	public CentralizedCompanyThreadLocal(String name) {
+	public CompanyCentralizedThreadLocal(String name) {
 		this(name, () -> null, true);
 	}
 
-	public CentralizedCompanyThreadLocal(String name, Supplier<T> supplier) {
+	public CompanyCentralizedThreadLocal(String name, Supplier<T> supplier) {
 		this(name, supplier, true);
 	}
 
-	public CentralizedCompanyThreadLocal(
+	public CompanyCentralizedThreadLocal(
 		String name, Supplier<T> supplier, boolean shortLived) {
 
 		this(name, supplier, null, shortLived);
 	}
 
-	public CentralizedCompanyThreadLocal(
+	public CompanyCentralizedThreadLocal(
 		String name, Supplier<T> supplier, Function<T, T> copyFunction,
 		boolean shortLived) {
 
 		super(name, supplier, copyFunction, shortLived);
 
-		_centralizedCompanyThreadLocals.add(this);
+		_companyCentralizedThreadLocals.add(this);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CentralizedCompanyThreadLocal<T>
 		return super.setWithSafeCloseable(value);
 	}
 
-	private static final List<CentralizedCompanyThreadLocal<?>>
-		_centralizedCompanyThreadLocals = new ArrayList<>();
+	private static final List<CompanyCentralizedThreadLocal<?>>
+		_companyCentralizedThreadLocals = new ArrayList<>();
 
 }

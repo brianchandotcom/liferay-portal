@@ -89,18 +89,18 @@ public class CompanyThreadLocalTest {
 		try {
 			CompanyThreadLocal.setCompanyId(1L);
 
-			for (CentralizedCompanyThreadLocal<?>
-					centralizedCompanyThreadLocal :
-						CentralizedCompanyThreadLocal.
-							getCentralizedCompanyThreadLocals()) {
+			for (CompanyCentralizedThreadLocal<?>
+					companyCentralizedThreadLocal :
+						CompanyCentralizedThreadLocal.
+							getCompanyCentralizedThreadLocals()) {
 
 				Object initialValue = ReflectionTestUtil.invoke(
-					centralizedCompanyThreadLocal, "initialValue",
+					companyCentralizedThreadLocal, "initialValue",
 					new Class<?>[0]);
 
-				Object value = centralizedCompanyThreadLocal.get();
+				Object value = companyCentralizedThreadLocal.get();
 
-				String name = centralizedCompanyThreadLocal.toString();
+				String name = companyCentralizedThreadLocal.toString();
 
 				if (name.contains("DataSampleThreadLocal")) {
 					DataSampleThreadLocal dataSampleThreadLocalInitialValue =
@@ -146,33 +146,33 @@ public class CompanyThreadLocalTest {
 
 		TimeZoneThreadLocal.setDefaultTimeZone(pstTimeZone);
 
-		Map<CentralizedCompanyThreadLocal<?>, Object>
-			centralizedCompanyThreadLocalMap = new HashMap<>();
+		Map<CompanyCentralizedThreadLocal<?>, Object>
+			companyCentralizedThreadLocalMap = new HashMap<>();
 
-		for (CentralizedCompanyThreadLocal<?> centralizedCompanyThreadLocal :
-				CentralizedCompanyThreadLocal.
-					getCentralizedCompanyThreadLocals()) {
+		for (CompanyCentralizedThreadLocal<?> companyCentralizedThreadLocal :
+				CompanyCentralizedThreadLocal.
+					getCompanyCentralizedThreadLocals()) {
 
-			centralizedCompanyThreadLocalMap.put(
-				centralizedCompanyThreadLocal,
-				centralizedCompanyThreadLocal.get());
+			companyCentralizedThreadLocalMap.put(
+				companyCentralizedThreadLocal,
+				companyCentralizedThreadLocal.get());
 		}
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(1L)) {
 
-			for (CentralizedCompanyThreadLocal<?>
-					centralizedCompanyThreadLocal :
-						CentralizedCompanyThreadLocal.
-							getCentralizedCompanyThreadLocals()) {
+			for (CompanyCentralizedThreadLocal<?>
+					companyCentralizedThreadLocal :
+						CompanyCentralizedThreadLocal.
+							getCompanyCentralizedThreadLocals()) {
 
 				Object initialValue = ReflectionTestUtil.invoke(
-					centralizedCompanyThreadLocal, "initialValue",
+					companyCentralizedThreadLocal, "initialValue",
 					new Class<?>[0]);
 
-				Object value = centralizedCompanyThreadLocal.get();
+				Object value = companyCentralizedThreadLocal.get();
 
-				String name = centralizedCompanyThreadLocal.toString();
+				String name = companyCentralizedThreadLocal.toString();
 
 				if (name.contains("DataSampleThreadLocal")) {
 					DataSampleThreadLocal dataSampleThreadLocalInitialValue =
@@ -191,14 +191,14 @@ public class CompanyThreadLocalTest {
 			}
 		}
 
-		for (CentralizedCompanyThreadLocal<?> centralizedCompanyThreadLocal :
-				CentralizedCompanyThreadLocal.
-					getCentralizedCompanyThreadLocals()) {
+		for (CompanyCentralizedThreadLocal<?> companyCentralizedThreadLocal :
+				CompanyCentralizedThreadLocal.
+					getCompanyCentralizedThreadLocals()) {
 
 			Assert.assertEquals(
-				centralizedCompanyThreadLocalMap.get(
-					centralizedCompanyThreadLocal),
-				centralizedCompanyThreadLocal.get());
+				companyCentralizedThreadLocalMap.get(
+					companyCentralizedThreadLocal),
+				companyCentralizedThreadLocal.get());
 		}
 	}
 

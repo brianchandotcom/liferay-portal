@@ -23,6 +23,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -662,7 +663,11 @@ public class DDMFormValuesExportImportContentProcessor
 					_portletDataContext, jsonObject);
 
 				if (importedLayout != null) {
-					value.addString(locale, toJSON(importedLayout, locale));
+					value.addString(
+						locale,
+						toJSON(
+							importedLayout, locale,
+							jsonObject.getString("name")));
 
 					continue;
 				}
@@ -695,7 +700,11 @@ public class DDMFormValuesExportImportContentProcessor
 				}
 
 				if (importedLayout != null) {
-					value.addString(locale, toJSON(importedLayout, locale));
+					value.addString(
+						locale,
+						toJSON(
+							importedLayout, locale,
+							jsonObject.getString("name")));
 				}
 			}
 		}
@@ -720,7 +729,7 @@ public class DDMFormValuesExportImportContentProcessor
 			return layout;
 		}
 
-		protected String toJSON(Layout layout, Locale locale)
+		protected String toJSON(Layout layout, Locale locale, String name)
 			throws PortalException {
 
 			return JSONUtil.put(
@@ -730,12 +739,27 @@ public class DDMFormValuesExportImportContentProcessor
 			).put(
 				"layoutId", layout.getLayoutId()
 			).put(
-				"name", layout.getBreadcrumb(locale)
+				"name", _getName(layout, locale, name)
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
 				"value", layout.getFriendlyURL(locale)
 			).toString();
+		}
+
+		private String _getName(Layout layout, Locale locale, String name)
+			throws PortalException {
+
+			try {
+				return layout.getBreadcrumb(locale);
+			}
+			catch (NoSuchLayoutException noSuchLayoutException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(noSuchLayoutException);
+				}
+			}
+
+			return name;
 		}
 
 		private final PortletDataContext _portletDataContext;

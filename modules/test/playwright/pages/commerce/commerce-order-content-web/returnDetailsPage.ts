@@ -26,7 +26,7 @@ export class ReturnDetailsPage extends CommerceDNDTablePage {
 	constructor(page: Page) {
 		super(
 			page,
-			'#_com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet_return-items-container .dnd-table'
+			'#_com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet_return-items-container .fds table'
 		);
 
 		this.layoutsPage = new CommerceLayoutsPage(page);

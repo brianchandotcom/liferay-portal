@@ -41,11 +41,11 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	constructor(page: Page) {
 		super(
 			page,
-			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_fm .dnd-table'
+			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_fm .fds table'
 		);
 
 		this.editCommerceOrderTable = page.locator(
-			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_editOrderContainer .dnd-table'
+			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_editOrderContainer .fds table'
 		);
 		this.editCommerceOrderTableRow = async (
 			colPosition: number,
@@ -62,9 +62,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 		this.editCommerceOrderTableRows = async () => {
 			await this.editCommerceOrderTable.elementHandle();
 
-			return await this.editCommerceOrderTable
-				.locator('div.dnd-tbody div.dnd-tr')
-				.all();
+			return await this.editCommerceOrderTable.locator('tbody tr').all();
 		};
 		this.editCommerceOrderTableRowLink = async ({
 			colIndex = 1,
@@ -109,7 +107,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 			throw new Error(`Cannot locate order row with value ${sku}`);
 		};
 		this.keyOrderStatus = (orderStatus: string) =>
-			page.locator('.dnd-table').getByText(orderStatus);
+			page.locator('.fds table').getByText(orderStatus);
 		this.orderActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});

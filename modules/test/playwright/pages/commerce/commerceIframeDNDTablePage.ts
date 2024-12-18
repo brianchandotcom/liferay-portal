@@ -13,10 +13,10 @@ export const searchTableRowByValue = async function (
 ) {
 	await tableLocator.elementHandle();
 
-	const rows = await tableLocator.locator('div.dnd-tr').all();
+	const rows = await tableLocator.locator('tr').all();
 
 	for await (const row of rows) {
-		const column = row.locator('div.dnd-td').nth(colPosition).first();
+		const column = row.locator('td').nth(colPosition).first();
 
 		const colValue = (await column.allInnerTexts()).join('');
 
@@ -67,7 +67,7 @@ export class CommerceIframeDNDTablePage {
 		this.tableRows = async () => {
 			await this.table.elementHandle();
 
-			return await this.table.locator('div.dnd-tbody div.dnd-tr').all();
+			return await this.table.locator('tbody tr').all();
 		};
 		this.tableRowLink = async ({
 			colIndex = 1,

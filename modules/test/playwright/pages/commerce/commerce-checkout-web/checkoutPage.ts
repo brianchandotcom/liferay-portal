@@ -60,7 +60,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	constructor(page: Page) {
 		super(
 			page,
-			'#_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_fm .dnd-table'
+			'#_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_fm .fds table'
 		);
 		this.activeCheckoutStep = page.locator(
 			'.multi-step-item.active .multi-step-indicator-label'

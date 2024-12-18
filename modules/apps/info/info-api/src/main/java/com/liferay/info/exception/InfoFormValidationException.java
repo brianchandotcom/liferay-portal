@@ -90,8 +90,8 @@ public class InfoFormValidationException extends InfoFormException {
 
 		@Override
 		public String getLocalizedMessage(Locale locale) {
-			return LanguageUtil.get(
-				locale, "value-exceeds-maximum-length-of-x");
+			return LanguageUtil.format(
+				locale, "value-exceeds-maximum-length-of-x", _maxLength);
 		}
 
 		@Override

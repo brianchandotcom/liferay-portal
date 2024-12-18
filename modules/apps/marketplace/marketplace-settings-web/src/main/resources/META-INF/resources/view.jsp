@@ -7,9 +7,22 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div>
 	<react:component
-		module="{App} from marketplace-settings-web"
+		module="{MarketplaceSettings} from marketplace-settings-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
+			).put(
+				"clientId", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_CLIENT_ID)
+			).put(
+				"redirect", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_REDIRECT)
+			).put(
+				"url", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_URL)
+			).build()
+		%>'
 	/>
 </div>
 

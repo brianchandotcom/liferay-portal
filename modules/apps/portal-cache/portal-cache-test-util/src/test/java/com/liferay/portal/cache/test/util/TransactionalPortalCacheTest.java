@@ -6,6 +6,7 @@
 package com.liferay.portal.cache.test.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.MVCCPortalCache;
@@ -33,11 +34,15 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Shuyang Zhou
@@ -87,6 +92,11 @@ public class TransactionalPortalCacheTest {
 
 		_portalCache.registerPortalCacheListener(_testCacheListener);
 		_portalCache.registerPortalCacheListener(_testCacheReplicator);
+	}
+
+	@After
+	public void tearDown() {
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
 	@Test
@@ -398,6 +408,75 @@ public class TransactionalPortalCacheTest {
 		// Non MVCC portal cache
 
 		_testShardedTransactionalCache(false);
+	}
+
+	@Test(expected = Throwable.class)
+	public void testShardedTransactionalCacheWithException() {
+		_setEnableTransactionalCache(true);
+
+		// Commit with exception
+
+		_portalCache = new ShardedTestPortalCache<String, String>(
+			"Broken Sharded Test Portal Cache") {
+
+			@Override
+			protected void doPut(String key, String value, int timeToLive) {
+				ReflectionUtil.throwException(
+					new Throwable("Unable to do put"));
+			}
+
+		};
+
+		TransactionalPortalCache<String, String> transactionalPortalCache =
+			new TransactionalPortalCache<>(_portalCache, false);
+
+		TransactionalPortalCacheUtil.begin();
+
+		long companyId1 = RandomTestUtil.randomLong();
+
+		_companyIdThreadLocal.set(companyId1);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_1));
+
+		try {
+			TransactionalPortalCacheUtil.commit(false);
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Assert.assertEquals("Unable to do put", throwable.getMessage());
+		}
+
+		// Null safeCloseable
+
+		MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
+			Mockito.mockStatic(CompanyThreadLocal.class);
+
+		companyThreadLocalMockedStatic.when(
+			() -> CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+				Mockito.any())
+		).thenReturn(
+			null
+		);
+
+		TransactionalPortalCacheUtil.begin();
+
+		_companyIdThreadLocal.set(companyId1);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_2);
+
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_1));
+
+		TransactionalPortalCacheUtil.commit(false);
+
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _portalCache.get(_KEY_1));
+
+		companyThreadLocalMockedStatic.close();
 	}
 
 	@Test

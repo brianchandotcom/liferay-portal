@@ -11,6 +11,7 @@ dependencies {
 	testImplementation project(":core:petra:petra-concurrent")
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-process")
+	testImplementation project(":core:petra:petra-reflect")
 }
 
 liferay {

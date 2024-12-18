@@ -100,6 +100,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -123,6 +124,8 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.InputStream;
+
+import java.text.DateFormat;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -568,10 +571,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				"((status eq 0) or (status eq 5))"),
 			userAccount1, userAccount2, userAccount3, userAccount6);
 
+		_testGetUserAccountsPageWithBirthDateFilter();
 		_testGetUserAccountsPageWithCustomFields();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetUserAccountsPageWithFilterDateTimeEquals()
@@ -1843,6 +1846,31 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		if (expectedUserAccounts.length > 0) {
 			assertValid(page);
 		}
+	}
+
+	private void _testGetUserAccountsPageWithBirthDateFilter()
+		throws Exception {
+
+		UserAccount userAccount1 = randomUserAccount();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.set(Calendar.YEAR, 1990);
+
+		userAccount1.setBirthDate(calendar.getTime());
+
+		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
+
+		testGetUserAccountsPage_addUserAccount(randomUserAccount());
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		_testGetUserAccountsPage("(birthDate eq 1979-01-01)");
+		_testGetUserAccountsPage(
+			StringBundler.concat(
+				"(birthDate eq ", dateFormat.format(calendar.getTime()), ")"),
+			userAccount1);
 	}
 
 	private void _testGetUserAccountsPageWithCustomFields() throws Exception {

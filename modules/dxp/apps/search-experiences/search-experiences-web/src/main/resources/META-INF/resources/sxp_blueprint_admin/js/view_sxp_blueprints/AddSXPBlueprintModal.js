@@ -4,8 +4,10 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
@@ -37,6 +39,7 @@ const AddModal = ({
 
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 	const [titleInputValue, setTitleInputValue] = useState('');
+	const [isCollectionProvider, setIsCollectionProvider] = useState(false);
 
 	const _handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || DEFAULT_ERROR);
@@ -52,11 +55,18 @@ const AddModal = ({
 				configuration: {
 					advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,
 					aggregationConfiguration: {},
-					generalConfiguration: {
-						clauseContributorsExcludes: [],
-						clauseContributorsIncludes: ['*'],
-						searchableAssetTypes: [],
-					},
+					generalConfiguration: Liferay.FeatureFlags['LPS-129412']
+						? {
+								clauseContributorsExcludes: [],
+								clauseContributorsIncludes: ['*'],
+								collectionProvider: isCollectionProvider,
+								searchableAssetTypes: [],
+							}
+						: {
+								clauseContributorsExcludes: [],
+								clauseContributorsIncludes: ['*'],
+								searchableAssetTypes: [],
+							},
 					highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
 					parameterConfiguration: DEFAULT_PARAMETER_CONFIGURATION,
 					queryConfiguration: {
@@ -210,6 +220,43 @@ const AddModal = ({
 							value={descriptionInputValue}
 						/>
 					</div>
+
+					{Liferay.FeatureFlags['LPS-129412'] && (
+						<div className="form-group">
+							<ClayCheckbox
+								aria-label={Liferay.Language.get(
+									'create-collection-provider'
+								)}
+								checked={isCollectionProvider}
+								label={
+									<>
+										{Liferay.Language.get(
+											'create-collection-provider'
+										)}
+
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="bottom-left"
+												title={Liferay.Language.get(
+													'create-collection-provider-help'
+												)}
+											>
+												<ClayIcon
+													className="c-ml-2 text-3 text-secondary"
+													symbol="question-circle-full"
+												/>
+											</span>
+										</ClayTooltipProvider>
+									</>
+								}
+								onChange={() =>
+									setIsCollectionProvider(
+										!isCollectionProvider
+									)
+								}
+							/>
+						</div>
+					)}
 				</ClayModal.Body>
 
 				<ClayModal.Footer

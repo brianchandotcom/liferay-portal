@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayRadio, ClayRadioGroup, ClaySelect} from '@clayui/form';
+import ClayForm, {
+	ClayCheckbox,
+	ClayRadio,
+	ClayRadioGroup,
+	ClaySelect,
+} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import getCN from 'classnames';
 import React, {useContext} from 'react';
@@ -30,6 +35,7 @@ function ConfigurationTab({
 	advancedConfig,
 	aggregationConfig,
 	errors,
+	frameworkConfig,
 	highlightConfig,
 	indexConfig,
 	parameterConfig,
@@ -81,6 +87,13 @@ function ConfigurationTab({
 		});
 	};
 
+	const _handleOnCollectionProviderChange = () => {
+		setFieldValue('frameworkConfig', {
+			...frameworkConfig,
+			collectionProvider: !frameworkConfig.collectionProvider,
+		});
+	};
+
 	/**
 	 * Checks if company index is selected.
 	 * @returns {boolean}
@@ -117,6 +130,27 @@ function ConfigurationTab({
 	return (
 		<ClayLayout.ContainerFluid className="layout-section-main" size="xl">
 			<div className="layout-section-main-shift">
+				{Liferay.FeatureFlags['LPS-129412'] && (
+					<div className="c-mb-4 sheet sheet-lg">
+						<h2 className="sheet-title">
+							{Liferay.Language.get('general-settings')}
+						</h2>
+
+						<ClayCheckbox
+							aria-label={Liferay.Language.get(
+								'enable-as-a-collection-provider'
+							)}
+							checked={
+								frameworkConfig.collectionProvider || false
+							}
+							label={Liferay.Language.get(
+								'enable-as-a-collection-provider'
+							)}
+							onChange={_handleOnCollectionProviderChange}
+						/>
+					</div>
+				)}
+
 				<div className="sheet sheet-lg">
 					<h2 className="sheet-title">
 						{Liferay.Language.get('configuration')}

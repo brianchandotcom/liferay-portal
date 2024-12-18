@@ -6,7 +6,6 @@
 package com.liferay.layout.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -105,10 +104,6 @@ public class LayoutTypeContentPerformanceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
 		JSONObject jsonObject = ContentLayoutTestUtil.addPortletToLayout(
 			draftLayout, JournalContentPortletKeys.JOURNAL_CONTENT);
 
@@ -125,7 +120,7 @@ public class LayoutTypeContentPerformanceTest {
 			JournalContentPortletKeys.JOURNAL_CONTENT, portletNamespace);
 
 		_setUpPortletPreferences(
-			assetEntry, journalArticle, draftLayout, portletInstanceId);
+			journalArticle, draftLayout, portletInstanceId);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
@@ -185,21 +180,17 @@ public class LayoutTypeContentPerformanceTest {
 	}
 
 	private void _assertPortletPreferences(
-		AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
-		String portletId) {
+		JournalArticle journalArticle, Layout layout, String portletId) {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
 
 		Assert.assertEquals(
-			String.valueOf(journalArticle.getArticleId()),
-			portletPreferences.getValue("articleId", null));
+			journalArticle.getExternalReferenceCode(),
+			portletPreferences.getValue("articleExternalReferenceCode", null));
 		Assert.assertEquals(
-			String.valueOf(assetEntry.getEntryId()),
-			portletPreferences.getValue("assetEntryId", null));
-		Assert.assertEquals(
-			String.valueOf(journalArticle.getGroupId()),
-			portletPreferences.getValue("groupId", null));
+			_group.getExternalReferenceCode(),
+			portletPreferences.getValue("groupExternalReferenceCode", null));
 	}
 
 	private String _getLayoutContent(Layout layout, Locale locale)
@@ -221,24 +212,21 @@ public class LayoutTypeContentPerformanceTest {
 	}
 
 	private void _setUpPortletPreferences(
-			AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
-			String portletId)
+			JournalArticle journalArticle, Layout layout, String portletId)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
 
 		portletPreferences.setValue(
-			"articleId", String.valueOf(journalArticle.getArticleId()));
+			"articleExternalReferenceCode",
+			journalArticle.getExternalReferenceCode());
 		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"groupExternalReferenceCode", _group.getExternalReferenceCode());
 
 		portletPreferences.store();
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, layout, portletId);
+		_assertPortletPreferences(journalArticle, layout, portletId);
 	}
 
 	@Inject

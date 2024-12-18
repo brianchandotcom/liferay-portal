@@ -209,18 +209,20 @@ public class StagingDataPortletPreferencesTest
 			RandomTestUtil.randomString());
 
 		Map<String, String[]> preferenceMap = HashMapBuilder.put(
-			"articleId",
-			new String[] {String.valueOf(journalArticle.getArticleId())}
+			"articleExternalReferenceCode",
+			new String[] {journalArticle.getExternalReferenceCode()}
 		).put(
-			"groupId", new String[] {String.valueOf(stagingGroup.getGroupId())}
+			"groupExternalReferenceCode",
+			new String[] {stagingGroup.getExternalReferenceCode()}
 		).build();
 
 		String portletId = publishLayoutWithDisplayPortlet(
 			JournalContentPortletKeys.JOURNAL_CONTENT, preferenceMap, true);
 
 		Assert.assertEquals(
-			journalArticle.getArticleId(),
-			livePortletPreferences.getValue("articleId", StringPool.BLANK));
+			journalArticle.getExternalReferenceCode(),
+			livePortletPreferences.getValue(
+				"articleExternalReferenceCode", StringPool.BLANK));
 
 		publishPortlet(JournalPortletKeys.JOURNAL);
 
@@ -231,8 +233,9 @@ public class StagingDataPortletPreferencesTest
 				journalArticle.getUuid(), liveGroup.getGroupId());
 
 		Assert.assertEquals(
-			liveJournalArticle.getArticleId(),
-			livePortletPreferences.getValue("articleId", StringPool.BLANK));
+			liveJournalArticle.getExternalReferenceCode(),
+			livePortletPreferences.getValue(
+				"articleExternalReferenceCode", StringPool.BLANK));
 	}
 
 	@Test

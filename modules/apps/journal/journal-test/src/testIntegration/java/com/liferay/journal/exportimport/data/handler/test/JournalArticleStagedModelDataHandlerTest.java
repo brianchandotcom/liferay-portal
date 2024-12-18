@@ -8,9 +8,7 @@ package com.liferay.journal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -43,7 +41,6 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -325,15 +322,12 @@ public class JournalArticleStagedModelDataHandlerTest
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, 0,
 				JournalContentPortletKeys.JOURNAL_CONTENT);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		portletPreferences.setValue("articleId", journalArticle.getArticleId());
 		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+			"articleExternalReferenceCode",
+			journalArticle.getExternalReferenceCode());
 		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"groupExternalReferenceCode",
+			stagingGroup.getExternalReferenceCode());
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -470,15 +464,12 @@ public class JournalArticleStagedModelDataHandlerTest
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED, 0,
 				JournalContentPortletKeys.JOURNAL_CONTENT);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		portletPreferences.setValue("articleId", journalArticle.getArticleId());
 		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+			"articleExternalReferenceCode",
+			journalArticle.getExternalReferenceCode());
 		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"groupExternalReferenceCode",
+			stagingGroup.getExternalReferenceCode());
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			stagingGroup.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -544,18 +535,9 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		Assert.assertNotNull(importedPortletPreferences);
 		Assert.assertEquals(
-			importedJournalArticle.getArticleId(),
-			importedPortletPreferences.getValue("articleId", null));
-
-		AssetEntry importedAssetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			importedJournalArticle.getResourcePrimKey());
-
-		Assert.assertNotNull(importedAssetEntry);
-
-		Assert.assertEquals(
-			String.valueOf(importedAssetEntry.getEntryId()),
-			importedPortletPreferences.getValue("assetEntryId", null));
+			importedJournalArticle.getExternalReferenceCode(),
+			importedPortletPreferences.getValue(
+				"articleExternalReferenceCode", null));
 	}
 
 	@Override
@@ -1112,20 +1094,6 @@ public class JournalArticleStagedModelDataHandlerTest
 		stagedModels.add(expiredArticle);
 
 		return stagedModels;
-	}
-
-	@Override
-	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)
-		throws Exception {
-
-		JournalArticle article = (JournalArticle)stagedModel;
-
-		JournalArticleResource articleResource =
-			JournalArticleResourceLocalServiceUtil.getArticleResource(
-				article.getResourcePrimKey());
-
-		return AssetEntryLocalServiceUtil.fetchEntry(
-			group.getGroupId(), articleResource.getUuid());
 	}
 
 	@Override

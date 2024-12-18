@@ -1,19 +1,17 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.constants.CPConfigurationFDSNames;
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,41 +19,31 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
-		"frontend.data.set.name=" + CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS
-	},
+	property = "frontend.data.set.name=" + CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS,
 	service = FDSFilter.class
 )
-public class ProductTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
+public class ShippableSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getId() {
-		return "productType";
+		return "shippable";
 	}
 
 	@Override
 	public String getLabel() {
-		return "product-type";
+		return "shippable";
 	}
 
 	@Override
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (CPType cpType : _cpTypeRegistry.getCPTypes()) {
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					cpType.getLabel(locale), cpType.getName()));
-		}
-
-		return selectionFDSFilterItems;
+		return ListUtil.fromArray(
+			new SelectionFDSFilterItem(_language.get(locale, "yes"), true),
+			new SelectionFDSFilterItem(_language.get(locale, "no"), false));
 	}
 
 	@Override
@@ -64,6 +52,6 @@ public class ProductTypeSelectionFDSFilter extends BaseSelectionFDSFilter {
 	}
 
 	@Reference
-	private CPTypeRegistry _cpTypeRegistry;
+	private Language _language;
 
 }

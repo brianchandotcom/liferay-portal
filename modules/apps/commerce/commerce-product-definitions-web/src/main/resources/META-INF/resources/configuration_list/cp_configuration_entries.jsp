@@ -19,11 +19,12 @@ long cpConfigurationListId = cpConfigurationListDisplayContext.getCPConfiguratio
 	title='<%= LanguageUtil.get(request, "products") %>'
 >
 	<frontend-data-set:headless-display
-		apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations" %>'
+		apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations?showDifferences=true" %>'
 		fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
 		itemsPerPage="<%= 10 %>"
+		propsTransformer="{CPConfigurationEntryFDSPropsTransformer} from commerce-product-definitions-web"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"

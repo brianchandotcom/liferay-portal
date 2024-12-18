@@ -34,28 +34,52 @@ public class CPConfigurationEntryTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"entityName", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink"
+				"cpConfigurationEntryDataRenderer"
 			).setSortable(
 				true
 			)
 		).add(
 			"visible", "visible",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"purchasable", "purchasable",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"productShippingConfiguration.shippable", "shippable",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"minOrderQuantity", "min-order-quantity",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"maxOrderQuantity", "max-order-quantity",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"multipleOrderQuantity", "multiple-order-quantity",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"cpConfigurationEntryDataRenderer"
+			).setSortable(
+				true
+			)
 		).build();
 	}
 

@@ -210,8 +210,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> page =
 			productConfigurationResource.
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 10),
-					null);
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -224,7 +224,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			page =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						irrelevantExternalReferenceCode, null, null,
+						irrelevantExternalReferenceCode, null, null, null,
 						Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -249,8 +249,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		page =
 			productConfigurationResource.
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 10),
-					null);
+					externalReferenceCode, null, null, null,
+					Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -305,7 +305,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null,
+						externalReferenceCode, null, null,
 						getFilterString(
 							entityField, "between", productConfiguration1),
 						Pagination.of(1, 2), null);
@@ -375,7 +375,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null,
+						externalReferenceCode, null, null,
 						getFilterString(
 							entityField, operator, productConfiguration1),
 						Pagination.of(1, 2), null);
@@ -396,7 +396,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> productConfigurationPage =
 			productConfigurationResource.
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-					externalReferenceCode, null, null, null, null);
+					externalReferenceCode, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			productConfigurationPage.getTotalCount());
@@ -421,7 +421,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page1 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -436,7 +436,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page2 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -449,7 +449,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page3 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -463,7 +463,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page1 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(1, totalCount + 2), null);
 
 			List<ProductConfiguration> productConfigurations1 =
@@ -476,7 +476,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page2 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -491,7 +491,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page3 =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
@@ -638,13 +638,13 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> page =
 			productConfigurationResource.
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-					externalReferenceCode, null, null, null, null);
+					externalReferenceCode, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<ProductConfiguration> ascPage =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":asc");
 
@@ -658,7 +658,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> descPage =
 				productConfigurationResource.
 					getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-						externalReferenceCode, null, null,
+						externalReferenceCode, null, null, null,
 						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":desc");
 
@@ -732,7 +732,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> page =
 			productConfigurationResource.
 				getProductConfigurationListIdProductConfigurationsPage(
-					id, null, null, Pagination.of(1, 10), null);
+					id, null, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -744,7 +744,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			page =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						irrelevantId, null, null,
+						irrelevantId, null, null, null,
 						Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -769,7 +769,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		page =
 			productConfigurationResource.
 				getProductConfigurationListIdProductConfigurationsPage(
-					id, null, null, Pagination.of(1, 10), null);
+					id, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -824,7 +824,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null,
+						id, null, null,
 						getFilterString(
 							entityField, "between", productConfiguration1),
 						Pagination.of(1, 2), null);
@@ -894,7 +894,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null,
+						id, null, null,
 						getFilterString(
 							entityField, operator, productConfiguration1),
 						Pagination.of(1, 2), null);
@@ -915,7 +915,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> productConfigurationPage =
 			productConfigurationResource.
 				getProductConfigurationListIdProductConfigurationsPage(
-					id, null, null, null, null);
+					id, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			productConfigurationPage.getTotalCount());
@@ -940,7 +940,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page1 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null,
+						id, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -955,7 +955,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page2 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null,
+						id, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -968,7 +968,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page3 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null,
+						id, null, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 							pageSizeLimit),
@@ -982,7 +982,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page1 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null, Pagination.of(1, totalCount + 2), null);
+						id, null, null, null, Pagination.of(1, totalCount + 2),
+						null);
 
 			List<ProductConfiguration> productConfigurations1 =
 				(List<ProductConfiguration>)page1.getItems();
@@ -994,7 +995,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page2 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null, Pagination.of(2, totalCount + 2), null);
+						id, null, null, null, Pagination.of(2, totalCount + 2),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -1008,8 +1010,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> page3 =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null, Pagination.of(1, (int)totalCount + 3),
-						null);
+						id, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
 				productConfiguration1,
@@ -1155,13 +1157,13 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		Page<ProductConfiguration> page =
 			productConfigurationResource.
 				getProductConfigurationListIdProductConfigurationsPage(
-					id, null, null, null, null);
+					id, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<ProductConfiguration> ascPage =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null,
+						id, null, null, null,
 						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":asc");
 
@@ -1175,7 +1177,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			Page<ProductConfiguration> descPage =
 				productConfigurationResource.
 					getProductConfigurationListIdProductConfigurationsPage(
-						id, null, null,
+						id, null, null, null,
 						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":desc");
 
@@ -2170,6 +2172,14 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("differences", additionalAssertFieldName)) {
+				if (productConfiguration.getDifferences() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"displayAvailability", additionalAssertFieldName)) {
 
@@ -2503,6 +2513,17 @@ public abstract class BaseProductConfigurationResourceTestCase {
 						(Map)
 							productConfiguration2.
 								getAvailabilityEstimateName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("differences", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productConfiguration1.getDifferences(),
+						productConfiguration2.getDifferences())) {
 
 					return false;
 				}
@@ -2854,6 +2875,11 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("availabilityEstimateName")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("differences")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -37,13 +37,15 @@ public interface ProductConfigurationResource {
 	public Page<ProductConfiguration>
 			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
 				String externalReferenceCode, String search,
-				String filterString, Pagination pagination, String sortString)
+				Boolean showDifferences, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPageHttpResponse(
 				String externalReferenceCode, String search,
-				String filterString, Pagination pagination, String sortString)
+				Boolean showDifferences, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public ProductConfiguration
@@ -60,14 +62,14 @@ public interface ProductConfigurationResource {
 
 	public Page<ProductConfiguration>
 			getProductConfigurationListIdProductConfigurationsPage(
-				Long id, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long id, String search, Boolean showDifferences,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getProductConfigurationListIdProductConfigurationsPageHttpResponse(
-				Long id, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long id, String search, Boolean showDifferences,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public ProductConfiguration
@@ -294,14 +296,14 @@ public interface ProductConfigurationResource {
 		public Page<ProductConfiguration>
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
 					String externalReferenceCode, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Boolean showDifferences, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPageHttpResponse(
-					externalReferenceCode, search, filterString, pagination,
-					sortString);
+					externalReferenceCode, search, showDifferences,
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -365,8 +367,8 @@ public interface ProductConfigurationResource {
 		public HttpInvoker.HttpResponse
 				getProductConfigurationListByExternalReferenceCodeProductConfigurationsPageHttpResponse(
 					String externalReferenceCode, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					Boolean showDifferences, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -392,6 +394,11 @@ public interface ProductConfigurationResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (showDifferences != null) {
+				httpInvoker.parameter(
+					"showDifferences", String.valueOf(showDifferences));
 			}
 
 			if (filterString != null) {
@@ -536,13 +543,15 @@ public interface ProductConfigurationResource {
 
 		public Page<ProductConfiguration>
 				getProductConfigurationListIdProductConfigurationsPage(
-					Long id, String search, String filterString,
-					Pagination pagination, String sortString)
+					Long id, String search, Boolean showDifferences,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProductConfigurationListIdProductConfigurationsPageHttpResponse(
-					id, search, filterString, pagination, sortString);
+					id, search, showDifferences, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -605,8 +614,9 @@ public interface ProductConfigurationResource {
 
 		public HttpInvoker.HttpResponse
 				getProductConfigurationListIdProductConfigurationsPageHttpResponse(
-					Long id, String search, String filterString,
-					Pagination pagination, String sortString)
+					Long id, String search, Boolean showDifferences,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -632,6 +642,11 @@ public interface ProductConfigurationResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (showDifferences != null) {
+				httpInvoker.parameter(
+					"showDifferences", String.valueOf(showDifferences));
 			}
 
 			if (filterString != null) {

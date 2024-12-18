@@ -271,6 +271,47 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _availabilityEstimateNameSupplier;
 
+	@Schema
+	public String[] getDifferences() {
+		if (_differencesSupplier != null) {
+			differences = _differencesSupplier.get();
+
+			_differencesSupplier = null;
+		}
+
+		return differences;
+	}
+
+	public void setDifferences(String[] differences) {
+		this.differences = differences;
+
+		_differencesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDifferences(
+		UnsafeSupplier<String[], Exception> differencesUnsafeSupplier) {
+
+		_differencesSupplier = () -> {
+			try {
+				return differencesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] differences;
+
+	@JsonIgnore
+	private Supplier<String[]> _differencesSupplier;
+
 	@Schema(example = "true")
 	public Boolean getDisplayAvailability() {
 		if (_displayAvailabilitySupplier != null) {
@@ -1146,6 +1187,32 @@ public class ProductConfiguration implements Serializable {
 			sb.append("\"availabilityEstimateName\": ");
 
 			sb.append(_toJSON(availabilityEstimateName));
+		}
+
+		String[] differences = getDifferences();
+
+		if (differences != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"differences\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < differences.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(differences[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < differences.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Boolean displayAvailability = getDisplayAvailability();

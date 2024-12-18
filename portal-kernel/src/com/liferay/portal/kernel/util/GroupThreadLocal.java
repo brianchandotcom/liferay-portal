@@ -56,7 +56,7 @@ public class GroupThreadLocal {
 		GroupThreadLocal.class);
 
 	private static final ThreadLocal<Boolean> _deleteInProcess =
-		new CentralizedThreadLocal<>(
+		new CompanyCentralizedThreadLocal<>(
 			GroupThreadLocal.class + "._deleteInProcess", () -> Boolean.FALSE);
 	private static final CentralizedThreadLocal<Long> _groupId =
 		new CompanyCentralizedThreadLocal<>(

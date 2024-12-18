@@ -128,7 +128,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 					LayoutSEOLink.Relationship.ALTERNATE));
 		}
 
-		String defaultLocaleURL = alternateURLs.get(siteDefaultLocale);
+		String defaultLocaleURL = alternateCanonicalURLs.get(siteDefaultLocale);
 
 		if (defaultLocaleURL == null) {
 			return layoutSEOLinks;

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -100,7 +101,8 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetCanonicalLocalizedLayoutSEOLinksWithDefaultLocale()
+	@TestInfo("LPD-44673")
+	public void testGetLocalizedLayoutSEOLinksWithDefaultLocaleCanonical()
 		throws Exception {
 
 		_setupForTestingLayoutLocalizedLayoutSEOLinks();

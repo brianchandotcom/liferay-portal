@@ -1303,6 +1303,94 @@ test(
 );
 
 test(
+	'Export Import global fragment collection',
+	{
+		tag: '@LPS-98501',
+	},
+	async ({apiHelpers, fragmentsPage, page}) => {
+
+		// Create global fragment set
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalFragmentCollectionName = getRandomString();
+
+		const globalFragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName,
+				}
+			);
+
+		// Create global fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: globalFragmentCollection.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name">Fragment Entry 1</div>',
+			name: fragmentEntryName,
+		});
+
+		// Go to global site and export fragment set
+
+		await fragmentsPage.goto('/global');
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Export'}),
+			trigger: page.locator('.sheet-title').getByLabel('Show Actions'),
+		});
+
+		const download = await downloadPromise;
+
+		const filePath = getTempDir() + download.suggestedFilename();
+
+		await download.saveAs(filePath);
+
+		// Delete fragment set
+
+		await fragmentsPage.deleteFragmentSet(globalFragmentCollectionName);
+
+		// Go to site and import fragment sets
+
+		await fragmentsPage.goto('/global');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Import'}),
+			trigger: page.locator('.sheet-title').getByLabel('Show Actions'),
+		});
+
+		await fragmentsPage.importFile(download.suggestedFilename(), filePath);
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Assert imported entries
+
+		await fragmentsPage.goto('/global');
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName);
+
+		await expect(
+			page.getByRole('link', {name: fragmentEntryName})
+		).toBeVisible();
+
+		// Delete global fragment set
+
+		await fragmentsPage.deleteFragmentSet(globalFragmentCollectionName);
+	}
+);
+
+test(
 	'Import fragments',
 	{
 		tag: '@LPS-188478',

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaComponentAnnotationsCheck" files="marketplace-settings-web/src/main/java/com/liferay/marketplace/settings/web/internal/http/MarketplaceHttp\.java" />
+	</source-check>
+</suppressions>

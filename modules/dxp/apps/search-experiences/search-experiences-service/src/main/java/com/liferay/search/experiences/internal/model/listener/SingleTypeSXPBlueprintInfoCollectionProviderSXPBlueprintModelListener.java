@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -62,7 +63,9 @@ public class
 
 	@Override
 	public void onAfterCreate(SXPBlueprint sxpBlueprint) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-193551")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-129412") ||
+			!_collectionProvider(sxpBlueprint)) {
+
 			return;
 		}
 
@@ -96,6 +99,21 @@ public class
 	@Override
 	protected String getItemClassName() {
 		return _className;
+	}
+
+	private boolean _collectionProvider(SXPBlueprint sxpBlueprint) {
+		Configuration configuration = Configuration.unsafeToDTO(
+			sxpBlueprint.getConfigurationJSON());
+
+		GeneralConfiguration generalConfiguration =
+			configuration.getGeneralConfiguration();
+
+		if (generalConfiguration == null) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			generalConfiguration.getCollectionProvider());
 	}
 
 	private String _getClassName(SXPBlueprint sxpBlueprint) {

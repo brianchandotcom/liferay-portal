@@ -624,6 +624,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 									category.getExternalReferenceCode(),
 									contextCompany.getGroupId());
 
+						if (assetCategory == null) {
+							return null;
+						}
+
 						return assetCategory.getCategoryId();
 					}));
 		}

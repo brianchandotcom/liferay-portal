@@ -39,14 +39,11 @@ public class CPConfigurationEntryTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"visible", "visible",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"visible", "visible"
 		).add(
-			"purchasable", "purchasable",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"purchasable", "purchasable"
 		).add(
-			"productShippingConfiguration.shippable", "shippable",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"productShippingConfiguration.shippable", "shippable"
 		).add(
 			"minOrderQuantity", "min-order-quantity",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

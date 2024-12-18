@@ -29,18 +29,21 @@ export default function ({diagramId, namespace}) {
 
 	typeInput.addEventListener('change', handleSelectChange);
 
+	const fileEntryIdInput = document.getElementById(`${namespace}fileEntryId`);
+
+	const originalFileEntryIdInputValue = fileEntryIdInput.value;
+
 	function handleDiagramImageChanged({fileEntryId}) {
-		if (fileEntryId === '0') {
+		if (
+			fileEntryId === '0' ||
+			fileEntryId === originalFileEntryIdInputValue
+		) {
 			return;
 		}
 
 		const publishInput = document.getElementById(`${namespace}publish`);
 
 		publishInput.value = false;
-
-		const fileEntryIdInput = document.getElementById(
-			`${namespace}fileEntryId`
-		);
 
 		fileEntryIdInput.value = fileEntryId;
 

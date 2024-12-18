@@ -12,7 +12,7 @@
 			[/#if]
 		</div>
 
-		<p class="mt-1 text-secondary [#if !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
+		<p class="mt-1 text-secondary [#if input.errorMessage?has_content || !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
 			<span class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />

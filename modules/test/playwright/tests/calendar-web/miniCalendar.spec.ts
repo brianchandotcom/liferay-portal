@@ -5,18 +5,23 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {calendarPagesTest} from '../../fixtures/calendarPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
+import {performUserSwitch} from '../../utils/performLogin';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	apiHelpersTest,
 	calendarPagesTest,
 	featureFlagsTest({
@@ -109,4 +114,78 @@ test('ensure that mini calendar accessibility properties are maintained after ch
 		'aria-live',
 		'polite'
 	);
+});
+
+test('ensure that next and previous buttons acessibility label in the mini calendar are translated to portuguese', async ({
+	accountSettingsPage,
+	apiHelpers,
+	calendarWidgetPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	let company;
+
+	let defaultUser;
+
+	let user;
+
+	try {
+		company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		defaultUser =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+
+		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
+
+		await accountSettingsPage.selectAccountLanguage('pt_BR');
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(
+			calendarWidgetPage.miniCalendarNextMonthButton
+		).toHaveAccessibleName('Ir para o próximo mês');
+
+		await expect(
+			calendarWidgetPage.miniCalendarPastMonthButton
+		).toHaveAccessibleName('Ir para o mês anterior');
+	}
+	finally {
+		await page.goto('en');
+
+		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+
+		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
+
+		await accountSettingsPage.selectAccountLanguage('en_US');
+
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await performUserSwitch(page, defaultUser.alternateName);
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+	}
 });

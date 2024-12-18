@@ -27,6 +27,7 @@ export class CalendarWidgetPage {
 	readonly miniCalendarGrid: Locator;
 	readonly miniCalendarHeaderLabel: Locator;
 	readonly miniCalendarNextMonthButton: Locator;
+	readonly miniCalendarPastMonthButton: Locator;
 	readonly page: Page;
 	readonly publishEventButton: Locator;
 	readonly repeatCheckbox: Locator;
@@ -83,9 +84,12 @@ export class CalendarWidgetPage {
 		this.miniCalendarHeaderLabel = page.locator(
 			'.yui3-calendar-header-label'
 		);
-		this.miniCalendarNextMonthButton = page.getByRole('button', {
-			name: 'Go to next month',
-		});
+		this.miniCalendarNextMonthButton = page.locator(
+			'.yui3-calendarnav-nextmonth'
+		);
+		this.miniCalendarPastMonthButton = page.locator(
+			'.yui3-calendarnav-prevmonth'
+		);
 		this.page = page;
 		this.publishEventButton = page
 			.frameLocator('iframe')

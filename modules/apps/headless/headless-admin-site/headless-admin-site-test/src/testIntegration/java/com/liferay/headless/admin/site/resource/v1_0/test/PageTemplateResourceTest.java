@@ -387,12 +387,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				pageTemplate.getPageSpecifications(), serviceContext,
-				curContentPageSpecification ->
+				contentPageSpecification ->
 					pageTemplateResource.
 						postSiteSiteByExternalReferenceCodePageTemplatePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							pageTemplate.getExternalReferenceCode(),
-							curContentPageSpecification));
+							contentPageSpecification));
 
 		PageTemplate widgetPageTemplate =
 			pageTemplateResource.

@@ -279,12 +279,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				utilityPage.getPageSpecifications(),
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()),
-				curContentPageSpecification ->
+				contentPageSpecification ->
 					utilityPageResource.
 						postSiteSiteByExternalReferenceCodeUtilityPagePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							utilityPage.getExternalReferenceCode(),
-							curContentPageSpecification));
+							contentPageSpecification));
 	}
 
 	@Override

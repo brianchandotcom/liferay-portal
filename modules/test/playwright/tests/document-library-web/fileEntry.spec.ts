@@ -428,7 +428,7 @@ test(
 				{name: 'Pets'},
 				{name: 'Furniture'},
 			],
-			site,
+			siteId: site.id,
 			vocabularyName,
 		});
 
@@ -523,7 +523,7 @@ test(
 				const categories = await createCategories({
 					apiHelpers,
 					categoryNames: [{name: 'Category' + getRandomString()}],
-					site,
+					siteId: site.id,
 					vocabularyName: getRandomString(),
 				});
 

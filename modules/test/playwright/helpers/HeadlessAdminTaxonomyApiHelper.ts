@@ -48,6 +48,18 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}
 
 	/**
+	 * It allows deleting a vocabulary.
+	 *
+	 * @param vocabularyId the vocabulary id
+	 */
+
+	async deleteTaxonomyVocabulary(vocabularyId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}`
+		);
+	}
+
+	/**
 	 * It allows getting a category by vocabulary.
 	 *
 	 * @param name the name of the category

@@ -13726,7 +13726,7 @@ public class ObjectEntryResourceTest {
 
 		// File with URL attachment and resource not found
 
-		String notFoundFileURL = StringBundler.concat(
+		String resourceNotFoundFileURL = StringBundler.concat(
 			"http://", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
@@ -13734,27 +13734,32 @@ public class ObjectEntryResourceTest {
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Unable to download file from " + notFoundFileURL
+				"title",
+				"Unable to download file from " + resourceNotFoundFileURL +
+					", unexpected HTTP code: 404"
 			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", notFoundFileURL, null,
-				null),
+				RandomTestUtil.randomString() + ".txt", resourceNotFoundFileURL,
+				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 			useExternalReferenceCode);
 
 		// File with URL attachment and unsupported protocol
 
+		String unsupportedProtocolURL = StringBundler.concat(
+			"file://", company.getVirtualHostname(), ":8080");
+
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Unsupported protocol"
+				"title",
+				"Unable to download file from " + unsupportedProtocolURL +
+					", unsupported protocol: file"
 			),
 			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt",
-				StringBundler.concat(
-					"file://", company.getVirtualHostname(), ":8080"),
+				RandomTestUtil.randomString() + ".txt", unsupportedProtocolURL,
 				null, null),
 			httpMethod, null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
@@ -14226,7 +14231,8 @@ public class ObjectEntryResourceTest {
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"Unable to download file from " + resourceNotFoundFileURL
+				"Unable to download file from " + resourceNotFoundFileURL +
+					", unexpected HTTP code: 404"
 			),
 			_toFileEntry(
 				customFileEntry.getTitle(), resourceNotFoundFileURL, null,
@@ -14236,17 +14242,20 @@ public class ObjectEntryResourceTest {
 
 		// File with URL attachment and unsupported protocol
 
+		String unsupportedProtocolURL = StringBundler.concat(
+			"file://", company.getVirtualHostname(), ":8080");
+
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Unsupported protocol"
+				"title",
+				"Unable to download file from " + unsupportedProtocolURL +
+					", unsupported protocol: file"
 			),
 			_toFileEntry(
-				customFileEntry.getTitle(),
-				StringBundler.concat(
-					"file://", company.getVirtualHostname(), ":8080"),
-				null, _group.getGroupId()),
+				customFileEntry.getTitle(), unsupportedProtocolURL, null,
+				_group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 

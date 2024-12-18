@@ -226,7 +226,7 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _alternateNameSupplier;
 
-	@Schema(description = "The user's date of birth, in ISO 8601 format.")
+	@Schema(description = "The user's date of birth.")
 	public Date getBirthDate() {
 		if (_birthDateSupplier != null) {
 			birthDate = _birthDateSupplier.get();
@@ -260,7 +260,7 @@ public class UserAccount implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The user's date of birth, in ISO 8601 format.")
+	@GraphQLField(description = "The user's date of birth.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date birthDate;
 

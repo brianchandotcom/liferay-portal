@@ -15,8 +15,10 @@ export class CommerceAdminProductConfigurationListPage {
 	readonly depthInput: Locator;
 	readonly detailsMenuItem: Locator;
 	readonly displayAvailabilityInput: Locator;
+	readonly displayDateInput: Locator;
 	readonly displayStockQuantityInput: Locator;
 	readonly entriesMenuItem: Locator;
+	readonly expirationDateInput: Locator;
 	readonly freeShippingInput: Locator;
 	readonly heightInput: Locator;
 	readonly lowStockActivityInput: Locator;
@@ -25,7 +27,9 @@ export class CommerceAdminProductConfigurationListPage {
 	readonly minStockQuantityInput: Locator;
 	readonly multipleOrderQuantityInput: Locator;
 	readonly nameInput: Locator;
+	readonly neverExpireInput: Locator;
 	readonly page: Page;
+	readonly parentCPConfigurationListNameInput: Locator;
 	readonly priorityInput: Locator;
 	readonly purchasableInput: Locator;
 	readonly saveButton: Locator;
@@ -54,10 +58,16 @@ export class CommerceAdminProductConfigurationListPage {
 		this.displayAvailabilityInput = page.getByTestId(
 			'displayAvailabilityInput'
 		);
+		this.displayDateInput = page
+			.getByTestId('displayDate')
+			.getByLabel('Display Date');
 		this.displayStockQuantityInput = page.getByTestId(
 			'displayStockQuantityInput'
 		);
 		this.entriesMenuItem = page.getByRole('link', {name: 'Entries'});
+		this.expirationDateInput = page
+			.getByTestId('expirationDate')
+			.getByLabel('Expiration Date');
 		this.freeShippingInput = page.getByTestId('freeShippingInput');
 		this.heightInput = page.getByTestId('heightInput');
 		this.lowStockActivityInput = page.getByTestId('lowStockActivityInput');
@@ -68,7 +78,13 @@ export class CommerceAdminProductConfigurationListPage {
 			'multipleOrderQuantityInput'
 		);
 		this.nameInput = page.getByTestId('nameInput');
+		this.neverExpireInput = page
+			.getByTestId('expirationDate')
+			.getByText('Never Expire');
 		this.page = page;
+		this.parentCPConfigurationListNameInput = page.getByTestId(
+			'parentCPConfigurationListNameInput'
+		);
 		this.priorityInput = page.getByTestId('priorityInput');
 		this.purchasableInput = page.getByTestId('purchasableInput');
 		this.saveButton = page.getByRole('link', {exact: true, name: 'Save'});

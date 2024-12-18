@@ -45,6 +45,10 @@ test('LPD-43390 Create child configuration list', async ({
 
 	await commerceAdminProductConfigurationListsPage.addConfigurationList.click();
 
+	await expect(
+		commerceAdminProductConfigurationListsPage.addConfigurationListParentList
+	).toBeVisible();
+
 	await commerceAdminProductConfigurationListsPage.addConfigurationListName.fill(
 		'Test'
 	);
@@ -369,16 +373,24 @@ test('LPD-43013 Edit configuration template', async ({
 	await expect(
 		commerceAdminProductConfigurationListPage.detailsMenuItem
 	).toBeVisible();
-
-	await commerceAdminProductConfigurationListPage.nameInput.fill('Name1');
 	await expect(
 		commerceAdminProductConfigurationListPage.catalogNameInput
 	).toBeDisabled();
 	await expect(
 		commerceAdminProductConfigurationListPage.catalogNameInput
 	).toHaveValue(catalog.name);
-	await commerceAdminProductConfigurationListPage.priorityInput.fill('2');
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toHaveCount(0);
+	await expect(
+		commerceAdminProductConfigurationListPage.displayDateInput
+	).toHaveCount(0);
+	await expect(
+		commerceAdminProductConfigurationListPage.expirationDateInput
+	).toHaveCount(0);
 
+	await commerceAdminProductConfigurationListPage.nameInput.fill('Name1');
+	await commerceAdminProductConfigurationListPage.priorityInput.fill('2');
 	await commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput.fill(
 		'1,2'
 	);
@@ -468,10 +480,10 @@ test('LPD-43013 Edit configuration template', async ({
 	).toHaveValue('2.0');
 	await expect(
 		commerceAdminProductConfigurationListPage.displayAvailabilityInput
-	).not.toBeChecked();
+	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationListPage.displayStockQuantityInput
-	).not.toBeChecked();
+	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationListPage.freeShippingInput
 	).toBeChecked();
@@ -562,4 +574,96 @@ test('LPD-37882 Show purchasable field', async ({
 	);
 
 	expect(product.skus[0].purchasable).toBeFalsy();
+});
+
+test('LPD-43013 Edit child configuration list', async ({
+	applicationsMenuPage,
+	commerceAdminProductConfigurationListPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	await applicationsMenuPage.goToCommerceProductConfigurationLists(false);
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.table
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationListsPage.addConfigurationList.click();
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.addConfigurationListParentList
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationListsPage.addConfigurationListName.fill(
+		'Test'
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListPriority.fill(
+		'1'
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListCatalog.selectOption(
+		{label: 'Master'}
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListParentList.click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationListParentListElement.click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationListSaveButton.click();
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.newConfigurationListName
+	).toHaveText('Test');
+	await expect(
+		commerceAdminProductConfigurationListPage.detailsMenuItem
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toHaveValue('Master');
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toHaveValue('Master Configuration Master');
+	await expect(
+		commerceAdminProductConfigurationListPage.displayDateInput
+	).toBeEnabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.expirationDateInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.allowedOrderQuantitiesInput
+	).toHaveCount(0);
+
+	await commerceAdminProductConfigurationListPage.nameInput.fill('Test1');
+	await commerceAdminProductConfigurationListPage.priorityInput.fill('2');
+	await commerceAdminProductConfigurationListPage.neverExpireInput.click();
+
+	await commerceAdminProductConfigurationListPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(
+		commerceAdminProductConfigurationListPage.nameInput
+	).toHaveValue('Test1');
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.catalogNameInput
+	).toHaveValue('Master');
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toHaveValue('Master Configuration Master');
+	await expect(
+		commerceAdminProductConfigurationListPage.priorityInput
+	).toHaveValue('2.0');
+	await expect(
+		commerceAdminProductConfigurationListPage.expirationDateInput
+	).toBeEnabled();
 });

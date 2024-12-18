@@ -154,14 +154,10 @@ public class BlogsItemSelectorViewDisplayContext {
 			return true;
 		}
 
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+		return !WorkflowDefinitionLinkLocalServiceUtil.
+			hasWorkflowDefinitionLink(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				BlogsEntry.class.getName())) {
-
-			return false;
-		}
-
-		return true;
+				BlogsEntry.class.getName());
 	}
 
 	private BlogsFileUploadsConfiguration _getBlogsFileUploadsConfiguration()

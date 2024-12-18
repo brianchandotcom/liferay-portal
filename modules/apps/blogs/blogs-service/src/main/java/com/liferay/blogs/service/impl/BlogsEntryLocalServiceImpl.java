@@ -1923,22 +1923,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));
 
 		if (assetEntry == null) {
-			if (ArrayUtil.isEmpty(friendlyURLAssetCategoryIds)) {
-				return false;
-			}
-
-			return true;
+			return !ArrayUtil.isEmpty(friendlyURLAssetCategoryIds);
 		}
 
 		List<AssetCategory> assetCategories = assetEntry.getCategories();
 
-		if (assetCategories.containsAll(
-				ListUtil.toList(friendlyURLAssetCategoryIds))) {
-
-			return false;
-		}
-
-		return true;
+		return !assetCategories.containsAll(
+			ListUtil.toList(friendlyURLAssetCategoryIds));
 	}
 
 	private boolean _isValidImageMimeType(FileEntry fileEntry) {

@@ -209,16 +209,11 @@ public class BlogsViewEntriesDisplayContext {
 	}
 
 	private boolean _isOrderByColRelevance() {
-		if (Objects.equals(
-				ParamUtil.getString(
-					_httpServletRequest,
-					SearchContainer.DEFAULT_ORDER_BY_COL_PARAM),
-				"relevance")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ParamUtil.getString(
+				_httpServletRequest,
+				SearchContainer.DEFAULT_ORDER_BY_COL_PARAM),
+			"relevance");
 	}
 
 	private void _populateResults(SearchContainer<BlogsEntry> searchContainer)

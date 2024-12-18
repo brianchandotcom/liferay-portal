@@ -380,7 +380,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(
 			AssetListEntry.class.getName(),
 			itemExternalReference.getClassName());
-
 		Assert.assertEquals(
 			CollectionReference.CollectionType.COLLECTION,
 			itemExternalReference.getCollectionType());

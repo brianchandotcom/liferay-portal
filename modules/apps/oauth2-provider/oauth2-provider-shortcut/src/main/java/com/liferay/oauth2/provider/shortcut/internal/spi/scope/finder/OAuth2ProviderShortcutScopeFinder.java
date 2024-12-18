@@ -51,8 +51,8 @@ public class OAuth2ProviderShortcutScopeFinder
 			ResourceBundleUtil.getString(
 				ResourceBundleUtil.getBundle(
 					locale, OAuth2ProviderShortcutScopeFinder.class),
-				"liferay-json-web-services-analytics-name"),
-			"liferay-json-web-services-analytics-name");
+				"analytics"),
+			"analytics");
 	}
 
 	@Override

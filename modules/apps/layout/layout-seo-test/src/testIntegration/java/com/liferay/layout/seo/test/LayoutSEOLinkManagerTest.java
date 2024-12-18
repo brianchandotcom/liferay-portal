@@ -101,43 +101,6 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	@TestInfo("LPD-44673")
-	public void testGetLocalizedLayoutSEOLinksWithDefaultLocaleCanonical()
-		throws Exception {
-
-		_setupForTestingLayoutLocalizedLayoutSEOLinks();
-
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
-		String canonicalURL = RandomTestUtil.randomString();
-
-		_updateLayoutSEOEntry(
-			Collections.singletonMap(siteDefaultLocale, canonicalURL));
-
-		String languageTag = siteDefaultLocale.toLanguageTag();
-
-		for (LayoutSEOLink layoutSEOLink :
-				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-					_layout, siteDefaultLocale, _canonicalURL,
-					_expectedFriendlyURLs.keySet())) {
-
-			String hrefLang = layoutSEOLink.getHrefLang();
-
-			if (Validator.isNull(hrefLang) || hrefLang.equals(languageTag) ||
-				hrefLang.equals("x-default")) {
-
-				Assert.assertEquals(canonicalURL, layoutSEOLink.getHref());
-			}
-			else {
-				Assert.assertEquals(
-					_getExpectedAlternateURL(
-						LocaleUtil.fromLanguageId(hrefLang), StringPool.SLASH),
-					layoutSEOLink.getHref());
-			}
-		}
-	}
-
-	@Test
 	public void testGetClassicContentLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
@@ -247,6 +210,43 @@ public class LayoutSEOLinkManagerTest {
 				_layout.getGroupId(), LocaleUtil.US,
 				() -> _assertLayoutLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "localized-url")));
+	}
+
+	@Test
+	@TestInfo("LPD-44673")
+	public void testGetLocalizedLayoutSEOLinksWithDefaultLocaleCanonical()
+		throws Exception {
+
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		String canonicalURL = RandomTestUtil.randomString();
+
+		_updateLayoutSEOEntry(
+			Collections.singletonMap(siteDefaultLocale, canonicalURL));
+
+		String languageTag = siteDefaultLocale.toLanguageTag();
+
+		for (LayoutSEOLink layoutSEOLink :
+				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+					_layout, siteDefaultLocale, _canonicalURL,
+					_expectedFriendlyURLs.keySet())) {
+
+			String hrefLang = layoutSEOLink.getHrefLang();
+
+			if (Validator.isNull(hrefLang) || hrefLang.equals(languageTag) ||
+				hrefLang.equals("x-default")) {
+
+				Assert.assertEquals(canonicalURL, layoutSEOLink.getHref());
+			}
+			else {
+				Assert.assertEquals(
+					_getExpectedAlternateURL(
+						LocaleUtil.fromLanguageId(hrefLang), StringPool.SLASH),
+					layoutSEOLink.getHref());
+			}
+		}
 	}
 
 	private void _assertAlternateLayoutSEOLink(

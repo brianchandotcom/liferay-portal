@@ -20,15 +20,11 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
-import java.text.ParseException;
-
 import java.util.Date;
 import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.quartz.CronExpression;
 
 /**
  * @author Matija Petanjek
@@ -46,20 +42,6 @@ public class DispatchTriggerHelper {
 
 		if ((startDate == null) || startDate.before(now)) {
 			startDate = now;
-		}
-
-		if (dispatchTrigger.getCronExpression() != null) {
-			try {
-				CronExpression ce = new CronExpression(
-					dispatchTrigger.getCronExpression());
-
-				startDate = ce.getNextValidTimeAfter(startDate);
-			}
-			catch (ParseException parseException) {
-				if (_log.isDebugEnabled()) {
-					_log.error(parseException);
-				}
-			}
 		}
 
 		Trigger trigger = _triggerFactory.createTrigger(

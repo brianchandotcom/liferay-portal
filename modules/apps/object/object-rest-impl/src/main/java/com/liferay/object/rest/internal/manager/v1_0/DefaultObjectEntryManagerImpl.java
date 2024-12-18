@@ -1412,12 +1412,31 @@ public class DefaultObjectEntryManagerImpl
 
 				if (Objects.equals(url.getProtocol(), "file")) {
 					throw new UnsupportedOperationException(
-						"Unsupported protocol");
+						StringBundler.concat(
+							"Unable to download file from ",
+							fileEntry.getFileURL(), ", unsupported protocol: ",
+							url.getProtocol()));
 				}
 
-				fileContent = _http.URLtoByteArray(url.toString());
+				Http.Options options = new Http.Options();
+
+				options.setLocation(url.toString());
+
+				fileContent = _http.URLtoByteArray(options);
+
+				Http.Response response = options.getResponse();
+
+				if (response.getResponseCode() != 200) {
+					throw new IllegalArgumentException(
+						StringBundler.concat(
+							"Unable to download file from ",
+							fileEntry.getFileURL(), ", unexpected HTTP code: ",
+							response.getResponseCode()));
+				}
 			}
 			catch (IOException ioException) {
+				_log.error(ioException);
+
 				throw new IllegalArgumentException(
 					"Unable to download file from " + fileEntry.getFileURL(),
 					ioException);

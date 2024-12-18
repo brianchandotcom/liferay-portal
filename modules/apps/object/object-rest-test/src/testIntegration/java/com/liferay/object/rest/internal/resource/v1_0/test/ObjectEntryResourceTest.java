@@ -13308,21 +13308,27 @@ public class ObjectEntryResourceTest {
 
 		// File from URL and host down
 
-		String hostDownFileURL = StringBundler.concat(
-			"http://", company.getVirtualHostname(), ":8081");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.manager.v1_0." +
+					"DefaultObjectEntryManagerImpl",
+				LoggerTestUtil.ERROR)) {
 
-		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Unable to download file from " + hostDownFileURL
-			),
-			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", hostDownFileURL, null,
-				null),
-			httpMethod, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
-			useExternalReferenceCode);
+			String hostDownFileURL = StringBundler.concat(
+				"http://", company.getVirtualHostname(), ":8081");
+
+			_testPatchPutCustomObjectEntryWithAttachmentField(
+				fileEntry -> JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to download file from " + hostDownFileURL
+				),
+				_toFileEntry(
+					RandomTestUtil.randomString() + ".txt", hostDownFileURL,
+					null, null),
+				httpMethod, null, objectDefinition,
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				useExternalReferenceCode);
+		}
 
 		// File from URL malformed
 
@@ -13330,18 +13336,24 @@ public class ObjectEntryResourceTest {
 			"http//", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
-		_testPatchPutCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Unable to download file from " + malformedFileURL
-			),
-			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", malformedFileURL, null,
-				null),
-			httpMethod, null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
-			useExternalReferenceCode);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.manager.v1_0." +
+					"DefaultObjectEntryManagerImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_testPatchPutCustomObjectEntryWithAttachmentField(
+				fileEntry -> JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to download file from " + malformedFileURL
+				),
+				_toFileEntry(
+					RandomTestUtil.randomString() + ".txt", malformedFileURL,
+					null, null),
+				httpMethod, null, objectDefinition,
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				useExternalReferenceCode);
+		}
 
 		// File from URL not found
 
@@ -13916,20 +13928,26 @@ public class ObjectEntryResourceTest {
 
 		// File from URL and host down
 
-		String hostDownFileURL = StringBundler.concat(
-			"http://", company.getVirtualHostname(), ":8081");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.manager.v1_0." +
+					"DefaultObjectEntryManagerImpl",
+				LoggerTestUtil.ERROR)) {
 
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Unable to download file from " + hostDownFileURL
-			),
-			_toFileEntry(
-				RandomTestUtil.randomString() + ".txt", hostDownFileURL, null,
-				null),
-			null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+			String hostDownFileURL = StringBundler.concat(
+				"http://", company.getVirtualHostname(), ":8081");
+
+			_testPostCustomObjectEntryWithAttachmentField(
+				fileEntry -> JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to download file from " + hostDownFileURL
+				),
+				_toFileEntry(
+					RandomTestUtil.randomString() + ".txt", hostDownFileURL,
+					null, null),
+				null, objectDefinition,
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+		}
 
 		// File from URL malformed
 
@@ -13937,17 +13955,23 @@ public class ObjectEntryResourceTest {
 			"http//", company.getVirtualHostname(), ":8080/",
 			RandomTestUtil.randomString());
 
-		_testPostCustomObjectEntryWithAttachmentField(
-			fileEntry -> JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title", "Unable to download file from " + malformedFileURL
-			),
-			_toFileEntry(
-				customFileEntry.getTitle(), malformedFileURL, null,
-				_group.getGroupId()),
-			null, objectDefinition,
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.manager.v1_0." +
+					"DefaultObjectEntryManagerImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_testPostCustomObjectEntryWithAttachmentField(
+				fileEntry -> JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to download file from " + malformedFileURL
+				),
+				_toFileEntry(
+					customFileEntry.getTitle(), malformedFileURL, null,
+					_group.getGroupId()),
+				null, objectDefinition,
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
+		}
 
 		// File from URL not found
 

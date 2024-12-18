@@ -253,6 +253,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		_listTypeEntryKey1 = _addListTypeEntry();
 		_listTypeEntryKey2 = _addListTypeEntry();
+		_listTypeEntryKey3 = _addListTypeEntry();
+		_listTypeEntryKey4 = _addListTypeEntry();
 
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
 			"localizedBooleanObjectFieldName_i18n",
@@ -302,6 +304,13 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US", "en_US localizedLongTextObjectFieldValue"
 			).put(
 				"pt_BR", "pt_BR localizedLongTextObjectFieldValue"
+			).build()
+		).put(
+			"localizedMultiPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
+			).put(
+				"pt_BR", Arrays.asList(_listTypeEntryKey4)
 			).build()
 		).put(
 			"localizedPicklistObjectFieldName_i18n",
@@ -516,6 +525,17 @@ public class DefaultObjectEntryManagerImplTest
 					true
 				).name(
 					"localizedLongTextObjectFieldName"
+				).build(),
+				new MultiselectPicklistObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					listTypeDefinition.getListTypeDefinitionId()
+				).localized(
+					true
+				).name(
+					"localizedMultiPicklistObjectFieldName"
 				).build(),
 				new MultiselectPicklistObjectFieldBuilder(
 				).labelMap(
@@ -2360,6 +2380,9 @@ public class DefaultObjectEntryManagerImplTest
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
 					).put(
+						"localizedMultiPicklistObjectFieldName",
+						Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
+					).put(
 						"localizedPicklistObjectFieldName", _listTypeEntryKey1
 					).put(
 						"localizedPrecisionDecimalObjectFieldName",
@@ -2444,6 +2467,13 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US", 100L
 			).put(
 				"pt_BR", 54L
+			).build()
+		).put(
+			"localizedMultiPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", Arrays.asList(_listTypeEntryKey3)
+			).put(
+				"pt_BR", Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
 			).build()
 		).put(
 			"localizedPicklistObjectFieldName_i18n",
@@ -4139,6 +4169,9 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
+				"localizedMultiPicklistObjectFieldName",
+				Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
+			).put(
 				"localizedPicklistObjectFieldName", _listTypeEntryKey1
 			).put(
 				"localizedRichTextObjectFieldName",
@@ -4163,6 +4196,9 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedLongTextObjectFieldName",
 				"pt_BR localizedLongTextObjectFieldValue"
+			).put(
+				"localizedMultiPicklistObjectFieldName",
+				Arrays.asList(_listTypeEntryKey4)
 			).put(
 				"localizedPicklistObjectFieldName", _listTypeEntryKey2
 			).put(
@@ -4291,6 +4327,13 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", ""
 			).build()
 		).put(
+			"localizedMultiPicklistObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", Arrays.asList(_listTypeEntryKey3)
+			).put(
+				"pt_BR", Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
+			).build()
+		).put(
 			"localizedPicklistObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", _listTypeEntryKey2
@@ -4374,6 +4417,9 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
+				"localizedMultiPicklistObjectFieldName",
+				Arrays.asList(_listTypeEntryKey3)
+			).put(
 				"localizedPicklistObjectFieldName", _listTypeEntryKey2
 			).put(
 				"localizedRichTextObjectFieldName",
@@ -4398,6 +4444,9 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
+			).put(
+				"localizedMultiPicklistObjectFieldName",
+				Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
 			).put(
 				"localizedPicklistObjectFieldName", _listTypeEntryKey1
 			).put(
@@ -4874,20 +4923,39 @@ public class DefaultObjectEntryManagerImplTest
 		}
 		else if (Objects.equals(
 					expectedEntry.getKey(),
+					"localizedMultiPicklistObjectFieldName")) {
+
+			_assertListTypeEntries(
+				(List<ListEntry>)actualObjectEntryProperties.get(
+					expectedEntry.getKey()),
+				(List<Object>)expectedEntry.getValue());
+		}
+		else if (Objects.equals(
+					expectedEntry.getKey(),
+					"localizedMultiPicklistObjectFieldName_i18n")) {
+
+			Map<String, Object> actualValues =
+				(Map<String, Object>)actualObjectEntryProperties.get(
+					expectedEntry.getKey());
+			Map<String, Object> expectedValues =
+				(Map<String, Object>)expectedEntry.getValue();
+
+			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
+				_assertListTypeEntries(
+					(List<ListEntry>)actualValues.get(entry.getKey()),
+					(List<Object>)entry.getValue());
+			}
+		}
+		else if (Objects.equals(
+					expectedEntry.getKey(),
 					"localizedPicklistObjectFieldName") ||
 				 Objects.equals(
 					 expectedEntry.getKey(), "picklistObjectFieldName")) {
 
-			ListEntry listEntry = (ListEntry)actualObjectEntryProperties.get(
-				expectedEntry.getKey());
-
-			if (expectedEntry.getValue() instanceof String) {
-				Assert.assertEquals(
-					expectedEntry.getValue(), listEntry.getKey());
-			}
-			else {
-				Assert.assertEquals(expectedEntry.getValue(), listEntry);
-			}
+			_assertListTypeEntry(
+				(ListEntry)actualObjectEntryProperties.get(
+					expectedEntry.getKey()),
+				expectedEntry.getValue());
 		}
 		else if (Objects.equals(
 					expectedEntry.getKey(),
@@ -4900,15 +4968,9 @@ public class DefaultObjectEntryManagerImplTest
 				(Map<String, Object>)expectedEntry.getValue();
 
 			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
-				ListEntry listEntry = (ListEntry)actualValues.get(
-					entry.getKey());
-
-				if (entry.getValue() instanceof String) {
-					Assert.assertEquals(entry.getValue(), listEntry.getKey());
-				}
-				else {
-					Assert.assertEquals(entry.getValue(), listEntry);
-				}
+				_assertListTypeEntry(
+					(ListEntry)actualValues.get(entry.getKey()),
+					entry.getValue());
 			}
 		}
 		else if (Objects.equals(
@@ -5245,6 +5307,44 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			objectEntries.toString(), size, objectEntries.size());
+	}
+
+	private void _assertListTypeEntries(
+		List<ListEntry> actualListTypeEntries,
+		List<Object> expectedListTypeEntries) {
+
+		if (ListUtil.isEmpty(expectedListTypeEntries)) {
+			return;
+		}
+
+		for (Object expectedListTypeEntry : expectedListTypeEntries) {
+			Assert.assertTrue(
+				ListUtil.exists(
+					actualListTypeEntries,
+					actualListTypeEntry -> {
+						try {
+							_assertListTypeEntry(
+								actualListTypeEntry, expectedListTypeEntry);
+
+							return true;
+						}
+						catch (AssertionError assertionError) {
+							return false;
+						}
+					}));
+		}
+	}
+
+	private void _assertListTypeEntry(
+		ListEntry actualListTypeEntry, Object expectedListTypeEntry) {
+
+		if (expectedListTypeEntry instanceof String) {
+			Assert.assertEquals(
+				expectedListTypeEntry, actualListTypeEntry.getKey());
+		}
+		else {
+			Assert.assertEquals(expectedListTypeEntry, actualListTypeEntry);
+		}
 	}
 
 	private void _assertLocalizedValues(
@@ -5733,6 +5833,8 @@ public class DefaultObjectEntryManagerImplTest
 
 	private String _listTypeEntryKey1;
 	private String _listTypeEntryKey2;
+	private String _listTypeEntryKey3;
+	private String _listTypeEntryKey4;
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

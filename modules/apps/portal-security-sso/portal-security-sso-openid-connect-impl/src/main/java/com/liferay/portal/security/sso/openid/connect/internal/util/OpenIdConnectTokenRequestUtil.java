@@ -150,7 +150,7 @@ public class OpenIdConnectTokenRequestUtil {
 			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
 
 			_validate(
-				clientID, secret, nonce,
+				authorizationCodeGrant, clientID, secret, nonce,
 				oidcClientInformation.getOIDCMetadata(), oidcProviderMetadata,
 				oidcTokens);
 
@@ -173,7 +173,8 @@ public class OpenIdConnectTokenRequestUtil {
 	}
 
 	private static IDTokenClaimsSet _validate(
-			ClientID clientID, Secret clientSecret, Nonce nonce,
+			AuthorizationGrant authorizationCodeGrant, ClientID clientID,
+			Secret clientSecret, Nonce nonce,
 			OIDCClientMetadata oidcClientMetadata,
 			OIDCProviderMetadata oidcProviderMetadata, OIDCTokens oidcTokens)
 		throws OpenIdConnectServiceException.TokenException {
@@ -202,6 +203,12 @@ public class OpenIdConnectTokenRequestUtil {
 						malformedURLException.getMessage(),
 					malformedURLException);
 			}
+		}
+
+		if ((authorizationCodeGrant instanceof RefreshTokenGrant) &&
+			(oidcTokens.getIDToken() == null)) {
+
+			return null;
 		}
 
 		try {

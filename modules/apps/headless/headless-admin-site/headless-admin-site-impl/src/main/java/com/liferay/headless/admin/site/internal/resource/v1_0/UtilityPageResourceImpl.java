@@ -145,9 +145,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				contentPageSpecification,
 				_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
-					contextHttpServletRequest,
 					layoutUtilityPageEntry.getGroupId(),
-					contextUser.getUserId())));
+					contextHttpServletRequest, contextUser.getUserId())));
 	}
 
 	@Override

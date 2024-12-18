@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ServiceContextUtil {
 
 	public static ServiceContext createServiceContext(
-		HttpServletRequest httpServletRequest, long groupId, long userId) {
+		long groupId, HttpServletRequest httpServletRequest, long userId) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, httpServletRequest, null

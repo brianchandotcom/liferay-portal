@@ -253,9 +253,8 @@ public class DisplayPageTemplateResourceImpl
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(
-					contextHttpServletRequest,
 					layoutPageTemplateEntry.getGroupId(),
-					contextUser.getUserId())));
+					contextHttpServletRequest, contextUser.getUserId())));
 	}
 
 	@Override

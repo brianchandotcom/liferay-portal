@@ -232,7 +232,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			LayoutUtil.addDraftToPublishedLayout(
 				contentPageSpecification, layout,
 				ServiceContextUtil.createServiceContext(
-					contextHttpServletRequest, layout.getGroupId(),
+					layout.getGroupId(), contextHttpServletRequest,
 					contextUser.getUserId())));
 	}
 

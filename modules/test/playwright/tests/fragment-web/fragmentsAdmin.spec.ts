@@ -1171,6 +1171,69 @@ test(
 );
 
 test(
+	'Import fragments',
+	{
+		tag: '@LPS-188478',
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragments administration
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Open import view
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Import'}),
+			trigger: page.getByTitle('Fragment Sets Options'),
+		});
+
+		// Import fragments
+
+		await expect(
+			page.getByRole('heading', {name: 'Import File'})
+		).toBeVisible();
+
+		await fragmentsPage.importFile(
+			'react-fragment-example.zip',
+			path.join(__dirname, '/dependencies/react-fragment-example.zip')
+		);
+
+		// Assert import message
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Upload another file
+
+		await page.getByRole('button', {name: 'Upload Another File'}).click();
+
+		await fragmentsPage.importFile(
+			'basic-fragment-example.zip',
+			path.join(__dirname, '/dependencies/basic-fragment-example.zip')
+		);
+
+		await expect(
+			page.getByRole('button', {name: '1 item was imported.'})
+		).toBeVisible();
+
+		// Assert imported entries
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Collection Name'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Sample'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'View site usages and propagate changes of global fragments',
 	{
 		tag: '@LPS-100540',

@@ -167,6 +167,7 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_MB_MESSAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_OBJECT_ENTRY_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_OBJECT_ENTRY_PAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");

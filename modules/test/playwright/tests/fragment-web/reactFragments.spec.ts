@@ -13,7 +13,6 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {zipFolder} from '../../utils/zip';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -43,23 +42,10 @@ test(
 
 		// Import react fragment
 
-		const fileChooserPromise = page.waitForEvent('filechooser');
-
-		await page
-			.getByRole('button', {exact: true, name: 'Select File'})
-			.click();
-
-		const fileChooser = await fileChooserPromise;
-
-		await fileChooser.setFiles(
-			await zipFolder(
-				path.join(__dirname, '/dependencies/react-fragment-example.zip')
-			)
+		await fragmentsPage.importFile(
+			'react-fragment-example.zip',
+			path.join(__dirname, '/dependencies/react-fragment-example.zip')
 		);
-
-		await page.getByText('react-fragment-example.zip').waitFor();
-
-		await page.getByRole('button', {name: 'Import'}).click();
 
 		await expect(page.getByText('React Fragment Example')).toBeVisible();
 

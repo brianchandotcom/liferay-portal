@@ -12,7 +12,9 @@ import React, {useState} from 'react';
 import './ObjectRelationshipInheritanceCheckbox.scss';
 
 interface ObjectRelationshipInheritanceCheckbox {
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange: (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => Promise<void> | void;
 	values: Partial<ObjectRelationship>;
 }
 

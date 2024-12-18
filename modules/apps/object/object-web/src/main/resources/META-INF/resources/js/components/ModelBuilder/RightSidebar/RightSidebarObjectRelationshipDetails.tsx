@@ -228,7 +228,7 @@ export function RightSidebarObjectRelationshipDetails({
 		});
 	};
 
-	const handleInheritanceCheckboxChange = ({
+	const handleInheritanceCheckboxChange = async ({
 		target,
 	}: React.ChangeEvent<HTMLInputElement>) => {
 		if (target.checked) {
@@ -237,9 +237,9 @@ export function RightSidebarObjectRelationshipDetails({
 				edge: true,
 			});
 
-			onSubmit({...values, edge: true});
+			await onSubmit({...values, edge: true});
 
-			updateModelBuilderRootStructure();
+			await updateModelBuilderRootStructure();
 		}
 		else {
 			const parentWindow = Liferay.Util.getOpener();
@@ -253,7 +253,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 					await onSubmit({...values, edge: false});
 
-					updateModelBuilderRootStructure();
+					await updateModelBuilderRootStructure();
 				},
 			});
 		}

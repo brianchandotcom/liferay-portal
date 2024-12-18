@@ -27,9 +27,9 @@ interface ObjectRelationshipFormBaseProps {
 	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
-	onChangeInheritanceCheckbox?: (
+	onChangeInheritanceCheckbox: (
 		event: React.ChangeEvent<HTMLInputElement>
-	) => void;
+	) => Promise<void> | void;
 	onSubmit?: (values?: Partial<ObjectRelationship>) => Promise<void>;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;

@@ -219,27 +219,15 @@ public class BookmarksDisplayContext {
 	}
 
 	public boolean isNavigationHome() {
-		if (Objects.equals(getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "all");
 	}
 
 	public boolean isNavigationMine() {
-		if (Objects.equals(getNavigation(), "mine")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "mine");
 	}
 
 	public boolean isNavigationRecent() {
-		if (Objects.equals(getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "recent");
 	}
 
 	private Long _getAssetCategoryId() {

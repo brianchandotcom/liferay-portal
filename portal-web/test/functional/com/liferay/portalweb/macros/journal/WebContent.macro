@@ -1189,7 +1189,7 @@ definition {
 		}
 
 		if (${saveAsDraft} == "true") {
-			WebContent.saveAsDraftWithPermissions();
+			PortletEntry.saveAsDraft();
 
 			AssertTextEquals.assertPartialText(
 				key_status = "Draft",

@@ -98,14 +98,8 @@ public class CTCollectionSearchPermissionFilterContributor
 			ctCollectionIds,
 			ctCollectionId -> {
 				try {
-					if (_ctCollectionModelResourcePermission.contains(
-							permissionChecker, ctCollectionId,
-							ActionKeys.VIEW)) {
-
-						return true;
-					}
-
-					return false;
+					return _ctCollectionModelResourcePermission.contains(
+						permissionChecker, ctCollectionId, ActionKeys.VIEW);
 				}
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {

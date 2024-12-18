@@ -100,22 +100,12 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 			ctModelClass);
 
 		if (primaryKey instanceof Long) {
-			if (_ctEntryLocalService.hasCTEntry(
-					ctCollectionId, modelClassNameId, (Long)primaryKey)) {
-
-				return false;
-			}
-
-			return true;
+			return !_ctEntryLocalService.hasCTEntry(
+				ctCollectionId, modelClassNameId, (Long)primaryKey);
 		}
 
-		if (_ctEntryLocalService.hasCTEntries(
-				ctCollectionId, modelClassNameId)) {
-
-			return false;
-		}
-
-		return true;
+		return !_ctEntryLocalService.hasCTEntries(
+			ctCollectionId, modelClassNameId);
 	}
 
 	@Override

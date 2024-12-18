@@ -69,11 +69,7 @@ public class DataCleanUpPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		return false;
+		return permissionChecker.isCompanyAdmin();
 	}
 
 	@Reference

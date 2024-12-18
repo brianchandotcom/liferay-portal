@@ -203,11 +203,7 @@ public class CTRowUtil {
 
 		Collection<Integer> values = tableColumnsMap.values();
 
-		if (values.contains(Types.BLOB)) {
-			return true;
-		}
-
-		return false;
+		return values.contains(Types.BLOB);
 	}
 
 	private CTRowUtil() {

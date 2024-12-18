@@ -16,11 +16,7 @@ public class CTCommentImpl extends CTCommentBaseImpl {
 	public boolean isEdited() {
 		Date modifiedDate = getModifiedDate();
 
-		if (modifiedDate.after(getCreateDate())) {
-			return true;
-		}
-
-		return false;
+		return modifiedDate.after(getCreateDate());
 	}
 
 }

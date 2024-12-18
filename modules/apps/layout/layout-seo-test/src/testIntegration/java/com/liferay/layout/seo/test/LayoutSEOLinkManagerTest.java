@@ -124,6 +124,12 @@ public class LayoutSEOLinkManagerTest {
 			if (Validator.isNull(hrefLang) || hrefLang.equals(languageTag)) {
 				Assert.assertEquals(canonicalURL, layoutSEOLink.getHref());
 			}
+			else {
+				Assert.assertEquals(
+					_getExpectedAlternateURL(
+						LocaleUtil.fromLanguageId(hrefLang), StringPool.SLASH),
+					layoutSEOLink.getHref());
+			}
 		}
 	}
 

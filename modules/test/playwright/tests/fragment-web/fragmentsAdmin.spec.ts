@@ -22,6 +22,7 @@ import {
 	disableSystemFeatureFlag,
 	enableSystemFeatureFlag,
 } from '../../utils/systemFeatureFlag';
+import {getTempDir} from '../../utils/temp';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {zipFolder} from '../../utils/zip';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
@@ -1168,6 +1169,136 @@ test(
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		await expect(page.getByText('Test Fragment New')).toBeVisible();
+	}
+);
+
+test(
+	'Export Import multiple fragment collections',
+	{
+		tag: ['@LPS-98501', '@LPS-120957', '@LPS-175242'],
+	},
+	async ({apiHelpers, fragmentsPage, page, site}) => {
+
+		// Create two global fragment set
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalFragmentCollectionName1 = getRandomString();
+
+		const globalFragmentCollection1 =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName1,
+				}
+			);
+
+		const globalFragmentCollectionName2 = getRandomString();
+
+		const globalFragmentCollection2 =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: globalSiteId,
+					name: globalFragmentCollectionName2,
+				}
+			);
+
+		// Create global fragment for each fragment set
+
+		const fragmentEntryName1 = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId:
+				globalFragmentCollection1.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name">Fragment Entry 1</div>',
+			name: fragmentEntryName1,
+		});
+
+		const fragmentEntryName2 = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId:
+				globalFragmentCollection2.fragmentCollectionId,
+			groupId: globalSiteId,
+			html: '<div class="fragment-name">Fragment Entry 2</div>',
+			name: fragmentEntryName2,
+		});
+
+		// Go to global site and export fragment sets
+
+		await fragmentsPage.goto('/global');
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Export'}),
+			trigger: page.getByTitle('Fragment Sets Options'),
+		});
+
+		const iframe = page.frameLocator('iframe[title="Export Fragment Set"]');
+
+		await iframe
+			.getByLabel('Select All Items on the Page')
+			.check({trial: true});
+
+		await iframe.getByLabel('Select All Items on the Page').check();
+
+		await page.getByRole('button', {exact: true, name: 'Export'}).click();
+
+		await waitForAlert(
+			page,
+			'Success:Your request processed successfully.'
+		);
+
+		const download = await downloadPromise;
+
+		const filePath = getTempDir() + download.suggestedFilename();
+
+		await download.saveAs(filePath);
+
+		// Delete global fragment sets
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			globalFragmentCollection1.fragmentCollectionId
+		);
+
+		await apiHelpers.jsonWebServicesFragmentCollection.deleteFragmentCollection(
+			globalFragmentCollection2.fragmentCollectionId
+		);
+
+		// Go to site and import fragment sets
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Import'}),
+			trigger: page.getByTitle('Fragment Sets Options'),
+		});
+
+		await fragmentsPage.importFile(download.suggestedFilename(), filePath);
+
+		await expect(
+			page.getByRole('button', {name: '2 items were imported.'})
+		).toBeVisible();
+
+		// Assert imported entries
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName1);
+
+		await expect(
+			page.getByRole('link', {name: fragmentEntryName1})
+		).toBeVisible();
+
+		await fragmentsPage.gotoFragmentSet(globalFragmentCollectionName2);
+
+		await expect(
+			page.getByRole('link', {name: fragmentEntryName2})
+		).toBeVisible();
 	}
 );
 

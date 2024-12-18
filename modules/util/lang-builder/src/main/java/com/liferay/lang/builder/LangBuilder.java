@@ -168,18 +168,18 @@ public class LangBuilder {
 		_createProperties(content, "et"); // Estonian
 		_createProperties(content, "fi"); // Finnish
 		_createProperties(content, "fr"); // French
-		_createProperties(content, "fr_BE"); // French (Belgium)
+		_createProperties(content, "fr_BE", "fr"); // French (Belgium)
 		_createProperties(content, "fr_CA"); // French (Canada)
 		_createProperties(content, "gl"); // Galician
 		_createProperties(content, "de"); // German
-		_createProperties(content, "de_AT"); // German (Austria)
+		_createProperties(content, "de_AT", "de"); // German (Austria)
 		_createProperties(content, "el"); // Greek
 		_createProperties(content, "iw"); // Hebrew
 		_createProperties(content, "hi_IN"); // Hindi (India)
 		_createProperties(content, "hu"); // Hungarian
 		_createProperties(content, "in"); // Indonesian
 		_createProperties(content, "it"); // Italian
-		_createProperties(content, "it_CH"); // Italian (Switzerland)
+		_createProperties(content, "it_CH", "it"); // Italian (Switzerland)
 		_createProperties(content, "ja"); // Japanese
 		_createProperties(content, "kk"); // Kazakh
 		_createProperties(content, "ko"); // Korean
@@ -187,7 +187,7 @@ public class LangBuilder {
 		_createProperties(content, "lt"); // Lithuanian
 		_createProperties(content, "mk"); // Macedonian
 		_createProperties(content, "ms"); // Malay
-		_createProperties(content, "no"); // Norwegian
+		_createProperties(content, "no", "nb"); // Norwegian
 		_createProperties(content, "nb"); // Norwegian Bokmål
 		_createProperties(content, "fa"); // Persian
 		_createProperties(content, "pl"); // Polish
@@ -204,8 +204,8 @@ public class LangBuilder {
 		_createProperties(content, "es_CO", "es"); // Spanish (Colombia)
 		_createProperties(content, "es_MX", "es"); // Spanish (Mexico)
 		_createProperties(content, "sv"); // Swedish
-		_createProperties(content, "fr_CH"); // Swiss French
-		_createProperties(content, "de_CH"); // Swiss German
+		_createProperties(content, "fr_CH", "fr"); // Swiss French
+		_createProperties(content, "de_CH", "de"); // Swiss German
 		_createProperties(content, "ta_IN"); // Tamil
 		_createProperties(content, "th"); // Thai
 		_createProperties(content, "tr"); // Turkish

@@ -141,12 +141,12 @@ test.describe('manage picklists inside the picklists portlet', () => {
 
 		const listTypeDefinitionHeader =
 			await listTypeDefinitionPage.frameLocator
-				.locator('div.dnd-th')
+				.locator('.fds th')
 				.allInnerTexts();
 
 		const listTypeDefinitionContent =
 			await listTypeDefinitionPage.frameLocator
-				.locator('div.dnd-td')
+				.locator('.fds td')
 				.allInnerTexts();
 
 		const listTypeDefinitionHeaderTemplate = [

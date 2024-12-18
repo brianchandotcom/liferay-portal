@@ -854,8 +854,8 @@ test.describe('Manage root models elements through Objects Admin', () => {
 
 			await expect(
 				page
-					.locator(`.dnd-td.cell-${cellClassSufix}`)
-					.or(page.locator(`td.cell-${cellClassSufix}`))
+					.locator(`.fds td.cell-${cellClassSufix}`)
+					.or(page.locator(`.fds td.cell-${cellClassSufix}`))
 			).toHaveText('Inherited');
 		}
 		finally {

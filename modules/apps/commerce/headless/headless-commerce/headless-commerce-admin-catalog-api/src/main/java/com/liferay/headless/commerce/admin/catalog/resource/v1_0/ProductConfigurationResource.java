@@ -50,8 +50,9 @@ public interface ProductConfigurationResource {
 
 	public Page<ProductConfiguration>
 			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				String externalReferenceCode, String search,
+				Boolean showDifferences, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception;
 
 	public ProductConfiguration
@@ -62,8 +63,8 @@ public interface ProductConfigurationResource {
 
 	public Page<ProductConfiguration>
 			getProductConfigurationListIdProductConfigurationsPage(
-				Long id, String search, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				Long id, String search, Boolean showDifferences, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public ProductConfiguration

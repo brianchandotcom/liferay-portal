@@ -271,7 +271,7 @@ public class ProductConfigurationDTOConverter
 
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				cpConfigurationEntrySetting.getSetting());
+				cpConfigurationEntrySetting.getValue());
 
 			if (!Objects.equals(
 					jsonObject.getString("allowedOrderQuantities"),

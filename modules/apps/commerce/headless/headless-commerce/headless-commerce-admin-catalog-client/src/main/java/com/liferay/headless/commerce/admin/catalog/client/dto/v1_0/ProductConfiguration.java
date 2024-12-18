@@ -139,6 +139,27 @@ public class ProductConfiguration implements Cloneable, Serializable {
 
 	protected Map<String, String> availabilityEstimateName;
 
+	public String[] getDifferences() {
+		return differences;
+	}
+
+	public void setDifferences(String[] differences) {
+		this.differences = differences;
+	}
+
+	public void setDifferences(
+		UnsafeSupplier<String[], Exception> differencesUnsafeSupplier) {
+
+		try {
+			differences = differencesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] differences;
+
 	public Boolean getDisplayAvailability() {
 		return displayAvailability;
 	}

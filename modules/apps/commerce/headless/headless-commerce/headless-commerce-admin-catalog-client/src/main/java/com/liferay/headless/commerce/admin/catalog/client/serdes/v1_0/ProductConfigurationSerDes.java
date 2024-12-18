@@ -115,6 +115,28 @@ public class ProductConfigurationSerDes {
 				_toJSON(productConfiguration.getAvailabilityEstimateName()));
 		}
 
+		if (productConfiguration.getDifferences() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"differences\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < productConfiguration.getDifferences().length;
+				 i++) {
+
+				sb.append(_toJSON(productConfiguration.getDifferences()[i]));
+
+				if ((i + 1) < productConfiguration.getDifferences().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (productConfiguration.getDisplayAvailability() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -392,6 +414,15 @@ public class ProductConfigurationSerDes {
 					productConfiguration.getAvailabilityEstimateName()));
 		}
 
+		if (productConfiguration.getDifferences() == null) {
+			map.put("differences", null);
+		}
+		else {
+			map.put(
+				"differences",
+				String.valueOf(productConfiguration.getDifferences()));
+		}
+
 		if (productConfiguration.getDisplayAvailability() == null) {
 			map.put("displayAvailability", null);
 		}
@@ -594,6 +625,9 @@ public class ProductConfigurationSerDes {
 
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "differences")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "displayAvailability")) {
 
@@ -705,6 +739,12 @@ public class ProductConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					productConfiguration.setAvailabilityEstimateName(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "differences")) {
+				if (jsonParserFieldValue != null) {
+					productConfiguration.setDifferences(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

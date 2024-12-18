@@ -126,10 +126,10 @@ public class AssetTagFinderImpl
 		try {
 			session = openSession();
 
-			Table<AssetTagTable> tempAssetTagTable = _getTagEntriesGroupByStep(
+			Table<AssetTagTable> tempAssetTagTable = _getAssetTagHavingStep(
 				groupId, classNameId, name
 			).unionAll(
-				_getEmptyEntriesGroupByStep(name)
+				_getAssetTagGroupByStep(name)
 			).as(
 				AssetTagTable.INSTANCE.getName(), AssetTagTable.INSTANCE
 			);
@@ -164,6 +164,100 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private Expression<?>[] _getAssetTagExpressions(
+		boolean includeAssetCount, boolean replaceAssetCount) {
+
+		Collection<Column<AssetTagTable, ?>> columns =
+			AssetTagTable.INSTANCE.getColumns();
+
+		Expression<?>[] expressions = new Expression<?>[0];
+
+		for (Iterator<?> iterator = columns.iterator(); iterator.hasNext();) {
+			Column<AssetTagTable, ?> column =
+				(Column<AssetTagTable, ?>)iterator.next();
+
+			Expression<?> expression = column;
+
+			if (Objects.equals(column.getName(), "assetCount")) {
+				if (!includeAssetCount) {
+					continue;
+				}
+
+				if (replaceAssetCount) {
+					expression = _assetTagCountExpression;
+				}
+			}
+
+			expressions = ArrayUtil.append(expressions, expression);
+		}
+
+		return expressions;
+	}
+
+	private GroupByStep _getAssetTagGroupByStep(String name) {
+		return DSLQueryFactoryUtil.select(
+			_getAssetTagExpressions(true, false)
+		).from(
+			AssetTagTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate = AssetTagTable.INSTANCE.assetCount.eq(0);
+
+				if (name == null) {
+					return predicate;
+				}
+
+				return predicate.and(
+					DSLFunctionFactoryUtil.lower(
+						AssetTagTable.INSTANCE.name
+					).like(
+						StringUtil.toLowerCase(name)
+					));
+			}
+		);
+	}
+
+	private HavingStep _getAssetTagHavingStep(
+		long groupId, long classNameId, String name) {
+
+		return DSLQueryFactoryUtil.select(
+			_getAssetTagExpressions(true, true)
+		).from(
+			AssetTagTable.INSTANCE
+		).innerJoinON(
+			AssetEntries_AssetTagsTable.INSTANCE,
+			AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+				AssetTagTable.INSTANCE.tagId)
+		).innerJoinON(
+			AssetEntryTable.INSTANCE,
+			AssetEntryTable.INSTANCE.entryId.eq(
+				AssetEntries_AssetTagsTable.INSTANCE.entryId)
+		).where(
+			() -> {
+				Predicate predicate = AssetEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
+				).and(
+					AssetEntryTable.INSTANCE.visible.eq(true)
+				);
+
+				if (name == null) {
+					return predicate;
+				}
+
+				return predicate.and(
+					DSLFunctionFactoryUtil.lower(
+						AssetTagTable.INSTANCE.name
+					).like(
+						StringUtil.toLowerCase(name)
+					));
+			}
+		).groupBy(
+			_getAssetTagExpressions(false, false)
+		);
 	}
 
 	private Long[] _getAssetTagIds(
@@ -237,101 +331,7 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	private GroupByStep _getEmptyEntriesGroupByStep(String name) {
-		return DSLQueryFactoryUtil.select(
-			_getExpressions(true, false)
-		).from(
-			AssetTagTable.INSTANCE
-		).where(
-			() -> {
-				Predicate predicate = AssetTagTable.INSTANCE.assetCount.eq(0);
-
-				if (name == null) {
-					return predicate;
-				}
-
-				return predicate.and(
-					DSLFunctionFactoryUtil.lower(
-						AssetTagTable.INSTANCE.name
-					).like(
-						StringUtil.toLowerCase(name)
-					));
-			}
-		);
-	}
-
-	private Expression<?>[] _getExpressions(
-		boolean includeAssetCount, boolean replaceAssetCount) {
-
-		Collection<Column<AssetTagTable, ?>> columns =
-			AssetTagTable.INSTANCE.getColumns();
-
-		Expression<?>[] expressions = new Expression<?>[0];
-
-		for (Iterator<?> iterator = columns.iterator(); iterator.hasNext();) {
-			Column<AssetTagTable, ?> column =
-				(Column<AssetTagTable, ?>)iterator.next();
-
-			Expression<?> expression = column;
-
-			if (Objects.equals(column.getName(), "assetCount")) {
-				if (!includeAssetCount) {
-					continue;
-				}
-
-				if (replaceAssetCount) {
-					expression = _entryCountExpression;
-				}
-			}
-
-			expressions = ArrayUtil.append(expressions, expression);
-		}
-
-		return expressions;
-	}
-
-	private HavingStep _getTagEntriesGroupByStep(
-		long groupId, long classNameId, String name) {
-
-		return DSLQueryFactoryUtil.select(
-			_getExpressions(true, true)
-		).from(
-			AssetTagTable.INSTANCE
-		).innerJoinON(
-			AssetEntries_AssetTagsTable.INSTANCE,
-			AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
-				AssetTagTable.INSTANCE.tagId)
-		).innerJoinON(
-			AssetEntryTable.INSTANCE,
-			AssetEntryTable.INSTANCE.entryId.eq(
-				AssetEntries_AssetTagsTable.INSTANCE.entryId)
-		).where(
-			() -> {
-				Predicate predicate = AssetEntryTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					AssetEntryTable.INSTANCE.classNameId.eq(classNameId)
-				).and(
-					AssetEntryTable.INSTANCE.visible.eq(true)
-				);
-
-				if (name == null) {
-					return predicate;
-				}
-
-				return predicate.and(
-					DSLFunctionFactoryUtil.lower(
-						AssetTagTable.INSTANCE.name
-					).like(
-						StringUtil.toLowerCase(name)
-					));
-			}
-		).groupBy(
-			_getExpressions(false, false)
-		);
-	}
-
-	private final Expression<Long> _entryCountExpression =
+	private final Expression<Long> _assetTagCountExpression =
 		DSLFunctionFactoryUtil.count(
 			AssetTagTable.INSTANCE.tagId
 		).as(

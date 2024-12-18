@@ -6,15 +6,15 @@
 package com.liferay.search.experiences.internal.feature.flag;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.search.experiences.internal.model.listener.AssetEntrySXPBlueprintInfoCollectionProviderSXPBlueprintModelListener;
 import com.liferay.search.experiences.internal.model.listener.InfoCollectionProviderSXPBlueprintModelListener;
-import com.liferay.search.experiences.internal.model.listener.JournalArticleSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener;
+import com.liferay.search.experiences.internal.model.listener.SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import java.util.AbstractMap;
@@ -46,25 +46,14 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 			<InfoCollectionProviderSXPBlueprintModelListener,
 			 ServiceRegistration<?>> entry = null;
 
-		if (enabled) {
+		if (enabled && Objects.equals(featureFlagKey, "LPS-129412")) {
 			InfoCollectionProviderSXPBlueprintModelListener
-				infoCollectionProviderSXPBlueprintModelListener = null;
-
-			if (Objects.equals(featureFlagKey, "LPS-193551")) {
 				infoCollectionProviderSXPBlueprintModelListener =
-					new JournalArticleSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
+					new SingleTypeSXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
 						_bundleContext, _companyLocalService,
 						_sxpBlueprintLocalService, _assetHelper,
-						_journalArticleService, _searcher,
+						_dlAppLocalService, _journalArticleService, _searcher,
 						_searchRequestBuilderFactory);
-			}
-			else if (Objects.equals(featureFlagKey, "LPS-129412")) {
-				infoCollectionProviderSXPBlueprintModelListener =
-					new AssetEntrySXPBlueprintInfoCollectionProviderSXPBlueprintModelListener(
-						_bundleContext, _companyLocalService,
-						_sxpBlueprintLocalService, _assetHelper, _searcher,
-						_searchRequestBuilderFactory);
-			}
 
 			infoCollectionProviderSXPBlueprintModelListener.start();
 
@@ -106,6 +95,9 @@ public class SXPBlueprintFeatureFlagListener implements FeatureFlagListener {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

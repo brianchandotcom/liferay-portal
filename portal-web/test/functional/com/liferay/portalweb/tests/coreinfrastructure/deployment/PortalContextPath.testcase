@@ -145,7 +145,7 @@ definition {
 
 			Navigator.openSpecificURL(url = "http://localhost:8080/liferay/o/glowroot");
 
-			AssertElementPresent(locator1 = "Home#GLOWROOT-NON-ROOT-CONTEXT-PATH");
+			AssertElementPresent(locator1 = "//script[contains(text(), '/liferay/o/glowroot')]");
 		}
 	}
 

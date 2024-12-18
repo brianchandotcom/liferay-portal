@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IllegalImportsCheck" files="fragment-impl/src/main/java/com/liferay/fragment/internal/processor/FragmentEntryProcessorRegistryImpl.java" />
+	</source-check>
+</suppressions>

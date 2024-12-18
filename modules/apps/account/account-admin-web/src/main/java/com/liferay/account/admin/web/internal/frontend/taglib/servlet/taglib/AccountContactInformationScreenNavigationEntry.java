@@ -48,11 +48,7 @@ public class AccountContactInformationScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew()) {
-			return false;
-		}
-
-		return true;
+		return !accountEntry.isNew();
 	}
 
 }

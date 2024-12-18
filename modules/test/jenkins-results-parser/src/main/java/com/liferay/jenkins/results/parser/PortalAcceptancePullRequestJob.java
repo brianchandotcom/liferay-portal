@@ -65,7 +65,7 @@ public class PortalAcceptancePullRequestJob
 			}
 
 			if (Objects.equals(getTestSuiteName(), "stable") &&
-				relevantEngineEnabled) {
+				_isRelevantTestSuite() && relevantEngineEnabled) {
 
 				batchTestClassGroups = Collections.synchronizedList(
 					getBatchTestClassGroups(getStableRuleBatchNames()));

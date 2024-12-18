@@ -220,7 +220,6 @@
 		<check name="CSPComplianceCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks code to prevent common CSP related pitfalls." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="FTLEmptyLinesCheck">
 			<category name="Styling" />
@@ -1091,7 +1090,6 @@
 		<check name="CSPComplianceCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks code to prevent common CSP related pitfalls." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />

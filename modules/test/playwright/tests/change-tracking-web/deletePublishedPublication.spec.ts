@@ -46,7 +46,7 @@ test('LPD-29837 Add option to delete history from Publications Admin', async ({
 	});
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
 	await page.reload();
@@ -55,7 +55,7 @@ test('LPD-29837 Add option to delete history from Publications Admin', async ({
 
 	const collectionRowItem = page
 		.locator('.dnd-tr')
-		.filter({hasText: ctCollection.name})
+		.filter({hasText: ctCollection.body.name})
 		.first();
 
 	await expect(collectionRowItem).toBeVisible();

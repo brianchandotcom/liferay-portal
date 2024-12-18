@@ -22,6 +22,7 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,8 +60,6 @@ public class CommerceProductOptionValueFDSDataProvider
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
-
-		List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			new ArrayList<>();
@@ -100,31 +99,23 @@ public class CommerceProductOptionValueFDSDataProvider
 				cpDefinitionOptionValueRelBaseModelSearchResult.getBaseModels();
 		}
 
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			productOptionValues.add(
-				new ProductOptionValue(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId(),
-					_commercePriceFormatter.format(
-						commerceCurrency,
-						_getPrice(
-							cpDefinitionOptionValueRel,
-							cpDefinitionOptionRelId),
-						locale),
-					cpDefinitionOptionValueRel.getKey(),
-					cpDefinitionOptionValueRel.getName(
-						_language.getLanguageId(locale)),
-					cpDefinitionOptionValueRel.getPriority(),
-					_language.get(
-						locale,
-						cpDefinitionOptionValueRel.isPreselected() ? "yes" :
-							"no"),
-					_getSku(cpDefinitionOptionValueRel)));
-		}
-
-		return productOptionValues;
+		return TransformUtil.transform(
+			cpDefinitionOptionValueRels,
+			cpDefinitionOptionValueRel -> new ProductOptionValue(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
+				_commercePriceFormatter.format(
+					commerceCurrency,
+					_getPrice(
+						cpDefinitionOptionValueRel, cpDefinitionOptionRelId),
+					locale),
+				cpDefinitionOptionValueRel.getKey(),
+				cpDefinitionOptionValueRel.getName(
+					_language.getLanguageId(locale)),
+				cpDefinitionOptionValueRel.getPriority(),
+				_language.get(
+					locale,
+					cpDefinitionOptionValueRel.isPreselected() ? "yes" : "no"),
+				_getSku(cpDefinitionOptionValueRel)));
 	}
 
 	@Override

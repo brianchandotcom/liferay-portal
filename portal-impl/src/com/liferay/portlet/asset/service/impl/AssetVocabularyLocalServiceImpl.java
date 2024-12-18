@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -165,9 +166,11 @@ public class AssetVocabularyLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
 		if (Validator.isNull(name)) {
 			name = _generateVocabularyName(
-				groupId, titleMap.get(LocaleUtil.getSiteDefault()));
+				groupId, trimmedTitleMap.get(LocaleUtil.getSiteDefault()));
 		}
 
 		name = _getVocabularyName(name);
@@ -193,7 +196,7 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.setTitle(title);
 		}
 		else {
-			vocabulary.setTitleMap(titleMap);
+			vocabulary.setTitleMap(trimmedTitleMap);
 		}
 
 		vocabulary.setDescriptionMap(descriptionMap);
@@ -473,7 +476,7 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
-		vocabulary.setTitleMap(titleMap);
+		vocabulary.setTitleMap(_getTrimmedTitleMap(titleMap));
 		vocabulary.setDescriptionMap(descriptionMap);
 		vocabulary.setSettings(settings);
 		vocabulary.setVisibilityType(visibilityType);
@@ -492,7 +495,7 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
-		vocabulary.setTitleMap(titleMap);
+		vocabulary.setTitleMap(_getTrimmedTitleMap(titleMap));
 
 		if (Validator.isNotNull(title)) {
 			vocabulary.setTitle(title);
@@ -590,6 +593,21 @@ public class AssetVocabularyLocalServiceImpl
 
 			curVocabularyName = curVocabularyName + CharPool.DASH + count++;
 		}
+	}
+
+	private Map<Locale, String> _getTrimmedTitleMap(
+		Map<Locale, String> titleMap) {
+
+		Map<Locale, String> trimmedTitleMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			trimmedTitleMap.put(
+				entry.getKey(),
+				ModelHintsUtil.trimString(
+					AssetVocabulary.class.getName(), "name", entry.getValue()));
+		}
+
+		return trimmedTitleMap;
 	}
 
 	private String _getVocabularyName(String vocabularyName) {

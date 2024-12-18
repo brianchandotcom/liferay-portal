@@ -12,12 +12,12 @@ import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductMedia;
-import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +57,6 @@ public class CommerceProductAttachmentFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<ProductMedia> productMedia = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -71,41 +68,37 @@ public class CommerceProductAttachmentFDSDataProvider
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+		return TransformUtil.transform(
 			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
 				_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
 				fdsKeywords.getKeywords(),
 				CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_ANY, fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			cpAttachmentFileEntry -> {
+				long cpAttachmentFileEntryId =
+					cpAttachmentFileEntry.getCPAttachmentFileEntryId();
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
+				String title = cpAttachmentFileEntry.getTitle(
+					themeDisplay.getLanguageId());
 
-			long cpAttachmentFileEntryId =
-				cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+				String extension = StringPool.BLANK;
 
-			String title = cpAttachmentFileEntry.getTitle(
-				themeDisplay.getLanguageId());
+				FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
-			String extension = StringPool.BLANK;
+				if (fileEntry != null) {
+					extension = HtmlUtil.escape(fileEntry.getExtension());
+				}
 
-			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+				String statusDisplayStyle = StringPool.BLANK;
 
-			if (fileEntry != null) {
-				extension = HtmlUtil.escape(fileEntry.getExtension());
-			}
+				if (cpAttachmentFileEntry.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
 
-			String statusDisplayStyle = StringPool.BLANK;
+					statusDisplayStyle = "success";
+				}
 
-			if (cpAttachmentFileEntry.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
-
-				statusDisplayStyle = "success";
-			}
-
-			productMedia.add(
-				new ProductMedia(
+				return new ProductMedia(
 					cpAttachmentFileEntryId,
 					new ImageField(
 						title, "rounded", "lg",
@@ -120,10 +113,8 @@ public class CommerceProductAttachmentFDSDataProvider
 						_language.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
-								cpAttachmentFileEntry.getStatus())))));
-		}
-
-		return productMedia;
+								cpAttachmentFileEntry.getStatus()))));
+			});
 	}
 
 	@Override

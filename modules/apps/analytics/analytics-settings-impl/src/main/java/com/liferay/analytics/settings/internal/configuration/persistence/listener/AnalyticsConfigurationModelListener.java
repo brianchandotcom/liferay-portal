@@ -32,6 +32,14 @@ public class AnalyticsConfigurationModelListener
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(pid);
 
+		properties.put(
+			"previousContentRecommenderMostPopularItemsEnabled",
+			analyticsConfiguration.contentRecommenderMostPopularItemsEnabled());
+		properties.put(
+			"previousContentRecommenderUserPersonalizationEnabled",
+			analyticsConfiguration.
+				contentRecommenderUserPersonalizationEnabled());
+
 		String[] commerceSyncEnabledAnalyticsChannelIds =
 			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds();
 

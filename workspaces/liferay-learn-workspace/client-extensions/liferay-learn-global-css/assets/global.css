@@ -16,6 +16,10 @@
 	src: url(./fonts/SourceCodePro-Variable.ttf) format('truetype');
 }
 
+body {
+	font-family: 'Source Sans 3' !important;
+}
+
 code[class*='language-'],
 pre[class*='language-'] {
 	background: none;
@@ -291,6 +295,22 @@ pre[class*='language-'] {
 	.previous-lesson-icon {
 		color: var(--color-action-neutral-default, #2b3a4b);
 	}
+}
+
+.custom-control-label .custom-control-label-text {
+	color: var(--color-neutral-10, #282934) !important;
+	line-height: 16px;
+}
+
+.custom-control-label::before {
+	border-color: var(--color-neutral-10, #282934) !important;
+}
+
+.input-group .search-bar-keywords-input::placeholder {
+	color: var(--color-state-neutral-darken-1,#6C6C75 ) !important;
+	font-size: 1rem !important;
+	font-weight: 400 !important;
+	line-height: 24px !important;
 }
 
 .landing-page,
@@ -886,6 +906,12 @@ pre[class*='language-'] {
 	&:hover {
 		color: var(--color-action-primary-hover, #0053f0);
 	}
+}
+
+.learn-category div {
+	color: var(--color-neutral-10, #282934);
+	font-weight: 400;
+	line-height: 24px;
 }
 
 .learn-course-side-nav {
@@ -1536,6 +1562,12 @@ pre[class*='language-'] {
 	}
 }
 
+.panel-title {
+	color: var(--color-neutral-10, #282934) !important;
+	font-size: 1.125rem;
+	text-transform: none;
+}
+
 .search-bar-suggestions
 	> .input-group-item
 	> .input-group
@@ -1588,13 +1620,13 @@ pre[class*='language-'] {
 		color: #0b5fff;
 		font-size: 1rem;
 		font-style: normal;
-		font-weight: 600;
+		font-weight: 600 !important;
 		line-height: 1.5rem;
 		padding: 1rem;
 	}
 
 	.search-results-entry .search-results-entry-title .published-date {
-		color: var(--color-state-neutral-darken-1, #6c6c75);
+		color: var(--color-state-neutral-darken-1, #54555F);
 		font-size: 0.8125rem;
 		font-style: normal;
 		font-weight: 400;
@@ -1696,4 +1728,10 @@ pre[class*='language-'] {
 
 .token.entity {
 	cursor: help;
+}
+
+.treeview .btn {
+	color: var(--color-neutral-10, #282934) !important;
+	font-size: 13px;
+	font-weight: 400;
 }

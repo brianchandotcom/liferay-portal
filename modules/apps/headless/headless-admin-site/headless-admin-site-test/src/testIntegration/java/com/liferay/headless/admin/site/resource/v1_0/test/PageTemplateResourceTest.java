@@ -10,11 +10,13 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -27,11 +29,17 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,6 +47,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -108,6 +117,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-44414")
 	public void testGetSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
@@ -115,7 +125,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testPostSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate(
 				randomPageTemplate());
 
-		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
+
+		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields();
 
 		_assertProblemException(
 			"NOT_FOUND",
@@ -127,7 +139,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_enableLocalStaging();
 
-		_testGetSiteSiteByExternalReferenceCodeMasterPage(pageTemplate);
+		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
 
 		_withCompanyGroupWidgetPageTemplate(
 			(group, widgetPageTemplate) ->
@@ -579,6 +591,32 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				pageTemplateSet.getExternalReferenceCode(), pageTemplate);
 	}
 
+	private void _assertPageSpecifications(
+		Layout layout, PageSpecification[] pageSpecifications) {
+
+		Assert.assertFalse(layout.isPublished());
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
+
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		PageSpecification pageSpecification = pageSpecifications[0];
+
+		Assert.assertEquals(
+			draftLayout.getExternalReferenceCode(),
+			pageSpecification.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			PageSpecification.Status.DRAFT, pageSpecification.getStatus());
+
+		Assert.assertEquals(
+			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+			pageSpecification.getType());
+	}
+
 	private void _assertProblemException(
 			String status, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -650,6 +688,21 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				RandomTestUtil.randomInt(0, unsafeSuppliers.size() - 1));
 
 		return unsafeSupplier.get();
+	}
+
+	private PageTemplateResource _getPageTemplateResource() throws Exception {
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		return PageTemplateResource.builder(
+		).authentication(
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "pageSpecifications"
+		).build();
 	}
 
 	private PageTemplateSet _getPageTemplateSet(Group group) throws Exception {
@@ -819,7 +872,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 						pageTemplateExternalReferenceCode));
 	}
 
-	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
+	private void _testGetSiteSiteByExternalReferenceCodePageTemplate(
 			PageTemplate pageTemplate)
 		throws Exception {
 
@@ -830,6 +883,38 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		assertEquals(pageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields()
+		throws Exception {
+
+		PageTemplateResource curPageTemplateResource =
+			_getPageTemplateResource();
+
+		PageTemplate pageTemplate =
+			curPageTemplateResource.
+				postSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					_getContentPageTemplate(testGroup));
+
+		PageTemplate getPageTemplate =
+			curPageTemplateResource.
+				getSiteSiteByExternalReferenceCodePageTemplate(
+					testGroup.getExternalReferenceCode(),
+					pageTemplate.getExternalReferenceCode());
+
+		assertEquals(pageTemplate, getPageTemplate);
+		assertValid(getPageTemplate);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					getPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		_assertPageSpecifications(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			getPageTemplate.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageTemplate(
@@ -980,6 +1065,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService

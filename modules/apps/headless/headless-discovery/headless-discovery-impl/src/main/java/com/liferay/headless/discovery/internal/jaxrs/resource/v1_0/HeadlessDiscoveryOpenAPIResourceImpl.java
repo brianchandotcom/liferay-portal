@@ -435,12 +435,14 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 
 		String version = StringUtil.extractFirst(subpath, StringPool.SLASH);
 
-		if (version != null) {
-			Matcher versionMatcher = _versionPattern.matcher(version);
+		if (version == null) {
+			return null;
+		}
 
-			if (versionMatcher.matches()) {
-				return version;
-			}
+		Matcher versionMatcher = _versionPattern.matcher(version);
+
+		if (versionMatcher.matches()) {
+			return version;
 		}
 
 		return null;

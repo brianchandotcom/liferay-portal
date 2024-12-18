@@ -127,11 +127,7 @@ public class ColumnDescriptor {
 	}
 
 	public boolean isChild() {
-		if (_parentColumnDescriptors.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !_parentColumnDescriptors.isEmpty();
 	}
 
 	private ColumnDescriptor(

@@ -521,33 +521,32 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	private OrderByComparator<com.liferay.portal.kernel.workflow.WorkflowTask>
 		_toOrderByComparator(Sort sort) {
 
-		if (sort != null) {
-			boolean ascending = !sort.isReverse();
-
-			String sortFieldName = sort.getFieldName();
-
-			if (StringUtil.startsWith(sortFieldName, "dateCompletion")) {
-				return _workflowComparatorFactory.
-					getTaskCompletionDateComparator(ascending);
-			}
-			else if (StringUtil.startsWith(sortFieldName, "dateCreated")) {
-				return _workflowComparatorFactory.getTaskCreateDateComparator(
-					ascending);
-			}
-			else if (StringUtil.startsWith(sortFieldName, "dateDue")) {
-				return _workflowComparatorFactory.getTaskDueDateComparator(
-					ascending);
-			}
-			else if (StringUtil.startsWith(sortFieldName, "name")) {
-				return _workflowComparatorFactory.getTaskNameComparator(
-					ascending);
-			}
-
-			return _workflowComparatorFactory.getTaskInstanceIdComparator(
-				ascending);
+		if (sort == null) {
+			return null;
 		}
 
-		return null;
+		boolean ascending = !sort.isReverse();
+
+		String sortFieldName = sort.getFieldName();
+
+		if (StringUtil.startsWith(sortFieldName, "dateCompletion")) {
+			return _workflowComparatorFactory.getTaskCompletionDateComparator(
+				ascending);
+		}
+		else if (StringUtil.startsWith(sortFieldName, "dateCreated")) {
+			return _workflowComparatorFactory.getTaskCreateDateComparator(
+				ascending);
+		}
+		else if (StringUtil.startsWith(sortFieldName, "dateDue")) {
+			return _workflowComparatorFactory.getTaskDueDateComparator(
+				ascending);
+		}
+		else if (StringUtil.startsWith(sortFieldName, "name")) {
+			return _workflowComparatorFactory.getTaskNameComparator(ascending);
+		}
+
+		return _workflowComparatorFactory.getTaskInstanceIdComparator(
+			ascending);
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)

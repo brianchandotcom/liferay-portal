@@ -42,11 +42,7 @@ public class FieldProviderUtil {
 
 				String name = dtoEntityField.getName();
 
-				if (name.startsWith("x-")) {
-					return false;
-				}
-
-				return true;
+				return !name.startsWith("x-");
 			});
 	}
 

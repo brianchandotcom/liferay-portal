@@ -34,6 +34,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -146,6 +147,54 @@ public class DDMIndexerImplTest {
 		ddmFormField.setRepeatable(true);
 
 		_testExtractIndexableAttributes(ddmFormField, StringPool.BLANK);
+	}
+
+	@Test
+	public void testExtractIndexableAttributesWithJournalArticleField() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.BRAZIL);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			_FIELD_NAME, RandomTestUtil.randomString(),
+			DDMFormFieldTypeConstants.JOURNAL_ARTICLE,
+			DDMFormFieldTypeConstants.JOURNAL_ARTICLE, false, false, false);
+
+		ddmFormField.setIndexType("keyword");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Assert.assertEquals(
+			"Title",
+			_ddmIndexer.extractIndexableAttributes(
+				_createDDMStructure(ddmForm),
+				_createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+						_FIELD_NAME,
+						JSONUtil.put(
+							"title", "Title"
+						).toString())),
+				null));
+		Assert.assertEquals(
+			"Title Título",
+			_ddmIndexer.extractIndexableAttributes(
+				_createDDMStructure(ddmForm),
+				_createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+						_FIELD_NAME,
+						JSONUtil.put(
+							"title", "Title"
+						).put(
+							"titleMap",
+							JSONUtil.put(
+								"en_US", "Title"
+							).put(
+								"pt_BR", "Título"
+							)
+						).toString())),
+				null));
 	}
 
 	@Test

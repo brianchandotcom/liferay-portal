@@ -126,11 +126,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			entityClassName = entityClassName.substring(0, index);
 		}
 
-		if (_allowedEntityClassNames.contains(entityClassName)) {
-			return true;
-		}
-
-		return false;
+		return _allowedEntityClassNames.contains(entityClassName);
 	}
 
 	private boolean _isBatchPlannerEnabled(
@@ -146,11 +142,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private boolean _isExport(String value) {
-		if (value.equals("export")) {
-			return true;
-		}
-
-		return false;
+		return value.equals("export");
 	}
 
 	private String _render(RenderRequest renderRequest) throws PortalException {

@@ -13,8 +13,10 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {zipFolder} from '../../utils/zip';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -479,4 +481,86 @@ test.describe('General', () => {
 
 		await expect(page.getByText('Edited')).toBeVisible();
 	});
+});
+
+test.describe('Import page templates', () => {
+	test(
+		'Import content page templates works when success and error occurs',
+		{
+			tag: '@LPS-173150',
+		},
+		async ({page, pageTemplatesPage, site}) => {
+
+			// Go to page templates administration
+
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			// Open import view
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page
+					.locator('.dropdown-menu')
+					.getByRole('menuitem', {name: 'Import'}),
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			// Import master page
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await page
+				.getByRole('button', {exact: true, name: 'Select File'})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				await zipFolder(
+					path.join(
+						__dirname,
+						'/dependencies/page-templates-with-invalid-value.zip'
+					)
+				)
+			);
+
+			await page
+				.getByText('page-templates-with-invalid-value.zip')
+				.waitFor();
+
+			await expect(
+				page.getByRole('button', {name: 'Replace File'})
+			).toBeVisible();
+
+			await page.getByRole('button', {name: 'Import'}).click();
+
+			// Assert error and success messages
+
+			await expect(
+				page.getByRole('button', {name: '1 item was imported.'})
+			).toBeVisible();
+
+			await expect(
+				page.getByText('1 item could not be imported.', {exact: true})
+			).toBeVisible();
+
+			// Assert imported entries
+
+			await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+			await expect(
+				page.getByRole('link', {
+					name: 'Content Page Template With Edited Inline Text',
+				})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {
+					name: 'Content Page Template With Invalid Value',
+				})
+			).not.toBeVisible();
+		}
+	);
 });

@@ -16,9 +16,11 @@ import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
+	useSelectorRef,
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
+import {hasLocalizationSelect} from '../../../../../../app/utils/hasLocalizationSelect';
 import {openAddLocalizationSelect} from '../../../../../../app/utils/openAddLocalizationSelect';
 import {openInfoFieldSelector} from '../../../../../../common/openInfoFieldSelector';
 
@@ -38,6 +40,10 @@ export default function FormMappingOptions({
 	);
 	const [classTypeId, setClassTypeId] = useControlledState(
 		item.config.classTypeId
+	);
+
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
 	);
 
 	const selectedType = formTypes.find(({value}) => value === classNameId);
@@ -73,7 +79,12 @@ export default function FormMappingOptions({
 						saveMapping(fields);
 
 						if (Liferay.FeatureFlags['LPD-37927']) {
-							if (fields.some((field) => field.localizable)) {
+							if (
+								fields.some((field) => field.localizable) &&
+								!hasLocalizationSelect(
+									fragmentEntryLinksRef.current
+								)
+							) {
 								openAddLocalizationSelect({
 									dispatch,
 									formId: item.itemId,
@@ -90,6 +101,7 @@ export default function FormMappingOptions({
 		},
 		[
 			formTypes,
+			fragmentEntryLinksRef,
 			dispatch,
 			item,
 			onValueSelect,

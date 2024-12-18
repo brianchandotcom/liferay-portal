@@ -1180,7 +1180,7 @@ public class PageSpecificationResourceTest
 			pageExperience.setPageElements(
 				() -> {
 					PageElement[] pageElements = _getPageElements(
-						RandomTestUtil.randomInt(1, 3), null);
+						RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
 
 					if (ListUtil.isEmpty(dropZonePageElements)) {
 						return pageElements;

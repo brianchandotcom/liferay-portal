@@ -133,15 +133,14 @@ public class FragmentEntryLinkManagerTest {
 					"urls", "http://" + RandomTestUtil.randomString() + ".com"
 				).buildString());
 
+		String portletId = StringBundler.concat(
+			"com_liferay_client_extension_web_internal_portlet_",
+			"ClientExtensionEntryPortlet_", TestPropsValues.getCompanyId(), "_",
+			CETUtil.normalizeExternalReferenceCodeForPortletId(
+				clientExtensionEntry.getExternalReferenceCode()));
+
 		JSONObject processAddPortletJSONObject =
-			ContentLayoutTestUtil.addPortletToLayout(
-				draftLayout,
-				StringBundler.concat(
-					"com_liferay_client_extension_web_internal_portlet_",
-					"ClientExtensionEntryPortlet_",
-					TestPropsValues.getCompanyId(), "_",
-					CETUtil.normalizeExternalReferenceCodeForPortletId(
-						clientExtensionEntry.getExternalReferenceCode())));
+			ContentLayoutTestUtil.addPortletToLayout(draftLayout, portletId);
 
 		JSONObject fragmentEntryLinkJSONObject =
 			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
@@ -194,6 +193,13 @@ public class FragmentEntryLinkManagerTest {
 			"actions");
 
 		Assert.assertTrue(SetUtil.isEmpty(actionsJSONObject.keySet()));
+
+		Assert.assertEquals(
+			_portal.getPortletTitle(
+				portletId, LocaleThreadLocal.getSiteDefaultLocale()),
+			fragmentEntryLinkJSONObject.getString("name"));
+		Assert.assertEquals(
+			portletId, fragmentEntryLinkJSONObject.getString("portletId"));
 	}
 
 	@Test

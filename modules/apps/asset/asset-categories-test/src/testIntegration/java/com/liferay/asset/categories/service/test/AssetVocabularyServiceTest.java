@@ -12,15 +12,16 @@ import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -122,6 +123,31 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Test
+	public void testAddVocabularyLongTitlesAreTrimmed() throws Exception {
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AssetVocabulary.class.getName(), "name");
+
+		String title = RandomTestUtil.randomString(nameMaxLength);
+
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			StringPool.BLANK, StringPool.BLANK,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, title + RandomTestUtil.randomString(10)
+			).put(
+				LocaleUtil.US, title + RandomTestUtil.randomString(10)
+			).build(),
+			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(title.trim()), vocabulary.getName());
+
+		_assertAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
+	}
+
+	@Test
 	public void testAddVocabularyWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = StringUtil.randomString();
 
@@ -205,7 +231,7 @@ public class AssetVocabularyServiceTest {
 			ResourceActionLocalServiceUtil.getResourceActionsCount(
 				AssetVocabulary.class.getName()));
 		Assert.assertNull(
-			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+			_assetCategoryLocalService.fetchAssetCategory(
 				category.getCategoryId()));
 		Assert.assertNull(
 			_assetVocabularyLocalService.fetchAssetVocabulary(
@@ -299,7 +325,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
@@ -334,7 +360,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
@@ -350,7 +376,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -362,7 +388,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
@@ -393,7 +419,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false);
 
 			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -427,7 +453,7 @@ public class AssetVocabularyServiceTest {
 				user, permissionChecker)) {
 
 			List<AssetVocabulary> vocabularies =
-				AssetVocabularyServiceUtil.getGroupVocabularies(
+				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true);
 
 			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -440,7 +466,7 @@ public class AssetVocabularyServiceTest {
 	@Test
 	public void testGetGroupVocabulariesWithNoVocabularies() throws Exception {
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false);
 
 		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
@@ -451,7 +477,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(
+			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true);
 
 		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
@@ -550,6 +576,36 @@ public class AssetVocabularyServiceTest {
 			StringUtil.toLowerCase(title), vocabulary.getName());
 	}
 
+	@Test
+	public void testUpdateVocabularyLongTitlesAreTrimmed() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId(), name);
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(name.trim()), vocabulary.getName());
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AssetVocabulary.class.getName(), "name");
+
+		String title = RandomTestUtil.randomString(nameMaxLength);
+
+		vocabulary = _assetVocabularyLocalService.updateVocabulary(
+			vocabulary.getVocabularyId(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, title + RandomTestUtil.randomString(10)
+			).put(
+				LocaleUtil.US, title + RandomTestUtil.randomString(10)
+			).build(),
+			null, vocabulary.getSettings(), vocabulary.getVisibilityType());
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(name.trim()), vocabulary.getName());
+
+		_assertAssetCategoryLongTitlesAreTrimmed(vocabulary, title);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -566,6 +622,16 @@ public class AssetVocabularyServiceTest {
 		return results.getLength();
 	}
 
+	private void _assertAssetCategoryLongTitlesAreTrimmed(
+		AssetVocabulary assetVocabulary, String title) {
+
+		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Assert.assertEquals(title, entry.getValue());
+		}
+	}
+
 	private void _testAddVocabulary(String primKey, String roleName)
 		throws Exception {
 
@@ -580,7 +646,13 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private AssetVocabularyService _assetVocabularyService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

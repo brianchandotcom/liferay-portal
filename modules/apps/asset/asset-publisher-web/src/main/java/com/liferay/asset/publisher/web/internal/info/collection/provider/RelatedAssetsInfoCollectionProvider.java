@@ -105,14 +105,9 @@ public class RelatedAssetsInfoCollectionProvider
 		String assetPublisherPortletNamespace = _portal.getPortletNamespace(
 			AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
-		if (Objects.equals(
-				itemSelectedEventName,
-				assetPublisherPortletNamespace + "selectAssetList")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			itemSelectedEventName,
+			assetPublisherPortletNamespace + "selectAssetList");
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(Pagination pagination) {

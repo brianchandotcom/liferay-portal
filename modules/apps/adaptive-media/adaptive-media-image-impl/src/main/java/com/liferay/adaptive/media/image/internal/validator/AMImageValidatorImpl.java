@@ -62,11 +62,7 @@ public class AMImageValidatorImpl implements AMImageValidator {
 			return false;
 		}
 
-		if (isProcessingSupported(fileVersion)) {
-			return true;
-		}
-
-		return false;
+		return isProcessingSupported(fileVersion);
 	}
 
 	@Override
@@ -83,11 +79,8 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 	@Override
 	public boolean isProcessingSupported(String mimeType) {
-		if (StringUtil.equalsIgnoreCase(mimeType, ContentTypes.IMAGE_SVG_XML)) {
-			return false;
-		}
-
-		return true;
+		return !StringUtil.equalsIgnoreCase(
+			mimeType, ContentTypes.IMAGE_SVG_XML);
 	}
 
 	@Override

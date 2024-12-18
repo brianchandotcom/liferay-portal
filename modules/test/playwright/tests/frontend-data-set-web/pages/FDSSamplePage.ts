@@ -63,8 +63,10 @@ export class FDSSamplePage {
 			title: getRandomString(),
 		});
 
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+		const url = `${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`;
+
+		await this.page.goto(url);
+
+		return {url};
 	}
 }

@@ -38,7 +38,7 @@ test('LPD-28276 Assert tag data persists in parent tab', async ({
 
 	await page.getByRole('button', {name: 'Save'}).click();
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await changeTrackingPage.reviewChange(tagName);
 
@@ -54,7 +54,7 @@ test('LPD-29088 Assert Publication Overview panel empty', async ({
 	ctCollection,
 	page,
 }) => {
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	const publicationOverviewPanel = page.getByRole('button', {
 		name: 'Publication Overview',
@@ -109,7 +109,7 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 		await apiHelpers.headlessDelivery.postBlog(site2.id);
 	}
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await expect(page.getByText('Liferay DXP (1): Tag (1)')).toBeVisible();
 	await expect(
@@ -123,10 +123,10 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 	).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
-	await changeTrackingPage.goToReviewChangesHistory(ctCollection.name);
+	await changeTrackingPage.goToReviewChangesHistory(ctCollection.body.name);
 
 	await expect(page.getByText('Liferay DXP (1): Tag (1)')).toBeVisible();
 	await expect(
@@ -153,7 +153,7 @@ test('LPD-29089 Assert Publication Overview filter', async ({
 
 	await apiHelpers.headlessDelivery.postWikiNode(site.id);
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await page.getByRole('link', {name: 'Blogs Entry (1)'}).click();
 

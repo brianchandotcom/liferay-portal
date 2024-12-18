@@ -49,7 +49,7 @@ public class FieldPeopleConstants {
 	};
 
 	public static final String[] FIELD_USER_EXAMPLES = {
-		"True", "lorem ipsum", "12345", "12345", "31st Oct 2008", "True",
+		"True", "lorem ipsum", "12345", "12345", "31st Oct 2008",
 		"test@liferay.com", "True", "external12345", "12345", "John", "12345",
 		"Hello John!", "Manager", "12345", "Doe", "12345", "Michael",
 		"31st Oct 2008", "12345", "12345", "johndoe", "0", "12345", "12345",

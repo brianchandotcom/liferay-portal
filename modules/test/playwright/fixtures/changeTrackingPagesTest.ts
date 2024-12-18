@@ -42,7 +42,7 @@ const changeTrackingPages = test.extend<{
 				// Checkout ctCollection
 
 				await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-					ctCollection.id
+					ctCollection.body.id
 				);
 
 				await use(ctCollection);
@@ -55,7 +55,7 @@ const changeTrackingPages = test.extend<{
 				// Delete ctCollection
 
 				await apiHelpers.headlessChangeTracking.deleteCTCollection(
-					ctCollection.id
+					ctCollection.body.id
 				);
 			}
 		},

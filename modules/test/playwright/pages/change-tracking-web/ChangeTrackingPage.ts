@@ -262,7 +262,7 @@ export class ChangeTrackingPage {
 	async workOnProduction() {
 		const apiHelpers = new ApiHelpers(this.page);
 
-		await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(0);
 
 		await this.page.reload();
 	}
@@ -271,7 +271,7 @@ export class ChangeTrackingPage {
 		const apiHelpers = new ApiHelpers(this.page);
 
 		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-			ctCollection.id
+			ctCollection.body.id
 		);
 
 		await this.page.reload();

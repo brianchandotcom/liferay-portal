@@ -20,6 +20,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+		<liferay-ui:error exception="<%= CommerceInventoryWarehouseItemQuantityException.class %>" message="please-enter-a-valid-quantity" />
 		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureKeyException.class %>" message="inventory-item-with-this-sku-and-uom-already-exists-in-the-selected-warehouse" />
 		<liferay-ui:error exception="<%= DuplicateCommerceInventoryWarehouseItemException.class %>" message="inventory-item-with-this-sku-already-exists-in-the-selected-warehouse" />
 		<liferay-ui:error exception="<%= NoSuchCPInstanceUnitOfMeasureException.class %>" message="no-such-uom-exists-with-this-sku" />

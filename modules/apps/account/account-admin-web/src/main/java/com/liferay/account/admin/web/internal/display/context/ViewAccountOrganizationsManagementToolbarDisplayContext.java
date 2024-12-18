@@ -172,13 +172,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (AccountEntryPermission.hasEditOrManageOrganizationsPermission(
-				themeDisplay.getPermissionChecker(), _getAccountEntryId())) {
-
-			return true;
-		}
-
-		return false;
+		return AccountEntryPermission.hasEditOrManageOrganizationsPermission(
+			themeDisplay.getPermissionChecker(), _getAccountEntryId());
 	}
 
 }

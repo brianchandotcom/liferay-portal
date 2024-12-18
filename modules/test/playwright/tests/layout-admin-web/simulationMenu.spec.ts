@@ -93,7 +93,10 @@ test.describe('Page content', () => {
 
 			// Select experiences
 
-			await simulationMenuPage.changePreviewBy('Experiences');
+			await simulationMenuPage.changeCombobox(
+				'Preview By',
+				'Experiences'
+			);
 
 			// Assert default experience
 
@@ -105,11 +108,7 @@ test.describe('Page content', () => {
 
 			// Assert custom experience
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'E1'}),
-				trigger: page.getByRole('combobox', {name: 'Experience'}),
-			});
+			await simulationMenuPage.changeCombobox('Experience', 'E1');
 
 			await expect(
 				page.getByText('Showing content for the experience "E1".')
@@ -303,13 +302,10 @@ test.describe('Page content', () => {
 
 				// Assert segmented collection
 
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: page.locator('.dropdown-item', {
-						hasText: segmentsEntryName,
-					}),
-					trigger: page.getByRole('combobox', {name: 'Segment'}),
-				});
+				await simulationMenuPage.changeCombobox(
+					'Segment',
+					segmentsEntryName
+				);
 
 				await expect(
 					page.getByText(
@@ -370,7 +366,10 @@ test.describe('Page content', () => {
 					)
 				).toBeVisible({timeout: 1000});
 
-				await simulationMenuPage.changePreviewBy('Experiences');
+				await simulationMenuPage.changeCombobox(
+					'Preview By',
+					'Experiences'
+				);
 
 				await expect(
 					page.getByText(

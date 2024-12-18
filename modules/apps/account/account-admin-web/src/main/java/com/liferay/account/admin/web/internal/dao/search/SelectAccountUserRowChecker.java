@@ -28,13 +28,8 @@ public class SelectAccountUserRowChecker extends EmptyOnClickRowChecker {
 	public boolean isChecked(Object object) {
 		AccountUserDisplay accountUserDisplay = (AccountUserDisplay)object;
 
-		if (AccountEntryUserRelLocalServiceUtil.hasAccountEntryUserRel(
-				_accountEntryId, accountUserDisplay.getUserId())) {
-
-			return true;
-		}
-
-		return false;
+		return AccountEntryUserRelLocalServiceUtil.hasAccountEntryUserRel(
+			_accountEntryId, accountUserDisplay.getUserId());
 	}
 
 	@Override

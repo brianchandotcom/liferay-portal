@@ -117,7 +117,9 @@ export async function loadData(
 	additionalAPIURLParameters
 ) {
 	const fullUrl = apiURL.startsWith('/')
-		? themeDisplay.getPortalURL() + themeDisplay.getPathContext() + apiURL
+		? Liferay.ThemeDisplay.getPortalURL() +
+			Liferay.ThemeDisplay.getPathContext() +
+			apiURL
 		: apiURL;
 
 	const url = new URL(fullUrl);
@@ -137,8 +139,8 @@ export async function loadData(
 		);
 	}
 
-	if (themeDisplay.isImpersonated()) {
-		url.searchParams.append('doAsUserId', themeDisplay.getUserId());
+	if (Liferay.ThemeDisplay.isImpersonated()) {
+		url.searchParams.append('doAsUserId', Liferay.ThemeDisplay.getUserId());
 	}
 
 	url.searchParams.append('page', page);

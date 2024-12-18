@@ -241,6 +241,7 @@ declare module Liferay {
 		export function getPathThemeImages(): string;
 		export function getPathThemeSpritemap(): string;
 		export function getPortalURL(): string;
+		export function getTimeZone(): string;
 		export function getSiteGroupId(): number;
 		export function isControlPanel(): boolean;
 	}

@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -24,11 +25,13 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,6 +82,7 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	public void testPatchPhone() throws Exception {
 		super.testPatchPhone();
 
+		_testPatchPhoneNotPrimary();
 		_testPatchPhoneType();
 	}
 
@@ -297,6 +301,33 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		phone2 = phoneResource.getPhone(phone2.getId());
 
 		Assert.assertTrue(phone2.getPrimary());
+	}
+
+	private void _testPatchPhoneNotPrimary() throws Exception {
+		Phone randomPhone = randomPhone();
+
+		randomPhone.setPrimary(true);
+
+		randomPhone = _addPhone(
+			randomPhone, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_PHONE);
+
+		testPatchPhone_addPhone();
+
+		randomPhone.setPrimary(false);
+
+		Phone patchPhone = phoneResource.patchPhone(
+			randomPhone.getId(), randomPhone);
+
+		Page<Phone> phonesPage = phoneResource.getUserAccountPhonesPage(
+			_user.getUserId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				ListUtil.fromCollection(phonesPage.getItems()),
+				phone ->
+					phone.getPrimary() &&
+					!Objects.equals(phone.getId(), patchPhone.getId())));
 	}
 
 	private void _testPatchPhoneType() throws Exception {

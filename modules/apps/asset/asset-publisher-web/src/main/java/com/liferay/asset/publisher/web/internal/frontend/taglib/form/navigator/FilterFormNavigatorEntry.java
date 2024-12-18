@@ -46,11 +46,7 @@ public class FilterFormNavigatorEntry
 			return false;
 		}
 
-		if (isDynamicAssetSelection()) {
-			return true;
-		}
-
-		return false;
+		return isDynamicAssetSelection();
 	}
 
 	@Override

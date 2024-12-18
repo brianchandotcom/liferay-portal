@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -36,6 +38,7 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,6 +90,14 @@ public class PostalAddressResourceTest
 		super.testDeletePostalAddress();
 
 		_testDeletePrimaryPostalAddress();
+	}
+
+	@Override
+	@Test
+	public void testPatchPostalAddress() throws Exception {
+		super.testPatchPostalAddress();
+
+		_testPatchPostalAddressNotPrimary();
 	}
 
 	@Override
@@ -369,6 +380,38 @@ public class PostalAddressResourceTest
 			postalAddress2.getId());
 
 		Assert.assertTrue(postalAddress2.getPrimary());
+	}
+
+	private void _testPatchPostalAddressNotPrimary() throws Exception {
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		randomPostalAddress.setPrimary(true);
+
+		randomPostalAddress = _addPostalAddress(
+			randomPostalAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+
+		_addPostalAddress(
+			randomPostalAddress(), Contact.class.getName(),
+			_user.getContactId(), ListTypeConstants.CONTACT_ADDRESS);
+
+		randomPostalAddress.setPrimary(false);
+
+		PostalAddress patchPostalAddress =
+			postalAddressResource.patchPostalAddress(
+				randomPostalAddress.getId(), randomPostalAddress);
+
+		Page<PostalAddress> postalAddressesPage =
+			postalAddressResource.getUserAccountPostalAddressesPage(
+				_user.getUserId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				ListUtil.fromCollection(postalAddressesPage.getItems()),
+				postalAddress ->
+					postalAddress.getPrimary() &&
+					!Objects.equals(
+						postalAddress.getId(), patchPostalAddress.getId())));
 	}
 
 	private PostalAddress _toPostalAddress(Address address) {

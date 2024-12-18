@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.exception.CommerceInventoryReplenishmentQuantityException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
@@ -61,7 +62,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof MVCCException ||
+			if (exception instanceof
+					CommerceInventoryReplenishmentQuantityException ||
+				exception instanceof MVCCException ||
 				exception instanceof PrincipalException.MustHavePermission) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
@@ -96,7 +99,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			addCommerceInventoryReplenishmentItem(
 				null, commerceInventoryWarehouseId, calendar.getTime(),
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "quantity"),
+					actionRequest,
+					CommerceInventoryReplenishmentItem.class.getName(),
+					"quantity"),
 				ParamUtil.getString(actionRequest, "sku"),
 				ParamUtil.getString(actionRequest, "unitOfMeasureKey"));
 	}
@@ -140,7 +145,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
 				commerceInventoryReplenishmentItemId, calendar.getTime(),
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "quantity"),
+					actionRequest,
+					CommerceInventoryReplenishmentItem.class.getName(),
+					"quantity"),
 				mvccVersion);
 	}
 

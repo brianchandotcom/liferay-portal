@@ -24,6 +24,7 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -246,6 +247,146 @@ test.describe('Form Configuration', () => {
 				expect(firstAlertDisappears).toBe(true);
 				expect(moreAlertsAppear).toBe(false);
 			}).toPass();
+		}
+	);
+
+	test(
+		'Success notification with toast message must be compatible with go to entry display page redirect option',
+		{
+			tag: '@LPS-188036',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a default display page for lemon object
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Create a page with a form fragment
+
+			const formId = getRandomString();
+
+			const textDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName,
+				pageElements: [textDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and change form configuration
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Success Action',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Go to Entry Display Page',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Display Page',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Default',
+			});
+
+			await page
+				.getByLabel('Show Notification After Submit', {exact: true})
+				.check();
+
+			await page
+				.getByLabel('Success Notification Text', {exact: true})
+				.fill('Request received correctly');
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert form is not redirected if there are validation errors
+
+			const input = page.getByLabel('Lemon Size');
+
+			await input.click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).toBeVisible();
+
+			// Clear input and assert success notification
+
+			await input.clear();
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await waitForAlert(page, 'Request received correctly');
+
+			// Delete the display page
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
 		}
 	);
 });
@@ -2147,7 +2288,7 @@ test.describe('Text input field', () => {
 				'Value exceeds maximum length of 280 for field Lemon Size.'
 			);
 
-			await page.getByLabel('Lemon Size').click();
+			await page.getByLabel('Lemon Size', {exact: true}).click();
 
 			await page.keyboard.type('a'.repeat(290));
 
@@ -2223,9 +2364,9 @@ test.describe('Text input field', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await expect(page.getByLabel('Potato Origin')).toHaveAttribute(
-				'required'
-			);
+			await expect(
+				page.getByLabel('Potato Origin', {exact: true})
+			).toHaveAttribute('required');
 		}
 	);
 });
@@ -2823,7 +2964,7 @@ test.describe('Textarea input field', () => {
 				'Maximum Number of Characters Exceeded: 310 / 300'
 			);
 
-			await page.getByLabel('Lemon History').click();
+			await page.getByLabel('Lemon History', {exact: true}).click();
 
 			await page.keyboard.type('a'.repeat(310));
 
@@ -4363,7 +4504,7 @@ test.describe('Multistep', () => {
 
 			// Try to submit and check it takes to step 2 because field is required
 
-			const field = page.getByLabel('Potato Origin');
+			const field = page.getByLabel('Potato Origin', {exact: true});
 
 			await submitForm();
 
@@ -4381,7 +4522,9 @@ test.describe('Multistep', () => {
 
 			// Fill field with correct value, submit and check it submits
 
-			await page.getByLabel('Potato Origin').fill('Canary Islands');
+			await page
+				.getByLabel('Potato Origin', {exact: true})
+				.fill('Canary Islands');
 
 			await submitForm();
 
@@ -4560,11 +4703,11 @@ test.describe('Edit mode language changes', () => {
 
 		await pageEditorPage.switchLanguage('en-US');
 
-		const englishLabel = page.getByLabel('English Label');
+		const englishLabel = page.getByLabel('English Label', {exact: true});
 		const englishHelpText = page.getByText('English Help Text');
 		const englishPlaceholder = page.getByPlaceholder('English Placeholder');
 
-		const spanishLabel = page.getByLabel('Spanish Label');
+		const spanishLabel = page.getByLabel('Spanish Label', {exact: true});
 		const spanishHelpText = page.getByText('Spanish Help Text');
 		const spanishPlaceholder = page.getByPlaceholder('Spanish Placeholder');
 
@@ -4629,6 +4772,70 @@ test.describe('Edit mode form errors', () => {
 			trigger: page.getByRole('button', {name: 'Cancel'}),
 		});
 	}
+
+	test(
+		'Can only drop form fragments inside a mapped form container',
+		{
+			tag: ['@LPS-149984', '@LPS-157740'],
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a content page
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition(),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Assert form fragments can only be dropped inside a mapped form container
+
+			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+			const header = page.getByRole('menuitem', {
+				exact: true,
+				name: 'Form Components',
+			});
+
+			await expandSection(header);
+
+			await page.getByLabel(`Add Textarea`).focus();
+
+			await page.keyboard.press('Enter');
+
+			await waitForAlert(
+				page,
+				'Error:Form components can only be placed inside a mapped form container.',
+				{type: 'danger'}
+			);
+
+			// Assert form fragments cannot be placed inside an unmapped form container
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Stepper',
+				page.locator('.page-editor__form .page-editor__container')
+			);
+
+			await waitForAlert(
+				page,
+				'Error:Fragments cannot be placed inside an unmapped form container.',
+				{type: 'danger'}
+			);
+		}
+	);
 
 	test(
 		'Show a warning message when there is a form with unmapped input fragments, hidden required input fragments, missing required input fragments, hidden submit button or missing submit button',
@@ -4974,6 +5181,143 @@ test.describe('Edit mode form errors', () => {
 			).toBeVisible();
 
 			await expect(page.getByText('Step 3 is empty')).toBeVisible();
+		}
+	);
+});
+
+test.describe('View mode form errors', () => {
+	test(
+		'Show only the first error message when multiple validation issues happen after submitting a form',
+		{
+			tag: '@LPS-151402',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create a default display page for lemon object
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: pageManagementSite.id,
+						name: getRandomString(),
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Create a page with a form fragment
+
+			const formId = getRandomString();
+
+			const textInputDefinition1 = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonSize',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const textInputDefinition2 = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_lemonWeight',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+				objectDefinitionClassName,
+				pageElements: [
+					textInputDefinition1,
+					textInputDefinition2,
+					submitFragmentDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Assert first error message is shown when there are multiple error messages
+
+			await page.getByLabel('Lemon Size').click();
+
+			await page.keyboard.type('a'.repeat(290));
+
+			await page.getByLabel('Lemon Weight').fill(getRandomString());
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).toBeVisible();
+
+			await expect(
+				page.getByText('The lemon weight must be greater than 0')
+			).not.toBeVisible();
+
+			// Assert second error message
+
+			await page.getByLabel('Lemon Size').clear();
+
+			await page.getByLabel('Lemon Weight').fill('-1');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Value exceeds maximum length of 280 for field Lemon Size.'
+				)
+			).not.toBeVisible();
+
+			await expect(
+				page.getByText('The lemon weight must be greater than 0')
+			).toBeVisible();
+
+			// Delete the display page
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
 		}
 	);
 });

@@ -499,7 +499,7 @@ definition {
 				entryExternalURL = ${entryExternalURL},
 				fieldLabel = "Content");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When the site designer displays web contents on Web Content Display") {

@@ -6,9 +6,12 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {TranslationAdminItem} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
+
+import './LocalizationSelect.scss';
 
 const EVENT_TRANSLATION_STATUS = 'localizationSelect:updateTranslationStatus';
 
@@ -58,6 +61,20 @@ export function LocalizationSelect({
 			Liferay.detach(EVENT_TRANSLATION_STATUS);
 		};
 	}, [locales]);
+
+	useEffect(() => {
+		const onLocaleChanged = ({languageId}) => {
+			if (selectedLocaleId !== languageId) {
+				setSelectedLocaleId(languageId);
+			}
+		};
+
+		Liferay.on('localizationSelect:localeChanged', onLocaleChanged);
+
+		return () => {
+			Liferay.detach('localizationSelect:localeChanged', onLocaleChanged);
+		};
+	}, [selectedLocaleId]);
 
 	return (
 		<Picker
@@ -114,7 +131,10 @@ const TriggerButton = React.forwardRef(
 			<ClayButton
 				{...props}
 				aria-label={ariaLabelButton}
-				className="btn-block form-control-select"
+				className={classNames(
+					'btn-block form-control-select localization-select',
+					{'hidden-label': hideLanguageLabel}
+				)}
 				displayType="secondary"
 				ref={ref}
 				size={small ? 'sm' : undefined}

@@ -301,13 +301,13 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					contextAcceptLanguage.getPreferredLocale());
 			}
 
-			if (useCustomName) {
-				return unicodeProperties.getProperty(
-					"name_" + preferredLanguageId,
-					unicodeProperties.getProperty("name_" + defaultLanguageId));
+			if (!useCustomName) {
+				return null;
 			}
 
-			return null;
+			return unicodeProperties.getProperty(
+				"name_" + preferredLanguageId,
+				unicodeProperties.getProperty("name_" + defaultLanguageId));
 		}
 
 		if (useCustomName) {
@@ -627,21 +627,20 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						getUseCustomName()));
 				setName_i18n(
 					() -> {
-						if (contextAcceptLanguage.isAcceptAllLanguages()) {
-							Map<Locale, String> localizedNames =
-								_getLocalizedNamesFromProperties(
-									unicodeProperties);
-
-							if ((!useCustomName || localizedNames.isEmpty()) &&
-								(layout != null)) {
-
-								localizedNames = layout.getNameMap();
-							}
-
-							return LocalizedMapUtil.getI18nMap(localizedNames);
+						if (!contextAcceptLanguage.isAcceptAllLanguages()) {
+							return null;
 						}
 
-						return null;
+						Map<Locale, String> localizedNames =
+							_getLocalizedNamesFromProperties(unicodeProperties);
+
+						if ((!useCustomName || localizedNames.isEmpty()) &&
+							(layout != null)) {
+
+							localizedNames = layout.getNameMap();
+						}
+
+						return LocalizedMapUtil.getI18nMap(localizedNames);
 					});
 				setNavigationMenuItems(
 					() -> transformToArray(

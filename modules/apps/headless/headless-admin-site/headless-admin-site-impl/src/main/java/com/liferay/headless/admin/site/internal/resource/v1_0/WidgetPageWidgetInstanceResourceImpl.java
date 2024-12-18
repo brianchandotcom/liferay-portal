@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
-import com.liferay.headless.admin.site.internal.resource.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

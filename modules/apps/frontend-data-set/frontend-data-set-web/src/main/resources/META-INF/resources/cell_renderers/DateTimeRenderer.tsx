@@ -1,0 +1,49 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ETimeZoneBehaviors} from '../constants';
+
+interface IDateTimeRendererOptions {
+	format?: any;
+	timeZoneBehavior?: ETimeZoneBehaviors;
+}
+
+function DateTimeRenderer({
+	options,
+	value,
+}: {
+	options?: IDateTimeRendererOptions;
+	value: number | string;
+}) {
+	if (!value) {
+		return null;
+	}
+
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+	const dateOptions = options?.format || {
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		year: 'numeric',
+	};
+
+	if (
+		options?.timeZoneBehavior ===
+		ETimeZoneBehaviors.APPLY_THEME_DISPLAY_TIME_ZONE
+	) {
+		dateOptions.timeZone = Liferay.ThemeDisplay.getTimeZone();
+	}
+
+	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
+		new Date(value)
+	);
+
+	return formattedDate;
+}
+
+export default DateTimeRenderer;

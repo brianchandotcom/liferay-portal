@@ -341,7 +341,7 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldLocalizedException.class,
-			"Only Boolean,Date,Decimal,Integer,LongInteger,LongText," +
+			"Only Boolean,Date,DateTime,Decimal,Integer,LongInteger,LongText," +
 				"PrecisionDecimal,RichText and Text business types support " +
 					"localization",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(

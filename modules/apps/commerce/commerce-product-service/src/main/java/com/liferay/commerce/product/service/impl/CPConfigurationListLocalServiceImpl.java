@@ -129,11 +129,11 @@ public class CPConfigurationListLocalServiceImpl
 				_portal.getClassNameId(CPConfigurationList.class),
 				cpConfigurationList.getCPConfigurationListId(),
 				cpConfigurationList.getCPConfigurationListId(), 0,
-				StringPool.BLANK, true, 0, StringPool.BLANK, 0, true, true,
-				false, 0, StringPool.BLANK,
+				StringPool.BLANK, true, 0, "default", 0, false, false, false, 0,
+				StringPool.BLANK,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
-				BigDecimal.ONE,
+				BigDecimal.ZERO,
 				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY,
 				true, true, 0, false, false, true, 0, 0);
 		}

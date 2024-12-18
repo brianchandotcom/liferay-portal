@@ -136,11 +136,11 @@ if (Validator.isNotNull(backURL)) {
 
 			<c:if test="<%= Validator.isNotNull(curBackgroundTask.getStatusMessage()) %>">
 				<div class="background-task-status-row h6">
-					<liferay:csp>
+					<liferay-ui:csp>
 						<a class="details-link" href="javascript:void(0);" onclick="<portlet:namespace />viewBackgroundTaskDetails(<%= curBackgroundTask.getBackgroundTaskId() %>);">
 							<liferay-ui:message key="see-more-details" />
 						</a>
-					</liferay:csp>
+					</liferay-ui:csp>
 				</div>
 
 				<div class="background-task-status-message hide" id="<portlet:namespace />backgroundTaskStatusMessage<%= curBackgroundTask.getBackgroundTaskId() %>">

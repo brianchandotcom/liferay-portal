@@ -1661,11 +1661,7 @@ public class AssetPublisherDisplayContext {
 		String rootPortletId = PortletIdCodec.decodePortletName(
 			getPortletResource());
 
-		if (rootPortletId.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
-			return true;
-		}
-
-		return false;
+		return rootPortletId.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER);
 	}
 
 	public boolean isEnableSubscriptions() {
@@ -1733,11 +1729,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isPaginationTypeNone() {
-		if (Objects.equals(getPaginationType(), PAGINATION_TYPE_NONE)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getPaginationType(), PAGINATION_TYPE_NONE);
 	}
 
 	public boolean isPaginationTypeSelected(String paginationType) {
@@ -1766,25 +1758,15 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleDynamic() {
-		if (Objects.equals(
-				getSelectionStyle(),
-				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getSelectionStyle(),
+			AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC);
 	}
 
 	public boolean isSelectionStyleManual() {
-		if (Objects.equals(
-				getSelectionStyle(),
-				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getSelectionStyle(),
+			AssetPublisherSelectionStyleConstants.TYPE_MANUAL);
 	}
 
 	public boolean isShowAddContentButton() {
@@ -2069,15 +2051,9 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (!PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), 0,
-				_themeDisplay.getLayout(), portletDisplay.getId(),
-				ActionKeys.SUBSCRIBE, false, false)) {
-
-			return false;
-		}
-
-		return true;
+		return PortletPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), 0, _themeDisplay.getLayout(),
+			portletDisplay.getId(), ActionKeys.SUBSCRIBE, false, false);
 	}
 
 	public boolean isSubtypeFieldsFilterEnabled() {

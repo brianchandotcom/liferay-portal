@@ -56,7 +56,14 @@ public class DynamicObjectDefinitionTableUtil {
 		int size = 280;
 
 		if (StringUtil.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			size = 5000;
+		}
+		else if (StringUtil.equals(
+					businessType,
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			size = 75;
 		}

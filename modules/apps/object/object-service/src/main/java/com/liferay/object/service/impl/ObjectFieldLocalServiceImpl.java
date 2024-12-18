@@ -1612,6 +1612,8 @@ public class ObjectFieldLocalServiceImpl
 						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_DATE,
 						StringPool.COMMA,
+						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
+						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 						StringPool.COMMA,
 						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,

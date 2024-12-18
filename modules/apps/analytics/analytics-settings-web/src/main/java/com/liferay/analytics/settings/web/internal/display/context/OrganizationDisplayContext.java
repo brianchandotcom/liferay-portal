@@ -126,11 +126,7 @@ public class OrganizationDisplayContext {
 	}
 
 	private boolean _isOrderByAscending() {
-		if (Objects.equals(getOrderByType(), "asc")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getOrderByType(), "asc");
 	}
 
 	private final AnalyticsConfiguration _analyticsConfiguration;

@@ -54,11 +54,7 @@ public abstract class BasePanelCategory implements PanelCategory {
 
 		PanelCategory panelCategory = (PanelCategory)object;
 
-		if (Objects.equals(getKey(), panelCategory.getKey())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getKey(), panelCategory.getKey());
 	}
 
 	@Override

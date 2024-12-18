@@ -52,14 +52,9 @@ public class ControlPanelCategoryWrapper extends BasePanelCategory {
 
 		User user = permissionChecker.getUser();
 
-		if (OrganizationPermissionUtil.contains(
-				permissionChecker, user.getOrganizationIds(true),
-				AccountActionKeys.MANAGE_ACCOUNTS)) {
-
-			return true;
-		}
-
-		return false;
+		return OrganizationPermissionUtil.contains(
+			permissionChecker, user.getOrganizationIds(true),
+			AccountActionKeys.MANAGE_ACCOUNTS);
 	}
 
 	@Reference(

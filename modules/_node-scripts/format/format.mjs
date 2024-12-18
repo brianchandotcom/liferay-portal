@@ -259,7 +259,9 @@ async function getFilePaths(rootDir, filesToFormat) {
 	const [rootIgnored, workspacesIgnored, playwrightIgnored] =
 		await Promise.all([
 			getIgnoredFiles(rootDir),
-			getIgnoredFiles(workspacesDir),
+			getIgnoredFiles(
+				path.join(workspacesDir, 'liferay-sample-workspace')
+			),
 			getIgnoredFiles(playwrightDir),
 		]);
 

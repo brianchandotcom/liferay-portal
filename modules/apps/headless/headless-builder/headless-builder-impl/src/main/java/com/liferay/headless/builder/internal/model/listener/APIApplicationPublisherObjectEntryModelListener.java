@@ -208,31 +208,32 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				if (_pendingAPIApplications.remove(apiApplicationId)) {
-					ObjectEntry apiApplicationObjectEntry =
-						_objectEntryLocalService.fetchObjectEntry(
-							apiApplicationId);
+				if (!_pendingAPIApplications.remove(apiApplicationId)) {
+					return null;
+				}
 
-					if (apiApplicationObjectEntry == null) {
-						return null;
-					}
+				ObjectEntry apiApplicationObjectEntry =
+					_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
 
-					Map<String, Serializable> values =
-						apiApplicationObjectEntry.getValues();
+				if (apiApplicationObjectEntry == null) {
+					return null;
+				}
 
-					if (StringUtil.equals(
-							(String)values.get("applicationStatus"),
-							"unpublished")) {
+				Map<String, Serializable> values =
+					apiApplicationObjectEntry.getValues();
 
-						_apiApplicationPublisher.unpublish(
-							(String)values.get("baseURL"),
-							apiApplicationObjectEntry.getCompanyId());
-					}
-					else {
-						_apiApplicationPublisher.publish(
-							(String)values.get("baseURL"),
-							apiApplicationObjectEntry.getCompanyId());
-					}
+				if (StringUtil.equals(
+						(String)values.get("applicationStatus"),
+						"unpublished")) {
+
+					_apiApplicationPublisher.unpublish(
+						(String)values.get("baseURL"),
+						apiApplicationObjectEntry.getCompanyId());
+				}
+				else {
+					_apiApplicationPublisher.publish(
+						(String)values.get("baseURL"),
+						apiApplicationObjectEntry.getCompanyId());
 				}
 
 				return null;

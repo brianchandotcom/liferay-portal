@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
@@ -24,7 +25,72 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
 	pagesPagesTest
+);
+
+test(
+	'Add child page',
+	{
+		tag: ['@LPS-103104', '@LPS-102544'],
+	},
+	async ({apiHelpers, page, pageTreePage, pagesAdminPage, site}) => {
+
+		// Create a new page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Add child page
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Add Child Page'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		const childLayoutTitle = getRandomString();
+
+		await pagesAdminPage.addPage({
+			name: childLayoutTitle,
+			template: 'Widget Page',
+		});
+
+		// Assert child page in page tree
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await openProductMenu(page);
+
+		await pageTreePage.open();
+
+		await expect(
+			page.getByRole('link', {name: childLayoutTitle})
+		).toBeVisible();
+	}
 );
 
 test(

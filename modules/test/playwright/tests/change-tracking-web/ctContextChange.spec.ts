@@ -97,14 +97,14 @@ test('LPD-33582 Assert context change popover buttons behavior', async ({
 
 	await page.getByRole('button', {name: 'Select a Publication'}).click();
 
-	await page.getByText(ctCollection2.name).click();
+	await page.getByText(ctCollection2.body.name).click();
 
 	await expect(
-		page.getByRole('button', {name: ctCollection2.name})
+		page.getByRole('button', {name: ctCollection2.body.name})
 	).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection2.id
+		ctCollection2.body.id
 	);
 });
 

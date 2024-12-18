@@ -65,11 +65,7 @@ public class AssetPublisherViewContentDisplayContext {
 	}
 
 	public boolean getPrint() {
-		if (Objects.equals(_getViewMode(), Constants.PRINT)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getViewMode(), Constants.PRINT);
 	}
 
 	public String getReturnToFullPageURL() {

@@ -232,11 +232,6 @@ public class CommerceInventoryDisplayContext {
 		return creationMenu;
 	}
 
-	public String getParsedQuantity(BigDecimal quantity) throws Exception {
-		return _commerceQuantityFormatter.parse(
-			quantity, _cpRequestHelper.getLocale());
-	}
-
 	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_cpRequestHelper.getLiferayPortletResponse();
@@ -255,6 +250,11 @@ public class CommerceInventoryDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public String getQuantity(BigDecimal quantity) throws Exception {
+		return _commerceQuantityFormatter.format(
+			quantity, _cpRequestHelper.getLocale());
 	}
 
 	public CreationMenu getReplenishmentCreationMenu() throws Exception {

@@ -12,6 +12,7 @@ export class RulesBuilderPage {
 	readonly conditionLeftFormFieldSelect: Locator;
 	readonly conditionOperatorSelect: Locator;
 	readonly conditionOperatorValueSourceSelect: Locator;
+	readonly conditionRightFormFieldInput: Locator;
 	readonly conditionRightFormFieldSelect: Locator;
 	readonly dataProviderOutputSelect: Locator;
 	readonly page: Page;
@@ -34,6 +35,7 @@ export class RulesBuilderPage {
 		this.conditionOperatorValueSourceSelect = page.getByTestId(
 			'field-binary-operator-id'
 		);
+		this.conditionRightFormFieldInput = page.locator('#field-right-id');
 		this.conditionRightFormFieldSelect = page.getByTestId('field-right-id');
 		this.dataProviderOutputSelect = page
 			.locator('li')

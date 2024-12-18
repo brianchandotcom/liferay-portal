@@ -308,6 +308,7 @@ export const List: React.FC<IListProps> = ({
 			label: Liferay.Language.get('dynamic-segment')
 		},
 		{
+			deprecated: true,
 			href: setUriQueryValues(
 				{type: SegmentTypes.Static},
 				toRoute(Routes.CONTACTS_SEGMENT_CREATE, {

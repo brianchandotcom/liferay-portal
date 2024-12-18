@@ -32,7 +32,6 @@ import java.lang.reflect.Parameter;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -584,21 +583,18 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Field _getField(Class<?> entityClass, String fieldName) {
-		List<Field> fields = new ArrayList<>(
-			Arrays.asList(entityClass.getDeclaredFields()));
+		Class<?> clazz = entityClass;
 
-		Class<?> superClass = entityClass.getSuperclass();
+		while ((clazz != null) && (clazz != Object.class)) {
+			for (Field field : clazz.getDeclaredFields()) {
+				if (Objects.equals(field.getName(), fieldName) ||
+					Objects.equals(field.getName(), "_" + fieldName)) {
 
-		if (superClass != null) {
-			Collections.addAll(fields, superClass.getDeclaredFields());
-		}
-
-		for (Field field : fields) {
-			if (Objects.equals(field.getName(), fieldName) ||
-				Objects.equals(field.getName(), "_" + fieldName)) {
-
-				return field;
+					return field;
+				}
 			}
+
+			clazz = clazz.getSuperclass();
 		}
 
 		return null;
@@ -630,9 +626,15 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			String fieldName, Class<?> itemClass,
 			NestedFieldsContext nestedFieldsContext) {
 
-		Class<?>[] parentClasses = new Class<?>[] {
-			Void.class, itemClass, itemClass.getSuperclass()
-		};
+		List<Class<?>> parentClasses = ListUtil.fromArray(Void.class);
+
+		Class<?> clazz = itemClass;
+
+		while ((clazz != null) && (clazz != Object.class)) {
+			parentClasses.add(clazz);
+
+			clazz = clazz.getSuperclass();
+		}
 
 		for (Class<?> parentClass : parentClasses) {
 			FactoryKey factoryKey = new FactoryKey(

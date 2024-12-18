@@ -220,11 +220,7 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 			return false;
 		}
 
-		if (layoutStructure.isItemMarkedForDeletion(itemId)) {
-			return false;
-		}
-
-		return true;
+		return !layoutStructure.isItemMarkedForDeletion(itemId);
 	}
 
 	private final LayoutLocalService _layoutLocalService;

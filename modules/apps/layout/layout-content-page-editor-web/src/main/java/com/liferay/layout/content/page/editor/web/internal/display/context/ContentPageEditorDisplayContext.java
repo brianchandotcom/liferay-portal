@@ -9,7 +9,6 @@ import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelec
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.model.FragmentComposition;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -80,8 +79,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -143,18 +140,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * @author Eudaldo Alonso
@@ -1461,30 +1452,6 @@ public class ContentPageEditorDisplayContext {
 				"masterLayout", masterLayout
 			);
 
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId());
-
-			if ((fragmentEntry == null) &&
-				(fragmentEntryLink.getRendererKey() == null)) {
-
-				String portletId = _getPortletId(
-					jsonObject.getString("content"));
-
-				PortletConfig portletConfig = PortletConfigFactoryUtil.get(
-					portletId);
-
-				if (portletConfig != null) {
-					jsonObject.put(
-						"name",
-						portal.getPortletTitle(
-							portletId, themeDisplay.getLocale())
-					).put(
-						"portletId", portletId
-					);
-				}
-			}
-
 			fragmentEntryLinksMap.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				jsonObject);
@@ -1785,23 +1752,6 @@ public class ContentPageEditorDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getId();
-	}
-
-	private String _getPortletId(String content) {
-		Document document = Jsoup.parse(content);
-
-		Elements elements = document.getElementsByAttributeValueStarting(
-			"id", "portlet_");
-
-		if (elements.size() != 1) {
-			return StringPool.BLANK;
-		}
-
-		Element element = elements.get(0);
-
-		String id = element.id();
-
-		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
 	private Layout _getPublishedLayout() {

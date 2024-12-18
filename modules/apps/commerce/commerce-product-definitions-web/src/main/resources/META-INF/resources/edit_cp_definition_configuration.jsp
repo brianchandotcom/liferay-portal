@@ -65,6 +65,9 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 				<div class="row">
 					<aui:model-context bean="<%= cpDefinitionInventory %>" model="<%= CPDefinitionInventory.class %>" />
 
+					<liferay-ui:error exception="<%= CPConfigurationEntryQuantityException.class %>" message="please-enter-a-valid-quantity" />
+					<liferay-ui:error exception="<%= CPDefinitionInventoryQuantityException.class %>" message="please-enter-a-valid-quantity" />
+
 					<div class="col-6">
 						<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine">
 

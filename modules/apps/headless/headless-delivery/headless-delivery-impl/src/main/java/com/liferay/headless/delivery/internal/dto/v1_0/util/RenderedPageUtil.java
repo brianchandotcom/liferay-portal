@@ -64,12 +64,12 @@ public class RenderedPageUtil {
 
 				setPageTemplateId(
 					() -> {
-						if (layoutPageTemplateEntry != null) {
-							return layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryKey();
+						if (layoutPageTemplateEntry == null) {
+							return null;
 						}
 
-						return null;
+						return layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey();
 					});
 
 				setPageTemplateName(

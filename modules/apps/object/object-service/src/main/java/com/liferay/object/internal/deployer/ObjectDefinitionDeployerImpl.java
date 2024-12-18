@@ -417,6 +417,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return serviceRegistrations;
 	}
 
+	@Override
+	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		_unregister(_getServiceRegistrationKey(objectDefinition, null));
+
+		for (String serviceRegistrationKey : _serviceRegistrations.keySet()) {
+			if (serviceRegistrationKey.startsWith(
+					_getServiceRegistrationKey(objectDefinition, null) +
+						StringPool.POUND)) {
+
+				_unregister(serviceRegistrationKey);
+			}
+		}
+	}
+
 	private String _getServiceRegistrationKey(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship) {
@@ -492,6 +506,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectLayoutTabScreenNavigationCategory(
 					objectDefinition, null, objectRelationship),
 				null));
+	}
+
+	private void _unregister(String serviceRegistrationKey) {
+		ServiceRegistration<?> serviceRegistration =
+			_serviceRegistrations.remove(serviceRegistrationKey);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private final AccountEntryLocalService _accountEntryLocalService;

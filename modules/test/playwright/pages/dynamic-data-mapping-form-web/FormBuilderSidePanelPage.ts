@@ -17,6 +17,7 @@ export class FormBuilderSidePanelPage {
 	readonly paragraphFieldTextarea: Locator;
 	readonly paragraphFieldTitle: Locator;
 	readonly page: Page;
+	readonly requiredFieldToggleSwitch: Locator;
 
 	constructor(page: Page) {
 		this.addSelectFromListButton = page.getByRole('button', {
@@ -43,6 +44,7 @@ export class FormBuilderSidePanelPage {
 		this.paragraphFieldTitle = page.getByPlaceholder('Enter a title.');
 
 		this.page = page;
+		this.requiredFieldToggleSwitch = page.getByText('Required Field');
 	}
 
 	async addFieldByDoubleClick(formFieldTypeTitle: FormFieldTypeTitle) {

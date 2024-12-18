@@ -265,6 +265,13 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", "2025-01-01"
 			).build()
 		).put(
+			"localizedDateTimeObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", "2024-04-04T04:04:04.000Z"
+			).put(
+				"pt_BR", "2025-05-05T05:05:05.000Z"
+			).build()
+		).put(
 			"localizedDecimalObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", 5.0
@@ -406,6 +413,21 @@ public class DefaultObjectEntryManagerImplTest
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
 							ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC))
+				).build(),
+				new DateTimeObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedDateTimeObjectFieldName"
+				).objectFieldSettings(
+					Collections.singletonList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+							ObjectFieldSettingConstants.
+								VALUE_USE_INPUT_AS_ENTERED))
 				).build(),
 				new DecimalObjectFieldBuilder(
 				).labelMap(
@@ -2296,6 +2318,9 @@ public class DefaultObjectEntryManagerImplTest
 					).put(
 						"localizedDateObjectFieldName", "2024-01-01"
 					).put(
+						"localizedDateTimeObjectFieldName",
+						"2024-04-04T04:04:04.000"
+					).put(
 						"localizedDecimalObjectFieldName", 5.0
 					).put(
 						"localizedIntegerObjectFieldName", 50
@@ -2346,6 +2371,64 @@ public class DefaultObjectEntryManagerImplTest
 
 		String picklistObjectFieldValue2 = _addListTypeEntry();
 
+		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
+			"localizedBooleanObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", false
+			).put(
+				"pt_BR", true
+			).build()
+		).put(
+			"localizedDateObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", "2022-01-01"
+			).put(
+				"pt_BR", "2023-01-01"
+			).build()
+		).put(
+			"localizedDateTimeObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", "2022-02-02T02:02:02.000"
+			).put(
+				"pt_BR", "2023-03-03T03:03:03.000"
+			).build()
+		).put(
+			"localizedDecimalObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 10.0
+			).put(
+				"pt_BR", 5.4
+			).build()
+		).put(
+			"localizedIntegerObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 100
+			).put(
+				"pt_BR", 54
+			).build()
+		).put(
+			"localizedLongIntegerObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", 100L
+			).put(
+				"pt_BR", 54L
+			).build()
+		).put(
+			"localizedPrecisionDecimalObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", new BigDecimal("0.28775433729")
+			).put(
+				"pt_BR", new BigDecimal("0.33750624632")
+			).build()
+		).put(
+			"localizedTextObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", "en_US localizedTextObjectFieldValue2"
+			).put(
+				"pt_BR", "pt_BR localizedTextObjectFieldValue2"
+			).build()
+		).build();
+
 		ObjectEntry childObjectEntry2 =
 			_defaultObjectEntryManager.addObjectEntry(
 				dtoConverterContext, _objectDefinition2,
@@ -2355,61 +2438,14 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipFieldName,
 							parentObjectEntry2.getId()
 						).put(
-							"localizedBooleanObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", false
-							).put(
-								"pt_BR", true
-							).build()
-						).put(
-							"localizedDateObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", "2022-01-01"
-							).put(
-								"pt_BR", "2023-01-01"
-							).build()
-						).put(
-							"localizedDecimalObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", 10.0
-							).put(
-								"pt_BR", 5.4
-							).build()
-						).put(
-							"localizedIntegerObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", 100
-							).put(
-								"pt_BR", 54
-							).build()
-						).put(
-							"localizedLongIntegerObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", 100L
-							).put(
-								"pt_BR", 54L
-							).build()
-						).put(
 							"localizedLongTextObjectFieldName",
 							"en_US localizedLongTextObjectFieldValue"
-						).put(
-							"localizedPrecisionDecimalObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", new BigDecimal("0.28775433729")
-							).put(
-								"pt_BR", new BigDecimal("0.33750624632")
-							).build()
-						).put(
-							"localizedTextObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US", "en_US localizedTextObjectFieldValue2"
-							).put(
-								"pt_BR", "pt_BR localizedTextObjectFieldValue2"
-							).build()
 						).put(
 							"picklistObjectFieldName", picklistObjectFieldValue2
 						).put(
 							"textObjectFieldName", "aab"
+						).putAll(
+							_localizedObjectFieldI18nValues
 						).build();
 					}
 				},
@@ -2422,69 +2458,17 @@ public class DefaultObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						_objectRelationshipFieldName, parentObjectEntry2.getId()
 					).put(
-						"localizedBooleanObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", false
-						).put(
-							"pt_BR", true
-						).build()
-					).put(
-						"localizedDateObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", _getTimestamp("2022-01-01")
-						).put(
-							"pt_BR", _getTimestamp("2023-01-01")
-						).build()
-					).put(
-						"localizedDecimalObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", 10.0
-						).put(
-							"pt_BR", 5.4
-						).build()
-					).put(
-						"localizedIntegerObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", 100
-						).put(
-							"pt_BR", 54
-						).build()
-					).put(
-						"localizedLongIntegerObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", 100L
-						).put(
-							"pt_BR", 54L
-						).build()
-					).put(
 						"localizedLongTextObjectFieldName",
 						"en_US localizedLongTextObjectFieldValue"
-					).put(
-						"localizedLongTextObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", "en_US localizedLongTextObjectFieldValue"
-						).build()
-					).put(
-						"localizedPrecisionDecimalObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", new BigDecimal("0.28775433729")
-						).put(
-							"pt_BR", new BigDecimal("0.33750624632")
-						).build()
 					).put(
 						"localizedTextObjectFieldName",
 						"en_US localizedTextObjectFieldValue2"
 					).put(
-						"localizedTextObjectFieldName_i18n",
-						HashMapBuilder.put(
-							"en_US", "en_US localizedTextObjectFieldValue2"
-						).put(
-							"pt_BR", "pt_BR localizedTextObjectFieldValue2"
-						).build()
-					).put(
 						"picklistObjectFieldName", picklistObjectFieldValue2
 					).put(
 						"textObjectFieldName", "aab"
+					).putAll(
+						_localizedObjectFieldI18nValues
 					).build();
 				}
 			});
@@ -2633,6 +2617,14 @@ public class DefaultObjectEntryManagerImplTest
 				"filter",
 				buildEqualsExpressionFilterString(
 					"localizedDateObjectFieldName", _getTimestamp("2024-01-01"))
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"localizedDateTimeObjectFieldName",
+					_getLocalDateTime("2024-04-04T04:04:04.000"))
 			).build(),
 			childObjectEntry1);
 		testGetObjectEntries(
@@ -2862,6 +2854,16 @@ public class DefaultObjectEntryManagerImplTest
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "localizedDateObjectFieldName:desc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedDateTimeObjectFieldName:asc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedDateTimeObjectFieldName:desc"
 			).build(),
 			childObjectEntry1, childObjectEntry2);
 		testGetObjectEntries(
@@ -4070,6 +4072,8 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedDateObjectFieldName", "2024-01-01"
 			).put(
+				"localizedDateTimeObjectFieldName", "2024-04-04T04:04:04.000"
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -4090,6 +4094,8 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedBooleanObjectFieldName", false
 			).put(
 				"localizedDateObjectFieldName", "2025-01-01"
+			).put(
+				"localizedDateTimeObjectFieldName", "2025-05-05T05:05:05.000"
 			).put(
 				"localizedLongTextObjectFieldName",
 				"pt_BR localizedLongTextObjectFieldValue"
@@ -4205,6 +4211,13 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", "2025-02-02"
 			).build()
 		).put(
+			"localizedDateTimeObjectFieldName_i18n",
+			HashMapBuilder.put(
+				"en_US", "2022-02-02T02:02:02.000"
+			).put(
+				"pt_BR", "2023-03-03T03:03:03.000"
+			).build()
+		).put(
 			"localizedLongTextObjectFieldName_i18n",
 			HashMapBuilder.put(
 				"en_US", "en_US localizedLongTextObjectFieldValue"
@@ -4283,6 +4296,8 @@ public class DefaultObjectEntryManagerImplTest
 			).put(
 				"localizedDateObjectFieldName", "2024-02-02"
 			).put(
+				"localizedDateTimeObjectFieldName", "2022-02-02T02:02:02.000"
+			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
 			).put(
@@ -4303,6 +4318,8 @@ public class DefaultObjectEntryManagerImplTest
 				"localizedBooleanObjectFieldName", true
 			).put(
 				"localizedDateObjectFieldName", "2025-02-02"
+			).put(
+				"localizedDateTimeObjectFieldName", "2023-03-03T03:03:03.000"
 			).put(
 				"localizedLongTextObjectFieldName",
 				"en_US localizedLongTextObjectFieldValue"
@@ -4680,6 +4697,10 @@ public class DefaultObjectEntryManagerImplTest
 			FileEntry fileEntry = (FileEntry)actualObjectEntryProperties.get(
 				expectedEntry.getKey());
 
+			if ((fileEntry == null) && (expectedEntry.getValue() == null)) {
+				return;
+			}
+
 			Assert.assertEquals(expectedEntry.getValue(), fileEntry.getId());
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
@@ -4733,6 +4754,48 @@ public class DefaultObjectEntryManagerImplTest
 					actualObjectEntryProperties.get(expectedEntry.getKey())));
 		}
 		else if (Objects.equals(
+					expectedEntry.getKey(),
+					"localizedDateObjectFieldName_i18n")) {
+
+			Map<String, Object> actualValues =
+				(Map<String, Object>)actualObjectEntryProperties.get(
+					expectedEntry.getKey());
+			Map<String, Object> expectedValues =
+				(Map<String, Object>)expectedEntry.getValue();
+
+			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
+				Assert.assertEquals(
+					_getTimestamp(String.valueOf(entry.getValue())),
+					_getTimestamp(
+						String.valueOf(actualValues.get(entry.getKey()))));
+			}
+		}
+		else if (Objects.equals(
+					expectedEntry.getKey(),
+					"localizedDateTimeObjectFieldName_i18n")) {
+
+			Map<String, Object> actualValues =
+				(Map<String, Object>)actualObjectEntryProperties.get(
+					expectedEntry.getKey());
+			Map<String, Object> expectedValues =
+				(Map<String, Object>)expectedEntry.getValue();
+
+			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
+				Object expectedValue = entry.getValue();
+
+				if (expectedValue instanceof String) {
+					expectedValue = Timestamp.valueOf(
+						_getLocalDateTime(String.valueOf(expectedValue)));
+				}
+
+				Assert.assertEquals(
+					expectedValue,
+					Timestamp.valueOf(
+						_getLocalDateTime(
+							String.valueOf(actualValues.get(entry.getKey())))));
+			}
+		}
+		else if (Objects.equals(
 					expectedEntry.getKey(), "picklistObjectFieldName")) {
 
 			ListEntry listEntry = (ListEntry)actualObjectEntryProperties.get(
@@ -4772,24 +4835,6 @@ public class DefaultObjectEntryManagerImplTest
 					_simpleDTOConverterContext,
 					GetterUtil.getString(expectedEntry.getValue()),
 					_objectDefinition1, null));
-		}
-		else if (Objects.equals(
-					expectedEntry.getKey(),
-					"localizedDateObjectFieldName_i18n")) {
-
-			Map<String, Object> actualValues =
-				(Map<String, Object>)actualObjectEntryProperties.get(
-					expectedEntry.getKey());
-			Map<String, Object> expectedValues =
-				(Map<String, Object>)expectedEntry.getValue();
-
-			for (Map.Entry<String, Object> excpectedValue :
-					expectedValues.entrySet()) {
-
-				Assert.assertEquals(
-					_getTimestamp(String.valueOf(excpectedValue.getValue())),
-					actualValues.get(excpectedValue.getKey()));
-			}
 		}
 		else {
 			super.assertObjectEntryProperties(
@@ -5415,6 +5460,12 @@ public class DefaultObjectEntryManagerImplTest
 			"picklistObjectFieldName");
 
 		return listEntry.getKey();
+	}
+
+	private LocalDateTime _getLocalDateTime(String dateTimeString) {
+		return LocalDateTime.parse(
+			dateTimeString,
+			DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
 	}
 
 	private Page<ObjectEntry> _getPage(

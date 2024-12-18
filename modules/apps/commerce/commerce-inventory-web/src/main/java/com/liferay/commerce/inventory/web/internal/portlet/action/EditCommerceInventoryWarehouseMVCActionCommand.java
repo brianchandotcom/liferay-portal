@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
@@ -66,7 +67,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof CPInstanceUnitOfMeasureKeyException ||
+			if (exception instanceof
+					CommerceInventoryWarehouseItemQuantityException ||
+				exception instanceof CPInstanceUnitOfMeasureKeyException ||
 				exception instanceof
 					DuplicateCommerceInventoryWarehouseItemException ||
 				exception instanceof MVCCException ||
@@ -95,7 +98,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				ParamUtil.getLong(
 					actionRequest, "commerceInventoryWarehouseId"),
 				_commerceOrderItemQuantityFormatter.parse(
-					actionRequest, "quantity"),
+					actionRequest,
+					CommerceInventoryWarehouseItem.class.getName(), "quantity"),
 				ParamUtil.getString(actionRequest, "sku"),
 				ParamUtil.getString(actionRequest, "unitOfMeasure"));
 	}
@@ -134,7 +138,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
 		BigDecimal quantity = _commerceOrderItemQuantityFormatter.parse(
-			actionRequest, "quantity");
+			actionRequest, CommerceInventoryWarehouseItem.class.getName(),
+			"quantity");
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.

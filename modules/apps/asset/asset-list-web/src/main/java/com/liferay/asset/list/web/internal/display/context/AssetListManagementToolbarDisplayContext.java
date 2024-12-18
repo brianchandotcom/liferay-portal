@@ -171,15 +171,10 @@ public class AssetListManagementToolbarDisplayContext
 			return false;
 		}
 
-		if (AssetListPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
-				AssetListActionKeys.ADD_ASSET_LIST_ENTRY)) {
-
-			return true;
-		}
-
-		return false;
+		return AssetListPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(),
+			AssetListActionKeys.ADD_ASSET_LIST_ENTRY);
 	}
 
 	@Override

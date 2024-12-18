@@ -81,7 +81,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 		title,
 	});
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	const publishLink = page.getByRole('link', {name: 'Publish'});
 
@@ -95,7 +95,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await expect(page.getByRole('link', {name: 'History'})).toBeVisible();
 
-	await page.getByRole('link', {name: ctCollection.name}).click();
+	await page.getByRole('link', {name: ctCollection.body.name}).click();
 
 	await expect(page.getByText('Deleted')).toBeVisible();
 
@@ -109,7 +109,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await expect(page.getByText(title)).toBeVisible();
 
-	await changeTrackingPage.goToReviewChanges(ctCollection2.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection2.body.name);
 
 	await publishLink.click();
 
@@ -131,7 +131,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 	await expect(page.getByText('No web content was found.')).toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection2.id
+		ctCollection2.body.id
 	);
 
 	await blogsPage.goto();
@@ -206,7 +206,7 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await page.reload();
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	const publishLink = page.getByRole('link', {name: 'Publish'});
 

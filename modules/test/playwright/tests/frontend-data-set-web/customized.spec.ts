@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -13,7 +14,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
@@ -23,10 +24,20 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.beforeEach(async ({fdsSamplePage, site}) => {
-	await fdsSamplePage.setupFDSSampleWidget({site});
+const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
+
+let fdsSamplePageURL: string;
+
+test.beforeEach(async ({fdsSamplePage, page, site}) => {
+	const {url} = await fdsSamplePage.setupFDSSampleWidget({site});
+
+	fdsSamplePageURL = url;
 
 	await fdsSamplePage.selectTab('Customized');
+
+	await expect(
+		page.getByText('This is a description for sample 1.')
+	).toBeVisible();
 });
 
 test(
@@ -532,3 +543,45 @@ test('Use client extensions', async ({page}) => {
 		expect(rowCount).toEqual(1);
 	});
 });
+
+accountSettingsTest(
+	'Set time zone from theme display in a datetime renderer',
+	{
+		tag: ['@LPD-37756'],
+	},
+	async ({accountSettingsPage, fdsSamplePage, page}) => {
+		await test.step('Check date in UTC time zone', async () => {
+			await accountSettingsPage.goToDisplaySettings();
+
+			await accountSettingsPage.setTimeZone('UTC');
+
+			await page.goto(fdsSamplePageURL);
+
+			await fdsSamplePage.selectTab('Customized');
+
+			await expect(
+				page.getByText('Jan 1, 2020, 12:00:00 AM')
+			).toBeVisible();
+		});
+
+		await test.step('Check date in a different time zone', async () => {
+			await accountSettingsPage.goToDisplaySettings();
+
+			await accountSettingsPage.setTimeZone('Europe/Paris');
+
+			await page.goto(fdsSamplePageURL);
+
+			await fdsSamplePage.selectTab('Customized');
+
+			await expect(
+				page.getByText('Jan 1, 2020, 1:00:00 AM')
+			).toBeVisible();
+		});
+
+		await test.step('Revert to default UTC time zone', async () => {
+			await accountSettingsPage.goToDisplaySettings();
+
+			await accountSettingsPage.setTimeZone('UTC');
+		});
+	}
+);

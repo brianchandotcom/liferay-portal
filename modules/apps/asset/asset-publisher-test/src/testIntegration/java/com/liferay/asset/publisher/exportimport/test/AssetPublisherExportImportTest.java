@@ -240,7 +240,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			_assetCategoryLocalService.fetchAssetCategory(
 				importedAssetCategoryId);
 
-		Assert.assertNotNull(importedAssetCategory);
 		Assert.assertEquals(
 			assetCategory.getUuid(), importedAssetCategory.getUuid());
 	}

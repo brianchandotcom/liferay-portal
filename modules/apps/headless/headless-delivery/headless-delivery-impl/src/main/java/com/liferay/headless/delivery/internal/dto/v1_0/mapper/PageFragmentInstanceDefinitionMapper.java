@@ -1108,12 +1108,12 @@ public class PageFragmentInstanceDefinitionMapper {
 											configJSONObject.getJSONObject(
 												"href");
 
-										if (hrefJSONObject != null) {
-											return JSONUtil.toStringMap(
-												hrefJSONObject);
+										if (hrefJSONObject == null) {
+											return null;
 										}
 
-										return null;
+										return JSONUtil.toStringMap(
+											hrefJSONObject);
 									});
 							}
 						};

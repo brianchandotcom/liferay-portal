@@ -43,11 +43,7 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 
 	@Override
 	public boolean isEnabled() {
-		if (_imageMagick.isEnabled()) {
-			return true;
-		}
-
-		return false;
+		return _imageMagick.isEnabled();
 	}
 
 	@Override

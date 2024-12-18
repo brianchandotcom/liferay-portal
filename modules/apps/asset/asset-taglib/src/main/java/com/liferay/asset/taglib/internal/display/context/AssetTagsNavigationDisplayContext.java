@@ -246,11 +246,7 @@ public class AssetTagsNavigationDisplayContext {
 	}
 
 	private boolean _showBreadcrumb() {
-		if (Validator.isNotNull(_getTag())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_getTag());
 	}
 
 	private final Map<String, Integer> _assetTagCounts = new HashMap<>();

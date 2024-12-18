@@ -806,16 +806,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean hasAddVocabularyPermission() {
-		if (AssetCategoriesPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				AssetCategoriesPermission.RESOURCE_NAME,
-				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-				_themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
-
-			return true;
-		}
-
-		return false;
+		return AssetCategoriesPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			AssetCategoriesPermission.RESOURCE_NAME,
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+			_themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY);
 	}
 
 	public boolean hasPermission(AssetCategory category, String actionId)
@@ -856,15 +851,10 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isFlattenedNavigationAllowed() {
-		if (StringUtil.equals(
-				_assetCategoriesAdminWebConfiguration.
-					categoryNavigationDisplayStyle(),
-				AssetCategoriesAdminDisplayStyleKeys.FLATTENED_TREE)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			_assetCategoriesAdminWebConfiguration.
+				categoryNavigationDisplayStyle(),
+			AssetCategoriesAdminDisplayStyleKeys.FLATTENED_TREE);
 	}
 
 	public boolean isItemSelector() {
@@ -900,11 +890,7 @@ public class AssetCategoriesDisplayContext {
 			return false;
 		}
 
-		if (isAssetCategoriesLimitExceeded()) {
-			return true;
-		}
-
-		return false;
+		return isAssetCategoriesLimitExceeded();
 	}
 
 	public boolean isShowCategoriesAddButton() {
@@ -923,16 +909,11 @@ public class AssetCategoriesDisplayContext {
 			_log.error("Unable to get asset vocabulary", exception);
 		}
 
-		if (AssetCategoriesPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				AssetCategoriesPermission.RESOURCE_NAME,
-				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-				_themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY)) {
-
-			return true;
-		}
-
-		return false;
+		return AssetCategoriesPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			AssetCategoriesPermission.RESOURCE_NAME,
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+			_themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY);
 	}
 
 	public boolean isShowCategoriesSelectButton() {

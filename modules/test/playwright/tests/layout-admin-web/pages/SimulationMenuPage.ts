@@ -21,27 +21,38 @@ export class SimulationMenuPage {
 			});
 	}
 
-	async changePreviewBy(name: 'Experiences' | 'Segments') {
-		const select = this.page.getByRole('combobox', {name: 'Preview By'});
+	async changeCombobox(
+		name: 'Preview By' | 'Experience' | 'Segment',
+		value: string
+	) {
+		const select = this.page
+			.locator('.simulation-app-panel-body')
+			.getByLabel(name);
 
-		if ((await select.textContent()).includes(name)) {
+		if ((await select.textContent()).includes(value)) {
 			return;
 		}
 
-		const value = name.toLowerCase();
+		const option =
+			name === 'Experience'
+				? this.page.getByRole('option', {name: value})
+				: this.page.locator('li', {hasText: value});
 
 		await expect(async () => {
-			await this.page.getByRole('combobox', {name: 'Preview By'}).click();
+			await this.page
+				.getByRole('combobox', {name})
+				.click({timeout: 1000});
 
-			await expect(this.page.locator(`#${value}`)).toBeVisible({
+			await expect(option).toBeVisible({
 				timeout: 1000,
 			});
 
-			await this.page.locator(`#${value}`).click({timeout: 1000});
+			await option.click({timeout: 1000});
 
-			await expect(
-				this.page.getByRole('combobox', {name: 'Preview By'})
-			).toContainText(name, {timeout: 1000});
+			await expect(this.page.getByRole('combobox', {name})).toContainText(
+				value,
+				{timeout: 1000}
+			);
 		}).toPass();
 
 		await expect(

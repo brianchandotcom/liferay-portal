@@ -84,11 +84,7 @@ public class DefaultAssetPublisherCustomizer
 	public boolean isOrderingByTitleEnabled(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
-			return false;
-		}
-
-		return true;
+		return assetPublisherWebConfiguration.searchWithIndex();
 	}
 
 	@Override
@@ -128,11 +124,7 @@ public class DefaultAssetPublisherCustomizer
 	public boolean isShowSubtypeFieldsFilter(
 		HttpServletRequest httpServletRequest) {
 
-		if (!assetPublisherWebConfiguration.searchWithIndex()) {
-			return false;
-		}
-
-		return true;
+		return assetPublisherWebConfiguration.searchWithIndex();
 	}
 
 	@Override

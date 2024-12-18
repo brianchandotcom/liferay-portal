@@ -253,11 +253,7 @@ public class GroupDisplayContext {
 	}
 
 	private boolean _isOrderByAscending() {
-		if (Objects.equals(getOrderByType(), "asc")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getOrderByType(), "asc");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

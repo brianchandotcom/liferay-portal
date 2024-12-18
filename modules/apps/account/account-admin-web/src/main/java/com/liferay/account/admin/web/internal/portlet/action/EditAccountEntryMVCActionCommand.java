@@ -215,13 +215,8 @@ public class EditAccountEntryMVCActionCommand
 	}
 
 	private boolean _isAllowUpdateDomains(String type) {
-		if (Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

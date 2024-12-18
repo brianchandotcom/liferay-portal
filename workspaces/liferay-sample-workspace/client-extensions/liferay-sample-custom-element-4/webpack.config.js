@@ -20,12 +20,12 @@ module.exports = {
 	entry: {
 		index: './assets/index.js',
 	},
+	experiments: {
+		outputModule: true,
+	},
 	externals: {
 		'react': 'react',
 		'react-dom': 'react-dom',
-	},
-	experiments: {
-		outputModule: true,
 	},
 	mode: DEVELOPMENT ? 'development' : 'production',
 	module: {

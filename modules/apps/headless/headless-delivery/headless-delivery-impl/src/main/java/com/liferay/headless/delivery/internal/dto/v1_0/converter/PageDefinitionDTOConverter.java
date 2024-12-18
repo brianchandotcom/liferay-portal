@@ -295,14 +295,14 @@ public class PageDefinitionDTOConverter
 						long faviconFileEntryId =
 							layout.getFaviconFileEntryId();
 
-						if (faviconFileEntryId != 0) {
-							return ContentDocumentUtil.toContentDocument(
-								_dlURLHelper, "settings.favIcon.image",
-								_dlAppService.getFileEntry(faviconFileEntryId),
-								dtoConverterContext.getUriInfo());
+						if (faviconFileEntryId == 0) {
+							return null;
 						}
 
-						return null;
+						return ContentDocumentUtil.toContentDocument(
+							_dlURLHelper, "settings.favIcon.image",
+							_dlAppService.getFileEntry(faviconFileEntryId),
+							dtoConverterContext.getUriInfo());
 					});
 				setGlobalCSSClientExtensions(
 					() -> _getClientExtensions(

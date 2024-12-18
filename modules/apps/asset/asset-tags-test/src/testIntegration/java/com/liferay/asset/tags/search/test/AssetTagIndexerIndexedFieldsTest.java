@@ -141,11 +141,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 		String vendor = searchEngine.getVendor();
 
-		if (vendor.equals("Solr")) {
-			return true;
-		}
-
-		return false;
+		return vendor.equals("Solr");
 	}
 
 	@Inject

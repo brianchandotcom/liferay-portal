@@ -100,6 +100,10 @@ export class PageEditorPage {
 	async addFragment(setName: string, name: string, dropTarget?: Locator) {
 		await this.goToSidebarTab('Fragments and Widgets');
 
+		await this.page
+			.getByRole('tab', {exact: true, name: 'Fragments'})
+			.click();
+
 		const header = this.page.getByRole('menuitem', {
 			exact: true,
 			name: setName,

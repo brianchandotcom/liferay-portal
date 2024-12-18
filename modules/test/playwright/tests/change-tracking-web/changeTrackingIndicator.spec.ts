@@ -67,10 +67,12 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 	await selectPublicationMenuItem.click();
 
 	await expect(
-		page.locator('li').filter({hasText: ctCollection.name})
+		page.locator('li').filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });
 
 test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', async ({
@@ -84,7 +86,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 		);
 
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
 	await featureFlagsInstanceSettingsPage.goto('Release');
@@ -108,7 +110,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 	await selectPublicationMenuItem.click();
 
 	await expect(
-		page.locator('li').filter({hasText: ctCollection.name})
+		page.locator('li').filter({hasText: ctCollection.body.name})
 	).toBeVisible();
 
 	await featureFlagsInstanceSettingsPage.goto('Release');
@@ -120,5 +122,7 @@ test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', asy
 		false
 	);
 
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
 });

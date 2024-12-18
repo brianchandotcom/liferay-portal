@@ -21,6 +21,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.exception.CommerceGeocoderException" %><%@
 page import="com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseActiveException" %><%@
+page import="com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemQuantityException" %><%@
 page import="com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseNameException" %><%@
 page import="com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseExternalReferenceCodeException" %><%@
 page import="com.liferay.commerce.inventory.exception.MVCCException" %><%@

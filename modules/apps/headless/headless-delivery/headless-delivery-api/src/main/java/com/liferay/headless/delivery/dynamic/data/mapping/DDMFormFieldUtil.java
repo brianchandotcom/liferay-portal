@@ -30,23 +30,24 @@ public class DDMFormFieldUtil {
 			return ddmFormField;
 		}
 
-		if (ddmStructure.getParentStructureId() != -1) {
-			try {
-				DDMStructure parentDDMStructure =
-					ddmStructureService.getStructure(
-						ddmStructure.getParentStructureId());
+		if (ddmStructure.getParentStructureId() == -1) {
+			return null;
+		}
 
-				ddmFormField = _getDDMFormField(
-					parentDDMStructure.getDDMFormFields(true), name);
+		try {
+			DDMStructure parentDDMStructure = ddmStructureService.getStructure(
+				ddmStructure.getParentStructureId());
 
-				if (ddmFormField != null) {
-					return ddmFormField;
-				}
+			ddmFormField = _getDDMFormField(
+				parentDDMStructure.getDDMFormFields(true), name);
+
+			if (ddmFormField != null) {
+				return ddmFormField;
 			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
-				}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
 			}
 		}
 

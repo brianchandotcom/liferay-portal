@@ -9,16 +9,15 @@ import com.liferay.commerce.product.definitions.web.internal.constants.CommerceP
 import com.liferay.commerce.product.definitions.web.internal.model.Channel;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,28 +41,22 @@ public class CommerceProductChannelFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Channel> channels = new ArrayList<>();
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
-		List<CommerceChannelRel> commerceChannelRels =
+		return TransformUtil.transform(
 			_commerceChannelRelService.getCommerceChannelRels(
 				CPDefinition.class.getName(), cpDefinitionId,
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			commerceChannelRel -> {
+				CommerceChannel commerceChannel =
+					commerceChannelRel.getCommerceChannel();
 
-		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
-			CommerceChannel commerceChannel =
-				commerceChannelRel.getCommerceChannel();
-
-			channels.add(
-				new Channel(
+				return new Channel(
 					commerceChannelRel.getCommerceChannelRelId(),
-					commerceChannel.getName()));
-		}
-
-		return channels;
+					commerceChannel.getName());
+			});
 	}
 
 	@Override

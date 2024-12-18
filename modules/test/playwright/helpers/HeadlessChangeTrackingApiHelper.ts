@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {CTCollectionApi} from '@liferay/change-tracking-rest-client-js';
+
 import getRandomString from '../utils/getRandomString';
 import {ApiHelpers} from './ApiHelpers';
 
@@ -15,9 +17,12 @@ export class HeadlessChangeTrackingApiHelper {
 		this.basePath = 'change-tracking-rest/v1.0';
 	}
 
-	async checkoutCTCollection(ctCollectionId: string) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}/checkout`
+	async checkoutCTCollection(ctCollectionId: number) {
+		const ctCollectionApiClient =
+			await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return await ctCollectionApiClient.postCTCollectionCheckout(
+			ctCollectionId
 		);
 	}
 
@@ -29,21 +34,25 @@ export class HeadlessChangeTrackingApiHelper {
 			status: {code: 0, label: 'string', label_i18n: 'string'},
 		};
 
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections`,
-			{data: requestBody}
-		);
+		const ctCollectionApiClient =
+			await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return await ctCollectionApiClient.postCTCollection(requestBody);
 	}
 
-	async deleteCTCollection(ctCollectionId: string) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}`
-		);
+	async deleteCTCollection(ctCollectionId: number) {
+		const ctCollectionApiClient =
+			await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return await ctCollectionApiClient.deleteCTCollection(ctCollectionId);
 	}
 
 	async publishCTCollection(ctCollectionId: number) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/ct-collections/${ctCollectionId}/publish`
+		const ctCollectionApiClient =
+			await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return await ctCollectionApiClient.postCTCollectionPublish(
+			ctCollectionId
 		);
 	}
 }

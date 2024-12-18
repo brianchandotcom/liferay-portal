@@ -306,7 +306,10 @@
 			getSiteGroupId: function () {
 				return '<%= themeDisplay.getSiteGroupId() %>';
 			},
-			getURLControlPanel: function () {
+			getTimeZone: function() {
+				return '<%= Validator.isNotNull(themeDisplay.getTimeZone()) ? themeDisplay.getTimeZone().getID() : TimeZone.getDefault().getID() %>';
+			},
+			getURLControlPanel: function() {
 				return '<%= themeDisplay.getURLControlPanel() %>';
 			},
 			getURLHome: function () {

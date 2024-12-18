@@ -88,11 +88,7 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 								return true;
 							}
 
-							if (sort.isReverse()) {
-								return false;
-							}
-
-							return true;
+							return !sort.isReverse();
 						}
 
 					});

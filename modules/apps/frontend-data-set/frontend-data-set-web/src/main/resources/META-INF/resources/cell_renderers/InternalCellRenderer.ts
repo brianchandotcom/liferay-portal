@@ -12,13 +12,7 @@ import ActionsLinkRenderer from './ActionLinkRenderer';
 // @ts-ignore
 
 import BooleanRenderer from './BooleanRenderer';
-
-// @ts-ignore
-
 import DateRenderer from './DateRenderer';
-
-// @ts-ignore
-
 import DateTimeRenderer from './DateTimeRenderer';
 import DefaultRenderer from './DefaultRenderer';
 

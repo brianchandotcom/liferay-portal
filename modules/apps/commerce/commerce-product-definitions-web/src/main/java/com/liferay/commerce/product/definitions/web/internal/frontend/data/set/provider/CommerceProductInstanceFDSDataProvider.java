@@ -24,6 +24,7 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -67,8 +67,6 @@ public class CommerceProductInstanceFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Sku> skus = new ArrayList<>();
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
@@ -76,48 +74,50 @@ public class CommerceProductInstanceFDSDataProvider
 
 		String languageId = _language.getLanguageId(locale);
 
-		List<CPInstance> cpInstances = _getCPInstances(
-			_portal.getCompanyId(httpServletRequest), cpDefinitionId,
-			fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-			fdsPagination.getEndPosition(), sort);
+		return TransformUtil.transform(
+			_getCPInstances(
+				_portal.getCompanyId(httpServletRequest), cpDefinitionId,
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition(), sort),
+			cpInstance -> {
+				Map<String, List<String>>
+					cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
+						_cpDefinitionOptionRelLocalService.
+							getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+								cpInstance.getCPInstanceId());
 
-		for (CPInstance cpInstance : cpInstances) {
-			Map<String, List<String>>
-				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
-					_cpDefinitionOptionRelLocalService.
-						getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
-							cpInstance.getCPInstanceId());
+				CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+				String cpDefinitionName = cpDefinition.getName(languageId);
 
-			String cpDefinitionName = cpDefinition.getName(languageId);
+				JSONArray jsonArray = CPJSONUtil.toJSONArray(
+					cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
-			JSONArray jsonArray = CPJSONUtil.toJSONArray(
-				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
+				String availableQuantity = String.valueOf(
+					_commerceQuantityFormatter.format(
+						_cpInstanceUnitOfMeasureLocalService.
+							fetchPrimaryCPInstanceUnitOfMeasure(
+								cpInstance.getCPInstanceId()),
+						_commerceInventoryEngine.getStockQuantity(
+							cpInstance.getCompanyId(),
+							cpDefinition.getGroupId(), cpInstance.getSku(),
+							StringPool.BLANK)));
 
-			String availableQuantity = String.valueOf(
-				_commerceQuantityFormatter.format(
-					_cpInstanceUnitOfMeasureLocalService.
-						fetchPrimaryCPInstanceUnitOfMeasure(
-							cpInstance.getCPInstanceId()),
-					_commerceInventoryEngine.getStockQuantity(
-						cpInstance.getCompanyId(), cpDefinition.getGroupId(),
-						cpInstance.getSku(), StringPool.BLANK)));
+				String statusDisplayStyle = StringPool.BLANK;
 
-			String statusDisplayStyle = StringPool.BLANK;
+				if (cpInstance.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
 
-			if (cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				statusDisplayStyle = "success";
-			}
+					statusDisplayStyle = "success";
+				}
 
-			String discontinued = "no";
+				String discontinued = "no";
 
-			if (cpInstance.isDiscontinued()) {
-				discontinued = "yes";
-			}
+				if (cpInstance.isDiscontinued()) {
+					discontinued = "yes";
+				}
 
-			skus.add(
-				new Sku(
+				return new Sku(
 					cpInstance.getCPInstanceId(), cpInstance.getSku(),
 					HtmlUtil.escape(
 						_getOptions(
@@ -131,10 +131,8 @@ public class CommerceProductInstanceFDSDataProvider
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
 								cpInstance.getStatus()))),
-					_language.get(httpServletRequest, discontinued)));
-		}
-
-		return skus;
+					_language.get(httpServletRequest, discontinued));
+			});
 	}
 
 	@Override

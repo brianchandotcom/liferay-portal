@@ -601,7 +601,12 @@ public class ResourceActionsImpl implements ResourceActions {
 		ResourceActionsBag resourceActionsBag = _getResourceActionsBag(
 			name, false);
 
-		Set<String> resourceActions = resourceActionsBag.getSupportsActions();
+		Set<String> resourceActions =
+			resourceActionsBag.getOwnerDefaultActions();
+
+		resourceActions.remove(action);
+
+		resourceActions = resourceActionsBag.getSupportsActions();
 
 		resourceActions.remove(action);
 

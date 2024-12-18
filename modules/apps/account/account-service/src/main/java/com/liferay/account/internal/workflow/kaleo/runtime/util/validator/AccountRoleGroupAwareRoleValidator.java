@@ -37,14 +37,8 @@ public class AccountRoleGroupAwareRoleValidator
 	}
 
 	private boolean _isAccountEntryGroup(Group group) {
-		if (Objects.equals(
-				_portal.getClassNameId(AccountEntry.class),
-				group.getClassNameId())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_portal.getClassNameId(AccountEntry.class), group.getClassNameId());
 	}
 
 	@Reference

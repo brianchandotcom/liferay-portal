@@ -28,9 +28,11 @@ public interface CommerceOrderItemQuantityFormatter {
 	public String format(CommerceOrderItem commerceOrderItem, Locale locale)
 		throws PortalException;
 
-	public BigDecimal parse(ActionRequest actionRequest, String param)
+	public BigDecimal parse(
+			ActionRequest actionRequest, String className, String param)
 		throws Exception;
 
-	public BigDecimal parse(String quantity, Locale locale) throws Exception;
+	public BigDecimal parse(String className, String quantity, Locale locale)
+		throws Exception;
 
 }

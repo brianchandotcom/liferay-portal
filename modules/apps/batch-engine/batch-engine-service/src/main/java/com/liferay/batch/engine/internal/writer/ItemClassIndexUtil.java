@@ -53,11 +53,7 @@ public class ItemClassIndexUtil {
 	}
 
 	public static boolean isDate(Class<?> clazz) {
-		if (Objects.equals(clazz, Date.class)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(clazz, Date.class);
 	}
 
 	public static boolean isIterable(Class<?> valueClass) {
@@ -71,11 +67,7 @@ public class ItemClassIndexUtil {
 	}
 
 	public static boolean isMap(Class<?> clazz) {
-		if (Objects.equals(clazz, Map.class)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(clazz, Map.class);
 	}
 
 	public static boolean isMultidimensionalArray(Class<?> clazz) {
@@ -85,11 +77,7 @@ public class ItemClassIndexUtil {
 
 		Class<?> componentTypeClass = clazz.getComponentType();
 
-		if (!componentTypeClass.isArray()) {
-			return false;
-		}
-
-		return true;
+		return componentTypeClass.isArray();
 	}
 
 	public static boolean isSingleColumnAdoptableArray(Class<?> clazz) {
@@ -97,11 +85,7 @@ public class ItemClassIndexUtil {
 			return false;
 		}
 
-		if (isSingleColumnAdoptableValue(clazz.getComponentType())) {
-			return true;
-		}
-
-		return false;
+		return isSingleColumnAdoptableValue(clazz.getComponentType());
 	}
 
 	public static boolean isSingleColumnAdoptableValue(Class<?> clazz) {

@@ -38,11 +38,7 @@ public class AccountEntryDomainValidator {
 	}
 
 	public boolean isBlockedDomain(String domain) {
-		if (ArrayUtil.contains(_blockedDomains, domain)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(_blockedDomains, domain);
 	}
 
 	public boolean isEmailAddressDomainValidationEnabled() {

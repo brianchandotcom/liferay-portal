@@ -36,26 +36,26 @@ public class SEOSettingsUtil {
 			{
 				setCustomCanonicalURL(
 					() -> {
-						if ((layoutSEOEntry != null) &&
-							layoutSEOEntry.isCanonicalURLEnabled()) {
+						if ((layoutSEOEntry == null) ||
+							!layoutSEOEntry.isCanonicalURLEnabled()) {
 
-							return layoutSEOEntry.getCanonicalURL(
-								dtoConverterContext.getLocale());
+							return null;
 						}
 
-						return null;
+						return layoutSEOEntry.getCanonicalURL(
+							dtoConverterContext.getLocale());
 					});
 				setCustomCanonicalURL_i18n(
 					() -> {
-						if ((layoutSEOEntry != null) &&
-							layoutSEOEntry.isCanonicalURLEnabled()) {
+						if ((layoutSEOEntry == null) ||
+							!layoutSEOEntry.isCanonicalURLEnabled()) {
 
-							return LocalizedMapUtil.getI18nMap(
-								dtoConverterContext.isAcceptAllLanguages(),
-								layoutSEOEntry.getCanonicalURLMap());
+							return null;
 						}
 
-						return null;
+						return LocalizedMapUtil.getI18nMap(
+							dtoConverterContext.isAcceptAllLanguages(),
+							layoutSEOEntry.getCanonicalURLMap());
 					});
 				setDescription(
 					() -> layout.getDescription(

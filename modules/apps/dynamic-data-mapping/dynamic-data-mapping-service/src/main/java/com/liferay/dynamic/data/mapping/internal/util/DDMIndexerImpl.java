@@ -70,6 +70,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -537,7 +538,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		throws Exception {
 
 		if (type.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
-			type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE) ||
 			type.equals(DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
@@ -562,6 +562,31 @@ public class DDMIndexerImpl implements DDMIndexer {
 					 Validator.isNotNull(jsonObject.getString("alt"))) {
 
 				sb.append(jsonObject.getString("alt"));
+			}
+			else if (jsonObject.has("title")) {
+				sb.append(jsonObject.getString("title"));
+			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE)) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
+
+			if (jsonObject == null) {
+				return;
+			}
+
+			if (jsonObject.has("titleMap")) {
+				JSONObject titleMapJSONObject = jsonObject.getJSONObject(
+					"titleMap");
+
+				Iterator<String> iterator = titleMapJSONObject.keys();
+
+				while (iterator.hasNext()) {
+					sb.append(titleMapJSONObject.getString(iterator.next()));
+
+					if (iterator.hasNext()) {
+						sb.append(StringPool.SPACE);
+					}
+				}
 			}
 			else if (jsonObject.has("title")) {
 				sb.append(jsonObject.getString("title"));

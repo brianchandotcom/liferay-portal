@@ -43,16 +43,22 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		String lowerCaseContent) {
 
 		List<String> ignoredTagPrefixes = new ArrayList<>();
+		String liferayUiCSPTagClose = StringPool.BLANK;
+		String liferayUiCSPTagOpen = StringPool.BLANK;
 
 		if (fileName.endsWith(".ftl")) {
 			ignoredTagPrefixes = getAttributeValues(
 				_IGNORED_FTL_TAG_PREFIXES_KEY, absolutePath);
+			liferayUiCSPTagClose = "</@liferay_ui.csp>";
+			liferayUiCSPTagOpen = "<@liferay_ui.csp>";
 		}
 		else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
 				 fileName.endsWith(".jspx")) {
 
 			ignoredTagPrefixes = getAttributeValues(
 				_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
+			liferayUiCSPTagClose = "</liferay-ui:csp>";
+			liferayUiCSPTagOpen = "<liferay-ui:csp>";
 		}
 
 		if (ListUtil.isEmpty(ignoredTagPrefixes)) {
@@ -97,6 +103,15 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					if (tagString.startsWith(ignoredTagPrefix)) {
 						continue outerLoop;
 					}
+				}
+
+				String previousPart = content.substring(0, tagStartPosition);
+
+				int y = previousPart.lastIndexOf(liferayUiCSPTagClose);
+				int z = previousPart.lastIndexOf(liferayUiCSPTagOpen);
+
+				if (z > y) {
+					continue;
 				}
 
 				addMessage(

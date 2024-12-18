@@ -11,9 +11,6 @@ package com.liferay.frontend.taglib.sample.web.internal.constants;
 public class SamplePortletKeys {
 
 	public static final String SAMPLE_PORTLET =
-		"com_liferay_sample_web_portlet_SamplePortlet";
-
-	public static final String SEARCH_PAGINATOR_DISPLAY_CONTEXT =
-		"SEARCH_PAGINATOR_DISPLAY_CONTEXT";
+		"com_liferay_frontend_taglib_sample_web_portlet_SamplePortlet";
 
 }

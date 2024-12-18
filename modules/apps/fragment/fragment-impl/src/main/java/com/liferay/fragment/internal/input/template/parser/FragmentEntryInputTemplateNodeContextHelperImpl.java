@@ -277,13 +277,27 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		Map<Locale, String> valueI18n = new HashMap<>();
 
-		Map<String, String> infoFormParameterMap =
-			(Map<String, String>)SessionMessages.get(
+		Map<String, Object> infoFormParameterMap =
+			(Map<String, Object>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");
 
 		if (infoFormParameterMap != null) {
-			label = infoFormParameterMap.get(infoField.getName() + "-label");
-			value = infoFormParameterMap.get(infoField.getName());
+			label = String.valueOf(
+				infoFormParameterMap.get(infoField.getName() + "-label"));
+
+			Object infoParameterMapValue = infoFormParameterMap.get(
+				infoField.getName());
+
+			if (infoParameterMapValue instanceof Map) {
+				Map<Locale, String> map =
+					(Map<Locale, String>)infoParameterMapValue;
+
+				value = map.get(locale);
+				valueI18n = map;
+			}
+			else {
+				value = String.valueOf(infoParameterMapValue);
+			}
 		}
 		else {
 			Object infoFieldValue = _getValue(
@@ -318,8 +332,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		if (!localizable && FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
 			_addLocalizationOptionsAttributes(
-				fragmentEntryLink, httpServletRequest, inputTemplateNode,
-				locale);
+				fragmentEntryLink, httpServletRequest, inputLabel,
+				inputTemplateNode, locale);
 		}
 
 		return inputTemplateNode;
@@ -476,7 +490,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	private void _addLocalizationOptionsAttributes(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, String inputLabel,
 		InputTemplateNode inputTemplateNode, Locale locale) {
 
 		LayoutStructure layoutStructure = null;
@@ -524,7 +538,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (localizationConfigJSONObject == null) {
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsMessage",
-				_language.get(locale, "this-field-cannot-be-localized"));
+				_language.format(
+					locale, "x-field-cannot-be-localized", inputLabel));
 			inputTemplateNode.addAttribute(
 				"unlocalizedFieldsState", "disabled");
 

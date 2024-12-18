@@ -256,9 +256,11 @@ const Recommendations: React.FC = () => {
 			<StateRenderer.Success>
 				<RecommendationsContent
 					jobs={jobs}
-					onJobChange={() => {
-						refetch();
-					}}
+
+					// setTimeout is a hack to trigger fetch again at the
+					// end of javascript execution to make an updated request.
+
+					onJobChange={() => setTimeout(refetch, 0)}
 				/>
 			</StateRenderer.Success>
 		</StateRenderer>

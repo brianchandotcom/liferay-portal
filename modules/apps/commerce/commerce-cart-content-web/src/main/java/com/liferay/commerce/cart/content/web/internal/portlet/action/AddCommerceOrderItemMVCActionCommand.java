@@ -101,7 +101,8 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
 					formFieldValues,
 					_commerceOrderItemQuantityFormatter.parse(
-						actionRequest, "quantity"),
+						actionRequest, CommerceOrderItem.class.getName(),
+						"quantity"),
 					0, BigDecimal.ZERO,
 					ParamUtil.getString(actionRequest, "unitOfMeasureKey"),
 					(CommerceContext)httpServletRequest.getAttribute(

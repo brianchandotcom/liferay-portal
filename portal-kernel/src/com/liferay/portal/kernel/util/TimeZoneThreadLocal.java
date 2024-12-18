@@ -34,12 +34,6 @@ public class TimeZoneThreadLocal {
 		_defaultTimeZone.set(timeZone);
 	}
 
-	public static SafeCloseable setDefaultTimeZoneWithSafeCloseable(
-		TimeZone timeZone) {
-
-		return _defaultTimeZone.setWithSafeCloseable(timeZone);
-	}
-
 	public static void setThemeDisplayTimeZone(TimeZone timeZone) {
 		_themeDisplayTimeZone.set(timeZone);
 	}

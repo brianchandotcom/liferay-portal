@@ -30,7 +30,7 @@ public class SegmentsEntryConstants {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, SegmentsEntryConstants.class);
 
-		return LanguageUtil.get(resourceBundle, "default-segment-name");
+		return LanguageUtil.get(resourceBundle, "anyone");
 	}
 
 }

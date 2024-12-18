@@ -186,13 +186,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, List<ServiceRegistration<?>>> activeServiceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
-		Map<Long, List<ObjectLayout>> partitionedDefaultObjectLayouts =
-			_objectLayoutLocalService.getDefaultObjectLayouts(companyId);
-		Map<Long, List<ObjectRelationship>> partitionedObjectRelationships =
-			_objectRelationshipLocalService.getObjectRelationshipsByCompanyId(
+		Map<Long, List<ObjectLayout>> objectLayoutsMap =
+			_objectLayoutLocalService.getObjectLayoutsMap(companyId);
+		Map<Long, List<ObjectRelationship>> objectRelationshipsMap =
+			_objectRelationshipLocalService.getObjectRelationshipsMap(
 				companyId);
-		Map<Long, List<ObjectAction>> partitionedStandaloneObjectActions =
-			_objectActionLocalService.getObjectActions(
+		Map<Long, List<ObjectAction>> standaloneObjectActionsMap =
+			_objectActionLocalService.getObjectActionsMap(
 				companyId, true, ObjectActionTriggerConstants.KEY_STANDALONE);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
@@ -201,12 +201,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			activeServiceRegistrationsMap.put(
 				objectDefinitionId,
 				_deploy(
-					partitionedDefaultObjectLayouts.getOrDefault(
+					objectLayoutsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
 					objectDefinition,
-					partitionedObjectRelationships.getOrDefault(
+					objectRelationshipsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
-					partitionedStandaloneObjectActions.getOrDefault(
+					standaloneObjectActionsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList())));
 		}
 

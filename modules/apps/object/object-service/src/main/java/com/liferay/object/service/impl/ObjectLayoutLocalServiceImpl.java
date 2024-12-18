@@ -163,30 +163,6 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	@Override
-	public Map<Long, List<ObjectLayout>> getDefaultObjectLayouts(
-		long companyId) {
-
-		Map<Long, List<ObjectLayout>> partitionedObjectLayouts =
-			new HashMap<>();
-
-		for (ObjectLayout objectLayout :
-				objectLayoutPersistence.findByC_DOL(companyId, true)) {
-
-			objectLayout.setObjectLayoutTabs(
-				_getObjectLayoutTabs(objectLayout));
-
-			List<ObjectLayout> objectLayouts =
-				partitionedObjectLayouts.computeIfAbsent(
-					objectLayout.getObjectDefinitionId(),
-					key -> new ArrayList<>());
-
-			objectLayouts.add(objectLayout);
-		}
-
-		return partitionedObjectLayouts;
-	}
-
-	@Override
 	public ObjectLayout getObjectLayout(long objectLayoutId)
 		throws PortalException {
 
@@ -224,6 +200,25 @@ public class ObjectLayoutLocalServiceImpl
 	public int getObjectLayoutsCount(long objectDefinitionId) {
 		return objectLayoutPersistence.countByObjectDefinitionId(
 			objectDefinitionId);
+	}
+
+	@Override
+	public Map<Long, List<ObjectLayout>> getObjectLayoutsMap(long companyId) {
+		Map<Long, List<ObjectLayout>> objectLayoutsMap = new HashMap<>();
+
+		for (ObjectLayout objectLayout :
+				objectLayoutPersistence.findByC_DOL(companyId, true)) {
+
+			objectLayout.setObjectLayoutTabs(
+				_getObjectLayoutTabs(objectLayout));
+
+			List<ObjectLayout> objectLayouts = objectLayoutsMap.computeIfAbsent(
+				objectLayout.getObjectDefinitionId(), key -> new ArrayList<>());
+
+			objectLayouts.add(objectLayout);
+		}
+
+		return objectLayoutsMap;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

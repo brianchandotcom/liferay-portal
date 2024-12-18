@@ -322,33 +322,30 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
-	public Map<Long, List<ObjectAction>> getObjectActions(
-		long companyId, boolean active, String objectActionTriggerKey) {
-
-		Map<Long, List<ObjectAction>> partitionedObjectActions =
-			new HashMap<>();
-
-		for (ObjectAction objectAction :
-				objectActionPersistence.findByC_A_OATK(
-					companyId, active, objectActionTriggerKey)) {
-
-			List<ObjectAction> objectActions =
-				partitionedObjectActions.computeIfAbsent(
-					objectAction.getObjectDefinitionId(),
-					key -> new ArrayList<>());
-
-			objectActions.add(objectAction);
-		}
-
-		return partitionedObjectActions;
-	}
-
-	@Override
 	public List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 
 		return objectActionPersistence.findByO_A_OATK(
 			objectDefinitionId, true, objectActionTriggerKey);
+	}
+
+	@Override
+	public Map<Long, List<ObjectAction>> getObjectActionsMap(
+		long companyId, boolean active, String objectActionTriggerKey) {
+
+		Map<Long, List<ObjectAction>> objectActionsMap = new HashMap<>();
+
+		for (ObjectAction objectAction :
+				objectActionPersistence.findByC_A_OATK(
+					companyId, active, objectActionTriggerKey)) {
+
+			List<ObjectAction> objectActions = objectActionsMap.computeIfAbsent(
+				objectAction.getObjectDefinitionId(), key -> new ArrayList<>());
+
+			objectActions.add(objectAction);
+		}
+
+		return objectActionsMap;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

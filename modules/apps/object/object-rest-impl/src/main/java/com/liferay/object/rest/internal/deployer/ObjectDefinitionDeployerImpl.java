@@ -128,10 +128,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
-		Map<Long, List<ObjectField>> partitionedObjectFields =
-			_objectFieldLocalService.getObjectFieldsByCompanyId(companyId);
-		Map<Long, List<ObjectRelationship>> partitionedObjectRelationships =
-			_objectRelationshipLocalService.getObjectRelationshipsByCompanyId(
+		Map<Long, List<ObjectField>> objectFieldsMap =
+			_objectFieldLocalService.getObjectFieldsMap(companyId);
+		Map<Long, List<ObjectRelationship>> objectRelationshipsMap =
+			_objectRelationshipLocalService.getObjectRelationshipsMap(
 				companyId);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
@@ -141,9 +141,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinitionId,
 				_deploy(
 					objectDefinition,
-					partitionedObjectFields.getOrDefault(
+					objectFieldsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
-					partitionedObjectRelationships.getOrDefault(
+					objectRelationshipsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList())));
 		}
 

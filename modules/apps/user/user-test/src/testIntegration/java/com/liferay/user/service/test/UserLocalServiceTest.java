@@ -438,7 +438,7 @@ public class UserLocalServiceTest {
 		try (SafeCloseable safeCloseable1 =
 				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
 
-			User user;
+			User user = null;
 
 			try (SafeCloseable safeCloseable2 =
 					_setDefaultPasswordPolicyWithSafeCloseable(
@@ -1470,7 +1470,7 @@ public class UserLocalServiceTest {
 	}
 
 	private SafeCloseable _setDefaultPasswordPolicyWithSafeCloseable(
-			Consumer<PasswordPolicy> consumer)
+			Consumer<PasswordPolicy> passwordPolicyConsumer)
 		throws PortalException {
 
 		PasswordPolicy passwordPolicy =
@@ -1480,7 +1480,7 @@ public class UserLocalServiceTest {
 		PasswordPolicy originalPasswordPolicy =
 			(PasswordPolicy)passwordPolicy.clone();
 
-		consumer.accept(passwordPolicy);
+		passwordPolicyConsumer.accept(passwordPolicy);
 
 		PasswordPolicy updatedPasswordPolicy =
 			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);

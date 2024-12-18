@@ -8,12 +8,14 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 DLViewEntryHistoryDisplayContext dlViewEntryHistoryDisplayContext = (DLViewEntryHistoryDisplayContext)request.getAttribute(DLViewEntryHistoryDisplayContext.class.getName());
 
 FileEntry fileEntry = dlViewEntryHistoryDisplayContext.getFileEntry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(dlViewEntryHistoryDisplayContext.getBackURL());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(fileEntry.getTitle());
 %>

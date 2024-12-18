@@ -46,6 +46,10 @@ function onInputKeyup(event) {
 
 	currentLength.innerText = length;
 
+	if (errorMessage) {
+		errorMessage.remove();
+	}
+
 	if (length > input.attributes.maxLength) {
 		enableLengthWarning();
 	}

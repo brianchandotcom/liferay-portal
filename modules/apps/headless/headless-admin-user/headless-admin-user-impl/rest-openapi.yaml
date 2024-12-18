@@ -1078,8 +1078,8 @@ components:
                     type: string
                 birthDate:
                     description:
-                        The user's date of birth, in ISO 8601 format.
-                    format: date-time
+                        The user's date of birth.
+                    format: date
                     type: string
                 currentPassword:
                     description:
@@ -1394,7 +1394,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.70'."
+        'com.liferay.headless.admin.user.client', and version '4.0.71'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

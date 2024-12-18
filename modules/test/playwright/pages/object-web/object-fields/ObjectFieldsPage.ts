@@ -72,10 +72,10 @@ export class ObjectFieldsPage {
 	}
 
 	async deleteObjectField(nth: number) {
-		await this.page.locator('.cell-select-item').nth(nth).waitFor();
+		await this.page.locator('.cell-item-actions').nth(nth).waitFor();
 
 		await this.page
-			.locator('.cell-select-item')
+			.locator('.cell-item-actions')
 			.nth(nth)
 			.locator('.dropdown-toggle')
 			.click();

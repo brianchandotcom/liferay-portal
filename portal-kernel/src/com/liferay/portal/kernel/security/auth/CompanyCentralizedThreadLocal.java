@@ -26,10 +26,6 @@ public class CompanyCentralizedThreadLocal<T>
 		return _companyCentralizedThreadLocals;
 	}
 
-	public CompanyCentralizedThreadLocal(boolean shortLived) {
-		this(null, () -> null, shortLived);
-	}
-
 	public CompanyCentralizedThreadLocal(String name) {
 		this(name, () -> null, true);
 	}

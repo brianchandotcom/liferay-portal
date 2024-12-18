@@ -79,18 +79,18 @@ export class AssetCategoriesEditPage {
 
 	async moveCategory({
 		categoryName,
-		expandName,
+		expandNames = [],
 		targetName,
 	}: {
 		categoryName: string;
-		expandName?: string;
+		expandNames?: string[];
 		targetName: string;
 	}) {
 		const moveIframe = this.page.frameLocator(
 			`iframe[title="Move ${categoryName}"]`
 		);
 
-		if (expandName) {
+		for (const expandName of expandNames) {
 			await moveIframe.getByLabel(expandName).getByRole('button').click();
 		}
 

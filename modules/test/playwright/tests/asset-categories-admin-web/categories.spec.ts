@@ -144,7 +144,7 @@ test('User can move a category and subcategory.', async ({
 
 		await assetCategoriesEditPage.moveCategory({
 			categoryName: subcategoryName,
-			expandName: vocabularyName1,
+			expandNames: [vocabularyName1],
 			targetName: categoryName2,
 		});
 

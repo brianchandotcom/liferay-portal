@@ -112,12 +112,11 @@ public class LayoutSEOLinkManagerTest {
 
 		LayoutSEOEntry layoutSEOEntry = _updateLayoutSEOEntry(canonicalURLMap);
 
-		List<LayoutSEOLink> layoutSEOLinks =
-			_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-				_layout, siteDefaultLocale, _canonicalURL,
-				_expectedFriendlyURLs.keySet());
+		for (LayoutSEOLink layoutSEOLink :
+				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+					_layout, siteDefaultLocale, _canonicalURL,
+					_expectedFriendlyURLs.keySet())) {
 
-		for (LayoutSEOLink layoutSEOLink : layoutSEOLinks) {
 			String hrefLang = layoutSEOLink.getHrefLang();
 
 			if (Validator.isNull(hrefLang) ||

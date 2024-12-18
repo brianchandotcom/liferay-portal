@@ -1,0 +1,42 @@
+@component-name = "portal-core-infra"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Deployment";
+
+	setUp {
+		SignIn.signInTestSetup();
+	}
+
+	@description = "LPD-33643 Verify Glowroot works with root context."
+	@priority = 5
+	test VisitGlowrootWithRootContext {
+		property portal.acceptance = "true";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Visit Glowroot page with root context") {
+			AntCommands.runCommand("build-test.xml", "stop-app-server");
+
+			AntCommands.runCommand("build-test.xml", "enable-glowroot-for-tomcat");
+
+			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
+
+			SignIn.signInSpecificURL(
+				url = "http://localhost:8080/",
+				userEmailAddress = "test@liferay.com",
+				userPassword = PropsUtil.get("default.admin.password"));
+
+			Navigator.openSpecificURL(url = "http://localhost:8080/o/glowroot");
+
+			AssertElementPresent(locator1 = "//script[contains(text(), '/o/glowroot')]");
+		}
+	}
+
+}
+
+
+

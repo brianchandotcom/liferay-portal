@@ -7,16 +7,25 @@ package com.liferay.object.internal.entry.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,6 +34,109 @@ import java.util.Map;
  * @author Carolina Barbosa
  */
 public class ObjectEntryUtil {
+
+	public static JSONObject getPayloadJSONObject(
+			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
+			JSONFactory jsonFactory, String objectActionTriggerKey,
+			ObjectDefinition objectDefinition, BaseModel<?> originalBaseModel,
+			SystemObjectDefinitionManager systemObjectDefinitionManager,
+			long userId)
+		throws PortalException {
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		Class<?> modelClass = systemObjectDefinitionManager.getModelClass();
+
+		DTOConverter<BaseModel<?>, ?> dtoConverter =
+			(DTOConverter<BaseModel<?>, ?>)dtoConverterRegistry.getDTOConverter(
+				jaxRsApplicationDescriptor.getApplicationName(),
+				modelClass.getName(), jaxRsApplicationDescriptor.getVersion());
+
+		String dtoConverterType = null;
+
+		if (dtoConverter == null) {
+			dtoConverterType = modelClass.getSimpleName();
+		}
+		else {
+			dtoConverterType = dtoConverter.getContentType();
+		}
+
+		Map<String, Object> extendedProperties =
+			HashMapBuilder.<String, Object>putAll(
+				ObjectEntryLocalServiceUtil.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition,
+						GetterUtil.getLong(baseModel.getPrimaryKeyObj()))
+			).putAll(
+				EntityExtensionThreadLocal.getExtendedProperties()
+			).build();
+
+		return JSONUtil.put(
+			"classPK", baseModel.getPrimaryKeyObj()
+		).put(
+			"extendedProperties", extendedProperties
+		).put(
+			"model" + modelClass.getSimpleName(), baseModel.getModelAttributes()
+		).put(
+			"modelDTO" + dtoConverterType,
+			_toDTO(
+				baseModel, dtoConverter, dtoConverterRegistry,
+				extendedProperties, jsonFactory, modelClass, userId)
+		).put(
+			"objectActionTriggerKey", objectActionTriggerKey
+		).put(
+			"original" + modelClass.getSimpleName(),
+			() -> {
+				if (originalBaseModel == null) {
+					return null;
+				}
+
+				return originalBaseModel.getModelAttributes();
+			}
+		).put(
+			"originalDTO" + dtoConverterType,
+			() -> {
+				if (originalBaseModel == null) {
+					return null;
+				}
+
+				return _toDTO(
+					originalBaseModel, dtoConverter, dtoConverterRegistry,
+					Collections.emptyMap(), jsonFactory, modelClass, userId);
+			}
+		);
+	}
+
+	public static JSONObject getPayloadJSONObject(
+			DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
+			ObjectDefinition objectDefinition, long primaryKey,
+			SystemObjectDefinitionManagerRegistry
+				systemObjectDefinitionManagerRegistry,
+			long userId)
+		throws PortalException {
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			SystemObjectDefinitionManager systemObjectDefinitionManager =
+				systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+
+			return getPayloadJSONObject(
+				systemObjectDefinitionManager.
+					fetchBaseModelByExternalReferenceCode(
+						systemObjectDefinitionManager.
+							getBaseModelExternalReferenceCode(primaryKey),
+						objectDefinition.getCompanyId()),
+				dtoConverterRegistry, jsonFactory, null, objectDefinition, null,
+				systemObjectDefinitionManager, userId);
+		}
+
+		return getPayloadJSONObject(
+			dtoConverterRegistry, jsonFactory, null, objectDefinition,
+			ObjectEntryLocalServiceUtil.fetchObjectEntry(primaryKey), null,
+			null, UserLocalServiceUtil.fetchUser(userId));
+	}
 
 	public static JSONObject getPayloadJSONObject(
 		DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
@@ -79,6 +191,77 @@ public class ObjectEntryUtil {
 		).put(
 			"userId", user.getUserId()
 		);
+	}
+
+	private static Map<String, Object> _toDTO(
+		BaseModel<?> baseModel, DTOConverter<BaseModel<?>, ?> dtoConverter,
+		DTOConverterRegistry dtoConverterRegistry,
+		Map<String, Object> extendedProperties, JSONFactory jsonFactory,
+		Class<?> modelClass, long userId) {
+
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		if (dtoConverter == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No DTO converter found for " + modelClass.getName());
+			}
+
+			return modelAttributes;
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(userId);
+
+		if (user == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No user found with user ID " + userId);
+			}
+
+			return modelAttributes;
+		}
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry,
+				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
+
+		try {
+			Object object = dtoConverter.toDTO(
+				defaultDTOConverterContext, baseModel);
+
+			if (object == null) {
+				return modelAttributes;
+			}
+
+			JSONObject jsonObject = jsonFactory.createJSONObject(
+				jsonFactory.looseSerializeDeep(object));
+
+			jsonObject.put(
+				"createDate", modelAttributes.get("createDate")
+			).put(
+				"modifiedDate", modelAttributes.get("modifiedDate")
+			).put(
+				"status", modelAttributes.get("status")
+			).put(
+				"userName", user.getFullName()
+			).put(
+				"uuid", modelAttributes.get("uuid")
+			);
+
+			for (Map.Entry<String, Object> entry :
+					extendedProperties.entrySet()) {
+
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
+
+			return jsonObject.toMap();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return baseModel.getModelAttributes();
 	}
 
 	private static Map<String, Object> _toDTO(

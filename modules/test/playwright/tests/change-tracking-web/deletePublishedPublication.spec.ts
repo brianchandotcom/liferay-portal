@@ -54,7 +54,7 @@ test('LPD-29837 Add option to delete history from Publications Admin', async ({
 	await changeTrackingPage.goToPublicationHistory();
 
 	const collectionRowItem = page
-		.locator('.dnd-tr')
+		.locator('.fds tr')
 		.filter({hasText: ctCollection.body.name})
 		.first();
 
@@ -77,7 +77,7 @@ test('LPD-29837 Add option to delete history from Publications Admin', async ({
 	await deleteMenuItem.click();
 
 	const collectionHeaderItem = page
-		.locator('.dnd-th')
+		.locator('.fds th')
 		.filter({hasText: 'Publication'})
 		.first();
 

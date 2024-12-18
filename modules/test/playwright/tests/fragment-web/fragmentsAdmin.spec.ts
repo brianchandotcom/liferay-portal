@@ -1458,6 +1458,79 @@ test(
 );
 
 test(
+	'Import form fragment without field type',
+	{
+		tag: ['@LPS-151157', '@LPS-175242'],
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragments administration
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		// Open import view
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Import'}),
+			trigger: page.getByTitle('Fragment Sets Options'),
+		});
+
+		// Import fragments
+
+		await expect(
+			page.getByRole('heading', {name: 'Import File'})
+		).toBeVisible();
+
+		await fragmentsPage.importFile(
+			'form-fragment-without-field-type.zip',
+			await zipFolder(
+				path.join(
+					__dirname,
+					'/dependencies/form-fragment-without-field-type.zip'
+				)
+			)
+		);
+
+		await expect(
+			page.locator('.panel', {
+				hasText: '1 item was imported with warnings.',
+			})
+		).toBeVisible();
+
+		await expect(
+			page.getByText(
+				'Fragment type input must have at least one field type'
+			)
+		).toBeVisible();
+
+		// Assert imported entries
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet('Form Fragments');
+
+		const fragmentCard = page.locator('.card-type-asset', {
+			hasText: 'Fragment Example',
+		});
+
+		await expect(
+			fragmentCard.locator('.label-warning', {hasText: 'Warnings'})
+		).toBeVisible();
+
+		await fragmentsPage.clickAction('Edit', 'Fragment Example');
+
+		// Go to configuration tab
+
+		await page.getByRole('tab', {name: 'Configuration'}).click();
+
+		await expect(
+			page.getByText('No field type is defined for this fragment.')
+		).toBeVisible();
+	}
+);
+
+test(
 	'View site usages and propagate changes of global fragments',
 	{
 		tag: '@LPS-100540',

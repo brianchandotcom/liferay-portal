@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -115,6 +117,14 @@ public class CPConfigurationEntryLocalServiceImpl
 			userId, groupId, cpConfigurationEntry.getCPConfigurationEntryId(),
 			CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS,
 			StringPool.BLANK);
+
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		_cpConfigurationEntrySettingLocalService.addCPConfigurationEntrySetting(
+			user.getUserId(), groupId,
+			cpConfigurationEntry.getCPConfigurationEntryId(),
+			CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG,
+			jsonSerializer.serializeDeep(cpConfigurationEntry));
 
 		if (cpConfigurationEntry.getParentCPConfigurationList() == null) {
 			return cpConfigurationEntry;
@@ -397,6 +407,9 @@ public class CPConfigurationEntryLocalServiceImpl
 	@Reference
 	private CPConfigurationEntrySettingLocalService
 		_cpConfigurationEntrySettingLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

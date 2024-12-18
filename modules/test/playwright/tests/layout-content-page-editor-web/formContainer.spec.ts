@@ -18,6 +18,7 @@ import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplates
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
@@ -46,6 +47,7 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	loginTest(),
+	masterPagesPagesTest,
 	objectPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
@@ -5426,6 +5428,90 @@ test.describe('Edit mode form errors', () => {
 			).toBeVisible();
 
 			await expect(page.getByText('Step 3 is empty')).toBeVisible();
+		}
+	);
+
+	test(
+		'Show	 error message after mapping the Form Container to object when multiple OOTB input fragments are unavailable',
+		{tag: '@LPS-158143'},
+		async ({
+			apiHelpers,
+			masterPagesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: pageManagementSite.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			await masterPagesPage.goto(pageManagementSite.friendlyUrlPath);
+
+			await masterPagesPage.editMaster(layoutPageTemplateEntryName);
+
+			await masterPagesPage.configureAllowedFragments(
+				['Checkbox', 'Date'],
+				'Form Components'
+			);
+
+			await pageEditorPage.publishPage();
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: pageManagementSite.id,
+				masterLayoutPlid: masterPage.plid,
+				options: {type: 'content'},
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			const fragment = pageEditorPage.getFragment(
+				await pageEditorPage.getFragmentId('Form Container')
+			);
+
+			await fragment
+				.getByLabel('Content Type')
+				.selectOption('All Fields');
+
+			const fieldsModal = page.frameLocator(
+				'iframe[title="Manage Form Fields"]'
+			);
+
+			await fieldsModal
+				.getByLabel('Select All Items on the Page')
+				.check({trial: true});
+
+			await fieldsModal
+				.getByLabel('Select All Items on the Page')
+				.check();
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-title', {
+					hasText: 'Manage Form Fields',
+				}),
+				trigger: page.locator('.modal-footer').getByText('Save'),
+			});
+
+			await expect(page.locator('.alert-danger')).toContainText(
+				'Some fragments are missing. Boolean and Date fields cannot have an associated fragment or cannot be available in master.'
+			);
 		}
 	);
 });

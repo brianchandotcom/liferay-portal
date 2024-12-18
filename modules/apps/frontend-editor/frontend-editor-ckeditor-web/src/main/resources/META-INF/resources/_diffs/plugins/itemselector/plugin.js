@@ -52,20 +52,16 @@
 		},
 
 		_checkImageWidth(editor, editorContent, imageSrc) {
-			if (imageSrc.url) {
-				imageSrc = imageSrc.url;
-			}
+			const url = imageSrc.url ? imageSrc.url : imageSrc;
 
-			if (
+			const editorContentDocument =
 				!editor.window.$.AlloyEditor &&
 				!editorContent.id.endsWith('BalloonEditor')
-			) {
-				editorContent =
-					editorContent.querySelector('iframe').contentDocument;
-			}
+					? editorContent.querySelector('iframe').contentDocument
+					: editorContent;
 
-			const imgElement = editorContent.querySelector(
-				`img[src='${imageSrc}']`
+			const imgElement = editorContentDocument.querySelector(
+				`img[src='${url}']`
 			);
 
 			imgElement.onload = function () {

@@ -359,7 +359,7 @@ test.describe('Form Configuration', () => {
 
 			// Assert form is not redirected if there are validation errors
 
-			const input = page.getByLabel('Lemon Size');
+			const input = page.getByLabel('Lemon Size', {exact: true});
 
 			await input.click();
 
@@ -5358,11 +5358,13 @@ test.describe('View mode form errors', () => {
 
 			// Assert first error message is shown when there are multiple error messages
 
-			await page.getByLabel('Lemon Size').click();
+			await page.getByLabel('Lemon Size', {exact: true}).click();
 
 			await page.keyboard.type('a'.repeat(290));
 
-			await page.getByLabel('Lemon Weight').fill(getRandomString());
+			await page
+				.getByLabel('Lemon Weight', {exact: true})
+				.fill(getRandomString());
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -5378,9 +5380,9 @@ test.describe('View mode form errors', () => {
 
 			// Assert second error message
 
-			await page.getByLabel('Lemon Size').clear();
+			await page.getByLabel('Lemon Size', {exact: true}).clear();
 
-			await page.getByLabel('Lemon Weight').fill('-1');
+			await page.getByLabel('Lemon Weight', {exact: true}).fill('-1');
 
 			await page.getByText('Submit', {exact: true}).click();
 

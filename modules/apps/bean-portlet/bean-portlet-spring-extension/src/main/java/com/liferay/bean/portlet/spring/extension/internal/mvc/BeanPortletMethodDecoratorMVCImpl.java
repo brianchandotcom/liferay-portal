@@ -106,11 +106,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 
 		Class<?> declaringClass = method.getDeclaringClass();
 
-		if (declaringClass.isAnnotationPresent(Controller.class)) {
-			return true;
-		}
-
-		return false;
+		return declaringClass.isAnnotationPresent(Controller.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -377,7 +377,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = AssetCategoryException.class)
-	public void testAddEntryWithCategoriesFromVocabularyNonmultiValued()
+	public void testAddEntryWithAssetCategoriesFromNonmultiValuedAssetVocabulary()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1258,7 +1258,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = AssetCategoryException.class)
-	public void testUpdateEntryWithCategoriesFromVocabularyNonmultiValued()
+	public void testUpdateEntryWithAssetCategoriesFromNonmultiValuedAssetVocabulary()
 		throws Exception {
 
 		ServiceContext serviceContext =

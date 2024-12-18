@@ -348,7 +348,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test(expected = AssetCategoryException.class)
-	public void testShouldFailIfAddingCategoriesFromVocabularyNonmultiValued()
+	public void testShouldFailIfAddingAssetCategoriesFromNonmultiValuedAssetVocabulary()
 		throws Exception {
 
 		ServiceContext serviceContext =

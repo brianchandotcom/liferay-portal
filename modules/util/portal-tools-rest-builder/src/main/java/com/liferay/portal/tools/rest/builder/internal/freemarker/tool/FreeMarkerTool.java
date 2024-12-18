@@ -11,8 +11,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -1045,6 +1047,53 @@ public class FreeMarkerTool {
 
 		return DTOOpenAPIParser.isSchemaProperty(
 			configYAML, propertyName, schema, schemas);
+	}
+
+	public boolean isGeneratePermissions(
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
+		List<JavaMethodSignature> javaMethodSignatures, Schema schema,
+		String schemaName) {
+
+		if (!configYAML.isGeneratePermissions()) {
+			return false;
+		}
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (MapUtil.isEmpty(propertySchemas) ||
+			!propertySchemas.containsKey("permissions") ||
+			!containsJavaMethodSignature(
+				javaMethodSignatures, "get" + schemaName + "PermissionsPage") ||
+			!containsJavaMethodSignature(
+				javaMethodSignatures, "put" + schemaName + "PermissionsPage")) {
+
+			return false;
+		}
+
+		String methodName = javaMethodSignature.getMethodName();
+		String parentSchemaName = GetterUtil.getString(
+			javaMethodSignature.getParentSchemaName());
+		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
+
+		if (methodName.equals(
+				StringBundler.concat(
+					"get", parentSchemaName, pluralSchemaName, "Page")) ||
+			methodName.equals("get" + parentSchemaName + schemaName) ||
+			methodName.equals(
+				StringBundler.concat(
+					"get", parentSchemaName, schemaName,
+					"ByExternalReferenceCode")) ||
+			methodName.equals("post" + parentSchemaName + schemaName) ||
+			methodName.equals("put" + parentSchemaName + schemaName) ||
+			methodName.equals(
+				StringBundler.concat(
+					"put", parentSchemaName, schemaName,
+					"ByExternalReferenceCode"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isParameter(

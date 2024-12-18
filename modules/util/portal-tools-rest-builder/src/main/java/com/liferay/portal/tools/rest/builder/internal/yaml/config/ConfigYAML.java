@@ -102,6 +102,10 @@ public class ConfigYAML {
 		return _generateOpenAPI;
 	}
 
+	public boolean isGeneratePermissions() {
+		return _generatePermissions;
+	}
+
 	public boolean isGenerateREST() {
 		return _generateREST;
 	}
@@ -192,6 +196,10 @@ public class ConfigYAML {
 		_generateOpenAPI = generateOpenAPI;
 	}
 
+	public void setGeneratePermissions(boolean generatePermissions) {
+		_generatePermissions = generatePermissions;
+	}
+
 	public void setGenerateREST(boolean generateREST) {
 		_generateREST = generateREST;
 	}
@@ -245,6 +253,7 @@ public class ConfigYAML {
 	private boolean _generateClientJS;
 	private boolean _generateGraphQL = true;
 	private boolean _generateOpenAPI = true;
+	private boolean _generatePermissions;
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;
 	private String _implDir = "src/main/java";

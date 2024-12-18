@@ -60,6 +60,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -111,6 +112,7 @@ public abstract class Base${schemaName}ResourceImpl
 		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
 	<#if generateBatch>
@@ -134,6 +136,8 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 
 		<#assign
+			generatePermissions = freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)
+			httpMethod = freeMarkerTool.getHTTPMethod(javaMethodSignature.operation)
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
 
@@ -175,6 +179,118 @@ public abstract class Base${schemaName}ResourceImpl
 			<#assign putByERCBatchJavaMethodSignature = javaMethodSignature />
 		</#if>
 
+		<#if generatePermissions>
+			protected abstract ${javaMethodSignature.returnType} do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)}) throws Exception;
+
+			<#if configYAML.application??>
+				/**
+				* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
+				*/
+			</#if>
+			@Override
+			${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
+			public final ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
+				<#if stringUtil.equals(httpMethod, "get")>
+					<#if javaMethodSignature.returnType?contains("Page<")>
+						${javaMethodSignature.returnType} ${schemaVarName}Page =
+					<#else>
+						${javaMethodSignature.returnType} ${httpMethod}${schemaName} =
+					</#if>
+
+					do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterName}
+
+							<#sep>, </#sep>
+						</#list>
+						);
+
+					<#if javaMethodSignature.returnType?contains("Page<")>
+						<#if properties?keys?seq_contains("permissions")>
+							for (${schemaName} ${schemaVarName} : ${schemaVarName}Page.getItems()) {
+								${schemaVarName}.setPermissions(
+									() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
+										Page<Permission> permissionPage = get${schemaName}PermissionsPage(
+										<#if properties?keys?seq_contains("id")>
+											${schemaVarName}.getId()
+										<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+											${schemaVarName}.get${schemaVarName}Id()
+										<#else>
+											${schemaVarName}Id
+										</#if>
+										, null);
+
+										Collection<Permission> permissions = permissionPage.getItems();
+
+										return permissions.toArray(new Permission[permissions.size()]);
+									}));
+							}
+						</#if>
+
+						return ${schemaVarName}Page;
+					<#else>
+						<#if properties?keys?seq_contains("permissions")>
+							${httpMethod}${schemaName}.setPermissions(
+								() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
+										Page<Permission> permissionPage = get${schemaName}PermissionsPage(
+										<#if properties?keys?seq_contains("id")>
+											${httpMethod}${schemaName}.getId()
+										<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+											${httpMethod}${schemaName}.get${schemaVarName}Id()
+										<#else>
+											${schemaVarName}Id
+										</#if>
+										, null);
+
+										Collection<Permission> permissions = permissionPage.getItems();
+
+										return permissions.toArray(new Permission[permissions.size()]);
+								}));
+
+							return ${httpMethod}${schemaName};
+						<#else>
+							/* NO: ${properties?keys?join(", ")} */
+						</#if>
+					</#if>
+				<#else>
+					Permission[] permissions = ${schemaVarName}.getPermissions();
+
+					${javaMethodSignature.returnType} ${httpMethod}${schemaName} =
+						do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterName}
+
+							<#sep>, </#sep>
+						</#list>
+						);
+
+					if (permissions != null) {
+						Page<Permission> permissionPage = put${schemaName}PermissionsPage(
+							<#if properties?keys?seq_contains("id")>
+								${httpMethod}${schemaName}.getId()
+							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+								${httpMethod}${schemaName}.get${schemaVarName}Id()
+							<#else>
+								${schemaVarName}Id
+							</#if>
+							, permissions);
+
+						${httpMethod}${schemaName}.setPermissions(
+							() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
+									Collection<Permission> collection = permissionPage.getItems();
+
+									return collection.toArray(new Permission[collection.size()]);
+							}));
+					}
+
+					return ${httpMethod}${schemaName};
+				</#if>
+
+			}
+
+			<#continue>
+		</#if>
+
 		<#if configYAML.application??>
 			/**
 			* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
@@ -182,7 +298,7 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
+		public <#if generatePermissions>final</#if> ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
@@ -391,15 +507,15 @@ public abstract class Base${schemaName}ResourceImpl
 					</#list>
 				);
 
-				<#assign properties = freeMarkerTool.getWritableDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
+				<#assign writableDTOProperties = freeMarkerTool.getWritableDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
 
-				<#list properties?keys as propertyName>
+				<#list writableDTOProperties?keys as propertyName>
 					<#if !freeMarkerTool.isDTOSchemaProperty(configYAML, propertyName, schema, allSchemas) && !stringUtil.equals(propertyName, "id")>
 						if (${schemaVarName}.get${propertyName?cap_first}() != null) {
 							<#assign dtoPropertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas) />
 
 							<#if dtoPropertySchema.isJsonMap()>
-								${properties[propertyName]} ${propertyName} = existing${schemaName}.get${propertyName?cap_first}();
+								${writableDTOProperties[propertyName]} ${propertyName} = existing${schemaName}.get${propertyName?cap_first}();
 
 								${propertyName}.putAll(${schemaVarName}.get${propertyName?cap_first}());
 
@@ -408,7 +524,7 @@ public abstract class Base${schemaName}ResourceImpl
 								existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
 							</#if>
 						}
-					<#elseif stringUtil.equals(properties[propertyName], "CustomField[]")>
+					<#elseif stringUtil.equals(writableDTOProperties[propertyName], "CustomField[]")>
 						existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
 					</#if>
 				</#list>
@@ -444,8 +560,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#if generateBatch>
 		<#assign
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-
 			createStrategies = freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, properties)
 			updateStrategies = freeMarkerTool.getVulcanBatchImplementationUpdateStrategies(javaMethodSignatures)
 

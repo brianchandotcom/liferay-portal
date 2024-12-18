@@ -15,7 +15,7 @@ boolean showAllPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-st
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet-list:type"));
 
 Set<String> displayedControls = new HashSet<String>();
-Set<String> portletDataHandlerClassNames = new HashSet<String>();
+Set<String> portletDataHandlerNames = new HashSet<String>();
 
 String defaultRange = null;
 long exportGroupId = groupId;

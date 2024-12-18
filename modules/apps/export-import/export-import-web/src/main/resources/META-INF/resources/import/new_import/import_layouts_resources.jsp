@@ -211,7 +211,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 											<%
 											Set<String> displayedControls = new HashSet<String>();
-											Set<String> portletDataHandlerClassNames = new HashSet<String>();
+											Set<String> portletDataHandlerNames = new HashSet<String>();
 
 											for (Portlet portlet : dataPortlets) {
 												PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
@@ -220,12 +220,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 													continue;
 												}
 
-												Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+												String portletDataHandlerName = portletDataHandler.getName();
 
-												String portletDataHandlerClassName = portletDataHandlerClass.getName();
-
-												if (!portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
-													portletDataHandlerClassNames.add(portletDataHandlerClassName);
+												if (!portletDataHandlerNames.contains(portletDataHandlerName)) {
+													portletDataHandlerNames.add(portletDataHandlerName);
 												}
 												else {
 													continue;

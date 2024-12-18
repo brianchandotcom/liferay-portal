@@ -5,6 +5,7 @@
 
 import {getRandomDouble} from '../utils/getRandomDouble';
 import {getRandomInt} from '../utils/getRandomInt';
+import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 export type TAttachmentBase64 = {
@@ -80,11 +81,7 @@ export type TProduct = {
 	}[];
 	productChannelFilter?: boolean;
 	productChannels?: TChannel[];
-	productConfiguration?: {
-		allowBackOrder?: boolean;
-		minOrderQuantity?: number;
-		multipleOrderQuantity?: number;
-	};
+	productConfiguration?: TProductConfiguration;
 	productId?: number;
 	productOptions?: any[];
 	productSpecifications?: any[];
@@ -112,7 +109,7 @@ export type TProductConfiguration = {
 	displayAvailability?: boolean;
 	displayStockQuantity?: boolean;
 	entityExternalReferenceCode?: string;
-	entityId: number;
+	entityId?: number;
 	entityName?: string;
 	entityType?: string;
 	externalReferenceCode?: string;
@@ -127,6 +124,19 @@ export type TProductConfiguration = {
 	productTaxConfiguration?: any;
 	purchasable?: boolean;
 	visible?: boolean;
+};
+
+export type TProductConfigurationList = {
+	catalogExternalReferenceCode?: string;
+	catalogId: number;
+	externalReferenceCode?: string;
+	id?: number;
+	masterProductConfigurationList?: boolean;
+	name?: string;
+	neverExpire?: boolean;
+	parentProductConfigurationListId?: number;
+	priority?: number;
+	productConfigurations?: TProductConfiguration[];
 };
 
 type TProductVirtualSettings = {
@@ -229,6 +239,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async deleteProduct(productId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}`
+		);
+	}
+
+	async deleteProductConfiguration(productConfigurationId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configurations/${productConfigurationId}`
+		);
+	}
+
+	async deleteProductConfigurationList(productConfigurationListId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}`
 		);
 	}
 
@@ -561,20 +583,56 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 	async postProductConfiguration(
 		productConfigurationListId: number,
-		productConfiguration?: TProductConfiguration
+		productConfiguration: TProductConfiguration
 	): Promise<TProductConfiguration> {
 		productConfiguration = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}/product-configurations`,
 			{
 				data: {
+					allowBackOrder: true,
 					entityType: 'product',
+					maxOrderQuantity: 10000,
+					minOrderQuantity: 1,
+					multipleOrderQuantity: 1,
+					purchasable: true,
 					visible: true,
 					...productConfiguration,
 				},
 			}
 		);
 
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: productConfiguration.id,
+				type: 'productConfiguration',
+			});
+		}
+
 		return productConfiguration;
+	}
+
+	async postProductConfigurationList(
+		productConfigurationList: TProductConfigurationList
+	): Promise<TProductConfigurationList> {
+		productConfigurationList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists?nestedFields=productConfigurations`,
+			{
+				data: {
+					catalogId: getRandomInt(),
+					name: getRandomString(),
+					...productConfigurationList,
+				},
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: productConfigurationList.id,
+				type: 'productConfigurationList',
+			});
+		}
+
+		return productConfigurationList;
 	}
 
 	async postProductRelatedProduct(

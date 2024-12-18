@@ -33,7 +33,7 @@ test('User can add, edit, delete a category and add a subcategory.', async ({
 		await createCategories({
 			apiHelpers,
 			categoryNames: [{name: categoryName}],
-			site,
+			siteId: site.id,
 			vocabularyName,
 		});
 	});
@@ -93,23 +93,26 @@ test('User can move a category and subcategory.', async ({
 	page,
 	site,
 }) => {
-	const categoryName1 = 'category-1';
+    let categories = [];
+    const categoryName1 = 'category-1';
 	const categoryName2 = 'category-2';
 	const vocabularyName1 = 'vocabulary one';
 	const vocabularyName2 = 'vocabulary two';
 
-	const categories = await createCategories({
-		apiHelpers,
-		categoryNames: [{name: categoryName1}, {name: categoryName2}],
-		site,
-		vocabularyName: vocabularyName1,
-	});
+	await test.step('add two vocabularies', async () => {
+        categories = await createCategories({
+			apiHelpers,
+            categoryNames: [{name: categoryName1}, {name: categoryName2}],
+			siteId: site.id,
+			vocabularyName: vocabularyName1,
+		});
 
-	await createCategories({
-		apiHelpers,
-		categoryNames: [],
-		site,
-		vocabularyName: vocabularyName2,
+		await createCategories({
+			apiHelpers,
+			categoryNames: [],
+			siteId: site.id,
+			vocabularyName: vocabularyName2,
+		});
 	});
 
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
@@ -173,7 +176,7 @@ test('User can add, edit, delete properties in category.', async ({
 	await createCategories({
 		apiHelpers,
 		categoryNames: [{name: categoryName}],
-		site,
+		siteId: site.id,
 		vocabularyName: 'test vocabulary',
 	});
 

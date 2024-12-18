@@ -498,6 +498,16 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'product') {
 				await this.headlessCommerceAdminCatalog.deleteProduct(item.id);
 			}
+			else if (item.type === 'productConfiguration') {
+				await this.headlessCommerceAdminCatalog.deleteProductConfiguration(
+					item.id
+				);
+			}
+			else if (item.type === 'productConfigurationList') {
+				await this.headlessCommerceAdminCatalog.deleteProductConfigurationList(
+					item.id
+				);
+			}
 			else if (item.type === 'relatedProduct') {
 				await this.headlessCommerceAdminCatalog.deleteRelatedProduct(
 					item.id
@@ -528,6 +538,11 @@ export class DataApiHelpers extends ApiHelpers {
 			}
 			else if (item.type === 'sxpBlueprint') {
 				await this.searchExperiences.deleteSXPBlueprint(item.id);
+			}
+			else if (item.type === 'taxonomyVocabulary') {
+				await this.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+					item.id
+				);
 			}
 			else if (item.type === 'terms') {
 				await this.headlessCommerceAdminOrder.deleteTerms(item.id);

@@ -25,7 +25,7 @@ export async function blogsCategorizedFriendlyUrlSetup({
 	const categories = await createCategories({
 		apiHelpers,
 		categoryNames: friendlyUrlCategories,
-		site,
+		siteId: site.id,
 		vocabularyName,
 	});
 	await createDPTandMarkAsDefault({page, site});

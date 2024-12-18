@@ -33,7 +33,13 @@ export const searchTableRowByValue = async function (
 };
 
 export class CommerceDNDTablePage {
+	readonly addFilterButton: Locator;
+	readonly backButton: Locator;
 	readonly emptyTableMessage: Locator;
+	readonly filterButton: Locator;
+	readonly filterMenuItem: (name: string) => Locator;
+	readonly filterValue: (value: string) => Locator;
+	readonly resetFiltersButton: Locator;
 	readonly table: Locator;
 	readonly tableHeaders: Locator;
 	readonly tableRow: (
@@ -45,7 +51,23 @@ export class CommerceDNDTablePage {
 	readonly tableRowLink: ({colIndex, rowValue}) => Promise<Locator>;
 
 	constructor(page: Page, tableIdentifier: string) {
+		this.addFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Filter',
+		});
+		this.backButton = page.getByRole('button', {exact: true, name: 'Back'});
 		this.emptyTableMessage = page.getByText('No Results Found');
+		this.filterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
+		this.filterMenuItem = (name: string) =>
+			page.getByRole('menuitem', {exact: true, name});
+		this.filterValue = (value: string) => page.getByLabel(value);
+		this.resetFiltersButton = page.getByRole('button', {
+			exact: true,
+			name: 'Reset Filters',
+		});
 		this.table = page.locator(tableIdentifier);
 		this.tableHeaders = this.table.locator('div.dnd-tr').first();
 		this.tableRow = async (
@@ -82,5 +104,23 @@ export class CommerceDNDTablePage {
 
 			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
 		};
+	}
+
+	async addDataSetFilter(
+		filterName: string,
+		filterValue: string,
+		exclude: boolean = false
+	) {
+		await this.filterButton.click();
+		await this.filterMenuItem(filterName).click();
+		await this.filterValue(filterValue).check();
+
+		if (exclude) {
+			await this.filterValue('Exclude').check();
+		}
+
+		await this.addFilterButton.click();
+		await this.backButton.click();
+		await this.filterButton.click();
 	}
 }

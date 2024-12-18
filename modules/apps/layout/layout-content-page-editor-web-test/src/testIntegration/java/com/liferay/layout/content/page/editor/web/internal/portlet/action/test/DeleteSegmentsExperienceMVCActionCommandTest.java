@@ -92,9 +92,12 @@ public class DeleteSegmentsExperienceMVCActionCommandTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		portletPreferences.setValue("articleId", journalArticle.getArticleId());
 		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"articleExternalReferenceCode",
+			journalArticle.getExternalReferenceCode());
+
+		portletPreferences.setValue(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode());
 
 		portletPreferences.store();
 
@@ -114,8 +117,9 @@ public class DeleteSegmentsExperienceMVCActionCommandTest {
 			draftLayout, portletId, null);
 
 		Assert.assertEquals(
-			journalArticle.getArticleId(),
-			portletPreferences.getValue("articleId", StringPool.BLANK));
+			journalArticle.getExternalReferenceCode(),
+			portletPreferences.getValue(
+				"articleExternalReferenceCode", StringPool.BLANK));
 	}
 
 	private String _addJournalContentPortletToLayout(Layout layout)

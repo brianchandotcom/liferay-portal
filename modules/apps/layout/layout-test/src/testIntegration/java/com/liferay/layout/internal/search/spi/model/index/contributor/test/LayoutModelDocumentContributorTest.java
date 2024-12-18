@@ -6,7 +6,6 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -354,16 +353,11 @@ public class LayoutModelDocumentContributorTest {
 			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
 			_journalConverter);
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		_setUpPortletPreferences(assetEntry, journalArticle, portletId);
+		_setUpPortletPreferences(journalArticle, portletId);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, _layout, portletId);
+		_assertPortletPreferences(journalArticle, _layout, portletId);
 
 		_assertReindex(content);
 	}
@@ -428,16 +422,11 @@ public class LayoutModelDocumentContributorTest {
 			).toString(),
 			_group.getGroupId(), _journalConverter);
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		_setUpPortletPreferences(assetEntry, journalArticle, portletId);
+		_setUpPortletPreferences(journalArticle, portletId);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, _layout, portletId);
+		_assertPortletPreferences(journalArticle, _layout, portletId);
 
 		_assertReindex("\"lat\":" + lat, "\"lng\":" + lng);
 	}
@@ -564,21 +553,17 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	private void _assertPortletPreferences(
-		AssetEntry assetEntry, JournalArticle journalArticle, Layout layout,
-		String portletId) {
+		JournalArticle journalArticle, Layout layout, String portletId) {
 
 		PortletPreferences portletPreferences =
 			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
 
 		Assert.assertEquals(
-			String.valueOf(journalArticle.getArticleId()),
-			portletPreferences.getValue("articleId", null));
-		Assert.assertEquals(
-			String.valueOf(assetEntry.getEntryId()),
-			portletPreferences.getValue("assetEntryId", null));
+			String.valueOf(journalArticle.getExternalReferenceCode()),
+			portletPreferences.getValue("articleExternalReferenceCode", null));
 		Assert.assertEquals(
 			String.valueOf(journalArticle.getGroupId()),
-			portletPreferences.getValue("groupId", null));
+			portletPreferences.getValue("groupExternalReferenceCode", null));
 	}
 
 	private void _assertReindex(String... expectedContents) throws Exception {
@@ -637,16 +622,11 @@ public class LayoutModelDocumentContributorTest {
 			_ddmFormValuesToFieldsConverter, content, _group.getGroupId(),
 			_journalConverter);
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		_setUpPortletPreferences(assetEntry, journalArticle, portletId);
+		_setUpPortletPreferences(journalArticle, portletId);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, _layout, portletId);
+		_assertPortletPreferences(journalArticle, _layout, portletId);
 
 		_assertReindex(content);
 	}
@@ -741,8 +721,7 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	private void _setUpPortletPreferences(
-			AssetEntry assetEntry, JournalArticle journalArticle,
-			String portletId)
+			JournalArticle journalArticle, String portletId)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -750,16 +729,15 @@ public class LayoutModelDocumentContributorTest {
 				_draftLayout, portletId, null);
 
 		portletPreferences.setValue(
-			"articleId", String.valueOf(journalArticle.getArticleId()));
+			"articleExternalReferenceCode",
+			journalArticle.getExternalReferenceCode());
 		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
-		portletPreferences.setValue(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"groupExternalReferenceCode",
+			String.valueOf(journalArticle.getGroupId()));
 
 		portletPreferences.store();
 
-		_assertPortletPreferences(
-			assetEntry, journalArticle, _draftLayout, portletId);
+		_assertPortletPreferences(journalArticle, _draftLayout, portletId);
 	}
 
 	private static final String _CLASS_NAME_INCLUDE_TAG =

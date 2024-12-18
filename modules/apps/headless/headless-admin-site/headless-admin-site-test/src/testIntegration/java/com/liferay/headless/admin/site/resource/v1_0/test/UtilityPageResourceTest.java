@@ -133,13 +133,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			Assert.assertNull(problem.getTitle());
 		}
 
-		UtilityPageResource curUtilityPageResource = _getUtilityPageResource();
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
 		_assertNestedFields(
-			curUtilityPageResource.
-				getSiteSiteByExternalReferenceCodeUtilityPage(
-					testGroup.getExternalReferenceCode(),
-					postUtilityPage.getExternalReferenceCode()));
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				postUtilityPage.getExternalReferenceCode()));
 	}
 
 	@Ignore
@@ -262,12 +261,11 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	public void testPostSiteSiteByExternalReferenceCodeUtilityPagePageSpecification()
 		throws Exception {
 
-		UtilityPageResource curUtilityPageResource = _getUtilityPageResource();
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
 		UtilityPage utilityPage =
-			curUtilityPageResource.
-				postSiteSiteByExternalReferenceCodeUtilityPage(
-					testGroup.getExternalReferenceCode(), randomUtilityPage());
+			utilityPageResource.postSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(), randomUtilityPage());
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
@@ -466,10 +464,10 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
 				testGroup.getExternalReferenceCode(), randomUtilityPage());
 
-		UtilityPageResource curUtilityPageResource = _getUtilityPageResource();
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
 		page =
-			curUtilityPageResource.
+			utilityPageResource.
 				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
 					Pagination.of(1, 10), null);

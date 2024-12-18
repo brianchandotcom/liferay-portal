@@ -192,10 +192,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		SitePageResource curSitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource();
 
 		SitePage sitePage =
-			curSitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				layout.getExternalReferenceCode());
 
@@ -591,10 +591,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				SitePage sitePage)
 		throws Exception {
 
-		SitePageResource curSitePageResource = _getSitePageResource();
+		SitePageResource sitePageResource = _getSitePageResource();
 
 		_assertNestedFields(
-			curSitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode()));
 	}

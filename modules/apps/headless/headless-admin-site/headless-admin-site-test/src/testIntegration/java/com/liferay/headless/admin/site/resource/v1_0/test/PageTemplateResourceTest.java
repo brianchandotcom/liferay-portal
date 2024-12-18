@@ -364,11 +364,10 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	public void testPostSiteSiteByExternalReferenceCodePageTemplatePageSpecification()
 		throws Exception {
 
-		PageTemplateResource curPageTemplateResource =
-			_getPageTemplateResource();
+		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
 
 		PageTemplate pageTemplate =
-			curPageTemplateResource.
+			pageTemplateResource.
 				postSiteSiteByExternalReferenceCodePageTemplate(
 					testGroup.getExternalReferenceCode(),
 					_getContentPageTemplate(testGroup));
@@ -396,7 +395,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 							curContentPageSpecification));
 
 		PageTemplate widgetPageTemplate =
-			curPageTemplateResource.
+			pageTemplateResource.
 				postSiteSiteByExternalReferenceCodePageTemplate(
 					testGroup.getExternalReferenceCode(),
 					_getWidgetPageTemplate(testGroup));
@@ -962,20 +961,18 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	private void _testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields()
 		throws Exception {
 
-		PageTemplateResource curPageTemplateResource =
-			_getPageTemplateResource();
+		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
 
 		PageTemplate pageTemplate =
-			curPageTemplateResource.
+			pageTemplateResource.
 				postSiteSiteByExternalReferenceCodePageTemplate(
 					testGroup.getExternalReferenceCode(),
 					_getContentPageTemplate(testGroup));
 
 		PageTemplate getPageTemplate =
-			curPageTemplateResource.
-				getSiteSiteByExternalReferenceCodePageTemplate(
-					testGroup.getExternalReferenceCode(),
-					pageTemplate.getExternalReferenceCode());
+			pageTemplateResource.getSiteSiteByExternalReferenceCodePageTemplate(
+				testGroup.getExternalReferenceCode(),
+				pageTemplate.getExternalReferenceCode());
 
 		assertEquals(pageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);

@@ -107,10 +107,10 @@ public class LayoutSEOLinkManagerTest {
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> canonicalURLMap = Collections.singletonMap(
-			siteDefaultLocale, RandomTestUtil.randomString());
+		String canonicalURL = RandomTestUtil.randomString();
 
-		LayoutSEOEntry layoutSEOEntry = _updateLayoutSEOEntry(canonicalURLMap);
+		_updateLayoutSEOEntry(
+			Collections.singletonMap(siteDefaultLocale, canonicalURL));
 
 		for (LayoutSEOLink layoutSEOLink :
 				_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
@@ -122,9 +122,7 @@ public class LayoutSEOLinkManagerTest {
 			if (Validator.isNull(hrefLang) ||
 				hrefLang.equals(siteDefaultLocale.toLanguageTag())) {
 
-				Assert.assertEquals(
-					layoutSEOLink.getHref(),
-					layoutSEOEntry.getCanonicalURL(siteDefaultLocale));
+				Assert.assertEquals(layoutSEOLink.getHref(), canonicalURL);
 			}
 		}
 	}

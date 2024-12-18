@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductConfigurationDTOConverterContext;
+import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductConfigurationEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductConfigurationUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -48,6 +50,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -83,6 +86,13 @@ public class ProductConfigurationResourceImpl
 
 		deleteProductConfiguration(
 			cpConfigurationEntry.getCPConfigurationEntryId());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -629,6 +639,9 @@ public class ProductConfigurationResourceImpl
 				_dtoConverterRegistry, cpDefinitionId,
 				contextAcceptLanguage.getPreferredLocale(), null, null));
 	}
+
+	private static final EntityModel _entityModel =
+		new ProductConfigurationEntityModel();
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPConfigurationEntry)"

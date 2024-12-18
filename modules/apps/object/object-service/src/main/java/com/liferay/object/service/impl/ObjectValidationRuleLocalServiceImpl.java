@@ -22,10 +22,12 @@ import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.exception.RequiredObjectValidationRuleSettingException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
+import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
@@ -36,6 +38,7 @@ import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.service.persistence.ObjectValidationRuleSettingPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -44,8 +47,11 @@ import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -63,6 +69,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -447,6 +454,10 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRuleEngine.getKey(),
 						ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
 
+				_addRelatedObjectEntryValues(
+					objectDefinition.getObjectDefinitionId(),
+					objectValidationRule.getScript(), userId, variables);
+
 				results = objectValidationRuleEngine.execute(
 					variables, objectValidationRule.getScript());
 			}
@@ -534,6 +545,80 @@ public class ObjectValidationRuleLocalServiceImpl
 		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {
 			throw new ObjectValidationRuleEngineException(
 				objectValidationRuleResults);
+		}
+	}
+
+	private void _addRelatedObjectEntryValues(
+			long objectDefinitionId, ObjectField relationshipObjectField,
+			long userId, Map<String, Object> values)
+		throws PortalException {
+
+		long primaryKey = MapUtil.getLong(
+			values, relationshipObjectField.getName());
+
+		if (primaryKey == 0) {
+			ListUtil.isNotEmptyForEach(
+				_objectFieldPersistence.findByObjectDefinitionId(
+					objectDefinitionId),
+				objectField -> values.put(
+					StringBundler.concat(
+						relationshipObjectField.getName(), StringPool.UNDERLINE,
+						objectField.getName()),
+					null));
+
+			return;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		Map<String, Object> variables = ObjectEntryVariablesUtil.getVariables(
+			_dtoConverterRegistry, objectDefinition, false,
+			ObjectEntryUtil.getPayloadJSONObject(
+				_dtoConverterRegistry, _jsonFactory, objectDefinition,
+				primaryKey, _systemObjectDefinitionManagerRegistry, userId),
+			_systemObjectDefinitionManagerRegistry);
+
+		for (Map.Entry<String, Object> entry : variables.entrySet()) {
+			values.put(
+				StringBundler.concat(
+					relationshipObjectField.getName(), StringPool.UNDERLINE,
+					entry.getKey()),
+				entry.getValue());
+		}
+	}
+
+	private void _addRelatedObjectEntryValues(
+			long objectDefinitionId, String script, long userId,
+			Map<String, Object> variables)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-43542")) {
+			return;
+		}
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId2(
+					objectDefinitionId)) {
+
+			ObjectField relationshipObjectField =
+				_objectFieldPersistence.findByPrimaryKey(
+					objectRelationship.getObjectFieldId2());
+
+			if (!script.contains(
+					relationshipObjectField.getName() + StringPool.UNDERLINE)) {
+
+				continue;
+			}
+
+			_addRelatedObjectEntryValues(
+				objectRelationship.getObjectDefinitionId1(),
+				relationshipObjectField, userId,
+				(Map<String, Object>)variables.get("baseModel"));
+			_addRelatedObjectEntryValues(
+				objectRelationship.getObjectDefinitionId1(),
+				relationshipObjectField, userId,
+				(Map<String, Object>)variables.get("originalBaseModel"));
 		}
 	}
 
@@ -905,6 +990,9 @@ public class ObjectValidationRuleLocalServiceImpl
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -912,6 +1000,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
 
 	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;

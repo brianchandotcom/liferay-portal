@@ -235,7 +235,13 @@ public class AnalyticsConfigurationRegistryImpl
 						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_ORDER,
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_PRODUCT
+							DISPATCH_TRIGGER_NAME_PRODUCT,
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_ASSET_ENTITIES,
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_MOST_VIEWED_RECOMMENDER,
+						AnalyticsMachineLearningConstants.
+							DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER
 					});
 
 				_deleteAnalyticsAdmin(companyId);

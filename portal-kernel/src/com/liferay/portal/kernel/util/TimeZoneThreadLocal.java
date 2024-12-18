@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;

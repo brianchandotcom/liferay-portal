@@ -9,6 +9,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {zipFolder} from '../../utils/zip';
 
 export class FragmentsPage {
 	readonly page: Page;
@@ -234,6 +235,22 @@ export class FragmentsPage {
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 
 		await waitForAlert(this.page);
+	}
+
+	async importFile(fileName: string, folderPath: string) {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.page
+			.getByRole('button', {exact: true, name: 'Select File'})
+			.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(await zipFolder(folderPath));
+
+		await this.page.getByText(fileName).waitFor();
+
+		await this.page.getByRole('button', {name: 'Import'}).click();
 	}
 
 	async markAsCacheable(title: string) {

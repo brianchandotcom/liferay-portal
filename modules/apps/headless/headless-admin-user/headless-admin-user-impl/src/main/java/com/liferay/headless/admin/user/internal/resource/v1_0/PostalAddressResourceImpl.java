@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
@@ -229,6 +230,10 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setRegionId(_getRegionId(postalAddress, country));
 		}
 
+		if (Validator.isNotNull(postalAddress.getAddressType())) {
+			address.setListTypeId(_getListTypeId(address, postalAddress));
+		}
+
 		boolean oldPrimary = address.isPrimary();
 
 		boolean newPrimary = GetterUtil.getBoolean(
@@ -249,10 +254,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			GetterUtil.getString(
 				postalAddress.getPostalCode(), address.getZip()),
 			address.getRegionId(), address.getCountryId(),
-			GetterUtil.getLong(
-				_getListTypeId(address, postalAddress),
-				address.getListTypeId()),
-			address.isMailing(), newPrimary,
+			address.getListTypeId(), address.isMailing(), newPrimary,
 			GetterUtil.getString(
 				postalAddress.getPhoneNumber(), address.getPhoneNumber()));
 

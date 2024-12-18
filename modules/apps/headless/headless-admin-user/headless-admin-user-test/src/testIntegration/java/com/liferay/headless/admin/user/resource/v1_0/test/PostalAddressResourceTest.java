@@ -12,6 +12,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -98,6 +99,7 @@ public class PostalAddressResourceTest
 		super.testPatchPostalAddress();
 
 		_testPatchPostalAddressNotPrimary();
+		_testPatchPostalAddressWithoutListType();
 	}
 
 	@Override
@@ -412,6 +414,22 @@ public class PostalAddressResourceTest
 					postalAddress.getPrimary() &&
 					!Objects.equals(
 						postalAddress.getId(), patchPostalAddress.getId())));
+	}
+
+	private void _testPatchPostalAddressWithoutListType() throws Exception {
+		PostalAddress randomPostalAddress = randomPostalAddress();
+
+		randomPostalAddress = _addPostalAddress(
+			randomPostalAddress, Contact.class.getName(), _user.getContactId(),
+			ListTypeConstants.CONTACT_ADDRESS);
+
+		randomPostalAddress.setAddressType(StringPool.BLANK);
+
+		PostalAddress patchPostalAddress =
+			postalAddressResource.patchPostalAddress(
+				randomPostalAddress.getId(), randomPostalAddress);
+
+		Assert.assertEquals("business", patchPostalAddress.getAddressType());
 	}
 
 	private PostalAddress _toPostalAddress(Address address) {

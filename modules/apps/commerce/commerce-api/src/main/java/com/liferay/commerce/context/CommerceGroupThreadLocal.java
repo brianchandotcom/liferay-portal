@@ -8,7 +8,6 @@ package com.liferay.commerce.context;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.auth.CompanyCentralizedThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
@@ -32,7 +31,7 @@ public class CommerceGroupThreadLocal {
 	}
 
 	private static final CentralizedThreadLocal<Group> _commerceGroup =
-		new CompanyCentralizedThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			CommerceGroupThreadLocal.class + "._commerceGroup");
 
 }

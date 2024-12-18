@@ -31,15 +31,18 @@ long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTempl
 					</div>
 
 					<div class="col-12">
-						<aui:input data-qa-id="catalogNameInput" disabled="<%= true %>" formName="fm" name="catalogName" type="text" value="<%= cpConfigurationListDisplayContext.getCommerceCatalogName() %>">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input data-qa-id="catalogNameInput" disabled="<%= true %>" formName="fm" name="catalogName" type="text" value="<%= cpConfigurationListDisplayContext.getCommerceCatalogName() %>" />
 					</div>
+
+					<c:if test="<%= cpConfigurationList.getParentCPConfigurationListId() > 0 %>">
+						<div class="col-12">
+							<aui:input data-qa-id="parentCPConfigurationListNameInput" disabled="<%= true %>" formName="fm" label="parent-configuration" name="parentCPConfigurationListName" type="text" value="<%= cpConfigurationListDisplayContext.getParentCPConfigurationListName() %>" />
+						</div>
+					</c:if>
 
 					<div class="col-12">
 						<aui:input data-qa-id="priorityInput" formName="fm" name="priority" type="text">
 							<aui:validator name="number" />
-							<aui:validator name="required" />
 						</aui:input>
 					</div>
 				</div>
@@ -53,12 +56,12 @@ long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTempl
 					title='<%= LanguageUtil.get(request, "schedule") %>'
 				>
 					<div class="row">
-						<div class="col-12">
-							<aui:input data-qa-id="displayDateInput" formName="fm" name="displayDate" />
+						<div class="col-12" data-qa-id="displayDate">
+							<aui:input formName="fm" name="displayDate" />
 						</div>
 
-						<div class="col-12">
-							<aui:input data-qa-id="expirationDateInput" dateTogglerCheckboxLabel="never-expire" disabled="<%= cpConfigurationList.getExpirationDate() == null %>" formName="fm" name="expirationDate" />
+						<div class="col-12" data-qa-id="expirationDate">
+							<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= cpConfigurationList.getExpirationDate() == null %>" formName="fm" name="expirationDate" />
 						</div>
 					</div>
 				</commerce-ui:panel>

@@ -327,6 +327,27 @@ public class CPConfigurationListDisplayContext {
 		return headerActionModels;
 	}
 
+	public String getParentCPConfigurationListName() throws PortalException {
+		CPConfigurationList cpConfigurationList = getCPConfigurationList();
+
+		if (cpConfigurationList == null) {
+			return StringPool.BLANK;
+		}
+
+		long parentCPConfigurationListId =
+			cpConfigurationList.getParentCPConfigurationListId();
+
+		if (parentCPConfigurationListId == 0) {
+			return StringPool.BLANK;
+		}
+
+		CPConfigurationList parentCPConfigurationList =
+			cpConfigurationListService.getCPConfigurationList(
+				parentCPConfigurationListId);
+
+		return parentCPConfigurationList.getName();
+	}
+
 	public String getProductName() throws PortalException {
 		if (_cpDefinition != null) {
 			return _cpDefinition.getName(

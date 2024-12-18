@@ -64,6 +64,7 @@ export default function ({
 					{
 						cpConfigurationListId: productConfigurationList.id,
 						p_p_state: windowState,
+						screenNavigationCategoryKey: 'details',
 					}
 				);
 

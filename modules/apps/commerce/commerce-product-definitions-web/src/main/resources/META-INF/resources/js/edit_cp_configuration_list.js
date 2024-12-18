@@ -75,7 +75,8 @@ export default function (context) {
 						expirationDate,
 						name: formData.get(`${context.namespace}name`),
 						neverExpire: !expirationDate,
-						priority: formData.get(`${context.namespace}priority`),
+						priority:
+							formData.get(`${context.namespace}priority`) || '0',
 					}),
 					headers: fetchParams.headers,
 					method: 'PATCH',

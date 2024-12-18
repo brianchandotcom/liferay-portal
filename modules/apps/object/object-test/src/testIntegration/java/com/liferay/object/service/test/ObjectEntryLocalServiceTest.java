@@ -467,6 +467,139 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 	}
 
+	@FeatureFlags("LPD-43542")
+	@Test
+	public void testAddAndUpdateObjectEntryWithObjectValidationRule()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"name"
+					).build()));
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2);
+
+		ObjectField relationshipObjectField1 =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationship1.getObjectFieldId2());
+
+		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
+			objectDefinition2,
+			String.format(
+				"not(isEmpty(%s_name))", relationshipObjectField1.getName()));
+
+		ObjectRelationship objectRelationship2 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService,
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					TestPropsValues.getCompanyId(), User.class.getName()),
+				objectDefinition2);
+
+		ObjectField relationshipObjectField2 =
+			_objectFieldLocalService.fetchObjectField(
+				objectRelationship2.getObjectFieldId2());
+
+		try {
+			_addObjectEntry(
+				0, objectDefinition2.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					relationshipObjectField2.getName(),
+					TestPropsValues.getUserId()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule);
+		}
+
+		objectValidationRule = _updateObjectValidationRule(
+			objectValidationRule,
+			String.format(
+				"isEmpty(%s_name)", relationshipObjectField1.getName()));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			0, objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				relationshipObjectField2.getName(),
+				() -> {
+					User user = UserTestUtil.addUser(
+						RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+						"Paul", RandomTestUtil.randomString(),
+						new long[] {TestPropsValues.getGroupId()});
+
+					return user.getUserId();
+				}
+			).build());
+
+		_updateObjectValidationRule(
+			objectValidationRule,
+			String.format(
+				"%s_name == oldValue(\"%s_givenName\")",
+				relationshipObjectField1.getName(),
+				relationshipObjectField2.getName()));
+
+		_clearValidatedObjectEntryIds();
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				relationshipObjectField1.getName(),
+				() -> {
+					ObjectEntry relatedObjectEntry = _addObjectEntry(
+						0, objectDefinition1.getObjectDefinitionId(),
+						HashMapBuilder.<String, Serializable>put(
+							"name", "Paul"
+						).build());
+
+					return relatedObjectEntry.getObjectEntryId();
+				}
+			).put(
+				relationshipObjectField2.getName(),
+				() -> {
+					User user2 = UserTestUtil.addUser(
+						RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+						"Peter", RandomTestUtil.randomString(),
+						new long[] {TestPropsValues.getGroupId()});
+
+					return user2.getUserId();
+				}
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_clearValidatedObjectEntryIds();
+
+		_objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				relationshipObjectField1.getName(),
+				() -> {
+					ObjectEntry relatedObjectEntry = _addObjectEntry(
+						0, objectDefinition1.getObjectDefinitionId(),
+						HashMapBuilder.<String, Serializable>put(
+							"name", "Peter"
+						).build());
+
+					return relatedObjectEntry.getObjectEntryId();
+				}
+			).put(
+				relationshipObjectField2.getName(), 0
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	@Test
 	public void testAddMultipleObjectEntriesWithTheSameObjectValidationRule()
 		throws Exception {
@@ -496,22 +629,8 @@ public class ObjectEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
-
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
-
-			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 1,
-				objectValidationRuleResults.size());
-
-			_assertObjectValidationRuleResult(
-				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
-				null, objectValidationRuleResults.get(0));
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule);
 		}
 	}
 
@@ -1505,22 +1624,8 @@ public class ObjectEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
-
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
-
-			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 1,
-				objectValidationRuleResults.size());
-
-			_assertObjectValidationRuleResult(
-				objectValidationRule1.getErrorLabel(LocaleUtil.getDefault()),
-				null, objectValidationRuleResults.get(0));
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule1);
 		}
 
 		_objectValidationRuleLocalService.deleteObjectValidationRule(
@@ -3685,33 +3790,15 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			user.setEmailAddress(RandomTestUtil.randomString());
 
-			ThreadLocal<Set<Long>> threadLocal =
-				ReflectionTestUtil.getFieldValue(
-					ObjectEntryThreadLocal.class, "_validatedObjectEntryIds");
-
-			threadLocal.set(new HashSet<>());
+			_clearValidatedObjectEntryIds();
 
 			_userLocalService.updateUser(user);
 
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
-
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
-
-			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 1,
-				objectValidationRuleResults.size());
-
-			_assertObjectValidationRuleResult(
-				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
-				null, objectValidationRuleResults.get(0));
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule);
 		}
 		finally {
 			_objectValidationRuleLocalService.deleteObjectValidationRule(
@@ -3854,6 +3941,20 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectValidationRule _addObjectValidationRule(
+			ObjectDefinition objectDefinition, String script)
+		throws PortalException {
+
+		return _objectValidationRuleLocalService.addObjectValidationRule(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			RandomTestUtil.randomLocaleStringMap(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION, script,
+			false, Collections.emptyList());
+	}
+
+	private ObjectValidationRule _addObjectValidationRule(
 			String engine, Map<Locale, String> errorLabelMap, String script)
 		throws Exception {
 
@@ -3931,6 +4032,28 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(count, _count());
 	}
 
+	private void _assertFailureObjectValidationRule(
+		ModelListenerException modelListenerException,
+		ObjectValidationRule objectValidationRule) {
+
+		ObjectValidationRuleEngineException
+			objectValidationRuleEngineException =
+				(ObjectValidationRuleEngineException)
+					modelListenerException.getCause();
+
+		List<ObjectValidationRuleResult> objectValidationRuleResults =
+			objectValidationRuleEngineException.
+				getObjectValidationRuleResults();
+
+		Assert.assertEquals(
+			objectValidationRuleResults.toString(), 1,
+			objectValidationRuleResults.size());
+
+		_assertObjectValidationRuleResult(
+			objectValidationRule.getErrorLabel(LocaleUtil.getDefault()), null,
+			objectValidationRuleResults.get(0));
+	}
+
 	private void _assertKeywords(String keywords, int count) throws Exception {
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			_objectEntryLocalService.searchObjectEntries(
@@ -3983,6 +4106,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedObjectFieldName,
 			objectValidationRuleResult.getObjectFieldName());
+	}
+
+	private void _clearValidatedObjectEntryIds() {
+		ThreadLocal<Set<Long>> threadLocal = ReflectionTestUtil.getFieldValue(
+			ObjectEntryThreadLocal.class, "_validatedObjectEntryIds");
+
+		threadLocal.set(new HashSet<>());
 	}
 
 	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {
@@ -4683,6 +4813,15 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
+	}
+
+	private ObjectValidationRule _updateObjectValidationRule(
+		ObjectValidationRule objectValidationRule, String script) {
+
+		objectValidationRule.setScript(script);
+
+		return _objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule);
 	}
 
 	@Inject

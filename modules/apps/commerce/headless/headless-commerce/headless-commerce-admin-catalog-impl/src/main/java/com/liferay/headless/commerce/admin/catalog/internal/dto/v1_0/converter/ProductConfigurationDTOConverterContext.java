@@ -23,19 +23,26 @@ public class ProductConfigurationDTOConverterContext
 	public ProductConfigurationDTOConverterContext(
 		boolean acceptAllLanguages, Map<String, Map<String, String>> actions,
 		long cpConfigurationEntryId, DTOConverterRegistry dtoConverterRegistry,
-		Object id, Locale locale, UriInfo uriInfo, User user) {
+		Object id, Locale locale, boolean showDifferences, UriInfo uriInfo,
+		User user) {
 
 		super(
 			acceptAllLanguages, actions, dtoConverterRegistry, id, locale,
 			uriInfo, user);
 
 		_cpConfigurationEntryId = cpConfigurationEntryId;
+		_showDifferences = showDifferences;
 	}
 
 	public long getCPConfigurationEntryId() {
 		return _cpConfigurationEntryId;
 	}
 
+	public boolean getShowDifferences() {
+		return _showDifferences;
+	}
+
 	private final long _cpConfigurationEntryId;
+	private final boolean _showDifferences;
 
 }

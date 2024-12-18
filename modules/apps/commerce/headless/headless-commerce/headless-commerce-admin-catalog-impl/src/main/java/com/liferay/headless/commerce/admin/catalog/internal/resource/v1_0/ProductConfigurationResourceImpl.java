@@ -109,7 +109,7 @@ public class ProductConfigurationResourceImpl
 		throws Exception {
 
 		return _toProductConfiguration(
-			_cpConfigurationEntryService.getCPConfigurationEntry(id));
+			_cpConfigurationEntryService.getCPConfigurationEntry(id), false);
 	}
 
 	@Override
@@ -129,8 +129,9 @@ public class ProductConfigurationResourceImpl
 	@Override
 	public Page<ProductConfiguration>
 			getProductConfigurationListByExternalReferenceCodeProductConfigurationsPage(
-				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				String externalReferenceCode, String search,
+				Boolean showDifferences, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		CPConfigurationList cpConfigurationList =
@@ -139,8 +140,8 @@ public class ProductConfigurationResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getProductConfigurationListIdProductConfigurationsPage(
-			cpConfigurationList.getCPConfigurationListId(), search, filter,
-			pagination, sorts);
+			cpConfigurationList.getCPConfigurationListId(), search,
+			showDifferences, filter, pagination, sorts);
 	}
 
 	@NestedField(
@@ -150,8 +151,8 @@ public class ProductConfigurationResourceImpl
 	@Override
 	public Page<ProductConfiguration>
 			getProductConfigurationListIdProductConfigurationsPage(
-				Long id, String search, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				Long id, String search, Boolean showDifferences, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPConfigurationList cpConfigurationList =
@@ -177,7 +178,8 @@ public class ProductConfigurationResourceImpl
 			sorts,
 			document -> _toProductConfiguration(
 				_cpConfigurationEntryService.getCPConfigurationEntry(
-					GetterUtil.getLong(document.get(Field.CLASS_PK)))));
+					GetterUtil.getLong(document.get(Field.CLASS_PK))),
+				GetterUtil.getBoolean(showDifferences)));
 	}
 
 	@NestedField(parentClass = Product.class, value = "productConfiguration")
@@ -306,7 +308,8 @@ public class ProductConfigurationResourceImpl
 					cpConfigurationEntry.getWeight()),
 				GetterUtil.getDouble(
 					productShippingConfiguration.getWidth(),
-					cpConfigurationEntry.getWidth())));
+					cpConfigurationEntry.getWidth())),
+			false);
 	}
 
 	@Override
@@ -544,7 +547,8 @@ public class ProductConfigurationResourceImpl
 					productTaxConfiguration.getTaxable(), true),
 				GetterUtil.getBoolean(productConfiguration.getVisible(), true),
 				GetterUtil.getDouble(productShippingConfiguration.getWeight()),
-				GetterUtil.getDouble(productShippingConfiguration.getWidth())));
+				GetterUtil.getDouble(productShippingConfiguration.getWidth())),
+			false);
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -608,7 +612,7 @@ public class ProductConfigurationResourceImpl
 	}
 
 	private ProductConfiguration _toProductConfiguration(
-			CPConfigurationEntry cpConfigurationEntry)
+			CPConfigurationEntry cpConfigurationEntry, boolean showDifferences)
 		throws Exception {
 
 		return _productConfigurationDTOConverter.toDTO(
@@ -617,8 +621,8 @@ public class ProductConfigurationResourceImpl
 				_getActions(cpConfigurationEntry),
 				cpConfigurationEntry.getCPConfigurationEntryId(),
 				_dtoConverterRegistry, null,
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				contextAcceptLanguage.getPreferredLocale(), showDifferences,
+				contextUriInfo, contextUser));
 	}
 
 	private ProductConfiguration _toProductConfiguration(Long cpDefinitionId)

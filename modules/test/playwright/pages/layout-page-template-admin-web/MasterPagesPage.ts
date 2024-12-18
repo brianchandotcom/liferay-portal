@@ -106,6 +106,33 @@ export class MasterPagesPage {
 		await this.page.getByText('Configure Allowed Fragments').waitFor();
 	}
 
+	async configureAllowedFragments(
+		fragmentNames: string[],
+		prefilter: string
+	) {
+		await this.page
+			.getByRole('button', {name: 'Configure Allowed Fragments'})
+			.click();
+
+		if (prefilter) {
+			await this.page
+				.getByRole('dialog', {name: 'Allowed Fragments'})
+				.getByPlaceholder('Search')
+				.fill(prefilter);
+		}
+
+		for (const fragmentName of fragmentNames) {
+			await this.page
+				.getByRole('treeitem', {exact: true, name: fragmentName})
+				.click();
+		}
+
+		await this.page
+			.getByRole('dialog', {name: 'Allowed Fragments'})
+			.getByRole('button', {name: 'Save'})
+			.click();
+	}
+
 	async importFile(fileName: string, folderPath: string) {
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 

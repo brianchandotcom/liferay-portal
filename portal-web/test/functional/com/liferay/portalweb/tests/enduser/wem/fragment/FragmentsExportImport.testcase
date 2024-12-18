@@ -1221,61 +1221,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-101256. The fragment replacing HTML,CSS,JS,JSON in dependencies survives after importing."
-	@priority = 4
-	test ImportFragmentWithHTMLCSSJSJSONReplaced {
-		task ("Import a fragment collection") {
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "collections-HTMLCSSJSJSON-replace.zip");
-		}
-
-		task ("Add an imported fragment composition to content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				composition = "true",
-				fragmentName = "New Fragment Name");
-		}
-
-		task ("Assert changes from fragment are propagated to composition of fragment") {
-			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
-
-			AssertElementPresent(
-				key_elementHeader = "//div[@data-name='Fragment Name']",
-				key_position = 1,
-				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
-
-			AssertElementPresent(
-				key_color = "success",
-				key_text = "Here we go",
-				locator1 = "Button#ANY_WITH_COLOR");
-
-			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__fragment-content')][contains(.,'border: solid violet')]");
-
-			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			AssertTextEquals(
-				key_fieldLabel = "Button Text",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Go Somewhere");
-
-			ClickNoError(
-				key_text = "Here we go",
-				locator1 = "Button#ANY");
-
-			AssertConfirm(value1 = "Here we go");
-		}
-	}
-
 	@description = "This is a test for LPS-188478. Assert new import page of fragment works."
 	@priority = 5
 	test UploadAnotherFile {

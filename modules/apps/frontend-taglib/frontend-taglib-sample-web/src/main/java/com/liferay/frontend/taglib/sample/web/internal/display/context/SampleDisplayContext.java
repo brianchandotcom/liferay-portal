@@ -42,6 +42,14 @@ public class SampleDisplayContext {
 				"Fieldset"
 			).build(),
 			NavigationItemBuilder.setActive(
+				navigation.equals("input-localized")
+			).setHref(
+				_renderResponse.createRenderURL(), "navigation",
+				"input-localized"
+			).setLabel(
+				"Input Localized"
+			).build(),
+			NavigationItemBuilder.setActive(
 				navigation.equals("search-iterator")
 			).setHref(
 				_renderResponse.createRenderURL(), "navigation",

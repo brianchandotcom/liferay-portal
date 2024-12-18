@@ -142,7 +142,7 @@
 					"listTypeDefinitionExternalReferenceCode": "HTTP_METHOD_PICKLIST",
 					"name": "httpMethod",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},
@@ -219,7 +219,7 @@
 					"listTypeDefinitionExternalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
 					"name": "retrieveType",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},
@@ -236,7 +236,7 @@
 					"listTypeDefinitionExternalReferenceCode": "SCOPE_PICKLIST",
 					"name": "scope",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				}
@@ -547,7 +547,7 @@
 					"listTypeDefinitionExternalReferenceCode": "APPLICATION_STATUS_PICKLIST",
 					"name": "applicationStatus",
 					"required": true,
-					"state": true,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},

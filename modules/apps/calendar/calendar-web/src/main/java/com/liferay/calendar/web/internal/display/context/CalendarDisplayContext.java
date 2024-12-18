@@ -704,11 +704,7 @@ public class CalendarDisplayContext {
 	}
 
 	private boolean _isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private boolean _isShowAddResourceButton() {

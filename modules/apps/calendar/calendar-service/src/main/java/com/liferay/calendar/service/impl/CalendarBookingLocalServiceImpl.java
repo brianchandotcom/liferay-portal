@@ -832,11 +832,7 @@ public class CalendarBookingLocalServiceImpl
 					WorkflowConstants.STATUS_PENDING
 				});
 
-		if (!calendarBookings.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !calendarBookings.isEmpty();
 	}
 
 	@Override

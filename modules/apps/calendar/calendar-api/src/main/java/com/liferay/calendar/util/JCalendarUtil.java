@@ -114,11 +114,7 @@ public class JCalendarUtil {
 		Calendar adjustedJCalendar1 = toLastHourJCalendar(jCalendar1);
 		Calendar adjustedJCalendar2 = toLastHourJCalendar(jCalendar2);
 
-		if (adjustedJCalendar1.after(adjustedJCalendar2)) {
-			return true;
-		}
-
-		return false;
+		return adjustedJCalendar1.after(adjustedJCalendar2);
 	}
 
 	public static boolean isSameDayOfWeek(

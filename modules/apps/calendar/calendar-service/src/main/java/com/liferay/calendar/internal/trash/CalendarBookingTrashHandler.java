@@ -57,11 +57,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 			return false;
 		}
 
-		if (calendarBooking.isMasterBooking()) {
-			return true;
-		}
-
-		return false;
+		return calendarBooking.isMasterBooking();
 	}
 
 	@Override

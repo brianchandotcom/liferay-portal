@@ -1580,14 +1580,9 @@ test.describe('Form Localization', () => {
 
 		// Map the form to the All Fields object and publish the page
 
-		await pageEditorPage.mapFormFragment(formId, 'All Fields');
-
-		// Add a Localization Select from the modal
-
-		await page
-			.getByRole('dialog')
-			.getByRole('button', {name: 'Add Localization Select'})
-			.click();
+		await pageEditorPage.mapFormFragment(formId, 'All Fields', [], {
+			addLocalizationSelect: true,
+		});
 
 		await expect(
 			page.locator('[data-name="Localization Select"]')
@@ -1813,9 +1808,12 @@ test.describe('Form Localization', () => {
 
 		const formId = await pageEditorPage.getFragmentId('Form Container');
 
-		await pageEditorPage.mapFormFragment(formId, 'All Fields (Default)');
-
-		await page.getByText('Add Localization Select', {exact: true}).click();
+		await pageEditorPage.mapFormFragment(
+			formId,
+			'All Fields (Default)',
+			[],
+			{addLocalizationSelect: true}
+		);
 
 		await displayPageTemplatesPage.publishTemplate();
 

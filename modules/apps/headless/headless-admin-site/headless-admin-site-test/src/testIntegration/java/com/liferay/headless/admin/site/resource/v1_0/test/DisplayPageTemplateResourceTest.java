@@ -320,11 +320,11 @@ public class DisplayPageTemplateResourceTest
 	public void testPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification()
 		throws Exception {
 
-		DisplayPageTemplateResource curDisplayPageTemplateResource =
+		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
 
 		DisplayPageTemplate displayPageTemplate =
-			curDisplayPageTemplateResource.
+			displayPageTemplateResource.
 				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),
 					randomDisplayPageTemplate());
@@ -344,12 +344,12 @@ public class DisplayPageTemplateResourceTest
 				_layoutLocalService.getLayout(
 					layoutPageTemplateEntry.getPlid()),
 				displayPageTemplate.getPageSpecifications(), serviceContext,
-				curContentPageSpecification ->
+				contentPageSpecification ->
 					displayPageTemplateResource.
 						postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
 							testGroup.getExternalReferenceCode(),
 							displayPageTemplate.getExternalReferenceCode(),
-							curContentPageSpecification));
+							contentPageSpecification));
 
 		_assertPostSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecificationProblemException(
 			LayoutPageTemplateEntryTestUtil.getBasicLayoutPageTemplateEntry(
@@ -715,11 +715,11 @@ public class DisplayPageTemplateResourceTest
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplate());
 
-		DisplayPageTemplateResource curDisplayPageTemplateResource =
+		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
 
 		page =
-			curDisplayPageTemplateResource.
+			displayPageTemplateResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
 					Pagination.of(1, 10), null);
@@ -737,11 +737,11 @@ public class DisplayPageTemplateResourceTest
 				DisplayPageTemplate displayPageTemplate)
 		throws Exception {
 
-		DisplayPageTemplateResource curDisplayPageTemplateResource =
+		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
 
 		_assertNestedFields(
-			curDisplayPageTemplateResource.
+			displayPageTemplateResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),
 					displayPageTemplate.getExternalReferenceCode()));
@@ -888,12 +888,12 @@ public class DisplayPageTemplateResourceTest
 		assertEquals(displayPageTemplate, putDisplayPageTemplate);
 		assertValid(putDisplayPageTemplate);
 
-		DisplayPageTemplateFolder curDisplayPageTemplateFolder =
+		DisplayPageTemplateFolder displayPageTemplateFolder =
 			putDisplayPageTemplate.getParentFolder();
 
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getExternalReferenceCode(),
-			curDisplayPageTemplateFolder.getExternalReferenceCode());
+			displayPageTemplateFolder.getExternalReferenceCode());
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

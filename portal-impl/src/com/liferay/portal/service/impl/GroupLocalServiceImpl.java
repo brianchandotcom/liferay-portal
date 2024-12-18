@@ -5097,7 +5097,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if ((group != null) &&
 			((groupId <= 0) || (group.getGroupId() != groupId))) {
 
-			throw new DuplicateGroupException("{groupId=" + groupId + "}");
+			throw new DuplicateGroupException(
+				StringBundler.concat(
+					"{companyId=", companyId, ", groupKey=", groupKey, "}"));
 		}
 
 		if (site || (type == GroupConstants.TYPE_DEPOT)) {

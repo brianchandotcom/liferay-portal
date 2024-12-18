@@ -103,7 +103,7 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetCanonicalLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
-		_setupForTestingContentLocalizedLayoutSEOLinks();
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 

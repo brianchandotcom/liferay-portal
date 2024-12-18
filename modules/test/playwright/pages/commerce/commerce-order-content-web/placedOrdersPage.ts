@@ -35,7 +35,7 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 	constructor(page: Page) {
 		super(
 			page,
-			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .dnd-table'
+			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .fds table'
 		);
 
 		this.commerceBillingAddress = page.getByTestId(
@@ -82,7 +82,7 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 			.getByTestId('specificationFacetPanel')
 			.getByRole('button');
 		this.placedOrdersTable = page.locator(
-			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .dnd-table'
+			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .fds table'
 		);
 		this.placedOrderTableOrderDate = (orderDate) =>
 			this.placedOrdersTable.getByText(orderDate);
@@ -105,4 +105,4 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 	}
 }
 
-// locator('#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .dnd-table').getByText('Oct 18, 24 9:17:33 AM')
+// locator('#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .fds table').getByText('Oct 18, 24 9:17:33 AM')

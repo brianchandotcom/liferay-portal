@@ -31,9 +31,9 @@ export class CommerceAdminProductDetailsMediaPage {
 			'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm'
 		);
 		this.mediaAttachmentsTable = this.mediaForm
-			.locator('.dnd-table')
+			.locator('.fds table')
 			.nth(1);
-		this.mediaImagesTable = this.mediaForm.locator('.dnd-table').nth(0);
+		this.mediaImagesTable = this.mediaForm.locator('table').nth(0);
 		this.page = page;
 		this.tableRow = async (
 			table: Locator,

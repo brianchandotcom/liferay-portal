@@ -20,7 +20,7 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 	constructor(page: Page) {
 		super(
 			page,
-			'#_com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet_fm .dnd-table'
+			'#_com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet_fm .fds table'
 		);
 		this.editDiscountRuleFrame = page.frameLocator('iframe').nth(1);
 

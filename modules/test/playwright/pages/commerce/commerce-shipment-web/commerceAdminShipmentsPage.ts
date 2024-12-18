@@ -35,7 +35,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		super(
 			page,
 			'iframe >> nth=1',
-			'#_com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet_fm .dnd-table'
+			'#_com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet_fm .fds table'
 		);
 		this.addQuantityInShipment = page
 			.frameLocator('iframe')
@@ -65,7 +65,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		});
 		this.shipmentIdLink = (shipmentId: string) =>
 			page
-				.locator('.dnd-table')
+				.locator('table')
 				.getByRole('link', {exact: true, name: shipmentId});
 		this.shipmentsItemSubmitButton = page
 			.frameLocator('iframe >> nth=1')

@@ -370,10 +370,6 @@ public interface ObjectFieldLocalService
 	public List<ObjectField> getObjectFieldsByBusinessType(
 		long objectDefinitionId, String businessType);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<ObjectField>> getObjectFieldsByCompanyId(
-		long companyId);
-
 	/**
 	 * Returns the number of object fields.
 	 *
@@ -391,6 +387,9 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectFieldsCountByListTypeDefinitionId(
 		long listTypeDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<ObjectField>> getObjectFieldsMap(long companyId);
 
 	/**
 	 * Returns the OSGi service identifier.

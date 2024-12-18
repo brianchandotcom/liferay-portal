@@ -464,12 +464,6 @@ public class ObjectFieldLocalServiceUtil {
 			objectDefinitionId, businessType);
 	}
 
-	public static Map<Long, List<ObjectField>> getObjectFieldsByCompanyId(
-		long companyId) {
-
-		return getService().getObjectFieldsByCompanyId(companyId);
-	}
-
 	/**
 	 * Returns the number of object fields.
 	 *
@@ -494,6 +488,12 @@ public class ObjectFieldLocalServiceUtil {
 
 		return getService().getObjectFieldsCountByListTypeDefinitionId(
 			listTypeDefinitionId);
+	}
+
+	public static Map<Long, List<ObjectField>> getObjectFieldsMap(
+		long companyId) {
+
+		return getService().getObjectFieldsMap(companyId);
 	}
 
 	/**

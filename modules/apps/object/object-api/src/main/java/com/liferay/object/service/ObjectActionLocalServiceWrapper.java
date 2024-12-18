@@ -396,16 +396,6 @@ public class ObjectActionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map
-		<Long, java.util.List<com.liferay.object.model.ObjectAction>>
-			getObjectActions(
-				long companyId, boolean active, String objectActionTriggerKey) {
-
-		return _objectActionLocalService.getObjectActions(
-			companyId, active, objectActionTriggerKey);
-	}
-
-	@Override
 	public java.util.List<com.liferay.object.model.ObjectAction>
 		getObjectActions(
 			long objectDefinitionId, String objectActionTriggerKey) {
@@ -422,6 +412,16 @@ public class ObjectActionLocalServiceWrapper
 	@Override
 	public int getObjectActionsCount() {
 		return _objectActionLocalService.getObjectActionsCount();
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectAction>>
+			getObjectActionsMap(
+				long companyId, boolean active, String objectActionTriggerKey) {
+
+		return _objectActionLocalService.getObjectActionsMap(
+			companyId, active, objectActionTriggerKey);
 	}
 
 	/**

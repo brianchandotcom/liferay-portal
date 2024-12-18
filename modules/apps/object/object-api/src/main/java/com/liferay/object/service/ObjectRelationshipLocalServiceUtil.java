@@ -491,12 +491,6 @@ public class ObjectRelationshipLocalServiceUtil {
 			objectDefinitionId1, deletionType, reverse);
 	}
 
-	public static Map<Long, List<ObjectRelationship>>
-		getObjectRelationshipsByCompanyId(long companyId) {
-
-		return getService().getObjectRelationshipsByCompanyId(companyId);
-	}
-
 	public static List<ObjectRelationship>
 		getObjectRelationshipsByObjectDefinitionId2(long objectDefinitionId2) {
 
@@ -511,6 +505,12 @@ public class ObjectRelationshipLocalServiceUtil {
 	 */
 	public static int getObjectRelationshipsCount() {
 		return getService().getObjectRelationshipsCount();
+	}
+
+	public static Map<Long, List<ObjectRelationship>> getObjectRelationshipsMap(
+		long companyId) {
+
+		return getService().getObjectRelationshipsMap(companyId);
 	}
 
 	/**

@@ -52,6 +52,10 @@ public class StatusSystemObjectFieldFilterStrategy
 
 		JSONArray jsonArray = getJSONArray();
 
+		if (jsonArray == null) {
+			return selectionFDSFilterItems;
+		}
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Integer status = (Integer)jsonArray.get(i);
 

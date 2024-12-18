@@ -34,12 +34,9 @@ public abstract class BaseObjectFieldFilterStrategy
 
 	@Override
 	public Map<String, Object> parse() throws PortalException {
-		if (Validator.isNull(objectViewFilterColumn.getFilterType())) {
-			return null;
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"exclude",
+			Validator.isNotNull(objectViewFilterColumn.getFilterType()) &&
 			ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES.equals(
 				objectViewFilterColumn.getFilterType())
 		).put(

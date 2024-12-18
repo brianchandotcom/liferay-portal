@@ -107,6 +107,11 @@ public class OneToManyObjectFieldFilterStrategy
 			restContextPath = "/o" + objectDefinition1.getRESTContextPath();
 		}
 
+		if (_groupId != 0) {
+			restContextPath = StringBundler.concat(
+				restContextPath, "/scopes/", _groupId);
+		}
+
 		return new OneToManySelectionFDSFilter(
 			parse(), restContextPath, titleObjectField.getLabel(locale),
 			_objectField.getName(), titleObjectField.getName());
@@ -120,6 +125,10 @@ public class OneToManyObjectFieldFilterStrategy
 			new ArrayList<>();
 
 		JSONArray jsonArray = getJSONArray();
+
+		if (jsonArray == null) {
+			return selectionFDSFilterItems;
+		}
 
 		if (_objectDefinition1.isUnmodifiableSystemObject()) {
 			for (int i = 0; i < jsonArray.length(); i++) {

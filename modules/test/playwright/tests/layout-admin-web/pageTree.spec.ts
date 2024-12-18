@@ -9,13 +9,16 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
 import getRandomString from '../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {performUserSwitch} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
@@ -25,6 +28,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	pagesAdminPagesTest,
 	pagesPagesTest
 );
@@ -276,6 +280,89 @@ test(
 			page
 				.locator('.page-type-selector')
 				.getByTitle('Add Page', {exact: true})
+		).not.toBeVisible();
+	}
+);
+
+test(
+	'Users with only View permissions can not see draft options',
+	{
+		tag: '@LPS-140136',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageTreePage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const pageName = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: pageName,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Add a fragment so we create a draft
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		// Switch to a new user with only View page permission
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['VIEW'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+					primaryKey: company.companyId,
+					resourceName:
+						'com_liferay_layout_admin_web_portlet_GroupPagesPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['ADD_LAYOUT', 'VIEW_SITE_ADMINISTRATION'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Group',
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Check draft actions are not present
+
+		const treeItem = page.getByRole('treeitem', {name: pageName});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: treeItem.locator('.dropdown-toggle'),
+			trigger: treeItem,
+		});
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Preview Draft'})
 		).not.toBeVisible();
 	}
 );

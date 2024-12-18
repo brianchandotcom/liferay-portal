@@ -9,7 +9,6 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {zipFolder} from '../../utils/zip';
 
 export class FragmentsPage {
 	readonly page: Page;
@@ -237,7 +236,7 @@ export class FragmentsPage {
 		await waitForAlert(this.page);
 	}
 
-	async importFile(fileName: string, folderPath: string) {
+	async importFile(fileName: string, zipFolder: string) {
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 
 		await this.page
@@ -246,7 +245,7 @@ export class FragmentsPage {
 
 		const fileChooser = await fileChooserPromise;
 
-		await fileChooser.setFiles(await zipFolder(folderPath));
+		await fileChooser.setFiles(zipFolder);
 
 		await this.page.getByText(fileName).waitFor();
 

@@ -23,6 +23,7 @@ import {
 	enableSystemFeatureFlag,
 } from '../../utils/systemFeatureFlag';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {zipFolder} from '../../utils/zip';
 import getFormContainerDefinition from '../layout-content-page-editor-web/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
@@ -1197,7 +1198,9 @@ test(
 
 		await fragmentsPage.importFile(
 			'react-fragment-example.zip',
-			path.join(__dirname, '/dependencies/react-fragment-example.zip')
+			await zipFolder(
+				path.join(__dirname, '/dependencies/react-fragment-example.zip')
+			)
 		);
 
 		// Assert import message
@@ -1212,7 +1215,9 @@ test(
 
 		await fragmentsPage.importFile(
 			'basic-fragment-example.zip',
-			path.join(__dirname, '/dependencies/basic-fragment-example.zip')
+			await zipFolder(
+				path.join(__dirname, '/dependencies/basic-fragment-example.zip')
+			)
 		);
 
 		await expect(

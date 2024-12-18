@@ -13,6 +13,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {zipFolder} from '../../utils/zip';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -44,7 +45,9 @@ test(
 
 		await fragmentsPage.importFile(
 			'react-fragment-example.zip',
-			path.join(__dirname, '/dependencies/react-fragment-example.zip')
+			await zipFolder(
+				path.join(__dirname, '/dependencies/react-fragment-example.zip')
+			)
 		);
 
 		await expect(page.getByText('React Fragment Example')).toBeVisible();

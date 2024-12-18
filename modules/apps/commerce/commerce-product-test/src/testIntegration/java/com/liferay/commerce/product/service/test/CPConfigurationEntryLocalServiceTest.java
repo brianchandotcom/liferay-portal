@@ -159,7 +159,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		).and(
 			"A new Configuration Entry is added"
 		).then(
-			"The Configuration Entry is inherited is substituted by the new one"
+			"The Configuration Entry is substituted by the new one"
 		);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
@@ -190,7 +190,7 @@ public class CPConfigurationEntryLocalServiceTest {
 			displayDateHour += 12;
 		}
 
-		CPConfigurationList cpConfigurationList =
+		CPConfigurationList cpConfigurationList1 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
 				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
 				_cpConfigurationList.getCPConfigurationListId(), false,
@@ -202,7 +202,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertTrue(
 			ListUtil.isEmpty(
 				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
-					cpConfigurationList.getCPConfigurationListId())));
+					cpConfigurationList1.getCPConfigurationListId())));
 
 		CPConfigurationEntrySetting cpConfigurationEntrySetting =
 			_cpConfigurationEntrySettingLocalService.
@@ -211,30 +211,25 @@ public class CPConfigurationEntryLocalServiceTest {
 					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
 		Assert.assertNotNull(cpConfigurationEntrySetting);
-
 		Assert.assertTrue(
 			StringUtil.contains(
 				cpConfigurationEntrySetting.getSetting(),
 				String.valueOf(
-					cpConfigurationList.getCPConfigurationListId())));
+					cpConfigurationList1.getCPConfigurationListId())));
 
-		externalReferenceCode = RandomTestUtil.randomString();
+		CPConfigurationList cpConfigurationList2 =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				cpConfigurationList1.getCPConfigurationListId(), false,
+				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), displayDateHour,
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
 
-		CPConfigurationEntry cpConfigurationEntry2 =
-			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
-				externalReferenceCode, _user.getUserId(),
-				cpConfigurationList.getGroupId(),
-				_portal.getClassNameId(CPDefinition.class),
-				_cpDefinition.getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
-				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
-				true, true, 1.0, true, true, true, 1.0, 1.0);
-
-		Assert.assertFalse(
+		Assert.assertTrue(
 			ListUtil.isEmpty(
 				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
-					cpConfigurationList.getCPConfigurationListId())));
+					cpConfigurationList2.getCPConfigurationListId())));
 
 		cpConfigurationEntrySetting =
 			_cpConfigurationEntrySettingLocalService.
@@ -243,16 +238,95 @@ public class CPConfigurationEntryLocalServiceTest {
 					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
 		Assert.assertNotNull(cpConfigurationEntrySetting);
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList2.getCPConfigurationListId())));
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		CPConfigurationEntry cpConfigurationEntry2 =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				externalReferenceCode, _user.getUserId(),
+				cpConfigurationList2.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				cpConfigurationList2.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		Assert.assertFalse(
+			ListUtil.isEmpty(
+				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
+					cpConfigurationList2.getCPConfigurationListId())));
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+		Assert.assertFalse(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList2.getCPConfigurationListId())));
+
+		CPConfigurationList cpConfigurationList3 =
+			_cpConfigurationListLocalService.addCPConfigurationList(
+				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				cpConfigurationList2.getCPConfigurationListId(), false,
+				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), displayDateHour,
+				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry2.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList3.getCPConfigurationListId())));
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
 		Assert.assertFalse(
 			StringUtil.contains(
 				cpConfigurationEntrySetting.getSetting(),
 				String.valueOf(
-					cpConfigurationList.getCPConfigurationListId())));
+					cpConfigurationList3.getCPConfigurationListId())));
 
-		Assert.assertEquals(
-			externalReferenceCode,
-			cpConfigurationEntry2.getExternalReferenceCode());
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry2);
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList2.getCPConfigurationListId())));
+		Assert.assertTrue(
+			StringUtil.contains(
+				cpConfigurationEntrySetting.getSetting(),
+				String.valueOf(
+					cpConfigurationList3.getCPConfigurationListId())));
 	}
 
 	@Test
@@ -320,7 +394,6 @@ public class CPConfigurationEntryLocalServiceTest {
 					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
 		Assert.assertNotNull(cpConfigurationEntrySetting);
-
 		Assert.assertTrue(
 			StringUtil.contains(
 				cpConfigurationEntrySetting.getSetting(),

@@ -948,7 +948,14 @@ export class PageEditorPage {
 		);
 	}
 
-	async mapFormFragment(fragmentId: string, type: string, fields?: string[]) {
+	async mapFormFragment(
+		fragmentId: string,
+		type: string,
+		fields?: string[],
+		options?: {
+			addLocalizationSelect?: boolean;
+		}
+	) {
 		const fragment = this.getFragment(fragmentId);
 
 		await fragment.getByLabel('Content Type').selectOption(type);
@@ -961,7 +968,7 @@ export class PageEditorPage {
 			.getByLabel('Select All Items on the Page')
 			.check({trial: true});
 
-		if (!fields) {
+		if (!fields || !fields.length) {
 			await fieldsModal
 				.getByLabel('Select All Items on the Page')
 				.check();
@@ -987,6 +994,23 @@ export class PageEditorPage {
 			'Success:Your form has been successfully loaded.',
 			{autoClose: false}
 		);
+
+		const addLocalizationSelectDialog = this.page.getByRole('dialog', {
+			name: 'Add Localization Select',
+		});
+
+		if (await addLocalizationSelectDialog.isVisible()) {
+			if (options?.addLocalizationSelect) {
+				await addLocalizationSelectDialog
+					.getByRole('button', {name: 'Add Localization Select'})
+					.click();
+			}
+			else {
+				await addLocalizationSelectDialog
+					.getByRole('button', {name: 'Cancel'})
+					.click();
+			}
+		}
 	}
 
 	async mapEditableLink({

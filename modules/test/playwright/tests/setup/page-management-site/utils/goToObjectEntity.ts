@@ -32,5 +32,5 @@ export async function goToObjectEntity({
 
 	await page.getByRole('menuitem', {name: pluralName}).click();
 
-	await page.locator('.dnd-tbody').waitFor();
+	await page.locator('.fds tbody').waitFor();
 }

@@ -1339,6 +1339,10 @@ components:
                         en_US: 3-5 Days
                         it_IT: 3-5 Giorni
                     type: object
+                differences:
+                    items:
+                        type: string
+                    type: array
                 displayAvailability:
                     example: true
                     type: boolean
@@ -7691,6 +7695,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: showDifferences
+                  required: false
+                  schema:
+                      type: boolean
+                - in: query
                   name: sort
                   required: false
                   schema:
@@ -8739,6 +8748,11 @@ paths:
                   required: false
                   schema:
                       type: string
+                - in: query
+                  name: showDifferences
+                  required: false
+                  schema:
+                      type: boolean
                 - in: query
                   name: sort
                   required: false

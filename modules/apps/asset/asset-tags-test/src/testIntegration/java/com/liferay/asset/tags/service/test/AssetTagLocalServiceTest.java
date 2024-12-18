@@ -495,14 +495,6 @@ public class AssetTagLocalServiceTest {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private void _addJournalArticle(String[] tagNames) throws Exception {
-		_serviceContext.setAssetTagNames(tagNames);
-
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
-	}
-
 	private List<AssetTag> _addAssetTags(String[] tagNames)
 		throws PortalException {
 
@@ -524,6 +516,14 @@ public class AssetTagLocalServiceTest {
 		BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
 			_serviceContext);
+	}
+
+	private void _addJournalArticle(String[] tagNames) throws Exception {
+		_serviceContext.setAssetTagNames(tagNames);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
 	}
 
 	private void _assertGetTags(

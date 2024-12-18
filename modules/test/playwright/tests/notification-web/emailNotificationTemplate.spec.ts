@@ -390,7 +390,7 @@ test('can use notification terms and freeMarker variables in notification templa
 	];
 
 	for (const term of terms) {
-		await expect(page.locator('div.dnd-td').getByText(term)).toBeVisible();
+		await expect(page.locator('.fds td').getByText(term)).toBeVisible();
 	}
 
 	const copyButtons = [

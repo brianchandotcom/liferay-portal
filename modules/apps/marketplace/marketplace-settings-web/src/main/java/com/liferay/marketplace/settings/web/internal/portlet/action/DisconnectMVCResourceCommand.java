@@ -5,6 +5,7 @@
 
 package com.liferay.marketplace.settings.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.marketplace.settings.web.internal.configuration.MarketplaceConfigurationUtil;
 import com.liferay.marketplace.settings.web.internal.constants.MarketplaceSettingsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -25,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MarketplaceSettingsPortletKeys.MARKETPLACE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"mvc.command.name=/marketplace_settings/disconnect"
 	},
 	service = MVCResourceCommand.class

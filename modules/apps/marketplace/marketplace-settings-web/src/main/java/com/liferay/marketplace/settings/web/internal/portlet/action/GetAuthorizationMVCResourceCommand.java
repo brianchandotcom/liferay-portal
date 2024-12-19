@@ -5,9 +5,9 @@
 
 package com.liferay.marketplace.settings.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.marketplace.settings.web.internal.configuration.MarketplaceConfiguration;
 import com.liferay.marketplace.settings.web.internal.configuration.MarketplaceConfigurationUtil;
-import com.liferay.marketplace.settings.web.internal.constants.MarketplaceSettingsPortletKeys;
 import com.liferay.marketplace.settings.web.internal.http.MarketplaceHttp;
 import com.liferay.marketplace.settings.web.internal.model.Authorization;
 import com.liferay.marketplace.settings.web.internal.model.Payload;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MarketplaceSettingsPortletKeys.MARKETPLACE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"mvc.command.name=/marketplace_settings/get_authorization"
 	},
 	service = MVCResourceCommand.class
@@ -64,15 +64,15 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Authorization authorization = new Authorization(
 			marketplaceConfiguration.accessToken(),
-			marketplaceConfiguration.marketplaceSettings(),
+			marketplaceConfiguration.settings(),
 			marketplaceConfiguration.url());
 
 		if (System.currentTimeMillis() > marketplaceConfiguration.expiresIn()) {
 			Payload payload = new Payload(
 				marketplaceConfiguration.clientId(),
 				marketplaceConfiguration.code(), null,
-				marketplaceConfiguration.marketplaceSettings(),
 				marketplaceConfiguration.redirect(),
+				marketplaceConfiguration.settings(),
 				marketplaceConfiguration.url());
 
 			authorization = _marketplaceHttp.exchangeToken(

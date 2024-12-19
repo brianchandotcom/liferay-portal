@@ -5,7 +5,7 @@
 
 package com.liferay.marketplace.settings.web.internal.portlet.action;
 
-import com.liferay.marketplace.settings.web.internal.constants.MarketplaceSettingsPortletKeys;
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.marketplace.settings.web.internal.http.MarketplaceHttp;
 import com.liferay.marketplace.settings.web.internal.model.Authorization;
 import com.liferay.marketplace.settings.web.internal.model.Payload;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MarketplaceSettingsPortletKeys.MARKETPLACE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 		"mvc.command.name=/marketplace_settings/connect"
 	},
 	service = MVCResourceCommand.class

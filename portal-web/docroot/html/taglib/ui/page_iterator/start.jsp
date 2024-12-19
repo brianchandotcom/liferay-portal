@@ -287,7 +287,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 										<li>
 											<liferay-ui:csp>
-												<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+												<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= String.valueOf(i) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 											</liferay-ui:csp>
 										</li>
 
@@ -326,7 +326,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 										<li>
 											<liferay-ui:csp>
-												<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+												<a class="dropdown-item" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= String.valueOf(i) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 											</liferay-ui:csp>
 										</li>
 
@@ -376,7 +376,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 							<li class="<%= ((cur - 3) > 1) ? "" : "page-item" %>">
 								<liferay-ui:csp>
-									<a class="<%= ((cur - 3) > 1) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+									<a class="<%= ((cur - 3) > 1) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= String.valueOf(i) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 								</liferay-ui:csp>
 							</li>
 
@@ -430,7 +430,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 							<li class="<%= ((cur + 3) < pages) ? "" : "page-item" %>">
 								<liferay-ui:csp>
-									<a class="<%= ((cur + 3) < pages) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
+									<a class="<%= ((cur + 3) < pages) ? "dropdown-item" : "dropdown-item page-link" %>" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" id="<%= String.valueOf(i) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span><%= i %></a>
 								</liferay-ui:csp>
 							</li>
 

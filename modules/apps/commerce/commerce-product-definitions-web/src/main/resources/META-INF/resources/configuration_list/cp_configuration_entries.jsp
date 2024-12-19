@@ -18,14 +18,20 @@ long cpConfigurationListId = cpConfigurationListDisplayContext.getCPConfiguratio
 	elementClasses="mt-4"
 	title='<%= LanguageUtil.get(request, "products") %>'
 >
-	<frontend-data-set:headless-display
-		apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations" %>'
-		fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
-		formName="fm"
-		id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
-		itemsPerPage="<%= 10 %>"
-		selectedItemsKey="id"
-		selectionType="multiple"
-		style="fluid"
-	/>
+	<aui:form method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="updateCPConfigurationEntryIds" type="hidden" />
+
+		<frontend-data-set:headless-display
+			apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations" %>'
+			bulkActionDropdownItems="<%= cpConfigurationListDisplayContext.getBulkActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
+			itemsPerPage="<%= 10 %>"
+			selectedItemsKey="id"
+			selectionType="multiple"
+			style="fluid"
+		/>
+	</aui:form>
 </commerce-ui:panel>

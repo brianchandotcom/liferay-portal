@@ -15,6 +15,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -2976,9 +2977,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				return portlet;
 			}
 
-			return super.get(
-				key + StringPool.AT +
-					CompanyThreadLocal.getNonsystemCompanyId());
+			return super.get(DBPartitionUtil.getPartitionKey(key));
 		}
 
 		@Override
@@ -2996,8 +2995,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		public Portlet remove(Object key) {
 			if (DBPartition.isPartitionEnabled()) {
 				Portlet portlet = super.remove(
-					key + StringPool.AT +
-						CompanyThreadLocal.getNonsystemCompanyId());
+					DBPartitionUtil.getPartitionKey(key));
 
 				if (portlet != null) {
 					return portlet;

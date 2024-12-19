@@ -20,53 +20,54 @@ const test = mergeTests(
 );
 
 test(
-	'Subscription and unsubscription of a Document',
+	'Subscription and unsubscription of a File Entry',
 	{tag: '@LPD-42444'},
 	async ({apiHelpers, documentLibraryPage, page, site}) => {
-		const documentTitle =
-			await test.step('Create a new document', async () => {
-				const document = await apiHelpers.headlessDelivery.postDocument(
-					site.id,
-					createReadStream(
-						path.join(__dirname, '/dependencies/image1.jpeg')
-					)
-				);
+		const fileEntryTitle =
+			await test.step('Create a new File Entry', async () => {
+				const fileEntry =
+					await apiHelpers.headlessDelivery.postDocument(
+						site.id,
+						createReadStream(
+							path.join(__dirname, '/dependencies/image1.jpeg')
+						)
+					);
 
-				return document.title;
+				return fileEntry.title;
 			});
 
-		await test.step(`Subscription and unsubscription through Document Actions`, async () => {
+		await test.step(`Subscription and unsubscription through File Entry Actions`, async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
 			await documentLibraryPage.goToFileEntryAction(
 				'Subscribe',
-				documentTitle
+				fileEntryTitle
 			);
 			await documentLibraryPage.goToFileEntryAction(
 				'Unsubscribe',
-				documentTitle
+				fileEntryTitle
 			);
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribe',
-				documentTitle
+				fileEntryTitle
 			);
 		});
 
-		await test.step(`Subscription and unsubscription through Document Info Panel`, async () => {
+		await test.step(`Subscription and unsubscription through File Entry Info Panel`, async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFileEntry(documentTitle);
-			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
+			await documentLibraryPage.selectFileEntry(fileEntryTitle);
+			await documentLibraryPage.openInfoPanel(fileEntryTitle, 'Details');
 			await expect(page.getByLabel('Subscribe')).toBeVisible();
 			await page.getByLabel('Subscribe').click();
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFileEntry(documentTitle);
-			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
+			await documentLibraryPage.selectFileEntry(fileEntryTitle);
+			await documentLibraryPage.openInfoPanel(fileEntryTitle, 'Details');
 			await expect(page.getByLabel('Unsubscribe')).toBeVisible();
 			await page.getByLabel('Unsubscribe').click();
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFileEntry(documentTitle);
-			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
+			await documentLibraryPage.selectFileEntry(fileEntryTitle);
+			await documentLibraryPage.openInfoPanel(fileEntryTitle, 'Details');
 			await expect(page.getByLabel('Subscribe')).toBeVisible();
 		});
 
@@ -77,12 +78,12 @@ test(
 
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribed to a Parent Folder',
-				documentTitle
+				fileEntryTitle
 			);
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFileEntry(documentTitle);
-			await documentLibraryPage.openInfoPanel(documentTitle, 'Details');
+			await documentLibraryPage.selectFileEntry(fileEntryTitle);
+			await documentLibraryPage.openInfoPanel(fileEntryTitle, 'Details');
 			await expect(
 				page.getByLabel('Subscribed to a Parent Folder')
 			).toBeVisible();
@@ -93,67 +94,56 @@ test(
 
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribe',
-				documentTitle
+				fileEntryTitle
 			);
 		});
 	}
 );
 
 test(
-	'Subscription and unsubscription of a DocumentFolder',
+	'Subscription and unsubscription of a Folder',
 	{tag: '@LPD-42444'},
 	async ({apiHelpers, documentLibraryPage, page, site}) => {
-		const documentFolderName =
-			await test.step('Create a new DocumentFolder', async () => {
-				const documentFolder =
-					await apiHelpers.headlessDelivery.postDocumentFolder(
-						site.id
-					);
+		const folderName = await test.step('Create a new Folder', async () => {
+			const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
+				site.id
+			);
 
-				return documentFolder.name;
-			});
+			return folder.name;
+		});
 
-		await test.step(`Subscription and unsubscription through DocumentFolder Actions`, async () => {
+		await test.step(`Subscription and unsubscription through Folder Actions`, async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
 			await documentLibraryPage.goToFileEntryAction(
 				'Subscribe',
-				documentFolderName
+				folderName
 			);
 			await documentLibraryPage.goToFileEntryAction(
 				'Unsubscribe',
-				documentFolderName
+				folderName
 			);
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribe',
-				documentFolderName
+				folderName
 			);
 		});
 
-		await test.step(`Subscription and unsubscription through DocumentFolder Info Panel`, async () => {
+		await test.step(`Subscription and unsubscription through Folder Info Panel`, async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFolder(documentFolderName);
-			await documentLibraryPage.openInfoPanel(
-				documentFolderName,
-				'Details'
-			);
+			await documentLibraryPage.selectFolder(folderName);
+			await documentLibraryPage.openInfoPanel(folderName, 'Details');
 			await expect(page.getByLabel('Subscribe')).toBeVisible();
 			await page.getByLabel('Subscribe').click();
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFolder(documentFolderName);
-			await documentLibraryPage.openInfoPanel(
-				documentFolderName,
-				'Details'
-			);
+			await documentLibraryPage.selectFolder(folderName);
+			await documentLibraryPage.openInfoPanel(folderName, 'Details');
 			await expect(page.getByLabel('Unsubscribe')).toBeVisible();
 			await page.getByLabel('Unsubscribe').click();
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFolder(documentFolderName);
-			await documentLibraryPage.openInfoPanel(
-				documentFolderName,
-				'Details'
-			);
+			await documentLibraryPage.selectFolder(folderName);
+			await documentLibraryPage.openInfoPanel(folderName, 'Details');
 			await expect(page.getByLabel('Subscribe')).toBeVisible();
 		});
 
@@ -164,15 +154,12 @@ test(
 
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribed to a Parent Folder',
-				documentFolderName
+				folderName
 			);
 
 			await documentLibraryPage.goto(site.friendlyUrlPath);
-			await documentLibraryPage.selectFolder(documentFolderName);
-			await documentLibraryPage.openInfoPanel(
-				documentFolderName,
-				'Details'
-			);
+			await documentLibraryPage.selectFolder(folderName);
+			await documentLibraryPage.openInfoPanel(folderName, 'Details');
 			await expect(
 				page.getByLabel('Subscribed to a Parent Folder')
 			).toBeVisible();
@@ -183,7 +170,7 @@ test(
 
 			await documentLibraryPage.assertFileEntryAction(
 				'Subscribe',
-				documentFolderName
+				folderName
 			);
 		});
 	}

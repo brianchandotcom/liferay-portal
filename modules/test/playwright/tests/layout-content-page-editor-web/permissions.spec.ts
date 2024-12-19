@@ -240,26 +240,45 @@ test(
 
 		// Go to contents panel and check user can not edit the web content
 
-		await pageEditorPage.goToSidebarTab('Page Content');
+		const checkWebContentEdition = async (allowed: boolean) => {
+			await pageEditorPage.goToSidebarTab('Page Content');
 
-		const panel = page.getByLabel('Page Content Panel');
+			const panel = page.getByLabel('Page Content Panel');
 
-		const content = panel.locator(
-			'.page-editor__page-contents__page-content'
-		);
+			const content = panel.locator(
+				'.page-editor__page-contents__page-content'
+			);
 
-		await hoverAndExpectToBeVisible({
-			autoClick: true,
-			target: content.getByTitle('Open Actions Menu'),
-			trigger: content,
-		});
+			await hoverAndExpectToBeVisible({
+				autoClick: true,
+				target: content.getByTitle('Open Actions Menu'),
+				trigger: content,
+			});
 
-		await expect(
-			page.getByRole('menuitem', {name: 'View Usages'})
-		).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {name: 'View Usages'})
+			).toBeVisible();
 
-		await expect(
-			page.getByRole('menuitem', {name: 'Edit'})
-		).not.toBeVisible();
+			if (allowed) {
+				await expect(
+					page.getByRole('menuitem', {name: 'Edit'})
+				).toBeVisible();
+			}
+			else {
+				await expect(
+					page.getByRole('menuitem', {name: 'Edit'})
+				).not.toBeVisible();
+			}
+		};
+
+		await checkWebContentEdition(false);
+
+		await pageEditorPage.publishPage();
+
+		// Do it as user with permissions
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await checkWebContentEdition(true);
 	}
 );

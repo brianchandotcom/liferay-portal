@@ -630,3 +630,62 @@ test(
 		).toBeVisible({timeout: 5000});
 	}
 );
+
+test(
+	'Check users with Update-Limited and can access page options in edit mode',
+	{
+		tag: '@LPS-181272',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add new user with 'Update - Limited' permission
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const userWithLimited = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE_LAYOUT_LIMITED'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		// Create a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode as user and check options are available
+
+		await pageEditorPage.goto(
+			layout,
+			site.friendlyUrlPath,
+			userWithLimited.id
+		);
+
+		await expect(
+			page.locator('.page-editor__no-fragments-state')
+		).toBeVisible();
+
+		// Check page options are available
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('menuitem', {name: 'Preview'}),
+			trigger: page.locator('.control-menu-nav').getByLabel('Options'),
+		});
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Preview'})
+		).toBeVisible();
+	}
+);

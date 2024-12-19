@@ -216,6 +216,14 @@ public class DBPartitionUtil {
 		}
 	}
 
+	public static String getPartitionKey(Object key) {
+		if (!DBPartition.isPartitionEnabled()) {
+			return key.toString();
+		}
+
+		return key + StringPool.AT + CompanyThreadLocal.getNonsystemCompanyId();
+	}
+
 	public static String getPartitionName(long companyId) {
 		if ((companyId == CompanyConstants.SYSTEM) ||
 			(companyId == _defaultCompanyId)) {

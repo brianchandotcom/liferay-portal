@@ -128,7 +128,7 @@ definition {
 			KeyPress(
 				key_menuItem = "Add Child",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\ENTER");
+				value1 = "\RIGHT");
 
 			KeyPress(
 				key_menuItem = "Blogs Entry",

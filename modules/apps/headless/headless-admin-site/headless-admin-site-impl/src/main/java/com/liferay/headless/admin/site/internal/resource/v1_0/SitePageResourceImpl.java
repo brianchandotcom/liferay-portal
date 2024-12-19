@@ -72,11 +72,19 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		_layoutService.deleteLayout(
+		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
 			GroupUtil.getGroupId(
 				false, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
+
+		_validateSitePageLayout(layout);
+
+		_layoutService.deleteLayout(
+			layout.getPlid(),
+			ServiceContextUtil.createServiceContext(
+				layout.getGroupId(), contextHttpServletRequest,
+				contextUser.getUserId()));
 	}
 
 	@Override

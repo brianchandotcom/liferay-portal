@@ -82,10 +82,10 @@ public class UpgradePortletPreferences
 		}
 
 		portletPreferences.reset("articleId");
+		portletPreferences.reset("groupId");
 		portletPreferences.setValue(
 			"articleExternalReferenceCode",
 			journalArticle.getExternalReferenceCode());
-		portletPreferences.reset("groupId");
 		portletPreferences.setValue(
 			"groupExternalReferenceCode", group.getExternalReferenceCode());
 

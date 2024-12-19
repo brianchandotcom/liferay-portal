@@ -41,6 +41,8 @@ export class CommerceDNDTablePage {
 	readonly filterValue: (value: string) => Locator;
 	readonly resetFiltersButton: Locator;
 	readonly table: Locator;
+	readonly tableHeadSelector: Locator;
+	readonly tableHeadSelectorButton: (buttonPosition: number) => Locator;
 	readonly tableHeaders: Locator;
 	readonly tableRow: (
 		colPosition: number,
@@ -69,6 +71,15 @@ export class CommerceDNDTablePage {
 			name: 'Reset Filters',
 		});
 		this.table = page.locator(tableIdentifier);
+		this.tableHeadSelector = page.locator(
+			'input[name="table-head-selector"]'
+		);
+		this.tableHeadSelectorButton = (buttonPosition: number) =>
+			page
+				.locator('nav')
+				.filter({hasText: 'Select All'})
+				.getByRole('button')
+				.nth(buttonPosition);
 		this.tableHeaders = this.table.locator('div.dnd-tr').first();
 		this.tableRow = async (
 			colPosition: number,

@@ -7,12 +7,10 @@ package com.liferay.marketplace.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.marketplace.settings.web.internal.configuration.MarketplaceConfigurationUtil;
-import com.liferay.marketplace.settings.web.internal.constants.MarketplaceSettingsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -42,7 +40,7 @@ public class DisconnectMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+			themeDisplay.getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);

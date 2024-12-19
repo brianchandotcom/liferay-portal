@@ -8,7 +8,9 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
@@ -39,7 +41,14 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
+
 		return HashMapBuilder.<String, Object>put(
+			"localizedObjectField", localizedObjectField
+		).put(
 			"predefinedValue",
 			GetterUtil.getBoolean(
 				DDMFormFieldTypeUtil.getValue(
@@ -76,6 +85,9 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			GetterUtil.getBoolean(
 				DDMFormFieldTypeUtil.getValue(
 					ddmFormFieldRenderingContext.getValue()))
+		).putAll(
+			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
+				ddmForm.getDefaultLocale())
 		).build();
 	}
 

@@ -6,14 +6,17 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
@@ -58,7 +61,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -294,37 +299,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	protected SitePage randomSitePage() throws Exception {
-		SitePage sitePage = super.randomSitePage();
+		List<SitePage.Type> types = Arrays.asList(
+			SitePage.Type.COLLECTION_PAGE, SitePage.Type.CONTENT_PAGE,
+			SitePage.Type.WIDGET_PAGE);
 
-		sitePage.setFriendlyUrlPath_i18n(
-			HashMapBuilder.put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-				StringPool.FORWARD_SLASH +
-					StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).build());
-		sitePage.setName_i18n(
-			HashMapBuilder.put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-				RandomTestUtil.randomString()
-			).put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-				RandomTestUtil.randomString()
-			).build());
-		sitePage.setPageSettings(
-			new WidgetPageSettings() {
-				{
-					setHiddenFromNavigation(false);
-					setLayoutTemplateId("1_column");
-					setType(Type.WIDGET_PAGE_SETTINGS);
-				}
-			});
-		sitePage.setType(SitePage.Type.WIDGET_PAGE);
-
-		return sitePage;
+		return _getRandomSitePage(
+			types.get(RandomTestUtil.randomInt(0, types.size() - 1)));
 	}
 
 	@Override
@@ -599,6 +579,142 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
 			widgetPageSettings.getLayoutTemplateId());
+	}
+
+	private ClassNameReference _getClassNameReference() {
+		return new ClassNameReference() {
+			{
+				setClassName(
+					() ->
+						"com.liferay.asset.internal.info.collection.provider." +
+							"RecentContentInfoCollectionProvider");
+				setCollectionType(() -> CollectionType.COLLECTION_PROVIDER);
+			}
+		};
+	}
+
+	private CollectionPageSettings _getCollectionPageSettings()
+		throws Exception {
+
+		if (RandomTestUtil.randomBoolean()) {
+			return new CollectionPageSettings() {
+				{
+					setCollectionReference(() -> _getClassNameReference());
+					setType(Type.COLLECTION_PAGE_SETTINGS);
+				}
+			};
+		}
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference() {
+				{
+					setClassName(() -> AssetListEntry.class.getName());
+					setCollectionType(() -> CollectionType.COLLECTION);
+				}
+			};
+
+		AssetListEntry assetListEntry;
+
+		if (RandomTestUtil.randomBoolean()) {
+			assetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+		}
+		else {
+			assetListEntry = AssetListEntryLocalServiceUtil.addAssetListEntry(
+				null, TestPropsValues.getUserId(), irrelevantGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				ServiceContextTestUtil.getServiceContext(
+					irrelevantGroup.getGroupId()));
+
+			itemExternalReference.setScope(
+				() -> new Scope() {
+					{
+						setExternalReferenceCode(
+							irrelevantGroup::getExternalReferenceCode);
+						setType(Type.SITE);
+					}
+				});
+		}
+
+		itemExternalReference.setExternalReferenceCode(
+			assetListEntry::getExternalReferenceCode);
+
+		return new CollectionPageSettings() {
+			{
+				setCollectionReference(() -> itemExternalReference);
+				setType(Type.COLLECTION_PAGE_SETTINGS);
+			}
+		};
+	}
+
+	private PageSettings _getPageSettings(SitePage.Type type) throws Exception {
+		if (type == SitePage.Type.COLLECTION_PAGE) {
+			return _getCollectionPageSettings();
+		}
+
+		if (type == SitePage.Type.CONTENT_PAGE) {
+			return new ContentPageSettings() {
+				{
+					setType(Type.CONTENT_PAGE_SETTINGS);
+				}
+			};
+		}
+
+		return new WidgetPageSettings() {
+			{
+				setLayoutTemplateId("1_column");
+				setType(Type.WIDGET_PAGE_SETTINGS);
+			}
+		};
+	}
+
+	private SitePage _getRandomSitePage(SitePage.Type curType)
+		throws Exception {
+
+		SitePage sitePage = new SitePage() {
+			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+
+		sitePage.setFriendlyUrlPath_i18n(
+			HashMapBuilder.put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).build());
+		sitePage.setName_i18n(
+			HashMapBuilder.put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+				RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+				RandomTestUtil.randomString()
+			).build());
+
+		sitePage.setPageSettings(
+			() -> {
+				PageSettings pageSettings = _getPageSettings(curType);
+
+				pageSettings.setHiddenFromNavigation(
+					RandomTestUtil::randomBoolean);
+
+				return pageSettings;
+			});
+		sitePage.setType(() -> curType);
+
+		return sitePage;
 	}
 
 	private SitePageResource _getSitePageResource() throws Exception {

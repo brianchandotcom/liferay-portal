@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,7 +44,12 @@ public class ConnectMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_checkPermissions(themeDisplay.getCompanyId());
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
 
 		Authorization authorization = _marketplaceHttp.exchangeToken(
 			themeDisplay.getCompanyId(),
@@ -53,22 +57,13 @@ public class ConnectMVCResourceCommand extends BaseMVCResourceCommand {
 				ParamUtil.getString(resourceRequest, "clientId"),
 				ParamUtil.getString(resourceRequest, "code"),
 				ParamUtil.getString(resourceRequest, "codeVerifier"),
-				ParamUtil.getString(resourceRequest, "marketplaceSettings"),
 				ParamUtil.getString(resourceRequest, "redirect"),
+				ParamUtil.getString(resourceRequest, "settings"),
 				ParamUtil.getString(resourceRequest, "url")),
 			null);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, authorization.toJSONObject());
-	}
-
-	private void _checkPermissions(long companyId) throws Exception {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
-		}
 	}
 
 	@Reference

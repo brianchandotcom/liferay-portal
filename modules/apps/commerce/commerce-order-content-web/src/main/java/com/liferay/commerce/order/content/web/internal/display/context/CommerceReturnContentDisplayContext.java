@@ -167,10 +167,12 @@ public class CommerceReturnContentDisplayContext {
 		try {
 			AccountEntry accountEntry = _commerceContext.getAccountEntry();
 
-			return accountEntry.getAccountEntryId();
+			if (accountEntry != null) {
+				return accountEntry.getAccountEntryId();
+			}
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return 0;
@@ -178,10 +180,12 @@ public class CommerceReturnContentDisplayContext {
 
 	public long getCommerceChannelId() {
 		try {
-			return _commerceContext.getCommerceChannelId();
+			if (_commerceContext != null) {
+				return _commerceContext.getCommerceChannelId();
+			}
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return 0;

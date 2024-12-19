@@ -20,6 +20,8 @@
 			).put(
 				"orderSummaryURL", orderSummaryURL
 			).put(
+				"quickCheckoutEnabled", quickCheckoutEnabled
+			).put(
 				"reorderURL", reorderURL
 			).put(
 				"viewReturnableOrderItemsURL", viewReturnableOrderItemsURL

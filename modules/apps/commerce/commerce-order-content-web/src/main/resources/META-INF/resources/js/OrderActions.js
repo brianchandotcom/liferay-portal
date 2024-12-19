@@ -17,6 +17,7 @@ function OrderActions({
 	namespace,
 	orderId,
 	orderSummaryURL,
+	quickCheckoutEnabled,
 	reorderURL,
 	viewReturnableOrderItemsURL,
 }) {
@@ -33,24 +34,23 @@ function OrderActions({
 						.getOrderTransitionsById;
 
 			getTransitions(orderId)
-				.then((response) => {
-					const quickCheckoutTransition = response.items.find(
-						(item) => item.name === 'quick-checkout'
-					);
+				.then(({items: availableTransitions}) => {
+					let actions = availableTransitions;
 
-					let actions =
-						open && !quickCheckoutTransition
-							? [
-									...response.items,
-									{
-										disabled: true,
-										label: Liferay.Language.get(
-											'quick-checkout'
-										),
-										name: 'quick-checkout',
-									},
-								]
-							: response.items;
+					if (quickCheckoutEnabled) {
+						const quickCheckoutTransition =
+							availableTransitions.find(
+								(item) => item.name === 'quick-checkout'
+							);
+
+						if (open && !quickCheckoutTransition) {
+							actions.push({
+								disabled: true,
+								label: Liferay.Language.get('quick-checkout'),
+								name: 'quick-checkout',
+							});
+						}
+					}
 
 					if (viewReturnableOrderItemsURL) {
 						actions = [
@@ -76,7 +76,7 @@ function OrderActions({
 					});
 				});
 		},
-		[orderId, open, viewReturnableOrderItemsURL]
+		[orderId, open, quickCheckoutEnabled, viewReturnableOrderItemsURL]
 	);
 
 	useEffect(() => {

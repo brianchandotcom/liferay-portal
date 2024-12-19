@@ -199,7 +199,8 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:fieldValue",
 				_getFieldValue(
-					commerceOrder, field, fragmentRendererContext.getLocale()));
+					commerceOrder, field, httpServletRequest,
+					fragmentRendererContext.getLocale()));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:info-box:fieldValueType",
 				_getEditableFieldValueType(field));
@@ -440,13 +441,20 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _getFieldValue(
-			CommerceOrder commerceOrder, String field, Locale locale)
+			CommerceOrder commerceOrder, String field,
+			HttpServletRequest httpServletRequest, Locale locale)
 		throws PortalException {
 
 		if (field.equals("accountInfo")) {
 			AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
-			if (accountEntry == null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if ((accountEntry == null) ||
+				(accountEntry.isGuestAccount() && themeDisplay.isSignedIn())) {
+
 				return StringPool.BLANK;
 			}
 

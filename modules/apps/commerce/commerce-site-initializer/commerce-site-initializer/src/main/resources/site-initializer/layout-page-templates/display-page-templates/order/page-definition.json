@@ -1066,14 +1066,14 @@
 																										"buttonStyle": "secondary",
 																										"field": "notes",
 																										"label": {
-																											"en_US": "Questions & Answers"
+																											"en_US": "Questions and Answers"
 																										},
 																										"readOnly": false
 																									},
 																									"fragmentFields": [
 																									],
 																									"indexed": true,
-																									"name": "Payment Terms"
+																									"name": "Questions and Answers"
 																								},
 																								"type": "Fragment"
 																							}

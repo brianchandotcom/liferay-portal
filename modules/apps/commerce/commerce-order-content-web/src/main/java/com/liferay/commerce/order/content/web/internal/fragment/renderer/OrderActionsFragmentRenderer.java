@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
@@ -25,11 +27,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -40,6 +44,7 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -161,6 +166,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				).setParameter(
 					"commerceOrderUuid", commerceOrder.getUuid()
 				).buildString());
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-actions:quickCheckoutEnabled",
+				_isQuickCheckoutEnabled(commerceChannel));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-actions:reorderURL",
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
@@ -418,6 +426,27 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 		return false;
 	}
 
+	private boolean _isQuickCheckoutEnabled(CommerceChannel commerceChannel) {
+		try {
+			CommerceOrderCheckoutConfiguration
+				commerceOrderCheckoutConfiguration =
+					_configurationProvider.getConfiguration(
+						CommerceOrderCheckoutConfiguration.class,
+						new GroupServiceSettingsLocator(
+							commerceChannel.getGroupId(),
+							CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			return commerceOrderCheckoutConfiguration.quickCheckoutEnabled();
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		return false;
+	}
+
 	private void _printPortletMessageInfo(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -477,6 +506,9 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

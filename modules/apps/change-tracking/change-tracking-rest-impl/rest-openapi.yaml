@@ -425,34 +425,6 @@ paths:
                             schema:
                                 type: string
             tags: ["CTCollection"]
-    "/ct-collections/history":
-        get:
-            operationId: getCTCollectionsHistoryPage
-            parameters:
-                - in: query
-                  name: classNameId
-                  schema:
-                      type: integer
-                - in: query
-                  name: classPK
-                  schema:
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/CTCollection"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/CTCollection"
-                                type: array
-                    description:
-                        The array of CTCollections that were retrieved by the supplied classNameId and classPk
-            tags: ["CTCollection"]
     "/ct-collections/{ctCollectionId}":
         delete:
             operationId: deleteCTCollection

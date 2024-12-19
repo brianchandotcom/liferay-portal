@@ -33,7 +33,12 @@ export default function ScheduleOptions({
 
 			const date = new Date(displayDate);
 
-			if (date.valueOf() <= new Date().valueOf()) {
+			if (
+				date.valueOf() <=
+				new Date(
+					new Date().toLocaleString('en-US', {timeZone})
+				).valueOf()
+			) {
 				setError(
 					Liferay.Language.get('the-date-entered-is-in-the-past')
 				);
@@ -42,7 +47,7 @@ export default function ScheduleOptions({
 				setError('');
 			}
 		}
-	}, [setError, displayDate]);
+	}, [displayDate, setError, timeZone]);
 
 	return (
 		<>

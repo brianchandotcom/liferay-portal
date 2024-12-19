@@ -144,7 +144,7 @@ const ActivableTopperEmpty = ({
 	isHovered,
 	item,
 	itemElement,
-	shouldIgnoreEvents,
+	shouldIgnoreEvents = () => {},
 }) => {
 	const containerRef = useRef(null);
 

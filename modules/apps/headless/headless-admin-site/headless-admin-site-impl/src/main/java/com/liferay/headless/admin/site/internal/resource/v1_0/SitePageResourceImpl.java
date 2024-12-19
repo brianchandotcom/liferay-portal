@@ -321,31 +321,30 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				"collectionType", InfoListItemSelectorReturnType.class.getName()
 			).buildString();
 		}
-		else if (collectionType ==
-					CollectionReference.CollectionType.COLLECTION_PROVIDER) {
 
-			if (!(collectionReference instanceof ClassNameReference)) {
-				throw new UnsupportedOperationException();
-			}
+		if ((collectionType !=
+				CollectionReference.CollectionType.COLLECTION_PROVIDER) ||
+			!(collectionReference instanceof ClassNameReference)) {
 
-			ClassNameReference classNameReference =
-				(ClassNameReference)collectionReference;
-
-			if (classNameReference.getClassName() == null) {
-				throw new UnsupportedOperationException();
-			}
-
-			return UnicodePropertiesBuilder.create(
-				true
-			).setProperty(
-				"collectionPK", classNameReference.getClassName()
-			).setProperty(
-				"collectionType",
-				InfoListProviderItemSelectorReturnType.class.getName()
-			).buildString();
+			throw new UnsupportedOperationException();
 		}
 
-		throw new UnsupportedOperationException();
+		return UnicodePropertiesBuilder.put(
+			"collectionPK",
+			() -> {
+				ClassNameReference classNameReference =
+					(ClassNameReference)collectionReference;
+
+				if (Validator.isNull(classNameReference.getClassName())) {
+					throw new UnsupportedOperationException();
+				}
+
+				return classNameReference.getClassName();
+			}
+		).put(
+			"collectionType",
+			InfoListProviderItemSelectorReturnType.class.getName()
+		).buildString();
 	}
 
 	private String _getTypeSettings(long groupId, SitePage sitePage)

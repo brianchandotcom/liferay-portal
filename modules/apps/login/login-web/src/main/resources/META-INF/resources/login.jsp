@@ -13,7 +13,7 @@
 		<%
 		String signedInAs = HtmlUtil.escape(user.getFullName());
 
-		if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null)) {
+		if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null) && PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), 0, "com_liferay_my_account_web_portlet_MyAccountPortlet", ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
 			String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
 
 			signedInAs = "<a class=\"signed-in\" href=\"" + HtmlUtil.escape(myAccountURL) + "\">" + signedInAs + "</a>";

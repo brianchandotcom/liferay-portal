@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -57,20 +56,10 @@ test('Allow changing image resolution with direct selection', async ({
 
 	// Select the image directly
 
-	await pageEditorPage.selectEditable(imageId, 'image-square');
-
-	await page.getByTitle('Select Image').click();
-
-	const articleCard = page
-		.frameLocator('iframe[title="Select"]')
-		.getByText('high_resolution_photo.jpg');
-
-	await clickAndExpectToBeHidden({
-		target: page.locator('.modal-dialog'),
-		trigger: articleCard,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
+	await pageEditorPage.selectDirectImage(
+		'high_resolution_photo.jpg',
+		imageId
+	);
 
 	// Check that all the options are available
 
@@ -168,20 +157,10 @@ test('Allow changing image resolution in other viewports', async ({
 
 	// Select the image directly
 
-	await pageEditorPage.selectEditable(imageId, 'image-square');
-
-	await page.getByTitle('Select Image').click();
-
-	const articleCard = page
-		.frameLocator('iframe[title="Select"]')
-		.getByText('high_resolution_photo.jpg', {exact: false});
-
-	await clickAndExpectToBeHidden({
-		target: page.locator('.modal-dialog'),
-		trigger: articleCard,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
+	await pageEditorPage.selectDirectImage(
+		'high_resolution_photo.jpg',
+		imageId
+	);
 
 	// Check that the resolution can be changed independenly in each viewport
 
@@ -222,20 +201,7 @@ test(
 
 		// Select the image directly
 
-		await pageEditorPage.selectEditable(imageId, 'image-square');
-
-		await page.getByTitle('Select Image').click();
-
-		const articleCard = page
-			.frameLocator('iframe[title="Select"]')
-			.getByText('orange.jpg');
-
-		await clickAndExpectToBeHidden({
-			target: page.locator('.modal-dialog'),
-			trigger: articleCard,
-		});
-
-		await pageEditorPage.waitForChangesSaved();
+		await pageEditorPage.selectDirectImage('orange.jpg', imageId);
 
 		// Go to page contents panel and edit image
 

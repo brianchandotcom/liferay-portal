@@ -1135,6 +1135,23 @@ export class PageEditorPage {
 		}
 	}
 
+	async selectDirectImage(fileName: string, imageId: string) {
+		await this.selectEditable(imageId, 'image-square');
+
+		await this.page.getByTitle('Select Image').click();
+
+		const articleCard = this.page
+			.frameLocator('iframe[title="Select"]')
+			.getByText(fileName, {exact: false});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-dialog'),
+			trigger: articleCard,
+		});
+
+		await this.waitForChangesSaved();
+	}
+
 	async selectEditable(
 		fragmentId: string,
 		editableId: string,

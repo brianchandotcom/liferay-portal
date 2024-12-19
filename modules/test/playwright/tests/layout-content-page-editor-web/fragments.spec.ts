@@ -1218,20 +1218,7 @@ test.describe('Image Fragment', () => {
 
 			// Select the image directly
 
-			await pageEditorPage.selectEditable(imageId, 'image-square');
-
-			await page.getByTitle('Select Image').click();
-
-			const imageCard = page
-				.frameLocator('iframe[title="Select"]')
-				.getByText('poodle.jpg');
-
-			await clickAndExpectToBeHidden({
-				target: page.locator('.modal-dialog'),
-				trigger: imageCard,
-			});
-
-			await pageEditorPage.waitForChangesSaved();
+			await pageEditorPage.selectDirectImage('poodle.jpg', imageId);
 
 			expect(
 				await page

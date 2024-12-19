@@ -123,7 +123,9 @@ test('LPD-22759 Allow users to view the entire history of an entity in a popup m
 	await goToPublicationTimelineModal(page, journalPage);
 
 	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
-	await entityHistoryModalLocator.getByText(ctCollections[0].name).waitFor();
+	await entityHistoryModalLocator
+		.getByText(ctCollections[0].body.name)
+		.waitFor();
 
 	for (let i = 0; i < ctCollections.length; i++) {
 		if (i !== ctCollections.length - 1) {

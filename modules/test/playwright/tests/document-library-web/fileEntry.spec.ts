@@ -404,7 +404,7 @@ test(
 	async ({
 		apiHelpers,
 		documentLibraryPage,
-		documentLibraryViewFilePage,
+		documentLibraryViewFileEntryPage,
 		site,
 	}) => {
 		const documentTitle = 'Title' + getRandomString();
@@ -506,17 +506,19 @@ test(
 		await test.step('Check that category, related asset and tag are visible in document view page', async () => {
 			await documentLibraryPage.goto(site.friendlyUrlPath);
 			await documentLibraryPage.goToViewFileEntry(documentTitle);
-			await documentLibraryViewFilePage.openInfoPanel(
+			await documentLibraryViewFileEntryPage.openInfoPanel(
 				documentTitle,
 				'Details'
 			);
-			await documentLibraryViewFilePage.assertInfoPanelCategories([
+			await documentLibraryViewFileEntryPage.assertInfoPanelCategories([
 				categoryName,
 			]);
-			await documentLibraryViewFilePage.assertInfoPanelRelatedAssets([
-				structuredContentTitle,
+			await documentLibraryViewFileEntryPage.assertInfoPanelRelatedAssets(
+				[structuredContentTitle]
+			);
+			await documentLibraryViewFileEntryPage.assertInfoPanelTags([
+				keyword,
 			]);
-			await documentLibraryViewFilePage.assertInfoPanelTags([keyword]);
 		});
 	}
 );

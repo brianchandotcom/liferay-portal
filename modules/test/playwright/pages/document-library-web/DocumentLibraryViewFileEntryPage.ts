@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-export class DocumentLibraryViewFilePage {
+export class DocumentLibraryViewFileEntryPage {
 	readonly infoPanel: Locator;
 	readonly infoPanelButton: Locator;
 	readonly infoPanelTab: Locator;

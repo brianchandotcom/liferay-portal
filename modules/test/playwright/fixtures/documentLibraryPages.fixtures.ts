@@ -10,7 +10,7 @@ import {DocumentLibraryEditDocumentTypesPage} from '../pages/document-library-we
 import {DocumentLibraryEditFilePage} from '../pages/document-library-web/DocumentLibraryEditFilePage';
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/DocumentLibraryEditFolderPage';
 import {DocumentLibraryPage} from '../pages/document-library-web/DocumentLibraryPage';
-import {DocumentLibraryViewFilePage} from '../pages/document-library-web/DocumentLibraryViewFilePage';
+import {DocumentLibraryViewFileEntryPage} from '../pages/document-library-web/DocumentLibraryViewFileEntryPage';
 import {AICreatorInstanceSettingsPage} from '../pages/product-navigation-applications-menu/AICreatorSettingsPage';
 import {GogoShellPage} from '../pages/product-navigation-applications-menu/GogoShellPage';
 
@@ -21,7 +21,7 @@ const documentLibraryPagesTest = test.extend<{
 	documentLibraryEditFilePage: DocumentLibraryEditFilePage;
 	documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
 	documentLibraryPage: DocumentLibraryPage;
-	documentLibraryViewFilePage: DocumentLibraryViewFilePage;
+	documentLibraryViewFileEntryPage: DocumentLibraryViewFileEntryPage;
 	gogoShellPage: GogoShellPage;
 }>({
 	aiCreatorInstanceSettingsPage: async ({page}, use) => {
@@ -42,8 +42,8 @@ const documentLibraryPagesTest = test.extend<{
 	documentLibraryPage: async ({page}, use) => {
 		await use(new DocumentLibraryPage(page));
 	},
-	documentLibraryViewFilePage: async ({page}, use) => {
-		await use(new DocumentLibraryViewFilePage(page));
+	documentLibraryViewFileEntryPage: async ({page}, use) => {
+		await use(new DocumentLibraryViewFileEntryPage(page));
 	},
 	gogoShellPage: async ({page}, use) => {
 		await use(new GogoShellPage(page));

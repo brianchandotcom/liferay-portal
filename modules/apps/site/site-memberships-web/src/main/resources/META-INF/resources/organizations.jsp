@@ -21,146 +21,140 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	propsTransformer="{OrganizationsManagementToolbarPropsTransformer} from site-memberships-web"
 />
 
-<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<div class="sidenav-content">
-		<clay:container-fluid>
-			<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
+<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-			<aui:form action="<%= deleteGroupOrganizationsURL %>" method="post" name="fm">
-				<aui:input name="tabs1" type="hidden" value="organizations" />
-				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
+<aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+	<aui:input name="tabs1" type="hidden" value="organizations" />
+	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 
-				<liferay-site-navigation:breadcrumb
-					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
-				/>
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
+	/>
 
-				<liferay-ui:search-container
-					id="organizations"
-					searchContainer="<%= organizationsDisplayContext.getOrganizationSearchContainer() %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.portal.kernel.model.Organization"
-						escapedModel="<%= true %>"
-						keyProperty="organizationId"
-						modelVar="organization"
-					>
+	<liferay-ui:search-container
+		id="organizations"
+		searchContainer="<%= organizationsDisplayContext.getOrganizationSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.Organization"
+			escapedModel="<%= true %>"
+			keyProperty="organizationId"
+			modelVar="organization"
+		>
 
-						<%
-						String displayStyle = organizationsDisplayContext.getDisplayStyle();
-						%>
+			<%
+			String displayStyle = organizationsDisplayContext.getDisplayStyle();
+			%>
 
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<liferay-ui:search-container-column-text>
-									<clay:user-card
-										propsTransformer="{OrganizationCardPropsTransformer} from site-memberships-web"
-										userCard="<%= new OrganizationsUserCard(organization, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-									/>
-								</liferay-ui:search-container-column-text>
-							</c:when>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
-								<liferay-ui:search-container-column-icon
-									icon="organizations"
-									toggleRowChecker="<%= true %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									colspan="<%= 2 %>"
-								>
-									<div class="h5"><%= organization.getName() %></div>
-
-									<div class="h6 text-default">
-										<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>
-									</div>
-
-									<div class="h6 text-default">
-										<span><liferay-ui:message key="<%= organization.getType() %>" /></span>
-									</div>
-
-									<div class="h6 text-default">
-										<span><%= HtmlUtil.escape(organization.getAddress().getCity()) %></span>
-										<span><%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
-										<span><%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
-									</div>
-								</liferay-ui:search-container-column-text>
-
-								<%
-								OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
-								%>
-
-								<liferay-ui:search-container-column-text>
-									<clay:dropdown-actions
-										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-										propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
-									/>
-								</liferay-ui:search-container-column-text>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									name="name"
-									orderable="<%= true %>"
-									value="<%= organization.getName() %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200"
-									name="parent-organization"
-									value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest table-cell-minw-100"
-									name="type"
-									orderable="<%= true %>"
-									value="<%= LanguageUtil.get(request, organization.getType()) %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest table-cell-minw-150"
-									name="city"
-									value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest table-cell-minw-150"
-									name="region"
-									value="<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest table-cell-minw-150"
-									name="country"
-									value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-								/>
-
-								<%
-								OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
-								%>
-
-								<liferay-ui:search-container-column-text>
-									<clay:dropdown-actions
-										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-										dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
-										propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
-									/>
-								</liferay-ui:search-container-column-text>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						displayStyle="<%= organizationsDisplayContext.getDisplayStyle() %>"
-						markupView="lexicon"
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+					<liferay-ui:search-container-column-text>
+						<clay:user-card
+							propsTransformer="{OrganizationCardPropsTransformer} from site-memberships-web"
+							userCard="<%= new OrganizationsUserCard(organization, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="organizations"
+						toggleRowChecker="<%= true %>"
 					/>
-				</liferay-ui:search-container>
-			</aui:form>
-		</clay:container-fluid>
-	</div>
-</div>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<div class="h5"><%= organization.getName() %></div>
+
+						<div class="h6 text-default">
+							<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>
+						</div>
+
+						<div class="h6 text-default">
+							<span><liferay-ui:message key="<%= organization.getType() %>" /></span>
+						</div>
+
+						<div class="h6 text-default">
+							<span><%= HtmlUtil.escape(organization.getAddress().getCity()) %></span>
+							<span><%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
+							<span><%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
+						</div>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+							dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200 table-title"
+						name="name"
+						orderable="<%= true %>"
+						value="<%= organization.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand table-cell-minw-200"
+						name="parent-organization"
+						value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-100"
+						name="type"
+						orderable="<%= true %>"
+						value="<%= LanguageUtil.get(request, organization.getType()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
+						name="city"
+						value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
+						name="region"
+						value="<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
+						name="country"
+						value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+					/>
+
+					<%
+					OrganizationActionDropdownItemsProvider organizationActionDropdownItemsProvider = new OrganizationActionDropdownItemsProvider(organization, renderRequest, renderResponse);
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+							dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="{OrganizationDropdownDefaultPropsTransformer} from site-memberships-web"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="<%= organizationsDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</aui:form>
 
 <portlet:actionURL name="addGroupOrganizations" var="addGroupOrganizationsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -21,20 +21,28 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MarketplaceConfiguration {
 
+	@Meta.AD(required = false)
 	public String accessToken();
 
+	@Meta.AD(required = false)
 	public String clientId();
 
-	public String marketplaceSettings();
-
+	@Meta.AD(required = false)
 	public String code();
 
-	public String refreshToken();
-
+	@Meta.AD(required = false)
 	public long expiresIn();
 
+	@Meta.AD(required = false)
 	public String redirect();
 
+	@Meta.AD(required = false)
+	public String refreshToken();
+
+	@Meta.AD(required = false)
+	public String settings();
+
+	@Meta.AD(required = false)
 	public String url();
 
 }

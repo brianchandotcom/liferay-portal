@@ -15,12 +15,10 @@ import {Authorization, MarketplaceSettingsProps} from './types';
 const steps = [
 	{
 		Component: Connect,
-		subTitle: '',
 		title: 'Connect',
 	},
 	{
 		Component: Status,
-		subTitle: '',
 		title: 'Status',
 	},
 ];
@@ -31,29 +29,26 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 		hasAuthorization: false,
 		loading: true,
 	});
+
 	const [step, setStep] = useState(0);
 
 	const currentStep = steps[step];
 	const Component = currentStep.Component;
 
 	useEffect(() => {
-		const fetchAuthorization = async () => {
-			const response = await fetch(
-				createResourceURL(props.baseResourceURL, {
-					p_p_resource_id: '/marketplace_settings/get_authorization',
+		fetch(
+			createResourceURL(props.baseResourceURL, {
+				p_p_resource_id: '/marketplace_settings/get_authorization',
+			})
+		)
+			.then((response) => response.json())
+			.then((response) =>
+				setAuthorization({
+					data: response.data,
+					hasAuthorization: response.authorized,
+					loading: false,
 				})
 			);
-
-			const {authorized, data} = await response.json();
-
-			return setAuthorization({
-				data,
-				hasAuthorization: authorized,
-				loading: false,
-			});
-		};
-
-		fetchAuthorization();
 	}, [props.baseResourceURL]);
 
 	const onDisconnect = async () => {

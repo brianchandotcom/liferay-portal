@@ -8,34 +8,33 @@ import React from 'react';
 
 type StepProps = {
 	step: number;
-	steps: {subTitle?: string; title: string}[];
+	steps: {title: string}[];
 };
 
-export default function Step({step, steps}: StepProps) {
-	return (
-		<ClayMultiStepNav>
-			{steps.map(({subTitle, title}, i) => {
-				const complete = step > i;
+const Step = ({step, steps}: StepProps) => (
+	<ClayMultiStepNav>
+		{steps.map(({title}, i) => {
+			const complete = step > i;
 
-				return (
-					<ClayMultiStepNav.Item
-						active={step === i}
-						expand={i + 1 !== steps.length}
-						key={i}
-						state={complete ? 'complete' : undefined}
-					>
-						<ClayMultiStepNav.Title>{title}</ClayMultiStepNav.Title>
+			return (
+				<ClayMultiStepNav.Item
+					active={step === i}
+					expand={i + 1 !== steps.length}
+					key={i}
+					state={complete ? 'complete' : undefined}
+				>
+					<ClayMultiStepNav.Title>{title}</ClayMultiStepNav.Title>
 
-						<ClayMultiStepNav.Divider />
+					<ClayMultiStepNav.Divider />
 
-						<ClayMultiStepNav.Indicator
-							complete={complete}
-							label={1 + i}
-							subTitle={subTitle}
-						/>
-					</ClayMultiStepNav.Item>
-				);
-			})}
-		</ClayMultiStepNav>
-	);
-}
+					<ClayMultiStepNav.Indicator
+						complete={complete}
+						label={1 + i}
+					/>
+				</ClayMultiStepNav.Item>
+			);
+		})}
+	</ClayMultiStepNav>
+);
+
+export default Step;

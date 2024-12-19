@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +40,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = StagingGroupHelper.class)
 public class StagingGroupHelperImpl implements StagingGroupHelper {
+
+	@Override
+	public Group fetchCompanyGroup(long companyId) {
+		return _groupLocalService.fetchFriendlyURLGroup(
+			companyId, CompanyGroupConstants.FRIENDLY_URL);
+	}
 
 	@Override
 	public Group fetchLiveGroup(Group group) {
@@ -158,6 +165,21 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 		}
 
 		return groupId;
+	}
+
+	@Override
+	public boolean isCompanyGroup(Group group) {
+		Group companyGroup = fetchCompanyGroup(group.getCompanyId());
+
+		if (companyGroup == null) {
+			return false;
+		}
+
+		if (group.getGroupId() == companyGroup.getGroupId()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

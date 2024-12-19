@@ -29,6 +29,12 @@
 			continue;
 		}
 
+		StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (portletDataHandler.isCompany() != stagingGroupHelper.isCompanyGroup(group)) {
+			continue;
+		}
+
 		String portletDataHandlerName = portletDataHandler.getName();
 
 		if (portletDataHandlerNames.contains(portletDataHandlerName)) {

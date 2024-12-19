@@ -236,11 +236,11 @@ public class TransactionalPortalCacheUtil {
 					uncommittedBuffer = new ShardedUncommittedBuffer(
 						(PortalCache<Serializable, Object>)portalCache,
 						(companyId, targetPortalCache) ->
-							new MarkerUncommittedBuffer(
+							new MarkerMVCCUncommittedBuffer(
 								companyId, targetPortalCache));
 				}
 				else {
-					uncommittedBuffer = new MarkerUncommittedBuffer(
+					uncommittedBuffer = new MarkerMVCCUncommittedBuffer(
 						(PortalCache<Serializable, Object>)portalCache);
 				}
 			}
@@ -291,7 +291,8 @@ public class TransactionalPortalCacheUtil {
 			ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
 
-	private static class MarkerUncommittedBuffer extends MVCCUncommittedBuffer {
+	private static class MarkerMVCCUncommittedBuffer
+		extends MVCCUncommittedBuffer {
 
 		@Override
 		public void commit(boolean readOnly) {
@@ -328,7 +329,7 @@ public class TransactionalPortalCacheUtil {
 			}
 		}
 
-		private MarkerUncommittedBuffer(
+		private MarkerMVCCUncommittedBuffer(
 			long companyId, PortalCache<Serializable, Object> portalCache) {
 
 			super(portalCache);
@@ -341,7 +342,7 @@ public class TransactionalPortalCacheUtil {
 				_portalCacheName, key -> new Object());
 		}
 
-		private MarkerUncommittedBuffer(
+		private MarkerMVCCUncommittedBuffer(
 			PortalCache<Serializable, Object> portalCache) {
 
 			super(portalCache);

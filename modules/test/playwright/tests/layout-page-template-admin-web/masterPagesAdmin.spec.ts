@@ -582,3 +582,66 @@ test(
 		).not.toBeAttached();
 	}
 );
+
+test.describe('Allowed fragments Configuration', () => {
+	test(
+		'Only allowed fragments are shown in the sidebar when creating a page based on the master',
+		{tag: '@LPS-102194'},
+		async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
+
+			// Create a master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.editMaster(layoutPageTemplateEntryName);
+
+			// Configure allowed fragments
+
+			await masterPagesPage.configureAllowedFragments({
+				fragmentNames: ['Heading', 'Button'],
+				mode: 'select',
+				prefilter: 'Basic Components',
+			});
+
+			await pageEditorPage.publishPage();
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				options: {type: 'content'},
+				title: getRandomString(),
+			});
+
+			// Check that only 3 fragments are shown, Container, grid and heading
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			expect(
+				page.locator('.page-editor__fragments-widgets__tab-list-item')
+			).toHaveCount(4);
+
+			expect(
+				page
+					.locator('.page-editor__fragments-widgets__tab-list-item')
+					.nth(2)
+			).toHaveText('Button');
+
+			expect(
+				page
+					.locator('.page-editor__fragments-widgets__tab-list-item')
+					.nth(3)
+			).toHaveText('Heading');
+		}
+	);
+});

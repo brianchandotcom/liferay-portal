@@ -40,6 +40,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -686,6 +687,38 @@ public class ObjectViewLocalServiceTest {
 					" exists with the external reference code ",
 					externalReferenceCode),
 				objectViewFilterColumnException.getMessage());
+		}
+
+		String objectFieldName = objectField.getName();
+
+		List<String> objectFieldValues = Arrays.asList(
+			"[]", "[\"\"]", "[ ]", "[ , ]");
+
+		for (String objectFieldValue : objectFieldValues) {
+			AssertUtils.assertFailure(
+				ObjectViewFilterColumnException.class,
+				StringBundler.concat(
+					"Object field name \"", objectFieldName,
+					"\" needs to have the filter type and JSON specified"),
+				() -> _objectViewLocalService.addObjectView(
+					TestPropsValues.getUserId(),
+					_objectDefinition.getObjectDefinitionId(), false,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					Collections.singletonList(
+						_createObjectViewColumn(
+							"Simon",
+							StringUtil.toLowerCase(
+								RandomStringUtils.randomAlphabetic(5)),
+							false)),
+					Collections.singletonList(
+						_createObjectViewFilterColumn(
+							ObjectViewFilterColumnConstants.
+								FILTER_TYPE_INCLUDES,
+							StringBundler.concat(
+								"{\"includes\": ", objectFieldValue, "}"),
+							objectFieldName)),
+					Collections.emptyList()));
 		}
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(

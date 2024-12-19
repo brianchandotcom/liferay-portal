@@ -43,12 +43,12 @@ public class ProductConfigurationListAccountGroupDTOConverter
 			_cpConfigurationListRelService.getCPConfigurationListRel(
 				(Long)dtoConverterContext.getId());
 
-		AccountGroup cpConfigurationListAccountGroup =
-			_accountGroupLocalService.getAccountGroup(
-				cpConfigurationListRel.getClassPK());
 		CPConfigurationList cpConfigurationList =
 			_cpConfigurationListService.getCPConfigurationList(
 				cpConfigurationListRel.getCPConfigurationListId());
+		AccountGroup cpConfigurationListAccountGroup =
+			_accountGroupLocalService.getAccountGroup(
+				cpConfigurationListRel.getClassPK());
 
 		return new ProductConfigurationListAccountGroup() {
 			{

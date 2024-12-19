@@ -254,12 +254,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _layoutService.addLayout(
 			sitePage.getExternalReferenceCode(), groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
-			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
-			null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+			null, null, null,
+			SitePageTypeUtil.toInternalType(sitePage.getType()),
 			_getTypeSettings(groupId, sitePage),
-			_isHiddenFromNavigation(sitePage.getPageSettings()), false,
+			_isHiddenFromNavigation(sitePage.getPageSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				sitePage.getFriendlyUrlPath_i18n()),
 			0, serviceContext);

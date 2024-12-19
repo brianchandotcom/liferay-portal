@@ -100,11 +100,13 @@ export default function AccountCreationModal({
 					{Liferay.Language.get('create-new-account')}
 				</ClayModal.Header>
 
-				<AccountCreationModalBody
-					accountData={accountData}
-					accountTypes={accountTypes}
-					setAccountData={setAccountData}
-				/>
+				<ClayModal.Body>
+					<AccountCreationModalBody
+						accountData={accountData}
+						accountTypes={accountTypes}
+						setAccountData={setAccountData}
+					/>
+				</ClayModal.Body>
 
 				<ClayModal.Footer
 					last={

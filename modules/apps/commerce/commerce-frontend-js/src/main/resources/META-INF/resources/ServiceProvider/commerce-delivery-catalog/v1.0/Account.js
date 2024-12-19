@@ -18,7 +18,9 @@ function resolvePath(basePath = '', channelId = '') {
 export default function Account(basePath) {
 	return {
 		baseURL: (channelId) => resolvePath(basePath, channelId),
-		getAccounts: (channelId, ...params) =>
+		createAccountByChannelId: (channelId, json) =>
+			AJAX.POST(resolvePath(basePath, channelId), json),
+		getAccountsByChannelId: (channelId, ...params) =>
 			AJAX.GET(resolvePath(basePath, channelId), ...params),
 	};
 }

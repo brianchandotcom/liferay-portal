@@ -24,6 +24,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 String[] accountEntryAllowedTypes = (String[])request.getAttribute("liferay-commerce:account-selector:accountEntryAllowedTypes");
+String checkoutURL = (String)request.getAttribute("liferay-commerce:account-selector:checkoutURL");
 long commerceChannelId = (long)request.getAttribute("liferay-commerce:account-selector:commerceChannelId");
 String createNewOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:createNewOrderURL");
 String cssClasses = (String)request.getAttribute("liferay-commerce:account-selector:cssClasses");
@@ -31,6 +32,7 @@ String currencyCode = (String)request.getAttribute("liferay-commerce:account-sel
 CurrentCommerceAccountModel currentCommerceAccount = (CurrentCommerceAccountModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceAccount");
 CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceOrder");
 boolean hasCommerceOpenOrderContentPortlet = (boolean)request.getAttribute("liferay-commerce:account-selector:hasCommerceOpenOrderContentPortlet");
+boolean hasPermission = (boolean)request.getAttribute("liferay-commerce:account-selector:hasPermission");
 JSONArray orderTypesJSONArray = (JSONArray)request.getAttribute("liferay-commerce:account-selector:orderTypes");
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
 String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");

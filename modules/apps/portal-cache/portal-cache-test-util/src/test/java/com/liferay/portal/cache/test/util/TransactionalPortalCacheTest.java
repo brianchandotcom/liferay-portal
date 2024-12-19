@@ -450,7 +450,7 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Unable to do put", throwable.getMessage());
 		}
 
-		// Null safeCloseable
+		// Null safe closeable
 
 		MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
 			Mockito.mockStatic(CompanyThreadLocal.class);

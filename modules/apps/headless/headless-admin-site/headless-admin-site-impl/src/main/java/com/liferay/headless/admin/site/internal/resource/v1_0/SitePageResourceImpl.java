@@ -266,7 +266,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		if ((collectionReference == null) ||
 			(collectionReference.getCollectionType() == null)) {
 
-			throw new NotSupportedException();
+			throw new UnsupportedOperationException();
 		}
 
 		CollectionReference.CollectionType collectionType =
@@ -281,14 +281,14 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					CollectionReference.CollectionType.COLLECTION_PROVIDER) {
 
 			if (!(collectionReference instanceof ClassNameReference)) {
-				throw new NotSupportedException();
+				throw new UnsupportedOperationException();
 			}
 
 			ClassNameReference classNameReference =
 				(ClassNameReference)collectionReference;
 
 			if (classNameReference.getClassName() == null) {
-				throw new NotSupportedException();
+				throw new UnsupportedOperationException();
 			}
 
 			return UnicodePropertiesBuilder.create(
@@ -300,7 +300,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			).buildString();
 		}
 
-		throw new NotSupportedException();
+		throw new UnsupportedOperationException();
 	}
 
 	private String _getTypeSettings(SitePage sitePage) {
@@ -308,7 +308,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (sitePage.getType() == SitePage.Type.COLLECTION_PAGE) {
 			if (!(pageSettings instanceof CollectionPageSettings)) {
-				throw new NotSupportedException();
+				throw new UnsupportedOperationException();
 			}
 
 			return _getTypeSettings((CollectionPageSettings)pageSettings);
@@ -316,7 +316,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
 			if (!(pageSettings instanceof ContentPageSettings)) {
-				throw new NotSupportedException();
+				throw new UnsupportedOperationException();
 			}
 
 			return null;
@@ -325,7 +325,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		if ((sitePage.getType() != SitePage.Type.WIDGET_PAGE) ||
 			!(pageSettings instanceof WidgetPageSettings)) {
 
-			throw new NotSupportedException();
+			throw new UnsupportedOperationException();
 		}
 
 		WidgetPageSettings widgetPageSettings =

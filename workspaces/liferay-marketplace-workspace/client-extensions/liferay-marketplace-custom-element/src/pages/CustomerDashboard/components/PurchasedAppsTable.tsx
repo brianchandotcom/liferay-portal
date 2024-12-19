@@ -89,14 +89,6 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 					},
 					title: i18n.translate('purchased-by'),
 				},
-
-				{
-					key: 'type',
-					render: (type) => (
-						<div className="dashboard-table-row-type">{type}</div>
-					),
-					title: i18n.translate('license-type'),
-				},
 				{
 					key: 'orderTypeExternalReferenceCode',
 					render: (orderTypeExternalReferenceCode) =>

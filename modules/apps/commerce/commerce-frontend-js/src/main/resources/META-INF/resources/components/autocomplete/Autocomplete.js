@@ -249,9 +249,9 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		function handleClick(event) {
 			if (
 				nodeRef.current.contains(event.target) ||
-				event.target === dropdownNodeRef.current.parentElement ||
 				(dropdownNodeRef.current &&
-					dropdownNodeRef.current.contains(event.target))
+					(event.target === dropdownNodeRef.current.parentElement ||
+						dropdownNodeRef.current.contains(event.target)))
 			) {
 				return;
 			}

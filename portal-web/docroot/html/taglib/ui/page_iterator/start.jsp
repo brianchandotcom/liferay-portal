@@ -269,7 +269,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							</liferay-ui:csp>
 						</li>
 						<li class="dropdown page-item">
-							<button aria-controls="dropdown-pages-1" aria-haspopup="true" class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown">
+							<button aria-controls="dropdown-pages-1" aria-haspopup="true" class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown" title="<%= LanguageUtil.get(request, "show-intermediate-pages") %>">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
@@ -311,7 +311,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							</liferay-ui:csp>
 						</li>
 						<li class="dropdown page-item">
-							<button aria-controls="dropdown-pages-2" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+							<button aria-controls="dropdown-pages-2" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" title="<%= LanguageUtil.get(request, "show-intermediate-pages") %>">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
@@ -360,7 +360,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 						<c:if test="<%= (cur - 3) > 1 %>">
 							<li class="dropdown page-item">
-								<button aria-controls="dropdown-pages-3" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+								<button aria-controls="dropdown-pages-3" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" title="<%= LanguageUtil.get(request, "show-intermediate-pages") %>">
 									<span aria-hidden="true">...</span>
 
 									<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
@@ -412,7 +412,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 						<c:if test="<%= (cur + 3) < pages %>">
 							<li class="dropdown page-item">
-								<button aria-controls="dropdown-pages-4" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+								<button aria-controls="dropdown-pages-4" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown" title="<%= LanguageUtil.get(request, "show-intermediate-pages") %>">
 									<span aria-hidden="true">...</span>
 
 									<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>

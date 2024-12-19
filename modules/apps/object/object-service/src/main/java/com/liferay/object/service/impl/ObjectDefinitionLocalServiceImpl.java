@@ -88,6 +88,7 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -97,7 +98,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -626,7 +626,8 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getCompanyId())) {
 
 			_inactiveServiceRegistrationsMap.computeIfAbsent(
-				_getObjectDefinitionKey(objectDefinition),
+				DBPartitionUtil.getPartitionKey(
+					objectDefinition.getObjectDefinitionId()),
 				objectDefinitionId ->
 					InactiveObjectDefinitionDeployerUtil.deploy(
 						_bundleContext, _objectEntryService,
@@ -652,7 +653,8 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getCompanyId())) {
 
 				serviceRegistrationsMap.computeIfAbsent(
-					_getObjectDefinitionKey(objectDefinition),
+					DBPartitionUtil.getPartitionKey(
+						objectDefinition.getObjectDefinitionId()),
 					objectDefinitionId -> objectDefinitionDeployer.deploy(
 						objectDefinition));
 			}
@@ -932,8 +934,8 @@ public class ObjectDefinitionLocalServiceImpl
 					}
 
 					_inactiveServiceRegistrationsMap.put(
-						companyId + StringPool.AT +
-							objectDefinition.getObjectDefinitionId(),
+						DBPartitionUtil.getPartitionKey(
+							objectDefinition.getObjectDefinitionId()),
 						InactiveObjectDefinitionDeployerUtil.deploy(
 							_bundleContext, _objectEntryService,
 							_objectFieldLocalService,
@@ -1033,7 +1035,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 			List<ServiceRegistration<?>> serviceRegistrations =
 				serviceRegistrationsMap.remove(
-					_getObjectDefinitionKey(objectDefinition));
+					DBPartitionUtil.getPartitionKey(
+						objectDefinition.getObjectDefinitionId()));
 
 			if (serviceRegistrations != null) {
 				for (ServiceRegistration<?> serviceRegistration :
@@ -1748,16 +1751,6 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		return name;
-	}
-
-	private String _getObjectDefinitionKey(ObjectDefinition objectDefinition) {
-		String key = String.valueOf(objectDefinition.getObjectDefinitionId());
-
-		if (DBPartition.isPartitionEnabled()) {
-			key = key + StringPool.AT + objectDefinition.getCompanyId();
-		}
-
-		return key;
 	}
 
 	private long _getObjectFolderId(long companyId, long objectFolderId)

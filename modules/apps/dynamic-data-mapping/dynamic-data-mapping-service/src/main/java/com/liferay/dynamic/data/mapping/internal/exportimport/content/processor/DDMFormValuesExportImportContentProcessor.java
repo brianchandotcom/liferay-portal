@@ -114,6 +114,153 @@ public class DDMFormValuesExportImportContentProcessor
 		long groupId, DDMFormValues ddmFormValues) {
 	}
 
+	protected class LayoutImportDDMFormFieldValueTransformer
+		implements DDMFormFieldValueTransformer {
+
+		public LayoutImportDDMFormFieldValueTransformer(
+			PortletDataContext portletDataContext) {
+
+			_portletDataContext = portletDataContext;
+		}
+
+		@Override
+		public String getFieldType() {
+			return LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT;
+		}
+
+		@Override
+		public void transform(DDMFormFieldValue ddmFormFieldValue)
+			throws PortalException {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				String valueString = value.getString(locale);
+
+				JSONObject jsonObject = null;
+
+				try {
+					jsonObject = _jsonFactory.createJSONObject(valueString);
+				}
+				catch (JSONException jsonException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to parse JSON", jsonException);
+					}
+
+					continue;
+				}
+
+				if (jsonObject.length() == 0) {
+					continue;
+				}
+
+				Layout importedLayout = fetchImportedLayout(
+					_portletDataContext, jsonObject);
+
+				if (importedLayout != null) {
+					value.addString(
+						locale,
+						toJSON(
+							importedLayout, locale,
+							jsonObject.getString("name")));
+
+					continue;
+				}
+
+				Element missingReferencesElement =
+					_portletDataContext.getMissingReferencesElement();
+
+				List<Element> elements = missingReferencesElement.elements();
+
+				for (Element element : elements) {
+					String className = element.attributeValue("class-name");
+
+					if (className.equals(Layout.class.getName())) {
+						String uuid = element.attributeValue("uuid");
+
+						if (jsonObject.has("id") &&
+							!Objects.equals(uuid, jsonObject.getString("id"))) {
+
+							continue;
+						}
+
+						String privateLayout = element.attributeValue(
+							"private-layout");
+
+						importedLayout =
+							_layoutLocalService.fetchLayoutByUuidAndGroupId(
+								uuid, _portletDataContext.getScopeGroupId(),
+								Boolean.valueOf(privateLayout));
+					}
+				}
+
+				if (importedLayout != null) {
+					value.addString(
+						locale,
+						toJSON(
+							importedLayout, locale,
+							jsonObject.getString("name")));
+				}
+			}
+		}
+
+		protected Layout fetchImportedLayout(
+			PortletDataContext portletDataContext, JSONObject jsonObject) {
+
+			Map<Long, Layout> layouts =
+				(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+					Layout.class + ".layout");
+
+			long layoutId = jsonObject.getLong("layoutId");
+
+			Layout layout = layouts.get(layoutId);
+
+			if (layout == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to find layout with ID " + layoutId);
+				}
+			}
+
+			return layout;
+		}
+
+		protected String toJSON(Layout layout, Locale locale, String name)
+			throws PortalException {
+
+			return JSONUtil.put(
+				"groupId", layout.getGroupId()
+			).put(
+				"id", layout.getUuid()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", _getName(layout, locale, name)
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"value", layout.getFriendlyURL(locale)
+			).toString();
+		}
+
+		private String _getName(Layout layout, Locale locale, String name)
+			throws PortalException {
+
+			try {
+				return layout.getBreadcrumb(locale);
+			}
+			catch (NoSuchLayoutException noSuchLayoutException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(noSuchLayoutException);
+				}
+			}
+
+			return name;
+		}
+
+		private final PortletDataContext _portletDataContext;
+
+	}
+
 	private boolean _hasNotExportableStatus(
 		StagedModel stagedModel, int status) {
 
@@ -616,153 +763,6 @@ public class DDMFormValuesExportImportContentProcessor
 
 		private final PortletDataContext _portletDataContext;
 		private final StagedModel _stagedModel;
-
-	}
-
-	private class LayoutImportDDMFormFieldValueTransformer
-		implements DDMFormFieldValueTransformer {
-
-		public LayoutImportDDMFormFieldValueTransformer(
-			PortletDataContext portletDataContext) {
-
-			_portletDataContext = portletDataContext;
-		}
-
-		@Override
-		public String getFieldType() {
-			return LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT;
-		}
-
-		@Override
-		public void transform(DDMFormFieldValue ddmFormFieldValue)
-			throws PortalException {
-
-			Value value = ddmFormFieldValue.getValue();
-
-			for (Locale locale : value.getAvailableLocales()) {
-				String valueString = value.getString(locale);
-
-				JSONObject jsonObject = null;
-
-				try {
-					jsonObject = _jsonFactory.createJSONObject(valueString);
-				}
-				catch (JSONException jsonException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsonException);
-					}
-
-					continue;
-				}
-
-				if (jsonObject.length() == 0) {
-					continue;
-				}
-
-				Layout importedLayout = fetchImportedLayout(
-					_portletDataContext, jsonObject);
-
-				if (importedLayout != null) {
-					value.addString(
-						locale,
-						toJSON(
-							importedLayout, locale,
-							jsonObject.getString("name")));
-
-					continue;
-				}
-
-				Element missingReferencesElement =
-					_portletDataContext.getMissingReferencesElement();
-
-				List<Element> elements = missingReferencesElement.elements();
-
-				for (Element element : elements) {
-					String className = element.attributeValue("class-name");
-
-					if (className.equals(Layout.class.getName())) {
-						String uuid = element.attributeValue("uuid");
-
-						if (jsonObject.has("id") &&
-							!Objects.equals(uuid, jsonObject.getString("id"))) {
-
-							continue;
-						}
-
-						String privateLayout = element.attributeValue(
-							"private-layout");
-
-						importedLayout =
-							_layoutLocalService.fetchLayoutByUuidAndGroupId(
-								uuid, _portletDataContext.getScopeGroupId(),
-								Boolean.valueOf(privateLayout));
-					}
-				}
-
-				if (importedLayout != null) {
-					value.addString(
-						locale,
-						toJSON(
-							importedLayout, locale,
-							jsonObject.getString("name")));
-				}
-			}
-		}
-
-		protected Layout fetchImportedLayout(
-			PortletDataContext portletDataContext, JSONObject jsonObject) {
-
-			Map<Long, Layout> layouts =
-				(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-					Layout.class + ".layout");
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			Layout layout = layouts.get(layoutId);
-
-			if (layout == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to find layout with ID " + layoutId);
-				}
-			}
-
-			return layout;
-		}
-
-		protected String toJSON(Layout layout, Locale locale, String name)
-			throws PortalException {
-
-			return JSONUtil.put(
-				"groupId", layout.getGroupId()
-			).put(
-				"id", layout.getUuid()
-			).put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name", _getName(layout, locale, name)
-			).put(
-				"privateLayout", layout.isPrivateLayout()
-			).put(
-				"value", layout.getFriendlyURL(locale)
-			).toString();
-		}
-
-		private String _getName(Layout layout, Locale locale, String name)
-			throws PortalException {
-
-			try {
-				return layout.getBreadcrumb(locale);
-			}
-			catch (NoSuchLayoutException noSuchLayoutException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(noSuchLayoutException);
-				}
-			}
-
-			return name;
-		}
-
-		private final PortletDataContext _portletDataContext;
 
 	}
 

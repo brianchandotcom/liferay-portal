@@ -101,6 +101,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.fetchLayoutByExternalReferenceCode(
 				postSitePage.getExternalReferenceCode(),
 				testGroup.getGroupId()));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		_testDeleteSiteSiteByExternalReferenceCodeSitePage(
+			_addLayout(LayoutConstants.TYPE_COLLECTION, null, serviceContext),
+			_addLayout(LayoutConstants.TYPE_CONTENT, null, serviceContext),
+			_addLayout(
+				LayoutConstants.TYPE_PORTLET,
+				UnicodePropertiesBuilder.put(
+					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
+				).buildString(),
+				serviceContext));
 	}
 
 	@Override
@@ -571,6 +585,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).parameters(
 			"nestedFields", "friendlyUrlHistory,pageSpecifications"
 		).build();
+	}
+
+	private void _testDeleteSiteSiteByExternalReferenceCodeSitePage(
+			Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			sitePageResource.deleteSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				layout.getExternalReferenceCode());
+
+			Assert.assertNull(
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					layout.getExternalReferenceCode(), testGroup.getGroupId()));
+		}
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeSitePage(Layout layout)

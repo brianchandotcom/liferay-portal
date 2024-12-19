@@ -6,19 +6,19 @@
 import ClayButton from '@clayui/button';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
 
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import Page from '../../../../components/Page';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
+import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 import PurchasedAppsTable from '../../components/PurchasedAppsTable';
 import {usePurchasedOrders} from '../../usePurchasedOrders';
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
-	const {selectedAccount} = useOutletContext<any>();
+	const {selectedAccount} = useCustomerDashboardOutletContext();
 
 	const {
 		data: placedOrders = {items: [], pageSize: 1, totalCount: 0},

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Account to OAuth2 DXP Authorization"
+	},
+	"name": "accountToOAuth2DxpAuthorization",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:OAuth2DxpAuthorization$]",
+	"objectDefinitionName2": "OAuth2DxpAuthorization",
+	"type": "oneToMany"
+}

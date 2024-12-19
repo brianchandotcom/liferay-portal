@@ -161,6 +161,7 @@ export default {
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
+	'dxp-connections': 'DXP Connections',
 	'dxp-license-usage-type': 'DXP License Usage Type',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay SaaS.',
@@ -277,6 +278,8 @@ export default {
 	'move-to-bottom': 'Move to Bottom',
 	'move-to-top': 'Move to Top',
 	'move-up': 'Move Up',
+	'my-apps': 'My Apps',
+	'my-solutions': 'My Solutions',
 	'name': 'Name',
 	'never-expires': 'Never Expires',
 	'new-trial': 'New Trial',

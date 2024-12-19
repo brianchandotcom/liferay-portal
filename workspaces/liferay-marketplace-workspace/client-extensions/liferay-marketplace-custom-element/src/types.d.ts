@@ -791,6 +791,17 @@ type RadioOption<T> = {
 
 type StorageType = 'persisted' | 'temporary';
 
+type Creator = {
+	additionalName: string;
+	contentType: string;
+	externalReferenceCode: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	image: string;
+	name: string;
+};
+
 type APIResponse<Query = any> = {
 	actions: ObjectActions;
 	facets: Facets[];

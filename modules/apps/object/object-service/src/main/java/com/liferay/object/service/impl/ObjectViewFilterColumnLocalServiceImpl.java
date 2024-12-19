@@ -20,6 +20,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -144,6 +147,26 @@ public class ObjectViewFilterColumnLocalServiceImpl
 						"\" needs to have the filter type and JSON specified"));
 			}
 
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				objectViewFilterColumn.getJSON());
+
+			if (JSONUtil.isEmpty(
+					jsonObject.getJSONArray(
+						objectViewFilterColumn.getFilterType())) ||
+				Validator.isNull(
+					String.valueOf(
+						jsonObject.get(objectViewFilterColumn.getFilterType())
+					).replaceAll(
+						"[\\[\\]\"]", ""
+					))) {
+
+				throw new ObjectViewFilterColumnException(
+					StringBundler.concat(
+						"Object field name \"",
+						objectViewFilterColumn.getObjectFieldName(),
+						"\" needs to have the filter type and JSON specified"));
+			}
+
 			ObjectFieldFilterContributor objectFieldFilterContributor =
 				_objectFieldFilterContributorRegistry.
 					getObjectFieldFilterContributor(
@@ -164,6 +187,9 @@ public class ObjectViewFilterColumnLocalServiceImpl
 	private static final Set<String> _filterableObjectFieldNames =
 		Collections.unmodifiableSet(
 			SetUtil.fromArray("status", "createDate", "modifiedDate"));
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectFieldFilterContributorRegistry

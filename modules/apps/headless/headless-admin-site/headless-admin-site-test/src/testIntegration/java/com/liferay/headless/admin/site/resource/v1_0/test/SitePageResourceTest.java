@@ -115,6 +115,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
 				).buildString(),
 				serviceContext));
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_CONTENT, null, serviceContext);
+
+		_assertDeleteSiteSiteByExternalReferenceCodeSitePageProblemException(
+			layout.fetchDraftLayout(),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext));
 	}
 
 	@Override
@@ -434,6 +448,21 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		Assert.assertTrue(
 			sitePage.getPageSettings() instanceof ContentPageSettings);
+	}
+
+	private void
+			_assertDeleteSiteSiteByExternalReferenceCodeSitePageProblemException(
+				Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			_assertProblemException(
+				() ->
+					sitePageResource.
+						deleteSiteSiteByExternalReferenceCodeSitePage(
+							testGroup.getExternalReferenceCode(),
+							layout.getExternalReferenceCode()));
+		}
 	}
 
 	private void _assertMapEquals(

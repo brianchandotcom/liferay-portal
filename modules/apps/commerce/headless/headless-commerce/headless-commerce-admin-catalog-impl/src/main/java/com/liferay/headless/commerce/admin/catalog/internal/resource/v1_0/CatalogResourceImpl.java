@@ -64,7 +64,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 	public Response deleteCatalog(Long id) throws Exception {
 		_commerceCatalogService.deleteCommerceCatalog(id);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}
@@ -87,7 +87,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 		_commerceCatalogService.deleteCommerceCatalog(
 			commerceCatalog.getCommerceCatalogId());
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}

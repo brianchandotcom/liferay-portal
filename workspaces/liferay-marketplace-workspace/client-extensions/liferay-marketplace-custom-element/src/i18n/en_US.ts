@@ -373,6 +373,8 @@ export default {
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
 	'save-as-a-draft-exit': 'Save as a draft & exit',
 	'save-as-draft': 'Save as Draft',
+	'save-this-address-for-future-orders':
+		'Save this address for future orders',
 	'search': 'Search',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',

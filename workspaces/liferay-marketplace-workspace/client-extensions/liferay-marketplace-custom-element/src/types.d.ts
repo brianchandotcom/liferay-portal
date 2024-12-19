@@ -181,6 +181,7 @@ type BillingAddress = {
 	name?: string;
 	phoneNumber?: string;
 	regionISOCode?: string;
+	saveAddress: boolean;
 	street1?: string;
 	street2?: string;
 	zip?: string;

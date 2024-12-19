@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 
 import {Input} from '../../../../../components/Input/Input';
@@ -12,6 +13,7 @@ import getPostalAddressDescription from './getPostalAddressDescription';
 
 import './BillingAddress.scss';
 import Select from '../../../../../components/Select/Select';
+import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import {Region} from '../../../../../services/rest/HeadlessCommerceAdminAddress';
 
@@ -33,6 +35,7 @@ const defaultBillingAddress = {
 	name: '',
 	phoneNumber: '',
 	regionISOCode: '',
+	saveAddress: false,
 	street1: '',
 	street2: '',
 	zip: '',
@@ -80,7 +83,7 @@ export function BillingAddress({
 									(address) => address.name === title
 								);
 
-								const billingAddress = {
+								const accountAddress = {
 									city: postalAddress?.city,
 									country: postalAddress?.countryISOCode,
 									countryISOCode:
@@ -88,6 +91,7 @@ export function BillingAddress({
 									name: postalAddress?.name,
 									phoneNumber: postalAddress?.phoneNumber,
 									regionISOCode: postalAddress?.regionISOCode,
+									saveAddress: false,
 									street1: postalAddress?.street1,
 									street2: postalAddress?.street2,
 									zip: postalAddress?.zip,
@@ -95,7 +99,7 @@ export function BillingAddress({
 
 								setShowNewAddressButton(false);
 
-								setBillingAddress(billingAddress);
+								setBillingAddress(accountAddress);
 							}}
 							selected={selectedAddress === address.name}
 							title={title}
@@ -239,6 +243,24 @@ export function BillingAddress({
 							required
 							value={billingAddress?.phoneNumber}
 						/>
+
+						<div className="d-flex">
+							<ClayCheckbox
+								checked={billingAddress?.saveAddress}
+								onChange={() =>
+									setBillingAddress({
+										...billingAddress,
+										saveAddress:
+											!billingAddress?.saveAddress,
+									})
+								}
+							/>
+							<span className="ml-3">
+								{i18n.translate(
+									'save-this-address-for-future-orders'
+								)}
+							</span>
+						</div>
 					</div>
 				</div>
 			)}

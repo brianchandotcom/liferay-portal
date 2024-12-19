@@ -1749,17 +1749,17 @@
 		</check>
 		<check name="UpgradeCatchAllJavaImportsCheck">
 			<category name="Upgrade" />
-			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjava` file." />
+			<description name="Sorts and groups imports in `LPD_XXXXX.java` and `LPS_XXXXX.java` files." />
 			<weight>1</weight>
 		</check>
 		<check name="UpgradeCatchAllJavaTermOrderCheck">
 			<category name="Upgrade" />
-			<description name="Sorts javaterms in `UpgradeCatchAllCheck.testjava` file." />
+			<description name="Sorts javaterms in `LPD_XXXXX.java` and `LPS_XXXXX.java` files." />
 			<weight>1</weight>
 		</check>
 		<check name="UpgradeCatchAllJSPImportsCheck">
 			<category name="Upgrade" />
-			<description name="Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file." />
+			<description name="Sorts and groups imports in `LPD_XXXXX.jsp` and `LPS_XXXXX.jsp` files." />
 			<weight>1</weight>
 		</check>
 		<check name="UpgradeGradleIncludeResourceCheck">

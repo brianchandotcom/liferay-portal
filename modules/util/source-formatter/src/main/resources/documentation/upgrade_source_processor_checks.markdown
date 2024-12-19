@@ -5,9 +5,9 @@ Check | Category | Description
 UpgradeBNDDeclarativeServicesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs replacements on Liferay's outdated code. |
-[UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file. |
-UpgradeCatchAllJavaImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `UpgradeCatchAllCheck.testjava` file. |
-UpgradeCatchAllJavaTermOrderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts javaterms in `UpgradeCatchAllCheck.testjava` file. |
+[UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `LPD_XXXXX.jsp` and `LPS_XXXXX.jsp` files. |
+UpgradeCatchAllJavaImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
+UpgradeCatchAllJavaTermOrderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts javaterms in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
 UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to remove 'fieldset-group' tag. |
 UpgradeJavaAssetEntryAssetCategoriesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |

@@ -7,6 +7,9 @@ package com.liferay.source.formatter.check;
 
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Nícolas Moura
  */
@@ -17,11 +20,18 @@ public class UpgradeCatchAllJSPImportsCheck extends JSPImportsCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!fileName.endsWith("UpgradeCatchAllCheck.jsp")) {
+		Matcher matcher = _pattern.matcher(fileName);
+
+		if (!matcher.find() ||
+			!absolutePath.contains("/upgrade/upgrade-catch-all-check")) {
+
 			return content;
 		}
 
 		return super.doProcess(fileName, absolutePath, content);
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(LPD|LPS)_[0-9]+\\.jsp");
 
 }

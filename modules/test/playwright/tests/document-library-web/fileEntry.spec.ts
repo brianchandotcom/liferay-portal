@@ -510,3 +510,25 @@ test(
 		});
 	}
 );
+
+test(
+	'Back button works when viewing file entry history',
+	{
+		tag: '@LPD-44784',
+	},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		const title = getRandomString();
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryPage.goToViewHistoryFileEntry(title);
+
+		await page.getByRole('link', {name: 'Back'}).click();
+
+		await expect(
+			page.getByRole('button', {name: 'Versions'})
+		).not.toBeVisible();
+	}
+);

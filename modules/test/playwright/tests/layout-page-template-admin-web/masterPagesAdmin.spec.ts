@@ -7,6 +7,7 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
@@ -24,6 +25,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	pagesAdminPagesTest,
 	isolatedSiteTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginTest(),
 	masterPagesPagesTest,
 	pageEditorPagesTest
@@ -609,7 +613,7 @@ test.describe('Allowed fragments Configuration', () => {
 			// Configure allowed fragments
 
 			await masterPagesPage.configureAllowedFragments({
-				fragmentNames: ['Heading', 'Button'],
+				fragmentNames: ['Button', 'Heading'],
 				mode: 'select',
 				prefilter: 'Basic Components',
 			});
@@ -642,6 +646,128 @@ test.describe('Allowed fragments Configuration', () => {
 					.locator('.page-editor__fragments-widgets__tab-list-item')
 					.nth(3)
 			).toHaveText('Heading');
+		}
+	);
+
+	test(
+		'Disabling Select New Fragments Automatically option limits the fragments that can be added to the page',
+		{tag: '@LPS-102194'},
+		async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
+
+			// Create a master page
+
+			const layoutPageTemplateEntryName1 = getRandomString();
+
+			const masterPage1 =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName1,
+						type: 'master-layout',
+					}
+				);
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.editMaster(layoutPageTemplateEntryName1);
+
+			// Configure allowed fragments
+
+			await masterPagesPage.configureAllowedFragments({
+				fragmentNames: ['Button', 'Heading'],
+				mode: 'select',
+				selectNewFragmentsAutomatically: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Create a master page
+
+			const layoutPageTemplateEntryName2 = getRandomString();
+
+			const masterPage2 =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName2,
+						type: 'master-layout',
+					}
+				);
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+
+			await masterPagesPage.editMaster(layoutPageTemplateEntryName2);
+
+			// Configure allowed fragments
+
+			await masterPagesPage.configureAllowedFragments({
+				fragmentNames: ['Button', 'Heading'],
+				mode: 'select',
+				selectNewFragmentsAutomatically: false,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Create a new fragment collection and fragment entry
+
+			const fragmentCollectionName = getRandomString();
+
+			const {fragmentCollectionId} =
+				await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+					{
+						groupId: site.id,
+						name: fragmentCollectionName,
+					}
+				);
+
+			// Create custom basic fragment
+
+			const basicFragmentEntryName = getRandomString();
+
+			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+				fragmentCollectionId,
+				groupId: site.id,
+				html: '<div class="fragment-name">Fragment Example</div>',
+				name: basicFragmentEntryName,
+			});
+
+			// Create a new page based on the first master page
+
+			const layout1 = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage1.plid,
+				options: {type: 'content'},
+				title: getRandomString(),
+			});
+
+			// Check that the fragment is shown
+
+			await pageEditorPage.goto(layout1, site.friendlyUrlPath);
+
+			await page
+				.getByRole('tabpanel', {name: 'Fragments and Widgets'})
+				.waitFor();
+
+			expect(page.getByText(basicFragmentEntryName)).toBeVisible();
+
+			// Create a new page based on the second master page
+
+			const layout2 = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage2.plid,
+				options: {type: 'content'},
+				title: getRandomString(),
+			});
+
+			// Check that the fragment is shown
+
+			await pageEditorPage.goto(layout2, site.friendlyUrlPath);
+
+			await page
+				.getByRole('tabpanel', {name: 'Fragments and Widgets'})
+				.waitFor();
+
+			expect(page.getByText(basicFragmentEntryName)).not.toBeVisible();
 		}
 	);
 });

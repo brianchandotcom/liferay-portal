@@ -435,7 +435,12 @@ function computeDrop({
 			});
 		}
 		else {
-			onDragEnd(targetId, position);
+			onDragEnd(
+				targetId,
+				position,
+				dropTarget.collectionItemIndex !== null &&
+					dropTarget.toControlsId
+			);
 		}
 	}
 

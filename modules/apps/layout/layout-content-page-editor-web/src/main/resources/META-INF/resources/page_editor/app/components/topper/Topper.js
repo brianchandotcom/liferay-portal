@@ -26,6 +26,7 @@ import {
 	useIsHovered,
 	useMultiSelectType,
 	useSelectItem,
+	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import {
@@ -119,6 +120,7 @@ function TopperContent({
 
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
+	const selectItems = useSelectMultipleItems();
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
@@ -162,7 +164,7 @@ function TopperContent({
 		}
 	};
 
-	const onDragEnd = (parentItemId, position) => {
+	const onDragEnd = (parentItemId, position, toControlsId) => {
 		const thunk = isStepper(dragItem)
 			? moveStepper({
 					itemId: item.itemId,
@@ -171,6 +173,11 @@ function TopperContent({
 				})
 			: moveItems({
 					itemIds: activeItemIds,
+					onMoveEnd: () => {
+						if (toControlsId) {
+							selectItems(activeItemIds.map(toControlsId));
+						}
+					},
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});

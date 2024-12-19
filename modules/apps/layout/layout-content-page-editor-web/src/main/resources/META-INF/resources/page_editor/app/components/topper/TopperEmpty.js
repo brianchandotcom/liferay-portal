@@ -13,6 +13,7 @@ import React, {useRef} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {useClipboard} from '../../contexts/ClipboardContext';
+import {useToControlsId} from '../../contexts/CollectionItemContext';
 import {
 	useActiveItemIds,
 	useHoverItem,
@@ -22,7 +23,7 @@ import {
 	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {
-	useMovementTarget,
+	useIsMovementTarget,
 	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
 import {
@@ -80,8 +81,10 @@ const TopperEmpty = ({children, className, item}) => {
 	const containerRef = useRef(null);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const {itemId: movementTargetItemId} = useMovementTarget();
+	const isKeyboardTarget = useIsMovementTarget();
 	const movementTargetPosition = useMovementTargetPosition();
+
+	const toControlsId = useToControlsId();
 
 	const dropTargetPosition = targetPosition || movementTargetPosition;
 
@@ -90,7 +93,8 @@ const TopperEmpty = ({children, className, item}) => {
 
 	const dropContainerId = useDropContainerId();
 
-	const isValidDrop = isOverTarget || movementTargetItemId === item.itemId;
+	const isValidDrop =
+		isOverTarget || isKeyboardTarget(toControlsId(item.itemId));
 
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
@@ -149,8 +153,10 @@ const ActivableTopperEmpty = ({
 	const containerRef = useRef(null);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const {itemId: movementTargetItemId} = useMovementTarget();
+	const isKeyboardTarget = useIsMovementTarget();
 	const movementTargetPosition = useMovementTargetPosition();
+
+	const toControlsId = useToControlsId();
 
 	const dropTargetPosition = targetPosition || movementTargetPosition;
 
@@ -159,7 +165,8 @@ const ActivableTopperEmpty = ({
 
 	const dropContainerId = useDropContainerId();
 
-	const isValidDrop = isOverTarget || movementTargetItemId === item.itemId;
+	const isValidDrop =
+		isOverTarget || isKeyboardTarget(toControlsId(item.itemId));
 
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();

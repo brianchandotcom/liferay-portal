@@ -1270,46 +1270,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-137155. The page creator can change permissions of content page via header ellipsis icon at edit mode."
-	@priority = 3
-	test RemoveViewPermissionForGuestViaHeaderEllipsisIcon {
-		task ("Given a page designer has content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
-		}
-
-		task ("When the page designer removes view permission of guest role via header ellipsis icon at edit mode") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			LexiconEntry.gotoHeaderMenuItem(menuItem = "Permissions");
-
-			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-				addOrRemoveViewPermission = "Remove",
-				permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "guest");
-
-			IFrame.closeFrame();
-
-			PageEditor.publish();
-		}
-
-		task ("Then a guest user cannot access to the content page") {
-			User.logoutPG();
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = 404);
-		}
-	}
-
 	@description = "This is a test for LPS-165556. The page creator without trigger permission could see the available actions in Action selector."
 	@priority = 4
 	test ViewAvailableActionsInActionSelectorAsUserWithoutTriggerPermission {

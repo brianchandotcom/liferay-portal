@@ -4,25 +4,25 @@
  */
 
 import classNames from 'classnames';
-import { ReactNode } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import {ReactNode} from 'react';
+import {useOutletContext, useParams} from 'react-router-dom';
 
-import { DetailedCard } from '../../../../../components/DetailedCard/DetailedCard';
+import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import i18n from '../../../../../i18n';
 import formatLocaleCurrency from '../../../../../utils/formatLocaleCurrency';
 import {
 	getSpecificationByKey,
 	isCloudProduct,
 } from '../../../../../utils/productUtils';
-import { safeJSONParse } from '../../../../../utils/util';
+import {safeJSONParse} from '../../../../../utils/util';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
-import { formatDate } from '../../../../PublisherDashboard/PublisherDashboardPageUtil';
+import {formatDate} from '../../../../PublisherDashboard/PublisherDashboardPageUtil';
 
 import './App.scss';
 
 const App = () => {
-	const { orderId } = useParams();
-	const { placedOrder, product } = useOutletContext<any>();
+	const {orderId} = useParams();
+	const {placedOrder, product} = useOutletContext<any>();
 
 	const licenseType = getSpecificationByKey('license-type', product);
 
@@ -32,7 +32,7 @@ const App = () => {
 		) || '-';
 
 	const isCloud = isCloudProduct(product);
-	const { isPaidApp } = getProductPriceModel(product);
+	const {isPaidApp} = getProductPriceModel(product);
 
 	return (
 		<div className="app-details-page-container mt-6">
@@ -81,7 +81,9 @@ const App = () => {
 						</p>
 					</div>
 					<div className="row">
-						<div className="col-6 h5">License Type</div>
+						<div className="col-6 h5">
+							{i18n.translate('license-type')}
+						</div>
 						<p className="col">{licenseType?.value || '-'}</p>
 					</div>
 				</DetailedCard>
@@ -131,8 +133,8 @@ const App = () => {
 														{isCloud
 															? 'Standard'
 															: optionName[0]
-																?.value ||
-															''}
+																	?.value ||
+																''}
 													</p>
 													<p className="col-3">
 														{order.quantity}
@@ -142,7 +144,7 @@ const App = () => {
 											<p className="col-4 text-right">
 												{formatLocaleCurrency(
 													order.quantity *
-													order.price.price
+														order.price.price
 												)}
 											</p>
 										</div>
@@ -217,24 +219,24 @@ const App = () => {
 								</p>
 								{placedOrder.placedOrderBillingAddress
 									.street2 && (
-										<p>
-											{
-												placedOrder
-													.placedOrderBillingAddress
-													.street2
-											}
-										</p>
-									)}
+									<p>
+										{
+											placedOrder
+												.placedOrderBillingAddress
+												.street2
+										}
+									</p>
+								)}
 								{placedOrder.placedOrderBillingAddress
 									.street3 && (
-										<p>
-											{
-												placedOrder
-													.placedOrderBillingAddress
-													.street3
-											}
-										</p>
-									)}
+									<p>
+										{
+											placedOrder
+												.placedOrderBillingAddress
+												.street3
+										}
+									</p>
+								)}
 								<p>
 									{placedOrder.placedOrderBillingAddress.city}
 									,

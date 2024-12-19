@@ -53,6 +53,13 @@ class HeadlessAdminUser {
 		);
 	}
 
+	async postAddress(accountId: number, body: any) {
+		return fetcher.post(
+			`/o/headless-admin-user/v1.0/accounts/${accountId}/postal-addresses`,
+			body
+		);
+	}
+
 	async sendRoleAccountUser(
 		accountId: number,
 		roleId: number,

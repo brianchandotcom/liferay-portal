@@ -7,8 +7,15 @@ import {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {Analytics} from '../../core/Analytics';
 import useCart from '../../hooks/useCart';
+import useCommerceRegions from '../../hooks/useCommerceRegions';
 import useGetAddresses from '../../hooks/useGetAddresses';
+import i18n from '../../i18n';
+import {Liferay} from '../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
+import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
+import {Region} from '../../services/rest/HeadlessCommerceAdminAddress';
 import {
 	getPaymentMethodURL,
 	postCheckoutCart,
@@ -27,10 +34,6 @@ import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 import './styles/index.scss';
-import {Analytics} from '../../core/Analytics';
-import i18n from '../../i18n';
-import {Liferay} from '../../liferay/liferay';
-import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 
 const getProductBasePriceAndTrial = (
 	product: DeliveryProduct,
@@ -130,6 +133,10 @@ const GetAppOutlet = () => {
 	const {addresses} = useGetAddresses(account?.id);
 	const {channel} = useMarketplaceContext();
 	const location = useLocation();
+
+	const {data: regionsResponse} = useCommerceRegions();
+	const regions = regionsResponse?.items ?? [];
+
 	const navigate = useNavigate();
 
 	const productBasePriceAndTrial = getProductBasePriceAndTrial(
@@ -153,8 +160,53 @@ const GetAppOutlet = () => {
 
 	const {isFreeApp, priceModel} = getProductPriceModel(product);
 
+	const getCountryNameByCode = (regions: Region[], countryCode?: string) => {
+		const country = regions.find((region) => region.a2 === countryCode);
+
+		return (
+			country?.title_i18n[Liferay.ThemeDisplay.getLanguageId()] ||
+			country?.title_i18n[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
+			country?.name
+		);
+	};
+
+	const getRegionByCountryCode = (
+		regions: Region[],
+		regionISOCode?: string,
+		countryCode?: string
+	) => {
+		const country = regions.find((region) => region.a2 === countryCode);
+		const addressRegion = country?.regions.find(
+			(region) => region.regionCode === regionISOCode
+		);
+
+		return addressRegion?.name;
+	};
+
 	async function handleGetApp(orderId = cartUtil?.cart?.id) {
 		setLoading(true);
+
+		if (billingAddress.saveAddress) {
+			await HeadlessAdminUserImpl.postAddress(account?.id as number, {
+				addressCountry: getCountryNameByCode(
+					regions,
+					billingAddress?.country
+				),
+				addressLocality: billingAddress.city,
+				addressRegion: getRegionByCountryCode(
+					regions,
+					billingAddress.regionISOCode,
+					billingAddress?.country
+				),
+				addressType: 'billing-and-shipping',
+				name: billingAddress.name,
+				phoneNumber: billingAddress.phoneNumber,
+				postalCode: billingAddress.zip,
+				primary: false,
+				streetAddressLine1: billingAddress.street1,
+				streetAddressLine2: billingAddress.street2,
+			});
+		}
 
 		const productSpecificationValues = getProductSpecificationValues(
 			product?.productSpecifications || []
@@ -259,6 +311,7 @@ const GetAppOutlet = () => {
 
 						<Outlet
 							context={{
+								account,
 								addresses,
 								cartUtil,
 								handleGetApp,

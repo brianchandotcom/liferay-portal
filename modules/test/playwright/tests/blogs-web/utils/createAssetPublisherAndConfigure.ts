@@ -55,11 +55,7 @@ export async function createAssetPublisherAndConfigure({
 		label: 'Blogs Entry',
 	});
 
-	await configurationIframe.getByRole('button', {name: 'Save'}).click();
-	await waitForAlert(
-		configurationIframe,
-		'Success:You have successfully updated the setup.'
-	);
+	await assetPublisherPage.saveConfiguration();
 	await page.getByLabel('close', {exact: true}).click();
 
 	await pageEditorPage.publishPage();

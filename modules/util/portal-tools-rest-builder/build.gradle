@@ -39,6 +39,10 @@ dependencies {
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
 
+deploy {
+	dependsOn downloadNode
+}
+
 deployDependencies {
 	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"

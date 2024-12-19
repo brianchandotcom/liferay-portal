@@ -16,12 +16,12 @@ export class AssetPublisherPage {
 		this.page = page;
 
 		this.configurationIframe = this.page.frameLocator(
-			'iframe[title*="Asset Publisher"]'
+			'iframe[title*="Configuration"]'
 		);
 	}
 
 	async changeAssetSelection(type: 'Collection' | 'Dynamic' | 'Manual') {
-		await this.configurationIframe.getByLabel(type, {exact: true}).click();
+		await this.configurationIframe.getByLabel(type).click();
 
 		await waitForAlert(
 			this.configurationIframe,

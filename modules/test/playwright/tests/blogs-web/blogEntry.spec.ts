@@ -70,13 +70,7 @@ test(
 	{
 		tag: '@LPD-26752',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'category-1'},
@@ -86,7 +80,6 @@ test(
 
 		await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,
@@ -138,13 +131,7 @@ test(
 	{
 		tag: '@LPD-24858',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'category 1'},
@@ -154,7 +141,6 @@ test(
 
 		await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,
@@ -192,13 +178,7 @@ test(
 	{
 		tag: '@LPD-26753',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'category-1'},
@@ -208,7 +188,6 @@ test(
 
 		const {categories} = await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,
@@ -263,13 +242,7 @@ test(
 	{
 		tag: '@LPS-26755',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'lifestyle', name_i18n: {['ES-es']: 'estilo-de-vida'}},
@@ -279,7 +252,6 @@ test(
 
 		await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,
@@ -320,13 +292,7 @@ test(
 	{
 		tag: '@LPD-26659',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'category-1'},
@@ -336,7 +302,6 @@ test(
 
 		await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,
@@ -390,13 +355,7 @@ test(
 	{
 		tag: '@LPD-26659',
 	},
-	async ({
-		apiHelpers,
-		blogsEditBlogEntryPage,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
 		const vocabularyName = getRandomString();
 		const friendlyUrlCategories = [
 			{name: 'category-1'},
@@ -406,7 +365,6 @@ test(
 
 		await blogsCategorizedFriendlyUrlSetup({
 			apiHelpers,
-			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
 			site,

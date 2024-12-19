@@ -3,17 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Page} from '@playwright/test';
+
+import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import getRandomString from '../../../utils/getRandomString';
 
-import type {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
-
 export async function createDPTandMarkAsDefault({
-	displayPageTemplatesPage,
+	page,
 	site,
 }: {
-	displayPageTemplatesPage: DisplayPageTemplatesPage;
+	page: Page;
 	site: Site;
 }) {
+	const displayPageTemplatesPage = new DisplayPageTemplatesPage(page);
+
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 	const displayPageTemplateName = getRandomString();

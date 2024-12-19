@@ -377,10 +377,6 @@ public interface ObjectRelationshipLocalService
 		long objectDefinitionId1, String deletionType, boolean reverse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<ObjectRelationship>>
-		getObjectRelationshipsByCompanyId(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
 		long objectDefinitionId2);
 
@@ -391,6 +387,10 @@ public interface ObjectRelationshipLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectRelationshipsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<ObjectRelationship>> getObjectRelationshipsMap(
+		long companyId);
 
 	/**
 	 * Returns the OSGi service identifier.

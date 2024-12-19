@@ -350,13 +350,6 @@ public class ObjectActionLocalServiceUtil {
 		return getService().getObjectActions(objectDefinitionId);
 	}
 
-	public static Map<Long, List<ObjectAction>> getObjectActions(
-		long companyId, boolean active, String objectActionTriggerKey) {
-
-		return getService().getObjectActions(
-			companyId, active, objectActionTriggerKey);
-	}
-
 	public static List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 
@@ -371,6 +364,13 @@ public class ObjectActionLocalServiceUtil {
 	 */
 	public static int getObjectActionsCount() {
 		return getService().getObjectActionsCount();
+	}
+
+	public static Map<Long, List<ObjectAction>> getObjectActionsMap(
+		long companyId, boolean active, String objectActionTriggerKey) {
+
+		return getService().getObjectActionsMap(
+			companyId, active, objectActionTriggerKey);
 	}
 
 	/**

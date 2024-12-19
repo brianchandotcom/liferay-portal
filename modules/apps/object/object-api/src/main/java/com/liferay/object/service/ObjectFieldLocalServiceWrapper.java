@@ -536,14 +536,6 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId, businessType);
 	}
 
-	@Override
-	public java.util.Map
-		<Long, java.util.List<com.liferay.object.model.ObjectField>>
-			getObjectFieldsByCompanyId(long companyId) {
-
-		return _objectFieldLocalService.getObjectFieldsByCompanyId(companyId);
-	}
-
 	/**
 	 * Returns the number of object fields.
 	 *
@@ -572,6 +564,14 @@ public class ObjectFieldLocalServiceWrapper
 
 		return _objectFieldLocalService.
 			getObjectFieldsCountByListTypeDefinitionId(listTypeDefinitionId);
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectField>>
+			getObjectFieldsMap(long companyId) {
+
+		return _objectFieldLocalService.getObjectFieldsMap(companyId);
 	}
 
 	/**

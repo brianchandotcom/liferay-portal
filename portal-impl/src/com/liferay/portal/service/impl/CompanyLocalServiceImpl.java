@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -709,6 +710,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					unregisterCompany(company);
 
 					_synchronizePortalInstances();
+
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
+
+						CacheRegistryUtil.clear();
+					}
 
 					return null;
 				});
@@ -1565,6 +1573,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					_synchronizePortalInstances();
 
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
+
+						CacheRegistryUtil.clear();
+					}
+
 					return null;
 				});
 
@@ -2186,7 +2201,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			});
 
 		companyLocalService.forEachCompanyId(
-			companyId -> PortalInstances.removeCompany(companyId),
+			companyId -> {
+				PortalInstances.removeCompany(companyId);
+
+				CacheRegistryUtil.clear();
+			},
 			ArrayUtil.toLongArray(companyIds));
 	}
 

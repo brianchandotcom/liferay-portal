@@ -90,7 +90,8 @@ String unsubscribeActionName = StringPool.BLANK;
 					<c:otherwise>
 						<clay:icon
 							aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
-							cssClass="icon-monospaced lfr-portal-tooltip mt-0"
+							cssClass="lfr-portal-tooltip mt-0"
+							monospaced="<%= true %>"
 							symbol="bell-off"
 							title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
 						/>

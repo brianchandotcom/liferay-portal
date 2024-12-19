@@ -277,11 +277,6 @@ public class UsersManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getInfoPanelId() {
-		return "infoPanelId";
-	}
-
-	@Override
 	public String getSearchContainerId() {
 		return "users";
 	}
@@ -304,11 +299,6 @@ public class UsersManagementToolbarDisplayContext
 		}
 
 		return false;
-	}
-
-	@Override
-	public Boolean isShowInfoButton() {
-		return true;
 	}
 
 	@Override

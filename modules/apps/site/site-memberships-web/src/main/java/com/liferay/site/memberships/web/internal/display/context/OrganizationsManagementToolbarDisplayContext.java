@@ -140,11 +140,6 @@ public class OrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getInfoPanelId() {
-		return "infoPanelId";
-	}
-
-	@Override
 	public String getSearchContainerId() {
 		return "organizations";
 	}
@@ -171,11 +166,6 @@ public class OrganizationsManagementToolbarDisplayContext
 		}
 
 		return false;
-	}
-
-	@Override
-	public Boolean isShowInfoButton() {
-		return true;
 	}
 
 	@Override

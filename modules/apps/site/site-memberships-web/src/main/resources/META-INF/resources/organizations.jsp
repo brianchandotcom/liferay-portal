@@ -22,17 +22,6 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site_memberships/organizations_info_panel" var="sidebarPanelURL">
-		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-	</liferay-portlet:resourceURL>
-
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="organizations"
-	>
-		<liferay-util:include page="/organization_info_panel.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
-
 	<div class="sidenav-content">
 		<clay:container-fluid>
 			<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">

@@ -26,6 +26,7 @@ import {
 	useActivationOrigin,
 	useActiveItemIds,
 	useSelectItem,
+	useSelectMultipleItems,
 } from '../../../../../app/contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
@@ -68,6 +69,7 @@ import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
+import {hasCollectionParent} from '../../../../../app/utils/hasCollectionParent';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
 import loadCollectionFields from '../../../../../app/utils/loadCollectionFields';
 import toMovementItem from '../../../../../app/utils/toMovementItem';
@@ -281,6 +283,7 @@ function NodeContent({
 		(state) => state.selectedViewportSize
 	);
 	const selectItem = useSelectItem();
+	const selectItems = useSelectMultipleItems();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
 
@@ -346,6 +349,23 @@ function NodeContent({
 				})
 			: moveItems({
 					itemIds: activeItemIds,
+					onMoveEnd: (layoutData) => {
+						if (
+							hasCollectionParent(
+								layoutData.items[parentItemId],
+								layoutData
+							)
+						) {
+							const itemIds = activeItemIds.map((id) =>
+								getFirstControlsId({
+									item: layoutData.items[id],
+									layoutData,
+								})
+							);
+
+							selectItems(itemIds);
+						}
+					},
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});

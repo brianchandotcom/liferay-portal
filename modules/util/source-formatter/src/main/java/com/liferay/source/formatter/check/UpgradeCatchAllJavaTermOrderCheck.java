@@ -9,6 +9,9 @@ import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.dom4j.DocumentException;
 
 /**
@@ -22,11 +25,18 @@ public class UpgradeCatchAllJavaTermOrderCheck extends JavaTermOrderCheck {
 			String fileContent)
 		throws DocumentException, IOException {
 
-		if (!fileName.endsWith("UpgradeCatchAllCheck.java")) {
+		Matcher matcher = _pattern.matcher(fileName);
+
+		if (!matcher.find() ||
+			!absolutePath.contains("/upgrade/upgrade-catch-all-check")) {
+
 			return javaTerm.getContent();
 		}
 
 		return super.doProcess(fileName, absolutePath, javaTerm, fileContent);
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(LPD|LPS)_[0-9]+\\.java");
 
 }

@@ -5,9 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
 
-const test = mergeTests(loginTest());
+const test = mergeTests(
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
+	isolatedSiteTest,
+	loginTest(),
+	samplePageTest
+);
+
+const linkName = 'Search Paginator';
 
 test(
 	'Check various accessibility in pagination',
@@ -65,6 +77,40 @@ test(
 			const paginationTranslated = page.getByLabel('Paginación');
 
 			await expect(paginationTranslated).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Intermediate pages button and dropdown accesibility issues',
+	{tag: '@LPD-42610'},
+	async ({page, samplePage, site}) => {
+		await test.step('Add taglib sample to page', async () => {
+			await samplePage.setupSampleWidget({
+				site,
+			});
+
+			await samplePage.selectLink(linkName);
+		});
+
+		await test.step('Check intermediate pages button has a tooltip', async () => {
+			const intermediatePagesButton = await page.getByRole('button', {
+				name: 'Intermediate Pages Use TAB to',
+			});
+
+			await expect(intermediatePagesButton).toHaveAttribute('title');
+		});
+
+		await test.step('Check intermediate pages dropdown items has a role', async () => {
+			const intermediatePagesDropdown = await page.locator(
+				'ul.pagination > div.dropdown-menu'
+			);
+
+			const pageLink = intermediatePagesDropdown
+				.locator('a.dropdown-item')
+				.first();
+
+			await expect(pageLink).toHaveRole('roleitem');
 		});
 	}
 );

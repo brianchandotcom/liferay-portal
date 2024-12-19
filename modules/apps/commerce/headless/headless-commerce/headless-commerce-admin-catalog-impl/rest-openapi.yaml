@@ -405,6 +405,14 @@ components:
                 currencyCode:
                     example: USD
                     type: string
+                currencyExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
+                currencyId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 defaultLanguageId:
                     example: en_US
                     type: string

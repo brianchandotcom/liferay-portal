@@ -61,6 +61,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -176,7 +177,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public Map<String, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
-		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+		Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
 		Map<Long, List<ObjectAction>> objectActionsMap =
@@ -192,7 +193,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 			serviceRegistrationsMap.put(
-				objectDefinitionId,
+				DBPartitionUtil.getPartitionKey(objectDefinitionId),
 				_deploy(
 					objectDefinition,
 					objectLayoutsMap.getOrDefault(

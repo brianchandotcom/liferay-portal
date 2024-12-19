@@ -6,7 +6,7 @@
 package com.liferay.object.deployer;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -28,8 +28,8 @@ public interface ObjectDefinitionDeployer {
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			serviceRegistrationsMap.put(
-				companyId + StringPool.AT +
-					objectDefinition.getObjectDefinitionId(),
+				DBPartitionUtil.getPartitionKey(
+					objectDefinition.getObjectDefinitionId()),
 				deploy(objectDefinition));
 		}
 

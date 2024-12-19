@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -31,6 +32,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,6 +80,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Gianmarco Brunialti Masera
  */
 @Component(service = CommerceAccountResource.class)
 public class CommerceAccountResource {
@@ -258,9 +261,33 @@ public class CommerceAccountResource {
 
 			HttpSession httpSession = originalHttpServletRequest.getSession();
 
-			httpSession.removeAttribute(
-				CommerceOrder.class.getName() + StringPool.POUND +
-					channelGroupId);
+			if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
+				CommerceOrder commerceOrder =
+					(CommerceOrder)httpSession.getAttribute(
+						CommerceCheckoutWebKeys.
+							COMMERCE_ORDER_ON_ACCOUNT_SELECTION);
+
+				if (commerceOrder != null) {
+					httpSession.setAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							channelGroupId,
+						commerceOrder.getUuid());
+
+					httpSession.removeAttribute(
+						CommerceCheckoutWebKeys.
+							COMMERCE_ORDER_ON_ACCOUNT_SELECTION);
+				}
+				else {
+					httpSession.removeAttribute(
+						CommerceOrder.class.getName() + StringPool.POUND +
+							channelGroupId);
+				}
+			}
+			else {
+				httpSession.removeAttribute(
+					CommerceOrder.class.getName() + StringPool.POUND +
+						channelGroupId);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);

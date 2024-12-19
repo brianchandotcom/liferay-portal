@@ -103,7 +103,7 @@ test(
 
 		await test.step('Check intermediate pages dropdown items has a role', async () => {
 			const intermediatePagesDropdown = await page.locator(
-				'ul.pagination > div.dropdown-menu'
+				'ul.pagination div.dropdown-menu'
 			);
 
 			const pageLink = intermediatePagesDropdown

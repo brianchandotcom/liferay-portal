@@ -11,22 +11,22 @@ package com.liferay.marketplace.settings.web.internal.model;
 public class Payload {
 
 	public Payload(
-		String clientId, String code, String codeVerifier,
-		String marketplaceSettings, String redirect, String url) {
+		String clientId, String code, String codeVerifier, String redirect,
+		String settings, String url) {
 
 		this.clientId = clientId;
 		this.code = code;
 		this.codeVerifier = codeVerifier;
-		this.marketplaceSettings = marketplaceSettings;
 		this.redirect = redirect;
+		this.settings = settings;
 		this.url = url;
 	}
 
 	public String clientId;
 	public String code;
 	public String codeVerifier;
-	public String marketplaceSettings;
 	public String redirect;
+	public String settings;
 	public String url;
 
 }

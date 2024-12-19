@@ -76,15 +76,15 @@ public class MarketplaceHttp {
 				System.currentTimeMillis() +
 					(jsonObject.getLong("expires_in") * 1000)
 			).put(
-				"marketplaceSettings", payload.marketplaceSettings
-			).put(
 				"refreshToken", jsonObject.getString("refresh_token")
+			).put(
+				"settings", payload.settings
 			).put(
 				"url", payload.url
 			).build());
 
 		return new Authorization(
-			jsonObject.getString("access_token"), payload.marketplaceSettings,
+			jsonObject.getString("access_token"), payload.settings,
 			payload.url);
 	}
 

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 /**
  * @author Eudaldo Alonso
@@ -46,6 +48,19 @@ public class EditSXPBlueprintDisplayContext {
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+		).put(
+			"fetchClassSubtypesURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setCMD(
+				"getClassSubtypes"
+			).setParameter(
+				"companyId", _themeDisplay.getCompanyId()
+			).setParameter(
+				"languageId", _themeDisplay.getLanguageId()
+			).setResourceID(
+				"/search_experiences/get_class_subtypes"
+			).buildString()
 		).put(
 			"fetchSitesURL",
 			ResourceURLBuilder.createResourceURL(

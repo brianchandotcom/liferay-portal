@@ -80,6 +80,9 @@ public class PaymentDTOConverter
 				setComment(commercePaymentEntry::getNote);
 				setCreateDate(commercePaymentEntry::getCreateDate);
 				setCurrencyCode(commercePaymentEntry::getCurrencyCode);
+				setCurrencyExternalReferenceCode(
+					commerceCurrency::getExternalReferenceCode);
+				setCurrencyId(commerceCurrency::getCommerceCurrencyId);
 				setErrorMessages(commercePaymentEntry::getErrorMessages);
 				setExternalReferenceCode(
 					commercePaymentEntry::getExternalReferenceCode);

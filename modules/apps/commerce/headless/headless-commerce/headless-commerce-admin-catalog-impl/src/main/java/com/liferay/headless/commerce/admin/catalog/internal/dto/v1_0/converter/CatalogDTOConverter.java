@@ -5,6 +5,8 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
@@ -37,11 +39,19 @@ public class CatalogDTOConverter
 			_commerceCatalogService.getCommerceCatalog(
 				(Long)dtoConverterContext.getId());
 
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commerceCatalog.getCompanyId(),
+				commerceCatalog.getCommerceCurrencyCode());
+
 		return new Catalog() {
 			{
 				setAccountId(commerceCatalog::getAccountEntryId);
 				setActions(dtoConverterContext::getActions);
-				setCurrencyCode(commerceCatalog::getCommerceCurrencyCode);
+				setCurrencyCode(commerceCurrency::getCode);
+				setCurrencyExternalReferenceCode(
+					commerceCurrency::getExternalReferenceCode);
+				setCurrencyId(commerceCurrency::getCommerceCurrencyId);
 				setDefaultLanguageId(
 					commerceCatalog::getCatalogDefaultLanguageId);
 				setExternalReferenceCode(
@@ -55,5 +65,8 @@ public class CatalogDTOConverter
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 }

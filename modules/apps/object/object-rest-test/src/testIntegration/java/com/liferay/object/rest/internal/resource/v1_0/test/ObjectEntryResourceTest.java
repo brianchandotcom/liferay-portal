@@ -13967,8 +13967,8 @@ public class ObjectEntryResourceTest {
 					"title", "Unable to download file from " + malformedFileURL
 				),
 				_toFileEntry(
-					customFileEntry.getTitle(), malformedFileURL, null,
-					_group.getGroupId()),
+					RandomTestUtil.randomString() + ".txt", malformedFileURL,
+					null, _group.getGroupId()),
 				null, objectDefinition,
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 		}
@@ -13988,8 +13988,8 @@ public class ObjectEntryResourceTest {
 					", unexpected HTTP code: 404"
 			),
 			_toFileEntry(
-				customFileEntry.getTitle(), resourceNotFoundFileURL, null,
-				_group.getGroupId()),
+				RandomTestUtil.randomString() + ".txt", resourceNotFoundFileURL,
+				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
@@ -14007,8 +14007,8 @@ public class ObjectEntryResourceTest {
 					", unsupported protocol: file"
 			),
 			_toFileEntry(
-				customFileEntry.getTitle(), unsupportedProtocolURL, null,
-				_group.getGroupId()),
+				RandomTestUtil.randomString() + ".txt", unsupportedProtocolURL,
+				null, _group.getGroupId()),
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 

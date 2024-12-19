@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CaptchaUtil {
 
 	public static void check(HttpServletRequest httpServletRequest)
-		throws CaptchaConfigurationException, CaptchaException {
+		throws CaptchaException {
 
 		getCaptcha(
 			httpServletRequest
@@ -38,7 +38,7 @@ public class CaptchaUtil {
 	}
 
 	public static void check(PortletRequest portletRequest)
-		throws CaptchaConfigurationException, CaptchaException {
+		throws CaptchaException {
 
 		getCaptcha(
 			portletRequest

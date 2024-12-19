@@ -13,6 +13,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import dragAndDropElement from '../../utils/dragAndDropElement';
 import getRandomString from '../../utils/getRandomString';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
@@ -397,5 +398,140 @@ test(
 
 		await expect(firstStep.locator('[data-name="Text"]')).toHaveCount(0);
 		await expect(secondStep.locator('[data-name="Text"]')).toHaveCount(2);
+	}
+);
+
+test(
+	'Check correct item is selected when dragging into a collection item from tree',
+	{tag: ['@LPD-41382']},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Add a content page with a fragment and a collection display
+
+		const heading = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
+
+		const collectionId = getRandomString();
+
+		const collection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: collectionId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([heading, collection]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and to Browser panel
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		// Expand Collection
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Collection Item',
+			}),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Collection',
+			}),
+		});
+
+		// Add fragment to collection item
+
+		await pageEditorPage.dragTreeNode({
+			position: 'middle',
+			source: {label: 'Heading'},
+			target: {label: 'Collection Item'},
+		});
+
+		await expect(
+			page.locator('.page-editor__page-structure__tree-node').nth(2)
+		).toContainText('Heading');
+
+		// Check fragment is selected
+
+		await expect(
+			page.locator('.page-editor__topper__title', {hasText: 'Heading'})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Check correct item is selected when dragging into a collection item from layout',
+	{tag: ['@LPD-41382']},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Add a content page with a fragment and a collection display
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
+
+		const collectionId = getRandomString();
+
+		const collection = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: collectionId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition, collection]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		const heading = pageEditorPage.getFragment(headingId);
+
+		await heading.waitFor();
+
+		// Drag heading into collection item
+
+		await expect(async () => {
+			await heading.dragTo(
+				page.locator('.page-editor__collection-item').nth(1)
+			);
+
+			const topper = page
+				.locator(`.lfr-layout-structure-item-topper-${headingId}`)
+				.nth(1);
+
+			await expect(topper).toHaveClass(/active/, {timeout: 2000});
+		}).toPass();
 	}
 );

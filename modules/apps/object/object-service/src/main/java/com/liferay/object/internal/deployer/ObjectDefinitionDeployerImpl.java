@@ -213,6 +213,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return activeServiceRegistrationsMap;
 	}
 
+	@Override
+	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		_unregister(_getServiceRegistrationKey(objectDefinition, null));
+
+		for (String serviceRegistrationKey : _serviceRegistrations.keySet()) {
+			if (serviceRegistrationKey.startsWith(
+					_getServiceRegistrationKey(objectDefinition, null) +
+						StringPool.POUND)) {
+
+				_unregister(serviceRegistrationKey);
+			}
+		}
+	}
+
 	private List<ServiceRegistration<?>> _deploy(
 		List<ObjectLayout> defaultObjectLayouts,
 		ObjectDefinition objectDefinition,
@@ -463,20 +477,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		return serviceRegistrations;
-	}
-
-	@Override
-	public synchronized void undeploy(ObjectDefinition objectDefinition) {
-		_unregister(_getServiceRegistrationKey(objectDefinition, null));
-
-		for (String serviceRegistrationKey : _serviceRegistrations.keySet()) {
-			if (serviceRegistrationKey.startsWith(
-					_getServiceRegistrationKey(objectDefinition, null) +
-						StringPool.POUND)) {
-
-				_unregister(serviceRegistrationKey);
-			}
-		}
 	}
 
 	private String _getServiceRegistrationKey(

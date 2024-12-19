@@ -4,6 +4,7 @@
  */
 
 import {State} from '../../types/State';
+import {LayoutData} from '../../types/layout_data/LayoutData';
 import moveItemsAction from '../actions/moveItems';
 import updateNetwork from '../actions/updateNetwork';
 import LayoutService from '../services/LayoutService';
@@ -12,11 +13,17 @@ import filterSelectedItems from './filterSelectedItems';
 
 type Props = {
 	itemIds: string[];
+	onMoveEnd?: (layoutData: LayoutData) => void;
 	parentItemIds: string[];
 	positions: number[];
 };
 
-export default function moveItems({itemIds, parentItemIds, positions}: Props) {
+export default function moveItems({
+	itemIds,
+	onMoveEnd,
+	parentItemIds,
+	positions,
+}: Props) {
 	return (
 		dispatch: (
 			action: ReturnType<typeof updateNetwork | typeof moveItemsAction>
@@ -38,6 +45,10 @@ export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 			segmentsExperienceId,
 		}).then((layoutData) => {
 			dispatch(moveItemsAction({itemIds: sortedItemIds, layoutData}));
+
+			if (onMoveEnd) {
+				onMoveEnd(layoutData);
+			}
 		});
 	};
 }

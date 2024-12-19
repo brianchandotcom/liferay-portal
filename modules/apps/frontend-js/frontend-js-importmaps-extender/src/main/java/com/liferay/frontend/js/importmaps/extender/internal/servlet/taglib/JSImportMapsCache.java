@@ -26,7 +26,7 @@ public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
 
-	public synchronized JSImportMapsRegistration register(
+	public JSImportMapsRegistration register(
 		long companyId, JSONObject jsonObject, String scope) {
 
 		if (scope == null) {
@@ -41,15 +41,7 @@ public class JSImportMapsCache {
 
 			globalImportMapsValues.put(globalId, value);
 
-			return () -> {
-				synchronized (this) {
-					globalImportMapsValues.remove(globalId);
-
-					if (globalImportMapsValues.isEmpty()) {
-						_globalImportMapsValuesMap.remove(companyId);
-					}
-				}
-			};
+			return () -> globalImportMapsValues.remove(globalId);
 		}
 
 		ConcurrentMap<String, String> scopedImportMapsValues =
@@ -69,15 +61,7 @@ public class JSImportMapsCache {
 			};
 		}
 
-		return () -> {
-			synchronized (this) {
-				scopedImportMapsValues.remove(scope);
-
-				if (scopedImportMapsValues.isEmpty()) {
-					_scopedImportMapsValuesMap.remove(companyId);
-				}
-			}
-		};
+		return () -> scopedImportMapsValues.remove(scope);
 	}
 
 	public void writeImportMaps(long companyId, Writer writer)
@@ -137,10 +121,8 @@ public class JSImportMapsCache {
 			return globalImportMapsValues1;
 		}
 
-		synchronized (this) {
-			_globalImportMapsValuesMap.putIfAbsent(
-				companyId, new ConcurrentHashMap<>());
-		}
+		_globalImportMapsValuesMap.putIfAbsent(
+			companyId, new ConcurrentHashMap<>());
 
 		return _globalImportMapsValuesMap.get(companyId);
 	}
@@ -155,10 +137,8 @@ public class JSImportMapsCache {
 			return scopedImportMapsValues1;
 		}
 
-		synchronized (this) {
-			_scopedImportMapsValuesMap.putIfAbsent(
-				companyId, new ConcurrentHashMap<>());
-		}
+		_scopedImportMapsValuesMap.putIfAbsent(
+			companyId, new ConcurrentHashMap<>());
 
 		return _scopedImportMapsValuesMap.get(companyId);
 	}

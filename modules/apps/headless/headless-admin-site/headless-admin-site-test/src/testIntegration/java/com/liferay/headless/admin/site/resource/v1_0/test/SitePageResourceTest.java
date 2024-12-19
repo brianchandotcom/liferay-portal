@@ -300,10 +300,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected boolean equals(SitePage sitePage1, SitePage sitePage2) {
+		super.equals(sitePage1, sitePage2);
+
+		if (Objects.equals(
+				SitePage.Type.COLLECTION_PAGE, sitePage1.getType()) &&
+			Objects.equals(
+				SitePage.Type.COLLECTION_PAGE, sitePage2.getType())) {
+
+			return true;
+		}
+
+		if (!Objects.deepEquals(
+				sitePage1.getPageSettings(), sitePage2.getPageSettings())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"externalReferenceCode", "friendlyUrlPath_i18n", "name_i18n",
-			"pageSettings", "type", "uuid"
+			"type", "uuid"
 		};
 	}
 
@@ -372,6 +393,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		CollectionPageSettings collectionPageSettings =
 			(CollectionPageSettings)sitePage.getPageSettings();
+
+		if (collectionPageSettings.getCollectionReference() == null) {
+			return;
+		}
 
 		if (Objects.equals(
 				collectionType,

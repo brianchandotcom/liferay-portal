@@ -5,11 +5,13 @@
 
 package com.liferay.layout.admin.web.internal.item.selector;
 
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.IOException;
 
@@ -64,13 +66,18 @@ public class StyleBookEntryItemSelectorView
 			styleBookEntryItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new StyleBookEntryItemSelectorViewDescriptor(
+				_frontendTokenDefinitionRegistry,
 				(HttpServletRequest)servletRequest, portletURL,
-				styleBookEntryItemSelectorCriterion));
+				styleBookEntryItemSelectorCriterion,
+				_styleBookEntryLocalService));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer
@@ -79,5 +86,8 @@ public class StyleBookEntryItemSelectorView
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

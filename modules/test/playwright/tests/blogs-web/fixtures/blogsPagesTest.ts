@@ -9,7 +9,7 @@ import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admi
 import {BlogsEditBlogEntryPage} from '../pages/BlogsEditBlogEntryPage';
 import {BlogsPage} from '../pages/BlogsPage';
 
-const blogsPagesTest = test.extend<{
+export const blogsPagesTest = test.extend<{
 	blogsEditBlogEntryPage: BlogsEditBlogEntryPage;
 	blogsPage: BlogsPage;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
@@ -24,5 +24,3 @@ const blogsPagesTest = test.extend<{
 		await use(new DisplayPageTemplatesPage(page));
 	},
 });
-
-export {blogsPagesTest};

@@ -9,7 +9,6 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 import {blogsCategorizedFriendlyUrlSetup} from './utils/blogsCategorizedFriendlyUrlSetup';
@@ -20,7 +19,6 @@ const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	blogsPagesTest,
-	pageEditorPagesTest,
 	loginTest(),
 	featureFlagsTest({
 		'LPD-11147': true,
@@ -77,7 +75,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -92,7 +89,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});
@@ -147,7 +143,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -162,7 +157,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});
@@ -203,7 +197,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -218,7 +211,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});
@@ -276,7 +268,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -291,7 +282,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});
@@ -335,7 +325,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -350,7 +339,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});
@@ -407,7 +395,6 @@ test(
 		blogsEditBlogEntryPage,
 		displayPageTemplatesPage,
 		page,
-		pageEditorPage,
 		site,
 	}) => {
 		const vocabularyName = getRandomString();
@@ -422,7 +409,6 @@ test(
 			displayPageTemplatesPage,
 			friendlyUrlCategories,
 			page,
-			pageEditorPage,
 			site,
 			vocabularyName,
 		});

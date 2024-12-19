@@ -6,28 +6,26 @@
 import {Page} from '@playwright/test';
 
 import {AssetPublisherPage} from '../../../pages/asset-publisher-web/AssetPublisherPage';
+import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import getRandomString from '../../../utils/getRandomString';
 import {openFieldset} from '../../../utils/openFieldset';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 import type {ApiHelpers} from '../../../helpers/ApiHelpers';
-import type {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 
 export async function createAssetPublisherAndConfigure({
 	apiHelpers,
 	page,
-	pageEditorPage,
 	site,
 }: {
 	apiHelpers: ApiHelpers;
 	page: Page;
-	pageEditorPage: PageEditorPage;
 	site: Site;
 }) {
-	const widgetId = getRandomString();
 	const assetPublisherPage = new AssetPublisherPage(page);
+	const pageEditorPage = new PageEditorPage(page);
+	const widgetId = getRandomString();
 
 	const widgetDefinition = getWidgetDefinition({
 		id: widgetId,

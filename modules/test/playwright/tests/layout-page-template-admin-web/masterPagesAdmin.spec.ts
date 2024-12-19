@@ -330,61 +330,60 @@ test(
 	}
 );
 
-test('Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed', async ({
-	masterPagesPage,
-	pageEditorPage,
-	pagesAdminPage,
-	site,
-}) => {
-	const masterName = getRandomString();
+test(
+	'Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed',
+	{tag: '@LPS-102566'},
+	async ({masterPagesPage, pageEditorPage, pagesAdminPage, site}) => {
+		const masterName = getRandomString();
 
-	let buttonId: string;
-	let buttonFragment: Locator;
-	let headingId: string;
-	let headingFragment: Locator;
+		let buttonId: string;
+		let buttonFragment: Locator;
+		let headingId: string;
+		let headingFragment: Locator;
 
-	await test.step('Create and publish new custom master page with one fragment hidden', async () => {
-		await masterPagesPage.goto(site.friendlyUrlPath);
+		await test.step('Create and publish new custom master page with one fragment hidden', async () => {
+			await masterPagesPage.goto(site.friendlyUrlPath);
 
-		await masterPagesPage.createNewMaster(masterName);
-		await masterPagesPage.editMaster(masterName);
+			await masterPagesPage.createNewMaster(masterName);
+			await masterPagesPage.editMaster(masterName);
 
-		await pageEditorPage.addFragment('Basic Components', 'Button');
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
 
-		buttonId = await pageEditorPage.getFragmentId('Button');
-		buttonFragment = pageEditorPage.getFragment(buttonId);
-		headingId = await pageEditorPage.getFragmentId('Heading');
-		headingFragment = pageEditorPage.getFragment(headingId);
+			buttonId = await pageEditorPage.getFragmentId('Button');
+			buttonFragment = pageEditorPage.getFragment(buttonId);
+			headingId = await pageEditorPage.getFragmentId('Heading');
+			headingFragment = pageEditorPage.getFragment(headingId);
 
-		await pageEditorPage.hideFragment(headingId);
+			await pageEditorPage.hideFragment(headingId);
 
-		await expect(headingFragment).not.toBeVisible();
+			await expect(headingFragment).not.toBeVisible();
 
-		await pageEditorPage.publishPage();
-	});
-
-	await test.step('Create and publish new page based on master page and check that the fragment is still hidden', async () => {
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		const pageName = getRandomString();
-
-		await pagesAdminPage.createNewPage({
-			name: pageName,
-			template: masterName,
+			await pageEditorPage.publishPage();
 		});
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+		await test.step('Create and publish new page based on master page and check that the fragment is still hidden', async () => {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await pagesAdminPage.editPage(pageName);
+			const pageName = getRandomString();
 
-		await expect(buttonFragment).toBeVisible();
-		expect(buttonFragment.getAttribute('inert')).toBeDefined();
+			await pagesAdminPage.createNewPage({
+				name: pageName,
+				template: masterName,
+			});
 
-		await expect(headingFragment).not.toBeVisible();
-		expect(headingFragment.getAttribute('inert')).toBeDefined();
-	});
-});
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.editPage(pageName);
+
+			await expect(buttonFragment).toBeVisible();
+			expect(buttonFragment.getAttribute('inert')).toBeDefined();
+
+			await expect(headingFragment).not.toBeVisible();
+			expect(headingFragment.getAttribute('inert')).toBeDefined();
+		});
+	}
+);
 
 test(
 	'Importing master page templates',

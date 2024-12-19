@@ -5856,11 +5856,13 @@ test.describe('View mode form errors', () => {
 
 			await page.getByText('Submit', {exact: true}).click();
 
-			await expect(
-				page.getByText(
-					'Value exceeds maximum length of 280 for field Lemon Size.'
-				)
-			).toBeVisible();
+			const formError = page.getByText(
+				'Value exceeds maximum length of 280 for field Lemon Size.'
+			);
+
+			await expect(formError).toBeVisible();
+
+			await expect(formError).toHaveClass(/alert/);
 
 			await expect(
 				page.getByText('The lemon weight must be greater than 0')
@@ -5874,11 +5876,7 @@ test.describe('View mode form errors', () => {
 
 			await page.getByText('Submit', {exact: true}).click();
 
-			await expect(
-				page.getByText(
-					'Value exceeds maximum length of 280 for field Lemon Size.'
-				)
-			).not.toBeVisible();
+			await expect(formError).not.toBeVisible();
 
 			await expect(
 				page.getByText('The lemon weight must be greater than 0')

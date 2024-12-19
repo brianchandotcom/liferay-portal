@@ -64,4 +64,15 @@ export class AssetPublisherPage {
 			.first()
 			.waitFor();
 	}
+
+	async saveConfiguration() {
+		await this.configurationIframe
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await waitForAlert(
+			this.configurationIframe,
+			'Success:You have successfully updated the setup.'
+		);
+	}
 }

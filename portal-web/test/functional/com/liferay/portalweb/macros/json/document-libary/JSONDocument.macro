@@ -101,7 +101,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFileWithUploadedFile(fileName = null, dmDocumentDescription = null, mimeType = null, dmDocumentTitle = null, assetTagNames = null, increaseMinutes = null, workflowAction = null, parentFolderName = null, groupName = null, assetCategoryIds = null, folderName = null) {
+	macro addFileWithUploadedFile(fileName = null, dmDocumentDescription = null, mimeType = null, dmDocumentTitle = null, assetTagNames = null, increaseMinutes = null, workflowAction = null, parentFolderName = null, groupName = null, assetCategoryIds = null, folderName = null, site = null) {
 		Variables.assertDefined(parameterList = "${mimeType},${sourceFileName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -185,13 +185,26 @@ definition {
 			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
-		var serviceContext = JSONDocumentSetter.setServiceContext(
-			addGroupPermissions = ${groupPermissions},
-			addGuestPermissions = ${guestPermissions},
-			assetCategoryIds = ${assetCategoryIds},
-			assetTagNames = ${assetTagNames},
-			serviceContext = ${serviceContext},
-			workflowAction = ${workflowAction});
+		if (isSet(site)) {
+			var serviceContext = JSONDocumentSetter.setServiceContext(
+				addGroupPermissions = ${groupPermissions},
+				addGuestPermissions = ${guestPermissions},
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				serviceContext = ${serviceContext},
+				site = ${site},
+				workflowAction = ${workflowAction});
+		}
+		else {
+			var serviceContext = JSONDocumentSetter.setServiceContext(
+				addGroupPermissions = ${groupPermissions},
+				addGuestPermissions = ${guestPermissions},
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				serviceContext = ${serviceContext},
+				workflowAction = ${workflowAction});
+		}
 
 		if (isSet(reviewDate)) {
 			var curl = '''

@@ -243,6 +243,7 @@ definition {
 			dmDocumentTitle = "DM Document JPG",
 			groupName = "Test Depot Name",
 			mimeType = "image/jpeg",
+			site = "false",
 			sourceFileName = "Document_4.jpg");
 
 		DepotNavigator.openToDMEntryInDepot(

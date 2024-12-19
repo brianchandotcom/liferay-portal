@@ -1,13 +1,15 @@
 definition {
 
 	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null, addGroupPermissions = null, addGuestPermissions = null, assetTagNames = null, workflowAction = null) {
+	macro setServiceContext(assetCategoryIds = null, addGroupPermissions = null, addGuestPermissions = null, assetTagNames = null, groupName = null, site = null, workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = ${addGroupPermissions},
 				addGuestPermissions = ${addGuestPermissions},
 				assetCategoryIds = ${assetCategoryIds},
 				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				site = ${site},
 				workflowAction = ${workflowAction});
 		}
 

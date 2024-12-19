@@ -68,7 +68,7 @@ const statusMap: {
 	},
 	[JobStatus.Enabled]: {
 		label: Liferay.Language.get('enabled'),
-		value: 'info',
+		value: 'success',
 	},
 	[JobStatus.Configuring]: {
 		label: Liferay.Language.get('configuring'),
@@ -78,7 +78,7 @@ const statusMap: {
 
 interface IRecommendationsContentProps {
 	jobs: Job[];
-	onJobChange: () => void;
+	onJobChange: (updatedJobs: Job[]) => void;
 }
 
 const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
@@ -94,6 +94,9 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 		updatedJobs[index] = {
 			...updatedJobs[index],
 			enabled: !updatedJobs[index].enabled,
+			status: updatedJobs[index].enabled
+				? JobStatus.Disabled
+				: JobStatus.Configuring,
 		};
 
 		const recomendationConfiguration = updatedJobs.reduce((acc, cur) => {
@@ -114,7 +117,7 @@ const RecommendationsContent: React.FC<IRecommendationsContentProps> = ({
 				message: sub(message, [updatedJobs[index].title]),
 			});
 
-			onJobChange();
+			onJobChange(updatedJobs);
 		}
 	};
 
@@ -260,7 +263,11 @@ const Recommendations: React.FC = () => {
 					// setTimeout is a hack to trigger fetch again at the
 					// end of javascript execution to make an updated request.
 
-					onJobChange={() => setTimeout(refetch, 0)}
+					onJobChange={(updatedJobs) => {
+						setJobs(updatedJobs);
+
+						setTimeout(refetch, REFETCH_JOB_INTERVAL);
+					}}
 				/>
 			</StateRenderer.Success>
 		</StateRenderer>

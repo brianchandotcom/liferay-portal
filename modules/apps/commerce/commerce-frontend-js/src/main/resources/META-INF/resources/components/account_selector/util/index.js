@@ -5,6 +5,8 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {ACCOUNT_ENTRY_ID_DEFAULT} from './constants';
+
 export function getInitials(name) {
 	return name
 		.split(' ')
@@ -12,6 +14,12 @@ export function getInitials(name) {
 		.join('');
 }
 
+export function shouldSelectAccount(accountId, orderId) {
+	return (
+		(!accountId || parseInt(accountId, 10) === ACCOUNT_ENTRY_ID_DEFAULT) &&
+		orderId
+	);
+}
 export function selectAccount(id, actionURL) {
 	const endpointURL = new URL(actionURL, Liferay.ThemeDisplay.getPortalURL());
 

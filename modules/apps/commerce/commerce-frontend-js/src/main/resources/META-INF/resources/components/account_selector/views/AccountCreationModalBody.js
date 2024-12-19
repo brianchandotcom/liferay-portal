@@ -6,7 +6,6 @@
 import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
@@ -21,6 +20,7 @@ const orgUrl = new URL(
 export default function AccountCreationModalBody({
 	accountData,
 	accountTypes,
+	quickCreate = false,
 	setAccountData,
 }) {
 	const [organizationQuery, setOrganizationQuery] = useState('');
@@ -55,12 +55,12 @@ export default function AccountCreationModalBody({
 	}, [accountData.organizations, resource]);
 
 	return (
-		<ClayModal.Body>
+		<>
 			<ClayForm.Group>
 				<label htmlFor="accountName">
 					{Liferay.Language.get('account-name')}
 
-					<span className="inline-item inline-item-after reference-mark">
+					<span className="ml-1 reference-mark">
 						<ClayIcon symbol="asterisk" />
 
 						<span className="hide-accessible sr-only">
@@ -138,6 +138,14 @@ export default function AccountCreationModalBody({
 			<ClayForm.Group>
 				<label htmlFor="accountType">
 					{Liferay.Language.get('type')}
+
+					<span className="ml-1 reference-mark">
+						<ClayIcon symbol="asterisk" />
+
+						<span className="hide-accessible sr-only">
+							{Liferay.Language.get('required')}
+						</span>
+					</span>
 				</label>
 
 				<ClaySelect name="accountType">
@@ -159,68 +167,72 @@ export default function AccountCreationModalBody({
 				</ClaySelect>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="accountTaxId">
-					<span>{Liferay.Language.get('tax-id')}</span>
+			{!quickCreate && (
+				<>
+					<ClayForm.Group>
+						<label htmlFor="accountTaxId">
+							<span>{Liferay.Language.get('tax-id')}</span>
 
-					<span
-						className="label-icon lfr-portal-tooltip ml-2"
-						data-tooltip-align="top"
-						title={Liferay.Language.get('tax-id-help')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get('tax-id-help')}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
 
-				<ClayInput
-					name="accountTaxId"
-					onChange={(event) =>
-						setAccountData({
-							...accountData,
-							taxId: event.target.value,
-						})
-					}
-					type="text"
-					value={accountData.taxId}
-				/>
-			</ClayForm.Group>
+						<ClayInput
+							name="accountTaxId"
+							onChange={(event) =>
+								setAccountData({
+									...accountData,
+									taxId: event.target.value,
+								})
+							}
+							type="text"
+							value={accountData.taxId}
+						/>
+					</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="accountERC">
-					{Liferay.Language.get('external-reference-code')}
-				</label>
+					<ClayForm.Group>
+						<label htmlFor="accountERC">
+							{Liferay.Language.get('external-reference-code')}
+						</label>
 
-				<ClayInput
-					name="accountERC"
-					onChange={(event) =>
-						setAccountData({
-							...accountData,
-							externalReferenceCode: event.target.value,
-						})
-					}
-					type="text"
-					value={accountData.externalReferenceCode}
-				/>
-			</ClayForm.Group>
+						<ClayInput
+							name="accountERC"
+							onChange={(event) =>
+								setAccountData({
+									...accountData,
+									externalReferenceCode: event.target.value,
+								})
+							}
+							type="text"
+							value={accountData.externalReferenceCode}
+						/>
+					</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="accountDescription">
-					{Liferay.Language.get('description')}
-				</label>
+					<ClayForm.Group>
+						<label htmlFor="accountDescription">
+							{Liferay.Language.get('description')}
+						</label>
 
-				<ClayInput
-					component="textarea"
-					name="accountDescription"
-					onChange={(event) =>
-						setAccountData({
-							...accountData,
-							description: event.target.value,
-						})
-					}
-					type="text"
-					value={accountData.description}
-				/>
-			</ClayForm.Group>
-		</ClayModal.Body>
+						<ClayInput
+							component="textarea"
+							name="accountDescription"
+							onChange={(event) =>
+								setAccountData({
+									...accountData,
+									description: event.target.value,
+								})
+							}
+							type="text"
+							value={accountData.description}
+						/>
+					</ClayForm.Group>
+				</>
+			)}
+		</>
 	);
 }

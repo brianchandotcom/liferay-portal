@@ -22,7 +22,9 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import javax.servlet.ServletContext;
@@ -30,6 +32,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Gianmarco Brunialti Masera
  */
 public class ServletContextUtil {
 
@@ -115,6 +118,12 @@ public class ServletContextUtil {
 		return _servletContextSnapshot.get();
 	}
 
+	public static ModelResourcePermission<User>
+		getUserModelResourcePermission() {
+
+		return _userModelResourcePermissionSnapshot.get();
+	}
+
 	private static final Snapshot<CommerceChannelLocalService>
 		_commerceChannelLocalServiceSnapshot = new Snapshot<>(
 			ServletContextUtil.class, CommerceChannelLocalService.class);
@@ -167,5 +176,10 @@ public class ServletContextUtil {
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,
 			"(osgi.web.symbolicname=com.liferay.commerce.frontend.taglib)");
+	private static final Snapshot<ModelResourcePermission<User>>
+		_userModelResourcePermissionSnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.portal.kernel.model.User)");
 
 }

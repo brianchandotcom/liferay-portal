@@ -392,6 +392,129 @@ test.describe('Form Configuration', () => {
 			);
 		}
 	);
+
+	test(
+		'Form Fragment redirect to correct success page',
+		{tag: '@LPS-155529'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Create a success page with a heading fragment
+
+			const successLayoutTitle = getRandomString();
+
+			const succesLayout =
+				await apiHelpers.headlessDelivery.createSitePage({
+					pageDefinition: getPageDefinition([
+						getFragmentDefinition({
+							fragmentFields: [
+								{
+									id: 'element-text',
+									value: {
+										text: {
+											value_i18n: {
+												en_US: 'Success Page',
+											},
+										},
+									},
+								},
+							],
+							id: getRandomString(),
+							key: 'BASIC_COMPONENT-heading',
+						}),
+					]),
+					siteId: pageManagementSite.id,
+					title: successLayoutTitle,
+				});
+
+			// Go to edit mode and map the form to Lemon object
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+				'Lemon Weight',
+			]);
+
+			// Change the success action to go to the success page
+
+			await pageEditorPage.selectFragment(formId);
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Success Action',
+				tab: 'General',
+				value: 'Go to Page',
+			});
+
+			const layoutTreeItem = page
+				.frameLocator('iframe[title="Select"]')
+				.getByLabel(successLayoutTitle);
+
+			await clickAndExpectToBeVisible({
+				target: layoutTreeItem,
+				timeout: 3000,
+				trigger: page.getByLabel('Select Page', {exact: true}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-dialog'),
+				trigger: layoutTreeItem,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and submit form
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByLabel('Lemon Weight', {exact: true}).fill('100');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			// Assert that the success page is displayed
+
+			await expect(page.getByText('Success Page')).toBeVisible();
+
+			// Delete the success page
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(
+				succesLayout.id
+			);
+
+			// Publish the form again and check that the default message is displayed
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByLabel('Lemon Weight', {exact: true}).fill('100');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Captcha Fragment', () => {

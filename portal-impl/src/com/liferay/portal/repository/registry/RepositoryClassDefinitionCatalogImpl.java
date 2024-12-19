@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -113,18 +114,31 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public void invalidate() {
+		Collection<Map<String, RepositoryClassDefinition>>
+			repositoryClassDefinitions = null;
+
 		if (DBPartition.isPartitionEnabled() &&
 			(CompanyThreadLocal.getCompanyId() != CompanyConstants.SYSTEM)) {
 
-			_repositoryClassDefinitions.remove(
-				CompanyThreadLocal.getCompanyId());
+			Map<String, RepositoryClassDefinition>
+				companyRepositoryClassDefinitions =
+					_repositoryClassDefinitions.get(
+						CompanyThreadLocal.getCompanyId());
 
-			return;
+			if (companyRepositoryClassDefinitions == null) {
+				return;
+			}
+
+			repositoryClassDefinitions = Collections.singletonList(
+				companyRepositoryClassDefinitions);
+		}
+		else {
+			repositoryClassDefinitions = _repositoryClassDefinitions.values();
 		}
 
 		for (Map<String, RepositoryClassDefinition>
 				companyRepositoryClassDefinitions :
-					_repositoryClassDefinitions.values()) {
+					repositoryClassDefinitions) {
 
 			for (RepositoryClassDefinition repositoryClassDefinition :
 					companyRepositoryClassDefinitions.values()) {

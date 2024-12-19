@@ -40,7 +40,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalEditArticlePage.fillTitle(title);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle();
 
 	await waitForAlert(page, `Success:${title} was created successfully.`);
 
@@ -67,7 +67,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalEditArticlePage.editArticle(title);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle(true);
 
 	await waitForAlert(page, `Success:${title} was updated successfully.`);
 
@@ -182,7 +182,7 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await journalEditArticlePage.fillTitle(title);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle();
 
 	await waitForAlert(page, `Success:${title} was created successfully.`);
 
@@ -192,7 +192,7 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await journalEditArticlePage.editArticle(title);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle(true);
 
 	await waitForAlert(page, `Success:${title} was updated successfully.`);
 

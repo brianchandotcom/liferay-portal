@@ -7,6 +7,7 @@ import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
 import React, {useCallback, useContext, useRef, useState} from 'react';
 
 import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
+import getFirstControlsId from '../utils/getFirstControlsId';
 import isItemContainerFlex from '../utils/isItemContainerFlex';
 import {useSelectorRef} from './StoreContext';
 
@@ -78,6 +79,22 @@ function useMovementTarget() {
 	return useContext(KeyboardMovementContext).target;
 }
 
+function useIsMovementTarget() {
+	const {target} = useContext(KeyboardMovementContext);
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+
+	const targetItem = layoutDataRef.current?.items[target.itemId];
+
+	const controlsId =
+		targetItem &&
+		getFirstControlsId({
+			item: targetItem,
+			layoutData: layoutDataRef.current,
+		});
+
+	return useCallback((itemId) => itemId === controlsId, [controlsId]);
+}
+
 function useMovementTargetPosition() {
 	const {target} = useContext(KeyboardMovementContext);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
@@ -109,6 +126,7 @@ function useSetMovementText() {
 export {
 	KeyboardMovementContextProvider,
 	useDisableKeyboardMovement,
+	useIsMovementTarget,
 	useMovementSources,
 	useMovementTarget,
 	useMovementTargetPosition,

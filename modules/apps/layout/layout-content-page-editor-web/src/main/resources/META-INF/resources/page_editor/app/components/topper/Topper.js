@@ -17,6 +17,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrig
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
+import {useToControlsId} from '../../contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemIds,
@@ -28,6 +29,7 @@ import {
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import {
+	useIsMovementTarget,
 	useMovementSources,
 	useMovementTarget,
 	useMovementTargetPosition,
@@ -111,7 +113,10 @@ function TopperContent({
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 	const isMultiSelect = activeItemIds.length > 1;
-	const {itemId: keyboardMovementTargetId} = useMovementTarget();
+	const isKeyboardTarget = useIsMovementTarget();
+
+	const toControlsId = useToControlsId();
+
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
@@ -189,7 +194,7 @@ function TopperContent({
 		draggingItem || draggingTopper || lastSource?.itemId === item.itemId;
 
 	const isTarget =
-		(isOverTarget || keyboardMovementTargetId === item.itemId) &&
+		(isOverTarget || isKeyboardTarget(toControlsId(item.itemId))) &&
 		!isUnmappedCollection(item) &&
 		!isUnmappedForm(item);
 

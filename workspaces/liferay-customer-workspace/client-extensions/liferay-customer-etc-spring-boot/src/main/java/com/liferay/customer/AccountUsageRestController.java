@@ -56,7 +56,7 @@ public class AccountUsageRestController extends BaseRestController {
 					1, 1000, StringPool.BLANK);
 
 			JSONObject jsonObject =
-				_googleCloudFunctionService.getCustomerAccountUsage(
+				_googleCloudFunctionService.fetchCustomerAccountUsage(
 					externalReferenceCode);
 
 			AccountUsage accountUsage = new AccountUsage(

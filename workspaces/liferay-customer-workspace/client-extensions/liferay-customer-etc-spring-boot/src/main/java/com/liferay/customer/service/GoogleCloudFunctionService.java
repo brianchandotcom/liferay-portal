@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoogleCloudFunctionService {
 
-	public JSONObject getCustomerAccountUsage(String accountKey)
+	public JSONObject fetchCustomerAccountUsage(String accountKey)
 		throws Exception {
 
 		try (InputStream inputStream = new ByteArrayInputStream(
@@ -57,19 +58,39 @@ public class GoogleCloudFunctionService {
 					StringBundler.concat(
 						_gcfBaseUrl, _FUNCTION_CUSTOMER_USAGE_API_PATH,
 						"/api/v1/customer/usage/accounts/", accountKey))
+			).setThrowExceptionOnExecuteError(
+				false
 			);
 
-			HttpResponse httpResponse = httpRequest.execute();
+			HttpResponse httpResponse = null;
 
 			try {
-				String result = CharStreams.toString(
-					new InputStreamReader(
-						httpResponse.getContent(), StandardCharsets.UTF_8));
+				httpResponse = httpRequest.execute();
 
-				return new JSONObject(result);
+				if (httpResponse.isSuccessStatusCode()) {
+					String result = CharStreams.toString(
+						new InputStreamReader(
+							httpResponse.getContent(), StandardCharsets.UTF_8));
+
+					return new JSONObject(result);
+				}
+
+				if (httpResponse.getStatusCode() ==
+						HttpStatus.NOT_FOUND.value()) {
+
+					return null;
+				}
+
+				throw new Exception(
+					StringBundler.concat(
+						httpResponse.getStatusCode(), " ",
+						httpResponse.getStatusMessage(), " for account ",
+						accountKey));
 			}
 			finally {
-				httpResponse.disconnect();
+				if (httpResponse != null) {
+					httpResponse.disconnect();
+				}
 			}
 		}
 	}

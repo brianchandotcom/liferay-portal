@@ -246,17 +246,19 @@ public class AccountUsage {
 	}
 
 	private void _initUsage(JSONObject jsonObject) {
-		_anonymousPageViewsUsed = jsonObject.getLong(
-			"totalAnonymousPageViewsCount");
-		_clientExtensionsCapacityCPUUsed = jsonObject.getInt(
-			"totalClientExtensionsCapacityCPUCount");
-		_clientExtensionsCapacityRAMUsed = jsonObject.getInt(
-			"totalClientExtensionsCapacityRAM");
-		_monthlyActiveLoggedInUsersUsed = jsonObject.getLong(
-			"totalMonthlyActiveLoggedInUsersCount");
-		_sitesUsed = jsonObject.getInt("totalSitesCount");
-		_storageCapacityDocumentLibraryUsed = jsonObject.getInt(
-			"totalStorageCapacityDocumentLibrary");
+		if (jsonObject != null) {
+			_anonymousPageViewsUsed = jsonObject.optLong(
+				"totalAnonymousPageViewsCount");
+			_clientExtensionsCapacityCPUUsed = jsonObject.optInt(
+				"totalClientExtensionsCapacityCPUCount");
+			_clientExtensionsCapacityRAMUsed = jsonObject.optInt(
+				"totalClientExtensionsCapacityRAM");
+			_monthlyActiveLoggedInUsersUsed = jsonObject.optLong(
+				"totalMonthlyActiveLoggedInUsersCount");
+			_sitesUsed = jsonObject.optInt("totalSitesCount");
+			_storageCapacityDocumentLibraryUsed = jsonObject.optInt(
+				"totalStorageCapacityDocumentLibrary");
+		}
 	}
 
 	private final long _anonymousPageViewsMax;

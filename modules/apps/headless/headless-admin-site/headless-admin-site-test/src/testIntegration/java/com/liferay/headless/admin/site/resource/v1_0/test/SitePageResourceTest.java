@@ -220,6 +220,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostByExternalReferenceCodeSitePage() throws Exception {
+		super.testPostByExternalReferenceCodeSitePage();
+
+		_testPostByExternalReferenceCodeSitePage(SitePage.Type.COLLECTION_PAGE);
+		_testPostByExternalReferenceCodeSitePage(SitePage.Type.CONTENT_PAGE);
+		_testPostByExternalReferenceCodeSitePage(SitePage.Type.WIDGET_PAGE);
+	}
+
+	@Override
+	@Test
 	public void testPostSiteSiteByExternalReferenceCodeSitePagePageSpecification()
 		throws Exception {
 
@@ -771,6 +781,23 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
 				testGroup.getExternalReferenceCode(),
 				sitePage.getExternalReferenceCode()));
+	}
+
+	private void _testPostByExternalReferenceCodeSitePage(SitePage.Type type)
+		throws Exception {
+
+		SitePage sitePage = _getRandomSitePage(type);
+
+		SitePage postSitePage =
+			testPostByExternalReferenceCodeSitePage_addSitePage(sitePage);
+
+		assertEquals(sitePage, postSitePage);
+		assertValid(postSitePage);
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
+			postSitePage);
 	}
 
 	@Inject

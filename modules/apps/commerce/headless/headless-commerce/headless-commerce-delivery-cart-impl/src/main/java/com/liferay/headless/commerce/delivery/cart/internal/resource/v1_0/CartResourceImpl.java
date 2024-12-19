@@ -504,7 +504,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), cart.getCurrencyCode(),
-				cart.getCurrencyExternalReferenceCode(), cart.getCurrencyId());
+				cart.getCurrencyExternalReferenceCode(),
+				GetterUtil.get(cart.getCurrencyId(), 0));
 
 		AccountEntry accountEntry = null;
 

@@ -356,7 +356,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), payment.getCurrencyCode(),
 				payment.getCurrencyExternalReferenceCode(),
-				payment.getCurrencyId());
+				GetterUtil.get(payment.getCurrencyId(), 0));
 
 		return _commercePaymentEntryService.addOrUpdateCommercePaymentEntry(
 			externalReferenceCode,
@@ -435,7 +435,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), payment.getCurrencyCode(),
 				payment.getCurrencyExternalReferenceCode(),
-				payment.getCurrencyId());
+				GetterUtil.get(payment.getCurrencyId(), 0));
 		}
 		catch (NoSuchCurrencyException noSuchCurrencyException) {
 			if (_log.isDebugEnabled()) {

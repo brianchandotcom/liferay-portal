@@ -6,10 +6,14 @@
 package com.liferay.commerce.internal.events;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.configuration.CommerceAccountServiceConfiguration;
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -19,6 +23,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -26,16 +31,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -60,38 +69,78 @@ public class LoginPostAction extends Action {
 		try {
 			_addDefaultAccountRoles(httpServletRequest);
 
-			Cookie[] cookies = httpServletRequest.getCookies();
-
-			if (cookies == null) {
-				return;
+			if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
+				_run(httpServletRequest, httpServletResponse);
 			}
+			else {
+				Cookie[] cookies = httpServletRequest.getCookies();
 
-			for (Cookie cookie : cookies) {
-				String name = cookie.getName();
+				if (cookies == null) {
+					return;
+				}
 
-				if (name.startsWith(
-						CommerceOrder.class.getName() + StringPool.POUND)) {
+				for (Cookie cookie : cookies) {
+					String cookieKey = cookie.getName();
 
-					HttpServletRequest originalHttpServletRequest =
-						_portal.getOriginalServletRequest(httpServletRequest);
+					if (cookieKey.startsWith(
+							CommerceOrder.class.getName() + StringPool.POUND)) {
 
-					HttpSession httpSession =
-						originalHttpServletRequest.getSession();
+						HttpServletRequest originalHttpServletRequest =
+							_portal.getOriginalServletRequest(
+								httpServletRequest);
 
-					httpSession.setAttribute(name, cookie.getValue());
+						HttpSession httpSession =
+							originalHttpServletRequest.getSession();
 
-					_updateGuestCommerceOrder(
-						cookie.getValue(),
-						Long.valueOf(
-							StringUtil.extractLast(name, StringPool.POUND)),
-						httpServletRequest);
+						httpSession.setAttribute(cookieKey, cookie.getValue());
 
-					break;
+						_updateGuestCommerceOrder(
+							cookie.getValue(),
+							Long.valueOf(
+								StringUtil.extractLast(
+									cookieKey, StringPool.POUND)),
+							httpServletRequest);
+					}
 				}
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
+	private void _addBusinessAccountRoles(
+		AccountEntry accountEntry, User user) {
+
+		try {
+			Role accountAdmnistratorRole = _roleLocalService.getRole(
+				user.getCompanyId(),
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+			Role buyerRole = _roleLocalService.getRole(
+				user.getCompanyId(),
+				AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER);
+
+			AccountRole accountAdmnistratorAccountRole =
+				_accountRoleLocalService.getAccountRoleByRoleId(
+					accountAdmnistratorRole.getRoleId());
+			AccountRole buyerAccountRole =
+				_accountRoleLocalService.getAccountRoleByRoleId(
+					buyerRole.getRoleId());
+
+			_accountRoleLocalService.associateUser(
+				accountEntry.getAccountEntryId(),
+				new long[] {
+					accountAdmnistratorAccountRole.getAccountRoleId(),
+					buyerAccountRole.getAccountRoleId()
+				},
+				user.getUserId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 	}
 
@@ -111,81 +160,290 @@ public class LoginPostAction extends Action {
 		}
 	}
 
-	private AccountEntry _getAccountEntry(
-		int commerceSiteType, HttpServletRequest httpServletRequest,
-		long userId) {
+	private void _associateAccountToOrder(
+			AccountEntry accountEntry, long commerceChannelGroupId,
+			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest,
+			long userId)
+		throws PortalException {
 
+		CommerceOrder userCommerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrder(
+				accountEntry.getAccountEntryId(), commerceChannelGroupId,
+				userId, CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+		if (userCommerceOrder != null) {
+			CommerceContext commerceContext = _commerceContextFactory.create(
+				_portal.getCompanyId(httpServletRequest),
+				commerceChannelGroupId, userId,
+				userCommerceOrder.getCommerceOrderId(),
+				accountEntry.getAccountEntryId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(
+					_portal.getUser(httpServletRequest)));
+
+			_commerceOrderLocalService.mergeGuestCommerceOrder(
+				userId, commerceOrder.getCommerceOrderId(),
+				userCommerceOrder.getCommerceOrderId(), commerceContext,
+				ServiceContextFactory.getInstance(httpServletRequest));
+		}
+		else {
+			_commerceOrderLocalService.updateAccount(
+				commerceOrder.getCommerceOrderId(), userId,
+				accountEntry.getAccountEntryId());
+		}
+	}
+
+	private AccountEntry _createAccountEntry(
+			String name, String type, User user)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		long userId = user.getUserId();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setUserId(userId);
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name,
+			null, null, user.getEmailAddress(), null, StringPool.BLANK, type,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), userId);
+
+		if (type.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
+			_addBusinessAccountRoles(accountEntry, user);
+		}
+
+		return accountEntry;
+	}
+
+	private AccountEntry _getAccountEntry(int commerceSiteType, long userId) {
 		AccountEntry accountEntry = null;
 
+		String[] accountTypes = {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON};
+
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
+			accountTypes = new String[] {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS
+			};
+		}
+		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X) {
+			accountTypes = new String[] {
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+			};
+		}
+
 		try {
-			if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
-				accountEntry = _getBusinessAccountEntry(userId);
-			}
-			else if (commerceSiteType ==
-						CommerceChannelConstants.SITE_TYPE_B2X) {
+			List<AccountEntry> accountEntries =
+				_accountEntryLocalService.getUserAccountEntries(
+					userId, null, null, accountTypes, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
-				accountEntry = _getBusinessAccountEntry(userId);
+			if (accountEntries.size() != 1) {
+				return null;
+			}
 
-				if (accountEntry == null) {
-					accountEntry = _getPersonAccountEntry(
-						httpServletRequest, userId);
-				}
-			}
-			else {
-				accountEntry = _getPersonAccountEntry(
-					httpServletRequest, userId);
-			}
+			accountEntry = accountEntries.get(0);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
 		return accountEntry;
 	}
 
-	private AccountEntry _getBusinessAccountEntry(long userId)
-		throws PortalException {
-
-		List<AccountEntry> userAccountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				userId, null, null,
-				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (userAccountEntries.isEmpty()) {
-			return null;
-		}
-
-		return userAccountEntries.get(0);
+	private long _getCommerceChannelGroupId(String key) {
+		return Long.valueOf(StringUtil.extractLast(key, StringPool.POUND));
 	}
 
-	private AccountEntry _getPersonAccountEntry(
-			HttpServletRequest httpServletRequest, long userId)
-		throws PortalException {
+	private CommerceOrder _getCommerceOrderByUuidAndGroupId(
+		long commerceChannelGroupId, String commerceOrderUuid) {
 
-		AccountEntry accountEntry =
-			_accountEntryLocalService.fetchPersonAccountEntry(userId);
-
-		if (accountEntry == null) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			User user = _portal.getUser(httpServletRequest);
-
-			serviceContext.setCompanyId(user.getCompanyId());
-
-			serviceContext.setUserId(userId);
-
-			accountEntry = _accountEntryLocalService.addAccountEntry(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-				user.getFullName(), null, null, user.getEmailAddress(), null,
-				StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry.getAccountEntryId(), userId);
+		try {
+			return _commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
+				commerceOrderUuid, commerceChannelGroupId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
-		return accountEntry;
+		return null;
+	}
+
+	private Map<String, String> _parseAccountInformation(
+		int commerceSiteType, String cookieValue, User user) {
+
+		String accountName = user.getFullName();
+		String accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+		String userEmailAddress = user.getEmailAddress();
+
+		String[] keyValues = cookieValue.split(StringPool.POUND);
+
+		for (String keyValue : keyValues) {
+			if (keyValue.startsWith("accountName=")) {
+				accountName = StringUtil.extractLast(
+					keyValue, StringPool.EQUAL);
+			}
+			else if (keyValue.startsWith("accountType=")) {
+				String value = StringUtil.extractLast(
+					keyValue, StringPool.EQUAL);
+
+				if (value.equals(
+						AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS) ||
+					value.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
+
+					accountType = value;
+				}
+			}
+			else if (keyValue.startsWith("userEmail=")) {
+				userEmailAddress = StringUtil.extractLast(
+					keyValue, StringPool.EQUAL);
+			}
+		}
+
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
+			accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+		}
+		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) {
+			accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+		}
+
+		return HashMapBuilder.put(
+			"accountName", accountName
+		).put(
+			"accountType", accountType
+		).put(
+			"userEmailAddress", userEmailAddress
+		).build();
+	}
+
+	private void _prepareOrderForCheckout(
+		CommerceOrder commerceOrder, HttpServletRequest httpServletRequest) {
+
+		httpServletRequest.setAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		HttpSession httpSession = originalHttpServletRequest.getSession();
+
+		httpSession.setAttribute(
+			CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT, Boolean.TRUE);
+	}
+
+	private void _run(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
+
+		Cookie[] cookies = httpServletRequest.getCookies();
+
+		if (cookies == null) {
+			return;
+		}
+
+		AccountEntry accountEntry = null;
+		CommerceOrder commerceOrder = null;
+		boolean immediateCheckout = false;
+
+		User user = _portal.getUser(httpServletRequest);
+
+		for (Cookie cookie : cookies) {
+			String cookieKey = cookie.getName();
+
+			if (cookieKey.startsWith(
+					LoginPostAction._ACCOUNT_INFORMATION_COOKIE_IDENTIFIER)) {
+
+				Map<String, String> accountInformation =
+					_parseAccountInformation(
+						_commerceAccountHelper.getCommerceSiteType(
+							_getCommerceChannelGroupId(cookieKey)),
+						cookie.getValue(), user);
+
+				String userEmailAddress = accountInformation.get(
+					"userEmailAddress");
+
+				if (userEmailAddress.equals(user.getEmailAddress())) {
+					String accountName = accountInformation.get("accountName");
+					String accountType = accountInformation.get("accountType");
+
+					accountEntry = _createAccountEntry(
+						accountName, accountType, user);
+				}
+
+				CookiesManagerUtil.deleteCookies(
+					cookie.getDomain(), httpServletRequest, httpServletResponse,
+					cookieKey);
+			}
+			else if (cookieKey.startsWith(
+						LoginPostAction._GUEST_ORDER_COOKIE_IDENTIFIER)) {
+
+				long commerceChannelGroupId = _getCommerceChannelGroupId(
+					cookieKey);
+
+				String commerceOrderUuid = cookie.getValue();
+
+				if (commerceOrderUuid.endsWith(
+						CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT)) {
+
+					commerceOrderUuid = StringUtil.removeSubstring(
+						commerceOrderUuid,
+						CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT);
+					immediateCheckout = true;
+				}
+
+				commerceOrder = _getCommerceOrderByUuidAndGroupId(
+					commerceChannelGroupId, commerceOrderUuid);
+
+				if ((commerceOrder != null) && immediateCheckout) {
+					_prepareOrderForCheckout(commerceOrder, httpServletRequest);
+				}
+			}
+		}
+
+		if ((accountEntry == null) && (commerceOrder != null)) {
+			accountEntry = _getAccountEntry(
+				_commerceAccountHelper.getCommerceSiteType(
+					commerceOrder.getGroupId()),
+				user.getUserId());
+
+			if (accountEntry == null) {
+				commerceOrder.setUserId(user.getUserId());
+
+				commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+					commerceOrder);
+
+				HttpServletRequest originalHttpServletRequest =
+					_portal.getOriginalServletRequest(httpServletRequest);
+
+				HttpSession httpSession =
+					originalHttpServletRequest.getSession();
+
+				httpSession.setAttribute(
+					CommerceCheckoutWebKeys.COMMERCE_ORDER_ON_ACCOUNT_SELECTION,
+					commerceOrder);
+
+				httpSession.setAttribute(
+					LoginPostAction._GUEST_ORDER_COOKIE_IDENTIFIER +
+						commerceOrder.getGroupId(),
+					commerceOrder.getUuid());
+			}
+		}
+
+		if ((accountEntry != null) && (commerceOrder != null)) {
+			_associateAccountToOrder(
+				accountEntry, commerceOrder.getGroupId(), commerceOrder,
+				httpServletRequest, user.getUserId());
+		}
 	}
 
 	private void _updateGuestCommerceOrder(
@@ -193,7 +451,7 @@ public class LoginPostAction extends Action {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		CommerceOrder commerceOrder = null;
+		CommerceOrder commerceOrder;
 
 		try {
 			commerceOrder =
@@ -214,53 +472,31 @@ public class LoginPostAction extends Action {
 			return;
 		}
 
-		long userId = _portal.getUserId(httpServletRequest);
+		User user = _portal.getUser(httpServletRequest);
 
-		AccountEntry accountEntry;
+		List<AccountEntry> userAccountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				user.getUserId(), null, null,
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
-			accountEntry = _getAccountEntry(
-				_commerceAccountHelper.getCommerceSiteType(
-					commerceChannelGroupId),
-				httpServletRequest, userId);
+		if (userAccountEntries.isEmpty()) {
+			userAccountEntries.add(
+				_createAccountEntry(
+					user.getFullName(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, user));
 		}
-		else {
-			accountEntry = _getPersonAccountEntry(httpServletRequest, userId);
-		}
 
-		if (accountEntry != null) {
-			CommerceOrder userCommerceOrder =
-				_commerceOrderLocalService.fetchCommerceOrder(
-					accountEntry.getAccountEntryId(), commerceChannelGroupId,
-					userId, CommerceOrderConstants.ORDER_STATUS_OPEN);
-
-			if (userCommerceOrder != null) {
-				CommerceContext commerceContext =
-					_commerceContextFactory.create(
-						_portal.getCompanyId(httpServletRequest),
-						commerceChannelGroupId, userId,
-						userCommerceOrder.getCommerceOrderId(),
-						accountEntry.getAccountEntryId());
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(httpServletRequest);
-
-				PermissionThreadLocal.setPermissionChecker(
-					PermissionCheckerFactoryUtil.create(
-						_portal.getUser(httpServletRequest)));
-
-				_commerceOrderLocalService.mergeGuestCommerceOrder(
-					userId, commerceOrder.getCommerceOrderId(),
-					userCommerceOrder.getCommerceOrderId(), commerceContext,
-					serviceContext);
-			}
-			else {
-				_commerceOrderLocalService.updateAccount(
-					commerceOrder.getCommerceOrderId(), userId,
-					accountEntry.getAccountEntryId());
-			}
-		}
+		_associateAccountToOrder(
+			userAccountEntries.get(0), commerceChannelGroupId, commerceOrder,
+			httpServletRequest, user.getUserId());
 	}
+
+	private static final String _ACCOUNT_INFORMATION_COOKIE_IDENTIFIER =
+		AccountEntry.class.getName() + StringPool.POUND;
+
+	private static final String _GUEST_ORDER_COOKIE_IDENTIFIER =
+		CommerceOrder.class.getName() + StringPool.POUND;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoginPostAction.class);
@@ -270,6 +506,9 @@ public class LoginPostAction extends Action {
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
@@ -285,5 +524,8 @@ public class LoginPostAction extends Action {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

@@ -41,7 +41,9 @@ import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
 import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
 import getDropData from '../../utils/drag_and_drop/getDropData';
 import itemIsAncestor from '../../utils/drag_and_drop/itemIsAncestor';
+import getFirstControlsId from '../../utils/getFirstControlsId';
 import {getFormParent} from '../../utils/getFormParent';
+import {hasCollectionParent} from '../../utils/hasCollectionParent';
 import {isMultistepForm} from '../../utils/isMultistepForm';
 import isStepper from '../../utils/isStepper';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
@@ -123,6 +125,26 @@ export default function KeyboardMovementManager() {
 							})
 						: moveItems({
 								itemIds: sources.map(({itemId}) => itemId),
+								onMoveEnd: (layoutData) => {
+									if (
+										hasCollectionParent(
+											layoutData.items[targetId],
+											layoutData
+										)
+									) {
+										const itemIds = sources.map(
+											({itemId}) =>
+												getFirstControlsId({
+													item: layoutData.items[
+														itemId
+													],
+													layoutData,
+												})
+										);
+
+										selectItems(itemIds);
+									}
+								},
 								parentItemIds: [targetId],
 								positions: [position],
 							});

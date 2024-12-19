@@ -19,7 +19,7 @@ export class SystemDataSetsPage {
 		readonly search: Locator;
 	};
 	readonly page: Page;
-	private readonly pageContainer: Locator;
+	readonly pageContainer: Locator;
 	private readonly systemDataSetsTab: Locator;
 
 	constructor(page: Page) {

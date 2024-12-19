@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
 
@@ -21,7 +22,7 @@ export const test = mergeTests(
 );
 
 test(
-	'Select a system data set to customize',
+	'Import a system data set to customize',
 	{tag: '@LPD-37531'},
 	async ({systemDataSetsPage}) => {
 		await test.step('Navigate to system data sets page', async () => {
@@ -77,6 +78,32 @@ test(
 			await classicSampleListItem.click();
 
 			await expect(classicSampleListItem).toHaveClass(/selected/);
+
+			await creationModal.createButton.click();
+
+			await waitForAlert(systemDataSetsPage.page);
+		});
+
+		await test.step('Check system data set is imported', async () => {
+			await expect(
+				systemDataSetsPage.pageContainer.getByText('Classic Sample')
+			).toBeVisible();
+		});
+
+		await test.step('Delete system data set', async () => {
+			await systemDataSetsPage.page
+				.getByRole('button', {name: 'Delete'})
+				.click();
+
+			const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+
+			await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+			await waitForAlert(systemDataSetsPage.page);
+
+			await expect(
+				systemDataSetsPage.pageContainer.getByText('Classic Sample')
+			).toBeHidden();
 		});
 	}
 );

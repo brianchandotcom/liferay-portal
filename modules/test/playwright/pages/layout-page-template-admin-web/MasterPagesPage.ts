@@ -106,17 +106,33 @@ export class MasterPagesPage {
 		await this.page.getByText('Configure Allowed Fragments').waitFor();
 	}
 
-	async configureAllowedFragments(
-		fragmentNames: string[],
-		prefilter: string
-	) {
+	async configureAllowedFragments({
+		fragmentNames,
+		mode = 'unselect',
+		prefilter,
+		selectNewFragmentsAutomatically = true,
+	}: {
+		fragmentNames: string[];
+		mode: 'select' | 'unselect';
+		prefilter?: string;
+		selectNewFragmentsAutomatically?: boolean;
+	}) {
 		await this.page
 			.getByRole('button', {name: 'Configure Allowed Fragments'})
 			.click();
 
+		const allowedFragmentsModal = this.page.getByRole('dialog', {
+			name: 'Allowed Fragments',
+		});
+
+		if (mode === 'select') {
+			await allowedFragmentsModal
+				.getByRole('treeitem', {exact: true, name: 'All Fragments'})
+				.click();
+		}
+
 		if (prefilter) {
-			await this.page
-				.getByRole('dialog', {name: 'Allowed Fragments'})
+			await allowedFragmentsModal
 				.getByPlaceholder('Search')
 				.fill(prefilter);
 		}
@@ -127,10 +143,20 @@ export class MasterPagesPage {
 				.click();
 		}
 
-		await this.page
-			.getByRole('dialog', {name: 'Allowed Fragments'})
-			.getByRole('button', {name: 'Save'})
-			.click();
+		const checkbox = allowedFragmentsModal.getByLabel(
+			'Select New Fragments Automatically'
+		);
+
+		if ((await checkbox.isChecked()) !== selectNewFragmentsAutomatically) {
+			if (selectNewFragmentsAutomatically) {
+				await checkbox.check();
+			}
+			else {
+				await checkbox.uncheck();
+			}
+		}
+
+		await allowedFragmentsModal.getByRole('button', {name: 'Save'}).click();
 	}
 
 	async importFile(fileName: string, folderPath: string) {

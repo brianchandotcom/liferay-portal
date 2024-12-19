@@ -43,7 +43,7 @@ AUI.add(
 			deleteNodesMessage: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-nodes'
 			),
-			depot: Liferay.Language.get('depot'),
+			depot: Liferay.Language.get('asset-library'),
 			description: Liferay.Language.get('description'),
 			duration: Liferay.Language.get('duration'),
 			edit: Liferay.Language.get('edit'),

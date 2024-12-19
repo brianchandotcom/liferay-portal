@@ -44,7 +44,7 @@ public class DepotObjectScopeProviderImpl implements ObjectScopeProvider {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "depot");
+		return _language.get(locale, "asset-library");
 	}
 
 	@Override

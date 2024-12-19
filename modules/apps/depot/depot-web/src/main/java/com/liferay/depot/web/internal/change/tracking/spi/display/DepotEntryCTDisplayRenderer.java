@@ -106,7 +106,7 @@ public class DepotEntryCTDisplayRenderer
 
 	@Override
 	public String getTypeName(Locale locale) {
-		return _language.get(locale, "depot");
+		return _language.get(locale, "asset-library");
 	}
 
 	@Override

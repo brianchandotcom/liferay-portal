@@ -174,102 +174,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		PageSettings pageSettings = sitePage.getPageSettings();
-
-		String typeSettings = null;
-
-		if (sitePage.getType() == SitePage.Type.COLLECTION_PAGE) {
-			if (!(pageSettings instanceof CollectionPageSettings)) {
-				throw new NotSupportedException();
-			}
-
-			CollectionPageSettings collectionPageSettings =
-				(CollectionPageSettings)pageSettings;
-
-			CollectionReference collectionReference =
-				collectionPageSettings.getCollectionReference();
-
-			if ((collectionReference == null) ||
-				(collectionReference.getCollectionType() == null)) {
-
-				throw new NotSupportedException();
-			}
-
-			CollectionReference.CollectionType collectionType =
-				collectionReference.getCollectionType();
-
-			if (collectionType ==
-					CollectionReference.CollectionType.COLLECTION) {
-
-				// TODO
-
-			}
-			else if (collectionType ==
-						CollectionReference.CollectionType.
-							COLLECTION_PROVIDER) {
-
-				if (!(collectionReference instanceof ClassNameReference)) {
-					throw new NotSupportedException();
-				}
-
-				ClassNameReference classNameReference =
-					(ClassNameReference)collectionReference;
-
-				if (classNameReference.getClassName() == null) {
-					throw new NotSupportedException();
-				}
-
-				typeSettings = UnicodePropertiesBuilder.create(
-					true
-				).setProperty(
-					"collectionPK", classNameReference.getClassName()
-				).setProperty(
-					"collectionType", "TODO"
-				).buildString();
-			}
-			else {
-				throw new NotSupportedException();
-			}
-		}
-		else if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
-			if (!(pageSettings instanceof ContentPageSettings)) {
-				throw new NotSupportedException();
-			}
-		}
-		else if (sitePage.getType() == SitePage.Type.WIDGET_PAGE) {
-			WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)pageSettings;
-
-			typeSettings = UnicodePropertiesBuilder.create(
-				true
-			).setProperty(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
-				widgetPageSettings.getLayoutTemplateId()
-			).buildString();
-		}
-
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
-		).build();
-
-		serviceContext.setUuid(sitePage.getUuid());
-
 		return _toSitePage(
-			_layoutService.addLayout(
-				sitePage.getExternalReferenceCode(), groupId, false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
-				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
-				LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
-				null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
-				typeSettings,
-				GetterUtil.getBoolean(pageSettings.getHiddenFromNavigation()),
-				false,
-				LocalizedMapUtil.getLocalizedMap(
-					sitePage.getFriendlyUrlPath_i18n()),
-				0, serviceContext));
+			_addLayout(
+				GroupUtil.getGroupId(
+					false, contextCompany.getCompanyId(),
+					siteExternalReferenceCode),
+				sitePage));
 	}
 
 	@Override
@@ -323,6 +233,118 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		throw new NotSupportedException(
 			"One of the following parameters must be specified: [siteId]");
+	}
+
+	private Layout _addLayout(long groupId, SitePage sitePage)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, sitePage.getViewableByAsString()
+		).build();
+
+		serviceContext.setUuid(sitePage.getUuid());
+
+		return _layoutService.addLayout(
+			sitePage.getExternalReferenceCode(), groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()),
+			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
+			null, null, SitePageTypeUtil.toInternalType(sitePage.getType()),
+			_getTypeSettings(sitePage),
+			_isHiddenFromNavigation(sitePage.getPageSettings()), false,
+			LocalizedMapUtil.getLocalizedMap(
+				sitePage.getFriendlyUrlPath_i18n()),
+			0, serviceContext);
+	}
+
+	private String _getTypeSettings(
+		CollectionPageSettings collectionPageSettings) {
+
+		CollectionReference collectionReference =
+			collectionPageSettings.getCollectionReference();
+
+		if ((collectionReference == null) ||
+			(collectionReference.getCollectionType() == null)) {
+
+			throw new NotSupportedException();
+		}
+
+		CollectionReference.CollectionType collectionType =
+			collectionReference.getCollectionType();
+
+		if (collectionType == CollectionReference.CollectionType.COLLECTION) {
+
+			// TODO
+
+		}
+		else if (collectionType ==
+					CollectionReference.CollectionType.COLLECTION_PROVIDER) {
+
+			if (!(collectionReference instanceof ClassNameReference)) {
+				throw new NotSupportedException();
+			}
+
+			ClassNameReference classNameReference =
+				(ClassNameReference)collectionReference;
+
+			if (classNameReference.getClassName() == null) {
+				throw new NotSupportedException();
+			}
+
+			return UnicodePropertiesBuilder.create(
+				true
+			).setProperty(
+				"collectionPK", classNameReference.getClassName()
+			).setProperty(
+				"collectionType", "TODO"
+			).buildString();
+		}
+
+		throw new NotSupportedException();
+	}
+
+	private String _getTypeSettings(SitePage sitePage) {
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		if (sitePage.getType() == SitePage.Type.COLLECTION_PAGE) {
+			if (!(pageSettings instanceof CollectionPageSettings)) {
+				throw new NotSupportedException();
+			}
+
+			return _getTypeSettings((CollectionPageSettings)pageSettings);
+		}
+
+		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
+			if (!(pageSettings instanceof ContentPageSettings)) {
+				throw new NotSupportedException();
+			}
+
+			return null;
+		}
+
+		if ((sitePage.getType() != SitePage.Type.WIDGET_PAGE) ||
+			!(pageSettings instanceof WidgetPageSettings)) {
+
+			throw new NotSupportedException();
+		}
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)pageSettings;
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+			widgetPageSettings.getLayoutTemplateId()
+		).buildString();
+	}
+
+	private boolean _isHiddenFromNavigation(PageSettings pageSettings) {
+		if (GetterUtil.getBoolean(pageSettings.getHiddenFromNavigation())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private SitePage _toSitePage(Layout layout) throws Exception {

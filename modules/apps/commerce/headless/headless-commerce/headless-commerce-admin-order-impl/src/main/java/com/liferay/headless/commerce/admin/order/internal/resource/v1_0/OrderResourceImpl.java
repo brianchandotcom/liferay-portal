@@ -330,7 +330,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				commerceChannel.getCompanyId(), order.getCurrencyCode(),
 				order.getCurrencyExternalReferenceCode(),
-				order.getCurrencyId());
+				GetterUtil.getLong(order.getCurrencyId()));
 
 		long commerceShippingMethodId = 0;
 

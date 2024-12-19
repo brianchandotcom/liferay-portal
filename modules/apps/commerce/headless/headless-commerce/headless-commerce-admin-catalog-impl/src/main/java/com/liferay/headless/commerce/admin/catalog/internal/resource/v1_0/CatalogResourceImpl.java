@@ -221,7 +221,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 				CommerceCurrencyUtil.getCommerceCurrency(
 					contextCompany.getCompanyId(), catalog.getCurrencyCode(),
 					catalog.getCurrencyExternalReferenceCode(),
-					catalog.getCurrencyId());
+					GetterUtil.getLong(catalog.getCurrencyId()));
 
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 				catalog.getExternalReferenceCode(),
@@ -242,7 +242,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 				commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 					contextCompany.getCompanyId(), catalog.getCurrencyCode(),
 					catalog.getCurrencyExternalReferenceCode(),
-					catalog.getCurrencyId());
+					GetterUtil.getLong(catalog.getCurrencyId()));
 			}
 			catch (NoSuchCurrencyException noSuchCurrencyException) {
 				if (_log.isDebugEnabled()) {
@@ -278,7 +278,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), catalog.getCurrencyCode(),
 				catalog.getCurrencyExternalReferenceCode(),
-				catalog.getCurrencyId());
+				GetterUtil.getLong(catalog.getCurrencyId()));
 
 		if (commerceCatalog == null) {
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
@@ -354,7 +354,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), catalog.getCurrencyCode(),
 				catalog.getCurrencyExternalReferenceCode(),
-				catalog.getCurrencyId());
+				GetterUtil.getLong(catalog.getCurrencyId()));
 		}
 		catch (NoSuchCurrencyException noSuchCurrencyException) {
 			if (_log.isDebugEnabled()) {

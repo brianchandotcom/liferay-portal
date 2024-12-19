@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
@@ -213,7 +214,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		_setBatchUnsupportedFormats(objectDefinitionSchemaProperties);
-		_setListEntryRef(schemas);
+		_setFieldRefs(schemas);
 		_setReadOnlyProperties(schemas);
 	}
 
@@ -766,6 +767,73 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 	}
 
+	private void _setFieldRefs(Map<String, Schema> schemas) {
+		Map<String, ObjectField> objectFields =
+			ObjectFieldUtil.toObjectFieldsMap(
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId()));
+
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
+
+		Map<String, Schema> properties = objectDefinitionSchema.getProperties();
+
+		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			ObjectField objectField = objectFields.get(key);
+
+			if (objectField == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				_addSchemas(FileEntry.class, schemas);
+
+				Schema schema = entry.getValue();
+
+				schema.$ref(FileEntry.class.getSimpleName());
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				_addSchemas(ListEntry.class, schemas);
+
+				Schema schema = entry.getValue();
+
+				schema.$ref(ListEntry.class.getSimpleName());
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				_addSchemas(ListEntry.class, schemas);
+
+				Schema schema = entry.getValue();
+
+				properties.put(
+					key,
+					new ArraySchema() {
+						{
+							setExtensions(schema.getExtensions());
+							setItems(
+								new Schema() {
+									{
+										set$ref(
+											ListEntry.class.getSimpleName());
+									}
+								});
+						}
+					});
+			}
+		}
+	}
+
 	private void _setIndividualActionSchemas(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
@@ -810,63 +878,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				actionSchemas.put(
 					StringUtil.toLowerCase(pathItemHttpMethod.name()),
 					actionSchema);
-			}
-		}
-	}
-
-	private void _setListEntryRef(Map<String, Schema> schemas) {
-		Map<String, ObjectField> objectFields =
-			ObjectFieldUtil.toObjectFieldsMap(
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId()));
-
-		Schema objectDefinitionSchema = schemas.get(
-			_objectDefinition.getShortName());
-
-		Map<String, Schema> properties = objectDefinitionSchema.getProperties();
-
-		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
-			String key = entry.getKey();
-
-			ObjectField objectField = objectFields.get(key);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				_addSchemas(ListEntry.class, schemas);
-
-				Schema schema = entry.getValue();
-
-				schema.$ref(ListEntry.class.getSimpleName());
-			}
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				_addSchemas(ListEntry.class, schemas);
-
-				Schema schema = entry.getValue();
-
-				properties.put(
-					key,
-					new ArraySchema() {
-						{
-							setExtensions(schema.getExtensions());
-							setItems(
-								new Schema() {
-									{
-										set$ref(
-											ListEntry.class.getSimpleName());
-									}
-								});
-						}
-					});
 			}
 		}
 	}

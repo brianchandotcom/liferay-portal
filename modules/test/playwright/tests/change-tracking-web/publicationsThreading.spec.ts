@@ -76,6 +76,7 @@ test('LPD-33336 Buffered increment runnable processing occurs in the same thread
 });
 
 test('LPS-117642 NoSuchTagException throws when adding a web content with tag within a Change List', async ({
+	journalEditArticlePage,
 	journalPage,
 	page,
 }) => {
@@ -104,5 +105,5 @@ test('LPS-117642 NoSuchTagException throws when adding a web content with tag wi
 
 	const articleTitle = 'My Test ' + getRandomInt() + ' Web Content';
 	await journalPage.fillArticleData(articleTitle, getRandomString());
-	await journalPage.publishArticle();
+	await journalEditArticlePage.publishArticle();
 });

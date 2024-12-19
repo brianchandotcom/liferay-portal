@@ -346,6 +346,11 @@ test('LPD-24645 Workflow tab is not present for draft', async ({
 
 	await page.getByRole('button', {name: 'Save as Draft'}).click();
 
+	await page
+		.locator('[role="dialog"]')
+		.getByRole('button', {name: /save as draft/i})
+		.click();
+
 	await page.getByText('Version: 1.0 Draft').waitFor();
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
@@ -656,7 +661,7 @@ test('LPD-28975 Workflow tab shows unexpected error for asset added in publicati
 
 	await journalEditArticlePage.fillTitle(title1);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle();
 
 	await waitForAlert(page, `Success:${title1} was created successfully.`);
 

@@ -46,7 +46,7 @@ test('LPD-30098 Invite user as admin', async ({
 
 	await journalEditArticlePage.fillTitle(title);
 
-	await page.getByRole('button', {name: 'Publish'}).click();
+	await journalEditArticlePage.publishArticle();
 
 	await waitForAlert(page, `Success:${title} was created successfully.`);
 

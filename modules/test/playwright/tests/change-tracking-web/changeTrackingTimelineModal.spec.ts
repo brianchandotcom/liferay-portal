@@ -52,7 +52,7 @@ test.beforeEach(
 				await journalEditArticlePage.goto();
 				await page.locator('div[data-qa-id="content"]').waitFor();
 				await journalEditArticlePage.fillTitle(articleTitle);
-				await page.getByRole('button', {name: 'Publish'}).click();
+				await journalEditArticlePage.publishArticle();
 				await waitForAlert(
 					page,
 					`Success:${articleTitle} was created successfully.`

@@ -110,7 +110,7 @@ test(
 				.locator('a.dropdown-item')
 				.first();
 
-			await expect(pageLink).toHaveRole('roleitem');
+			await expect(pageLink).toHaveRole('menuitem');
 		});
 	}
 );

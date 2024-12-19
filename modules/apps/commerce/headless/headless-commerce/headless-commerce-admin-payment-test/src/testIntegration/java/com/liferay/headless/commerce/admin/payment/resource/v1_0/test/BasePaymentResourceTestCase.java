@@ -178,6 +178,7 @@ public abstract class BasePaymentResourceTestCase {
 		payment.setCancelURL(regex);
 		payment.setComment(regex);
 		payment.setCurrencyCode(regex);
+		payment.setCurrencyExternalReferenceCode(regex);
 		payment.setErrorMessages(regex);
 		payment.setExternalReferenceCode(regex);
 		payment.setLanguageId(regex);
@@ -202,6 +203,7 @@ public abstract class BasePaymentResourceTestCase {
 		Assert.assertEquals(regex, payment.getCancelURL());
 		Assert.assertEquals(regex, payment.getComment());
 		Assert.assertEquals(regex, payment.getCurrencyCode());
+		Assert.assertEquals(regex, payment.getCurrencyExternalReferenceCode());
 		Assert.assertEquals(regex, payment.getErrorMessages());
 		Assert.assertEquals(regex, payment.getExternalReferenceCode());
 		Assert.assertEquals(regex, payment.getLanguageId());
@@ -1274,6 +1276,25 @@ public abstract class BasePaymentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (payment.getCurrencyExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (payment.getCurrencyId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (payment.getErrorMessages() == null) {
 					valid = false;
@@ -1632,6 +1653,30 @@ public abstract class BasePaymentResourceTestCase {
 				if (!Objects.deepEquals(
 						payment1.getCurrencyCode(),
 						payment2.getCurrencyCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						payment1.getCurrencyExternalReferenceCode(),
+						payment2.getCurrencyExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						payment1.getCurrencyId(), payment2.getCurrencyId())) {
 
 					return false;
 				}
@@ -2267,6 +2312,57 @@ public abstract class BasePaymentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("currencyExternalReferenceCode")) {
+			Object object = payment.getCurrencyExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("currencyId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("errorMessages")) {
 			Object object = payment.getErrorMessages();
 
@@ -2868,6 +2964,9 @@ public abstract class BasePaymentResourceTestCase {
 				createDate = RandomTestUtil.nextDate();
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				currencyExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				currencyId = RandomTestUtil.randomLong();
 				errorMessages = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(

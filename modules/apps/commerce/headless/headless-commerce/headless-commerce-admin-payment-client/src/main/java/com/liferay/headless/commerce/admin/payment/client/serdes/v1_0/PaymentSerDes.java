@@ -180,6 +180,30 @@ public class PaymentSerDes {
 			sb.append("\"");
 		}
 
+		if (payment.getCurrencyExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(payment.getCurrencyExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
+		if (payment.getCurrencyId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"currencyId\": ");
+
+			sb.append(payment.getCurrencyId());
+		}
+
 		if (payment.getErrorMessages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -499,6 +523,22 @@ public class PaymentSerDes {
 			map.put("currencyCode", String.valueOf(payment.getCurrencyCode()));
 		}
 
+		if (payment.getCurrencyExternalReferenceCode() == null) {
+			map.put("currencyExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"currencyExternalReferenceCode",
+				String.valueOf(payment.getCurrencyExternalReferenceCode()));
+		}
+
+		if (payment.getCurrencyId() == null) {
+			map.put("currencyId", null);
+		}
+		else {
+			map.put("currencyId", String.valueOf(payment.getCurrencyId()));
+		}
+
 		if (payment.getErrorMessages() == null) {
 			map.put("errorMessages", null);
 		}
@@ -689,6 +729,14 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
 				return false;
 			}
@@ -813,6 +861,20 @@ public class PaymentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				if (jsonParserFieldValue != null) {
 					payment.setCurrencyCode((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "currencyExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					payment.setCurrencyExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyId")) {
+				if (jsonParserFieldValue != null) {
+					payment.setCurrencyId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {

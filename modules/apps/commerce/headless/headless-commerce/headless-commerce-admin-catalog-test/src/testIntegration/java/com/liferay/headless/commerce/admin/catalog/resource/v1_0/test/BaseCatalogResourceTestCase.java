@@ -173,6 +173,7 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog = randomCatalog();
 
 		catalog.setCurrencyCode(regex);
+		catalog.setCurrencyExternalReferenceCode(regex);
 		catalog.setDefaultLanguageId(regex);
 		catalog.setExternalReferenceCode(regex);
 		catalog.setName(regex);
@@ -184,6 +185,7 @@ public abstract class BaseCatalogResourceTestCase {
 		catalog = CatalogSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, catalog.getCurrencyCode());
+		Assert.assertEquals(regex, catalog.getCurrencyExternalReferenceCode());
 		Assert.assertEquals(regex, catalog.getDefaultLanguageId());
 		Assert.assertEquals(regex, catalog.getExternalReferenceCode());
 		Assert.assertEquals(regex, catalog.getName());
@@ -1387,6 +1389,25 @@ public abstract class BaseCatalogResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (catalog.getCurrencyExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (catalog.getCurrencyId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"defaultLanguageId", additionalAssertFieldName)) {
 
 				if (catalog.getDefaultLanguageId() == null) {
@@ -1563,6 +1584,30 @@ public abstract class BaseCatalogResourceTestCase {
 				if (!Objects.deepEquals(
 						catalog1.getCurrencyCode(),
 						catalog2.getCurrencyCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"currencyExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						catalog1.getCurrencyExternalReferenceCode(),
+						catalog2.getCurrencyExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("currencyId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						catalog1.getCurrencyId(), catalog2.getCurrencyId())) {
 
 					return false;
 				}
@@ -1787,6 +1832,57 @@ public abstract class BaseCatalogResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("currencyExternalReferenceCode")) {
+			Object object = catalog.getCurrencyExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("currencyId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("defaultLanguageId")) {
 			Object object = catalog.getDefaultLanguageId();
 
@@ -1983,6 +2079,9 @@ public abstract class BaseCatalogResourceTestCase {
 				accountId = RandomTestUtil.randomLong();
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				currencyExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				currencyId = RandomTestUtil.randomLong();
 				defaultLanguageId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(

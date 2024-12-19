@@ -1,7 +1,8 @@
 <#list dataFactory.getSequence(dataFactory.maxObjectEntryPageCount) as objectEntryPageCount>
+	<#include "custom_object_definitions.ftl">
 
 	<#assign
-		layoutModel = dataFactory.newContentLayoutModel(groupId, objectDefinitionModel.getName() + objectEntryPageCount, null)
+		layoutModel = dataFactory.newContentLayoutModel(groupId, objectDefinitionModel.getName(), null)
 
 		fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, objectFieldModels)
 		layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)

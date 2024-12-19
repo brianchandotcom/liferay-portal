@@ -1,7 +1,7 @@
 <#assign
-	dlFolderModel = dataFactory.newDLFolderModel()
+	dlFolderModel = dataFactory.newDLFolderModel("Objects_" + objectEntryPageCount)
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
-	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId())
+	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId(), "Ticket_" + objectEntryPageCount)
 
 	listTypeEntryModels = dataFactory.newListTypeEntryModels(listTypeDefinitionModel.getListTypeDefinitionId())
 	objectFieldModels = dataFactory.newObjectFieldModels(objectDefinitionModel.getObjectDefinitionId(), objectDefinitionModel.getDBTableName(), listTypeDefinitionModel.getListTypeDefinitionId())

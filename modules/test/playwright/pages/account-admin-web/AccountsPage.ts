@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export const searchTableRowByValue = async function (
@@ -37,6 +38,7 @@ export const searchTableRowByValue = async function (
 
 export class AccountsPage {
 	readonly accountGroupsTab: Locator;
+	readonly accountRolesTab: Locator;
 	readonly accountsTable: Locator;
 	readonly accountsTableRow: (
 		colPosition: number,
@@ -52,6 +54,7 @@ export class AccountsPage {
 	readonly channelDefaultsTab: Locator;
 	readonly clearButton: Locator;
 	readonly deactivateButton: Locator;
+	readonly detailsTab: Locator;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (option: string) => Locator;
 	readonly filterStatus: (status: string) => Locator;
@@ -65,6 +68,9 @@ export class AccountsPage {
 	constructor(page: Page) {
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
+		});
+		this.accountRolesTab = page.getByRole('link', {
+			name: 'Roles',
 		});
 		this.accountsTable = page.locator(
 			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_accountEntriesSearchContainer'
@@ -108,6 +114,9 @@ export class AccountsPage {
 		});
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
 		this.deactivateButton = page.getByRole('button', {name: 'Deactivate'});
+		this.detailsTab = page.getByRole('link', {
+			name: 'Details',
+		});
 		this.filterButton = page.getByRole('button', {
 			exact: true,
 			name: 'Filter',
@@ -152,6 +161,10 @@ export class AccountsPage {
 
 	async goto() {
 		await this.applicationsMenuPage.goToAccounts();
+	}
+
+	async gotoAccountAdmin() {
+		await this.page.goto(`${PORTLET_URLS.accountAdmin}`);
 	}
 
 	async organizationName(name: string): Promise<Locator> {

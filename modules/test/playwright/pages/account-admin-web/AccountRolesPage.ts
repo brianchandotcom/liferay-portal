@@ -6,10 +6,16 @@
 import {Locator, Page} from '@playwright/test';
 
 export class AccountRolesPage {
+	readonly addNewRoleButton: Locator;
+	readonly editRoleButton: Locator;
 	readonly page: Page;
+	readonly searchInput: Locator;
 
 	constructor(page: Page) {
+		this.addNewRoleButton = page.getByTestId('creationMenuNewButton');
+		this.editRoleButton = page.locator('svg.lexicon-icon-ellipsis-v');
 		this.page = page;
+		this.searchInput = page.getByPlaceholder('Search for');
 	}
 
 	async roleName(name: string): Promise<Locator> {

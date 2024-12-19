@@ -23,6 +23,8 @@
 				).put(
 					"accountSelectorId", accountSelectorId
 				).put(
+					"checkoutURL", checkoutURL
+				).put(
 					"commerceChannelId", commerceChannelId
 				).put(
 					"createNewOrderURL", createNewOrderURL
@@ -34,6 +36,8 @@
 					"currentCommerceOrder", currentCommerceOrder
 				).put(
 					"hasCommerceOpenOrderContentPortlet", hasCommerceOpenOrderContentPortlet
+				).put(
+					"hasPermission", hasPermission
 				).put(
 					"orderTypes", orderTypesJSONArray
 				).put(

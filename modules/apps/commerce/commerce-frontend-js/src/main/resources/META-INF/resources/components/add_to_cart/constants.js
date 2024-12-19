@@ -5,5 +5,9 @@
 
 export const ALL = 'all';
 
+export const ACCOUNT_INFORMATION_COOKIE_IDENTIFIER =
+	'com.liferay.account.model.AccountEntry#';
 export const GUEST_COMMERCE_ORDER_COOKIE_IDENTIFIER =
 	'com.liferay.commerce.model.CommerceOrder#';
+
+export const SUFFIX_IMMEDIATE_CHECKOUT = '#immediate-checkout';

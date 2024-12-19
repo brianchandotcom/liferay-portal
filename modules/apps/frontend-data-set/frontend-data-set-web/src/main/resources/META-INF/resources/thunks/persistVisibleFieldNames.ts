@@ -16,9 +16,9 @@ export default function persistVisibleFieldNames({
 	portletId,
 	visibleFieldNames,
 }: {
-	appURL: string;
-	id: string;
-	portletId: string;
+	appURL?: string;
+	id?: string;
+	portletId?: string;
 	visibleFieldNames: VisibleFieldNames;
 }) {
 	return (viewsDispatch: any) => {

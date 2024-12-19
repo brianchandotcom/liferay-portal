@@ -57,7 +57,7 @@ test('LPD-42499 Assert correct message appears in Checking changes page', async 
 
 	await pageEditorPage.publishPage();
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await page.reload();
 

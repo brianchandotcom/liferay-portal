@@ -34,7 +34,7 @@ test.beforeEach(
 		await workflowPage.changeWorkflow('Blogs Entry', 'Single Approver');
 
 		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-			ctCollection.id
+			ctCollection.body.id
 		);
 
 		blogTitle = getRandomString();
@@ -83,7 +83,7 @@ test('LPD-44372 Workflow notification persists after publication is published', 
 	await workflowTasksPage.approve(blogTitle);
 
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.id
+		ctCollection.body.id
 	);
 
 	await page.reload();

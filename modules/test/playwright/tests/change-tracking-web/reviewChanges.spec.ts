@@ -186,7 +186,7 @@ test('LPD-47743 Assert Publication Score is visible', async ({
 		);
 	}
 
-	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
 	await expect(page.getByText('Publication Size:')).toBeVisible();
 });

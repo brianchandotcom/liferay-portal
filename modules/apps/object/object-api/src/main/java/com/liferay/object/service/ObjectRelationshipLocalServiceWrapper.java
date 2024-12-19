@@ -572,15 +572,6 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map
-		<Long, java.util.List<com.liferay.object.model.ObjectRelationship>>
-			getObjectRelationshipsByCompanyId(long companyId) {
-
-		return _objectRelationshipLocalService.
-			getObjectRelationshipsByCompanyId(companyId);
-	}
-
-	@Override
 	public java.util.List<com.liferay.object.model.ObjectRelationship>
 		getObjectRelationshipsByObjectDefinitionId2(long objectDefinitionId2) {
 
@@ -596,6 +587,15 @@ public class ObjectRelationshipLocalServiceWrapper
 	@Override
 	public int getObjectRelationshipsCount() {
 		return _objectRelationshipLocalService.getObjectRelationshipsCount();
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectRelationship>>
+			getObjectRelationshipsMap(long companyId) {
+
+		return _objectRelationshipLocalService.getObjectRelationshipsMap(
+			companyId);
 	}
 
 	/**

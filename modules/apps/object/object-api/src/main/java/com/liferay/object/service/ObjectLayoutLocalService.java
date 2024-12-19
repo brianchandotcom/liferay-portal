@@ -231,10 +231,6 @@ public interface ObjectLayoutLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<ObjectLayout>> getDefaultObjectLayouts(
-		long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -296,6 +292,9 @@ public interface ObjectLayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectLayoutsCount(long objectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<ObjectLayout>> getObjectLayoutsMap(long companyId);
 
 	/**
 	 * Returns the OSGi service identifier.

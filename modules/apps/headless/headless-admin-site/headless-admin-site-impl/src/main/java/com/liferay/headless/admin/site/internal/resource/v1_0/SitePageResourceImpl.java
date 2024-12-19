@@ -95,19 +95,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
-		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
-			layout.isTypeUtility()) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-		if (layoutPageTemplateEntry != null) {
-			throw new UnsupportedOperationException();
-		}
+		_validateSitePageLayout(layout);
 
 		return _toSitePage(layout);
 	}
@@ -267,6 +255,22 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			layout);
+	}
+
+	private void _validateSitePageLayout(Layout layout) {
+		if (layout.isDraftLayout() || layout.isTypeAssetDisplay() ||
+			layout.isTypeUtility()) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Reference

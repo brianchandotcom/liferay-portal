@@ -4170,16 +4170,15 @@ public class DataFactory {
 		return dlFileVersionModel;
 	}
 
-	public DLFolderModel newDLFolderModel() {
-		return newDLFolderModel(
-			_counter.get(), _globalGroupId, 0, "", "Objects");
-	}
-
 	public DLFolderModel newDLFolderModel(
 		long groupId, long parentFolderId, String name) {
 
 		return newDLFolderModel(
 			_counter.get(), groupId, parentFolderId, "", name);
+	}
+
+	public DLFolderModel newDLFolderModel(String name) {
+		return newDLFolderModel(_counter.get(), _globalGroupId, 0, "", name);
 	}
 
 	public List<DLFolderModel> newDLFolderModels(
@@ -5500,7 +5499,9 @@ public class DataFactory {
 		return layoutPageTemplateStructureRelModel;
 	}
 
-	public ObjectDefinitionModel newObjectDefinitionModel(long objectFolderId) {
+	public ObjectDefinitionModel newObjectDefinitionModel(
+		long objectFolderId, String name) {
+
 		long objectDefinitionId = _counter.get();
 
 		String className =
@@ -5513,8 +5514,6 @@ public class DataFactory {
 		classNameModel.setValue(className);
 
 		_classNameModels.put(className, classNameModel);
-
-		String name = "Ticket";
 
 		String label = _getObjectLabel(name);
 

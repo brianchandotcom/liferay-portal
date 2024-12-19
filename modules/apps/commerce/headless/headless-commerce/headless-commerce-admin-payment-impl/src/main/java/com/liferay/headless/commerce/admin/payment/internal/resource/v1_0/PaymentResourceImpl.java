@@ -7,6 +7,9 @@ package com.liferay.headless.commerce.admin.payment.internal.resource.v1_0;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.exception.NoSuchPaymentEntryException;
 import com.liferay.commerce.payment.gateway.CommercePaymentGateway;
@@ -16,7 +19,10 @@ import com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment;
 import com.liferay.headless.commerce.admin.payment.internal.odata.entity.v1_0.PaymentEntityModel;
 import com.liferay.headless.commerce.admin.payment.resource.v1_0.PaymentResource;
 import com.liferay.headless.commerce.core.util.ActionUtil;
+import com.liferay.headless.commerce.core.util.CommerceCurrencyUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -346,6 +352,12 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			String externalReferenceCode, Payment payment)
 		throws Exception {
 
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyUtil.getCommerceCurrency(
+				contextCompany.getCompanyId(), payment.getCurrencyCode(),
+				payment.getCurrencyExternalReferenceCode(),
+				payment.getCurrencyId());
+
 		return _commercePaymentEntryService.addOrUpdateCommercePaymentEntry(
 			externalReferenceCode,
 			GetterUtil.getLong(
@@ -354,7 +366,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			GetterUtil.getLong(payment.getRelatedItemId()),
 			GetterUtil.getLong(payment.getChannelId()), payment.getAmount(),
 			payment.getCallbackURL(), payment.getCancelURL(),
-			payment.getCurrencyCode(), payment.getErrorMessages(),
+			commerceCurrency.getCode(), payment.getErrorMessages(),
 			payment.getLanguageId(), payment.getComment(), payment.getPayload(),
 			payment.getPaymentIntegrationKey(),
 			GetterUtil.getInteger(payment.getPaymentStatus()),
@@ -414,6 +426,23 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 			CommercePaymentEntry commercePaymentEntry, Payment payment)
 		throws Exception {
 
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				contextCompany.getCompanyId(),
+				commercePaymentEntry.getCurrencyCode());
+
+		try {
+			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
+				contextCompany.getCompanyId(), payment.getCurrencyCode(),
+				payment.getCurrencyExternalReferenceCode(),
+				payment.getCurrencyId());
+		}
+		catch (NoSuchCurrencyException noSuchCurrencyException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchCurrencyException);
+			}
+		}
+
 		return _commercePaymentEntryService.updateCommercePaymentEntry(
 			GetterUtil.getString(
 				payment.getExternalReferenceCode(),
@@ -429,9 +458,7 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				commercePaymentEntry.getCallbackURL()),
 			GetterUtil.getString(
 				payment.getCancelURL(), commercePaymentEntry.getCancelURL()),
-			GetterUtil.getString(
-				payment.getCurrencyCode(),
-				commercePaymentEntry.getCurrencyCode()),
+			commerceCurrency.getCode(),
 			GetterUtil.getString(
 				payment.getErrorMessages(),
 				commercePaymentEntry.getErrorMessages()),
@@ -462,10 +489,16 @@ public class PaymentResourceImpl extends BasePaymentResourceImpl {
 				payment.getType(), commercePaymentEntry.getType()));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PaymentResourceImpl.class);
+
 	private static final EntityModel _entityModel = new PaymentEntityModel();
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.payment.model.CommercePaymentEntry)"

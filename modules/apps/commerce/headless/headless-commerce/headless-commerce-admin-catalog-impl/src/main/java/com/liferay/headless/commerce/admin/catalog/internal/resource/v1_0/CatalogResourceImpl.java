@@ -6,6 +6,9 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -16,8 +19,11 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.CatalogEntityModel;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.core.util.CommerceCurrencyUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -211,25 +217,46 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 				contextCompany.getCompanyId());
 
 		if (commerceCatalog == null) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyUtil.getCommerceCurrency(
+					contextCompany.getCompanyId(), catalog.getCurrencyCode(),
+					catalog.getCurrencyExternalReferenceCode(),
+					catalog.getCurrencyId());
+
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 				catalog.getExternalReferenceCode(),
 				GetterUtil.get(
 					catalog.getAccountId(),
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
-				catalog.getName(), catalog.getCurrencyCode(),
+				catalog.getName(), commerceCurrency.getCode(),
 				catalog.getDefaultLanguageId(),
 				_serviceContextHelper.getServiceContext());
 		}
 		else {
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyLocalService.getCommerceCurrency(
+					contextCompany.getCompanyId(),
+					commerceCatalog.getCommerceCurrencyCode());
+
+			try {
+				commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
+					contextCompany.getCompanyId(), catalog.getCurrencyCode(),
+					catalog.getCurrencyExternalReferenceCode(),
+					catalog.getCurrencyId());
+			}
+			catch (NoSuchCurrencyException noSuchCurrencyException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchCurrencyException);
+				}
+			}
+
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
 				commerceCatalog.getCommerceCatalogId(),
 				GetterUtil.get(
 					catalog.getAccountId(),
 					commerceCatalog.getAccountEntryId()),
 				GetterUtil.get(catalog.getName(), commerceCatalog.getName()),
-				GetterUtil.get(
-					catalog.getCurrencyCode(),
-					commerceCatalog.getCommerceCurrencyCode()),
+				commerceCurrency.getCode(),
 				GetterUtil.get(
 					catalog.getDefaultLanguageId(),
 					commerceCatalog.getCatalogDefaultLanguageId()));
@@ -247,13 +274,19 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 			_commerceCatalogService.fetchCommerceCatalogByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
 
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyUtil.getCommerceCurrency(
+				contextCompany.getCompanyId(), catalog.getCurrencyCode(),
+				catalog.getCurrencyExternalReferenceCode(),
+				catalog.getCurrencyId());
+
 		if (commerceCatalog == null) {
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 				catalog.getExternalReferenceCode(),
 				GetterUtil.get(
 					catalog.getAccountId(),
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
-				catalog.getName(), catalog.getCurrencyCode(),
+				catalog.getName(), commerceCurrency.getCode(),
 				catalog.getDefaultLanguageId(),
 				_serviceContextHelper.getServiceContext());
 		}
@@ -262,7 +295,7 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 				commerceCatalog.getCommerceCatalogId(),
 				GetterUtil.getLong(catalog.getAccountId()),
 				GetterUtil.getString(catalog.getName()),
-				GetterUtil.getString(catalog.getCurrencyCode()),
+				commerceCurrency.getCode(),
 				GetterUtil.getString(catalog.getDefaultLanguageId()));
 		}
 
@@ -312,18 +345,36 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 			Catalog catalog, CommerceCatalog commerceCatalog)
 		throws Exception {
 
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				contextCompany.getCompanyId(),
+				commerceCatalog.getCommerceCurrencyCode());
+
+		try {
+			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
+				contextCompany.getCompanyId(), catalog.getCurrencyCode(),
+				catalog.getCurrencyExternalReferenceCode(),
+				catalog.getCurrencyId());
+		}
+		catch (NoSuchCurrencyException noSuchCurrencyException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchCurrencyException);
+			}
+		}
+
 		_commerceCatalogService.updateCommerceCatalog(
 			commerceCatalog.getCommerceCatalogId(),
 			GetterUtil.get(
 				catalog.getAccountId(), commerceCatalog.getAccountEntryId()),
 			GetterUtil.get(catalog.getName(), commerceCatalog.getName()),
-			GetterUtil.get(
-				catalog.getCurrencyCode(),
-				commerceCatalog.getCommerceCurrencyCode()),
+			commerceCurrency.getCode(),
 			GetterUtil.get(
 				catalog.getDefaultLanguageId(),
 				commerceCatalog.getCatalogDefaultLanguageId()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CatalogResourceImpl.class);
 
 	private static final EntityModel _entityModel = new CatalogEntityModel();
 
@@ -334,6 +385,9 @@ public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 
 	@Reference
 	private CommerceCatalogService _commerceCatalogService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

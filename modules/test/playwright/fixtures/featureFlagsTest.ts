@@ -7,8 +7,19 @@ import {Page, mergeTests} from '@playwright/test';
 
 import {backendPageTest} from './backendPageTest';
 
+interface ScopedFeatureFlagValue {
+	enabled: boolean;
+	system: boolean;
+}
+
 export interface FeatureFlagsOptions {
-	[key: string]: boolean;
+	[key: string]: boolean | ScopedFeatureFlagValue;
+}
+
+export interface FeatureFlagBody {
+	companyId?: number;
+	readonly enabled?: boolean;
+	readonly key: string;
 }
 
 export interface FeatureFlag {
@@ -21,6 +32,30 @@ export interface FeatureFlags {
 }
 
 const test = mergeTests(backendPageTest);
+
+const getCompanyId = (value: boolean | ScopedFeatureFlagValue) => {
+	let companyId: number | undefined = undefined;
+
+	if (typeof value !== 'boolean') {
+		const scopedFeatureFlagValue = value as ScopedFeatureFlagValue;
+
+		if (scopedFeatureFlagValue.system) {
+			companyId = 0;
+		}
+	}
+
+	return companyId;
+};
+
+const isEnabled = (value: boolean | ScopedFeatureFlagValue) => {
+	if (typeof value === 'boolean') {
+		return value as boolean;
+	}
+
+	const scopedFeatureFlagValue = value as ScopedFeatureFlagValue;
+
+	return scopedFeatureFlagValue.enabled;
+};
 
 /**
  * Declare the FF needs of a test.
@@ -59,11 +94,12 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 
 				const originalFeatureFlags: FeatureFlagResult[] = [];
 
-				for (const key of Object.keys(options)) {
+				for (const [key, value] of Object.entries(options)) {
 					const reply = await invokeServer<IsEnabledResult>(
 						backendPage,
 						'/o/com-liferay-feature-flag-web/is-enabled',
 						{
+							companyId: getCompanyId(value),
 							key,
 						}
 					);
@@ -78,12 +114,13 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 
 					// Set requested state of FFs
 
-					for (const [key, enabled] of Object.entries(options)) {
+					for (const [key, value] of Object.entries(options)) {
 						await invokeServer<SetEnabledResult>(
 							backendPage,
 							'/o/com-liferay-feature-flag-web/set-enabled',
 							{
-								enabled,
+								companyId: getCompanyId(value),
+								enabled: isEnabled(value),
 								key,
 							}
 						);
@@ -97,9 +134,9 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 
 					await use(
 						Object.entries(options).reduce(
-							(featureFlags: FeatureFlag[], [key, enabled]) => {
+							(featureFlags: FeatureFlag[], [key, value]) => {
 								featureFlags.push({
-									enabled,
+									enabled: isEnabled(value),
 									key,
 								});
 
@@ -157,14 +194,17 @@ interface FeatureFlagResult {
 async function invokeServer<T>(
 	page: Page,
 	url: string,
-	partialBody: FeatureFlag
+	partialBody: FeatureFlagBody
 ): Promise<ServerReply<T>> {
+	if (partialBody.companyId === undefined) {
+		partialBody.companyId = Number(Liferay.ThemeDisplay.getCompanyId());
+	}
+
 	return await page.evaluate(
 		async ({partialBody, url}) =>
 			new Promise((resolve, reject) => {
 				Liferay.Util.fetch(url, {
 					body: Liferay.Util.objectToFormData({
-						companyId: Liferay.ThemeDisplay.getCompanyId(),
 						...partialBody,
 					}),
 					method: 'POST',

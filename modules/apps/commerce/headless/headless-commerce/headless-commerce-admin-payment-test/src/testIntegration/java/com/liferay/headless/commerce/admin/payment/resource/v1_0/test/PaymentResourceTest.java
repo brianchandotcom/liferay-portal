@@ -142,6 +142,9 @@ public class PaymentResourceTest extends BasePaymentResourceTestCase {
 				channelId = _commerceChannel.getCommerceChannelId();
 				comment = RandomTestUtil.randomString();
 				currencyCode = _commerceCurrency.getCode();
+				currencyExternalReferenceCode =
+					_commerceCurrency.getExternalReferenceCode();
+				currencyId = _commerceCurrency.getCommerceCurrencyId();
 				externalReferenceCode = RandomTestUtil.randomString();
 				languageId = RandomTestUtil.randomString();
 				paymentIntegrationKey = RandomTestUtil.randomString();

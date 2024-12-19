@@ -1,0 +1,392 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import {Body, Cell, Head, Row, Table} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
+import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import ClayList from '@clayui/list';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal, {useModal} from '@clayui/modal';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import getCN from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
+import {addParams, fetch} from 'frontend-js-web';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+
+import ThemeContext from '../../shared/ThemeContext';
+import sub from '../../utils/language/sub';
+
+function getLabel({classSubtypeLocalizedName, groupLocalizedName}) {
+	return `${classSubtypeLocalizedName} (${groupLocalizedName})`;
+}
+
+function getValue({
+	classSubtypeExternalReferenceCode,
+	classType,
+	groupExternalReferenceCode,
+}) {
+	return `${classType}#${groupExternalReferenceCode}#${classSubtypeExternalReferenceCode}`;
+}
+
+export function SearchableSubtypesModal({
+	className,
+	observer,
+	onClose,
+	onDone,
+	selectedSubtypes,
+}) {
+	const [selected, setSelected] = useState(selectedSubtypes);
+	const [subtypes, setSubtypes] = useState({classSubtypes: []});
+
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
+
+	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(false);
+
+	const {fetchClassSubtypesURL = '', namespace} = useContext(ThemeContext);
+
+	const isSelected = (item) =>
+		selected.some((selection) => selection === item);
+
+	const _handleSelect = (item) => () => {
+		if (isSelected(item)) {
+			setSelected(selected.filter((value) => value !== item));
+		}
+		else {
+			setSelected([...selected, item]);
+		}
+	};
+
+	const _handleClear = () => {
+		setSelected([]);
+	};
+
+	const _handleFetchSubtypes = useCallback(
+		(page, pageSize) => {
+			setLoading(true);
+
+			try {
+				fetch(
+					addParams(
+						{
+							[`${namespace}classType`]: className,
+
+							// [`${namespace}groupExternalReferenceCode`]: groupExternalReferenceCode, //TODO: Implement more params
+							// [`${namespace}page`]: page,
+							// [`${namespace}pageSize`]: pageSize,
+
+						},
+						fetchClassSubtypesURL
+					)
+				)
+					.then((response) => response.json())
+					.then((items) => {
+						setSubtypes(items);
+						setError(false);
+					})
+					.catch(() => {
+						setTimeout(() => {
+							setError(true);
+						}, 1000);
+					})
+					.finally(() => {
+						setLoading(false);
+					});
+			}
+			catch (error) {
+				setError(true);
+				setLoading(false);
+			}
+		},
+		[className, fetchClassSubtypesURL, namespace]
+	);
+
+	const _handlePageChange = (newPage) => {
+		setPage(newPage);
+
+		_handleFetchSubtypes(newPage, pageSize);
+	};
+
+	const _handlePageSizeChange = (newPageSize) => {
+		setPageSize(newPageSize);
+
+		_handleFetchSubtypes(page, newPageSize);
+	};
+
+	useEffect(() => {
+		_handleFetchSubtypes(page, pageSize);
+	}, [_handleFetchSubtypes, page, pageSize]);
+
+	return (
+		<ClayModal observer={observer} size="full-screen">
+			<ClayModal.Header>
+				{Liferay.Language.get('select-subtypes')}
+			</ClayModal.Header>
+
+			{loading && <ClayLoadingIndicator />}
+
+			{error ? (
+				<ClayModal.Body>
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+						)}
+						imgSrc="/o/admin-theme/images/states/empty_state.svg"
+						title={Liferay.Language.get('no-items-were-found')}
+					>
+						<ClayButton
+							displayType="secondary"
+							onClick={_handleFetchSubtypes}
+						>
+							{Liferay.Language.get('refresh')}
+						</ClayButton>
+					</ClayEmptyState>
+				</ClayModal.Body>
+			) : (
+				<ClayModal.Body>
+					<ManagementToolbar.Container
+						className={getCN(
+							{
+								'management-bar-primary': !!selected.length,
+							},
+							'border-light',
+							'border',
+							'rounded-top',
+							'border-bottom-0'
+						)}
+					>
+						<ManagementToolbar.ItemList expand>
+							<ManagementToolbar.Item>
+								<ClayCheckbox
+									checked={!!selected.length}
+									indeterminate={
+										!!selected.length &&
+										selected.length !== subtypes?.length
+									}
+									onChange={() =>
+										setSelected(
+											!selected.length
+												? subtypes.classSubtypes.map(
+														(item) => getValue(item)
+													)
+												: []
+										)
+									}
+								/>
+							</ManagementToolbar.Item>
+
+							<ClayDropDownWithItems
+								items={[]} // TODO: Implement filter
+								trigger={
+									<ClayButton
+										className="nav-link"
+										displayType="unstyled"
+									>
+										<span className="navbar-breakpoint-down-d-none">
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get('filter')}
+											</span>
+										</span>
+
+										<span className="navbar-breakpoint-d-none">
+											<ClayIcon symbol="filter" />
+										</span>
+									</ClayButton>
+								}
+								triggerIcon="caret-bottom"
+							/>
+						</ManagementToolbar.ItemList>
+					</ManagementToolbar.Container>
+
+					<Table
+						className="rounded-0 table-bordered"
+						columnsVisibility={false}
+					>
+						<Head
+							className="rounded-0"
+							items={[
+								{
+									id: 'name',
+									name: Liferay.Language.get('name'),
+									width: '30%',
+								},
+								{
+									id: 'site',
+									name: Liferay.Language.get('site'),
+									width: 'auto',
+								},
+							]}
+						>
+							{(column) => (
+								<Cell
+									className={getCN({
+										'table-cell-expand': column.expand,
+									})}
+									key={column.id}
+									width={column.width}
+								>
+									{column.name}
+								</Cell>
+							)}
+						</Head>
+
+						<Body>
+							{subtypes.classSubtypes.map((item) => {
+								const value = getValue(item);
+
+								return (
+									<Row
+										key={value}
+										onClick={_handleSelect(value)}
+									>
+										<Cell>
+											<div className="d-flex">
+												<ClayCheckbox
+													aria-label={sub(
+														Liferay.Language.get(
+															'select-x'
+														),
+														[
+															item.classSubtypeLocalizedName,
+														]
+													)}
+													checked={isSelected(value)}
+													onChange={_handleSelect(
+														value
+													)}
+												/>
+
+												<span className="c-ml-2 table-list-title">
+													{
+														item.classSubtypeLocalizedName
+													}
+												</span>
+											</div>
+										</Cell>
+
+										<Cell>
+											<span>
+												{item.groupLocalizedName}
+											</span>
+										</Cell>
+									</Row>
+								);
+							})}
+						</Body>
+					</Table>
+
+					<ClayPaginationBarWithBasicItems
+						active={page}
+						activeDelta={pageSize}
+						ellipsisBuffer={3}
+						ellipsisProps={{
+							'aria-label': Liferay.Language.get('more'),
+							'title': Liferay.Language.get('more'),
+						}}
+						onActiveChange={_handlePageChange}
+						onDeltaChange={_handlePageSizeChange}
+						totalItems={subtypes.classSubtypes.length}
+					/>
+				</ClayModal.Body>
+			)}
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={_handleClear}
+						>
+							{Liferay.Language.get('clear')}
+						</ClayButton>
+
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton onClick={() => onDone(selected)}>
+							{Liferay.Language.get('done')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
+	);
+}
+
+function SelectSubtypes({
+	className,
+	onChangeSubtypes,
+	onRemoveSubtype,
+	selectedSubtypes,
+}) {
+	const {observer, onOpenChange, open} = useModal();
+
+	const _handleOpen = () => {
+		onOpenChange(true);
+	};
+
+	const _handleClose = () => {
+		onOpenChange(false);
+	};
+
+	const _handleModalDone = (newValues) => {
+		onOpenChange(false);
+
+		onChangeSubtypes(newValues);
+	};
+
+	return (
+		<>
+			<ClayList.ItemText>
+				<ClayButton
+					aria-label={Liferay.Language.get('select-subtypes')}
+					className="c-mt-2 c-p-0 text-secondary"
+					displayType="link"
+					onClick={_handleOpen}
+					size="sm"
+				>
+					{Liferay.Language.get('select-subtypes')}
+				</ClayButton>
+
+				{open && (
+					<SearchableSubtypesModal
+						className={className}
+						observer={observer}
+						onClose={_handleClose}
+						onDone={_handleModalDone}
+						selectedSubtypes={selectedSubtypes}
+					/>
+				)}
+			</ClayList.ItemText>
+
+			<ClayList.ItemText className="c-mt-2">
+				{selectedSubtypes.map((item) => (
+					<ClayLabel
+						closeButtonProps={{
+							'aria-label': Liferay.Language.get('close'),
+							'id': `close-${item}`,
+							'onClick': () => onRemoveSubtype(item),
+							'title': Liferay.Language.get('close'),
+						}}
+						displayType="secondary"
+						key={item}
+						large
+					>
+						{item}
+					</ClayLabel>
+				))}
+			</ClayList.ItemText>
+		</>
+	);
+}
+
+export default SelectSubtypes;

@@ -22,12 +22,9 @@ type ConnectProps = {
 	setAuthorization: React.Dispatch<React.SetStateAction<Authorization>>;
 };
 
-const portletNamespace =
-	'_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_';
-
 export default function Connect({
 	authorization,
-	marketplaceSettingsProps: {baseResourceURL, ...oAuth2},
+	marketplaceSettingsProps: {baseResourceURL, portletNamespace, ...oAuth2},
 	onDisconnect,
 	onNext,
 	setAuthorization,
@@ -41,7 +38,7 @@ export default function Connect({
 			code_challenge_method: 'S256',
 			redirect_uri: oAuth2.url + oAuth2.redirect,
 			response_type: 'code',
-			state: window.location.origin,
+			state: JSON.stringify({origin: window.location.origin}),
 		});
 
 		const authorizeUrl = `${oAuth2.url}/o/oauth2/authorize?${urlSearchParams.toString()}`;
@@ -53,15 +50,14 @@ export default function Connect({
 		) as Window;
 
 		const handleMessage = async (event: MessageEvent) => {
-			const {code, marketplaceSettings} = event.data;
+			const {code, settings} = event.data;
 
 			const body = {
 				[`${portletNamespace}clientId`]: oAuth2.clientId,
 				[`${portletNamespace}code`]: code,
 				[`${portletNamespace}codeVerifier`]: code_verifier,
-				[`${portletNamespace}marketplaceSettings`]:
-					marketplaceSettings || {},
 				[`${portletNamespace}redirect`]: oAuth2.redirect,
+				[`${portletNamespace}settings`]: settings || {},
 				[`${portletNamespace}url`]: oAuth2.url,
 			};
 
@@ -100,8 +96,9 @@ export default function Connect({
 						</ClayAlert>
 
 						<p>
-							Your Liferay DXP platform is connected to the
-							Marketplace.
+							{Liferay.Language.get(
+								'your-liferay-dxp-platform-is-connected-to-the-marketplace'
+							)}
 						</p>
 					</>
 				}
@@ -139,13 +136,15 @@ export default function Connect({
 					Liferay.Language.get(
 						'click-x-to-learn-how-to-connect-liferay-dxp-to-marketplace'
 					),
-					<a
-						href="https://learn.liferay.com/w/dxp/liferay-development/marketplace"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						{Liferay.Language.get('here')}
-					</a>
+					(
+						<a
+							href="https://learn.liferay.com/w/dxp/liferay-development/marketplace"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{Liferay.Language.get('here')}
+						</a>
+					) as any
 				)}
 			</div>
 		</Container>

@@ -110,6 +110,9 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 				"commerceAccountGroupIds",
 				commerceContext.getCommerceAccountGroupIds()
 			).put(
+				"commerceChannelGroupId",
+				commerceContext.getCommerceChannelGroupId()
+			).put(
 				"commerceChannelId", commerceContext.getCommerceChannelId()
 			).put(
 				"commerceSiteType", commerceContext.getCommerceSiteType()

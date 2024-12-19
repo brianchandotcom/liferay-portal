@@ -16,7 +16,6 @@ import java.io.Writer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -30,7 +29,7 @@ public class JSImportMapsCache {
 		long companyId, JSONObject jsonObject, String scope) {
 
 		if (scope == null) {
-			ConcurrentMap<Long, String> globalImportMapsValues =
+			Map<Long, String> globalImportMapsValues =
 				_getGlobalImportMapsValues(companyId);
 
 			long globalId = _nextGlobalId.getAndIncrement();
@@ -44,8 +43,8 @@ public class JSImportMapsCache {
 			return () -> globalImportMapsValues.remove(globalId);
 		}
 
-		ConcurrentMap<String, String> scopedImportMapsValues =
-			_getScopedImportMapsValues(companyId);
+		Map<String, String> scopedImportMapsValues = _getScopedImportMapsValues(
+			companyId);
 
 		String value = scopedImportMapsValues.putIfAbsent(
 			scope, jsonObject.toString());
@@ -111,10 +110,8 @@ public class JSImportMapsCache {
 		writer.write("}}");
 	}
 
-	private ConcurrentMap<Long, String> _getGlobalImportMapsValues(
-		Long companyId) {
-
-		ConcurrentMap<Long, String> globalImportMapsValues1 =
+	private Map<Long, String> _getGlobalImportMapsValues(Long companyId) {
+		Map<Long, String> globalImportMapsValues1 =
 			_globalImportMapsValuesMap.get(companyId);
 
 		if (globalImportMapsValues1 != null) {
@@ -127,10 +124,8 @@ public class JSImportMapsCache {
 		return _globalImportMapsValuesMap.get(companyId);
 	}
 
-	private ConcurrentMap<String, String> _getScopedImportMapsValues(
-		Long companyId) {
-
-		ConcurrentMap<String, String> scopedImportMapsValues1 =
+	private Map<String, String> _getScopedImportMapsValues(Long companyId) {
+		Map<String, String> scopedImportMapsValues1 =
 			_scopedImportMapsValuesMap.get(companyId);
 
 		if (scopedImportMapsValues1 != null) {
@@ -187,10 +182,10 @@ public class JSImportMapsCache {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSImportMapsCache.class);
 
-	private final ConcurrentMap<Long, ConcurrentMap<Long, String>>
-		_globalImportMapsValuesMap = new ConcurrentHashMap<>();
+	private final Map<Long, Map<Long, String>> _globalImportMapsValuesMap =
+		new ConcurrentHashMap<>();
 	private final AtomicLong _nextGlobalId = new AtomicLong();
-	private final ConcurrentMap<Long, ConcurrentMap<String, String>>
-		_scopedImportMapsValuesMap = new ConcurrentHashMap<>();
+	private final Map<Long, Map<String, String>> _scopedImportMapsValuesMap =
+		new ConcurrentHashMap<>();
 
 }

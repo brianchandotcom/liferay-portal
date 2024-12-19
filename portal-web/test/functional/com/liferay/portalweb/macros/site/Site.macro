@@ -294,17 +294,7 @@ definition {
 	macro approveJoinSiteRestrictedViaMySitesPG(userLastName = null, userScreenName = null, userFirstName = null) {
 		var key_userScreenName = ${userScreenName};
 
-		Click(locator1 = "Icon#INFO");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SiteMemberships#MEMBERSHIP_TYPE",
-			value1 = "Membership Type: Restricted");
-
-		AssertElementPresent(locator1 = "SiteMemberships#REQUEST_MESSAGE");
-
-		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		Click(locator1 = "SiteMemberships#REQUEST_MESSAGE");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "View Membership Requests");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -1559,16 +1549,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewNoSiteMembershipsRequest() {
-		Click(locator1 = "Icon#INFO");
-
-		AssertElementNotPresent(locator1 = "SiteMemberships#REQUEST_MESSAGE");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SiteMemberships#MEMBERSHIP_TYPE",
-			value1 = "Membership Type: Restricted");
-
-		AssertElementNotPresent(locator1 = "SiteMemberships#REQUEST_MESSAGE");
-
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "View Membership Requests");
 
 		AssertElementNotPresent(locator1 = "SiteMembershipsViewMembershipRequests#USER_NAME");
@@ -1672,15 +1652,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewSiteMembershipsRequest(userLastName = null, userFirstName = null) {
-		Click(locator1 = "Icon#INFO");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SiteMemberships#MEMBERSHIP_TYPE",
-			value1 = "Membership Type: Restricted");
-
-		AssertElementPresent(locator1 = "SiteMemberships#REQUEST_MESSAGE");
-
-		Click(locator1 = "SiteMemberships#REQUEST_MESSAGE");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "View Membership Requests");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

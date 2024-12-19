@@ -590,3 +590,43 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Change permissions from edit mode',
+	{
+		tag: '@LPS-137155',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(
+			page.locator('.page-editor__no-fragments-state')
+		).toBeVisible();
+
+		// Check permissions can be set from control menu
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('menuitem', {name: 'Permissions'}),
+			trigger: page.locator('.control-menu-nav').getByLabel('Options'),
+		});
+
+		await page
+			.getByRole('menuitem', {name: 'Permissions'})
+			.click({timeout: 1000});
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Permissions"]')
+				.locator('.lfr-role-column', {hasText: 'Guest'})
+		).toBeVisible({timeout: 5000});
+	}
+);

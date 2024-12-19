@@ -231,7 +231,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), priceList.getCurrencyCode(),
 				priceList.getCurrencyExternalReferenceCode(),
-				priceList.getCurrencyId());
+				GetterUtil.getLong(priceList.getCurrencyId()));
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
@@ -572,7 +572,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), priceList.getCurrencyCode(),
 				priceList.getCurrencyExternalReferenceCode(),
-				priceList.getCurrencyId());
+				GetterUtil.getLong(priceList.getCurrencyId()));
 		}
 		catch (NoSuchCurrencyException noSuchCurrencyException) {
 			if (_log.isDebugEnabled()) {

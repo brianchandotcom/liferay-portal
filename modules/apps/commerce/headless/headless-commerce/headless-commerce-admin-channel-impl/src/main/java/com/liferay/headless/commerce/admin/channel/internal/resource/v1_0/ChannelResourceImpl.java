@@ -159,7 +159,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
 				channel.getCurrencyExternalReferenceCode(),
-				channel.getCurrencyId());
+				GetterUtil.getLong(channel.getCurrencyId()));
 		}
 		catch (NoSuchCurrencyException noSuchCurrencyException) {
 			if (_log.isDebugEnabled()) {
@@ -207,7 +207,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			commerceCurrency = CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
 				channel.getCurrencyExternalReferenceCode(),
-				channel.getCurrencyId());
+				GetterUtil.getLong(channel.getCurrencyId()));
 		}
 		catch (NoSuchCurrencyException noSuchCurrencyException) {
 			if (_log.isDebugEnabled()) {
@@ -237,7 +237,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
 				channel.getCurrencyExternalReferenceCode(),
-				channel.getCurrencyId());
+				GetterUtil.getLong(channel.getCurrencyId()));
 
 		return _toChannel(
 			_commerceChannelService.addCommerceChannel(
@@ -264,7 +264,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
 				channel.getCurrencyExternalReferenceCode(),
-				channel.getCurrencyId());
+				GetterUtil.getLong(channel.getCurrencyId()));
 
 		return _toChannel(
 			_commerceChannelService.updateCommerceChannel(
@@ -284,7 +284,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			CommerceCurrencyUtil.getCommerceCurrency(
 				contextCompany.getCompanyId(), channel.getCurrencyCode(),
 				channel.getCurrencyExternalReferenceCode(),
-				channel.getCurrencyId());
+				GetterUtil.getLong(channel.getCurrencyId()));
 
 		return _toChannel(
 			_commerceChannelService.addOrUpdateCommerceChannel(

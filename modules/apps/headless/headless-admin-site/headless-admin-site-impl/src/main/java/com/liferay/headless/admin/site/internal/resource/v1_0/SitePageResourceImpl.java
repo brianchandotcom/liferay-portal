@@ -272,7 +272,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _layoutService.addLayout(
 			externalReferenceCode, groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			_getParentLayoutId(
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
+				sitePage.getParentSitePageExternalReferenceCode()),
 			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
 			null, null, null,
 			SitePageTypeUtil.toInternalType(sitePage.getType()),
@@ -281,6 +283,25 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			LocalizedMapUtil.getLocalizedMap(
 				sitePage.getFriendlyUrlPath_i18n()),
 			0, serviceContext);
+	}
+
+	private long _getParentLayoutId(
+			long defaultParentLayoutId, long groupId,
+			String parentSitePageExternalReferenceCode)
+		throws Exception {
+
+		if (parentSitePageExternalReferenceCode == null) {
+			return defaultParentLayoutId;
+		}
+
+		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
+			parentSitePageExternalReferenceCode, groupId);
+
+		if (layout == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return layout.getLayoutId();
 	}
 
 	private String _getTypeSettings(
@@ -452,9 +473,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		layout = _layoutService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getParentLayoutId(), nameMap, layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getType(),
+			_getParentLayoutId(
+				layout.getParentLayoutId(), layout.getGroupId(),
+				sitePage.getParentSitePageExternalReferenceCode()),
+			nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			_isHiddenFromNavigation(
 				layout.isHidden(), sitePage.getPageSettings()),
 			friendlyURLMap, layout.isIconImage(), null,

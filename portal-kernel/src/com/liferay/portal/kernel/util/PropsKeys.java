@@ -2722,6 +2722,9 @@ public interface PropsKeys {
 	public static final String UPGRADE_DATABASE_AUTO_RUN =
 		"upgrade.database.auto.run";
 
+	public static final String UPGRADE_DATABASE_AUTO_RUN_FREQUENCY =
+		"upgrade.database.auto.run.frequency";
+
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		"upgrade.database.transactions.disabled";
 

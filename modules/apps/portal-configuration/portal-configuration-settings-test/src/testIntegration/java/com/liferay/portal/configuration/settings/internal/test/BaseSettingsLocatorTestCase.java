@@ -121,15 +121,14 @@ public abstract class BaseSettingsLocatorTestCase {
 		return settings.getValue(key, null);
 	}
 
-	protected String saveConfiguration(String configurationPid)
+	protected String saveConfiguration(
+			String configurationPid, String key, String value)
 		throws Exception {
-
-		String value = RandomTestUtil.randomString();
 
 		ConfigurationTestUtil.saveConfiguration(
 			configurationPid,
 			HashMapDictionaryBuilder.<String, Object>put(
-				SettingsLocatorTestConstants.TEST_KEY, value
+				key, value
 			).build());
 
 		_configurationPids.add(configurationPid);

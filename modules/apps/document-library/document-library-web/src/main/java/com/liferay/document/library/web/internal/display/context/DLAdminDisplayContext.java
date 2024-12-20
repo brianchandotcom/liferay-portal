@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
@@ -95,6 +96,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
 
@@ -347,7 +349,8 @@ public class DLAdminDisplayContext {
 			repositoryId = folder.getRepositoryId();
 		}
 		else {
-			repositoryId = _dlPortletInstanceSettings.getSelectedRepositoryId();
+			repositoryId =
+				_getSelectedRepositoryIdFromPortletInstanceSettings();
 		}
 
 		if (repositoryId == 0) {
@@ -413,7 +416,7 @@ public class DLAdminDisplayContext {
 		}
 
 		long repositoryId =
-			_dlPortletInstanceSettings.getSelectedRepositoryId();
+			_getSelectedRepositoryIdFromPortletInstanceSettings();
 
 		if (repositoryId != 0) {
 			_selectedRepositoryId = repositoryId;
@@ -560,18 +563,33 @@ public class DLAdminDisplayContext {
 
 	private void _computeRootFolder() {
 		_rootFolder = null;
-
-		_rootFolderId = _dlPortletInstanceSettings.getRootFolderId();
 		_rootFolderName = StringPool.BLANK;
 
-		if (_rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		String rootFolderExternalReferenceCode =
+			_dlPortletInstanceSettings.getRootFolderExternalReferenceCode();
+
+		if (Validator.isBlank(rootFolderExternalReferenceCode)) {
+			_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 			_rootFolderName = LanguageUtil.get(_httpServletRequest, "home");
 
 			return;
 		}
 
+		String selectedGroupExternalReferenceCode =
+			_dlPortletInstanceSettings.getSelectedGroupExternalReferenceCode();
+
 		try {
-			_rootFolder = DLAppLocalServiceUtil.getFolder(_rootFolderId);
+			Group selectedGroup =
+				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+					selectedGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+
+			_rootFolder = new LiferayFolder(
+				DLFolderLocalServiceUtil.getDLFolderByExternalReferenceCode(
+					rootFolderExternalReferenceCode,
+					selectedGroup.getGroupId()));
+
+			_rootFolderId = _rootFolder.getFolderId();
 
 			_rootFolderName = _rootFolder.getName();
 
@@ -597,7 +615,10 @@ public class DLAdminDisplayContext {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Could not find folder {folderId=", _rootFolderId, "}"),
+						"Could not find folder {folderExternalReferenceCode=",
+						rootFolderExternalReferenceCode,
+						", groupExternalReferenceCode=",
+						selectedGroupExternalReferenceCode, "}"),
 					noSuchFolderException);
 			}
 
@@ -1107,6 +1128,40 @@ public class DLAdminDisplayContext {
 			() -> _getSearchResults(hits), hits.getLength());
 
 		return searchContainer;
+	}
+
+	private long _getSelectedRepositoryIdFromPortletInstanceSettings() {
+		String selectedGroupExternalReferenceCode =
+			_dlPortletInstanceSettings.getSelectedGroupExternalReferenceCode();
+
+		if (Validator.isBlank(selectedGroupExternalReferenceCode)) {
+			return 0;
+		}
+
+		try {
+			Group selectedGroup =
+				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+					selectedGroupExternalReferenceCode,
+					_themeDisplay.getCompanyId());
+
+			String selectedRepositoryExternalReferenceCode =
+				_dlPortletInstanceSettings.
+					getSelectedRepositoryExternalReferenceCode();
+
+			if (Validator.isBlank(selectedRepositoryExternalReferenceCode)) {
+				return selectedGroup.getGroupId();
+			}
+
+			Repository selectedRepository =
+				RepositoryLocalServiceUtil.getRepositoryByExternalReferenceCode(
+					selectedRepositoryExternalReferenceCode,
+					selectedGroup.getGroupId());
+
+			return selectedRepository.getRepositoryId();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	private Sort _getSort(String orderByCol, String orderByType) {

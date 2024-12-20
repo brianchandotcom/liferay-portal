@@ -20,7 +20,7 @@ const useModalContext = () => {
 	const [state, dispatch] = useContext(Context);
 
 	return {
-		onClose: () => dispatch({type: 0}),
+		onClose: state.onClose,
 		onOpenModal: ({center = true, ...payload}: ModalOptions) => {
 			dispatch({
 				payload: {

@@ -103,7 +103,7 @@ const App = () => {
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
 								(order: PlacedOrderItems) => {
-									const optionName = safeJSONParse(
+									const optionName = safeJSONParse<any>(
 										order.options,
 										[]
 									);

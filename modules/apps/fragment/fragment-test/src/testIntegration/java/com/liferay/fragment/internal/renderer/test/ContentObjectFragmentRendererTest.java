@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -146,6 +147,7 @@ public class ContentObjectFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPS-173440")
 	public void testRenderContentWithoutPermissionsInEditMode()
 		throws Exception {
 
@@ -184,6 +186,7 @@ public class ContentObjectFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPS-173440")
 	public void testRenderContentWithoutPermissionsInViewMode()
 		throws Exception {
 

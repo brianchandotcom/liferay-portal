@@ -284,6 +284,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.CONTENT_PAGE);
 		_testPutSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.WIDGET_PAGE);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_CONTENT, null, serviceContext);
+
+		_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
+			layout.fetchDraftLayout(),
+			LayoutPageTemplateEntryTestUtil.
+				getBasicLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getDisplayPageLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutPageTemplateEntryTestUtil.
+				getMasterLayoutPageTemplateEntryLayout(serviceContext),
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntryLayout(
+				serviceContext));
 	}
 
 	@Ignore
@@ -562,6 +580,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void
+			_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
+				Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
+				_getRandomSitePage(
+					layout.getExternalReferenceCode(),
+					SitePage.Type.CONTENT_PAGE, layout.getUuid()));
 		}
 	}
 

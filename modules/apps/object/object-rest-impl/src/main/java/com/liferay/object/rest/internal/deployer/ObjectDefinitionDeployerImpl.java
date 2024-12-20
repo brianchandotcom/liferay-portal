@@ -128,16 +128,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				companyId);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 			serviceRegistrationsMap.put(
-				objectDefinitionId,
+				objectDefinition.getObjectDefinitionId(),
 				_deploy(
 					objectDefinition,
 					objectFieldsMap.getOrDefault(
-						objectDefinitionId, Collections.emptyList()),
+						objectDefinition.getObjectDefinitionId(),
+						Collections.emptyList()),
 					objectRelationshipsMap.getOrDefault(
-						objectDefinitionId, Collections.emptyList())));
+						objectDefinition.getObjectDefinitionId(),
+						Collections.emptyList())));
 		}
 
 		return serviceRegistrationsMap;

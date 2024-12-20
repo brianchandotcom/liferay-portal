@@ -7,8 +7,10 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -46,6 +48,10 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 
 	@Before
 	public void setUp() throws Exception {
+		_ddmFormField.setDDMForm(getDDMForm());
+
+		setUpLanguageUtil();
+
 		PortletURLFactoryUtil portletURLFactoryUtil =
 			new PortletURLFactoryUtil();
 
@@ -76,40 +82,23 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetNotDefinedPredefinedValue() {
-		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
+	public void testGetLocalizedObjectFieldTrue() {
+		_ddmFormField.setProperty("localizedObjectField", true);
 
 		Map<String, Object> parameters =
 			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, createDDMFormFieldRenderingContext());
+				_ddmFormField, createDDMFormFieldRenderingContext());
 
-		boolean predefinedValue = (boolean)parameters.get("predefinedValue");
-
-		Assert.assertFalse(predefinedValue);
+		Assert.assertTrue((boolean)parameters.get("localizedObjectField"));
 	}
 
 	@Test
-	public void testGetParametersShouldContainBlankSystemSettingsURL() {
-		Map<String, Object> parameters =
-			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				new DDMFormField("field", "checkbox"),
-				createDDMFormFieldRenderingContext());
-
-		String systemSettingsURL = String.valueOf(
-			parameters.get("systemSettingsURL"));
-
-		Assert.assertTrue(Validator.isBlank(systemSettingsURL));
-	}
-
-	@Test
-	public void testGetParametersShouldContainShowMaximumRepetitionsInfo() {
-		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
-
-		ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
+	public void testGetMaximumRepetitionsInfoTrue() {
+		_ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
 
 		Map<String, Object> parameters =
 			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, createDDMFormFieldRenderingContext());
+				_ddmFormField, createDDMFormFieldRenderingContext());
 
 		boolean showMaximumRepetitionsInfo = (boolean)parameters.get(
 			"showMaximumRepetitionsInfo");
@@ -118,14 +107,71 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetParametersShouldContainSystemSettingsURL() {
-		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
+	public void testGetNotDefinedPredefinedValue() {
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, createDDMFormFieldRenderingContext());
 
-		ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
+		boolean predefinedValue = (boolean)parameters.get("predefinedValue");
+
+		Assert.assertFalse(predefinedValue);
+	}
+
+	@Test
+	public void testGetPredefinedValueFalse() {
+		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
+
+		predefinedValue.addString(LocaleUtil.US, StringPool.FALSE);
+
+		_ddmFormField.setProperty("predefinedValue", predefinedValue);
 
 		Map<String, Object> parameters =
 			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, createDDMFormFieldRenderingContext());
+				_ddmFormField, createDDMFormFieldRenderingContext());
+
+		boolean actualPredefinedValue = (boolean)parameters.get(
+			"predefinedValue");
+
+		Assert.assertFalse(actualPredefinedValue);
+	}
+
+	@Test
+	public void testGetPredefinedValueTrue() {
+		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
+
+		predefinedValue.addString(LocaleUtil.US, StringPool.TRUE);
+
+		_ddmFormField.setProperty("predefinedValue", predefinedValue);
+
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, createDDMFormFieldRenderingContext());
+
+		boolean actualPredefinedValue = (boolean)parameters.get(
+			"predefinedValue");
+
+		Assert.assertTrue(actualPredefinedValue);
+	}
+
+	@Test
+	public void testGetSettingsURL() {
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, createDDMFormFieldRenderingContext());
+
+		String systemSettingsURL = String.valueOf(
+			parameters.get("systemSettingsURL"));
+
+		Assert.assertTrue(Validator.isBlank(systemSettingsURL));
+	}
+
+	@Test
+	public void testGetSystemSettingsURL() {
+		_ddmFormField.setProperty("showMaximumRepetitionsInfo", true);
+
+		Map<String, Object> parameters =
+			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, createDDMFormFieldRenderingContext());
 
 		String systemSettingsURL = String.valueOf(
 			parameters.get("systemSettingsURL"));
@@ -143,47 +189,31 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetPredefinedValueFalse() {
-		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
+	public void testGetValue() {
+		_ddmFormField.setProperty("localizedObjectField", true);
 
-		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext();
 
-		predefinedValue.addString(LocaleUtil.US, StringPool.FALSE);
+		String value = JSONUtil.put(
+			"en_US", true
+		).put(
+			"pt_BR", false
+		).toString();
 
-		ddmFormField.setProperty("predefinedValue", predefinedValue);
-
-		Map<String, Object> parameters =
-			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, createDDMFormFieldRenderingContext());
-
-		boolean actualPredefinedValue = (boolean)parameters.get(
-			"predefinedValue");
-
-		Assert.assertFalse(actualPredefinedValue);
-	}
-
-	@Test
-	public void testGetPredefinedValueTrue() {
-		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
-
-		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
-
-		predefinedValue.addString(LocaleUtil.US, StringPool.TRUE);
-
-		ddmFormField.setProperty("predefinedValue", predefinedValue);
+		ddmFormFieldRenderingContext.setValue(value);
 
 		Map<String, Object> parameters =
 			_checkboxDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, createDDMFormFieldRenderingContext());
+				_ddmFormField, ddmFormFieldRenderingContext);
 
-		boolean actualPredefinedValue = (boolean)parameters.get(
-			"predefinedValue");
-
-		Assert.assertTrue(actualPredefinedValue);
+		Assert.assertEquals(value, String.valueOf(parameters.get("value")));
 	}
 
 	private final CheckboxDDMFormFieldTemplateContextContributor
 		_checkboxDDMFormFieldTemplateContextContributor =
 			new CheckboxDDMFormFieldTemplateContextContributor();
+	private final DDMFormField _ddmFormField = new DDMFormField(
+		"field", "checkbox");
 
 }

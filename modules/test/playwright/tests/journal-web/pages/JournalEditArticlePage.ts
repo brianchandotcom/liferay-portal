@@ -30,7 +30,6 @@ export class JournalEditArticlePage {
 	readonly redoButton: Locator;
 	readonly selectButton: Locator;
 	readonly selectAndConfirmPublishButton: Locator;
-	readonly submitForWorkflowButton: Locator;
 	readonly titleInput: Locator;
 	readonly undoButton: Locator;
 	readonly alertErrorMessage: Locator;
@@ -68,9 +67,6 @@ export class JournalEditArticlePage {
 		this.selectButton = page.getByRole('button', {
 			exact: true,
 			name: 'Select',
-		});
-		this.submitForWorkflowButton = page.getByRole('button', {
-			name: 'Submit for Workflow',
 		});
 		this.titleInput = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXML'
@@ -432,7 +428,26 @@ export class JournalEditArticlePage {
 	async submitArticleForWorkflow(title: string) {
 		await this.fillTitle(title);
 
-		await this.submitForWorkflowButton.click();
+		await expect(async () => {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {
+					name: /submit for workflow with permissions/i,
+				}),
+				trigger: this.page.getByRole('button', {
+					name: /select and confirm submit for workflow settings/i,
+				}),
+			});
+
+			await expect(this.page.getByLabel('Viewable By')).toBeVisible({
+				timeout: 2000,
+			});
+		}).toPass();
+
+		await this.page
+			.locator('[role="dialog"]')
+			.getByRole('button', {name: /submit for workflow/i})
+			.click();
 
 		await this.page
 			.locator(

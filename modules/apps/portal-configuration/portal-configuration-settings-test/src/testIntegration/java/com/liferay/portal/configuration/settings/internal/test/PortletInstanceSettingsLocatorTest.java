@@ -40,42 +40,42 @@ public class PortletInstanceSettingsLocatorTest
 	public void testReturnsPortletInstanceScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			saveFactoryConfiguration(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			savePortletPreferences(
 				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			saveFactoryConfiguration(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			savePortletPreferences(groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			saveFactoryConfiguration(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 				_portletInstanceKey),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
 			savePortletPreferences(
 				PortletKeys.PREFS_PLID_SHARED,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portletInstanceKey,
 				_layout.getPlid()),
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 	}
 
 	@DeleteAfterTestRun

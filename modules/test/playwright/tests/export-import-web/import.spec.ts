@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectDefinitionApi,
+	ObjectField,
+} from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 import * as path from 'path';
@@ -34,6 +38,7 @@ export const test = mergeTests(
 	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-35013': {enabled: true},
+		'LPD-35914': {enabled: true, system: true},
 	}),
 	productMenuPageTest,
 	exportImportPagesTest,
@@ -285,4 +290,103 @@ test('can import a lar file selecting some items to import', async ({
 			);
 		}
 	});
+});
+
+test('can export and import custom object entries at instance level', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	exportImportPage,
+	page,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	await applicationsMenuPage.goToExport();
+
+	await page.getByTestId('creationMenuNewButton').nth(1).click();
+
+	await page.getByLabel('Tests 1 Items').click();
+
+	const exportName = 'CustomObject-' + getRandomString();
+
+	await exportImportPage.title.fill(exportName);
+
+	await exportImportPage.exportButton.click();
+
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(exportName);
+
+	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
+
+	expect(
+		await apiHelpers.get(
+			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		)
+	).toEqual({status: 'NOT_FOUND'});
+
+	await applicationsMenuPage.goToImport();
+
+	await page.getByRole('link', {name: 'Import'}).click();
+
+	await page.locator('input[type="file"]').setInputFiles(exportFilePath);
+
+	await page.getByRole('button', {name: 'Continue'}).click();
+
+	await page.getByRole('button', {name: 'Import'}).click();
+
+	await expect(
+		exportImportPage.page
+			.getByText(exportName)
+			.locator('../../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	expect(
+		await apiHelpers.get(
+			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		)
+	).toEqual(
+		expect.objectContaining({
+			externalReferenceCode: objectEntry.externalReferenceCode,
+			name: objectEntry.name,
+		})
+	);
 });

@@ -186,23 +186,23 @@ definition {
 				category = "Design",
 				portlet = "Fragments");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Content");
+			LexiconCard.viewCardPresent(card = "Content");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Image");
+			LexiconCard.viewCardPresent(card = "Image");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Button");
+			LexiconCard.viewCardPresent(card = "Button");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Multiple Editables");
+			LexiconCard.viewCardPresent(card = "Multiple Editables");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Static Text");
+			LexiconCard.viewCardPresent(card = "Static Text");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Image 2");
+			LexiconCard.viewCardPresent(card = "Image 2");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Rich Text");
+			LexiconCard.viewCardPresent(card = "Rich Text");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Title 2");
+			LexiconCard.viewCardPresent(card = "Title 2");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Title");
+			LexiconCard.viewCardPresent(card = "Title");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Button",

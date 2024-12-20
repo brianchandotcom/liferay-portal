@@ -243,7 +243,7 @@ definition {
 		task ("Delete the Display Page Template") {
 			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Template Name");
 
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Template Name");
+			LexiconCard.viewCardNotPresent(card = "Display Page Template Name");
 		}
 
 		task ("Import the Display Page Template Exported and Assert the Fragment Presence") {
@@ -1215,7 +1215,7 @@ definition {
 
 		task ("Assert Masters Page Templates are present") {
 			for (var masterLayoutName : list "Blank,Master") {
-				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = ${masterLayoutName});
+				LexiconCard.viewCardPresent(card = ${masterLayoutName});
 			}
 		}
 

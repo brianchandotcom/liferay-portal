@@ -281,31 +281,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCSSExtensions(extensionNameList = null) {
-		WaitForEditable(
-			key_text = "Add CSS Client Extensions",
-			locator1 = "Button#ANY");
-
-		Click(
-			key_text = "Add CSS Client Extensions",
-			locator1 = "Button#ANY");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var extensionName : list ${extensionNameList}) {
-			Check(
-				key_listEntry = ${extensionName},
-				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
-		}
-
-		SelectFrameTop();
-
-		Click(
-			key_text = "Add",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
 	macro addJavaScript(javaScript = null, pageName = null) {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -327,75 +302,6 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
-	}
-
-	@summary = "Default summary"
-	macro addJavaScriptExtensions(insertion = null, extensionNameList = null) {
-		WaitForEditable(
-			key_text = "Add JavaScript Client Extensions",
-			locator1 = "Button#ANY");
-
-		Click(
-			key_text = "Add JavaScript Client Extensions",
-			locator1 = "Button#ANY");
-
-		MenuItem.click(menuItem = ${insertion});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var extensionName : list ${extensionNameList}) {
-			if ((IsElementNotPresent(key_listEntry = ${extensionName}, locator1 = "LexiconList#LIST_ENTRY_CHECKBOX")) && (IsElementPresent(locator1 = "Pagination#NEXT_LINK"))) {
-				Pagination.changePagination(itemsPerPage = 60);
-			}
-
-			Check(
-				key_listEntry = ${extensionName},
-				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
-		}
-
-		SelectFrameTop();
-
-		Click(
-			key_text = "Add",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro addLocalizedCanonicalURL(localizedCanonicalURLList = null, localeList = null) {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		var checkboxName = "Use Custom Canonical URL";
-
-		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click(locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertVisible(
-				key_infoMessage = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.",
-				locator1 = "Message#INFO_SPECIFIC",
-				value1 = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.");
-		}
-
-		var list1 = ListUtil.newListFromString(${localeList});
-		var list2 = ListUtil.newListFromString(${localizedCanonicalURLList});
-		var size = ListUtil.size(${list1});
-		var i = 0;
-
-		while (${i} != ${size}) {
-			var locale = ListUtil.get(${list1}, ${i});
-			var localizedCanonicalURL = ListUtil.get(${list2}, ${i});
-
-			PortletEntry.changeLocale(locale = ${locale});
-
-			Type(
-				locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-				value1 = ${localizedCanonicalURL});
-
-			PortletEntry.save();
-
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf(${i});
-		}
 	}
 
 	@summary = "Default summary"
@@ -567,25 +473,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPrivateChildPage(assertCheckboxMissing = null, parentPageName = null, sitePageType = null, childPageName = null, pageTemplateName = null, navigationMenus = null) {
-		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-		}
-
-		PagesAdmin.togglePrivacy(privacy = "Private Pages");
-
-		PagesAdmin.addChildPage(
-			assertCheckboxMissing = ${assertCheckboxMissing},
-			childPageName = ${childPageName},
-			navigationMenus = ${navigationMenus},
-			pageTemplateName = ${pageTemplateName},
-			parentPageName = ${parentPageName},
-			sitePageType = ${sitePageType});
-	}
-
-	@summary = "Default summary"
 	macro addPrivatePage(assertCheckboxMissing = null, sitePageType = null, siteTemplate = null, pageTemplateName = null, navigationMenus = null, pageName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -613,25 +500,6 @@ definition {
 			navigationMenus = ${navigationMenus},
 			pageName = ${pageName},
 			pageTemplateName = ${pageTemplateName},
-			sitePageType = ${sitePageType});
-	}
-
-	@summary = "Default summary"
-	macro addPublicChildPage(assertCheckboxMissing = null, parentPageName = null, sitePageType = null, childPageName = null, pageTemplateName = null, navigationMenus = null) {
-		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-		}
-
-		PagesAdmin.togglePrivacy(privacy = "Public Pages");
-
-		PagesAdmin.addChildPage(
-			assertCheckboxMissing = ${assertCheckboxMissing},
-			childPageName = ${childPageName},
-			navigationMenus = ${navigationMenus},
-			pageTemplateName = ${pageTemplateName},
-			parentPageName = ${parentPageName},
 			sitePageType = ${sitePageType});
 	}
 
@@ -672,53 +540,6 @@ definition {
 			portlet = ${portlet},
 			sitePageType = ${sitePageType},
 			vocabularyName = ${vocabularyName});
-	}
-
-	@summary = "Default summary"
-	macro addPublicPageUnderSitePagesVariation(sitePageType = null, pageTemplateName = null, pageName = null, collectionName = null) {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
-
-		WaitForPageLoad();
-
-		PagesAdmin._selectPageType(
-			collectionName = ${collectionName},
-			pageTemplateName = ${pageTemplateName},
-			sitePageType = ${sitePageType});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${pageName});
-
-		Button.click(button = "Add");
-
-		SelectFrame.selectFrameTop();
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertVisible(locator1 = "TextInput#NAME");
-
-		Button.click(button = "Save");
-
-		WaitForSPARefresh();
-	}
-
-	@summary = "Default summary"
-	macro addThemeCSSExtension(extensionName = null) {
-		WaitForEditable(
-			key_text = "Theme CSS",
-			locator1 = "TextInput#ANY");
-
-		Click(
-			key_text = "Theme CSS",
-			locator1 = "TextInput#ANY");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_listEntry = ${extensionName},
-			locator1 = "LexiconList#LIST_ENTRY_TITLE");
-
-		SelectFrameTop();
 	}
 
 	@summary = "Default summary"
@@ -882,37 +703,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro convertToContentPageByIcon(pageNameList = null) {
-		for (var pageName : list ${pageNameList}) {
-			PagesAdmin.selectPageItem(pageName = ${pageName});
-		}
-
-		ClickNoError(
-			key_text = "page",
-			locator1 = "ManagementBar#ANY_ICON");
-
-		AssertConfirm(value1 = "Are you sure you want to convert the selected pages?");
-	}
-
-	@summary = "Convert the content page to content page template"
-	macro createPageTemplate(alertMessage = null, collectionName = null) {
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Convert to Page Template",
-			pageName = ${pageName});
-
-		if (isSet(collectionName)) {
-			Select(
-				key_fieldLabel = "Page Template Set",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${collectionName});
-		}
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
 	macro deleteFriendlyURL(locale = null) {
 		Navigator.gotoNavTab(navTab = "General");
 
@@ -1070,28 +860,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSeoMetadata(htmlTitle = null, metaTagsDescription = null, metaTagsKeywords = null) {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		Type.typeClickAt(
-			key_text = "Title",
-			locator1 = "TextInput#ANY",
-			value1 = ${htmlTitle});
-
-		Type.typeClickAt(
-			key_text = "Description",
-			locator1 = "TextInput#ANY",
-			value1 = ${metaTagsDescription});
-
-		Type.typeClickAt(
-			key_text = "keywords",
-			locator1 = "TextArea#ANY",
-			value1 = ${metaTagsKeywords});
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
 	macro enablePrivatePages() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1173,64 +941,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoUtilityPageEllipsisMenuItem(menuItem = null, pageName = null) {
-		LexiconCard.clickEllipsisItem(
-			card = ${pageName},
-			item = ${menuItem});
-	}
-
-	@summary = "Default summary"
-	macro manageDeviceFamilyActions(actionType = null, themeName = null, actionURL = null, deviceFamilyName = null, siteName = null, pageName = null, actionName = null, columnName = null) {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage Actions",
-			rowEntry = ${deviceFamilyName});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(
-			key_text = "Add Action",
-			locator1 = "Button#ANY");
-
-		PortletEntry.inputName(name = ${actionName});
-
-		Select(
-			key_selectFieldLabel = "Type",
-			locator1 = "Select#ANY",
-			value1 = ${actionType});
-
-		if (${actionType} == "Redirect to Site") {
-			Select(
-				key_selectFieldLabel = "Site",
-				locator1 = "Select#ANY",
-				value1 = ${siteName});
-
-			Select(
-				key_selectFieldLabel = "Page",
-				locator1 = "Select#ANY",
-				value1 = ${pageName});
-		}
-		else if (${actionType} == "Layout Template Modification") {
-			Click(
-				key_card = ${columnName},
-				locator1 = "Card#CARD");
-		}
-		else if (${actionType} == "Redirect to URL") {
-			Type(
-				locator1 = "TextInput#URL",
-				value1 = ${actionURL});
-		}
-		else {
-			Check(
-				key_text = ${themeName},
-				locator1 = "TextInput#ANY");
-		}
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
-	@summary = "Default summary"
 	macro movePageItemUp(pageNameTo = null, pageName = null) {
 		var key_pageName = ${pageName};
 		var key_pageNameTo = ${pageNameTo};
@@ -1239,30 +949,6 @@ definition {
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_DRAG_HANDLER",
 			locator2 = "PagesAdmin#LIST_GROUP_ITEM_DROP_TARGET",
 			value1 = "");
-	}
-
-	@summary = "Default summary"
-	macro openConfigureSitePages() {
-		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
-		}
-
-		if (!(isSet(groupName))) {
-			var groupName = "Guest";
-			var siteURLKey = "guest";
-		}
-
-		if (!(isSet(site))) {
-			var site = "true";
-		}
-
-		var groupId = JSONLayoutSetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
-
-		Navigator.openWithAppendToBaseURL(
-			baseURL = ${baseURL},
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout_set&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=${groupId}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=0");
 	}
 
 	@summary = "Default summary"
@@ -1321,15 +1007,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewPageTemplate(pageTemplateName = null) {
-		Click(
-			key_cardTitle = ${pageTemplateName},
-			locator1 = "Icon#EYE_PREVIEW_SPECIFIC");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-	}
-
-	@summary = "Default summary"
 	macro removeOldFriendlyURL(oldFriendlyURL = null) {
 		AssertVisible(
 			key_oldFriendlyURL = ${oldFriendlyURL},
@@ -1372,47 +1049,6 @@ definition {
 			value1 = ${friendlyURLEdit});
 
 		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
-	macro selectFavicon(uploadFileName = null, imageFileName = null) {
-		WaitForEditable(
-			ariaLabel = "Select Favicon",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		Click(
-			ariaLabel = "Select Favicon",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		if (isSet(imageFileName)) {
-			ItemSelector.selectDMImage(imageFileName = ${imageFileName});
-		}
-		else {
-			ItemSelector.uploadFile(uploadFileName = ${uploadFileName});
-		}
-
-		SelectFrameTop();
-	}
-
-	@summary = "Default summary"
-	macro selectFaviconExtension(extensionName = null) {
-		WaitForEditable(
-			ariaLabel = "Select Favicon",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		Click(
-			ariaLabel = "Select Favicon",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Navigator.gotoNavTab(navTab = "Client Extension");
-
-		Click(
-			key_listEntry = ${extensionName},
-			locator1 = "LexiconList#LIST_ENTRY_TITLE");
-
-		SelectFrameTop();
 	}
 
 	@summary = "Default summary"
@@ -1515,23 +1151,6 @@ definition {
 					key_index = 4,
 					locator1 = "PagesAdmin#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 			}
-		}
-	}
-
-	@summary = "Default summary"
-	macro toggleHiddenFromNavigationMenuWidget(toggleValue = null) {
-		if (${toggleValue} == "enable") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Menu Display",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else if (${toggleValue} == "disable") {
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Menu Display",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else {
-			fail("Failed. Please set ${toggleValue} to enable or disable.");
 		}
 	}
 
@@ -1655,18 +1274,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBaseFriendlyURL(siteFriendlyURL = null) {
-		AssertTextEquals(
-			locator1 = "PagesAdmin#DETAILS_FRIENDLY_BASE_URL",
-			value1 = ${siteFriendlyURL});
-	}
-
-	@summary = "Default summary"
-	macro viewCurrentTheme(themeName = null) {
-		LexiconCard.viewCardTitle(card = ${themeName});
-	}
-
-	@summary = "Default summary"
 	macro viewFriendlyURL(localizedFriendlyURL = null, pageName = null) {
 		if (isSet(localizedFriendlyURL)) {
 			PortletEntry.changeLocale(
@@ -1691,15 +1298,6 @@ definition {
 		AssertVisible(
 			key_oldFriendlyURL = ${oldFriendlyURL},
 			locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-	}
-
-	@summary = "Default summary"
-	macro viewOldFriendlyURLNotPresent(oldFriendlyURLList = null) {
-		for (var oldFriendlyURL : list ${oldFriendlyURLList}) {
-			AssertElementNotPresent(
-				key_oldFriendlyURL = ${oldFriendlyURL},
-				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
-		}
 	}
 
 	@summary = "Default summary"
@@ -1753,135 +1351,6 @@ definition {
 
 			var index = ${index} + 1;
 		}
-	}
-
-	@summary = "Default summary"
-	macro viewPageStatus(pageName = null, status = null) {
-		if (!(isSet(index))) {
-			var index = 1;
-		}
-
-		AssertTextEquals(
-			index = ${index},
-			key_itemName = ${pageName},
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS",
-			value1 = ${status});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplate(pageName = null) {
-		Click(locator1 = "ControlMenu#INFO");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
-			value1 = "This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications.");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = ${pageName});
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR_3",
-			value1 = "Warning: Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
-
-		AssertChecked.assertCheckedNotVisible(
-			checkboxName = "Inherit Changes",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplateTypeNotPresent(pageTemplateName = null) {
-		LexiconCard.viewCardNotPresent(card = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplateTypePresent(pageTemplateName = null) {
-		LexiconCard.viewCardPresent(card = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewPageType(pageType = null, pageName = null) {
-		AssertElementPresent(
-			key_pageName = ${pageName},
-			key_pageType = ${pageType},
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_TYPE");
-	}
-
-	@summary = "Default summary"
-	macro viewPanelPortletList(portletNameList = null, componentName = null, pageName = null) {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = ${pageName});
-
-		var key_componentName = ${componentName};
-
-		if (IsElementPresent(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW")) {
-			Click(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW");
-		}
-
-		AssertElementPresent(locator1 = "PagesAdmin#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
-
-		for (var portletName : list ${portletNameList}) {
-			if (${portletName} == "Portal Directory") {
-				var key_componentOrPortletName = "Directory";
-			}
-			else {
-				var key_componentOrPortletName = StringUtil.extractChars(${portletName});
-			}
-
-			AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewSelectedLayoutColumn(columnName = null) {
-		AssertElementPresent(
-			key_card = ${columnName},
-			locator1 = "Card#CARD_SELECTED");
-	}
-
-	@summary = "Default summary"
-	macro viewSelectedPageItem(pageName = null) {
-		AssertChecked.assertCheckedNotVisible(
-			key_pageName = ${pageName},
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHECKBOX");
-	}
-
-	@summary = "Default summary"
-	macro viewSeoMetadata(htmlTitle = null, metaTagsDescription = null, metaTagsKeywords = null) {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextInput#ANY",
-			value1 = ${htmlTitle});
-
-		AssertTextEquals(
-			key_text = "Description",
-			locator1 = "TextInput#ANY",
-			value1 = ${metaTagsDescription});
-
-		AssertTextEquals(
-			key_text = "keywords",
-			locator1 = "TextArea#ANY",
-			value1 = ${metaTagsKeywords});
-	}
-
-	@summary = "Default summary"
-	macro viewVocabularyNotPresent(vocabularyName = null) {
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		AssertElementNotPresent(
-			key_vocabularyName = ${vocabularyName},
-			locator1 = "AssetCategorization#CATEGORY_SELECT");
 	}
 
 	@summary = "Default summary"

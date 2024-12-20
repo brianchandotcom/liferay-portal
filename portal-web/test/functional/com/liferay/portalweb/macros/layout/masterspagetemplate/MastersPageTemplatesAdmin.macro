@@ -12,23 +12,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteMasters(masterLayoutName = null) {
-		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-			item = "Delete",
-			masterLayoutName = ${masterLayoutName});
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
 	macro gotoMasters(masterLayoutName = null) {
 		LexiconCard.clickCardTitleLink(card = ${masterLayoutName});
 
@@ -38,64 +21,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMastersEllipsisItem(item = null, masterLayoutName = null) {
-		Click.waitForMenuToggleJSClick(
-			key_card = ${masterLayoutName},
-			locator1 = "Card#CARD_ELLIPSIS");
-
-		MenuItem.click(menuItem = ${item});
-	}
-
-	@summary = "Default summary"
-	macro importMastersFromTempFolder(importOption = null) {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Import");
-
-		WaitForPageLoad();
-
-		var mastersZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "master-page-*.zip");
-
-		UploadTempFile.uploadTempFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${mastersZipFileName});
-
-		Button.clickImport();
-
-		if (isSet(importOption)) {
-			WaitForVisible(locator1 = "Modal#HEADER");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = ${importOption});
-
-			Click(
-				key_text = "Import",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
-
-		Button.clickDone();
-	}
-
-	@summary = "Default summary"
 	macro openMastersAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts");
-	}
-
-	@summary = "Default summary"
-	macro selectMasters(masterLayoutName = null) {
-		LexiconCard.viewCardTitle(card = ${masterLayoutName});
-
-		Check.checkNotVisible(
-			key_card = ${masterLayoutName},
-			locator1 = "Card#CARD_CHECKBOX");
-	}
-
-	@summary = "Default summary"
-	macro viewMastersPresent(masterLayoutName = null) {
-		LexiconCard.viewCardPresent(card = ${masterLayoutName});
 	}
 
 }

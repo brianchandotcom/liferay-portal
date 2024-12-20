@@ -52,19 +52,6 @@ definition {
 		PortletEntry.create();
 	}
 
-	@summary = "Change content type"
-	macro changeContentType(displayPageName = null, subType = null, contentType = null) {
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = ${displayPageName},
-			item = "Change Content Type");
-
-		DisplayPageTemplatesAdmin._selectMappingTypes(
-			contentType = ${contentType},
-			subType = ${subType});
-
-		PortletEntry.save();
-	}
-
 	@summary = "Default summary"
 	macro deleteDisplayPage(displayPageName = null, defaultDisplayPageTemplate = null) {
 		LexiconCard.clickEllipsisItem(
@@ -157,22 +144,6 @@ definition {
 	@summary = "Default summary"
 	macro openDisplayPagesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=display-page-templates");
-	}
-
-	@summary = "Default summary"
-	macro renameDisplayPage(newDisplayPageName = null, displayPageName = null) {
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = ${displayPageName},
-			item = "Rename");
-
-		PortletEntry.inputName(name = ${newDisplayPageName});
-
-		Modal.save();
-	}
-
-	@summary = "Default summary"
-	macro viewDisplayPageNotPresent(displayPageName = null) {
-		LexiconCard.viewCardNotPresent(card = ${displayPageName});
 	}
 
 	@summary = "Default summary"

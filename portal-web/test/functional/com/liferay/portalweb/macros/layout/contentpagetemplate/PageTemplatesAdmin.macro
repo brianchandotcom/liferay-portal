@@ -77,17 +77,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMastersPageTemplate(pageTemplateName = null) {
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = ${pageTemplateName});
-
-		Button.clickSave();
-
-		PageEditor.publish();
-	}
-
-	@summary = "Default summary"
 	macro addPageTemplate(pageTemplateType = null, siteTemplate = null, pageTemplateName = null, menuItem = null, masterLayoutName = null) {
 		PageTemplatesAdmin._addPageTemplate(
 			masterLayoutName = ${masterLayoutName},
@@ -111,40 +100,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deletePageTemplate(pageTemplateName = null) {
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Delete",
-			pageTemplateName = ${pageTemplateName});
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro deletePageTemplateSet(setName = null) {
-		Navigator.gotoNavNested(navNested = ${setName});
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${setName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Delete");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
 	macro gotoPageTemplate(pageTemplateName = null) {
 		LexiconCard.clickCardTitleLink(card = ${pageTemplateName});
 	}
@@ -159,39 +114,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importPageTemplatesFromTempFolder(importOption = null) {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Import");
-
-		WaitForPageLoad();
-
-		var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
-
-		UploadTempFile.uploadTempFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${pageTemplateZipFileName});
-
-		Button.clickImport();
-
-		if (isSet(importOption)) {
-			WaitForVisible(locator1 = "Modal#HEADER");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = ${importOption});
-
-			Click(
-				key_text = "Import",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
-
-		Button.clickDone();
-	}
-
-	@summary = "Default summary"
 	macro openPageTemplatesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=page-templates");
 	}
@@ -199,57 +121,6 @@ definition {
 	@summary = "Default summary"
 	macro openPageTemplatesMenuAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
-	}
-
-	@summary = "Default summary"
-	macro renamePageTemplate(newPageTemplateName = null, pageTemplateName = null) {
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Rename",
-			pageTemplateName = ${pageTemplateName});
-
-		PortletEntry.inputName(name = ${newPageTemplateName});
-
-		Modal.save();
-	}
-
-	@summary = "Default summary"
-	macro selectPageTemplate(pageTemplateName = null) {
-		LexiconCard.viewCardTitle(card = ${pageTemplateName});
-
-		Check.checkNotVisible(
-			key_card = ${pageTemplateName},
-			locator1 = "Card#CARD_CHECKBOX");
-	}
-
-	@summary = "Default summary"
-	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
-		LexiconCard.viewCardLabel(
-			card = ${entry},
-			cardLabel = ${workflowStatus});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplateNotPresent(pageTemplateName = null) {
-		LexiconCard.viewCardNotPresent(card = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplatePresent(pageTemplateName = null) {
-		LexiconCard.viewCardPresent(card = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplateSetNotPresent(setName = null) {
-		AssertElementNotPresent(
-			key_navNested = ${setName},
-			locator1 = "NavNested#NAV_NESTED_LINK");
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplateSetPresent(setName = null) {
-		AssertElementPresent(
-			key_navNested = ${setName},
-			locator1 = "NavNested#NAV_NESTED_LINK");
 	}
 
 }

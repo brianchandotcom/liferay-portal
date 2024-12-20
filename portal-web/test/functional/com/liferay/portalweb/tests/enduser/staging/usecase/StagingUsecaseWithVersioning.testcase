@@ -1033,7 +1033,13 @@ definition {
 			menuItem = "Configure",
 			pageName = "Test Page Name");
 
-		PagesAdmin.viewSelectedLayoutColumn(columnName = "1 Column");
+		AssertElementPresent(
+			key_card = "1 Column",
+			locator1 = "Card#CARD_SELECTED");
+
+		AssertElementPresent(
+			key_card = "1 Column",
+			locator1 = "Card#CARD_SELECTED");
 	}
 
 	@priority = 3

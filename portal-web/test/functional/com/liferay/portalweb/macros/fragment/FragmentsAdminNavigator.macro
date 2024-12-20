@@ -1,25 +1,8 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoAddCollection() {
-		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
-			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
-		}
-		else {
-			Button.click(button = "New");
-
-			MenuItem.click(menuItem = "Collection");
-		}
-	}
-
-	@summary = "Default summary"
 	macro gotoCollection(collectionName = null) {
 		MenuBar.click(menuBar = ${collectionName});
-	}
-
-	@summary = "Default summary"
-	macro gotoEntry(entry = null) {
-		LexiconCard.clickCardTitleLink(card = ${entry});
 	}
 
 	@summary = "Default summary"
@@ -28,15 +11,6 @@ definition {
 			card = ${entry},
 			item = ${item},
 			specificFormFragment = ${specificFormFragment});
-	}
-
-	@summary = "Default summary"
-	macro gotoExportCollection() {
-		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-
-		DropdownMenuItem.click(menuItem = "Export");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
 	@summary = "Default summary"

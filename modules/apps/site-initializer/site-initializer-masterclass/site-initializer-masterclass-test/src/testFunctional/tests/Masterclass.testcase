@@ -1623,7 +1623,7 @@ definition {
 
 		task ("Assert Master Page Templates are present") {
 			for (var masterLayoutName : list "Blank,Main-1,Main-2,Private Area") {
-				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = ${masterLayoutName});
+				LexiconCard.viewCardPresent(card = ${masterLayoutName});
 			}
 		}
 

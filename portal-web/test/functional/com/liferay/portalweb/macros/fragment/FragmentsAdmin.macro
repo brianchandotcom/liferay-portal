@@ -1,32 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCollection(collectionDescription = null, collectionName = null) {
-		FragmentsAdminNavigator.gotoAddCollection();
-
-		Collection.editCollection(
-			collectionDescription = ${collectionDescription},
-			collectionName = ${collectionName});
-
-		Button.clickSave();
-	}
-
-	@summary = "Default summary"
-	macro addFolder(folderName = null) {
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Folder");
-
-		IFrame.selectConfigurationFrame();
-
-		PortletEntry.inputName(name = ${folderName});
-
-		IFrame.selectConfigurationFrame();
-
-		Button.clickSave();
-	}
-
-	@summary = "Default summary"
 	macro addFragment(fragmentName = null, supportedFieldTypes = null) {
 		LexiconEntry.gotoAdd();
 
@@ -78,77 +52,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addResource(resourceFile = null) {
-		LexiconEntry.gotoAdd();
-
-		WaitForEditable(locator1 = "TextInput#FILE");
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${resourceFile});
-	}
-
-	@summary = "Default summary"
-	macro addResourceToFolder(resourceFile = null, folderName = null) {
-		LexiconCard.clickCardTitleLink(card = ${folderName});
-
-		LexiconEntry.gotoAdd();
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${resourceFile});
-	}
-
-	@summary = "Default summary"
-	macro addSubfolder(subfolderName = null, folderName = null) {
-		LexiconCard.clickCardTitleLink(card = ${folderName});
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Folder");
-
-		IFrame.selectConfigurationFrame();
-
-		PortletEntry.inputName(name = ${subfolderName});
-
-		IFrame.selectConfigurationFrame();
-
-		Button.clickSave();
-	}
-
-	@summary = "Default summary"
-	macro deleteEntry(entry = null) {
-		LexiconCard.clickEllipsisItem(
-			card = ${entry},
-			item = "Delete");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Deleting a fragment is an action impossible to revert. It will be removed from the fragments set and it will not be possible to recover it.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro deleteResource(entry = null) {
-		LexiconCard.clickEllipsisItem(
-			card = ${entry},
-			item = "Delete");
-
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		//AssertTextEquals(
-		//	locator1 = "Modal#BODY",
-		//	value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-		//Click(
-		//	key_text = "Delete",
-		//	locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-	}
-
-	@summary = "Default summary"
 	macro enableFeaturedContent() {
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -165,41 +68,6 @@ definition {
 		}
 
 		Navigator.openURL();
-	}
-
-	@summary = "Default summary"
-	macro exportCollection(collectionName = null) {
-		Navigator.gotoNavNested(navNested = ${collectionName});
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${collectionName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Export");
-	}
-
-	@summary = "Default summary"
-	macro exportFragment(fragmentName = null, collectionName = null) {
-		FragmentsAdminNavigator.gotoCollection(collectionName = ${collectionName});
-
-		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = ${fragmentName},
-			item = "Export");
-	}
-
-	@summary = "Default summary"
-	macro exportMultipleCollections(collectionNameList = null) {
-		for (var collectionName : list ${collectionNameList}) {
-			Check(
-				key_tableEntry = ${collectionName},
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-		}
-
-		SelectFrameTop();
-
-		Button.click(button = "Export");
-
-		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"
@@ -230,99 +98,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCollectionFromTempFolder(importOption = null) {
-		FragmentsAdminNavigator.gotoImportCollection();
-
-		WaitForPageLoad();
-
-		var collectionsZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "collections-*.zip");
-
-		UploadTempFile.uploadTempFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${collectionsZipFileName});
-
-		Button.clickImport();
-
-		if (isSet(importOption)) {
-			WaitForVisible(locator1 = "Modal#HEADER");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = ${importOption});
-
-			Click(
-				key_text = "Import",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
-
-		Button.clickDone();
-	}
-
-	@summary = "Default summary"
-	macro importFragmentFromTempFolder(importOption = null, collectionName = null) {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${collectionName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Import");
-
-		WaitForPageLoad();
-
-		var entriesZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "entries-*.zip");
-
-		UploadTempFile.uploadTempFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${entriesZipFileName});
-
-		Button.clickImport();
-
-		if (isSet(importOption)) {
-			WaitForVisible(locator1 = "Modal#HEADER");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = ${importOption});
-
-			Click(
-				key_text = "Import",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
-
-		Button.clickDone();
-	}
-
-	@summary = "Default summary"
-	macro openFragmentsAdmin(siteURLKey = null) {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
-	}
-
-	@summary = "Default summary"
-	macro propagateChanges(itemNameList = null) {
-		if (isSet(itemNameList)) {
-			for (var itemName : list ${itemNameList}) {
-				Check(
-					key_tableEntry = ${itemName},
-					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-			}
-		}
-		else {
-			PortletEntry.selectAll();
-		}
-
-		Click(
-			key_text = "propagation",
-			locator1 = "ManagementBar#ANY_ICON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
 	macro selectCollection(collectionName = null) {
 		Select(
 			key_fieldLabel = "Fragment Sets",
@@ -330,38 +105,6 @@ definition {
 			value1 = ${collectionName});
 
 		Modal.save();
-	}
-
-	@summary = "Default summary"
-	macro viewEntryNotPresent(entry = null) {
-		LexiconCard.viewCardNotPresent(card = ${entry});
-	}
-
-	@summary = "Default summary"
-	macro viewEntryPresent(entry = null) {
-		LexiconCard.viewCardPresent(card = ${entry});
-	}
-
-	@summary = "Default summary"
-	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
-		LexiconCard.viewCardLabel(
-			card = ${entry},
-			cardLabel = ${workflowStatus});
-	}
-
-	@summary = "Default summary"
-	macro viewFormFragementForEachFieldType(formFragmentName = null, fieldType = null) {
-		LexiconTable.viewTableEntryFormFragment(
-			fieldType = ${fieldType},
-			tableEntryInfo = ${formFragmentName});
-	}
-
-	@summary = "Default summary"
-	macro viewSiteUsages(siteName = null, usages = null) {
-		LexiconTable.viewTableEntryInfo(
-			columnName = "usages",
-			tableEntry = ${siteName},
-			tableEntryInfo = ${usages});
 	}
 
 }

@@ -24,15 +24,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDescription(informationTemplateDescription = null) {
-		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
-
-		Navigator.gotoSidebarTab(tabName = "Properties");
-
-		PortletEntry.inputDescription(description = ${informationTemplateDescription});
-	}
-
-	@summary = "Default summary"
 	macro addField(fieldName = null, panelTitle = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
@@ -45,67 +36,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyCP(informationTemplateName = null, description = null, informationTemplateCopyName = null) {
-		InformationTemplates.gotoInformationTemplateEllipsisItem(
-			informationTemplateName = ${informationTemplateName},
-			item = "Make a Copy");
-
-		if (isSet(informationTemplateCopyName)) {
-			PortletEntry.inputName(name = ${informationTemplateCopyName});
-		}
-
-		if (isSet(description)) {
-			PortletEntry.inputDescription(description = ${description});
-		}
-
-		Click(locator1 = "Button#COPY");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
-	macro deleteCP(informationTemplateName = null) {
-		InformationTemplates.gotoInformationTemplateEllipsisItem(
-			informationTemplateName = ${informationTemplateName},
-			item = "Delete");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
-	macro editName(informationTemplateName = null) {
-		PortletEntry.inputName(name = ${informationTemplateName});
-	}
-
-	@summary = "Default summary"
 	macro gotoInformationTemplateEllipsisItem(informationTemplateName = null, item = null) {
 		Click(
 			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		MenuItem.click(menuItem = ${item});
-	}
-
-	@summary = "Default summary"
-	macro importScript(scriptFile = null) {
-		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
-
-		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-		var filePath = TestCase.getDependenciesDirPath(fileName = ${scriptFile});
-
-		UploadFile(
-			inputFieldId = "importScript",
-			locator1 = "TextInput#INPUT_ID",
-			value1 = ${filePath});
 	}
 
 	@summary = "Default summary"
@@ -118,24 +54,6 @@ definition {
 	@summary = "Default summary"
 	macro openInformationTemplatesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet&p_p_lifecycle=0&p_p_state=maximized");
-	}
-
-	@summary = "Default summary"
-	macro viewDescription(informationTemplateDescription = null) {
-		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
-
-		Navigator.gotoSidebarTab(tabName = "Properties");
-
-		AssertTextEquals(
-			locator1 = "TextArea#DESCRIPTION",
-			value1 = ${informationTemplateDescription});
-	}
-
-	@summary = "Default summary"
-	macro viewScriptContent(scriptContent = null) {
-		AssertTextEquals.assertPartialText(
-			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
-			value1 = ${scriptContent});
 	}
 
 	@summary = "Default summary"
@@ -161,13 +79,6 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = ${itemSubtype});
 		}
-	}
-
-	@summary = "Default summary"
-	macro viewTemplateNotPresent(informationTemplateName = null) {
-		AssertElementNotPresent(
-			key_tableEntry = ${informationTemplateName},
-			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
 }

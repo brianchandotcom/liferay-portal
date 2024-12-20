@@ -40,7 +40,7 @@ definition {
 				collectionName = "Imported",
 				scope = "Global");
 
-			FragmentsAdmin.viewEntryPresent(entry = "Title");
+			LexiconCard.viewCardPresent(card = "Title");
 		}
 	}
 

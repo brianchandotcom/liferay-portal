@@ -1897,33 +1897,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createPageTemplate(alertMessage = null, collectionName = null) {
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
-
-		if (isSet(experienceName)) {
-			AssertTextEquals(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "The page template is based on the current experience.");
-		}
-
-		Select(
-			key_fieldLabel = "Page Template Set",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${collectionName});
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
-
-		if (IsElementPresent(locator1 = "Message#ERROR_DISMISSIBLE")) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = ${alertMessage});
-		}
-		else {
-			Alert.viewSuccessMessage();
-		}
-	}
-
-	@summary = "Default summary"
 	macro deleteAllExperiences() {
 		PageEditor.openExperienceMenu();
 
@@ -2043,13 +2016,6 @@ definition {
 			key_fieldLabel = ${fieldLabel},
 			key_text = "theme",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
-	}
-
-	@summary = "Default summary"
-	macro discardDraft() {
-		Button.clickNoError(button = "Discard Draft");
-
-		AssertConfirm(value1 = "Are you sure you want to discard the current draft and apply the latest published changes?");
 	}
 
 	@summary = "Default summary"
@@ -5436,24 +5402,6 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 				key_position = ${position},
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMNS_NO_GUTTER");
 		}
-	}
-
-	@summary = "Default summary"
-	macro viewCollectionItem(assetTitle = null) {
-		if (!(isSet(column))) {
-			var column = 1;
-		}
-
-		if (!(isSet(row))) {
-			var row = 1;
-		}
-
-		AssertVisible(
-			key_colPosition = ${column},
-			key_entryTitle = ${assetTitle},
-			key_fragmentName = "Collection Display",
-			key_rowPosition = ${row},
-			locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 	}
 
 	@summary = "Default summary"

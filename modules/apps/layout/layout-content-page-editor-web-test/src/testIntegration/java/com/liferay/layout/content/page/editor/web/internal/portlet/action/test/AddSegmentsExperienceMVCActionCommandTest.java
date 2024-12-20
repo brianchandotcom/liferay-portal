@@ -347,12 +347,12 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		portletPreferences.setValue(
 			"allAssetVocabularies", Boolean.FALSE.toString());
 		portletPreferences.setValue(
-			"assetVocabularyGroupExternalReferenceCodes",
-			_group.getExternalReferenceCode());
-		portletPreferences.setValue(
 			"assetVocabularyExternalReferenceCodes_" +
 				_group.getExternalReferenceCode(),
 			assetVocabulary.getExternalReferenceCode());
+		portletPreferences.setValue(
+			"assetVocabularyGroupExternalReferenceCodes",
+			_group.getExternalReferenceCode());
 		portletPreferences.setValue("displayStyle", displayStyle);
 		portletPreferences.setValue(
 			"displayStyleGroupExternalReferenceCode",

@@ -34,8 +34,10 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.After;
@@ -85,11 +87,11 @@ public abstract class BaseSettingsLocatorTestCase {
 
 		_configurationPids.clear();
 
-		for (String configurationPid : _factoryConfigurationPids) {
+		for (Map.Entry<String, String> entry :
+				_factoryConfigurationPids.entrySet()) {
+
 			ConfigurationTestUtil.deleteFactoryConfiguration(
-				configurationPid,
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID +
-					".scoped");
+				entry.getKey(), entry.getValue());
 		}
 
 		_factoryConfigurationPids.clear();
@@ -170,7 +172,7 @@ public abstract class BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY, value
 			).build());
 
-		_factoryConfigurationPids.add(pid);
+		_factoryConfigurationPids.put(pid, factoryPid + ".scoped");
 
 		return value;
 	}
@@ -249,8 +251,8 @@ public abstract class BaseSettingsLocatorTestCase {
 			"</preference></portlet-preferences>";
 
 	private static final Set<String> _configurationPids = new HashSet<>();
-	private static final Set<String> _factoryConfigurationPids =
-		new HashSet<>();
+	private static final Map<String, String> _factoryConfigurationPids =
+		new HashMap<>();
 
 	@Inject
 	private static PortletPreferencesLocalService

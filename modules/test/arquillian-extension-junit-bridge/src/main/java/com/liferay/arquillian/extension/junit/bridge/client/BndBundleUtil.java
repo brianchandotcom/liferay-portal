@@ -148,6 +148,8 @@ public class BndBundleUtil {
 		project.setProperty(
 			"Import-Package", StringUtil.merge(importPackages, ","));
 
+		project.setProperty("-contract", "!JavaPortlet,!JavaServlet");
+
 		Set<String> includeResources = new LinkedHashSet<>();
 
 		includeResources.add("test-classes/integration");

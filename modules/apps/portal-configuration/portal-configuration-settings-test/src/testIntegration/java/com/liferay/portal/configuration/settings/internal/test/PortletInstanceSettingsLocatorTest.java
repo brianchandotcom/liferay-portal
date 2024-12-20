@@ -74,7 +74,8 @@ public class PortletInstanceSettingsLocatorTest
 			savePortletPreferences(
 				PortletKeys.PREFS_PLID_SHARED,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _portletInstanceKey,
-				_layout.getPlid()),
+				_layout.getPlid(), SettingsLocatorTestConstants.TEST_KEY,
+				RandomTestUtil.randomString()),
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 	}
 

@@ -524,67 +524,65 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	}
 </aui:script>
 
-<aui:script senna="temporary" type="text/javascript">
-	(function () {
-		var pageIterator = document.getElementById('<%= namespace + id %>');
-		if (pageIterator) {
-			var button = pageIterator.querySelector('.pagination .dropdown-toggle');
-			var list = pageIterator.querySelector('.pagination .dropdown-menu');
-			var options = list.querySelectorAll('.pagination .dropdown-item');
+<aui:script sandbox="<%= true %>" senna="temporary" type="text/javascript">
+	var pageIterator = document.getElementById('<%= namespace + id %>');
+	if (pageIterator) {
+		var button = pageIterator.querySelector('.pagination .dropdown-toggle');
+		var list = pageIterator.querySelector('.pagination .dropdown-menu');
+		var options = list.querySelectorAll('.pagination .dropdown-item');
 
-			function onButtonKeyDown(event) {
-				if (
-					event.key === 'ArrowDown' ||
-					event.key === 'ArrowUp' ||
-					event.key === 'Enter' ||
-					event.key === ' '
-				) {
-					event.preventDefault();
-					button.setAttribute('aria-expanded', 'true');
-					list.classList.add('show');
-					if (options) {
-						options[0].focus();
-					}
+		function onButtonKeyDown(event) {
+			if (
+				event.key === 'ArrowDown' ||
+				event.key === 'ArrowUp' ||
+				event.key === 'Enter' ||
+				event.key === ' '
+			) {
+				event.preventDefault();
+				button.setAttribute('aria-expanded', 'true');
+				list.classList.add('show');
+				if (options) {
+					options[0].focus();
 				}
 			}
-			button.addEventListener('keydown', onButtonKeyDown);
-			function onLeaveDropdown() {
-				button.setAttribute('aria-expanded', 'false');
-				list.classList.remove('show');
-			}
-			function handleKeyEvents(event) {
-				var currentIndex = Array.from(options).indexOf(
-					document.activeElement
-				);
-				if (event.key === 'ArrowDown') {
-					event.preventDefault();
-					if (currentIndex < options.length - 1) {
-						options[currentIndex + 1].focus();
-					}
-				}
-				else if (event.key === 'ArrowUp') {
-					event.preventDefault();
-					if (currentIndex > 0) {
-						options[currentIndex - 1].focus();
-					}
-				}
-				else if (event.key === 'Escape' || event.key === 'Tab') {
-					button.focus();
-					onLeaveDropdown();
-				}
-				else if (event.key === ' ') {
-					event.preventDefault();
-					options[currentIndex].click();
-				}
-			}
-			list.addEventListener('keydown', handleKeyEvents);
-			var destroyDropDownPagination = function () {
-				button.removeEventListener('keydown', onButtonKeyDown);
-				list.removeEventListener('keydown', handleKeyEvents);
-			};
-			Liferay.once('beforeScreenFlip', destroyDropDownPagination);
 		}
-	})();
+		button.addEventListener('keydown', onButtonKeyDown);
+		function onLeaveDropdown() {
+			button.setAttribute('aria-expanded', 'false');
+			list.classList.remove('show');
+		}
+		function handleKeyEvents(event) {
+			var currentIndex = Array.from(options).indexOf(
+				document.activeElement
+			);
+			if (event.key === 'ArrowDown') {
+				event.preventDefault();
+				if (currentIndex < options.length - 1) {
+					options[currentIndex + 1].focus();
+				}
+			}
+			else if (event.key === 'ArrowUp') {
+				event.preventDefault();
+				if (currentIndex > 0) {
+					options[currentIndex - 1].focus();
+				}
+			}
+			else if (event.key === 'Escape' || event.key === 'Tab') {
+				button.focus();
+				onLeaveDropdown();
+			}
+			else if (event.key === ' ') {
+				event.preventDefault();
+				options[currentIndex].click();
+			}
+		}
+		list.addEventListener('keydown', handleKeyEvents);
+		var destroyDropDownPagination = function () {
+			button.removeEventListener('keydown', onButtonKeyDown);
+			list.removeEventListener('keydown', handleKeyEvents);
+		};
+		Liferay.once('beforeScreenFlip', destroyDropDownPagination);
+	}
 </aui:script>
 
 <%!

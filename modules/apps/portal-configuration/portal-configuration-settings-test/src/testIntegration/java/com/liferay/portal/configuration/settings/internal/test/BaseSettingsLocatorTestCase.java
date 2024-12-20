@@ -180,21 +180,20 @@ public abstract class BaseSettingsLocatorTestCase {
 		throws Exception {
 
 		return savePortletPreferences(
-			ownerId, ownerType, portletId, PortletKeys.PREFS_PLID_SHARED);
+			ownerId, ownerType, portletId, PortletKeys.PREFS_PLID_SHARED,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 	}
 
 	protected String savePortletPreferences(
-			long ownerId, int ownerType, String portletId, long plid)
+			long ownerId, int ownerType, String portletId, long plid,
+			String key, String value)
 		throws Exception {
-
-		String value = RandomTestUtil.randomString();
 
 		_portletPreferencesList.add(
 			_portletPreferencesLocalService.addPortletPreferences(
 				companyId, ownerId, ownerType, plid, portletId, null,
-				String.format(
-					_PORTLET_PREFERENCES_FORMAT,
-					SettingsLocatorTestConstants.TEST_KEY, value)));
+				String.format(_PORTLET_PREFERENCES_FORMAT, key, value)));
 
 		return value;
 	}

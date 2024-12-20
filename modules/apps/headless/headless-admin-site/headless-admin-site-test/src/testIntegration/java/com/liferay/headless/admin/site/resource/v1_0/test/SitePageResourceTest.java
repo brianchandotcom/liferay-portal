@@ -344,7 +344,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
 
-		return testPostByExternalReferenceCodeSitePage_addSitePage(sitePage);
+		return sitePageResource.postByExternalReferenceCodeSitePage(
+			siteExternalReferenceCode, sitePage);
+	}
+
+	@Override
+	protected String
+		testGetSiteSiteByExternalReferenceCodeSitePagesPage_getIrrelevantSiteExternalReferenceCode() {
+
+		return irrelevantGroup.getExternalReferenceCode();
 	}
 
 	@Override

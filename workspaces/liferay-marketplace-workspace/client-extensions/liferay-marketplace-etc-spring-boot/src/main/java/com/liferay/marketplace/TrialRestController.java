@@ -31,6 +31,8 @@ import java.net.URL;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -172,18 +174,31 @@ public class TrialRestController extends BaseRestController {
 		_marketplaceService.updateOrder(
 			null, orderId, MarketplaceConstants.ORDER_STATUS_PROCESSING);
 
-		UserAccount userAccount = _marketplaceService.getUserAccount(
-			modelDTOOrderJSONObject.getString("creatorEmailAddress"));
+		Order order = _marketplaceService.getOrder(orderId);
 
-		_postNotificationQueueEntry(
-			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			"TRY-IT-NOW-PROCESSING-ORDER",
-			new HashMapBuilder<String, Object>().put(
-				"[%COMMERCEORDER_AUTHOR_FIRST_NAME%]",
-				userAccount.getGivenName()
-			).put(
-				"[%COMMERCEORDER_ID%]", String.valueOf(orderId)
-			).build());
+		UserAccount userAccount = _marketplaceService.getUserAccount(
+			order.getCreatorEmailAddress());
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONObject trialSettingsJSONObject = new JSONObject(
+			customFields.getOrDefault("trial-settings", "{}"));
+
+		boolean sendNotificationEmail = trialSettingsJSONObject.optBoolean(
+			"sendNotificationEmail", true);
+
+		if (sendNotificationEmail) {
+			_postNotificationQueueEntry(
+				modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+				"TRY-IT-NOW-PROCESSING-ORDER",
+				new HashMapBuilder<String, Object>().put(
+					"[%COMMERCEORDER_AUTHOR_FIRST_NAME%]",
+					userAccount.getGivenName()
+				).put(
+					"[%COMMERCEORDER_ID%]", String.valueOf(orderId)
+				).build());
+		}
 
 		PortalInstance portalInstance = _postPortalInstance(
 			jwt, modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -191,6 +206,9 @@ public class TrialRestController extends BaseRestController {
 
 		try {
 			_consoleService.setUpProject(
+				_getConsoleInviteEmailAddresses(
+					trialSettingsJSONObject.optJSONArray(
+						"consoleInviteEmailAddresses")),
 				portalInstance.getVirtualHost(), orderId);
 		}
 		catch (Exception exception) {
@@ -237,17 +255,19 @@ public class TrialRestController extends BaseRestController {
 			).build(),
 			orderId, MarketplaceConstants.ORDER_STATUS_IN_PROGRESS);
 
-		_postNotificationQueueEntry(
-			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-			"TRY-IT-NOW-COMPLETED-ORDER",
-			new HashMapBuilder<String, Object>().put(
-				"%EMAIL%",
-				modelDTOOrderJSONObject.getString("creatorEmailAddress")
-			).put(
-				"%NAME%", userAccount.getGivenName()
-			).put(
-				"%URL%", portalInstance.getVirtualHost()
-			).build());
+		if (sendNotificationEmail) {
+			_postNotificationQueueEntry(
+				modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+				"TRY-IT-NOW-COMPLETED-ORDER",
+				new HashMapBuilder<String, Object>().put(
+					"%EMAIL%",
+					modelDTOOrderJSONObject.getString("creatorEmailAddress")
+				).put(
+					"%NAME%", userAccount.getGivenName()
+				).put(
+					"%URL%", portalInstance.getVirtualHost()
+				).build());
+		}
 	}
 
 	@PostMapping("provisioning/{orderId}")
@@ -298,6 +318,16 @@ public class TrialRestController extends BaseRestController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Portal instance deleted for order " + orderId);
 		}
+	}
+
+	private String[] _getConsoleInviteEmailAddresses(JSONArray jsonArray) {
+		List<String> arrayList = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			arrayList.add(jsonArray.getString(i));
+		}
+
+		return arrayList.toArray(new String[0]);
 	}
 
 	private PortalInstanceResource _getPortalInstanceResource()

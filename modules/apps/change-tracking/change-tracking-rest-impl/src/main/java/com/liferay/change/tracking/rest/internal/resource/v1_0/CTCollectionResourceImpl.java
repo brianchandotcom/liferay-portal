@@ -16,8 +16,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesService;
-import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
-import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -40,7 +38,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -119,31 +116,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		throws Exception {
 
 		return _getShareLink(ctCollectionId);
-	}
-
-	@Override
-	public Page<CTCollection> getCTCollectionsHistoryPage(
-			Integer classNameId, Integer classPK)
-		throws Exception {
-
-		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
-				Long.valueOf(classNameId));
-
-		if (ctCollectionHistoryProvider == null) {
-			return Page.of(
-				TransformUtil.transform(
-					_ctCollectionLocalService.
-						getExclusivePublishedCTCollections(
-							classNameId, classPK),
-					this::_toCTCollection));
-		}
-
-		return Page.of(
-			TransformUtil.transform(
-				ctCollectionHistoryProvider.getCTCollections(
-					classNameId, classPK),
-				this::_toCTCollection));
 	}
 
 	@Override
@@ -487,10 +459,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private DTOConverter
 		<com.liferay.change.tracking.model.CTCollection, CTCollection>
 			_ctCollectionDTOConverter;
-
-	@Reference
-	private CTCollectionHistoryProviderRegistry
-		_ctCollectionHistoryProviderRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

@@ -322,9 +322,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		CollectionReference collectionReference =
 			collectionPageSettings.getCollectionReference();
 
-		if ((collectionReference == null) ||
-			(collectionReference.getCollectionType() == null)) {
+		if (collectionReference == null) {
+			return null;
+		}
 
+		if (collectionReference.getCollectionType() == null) {
 			throw new UnsupportedOperationException();
 		}
 

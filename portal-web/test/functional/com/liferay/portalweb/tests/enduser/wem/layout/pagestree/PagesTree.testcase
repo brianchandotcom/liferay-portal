@@ -81,49 +81,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
-	@priority = 5
-	test SearchAllPageTypes {
-		property portal.acceptance = "true";
-
-		task ("Add different types of pages") {
-			var i = 1;
-
-			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}",
-					type = ${pageType});
-
-				var i = ${i} + 1;
-			}
-
-			for (var i : list "6,7,8,9,10,11") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("Access to the Page Tree ") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-		}
-
-		task ("Type search term") {
-			PagesFinder.inputPageSearch(keyword = "Test");
-		}
-
-		task ("Assert all 11 pages shown in Pages Administration") {
-			PagesFinder.viewInPagesAdministration();
-
-			AssertTextEquals(
-				locator1 = "Search#SEARCH_INFO",
-				value1 = "11 Results Found for \"Test\"");
-		}
-	}
-
 	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
 	@priority = 4
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {

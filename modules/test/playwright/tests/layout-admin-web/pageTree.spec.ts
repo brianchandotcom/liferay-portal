@@ -454,7 +454,7 @@ test(
 test(
 	'Load more button is working while editing a page',
 	{
-		tag: '@LPS-168856',
+		tag: ['@LPS-90363', '@LPS-168856'],
 	},
 	async ({apiHelpers, page, pageEditorPage, pageTreePage, site}) => {
 
@@ -499,6 +499,20 @@ test(
 		await expect(
 			page.getByRole('link', {exact: true, name: 'Test Content Page 19'})
 		).toBeVisible();
+
+		// Search pages
+
+		await page
+			.getByPlaceholder('Start typing to find a page.')
+			.fill(layoutTitle);
+
+		// Assert results
+
+		await expect(
+			page.getByRole('link', {name: 'Test Content Page 18'})
+		).not.toBeVisible();
+
+		await expect(page.getByRole('link', {name: layoutTitle})).toBeVisible();
 	}
 );
 

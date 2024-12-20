@@ -154,7 +154,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -265,7 +265,7 @@ definition {
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrledit");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 

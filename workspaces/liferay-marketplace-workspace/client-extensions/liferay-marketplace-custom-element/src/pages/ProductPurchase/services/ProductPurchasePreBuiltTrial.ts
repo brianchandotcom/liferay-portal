@@ -10,8 +10,8 @@ import ProductPurchase from './ProductPurchase';
 export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = ORDER_TYPES.SOLUTIONS7;
 
-	public async createOrder(): Promise<Cart> {
-		const order = await super.createOrder();
+	public async createOrder(cart?: Partial<Cart>): Promise<Cart> {
+		const order = await super.createOrder(cart);
 
 		await trialOAuth2.provisioningTrial(order.id);
 

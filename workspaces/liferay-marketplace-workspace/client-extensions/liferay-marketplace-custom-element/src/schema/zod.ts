@@ -246,6 +246,14 @@ const zodSchema = {
 		}),
 		termsAndConditions: z.boolean().refine((data) => data === true),
 	},
+	trialForm: z.object({
+		accountId: z.string().optional(),
+		inviteMembers: z.array(z.string().email()),
+		product: z
+			.any()
+			.refine((value) => !!value, {message: 'Product is required'}),
+		sendNotificationEmail: z.boolean(),
+	}),
 };
 
 export {z, zodResolver};

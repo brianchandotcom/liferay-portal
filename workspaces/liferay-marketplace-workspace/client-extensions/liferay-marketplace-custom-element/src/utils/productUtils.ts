@@ -5,7 +5,11 @@
 
 import productIconFallback from '../assets/icons/purchased_app_icon.svg';
 import productImageFallback from '../assets/images/app_placeholder.png';
-import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../enums/Product';
+import {
+	PRODUCT_IMAGE_FALLBACK_CATEGORIES,
+	PRODUCT_SPECIFICATION_KEY,
+} from '../enums/Product';
+import {ProductType} from '../enums/ProductType';
 import i18n from '../i18n';
 
 export function getProductFallback(): DeliveryProduct {
@@ -100,4 +104,16 @@ export function getProductCategoriesByVocabularyName(
 				)
 		)
 		.map(({name}) => name);
+}
+
+export function getProductType(product: DeliveryProduct) {
+	const specification = getSpecificationByKey(
+		PRODUCT_SPECIFICATION_KEY.APP_TYPE,
+		product
+	);
+
+	return {
+		isCloud: specification?.value === ProductType.CLOUD,
+		isDXP: specification?.value === ProductType.DXP,
+	};
 }

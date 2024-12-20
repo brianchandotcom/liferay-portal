@@ -260,6 +260,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"One of the following parameters must be specified: [siteId]");
 	}
 
+	@Override
+	protected void preparePatch(SitePage sitePage, SitePage existingSitePage) {
+		if (sitePage.getPageSettings() != null) {
+			existingSitePage.setPageSettings(sitePage::getPageSettings);
+		}
+	}
+
 	private Layout _addLayout(
 			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {

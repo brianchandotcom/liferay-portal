@@ -1705,7 +1705,7 @@ test.describe('Form Localization', () => {
 
 			// Map the form to the All Fields object and publish the page
 
-			await pageEditorPage.mapFormFragment(formId, 'All Fields', [], {
+			await pageEditorPage.mapFormFragment(formId, 'All Fields', 'all', {
 				addLocalizationSelect: true,
 			});
 
@@ -1986,11 +1986,9 @@ test.describe('Form Localization', () => {
 
 			// Map the form to the Plant object and publish the page
 
-			await pageEditorPage.mapFormFragment(formId, 'Plant');
-
-			await page
-				.getByText('Add Localization Select', {exact: true})
-				.click();
+			await pageEditorPage.mapFormFragment(formId, 'Plant', 'all', {
+				addLocalizationSelect: true,
+			});
 
 			await pageEditorPage.publishPage();
 
@@ -2172,7 +2170,7 @@ test.describe('Form Localization', () => {
 			await pageEditorPage.mapFormFragment(
 				formId,
 				'All Fields (Default)',
-				[],
+				'all',
 				{addLocalizationSelect: true}
 			);
 

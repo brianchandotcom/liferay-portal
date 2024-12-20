@@ -34,15 +34,23 @@ type MultiSelectValue = {
 	value: string;
 };
 
+const defaultEmailAddress = Liferay.ThemeDisplay.getUserEmailAddress();
+
 const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 	const {channel, myUserAccount} = useMarketplaceContext();
 
 	const {formState, handleSubmit, register, setValue, trigger, watch} =
 		useForm({
 			defaultValues: {
-				_refInviteMembers: [],
+				_refInviteEmailAddresses: [
+					{
+						key: defaultEmailAddress,
+						label: defaultEmailAddress,
+						value: defaultEmailAddress,
+					},
+				],
 				accountId: String(myUserAccount.accountBriefs[0].id),
-				consoleInviteEmailAddresses: [],
+				consoleInviteEmailAddresses: [defaultEmailAddress],
 				product: undefined,
 				sendNotificationEmail: false,
 			},
@@ -53,7 +61,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 
 	const {isValid} = formState;
 
-	const _refInviteMembers = watch('_refInviteMembers');
+	const _refInviteEmailAddresses = watch('_refInviteEmailAddresses');
 	const {accountBriefs = []} = myUserAccount;
 
 	const [search, setSearch] = useState('');
@@ -188,10 +196,13 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
 						<ClayMultiSelect
-							items={_refInviteMembers}
+							items={_refInviteEmailAddresses}
 							onChange={setEmailAddressText}
 							onItemsChange={(values: MultiSelectValue[]) => {
-								setValue('_refInviteMembers', values as any);
+								setValue(
+									'_refInviteEmailAddresses',
+									values as any
+								);
 
 								setValue(
 									'consoleInviteEmailAddresses',

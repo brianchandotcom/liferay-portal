@@ -370,6 +370,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
+		if (pageSettings == null) {
+			return null;
+		}
+
 		if (sitePage.getType() == SitePage.Type.COLLECTION_PAGE) {
 			if (!(pageSettings instanceof CollectionPageSettings)) {
 				throw new UnsupportedOperationException();
@@ -406,6 +410,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	private boolean _isHiddenFromNavigation(
 		boolean defaultValue, PageSettings pageSettings) {
+
+		if (pageSettings == null) {
+			return defaultValue;
+		}
 
 		if (GetterUtil.getBoolean(
 				pageSettings.getHiddenFromNavigation(), defaultValue)) {
@@ -456,9 +464,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getGroupId(), contextHttpServletRequest,
 				contextUser.getUserId()));
 
+		String typeSettings = _getTypeSettings(layout.getGroupId(), sitePage);
+
+		if (typeSettings == null) {
+			return layout;
+		}
+
 		return _layoutService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			_getTypeSettings(layout.getGroupId(), sitePage));
+			typeSettings);
 	}
 
 	private void _validateSitePageLayout(Layout layout) {

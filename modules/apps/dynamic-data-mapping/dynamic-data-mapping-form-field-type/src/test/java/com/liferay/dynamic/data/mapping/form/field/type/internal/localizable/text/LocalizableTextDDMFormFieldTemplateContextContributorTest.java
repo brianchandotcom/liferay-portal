@@ -5,7 +5,6 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -113,16 +112,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(expectedString, actualPredefinedValue);
 	}
 
-	private DDMForm _getDDMForm() {
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.setDefaultLocale(LocaleUtil.US);
-
-		return ddmForm;
-	}
-
 	private Map<String, Object> _getParameters() {
-		_ddmFormField.setDDMForm(_getDDMForm());
+		_ddmFormField.setDDMForm(getDDMForm());
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();

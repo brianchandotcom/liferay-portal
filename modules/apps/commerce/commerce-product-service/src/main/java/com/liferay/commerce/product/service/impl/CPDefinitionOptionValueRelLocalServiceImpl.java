@@ -38,6 +38,7 @@ import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.info.pagination.Pagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -445,33 +446,28 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
 		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
 
-		List<CPDefinitionOptionValueRel> filteredCPDefinitionOptionValueRels =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			cpDefinitionOptionValueRels,
+			cpDefinitionOptionValueRel -> {
+				for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+						cpInstanceOptionValueRels) {
 
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
+					long cpDefinitionOptionValueRelId1 =
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId();
+					long cpDefinitionOptionValueRelId2 =
+						cpInstanceOptionValueRel.
+							getCPDefinitionOptionValueRelId();
 
-			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-					cpInstanceOptionValueRels) {
+					if (cpDefinitionOptionValueRelId1 ==
+							cpDefinitionOptionValueRelId2) {
 
-				long cpDefinitionOptionValueRelId1 =
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId();
-				long cpDefinitionOptionValueRelId2 =
-					cpInstanceOptionValueRel.getCPDefinitionOptionValueRelId();
-
-				if (cpDefinitionOptionValueRelId1 ==
-						cpDefinitionOptionValueRelId2) {
-
-					filteredCPDefinitionOptionValueRels.add(
-						cpDefinitionOptionValueRel);
-
-					break;
+						return cpDefinitionOptionValueRel;
+					}
 				}
-			}
-		}
 
-		return filteredCPDefinitionOptionValueRels;
+				return null;
+			});
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 [#assign
+	activeKey = ""
 	navItems = sourceObject.navItems
+	expandedKeys = ""
+	navItemsJSONArray = ""
 /]
 
 <div class="vertical-navigation-fragment">
@@ -19,6 +22,14 @@
 				/]
 			</ul>
 		</nav>
+
+		<script ${nonceAttribute} class="vertical-navigation-props" type="application/ld+json">
+			{
+				"active": "${activeKey}",
+				"expandedKeys": [${expandedKeys}],
+				"navItems": ${navItemsJSONArray}
+			}
+		</script>
 	[/#if]
 </div>
 
@@ -28,7 +39,11 @@
 	navItems
 ]
 	[#if navItems?has_content && ((displayDepth == 0) || (navItemLevel lte displayDepth))]
+		[#assign navItemsJSONArray = navItemsJSONArray + "[" /]
+
 		[#list navItems as navItem]
+			[#assign navItemsJSONArray = navItemsJSONArray + "{" /]
+
 			[#assign
 				navItemCSSClass = "nav-item"
 				navLinkCSSClass = "nav-link"
@@ -40,17 +55,21 @@
 
 			[#if !navItem.isChildSelected() && navItem.isSelected()]
 				[#assign
+					activeKey = navItem.getLayoutId()
 					navLinkCSSClass = "${navLinkCSSClass} active"
 				/]
 			[/#if]
 
 			<li class="${navItemCSSClass}" role="none">
 				[#if navItem.isBrowsable()]
+					[#assign navItemsJSONArray = navItemsJSONArray + '"href": "${navItem.getRegularURL()!}",' /]
+
 					<a class="${navLinkCSSClass}" href="${navItem.getRegularURL()!}" ${navItem.getTarget()}>
 						[@labelWithIcon navItem=navItem /]
 					</a>
 				[#elseif navItem.getChildren()?has_content]
 					[#assign
+						expandedKeys = expandedKeys + (expandedKeys?length > 0)?then(",", "") + '"${navItem.getLayoutId()}"'
 						id = "navChildren" + navItem.getLayoutId()
 					/]
 
@@ -62,17 +81,31 @@
 					</button>
 
 					<ul class="nav nav-stacked show" id="${id}" role="menu">
+						[#assign navItemsJSONArray = navItemsJSONArray + '"items": ' /]
+
 						[@buildNavigation
 							displayDepth=displayDepth
 							navItemLevel=(navItemLevel + 1)
 							navItems=navItem.getChildren()
 						/]
+
+						[#assign navItemsJSONArray = navItemsJSONArray + "," /]
 					</ul>
 				[#else]
 					[@labelWithIcon navItem=navItem /]
 				[/#if]
 			</li>
+
+			[#assign
+				navItemsJSONArray = navItemsJSONArray + '"icon": "${(navItem.getIcon??)?then(navItem.getIcon(), "")}", "id": "${navItem.getLayoutId()}", "label": "${navItem.getName()}"}'
+			/]
+
+			[#if navItem?has_next]
+				[#assign navItemsJSONArray = navItemsJSONArray + "," /]
+			[/#if]
 		[/#list]
+
+		[#assign navItemsJSONArray = navItemsJSONArray + "]" /]
 	[/#if]
 [/#macro]
 

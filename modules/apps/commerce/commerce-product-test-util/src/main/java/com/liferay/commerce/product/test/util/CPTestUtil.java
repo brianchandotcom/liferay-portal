@@ -42,6 +42,7 @@ import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUti
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -815,26 +816,18 @@ public class CPTestUtil {
 	public static List<CPDefinitionOptionValueRel>
 		getRandomCPDefinitionOptionValueRels(long cpDefinitionId) {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			new ArrayList<>();
-
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+		return TransformUtil.transform(
 			CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
-				cpDefinitionId);
+				cpDefinitionId),
+			cpDefinitionOptionRel -> {
+				List<CPDefinitionOptionValueRel>
+					sourceCPDefinitionOptionValueRels =
+						cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
-		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-				cpDefinitionOptionRels) {
-
-			List<CPDefinitionOptionValueRel> sourceCPDefinitionOptionValueRels =
-				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
-
-			cpDefinitionOptionValueRels.add(
-				sourceCPDefinitionOptionValueRels.get(
+				return sourceCPDefinitionOptionValueRels.get(
 					RandomTestUtil.randomInt(
-						0, sourceCPDefinitionOptionValueRels.size() - 1)));
-		}
-
-		return cpDefinitionOptionValueRels;
+						0, sourceCPDefinitionOptionValueRels.size() - 1));
+			});
 	}
 
 	public static SearchContext getSearchContext(
@@ -1324,9 +1317,6 @@ public class CPTestUtil {
 				List<CPInstance> childCPInstances)
 		throws Exception {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			new ArrayList<>();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
@@ -1343,25 +1333,27 @@ public class CPTestUtil {
 				RandomTestUtil.nextDouble(), false, false, false, false,
 				priceType, serviceContext);
 
-		for (CPInstance cpInstance : childCPInstances) {
-			CPDefinitionOptionValueRel cpInstanceOptionValueRel =
-				CPDefinitionOptionValueRelLocalServiceUtil.
-					addCPDefinitionOptionValueRel(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomLocaleStringMap(),
-						RandomTestUtil.nextDouble(), serviceContext);
+		return TransformUtil.transform(
+			childCPInstances,
+			cpInstance -> {
+				CPDefinitionOptionValueRel cpInstanceOptionValueRel =
+					CPDefinitionOptionValueRelLocalServiceUtil.
+						addCPDefinitionOptionValueRel(
+							cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomLocaleStringMap(),
+							RandomTestUtil.nextDouble(), serviceContext);
 
-			BigDecimal price = null;
+				BigDecimal price = null;
 
-			if (Objects.equals(
-					priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+				if (Objects.equals(
+						priceType,
+						CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
 
-				price = new BigDecimal(RandomTestUtil.randomDouble());
-			}
+					price = new BigDecimal(RandomTestUtil.randomDouble());
+				}
 
-			cpDefinitionOptionValueRels.add(
-				CPDefinitionOptionValueRelLocalServiceUtil.
+				return CPDefinitionOptionValueRelLocalServiceUtil.
 					updateCPDefinitionOptionValueRel(
 						cpInstanceOptionValueRel.
 							getCPDefinitionOptionValueRelId(),
@@ -1371,10 +1363,8 @@ public class CPTestUtil {
 						cpInstanceOptionValueRel.getPriority(),
 						BigDecimal.valueOf(2),
 						cpInstanceOptionValueRel.getUnitOfMeasureKey(),
-						serviceContext));
-		}
-
-		return cpDefinitionOptionValueRels;
+						serviceContext);
+			});
 	}
 
 }

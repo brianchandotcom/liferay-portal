@@ -31,18 +31,22 @@ public class CompanyServiceSettingsLocatorTest
 	public void testReturnsCompanyScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyConfigurationValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
-		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
+		Assert.assertEquals(
+			companyConfigurationValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyPortletPreferencesValue = savePortletPreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
+		Assert.assertEquals(
+			companyPortletPreferencesValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 	}
 
 }

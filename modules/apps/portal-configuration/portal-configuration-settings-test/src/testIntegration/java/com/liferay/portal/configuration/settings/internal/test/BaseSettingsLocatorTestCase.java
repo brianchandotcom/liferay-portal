@@ -111,14 +111,14 @@ public abstract class BaseSettingsLocatorTestCase {
 		}
 	}
 
-	protected String getSettingsValue() throws Exception {
+	protected String getSettingsValue(String key) throws Exception {
 		if (settingsLocator == null) {
 			return null;
 		}
 
 		Settings settings = settingsLocator.getSettings();
 
-		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
+		return settings.getValue(key, null);
 	}
 
 	protected String saveConfiguration(String configurationPid)

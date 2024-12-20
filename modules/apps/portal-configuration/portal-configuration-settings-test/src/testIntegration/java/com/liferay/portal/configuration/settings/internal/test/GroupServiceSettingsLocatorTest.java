@@ -36,29 +36,37 @@ public class GroupServiceSettingsLocatorTest
 	public void testReturnsGroupScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-			getSettingsValue());
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyConfigurationValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
-		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
+		Assert.assertEquals(
+			companyConfigurationValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyPortletPreferencesValue = savePortletPreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
+		Assert.assertEquals(
+			companyPortletPreferencesValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String groupConfigurationValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
-		Assert.assertEquals(groupConfigurationValue, getSettingsValue());
+		Assert.assertEquals(
+			groupConfigurationValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String groupPortletPreferencesValue = savePortletPreferences(
 			groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP);
 
-		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
+		Assert.assertEquals(
+			groupPortletPreferencesValue,
+			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 	}
 
 	@DeleteAfterTestRun

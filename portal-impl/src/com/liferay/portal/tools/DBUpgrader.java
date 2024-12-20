@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.transaction.TransactionsUtil;
@@ -132,8 +133,7 @@ public class DBUpgrader {
 		}
 
 		if (PortalRunMode.isTestMode()) {
-			return GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+			return _isUpgradeDatabaseAutoRunEnabled();
 		}
 
 		if (_upgradeDatabaseAutoRun != null) {
@@ -144,8 +144,7 @@ public class DBUpgrader {
 			_upgradeDatabaseAutoRun = false;
 		}
 		else {
-			_upgradeDatabaseAutoRun = GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+			_upgradeDatabaseAutoRun = _isUpgradeDatabaseAutoRunEnabled();
 		}
 
 		return _upgradeDatabaseAutoRun;
@@ -406,6 +405,24 @@ public class DBUpgrader {
 		_stopWatch.start();
 	}
 
+	private static boolean _isUpgradeDatabaseAutoRunEnabled() {
+		boolean upgradeDatabaseAutoRun = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+
+		if (!upgradeDatabaseAutoRun) {
+			return false;
+		}
+
+		if (!StringUtil.equalsIgnoreCase(
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY),
+				_UPGRADE_DATABASE_AUTO_RUN_RELEASE)) {
+
+			return true;
+		}
+
+		return StartupHelperUtil.isNewRelease();
+	}
+
 	private static void _registerModuleServiceLifecycle(
 		String moduleServiceLifecycle) {
 
@@ -429,6 +446,8 @@ public class DBUpgrader {
 
 		db.runSQL("update CompanyInfo set key_ = null");
 	}
+
+	private static final String _UPGRADE_DATABASE_AUTO_RUN_RELEASE = "release";
 
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 

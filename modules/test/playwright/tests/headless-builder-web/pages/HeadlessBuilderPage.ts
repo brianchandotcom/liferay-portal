@@ -28,7 +28,7 @@ export class HeadlessBuilderPage {
 
 	async openApplicationActions(title: string) {
 		await this.page
-			.locator('.dnd-tr', {hasText: title})
+			.locator('.fds tbody tr', {hasText: title})
 			.getByRole('button')
 			.click();
 	}

@@ -6,7 +6,7 @@
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminOrder {
-	deleteOrder(orderId: string) {
+	deleteOrder(orderId: number | string) {
 		return fetcher.delete(
 			`o/headless-commerce-admin-order/v1.0/orders/${orderId}`
 		);

@@ -53,9 +53,7 @@ public class JournalUtilTest {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(), 1.0,
 			1.3);
 
-		List<DiffVersion> diffVersions = diffVersionsInfo.getDiffVersions();
-
-		for (DiffVersion diffVersion : diffVersions) {
+		for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
 			if (diffVersion.getVersion() == 1.1) {
 				Assert.assertEquals(1002, diffVersion.getUserId());
 			}
@@ -66,15 +64,9 @@ public class JournalUtilTest {
 	}
 
 	private JournalArticle _getJournalArticle(
-		double version, Date modifiedDate, long userId) {
+		Date modifiedDate, double version, long statusByUserId) {
 
 		JournalArticle article = Mockito.mock(JournalArticle.class);
-
-		Mockito.when(
-			article.getVersion()
-		).thenReturn(
-			version
-		);
 
 		Mockito.when(
 			article.getModifiedDate()
@@ -83,9 +75,15 @@ public class JournalUtilTest {
 		);
 
 		Mockito.when(
+			article.getVersion()
+		).thenReturn(
+			version
+		);
+
+		Mockito.when(
 			article.getStatusByUserId()
 		).thenReturn(
-			userId
+			statusByUserId
 		);
 
 		return article;
@@ -93,10 +91,10 @@ public class JournalUtilTest {
 
 	private List<JournalArticle> _getJournalArticles() {
 		return Arrays.asList(
-			_getJournalArticle(1.0, new Date(), 1001),
-			_getJournalArticle(1.1, new Date(), 1002),
-			_getJournalArticle(1.2, new Date(), 1001),
-			_getJournalArticle(1.3, new Date(), 1001));
+			_getJournalArticle(new Date(), 1.0, 1001),
+			_getJournalArticle(new Date(), 1.1, 1002),
+			_getJournalArticle(new Date(), 1.2, 1001),
+			_getJournalArticle(new Date(), 1.3, 1001));
 	}
 
 	private void _setUpJournalArticleServiceUtil() {

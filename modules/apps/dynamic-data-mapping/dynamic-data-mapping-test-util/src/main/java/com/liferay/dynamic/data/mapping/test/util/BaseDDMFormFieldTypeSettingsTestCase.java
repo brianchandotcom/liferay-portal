@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,14 +33,14 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import com.liferay.portal.kernel.util.WebKeys;
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 
 import org.mockito.Mockito;
-import org.springframework.mock.web.MockHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -67,15 +68,9 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 				actualDDMFormLayout.getPaginationMode()));
 	}
 
-	protected DDMForm getDDMForm() {
-		DDMForm ddmForm = new DDMForm();
+	protected DDMFormFieldRenderingContext
+		createDDMFormFieldRenderingContext() {
 
-		ddmForm.setDefaultLocale(LocaleUtil.US);
-
-		return ddmForm;
-	}
-
-	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext() {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
@@ -98,6 +93,14 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 		return ddmFormFieldRenderingContext;
 	}
 
+	protected DDMForm getDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		return ddmForm;
+	}
+
 	protected void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -106,9 +109,6 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 
 	protected void setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
-
-		Set<Locale> availableLocales = new HashSet<>(
-			Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.US));
 
 		Mockito.when(
 			language.getAvailableLocales()
@@ -180,6 +180,8 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 		);
 	}
 
+	protected Set<Locale> availableLocales = new HashSet<>(
+		Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.US));
 	protected Language language = Mockito.mock(Language.class);
 
 	private void _assertDDMFormLayoutColumn(

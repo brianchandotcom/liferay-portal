@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -43,15 +44,24 @@ public class AutoUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_originalNewRelease = StartupHelperUtil.isNewRelease();
+
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
+		_originalUpgradeDatabaseAutoRunFrequency = PropsUtil.get(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		StartupHelperUtil.setNewRelease(_originalNewRelease);
+
 		PropsUtil.set(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
 			_originalUpgradeDatabaseAutoRun);
+		PropsUtil.set(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY,
+			_originalUpgradeDatabaseAutoRunFrequency);
 
 		_upgradeProcessRun = false;
 
@@ -110,6 +120,40 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
+	public void testNonupgradeProcessWhenAutoUpgradeEnabledAndFrequencyRelease()
+		throws Exception {
+
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
+
+		StartupHelperUtil.setNewRelease(false);
+
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY, "release");
+
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	@Test
+	public void testUpgradeProcessWhenAutoUpgradeEnabledAndFrequencyRelease()
+		throws Exception {
+
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
+
+		StartupHelperUtil.setNewRelease(true);
+
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY, "release");
+
+		Assert.assertEquals(
+			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertTrue(_upgradeProcessRun);
+	}
+
+	@Test
 	public void testUpgradeWhenAutoUpgradeEnabled() throws Exception {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
@@ -136,7 +180,9 @@ public class AutoUpgradeProcessTest {
 	private static final String _SERVLET_CONTEXT_NAME =
 		"com.liferay.portal.upgrade.test";
 
+	private static boolean _originalNewRelease;
 	private static String _originalUpgradeDatabaseAutoRun;
+	private static String _originalUpgradeDatabaseAutoRunFrequency;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;

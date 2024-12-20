@@ -127,17 +127,17 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_CELL</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//div[contains(@class,'dnd-td')][${key_cellPosition}]</td>
+	<td>//tr[.//*[normalize-space(text())='${key_entryTitle}']]//td[${key_cellPosition}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_CHECKBOX</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//input[@type='checkbox']</td>
+	<td>//tr[.//*[normalize-space(text())='${key_entryTitle}']]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${key_entryTitle}']]//div[contains(@class,'dnd-td')][3]</td>
+	<td>//tr[.//*[normalize-space(text())='${key_entryTitle}']]//td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER</td>
-	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-tr')][${key_rowNumber}]</td>
+	<td>//tbody//tr[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,12 +157,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//*[contains(@class,'dnd-tr') and contains(.,'${key_entryTitle}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_FIELD</td>
-	<td>//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-th') and contains(.,'${key_fieldName}')]</td>
+	<td>//tr//th[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

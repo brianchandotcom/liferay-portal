@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>IN_PROGRESS_STATUS</td>
-	<td>//div[contains(.,'${key_publicationName}')]//div[(@class="dnd-td cell-status") and contains(.,'In Progress')]</td>
+	<td>//div[contains(.,'${key_publicationName}')]//td[(@class="cell-status") and contains(.,'In Progress')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>OUT_OF_DATE_STATUS</td>
-	<td>//div[contains(.,'${key_publicationName}')]//div[(@class="dnd-td cell-status") and contains(.,'Out of Date')]</td>
+	<td>//div[contains(.,'${key_publicationName}')]//td[(@class="cell-status") and contains(.,'Out of Date')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ELLIPSIS</td>
-	<td>//div[contains(@class, 'dnd-td') and contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ORDER_IN_HISTORY</td>
-	<td>//div[contains(@class,'dnd-tbody')]/div[${resultOrder}]/div/div[1]</td>
+	<td>//tbody/div[${resultOrder}]/div/div[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -232,7 +232,7 @@
 </tr>
 <tr>
 	<td>PUBLISHED_STATUS</td>
-	<td>//div[contains(.,'${key_publicationName}')]//div[(@class="dnd-td cell-status") and contains(.,'Published')]</td>
+	<td>//div[contains(.,'${key_publicationName}')]//td[(@class="cell-status") and contains(.,'Published')]</td>
 	<td></td>
 </tr>
 <tr>

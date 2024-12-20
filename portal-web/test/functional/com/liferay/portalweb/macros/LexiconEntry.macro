@@ -2,8 +2,6 @@ definition {
 
 	@summary = "Default summary"
 	macro changeDisplayStyle(displayStyle = null) {
-		WaitForPageLoad();
-
 		Click.mouseOverClick(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 		if (IsElementNotPresent(key_menuItem = StringUtil.upperCaseFirstLetter(${displayStyle}), locator1 = "MenuItem#ANY_MENU_ITEM")) {

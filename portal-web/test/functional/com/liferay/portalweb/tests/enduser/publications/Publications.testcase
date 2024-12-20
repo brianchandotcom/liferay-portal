@@ -1655,11 +1655,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContent.editDisplayDate(
-			displayDate = "01/01/2050",
-			displayTime = "12:30 AM");
-
-		WebContent.publishWithPermissions();
+		WebContent.scheduleExistingWCArticleWithPermissions(displayDate = "01/01/2050");
 
 		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",

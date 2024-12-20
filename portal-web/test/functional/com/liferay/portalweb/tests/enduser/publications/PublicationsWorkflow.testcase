@@ -144,7 +144,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
@@ -220,9 +220,16 @@ definition {
 
 			WebContentNavigator.gotoAddCP();
 
-			WebContent.addDraft(
+			WebContent.addCP(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
+
+			WebContent.saveAsDraftWithPermissions();
+
+			AssertTextEquals(
+				key_status = "Draft",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+				value1 = "Draft");
 		}
 
 		task ("Attempt to publish the publication and assert it is blocked with an error message") {
@@ -276,7 +283,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title 1");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
@@ -300,7 +307,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title 2");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
@@ -407,7 +414,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -487,7 +494,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title 1");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
@@ -522,7 +529,7 @@ definition {
 			webContentContent = "WC WebContent Content 2",
 			webContentTitle = "WC WebContent Title 2");
 
-		PortletEntry.submitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

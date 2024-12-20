@@ -323,7 +323,7 @@ definition {
 				templateName = "Test Template Name",
 				webContentTitle = "Test WebContent Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Assert that the web content change cannot move to Publication 1 without its parent changes") {

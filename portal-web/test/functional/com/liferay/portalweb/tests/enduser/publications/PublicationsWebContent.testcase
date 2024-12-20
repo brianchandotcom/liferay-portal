@@ -190,7 +190,7 @@ definition {
 
 			WebContent.addWithStructureCP(webContentTitle = "WC Titel");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Review changes of the Web Content") {
@@ -408,6 +408,8 @@ definition {
 
 		WebContent.publishExistingWCArticleWithPermissions();
 
+		PublicationsNavigator.openPublicationsAdmin();
+
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
@@ -608,7 +610,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentUpload = "DM Document Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		AssertElementPresent(
 			key_webContentTitle = "WC WebContent Title",

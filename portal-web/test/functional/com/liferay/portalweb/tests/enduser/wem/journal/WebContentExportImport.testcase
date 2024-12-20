@@ -319,7 +319,7 @@ definition {
 				webContentImage = "Document Title",
 				webContentTitle = "WC Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
@@ -570,7 +570,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentWebContent = "Basic WebContent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -609,7 +609,7 @@ definition {
 			fieldName = "TestName",
 			webContentTitle = "WC WebContent 1 Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent 1 Title");
 
@@ -707,7 +707,7 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewTitle(webContentTitle = "Agricultural Science Front Page");
 

@@ -130,7 +130,7 @@ definition {
 				webContentUpload = "Document_3.doc",
 				webContentWebContent = "WC 1");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title 2");
 		}

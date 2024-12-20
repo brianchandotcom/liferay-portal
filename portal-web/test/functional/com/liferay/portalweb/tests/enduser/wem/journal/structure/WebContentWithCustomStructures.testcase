@@ -945,7 +945,7 @@ definition {
 				webContentTitle = "Web Content Title 2",
 				webContentWebContent = "Web Content Title 1");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("View web content and geolocation field are shown") {

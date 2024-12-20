@@ -7,6 +7,7 @@ package com.liferay.saml.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -27,8 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"after-filter=Virtual Host Filter", "before-filter=Session Id Filter",
-		"dispatcher=FORWARD", "dispatcher=REQUEST",
+		"before-filter=Absolute Redirects Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST",
 		"init-param.url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$",
 		"servlet-context-name=",
 		"servlet-filter-name=SP Session Termination SAML Portal Filter",
@@ -49,6 +50,10 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		if (httpServletRequest.getAttribute("COMPANY_ID") == null) {
+			PortalInstances.getCompanyId(httpServletRequest);
+		}
 
 		if (_samlProviderConfigurationHelper.isEnabled() &&
 			(httpServletRequest.getSession(false) != null)) {

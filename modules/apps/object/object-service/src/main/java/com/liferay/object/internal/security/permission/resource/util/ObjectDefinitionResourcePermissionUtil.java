@@ -18,12 +18,14 @@ import com.liferay.object.tree.Tree;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +50,13 @@ public class ObjectDefinitionResourcePermissionUtil {
 			return;
 		}
 
+		List<String> rootDescendantNodeObjectDefinitionClassNames =
+			new ArrayList<>();
+
 		Document document = _readDocument(
 			objectActionLocalService, objectDefinition,
 			objectDefinitionPersistence, objectDefinitionTreeFactory,
+			rootDescendantNodeObjectDefinitionClassNames,
 			standaloneObjectActions);
 
 		resourceActions.populateModelResources(document);
@@ -63,6 +69,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 				portlet,
 				ObjectDefinitionResourcePermissionUtil.class.getClassLoader(),
 				document);
+		}
+
+		for (String rootDescendantNodeObjectDefinitionClassName :
+				rootDescendantNodeObjectDefinitionClassNames) {
+
+			resourceActions.removeModelResource(
+				rootDescendantNodeObjectDefinitionClassName,
+				ActionKeys.PERMISSIONS);
 		}
 
 		_objectDefinitionResourceActionDocumentsMap.put(
@@ -83,7 +97,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 		if (document == null) {
 			document = _readDocument(
 				objectActionLocalService, objectDefinition,
-				objectDefinitionPersistence, objectDefinitionTreeFactory, null);
+				objectDefinitionPersistence, objectDefinitionTreeFactory,
+				new ArrayList<>(), null);
 		}
 
 		resourceActions.removeModelResources(document);
@@ -148,6 +163,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
+			List<String> rootDescendantNodeObjectDefinitionClassNames,
 			ObjectDefinition rootNodeObjectDefinition,
 			List<ObjectAction> standaloneObjectActions)
 		throws Exception {
@@ -176,6 +192,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 				objectDefinitionPersistence.findByPrimaryKey(
 					node.getPrimaryKey());
 
+			rootDescendantNodeObjectDefinitionClassNames.add(
+				rootDescendantNodeObjectDefinition.getClassName());
+
 			modelResources = StringBundler.concat(
 				modelResources, "<model-resource><model-name>",
 				rootDescendantNodeObjectDefinition.getClassName(),
@@ -198,6 +217,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
+			List<String> rootDescendantNodeObjectDefinitionClassNames,
 			List<ObjectAction> standaloneObjectActions)
 		throws Exception {
 
@@ -240,8 +260,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectDefinition.getResourceName(),
 					_getRootDescendantNodeObjectDefinitionsModelResources(
 						objectActionLocalService, objectDefinitionPersistence,
-						objectDefinitionTreeFactory, objectDefinition,
-						standaloneObjectActions)
+						objectDefinitionTreeFactory,
+						rootDescendantNodeObjectDefinitionClassNames,
+						objectDefinition, standaloneObjectActions)
 				}));
 	}
 

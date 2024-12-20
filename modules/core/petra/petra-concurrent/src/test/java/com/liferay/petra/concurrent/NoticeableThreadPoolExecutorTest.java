@@ -14,6 +14,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -787,9 +788,22 @@ public class NoticeableThreadPoolExecutorTest {
 		private MethodNameThreadFactory() {
 			Exception exception = new Exception();
 
-			StackTraceElement[] stackTraceElements = exception.getStackTrace();
+			String prefix = null;
 
-			_prefix = stackTraceElements[2].getMethodName() + "-";
+			for (StackTraceElement stackTraceElement :
+					exception.getStackTrace()) {
+
+				if (Objects.equals(
+						NoticeableThreadPoolExecutorTest.class.getName(),
+						stackTraceElement.getClassName())) {
+
+					prefix = stackTraceElement.getMethodName() + "-";
+
+					break;
+				}
+			}
+
+			_prefix = prefix;
 		}
 
 		private final AtomicInteger _counter = new AtomicInteger();

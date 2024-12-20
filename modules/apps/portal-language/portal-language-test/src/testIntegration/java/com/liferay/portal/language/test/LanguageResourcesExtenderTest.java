@@ -10,20 +10,26 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.language.LanguageResources;
 
 import java.io.InputStream;
 
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
@@ -36,6 +42,70 @@ import org.osgi.framework.FrameworkUtil;
  */
 @RunWith(Arquillian.class)
 public class LanguageResourcesExtenderTest {
+
+	@Test
+	public void testRegistration() throws Exception {
+		Bundle bundle = _installResourceBundle(
+			"test.bundle", "content1.Language",
+			_getProvideCapability("content1.Language", 1));
+
+		try {
+			bundle.start();
+
+			Assert.assertEquals(
+				"Test 1",
+				LanguageResources.getMessage(_LOCALE, "language-key-1"));
+			Assert.assertEquals(
+				"Test 1", LanguageResources.getMessage(_LOCALE, "about"));
+			Assert.assertEquals(
+				"Test 1",
+				LanguageResources.getMessage(_LOCALE, "shared-language-key"));
+
+			Assert.assertEquals(
+				"Enabled", LanguageResources.getMessage(_LOCALE, "enabled"));
+		}
+		finally {
+			bundle.uninstall();
+		}
+	}
+
+	@Test
+	public void testRegistrationServiceRanking() throws Exception {
+		Bundle bundle1 = _installResourceBundle(
+			"test.bundle1", "content1.Language",
+			_getProvideCapability("content1.Language", 1));
+		Bundle bundle2 = _installResourceBundle(
+			"test.bundle2", "content2.Language",
+			_getProvideCapability("content2.Language", 2));
+
+		try {
+			bundle1.start();
+			bundle2.start();
+
+			Assert.assertEquals(
+				"Test 1",
+				LanguageResources.getMessage(_LOCALE, "language-key-1"));
+			Assert.assertEquals(
+				"Test 2",
+				LanguageResources.getMessage(_LOCALE, "language-key-2"));
+			Assert.assertEquals(
+				"Test 2", LanguageResources.getMessage(_LOCALE, "about"));
+			Assert.assertEquals(
+				"Test 2",
+				LanguageResources.getMessage(_LOCALE, "shared-language-key"));
+		}
+		finally {
+			bundle1.uninstall();
+			bundle2.uninstall();
+		}
+	}
+
+	private String _getProvideCapability(String baseName, int serviceRanking) {
+		return StringBundler.concat(
+			"liferay.language.resources;module.only=false;",
+			"resource.bundle.base.name=\"", baseName, "\";service.ranking=",
+			serviceRanking);
+	}
 
 	private Bundle _installResourceBundle(
 			String bundleSymbolicName, String baseName,
@@ -146,5 +216,7 @@ public class LanguageResourcesExtenderTest {
 			jarOutputStream.closeEntry();
 		}
 	}
+
+	private static final Locale _LOCALE = LocaleUtil.ENGLISH;
 
 }

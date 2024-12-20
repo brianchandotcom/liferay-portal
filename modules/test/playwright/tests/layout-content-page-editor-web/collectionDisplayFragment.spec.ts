@@ -251,11 +251,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	await expect(reportItem).toHaveCount(2);
 
-	const firstReportItem = reportItem.first();
-
-	await firstReportItem.click();
-	await firstReportItem.press('Tab');
-	await firstReportItem.press('Enter');
+	await reportItem.first().click();
 
 	await page.getByPlaceholder('No Item Selected').waitFor();
 
@@ -263,11 +259,9 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 		'Animal 01 - Dogs and Cats categories'
 	);
 
-	const secondReportItem = reportItem.nth(1);
+	await reportItem.nth(1).click();
 
-	await secondReportItem.click();
-	await secondReportItem.press('Tab');
-	await secondReportItem.press('Enter');
+	await page.getByPlaceholder('No Item Selected').waitFor();
 
 	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
 		'Animal 02 - Dogs category'

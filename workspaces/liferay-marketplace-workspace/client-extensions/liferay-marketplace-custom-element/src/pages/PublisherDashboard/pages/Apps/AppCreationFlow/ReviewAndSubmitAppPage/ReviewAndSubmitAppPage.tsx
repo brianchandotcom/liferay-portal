@@ -83,7 +83,7 @@ export function ReviewAndSubmitAppPage({
 				productSpecifications.some(
 					({specificationKey, value}) =>
 						specificationKey ===
-							PRODUCT_SPECIFICATION_KEY.APP_BUILD_CLOUD_COMPATIBLE &&
+							PRODUCT_SPECIFICATION_KEY.APP_TYPE &&
 						(value.en_US === 'cloud' ||
 							(value as unknown as string) === 'cloud')
 				) ?? false;

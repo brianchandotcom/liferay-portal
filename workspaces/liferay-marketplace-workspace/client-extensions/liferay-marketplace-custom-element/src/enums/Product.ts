@@ -30,7 +30,6 @@ export enum PRODUCT_PRICE_MODEL {
 }
 
 export enum PRODUCT_SPECIFICATION_KEY {
-	APP_BUILD_CLOUD_COMPATIBLE = 'type',
 	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
 	APP_BUILD_RAM_IN_GBS = 'ram',
 	APP_DEVELOPER_NAME = 'developer-name',
@@ -43,6 +42,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	APP_SUPPORT_PUBLISHER_WEBSITE_URL = 'publisherwebsiteurl',
 	APP_SUPPORT_URL = 'supporturl',
 	APP_SUPPORT_USAGE_TERMS_URL = 'appusagetermsurl',
+	APP_TYPE = 'type',
 	APP_VERSION = 'latest-version',
 	APP_VERSION_NOTES = 'product-notes',
 	DOWNLOADABLE_CLOUD_APP = 'downloadable-cloud-app',

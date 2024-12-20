@@ -267,7 +267,7 @@ const usePublishAppSubmission = (
 
 		const specifications = [
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_BUILD_CLOUD_COMPATIBLE,
+				key: PRODUCT_SPECIFICATION_KEY.APP_TYPE,
 				value: cloudCompatible ? ProductType.CLOUD : ProductType.DXP,
 			},
 		];

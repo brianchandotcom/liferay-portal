@@ -247,6 +247,7 @@ public class LocalProcessExecutorTest {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+		builder.setEnvironment(_environment);
 
 		char[] largeFileNameChars = new char[10 * 1024 * 1024];
 
@@ -551,6 +552,7 @@ public class LocalProcessExecutorTest {
 
 		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setEnvironment(_environment);
 		builder.setProcessLogConsumer(
 			processLog -> {
 				if (processLog.getLevel() == ProcessLog.Level.ERROR) {
@@ -1197,6 +1199,7 @@ public class LocalProcessExecutorTest {
 
 		builder.setArguments(_createArguments(jpdaOption));
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setEnvironment(_environment);
 
 		if (processLogConsumer != null) {
 			builder.setProcessLogConsumer(processLogConsumer);
@@ -1381,6 +1384,16 @@ public class LocalProcessExecutorTest {
 
 	private static final String _SYSTEM_PROPERTIES_QUIET =
 		"system.properties.quiet";
+
+	private static final Map<String, String> _environment =
+		new HashMap<String, String>(System.getenv()) {
+			{
+				put(
+					"JDK_JAVA_OPTIONS",
+					"--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens" +
+						"=java.base/java.lang.invoke=ALL-UNNAMED");
+			}
+		};
 
 	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();

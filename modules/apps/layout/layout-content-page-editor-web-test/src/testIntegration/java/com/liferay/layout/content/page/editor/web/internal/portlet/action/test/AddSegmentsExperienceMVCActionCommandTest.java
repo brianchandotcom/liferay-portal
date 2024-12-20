@@ -125,8 +125,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 				ddmTemplate.getTemplateKey();
 
 		_setUpPortletPreferences(
-			assetVocabulary1.getVocabularyId(), _addPortletToLayout(),
-			displayStyle);
+			assetVocabulary1, _addPortletToLayout(), displayStyle);
 
 		AssetVocabulary assetVocabulary2 = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -134,8 +133,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		long segmentsExperienceId = _addSegmentsExperience();
 
 		_setUpPortletPreferences(
-			assetVocabulary2.getVocabularyId(),
-			_getPortletId(segmentsExperienceId), displayStyle);
+			assetVocabulary2, _getPortletId(segmentsExperienceId),
+			displayStyle);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
@@ -338,7 +337,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	}
 
 	private void _setUpPortletPreferences(
-			long assetVocabularyId, String portletId, String displayStyle)
+			AssetVocabulary assetVocabulary, String portletId,
+			String displayStyle)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -347,12 +347,16 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		portletPreferences.setValue(
 			"allAssetVocabularies", Boolean.FALSE.toString());
 		portletPreferences.setValue(
-			"assetVocabularyIds", String.valueOf(assetVocabularyId));
+			"assetVocabularyGroupExternalReferenceCodes",
+			_group.getExternalReferenceCode());
+		portletPreferences.setValue(
+			"assetVocabularyExternalReferenceCodes_" +
+				_group.getExternalReferenceCode(),
+			assetVocabulary.getExternalReferenceCode());
 		portletPreferences.setValue("displayStyle", displayStyle);
 		portletPreferences.setValue(
-			"displayStyleGroupId", String.valueOf(_group.getGroupId()));
-		portletPreferences.setValue(
-			"displayStyleGroupKey", _group.getGroupKey());
+			"displayStyleGroupExternalReferenceCode",
+			_group.getExternalReferenceCode());
 
 		portletPreferences.store();
 	}

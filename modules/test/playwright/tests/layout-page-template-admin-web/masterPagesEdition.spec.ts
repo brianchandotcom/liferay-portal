@@ -142,7 +142,9 @@ test(
 				exact: true,
 				name: 'View',
 			}),
-			trigger: page.locator('.dnd-tbody .item-actions').first(),
+			trigger: page
+				.locator('.fds tbody .cell-item-actions .dropdown-toggle')
+				.first(),
 		});
 
 		await expect(page.getByText('Cats')).toBeVisible();

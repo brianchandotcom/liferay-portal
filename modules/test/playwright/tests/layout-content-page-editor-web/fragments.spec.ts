@@ -2202,7 +2202,7 @@ test.describe('Tags Fragment', () => {
 		});
 
 		const objectRow = page
-			.locator('.dnd-tr')
+			.locator('.fds tr')
 			.filter({hasText: 'Tags test'});
 
 		await objectRow.waitFor();

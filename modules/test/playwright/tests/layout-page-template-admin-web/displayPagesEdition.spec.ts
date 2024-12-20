@@ -1136,7 +1136,7 @@ test.describe('Object Display page', () => {
 				page,
 			});
 
-			const row = page.locator('.dnd-tbody .dnd-tr').first();
+			const row = page.locator('.fds tbody tr').first();
 
 			await expect(row).toContainText('one');
 			await expect(row).toContainText('lemonSize2');

@@ -5,8 +5,10 @@
 
 package com.liferay.dynamic.data.mapping.test.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -29,10 +32,14 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import org.junit.Assert;
 import org.junit.Before;
 
 import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -58,6 +65,37 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 			() -> Assert.assertEquals(
 				expectedDDMFormLayout.getPaginationMode(),
 				actualDDMFormLayout.getPaginationMode()));
+	}
+
+	protected DDMForm getDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		return ddmForm;
+	}
+
+	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext() {
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			0L
+		).when(
+			themeDisplay
+		).getPlid();
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(httpServletRequest);
+
+		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		return ddmFormFieldRenderingContext;
 	}
 
 	protected void setUpJSONFactoryUtil() {

@@ -1,7 +1,7 @@
 <script>
 	const toggleClick = (link) => {
 		link.addEventListener("click", (event) => {
-		
+
 			event.preventDefault();
 			const targetId = link.getAttribute("href").substring(1);
 
@@ -9,7 +9,7 @@
 
 			if (targetElement) {
 				const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
-				
+
 				window.scrollTo({
 					behavior: "smooth",
 					top: elementPosition,

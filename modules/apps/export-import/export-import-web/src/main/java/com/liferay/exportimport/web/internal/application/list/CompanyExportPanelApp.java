@@ -9,8 +9,10 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -39,6 +41,11 @@ public class CompanyExportPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return ExportImportPortletKeys.EXPORT;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group) {
+		return FeatureFlagManagerUtil.isEnabled("LPD-35914");
 	}
 
 	@Override

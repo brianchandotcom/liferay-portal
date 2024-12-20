@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -43,6 +44,10 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override
 	public Group fetchCompanyGroup(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+			return null;
+		}
+
 		return _groupLocalService.fetchFriendlyURLGroup(
 			companyId, CompanyGroupConstants.FRIENDLY_URL);
 	}

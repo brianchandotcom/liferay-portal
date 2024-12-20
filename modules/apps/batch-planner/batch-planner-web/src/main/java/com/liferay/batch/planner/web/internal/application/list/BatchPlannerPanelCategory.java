@@ -50,7 +50,9 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-8087")) {
+		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-8087") &&
+			!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+
 			return false;
 		}
 

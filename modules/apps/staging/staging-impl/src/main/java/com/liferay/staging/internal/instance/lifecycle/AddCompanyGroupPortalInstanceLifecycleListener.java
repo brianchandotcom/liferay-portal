@@ -7,15 +7,21 @@ package com.liferay.staging.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.internal.constants.CompanyGroupConstants;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -27,23 +33,49 @@ public class AddCompanyGroupPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		Group group = _groupLocalService.fetchFriendlyURLGroup(
-			company.getCompanyId(), CompanyGroupConstants.FRIENDLY_URL);
+	public void portalInstanceRegistered(Company company) {
+		_bundleContext.registerService(
+			FeatureFlagListener.class,
+			(companyId, featureFlagKey, enabled) -> {
+				try {
+					Group group = _groupLocalService.fetchFriendlyURLGroup(
+						company.getCompanyId(),
+						CompanyGroupConstants.FRIENDLY_URL);
 
-		if (group != null) {
-			return;
-		}
+					if (group != null) {
+						_groupLocalService.deleteGroup(group);
+					}
 
-		_groupLocalService.addGroup(
-			_userLocalService.getGuestUserId(company.getCompanyId()),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			StagingGroupHelper.class.getName(), company.getCompanyId(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
-			GroupConstants.TYPE_SITE_RESTRICTED, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			CompanyGroupConstants.FRIENDLY_URL, false, true, null);
+					if (!enabled) {
+						return;
+					}
+
+					_groupLocalService.addGroup(
+						_userLocalService.getGuestUserId(
+							company.getCompanyId()),
+						GroupConstants.DEFAULT_PARENT_GROUP_ID,
+						StagingGroupHelper.class.getName(), companyId,
+						GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null,
+						GroupConstants.TYPE_SITE_RESTRICTED, true,
+						GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+						CompanyGroupConstants.FRIENDLY_URL, false, true, null);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			},
+			MapUtil.singletonDictionary("featureFlagKey", "LPD-35914"));
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddCompanyGroupPortalInstanceLifecycleListener.class);
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

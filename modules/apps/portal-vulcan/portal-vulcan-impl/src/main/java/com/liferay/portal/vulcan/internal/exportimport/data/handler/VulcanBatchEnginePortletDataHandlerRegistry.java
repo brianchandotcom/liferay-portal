@@ -11,9 +11,11 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
@@ -38,14 +40,27 @@ public class VulcanBatchEnginePortletDataHandlerRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = ServiceTrackerFactory.open(
+		_serviceTracker = ServiceTrackerFactory.create(
 			bundleContext, "(batch.engine.task.item.delegate=true)",
 			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 				bundleContext));
+
+		_serviceRegistration = bundleContext.registerService(
+			FeatureFlagListener.class,
+			(companyId, featureFlagKey, enabled) -> {
+				if (enabled) {
+					_serviceTracker.open();
+				}
+				else {
+					_serviceTracker.close();
+				}
+			},
+			MapUtil.singletonDictionary("featureFlagKey", "LPD-35914"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceRegistration.unregister();
 		_serviceTracker.close();
 
 		for (ServiceRegistration<PortletDataHandler> serviceRegistration :
@@ -77,6 +92,7 @@ public class VulcanBatchEnginePortletDataHandlerRegistry {
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
+	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
 	private final Map
 		<ServiceReference<VulcanBatchEngineTaskItemDelegate>,
 		 ServiceRegistration<PortletDataHandler>> _serviceRegistrations =

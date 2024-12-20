@@ -53,6 +53,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -118,7 +119,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public Map<String, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
-		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+		Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
 		Map<Long, List<ObjectField>> objectFieldsMap =
@@ -129,7 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			serviceRegistrationsMap.put(
-				objectDefinition.getObjectDefinitionId(),
+				DBPartitionUtil.getPartitionKey(objectDefinition.getObjectDefinitionId()),
 				_deploy(
 					objectDefinition,
 					objectFieldsMap.getOrDefault(

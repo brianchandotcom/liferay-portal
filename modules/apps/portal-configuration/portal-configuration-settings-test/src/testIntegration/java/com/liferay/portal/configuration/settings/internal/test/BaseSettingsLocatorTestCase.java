@@ -140,21 +140,24 @@ public abstract class BaseSettingsLocatorTestCase {
 			Serializable scopePK)
 		throws Exception {
 
-		return saveFactoryConfiguration(factoryPid, scope, scopePK, null, null);
+		return saveFactoryConfiguration(
+			factoryPid, scope, scopePK, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 	}
 
 	protected String saveFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
 			Serializable scopePK, String propertyKey,
-			Serializable propertyValue)
+			Serializable propertyValue, String key, String value)
 		throws Exception {
-
-		String value = RandomTestUtil.randomString();
 
 		String pid = ConfigurationTestUtil.createFactoryConfiguration(
 			factoryPid + ".scoped",
 			HashMapDictionaryBuilder.<String, Object>put(
 				scope.getPropertyKey(), scopePK
+			).put(
+				key, value
 			).put(
 				propertyKey,
 				() -> {
@@ -166,8 +169,6 @@ public abstract class BaseSettingsLocatorTestCase {
 
 					return null;
 				}
-			).put(
-				SettingsLocatorTestConstants.TEST_KEY, value
 			).build());
 
 		_factoryConfigurationPids.put(pid, factoryPid + ".scoped");

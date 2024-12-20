@@ -29,7 +29,8 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+										"key": "vertical-navigation",
+										"siteKey": "New CMS"
 									},
 									"fragmentConfig": {
 										"displayStyle": "stacked",

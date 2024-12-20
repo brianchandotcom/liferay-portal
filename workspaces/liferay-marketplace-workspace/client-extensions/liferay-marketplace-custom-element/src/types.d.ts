@@ -383,7 +383,7 @@ type Order = {
 	currencyCode: string;
 	customFields?: {[key: string]: string};
 	externalReferenceCode?: string;
-	id?: number;
+	id: number;
 	marketplaceOrderType?: string;
 	modifiedDate?: string;
 	orderDate?: string;
@@ -401,6 +401,7 @@ type Order = {
 	orderStatus: number;
 	orderStatusInfo?: {
 		label: string;
+		label_i18n: string;
 	};
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId?: number;

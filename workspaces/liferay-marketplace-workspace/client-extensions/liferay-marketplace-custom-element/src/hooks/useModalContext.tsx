@@ -7,27 +7,26 @@ import {Context} from '@clayui/modal';
 import {Size} from '@clayui/modal/lib/types';
 import {ReactElement, useContext} from 'react';
 
-interface ModalOptions {
+export type ModalOptions = {
 	body: ReactElement;
 	center?: boolean;
-	footer?: (undefined | ReactElement)[];
+	footer?: (any | ReactElement)[];
 	header?: string;
-	size: Size;
-}
+	size?: Size | 'md';
+	status?: 'danger' | 'info' | 'success' | 'warning';
+};
 
 const useModalContext = () => {
 	const [state, dispatch] = useContext(Context);
 
 	return {
 		onClose: () => dispatch({type: 0}),
-		onOpenModal: ({body, center, footer, header, size}: ModalOptions) => {
+		onOpenModal: ({center = true, ...payload}: ModalOptions) => {
 			dispatch({
 				payload: {
-					body,
+					...payload,
 					center,
-					footer,
-					header,
-					size,
+					size: payload.size as Size,
 				},
 				type: 1,
 			});

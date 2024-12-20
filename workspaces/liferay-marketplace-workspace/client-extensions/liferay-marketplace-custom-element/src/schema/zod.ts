@@ -248,7 +248,7 @@ const zodSchema = {
 	},
 	trialForm: z.object({
 		accountId: z.string().optional(),
-		inviteMembers: z.array(z.string().email()),
+		consoleInviteEmailAddresses: z.array(z.string().email()),
 		product: z
 			.any()
 			.refine((value) => !!value, {message: 'Product is required'}),

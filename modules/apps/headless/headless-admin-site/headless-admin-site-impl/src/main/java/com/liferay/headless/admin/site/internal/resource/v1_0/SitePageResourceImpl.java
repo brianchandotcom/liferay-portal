@@ -294,6 +294,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return defaultParentLayoutId;
 		}
 
+		if (Validator.isNull(parentSitePageExternalReferenceCode)) {
+			return LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+		}
+
 		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
 			parentSitePageExternalReferenceCode, groupId);
 

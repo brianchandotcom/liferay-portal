@@ -226,6 +226,14 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		_validateSitePageLayout(layout);
 
+		if ((sitePage.getType() != null) &&
+			!Objects.equals(
+				layout.getType(),
+				SitePageTypeUtil.toInternalType(sitePage.getType()))) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _toSitePage(_updateLayout(layout, sitePage));
 	}
 

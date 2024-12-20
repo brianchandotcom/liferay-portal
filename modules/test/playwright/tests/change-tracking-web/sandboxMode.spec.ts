@@ -8,10 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../utils/waitForAlert';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -19,7 +19,7 @@ export const test = mergeTests(
 	}),
 	apiHelpersTest,
 	changeTrackingPagesTest,
-	isolatedSiteTest
+	journalPagesTest
 );
 
 test.beforeEach(async ({changeTrackingPage}) => {
@@ -79,40 +79,46 @@ test('LPD-34602 Add view-only mode for production when using Publications sandbo
 test('LPD-39341 Sandbox mode allows users to work on production without permissions', async ({
 	apiHelpers,
 	changeTrackingPage,
-	ctCollection,
+	journalEditArticlePage,
 	page,
-	site,
 }) => {
-	await changeTrackingPage.workOnPublication(ctCollection);
-
-	const basicWebContentStructureId =
-		await getBasicWebContentStructureId(apiHelpers);
-
-	const title = getRandomString();
-
-	await apiHelpers.jsonWebServicesJournal.addWebContent({
-		ddmStructureId: basicWebContentStructureId,
-		groupId: site.id,
-		titleMap: {en_US: title},
-	});
-
 	const user = await changeTrackingPage.addUserWithPublicationsUserRole();
 
 	await performLogout(page);
 
 	await performLogin(page, user.alternateName);
 
-	await changeTrackingPage.workOnPublication(ctCollection);
-
-	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.body.id
-	);
-
-	await page.reload();
-
 	const sandboxPublication = await page.getByText(user.alternateName + ' - ');
 
 	await expect(sandboxPublication).toBeVisible();
+
+	await journalEditArticlePage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.fillTitle(title);
+
+	await journalEditArticlePage.publishArticle();
+
+	await waitForAlert(page, `Success:${title} was created successfully.`);
+
+	await performLogout(page);
+
+	await performLogin(page, 'test');
+
+	await changeTrackingPage.publishSandboxPublication(user.alternateName);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	const newSandboxPublication = await page.getByText(
+		user.alternateName + ' - '
+	);
+
+	await expect(sandboxPublication).not.toBe(newSandboxPublication);
+
+	await expect(newSandboxPublication).toBeVisible();
 
 	await performLogout(page);
 

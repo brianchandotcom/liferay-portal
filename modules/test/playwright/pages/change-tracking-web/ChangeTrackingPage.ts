@@ -317,6 +317,22 @@ export class ChangeTrackingPage {
 		);
 	}
 
+	async publishSandboxPublication(title: string) {
+		await this.goto();
+
+		await this.page.getByRole('link', {name: title}).first().click();
+
+		await this.page.getByRole('link', {name: 'Publish'}).waitFor();
+
+		await this.page.getByRole('link', {name: 'Publish'}).click();
+
+		await expect(
+			this.page.getByText('No unresolved conflicts, ready to publish.')
+		).toBeVisible();
+
+		await this.page.getByRole('button', {name: 'Publish'}).click();
+	}
+
 	async toggleSandboxConfiguration(check: boolean) {
 		await this.goto();
 
@@ -324,7 +340,7 @@ export class ChangeTrackingPage {
 
 		await this.page.getByRole('menuitem', {name: 'Settings'}).click();
 
-		await expect(this.page.getByText('Sandbox Only')).toBeVisible();
+		await expect(this.page.getByText('Enable Publications')).toBeVisible();
 
 		const checkBox = this.page.getByRole('checkbox', {
 			name: 'enable-sandbox-only',

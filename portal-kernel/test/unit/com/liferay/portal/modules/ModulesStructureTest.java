@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.modules.util.GradleDependency;
+import com.liferay.portal.modules.util.Module;
 import com.liferay.portal.modules.util.ModulesStructureTestUtil;
 
 import java.io.File;
@@ -36,14 +37,18 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -326,6 +331,113 @@ public class ModulesStructureTest {
 				}
 
 			});
+	}
+
+	@Test
+	public void testScanCircularProjectDependencies() throws IOException {
+		Map<String, Module> moduleMap = new TreeMap<>();
+
+		for (String includeDirName : _includedDirNames) {
+			Files.walkFileTree(
+				_modulesDirPath.resolve(includeDirName),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path dirPath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Path buildGradlePath = dirPath.resolve("build.gradle");
+
+						if (Files.exists(buildGradlePath) &&
+							Files.exists(dirPath.resolve("src"))) {
+
+							String relativePathString = String.valueOf(
+								_modulesDirPath.relativize(dirPath));
+
+							Module module = new Module(
+								":".concat(
+									StringUtil.replace(
+										relativePathString, '/', ':')),
+								ModulesStructureTestUtil.
+									getProjectDependencyIds(buildGradlePath));
+
+							moduleMap.put(module.getId(), module);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+
+		Set<String> circularPaths = new TreeSet<>();
+
+		for (Module module : moduleMap.values()) {
+			Deque<String> scanDeque = new LinkedList<>();
+
+			scanDeque.add(module.getId());
+
+			List<String> pathList = new ArrayList<>();
+
+			String dependencyId = null;
+
+			while ((dependencyId = scanDeque.pollFirst()) != null) {
+				if (Objects.equals(dependencyId, "REMOVE_LAST_HOLDER")) {
+					pathList.remove(pathList.size() - 1);
+
+					continue;
+				}
+
+				int index = pathList.indexOf(dependencyId);
+
+				if (index == -1) {
+					pathList.add(dependencyId);
+
+					scanDeque.push("REMOVE_LAST_HOLDER");
+
+					Module dependencyModule = moduleMap.get(dependencyId);
+
+					List<String> dependencyIdList = new ArrayList<>(
+						dependencyModule.getDependencyIds());
+
+					ListIterator<String> listIterator =
+						dependencyIdList.listIterator(dependencyIdList.size());
+
+					while (listIterator.hasPrevious()) {
+						scanDeque.push(listIterator.previous());
+					}
+				}
+				else {
+					pathList = pathList.subList(index, pathList.size());
+
+					String minPath = Collections.min(pathList);
+
+					int minIndex = pathList.indexOf(minPath);
+
+					StringBundler sb = new StringBundler(
+						((pathList.size() - index) * 2) + 1);
+
+					for (int i = minIndex; i < (minIndex + pathList.size());
+						 i++) {
+
+						sb.append(pathList.get(i % pathList.size()));
+						sb.append(" -> ");
+					}
+
+					sb.append(minPath);
+
+					circularPaths.add(sb.toString());
+
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(circularPaths.toString(), circularPaths.isEmpty());
 	}
 
 	@Test
@@ -1703,6 +1815,8 @@ public class ModulesStructureTest {
 		"api", "compileOnly", "provided", "runtimeOnly", "testImplementation",
 		"testIntegrationImplementation", "testIntegrationRuntimeOnly",
 		"testRuntimeOnly");
+	private static final List<String> _includedDirNames = Arrays.asList(
+		"apps", "core", "dxp", "test");
 	private static final Pattern _jsonVersionPattern = Pattern.compile(
 		"\\n(\\t|  )\"version\": \"(.+)\"");
 	private static boolean _masterBranch;

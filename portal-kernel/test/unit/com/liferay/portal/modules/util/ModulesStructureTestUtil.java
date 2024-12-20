@@ -121,6 +121,22 @@ public class ModulesStructureTestUtil {
 		return gradleDependencies;
 	}
 
+	public static List<String> getProjectDependencyIds(Path buildGradlePath)
+		throws IOException {
+
+		List<String> dependencyIds = new ArrayList<>();
+
+		String content = new String(Files.readAllBytes(buildGradlePath));
+
+		Matcher matcher = _gradleProjectDependencyPattern.matcher(content);
+
+		while (matcher.find()) {
+			dependencyIds.add(matcher.group(2));
+		}
+
+		return dependencyIds;
+	}
+
 	public static String read(Path path) throws IOException {
 		Assert.assertTrue("Missing " + path, Files.exists(path));
 

@@ -217,7 +217,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String systemValue = saveConfiguration();
+		String systemValue = saveConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		settings = _settingsLocatorHelper.getConfigurationBeanSettings(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);

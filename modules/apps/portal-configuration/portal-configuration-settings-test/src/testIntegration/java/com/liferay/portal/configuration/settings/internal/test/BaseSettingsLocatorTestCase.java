@@ -119,11 +119,6 @@ public abstract class BaseSettingsLocatorTestCase {
 		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
 	}
 
-	protected String saveConfiguration() throws Exception {
-		return saveConfiguration(
-			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
-	}
-
 	protected String saveConfiguration(String configurationPid)
 		throws Exception {
 

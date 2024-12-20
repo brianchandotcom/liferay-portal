@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.settings.internal.constants.SettingsLoca
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
@@ -47,7 +48,10 @@ public class GroupServiceSettingsLocatorTest
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyPortletPreferencesValue = savePortletPreferences(
-			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portletId,
+			PortletKeys.PREFS_PLID_SHARED,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			companyPortletPreferencesValue,
@@ -62,7 +66,10 @@ public class GroupServiceSettingsLocatorTest
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String groupPortletPreferencesValue = savePortletPreferences(
-			groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP);
+			groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, portletId,
+			PortletKeys.PREFS_PLID_SHARED,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			groupPortletPreferencesValue,

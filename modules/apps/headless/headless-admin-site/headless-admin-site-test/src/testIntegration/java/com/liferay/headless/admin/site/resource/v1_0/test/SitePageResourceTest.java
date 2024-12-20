@@ -841,10 +841,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 
 		sitePage.setAvailableLanguages(
-			LocaleUtil.toW3cLanguageIds(
+			() -> LocaleUtil.toW3cLanguageIds(
 				new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}));
 		sitePage.setFriendlyUrlPath_i18n(
-			HashMapBuilder.put(
+			() -> HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
 				StringPool.FORWARD_SLASH +
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
@@ -854,14 +854,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).build());
 		sitePage.setName_i18n(
-			HashMapBuilder.put(
+			() -> HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
 				RandomTestUtil.randomString()
 			).put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
 				RandomTestUtil.randomString()
 			).build());
-
 		sitePage.setPageSettings(
 			() -> {
 				PageSettings pageSettings = _getPageSettings(curType);

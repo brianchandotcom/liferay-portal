@@ -51,6 +51,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -165,6 +166,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _toSitePage(
 			_addLayout(
+				sitePage.getExternalReferenceCode(),
 				GroupUtil.getGroupId(
 					false, contextCompany.getCompanyId(),
 					siteExternalReferenceCode),
@@ -202,6 +204,32 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
+	public SitePage putSiteSiteByExternalReferenceCodeSitePage(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode, SitePage sitePage)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, groupId);
+
+		if (layout == null) {
+			return _toSitePage(
+				_addLayout(sitePageExternalReferenceCode, groupId, sitePage));
+		}
+
+		_validateSitePageLayout(layout);
+
+		return _toSitePage(_updateLayout(layout, sitePage));
+	}
+
+	@Override
 	public Page<SitePage> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -224,7 +252,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"One of the following parameters must be specified: [siteId]");
 	}
 
-	private Layout _addLayout(long groupId, SitePage sitePage)
+	private Layout _addLayout(
+			String externalReferenceCode, long groupId, SitePage sitePage)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
@@ -234,13 +263,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		serviceContext.setUuid(sitePage.getUuid());
 
 		return _layoutService.addLayout(
-			sitePage.getExternalReferenceCode(), groupId, false,
+			externalReferenceCode, groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
 			null, null, null,
 			SitePageTypeUtil.toInternalType(sitePage.getType()),
 			_getTypeSettings(groupId, sitePage),
-			_isHiddenFromNavigation(sitePage.getPageSettings()),
+			_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				sitePage.getFriendlyUrlPath_i18n()),
 			0, serviceContext);
@@ -367,8 +396,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		).buildString();
 	}
 
-	private boolean _isHiddenFromNavigation(PageSettings pageSettings) {
-		if (GetterUtil.getBoolean(pageSettings.getHiddenFromNavigation())) {
+	private boolean _isHiddenFromNavigation(
+		boolean defaultValue, PageSettings pageSettings) {
+
+		if (GetterUtil.getBoolean(
+				pageSettings.getHiddenFromNavigation(), defaultValue)) {
+
 			return true;
 		}
 
@@ -383,6 +416,41 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			layout);
+	}
+
+	private Layout _updateLayout(Layout layout, SitePage sitePage)
+		throws Exception {
+
+		Map<Locale, String> nameMap = layout.getNameMap();
+
+		if (sitePage.getName_i18n() != null) {
+			nameMap = LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n());
+		}
+
+		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+
+		if (sitePage.getFriendlyUrlPath_i18n() != null) {
+			friendlyURLMap = LocalizedMapUtil.getLocalizedMap(
+				sitePage.getFriendlyUrlPath_i18n());
+		}
+
+		layout = _layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), nameMap, layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getType(),
+			_isHiddenFromNavigation(
+				layout.isHidden(), sitePage.getPageSettings()),
+			friendlyURLMap, layout.isIconImage(), null,
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPlid(),
+			ServiceContextUtil.createServiceContext(
+				layout.getGroupId(), contextHttpServletRequest,
+				contextUser.getUserId()));
+
+		return _layoutService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			_getTypeSettings(layout.getGroupId(), sitePage));
 	}
 
 	private void _validateSitePageLayout(Layout layout) {

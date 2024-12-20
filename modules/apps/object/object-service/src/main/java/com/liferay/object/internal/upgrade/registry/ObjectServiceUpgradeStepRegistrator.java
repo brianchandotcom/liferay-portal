@@ -489,6 +489,12 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.0.1", "10.1.0",
 			UpgradeProcessFactory.alterColumnType(
 				"ObjectEntry", "externalReferenceCode", "VARCHAR(1000)"));
+
+		registry.register(
+			"10.1.0", "10.2.0",
+			UpgradeProcessFactory.runSQL(
+				"update ObjectField set dbType = 'Integer' where " +
+					"dbColumnName = 'status'"));
 	}
 
 	@Reference

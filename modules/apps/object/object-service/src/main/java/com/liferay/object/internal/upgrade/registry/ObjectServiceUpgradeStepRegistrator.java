@@ -488,7 +488,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"10.0.1", "10.1.0",
 			UpgradeProcessFactory.alterColumnType(
-				"ObjectEntry", "externalReferenceCode", "VARCHAR(255)"));
+				"ObjectEntry", "externalReferenceCode", "VARCHAR(1000)"));
 	}
 
 	@Reference

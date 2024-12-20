@@ -512,7 +512,7 @@ public class ObjectDefinitionLocalServiceTest {
 				}
 				else {
 					Assert.assertEquals(
-						1,
+						0,
 						_resourceActionLocalService.getResourceActionsCount(
 							nodeObjectDefinition.getClassName()));
 					Assert.assertEquals(
@@ -2975,6 +2975,9 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertNull(
 			_resourceActionLocalService.fetchResourceAction(
 				objectDefinition.getClassName(), ActionKeys.DELETE));
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				objectDefinition.getClassName(), ActionKeys.PERMISSIONS));
 		Assert.assertNull(
 			_resourceActionLocalService.fetchResourceAction(
 				objectDefinition.getClassName(), ActionKeys.UPDATE));

@@ -19,7 +19,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
 	searchPageTest

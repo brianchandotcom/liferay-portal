@@ -14,7 +14,7 @@ const test = mergeTests(
 	loginTest(),
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-11003': true,
+		'LPD-11003': {enabled: true},
 	}),
 	lockedItemsPagesTest
 );

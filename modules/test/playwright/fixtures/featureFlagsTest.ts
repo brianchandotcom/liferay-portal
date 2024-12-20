@@ -48,7 +48,7 @@ const test = mergeTests(backendPageTest);
  *
  * export const testWithFF = mergeTests(
  *   featureFlagsTest({
- *     'LPS-148856': true,
+ *     'LPS-148856': {enabled: true},
  *   }),
  *   loginTest
  * );

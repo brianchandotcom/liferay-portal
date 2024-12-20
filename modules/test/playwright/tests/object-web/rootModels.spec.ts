@@ -19,7 +19,7 @@ import {pushToApiHelpersData} from '../../utils/pushToApiHelpersData';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPS-187142': true,
+		'LPS-187142': {enabled: true},
 	}),
 	loginTest(),
 	objectPagesTest

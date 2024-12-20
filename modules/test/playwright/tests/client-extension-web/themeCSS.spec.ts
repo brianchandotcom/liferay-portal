@@ -161,7 +161,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 const controlPanelScopedTest = mergeTests(
 	loginTest(),
 	featureFlagsTest({
-		'LPD-34650': true,
+		'LPD-34650': {enabled: true},
 	}),
 	clientExtensionsPageTest
 );

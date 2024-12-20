@@ -34,7 +34,7 @@ const autoSaveTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({
-		'LPD-11228': true,
+		'LPD-11228': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,
@@ -45,7 +45,7 @@ const autoSaveTest = mergeTests(
 
 const autosaveWithoutPermissionsTest = mergeTests(
 	featureFlagsTest({
-		'LPD-11228': true,
+		'LPD-11228': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

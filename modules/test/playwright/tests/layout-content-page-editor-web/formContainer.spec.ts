@@ -44,8 +44,8 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
-		'LPD-37927': true,
-		'LPS-178052': true,
+		'LPD-37927': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	masterPagesPagesTest,

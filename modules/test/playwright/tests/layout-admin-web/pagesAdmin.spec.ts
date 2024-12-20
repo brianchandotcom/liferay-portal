@@ -23,7 +23,7 @@ import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDe
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

@@ -13,7 +13,7 @@ import {deleteItems} from './utils/deleteItems';
 
 export const xssBypassTest = mergeTests(
 	featureFlagsTest({
-		'LPD-31212': true,
+		'LPD-31212': {enabled: true},
 	}),
 	loginTest(),
 	formsPagesTest
@@ -21,7 +21,7 @@ export const xssBypassTest = mergeTests(
 
 export const xssDisabledTest = mergeTests(
 	featureFlagsTest({
-		'LPD-31212': false,
+		'LPD-31212': {enabled: false},
 	}),
 	loginTest(),
 	formsPagesTest

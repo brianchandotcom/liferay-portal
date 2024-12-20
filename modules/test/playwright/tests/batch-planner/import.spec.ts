@@ -22,7 +22,7 @@ import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'COMMERCE-8087': true,
+		'COMMERCE-8087': {enabled: true},
 	}),
 	loginTest(),
 	dataMigrationCenterPagesTest,

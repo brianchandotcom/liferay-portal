@@ -13,7 +13,7 @@ import {utilityPagesPage} from './fixtures/utilityPageTest';
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPD-6378': true,
+		'LPD-6378': {enabled: true},
 	}),
 	utilityPagesPage
 );

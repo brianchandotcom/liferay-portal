@@ -31,7 +31,7 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	isolatedSiteTest,
 	featureFlagsTest({
-		'LPD-28830': true,
+		'LPD-28830': {enabled: true},
 	}),
 	loginAnalyticsCloudTest(),
 	loginTest()

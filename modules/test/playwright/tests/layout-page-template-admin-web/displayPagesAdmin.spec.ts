@@ -31,7 +31,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

@@ -14,7 +14,7 @@ export const test = mergeTests(
 	customDataSetsPageTest,
 	featureFlagPagesTest,
 	featureFlagsTest({
-		'LPS-164563': true,
+		'LPS-164563': {enabled: true},
 	}),
 	loginTest()
 );
@@ -104,7 +104,7 @@ export const disabledTest = mergeTests(
 	customDataSetsPageTest,
 	featureFlagPagesTest,
 	featureFlagsTest({
-		'LPS-164563': false,
+		'LPS-164563': {enabled: false},
 	}),
 	loginTest()
 );

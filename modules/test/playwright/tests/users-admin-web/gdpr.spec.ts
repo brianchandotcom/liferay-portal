@@ -25,8 +25,8 @@ export const test = mergeTests(
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-35013': true,
-		'LPS-178052': true,
+		'LPD-35013': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest({screenName: 'demo.company.admin'}),
 	usersAndOrganizationsPagesTest
@@ -37,8 +37,8 @@ export const testAdmin = mergeTests(
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-35013': true,
-		'LPS-178052': true,
+		'LPD-35013': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	productMenuPageTest,

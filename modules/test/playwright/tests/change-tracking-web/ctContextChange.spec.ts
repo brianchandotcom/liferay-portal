@@ -16,7 +16,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	featureFlagsTest({
-		'LPD-20131': true,
+		'LPD-20131': {enabled: true},
 	}),
 	journalPagesTest,
 	loginTest()

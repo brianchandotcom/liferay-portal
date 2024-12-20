@@ -15,7 +15,7 @@ function headlessBuilderTest(featureFlags?: FeatureFlagsOptions) {
 	return mergeTests(
 		featureFlagsTest({
 			...featureFlags,
-			'LPS-178642': true,
+			'LPS-178642': {enabled: true},
 		}),
 		test.extend<{
 			headlessBuilder: void;

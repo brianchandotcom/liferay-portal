@@ -18,7 +18,7 @@ import performLogin, {performLogout} from '../../utils/performLogin';
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
 	isolatedSiteTest,

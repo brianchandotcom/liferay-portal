@@ -16,7 +16,7 @@ import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTes
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

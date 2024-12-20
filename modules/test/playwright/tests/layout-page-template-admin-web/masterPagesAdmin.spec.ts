@@ -26,7 +26,7 @@ export const test = mergeTests(
 	pagesAdminPagesTest,
 	isolatedSiteTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	masterPagesPagesTest,

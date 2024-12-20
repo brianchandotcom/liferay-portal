@@ -503,6 +503,66 @@ test(
 );
 
 test(
+	'Users can see the preview draft when the content page at draft status',
+	{
+		tag: '@LPS-139064',
+	},
+	async ({apiHelpers, context, page, pageEditorPage, pageTreePage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Add heading fragment
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		// Open tree if it's not already open
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await openProductMenu(page);
+
+		await pageTreePage.open();
+
+		// Click on preview draft
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		const pagePromise = context.waitForEvent('page');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Preview Draft'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		// Assert draft content page
+
+		const newPage = await pagePromise;
+
+		await expect(
+			newPage
+				.getByLabel('Control Menu')
+				.locator('.label-item', {hasText: 'Draft'})
+		).toBeVisible();
+
+		await expect(newPage.getByText('Heading Example')).toBeVisible();
+	}
+);
+
+test(
 	'Users with only View permissions can not see draft options',
 	{
 		tag: '@LPS-140136',

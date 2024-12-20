@@ -71,7 +71,7 @@ public class JSImportMapsCache {
 				"Do not pass COMPANY_ID_ALL as companyId");
 		}
 
-		writer.write("{\"imports\":{");
+		writer.write("{\"imports\": {");
 
 		Map<Long, String> globalImportMapsValues1 = _getGlobalImportMapsValues(
 			COMPANY_ID_ALL);
@@ -89,7 +89,7 @@ public class JSImportMapsCache {
 
 		_writeImports(writer, globalImportMapsValues2);
 
-		writer.write("},\"scopes\":{");
+		writer.write("},\"scopes\": {");
 
 		Map<String, String> scopedImportMapsValues1 =
 			_getScopedImportMapsValues(COMPANY_ID_ALL);
@@ -174,7 +174,7 @@ public class JSImportMapsCache {
 
 			writer.write(StringPool.QUOTE);
 			writer.write(entry.getKey());
-			writer.write("\":");
+			writer.write("\": ");
 			writer.write(entry.getValue());
 		}
 	}

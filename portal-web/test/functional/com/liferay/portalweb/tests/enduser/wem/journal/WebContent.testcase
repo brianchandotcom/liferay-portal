@@ -173,7 +173,7 @@ definition {
 				dmFolderName = "Provided by Liferay",
 				imageFileName = "moon.png");
 
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 

@@ -26,7 +26,7 @@ export class SXPBlueprintsAndElementsViewPage {
 			.getByLabel('New Search Blueprint');
 		this.addBlueprintElementModal = page.locator('.modal-dialog');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.blueprintElementTable = page.locator('.dnd-table');
+		this.blueprintElementTable = page.locator('.fds table');
 		this.blueprintElementSearchBar = page.getByPlaceholder('Search');
 		this.blueprintsTab = page.getByRole('link', {name: 'Blueprints'});
 		this.elementsTab = page.getByRole('link', {name: 'Elements'});
@@ -34,9 +34,9 @@ export class SXPBlueprintsAndElementsViewPage {
 		// Blueprint/Element Table
 
 		this.blueprintElementTableHeading =
-			this.blueprintElementTable.locator('.dnd-thead');
+			this.blueprintElementTable.locator('thead');
 		this.blueprintElementTableOpenFieldsMenuButton =
-			this.blueprintElementTable.getByLabel('Open Fields Menu');
+			this.blueprintElementTable.getByLabel('Manage Columns Visibility');
 
 		this.page = page;
 	}
@@ -94,7 +94,7 @@ export class SXPBlueprintsAndElementsViewPage {
 			// If there are multiple items with the same title, check id
 
 			itemLink = this.blueprintElementTable
-				.locator('.dnd-tr')
+				.locator('tr')
 				.filter({
 					has: this.page.getByText(`${id}`),
 				})
@@ -107,7 +107,7 @@ export class SXPBlueprintsAndElementsViewPage {
 	async selectTableMenuOption(title: string, option: string) {
 		await expect(this.blueprintElementTable).toBeVisible();
 
-		const itemRow = this.blueprintElementTable.locator('.dnd-tr').filter({
+		const itemRow = this.blueprintElementTable.locator('tr').filter({
 			has: this.page.getByRole('link', {name: title}),
 		});
 

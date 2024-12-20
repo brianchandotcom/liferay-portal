@@ -1,3 +1,48 @@
+<script>
+	const toggleClick = (link) => {
+		link.addEventListener("click", (event) => {
+		
+			event.preventDefault();
+			const targetId = link.getAttribute("href").substring(1);
+
+			const targetElement = document.getElementById(targetId);
+
+			if (targetElement) {
+				const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
+				
+				window.scrollTo({
+					behavior: "smooth",
+					top: elementPosition,
+				});
+			}
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new MutationObserver(() => {
+			const anchorLinks = document.querySelectorAll(".toc li a");
+
+			if (anchorLinks.length > 0) {
+				anchorLinks.forEach((link) => {
+
+					if (!link.dataset.observed) {
+						toggleClick(link)
+						link.dataset.observed = "true";
+					}
+				});
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(document.body, { childList: true, subtree: true });
+		const anchorLinks = document.querySelectorAll("h1 a, h2 a, h3 a");
+
+		anchorLinks.forEach((link) => {
+			toggleClick(link)
+		});
+	});
+</script>
+
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())

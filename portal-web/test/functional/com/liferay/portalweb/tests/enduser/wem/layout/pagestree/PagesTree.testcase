@@ -124,41 +124,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-184551. The user could show multiple child pages on Page Tree."
-	@priority = 3
-	test ShowChildPages {
-		task ("Given a user has pages with child pages") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}");
-
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Child Page Name ${i}",
-					parentLayoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("When the user shows child pages in Page Tree") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			PagesFinder.goToPagesFinder();
-
-			Portlet.expandTree();
-		}
-
-		task ("Then the user sees child pages in Page Tree") {
-			AssertElementPresent(
-				key_nodeName = "Test Page Name 1",
-				locator1 = "Treeview#NODE_SELECTED");
-
-			for (var i : list "1,2") {
-				PagesFinder.viewPageNameInPagesFinder(pageName = "Child Page Name ${i}");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
 	@priority = 4
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {

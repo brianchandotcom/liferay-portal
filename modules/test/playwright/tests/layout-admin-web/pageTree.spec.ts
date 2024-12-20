@@ -563,6 +563,83 @@ test(
 );
 
 test(
+	'User can show multiple child pages',
+	{
+		tag: '@LPS-184551',
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Add first child page
+
+		const firstLayoutTitle = 'First Parent Layout';
+
+		const firstLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: firstLayoutTitle,
+		});
+
+		const firstChildLayoutTitle = 'First Child Layout';
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			parentLayoutId: firstLayout.layoutId,
+			title: firstChildLayoutTitle,
+		});
+
+		// Add second child page
+
+		const secondLayoutTitle = 'Second Parent Layout';
+
+		const secondLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: secondLayoutTitle,
+		});
+
+		const secondChildLayoutTitle = 'Second Child Layout';
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			parentLayoutId: secondLayout.layoutId,
+			title: secondChildLayoutTitle,
+		});
+
+		// Open tree if it's not already open
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${firstLayout.friendlyURL}`
+		);
+
+		await openProductMenu(page);
+
+		await pageTreePage.open();
+
+		// Assert child pages
+
+		await page
+			.getByRole('treeitem', {name: secondLayoutTitle})
+			.getByRole('button')
+			.first()
+			.click();
+
+		await expect(
+			page.getByRole('link', {name: firstLayoutTitle})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: firstChildLayoutTitle})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: secondLayoutTitle})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {name: secondChildLayoutTitle})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Users with only View permissions can not see draft options',
 	{
 		tag: '@LPS-140136',

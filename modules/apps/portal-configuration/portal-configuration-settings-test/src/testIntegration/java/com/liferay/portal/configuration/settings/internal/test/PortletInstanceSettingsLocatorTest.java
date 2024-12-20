@@ -43,7 +43,8 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue());
 
 		Assert.assertEquals(
-			saveScopedConfiguration(
+			saveFactoryConfiguration(
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId),
 			getSettingsValue());
 
@@ -53,7 +54,8 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue());
 
 		Assert.assertEquals(
-			saveScopedConfiguration(
+			saveFactoryConfiguration(
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId),
 			getSettingsValue());
 
@@ -62,7 +64,8 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue());
 
 		Assert.assertEquals(
-			saveScopedConfiguration(
+			saveFactoryConfiguration(
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 				_portletInstanceKey),
 			getSettingsValue());

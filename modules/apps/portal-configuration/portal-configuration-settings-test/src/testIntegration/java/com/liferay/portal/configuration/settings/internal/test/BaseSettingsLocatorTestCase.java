@@ -198,15 +198,6 @@ public abstract class BaseSettingsLocatorTestCase {
 		return value;
 	}
 
-	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
-		throws Exception {
-
-		return saveFactoryConfiguration(
-			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
-			scopePK);
-	}
-
 	protected static long companyId;
 	protected static long groupId;
 

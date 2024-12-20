@@ -33,7 +33,8 @@ public class CompanyServiceSettingsLocatorTest
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			getSettingsValue());
 
-		String companyConfigurationValue = saveScopedConfiguration(
+		String companyConfigurationValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		Assert.assertEquals(companyConfigurationValue, getSettingsValue());

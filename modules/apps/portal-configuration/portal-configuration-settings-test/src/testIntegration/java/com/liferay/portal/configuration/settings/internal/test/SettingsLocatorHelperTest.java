@@ -47,7 +47,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
+		String companyValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		companySettings =
@@ -138,7 +139,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String groupValue = saveScopedConfiguration(
+		String groupValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
 		groupSettings =
@@ -187,7 +189,8 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String portletInstanceValue = saveScopedConfiguration(
+		String portletInstanceValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			portletInstanceKey);
 

@@ -1,8 +1,9 @@
 Bundle-Name: Liferay External Data Source Test Controller Test
 Bundle-SymbolicName: com.liferay.external.data.source.test.controller.test
 Bundle-Version: 1.0.0
+Import-Package: !org.apache.log4j
 -includeresource:\
 	com.liferay.external.data.source.test.api.jar=com.liferay.external.data.source.test.api-*.jar,\
 	com.liferay.external.data.source.test.jar=com.liferay.external.data.source.test-*.jar,\
 	com.liferay.external.data.source.test.service.jar=com.liferay.external.data.source.test.service-*.jar,\
-	@org.hsqldb-[0-9.]*.jar
+	@org.hsqldb-*.jar

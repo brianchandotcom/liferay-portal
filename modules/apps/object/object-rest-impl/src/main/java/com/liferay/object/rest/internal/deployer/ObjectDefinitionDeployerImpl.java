@@ -115,14 +115,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
-	public synchronized List<ServiceRegistration<?>> deploy(
-		ObjectDefinition objectDefinition) {
-
-		return _deploy(objectDefinition, null, null);
-	}
-
-	@Override
-	public Map<Long, List<ServiceRegistration<?>>> deployObjectDefinitions(
+	public Map<Long, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
@@ -148,6 +141,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		return serviceRegistrationsMap;
+	}
+
+	@Override
+	public synchronized List<ServiceRegistration<?>> deploy(
+		ObjectDefinition objectDefinition) {
+
+		return _deploy(objectDefinition, null, null);
 	}
 
 	public ObjectDefinition getObjectDefinition(

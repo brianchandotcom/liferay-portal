@@ -919,7 +919,7 @@ public class ObjectDefinitionLocalServiceImpl
 						companyId, WorkflowConstants.STATUS_APPROVED);
 
 				activeServiceRegistrationsMap.putAll(
-					objectDefinitionDeployer.deployObjectDefinitions(
+					objectDefinitionDeployer.deploy(
 						companyId,
 						ListUtil.filter(
 							objectDefinitions,
@@ -1326,7 +1326,7 @@ public class ObjectDefinitionLocalServiceImpl
 						companyId, WorkflowConstants.STATUS_APPROVED);
 
 				serviceRegistrationsMap.putAll(
-					objectDefinitionDeployer.deployObjectDefinitions(
+					objectDefinitionDeployer.deploy(
 						companyId,
 						ListUtil.filter(
 							objectDefinitions,

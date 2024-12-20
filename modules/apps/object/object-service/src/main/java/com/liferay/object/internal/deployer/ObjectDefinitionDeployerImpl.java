@@ -173,14 +173,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	@Override
-	public List<ServiceRegistration<?>> deploy(
-		ObjectDefinition objectDefinition) {
-
-		return _deploy(null, objectDefinition, null, null);
-	}
-
-	@Override
-	public Map<Long, List<ServiceRegistration<?>>> deployObjectDefinitions(
+	public Map<Long, List<ServiceRegistration<?>>> deploy(
 		long companyId, List<ObjectDefinition> objectDefinitions) {
 
 		Map<Long, List<ServiceRegistration<?>>> activeServiceRegistrationsMap =
@@ -211,6 +204,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		return activeServiceRegistrationsMap;
+	}
+
+	@Override
+	public List<ServiceRegistration<?>> deploy(
+		ObjectDefinition objectDefinition) {
+
+		return _deploy(null, objectDefinition, null, null);
 	}
 
 	@Override

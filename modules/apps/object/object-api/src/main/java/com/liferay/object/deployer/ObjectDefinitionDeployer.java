@@ -19,12 +19,8 @@ import org.osgi.framework.ServiceRegistration;
  */
 public interface ObjectDefinitionDeployer {
 
-	public List<ServiceRegistration<?>> deploy(
-		ObjectDefinition objectDefinition);
-
-	public default Map<Long, List<ServiceRegistration<?>>>
-		deployObjectDefinitions(
-			long companyId, List<ObjectDefinition> objectDefinitions) {
+	public default Map<Long, List<ServiceRegistration<?>>> deploy(
+		long companyId, List<ObjectDefinition> objectDefinitions) {
 
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
@@ -37,6 +33,9 @@ public interface ObjectDefinitionDeployer {
 
 		return serviceRegistrationsMap;
 	}
+
+	public List<ServiceRegistration<?>> deploy(
+		ObjectDefinition objectDefinition);
 
 	public default void undeploy(ObjectDefinition objectDefinition) {
 	}

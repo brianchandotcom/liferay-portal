@@ -272,13 +272,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		super.testPutSiteSiteByExternalReferenceCodeSitePage();
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.COLLECTION_PAGE);
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.CONTENT_PAGE);
+		_testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type.WIDGET_PAGE);
 	}
 
 	@Ignore
@@ -716,17 +720,27 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		};
 	}
 
-	private SitePage _getRandomSitePage(SitePage.Type curType)
+	private SitePage _getRandomSitePage(SitePage.Type type) throws Exception {
+		return _getRandomSitePage(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), type,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+	}
+
+	private SitePage _getRandomSitePage(
+			String curExternalReferenceCode, SitePage.Type curType,
+			String curUuid)
 		throws Exception {
 
 		SitePage sitePage = new SitePage() {
 			{
-				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				externalReferenceCode = curExternalReferenceCode;
+				uuid = curUuid;
 			}
 		};
 
+		sitePage.setAvailableLanguages(
+			LocaleUtil.toW3cLanguageIds(
+				new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}));
 		sitePage.setFriendlyUrlPath_i18n(
 			HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
@@ -831,6 +845,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			postSitePage);
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeSitePage(
+			SitePage.Type type)
+		throws Exception {
+
+		SitePage sitePage = testPostByExternalReferenceCodeSitePage_addSitePage(
+			_getRandomSitePage(type));
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
+			sitePage);
+
+		sitePage = _getRandomSitePage(
+			sitePage.getExternalReferenceCode(), type, sitePage.getUuid());
+
+		SitePage putSitePage =
+			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+
+		equals(sitePage, putSitePage);
+		assertValid(putSitePage);
+
+		_assertSitePage(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
+			sitePage);
 	}
 
 	@Inject

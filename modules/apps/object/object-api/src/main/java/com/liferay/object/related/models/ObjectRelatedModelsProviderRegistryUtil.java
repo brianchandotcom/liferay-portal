@@ -5,7 +5,6 @@
 
 package com.liferay.object.related.models;
 
-import com.liferay.object.constants.ObjectRelatedModelsProviderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
@@ -17,6 +16,11 @@ import org.osgi.framework.ServiceRegistration;
  * @author Carlos Correa
  */
 public class ObjectRelatedModelsProviderRegistryUtil {
+
+	public static final String KEY_OBJECT_DEFINITION_ERC =
+		"object.definition.erc";
+
+	public static final String KEY_RELATIONSHIP_TYPE = "relationship.type";
 
 	public static ServiceRegistration<?> register(
 		BundleContext bundleContext, ObjectDefinition objectDefinition,
@@ -36,10 +40,10 @@ public class ObjectRelatedModelsProviderRegistryUtil {
 			HashMapDictionaryBuilder.<String, Object>put(
 				Constants.SERVICE_RANKING, () -> serviceRanking
 			).put(
-				ObjectRelatedModelsProviderConstants.KEY_OBJECT_DEFINITION_ERC,
+				KEY_OBJECT_DEFINITION_ERC,
 				objectDefinition.getExternalReferenceCode()
 			).put(
-				ObjectRelatedModelsProviderConstants.KEY_RELATIONSHIP_TYPE,
+				KEY_RELATIONSHIP_TYPE,
 				objectRelatedModelsProvider.getObjectRelationshipType()
 			).build());
 	}

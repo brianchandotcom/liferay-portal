@@ -70,9 +70,9 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			StringBundler.concat(
 				"(&(objectClass=", ObjectRelatedModelsProvider.class.getName(),
 				")(",
-				ObjectRelatedModelsProviderConstants.KEY_OBJECT_DEFINITION_ERC,
+				ObjectRelatedModelsProviderRegistryUtil.KEY_OBJECT_DEFINITION_ERC,
 				"=L_API_PROPERTY)(",
-				ObjectRelatedModelsProviderConstants.KEY_RELATIONSHIP_TYPE, "=",
+				ObjectRelatedModelsProviderRegistryUtil.KEY_RELATIONSHIP_TYPE, "=",
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, "))"),
 			new ObjectRelatedModelsProviderServiceTrackerCustomizer());
 

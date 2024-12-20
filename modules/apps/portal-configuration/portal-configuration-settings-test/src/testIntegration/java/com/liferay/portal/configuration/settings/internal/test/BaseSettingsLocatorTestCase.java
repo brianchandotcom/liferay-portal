@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -174,15 +173,6 @@ public abstract class BaseSettingsLocatorTestCase {
 		_factoryConfigurationPids.put(pid, factoryPid + ".scoped");
 
 		return value;
-	}
-
-	protected String savePortletPreferences(long ownerId, int ownerType)
-		throws Exception {
-
-		return savePortletPreferences(
-			ownerId, ownerType, portletId, PortletKeys.PREFS_PLID_SHARED,
-			SettingsLocatorTestConstants.TEST_KEY,
-			RandomTestUtil.randomString());
 	}
 
 	protected String savePortletPreferences(

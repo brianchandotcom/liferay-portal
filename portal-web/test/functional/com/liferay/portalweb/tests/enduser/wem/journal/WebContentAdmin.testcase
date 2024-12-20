@@ -921,7 +921,7 @@ definition {
 				webContentText = "LXC",
 				webContentTitle = "LXC");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When the site administrator navigates to the configuration page") {
@@ -1731,7 +1731,7 @@ definition {
 				webContentText = "LXC",
 				webContentTitle = "LXC");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When the site administrator navigates to the highlighted structure sheet") {

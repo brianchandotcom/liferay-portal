@@ -1,24 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertAlternateURL(portalURL = null, locale = null) {
-		var html = '''<link data-senna-track="temporary" href="''';
-
-		if (${locale} == "zh") {
-			var zhAlternate = '''" hreflang="zh-CN" rel="alternate">''';
-
-			var pageSource = StringUtil.add(${html}, "${portalURL}/zh/web/guest${zhAlternate}", "");
-		}
-		else if (${locale} == "es") {
-			var esAlternate = '''" hreflang="es-ES" rel="alternate">''';
-
-			var pageSource = StringUtil.add(${html}, "${portalURL}/es/web/guest${esAlternate}", "");
-		}
-
-		AssertHTMLSourceTextPresent(value1 = ${pageSource});
-	}
-
-	@summary = "Default summary"
 	macro assertCanonicalURL(customCanonicalURL = null, locale = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 		var html2 = '''" rel="canonical">''';
@@ -92,15 +74,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clearFiltersInAppliedFilters() {
-		Click(
-			button = "Clear Filters",
-			locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
-
-		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
-	}
-
-	@summary = "Default summary"
 	macro getAuthTokenFromHtmlSource() {
 		var javaScript = '''
 		var authToken = Liferay.authToken;
@@ -157,31 +130,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCollectionEntryEllipsisItem(item = null, tableEntry = null) {
-		LexiconTable.clickEllipsisItem(
-			item = ${item},
-			tableEntry = ${tableEntry});
-
-		SelectFrameTop();
-	}
-
-	@summary = "Default summary"
-	macro gotoPagePanelPortlet(portletName = null) {
-		var key_portletName = ${portletName};
-
-		AssertClick(
-			locator1 = "Panel#MENU_ITEM",
-			value1 = ${portletName});
-	}
-
-	@summary = "Default summary"
-	macro localizedPG(pageLocale = null) {
-		Click(
-			key_pageLocale = ${pageLocale},
-			locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE");
-	}
-
-	@summary = "Default summary"
 	macro openURLLocale(localizationPageURL = null) {
 		Navigator.openSpecificURL(url = ${localizationPageURL});
 
@@ -206,75 +154,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFilterInCollectionFilter(searchTerm = null, columnNumber = null, filterName = null, title = null, selectedName = null, categoryNameList = null) {
-		if (isSet(columnNumber)) {
-			Click.waitForMenuToggleJSClick(
-				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
-				key_position = 1,
-				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
-		}
-		else {
-			Click.waitForMenuToggleJSClick(
-				key_title = ${title},
-				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE");
-		}
-
-		if (isSet(searchTerm)) {
-			Type(
-				locator1 = "MenuItem#SEARCH_FIELD",
-				value1 = ${searchTerm});
-		}
-
-		if (isSet(multipleSelection)) {
-			for (var categoryName : list ${categoryNameList}) {
-				Check.checkNotVisible(
-					key_checkboxName = ${categoryName},
-					locator1 = "MenuItem#ANY_CHECKBOX");
-			}
-
-			DropdownMenuItem.click(menuItem = "Apply");
-		}
-		else {
-			Click.clickAtNotVisible(
-				key_radioName = ${filterName},
-				locator1 = "MenuItem#ANY_RADIO");
-		}
-
-		if (isSet(columnNumber)) {
-			AssertTextEquals(
-				key_columnNumber = ${columnNumber},
-				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
-				key_position = 1,
-				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
-				value1 = ${selectedName});
-		}
-		else {
-			AssertTextEquals(
-				key_title = ${title},
-				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
-				value1 = ${selectedName});
-		}
-	}
-
-	@summary = "Default summary"
-	macro selectTagInCollectionFilter(tagName = null) {
-		if (!(isSet(index))) {
-			var index = 1;
-		}
-
-		Type.sendKeys(
-			index = ${index},
-			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
-			value1 = ${tagName});
-
-		KeyPress(
-			index = ${index},
-			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
-			value1 = "\RETURN");
-	}
-
-	@summary = "Default summary"
 	macro viewChildPageDropdown(viewChildPageDropdown = null, childPageName = null, javaScriptPage = null) {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
@@ -293,20 +172,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Home#PAGE_CHILD_PAGE",
 			value1 = ${childPageName});
-	}
-
-	@summary = "Default summary"
-	macro viewCollectionItem(itemName = null) {
-		if (isSet(key_rowNumber)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = ${itemName});
-		}
-		else {
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-				value1 = ${itemName});
-		}
 	}
 
 	@summary = "Default summary"
@@ -377,120 +242,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
 			value1 = "This page is linked to a site template which does not allow modifications to it.");
-	}
-
-	@summary = "Default summary"
-	macro viewPanelPortletListPG(portletNameList = null, componentName = null, pageName = null) {
-		var key_componentName = ${componentName};
-
-		AssertTextEquals(
-			locator1 = "Panel#PANEL_TITLE",
-			value1 = ${componentName});
-
-		var key_pageName = ${pageName};
-
-		AssertTextEquals(
-			locator1 = "Panel#PANEL_PAGE_TITLE",
-			value1 = ${pageName});
-
-		AssertTextEquals(
-			locator1 = "Panel#PANEL_PAGE_DEFAULT_INFORMATION",
-			value1 = "Info:Please select a tool from the left menu.");
-
-		for (var portletName : list ${portletNameList}) {
-			var key_portletName = ${portletName};
-
-			AssertTextEquals(
-				locator1 = "Panel#MENU_ITEM",
-				value1 = ${portletName});
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewPreview(htmlTitle = null, description = null, locale = null, pageName = null, siteNameURL = null) {
-		if (isSet(key_imageName)) {
-			AssertVisible(locator1 = "PagesAdmin#PREVIEW_IMAGE");
-		}
-
-		AssertTextEquals(
-			locator1 = "PagesAdmin#PREVIEW_TITLE",
-			value1 = ${htmlTitle});
-
-		var pageNameURL = StringUtil.lowerCase(${pageName});
-
-		var pageNameURL = StringUtil.replace(${pageNameURL}, " ", "-");
-
-		var url = "${portalURL}/web/guest/${pageNameURL}";
-
-		if (isSet(siteNameURL)) {
-			if (isSet(pageName)) {
-				var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
-			}
-			else {
-				var url = "${portalURL}/web/${siteNameURL}";
-			}
-		}
-
-		if (isSet(openGraph)) {
-			var url = StringUtil.upperCase(${url});
-		}
-
-		if (isSet(locale)) {
-			var languageName = StringUtil.extractFirst(${locale}, "-");
-
-			if (isSet(openGraph)) {
-				var languageName = StringUtil.upperCase(${languageName});
-				var portalURL = StringUtil.upperCase(${portalURL});
-			}
-
-			var url = StringUtil.replace(${url}, ${portalURL}, "${portalURL}/${languageName}");
-		}
-
-		AssertTextEquals(
-			locator1 = "PagesAdmin#PREVIEW_URL",
-			value1 = ${url});
-
-		if (isSet(description)) {
-			AssertTextEquals(
-				locator1 = "PagesAdmin#PREVIEW_DESCRIPTION",
-				value1 = ${description});
-		}
-
-		if (isSet(validateTitleCSSStyle)) {
-			ProductMenuHelper.closeProductMenu();
-
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_TITLE",
-				locator2 = "overflow",
-				value1 = "hidden");
-
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_TITLE",
-				locator2 = "text-overflow",
-				value1 = "ellipsis");
-
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_TITLE",
-				locator2 = "white-space",
-				value1 = "nowrap");
-		}
-
-		if (isSet(validateURLCSSStyle)) {
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_URL",
-				locator2 = "overflow",
-				value1 = "hidden");
-
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_URL",
-				locator2 = "text-overflow",
-				value1 = "ellipsis");
-
-			AssertCssValue(
-				locator1 = "PagesAdmin#PREVIEW_URL",
-				locator2 = "white-space",
-				value1 = "nowrap");
-		}
 	}
 
 	@summary = "Default summary"

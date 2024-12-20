@@ -1,64 +1,12 @@
 definition {
 
 	@summary = "Default summary"
-	macro deleteCollection(collectionName = null) {
-		Navigator.gotoNavNested(navNested = ${collectionName});
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${collectionName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Delete");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it will not be possible to recover them.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-	}
-
-	@summary = "Default summary"
 	macro editCollection(collectionDescription = null, collectionName = null) {
 		PortletEntry.inputName(name = ${collectionName});
 
 		if (isSet(collectionDescription)) {
 			PortletEntry.inputDescription(description = ${collectionDescription});
 		}
-	}
-
-	@summary = "Default summary"
-	macro renameCollection(collectionDescription = null, collectionName = null, collectionNameEdit = null) {
-		Navigator.gotoNavNested(navNested = ${collectionName});
-
-		Click.waitForMenuToggleJSClick(
-			key_headerName = ${collectionName},
-			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		MenuItem.click(menuItem = "Edit");
-
-		Collection.editCollection(
-			collectionDescription = ${collectionDescription},
-			collectionName = ${collectionNameEdit});
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
-	macro viewNotPresent(collectionName = null) {
-		AssertElementNotPresent(
-			key_navNested = ${collectionName},
-			locator1 = "NavNested#NAV_NESTED_LINK");
-	}
-
-	@summary = "Default summary"
-	macro viewPresent(collectionName = null) {
-		AssertElementPresent(
-			key_navNested = ${collectionName},
-			locator1 = "NavNested#NAV_NESTED_LINK");
 	}
 
 }

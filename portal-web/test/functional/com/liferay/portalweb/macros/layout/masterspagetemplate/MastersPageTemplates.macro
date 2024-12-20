@@ -1,21 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro deselectAllowedFragments(fragmentNameList = null) {
-		SelectFrame(value1 = "relative=top");
-
-		for (var fragmentName : list ${fragmentNameList}) {
-			MastersPageTemplates.searchAllowedFragments(searchValue = ${fragmentName});
-
-			Uncheck.uncheckToggleSwitch(
-				key_fragmentName = ${fragmentName},
-				locator1 = "Checkbox#ALLOWED_FRAGMENT");
-		}
-
-		Button.clickSave();
-	}
-
-	@summary = "Default summary"
 	macro propagateChange() {
 		Button.clickNoError(button = "Publish Master");
 
@@ -27,58 +12,6 @@ definition {
 		Button.click(button = "Publish Master");
 
 		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
-	macro searchAllowedFragments(searchValue = null) {
-		Type(
-			locator1 = "TextInput#FRAGMENTS_SEARCH",
-			value1 = ${searchValue});
-	}
-
-	@summary = "Default summary"
-	macro selectAllowedFragments(fragmentNameList = null) {
-		SelectFrame(value1 = "relative=top");
-
-		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
-
-		for (var fragmentName : list ${fragmentNameList}) {
-			MastersPageTemplates.searchAllowedFragments(searchValue = ${fragmentName});
-
-			Check.checkToggleSwitch(
-				key_fragmentName = ${fragmentName},
-				locator1 = "Checkbox#ALLOWED_FRAGMENT");
-
-			AssertChecked.assertCheckedNotVisible(
-				key_fragmentName = ${fragmentName},
-				locator1 = "Checkbox#ALLOWED_FRAGMENT");
-		}
-
-		Button.clickSave();
-	}
-
-	@summary = "Default summary"
-	macro selectMaster(masterLayoutName = null) {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		LexiconCard.clickCardTitle(card = ${masterLayoutName});
-
-		SelectFrameTop();
-	}
-
-	@summary = "Default summary"
-	macro selectMasterViaPageDesignOptions(masterLayoutName = null) {
-		Navigator.gotoNavTab(navTab = "Master");
-
-		Click.waitForMenuToggleJSClick(
-			key_card = ${masterLayoutName},
-			locator1 = "Card#CARD_TYPE_ASSET");
-
-		AssertElementPresent(
-			key_card = ${masterLayoutName},
-			locator1 = "Card#CARD_SELECTED");
-
-		PageEditor.waitForAutoSave();
 	}
 
 }

@@ -1489,7 +1489,9 @@ definition {
 				pageName = "Test Widget Page",
 				sitePageType = "Widget Page");
 
-			PagesAdmin.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Hidden from Menu Display",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			PortletEntry.save();
 		}

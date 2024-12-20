@@ -1,22 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertFragmentPreview(fragmentLocator = null, text = null) {
-		SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-		if (isSet(text)) {
-			AssertTextEquals(
-				locator1 = ${fragmentLocator},
-				value1 = ${text});
-		}
-		else {
-			AssertElementPresent(locator1 = ${fragmentLocator});
-		}
-
-		SelectFrame.selectFrameTop();
-	}
-
-	@summary = "Default summary"
 	macro autocompleteFragmentHTML(fragmentHtml = null, htmlSnippet = null, autocompleteField = null) {
 		FragmentsEditor.typeHtmlEditor(content = "");
 
@@ -34,73 +18,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCodeTab() {
-		Button.click(button = "Code");
-	}
-
-	@summary = "Default summary"
-	macro gotoConfigurationTab() {
-		Button.click(button = "Configuration");
-	}
-
-	@summary = "Default summary"
-	macro publish() {
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
-	macro typeConfigurationEditor(content = null) {
-		Click(
-			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-			value1 = "keys=CONTROL,m");
-
-		Type.sendKeys(
-			locator1 = "//body",
-			value1 = "keys=CONTROL,m");
-
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-			value1 = ${content});
-	}
-
-	@summary = "Default summary"
-	macro typeCssEditor(content = null) {
-		Click(locator1 = "FragmentEditor#CSS_EDITOR");
-
-		Type.sendKeys(
-			locator1 = "//body",
-			value1 = "keys=CONTROL,m");
-
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = ${content});
-	}
-
-	@summary = "Default summary"
-	macro typeFileContent(fileName = null) {
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
-
-		var content = FileUtil.read(${dependencyFilePath});
-		var fileExtension = File.getFileExtension(fileName = ${fileName});
-
-		if (${fileExtension} == "html") {
-			FragmentsEditor.typeHtmlEditor(content = ${content});
-		}
-		else if (${fileExtension} == "css") {
-			FragmentsEditor.typeCssEditor(content = ${content});
-		}
-		else if (${fileExtension} == "js") {
-			FragmentsEditor.typeJsEditor(content = ${content});
-		}
-		else if (${fileExtension} == "json") {
-			FragmentsEditor.typeConfigurationEditor(content = ${content});
-		}
-		else {
-			fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
-		}
-	}
-
-	@summary = "Default summary"
 	macro typeHtmlEditor(content = null) {
 		Click(locator1 = "FragmentEditor#HTML_EDITOR");
 
@@ -111,26 +28,6 @@ definition {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#HTML_EDITOR",
 			value1 = ${content});
-	}
-
-	@summary = "Default summary"
-	macro typeJsEditor(content = null) {
-		Click(locator1 = "FragmentEditor#JS_EDITOR");
-
-		Type.sendKeys(
-			locator1 = "//body",
-			value1 = "keys=CONTROL,m");
-
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "FragmentEditor#JS_EDITOR",
-			value1 = ${content});
-	}
-
-	@summary = "Default summary"
-	macro waitForAutoSave() {
-		WaitForElementNotPresent(locator1 = "FragmentEditor#SAVING_CHANGES_MESSAGE");
-
-		WaitForVisible(locator1 = "FragmentEditor#CHANGES_SAVED_MESSAGE");
 	}
 
 }

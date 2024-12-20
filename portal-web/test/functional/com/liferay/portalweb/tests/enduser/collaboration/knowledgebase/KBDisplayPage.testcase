@@ -62,7 +62,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
 
-		DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Name");
+		LexiconCard.viewCardNotPresent(card = "Display Page Name");
 	}
 
 	@description = "This test ensures that the Max Nesting settings can be configured in the KB navigation fragment for a display page."

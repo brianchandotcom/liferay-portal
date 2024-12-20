@@ -20,131 +20,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPage(parentPageName = null, basicTemplate = null, pageTemplateName = null, childPageName = null, vocabularyName = null, categoryName = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
-		WaitForElementPresent(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "Pages");
-
-		MouseOver(
-			key_itemName = ${parentPageName},
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-
-		Click(
-			key_pageName = ${parentPageName},
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
-
-		DropdownMenuItem.click(menuItem = "Add Page");
-
-		ContentPages._selectCard(
-			basicTemplate = ${basicTemplate},
-			collectionName = ${collectionName},
-			masterLayoutName = ${masterLayoutName},
-			pageTemplateName = ${pageTemplateName});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${childPageName});
-
-		if (isSet(categoryName)) {
-			AssetCategorization.addCategory(
-				categoryName = ${categoryName},
-				vocabularyName = ${vocabularyName});
-		}
-
-		if (isSet(categoryNameList)) {
-			AssetCategorization.addMultipleCategories(
-				categoryNameList = ${categoryNameList},
-				vocabularyName = ${vocabularyName});
-		}
-
-		Button.click(button = "Add");
-
-		SelectFrame.selectFrameTop();
-
-		PageEditor.assertFragmentSidebarLoaded();
-	}
-
-	@summary = "Default summary"
-	macro addCollectionItemInCollectionPage(itemSubtype = null, title = null) {
-		if (isSet(itemSubtype)) {
-			Click(
-				key_title = ${title},
-				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
-
-			MenuItem.click(menuItem = ${itemSubtype});
-		}
-		else {
-			Click(
-				key_title = ${title},
-				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
-		}
-	}
-
-	@summary = "Default summary"
-	macro addCollectionPage(tabName = null, vocabularyName = null, menuItem = null, pageName = null, categoryName = null, masterLayoutName = null, collectionName = null, selectedAsset = null, categoryNameList = null) {
-		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-		}
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Collection Page");
-
-		Navigator.gotoNavTab(navTab = ${tabName});
-
-		if (isSet(menuItem)) {
-			AssetListsAdmin.addSelection(
-				collectionName = ${collectionName},
-				menuItem = ${menuItem},
-				selectedAsset = ${selectedAsset});
-
-			Click(locator1 = "Icon#BACK");
-		}
-
-		LexiconCard.clickCard(card = ${collectionName});
-
-		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = ${masterLayoutName});
-		}
-		else {
-			LexiconCard.clickCard(card = "Blank");
-		}
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${pageName});
-
-		if (isSet(categoryName)) {
-			AssetCategorization.addCategory(
-				categoryName = ${categoryName},
-				vocabularyName = ${vocabularyName});
-		}
-
-		if (isSet(categoryNameList)) {
-			AssetCategorization.addMultipleCategories(
-				categoryNameList = ${categoryNameList},
-				vocabularyName = ${vocabularyName});
-		}
-
-		Button.click(button = "Add");
-
-		SelectFrame.selectFrameTop();
-
-		PageEditor.assertFragmentSidebarLoaded();
-
-		ControlMenu.viewHeaderDraftTitle(headerTitle = ${pageName});
-
-		PageEditor.viewFragmentEditableText(
-			editableText = ${collectionName},
-			fragmentName = "Heading",
-			id = "element-text");
-
-		PageEditor.viewFragment(fragmentName = "Collection Display");
-	}
-
-	@summary = "Default summary"
 	macro addPage(assertCheckboxMissing = null, basicTemplate = null, pageTemplateName = null, vocabularyName = null, pageName = null, categoryName = null, navigationMenus = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -345,40 +220,9 @@ definition {
 
 		WaitForPageLoad();
 
-		ContentPages.viewCurrentExperience(experienceName = ${experienceName});
-	}
-
-	@summary = "Default summary"
-	macro focusSlide(slideNumber = null) {
-		if (IsElementPresent(ariaLabel = "Go to slide ${slideNumber}", locator1 = "Button#ANY_WITH_ARIA_LABEL")) {
-			Click(
-				ariaLabel = "Go to slide ${slideNumber}",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-		}
-		else {
-			Click(
-				ariaLabel = "Focus slide ${slideNumber}",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-		}
-	}
-
-	@summary = "Default summary"
-	macro getCommonStylesClass(fragmentName = null) {
-		if (!(isSet(index))) {
-			var index = 1;
-		}
-
-		var javascript = '''
-function getWebElement(locator) {
-  return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item-')][contains(@class,'-${fragmentName}')])[${index}]").classList).find(className => className.includes('lfr-layout-structure-item') && !className.includes('-${fragmentName}'));
-		''';
-
-		var commonStylesClass = selenium.getEval(${javascript});
-
-		return ${commonStylesClass};
+		AssertVisible(
+			key_title = ${experienceName},
+			locator1 = "Experience#EXPERIENCE_SELECTED_VIEW_MODE");
 	}
 
 	@summary = "Default summary"
@@ -410,24 +254,6 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	@summary = "Default summary"
-	macro viewCurrentExperience(experienceName = null) {
-		AssertVisible(
-			key_title = ${experienceName},
-			locator1 = "Experience#EXPERIENCE_SELECTED_VIEW_MODE");
-	}
-
-	@summary = "Default summary"
-	macro viewExperienceOrder(experienceNameList = null) {
-		ContentPages.openExperienceMenu();
-
-		MenuItem.viewOrder(menuItemList = ${experienceNameList});
-
-		Click(
-			ariaLabel = "Experience Selector",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-	}
-
-	@summary = "Default summary"
 	macro viewFragmentBackgroundImage(image = null) {
 		if (!(isSet(position))) {
 			var position = 1;
@@ -437,34 +263,6 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 			image = ${image},
 			index = ${position},
 			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");
-	}
-
-	@summary = "Default summary"
-	macro viewFragmentCommonStyle(styleValue = null, index = null, className = null, styleName = null) {
-		if (isSet(className)) {
-			var fragmentName = ${className};
-		}
-		else {
-			var fragmentName = StringUtil.replace(${fragmentName}, " ", "-");
-
-			var fragmentName = StringUtil.lowerCase(${fragmentName});
-		}
-
-		var commonStylesClass = ContentPages.getCommonStylesClass(
-			fragmentName = ${fragmentName},
-			index = ${index});
-
-		var actualStyleValue = Css.getStyleValue(
-			className = ${commonStylesClass},
-			cssSelector = "link[href*=layout-common-styles]",
-			styleName = ${styleName});
-
-		if (contains(${actualStyleValue}, ${styleValue})) {
-			echo("PASSED");
-		}
-		else {
-			TestUtils.fail(message = "FAILED: expected '${styleValue}', actual was '${actualStyleValue}'");
-		}
 	}
 
 	@summary = "Default summary"
@@ -496,18 +294,6 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 				index = ${position},
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
 		}
-	}
-
-	@summary = "View fragment not present at view mode"
-	macro viewFragmentNotPresent(fragmentName = null) {
-		if (!(isSet(position))) {
-			var position = 1;
-		}
-
-		AssertElementNotPresent(
-			fragmentName = StringUtil.lowerCase(${fragmentName}),
-			index = ${position},
-			locator1 = "Fragment#FRAGMENT_BODY");
 	}
 
 	@summary = "Default summary"
@@ -546,23 +332,6 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = ${text});
 		}
-	}
-
-	@summary = "Default summary"
-	macro viewFragmentTextInCollectionDisplay(text = null) {
-		if (!(isSet(row))) {
-			var row = 1;
-		}
-
-		if (!(isSet(column))) {
-			var column = 1;
-		}
-
-		AssertTextEquals(
-			column = ${column},
-			locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-			row = ${row},
-			value1 = ${text});
 	}
 
 }

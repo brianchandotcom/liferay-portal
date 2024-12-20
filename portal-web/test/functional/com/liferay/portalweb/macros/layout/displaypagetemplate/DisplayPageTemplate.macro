@@ -16,20 +16,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickPencil() {
-		WaitForPageLoad();
-
-		Click.waitForMenuToggleJSClick(locator1 = "Button#PENCIL");
-	}
-
-	@summary = "Default summary"
-	macro clickPencilItem(item = null) {
-		DisplayPageTemplate.clickPencil();
-
-		MenuItem.clickNoError(menuItem = ${item});
-	}
-
-	@summary = "Default summary"
 	macro selectDisplayPageTemplateForAsset(groupName = null, siteURLKey = null, kbChildArticleTitle = null, entryTitle = null, pageName = null, assetType = null) {
 		if (${assetType} == "Blogs Entry") {
 			BlogsNavigator.openToEditEntryInSite(

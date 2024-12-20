@@ -29,33 +29,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureLanguages(currentLanguageList = null) {
-		Panel.expandPanel(panel = "Languages");
-
-		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
-			Click(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
-
-			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
-		}
-
-		for (var currentLanguage : list ${currentLanguageList}) {
-			var key_currentLanguage = ${currentLanguage};
-
-			Select(
-				locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-				value1 = ${currentLanguage});
-
-			Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = ${currentLanguage});
-		}
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
 	macro selectLanguagePG(locale = null, textIcon = null) {
 		var portletName = ${portletName};
 
@@ -92,105 +65,6 @@ definition {
 			key_locale = ${locale},
 			key_portletName = "LanguagePortlet",
 			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE");
-	}
-
-	@summary = "Default summary"
-	macro viewLanguages(displayTemplate = null, availableLanguageList = null, unavailableLanguageList = null, unavailableIconList = null, availableIconList = null) {
-		if (${displayTemplate} == "Icon") {
-			for (var availableIcon : list ${availableIconList}) {
-				AssertElementPresent(
-					key_text = ${availableIcon},
-					locator1 = "Icon#ANY");
-			}
-
-			for (var unavailableIcon : list ${unavailableIconList}) {
-				AssertElementNotPresent(
-					key_text = ${unavailableIcon},
-					locator1 = "Icon#ANY");
-			}
-		}
-		else if (${displayTemplate} == "Icon Menu") {
-			Click(
-				key_portletName = "LanguagePortlet",
-				locator1 = "Language#DROPDOWN");
-
-			for (var availableLanguage : list ${availableLanguageList}) {
-				MenuItem.viewPresent(menuItem = ${availableLanguage});
-			}
-
-			for (var unavailableLanguage : list ${unavailableLanguageList}) {
-				MenuItem.viewNotPresent(menuItem = ${unavailableLanguage});
-			}
-		}
-		else if (${displayTemplate} == "Icon Menu Partial Match") {
-			Click(
-				key_portletName = "LanguagePortlet",
-				locator1 = "Language#DROPDOWN");
-
-			for (var availableLanguage : list ${availableLanguageList}) {
-				MenuItem.viewPresentPartialMatch(menuItem = ${availableLanguage});
-			}
-
-			for (var unavailableLanguage : list ${unavailableLanguageList}) {
-				MenuItem.viewNotPresentPartialMatch(menuItem = ${unavailableLanguage});
-			}
-		}
-		else if (${displayTemplate} == "Long Text") {
-			for (var availableLanguage : list ${availableLanguageList}) {
-				AssertTextEquals(
-					key_language = ${availableLanguage},
-					locator1 = "Language#LONG_TEXT_LINK",
-					value1 = ${availableLanguage});
-			}
-
-			for (var unavailableLanguage : list ${unavailableLanguageList}) {
-				AssertElementNotPresent(
-					key_language = ${unavailableLanguage},
-					locator1 = "Language#LONG_TEXT_LINK");
-			}
-		}
-		else if (${displayTemplate} == "Select Box") {
-			for (var availableLanguage : list ${availableLanguageList}) {
-				AssertElementPresent(
-					locator1 = "Select#SELECT_VALUE_ID",
-					option = ${availableLanguage},
-					selectFieldId = "languageIdfm");
-			}
-
-			for (var unavailableLanguage : list ${unavailableLanguageList}) {
-				AssertElementNotPresent(
-					locator1 = "Select#SELECT_VALUE_ID",
-					option = ${unavailableLanguage},
-					selectFieldId = "languageIdfm");
-			}
-		}
-		else if (${displayTemplate} == "Short Text") {
-			for (var availableLanguage : list ${availableLanguageList}) {
-				AssertTextEquals(
-					key_language = ${availableLanguage},
-					locator1 = "Language#SHORT_TEXT_LINK",
-					value1 = ${availableLanguage});
-			}
-
-			for (var unavailableLanguage : list ${unavailableLanguageList}) {
-				AssertElementNotPresent(
-					key_language = ${unavailableLanguage},
-					locator1 = "Language#SHORT_TEXT_LINK");
-			}
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewLanguagesSettings(currentLanguageList = null) {
-		Panel.expandPanel(panel = "Languages");
-
-		for (var currentLanguage : list ${currentLanguageList}) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = ${currentLanguage});
-		}
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 }

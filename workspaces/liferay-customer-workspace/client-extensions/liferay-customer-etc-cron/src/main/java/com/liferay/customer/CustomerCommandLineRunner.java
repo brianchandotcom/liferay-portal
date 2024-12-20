@@ -113,8 +113,7 @@ public class CustomerCommandLineRunner
 
 	private String _getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-customer-etc-spring-boot-oauth-application-headless-" +
-				"server");
+			"liferay-customer-etc-cron-oahs");
 	}
 
 	private static final Log _log = LogFactory.getLog(

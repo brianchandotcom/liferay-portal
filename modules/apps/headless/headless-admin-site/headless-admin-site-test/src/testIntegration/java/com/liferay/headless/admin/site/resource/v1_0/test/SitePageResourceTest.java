@@ -246,9 +246,20 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testPostByExternalReferenceCodeSitePage() throws Exception {
 		super.testPostByExternalReferenceCodeSitePage();
 
-		_testPostByExternalReferenceCodeSitePage(SitePage.Type.COLLECTION_PAGE);
-		_testPostByExternalReferenceCodeSitePage(SitePage.Type.CONTENT_PAGE);
-		_testPostByExternalReferenceCodeSitePage(SitePage.Type.WIDGET_PAGE);
+		_testPostByExternalReferenceCodeSitePage(
+			_getRandomSitePage(SitePage.Type.COLLECTION_PAGE));
+		_testPostByExternalReferenceCodeSitePage(
+			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
+		_testPostByExternalReferenceCodeSitePage(
+			_getRandomSitePage(SitePage.Type.WIDGET_PAGE));
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
+		_testPostByExternalReferenceCodeSitePage(
+			_getRandomSitePage(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				layout.getExternalReferenceCode(), SitePage.Type.CONTENT_PAGE,
+				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 	}
 
 	@Override
@@ -594,7 +605,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		for (Layout layout : layouts) {
 			_assertPatchSiteSiteByExternalReferenceCodeSitePageProblemException(
 				_getRandomSitePage(
-					layout.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(), null,
 					SitePage.Type.CONTENT_PAGE, layout.getUuid()));
 		}
 	}
@@ -655,7 +666,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		for (Layout layout : layouts) {
 			_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
 				_getRandomSitePage(
-					layout.getExternalReferenceCode(),
+					layout.getExternalReferenceCode(), null,
 					SitePage.Type.CONTENT_PAGE, layout.getUuid()));
 		}
 	}
@@ -824,13 +835,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private SitePage _getRandomSitePage(SitePage.Type type) throws Exception {
 		return _getRandomSitePage(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()), type,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), null, type,
 			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 	}
 
 	private SitePage _getRandomSitePage(
-			String curExternalReferenceCode, SitePage.Type curType,
-			String curUuid)
+			String curExternalReferenceCode,
+			String curParentSitePageExternalReferenceCode,
+			SitePage.Type curType, String curUuid)
 		throws Exception {
 
 		SitePage sitePage = new SitePage() {
@@ -870,6 +882,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				return pageSettings;
 			});
+		sitePage.setParentSitePageExternalReferenceCode(
+			() -> curParentSitePageExternalReferenceCode);
 		sitePage.setType(() -> curType);
 
 		return sitePage;
@@ -1014,19 +1028,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			});
 
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
+		sitePage.setParentSitePageExternalReferenceCode(
+			layout.getExternalReferenceCode());
+
+		_assertPatchSiteSiteByExternalReferenceCodeSitePage(
+			sitePage,
+			new SitePage() {
+				{
+					setExternalReferenceCode(
+						sitePage::getExternalReferenceCode);
+					setParentSitePageExternalReferenceCode(
+						layout::getExternalReferenceCode);
+					setType(sitePage::getType);
+					setUuid(sitePage::getUuid);
+				}
+			});
+
 		_assertPatchSiteSiteByExternalReferenceCodeSitePageProblemException(
 			_getRandomSitePage(
-				sitePage.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), null,
 				_getRandomType(
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),
 				sitePage.getUuid()));
 	}
 
-	private void _testPostByExternalReferenceCodeSitePage(SitePage.Type type)
+	private void _testPostByExternalReferenceCodeSitePage(SitePage sitePage)
 		throws Exception {
-
-		SitePage sitePage = _getRandomSitePage(type);
 
 		SitePage postSitePage =
 			testPostByExternalReferenceCodeSitePage_addSitePage(sitePage);
@@ -1052,8 +1082,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			sitePage);
 
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
 		sitePage = _getRandomSitePage(
-			sitePage.getExternalReferenceCode(), type, sitePage.getUuid());
+			sitePage.getExternalReferenceCode(),
+			layout.getExternalReferenceCode(), type, sitePage.getUuid());
 
 		SitePage putSitePage =
 			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
@@ -1070,7 +1103,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
 			_getRandomSitePage(
-				sitePage.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), null,
 				_getRandomType(
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),

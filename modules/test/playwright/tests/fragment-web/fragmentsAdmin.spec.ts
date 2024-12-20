@@ -1365,7 +1365,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Import'}),
-			trigger: page.locator('.sheet-title').getByLabel('Show Actions'),
+			trigger: page.getByLabel('Show Actions'),
 		});
 
 		await fragmentsPage.importFile(download.suggestedFilename(), filePath);

@@ -951,7 +951,7 @@ export class PageEditorPage {
 	async mapFormFragment(
 		fragmentId: string,
 		type: string,
-		fields?: string[],
+		fields?: string[] | 'all',
 		options?: {
 			addLocalizationSelect?: boolean;
 		}
@@ -968,7 +968,7 @@ export class PageEditorPage {
 			.getByLabel('Select All Items on the Page')
 			.check({trial: true});
 
-		if (!fields || !fields.length) {
+		if (!fields || fields === 'all') {
 			await fieldsModal
 				.getByLabel('Select All Items on the Page')
 				.check();

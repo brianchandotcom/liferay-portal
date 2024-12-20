@@ -499,6 +499,12 @@ public class ObjectServiceUpgradeStepRegistrator
 			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService),
 			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService),
 			new ObjectRelationshipStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.1.1", "10.2.0",
+			UpgradeProcessFactory.runSQL(
+				"update ObjectField set dbType = 'Integer' where " +
+					"dbColumnName = 'status'"));
 	}
 
 	@Reference

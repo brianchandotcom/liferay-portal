@@ -8,6 +8,7 @@ package com.liferay.portal.configuration.settings.internal.test;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import org.junit.Assert;
@@ -42,7 +43,10 @@ public class CompanyServiceSettingsLocatorTest
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		String companyPortletPreferencesValue = savePortletPreferences(
-			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portletId,
+			PortletKeys.PREFS_PLID_SHARED,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			companyPortletPreferencesValue,

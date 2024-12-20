@@ -50,7 +50,10 @@ public class PortletInstanceSettingsLocatorTest
 
 		Assert.assertEquals(
 			savePortletPreferences(
-				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY),
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, portletId,
+				PortletKeys.PREFS_PLID_SHARED,
+				SettingsLocatorTestConstants.TEST_KEY,
+				RandomTestUtil.randomString()),
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
@@ -60,7 +63,11 @@ public class PortletInstanceSettingsLocatorTest
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(
-			savePortletPreferences(groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP),
+			savePortletPreferences(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, portletId,
+				PortletKeys.PREFS_PLID_SHARED,
+				SettingsLocatorTestConstants.TEST_KEY,
+				RandomTestUtil.randomString()),
 			getSettingsValue(SettingsLocatorTestConstants.TEST_KEY));
 
 		Assert.assertEquals(

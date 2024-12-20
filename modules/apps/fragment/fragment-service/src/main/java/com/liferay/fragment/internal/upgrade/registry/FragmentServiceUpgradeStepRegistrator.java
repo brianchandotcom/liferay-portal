@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -250,6 +251,9 @@ public class FragmentServiceUpgradeStepRegistrator
 			new com.liferay.fragment.internal.upgrade.v2_13_1.
 				FragmentEntryLinkUpgradeProcess(_jsonFactory, _portal));
 	}
+
+	@Reference
+	protected ViewCountManager viewCountManager;
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;

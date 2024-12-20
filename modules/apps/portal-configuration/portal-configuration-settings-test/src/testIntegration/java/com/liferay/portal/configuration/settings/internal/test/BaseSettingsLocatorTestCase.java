@@ -10,7 +10,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.settings.internal.samples.TestConfiguration;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -133,17 +132,6 @@ public abstract class BaseSettingsLocatorTestCase {
 		_configurationPids.add(configurationPid);
 
 		return value;
-	}
-
-	protected String saveFactoryConfiguration(
-			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
-			Serializable scopePK)
-		throws Exception {
-
-		return saveFactoryConfiguration(
-			factoryPid, scope, scopePK, null, null,
-			SettingsLocatorTestConstants.TEST_KEY,
-			RandomTestUtil.randomString());
 	}
 
 	protected String saveFactoryConfiguration(

@@ -41,7 +41,9 @@ public class GroupServiceSettingsLocatorTest
 
 		String companyConfigurationValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			companyConfigurationValue,
@@ -59,7 +61,9 @@ public class GroupServiceSettingsLocatorTest
 
 		String groupConfigurationValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			groupConfigurationValue,

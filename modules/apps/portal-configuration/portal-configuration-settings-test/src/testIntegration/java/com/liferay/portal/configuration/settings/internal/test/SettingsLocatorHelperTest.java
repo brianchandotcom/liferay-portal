@@ -49,7 +49,9 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 
 		String companyValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
@@ -145,7 +147,9 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 
 		String groupValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
@@ -196,7 +200,9 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 		String portletInstanceValue = saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
-			portletInstanceKey);
+			portletInstanceKey, null, null,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(

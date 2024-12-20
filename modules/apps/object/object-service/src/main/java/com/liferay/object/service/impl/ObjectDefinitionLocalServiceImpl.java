@@ -2670,6 +2670,11 @@ public class ObjectDefinitionLocalServiceImpl
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
 
+	private final Map
+		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
+			_activeServiceRegistrationsMaps = Collections.synchronizedMap(
+				new LinkedHashMap<>());
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -2695,8 +2700,7 @@ public class ObjectDefinitionLocalServiceImpl
 	private GroupLocalService _groupLocalService;
 
 	private final Map<Long, List<ServiceRegistration<?>>>
-		_inactiveServiceRegistrationsMap =
-			new ConcurrentHashMap<>();
+		_inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private Language _language;
@@ -2785,11 +2789,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;
-
-	private final Map
-		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
-			_activeServiceRegistrationsMaps = Collections.synchronizedMap(
-				new LinkedHashMap<>());
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

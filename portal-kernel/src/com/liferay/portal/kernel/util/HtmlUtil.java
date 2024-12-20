@@ -401,12 +401,8 @@ public class HtmlUtil {
 
 		link = StringUtil.trim(link);
 
-		if (link.indexOf(StringPool.COLON) == 10) {
-			String protocol = StringUtil.toLowerCase(link.substring(0, 10));
-
-			if (protocol.equals("javascript")) {
-				link = StringUtil.replaceFirst(link, CharPool.COLON, "%3a");
-			}
+		if (link.contains("javascript:")) {
+			link = StringUtil.replaceFirst(link, CharPool.COLON, "%3a");
 		}
 
 		return link;

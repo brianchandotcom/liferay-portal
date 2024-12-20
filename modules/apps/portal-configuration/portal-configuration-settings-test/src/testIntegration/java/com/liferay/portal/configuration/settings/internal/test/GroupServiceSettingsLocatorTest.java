@@ -38,7 +38,8 @@ public class GroupServiceSettingsLocatorTest
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			getSettingsValue());
 
-		String companyConfigurationValue = saveScopedConfiguration(
+		String companyConfigurationValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
@@ -48,7 +49,8 @@ public class GroupServiceSettingsLocatorTest
 
 		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
 
-		String groupConfigurationValue = saveScopedConfiguration(
+		String groupConfigurationValue = saveFactoryConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
 		Assert.assertEquals(groupConfigurationValue, getSettingsValue());

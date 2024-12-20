@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_CATEGORY</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,27 +107,27 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_SITE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeSite}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeSite}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_STATUS</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeStatus}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_TITLE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//preceding-sibling::div//a[contains(.,'${key_changeTitle}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div//a[contains(.,'${key_changeTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_TYPE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeType}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_USER</td>
-	<td>//div[contains(@class,'dnd-td') and contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeUser}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeUser}')]</td>
 	<td></td>
 </tr>
 <tr>

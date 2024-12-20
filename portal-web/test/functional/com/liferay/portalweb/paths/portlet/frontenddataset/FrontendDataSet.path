@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>DELETE_ACTION_BUTTON</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-times-circle')]]</td>
+	<td>//td[text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-times-circle')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,22 +22,22 @@
 </tr>
 <tr>
 	<td>QUICK_ACTION_ITEM_INDEX</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[contains(@class,'quick-action-item')][${key_index}]</td>
+	<td>//td[text()='${key_title}']//..//*[contains(@class,'quick-action-item')][${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT_ACTION_BUTTON</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td>//td[text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CHECKBOX</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']/preceding-sibling::div//input[contains(@type,'checkbox')]</td>
+	<td>//td[text()='${key_title}']/preceding-sibling::div//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//td[text()='${key_title}']/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,22 +52,22 @@
 </tr>
 <tr>
 	<td>VIEW_ACTION_BUTTON</td>
-	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
+	<td>//td[text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERTICAL_ELLIPSIS_BUTTON</td>
-	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//td[normalize-space(text())='${key_itemName}']//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_BODY</td>
-	<td>//*[contains(@class,'fds')]//*[@class='dnd-tbody']</td>
+	<td>//*[contains(@class,'fds')]//tbody</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ITEM_ROW</td>
-	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]</td>
+	<td>//td[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>TABLE_CELL</td>
-	<td>xpath=(//div[@class='dnd-td' and position()='${key_columnIndex}'])[${key_valueIndex}]</td>
+	<td>xpath=(//td[position()='${key_columnIndex}'])[${key_valueIndex}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,17 +190,17 @@
 </tr>
 <tr>
 	<td>TABLE_ROW</td>
-	<td>//div[contains(@class, "dnd-tr")]</td>
+	<td>//tr</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ITEM_COLUMN</td>
-	<td>//div[(@class="dnd-tr")]/div[contains(@class,"dnd-th") and contains(string(), "${key_field}")]</td>
+	<td>//tr/th[contains(string(), "${key_field}")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_COLUMN_AND_ROW</td>
-	<td>//div[contains(@class,'dnd-table')]//*[contains(string(),'${key_field}')]/../../..//div[contains(text(),'${key_color}')]</td>
+	<td>//table//*[contains(string(),'${key_field}')]/../../..//div[contains(text(),'${key_color}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>HEADER_ROW</td>
-	<td>xpath=(//div[contains(@class, "dnd-tr")])[1]</td>
+	<td>xpath=(//tr)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -248,7 +248,7 @@
 </tr>
 <tr>
 	<td>ICON_IN_DATA_SET_FRAGMENT</td>
-	<td>xpath=(//div[(@class="dnd-tr")]/div[contains(@class,"dnd-td") and contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
+	<td>xpath=(//tr/td[contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 

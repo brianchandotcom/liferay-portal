@@ -17,12 +17,12 @@
 </tr>
 <tr>
 	<td>TABLE_CELL</td>
-	<td>//div[contains(@class,'dnd-tr')]//*[normalize-space(text())='${key_itemName}']</td>
+	<td>//tr//*[normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_LABEL_POSITION</td>
-	<td>//div[@class='dnd-tr'][${key_rowPosition}]//div[(text()='${key_labelName}')]</td>
+	<td>//tr[${key_rowPosition}]//div[(text()='${key_labelName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ENTRY_KEBAB_MENU</td>
-	<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class, 'dnd-td') and contains(., '${key_entry}')]/following-sibling::div//button</td>
+	<td>//tbody//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //td[contains(., '${key_entry}')]/following-sibling::div//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>NUMBER_OF_VIEWS</td>
-	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='Views']/../../../..//span[contains(@class,'badge') and (text()='${numberOfViews}')]</td>
+	<td>//table//div[normalize-space(text())='Views']/../../../..//span[contains(@class,'badge') and (text()='${numberOfViews}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -158,12 +158,12 @@
 </tr>
 <tr>
 	<td>ACCOUNT_ORDER_NAME</td>
-	<td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
+	<td>xpath=(//td[contains(text(),'${accountName}')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_COLUMN_NAME</td>
-	<td>//div[contains(@class,'dnd-th')]//*[contains(text(),'${key_column}')]</td>
+	<td>//th//*[contains(text(),'${key_column}')]</td>
 	<td></td>
 </tr>
 
@@ -471,7 +471,7 @@
 </tr>
 <tr>
 	<td>ICON_IN_DATA_SET_FRAGMENT</td>
-	<td>xpath=(//div[(@class="dnd-tr")]/div[contains(@class,"dnd-td") and contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
+	<td>xpath=(//tr/td[contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

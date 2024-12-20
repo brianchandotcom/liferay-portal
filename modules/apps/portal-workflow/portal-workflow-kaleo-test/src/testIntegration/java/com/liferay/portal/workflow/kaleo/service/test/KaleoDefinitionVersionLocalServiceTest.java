@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -124,7 +125,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				kaleoDefinition3LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
 				kaleoDefinition1.getCompanyId(),
-				"kaleodefinitionversiondescription",
+				"kaleodefinitionversiondescription", LocaleUtil.US,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
 		Assert.assertEquals(
@@ -133,7 +134,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				kaleoDefinition2LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
 				kaleoDefinition1.getCompanyId(), "kaleodefinitionversionname",
-				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				LocaleUtil.US, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
 		Assert.assertEquals(
 			Arrays.asList(
@@ -141,7 +142,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				kaleoDefinition3LatestKaleoDefinitionVersion),
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersions(
 				kaleoDefinition1.getCompanyId(), "kaleodefinitionversiontitle",
-				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				LocaleUtil.US, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, kaleoDefinitionVersionTitleComparator));
 	}
 

@@ -452,6 +452,57 @@ test(
 );
 
 test(
+	'Load more button is working while editing a page',
+	{
+		tag: '@LPS-168856',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageTreePage, site}) => {
+
+		// Add a content page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Add 20 pages
+
+		for (let i = 0; i < 20; i++) {
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition(),
+				siteId: site.id,
+				title: `Test Content Page ${i}`,
+			});
+		}
+
+		// Go to edit a content page
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Click load more button
+
+		await page.getByRole('button', {name: 'Load More Results'}).click();
+
+		// Assert last page
+
+		await expect(
+			page.getByRole('link', {exact: true, name: 'Test Content Page 19'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Users with only View permissions can not see draft options',
 	{
 		tag: '@LPS-140136',

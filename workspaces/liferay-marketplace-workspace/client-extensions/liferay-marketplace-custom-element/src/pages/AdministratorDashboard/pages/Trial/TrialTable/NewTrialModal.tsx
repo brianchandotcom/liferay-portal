@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
+import BaseWrapper from '../../../../../components/Input/base/BaseWrapper';
 import Select from '../../../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ORDER_CUSTOM_FIELDS} from '../../../../../enums/Order';
@@ -34,20 +35,27 @@ type MultiSelectValue = {
 };
 
 const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
-	const {formState, handleSubmit, register, setValue, watch} = useForm({
-		defaultValues: {
-			_refInviteMembers: [],
-			accountId: undefined,
-			consoleInviteEmailAddresses: [],
-			product: undefined,
-			sendNotificationEmail: false,
-		},
-		mode: 'all',
-		resolver: zodResolver(zodSchema.trialForm),
-	});
-	const _refInviteMembers = watch('_refInviteMembers');
-
 	const {channel, myUserAccount} = useMarketplaceContext();
+
+	const {formState, handleSubmit, register, setValue, trigger, watch} =
+		useForm({
+			defaultValues: {
+				_refInviteMembers: [],
+				accountId: String(myUserAccount.accountBriefs[0].id),
+				consoleInviteEmailAddresses: [],
+				product: undefined,
+				sendNotificationEmail: false,
+			},
+			mode: 'all',
+			reValidateMode: 'onChange',
+			resolver: zodResolver(zodSchema.trialForm),
+		});
+
+	const {isValid} = formState;
+
+	const _refInviteMembers = watch('_refInviteMembers');
+	const {accountBriefs = []} = myUserAccount;
+
 	const [search, setSearch] = useState('');
 	const [emailAddressText, setEmailAddressText] = useState('');
 	const debouncedSearch = useDebounce(search, 1500);
@@ -56,8 +64,6 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 		channel.id,
 		debouncedSearch
 	);
-
-	const {accountBriefs = []} = myUserAccount;
 
 	const onSubmit = async (form: z.infer<typeof zodSchema.trialForm>) => {
 		const product = form.product as DeliveryProduct;
@@ -115,9 +121,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 
 	return (
 		<div className="pb-8">
-			<div className="mb-5">
-				<h5>Cloud App</h5>
-
+			<BaseWrapper boldLabel label="Cloud App" required>
 				<Autocomplete
 					filterKey="productName"
 					items={apps?.items || []}
@@ -127,8 +131,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 						notFound: 'No results found',
 					}}
 					onChange={setSearch}
-					onItemsChange={() => {}}
-					placeholder="Search for the App name"
+					placeholder="Search for the app name"
 					value={search}
 				>
 					{(product) => (
@@ -136,20 +139,24 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 							{...({} as any)}
 							disabled
 							key={product.productId}
-							onClick={() => setValue('product', product as any)}
+							onClick={() => {
+								setValue('product', product as any);
+
+								trigger();
+							}}
 						>
 							{product.name}
 						</Autocomplete.Item>
 					)}
 				</Autocomplete>
-			</div>
+			</BaseWrapper>
 
 			<Select
 				{...register('accountId')}
 				boldLabel
-				defaultOptionLabel="Select Account"
+				defaultOptionLabel={i18n.translate('account-selection')}
 				helpText="Account where this Order will be registered."
-				label="Select Account"
+				label={i18n.translate('account-selection')}
 				options={accountBriefs
 					.sort((accountA, accountB) =>
 						accountA.name.localeCompare(accountB.name)
@@ -173,7 +180,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 					</label>
 
 					<small>
-						Anyone with an email address at these list will be
+						Everyone with an email address at these list will be
 						invited to the Cloud Environment.
 					</small>
 				</div>
@@ -209,7 +216,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 
 			<div className="d-flex justify-content-end">
 				<ClayButton
-					disabled={!formState.isValid}
+					disabled={!isValid}
 					onClick={handleSubmit(onSubmit)}
 				>
 					Create Trial

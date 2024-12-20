@@ -35,7 +35,11 @@ const useConfirmationModal = () => {
 							className="ml-2"
 							displayType="danger"
 							key={1}
-							onClick={onConfirm}
+							onClick={async () => {
+								await onConfirm();
+
+								modalContext.onClose();
+							}}
 						>
 							{i18n.translate('confirm')}
 						</ClayButton>,

@@ -1549,19 +1549,11 @@ public class CPDefinitionLocalServiceImpl
 	public List<String> getCPDefinitionLocalizationLanguageIds(
 		long cpDefinitionId) {
 
-		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+		return TransformUtil.transform(
 			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
-				cpDefinitionId);
-
-		List<String> availableLanguageIds = new ArrayList<>();
-
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				cpDefinitionLocalizationList) {
-
-			availableLanguageIds.add(cpDefinitionLocalization.getLanguageId());
-		}
-
-		return availableLanguageIds;
+				cpDefinitionId),
+			cpDefinitionLocalization ->
+				cpDefinitionLocalization.getLanguageId());
 	}
 
 	@Override

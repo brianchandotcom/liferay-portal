@@ -9,15 +9,14 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,24 +58,15 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 
 	@Override
 	public List<CPSku> getCPSkus() {
-		List<CPSku> cpSkus = new ArrayList<>();
-
-		List<CPInstance> cpInstances =
+		return TransformUtil.transform(
 			_cpInstanceLocalService.getCPDefinitionInstances(
 				_cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (CPInstance cpInstance : cpInstances) {
-			cpSkus.add(
-				new CPSkuImpl(
-					cpInstance,
-					_cpInstanceHelper.fetchCPInstanceUnitPrice(cpInstance),
-					_cpInstanceHelper.fetchCPInstanceUnitPromoPrice(
-						cpInstance)));
-		}
-
-		return cpSkus;
+				QueryUtil.ALL_POS, null),
+			cpInstance -> new CPSkuImpl(
+				cpInstance,
+				_cpInstanceHelper.fetchCPInstanceUnitPrice(cpInstance),
+				_cpInstanceHelper.fetchCPInstanceUnitPromoPrice(cpInstance)));
 	}
 
 	@Override

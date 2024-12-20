@@ -607,19 +607,15 @@ public class CPDefinitionModelDocumentContributor
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels)
 		throws Exception {
 
-		List<CPOption> cpOptions = new ArrayList<>();
+		return TransformUtil.transform(
+			cpDefinitionOptionRels,
+			cpDefinitionOptionRel -> {
+				if (!cpDefinitionOptionRel.isFacetable()) {
+					return null;
+				}
 
-		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-				cpDefinitionOptionRels) {
-
-			if (!cpDefinitionOptionRel.isFacetable()) {
-				continue;
-			}
-
-			cpOptions.add(cpDefinitionOptionRel.getCPOption());
-		}
-
-		return cpOptions;
+				return cpDefinitionOptionRel.getCPOption();
+			});
 	}
 
 	private String _getCPSpecificationOptionKey(
@@ -634,25 +630,19 @@ public class CPDefinitionModelDocumentContributor
 					cpDefinitionSpecificationOptionValues)
 		throws Exception {
 
-		List<CPDefinitionSpecificationOptionValue>
-			filteredCPDefinitionSpecificationOptionValues = new ArrayList<>();
+		return TransformUtil.transform(
+			cpDefinitionSpecificationOptionValues,
+			cpDefinitionSpecificationOptionValue -> {
+				CPSpecificationOption cpSpecificationOption =
+					cpDefinitionSpecificationOptionValue.
+						getCPSpecificationOption();
 
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
+				if (!cpSpecificationOption.isFacetable()) {
+					return null;
+				}
 
-			CPSpecificationOption cpSpecificationOption =
-				cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-
-			if (!cpSpecificationOption.isFacetable()) {
-				continue;
-			}
-
-			filteredCPDefinitionSpecificationOptionValues.add(
-				cpDefinitionSpecificationOptionValue);
-		}
-
-		return filteredCPDefinitionSpecificationOptionValues;
+				return cpDefinitionSpecificationOptionValue;
+			});
 	}
 
 	private String[] _getReverseCPDefinitionIds(long cProductId, String type) {

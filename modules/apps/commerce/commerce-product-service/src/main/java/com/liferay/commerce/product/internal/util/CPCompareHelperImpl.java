@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,37 +34,30 @@ public class CPCompareHelperImpl implements CPCompareHelper {
 			String cpDefinitionIdsCookieValue)
 		throws PortalException {
 
-		List<Long> cpDefinitionIds = _getCpDefinitionIds(
-			cpDefinitionIdsCookieValue);
+		return TransformUtil.transform(
+			_getCpDefinitionIds(cpDefinitionIdsCookieValue),
+			cpDefinitionId -> {
+				CPCatalogEntry cpCatalogEntry = null;
 
-		if (cpDefinitionIds.isEmpty()) {
-			return new ArrayList<>();
-		}
+				try {
+					cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
+						commerceAccountId, groupId, cpDefinitionId,
+						LocaleUtil.getDefault());
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
+					}
 
-		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
-
-		for (long cpDefinitionId : cpDefinitionIds) {
-			CPCatalogEntry cpCatalogEntry = null;
-
-			try {
-				cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
-					commerceAccountId, groupId, cpDefinitionId,
-					LocaleUtil.getDefault());
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
+					return null;
 				}
 
-				continue;
-			}
+				if (cpCatalogEntry != null) {
+					return cpCatalogEntry;
+				}
 
-			if (cpCatalogEntry != null) {
-				cpCatalogEntries.add(cpCatalogEntry);
-			}
-		}
-
-		return cpCatalogEntries;
+				return null;
+			});
 	}
 
 	@Override
@@ -72,37 +65,30 @@ public class CPCompareHelperImpl implements CPCompareHelper {
 		long groupId, long commerceAccountId,
 		String cpDefinitionIdsCookieValue) {
 
-		List<Long> cpDefinitionIds = _getCpDefinitionIds(
-			cpDefinitionIdsCookieValue);
+		return TransformUtil.transform(
+			_getCpDefinitionIds(cpDefinitionIdsCookieValue),
+			cpDefinitionId -> {
+				CPCatalogEntry cpCatalogEntry = null;
 
-		if (cpDefinitionIds.isEmpty()) {
-			return new ArrayList<>();
-		}
+				try {
+					cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
+						commerceAccountId, groupId, cpDefinitionId,
+						LocaleUtil.getDefault());
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
+					}
 
-		List<Long> activeCPDefinitionIds = new ArrayList<>();
-
-		for (long cpDefinitionId : cpDefinitionIds) {
-			CPCatalogEntry cpCatalogEntry = null;
-
-			try {
-				cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
-					commerceAccountId, groupId, cpDefinitionId,
-					LocaleUtil.getDefault());
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
+					return null;
 				}
 
-				continue;
-			}
+				if (cpCatalogEntry != null) {
+					return cpDefinitionId;
+				}
 
-			if (cpCatalogEntry != null) {
-				activeCPDefinitionIds.add(cpDefinitionId);
-			}
-		}
-
-		return activeCPDefinitionIds;
+				return null;
+			});
 	}
 
 	@Override

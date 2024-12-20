@@ -540,7 +540,7 @@ definition {
 				webContentLinkToPage = "Test Page Name 1",
 				webContentTitle = "support Link to Page field");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

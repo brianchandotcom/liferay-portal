@@ -200,6 +200,19 @@ public class CFGPropertiesTest {
 	}
 
 	@Test
+	public void testLoadWithNullReader() throws IOException {
+		CFGProperties cfgProperties = new CFGProperties() {
+
+			@Override
+			protected void doLoad(UnsyncBufferedReader unsyncBufferedReader) {
+			}
+
+		};
+
+		cfgProperties.load(null);
+	}
+
+	@Test
 	public void testPutAndSaveArray() throws IOException {
 		CFGProperties cfgProperties = new CFGProperties();
 

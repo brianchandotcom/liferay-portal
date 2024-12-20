@@ -48,63 +48,7 @@ public class CFGProperties implements ConfigurationProperties {
 	@Override
 	public void load(Reader reader) throws IOException {
 		try (UnsyncBufferedReader unsyncBufferedReader = _wrap(reader)) {
-			String line = unsyncBufferedReader.readLine();
-
-			List<String> lines = new ArrayList<>();
-
-			StringBundler sb = new StringBundler();
-
-			while (line != null) {
-				lines.add(line);
-
-				if ((line.length() < 1) || line.startsWith(StringPool.POUND) ||
-					line.startsWith(StringPool.EXCLAMATION)) {
-
-					line = unsyncBufferedReader.readLine();
-
-					continue;
-				}
-
-				if (line.endsWith(StringPool.BACK_SLASH)) {
-					String token = line.substring(0, line.length() - 1);
-
-					sb.append(token.trim());
-
-					line = unsyncBufferedReader.readLine();
-
-					continue;
-				}
-
-				sb.append(line.trim());
-
-				line = sb.toString();
-
-				Matcher matcher = _configPattern.matcher(line);
-
-				if (matcher.matches()) {
-					throw new IllegalArgumentException(
-						"Detected .config format in .cfg file in line: " +
-							line);
-				}
-
-				int index = line.indexOf(CharPool.EQUAL);
-
-				String key = line.substring(0, index);
-
-				String value = line.substring(index + 1);
-
-				_storage.put(
-					key.trim(),
-					new AbstractMap.SimpleImmutableEntry<>(
-						InterpolationUtil.substVars(value.trim()),
-						new ArrayList<>(lines)));
-
-				lines.clear();
-
-				sb.setIndex(0);
-
-				line = unsyncBufferedReader.readLine();
-			}
+			doLoad(unsyncBufferedReader);
 		}
 	}
 
@@ -183,6 +127,67 @@ public class CFGProperties implements ConfigurationProperties {
 		}
 
 		writer.write(sb.toString());
+	}
+
+	protected void doLoad(UnsyncBufferedReader unsyncBufferedReader)
+		throws IOException {
+
+		String line = unsyncBufferedReader.readLine();
+
+		List<String> lines = new ArrayList<>();
+
+		StringBundler sb = new StringBundler();
+
+		while (line != null) {
+			lines.add(line);
+
+			if ((line.length() < 1) || line.startsWith(StringPool.POUND) ||
+				line.startsWith(StringPool.EXCLAMATION)) {
+
+				line = unsyncBufferedReader.readLine();
+
+				continue;
+			}
+
+			if (line.endsWith(StringPool.BACK_SLASH)) {
+				String token = line.substring(0, line.length() - 1);
+
+				sb.append(token.trim());
+
+				line = unsyncBufferedReader.readLine();
+
+				continue;
+			}
+
+			sb.append(line.trim());
+
+			line = sb.toString();
+
+			Matcher matcher = _configPattern.matcher(line);
+
+			if (matcher.matches()) {
+				throw new IllegalArgumentException(
+					"Detected .config format in .cfg file in line: " + line);
+			}
+
+			int index = line.indexOf(CharPool.EQUAL);
+
+			String key = line.substring(0, index);
+
+			String value = line.substring(index + 1);
+
+			_storage.put(
+				key.trim(),
+				new AbstractMap.SimpleImmutableEntry<>(
+					InterpolationUtil.substVars(value.trim()),
+					new ArrayList<>(lines)));
+
+			lines.clear();
+
+			sb.setIndex(0);
+
+			line = unsyncBufferedReader.readLine();
+		}
 	}
 
 	private UnsyncBufferedReader _wrap(Reader reader) {

@@ -566,7 +566,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			DBPartitionUtil.forEachCompanyId(
-				companyId -> _destroyRemotePortlet(companyId, portletName));
+				companyId -> {
+					Portlet portlet = _portletLocalService.getPortletById(
+						companyId, portletName);
+
+					if (portlet != null) {
+						_portletLocalService.destroyRemotePortlet(portlet);
+					}
+				});
 		}
 	}
 
@@ -872,15 +879,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		_portletLocalService.deployRemotePortlet(
 			new long[] {companyId}, portlet, new String[] {"category.hidden"},
 			true, true);
-	}
-
-	private void _destroyRemotePortlet(long companyId, String portletName) {
-		Portlet portlet = _portletLocalService.getPortletById(
-			companyId, portletName);
-
-		if (portlet != null) {
-			_portletLocalService.destroyRemotePortlet(portlet);
-		}
 	}
 
 	private static final String _CLASS_NAME = DBPartitionTest.class.getName();

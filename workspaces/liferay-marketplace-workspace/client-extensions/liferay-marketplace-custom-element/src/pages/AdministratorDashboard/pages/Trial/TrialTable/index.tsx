@@ -7,22 +7,23 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import {useModal} from '@clayui/modal';
 import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
-import {useState} from 'react';
 
+import {DashboardPage} from '../../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Loading from '../../../../../components/Loading';
-import Modal from '../../../../../components/Modal';
 import Table from '../../../../../components/Table/Table';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
+import {useConfirmationModal} from '../../../../../hooks/useConfirmationModal';
+import useModalContext from '../../../../../hooks/useModalContext';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import trialOAuth2 from '../../../../../services/oauth/Trial';
 import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 import NewTrialModal from './NewTrialModal';
+import TrialDetailsModal, {ORDER_STATUS_LABEL} from './TrialDetailsModal';
 
 type TrialTableProps = {
 	items: Order[];
@@ -35,12 +36,6 @@ type DropDownItems = {
 	onClick: (item?: Order) => void;
 };
 
-const ORDER_STATUS_LABEL = {
-	completed: 'success',
-	pending: 'info',
-	processing: 'secondary',
-};
-
 const safeRunner = async (promise: any) => {
 	try {
 		await promise;
@@ -49,27 +44,43 @@ const safeRunner = async (promise: any) => {
 };
 
 const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
-	const [processing, setProcessing] = useState(false);
-	const [selectedTrial, setSelectedTrial] = useState<Order>();
-	const newTrialModal = useModal();
-	const modal = useModal();
+	const modalContext = useModalContext();
+	const confirmationModal = useConfirmationModal();
 
 	const onDeleteTrial = async (order: Order) => {
-		setProcessing(true);
-
-		const orderId = String(order.id);
-
-		await safeRunner(HeadlessCommerceAdminOrderImpl.deleteOrder(orderId));
-		await safeRunner(trialOAuth2.deleteTrial(orderId));
+		await safeRunner(HeadlessCommerceAdminOrderImpl.deleteOrder(order.id));
+		await safeRunner(trialOAuth2.deleteTrial(order.id));
 
 		await revalidate();
+	};
 
-		setProcessing(false);
-
-		modal.onClose();
+	const onClickDetails = (order: Order) => {
+		modalContext.onOpenModal({
+			body: <TrialDetailsModal order={order} />,
+			center: true,
+			footer: [
+				null,
+				null,
+				<ClayButton
+					aria-label="close"
+					displayType="secondary"
+					key={0}
+					onClick={modalContext.onClose}
+					size="sm"
+				>
+					{i18n.translate('close')}
+				</ClayButton>,
+			],
+			header: 'Trial Details',
+			size: 'md',
+		});
 	};
 
 	const itemsDropdown = [
+		{
+			name: i18n.translate('view-details'),
+			onClick: onClickDetails,
+		},
 		{
 			name: i18n.translate('go-to-trial'),
 			onClick: (order: Order) =>
@@ -99,28 +110,176 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 		},
 		{
 			name: i18n.translate('delete'),
-			onClick: async (order: Order) => {
-				modal.onOpenChange(true);
-
-				setSelectedTrial(order);
+			onClick: (order: Order) => {
+				confirmationModal.openModal({
+					body: (
+						<p>
+							{i18n.sub(
+								'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it',
+								`Order ${order.id}`
+							)}
+						</p>
+					),
+					header: i18n.translate('confirm-deletion'),
+					onConfirm: () => onDeleteTrial(order),
+				});
 			},
 		},
 	];
 
 	return (
-		<>
-			<div className="d-flex justify-content-between">
-				<h1 className="mb-1">{i18n.translate('recent-trials')}</h1>
+		<DashboardPage
+			buttonMessage={i18n.translate('new-trial')}
+			messages={{description: '', title: i18n.translate('trials')}}
+			onButtonClick={() =>
+				modalContext.onOpenModal({
+					body: (
+						<NewTrialModal
+							onClose={modalContext.onClose}
+							revalidate={revalidate}
+						/>
+					),
+					header: i18n.translate('new-trial'),
+				})
+			}
+		>
+			{items.length ? (
+				<Table
+					className="mt-3"
+					columns={[
+						{
+							key: 'id',
+							render: (id) => (
+								<span className="font-weight-bold">{id}</span>
+							),
+							title: i18n.translate('id'),
+						},
+						{
+							key: 'orderItems',
+							render: (orderItems) => orderItems[0]?.name.en_US,
+							title: i18n.translate('product'),
+						},
+						{
+							key: 'account',
+							render: (account) => account?.name,
+							title: i18n.translate('user-account'),
+						},
+						{
+							key: 'orderStatusInfo',
+							render: (orderStatusInfo) => (
+								<div className="align-items-center d-flex">
+									<ClayLabel
+										className="text-nowrap"
+										displayType={
+											ORDER_STATUS_LABEL[
+												orderStatusInfo?.label as keyof typeof ORDER_STATUS_LABEL
+											] as Status
+										}
+									>
+										{orderStatusInfo?.label_i18n}
+									</ClayLabel>
 
-				<ClayButton
-					onClick={() => newTrialModal.onOpenChange(true)}
-					size="sm"
-				>
-					New Trial
-				</ClayButton>
-			</div>
+									{[
+										ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
+										ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+									].includes(orderStatusInfo.code) && (
+										<Loading
+											displayType="primary"
+											shape="circle"
+											size="sm"
+										/>
+									)}
+								</div>
+							),
+							title: i18n.translate('trial-status'),
+						},
+						{
+							key: 'createDate',
+							render: (createDate) => (
+								<span className="ml-2 text-capitalize text-nowrap">
+									{createDate &&
+										formatDistance(
+											new Date(createDate),
+											Date.now(),
+											{addSuffix: true}
+										)}
+								</span>
+							),
+							title: i18n.translate('created-at'),
+						},
+						{
+							key: 'customFields',
+							render: (customFields) => (
+								<span className="ml-2 text-capitalize text-nowrap">
+									{customFields['trial-start-date'] &&
+										formatDistance(
+											new Date(
+												customFields['trial-start-date']
+											),
+											Date.now(),
+											{addSuffix: true}
+										)}
+								</span>
+							),
+							title: i18n.translate('start-date'),
+						},
+						{
+							key: 'customFields',
+							render: (customFields) => (
+								<span className="ml-2 text-capitalize text-nowrap">
+									{customFields['trial-end-date'] &&
+										formatDistance(
+											new Date(
+												customFields['trial-end-date']
+											),
+											Date.now(),
+											{addSuffix: true}
+										)}
+								</span>
+							),
+							title: i18n.translate('expiration-date'),
+						},
+						{
+							align: 'right',
+							key: 'accountId',
+							render: (_, order) => (
+								<DropDown
+									closeOnClick
+									filterKey="name"
+									trigger={
+										<ClayButton
+											aria-label="Action Dropdown"
+											displayType="unstyled"
+										>
+											<ClayIcon symbol="ellipsis-v" />
+										</ClayButton>
+									}
+								>
+									<DropDown.ItemList items={itemsDropdown}>
+										{(dropDownItem: unknown) => {
+											const item =
+												dropDownItem as DropDownItems;
 
-			{!items.length ? (
+											return (
+												<DropDown.Item
+													key={item.name}
+													onClick={() =>
+														item.onClick(order)
+													}
+												>
+													{item?.name}
+												</DropDown.Item>
+											);
+										}}
+									</DropDown.ItemList>
+								</DropDown>
+							),
+							title: '',
+						},
+					]}
+					rows={items}
+				/>
+			) : (
 				<div className="mt-3">
 					<DashboardEmptyTable
 						description1={i18n.translate(
@@ -133,208 +292,8 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 						title={i18n.translate('no-orders-yet')}
 					/>
 				</div>
-			) : (
-				<>
-					<Table
-						className="mt-3"
-						columns={[
-							{
-								key: 'id',
-								render: (id) => (
-									<span className="font-weight-bold">
-										{id}
-									</span>
-								),
-								title: i18n.translate('id'),
-							},
-							{
-								key: 'orderItems',
-								render: (orderItems) =>
-									orderItems[0]?.name.en_US,
-								title: i18n.translate('product'),
-							},
-							{
-								key: 'account',
-								render: (account) => account?.name,
-								title: i18n.translate('user-account'),
-							},
-							{
-								key: 'orderStatusInfo',
-								render: (orderStatusInfo) => (
-									<div className="align-items-center d-flex">
-										<ClayLabel
-											className="text-nowrap"
-											displayType={
-												ORDER_STATUS_LABEL[
-													orderStatusInfo?.label as keyof typeof ORDER_STATUS_LABEL
-												] as Status
-											}
-										>
-											{orderStatusInfo?.label_i18n}
-										</ClayLabel>
-
-										{[
-											ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
-											ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-										].includes(orderStatusInfo.code) && (
-											<Loading
-												displayType="primary"
-												shape="circle"
-												size="sm"
-											/>
-										)}
-									</div>
-								),
-								title: i18n.translate('trial-status'),
-							},
-							{
-								key: 'createDate',
-								render: (createDate) => (
-									<span className="ml-2 text-capitalize text-nowrap">
-										{createDate &&
-											formatDistance(
-												new Date(createDate),
-												Date.now(),
-												{addSuffix: true}
-											)}
-									</span>
-								),
-								title: i18n.translate('created-at'),
-							},
-							{
-								key: 'customFields',
-								render: (customFields) => (
-									<span className="ml-2 text-capitalize text-nowrap">
-										{customFields['trial-start-date'] &&
-											formatDistance(
-												new Date(
-													customFields[
-														'trial-start-date'
-													]
-												),
-												Date.now(),
-												{addSuffix: true}
-											)}
-									</span>
-								),
-								title: i18n.translate('start-date'),
-							},
-							{
-								key: 'customFields',
-								render: (customFields) => (
-									<span className="ml-2 text-capitalize text-nowrap">
-										{customFields['trial-end-date'] &&
-											formatDistance(
-												new Date(
-													customFields[
-														'trial-end-date'
-													]
-												),
-												Date.now(),
-												{addSuffix: true}
-											)}
-									</span>
-								),
-								title: i18n.translate('expiration-date'),
-							},
-							{
-								align: 'right',
-								key: 'accountId',
-								render: (_, order) => {
-									if (
-										order.orderStatusInfo?.code ===
-										ORDER_WORKFLOW_STATUS_CODE.PROCESSING
-									) {
-										return null;
-									}
-
-									return (
-										<DropDown
-											closeOnClick
-											filterKey="name"
-											trigger={
-												<div>
-													<ClayButton
-														aria-label="Action Dropdown"
-														displayType="unstyled"
-													>
-														<ClayIcon symbol="ellipsis-v" />
-													</ClayButton>
-												</div>
-											}
-										>
-											<DropDown.ItemList
-												items={itemsDropdown}
-											>
-												{(dropDownItem: unknown) => {
-													const item =
-														dropDownItem as DropDownItems;
-
-													return (
-														<DropDown.Item
-															key={item.name}
-															onClick={() =>
-																item.onClick(
-																	order
-																)
-															}
-														>
-															{item?.name}
-														</DropDown.Item>
-													);
-												}}
-											</DropDown.ItemList>
-										</DropDown>
-									);
-								},
-								title: '',
-							},
-						]}
-						rows={items}
-					/>
-
-					<Modal
-						last={
-							<>
-								<ClayButton
-									displayType="secondary"
-									onClick={modal.onClose}
-									size="sm"
-								>
-									{i18n.translate('cancel')}
-								</ClayButton>
-
-								<ClayButton
-									className="ml-2"
-									disabled={processing}
-									displayType="danger"
-									onClick={() =>
-										onDeleteTrial(selectedTrial as Order)
-									}
-									size="sm"
-								>
-									{i18n.translate('delete')}
-								</ClayButton>
-							</>
-						}
-						observer={modal.observer}
-						size={'md' as any}
-						status="danger"
-						title={`Are you sure you want to delete trial ${selectedTrial?.id}`}
-						visible={modal.open}
-					>
-						{i18n.sub(
-							'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it',
-							'Order'
-						)}
-					</Modal>
-				</>
 			)}
-
-			{newTrialModal.open && (
-				<NewTrialModal {...newTrialModal} revalidate={revalidate} />
-			)}
-		</>
+		</DashboardPage>
 	);
 };
 

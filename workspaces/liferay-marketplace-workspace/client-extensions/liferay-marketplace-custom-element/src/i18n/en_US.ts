@@ -79,6 +79,7 @@ export default {
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
 	'client-extension': 'Client Extension',
 	'client-extensions': 'Client Extensions',
+	'close': 'Close',
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
 	'cloud-compatible': 'Cloud Compatible?',
@@ -92,6 +93,7 @@ export default {
 	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
+	'confirm-deletion': 'Confirm Deletion',
 	'confirm-uninstall': 'Confirm & Uninstall',
 	'confirm-uninstall-terms': 'Confirm Uninstall Terms',
 	'contact-publisher': 'Contact Publisher',
@@ -277,6 +279,7 @@ export default {
 	'move-up': 'Move Up',
 	'name': 'Name',
 	'never-expires': 'Never Expires',
+	'new-trial': 'New Trial',
 	'no': 'No',
 	'no-apps-yet': 'No Apps Yet',
 	'no-become-a-publisher-request': 'No become a publisher request',

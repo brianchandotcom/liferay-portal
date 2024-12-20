@@ -6,7 +6,6 @@
 import Autocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
-import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {useState} from 'react';
@@ -23,7 +22,8 @@ import {getProductType} from '../../../../../utils/productUtils';
 import ProductPurchaseSolutionTrial from '../../../../ProductPurchase/services/ProductPurchasePreBuiltTrial';
 import {useTrialProducts} from './useTrialProducts';
 
-type NewTrialModalProps = ReturnType<typeof useModal> & {
+type NewTrialModalProps = {
+	onClose: () => void;
 	revalidate: () => void;
 };
 
@@ -33,16 +33,12 @@ type MultiSelectValue = {
 	value: string;
 };
 
-const NewTrialModal: React.FC<NewTrialModalProps> = ({
-	observer,
-	onOpenChange,
-	revalidate,
-}) => {
+const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 	const {formState, handleSubmit, register, setValue, watch} = useForm({
 		defaultValues: {
 			_refInviteMembers: [],
 			accountId: undefined,
-			inviteMembers: [],
+			consoleInviteEmailAddresses: [],
 			product: undefined,
 			sendNotificationEmail: false,
 		},
@@ -89,13 +85,12 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 			await productPurchase.createOrder({
 				customFields: {
 					[ORDER_CUSTOM_FIELDS.TRIAL_SETTINGS]: JSON.stringify({
-						inviteEmailAddresses: form.inviteMembers,
+						consoleInviteEmailAddresses:
+							form.consoleInviteEmailAddresses,
 						sendNotificationEmail: form.sendNotificationEmail,
 					}),
 				},
 			});
-
-			onOpenChange(false);
 
 			await revalidate();
 
@@ -105,6 +100,8 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 				message: 'Trial created successfully',
 				type: 'success',
 			});
+
+			onClose();
 		}
 		catch (error) {
 			console.error(error);
@@ -117,119 +114,108 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 	};
 
 	return (
-		<ClayModal center observer={observer}>
-			<ClayModal.Header>New Trial</ClayModal.Header>
-			<ClayModal.Body className="pb-8">
-				<div className="mb-5">
-					<h5>Cloud App</h5>
+		<div className="pb-8">
+			<div className="mb-5">
+				<h5>Cloud App</h5>
 
-					<Autocomplete
-						filterKey="productName"
-						items={apps?.items || []}
-						loadingState={isValidating ? 1 : 4}
-						messages={{
-							loading: 'Loading...',
-							notFound: 'No results found',
-						}}
-						onChange={setSearch}
-						onItemsChange={() => {}}
-						placeholder="Search for the App name"
-						value={search}
-					>
-						{(product) => (
-							<Autocomplete.Item
-								{...({} as any)}
-								disabled
-								key={product.productId}
-								onClick={() =>
-									setValue('product', product as any)
-								}
-							>
-								{product.name}
-							</Autocomplete.Item>
-						)}
-					</Autocomplete>
+				<Autocomplete
+					filterKey="productName"
+					items={apps?.items || []}
+					loadingState={isValidating ? 1 : 4}
+					messages={{
+						loading: 'Loading...',
+						notFound: 'No results found',
+					}}
+					onChange={setSearch}
+					onItemsChange={() => {}}
+					placeholder="Search for the App name"
+					value={search}
+				>
+					{(product) => (
+						<Autocomplete.Item
+							{...({} as any)}
+							disabled
+							key={product.productId}
+							onClick={() => setValue('product', product as any)}
+						>
+							{product.name}
+						</Autocomplete.Item>
+					)}
+				</Autocomplete>
+			</div>
+
+			<Select
+				{...register('accountId')}
+				boldLabel
+				defaultOptionLabel="Select Account"
+				helpText="Account where this Order will be registered."
+				label="Select Account"
+				options={accountBriefs
+					.sort((accountA, accountB) =>
+						accountA.name.localeCompare(accountB.name)
+					)
+					.map((account) => ({
+						key: account.id.toString(),
+						name: account.name,
+					}))}
+				required
+			/>
+
+			<ClayInput.Group
+				className={classNames('my-4', {
+					'has-error':
+						formState.errors.consoleInviteEmailAddresses?.length,
+				})}
+			>
+				<div className="d-flex flex-column">
+					<label htmlFor="allowed-email-domains">
+						Invite Members
+					</label>
+
+					<small>
+						Anyone with an email address at these list will be
+						invited to the Cloud Environment.
+					</small>
 				</div>
 
-				<Select
-					{...register('accountId')}
-					boldLabel
-					defaultOptionLabel="Select Account"
-					helpText="Account where this Order will be registered."
-					label="Select Account"
-					options={accountBriefs
-						.sort((accountA, accountB) =>
-							accountA.name.localeCompare(accountB.name)
-						)
-						.map((account) => ({
-							key: account.id.toString(),
-							name: account.name,
-						}))}
-					required
-				/>
+				<ClayInput.Group>
+					<ClayInput.GroupItem prepend>
+						<ClayMultiSelect
+							items={_refInviteMembers}
+							onChange={setEmailAddressText}
+							onItemsChange={(values: MultiSelectValue[]) => {
+								setValue('_refInviteMembers', values as any);
 
-				<ClayInput.Group
-					className={classNames('my-4', {
-						'has-error': formState.errors.inviteMembers?.length,
-					})}
-				>
-					<div className="d-flex flex-column">
-						<label htmlFor="allowed-email-domains">
-							Invite Members
-						</label>
-
-						<small>
-							Anyone with an email address at these list will be
-							invited to the Cloud Environment.
-						</small>
-					</div>
-
-					<ClayInput.Group>
-						<ClayInput.GroupItem prepend>
-							<ClayMultiSelect
-								items={_refInviteMembers}
-								onChange={setEmailAddressText}
-								onItemsChange={(values: MultiSelectValue[]) => {
-									setValue(
-										'_refInviteMembers',
-										values as any
-									);
-
-									setValue(
-										'inviteMembers',
-										values.map(({value}) => value) as any
-									);
-								}}
-								value={emailAddressText}
-							/>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-
-					<ClayForm.FeedbackItem>
-						{formState.errors.inviteMembers?.[0]?.message}
-					</ClayForm.FeedbackItem>
+								setValue(
+									'consoleInviteEmailAddresses',
+									values.map(({value}) => value) as any
+								);
+							}}
+							value={emailAddressText}
+						/>
+					</ClayInput.GroupItem>
 				</ClayInput.Group>
 
-				<ClayToggle
-					label="Send Notification Email"
-					onToggle={(value) =>
-						setValue('sendNotificationEmail', value)
-					}
-					toggled={watch('sendNotificationEmail')}
-				/>
-			</ClayModal.Body>
+				<ClayForm.FeedbackItem>
+					{formState.errors.consoleInviteEmailAddresses?.[0]?.message}
+				</ClayForm.FeedbackItem>
+			</ClayInput.Group>
 
-			<ClayModal.Footer
-				last={
-					<ClayButton
-						disabled={!formState.isValid}
-						onClick={handleSubmit(onSubmit)}
-					>
-						Create Trial
-					</ClayButton>
-				}
+			<ClayToggle
+				label="Send Notification Email"
+				onToggle={(value) => setValue('sendNotificationEmail', value)}
+				toggled={watch('sendNotificationEmail')}
 			/>
-		</ClayModal>
+
+			<div className="d-flex justify-content-end">
+				<ClayButton
+					disabled={!formState.isValid}
+					onClick={handleSubmit(onSubmit)}
+				>
+					Create Trial
+				</ClayButton>
+			</div>
+		</div>
 	);
 };
 

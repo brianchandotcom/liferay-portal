@@ -135,8 +135,8 @@ const useTrialMetrics = (param: FilterType) => {
 		availability: {
 			...availabilityResponse,
 			resourcesAvailable: `${
-				availabilityResponse?.max - availabilityResponse?.available
-			} / ${availabilityResponse?.max}`,
+				availabilityResponse?.max - availabilityResponse?.available || 0
+			} / ${availabilityResponse?.max || 0}`,
 		},
 		error,
 		inProgressCount: inProgressResponse?.totalCount,

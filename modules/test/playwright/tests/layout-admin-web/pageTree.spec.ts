@@ -18,6 +18,7 @@ import getRandomString from '../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {performUserSwitch} from '../../utils/performLogin';
 import {openProductMenu} from '../../utils/productMenu';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
@@ -102,6 +103,108 @@ test(
 		await expect(
 			page.getByRole('link', {name: childLayoutTitle})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Check page actions, copy page, permissions and delete',
+	{
+		tag: '@LPS-107774',
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Add content page
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Open the Product Menu
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Update permissions
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Permissions'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		const permissionsFrame = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		const guestActionViewCheckBox =
+			permissionsFrame.locator('#guest_ACTION_VIEW');
+
+		await guestActionViewCheckBox.uncheck({trial: true});
+
+		await guestActionViewCheckBox.uncheck();
+
+		await permissionsFrame
+			.getByRole('button', {exact: true, name: 'Save'})
+			.click();
+
+		await waitForAlert(permissionsFrame);
+
+		await expect(guestActionViewCheckBox).not.toBeChecked();
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		// Copy page
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Copy Page'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		const copyPageFrame = page.frameLocator('iframe[title="Copy Page"]');
+
+		await copyPageFrame
+			.getByPlaceholder('Add Page Name')
+			.fill(getRandomString());
+
+		await copyPageFrame.getByRole('button', {name: 'Add'}).click();
+
+		// Delete page
+
+		await page.getByRole('link', {name: layoutTitle}).hover();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: page
+				.getByRole('treeitem')
+				.filter({hasText: layoutTitle})
+				.locator('button.dropdown-toggle'),
+		});
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByRole('link', {name: layoutTitle})
+		).not.toBeVisible();
 	}
 );
 

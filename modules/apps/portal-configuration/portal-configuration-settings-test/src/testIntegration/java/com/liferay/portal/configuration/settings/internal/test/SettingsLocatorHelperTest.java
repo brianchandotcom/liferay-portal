@@ -78,12 +78,16 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 		saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY,
-			TestPropsValues.getCompanyId(), testKey, testValue1);
+			TestPropsValues.getCompanyId(), testKey, testValue1,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		saveFactoryConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 			ExtendedObjectClassDefinition.Scope.COMPANY,
-			TestPropsValues.getCompanyId(), testKey, testValue2);
+			TestPropsValues.getCompanyId(), testKey, testValue2,
+			SettingsLocatorTestConstants.TEST_KEY,
+			RandomTestUtil.randomString());
 
 		Settings companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(

@@ -74,6 +74,16 @@ function default_tear_down {
 	stop_default_app_server
 }
 
+function delete_property {
+	local liferay_home=${1}
+	local property_name=${2}
+
+	for file in ${liferay_home}/tomcat-*/webapps/ROOT/WEB-INF/classes/*.properties
+	do
+		sed -i "s/${property_name}=.*//g" "${file}"
+	done
+}
+
 function deploy_client_extensions {
 	echo "Deploying client extensions."
 
@@ -640,6 +650,17 @@ function update_portal_ext_properties {
 		$(get_parent_portal_ext_properties_files) \
 		\
 		$(get_playwright_project_dir)/env/portal-ext.properties
+}
+
+function update_property {
+	local liferay_home=${1}
+	local property_name=${2}
+	local property_value=${3}
+
+	for file in ${liferay_home}/tomcat-*/webapps/ROOT/WEB-INF/classes/*.properties
+	do
+		sed -i "s/${property_name}=.*/${property_name}=${property_value}/g" "${file}"
+	done
 }
 
 function validate_environment_variables {

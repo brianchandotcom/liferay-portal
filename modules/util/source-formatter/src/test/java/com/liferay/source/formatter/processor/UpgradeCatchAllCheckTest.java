@@ -6,7 +6,6 @@
 package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -125,11 +124,20 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			StringUtil.replace(_issueKey, CharPool.DASH, CharPool.UNDERLINE) +
 				".test" + _fileType;
 
+		Path filePath = Paths.get(
+			"src/test/resources/com/liferay/source/formatter/dependencies" +
+				"/upgrade/upgrade-catch-all-check/" + fileName);
+
 		Assert.assertTrue(
-			StringBundler.concat(
-				"Missing unit test in replacements.json of issueKey: ",
-				_issueKey, ", fileType: ", _fileType),
-			_hasValidUpgradeFiles(_issueKey, _fileType));
+			"Missing unit test in " + filePath, Files.exists(filePath));
+
+		Path expectedFilePath = Paths.get(
+			"src/test/resources/com/liferay/source/formatter/dependencies" +
+				"/expected/upgrade/upgrade-catch-all-check/" + fileName);
+
+		Assert.assertTrue(
+			"Missing unit test in " + expectedFilePath,
+			Files.exists(expectedFilePath));
 
 		_testUpgradeCatchAllCheck(
 			"upgrade/upgrade-catch-all-check/" + fileName);
@@ -159,28 +167,6 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 		}
 
 		return validExtensions;
-	}
-
-	private static boolean _hasValidUpgradeFiles(
-		String issueKey, String fileType) {
-
-		String fileName =
-			StringUtil.replace(issueKey, CharPool.DASH, CharPool.UNDERLINE) +
-				".test" + fileType;
-
-		Path filePath = Paths.get(
-			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/upgrade/upgrade-catch-all-check/" + fileName);
-
-		Path expectedFilePath = Paths.get(
-			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/expected/upgrade/upgrade-catch-all-check/" + fileName);
-
-		if (Files.exists(filePath) && Files.exists(expectedFilePath)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _testUpgradeCatchAllCheck(String fileName) throws Exception {

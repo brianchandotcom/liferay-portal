@@ -130,7 +130,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			serviceRegistrationsMap.put(
-				DBPartitionUtil.getPartitionKey(objectDefinition.getObjectDefinitionId()),
+				DBPartitionUtil.getPartitionKey(
+					objectDefinition.getObjectDefinitionId()),
 				_deploy(
 					objectDefinition,
 					objectFieldsMap.getOrDefault(

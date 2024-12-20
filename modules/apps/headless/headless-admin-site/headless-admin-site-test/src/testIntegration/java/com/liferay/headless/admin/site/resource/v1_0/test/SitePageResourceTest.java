@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -334,12 +335,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	protected SitePage randomSitePage() throws Exception {
-		List<SitePage.Type> types = Arrays.asList(
-			SitePage.Type.COLLECTION_PAGE, SitePage.Type.CONTENT_PAGE,
-			SitePage.Type.WIDGET_PAGE);
-
-		return _getRandomSitePage(
-			types.get(RandomTestUtil.randomInt(0, types.size() - 1)));
+		return _getRandomSitePage(_getRandomType(_types));
 	}
 
 	@Override
@@ -569,6 +565,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private void
+			_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
+				SitePage sitePage)
+		throws Exception {
+
+		_assertProblemException(
+			() -> sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage));
+	}
+
 	private void _assertSitePage(Layout layout, SitePage sitePage)
 		throws Exception {
 
@@ -774,6 +781,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return sitePage;
 	}
 
+	private SitePage.Type _getRandomType(List<SitePage.Type> types) {
+		return types.get(RandomTestUtil.randomInt(0, types.size() - 1));
+	}
+
 	private SitePageResource _getSitePageResource() throws Exception {
 		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
@@ -874,7 +885,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_layoutLocalService.getLayoutByExternalReferenceCode(
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			sitePage);
+
+		_assertPutSiteSiteByExternalReferenceCodeSitePageProblemException(
+			_getRandomSitePage(
+				sitePage.getExternalReferenceCode(),
+				_getRandomType(
+					ListUtil.filter(
+						_types, curType -> !Objects.equals(curType, type))),
+				sitePage.getUuid()));
 	}
+
+	private static final List<SitePage.Type> _types = Arrays.asList(
+		SitePage.Type.COLLECTION_PAGE, SitePage.Type.CONTENT_PAGE,
+		SitePage.Type.WIDGET_PAGE);
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;

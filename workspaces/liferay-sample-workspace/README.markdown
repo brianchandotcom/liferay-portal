@@ -102,9 +102,13 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Build a custom filter in a frontend data set.
 
-- *liferay-sample-global-css*
+- *liferay-sample-global-css-1*
 
 	Add a global CSS to a page.
+
+- *liferay-sample-global-css-2*
+
+	Add a global CSS to a company.
 
 - *liferay-sample-global-js-1*
 

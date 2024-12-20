@@ -32,10 +32,13 @@ const useConfirmationModal = () => {
 						</ClayButton>,
 
 						<ClayButton
-							className="ml-2"
+							className="ml-2 modal-action-trigger"
 							displayType="danger"
 							key={1}
-							onClick={async () => {
+							onClick={async (event) => {
+								event.currentTarget.disabled = true;
+								event.currentTarget.innerText = 'Loading...';
+
 								await onConfirm();
 
 								modalContext.onClose();

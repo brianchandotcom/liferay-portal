@@ -73,6 +73,40 @@ public class LanguageResourcesExtenderTest {
 	}
 
 	@Test
+	public void testRegistrationExcludePortalResources() throws Exception {
+		Bundle bundle = _installResourceBundle(
+			"test.bundle", "content1.Language",
+			_getProvideCapabilityModuleOnly(
+				"test.bundle", "test-bundle", "content1.Language", 1, true));
+
+		try {
+			bundle.start();
+
+			ResourceBundleLoader resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName("test.bundle");
+
+			Assert.assertNotNull(resourceBundleLoader);
+
+			ResourceBundle resourceBundle =
+				resourceBundleLoader.loadResourceBundle(_LOCALE);
+
+			Assert.assertNotNull(resourceBundle);
+
+			Assert.assertEquals(
+				"Test 1", resourceBundle.getString("language-key-1"));
+			Assert.assertEquals("Test 1", resourceBundle.getString("about"));
+			Assert.assertEquals(
+				"Test 1", resourceBundle.getString("shared-language-key"));
+
+			Assert.assertFalse(resourceBundle.containsKey("enabled"));
+		}
+		finally {
+			bundle.uninstall();
+		}
+	}
+
+	@Test
 	public void testRegistrationModuleOnly() throws Exception {
 		String bundleSymbolicName = "test.bundle";
 		String servletContextName = "test-bundle";
@@ -80,8 +114,8 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName, "content1.Language",
 			_getProvideCapabilityModuleOnly(
-				bundleSymbolicName, servletContextName, "content1.Language",
-				1));
+				bundleSymbolicName, servletContextName, "content1.Language", 1,
+				false));
 
 		try {
 			bundle.start();
@@ -142,11 +176,11 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1", "content1.Language",
 			_getProvideCapabilityModuleOnly(
-				"test.bundle1", "test-bundle1", "content1.Language", 1));
+				"test.bundle1", "test-bundle1", "content1.Language", 1, false));
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2", "content2.Language",
 			_getProvideCapabilityModuleOnly(
-				"test.bundle2", "test-bundle2", "content2.Language", 1));
+				"test.bundle2", "test-bundle2", "content2.Language", 1, false));
 
 		try {
 			bundle1.start();
@@ -231,13 +265,15 @@ public class LanguageResourcesExtenderTest {
 
 	private String _getProvideCapabilityModuleOnly(
 		String bundleSymbolicName, String servletContextName, String baseName,
-		int serviceRanking) {
+		int serviceRanking, boolean excludePortalResources) {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("liferay.language.resources;bundle.symbolic.name=\"");
 		sb.append(bundleSymbolicName);
-		sb.append("\";module.only=true;resource.bundle.base.name=\"");
+		sb.append("\";exclude.portal.resources=");
+		sb.append(excludePortalResources);
+		sb.append(";module.only=true;resource.bundle.base.name=\"");
 		sb.append(baseName);
 		sb.append("\";service.ranking=");
 		sb.append(serviceRanking);

@@ -45,6 +45,7 @@ export class CommerceAdminChannelDetailsPage {
 	readonly generalCommerceAdminChannelTableLink: (
 		name: string
 	) => Promise<Locator>;
+	readonly guestCheckoutToggle: Locator;
 	readonly isActive: (tableName: string) => Promise<Locator>;
 	readonly page: Page;
 	readonly placeHolderTerm: (
@@ -119,6 +120,7 @@ export class CommerceAdminChannelDetailsPage {
 		this.generalCommerceAdminChannelTableLink = async (name: string) => {
 			return page.getByRole('link', {exact: true, name});
 		};
+		this.guestCheckoutToggle = page.getByLabel('Guest Checkout');
 		this.sidePanelFrame = async (tableName: string) => {
 			switch (tableName) {
 				case 'Payment Methods':

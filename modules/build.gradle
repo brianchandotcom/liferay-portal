@@ -565,14 +565,6 @@ gradle.beforeProject {
 				xmltask
 			}
 
-			compileTestJava {
-				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-					if (!it.dependencyProject.name.endsWith("-theme")) {
-						mustRunAfter "${it.dependencyProject.path}:processResources"
-					}
-				}
-			}
-
 			compileTestIntegrationJava {
 				configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
 					if (!it.dependencyProject.name.endsWith("-theme")) {
@@ -588,6 +580,14 @@ gradle.beforeProject {
 						if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
 							mustRunAfter "${it.path}:deployAppServerPortalFile"
 						}
+					}
+				}
+			}
+
+			compileTestJava {
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
 					}
 				}
 			}
@@ -823,9 +823,9 @@ gradle.beforeProject {
 					}
 				}
 
-				tasks.named("compileTestJava") {
-					configurations.testImplementation.allDependencies.withType(ProjectDependency) {
-						compileTestJava.dependsOn "${it.dependencyProject.path}:jar"
+				tasks.named("compileTestIntegrationJava") {
+					configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
+						compileTestIntegrationJava.dependsOn "${it.dependencyProject.path}:jar"
 					}
 
 					doFirst {
@@ -837,9 +837,9 @@ gradle.beforeProject {
 					}
 				}
 
-				tasks.named("compileTestIntegrationJava") {
-					configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
-						compileTestIntegrationJava.dependsOn "${it.dependencyProject.path}:jar"
+				tasks.named("compileTestJava") {
+					configurations.testImplementation.allDependencies.withType(ProjectDependency) {
+						compileTestJava.dependsOn "${it.dependencyProject.path}:jar"
 					}
 
 					doFirst {

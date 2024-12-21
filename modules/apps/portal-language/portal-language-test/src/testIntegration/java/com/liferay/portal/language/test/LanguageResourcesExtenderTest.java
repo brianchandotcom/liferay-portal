@@ -13,6 +13,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -22,7 +23,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.jar.Attributes;
@@ -39,6 +42,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Kevin Lee
@@ -66,6 +70,94 @@ public class LanguageResourcesExtenderTest {
 
 			Assert.assertEquals(
 				"Enabled", LanguageResources.getMessage(_LOCALE, "enabled"));
+		}
+		finally {
+			bundle.uninstall();
+		}
+	}
+
+	@Test
+	public void testRegistrationBothHeaders() throws Exception {
+		String baseName = "content1.Language";
+		String bundleSymbolicName = "test.bundle";
+		String servletContextName = "test-bundle";
+
+		Bundle bundle = _installResourceBundle(
+			"test.bundle", baseName,
+			new String[] {
+				_getProvideCapabilityLegacy(
+					bundleSymbolicName, servletContextName, baseName, 1, false),
+				_getProvideCapability(baseName, 1)
+			},
+			null);
+
+		try {
+			bundle.start();
+
+			Assert.assertEquals(
+				"Test 1",
+				LanguageResources.getMessage(_LOCALE, "language-key-1"));
+			Assert.assertEquals(
+				"Test 1", LanguageResources.getMessage(_LOCALE, "about"));
+			Assert.assertEquals(
+				"Test 1",
+				LanguageResources.getMessage(_LOCALE, "shared-language-key"));
+
+			Assert.assertNull(
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName(
+						bundleSymbolicName));
+			Assert.assertNull(
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByServletContextName(
+						servletContextName));
+		}
+		finally {
+			bundle.uninstall();
+		}
+	}
+
+	@Test
+	public void testRegistrationBothHeadersModuleOnly() throws Exception {
+		String baseName = "content1.Language";
+		String bundleSymbolicName = "test.bundle";
+		String servletContextName = "test-bundle";
+
+		Bundle bundle = _installResourceBundle(
+			bundleSymbolicName, baseName,
+			new String[] {
+				_getProvideCapabilityLegacy(
+					bundleSymbolicName, servletContextName, baseName, 2, true),
+				_getProvideCapabilityModuleOnly(
+					bundleSymbolicName, servletContextName, baseName, 1, false)
+			},
+			null);
+
+		try {
+			bundle.start();
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			List<ServiceReference<ResourceBundleLoader>> serviceReferences =
+				new ArrayList<>(
+					bundleContext.getServiceReferences(
+						ResourceBundleLoader.class,
+						StringBundler.concat(
+							"(&(bundle.symbolic.name=", bundleSymbolicName,
+							")(servlet.context.name=", servletContextName,
+							"))")));
+
+			Assert.assertEquals(
+				serviceReferences.toString(), 1, serviceReferences.size());
+
+			ServiceReference<ResourceBundleLoader> serviceReference =
+				serviceReferences.get(0);
+
+			Assert.assertEquals(
+				"false",
+				serviceReference.getProperty("exclude.portal.resources"));
+			Assert.assertEquals(
+				1, serviceReference.getProperty("service.ranking"));
 		}
 		finally {
 			bundle.uninstall();

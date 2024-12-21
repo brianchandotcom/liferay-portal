@@ -50,8 +50,6 @@ public class LayoutAssetUpgradeProcess extends UpgradeProcess {
 
 				dynamicQuery.add(
 					typeProperty.ne(LayoutConstants.TYPE_ASSET_DISPLAY));
-				dynamicQuery.add(
-					typeProperty.ne(LayoutConstants.TYPE_COLLECTION));
 				dynamicQuery.add(typeProperty.ne(LayoutConstants.TYPE_CONTENT));
 			});
 		actionableDynamicQuery.setPerformActionMethod(

@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 function PageTypeSelector({
-	addCollectionLayoutURL,
 	addLayoutURL,
 	configureLayoutSetURL,
 	namespace,
@@ -63,11 +62,6 @@ function PageTypeSelector({
 			}
 		);
 	};
-
-	const handleOnAddCollectionPageClick = useCallback(() => {
-		setAddPageDropdownActive(false);
-		navigate(addCollectionLayoutURL);
-	}, [addCollectionLayoutURL]);
 
 	const handleOnAddPageClick = useCallback(() => {
 		setAddPageDropdownActive(false);
@@ -137,25 +131,6 @@ function PageTypeSelector({
 									{Liferay.Language.get('add-page')}
 								</ClayDropDown.Item>
 							)}
-
-							{addCollectionLayoutURL && (
-								<ClayDropDown.Item
-									data-value={Liferay.Language.get(
-										'add-collection-page'
-									)}
-									key={Liferay.Language.get(
-										'add-collection-page'
-									)}
-									onClick={handleOnAddCollectionPageClick}
-									title={Liferay.Language.get(
-										'add-collection-page'
-									)}
-								>
-									{Liferay.Language.get(
-										'add-collection-page'
-									)}
-								</ClayDropDown.Item>
-							)}
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 				)}
@@ -182,7 +157,6 @@ function PageTypeSelector({
 }
 
 PageTypeSelector.propTypes = {
-	addCollectionLayoutURL: PropTypes.string,
 	addLayoutURL: PropTypes.string,
 	configureLayoutSetURL: PropTypes.string,
 	namespace: PropTypes.string,

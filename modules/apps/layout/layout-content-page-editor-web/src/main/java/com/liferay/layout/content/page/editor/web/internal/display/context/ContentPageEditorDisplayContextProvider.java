@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -84,7 +83,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				_assetListEntryLocalService,
 				_getContentPageEditorSidebarPanels(), _contentManager,
 				_fragmentCollectionManager, _fragmentEntryLinkManager,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
@@ -184,9 +182,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 		return _serviceTrackerList.toList();
 	}
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private ContentManager _contentManager;

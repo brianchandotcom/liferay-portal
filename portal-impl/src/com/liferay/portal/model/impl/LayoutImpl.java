@@ -710,10 +710,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getIcon() {
-		if (isTypeCollection()) {
-			return "list";
-		}
-
 		if (isTypeContent()) {
 			return "page";
 		}
@@ -1443,8 +1439,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeContent() {
-		if (Objects.equals(getType(), LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(getType(), LayoutConstants.TYPE_CONTENT) ||
+		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTENT) ||
 			Objects.equals(getType(), LayoutConstants.TYPE_UTILITY) ||
 			Objects.equals(
 				_getLayoutTypeControllerType(), LayoutConstants.TYPE_CONTENT)) {

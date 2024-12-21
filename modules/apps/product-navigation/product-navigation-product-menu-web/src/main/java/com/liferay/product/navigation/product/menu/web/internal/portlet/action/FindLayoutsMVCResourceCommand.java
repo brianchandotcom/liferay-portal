@@ -84,8 +84,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			themeDisplay.getSiteGroupId(), keywords,
 			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
@@ -115,8 +114,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		int totalCount = _layoutLocalService.getLayoutsCount(
 			themeDisplay.getSiteGroupId(), keywords,
 			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,

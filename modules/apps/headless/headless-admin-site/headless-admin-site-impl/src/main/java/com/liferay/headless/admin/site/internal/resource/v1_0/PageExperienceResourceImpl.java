@@ -183,9 +183,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			pageExperience.getSitePageExternalReferenceCode(), groupId);
 
 		if ((layout == null) ||
-			(!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_COLLECTION) &&
-			 !Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
+			!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 			throw new UnsupportedOperationException();
 		}

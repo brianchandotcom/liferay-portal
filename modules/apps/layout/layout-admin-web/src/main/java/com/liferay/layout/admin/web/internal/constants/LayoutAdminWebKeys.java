@@ -22,7 +22,4 @@ public class LayoutAdminWebKeys {
 	public static final String MILLER_COLUMNS_DISPLAY_CONTEXT =
 		"MILLER_COLUMNS_DISPLAY_CONTEXT";
 
-	public static final String SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT =
-		"SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT";
-
 }

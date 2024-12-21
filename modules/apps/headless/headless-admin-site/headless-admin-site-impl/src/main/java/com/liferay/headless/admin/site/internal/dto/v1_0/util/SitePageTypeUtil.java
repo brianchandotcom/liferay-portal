@@ -44,8 +44,6 @@ public class SitePageTypeUtil {
 
 	private static final Map<SitePage.Type, String>
 		_externalToInternalValuesMap = HashMapBuilder.put(
-			SitePage.Type.COLLECTION_PAGE, LayoutConstants.TYPE_COLLECTION
-		).put(
 			SitePage.Type.CONTENT_PAGE, LayoutConstants.TYPE_CONTENT
 		).put(
 			SitePage.Type.WIDGET_PAGE, LayoutConstants.TYPE_PORTLET

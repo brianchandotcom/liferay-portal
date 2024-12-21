@@ -120,7 +120,7 @@ public class SegmentsServicePreActionTest {
 					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 					nameMap, nameMap, Collections.emptyMap(),
 					Collections.emptyMap(), Collections.emptyMap(),
-					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT,
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
@@ -172,7 +172,7 @@ public class SegmentsServicePreActionTest {
 					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 					nameMap, nameMap, Collections.emptyMap(),
 					Collections.emptyMap(), Collections.emptyMap(),
-					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT,
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
@@ -252,7 +252,7 @@ public class SegmentsServicePreActionTest {
 					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 					nameMap, nameMap, Collections.emptyMap(),
 					Collections.emptyMap(), Collections.emptyMap(),
-					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT,
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
@@ -397,7 +397,7 @@ public class SegmentsServicePreActionTest {
 					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 					nameMap, nameMap, Collections.emptyMap(),
 					Collections.emptyMap(), Collections.emptyMap(),
-					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_CONTENT,
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),

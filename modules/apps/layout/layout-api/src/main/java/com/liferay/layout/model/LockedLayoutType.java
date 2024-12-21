@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public enum LockedLayoutType {
 
-	COLLECTION_PAGE("collection-page"), CONTENT_PAGE("content-page"),
+	CONTENT_PAGE("content-page"),
 	CONTENT_PAGE_TEMPLATE("content-page-template"),
 	DISPLAY_PAGE_TEMPLATE("display-page-template"), MASTER_PAGE("master-page"),
 	UTILITY_PAGE("utility-page");

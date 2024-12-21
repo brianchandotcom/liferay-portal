@@ -84,30 +84,12 @@ public class LockedLayoutsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetSearchContainerLockedLayoutsFilterByCollectionPage()
-		throws Exception {
-
-		Layout draftLayout = _getDraftLayout(LayoutConstants.TYPE_COLLECTION);
-
-		_lockLayout(draftLayout, _user);
-
-		_lockLayout(_getDraftLayout(), _user);
-
-		_assertSearchContainerLayoutPlids(
-			1, new long[] {draftLayout.getPlid()},
-			_getSearchContainer(
-				_getMockLiferayPortletRenderRequest("collection-page")));
-	}
-
-	@Test
 	public void testGetSearchContainerLockedLayoutsFilterByContentPage()
 		throws Exception {
 
 		Layout draftLayout = _getDraftLayout();
 
 		_lockLayout(draftLayout, _user);
-
-		_lockLayout(_getDraftLayout(LayoutConstants.TYPE_COLLECTION), _user);
 
 		_assertSearchContainerLayoutPlids(
 			1, new long[] {draftLayout.getPlid()},

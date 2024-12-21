@@ -7,7 +7,6 @@ package com.liferay.layout.admin.web.internal.action.provider;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -81,17 +78,10 @@ public class LayoutActionProvider {
 		boolean showAddChildPageAction =
 			_layoutActionsHelper.isShowAddChildPageAction(layout);
 
-		if (showAddChildPageAction && !layout.isTypeCollection() &&
+		if (showAddChildPageAction &&
 			Validator.isNotNull(_getAddLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(() -> _getAddChildPageJSONObject(layout));
-		}
-
-		if (showAddChildPageAction && !layout.isTypeCollection() &&
-			Validator.isNotNull(_getAddCollectionLayoutURL(layout.getPlid()))) {
-
-			itemsJSONArray.put(
-				() -> _getAddChildCollectionPageJSONObject(layout));
 		}
 
 		Group group = layout.getGroup();
@@ -110,12 +100,6 @@ public class LayoutActionProvider {
 			).put(
 				() -> _getConfigureJSONObject(layout)
 			);
-		}
-
-		if (layout.isTypeCollection() &&
-			Validator.isNotNull(_getViewCollectionItemsURL(layout))) {
-
-			itemsJSONArray.put(() -> _getViewCollectionItemsJSONObject(layout));
 		}
 
 		if (_layoutActionsHelper.isShowPermissionsAction(layout, group)) {
@@ -142,20 +126,6 @@ public class LayoutActionProvider {
 			));
 	}
 
-	private JSONObject _getAddChildCollectionPageJSONObject(Layout layout) {
-		return JSONUtil.put(
-			"href", _getAddCollectionLayoutURL(layout.getPlid())
-		).put(
-			"id", "add-child-collection-page"
-		).put(
-			"label",
-			_language.get(
-				_themeDisplay.getLocale(), "add-child-collection-page")
-		).put(
-			"type", "item"
-		);
-	}
-
 	private JSONObject _getAddChildPageJSONObject(Layout layout) {
 		return JSONUtil.put(
 			"href", _getAddLayoutURL(layout.getPlid())
@@ -166,32 +136,6 @@ public class LayoutActionProvider {
 		).put(
 			"type", "item"
 		);
-	}
-
-	private String _getAddCollectionLayoutURL(long plid) {
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
-			return null;
-		}
-
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/select_layout_collections.jsp"
-		).setRedirect(
-			_getRedirect()
-		).setBackURL(
-			_getBackURL()
-		).setParameter(
-			"groupId", _themeDisplay.getSiteGroupId()
-		).setParameter(
-			"privateLayout", _isPrivateLayout()
-		).setParameter(
-			"selPlid", plid
-		).buildString();
 	}
 
 	private String _getAddLayoutURL(long plid) {
@@ -583,67 +527,6 @@ public class LayoutActionProvider {
 		_redirect = redirect;
 
 		return _redirect;
-	}
-
-	private JSONObject _getViewCollectionItemsJSONObject(Layout layout)
-		throws Exception {
-
-		return JSONUtil.put(
-			"data",
-			JSONUtil.put(
-				"id", "view-collection-items"
-			).put(
-				"modalTitle",
-				_language.get(_themeDisplay.getLocale(), "view-items")
-			).put(
-				"url", _getViewCollectionItemsURL(layout)
-			)
-		).put(
-			"href", StringPool.POUND
-		).put(
-			"id", "view-collection-items"
-		).put(
-			"label",
-			_language.get(_themeDisplay.getLocale(), "view-collection-items")
-		).put(
-			"target", "_blank"
-		).put(
-			"type", "item"
-		);
-	}
-
-	private String _getViewCollectionItemsURL(Layout layout) throws Exception {
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.VIEW)
-		).setRedirect(
-			() -> {
-				String redirect = PortalUtil.getLayoutRelativeURL(
-					_themeDisplay.getLayout(), _themeDisplay);
-
-				Layout curLayout = _themeDisplay.getLayout();
-
-				if (curLayout.isTypeAssetDisplay() ||
-					curLayout.isTypeControlPanel()) {
-
-					return ParamUtil.getString(
-						_httpServletRequest, "redirect", redirect);
-				}
-
-				return redirect;
-			}
-		).setParameter(
-			"backURLTitle", _getBackURLTitle()
-		).setParameter(
-			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
-		).setParameter(
-			"collectionType", layout.getTypeSettingsProperty("collectionType")
-		).setParameter(
-			"showActions", true
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

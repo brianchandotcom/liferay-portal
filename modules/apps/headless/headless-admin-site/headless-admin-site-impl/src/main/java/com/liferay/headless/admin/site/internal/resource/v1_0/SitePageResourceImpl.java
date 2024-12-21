@@ -135,7 +135,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 						siteExternalReferenceCode),
 					false, search,
 					new String[] {
-						LayoutConstants.TYPE_COLLECTION,
 						LayoutConstants.TYPE_CONTENT,
 						LayoutConstants.TYPE_PORTLET
 					},
@@ -149,7 +148,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					siteExternalReferenceCode),
 				false, search,
 				new String[] {
-					LayoutConstants.TYPE_COLLECTION,
 					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_PORTLET
 				},
 				null));

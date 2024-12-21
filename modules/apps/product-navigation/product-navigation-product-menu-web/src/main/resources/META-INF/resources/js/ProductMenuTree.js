@@ -30,7 +30,6 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 	} = props;
 
 	const {
-		addCollectionLayoutURL,
 		addLayoutURL,
 		administrationPortletNamespace,
 		administrationPortletURL,
@@ -63,7 +62,6 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 
 			<div className={classNames({hide: searchKeywords.length})}>
 				<PageTypeSelector
-					addCollectionLayoutURL={addCollectionLayoutURL}
 					addLayoutURL={addLayoutURL}
 					configureLayoutSetURL={configureLayoutSetURL}
 					namespace={portletNamespace}

@@ -2762,11 +2762,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
 			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
+
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			JSONObject pageElementJSONObject =
 				pageDefinitionJSONObject.getJSONObject("pageElement");
@@ -2831,33 +2830,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					}
 				}
 			}
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			UnicodeProperties unicodeProperties =
-				draftLayout.getTypeSettingsProperties();
-
-			Object[] typeSettings = JSONUtil.toObjectArray(
-				pageJSONObject.getJSONArray("typeSettings"));
-
-			for (Object typeSetting : typeSettings) {
-				JSONObject typeSettingJSONObject = (JSONObject)typeSetting;
-
-				String key = typeSettingJSONObject.getString("key");
-				String value = typeSettingJSONObject.getString("value");
-
-				unicodeProperties.put(
-					key, _replace(value, stringUtilReplaceValues));
-			}
-
-			draftLayout = _layoutLocalService.updateLayout(
-				serviceContext.getScopeGroupId(), draftLayout.isPrivateLayout(),
-				draftLayout.getLayoutId(), unicodeProperties.toString());
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
-			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
 			JSONObject settingsJSONObject =
 				pageDefinitionJSONObject.getJSONObject("settings");

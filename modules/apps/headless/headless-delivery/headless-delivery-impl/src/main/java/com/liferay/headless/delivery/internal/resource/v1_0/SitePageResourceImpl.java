@@ -229,7 +229,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.setAttribute(
 					Field.TYPE,
 					new String[] {
-						LayoutConstants.TYPE_COLLECTION,
 						LayoutConstants.TYPE_CONTENT,
 						LayoutConstants.TYPE_EMBEDDED,
 						LayoutConstants.TYPE_LINK_TO_LAYOUT,

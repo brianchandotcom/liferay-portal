@@ -5,7 +5,6 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 
-import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -22,11 +21,8 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -34,18 +30,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,12 +86,6 @@ public class LayoutActionDropdownItemsProvider {
 					).add(
 						_getPreviewLayoutActionUnsafeConsumer(
 							draftLayout, layout)
-					).add(
-						() ->
-							_layoutActionsHelper.
-								isShowViewCollectionItemsAction(layout),
-						_getViewCollectionItemsLayoutActionUnsafeConsumer(
-							layout)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -643,60 +630,6 @@ public class LayoutActionDropdownItemsProvider {
 			dropdownItem.setTarget(
 				HtmlUtil.escape(layout.getTypeSettingsProperty("target")));
 		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getViewCollectionItemsLayoutActionUnsafeConsumer(Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "viewCollectionItems");
-			dropdownItem.putData(
-				"viewCollectionItemsURL", _getViewCollectionItemsURL(layout));
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "view-collection-items"));
-		};
-	}
-
-	private String _getViewCollectionItemsURL(Layout layout)
-		throws PortalException, WindowStateException {
-
-		if (!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-
-			return null;
-		}
-
-		String collectionType = layout.getTypeSettingsProperty(
-			"collectionType");
-
-		if (Validator.isNull(collectionType)) {
-			return null;
-		}
-
-		String collectionPK = layout.getTypeSettingsProperty("collectionPK");
-
-		if (Validator.isNull(collectionPK)) {
-			return null;
-		}
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		if (portletURL == null) {
-			return null;
-		}
-
-		portletURL.setParameter(
-			"redirect", _layoutsAdminDisplayContext.getRedirect());
-		portletURL.setParameter(
-			"backURLTitle", LanguageUtil.get(_httpServletRequest, "pages"));
-		portletURL.setParameter("collectionPK", collectionPK);
-		portletURL.setParameter("collectionType", collectionType);
-		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

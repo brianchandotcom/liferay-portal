@@ -138,8 +138,8 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		}
 
 		if ((layout == null) ||
-			(!layout.isTypeAssetDisplay() && !layout.isTypeCollection() &&
-			 !layout.isTypeContent() && !layout.isTypeUtility() &&
+			(!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			 !layout.isTypeUtility() &&
 			 ((layout.getMasterLayoutPlid() == 0) ||
 			  !layout.isTypePortlet()))) {
 

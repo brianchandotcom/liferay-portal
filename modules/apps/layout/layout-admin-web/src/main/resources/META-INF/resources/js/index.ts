@@ -55,10 +55,6 @@ export {default as OrphanPortletsManagementToolbarPropsTransformer} from './Orph
 
 // @ts-ignore
 
-export {default as SelectLayoutCollectionManagementToolbarPropsTransformer} from './SelectLayoutCollectionManagementToolbarPropsTransformer';
-
-// @ts-ignore
-
 export {default as SelectLayoutUtilityPageEntryMasterLayoutVerticalCardPropsTransformer} from './SelectLayoutUtilityPageEntryMasterLayoutVerticalCardPropsTransformer';
 export {default as ThemeCSSReplacementSelector} from './ThemeCSSReplacementSelector';
 

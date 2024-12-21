@@ -158,32 +158,6 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
-	private String _getAddCollectionLayoutURL() {
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
-			return StringPool.BLANK;
-		}
-
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/select_layout_collections.jsp"
-		).setRedirect(
-			_getRedirect()
-		).setBackURL(
-			_getBackURL()
-		).setParameter(
-			"groupId", _themeDisplay.getSiteGroupId()
-		).setParameter(
-			"privateLayout", _isPrivateLayout()
-		).setParameter(
-			"selPlid", LayoutConstants.DEFAULT_PLID
-		).buildString();
-	}
-
 	private String _getAddLayoutURL() {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
@@ -262,8 +236,6 @@ public class LayoutsTreeDisplayContext {
 
 	private Map<String, Object> _getConfigData() {
 		Map<String, Object> configData = HashMapBuilder.<String, Object>put(
-			"addCollectionLayoutURL", _getAddCollectionLayoutURL()
-		).put(
 			"addLayoutURL", _getAddLayoutURL()
 		).put(
 			"administrationPortletNamespace",

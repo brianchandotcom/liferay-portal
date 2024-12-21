@@ -75,8 +75,7 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 		int layoutsCount = _layoutLocalService.searchCount(
 			group, privateLayout, keywords, searchOnlyByTitle,
 			new String[] {
-				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-				LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT, LayoutConstants.TYPE_PANEL,
 				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
@@ -114,7 +113,6 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 			List<Layout> layouts = _layoutLocalService.search(
 				groupId, privateLayout, keywords, searchOnlyByTitle,
 				new String[] {
-					LayoutConstants.TYPE_COLLECTION,
 					LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 					LayoutConstants.TYPE_LINK_TO_LAYOUT,

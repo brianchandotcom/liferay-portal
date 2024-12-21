@@ -11,13 +11,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,10 +52,7 @@ public class MappingContentPageEditorSidebarPanel
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if ((layout == null) ||
-			((layoutType !=
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) &&
-			 !Objects.equals(
-				 layout.getType(), LayoutConstants.TYPE_COLLECTION))) {
+			(layoutType != LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
 
 			return false;
 		}

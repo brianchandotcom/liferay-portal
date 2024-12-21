@@ -123,7 +123,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -218,16 +217,6 @@ public class LayoutsAdminDisplayContext {
 					dropdownItem.setLabel(
 						LanguageUtil.get(httpServletRequest, "page"));
 				}
-			).add(
-				this::isShowPublicLayouts,
-				dropdownItem -> {
-					dropdownItem.setHref(
-						getSelectLayoutCollectionURL(
-							LayoutConstants.DEFAULT_PLID, null, false));
-					dropdownItem.setLabel(
-						LanguageUtil.get(
-							httpServletRequest, "collection-page"));
-				}
 			).build();
 		}
 
@@ -240,36 +229,28 @@ public class LayoutsAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "public-page"));
 			}
 		).add(
-			this::isShowPublicLayouts,
-			dropdownItem -> {
-				dropdownItem.setHref(
-					getSelectLayoutCollectionURL(
-						LayoutConstants.DEFAULT_PLID, null, false));
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "public-collection-page"));
-			}
-		).add(
 			dropdownItem -> {
 				dropdownItem.setHref(getSelectLayoutPageTemplateEntryURL(true));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "private-page"));
 			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					getSelectLayoutCollectionURL(
-						LayoutConstants.DEFAULT_PLID, null, true));
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "private-collection-page"));
-			}
 		).build();
 	}
 
 	public String getAddLayoutURL() {
-		PortletURL portletURL = PortletURLBuilder.createActionURL(
+		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
+		).setActionName(
+			() -> {
+				long layoutPageTemplateEntryId = ParamUtil.getLong(
+					httpServletRequest, "layoutPageTemplateEntryId");
+
+				if (layoutPageTemplateEntryId > 0) {
+					return "/layout_admin/add_content_layout";
+				}
+
+				return "/layout_admin/add_simple_layout";
+			}
 		).setMVCRenderCommandName(
 			"/layout_admin/select_layout_page_template_entry"
 		).setBackURL(
@@ -281,60 +262,31 @@ public class LayoutsAdminDisplayContext {
 		).setParameter(
 			"groupId", getGroupId()
 		).setParameter(
+			"layoutPageTemplateEntryId",
+			ParamUtil.getLong(httpServletRequest, "layoutPageTemplateEntryId")
+		).setParameter(
 			"liveGroupId", getLiveGroupId()
+		).setParameter(
+			"masterLayoutPlid",
+			ParamUtil.getLong(httpServletRequest, "masterLayoutPlid")
 		).setParameter(
 			"parentLayoutId", getParentLayoutId()
 		).setParameter(
 			"privateLayout", isPrivateLayout()
 		).setParameter(
 			"stagingGroupId", getStagingGroupId()
-		).buildPortletURL();
+		).setParameter(
+			"type",
+			() -> {
+				String type = ParamUtil.getString(httpServletRequest, "type");
 
-		String type = ParamUtil.getString(httpServletRequest, "type");
+				if (Validator.isNotNull(type)) {
+					return type;
+				}
 
-		if (Validator.isNotNull(type)) {
-			portletURL.setParameter("type", type);
-		}
-
-		long layoutPageTemplateEntryId = ParamUtil.getLong(
-			httpServletRequest, "layoutPageTemplateEntryId");
-
-		if (layoutPageTemplateEntryId > 0) {
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/layout_admin/add_content_layout");
-		}
-		else {
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/layout_admin/add_simple_layout");
-		}
-
-		portletURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(layoutPageTemplateEntryId));
-
-		long masterLayoutPlid = ParamUtil.getLong(
-			httpServletRequest, "masterLayoutPlid");
-
-		portletURL.setParameter(
-			"masterLayoutPlid", String.valueOf(masterLayoutPlid));
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			String collectionPK = ParamUtil.getString(
-				httpServletRequest, "collectionPK");
-
-			portletURL.setParameter("collectionPK", collectionPK);
-
-			String collectionType = ParamUtil.getString(
-				httpServletRequest, "collectionType");
-
-			portletURL.setParameter("collectionType", collectionType);
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/layout_admin/add_collection_layout");
-		}
-
-		return portletURL.toString();
+				return null;
+			}
+		).buildString();
 	}
 
 	public List<SiteNavigationMenu> getAutoSiteNavigationMenus() {
@@ -1154,35 +1106,6 @@ public class LayoutsAdminDisplayContext {
 
 	public String getSelectFaviconEventName() {
 		return _liferayPortletResponse.getNamespace() + "selectImage";
-	}
-
-	public String getSelectLayoutCollectionURL(
-		long selPlid, String selectedTab, boolean privateLayout) {
-
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			"/select_layout_collections.jsp"
-		).setRedirect(
-			getRedirect()
-		).setBackURL(
-			_getBackURL()
-		).setParameter(
-			"groupId", getSelGroupId()
-		).setParameter(
-			"privateLayout", privateLayout
-		).setParameter(
-			"selectedTab",
-			() -> {
-				if (Validator.isNotNull(selectedTab)) {
-					return selectedTab;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"selPlid", selPlid
-		).buildString();
 	}
 
 	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout) {
@@ -2445,8 +2368,8 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		_types = new String[] {
-			LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
-			LayoutConstants.TYPE_EMBEDDED, LayoutConstants.TYPE_LINK_TO_LAYOUT,
+			LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+			LayoutConstants.TYPE_LINK_TO_LAYOUT,
 			LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PANEL,
 			LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL

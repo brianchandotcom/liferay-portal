@@ -51,19 +51,19 @@ public class RelatedInfoItemCollectionProviderItemDescriptor
 		return JSONUtil.put(
 			"itemSubtype",
 			() -> {
-				if (_relatedInfoItemCollectionProvider instanceof
-						SingleFormVariationInfoCollectionProvider) {
+				if (!(_relatedInfoItemCollectionProvider instanceof
+						SingleFormVariationInfoCollectionProvider)) {
 
-					SingleFormVariationInfoCollectionProvider<?>
-						singleFormVariationInfoCollectionProvider =
-							(SingleFormVariationInfoCollectionProvider<?>)
-								_relatedInfoItemCollectionProvider;
-
-					return singleFormVariationInfoCollectionProvider.
-						getFormVariationKey();
+					return null;
 				}
 
-				return null;
+				SingleFormVariationInfoCollectionProvider<?>
+					singleFormVariationInfoCollectionProvider =
+						(SingleFormVariationInfoCollectionProvider<?>)
+							_relatedInfoItemCollectionProvider;
+
+				return singleFormVariationInfoCollectionProvider.
+					getFormVariationKey();
 			}
 		).put(
 			"itemType",

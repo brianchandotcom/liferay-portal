@@ -993,12 +993,12 @@ public class EditInfoItemStrutsActionTest {
 				).put(
 					"classPK",
 					() -> {
-						if (classPK > 0) {
-							return Collections.singletonList(
-								String.valueOf(classPK));
+						if (classPK <= 0) {
+							return null;
 						}
 
-						return null;
+						return Collections.singletonList(
+							String.valueOf(classPK));
 					}
 				).put(
 					"classTypeId", Collections.singletonList("0")
@@ -1038,12 +1038,11 @@ public class EditInfoItemStrutsActionTest {
 				).put(
 					"myDateTime",
 					() -> {
-						if (dateTimeValueInput != null) {
-							return Collections.singletonList(
-								dateTimeValueInput);
+						if (dateTimeValueInput == null) {
+							return null;
 						}
 
-						return null;
+						return Collections.singletonList(dateTimeValueInput);
 					}
 				).put(
 					"myDecimal",

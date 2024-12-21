@@ -53,19 +53,19 @@ public class InfoCollectionProviderItemDescriptor
 		return JSONUtil.put(
 			"itemSubtype",
 			() -> {
-				if (_infoCollectionProvider instanceof
-						SingleFormVariationInfoCollectionProvider) {
+				if (!(_infoCollectionProvider instanceof
+						SingleFormVariationInfoCollectionProvider)) {
 
-					SingleFormVariationInfoCollectionProvider<?>
-						singleFormVariationInfoCollectionProvider =
-							(SingleFormVariationInfoCollectionProvider<?>)
-								_infoCollectionProvider;
-
-					return singleFormVariationInfoCollectionProvider.
-						getFormVariationKey();
+					return null;
 				}
 
-				return null;
+				SingleFormVariationInfoCollectionProvider<?>
+					singleFormVariationInfoCollectionProvider =
+						(SingleFormVariationInfoCollectionProvider<?>)
+							_infoCollectionProvider;
+
+				return singleFormVariationInfoCollectionProvider.
+					getFormVariationKey();
 			}
 		).put(
 			"itemType", _infoCollectionProvider.getCollectionItemClassName()

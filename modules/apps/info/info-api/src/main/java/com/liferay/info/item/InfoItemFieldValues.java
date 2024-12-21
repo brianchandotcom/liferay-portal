@@ -39,13 +39,14 @@ public class InfoItemFieldValues {
 				infoFieldName, Collections.emptyList());
 		}
 
-		if (infoFieldValues != null) {
-			Iterator<InfoFieldValue<Object>> iterator =
-				infoFieldValues.iterator();
+		if (infoFieldValues == null) {
+			return null;
+		}
 
-			if (iterator.hasNext()) {
-				return iterator.next();
-			}
+		Iterator<InfoFieldValue<Object>> iterator = infoFieldValues.iterator();
+
+		if (iterator.hasNext()) {
+			return iterator.next();
 		}
 
 		return null;

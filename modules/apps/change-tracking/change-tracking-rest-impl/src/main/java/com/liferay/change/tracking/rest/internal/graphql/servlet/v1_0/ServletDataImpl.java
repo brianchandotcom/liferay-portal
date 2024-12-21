@@ -239,11 +239,6 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"getCTCollectionShareLink"));
 					put(
-						"query#cTCollectionsHistory",
-						new ObjectValuePair<>(
-							CTCollectionResourceImpl.class,
-							"getCTCollectionsHistoryPage"));
-					put(
 						"query#cTCollection",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class, "getCTCollection"));

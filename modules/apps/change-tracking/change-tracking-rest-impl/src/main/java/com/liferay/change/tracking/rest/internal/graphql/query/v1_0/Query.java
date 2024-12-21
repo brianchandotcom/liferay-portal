@@ -160,25 +160,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollectionsHistory(classNameId: ___, classPK: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public CTCollectionPage cTCollectionsHistory(
-			@GraphQLName("classNameId") Integer classNameId,
-			@GraphQLName("classPK") Integer classPK)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_ctCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			ctCollectionResource -> new CTCollectionPage(
-				ctCollectionResource.getCTCollectionsHistoryPage(
-					classNameId, classPK)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollection(ctCollectionId: ___){actions, dateCreated, dateModified, dateScheduled, description, externalReferenceCode, id, name, ownerName, status, statusMessage}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

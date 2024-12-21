@@ -93,10 +93,6 @@ public interface CTCollectionResource {
 	public String getCTCollectionShareLink(Long ctCollectionId)
 		throws Exception;
 
-	public Page<CTCollection> getCTCollectionsHistoryPage(
-			Integer classNameId, Integer classPK)
-		throws Exception;
-
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
 	public Response deleteCTCollectionBatch(

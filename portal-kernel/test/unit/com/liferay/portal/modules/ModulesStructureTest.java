@@ -363,8 +363,8 @@ public class ModulesStructureTest {
 							":".concat(
 								StringUtil.replace(
 									relativePathString, '/', ':')),
-							ModulesStructureTestUtil.
-								getProjectDependencyIds(buildGradlePath));
+							ModulesStructureTestUtil.getProjectDependencyIds(
+								buildGradlePath));
 
 						modules.put(module.getId(), module);
 

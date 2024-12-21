@@ -541,7 +541,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			"friendlyURLAssetCategoryIds",
 			ParamUtil.getLongValues(
 				actionRequest, "friendlyURLAssetCategoryIds"));
-
 		serviceContext.setAttribute(
 			"updateAutoTags",
 			ParamUtil.getBoolean(actionRequest, "updateAutoTags"));

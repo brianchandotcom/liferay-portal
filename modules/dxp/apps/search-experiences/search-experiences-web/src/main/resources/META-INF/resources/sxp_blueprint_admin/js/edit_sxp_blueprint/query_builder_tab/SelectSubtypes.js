@@ -20,6 +20,7 @@ import {addParams, fetch} from 'frontend-js-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
+import removeDuplicates from '../../utils/functions/remove_duplicates';
 import sub from '../../utils/language/sub';
 
 function getLabel({classSubtypeLocalizedName, groupLocalizedName}) {
@@ -53,15 +54,41 @@ export function SearchableSubtypesModal({
 	const {fetchClassSubtypesURL = '', namespace} = useContext(ThemeContext);
 
 	const isSelected = (item) =>
-		selected.some((selection) => selection === item);
+		selected.some((selectedItem) => selectedItem.value === item.value);
+
+	const isInClassSubtypes = (item) =>
+		subtypes.classSubtypes?.some(
+			(subtypeItem) => subtypeItem.value === item.value
+		);
 
 	const _handleSelect = (item) => () => {
 		if (isSelected(item)) {
-			setSelected(selected.filter((value) => value !== item));
+			setSelected(
+				selected.filter(
+					(selectedItem) => selectedItem.value !== item.value
+				)
+			);
 		}
 		else {
-			setSelected([...selected, item]);
+			setSelected([...selected, {label: item.label, value: item.value}]);
 		}
+	};
+
+	const _handleSelectAll = () => {
+		setSelected(
+			subtypes.classSubtypes?.every((item) => isSelected(item))
+				? selected.filter((item) => !isInClassSubtypes(item))
+				: removeDuplicates(
+						[
+							...selected,
+							...subtypes.classSubtypes.map(({label, value}) => ({
+								label,
+								value,
+							})),
+						],
+						'value'
+					)
+		);
 	};
 
 	const _handleClear = () => {
@@ -88,7 +115,16 @@ export function SearchableSubtypesModal({
 				)
 					.then((response) => response.json())
 					.then((items) => {
-						setSubtypes(items);
+						setSubtypes({
+							...items,
+							classSubtypes: items.classSubtypes?.map(
+								(subtype) => ({
+									...subtype,
+									label: getLabel(subtype),
+									value: getValue(subtype),
+								})
+							),
+						});
 						setError(false);
 					})
 					.catch(() => {
@@ -165,20 +201,18 @@ export function SearchableSubtypesModal({
 						<ManagementToolbar.ItemList expand>
 							<ManagementToolbar.Item>
 								<ClayCheckbox
-									checked={!!selected.length}
+									checked={subtypes.classSubtypes?.every(
+										(item) => isSelected(item)
+									)}
 									indeterminate={
-										!!selected.length &&
-										selected.length !== subtypes?.length
-									}
-									onChange={() =>
-										setSelected(
-											!selected.length
-												? subtypes.classSubtypes.map(
-														(item) => getValue(item)
-													)
-												: []
+										subtypes.classSubtypes?.some((item) =>
+											isSelected(item)
+										) &&
+										!subtypes.classSubtypes?.every((item) =>
+											isSelected(item)
 										)
 									}
+									onChange={_handleSelectAll}
 								/>
 							</ManagementToolbar.Item>
 
@@ -239,12 +273,10 @@ export function SearchableSubtypesModal({
 
 						<Body>
 							{subtypes.classSubtypes.map((item) => {
-								const value = getValue(item);
-
 								return (
 									<Row
-										key={value}
-										onClick={_handleSelect(value)}
+										key={item.value}
+										onClick={_handleSelect(item)}
 									>
 										<Cell>
 											<div className="d-flex">
@@ -257,9 +289,9 @@ export function SearchableSubtypesModal({
 															item.classSubtypeLocalizedName,
 														]
 													)}
-													checked={isSelected(value)}
+													checked={isSelected(item)}
 													onChange={_handleSelect(
-														value
+														item
 													)}
 												/>
 
@@ -292,7 +324,9 @@ export function SearchableSubtypesModal({
 						}}
 						onActiveChange={_handlePageChange}
 						onDeltaChange={_handlePageSizeChange}
-						totalItems={subtypes.classSubtypes.length}
+						totalItems={
+							subtypes.total || subtypes.classSubtypes.length
+						}
 					/>
 				</ClayModal.Body>
 			)}
@@ -369,19 +403,19 @@ function SelectSubtypes({
 			</ClayList.ItemText>
 
 			<ClayList.ItemText className="c-mt-2">
-				{selectedSubtypes.map((item) => (
+				{selectedSubtypes.map(({label, value}) => (
 					<ClayLabel
 						closeButtonProps={{
 							'aria-label': Liferay.Language.get('close'),
-							'id': `close-${item}`,
-							'onClick': () => onRemoveSubtype(item),
+							'id': `close-${value}`,
+							'onClick': () => onRemoveSubtype(value),
 							'title': Liferay.Language.get('close'),
 						}}
 						displayType="secondary"
-						key={item}
+						key={value}
 						large
 					>
-						{item}
+						{label}
 					</ClayLabel>
 				))}
 			</ClayList.ItemText>

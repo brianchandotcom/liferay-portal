@@ -30,7 +30,7 @@ buildIBMS3Store {
 	filter {
 		String line ->
 
-		line.replace "import org.osgi.service.component.annotations.Activate;", "import jakarta.annotation.Generated;\n\nimport org.osgi.service.component.annotations.Activate;"
+		line.replace "import java.io.File;", "import jakarta.annotation.Generated;\n\nimport java.io.File;"
 	}
 
 	filter {

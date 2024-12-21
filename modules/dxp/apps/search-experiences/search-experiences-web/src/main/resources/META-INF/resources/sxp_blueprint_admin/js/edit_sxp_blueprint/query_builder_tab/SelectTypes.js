@@ -28,9 +28,12 @@ const getSelectedSubtypes = (selected, className) => {
  * with its subtypes as children.
  *
  * @param {*} selectedTypes
- * @returns Array
+ * @returns {array}
  */
-const setupSelected = (selectedTypes) => {
+const setupSelected = (selectedTypes, subtypeMap = {}) => {
+
+	// TODO: Fetch subtypes map
+
 	const arrayOfTypes = [];
 
 	selectedTypes.forEach((item) => {
@@ -47,7 +50,10 @@ const setupSelected = (selectedTypes) => {
 			if (itemIndex > -1) {
 				const subtypesArray = arrayOfTypes[itemIndex].subtypes || [];
 
-				subtypesArray.push(item);
+				subtypesArray.push({
+					label: subtypeMap[item] || item,
+					value: item,
+				});
 
 				arrayOfTypes[itemIndex] = {
 					subtypes: subtypesArray,
@@ -56,7 +62,7 @@ const setupSelected = (selectedTypes) => {
 			}
 			else {
 				arrayOfTypes.push({
-					subtypes: [item],
+					subtypes: [{label: subtypeMap[item] || item, value: item}],
 					type: typeClassName,
 				});
 			}
@@ -77,8 +83,8 @@ const transformSelected = (selected) => {
 
 	selected.forEach((type) => {
 		if (type.subtypes.length) {
-			type.subtypes.forEach((subtype) => {
-				newSelected.push(subtype);
+			type.subtypes.forEach(({value}) => {
+				newSelected.push(value);
 			});
 		}
 		else {
@@ -117,11 +123,11 @@ function SelectTypes({
 
 	const _handleRemoveSubtype = (subtype) => {
 		const newSelected = selected.map(({subtypes, type}) => ({
-			subtypes: subtypes.filter((item) => item !== subtype),
+			subtypes: subtypes.filter(({value}) => value !== subtype),
 			type,
 		}));
 
-		updateState(newSelected);
+		_handleChangeSelected(newSelected);
 	};
 
 	const _handleChangeSubtypes = (type) => (subtypes) => {
@@ -139,7 +145,7 @@ function SelectTypes({
 			return item;
 		});
 
-		updateState(newSelected);
+		_handleChangeSelected(newSelected);
 	};
 
 	const _handleChangeTypes = (types) => {
@@ -153,10 +159,10 @@ function SelectTypes({
 			return prevTypeObject || {subtypes: [], type};
 		});
 
-		updateState(newSelected);
+		_handleChangeSelected(newSelected);
 	};
 
-	const updateState = (newSelected) => {
+	const _handleChangeSelected = (newSelected) => {
 		setSelected(newSelected);
 
 		onFrameworkConfigChange({

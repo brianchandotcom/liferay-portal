@@ -271,7 +271,7 @@ definition {
 		}
 
 		task ("View web content is shown in web content admin after published") {
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
 		}

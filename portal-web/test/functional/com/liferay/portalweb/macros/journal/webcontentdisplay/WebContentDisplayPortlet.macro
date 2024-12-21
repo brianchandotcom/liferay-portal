@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalized(webContentTitle = null, portletNameTranslation = null, localizedBasicWebContent = null, webContentContent = null) {
+	macro addLocalized(localizedBasicWebContent = null, portletNameTranslation = null, publish = null, publishWithPermissions = null,  webContentContent = null, webContentTitle = null) {
 		WebContentDisplayPortletNavigator.gotoAdd(
 			portletNameTranslation = ${portletNameTranslation},
 			structureName = ${localizedBasicWebContent});
@@ -61,7 +61,9 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		Click(locator1 = "Button#PUBLISH_LOCALIZED");
+		WebContent.publishWithPermissionsLocalized(
+			publish = ${publish},
+			publishWithPermissions = ${publishWithPermissions});
 
 		SelectFrame(value1 = "relative=top");
 	}

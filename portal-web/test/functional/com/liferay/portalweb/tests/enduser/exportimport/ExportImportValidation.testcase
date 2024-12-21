@@ -195,7 +195,7 @@ definition {
 
 			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/files/MyFileToLinkToWebContent">MyFileToLinkToWebContent</a></p>''');
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 	}
 

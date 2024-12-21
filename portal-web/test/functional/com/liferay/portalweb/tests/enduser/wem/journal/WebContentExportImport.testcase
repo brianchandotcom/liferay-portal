@@ -468,7 +468,7 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("And when a page is created with an Asset Publisher to display the Web Content and then staged") {

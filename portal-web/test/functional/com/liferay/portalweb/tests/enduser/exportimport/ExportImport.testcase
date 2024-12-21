@@ -605,7 +605,7 @@ definition {
 				webContentLinkToPage = "Page C",
 				webContentTitle = "Web Content Title B");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("And: Add a WCD portlet to the first page and second then add a WC to each WCD") {
@@ -757,7 +757,7 @@ definition {
 				webContentLinkToPage = "Site Child Child Page",
 				webContentTitle = "WC WebContent Title 2");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When: User adds a WCD portlet to the site and select the second WC to it") {
@@ -1287,7 +1287,7 @@ definition {
 				webContentText = "Web Content Text",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
 		}
@@ -1886,7 +1886,7 @@ definition {
 				webContentTitle = "WC WebContent Title 2",
 				webContentWebContent = "WC WebContent Title 1");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("And: Add a WCD widget on the first page and select the first WC on it") {

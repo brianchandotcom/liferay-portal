@@ -1012,7 +1012,7 @@ definition {
 				webContentText = "Apple",
 				webContentTitle = "Fruit 1");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
 
@@ -1021,7 +1021,7 @@ definition {
 				webContentText = "Banana",
 				webContentTitle = "Fruit 2");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add a basic web content article") {

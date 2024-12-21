@@ -2080,7 +2080,7 @@ definition {
 				webContentText = "LXC",
 				webContentTitle = "LXC");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -2088,7 +2088,7 @@ definition {
 				webContentText = "Commerce",
 				webContentTitle = "Commerce");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			WebContent.moveToFolderCP(
 				folderName = "WC Folder Name",

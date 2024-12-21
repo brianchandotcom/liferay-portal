@@ -1313,7 +1313,7 @@ definition {
 			webContentTitle = "WC Title 2",
 			webContentWebContent = "WC Title 1");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 

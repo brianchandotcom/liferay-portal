@@ -4840,7 +4840,7 @@ definition {
 				webContentText = "Web Content Content",
 				webContentTitle = "Web Content Title 2");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Navigate to Content Dashbaord") {
@@ -7025,7 +7025,7 @@ definition {
 				webContentText = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Navigate to Content Dashbaord") {

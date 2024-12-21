@@ -538,7 +538,7 @@ definition {
 			siteURLKey = "guest",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		Navigator.gotoPage(pageName = "Home");
 

@@ -129,7 +129,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		Button.clickSaveAsDraft();
+		WebContent.saveAsDraftWithPermissions();
 
 		Alert.viewSuccessMessage();
 	}
@@ -1820,6 +1820,34 @@ definition {
 		}
 
 		Click(locator1 = "WCEditWebContent#PUBLISH_IN_MODAL");
+
+		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
+
+		if (IsElementPresent(locator1 = "Message#WARNING")) {
+			VerifyElementPresent(locator1 = "Message#WARNING");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	@summary = "Default summary"
+	macro publishWithPermissionsLocalized(publish = null, publishWithPermissions = null, viewableBy = null) {
+		Button.click(button = ${publish});
+
+		Click(
+			key_text = ${publishWithPermissions},
+			locator1 = "WCEditWebContent#DROPDOWN_BUTTON");
+
+		if (isSet(viewableBy)) {
+			Select(
+				locator1 = "Select#PERMISSIONS",
+				value1 = ${viewableBy});
+		}
+
+		Click(
+			key_text = ${publish},
+			locator1 = "WCEditWebContent#BUTTON_IN_MODAL");
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
 

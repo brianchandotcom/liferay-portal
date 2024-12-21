@@ -54,7 +54,7 @@ definition {
 			assetType = ${assetType},
 			pageName = ${pageName});
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 	}
 
 	@summary = "Default summary"

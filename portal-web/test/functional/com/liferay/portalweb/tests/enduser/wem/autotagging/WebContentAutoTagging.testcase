@@ -203,7 +203,7 @@ definition {
 
 		WaitForVisible(locator1 = "WC#SIDEBAR_BODY");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Test Site Name",

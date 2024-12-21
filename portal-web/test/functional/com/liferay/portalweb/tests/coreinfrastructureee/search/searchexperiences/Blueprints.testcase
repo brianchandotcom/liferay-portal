@@ -4941,7 +4941,7 @@ definition {
 					webContentTextFieldLabel = "Custom Title",
 					webContentTitle = "Test Web Content ${count}");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 		}
 

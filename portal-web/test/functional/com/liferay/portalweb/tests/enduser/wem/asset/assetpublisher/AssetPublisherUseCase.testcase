@@ -483,7 +483,7 @@ definition {
 				webContentContent = "This is the updated version of web content test for rss feed",
 				webContentTitle = "Web Content Title Updated Feed");
 
-			Button.clickPublish();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("View the Updated Feed Heading and Title on RSS Publisher") {
@@ -611,7 +611,7 @@ definition {
 				webContentText = "Web Content5 Text",
 				webContentTitle = "Web Content5 Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("View available filter fields of the first structure") {
@@ -1600,7 +1600,7 @@ definition {
 				webContentText = "WC WebContent Text",
 				webContentTitle = ${title});
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Add the Global site to Site Scope") {

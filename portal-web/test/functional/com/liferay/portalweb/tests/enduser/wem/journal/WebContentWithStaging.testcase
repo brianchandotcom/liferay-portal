@@ -572,7 +572,7 @@ definition {
 				webContentImage = "Document Title",
 				webContentTitle = "My Image");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

@@ -1067,7 +1067,7 @@ definition {
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title 1");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		PublicationsNavigator.gotoReviewChanges();
 

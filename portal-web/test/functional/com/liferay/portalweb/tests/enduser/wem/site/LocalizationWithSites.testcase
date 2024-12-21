@@ -613,6 +613,8 @@ definition {
 			WebContentDisplayPortlet.addLocalized(
 				localizedBasicWebContent = "Contenido web básico",
 				portletNameTranslation = "Visor de contenido web",
+				publish = "Publicar",
+				publishWithPermissions = "Publicar con permisos",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}

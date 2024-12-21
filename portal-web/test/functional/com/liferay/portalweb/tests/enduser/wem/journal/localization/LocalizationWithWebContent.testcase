@@ -522,7 +522,7 @@ definition {
 				webContentContent = "世界您好 Content",
 				webContentTitle = "世界您好 Title");
 
-			PortletEntry.publish();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Then the site designer could view the translation after changing the user language to Chinese") {
@@ -640,7 +640,7 @@ definition {
 					fieldLabel = "Text",
 					text = "这是一个文本");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("On any site, create a Display Page Template for that Web Content Structure and mark it as default") {

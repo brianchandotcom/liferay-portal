@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_WITH_PERMISSIONS_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Publish With Permissions')]</td>
 	<td></td>
@@ -116,6 +121,11 @@
 <tr>
 	<td>PUBLISH_IN_MODAL</td>
 	<td>//div[contains(@class,'modal-content')]//button[contains(text(),'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_IN_MODAL</td>
+	<td>//div[contains(@class,'modal-content')]//button[contains(text(),'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

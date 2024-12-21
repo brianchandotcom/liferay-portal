@@ -929,7 +929,7 @@ definition {
 				webContentDateFieldLabel = "Date and Time",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("When we have a content page with a date fragment") {
@@ -1196,7 +1196,7 @@ definition {
 				webContentTitle = "WC WebContent Title 2",
 				webContentWebContent = "Web Content Title");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1584,7 +1584,7 @@ definition {
 				folderName = "WC Folder Name",
 				searchTerm = "WC Folder Name");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("View the new folder and web content are shown in Asset Publisher") {
@@ -2356,7 +2356,7 @@ definition {
 
 				WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
-				PortletEntry.publish();
+				WebContent.publishExistingWCArticleWithPermissions();
 			}
 
 			task ("Add another site") {

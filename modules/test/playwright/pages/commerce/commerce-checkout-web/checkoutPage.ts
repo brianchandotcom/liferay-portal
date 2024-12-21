@@ -9,6 +9,7 @@ import {CommerceLayoutsPage} from '../commerce-order-content-web/commerceLayouts
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 type TAddress = {
+	asGuest?: boolean | false;
 	city: string;
 	countryLabel: string;
 	name: string;
@@ -33,6 +34,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly configurationMenuItem: Locator;
 	readonly continueButton: Locator;
 	readonly countryInput: Locator;
+	readonly emailInput: Locator;
 	readonly goToOrderDetailsButton: Locator;
 	readonly headingDeliveryGroupModal: (name: string) => Locator;
 	readonly iframeOkButton: Locator;
@@ -94,6 +96,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 			name: 'Configuration',
 		});
 		this.countryInput = page.getByTitle('Country');
+		this.emailInput = page.locator('input[id*="_email"]');
 		this.headingDeliveryGroupModal = (name: string) => {
 			return page.getByRole('heading', {exact: true, name});
 		};
@@ -145,6 +148,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	}
 
 	async addAddress({
+		asGuest = false,
 		phoneNumber = '',
 		regionLabel = '',
 		useAsBilling = true,
@@ -158,6 +162,10 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		await this.addressInput.fill(address.street);
 		await this.useAsBillingCheckbox.setChecked(useAsBilling);
 		await this.zipInput.fill(address.zip);
+
+		if (asGuest) {
+			await this.emailInput.fill('guestemail@liferay.com');
+		}
 	}
 
 	async addCheckoutWidget() {

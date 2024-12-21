@@ -53,8 +53,11 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
@@ -309,21 +312,17 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			return null;
 		}
 
-		for (Method methods : configurationBeanClass.getMethods()) {
-			Meta.AD annotation = methods.getAnnotation(Meta.AD.class);
+		Set<String> requiredKeys = new HashSet<>();
+
+		for (Method method : configurationBeanClass.getMethods()) {
+			Meta.AD annotation = method.getAnnotation(Meta.AD.class);
 
 			if (annotation == null) {
 				continue;
 			}
 
 			if (annotation.required()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping registration for class because Meta.AD is " +
-							"required: " + configurationBeanClass.getName());
-				}
-
-				return null;
+				requiredKeys.add(method.getName());
 			}
 		}
 
@@ -356,13 +355,23 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 						properties = new HashMapDictionary<>();
 					}
 
-					_configurationBeanSettings.put(
-						configurationPid,
-						new ConfigurationBeanSettings(
-							locationVariableResolver,
-							ConfigurableUtil.createConfigurable(
-								configurationBeanClass, properties),
-							_portalPropertiesSettings));
+					Enumeration<String> enumeration = properties.keys();
+
+					Set<String> localRequiredKeys = new HashSet<>(requiredKeys);
+
+					while (enumeration.hasMoreElements()) {
+						localRequiredKeys.remove(enumeration.nextElement());
+					}
+
+					if (localRequiredKeys.isEmpty()) {
+						_configurationBeanSettings.put(
+							configurationPid,
+							new ConfigurationBeanSettings(
+								locationVariableResolver,
+								ConfigurableUtil.createConfigurable(
+									configurationBeanClass, properties),
+								_portalPropertiesSettings));
+					}
 
 					countDownLatch.countDown();
 				},

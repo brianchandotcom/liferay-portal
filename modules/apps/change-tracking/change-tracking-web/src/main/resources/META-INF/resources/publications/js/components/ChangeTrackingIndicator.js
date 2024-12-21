@@ -400,9 +400,6 @@ export default function ChangeTrackingIndicator({
 	};
 
 	const [fetchData, setFetchData] = useState(null);
-	const [conflictIconClass, setConflictIconClass] = useState(null);
-	const [conflictIconLabel, setConflictIconLabel] = useState(null);
-	const [conflictIconName, setConflictIconName] = useState(null);
 	const [dangerIcon, setDangerIcon] = useState(null);
 	const [warningIcon, setWarningIcon] = useState(null);
 
@@ -412,18 +409,11 @@ export default function ChangeTrackingIndicator({
 				.then((response) => response.json())
 				.then((json) => {
 					if (json) {
-						if (Liferay.FeatureFlags['LPD-20556']) {
-							if (json.danger) {
-								setDangerIcon(json.danger);
-							}
-							if (json.warning) {
-								setWarningIcon(json.warning);
-							}
+						if (json.danger) {
+							setDangerIcon(json.danger);
 						}
-						else {
-							setConflictIconClass(json.conflictIconClass);
-							setConflictIconLabel(json.conflictIconLabel);
-							setConflictIconName(json.conflictIconName);
+						if (json.warning) {
+							setWarningIcon(json.warning);
 						}
 					}
 				})
@@ -438,10 +428,10 @@ export default function ChangeTrackingIndicator({
 	}, [getConflictInfoURL]);
 
 	const renderConflictIcon = () => {
-		if (Liferay.FeatureFlags['LPD-20556'] && !!dangerIcon) {
+		if (dangerIcon) {
 			return (
 				<ClayPopover
-					alightPosition="bottom"
+					alignPosition="bottom"
 					onShowChange={setOpenPopover}
 					show={openPopover}
 					trigger={
@@ -470,15 +460,6 @@ export default function ChangeTrackingIndicator({
 						{Liferay.Language.get(dangerIcon.conflictIconLabel)}
 					</ClayAlert>
 				</ClayPopover>
-			);
-		}
-		else if (conflictIconClass && conflictIconName) {
-			return (
-				<ClayIcon
-					className={conflictIconClass}
-					style={{fontSize: 'medium'}}
-					symbol={conflictIconName}
-				/>
 			);
 		}
 	};
@@ -732,8 +713,7 @@ export default function ChangeTrackingIndicator({
 							<ClayIcon
 								className={
 									timelineIconClass +
-									(Liferay.FeatureFlags['LPD-20556'] &&
-									!!warningIcon
+									(warningIcon
 										? ' ' + warningIcon.conflictIconClass
 										: '')
 								}
@@ -764,66 +744,51 @@ export default function ChangeTrackingIndicator({
 			{renderModal()}
 
 			<ClayLayout.ContentRow style={{justifyContent: 'center'}}>
-				{!Liferay.FeatureFlags['LPD-20556'] ? (
-					<ClayLayout.ContentCol>
-						<div
-							className="c-inner"
-							style={{
-								margin: '2px !important',
-								padding: '1px !important',
-								width: '16px !important',
-							}}
-							tabIndex="-1"
-							title={conflictIconLabel}
-						>
-							{renderConflictIcon()}
-						</div>
-					</ClayLayout.ContentCol>
-				) : null}
-
 				<ClayLayout.ContentCol>
 					{showWarning ? renderWarning() : renderDropdown()}
 				</ClayLayout.ContentCol>
 
-				{Liferay.FeatureFlags['LPD-20556'] && !!timelineItemsURL ? (
-					<ClayLayout.ContentCol>
-						<div className="autofit-col row-divider">
-							<div />
-						</div>
-					</ClayLayout.ContentCol>
-				) : null}
-
-				<ClayLayout.ContentCol>
-					<div
-						className="c-inner"
-						style={{
-							padding: '1px',
-							width: '21px',
-						}}
-						tabIndex="-1"
-						title="Timeline"
-					>
-						{renderTimeline()}
-					</div>
-				</ClayLayout.ContentCol>
-
 				{Liferay.FeatureFlags['LPD-20556'] ? (
-					<ClayLayout.ContentCol>
-						<div
-							className="c-inner"
-							data-qa-id={Liferay.Language.get(
-								'production-conflict'
-							)}
-							style={{
-								margin: '2px',
-								padding: '1px',
-								width: '16px !important',
-							}}
-							tabIndex="-1"
-						>
-							{renderConflictIcon()}
-						</div>
-					</ClayLayout.ContentCol>
+					<>
+						{timelineItemsURL ? (
+							<ClayLayout.ContentCol>
+								<div className="autofit-col row-divider">
+									<div />
+								</div>
+							</ClayLayout.ContentCol>
+						) : null}
+
+						<ClayLayout.ContentCol>
+							<div
+								className="c-inner"
+								style={{
+									padding: '1px',
+									width: '21px',
+								}}
+								tabIndex="-1"
+								title="Timeline"
+							>
+								{renderTimeline()}
+							</div>
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<div
+								className="c-inner"
+								data-qa-id={Liferay.Language.get(
+									'production-conflict'
+								)}
+								style={{
+									margin: '2px',
+									padding: '1px',
+									width: '16px !important',
+								}}
+								tabIndex="-1"
+							>
+								{renderConflictIcon()}
+							</div>
+						</ClayLayout.ContentCol>
+					</>
 				) : null}
 			</ClayLayout.ContentRow>
 		</>

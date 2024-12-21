@@ -18,7 +18,6 @@ import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegist
 import com.liferay.change.tracking.spi.history.DefaultCTCollectionHistoryProvider;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -116,18 +115,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 				_language.get(themeDisplay.getLocale(), "production"));
 
 		if (!conflictInfoMap.isEmpty()) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-				return JSONUtil.put(
-					"conflictIconClass", "change-tracking-conflict-icon-danger"
-				).put(
-					"conflictIconLabel",
-					_language.get(
-						themeDisplay.getLocale(), "conflict-detected-help")
-				).put(
-					"conflictIconName", "warning-full"
-				);
-			}
-
 			conflictInfoJSONObject.put(
 				"danger",
 				JSONUtil.put(
@@ -171,20 +158,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		if (possibleConflictCollection != null) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-				return JSONUtil.put(
-					"conflictIconClass", "change-tracking-conflict-icon-warning"
-				).put(
-					"conflictIconLabel",
-					_language.format(
-						themeDisplay.getLocale(),
-						"concurrent-modification-help-x",
-						possibleConflictCollection.getName())
-				).put(
-					"conflictIconName", "warning-full"
-				);
-			}
-
 			conflictInfoJSONObject.put(
 				"warning",
 				JSONUtil.put(
@@ -202,29 +175,7 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 		if (ListUtil.isEmpty(ctEntries) &&
 			(possibleConflictCollection == null)) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-				return _jsonFactory.createJSONObject();
-			}
-
-			return JSONUtil.put(
-				"conflictIconClass", "change-tracking-conflict-icon"
-			).put(
-				"conflictIconLabel",
-				_language.get(themeDisplay.getLocale(), "no-modifications-help")
-			).put(
-				"conflictIconName", "check"
-			);
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
-			return JSONUtil.put(
-				"conflictIconClass", "change-tracking-conflict-icon"
-			).put(
-				"conflictIconLabel",
-				_language.get(themeDisplay.getLocale(), "no-modifications-help")
-			).put(
-				"conflictIconName", "check"
-			);
+			return _jsonFactory.createJSONObject();
 		}
 
 		return conflictInfoJSONObject;

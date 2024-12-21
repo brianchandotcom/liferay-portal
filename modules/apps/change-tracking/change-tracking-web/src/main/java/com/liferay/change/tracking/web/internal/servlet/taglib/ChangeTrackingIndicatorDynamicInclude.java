@@ -654,7 +654,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				getConflictInfoURL.setResourceID(
 					"/change_tracking/get_conflict_info");
 
-				data.put("getConflictInfoURL", getConflictInfoURL.toString());
+				if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
+					data.put(
+						"getConflictInfoURL", getConflictInfoURL.toString());
+				}
 			}
 
 			data.put("timelineClassNameId", classNameId);
@@ -682,18 +685,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/change_tracking/checkout_ct_collection"
-				).setRedirect(
-					_portal.getCurrentURL(httpServletRequest)
-				).buildString();
-			}
-			else {
-				timelineEditURL = PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, themeDisplay.getScopeGroup(),
-						CTPortletKeys.PUBLICATIONS, 0, 0,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/change_tracking/edit_ct_collection"
 				).setRedirect(
 					_portal.getCurrentURL(httpServletRequest)
 				).buildString();

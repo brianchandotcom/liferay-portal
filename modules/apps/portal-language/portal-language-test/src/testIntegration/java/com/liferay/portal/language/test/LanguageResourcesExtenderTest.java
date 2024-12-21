@@ -77,6 +77,65 @@ public class LanguageResourcesExtenderTest {
 	}
 
 	@Test
+	public void testRegistrationAggregate() throws Exception {
+		Bundle bundle1 = _installResourceBundle(
+			"test.bundle1", "content1.Language",
+			_getProvideCapabilityModuleOnly(
+				"test.bundle1", "test-bundle1", "content1.Language", 1, false));
+		Bundle bundle2 = _installResourceBundle(
+			"test.bundle2", "content2.Language",
+			_getProvideCapabilityModuleOnly(
+				"test.bundle2", "test-bundle2", "content2.Language", 1, true));
+		Bundle bundle3 = _installResourceBundle(
+			"test.bundle3", "content3.Language",
+			new String[] {
+				_getProvideCapabilityModuleOnly(
+					"test.bundle3", "test-bundle3", "content3.Language", 1,
+					true),
+				_getProvideCapabilityAggregate(
+					"test.bundle3", "test-bundle3", "content3.Language", 2,
+					true,
+					new String[] {
+						"test.bundle2", "test.bundle1", "test.bundle3"
+					})
+			},
+			new String[] {
+				_getRequireCapabilityAggregate(
+					new String[] {"test.bundle2", "test.bundle1"})
+			});
+
+		try {
+			bundle1.start();
+			bundle2.start();
+			bundle3.start();
+
+			ResourceBundleLoader resourceBundleLoader =
+				ResourceBundleLoaderUtil.
+					getResourceBundleLoaderByBundleSymbolicName("test.bundle3");
+
+			Assert.assertNotNull(resourceBundleLoader);
+
+			ResourceBundle resourceBundle =
+				resourceBundleLoader.loadResourceBundle(_LOCALE);
+
+			Assert.assertEquals(
+				"Test 1", resourceBundle.getString("language-key-1"));
+			Assert.assertEquals(
+				"Test 2", resourceBundle.getString("language-key-2"));
+			Assert.assertEquals(
+				"Test 3", resourceBundle.getString("language-key-3"));
+			Assert.assertEquals("Test 2", resourceBundle.getString("about"));
+			Assert.assertEquals(
+				"Test 2", resourceBundle.getString("shared-language-key"));
+		}
+		finally {
+			bundle1.uninstall();
+			bundle2.uninstall();
+			bundle3.uninstall();
+		}
+	}
+
+	@Test
 	public void testRegistrationBothHeaders() throws Exception {
 		String baseName = "content1.Language";
 		String bundleSymbolicName = "test.bundle";
@@ -383,6 +442,37 @@ public class LanguageResourcesExtenderTest {
 			serviceRanking);
 	}
 
+	private String _getProvideCapabilityAggregate(
+		String bundleSymbolicName, String servletContextName, String baseName,
+		int serviceRanking, boolean excludePortalResources,
+		String[] aggregateResourceBundles) {
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(
+			_getProvideCapabilityModuleOnly(
+				bundleSymbolicName, servletContextName, baseName,
+				serviceRanking, excludePortalResources));
+
+		if (aggregateResourceBundles.length > 0) {
+			sb.append(";resource.bundle.aggregate=\"");
+
+			for (int i = 0; i < aggregateResourceBundles.length; i++) {
+				if (i > 0) {
+					sb.append(",");
+				}
+
+				sb.append("(bundle.symbolic.name=");
+				sb.append(aggregateResourceBundles[i]);
+				sb.append(")");
+			}
+
+			sb.append("\"");
+		}
+
+		return sb.toString();
+	}
+
 	private String _getProvideCapabilityLegacy(
 		String bundleSymbolicName, String servletContextName, String baseName,
 		int serviceRanking, boolean excludePortalResources) {
@@ -413,6 +503,25 @@ public class LanguageResourcesExtenderTest {
 		sb.append(";servlet.context.name=\"");
 		sb.append(servletContextName);
 		sb.append("\"");
+
+		return sb.toString();
+	}
+
+	private String _getRequireCapabilityAggregate(
+		String[] aggregateResourceBundles) {
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < aggregateResourceBundles.length; i++) {
+			if (i > 0) {
+				sb.append(",");
+			}
+
+			sb.append("liferay.language.resources;filter:=\"");
+			sb.append("(bundle.symbolic.name=");
+			sb.append(aggregateResourceBundles[i]);
+			sb.append(")\"");
+		}
 
 		return sb.toString();
 	}

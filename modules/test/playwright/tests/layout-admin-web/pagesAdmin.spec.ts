@@ -9,9 +9,13 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -20,7 +24,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	pageEditorPagesTest
 );
 
 test.describe('Keyboard movement and navigation', () => {
@@ -862,6 +867,83 @@ test(
 		await expect(page.locator('.breadcrumb-item.active')).toHaveText(
 			layoutTitle
 		);
+	}
+);
+
+test(
+	'If the page has more than one experience, the page template is created from the default experience',
+	{
+		tag: '@LPD-194263',
+	},
+	async ({apiHelpers, page, pageEditorPage, pagesAdminPage, site}) => {
+
+		// Create page with a paragraph fragment and go to edit mode
+
+		const layoutTitle = getRandomString();
+
+		const paragraphId = getRandomString();
+
+		const paragraphDefinition = getFragmentDefinition({
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Update editable text
+
+		await pageEditorPage.editTextEditable(
+			paragraphId,
+			'element-text',
+			'Default Text'
+		);
+
+		// Create experience
+
+		await pageEditorPage.createExperience('E1');
+
+		await pageEditorPage.editTextEditable(
+			paragraphId,
+			'element-text',
+			'E1 Text'
+		);
+
+		await pageEditorPage.publishPage();
+
+		// Convert layout into a page template
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction(
+			'Convert to Page Template',
+			layoutTitle
+		);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(
+			page,
+			'Success:The page template was created successfully',
+			{autoClose: false}
+		);
+
+		await page.getByRole('link', {name: 'See in Page Templates'}).click();
+
+		// Assert page template was created successfully
+
+		await page
+			.getByRole('link', {name: `${layoutTitle} - Page Template`})
+			.click();
+
+		await expect(page.getByText('Default Text')).toBeVisible();
+
+		await expect(page.getByText('E1 Text')).not.toBeVisible();
 	}
 );
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
@@ -32,12 +31,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -58,9 +59,11 @@ public class ComboServletTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
+	}
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "COMBO_CHECK_TIMESTAMP", true);
+	@AfterClass
+	public static void tearDownClass() {
+		_languageUtilMockedStatic.close();
 	}
 
 	@Before
@@ -237,10 +240,6 @@ public class ComboServletTest {
 
 	@Test
 	public void testMixedExtensionsRequest() throws Exception {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(new LanguageImpl());
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -460,6 +459,8 @@ public class ComboServletTest {
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
+	private static final MockedStatic<LanguageUtil> _languageUtilMockedStatic =
+		Mockito.mockStatic(LanguageUtil.class);
 	private static final PortalImpl _portalImpl = new PortalImpl();
 	private static final PortalUtil _portalUtil = new PortalUtil();
 

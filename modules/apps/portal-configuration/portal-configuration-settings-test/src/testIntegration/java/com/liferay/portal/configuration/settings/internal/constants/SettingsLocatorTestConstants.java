@@ -18,4 +18,11 @@ public class SettingsLocatorTestConstants {
 
 	public static final String TEST_KEY = "settingsLocatorTestKey";
 
+	public static final String TEST_REQUIRED_CONFIGURATION_PID =
+		"com.liferay.portal.configuration.settings.internal.samples." +
+			"TestRequiredConfiguration";
+
+	public static final String TEST_REQUIRED_KEY =
+		"settingsLocatorTestRequiredKey";
+
 }

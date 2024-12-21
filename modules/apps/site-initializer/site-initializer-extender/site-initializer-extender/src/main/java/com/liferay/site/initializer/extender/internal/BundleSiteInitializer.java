@@ -2762,92 +2762,88 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
-		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
-			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
+		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT) &&
+			!Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
-			Layout draftLayout = layout.fetchDraftLayout();
+			return;
+		}
 
-			JSONObject pageElementJSONObject =
-				pageDefinitionJSONObject.getJSONObject("pageElement");
+		Layout draftLayout = layout.fetchDraftLayout();
 
-			if ((pageElementJSONObject != null) &&
-				Objects.equals(
-					pageElementJSONObject.getString("type"), "Root")) {
+		JSONObject pageElementJSONObject =
+			pageDefinitionJSONObject.getJSONObject("pageElement");
 
-				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
-					"pageElements");
+		if ((pageElementJSONObject != null) &&
+			Objects.equals(pageElementJSONObject.getString("type"), "Root")) {
 
-				if (!JSONUtil.isEmpty(jsonArray)) {
-					LayoutPageTemplateStructure layoutPageTemplateStructure =
-						_layoutPageTemplateStructureLocalService.
-							fetchLayoutPageTemplateStructure(
-								draftLayout.getGroupId(),
+			JSONArray jsonArray = pageElementJSONObject.getJSONArray(
+				"pageElements");
+
+			if (!JSONUtil.isEmpty(jsonArray)) {
+				LayoutPageTemplateStructure layoutPageTemplateStructure =
+					_layoutPageTemplateStructureLocalService.
+						fetchLayoutPageTemplateStructure(
+							draftLayout.getGroupId(), draftLayout.getPlid());
+
+				LayoutStructure layoutStructure = new LayoutStructure();
+
+				layoutStructure.addRootLayoutStructureItem();
+
+				if (segmentsExperienceId == 0) {
+					segmentsExperienceId =
+						_segmentsExperienceLocalService.
+							fetchDefaultSegmentsExperienceId(
 								draftLayout.getPlid());
+				}
 
-					LayoutStructure layoutStructure = new LayoutStructure();
+				if (Validator.isNull(
+						layoutPageTemplateStructure.getData(
+							segmentsExperienceId))) {
 
-					layoutStructure.addRootLayoutStructureItem();
+					_layoutPageTemplateStructureRelLocalService.
+						addLayoutPageTemplateStructureRel(
+							serviceContext.getUserId(),
+							serviceContext.getScopeGroupId(),
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId(),
+							segmentsExperienceId, layoutStructure.toString(),
+							serviceContext);
+				}
+				else {
+					_layoutPageTemplateStructureRelLocalService.
+						updateLayoutPageTemplateStructureRel(
+							layoutPageTemplateStructure.
+								getLayoutPageTemplateStructureId(),
+							segmentsExperienceId, layoutStructure.toString());
+					_portletPreferencesLocalService.deletePortletPreferences(
+						0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						draftLayout.getPlid());
+				}
 
-					if (segmentsExperienceId == 0) {
-						segmentsExperienceId =
-							_segmentsExperienceLocalService.
-								fetchDefaultSegmentsExperienceId(
-									draftLayout.getPlid());
-					}
-
-					if (Validator.isNull(
-							layoutPageTemplateStructure.getData(
-								segmentsExperienceId))) {
-
-						_layoutPageTemplateStructureRelLocalService.
-							addLayoutPageTemplateStructureRel(
-								serviceContext.getUserId(),
-								serviceContext.getScopeGroupId(),
-								layoutPageTemplateStructure.
-									getLayoutPageTemplateStructureId(),
-								segmentsExperienceId,
-								layoutStructure.toString(), serviceContext);
-					}
-					else {
-						_layoutPageTemplateStructureRelLocalService.
-							updateLayoutPageTemplateStructureRel(
-								layoutPageTemplateStructure.
-									getLayoutPageTemplateStructureId(),
-								segmentsExperienceId,
-								layoutStructure.toString());
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-								draftLayout.getPlid());
-					}
-
-					for (int i = 0; i < jsonArray.length(); i++) {
-						_layoutsImporter.importPageElement(
-							draftLayout, layoutStructure,
-							layoutStructure.getMainItemId(),
-							jsonArray.getString(i), i, true,
-							segmentsExperienceId);
-					}
+				for (int i = 0; i < jsonArray.length(); i++) {
+					_layoutsImporter.importPageElement(
+						draftLayout, layoutStructure,
+						layoutStructure.getMainItemId(), jsonArray.getString(i),
+						i, true, segmentsExperienceId);
 				}
 			}
-
-			JSONObject settingsJSONObject =
-				pageDefinitionJSONObject.getJSONObject("settings");
-
-			if (settingsJSONObject != null) {
-				draftLayout = _updateDraftLayout(
-					draftLayout, settingsJSONObject);
-			}
-
-			layout = _layoutLocalService.copyLayoutContent(draftLayout, layout);
-
-			_layoutLocalService.updateStatus(
-				layout.getUserId(), draftLayout.getPlid(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-			_layoutLocalService.updateStatus(
-				layout.getUserId(), layout.getPlid(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
+
+		JSONObject settingsJSONObject = pageDefinitionJSONObject.getJSONObject(
+			"settings");
+
+		if (settingsJSONObject != null) {
+			draftLayout = _updateDraftLayout(draftLayout, settingsJSONObject);
+		}
+
+		layout = _layoutLocalService.copyLayoutContent(draftLayout, layout);
+
+		_layoutLocalService.updateStatus(
+			layout.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_layoutLocalService.updateStatus(
+			layout.getUserId(), layout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void _addOrUpdateLayouts(

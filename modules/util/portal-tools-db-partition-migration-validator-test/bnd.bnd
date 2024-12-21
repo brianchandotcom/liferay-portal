@@ -8,6 +8,8 @@ Import-Package:\
 	\
 	!com.oracle.bmc.*,\
 	\
+	!org.postgresql,\
+	\
 	*
 -includeresource:\
 	@com.liferay.portal.tools.db.partition.migration.validator.jar!/com/liferay/portal/tools/db/partition/migration/validator/*.class,\

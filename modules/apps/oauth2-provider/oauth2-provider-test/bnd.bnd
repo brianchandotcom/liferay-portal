@@ -6,6 +6,8 @@ Import-Package:\
 	\
 	!org.bouncycastle.*,\
 	\
+	!sun.net.www.protocol.http.*,\
+	\
 	*
 Private-Package: com.liferay.oauth2.provider.internal.test.*
 -includeresource:\

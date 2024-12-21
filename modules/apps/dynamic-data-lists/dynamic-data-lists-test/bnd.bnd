@@ -23,6 +23,7 @@ Import-Package:\
 	!org.apache.jcp.*,\
 	!org.apache.maven.*,\
 	!org.apache.tools.ant.*,\
+	!org.apache.xml.*,\
 	\
 	!org.bouncycastle.*,\
 	\

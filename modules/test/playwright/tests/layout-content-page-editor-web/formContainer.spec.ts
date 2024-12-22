@@ -3342,6 +3342,131 @@ test.describe('Textarea input field', () => {
 });
 
 test.describe('Picklist input field', () => {
+	test(
+		'Can see more than 10 options on dropdown menu of select from list',
+		{
+			tag: '@LPD-194759',
+		},
+		async ({apiHelpers, page, pageManagementSite}) => {
+
+			// Create list type
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			const countries = [
+				'Argentina',
+				'Brasil',
+				'Canada',
+				'France',
+				'Germany',
+				'Hungary',
+				'Italy',
+				'India',
+				'Portugal',
+				'Rusia',
+				'Spain',
+			];
+
+			for (const country of countries) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry(
+					listTypeDefinition.externalReferenceCode,
+					country
+				);
+			}
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'plantERC',
+					label: {
+						en_US: 'Plant',
+					},
+					name: 'Plant',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							externalReferenceCode: 'countryERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Country',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'country',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Plants',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a content page with form container
+
+			const picklistId = getRandomString();
+
+			const picklistDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_country',
+				},
+				id: picklistId,
+				key: 'INPUTS-select-from-list',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName: objectDefinition.className,
+				pageElements: [picklistDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode and assert select options
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByPlaceholder('Choose an Option').click();
+
+			for (const country of countries) {
+				await expect(
+					page.getByRole('option', {name: country})
+				).toBeVisible();
+			}
+		}
+	);
+
 	test('Shows correct options in picklist field selected as title in related object', async ({
 		apiHelpers,
 		page,

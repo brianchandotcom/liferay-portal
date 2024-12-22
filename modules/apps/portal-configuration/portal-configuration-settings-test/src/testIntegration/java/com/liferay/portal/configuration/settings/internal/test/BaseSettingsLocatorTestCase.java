@@ -172,7 +172,10 @@ public abstract class BaseSettingsLocatorTestCase {
 		_portletPreferencesList.add(
 			_portletPreferencesLocalService.addPortletPreferences(
 				companyId, ownerId, ownerType, plid, portletId, null,
-				String.format(_PORTLET_PREFERENCES_FORMAT, key, value)));
+				StringBundler.concat(
+					"<portlet-preferences><preference><name>", key,
+					"</name><value>", value, "</value></preference>",
+					"</portlet-preferences>")));
 
 		return value;
 	}
@@ -222,10 +225,6 @@ public abstract class BaseSettingsLocatorTestCase {
 			StringPool.OPEN_PARENTHESIS, key, StringPool.EQUAL, value,
 			StringPool.CLOSE_PARENTHESIS);
 	}
-
-	private static final String _PORTLET_PREFERENCES_FORMAT =
-		"<portlet-preferences><preference><name>%s</name><value>%s</value>" +
-			"</preference></portlet-preferences>";
 
 	private static final Set<String> _configurationPids = new HashSet<>();
 	private static final Map<String, String> _factoryConfigurationPids =

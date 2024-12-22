@@ -30,102 +30,106 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {
 
-			DetailAST modifiersDetailAST =
-				variableDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS);
+			_checkVariableDefinition(variableDefinitionDetailAST);
+		}
+	}
 
-			if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
-				!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+	private void _checkVariableDefinition(
+		DetailAST variableDefinitionDetailAST) {
 
-				return;
-			}
+		DetailAST modifiersDetailAST =
+			variableDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
-			String variableTypeName = getTypeName(
-				variableDefinitionDetailAST, false);
+		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
+			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 
-			if ((variableTypeName == null) ||
-				!variableTypeName.endsWith("ThreadLocal")) {
+			return;
+		}
 
-				return;
-			}
+		String variableTypeName = getTypeName(
+			variableDefinitionDetailAST, false);
 
-			String variableName = getName(variableDefinitionDetailAST);
+		if ((variableTypeName == null) ||
+			!variableTypeName.endsWith("ThreadLocal")) {
 
-			if (StringUtil.endsWith(variableName, "ThreadLocal")) {
-				log(
-					variableDefinitionDetailAST, _MSG_INCORRECT_ENDING_VARIABLE,
-					"*ThreadLocal", "ThreadLocal");
+			return;
+		}
 
-				return;
-			}
+		String variableName = getName(variableDefinitionDetailAST);
 
-			DetailAST assignDetailAST =
-				variableDefinitionDetailAST.findFirstToken(TokenTypes.ASSIGN);
+		if (StringUtil.endsWith(variableName, "ThreadLocal")) {
+			log(
+				variableDefinitionDetailAST, _MSG_INCORRECT_ENDING_VARIABLE,
+				"*ThreadLocal", "ThreadLocal");
 
-			if (assignDetailAST == null) {
-				return;
-			}
+			return;
+		}
 
-			DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
 
-			if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
-				return;
-			}
+		if (assignDetailAST == null) {
+			return;
+		}
 
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
 
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
+		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
 
-				return;
-			}
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-			DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
-				TokenTypes.ELIST);
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
 
-			if (elistDetailAST == null) {
-				return;
-			}
+			return;
+		}
 
-			firstChildDetailAST = elistDetailAST.getFirstChild();
+		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.ELIST);
 
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+		if (elistDetailAST == null) {
+			return;
+		}
 
-				return;
-			}
+		firstChildDetailAST = elistDetailAST.getFirstChild();
 
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
 
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
+			return;
+		}
 
-				return;
-			}
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
 
-			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-				return;
-			}
+			return;
+		}
 
-			DetailAST nextSiblingDetailAST =
-				firstChildDetailAST.getNextSibling();
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-			if ((nextSiblingDetailAST == null) ||
-				(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
 
-				return;
-			}
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
-			String expectedLiteralString = "." + variableName;
-			String value = StringUtil.unquote(nextSiblingDetailAST.getText());
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
 
-			if (!StringUtil.equals(expectedLiteralString, value)) {
-				log(
-					variableDefinitionDetailAST, _MSG_LITERAL_STRING,
-					variableName, expectedLiteralString);
-			}
+			return;
+		}
+
+		String expectedLiteralString = "." + variableName;
+		String value = StringUtil.unquote(nextSiblingDetailAST.getText());
+
+		if (!StringUtil.equals(expectedLiteralString, value)) {
+			log(
+				variableDefinitionDetailAST, _MSG_LITERAL_STRING, variableName,
+				expectedLiteralString);
 		}
 	}
 

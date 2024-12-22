@@ -22,6 +22,15 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
+
+		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
+			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+
+			return;
+		}
+
 		String variableTypeName = getTypeName(detailAST, false);
 
 		if ((variableTypeName == null) ||
@@ -69,7 +78,9 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		firstChildDetailAST = elistDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST == null) || firstChildDetailAST.getType() != TokenTypes.EXPR) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
 			return;
 		}
 

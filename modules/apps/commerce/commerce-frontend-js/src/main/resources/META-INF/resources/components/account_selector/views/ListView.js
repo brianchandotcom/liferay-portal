@@ -22,7 +22,7 @@ function ListView({
 			disabled={disabled}
 			infiniteScrollMode={true}
 			inputName={placeholder}
-			inputPlaceholder={Liferay.Language.get(placeholder)}
+			inputPlaceholder={placeholder}
 			itemsKey="id"
 			itemsLabel="name"
 			pageSize={10}

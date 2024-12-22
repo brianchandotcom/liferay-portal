@@ -34,11 +34,9 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 		}
 	}
 
-	private void _checkVariableDefinition(
-		DetailAST variableDefinitionDetailAST) {
-
-		DetailAST modifiersDetailAST =
-			variableDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+	private void _checkVariableDefinition(DetailAST detailAST) {
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
 		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
 			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
@@ -46,8 +44,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			return;
 		}
 
-		String variableTypeName = getTypeName(
-			variableDefinitionDetailAST, false);
+		String variableTypeName = getTypeName(detailAST, false);
 
 		if ((variableTypeName == null) ||
 			!variableTypeName.endsWith("ThreadLocal")) {
@@ -55,18 +52,17 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			return;
 		}
 
-		String variableName = getName(variableDefinitionDetailAST);
+		String variableName = getName(detailAST);
 
 		if (StringUtil.endsWith(variableName, "ThreadLocal")) {
 			log(
-				variableDefinitionDetailAST, _MSG_INCORRECT_ENDING_VARIABLE,
-				"*ThreadLocal", "ThreadLocal");
+				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, "*ThreadLocal",
+				"ThreadLocal");
 
 			return;
 		}
 
-		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
-			TokenTypes.ASSIGN);
+		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
 
 		if (assignDetailAST == null) {
 			return;
@@ -128,7 +124,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		if (!StringUtil.equals(expectedLiteralString, value)) {
 			log(
-				variableDefinitionDetailAST, _MSG_LITERAL_STRING, variableName,
+				detailAST, _MSG_LITERAL_STRING, variableName,
 				expectedLiteralString);
 		}
 	}

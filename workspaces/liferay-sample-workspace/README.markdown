@@ -104,11 +104,11 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-global-css-1*
 
-	Add a global CSS to a page.
+	Add a global CSS to a company.
 
 - *liferay-sample-global-css-2*
 
-	Add a global CSS to a company.
+	Add a global CSS to a page.
 
 - *liferay-sample-global-js-1*
 

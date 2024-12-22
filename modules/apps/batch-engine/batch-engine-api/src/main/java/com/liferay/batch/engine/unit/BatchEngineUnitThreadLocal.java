@@ -14,16 +14,16 @@ import com.liferay.petra.string.StringPool;
 public class BatchEngineUnitThreadLocal {
 
 	public static String getFileName() {
-		return _batchEngineUnitThreadLocal.get();
+		return _batchEngineUnit.get();
 	}
 
 	public static void setFileName(String fileName) {
-		_batchEngineUnitThreadLocal.set(fileName);
+		_batchEngineUnit.set(fileName);
 	}
 
-	private static final ThreadLocal<String> _batchEngineUnitThreadLocal =
+	private static final ThreadLocal<String> _batchEngineUnit =
 		new CentralizedThreadLocal<>(
-			BatchEngineUnitThreadLocal.class + "._batchEngineUnitThreadLocal",
+			BatchEngineUnitThreadLocal.class + "._batchEngineUnit",
 			() -> StringPool.BLANK);
 
 }

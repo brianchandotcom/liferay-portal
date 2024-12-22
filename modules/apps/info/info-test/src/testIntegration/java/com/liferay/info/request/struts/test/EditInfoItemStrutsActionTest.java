@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -214,6 +215,40 @@ public class EditInfoItemStrutsActionTest {
 	@Test
 	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
 		_testAddInfoItemWithInvalidData(null, null, "-9007199254740992");
+	}
+
+	@Test
+	@TestInfo("LPS-151402")
+	public void testAddInfoItemInvalidPicklistValue() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			null, null, null, null, 0, null, null, null, null, null, null, null,
+			"invalid", null, 0, null, null);
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Object object = SessionErrors.get(uploadPortletRequest, _formItemId);
+
+		Assert.assertNotNull(object);
+
+		Assert.assertTrue(object instanceof InfoFormException);
+
+		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 	}
 
 	@Test

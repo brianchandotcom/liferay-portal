@@ -41,7 +41,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		String variableName = getName(detailAST);
 
-		if (variableName.endsWith("ThreadLocal")) {
+		if (StringUtil.endsWith(variableName, "ThreadLocal")) {
 			log(
 				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, "*ThreadLocal",
 				"ThreadLocal");

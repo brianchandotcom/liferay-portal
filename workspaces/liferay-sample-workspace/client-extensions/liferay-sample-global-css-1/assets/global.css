@@ -1,5 +1,6 @@
-.logo::after {
-	color: #0054f0;
-	content: 'Liferay Sample Global CSS 1';
-	margin-left: 2rem;
+body::before {
+  color: #0054f0;
+  content: 'Liferay Sample Global CSS 1';
+  display: block;
+  margin-left: 2rem;
 }

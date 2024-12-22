@@ -69,7 +69,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		firstChildDetailAST = elistDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+		if ((firstChildDetailAST == null) || firstChildDetailAST.getType() != TokenTypes.EXPR) {
 			return;
 		}
 

@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.List;
+
 /**
  * @author Alan Huang
  */
@@ -17,102 +19,113 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST modifiersDetailAST = detailAST.findFirstToken(
-			TokenTypes.MODIFIERS);
+		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+			detailAST, false, TokenTypes.VARIABLE_DEF);
 
-		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
-			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
+		for (DetailAST variableDefinitionDetailAST :
+				variableDefinitionDetailASTList) {
 
-			return;
-		}
+			DetailAST modifiersDetailAST =
+				variableDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
 
-		String variableTypeName = getTypeName(detailAST, false);
+			if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
+				!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 
-		if ((variableTypeName == null) ||
-			!variableTypeName.endsWith("ThreadLocal")) {
+				return;
+			}
 
-			return;
-		}
+			String variableTypeName = getTypeName(
+				variableDefinitionDetailAST, false);
 
-		String variableName = getName(detailAST);
+			if ((variableTypeName == null) ||
+				!variableTypeName.endsWith("ThreadLocal")) {
 
-		if (StringUtil.endsWith(variableName, "ThreadLocal")) {
-			log(
-				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, "*ThreadLocal",
-				"ThreadLocal");
+				return;
+			}
 
-			return;
-		}
+			String variableName = getName(variableDefinitionDetailAST);
 
-		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
+			if (StringUtil.endsWith(variableName, "ThreadLocal")) {
+				log(
+					variableDefinitionDetailAST, _MSG_INCORRECT_ENDING_VARIABLE,
+					"*ThreadLocal", "ThreadLocal");
 
-		if (assignDetailAST == null) {
-			return;
-		}
+				return;
+			}
 
-		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+			DetailAST assignDetailAST =
+				variableDefinitionDetailAST.findFirstToken(TokenTypes.ASSIGN);
 
-		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
-			return;
-		}
+			if (assignDetailAST == null) {
+				return;
+			}
 
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
+			if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+				return;
+			}
 
-			return;
-		}
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
-			TokenTypes.ELIST);
+			if ((firstChildDetailAST == null) ||
+				(firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
 
-		if (elistDetailAST == null) {
-			return;
-		}
+				return;
+			}
 
-		firstChildDetailAST = elistDetailAST.getFirstChild();
+			DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+				TokenTypes.ELIST);
 
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+			if (elistDetailAST == null) {
+				return;
+			}
 
-			return;
-		}
+			firstChildDetailAST = elistDetailAST.getFirstChild();
 
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			if ((firstChildDetailAST == null) ||
+				(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
 
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
+				return;
+			}
 
-			return;
-		}
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			if ((firstChildDetailAST == null) ||
+				(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
 
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-			return;
-		}
+				return;
+			}
 
-		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if ((nextSiblingDetailAST == null) ||
-			(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
+			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+				return;
+			}
 
-			return;
-		}
+			DetailAST nextSiblingDetailAST =
+				firstChildDetailAST.getNextSibling();
 
-		String expectedLiteralString = "." + variableName;
-		String value = StringUtil.unquote(nextSiblingDetailAST.getText());
+			if ((nextSiblingDetailAST == null) ||
+				(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
 
-		if (!StringUtil.equals(expectedLiteralString, value)) {
-			log(
-				detailAST, _MSG_LITERAL_STRING, variableName,
-				expectedLiteralString);
+				return;
+			}
+
+			String expectedLiteralString = "." + variableName;
+			String value = StringUtil.unquote(nextSiblingDetailAST.getText());
+
+			if (!StringUtil.equals(expectedLiteralString, value)) {
+				log(
+					variableDefinitionDetailAST, _MSG_LITERAL_STRING,
+					variableName, expectedLiteralString);
+			}
 		}
 	}
 

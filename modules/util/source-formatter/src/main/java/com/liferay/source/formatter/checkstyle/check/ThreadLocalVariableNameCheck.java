@@ -43,6 +43,90 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 		}
 	}
 
+	private void _checkLiteralString(
+		DetailAST detailAST, DetailAST literalNewDetailAST,
+		String variableName) {
+
+		DetailAST elistDetailAST = literalNewDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		if (elistDetailAST == null) {
+			return;
+		}
+
+		literalNewDetailAST = elistDetailAST.getFirstChild();
+
+		if ((literalNewDetailAST == null) ||
+			(literalNewDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		literalNewDetailAST = literalNewDetailAST.getFirstChild();
+
+		if ((literalNewDetailAST == null) ||
+			(literalNewDetailAST.getType() != TokenTypes.PLUS)) {
+
+			return;
+		}
+
+		literalNewDetailAST = literalNewDetailAST.getFirstChild();
+
+		if (literalNewDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = literalNewDetailAST.getNextSibling();
+
+		if ((nextSiblingDetailAST == null) ||
+			(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
+
+			return;
+		}
+
+		String expectedLiteralString = "." + variableName;
+		String value = StringUtil.unquote(nextSiblingDetailAST.getText());
+
+		if (!StringUtil.equals(expectedLiteralString, value)) {
+			log(
+				detailAST, _MSG_LITERAL_STRING, variableName,
+				expectedLiteralString);
+		}
+	}
+
+	private void _checkVariableAssign(
+		DetailAST detailAST, String variableName) {
+
+		List<DetailAST> variableCallerDetailASTList =
+			getVariableCallerDetailASTList(detailAST, variableName);
+
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
+			DetailAST parentDetailAST = variableCallerDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
+				continue;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.EXPR) {
+				continue;
+			}
+
+			DetailAST nextSiblingDetailAST =
+				variableCallerDetailAST.getNextSibling();
+
+			if ((nextSiblingDetailAST == null) ||
+				(nextSiblingDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
+
+				return;
+			}
+
+			_checkLiteralString(
+				parentDetailAST, nextSiblingDetailAST, variableName);
+		}
+	}
+
 	private void _checkVariableDefinition(DetailAST detailAST) {
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
@@ -74,6 +158,8 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
 
 		if (assignDetailAST == null) {
+			_checkVariableAssign(detailAST, variableName);
+
 			return;
 		}
 
@@ -91,51 +177,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			return;
 		}
 
-		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
-			TokenTypes.ELIST);
-
-		if (elistDetailAST == null) {
-			return;
-		}
-
-		firstChildDetailAST = elistDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
-
-			return;
-		}
-
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
-
-			return;
-		}
-
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-			return;
-		}
-
-		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
-
-		if ((nextSiblingDetailAST == null) ||
-			(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
-
-			return;
-		}
-
-		String expectedLiteralString = "." + variableName;
-		String value = StringUtil.unquote(nextSiblingDetailAST.getText());
-
-		if (!StringUtil.equals(expectedLiteralString, value)) {
-			log(
-				detailAST, _MSG_LITERAL_STRING, variableName,
-				expectedLiteralString);
-		}
+		_checkLiteralString(detailAST, firstChildDetailAST, variableName);
 	}
 
 	private static final String _MSG_INCORRECT_ENDING_VARIABLE =

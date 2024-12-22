@@ -24,8 +24,17 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST != null) {
+			return;
+		}
+
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
 		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
-			detailAST, false, TokenTypes.VARIABLE_DEF);
+			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {

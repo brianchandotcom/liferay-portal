@@ -10,6 +10,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -24,8 +26,10 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
+	pageTemplatesPagesTest,
 	pagesAdminPagesTest,
-	pageEditorPagesTest
+	pageViewModePagesTest
 );
 
 test.describe('Keyboard movement and navigation', () => {
@@ -944,6 +948,119 @@ test(
 		await expect(page.getByText('Default Text')).toBeVisible();
 
 		await expect(page.getByText('E1 Text')).not.toBeVisible();
+	}
+);
+
+test(
+	'Switch page templates on preview page template modal during page creation',
+	{
+		tag: '@LPS-172658',
+	},
+	async ({
+		page,
+		pageEditorPage,
+		pageTemplatesPage,
+		pagesAdminPage,
+		site,
+		widgetPagePage,
+	}) => {
+
+		// Go to page template administration in global site
+
+		await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+		// Create page template collection
+
+		const pageTemplateCollectionName = getRandomString();
+
+		await pageTemplatesPage.addPageTemplateCollection(
+			pageTemplateCollectionName
+		);
+
+		// Create widget page template with web content display widget
+
+		const widgetPageTemplateName = 'Widget Page Template';
+
+		await pageTemplatesPage.addWidgetPageTemplate(widgetPageTemplateName);
+
+		await widgetPagePage.addPortlet('Web Content Display');
+
+		// Create content page template with heading fragment
+
+		await pageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const contentPageTemplateName = 'Content Page Template';
+
+		await pageTemplatesPage.addContentPageTemplate(contentPageTemplateName);
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		await pageEditorPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:The page template was published successfully.'
+		);
+
+		// Preview page templates
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.gotoSelectTemplates(pageTemplateCollectionName);
+
+		await page.getByTitle('Preview Page Template').first().click();
+
+		// Assert page templates
+
+		const iframe = page.locator('.modal-dialog').frameLocator('iframe');
+
+		await expect(iframe.getByText('Heading Example')).toBeVisible();
+
+		await expect(
+			page.getByRole('banner').getByText(contentPageTemplateName)
+		).toBeVisible();
+
+		await expect(page.getByText('1 of 2')).toBeVisible();
+
+		await page.getByLabel('Go to Next Template').click();
+
+		await expect(iframe.getByText('Web Content Display')).toBeVisible();
+
+		await expect(
+			page.getByRole('banner').getByText(widgetPageTemplateName)
+		).toBeVisible();
+
+		await expect(page.getByText('2 of 2')).toBeVisible();
+
+		// Create page from widget page template
+
+		await page
+			.getByRole('button', {name: 'Create Page from This Template'})
+			.click();
+
+		const addPageIframe = page.frameLocator('iframe[title="Add Page"]');
+
+		const pageName = getRandomString();
+
+		await addPageIframe.getByPlaceholder('Add Page Name').fill(pageName);
+
+		await addPageIframe.getByRole('button', {name: 'Add'}).click();
+
+		await waitForAlert(page, 'Success:The page was created successfully.');
+
+		// Assert widget page is created based on widget page template
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.clickOnAction('View', pageName);
+
+		await expect(
+			page.getByRole('heading', {name: 'Web Content Display'})
+		).toBeVisible();
+
+		await expect(
+			page.getByText('This application is not visible to users yet.')
+		).toBeVisible();
 	}
 );
 

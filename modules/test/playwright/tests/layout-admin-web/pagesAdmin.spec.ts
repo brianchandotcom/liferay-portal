@@ -15,6 +15,7 @@ import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
@@ -871,6 +872,194 @@ test(
 		await expect(page.locator('.breadcrumb-item.active')).toHaveText(
 			layoutTitle
 		);
+	}
+);
+
+test(
+	'Copy page with permissions',
+	{
+		tag: '@LPD-177031',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Add content page
+
+		const layoutTitle = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Configure permissions
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.changePagesPermissions(
+			[layoutTitle],
+			[
+				'guest_ACTION_VIEW',
+				'site-member_ACTION_CUSTOMIZE',
+				'site-member_ACTION_VIEW',
+			]
+		);
+
+		// Copy page with permissions
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Make a Copy',
+			}),
+			trigger: page
+				.locator('li', {has: page.getByText(layoutTitle)})
+				.getByRole('button', {name: 'Open Page Options Menu'}),
+		});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Page With Permissions'}),
+			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
+		});
+
+		const copyPageWithPermissionsFrame = page.frameLocator(
+			'iframe[title="Copy Page With Permissions"]'
+		);
+
+		const copyPageName = getRandomString();
+
+		await copyPageWithPermissionsFrame
+			.getByPlaceholder('Add Page Name')
+			.fill(copyPageName);
+
+		await copyPageWithPermissionsFrame
+			.getByRole('button', {name: 'Add'})
+			.click();
+
+		await waitForAlert(page);
+
+		// Assert copied permissions
+
+		await pagesAdminPage.clickOnAction('Permissions', copyPageName);
+
+		const permissionsFrame = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		await permissionsFrame
+			.getByRole('cell', {exact: true, name: 'Role'})
+			.waitFor();
+
+		await expect(
+			permissionsFrame.locator('#guest_ACTION_VIEW')
+		).not.toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#owner_ACTION_VIEW')
+		).toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#site-member_ACTION_CUSTOMIZE')
+		).not.toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#site-member_ACTION_VIEW')
+		).not.toBeChecked();
+	}
+);
+
+test(
+	'Copy page without permissions',
+	{
+		tag: '@LPD-177031',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Add content page
+
+		const layoutTitle = getRandomString();
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Configure permissions
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.changePagesPermissions(
+			[layoutTitle],
+			[
+				'guest_ACTION_VIEW',
+				'site-member_ACTION_CUSTOMIZE',
+				'site-member_ACTION_VIEW',
+			]
+		);
+
+		// Copy page with permissions
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Make a Copy',
+			}),
+			trigger: page
+				.locator('li', {has: page.getByText(layoutTitle)})
+				.getByRole('button', {name: 'Open Page Options Menu'}),
+		});
+
+		await hoverAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {exact: true, name: 'Page'}),
+			trigger: page.getByRole('menuitem', {name: 'Make a Copy'}),
+		});
+
+		const copyPageFrame = page.frameLocator('iframe[title="Copy Page"]');
+
+		const copyPageName = getRandomString();
+
+		await copyPageFrame
+			.getByPlaceholder('Add Page Name')
+			.fill(copyPageName);
+
+		await copyPageFrame.getByRole('button', {name: 'Add'}).click();
+
+		await waitForAlert(page);
+
+		// Assert copied permissions
+
+		await pagesAdminPage.clickOnAction('Permissions', copyPageName);
+
+		const permissionsFrame = page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		await permissionsFrame
+			.getByRole('cell', {exact: true, name: 'Role'})
+			.waitFor();
+
+		await expect(
+			permissionsFrame.locator('#guest_ACTION_VIEW')
+		).toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#owner_ACTION_VIEW')
+		).toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#site-member_ACTION_CUSTOMIZE')
+		).toBeChecked();
+
+		await expect(
+			permissionsFrame.locator('#site-member_ACTION_VIEW')
+		).toBeChecked();
 	}
 );
 

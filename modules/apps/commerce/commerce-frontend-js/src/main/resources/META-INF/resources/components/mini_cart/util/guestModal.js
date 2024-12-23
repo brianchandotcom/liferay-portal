@@ -235,7 +235,7 @@ export function storeAccountInformation({accountName, accountType, userEmail}) {
 
 	cookie.setValue(
 		groupId,
-		`accountName=${accountName}#accountType=${accountType}#userEmail=${userEmail}`
+		`accountEntryName=${accountName}#accountEntryType=${accountType}#userEmailAddress=${userEmail}`
 	);
 }
 

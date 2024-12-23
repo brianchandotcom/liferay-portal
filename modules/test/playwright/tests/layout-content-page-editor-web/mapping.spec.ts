@@ -15,6 +15,8 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -297,5 +299,60 @@ test(
 		await link.click();
 
 		await expect(page.getByText('Page Not Found')).toBeVisible();
+	}
+);
+
+test(
+	'Map single tag from asset entry to editable field',
+	{
+		tag: '@LPS-116975',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create web content with tags
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const basicWebContentTitle = getRandomString();
+
+		await addApprovedStructuredContent({
+			apiHelpers,
+			contentStructureId,
+			siteId: site.id,
+			tags: ['Dogs', 'Cats'],
+			title: basicWebContentTitle,
+		});
+
+		// Add content page
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await pageEditorPage.setMappedItem({
+			entity: 'Web Content',
+			entry: basicWebContentTitle,
+			field: 'Tags (Repeatable)',
+		});
+
+		await expect(page.locator('.component-heading')).toHaveText(
+			'Dogs, Cats'
+		);
 	}
 );

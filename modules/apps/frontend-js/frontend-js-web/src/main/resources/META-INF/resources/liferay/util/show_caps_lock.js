@@ -8,9 +8,10 @@ export default function showCapsLock(event, elementId) {
 
 	if (element) {
 		element.style.display = 'none';
-
+		element.classList.add('hide');
 		if (event.getModifierState('CapsLock')) {
 			element.style.display = '';
+			element.classList.remove('hide');
 		}
 	}
 }

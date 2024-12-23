@@ -18,6 +18,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -81,7 +82,12 @@ public class PortletPreferencesUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-45005")
 	public void testUpgrade() throws Exception {
+		Assert.assertNotNull(
+			ReflectionUtil.getDeclaredField(
+				_upgradeStepRegistrator.getClass(), "viewCountManager"));
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		PortletPreferences layoutPortletPreferences = _getPortletPreferences(

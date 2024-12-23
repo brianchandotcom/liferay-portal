@@ -51,20 +51,12 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-197909");
 	}
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-197909");
 	}
 
 	@Override

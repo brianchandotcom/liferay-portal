@@ -98,38 +98,22 @@ public class DefaultFragmentEntryProcessorContext
 
 	@Override
 	public boolean isEditMode() {
-		if (Objects.equals(getMode(), FragmentEntryLinkConstants.EDIT)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getMode(), FragmentEntryLinkConstants.EDIT);
 	}
 
 	@Override
 	public boolean isIndexMode() {
-		if (Objects.equals(getMode(), FragmentEntryLinkConstants.INDEX)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getMode(), FragmentEntryLinkConstants.INDEX);
 	}
 
 	@Override
 	public boolean isPreviewMode() {
-		if (Objects.equals(getMode(), FragmentEntryLinkConstants.PREVIEW)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getMode(), FragmentEntryLinkConstants.PREVIEW);
 	}
 
 	@Override
 	public boolean isViewMode() {
-		if (Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW);
 	}
 
 	public void setContextInfoItemReference(

@@ -118,22 +118,22 @@ public class LoginPostAction extends Action {
 			Role accountAdmnistratorRole = _roleLocalService.getRole(
 				user.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
-			Role buyerRole = _roleLocalService.getRole(
+			Role accountBuyerRole = _roleLocalService.getRole(
 				user.getCompanyId(),
 				AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER);
 
 			AccountRole accountAdmnistratorAccountRole =
 				_accountRoleLocalService.getAccountRoleByRoleId(
 					accountAdmnistratorRole.getRoleId());
-			AccountRole buyerAccountRole =
+			AccountRole accountBuyerAccountRole =
 				_accountRoleLocalService.getAccountRoleByRoleId(
-					buyerRole.getRoleId());
+					accountBuyerRole.getRoleId());
 
 			_accountRoleLocalService.associateUser(
 				accountEntry.getAccountEntryId(),
 				new long[] {
 					accountAdmnistratorAccountRole.getAccountRoleId(),
-					buyerAccountRole.getAccountRoleId()
+					accountBuyerAccountRole.getAccountRoleId()
 				},
 				user.getUserId());
 		}

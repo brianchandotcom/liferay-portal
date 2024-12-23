@@ -459,7 +459,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		CommerceOrder commerceOrder;
+		CommerceOrder commerceOrder = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
 			commerceOrder = (CommerceOrder)httpSession.getAttribute(

@@ -124,7 +124,7 @@ public class LoginActionTest {
 	}
 
 	@Test
-	public void testLoginRedirectWithCustomContextFromAnUtilityPage()
+	public void testLoginRedirectWithCustomContextFromAUtilityPage()
 		throws Exception {
 
 		String context = "/mycontext";
@@ -172,7 +172,7 @@ public class LoginActionTest {
 	}
 
 	@Test
-	public void testLoginRedirectWithNoDefaultSiteNameFromAnUtilityPage()
+	public void testLoginRedirectWithNoDefaultSiteNameFromAUtilityPage()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -216,7 +216,7 @@ public class LoginActionTest {
 	}
 
 	@Test
-	public void testNormalStateWhenLoginFromAnUtilityPage() throws Exception {
+	public void testNormalStateWhenLoginFromAUtilityPage() throws Exception {
 		long groupId = _group.getGroupId();
 
 		try (GroupConfigurationTemporarySwapper configurationTemporarySwapper =

@@ -72,11 +72,7 @@ public class PreviewImageFileEntryContentDashboardItemActionProvider
 			new PreviewImageFileEntryContentDashboardItemAction(
 				fileEntry, infoItemFieldValuesProvider, _language);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	@Reference

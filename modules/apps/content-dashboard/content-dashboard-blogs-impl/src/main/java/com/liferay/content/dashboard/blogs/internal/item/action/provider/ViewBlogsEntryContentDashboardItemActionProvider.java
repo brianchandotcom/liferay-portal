@@ -57,11 +57,7 @@ public class ViewBlogsEntryContentDashboardItemActionProvider
 		ContentDashboardItemAction contentDashboardItemAction =
 			_getContentDashboardItemAction(httpServletRequest, blogsEntry);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	private ContentDashboardItemAction _getContentDashboardItemAction(

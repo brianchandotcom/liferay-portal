@@ -68,11 +68,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProvider
 			new PreviewImageJournalArticleContentDashboardItemAction(
 				infoItemFieldValuesProvider, journalArticle, _language);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	@Reference

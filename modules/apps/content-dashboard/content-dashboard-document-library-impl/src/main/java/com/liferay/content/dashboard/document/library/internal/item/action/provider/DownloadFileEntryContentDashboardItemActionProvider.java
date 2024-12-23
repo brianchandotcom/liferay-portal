@@ -72,11 +72,7 @@ public class DownloadFileEntryContentDashboardItemActionProvider
 			_getContentDashboardItemAction(
 				fileEntry, infoItemFieldValuesProvider);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	private ContentDashboardItemAction _getContentDashboardItemAction(

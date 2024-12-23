@@ -62,11 +62,7 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 		ContentDashboardItemAction contentDashboardItemAction =
 			_getContentDashboardItemAction(httpServletRequest, journalArticle);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	private ContentDashboardItemAction _getContentDashboardItemAction(

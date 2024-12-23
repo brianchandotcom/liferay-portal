@@ -72,11 +72,7 @@ public class DownloadFileVersionContentDashboardItemVersionActionProvider
 		ContentDashboardItemVersionAction contentDashboardItemVersionAction =
 			_getContentDashboardItemVersionAction(fileEntry);
 
-		if (Validator.isNull(contentDashboardItemVersionAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemVersionAction.getURL());
 	}
 
 	private ContentDashboardItemVersionAction

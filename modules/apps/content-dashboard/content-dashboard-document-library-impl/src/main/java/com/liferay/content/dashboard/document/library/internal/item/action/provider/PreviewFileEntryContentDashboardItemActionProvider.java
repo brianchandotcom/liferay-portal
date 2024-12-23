@@ -65,11 +65,7 @@ public class PreviewFileEntryContentDashboardItemActionProvider
 				_dluRLHelper, fileEntry, httpServletRequest, _language,
 				_portal);
 
-		if (Validator.isNull(contentDashboardItemAction.getURL())) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNotNull(contentDashboardItemAction.getURL());
 	}
 
 	@Reference

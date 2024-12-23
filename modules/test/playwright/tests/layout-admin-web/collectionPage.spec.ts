@@ -41,12 +41,14 @@ test(
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await pagesAdminPage.newButton.click();
-
-		await pagesAdminPage.page
-			.getByRole('menuitem')
-			.getByText('Collection Page', {exact: true})
-			.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Collection Page',
+			}),
+			trigger: pagesAdminPage.newButton,
+		});
 
 		// Create a dynamic collection for web content
 

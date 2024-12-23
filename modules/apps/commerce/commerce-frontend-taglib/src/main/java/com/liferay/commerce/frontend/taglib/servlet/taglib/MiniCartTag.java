@@ -76,37 +76,11 @@ public class MiniCartTag extends IncludeTag {
 				return super.doStartTag();
 			}
 
-			_commerceChannelId = commerceContext.getCommerceChannelId();
-			_commerceChannelGroupId =
-				commerceContext.getCommerceChannelGroupId();
-
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 			if (accountEntry != null) {
 				_accountEntryId = accountEntry.getAccountEntryId();
-
-				_guestOrderEnabled = _isGuestOrderEnabled(
-					accountEntry, _commerceChannelGroupId);
 			}
-
-			CommerceCurrency commerceCurrency =
-				commerceContext.getCommerceCurrency();
-
-			_commerceCurrencyCode = commerceCurrency.getCode();
-
-			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
-
-			if (commerceOrder != null) {
-				_itemsQuantity = _getItemsQuantity(
-					commerceOrder, httpServletRequest);
-				_orderId = commerceOrder.getCommerceOrderId();
-			}
-
-			_orderDetailURL =
-				_commerceOrderHttpHelper.getCommerceCartPortletURL(
-					httpServletRequest, commerceOrder);
-
-			_requestQuoteEnabled = _isRequestQuoteEnabled();
 
 			PortletURL commerceCheckoutPortletURL =
 				PortletProviderUtil.getPortletURL(
@@ -120,6 +94,37 @@ public class MiniCartTag extends IncludeTag {
 					"/commerce_checkout/checkout_redirect"
 				).buildString();
 			}
+
+			_commerceChannelId = commerceContext.getCommerceChannelId();
+			_commerceChannelGroupId =
+				commerceContext.getCommerceChannelGroupId();
+
+			CommerceCurrency commerceCurrency =
+				commerceContext.getCommerceCurrency();
+
+			_commerceCurrencyCode = commerceCurrency.getCode();
+
+			if (accountEntry != null) {
+				_guestOrderEnabled = _isGuestOrderEnabled(
+					accountEntry, _commerceChannelGroupId);
+			}
+
+			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+			if (commerceOrder != null) {
+				_itemsQuantity = _getItemsQuantity(
+					commerceOrder, httpServletRequest);
+			}
+
+			_orderDetailURL =
+				_commerceOrderHttpHelper.getCommerceCartPortletURL(
+					httpServletRequest, commerceOrder);
+
+			if (commerceOrder != null) {
+				_orderId = commerceOrder.getCommerceOrderId();
+			}
+
+			_requestQuoteEnabled = _isRequestQuoteEnabled();
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

@@ -111,8 +111,9 @@ public class LanguageResourcesExtenderTest {
 						"test.bundle2", "test.bundle1", "test.bundle3"
 					})
 			},
-			_getRequireCapabilityAggregate(
-				new String[] {"test.bundle2", "test.bundle1"}));
+			"liferay.language.resources;filter:=\"(bundle.symbolic.name=" +
+				"test.bundle2)\",liferay.language.resources;filter:=\"(" +
+					"bundle.symbolic.name=test.bundle1)\"");
 
 		try {
 			bundle1.start();
@@ -555,25 +556,6 @@ public class LanguageResourcesExtenderTest {
 				bundleSymbolicName, servletContextName, baseName,
 				serviceRanking, excludePortalResources, moduleOnly),
 			"liferay.language.resources", "liferay.resource.bundle");
-	}
-
-	private String _getRequireCapabilityAggregate(
-		String[] aggregateResourceBundles) {
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < aggregateResourceBundles.length; i++) {
-			if (i > 0) {
-				sb.append(",");
-			}
-
-			sb.append("liferay.language.resources;filter:=\"");
-			sb.append("(bundle.symbolic.name=");
-			sb.append(aggregateResourceBundles[i]);
-			sb.append(")\"");
-		}
-
-		return sb.toString();
 	}
 
 	private Bundle _installResourceBundle(

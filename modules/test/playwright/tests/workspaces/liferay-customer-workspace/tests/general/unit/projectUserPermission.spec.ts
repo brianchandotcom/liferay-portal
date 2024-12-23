@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
-import {getRandomInt} from '../../../../../../utils/getRandomInt';
 import {customerApiHelpersTest} from '../../../fixtures/customerApiHelpersTest';
 import {customerPagesTest} from '../../../fixtures/customerPagesTest';
 import {
@@ -111,7 +110,7 @@ test.describe('Project User Permission', () => {
 
 		await projectTeamMembersPage.lastNameField.fill('testlast');
 
-		userEmailAddress = getRandomInt().toString() + '@liferay.com';
+		userEmailAddress = `${Math.floor(Math.random() * 90000) + 10000}@liferay.com`;
 
 		await projectTeamMembersPage.emailField.fill(userEmailAddress);
 

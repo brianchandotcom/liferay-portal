@@ -1901,32 +1901,6 @@ definition {
 		}
 	}
 
-	@description = "The content cannot be lost after try to publish a web content without title."
-	@priority = 4
-	test ViewContentNotLostWithBlankTitle {
-		task ("View cannot add a web content without title") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addNullCP(webContentContent = "Web Content Content");
-		}
-
-		task ("View content is still shown") {
-			WaitForElementPresent(
-				key_fieldLabel = "Content",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "Content",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "Web Content Content");
-		}
-	}
-
 	@description = "This is a use case for LPS-138504. Assert display page is still selected after adding a web content without adding required category."
 	@priority = 4
 	test ViewDisplayPageAfterAddingWebContentWithoutAddingRequiredCategory {

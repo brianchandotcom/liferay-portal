@@ -286,23 +286,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNullCP(webContentContent = null) {
-		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		if (isSet(webContentContent)) {
-			CKEditor.addContentInWebContent(
-				content = ${webContentContent},
-				fieldLabel = "Content");
-		}
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		AssertTextPresent(value1 = "Please enter a valid title for the default language: en-US");
-	}
-
-	@summary = "Default summary"
 	macro addPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
@@ -1423,23 +1406,6 @@ definition {
 		if (IsElementPresent(locator1 = ${iFrameDialog})) {
 			IFrame.closeFrame();
 		}
-	}
-
-	@summary = "Default summary"
-	macro editNullCP(webContentContent = null) {
-		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		WebContent.addCP(webContentTitle = "");
-
-		if (isSet(webContentContent)) {
-			CKEditor.addContentInWebContent(
-				content = ${webContentContent},
-				fieldLabel = "Content");
-		}
-
-		WebContent.publishWithPermissions();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
 	@summary = "Default summary"

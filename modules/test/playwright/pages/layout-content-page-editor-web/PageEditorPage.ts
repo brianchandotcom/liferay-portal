@@ -1399,7 +1399,7 @@ export class PageEditorPage {
 
 		if (source === 'relationship' || source === 'structure') {
 			await this.page
-				.getByLabel('Field')
+				.getByRole('combobox', {exact: true, name: 'Field'})
 				.selectOption(mappingConfiguration.mapping.field);
 
 			return;

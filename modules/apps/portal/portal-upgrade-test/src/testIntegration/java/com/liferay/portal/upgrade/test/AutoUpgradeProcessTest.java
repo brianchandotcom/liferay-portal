@@ -48,7 +48,7 @@ public class AutoUpgradeProcessTest {
 
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
-		_originalUpgradeDatabaseAutoRunFrequency = PropsUtil.get(
+		_originalUpgradeDatabaseAutoRunOnNewRelease = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE);
 	}
 
@@ -61,7 +61,7 @@ public class AutoUpgradeProcessTest {
 			_originalUpgradeDatabaseAutoRun);
 		PropsUtil.set(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE,
-			_originalUpgradeDatabaseAutoRunFrequency);
+			_originalUpgradeDatabaseAutoRunOnNewRelease);
 
 		_upgradeProcessRun = false;
 
@@ -106,6 +106,22 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
+	public void testNonupgradeProcessWhenAutoUpgradeAndNoNewRelease()
+		throws Exception {
+
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
+
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
+
+		StartupHelperUtil.setNewRelease(false);
+
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	@Test
 	public void testNonupgradeProcessWhenAutoUpgradeDisabled()
 		throws Exception {
 
@@ -120,16 +136,15 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNonupgradeProcessWhenAutoUpgradeEnabledAndFrequencyRelease()
+	public void testNonupgradeProcessWhenAutoUpgradeOnNewReleaseAndNoNewRelease()
 		throws Exception {
 
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
-		StartupHelperUtil.setNewRelease(false);
-
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 		PropsUtil.set(
-			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "release");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "true");
+
+		StartupHelperUtil.setNewRelease(false);
 
 		Assert.assertEquals(
 			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -138,16 +153,10 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeProcessWhenAutoUpgradeEnabledAndFrequencyRelease()
-		throws Exception {
-
+	public void testUpgradeWhenAutoUpgradeEnabled() throws Exception {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
-		StartupHelperUtil.setNewRelease(true);
-
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
-		PropsUtil.set(
-			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "release");
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -156,10 +165,15 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeWhenAutoUpgradeEnabled() throws Exception {
+	public void testUpgradeWhenAutoUpgradeOnNewReleaseAndNewRelease()
+		throws Exception {
+
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
+		PropsUtil.set(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "true");
+
+		StartupHelperUtil.setNewRelease(true);
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -184,7 +198,7 @@ public class AutoUpgradeProcessTest {
 
 	private static boolean _originalNewRelease;
 	private static String _originalUpgradeDatabaseAutoRun;
-	private static String _originalUpgradeDatabaseAutoRunFrequency;
+	private static String _originalUpgradeDatabaseAutoRunOnNewRelease;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;

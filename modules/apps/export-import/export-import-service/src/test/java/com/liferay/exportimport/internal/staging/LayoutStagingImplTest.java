@@ -49,11 +49,7 @@ public class LayoutStagingImplTest {
 				String portletId = invocationOnMock.getArgument(
 					0, String.class);
 
-				if (Objects.equals(_STAGED_PORTLET_ID, portletId)) {
-					return true;
-				}
-
-				return false;
+				return Objects.equals(_STAGED_PORTLET_ID, portletId);
 			}
 		);
 

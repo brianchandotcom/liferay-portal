@@ -3977,11 +3977,7 @@ public class StagingImpl implements Staging {
 		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
 
 		if (Validator.isNotNull(tabs1)) {
-			if (tabs1.equals("public-pages")) {
-				return false;
-			}
-
-			return true;
+			return !tabs1.equals("public-pages");
 		}
 
 		return ParamUtil.getBoolean(portletRequest, "privateLayout", true);

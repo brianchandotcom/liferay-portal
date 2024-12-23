@@ -1040,10 +1040,14 @@ test.describe('Page Contents Panel', () => {
 					})
 					.click();
 
+				await page.waitForURL(
+					/com_liferay_journal_web_portlet_JournalPortlet/
+				);
+
 				await expect(
 					page.locator('.article-content-content')
 				).toBeVisible({
-					timeout: 500,
+					timeout: 1000,
 				});
 			}).toPass();
 

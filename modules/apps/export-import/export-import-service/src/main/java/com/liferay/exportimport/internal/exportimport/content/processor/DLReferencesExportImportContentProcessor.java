@@ -517,11 +517,7 @@ public class DLReferencesExportImportContentProcessor
 	}
 
 	private boolean _isLegacyURL(String content, int beginPos) {
-		if (content.startsWith("/documents/", beginPos)) {
-			return false;
-		}
-
-		return true;
+		return !content.startsWith("/documents/", beginPos);
 	}
 
 	private boolean _isStyleReference(String content, int beginPos) {
@@ -537,11 +533,7 @@ public class DLReferencesExportImportContentProcessor
 
 		String url = "url(";
 
-		if (content.regionMatches(true, beginPos - url.length(), url, 0, 2)) {
-			return true;
-		}
-
-		return false;
+		return content.regionMatches(true, beginPos - url.length(), url, 0, 2);
 	}
 
 	private boolean _isValidateDLReferences() {

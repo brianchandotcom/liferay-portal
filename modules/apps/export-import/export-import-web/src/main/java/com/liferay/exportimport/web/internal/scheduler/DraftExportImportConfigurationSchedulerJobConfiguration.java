@@ -188,11 +188,7 @@ public class DraftExportImportConfigurationSchedulerJobConfiguration
 			return false;
 		}
 
-		if (group.hasStagingGroup()) {
-			return true;
-		}
-
-		return false;
+		return group.hasStagingGroup();
 	}
 
 	@Reference

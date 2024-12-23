@@ -199,19 +199,11 @@ public class ExportLayoutsProcessesDisplayContext {
 	}
 
 	public boolean isNavigationCompleted() {
-		if (Objects.equals(getNavigation(), "completed")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "completed");
 	}
 
 	public boolean isNavigationHome() {
-		if (Objects.equals(getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "all");
 	}
 
 	private String _displayStyle;

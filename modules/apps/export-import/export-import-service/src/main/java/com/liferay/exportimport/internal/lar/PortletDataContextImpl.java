@@ -1480,13 +1480,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public boolean isDataStrategyMirrorWithOverwriting() {
-		if (_dataStrategy.equals(
-				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE)) {
-
-			return true;
-		}
-
-		return false;
+		return _dataStrategy.equals(
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE);
 	}
 
 	@Override
@@ -2682,11 +2677,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private boolean _isGroupLayoutSetPrototype() throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
-		if (group.isLayoutSetPrototype()) {
-			return true;
-		}
-
-		return false;
+		return group.isLayoutSetPrototype();
 	}
 
 	private boolean _isResourceMain(ClassedModel classedModel) {

@@ -362,7 +362,7 @@ public class LoginPostAction extends Action {
 		for (Cookie cookie : cookies) {
 			String cookieKey = cookie.getName();
 
-			if (cookieKey.startsWith(_ACCOUNT_INFORMATION_COOKIE_IDENTIFIER)) {
+			if (cookieKey.startsWith(_COOKIE_NAME_PREFIX_ACCOUNT_ENTRY)) {
 				Map<String, String> accountInformation =
 					_parseAccountInformation(
 						_commerceAccountHelper.getCommerceSiteType(
@@ -384,7 +384,7 @@ public class LoginPostAction extends Action {
 					cookie.getDomain(), httpServletRequest, httpServletResponse,
 					cookieKey);
 			}
-			else if (cookieKey.startsWith(_GUEST_ORDER_COOKIE_IDENTIFIER)) {
+			else if (cookieKey.startsWith(_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
 				long commerceChannelGroupId = _getCommerceChannelGroupId(
 					cookieKey);
 
@@ -431,7 +431,7 @@ public class LoginPostAction extends Action {
 					commerceOrder);
 
 				httpSession.setAttribute(
-					_GUEST_ORDER_COOKIE_IDENTIFIER + commerceOrder.getGroupId(),
+					_COOKIE_NAME_PREFIX_COMMERCE_ORDER + commerceOrder.getGroupId(),
 					commerceOrder.getUuid());
 			}
 		}
@@ -489,10 +489,10 @@ public class LoginPostAction extends Action {
 			httpServletRequest, user.getUserId());
 	}
 
-	private static final String _ACCOUNT_INFORMATION_COOKIE_IDENTIFIER =
+	private static final String _COOKIE_NAME_PREFIX_ACCOUNT_ENTRY =
 		AccountEntry.class.getName() + StringPool.POUND;
 
-	private static final String _GUEST_ORDER_COOKIE_IDENTIFIER =
+	private static final String _COOKIE_NAME_PREFIX_COMMERCE_ORDER =
 		CommerceOrder.class.getName() + StringPool.POUND;
 
 	private static final Log _log = LogFactoryUtil.getLog(

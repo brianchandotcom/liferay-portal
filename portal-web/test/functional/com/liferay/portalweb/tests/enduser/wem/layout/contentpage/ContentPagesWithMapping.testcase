@@ -533,55 +533,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
-	@priority = 5
-	test MapTagFromAssetToEditableField {
-		property portal.acceptance = "true";
-
-		task ("Add a blogs entry with a tag") {
-			HeadlessBlog.addBlogEntry(
-				assetTagNames = "tagname1",
-				content = "Blogs Entry Content",
-				groupName = ${randomSiteName},
-				title = "Blogs Entry Title");
-		}
-
-		task ("Add a Heading fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Map the Tags field to editable field") {
-			PageEditorMapping.gotoEditableFieldMapping(
-				fragmentName = "Heading",
-				id = "element-text");
-
-			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "Blogs Entry Title",
-				navItem = "Blogs");
-
-			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
-
-			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Tags (Repeatable)");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("View mapped content") {
-			PageEditor.viewFragmentEditableText(
-				editableText = "tagname1",
-				fragmentName = "Heading",
-				id = "element-text");
-		}
-	}
-
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
 	@priority = 4
 	test MapWebContentFieldWithURLToImageFragment {

@@ -17,7 +17,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-oauth2-client-admin",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
 		"com.liferay.portlet.preferences-company-wide=true",
 		"javax.portlet.display-name=OAuth Client Administration",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",

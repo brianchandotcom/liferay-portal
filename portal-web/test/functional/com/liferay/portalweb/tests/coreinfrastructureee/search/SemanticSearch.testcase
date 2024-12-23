@@ -157,10 +157,10 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "albert");
+				text = "microsoft");
 
 			Click(
-				key_itemName = "albert/albert-base-v1",
+				key_itemName = "microsoft/codebert-base",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
@@ -230,10 +230,10 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "albert");
+				text = "microsoft");
 
 			Click(
-				key_itemName = "albert/albert-base-v1",
+				key_itemName = "microsoft/codebert-base",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 			AssertElementNotPresent(
@@ -620,10 +620,10 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "albert");
+				text = "microsoft");
 
 			Click(
-				key_itemName = "albert/albert-base-v1",
+				key_itemName = "microsoft/codebert-base",
 				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 			SemanticSearch.saveAndContinue();
@@ -642,7 +642,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert/albert-base-v1");
+				fieldValue = "microsoft/codebert-base");
 		}
 
 		task ("Refresh the page and assert form fields retain the values added earlier") {
@@ -654,7 +654,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert/albert-base-v1");
+				fieldValue = "microsoft/codebert-base");
 		}
 
 		task ("Back in System Settings, fill out required fields for Hugging Face Inference API and save") {
@@ -692,7 +692,7 @@ definition {
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
-				fieldValue = "albert/albert-base-v1");
+				fieldValue = "microsoft/codebert-base");
 		}
 
 		task ("Assert Instance Settings field values use the System Settings values when resetting to default") {

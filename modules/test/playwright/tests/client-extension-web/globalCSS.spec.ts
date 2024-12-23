@@ -14,12 +14,12 @@ const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-global-css-1',
 		name: 'Liferay Sample Global CSS 1',
-		url: '/o/liferay-sample-global-css-1/global.c4e57d8fcb15990d6a43.css',
+		url: '/o/liferay-sample-global-css-1/global.e3cbf932edf92a22ee4b.css',
 	},
 	{
 		erc: 'LXC:liferay-sample-global-css-2',
 		name: 'Liferay Sample Global CSS 2',
-		url: '/o/liferay-sample-global-css-2/global.2d96a4ee5d6cf2845a29.css',
+		url: '/o/liferay-sample-global-css-2/global.d5f481e0882afe84cab9.css',
 	},
 ];
 

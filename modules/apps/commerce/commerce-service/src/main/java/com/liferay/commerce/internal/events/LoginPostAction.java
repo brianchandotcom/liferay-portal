@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -259,7 +260,8 @@ public class LoginPostAction extends Action {
 	}
 
 	private long _getCommerceChannelGroupId(String key) {
-		return Long.valueOf(StringUtil.extractLast(key, StringPool.POUND));
+		return GetterUtil.getLong(
+			StringUtil.extractLast(key, StringPool.POUND));
 	}
 
 	private CommerceOrder _getCommerceOrderByUuidAndGroupId(

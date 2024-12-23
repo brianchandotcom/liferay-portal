@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
@@ -25,6 +26,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
 	pageManagementSiteTest
@@ -213,3 +215,87 @@ test('Allows selecting specific repeatable collection provider', async ({
 	await expect(page.getByText('Pug')).toBeAttached();
 	await expect(page.getByText('Sphynx')).toBeAttached();
 });
+
+test(
+	'Link information is still kept when the linked page is deleted',
+	{
+		tag: '@LPS-120198',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add layout
+
+		const firstLayoutTitle = getRandomString();
+
+		const firstLayout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: firstLayoutTitle,
+		});
+
+		// Add layout page with a button fragment
+
+		const buttonId = getRandomString();
+
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const secondLayout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([buttonDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode of page
+
+		await pageEditorPage.goto(secondLayout, site.friendlyUrlPath);
+
+		await pageEditorPage.mapEditableLink({
+			editableId: 'link',
+			fragmentName: 'Button',
+			linkConfiguration: {
+				layoutTitle: firstLayoutTitle,
+				type: 'Page',
+			},
+		});
+
+		await expect(page.getByPlaceholder('No Page Selected')).toHaveValue(
+			firstLayoutTitle
+		);
+
+		await expect(page.getByText('Go Somewhere')).toHaveAttribute(
+			'href',
+			`/web${site.friendlyUrlPath}/${firstLayoutTitle}`
+		);
+
+		await pageEditorPage.publishPage();
+
+		// Delete first layout
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${secondLayout.friendlyUrlPath}`
+		);
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(firstLayout.id);
+
+		// Go to second layout and assert link is still visible
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${secondLayout.friendlyUrlPath}`
+		);
+
+		const link = page.getByRole('link', {name: 'Go Somewhere'});
+
+		await expect(link).toHaveAttribute(
+			'href',
+			`/web${site.friendlyUrlPath}/${firstLayoutTitle}`
+		);
+
+		// Navigate to first layout and assert page not found
+
+		await link.click();
+
+		await expect(page.getByText('Page Not Found')).toBeVisible();
+	}
+);

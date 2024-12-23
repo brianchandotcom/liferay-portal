@@ -89,7 +89,7 @@ public class JSImportMapsCache {
 
 		_writeImports(writer, globalImportMapsValues2);
 
-		writer.write("},\"scopes\": {");
+		writer.write("}, \"scopes\": {");
 
 		Map<String, String> scopedImportMapsValues1 =
 			_getScopedImportMapsValues(COMPANY_ID_ALL);

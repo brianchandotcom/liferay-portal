@@ -116,20 +116,6 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNonupgradeWhenAutoUpgradeEnabledAndNoNewRelease() {
-		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
-
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
-
-		StartupHelperUtil.setNewRelease(false);
-
-		Assert.assertEquals(
-			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertFalse(_upgradeProcessRun);
-	}
-
-	@Test
 	public void testNonupgradeWhenAutoUpgradeOnNewReleaseEnabledAndNoNewRelease() {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
@@ -157,9 +143,21 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeWhenAutoUpgradeOnNewReleaseEnabledAndNewRelease()
-		throws Exception {
+	public void testUpgradeWhenAutoUpgradeEnabledAndNoNewRelease() {
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
+
+		StartupHelperUtil.setNewRelease(false);
+
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	@Test
+	public void testUpgradeWhenAutoUpgradeOnNewReleaseEnabledAndNewRelease() {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
 		PropsUtil.set(

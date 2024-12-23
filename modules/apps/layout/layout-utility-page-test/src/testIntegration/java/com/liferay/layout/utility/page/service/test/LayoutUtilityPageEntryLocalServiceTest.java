@@ -10,6 +10,8 @@ import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntry
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
@@ -101,24 +103,24 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 		Assert.assertFalse(layout.isPublished());
 		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
-	}
 
-	@Test(
-		expected = DuplicateLayoutUtilityPageEntryExternalReferenceCodeException.class
-	)
-	public void testAddLayoutUtilityPageEntryWithExistingExternalReferenceCode()
-		throws Exception {
+		try {
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				layoutUtilityPageEntry.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+				_serviceContext);
 
-		String externalReferenceCode = RandomTestUtil.randomString();
+			Assert.fail();
+		}
+		catch (DuplicateLayoutUtilityPageEntryExternalReferenceCodeException
+					duplicateLayoutUtilityPageEntryExternalReferenceCodeException) {
 
-		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), 0, 0, true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, _serviceContext);
-		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), 0, 0, true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, _serviceContext);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					duplicateLayoutUtilityPageEntryExternalReferenceCodeException);
+			}
+		}
 	}
 
 	@Test
@@ -161,6 +163,9 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutUtilityPageEntryLocalServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;

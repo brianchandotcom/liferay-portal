@@ -136,13 +136,15 @@ test(
 
 		await page.getByRole('link', {name: layoutTitle}).hover();
 
+		const dropdown = page
+			.getByRole('treeitem')
+			.filter({hasText: layoutTitle})
+			.locator('button.dropdown-toggle');
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Permissions'}),
-			trigger: page
-				.getByRole('treeitem')
-				.filter({hasText: layoutTitle})
-				.locator('button.dropdown-toggle'),
+			trigger: dropdown,
 		});
 
 		const permissionsFrame = page.frameLocator(
@@ -173,19 +175,18 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Copy Page'}),
-			trigger: page
-				.getByRole('treeitem')
-				.filter({hasText: layoutTitle})
-				.locator('button.dropdown-toggle'),
+			trigger: dropdown,
 		});
 
 		const copyPageFrame = page.frameLocator('iframe[title="Copy Page"]');
 
-		await copyPageFrame
-			.getByPlaceholder('Add Page Name')
-			.fill(getRandomString());
+		const copiedPage = getRandomString();
+
+		await copyPageFrame.getByPlaceholder('Add Page Name').fill(copiedPage);
 
 		await copyPageFrame.getByRole('button', {name: 'Add'}).click();
+
+		await expect(page.getByRole('link', {name: copiedPage})).toBeVisible();
 
 		// Delete page
 
@@ -194,10 +195,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: page
-				.getByRole('treeitem')
-				.filter({hasText: layoutTitle})
-				.locator('button.dropdown-toggle'),
+			trigger: dropdown,
 		});
 
 		await page.getByRole('button', {name: 'Delete'}).click();

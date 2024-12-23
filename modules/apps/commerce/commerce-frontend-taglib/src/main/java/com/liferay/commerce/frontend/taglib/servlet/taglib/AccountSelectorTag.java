@@ -165,8 +165,6 @@ public class AccountSelectorTag extends IncludeTag {
 
 			_commerceOrderTypeLocalService =
 				ServletContextUtil.getCommerceOrderTypeLocalService();
-			_userModelResourcePermission =
-				ServletContextUtil.getUserModelResourcePermission();
 
 			setServletContext(ServletContextUtil.getServletContext());
 		}
@@ -196,7 +194,6 @@ public class AccountSelectorTag extends IncludeTag {
 		_setCurrentAccountURL = null;
 		_spritemap = null;
 		_themeDisplay = null;
-		_userModelResourcePermission = null;
 	}
 
 	@Override
@@ -444,7 +441,10 @@ public class AccountSelectorTag extends IncludeTag {
 		}
 
 		try {
-			return _userModelResourcePermission.contains(
+			ModelResourcePermission<User> userModelResourcePermission =
+				_userModelResourcePermissionSnapshot.get();
+
+			return userModelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getUser(),
 				AccountActionKeys.MANAGE_ACCOUNTS);
 		}
@@ -463,6 +463,11 @@ public class AccountSelectorTag extends IncludeTag {
 	private static final Snapshot<FriendlyURLSeparatorProvider>
 		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
 			AccountSelectorTag.class, FriendlyURLSeparatorProvider.class);
+	private static final Snapshot<ModelResourcePermission<User>>
+		_userModelResourcePermissionSnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.portal.kernel.model.User)");
 
 	private AccountEntry _accountEntry;
 	private String[] _accountEntryAllowedTypes;
@@ -477,6 +482,5 @@ public class AccountSelectorTag extends IncludeTag {
 	private String _setCurrentAccountURL;
 	private String _spritemap;
 	private ThemeDisplay _themeDisplay;
-	private ModelResourcePermission<User> _userModelResourcePermission;
 
 }

@@ -585,6 +585,10 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
+		// Make sure the sidebars have loaded
+
+		await page.getByLabel('Fragments and Widgets', {exact: true}).waitFor();
+
 		// Open the Product Menu
 
 		await openProductMenu(page);

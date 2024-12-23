@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -94,3 +95,78 @@ test('Saves edited contend when leaving page while editing', async ({
 
 	await expect(page.getByText('Papa')).toBeVisible();
 });
+
+test(
+	'Value of editable field should be reset when the mapped content is missing',
+	{
+		tag: '@LPS-110462',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add web content
+
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const basicWebContentTitle = getRandomString();
+
+		const {articleId: basicWebContentId} =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: basicWebContentTitle},
+			});
+
+		// Add content page
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and map web content
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await pageEditorPage.setMappedItem({
+			entity: 'Web Content',
+			entry: basicWebContentTitle,
+			field: 'Title',
+		});
+
+		await expect(page.locator('.component-heading')).toHaveText(
+			basicWebContentTitle
+		);
+
+		// Delete web content
+
+		expect(
+			await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+				site.id,
+				basicWebContentId
+			)
+		).toHaveProperty('articleId');
+
+		// Reload edit mode and assert
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await expect(page.locator('.component-heading')).not.toHaveText(
+			basicWebContentTitle
+		);
+
+		await expect(page.locator('.component-heading')).toHaveText(
+			'Heading Example'
+		);
+	}
+);

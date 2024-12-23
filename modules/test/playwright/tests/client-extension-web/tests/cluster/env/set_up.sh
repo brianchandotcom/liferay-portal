@@ -54,7 +54,7 @@ function main {
 
 	echo "Changing configuration properties in conflict with cluster"
 
-	change_property "${slave_home}" "module.framework.properties.osgi.console" "localhost:11313"
+	update_property "${slave_home}" "module.framework.properties.osgi.console" "localhost:11313"
 
 	start_additional_bundles 1
 }

@@ -340,6 +340,9 @@ public class PropsValues {
 	public static final String[] COMBO_ALLOWED_FILE_EXTENSIONS =
 		PropsUtil.getArray(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS);
 
+	public static final int COMBO_ALLOWED_FILE_MAX_SIZE = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.COMBO_ALLOWED_FILE_MAX_SIZE));
+
 	public static final boolean COMBO_CHECK_TIMESTAMP = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP));
 

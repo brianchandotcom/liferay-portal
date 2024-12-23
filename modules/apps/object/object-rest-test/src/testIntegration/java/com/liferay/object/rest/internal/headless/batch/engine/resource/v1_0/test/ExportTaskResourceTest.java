@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
@@ -108,7 +107,6 @@ public class ExportTaskResourceTest extends BaseTaskResourceTestCase {
 		}
 	}
 
-	@FeatureFlags("LPD-29367")
 	@Test
 	public void testPostExportTaskWithBatchNestedFields() throws Exception {
 

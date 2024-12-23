@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -225,10 +224,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 	private static Set<String> _getBatchRestrictFields(
 		BatchEngineImportTask batchEngineImportTask) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-29367")) {
-			return new HashSet<>();
-		}
 
 		Map<String, Serializable> parameters =
 			batchEngineImportTask.getParameters();

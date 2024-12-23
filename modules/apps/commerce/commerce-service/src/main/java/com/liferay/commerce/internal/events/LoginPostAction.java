@@ -160,7 +160,7 @@ public class LoginPostAction extends Action {
 		}
 	}
 
-	private void _associateAccountToOrder(
+	private void _associateAccountEntryToCommerceOrder(
 			AccountEntry accountEntry, long commerceChannelGroupId,
 			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest,
 			long userId)
@@ -440,7 +440,7 @@ public class LoginPostAction extends Action {
 		}
 
 		if ((accountEntry != null) && (commerceOrder != null)) {
-			_associateAccountToOrder(
+			_associateAccountEntryToCommerceOrder(
 				accountEntry, commerceOrder.getGroupId(), commerceOrder,
 				httpServletRequest, user.getUserId());
 		}
@@ -487,7 +487,7 @@ public class LoginPostAction extends Action {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, user));
 		}
 
-		_associateAccountToOrder(
+		_associateAccountEntryToCommerceOrder(
 			userAccountEntries.get(0), commerceChannelGroupId, commerceOrder,
 			httpServletRequest, user.getUserId());
 	}

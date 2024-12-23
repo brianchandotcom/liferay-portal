@@ -54,7 +54,8 @@ public class LanguageResourcesExtenderTest {
 	public void testRegistration() throws Exception {
 		Bundle bundle = _installResourceBundle(
 			"test.bundle", "content1.Language",
-			_getProvideCapability("content1.Language", 1));
+			_getProvideCapability(
+				"test.bundle", null, "content1.Language", 1, null, false));
 
 		try {
 			bundle.start();
@@ -80,18 +81,20 @@ public class LanguageResourcesExtenderTest {
 	public void testRegistrationAggregate() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1", "content1.Language",
-			_getProvideCapabilityModuleOnly(
-				"test.bundle1", "test-bundle1", "content1.Language", 1, false));
+			_getProvideCapability(
+				"test.bundle1", "test-bundle1", "content1.Language", 1, false,
+				true));
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2", "content2.Language",
-			_getProvideCapabilityModuleOnly(
-				"test.bundle2", "test-bundle2", "content2.Language", 1, true));
+			_getProvideCapability(
+				"test.bundle2", "test-bundle2", "content2.Language", 1, true,
+				true));
 		Bundle bundle3 = _installResourceBundle(
 			"test.bundle3", "content3.Language",
 			new String[] {
-				_getProvideCapabilityModuleOnly(
+				_getProvideCapability(
 					"test.bundle3", "test-bundle3", "content3.Language", 1,
-					true),
+					true, true),
 				_getProvideCapabilityAggregate(
 					"test.bundle3", "test-bundle3", "content3.Language", 2,
 					true,
@@ -145,8 +148,10 @@ public class LanguageResourcesExtenderTest {
 			"test.bundle", baseName,
 			new String[] {
 				_getProvideCapabilityLegacy(
-					bundleSymbolicName, servletContextName, baseName, 1, false),
-				_getProvideCapability(baseName, 1)
+					bundleSymbolicName, servletContextName, baseName, 1, false,
+					true),
+				_getProvideCapability(
+					"test.bundle", null, baseName, 1, null, false)
 			},
 			null);
 
@@ -186,9 +191,11 @@ public class LanguageResourcesExtenderTest {
 			bundleSymbolicName, baseName,
 			new String[] {
 				_getProvideCapabilityLegacy(
-					bundleSymbolicName, servletContextName, baseName, 2, true),
-				_getProvideCapabilityModuleOnly(
-					bundleSymbolicName, servletContextName, baseName, 1, false)
+					bundleSymbolicName, servletContextName, baseName, 2, true,
+					true),
+				_getProvideCapability(
+					bundleSymbolicName, servletContextName, baseName, 1, false,
+					true)
 			},
 			null);
 
@@ -227,8 +234,9 @@ public class LanguageResourcesExtenderTest {
 	public void testRegistrationExcludePortalResources() throws Exception {
 		Bundle bundle = _installResourceBundle(
 			"test.bundle", "content1.Language",
-			_getProvideCapabilityModuleOnly(
-				"test.bundle", "test-bundle", "content1.Language", 1, true));
+			_getProvideCapability(
+				"test.bundle", "test-bundle", "content1.Language", 1, true,
+				true));
 
 		try {
 			bundle.start();
@@ -266,7 +274,7 @@ public class LanguageResourcesExtenderTest {
 			bundleSymbolicName, "content1.Language",
 			_getProvideCapabilityLegacy(
 				bundleSymbolicName, servletContextName, "content1.Language", 1,
-				false));
+				false, true));
 
 		try {
 			bundle.start();
@@ -292,9 +300,9 @@ public class LanguageResourcesExtenderTest {
 
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName, "content1.Language",
-			_getProvideCapabilityModuleOnly(
+			_getProvideCapability(
 				bundleSymbolicName, servletContextName, "content1.Language", 1,
-				false));
+				false, true));
 
 		try {
 			bundle.start();
@@ -354,12 +362,14 @@ public class LanguageResourcesExtenderTest {
 	public void testRegistrationModuleOnlyMultiple() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1", "content1.Language",
-			_getProvideCapabilityModuleOnly(
-				"test.bundle1", "test-bundle1", "content1.Language", 1, false));
+			_getProvideCapability(
+				"test.bundle1", "test-bundle1", "content1.Language", 1, false,
+				true));
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2", "content2.Language",
-			_getProvideCapabilityModuleOnly(
-				"test.bundle2", "test-bundle2", "content2.Language", 1, false));
+			_getProvideCapability(
+				"test.bundle2", "test-bundle2", "content2.Language", 1, false,
+				true));
 
 		try {
 			bundle1.start();
@@ -408,10 +418,12 @@ public class LanguageResourcesExtenderTest {
 	public void testRegistrationServiceRanking() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1", "content1.Language",
-			_getProvideCapability("content1.Language", 1));
+			_getProvideCapability(
+				"test.bundle1", null, "content1.Language", 1, null, false));
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2", "content2.Language",
-			_getProvideCapability("content2.Language", 2));
+			_getProvideCapability(
+				"test.bundle2", null, "content2.Language", 2, null, false));
 
 		try {
 			bundle1.start();
@@ -435,11 +447,43 @@ public class LanguageResourcesExtenderTest {
 		}
 	}
 
-	private String _getProvideCapability(String baseName, int serviceRanking) {
-		return StringBundler.concat(
-			"liferay.language.resources;module.only=false;",
-			"resource.bundle.base.name=\"", baseName, "\";service.ranking=",
-			serviceRanking);
+	private String _getProvideCapability(
+		String bundleSymbolicName, String servletContextName, String baseName,
+		Integer serviceRanking, Boolean excludePortalResources,
+		Boolean moduleOnly) {
+
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("liferay.language.resources;bundle.symbolic.name=\"");
+		sb.append(bundleSymbolicName);
+		sb.append("\"");
+
+		if (excludePortalResources != null) {
+			sb.append(";exclude.portal.resources=");
+			sb.append(excludePortalResources);
+		}
+
+		if (moduleOnly != null) {
+			sb.append(";module.only=");
+			sb.append(moduleOnly);
+		}
+
+		sb.append(";resource.bundle.base.name=\"");
+		sb.append(baseName);
+		sb.append("\"");
+
+		if (serviceRanking != null) {
+			sb.append(";service.ranking=");
+			sb.append(serviceRanking);
+		}
+
+		if (servletContextName != null) {
+			sb.append(";servlet.context.name=\"");
+			sb.append(servletContextName);
+			sb.append("\"");
+		}
+
+		return sb.toString();
 	}
 
 	private String _getProvideCapabilityAggregate(
@@ -450,9 +494,9 @@ public class LanguageResourcesExtenderTest {
 		StringBundler sb = new StringBundler(11);
 
 		sb.append(
-			_getProvideCapabilityModuleOnly(
+			_getProvideCapability(
 				bundleSymbolicName, servletContextName, baseName,
-				serviceRanking, excludePortalResources));
+				serviceRanking, excludePortalResources, true));
 
 		if (aggregateResourceBundles.length > 0) {
 			sb.append(";resource.bundle.aggregate=\"");
@@ -475,36 +519,14 @@ public class LanguageResourcesExtenderTest {
 
 	private String _getProvideCapabilityLegacy(
 		String bundleSymbolicName, String servletContextName, String baseName,
-		int serviceRanking, boolean excludePortalResources) {
-
-		String provideCapability = _getProvideCapabilityModuleOnly(
-			bundleSymbolicName, servletContextName, baseName, serviceRanking,
-			excludePortalResources);
+		Integer serviceRanking, Boolean excludePortalResources,
+		Boolean moduleOnly) {
 
 		return StringUtil.replace(
-			provideCapability, "liferay.language.resources",
-			"liferay.resource.bundle");
-	}
-
-	private String _getProvideCapabilityModuleOnly(
-		String bundleSymbolicName, String servletContextName, String baseName,
-		int serviceRanking, boolean excludePortalResources) {
-
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("liferay.language.resources;bundle.symbolic.name=\"");
-		sb.append(bundleSymbolicName);
-		sb.append("\";exclude.portal.resources=");
-		sb.append(excludePortalResources);
-		sb.append(";module.only=true;resource.bundle.base.name=\"");
-		sb.append(baseName);
-		sb.append("\";service.ranking=");
-		sb.append(serviceRanking);
-		sb.append(";servlet.context.name=\"");
-		sb.append(servletContextName);
-		sb.append("\"");
-
-		return sb.toString();
+			_getProvideCapability(
+				bundleSymbolicName, servletContextName, baseName,
+				serviceRanking, excludePortalResources, moduleOnly),
+			"liferay.language.resources", "liferay.resource.bundle");
 	}
 
 	private String _getRequireCapabilityAggregate(

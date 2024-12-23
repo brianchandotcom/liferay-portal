@@ -206,7 +206,7 @@ public class LoginPostAction extends Action {
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-			name,null, null, user.getEmailAddress(), null, StringPool.BLANK,
+			name, null, null, user.getEmailAddress(), null, StringPool.BLANK,
 			type, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
@@ -362,9 +362,7 @@ public class LoginPostAction extends Action {
 		for (Cookie cookie : cookies) {
 			String cookieKey = cookie.getName();
 
-			if (cookieKey.startsWith(
-					LoginPostAction._ACCOUNT_INFORMATION_COOKIE_IDENTIFIER)) {
-
+			if (cookieKey.startsWith(_ACCOUNT_INFORMATION_COOKIE_IDENTIFIER)) {
 				Map<String, String> accountInformation =
 					_parseAccountInformation(
 						_commerceAccountHelper.getCommerceSiteType(
@@ -386,9 +384,7 @@ public class LoginPostAction extends Action {
 					cookie.getDomain(), httpServletRequest, httpServletResponse,
 					cookieKey);
 			}
-			else if (cookieKey.startsWith(
-						LoginPostAction._GUEST_ORDER_COOKIE_IDENTIFIER)) {
-
+			else if (cookieKey.startsWith(_GUEST_ORDER_COOKIE_IDENTIFIER)) {
 				long commerceChannelGroupId = _getCommerceChannelGroupId(
 					cookieKey);
 
@@ -435,8 +431,7 @@ public class LoginPostAction extends Action {
 					commerceOrder);
 
 				httpSession.setAttribute(
-					LoginPostAction._GUEST_ORDER_COOKIE_IDENTIFIER +
-						commerceOrder.getGroupId(),
+					_GUEST_ORDER_COOKIE_IDENTIFIER + commerceOrder.getGroupId(),
 					commerceOrder.getUuid());
 			}
 		}

@@ -5,14 +5,20 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
+import com.liferay.portal.kernel.servlet.RequestDispatcherUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -238,6 +244,104 @@ public class ComboServletTest {
 			mockHttpServletResponse.getStatus());
 	}
 
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testMaxFileSizeDisabled() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "COMBO_ALLOWED_FILE_MAX_SIZE", 0);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		String path = "/" + RandomTestUtil.randomString() + ".js";
+
+		mockHttpServletRequest.setQueryString(path);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		PortalCache<String, byte[][]> bytesArrayPortalCache =
+			ReflectionTestUtil.getFieldValue(
+				_comboServlet, "_bytesArrayPortalCache");
+
+		String cacheKey = "[" + path + "]#null";
+
+		Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
+
+		String responseContent = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable = _setUpHttpServletResponse(
+				mockHttpServletResponse, responseContent)) {
+
+			_comboServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			byte[][] bytesArray = bytesArrayPortalCache.get(cacheKey);
+
+			Assert.assertNotNull(bytesArray);
+			Assert.assertEquals(
+				responseContent + StringPool.NEW_LINE,
+				new String(bytesArray[0], StringPool.UTF8));
+		}
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testMaxFileSizeEnabled() throws Exception {
+		String responseContent = RandomTestUtil.randomString();
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "COMBO_ALLOWED_FILE_MAX_SIZE",
+			responseContent.length() + 1);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		String path = "/" + RandomTestUtil.randomString() + ".js";
+
+		mockHttpServletRequest.setQueryString(path);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		PortalCache<String, byte[][]> bytesArrayPortalCache =
+			ReflectionTestUtil.getFieldValue(
+				_comboServlet, "_bytesArrayPortalCache");
+
+		String cacheKey = "[" + path + "]#null";
+
+		Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
+
+		// file size > max size
+
+		try (SafeCloseable safeCloseable = _setUpHttpServletResponse(
+				mockHttpServletResponse, responseContent + StringPool.STAR)) {
+
+			_comboServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
+		}
+
+		// file size = max size
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		try (SafeCloseable safeCloseable = _setUpHttpServletResponse(
+				mockHttpServletResponse, responseContent)) {
+
+			_comboServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			byte[][] bytesArray = bytesArrayPortalCache.get(cacheKey);
+
+			Assert.assertNotNull(bytesArray);
+			Assert.assertEquals(
+				responseContent + StringPool.NEW_LINE,
+				new String(bytesArray[0], StringPool.UTF8));
+		}
+	}
+
 	@Test
 	public void testMixedExtensionsRequest() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
@@ -356,6 +460,29 @@ public class ComboServletTest {
 		comboServlet.init(new MockServletConfig(portalServletContext));
 
 		return comboServlet;
+	}
+
+	private SafeCloseable _setUpHttpServletResponse(
+		HttpServletResponse httpServletResponse, String content) {
+
+		MockedStatic<RequestDispatcherUtil> requestDispatcherUtilMockedStatic =
+			Mockito.mockStatic(RequestDispatcherUtil.class);
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(httpServletResponse);
+
+		bufferCacheServletResponse.setContentType("text/javascript");
+		bufferCacheServletResponse.setString(content);
+		bufferCacheServletResponse.setStatus(HttpServletResponse.SC_OK);
+
+		requestDispatcherUtilMockedStatic.when(
+			() -> RequestDispatcherUtil.getBufferCacheServletResponse(
+				Mockito.any(), Mockito.any(), Mockito.any())
+		).thenReturn(
+			bufferCacheServletResponse
+		);
+
+		return requestDispatcherUtilMockedStatic::close;
 	}
 
 	private Portlet _setUpPortalPortlet(ServletContext portalServletContext) {

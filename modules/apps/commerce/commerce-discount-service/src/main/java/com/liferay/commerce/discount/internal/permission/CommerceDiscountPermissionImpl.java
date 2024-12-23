@@ -55,14 +55,9 @@ public class CommerceDiscountPermissionImpl
 			CommerceDiscount commerceDiscount, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, commerceDiscount.getCommerceDiscountId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, commerceDiscount.getCommerceDiscountId(),
+			actionId);
 	}
 
 	@Override

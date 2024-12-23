@@ -135,11 +135,7 @@ public class CheckoutDisplayContext {
 		List<CommerceOrderItem> commerceOrderItems =
 			_commerceOrder.getCommerceOrderItems();
 
-		if (commerceOrderItems.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return commerceOrderItems.isEmpty();
 	}
 
 	public boolean isOrderSummaryShowFullAddressEnabled()

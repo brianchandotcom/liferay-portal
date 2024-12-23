@@ -82,13 +82,8 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	}
 
 	public static boolean isAccountEntryAddress(Address address) {
-		if (Objects.equals(
-				AccountEntry.class.getName(), address.getClassName())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			AccountEntry.class.getName(), address.getClassName());
 	}
 
 	public static long toAddressTypeId(int commerceAddressType) {

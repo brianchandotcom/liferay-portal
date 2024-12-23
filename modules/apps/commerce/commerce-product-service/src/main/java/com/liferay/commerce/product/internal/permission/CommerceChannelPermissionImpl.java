@@ -66,14 +66,9 @@ public class CommerceChannelPermissionImpl
 			CommerceChannel commerceChannel, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, commerceChannel.getCommerceChannelId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, commerceChannel.getCommerceChannelId(),
+			actionId);
 	}
 
 	@Override

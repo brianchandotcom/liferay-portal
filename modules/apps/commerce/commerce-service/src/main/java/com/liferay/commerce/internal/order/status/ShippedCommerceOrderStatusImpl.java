@@ -135,11 +135,7 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 	public boolean isValidForOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
-			return false;
-		}
-
-		return true;
+		return _commerceShippingHelper.isShippable(commerceOrder);
 	}
 
 	@Reference

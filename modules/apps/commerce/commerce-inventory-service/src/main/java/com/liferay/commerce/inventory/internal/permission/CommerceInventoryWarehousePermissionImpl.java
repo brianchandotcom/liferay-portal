@@ -81,15 +81,10 @@ public class CommerceInventoryWarehousePermissionImpl
 			String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker,
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker,
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			actionId);
 	}
 
 	@Override

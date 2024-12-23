@@ -55,14 +55,9 @@ public class CPSpecificationOptionPermissionImpl
 			CPSpecificationOption cpSpecificationOption, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker,
-				cpSpecificationOption.getCPSpecificationOptionId(), actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker,
+			cpSpecificationOption.getCPSpecificationOptionId(), actionId);
 	}
 
 	@Override

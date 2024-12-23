@@ -56,11 +56,7 @@ public class CommerceCheckoutOrderSummaryMultishippingScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, CommerceOrder commerceOrder) {
-		if (CommerceOrderUtil.isCommerceOrderMultishipping(commerceOrder)) {
-			return true;
-		}
-
-		return false;
+		return CommerceOrderUtil.isCommerceOrderMultishipping(commerceOrder);
 	}
 
 	@Override

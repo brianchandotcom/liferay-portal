@@ -252,14 +252,9 @@ public class CPDefinitionOptionValueRelDisplayContext
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			getCPDefinitionOptionRel();
 
-		if (Objects.equals(
-				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-				cpDefinitionOptionRel.getCommerceOptionTypeKey())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+			cpDefinitionOptionRel.getCommerceOptionTypeKey());
 	}
 
 	private String _getTimeZone(String[] splits) {

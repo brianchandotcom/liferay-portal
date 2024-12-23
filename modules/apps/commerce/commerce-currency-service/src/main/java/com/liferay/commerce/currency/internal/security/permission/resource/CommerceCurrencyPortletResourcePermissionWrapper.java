@@ -28,11 +28,8 @@ public class CommerceCurrencyPortletResourcePermissionWrapper
 		return PortletResourcePermissionFactory.create(
 			CommerceCurrencyConstants.RESOURCE_NAME,
 			(permissionChecker, name, group, actionId) -> {
-				if (permissionChecker.hasPermission(group, name, 0, actionId)) {
-					return true;
-				}
-
-				return false;
+				return permissionChecker.hasPermission(
+					group, name, 0, actionId);
 			});
 	}
 

@@ -287,11 +287,7 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	public boolean isGuestOrder() throws PortalException {
 		AccountEntry accountEntry = getAccountEntry();
 
-		if (accountEntry.isGuestAccount()) {
-			return true;
-		}
-
-		return false;
+		return accountEntry.isGuestAccount();
 	}
 
 	@Override
@@ -337,11 +333,7 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 
 		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
-		if (commerceOrderItem.isSubscription()) {
-			return true;
-		}
-
-		return false;
+		return commerceOrderItem.isSubscription();
 	}
 
 	@Override

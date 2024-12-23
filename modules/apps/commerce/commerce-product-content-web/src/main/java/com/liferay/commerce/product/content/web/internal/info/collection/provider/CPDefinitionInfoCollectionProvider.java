@@ -118,13 +118,8 @@ public class CPDefinitionInfoCollectionProvider
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (Objects.equals(
-				portletDisplay.getPortletName(), PortletKeys.ITEM_SELECTOR)) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(
+			portletDisplay.getPortletName(), PortletKeys.ITEM_SELECTOR);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

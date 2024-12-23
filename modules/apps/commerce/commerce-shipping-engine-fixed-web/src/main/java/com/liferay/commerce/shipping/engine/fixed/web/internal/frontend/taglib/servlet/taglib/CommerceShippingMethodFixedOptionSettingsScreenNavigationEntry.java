@@ -62,11 +62,7 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 		String engineKey = commerceShippingMethod.getEngineKey();
 
-		if (engineKey.equals(ByWeightCommerceShippingEngine.KEY)) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals(ByWeightCommerceShippingEngine.KEY);
 	}
 
 	@Override

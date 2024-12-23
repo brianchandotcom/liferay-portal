@@ -55,14 +55,9 @@ public class CommerceTermEntryPermissionImpl
 			CommerceTermEntry commerceTermEntry, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, commerceTermEntry.getCommerceTermEntryId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, commerceTermEntry.getCommerceTermEntryId(),
+			actionId);
 	}
 
 	@Override

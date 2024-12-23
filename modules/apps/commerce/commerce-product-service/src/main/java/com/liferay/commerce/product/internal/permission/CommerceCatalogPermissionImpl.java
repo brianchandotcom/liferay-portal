@@ -66,14 +66,9 @@ public class CommerceCatalogPermissionImpl
 			CommerceCatalog commerceCatalog, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, commerceCatalog.getCommerceCatalogId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, commerceCatalog.getCommerceCatalogId(),
+			actionId);
 	}
 
 	@Override

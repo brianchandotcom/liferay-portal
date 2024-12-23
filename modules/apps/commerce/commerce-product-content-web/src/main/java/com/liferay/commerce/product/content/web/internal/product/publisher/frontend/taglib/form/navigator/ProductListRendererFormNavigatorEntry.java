@@ -90,11 +90,7 @@ public class ProductListRendererFormNavigatorEntry
 		String renderSelection = GetterUtil.getString(
 			portletPreferences.getValue("renderSelection", null), "custom");
 
-		if (renderSelection.equals("custom")) {
-			return true;
-		}
-
-		return false;
+		return renderSelection.equals("custom");
 	}
 
 	@Reference

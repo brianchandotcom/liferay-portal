@@ -76,11 +76,7 @@ public class LayoutCPDefinitionDisplayLayoutSelectionScreenNavigationEntry
 			_log.error(portalException);
 		}
 
-		if (Validator.isNotNull(cpDisplayLayout.getLayoutUuid())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(cpDisplayLayout.getLayoutUuid());
 	}
 
 	@Override

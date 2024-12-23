@@ -52,13 +52,8 @@ public class CommercePanelCategory extends BasePanelCategory {
 			return false;
 		}
 
-		if (PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
-
-			return true;
-		}
-
-		return false;
+		return PortalPermissionUtil.contains(
+			permissionChecker, ActionKeys.VIEW_CONTROL_PANEL);
 	}
 
 	@Reference

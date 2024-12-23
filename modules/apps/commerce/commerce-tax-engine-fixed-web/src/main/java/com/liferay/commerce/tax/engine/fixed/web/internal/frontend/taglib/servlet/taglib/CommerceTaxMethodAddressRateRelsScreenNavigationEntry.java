@@ -58,11 +58,7 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals("by-address")) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals("by-address");
 	}
 
 	@Override

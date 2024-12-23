@@ -51,11 +51,7 @@ public class CPDefinitionCPTypeVirtualScreenNavigationEntry
 
 		String productTypeName = cpDefinition.getProductTypeName();
 
-		if (productTypeName.equals(VirtualCPTypeConstants.NAME)) {
-			return true;
-		}
-
-		return false;
+		return productTypeName.equals(VirtualCPTypeConstants.NAME);
 	}
 
 	@Override

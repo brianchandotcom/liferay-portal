@@ -223,11 +223,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 			getCommerceShippingFixedOptions();
 
-		if (commerceShippingFixedOptions.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !commerceShippingFixedOptions.isEmpty();
 	}
 
 	private final CommerceInventoryWarehouseService

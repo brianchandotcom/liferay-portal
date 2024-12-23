@@ -108,11 +108,7 @@ public class InProgressCommerceOrderStatusImpl implements CommerceOrderStatus {
 
 	@Override
 	public boolean isComplete(CommerceOrder commerceOrder) {
-		if (commerceOrder.isOpen()) {
-			return false;
-		}
-
-		return true;
+		return !commerceOrder.isOpen();
 	}
 
 	@Override

@@ -80,14 +80,9 @@ public class MercanetCommercePaymentMethodConfigurationScreenNavigationEntry
 			return false;
 		}
 
-		if (Objects.equals(
-				commercePaymentMethod.getPaymentIntegrationKey(),
-				MercanetCommercePaymentMethod.KEY)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			commercePaymentMethod.getPaymentIntegrationKey(),
+			MercanetCommercePaymentMethod.KEY);
 	}
 
 	@Override

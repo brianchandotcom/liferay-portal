@@ -53,11 +53,7 @@ public class RemoteCommerceTaxMethodConfigurationScreenNavigationEntry
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals(RemoteCommerceTaxEngine.KEY)) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals(RemoteCommerceTaxEngine.KEY);
 	}
 
 	@Override

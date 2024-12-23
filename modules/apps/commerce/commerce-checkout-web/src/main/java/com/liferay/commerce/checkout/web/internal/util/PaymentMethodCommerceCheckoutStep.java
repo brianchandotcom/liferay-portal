@@ -66,14 +66,9 @@ public class PaymentMethodCommerceCheckoutStep
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		if (!_commerceCheckoutStepHttpHelper.
-				isActivePaymentMethodCommerceCheckoutStep(
-					httpServletRequest, commerceOrder)) {
-
-			return false;
-		}
-
-		return true;
+		return _commerceCheckoutStepHttpHelper.
+			isActivePaymentMethodCommerceCheckoutStep(
+				httpServletRequest, commerceOrder);
 	}
 
 	@Override

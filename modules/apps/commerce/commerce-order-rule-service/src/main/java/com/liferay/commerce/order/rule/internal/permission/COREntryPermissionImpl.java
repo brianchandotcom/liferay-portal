@@ -54,11 +54,7 @@ public class COREntryPermissionImpl implements COREntryPermission {
 			String actionId)
 		throws PortalException {
 
-		if (contains(permissionChecker, corEntry.getCOREntryId(), actionId)) {
-			return true;
-		}
-
-		return false;
+		return contains(permissionChecker, corEntry.getCOREntryId(), actionId);
 	}
 
 	@Override

@@ -56,11 +56,7 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals("fixed-tax")) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals("fixed-tax");
 	}
 
 	@Override

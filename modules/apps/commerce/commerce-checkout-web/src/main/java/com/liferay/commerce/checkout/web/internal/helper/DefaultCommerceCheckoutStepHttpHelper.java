@@ -635,11 +635,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (BigDecimalUtil.isZero(commerceOrder.getTotal())) {
-			return true;
-		}
-
-		return false;
+		return BigDecimalUtil.isZero(commerceOrder.getTotal());
 	}
 
 	private List<CommercePaymentMethodGroupRel>

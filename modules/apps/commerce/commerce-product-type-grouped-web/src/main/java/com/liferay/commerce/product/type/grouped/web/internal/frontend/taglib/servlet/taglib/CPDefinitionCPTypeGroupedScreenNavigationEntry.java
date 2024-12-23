@@ -50,11 +50,7 @@ public class CPDefinitionCPTypeGroupedScreenNavigationEntry
 
 		String productTypeName = cpDefinition.getProductTypeName();
 
-		if (productTypeName.equals(getCategoryKey())) {
-			return true;
-		}
-
-		return false;
+		return productTypeName.equals(getCategoryKey());
 	}
 
 	@Override

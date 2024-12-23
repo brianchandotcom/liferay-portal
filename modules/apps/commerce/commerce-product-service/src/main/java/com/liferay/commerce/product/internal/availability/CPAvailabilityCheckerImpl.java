@@ -83,11 +83,7 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 				cpInstance.getSku(), unitOfMeasure);
 		}
 
-		if (BigDecimalUtil.gt(quantity, stockQuantity)) {
-			return false;
-		}
-
-		return true;
+		return !BigDecimalUtil.gt(quantity, stockQuantity);
 	}
 
 	@Override

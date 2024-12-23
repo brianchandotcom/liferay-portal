@@ -103,11 +103,7 @@ public class CPOptionValueDisplayContext {
 			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
 			cpOption.getCommerceOptionTypeKey());
 
-		if (cpOptionSelectDateType) {
-			return true;
-		}
-
-		return false;
+		return cpOptionSelectDateType;
 	}
 
 	private String _getTimeZone(String[] splits) {

@@ -84,11 +84,7 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 		String renderSelection = GetterUtil.getString(
 			portletPreferences.getValue("renderSelection", null), "custom");
 
-		if (renderSelection.equals("adt")) {
-			return true;
-		}
-
-		return false;
+		return renderSelection.equals("adt");
 	}
 
 	@Reference

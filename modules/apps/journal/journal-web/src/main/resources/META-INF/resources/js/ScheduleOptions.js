@@ -113,7 +113,7 @@ export default function ScheduleOptions({
 
 			<ClayInput
 				form={formId}
-				name={`${portletNamespace}displayDateMinutes`}
+				name={`${portletNamespace}displayDateMinute`}
 				type="hidden"
 				value={minutes}
 			/>

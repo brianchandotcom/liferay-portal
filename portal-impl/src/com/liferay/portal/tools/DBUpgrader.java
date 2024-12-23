@@ -406,14 +406,19 @@ public class DBUpgrader {
 
 	private static boolean _isUpgradeDatabaseAutoRunEnabled() {
 		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN))) {
+
+			return true;
+		}
+
+		if (GetterUtil.getBoolean(
 				PropsUtil.get(
 					PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE))) {
 
 			return StartupHelperUtil.isNewRelease();
 		}
 
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+		return false;
 	}
 
 	private static void _registerModuleServiceLifecycle(

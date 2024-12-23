@@ -265,15 +265,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (FragmentPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
-
-			return true;
-		}
-
-		return false;
+		return FragmentPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 	}
 
 	private JSONArray _getFieldTypesJSONArray() {

@@ -645,20 +645,12 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public boolean isMappedCollection(JSONObject jsonObject) {
-		if (jsonObject.has("collectionFieldId")) {
-			return true;
-		}
-
-		return false;
+		return jsonObject.has("collectionFieldId");
 	}
 
 	@Override
 	public boolean isMappedDisplayPage(JSONObject jsonObject) {
-		if (Validator.isNotNull(jsonObject.get("mappedField"))) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(jsonObject.get("mappedField"));
 	}
 
 	private String _getDateValue(

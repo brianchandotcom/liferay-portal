@@ -49,11 +49,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
-		if (layout.isTypeAssetDisplay()) {
-			return true;
-		}
-
-		return false;
+		return layout.isTypeAssetDisplay();
 	}
 
 	@Override

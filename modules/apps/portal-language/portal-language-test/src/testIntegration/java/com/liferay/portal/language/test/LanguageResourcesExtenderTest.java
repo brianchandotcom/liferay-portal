@@ -519,7 +519,35 @@ public class LanguageResourcesExtenderTest {
 							moduleOnly)),
 					requireCapabilities);
 
-				_writeResources(jarOutputStream, bundle, baseName);
+				int index = baseName.lastIndexOf(CharPool.PERIOD);
+
+				String path = baseName.substring(0, index);
+				String name = baseName.substring(index + 1);
+
+				Enumeration<URL> enumeration = bundle.findEntries(
+					"com/liferay/portal/language/test/dependencies/" + path,
+					name.concat("*.properties"), false);
+
+				if (enumeration != null) {
+					while (enumeration.hasMoreElements()) {
+						URL url = enumeration.nextElement();
+
+						String urlPath = url.getPath();
+
+						String fileName = urlPath.substring(
+							urlPath.lastIndexOf(CharPool.SLASH) + 1);
+
+						jarOutputStream.putNextEntry(
+							new ZipEntry(path + StringPool.SLASH + fileName));
+
+						try (InputStream inputStream = url.openStream()) {
+							StreamUtil.transfer(
+								inputStream, jarOutputStream, false);
+						}
+
+						jarOutputStream.closeEntry();
+					}
+				}
 			}
 
 			return bundleContext.installBundle(
@@ -560,42 +588,6 @@ public class LanguageResourcesExtenderTest {
 		manifest.write(jarOutputStream);
 
 		jarOutputStream.closeEntry();
-	}
-
-	private void _writeResources(
-			JarOutputStream jarOutputStream, Bundle bundle, String baseName)
-		throws Exception {
-
-		int index = baseName.lastIndexOf(CharPool.PERIOD);
-
-		String path = baseName.substring(0, index);
-		String name = baseName.substring(index + 1);
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"com/liferay/portal/language/test/dependencies/" + path,
-			name.concat("*.properties"), false);
-
-		if (enumeration == null) {
-			return;
-		}
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			String urlPath = url.getPath();
-
-			String fileName = urlPath.substring(
-				urlPath.lastIndexOf(CharPool.SLASH) + 1);
-
-			jarOutputStream.putNextEntry(
-				new ZipEntry(path + StringPool.SLASH + fileName));
-
-			try (InputStream inputStream = url.openStream()) {
-				StreamUtil.transfer(inputStream, jarOutputStream, false);
-			}
-
-			jarOutputStream.closeEntry();
-		}
 	}
 
 	private static final Locale _LOCALE = LocaleUtil.ENGLISH;

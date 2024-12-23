@@ -11,8 +11,10 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -75,6 +78,29 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				layoutUtilityPageEntry.getExternalReferenceCode()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertTrue(layout.isPublished());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
+
+		layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				false, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), 0, _serviceContext);
+
+		Assert.assertTrue(
+			Validator.isNotNull(
+				layoutUtilityPageEntry.getExternalReferenceCode()));
+
+		layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 	}
 
 	@Test(
@@ -138,6 +164,9 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutUtilityPageEntryLocalService

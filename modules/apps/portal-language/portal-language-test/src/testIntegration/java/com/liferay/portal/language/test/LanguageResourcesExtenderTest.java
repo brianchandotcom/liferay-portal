@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.language.LanguageResources;
 
@@ -53,9 +54,7 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistration() throws Exception {
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", "content1.Language", null,
-			_getProvideCapability(
-				"test.bundle", null, "content1.Language", 1, null, false));
+			"test.bundle", "content1.Language", null, 1, null, false, null);
 
 		try {
 			bundle.start();
@@ -80,23 +79,16 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationAggregate() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", null,
-			_getProvideCapability(
-				"test.bundle1", "test-bundle1", "content1.Language", 1, false,
-				true));
+			"test.bundle1", "content1.Language", "test-bundle1", 1, false, true,
+			null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", null,
-			_getProvideCapability(
-				"test.bundle2", "test-bundle2", "content2.Language", 1, true,
-				true));
+			"test.bundle2", "content2.Language", "test-bundle2", 1, true, true,
+			null);
 		Bundle bundle3 = _installResourceBundle(
-			"test.bundle3", "content3.Language",
+			"test.bundle3", "content3.Language", "test-bundle3", 1, true, true,
 			"liferay.language.resources;filter:=\"(bundle.symbolic.name=" +
 				"test.bundle2)\",liferay.language.resources;filter:=\"(" +
 					"bundle.symbolic.name=test.bundle1)\"",
-			_getProvideCapability(
-				"test.bundle3", "test-bundle3", "content3.Language", 1, true,
-				true),
 			_getProvideCapabilityAggregate(
 				"test.bundle3", "test-bundle3", "content3.Language", 2, true,
 				new String[] {"test.bundle2", "test.bundle1", "test.bundle3"}));
@@ -139,12 +131,10 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", baseName, null,
+			"test.bundle", baseName, null, 1, null, false, null,
 			_getProvideCapabilityLegacy(
 				bundleSymbolicName, servletContextName, baseName, 1, false,
-				true),
-			_getProvideCapability(
-				"test.bundle", null, baseName, 1, null, false));
+				true));
 
 		try {
 			bundle.start();
@@ -179,12 +169,10 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, baseName, null,
+			bundleSymbolicName, baseName, servletContextName, 1, false, true,
+			null,
 			_getProvideCapabilityLegacy(
 				bundleSymbolicName, servletContextName, baseName, 2, true,
-				true),
-			_getProvideCapability(
-				bundleSymbolicName, servletContextName, baseName, 1, false,
 				true));
 
 		try {
@@ -221,10 +209,8 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationExcludePortalResources() throws Exception {
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", "content1.Language", null,
-			_getProvideCapability(
-				"test.bundle", "test-bundle", "content1.Language", 1, true,
-				true));
+			"test.bundle", "content1.Language", "test-bundle", 1, true, true,
+			null);
 
 		try {
 			bundle.start();
@@ -259,10 +245,8 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, "content1.Language", null,
-			_getProvideCapabilityLegacy(
-				bundleSymbolicName, servletContextName, "content1.Language", 1,
-				false, true));
+			bundleSymbolicName, "content1.Language", servletContextName, 1,
+			false, true, null);
 
 		try {
 			bundle.start();
@@ -287,10 +271,8 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, "content1.Language", null,
-			_getProvideCapability(
-				bundleSymbolicName, servletContextName, "content1.Language", 1,
-				false, true));
+			bundleSymbolicName, "content1.Language", servletContextName, 1,
+			false, true, null);
 
 		try {
 			bundle.start();
@@ -349,15 +331,11 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationModuleOnlyMultiple() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", null,
-			_getProvideCapability(
-				"test.bundle1", "test-bundle1", "content1.Language", 1, false,
-				true));
+			"test.bundle1", "content1.Language", "test-bundle1", 1, false, true,
+			null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", null,
-			_getProvideCapability(
-				"test.bundle2", "test-bundle2", "content2.Language", 1, false,
-				true));
+			"test.bundle2", "content2.Language", "test-bundle2", 1, false, true,
+			null);
 
 		try {
 			bundle1.start();
@@ -405,13 +383,9 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationServiceRanking() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", null,
-			_getProvideCapability(
-				"test.bundle1", null, "content1.Language", 1, null, false));
+			"test.bundle1", "content1.Language", null, 1, null, false, null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", null,
-			_getProvideCapability(
-				"test.bundle2", null, "content2.Language", 2, null, false));
+			"test.bundle2", "content2.Language", null, 2, null, false, null);
 
 		try {
 			bundle1.start();
@@ -519,7 +493,9 @@ public class LanguageResourcesExtenderTest {
 
 	private Bundle _installResourceBundle(
 			String bundleSymbolicName, String baseName,
-			String requireCapabilities, String... provideCapabilities)
+			String servletContextName, Integer serviceRanking,
+			Boolean excludePortalResources, Boolean moduleOnly,
+			String requireCapabilities, String... extraProvideCapabilities)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -534,7 +510,13 @@ public class LanguageResourcesExtenderTest {
 					unsyncByteArrayOutputStream)) {
 
 				_writeManifest(
-					jarOutputStream, bundleSymbolicName, provideCapabilities,
+					jarOutputStream, bundleSymbolicName,
+					ArrayUtil.append(
+						extraProvideCapabilities,
+						_getProvideCapability(
+							bundleSymbolicName, servletContextName, baseName,
+							serviceRanking, excludePortalResources,
+							moduleOnly)),
 					requireCapabilities);
 
 				_writeResources(jarOutputStream, bundle, baseName);

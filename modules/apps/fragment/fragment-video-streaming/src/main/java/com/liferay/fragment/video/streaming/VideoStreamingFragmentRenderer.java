@@ -81,20 +81,12 @@ public class VideoStreamingFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-200108")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-200108");
 	}
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-200108")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-200108");
 	}
 
 	@Override

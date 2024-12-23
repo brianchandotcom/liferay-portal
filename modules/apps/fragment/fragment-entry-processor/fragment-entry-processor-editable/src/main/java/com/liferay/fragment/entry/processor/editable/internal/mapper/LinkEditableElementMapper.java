@@ -207,11 +207,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 	}
 
 	private boolean _isMappedLayout(JSONObject jsonObject) {
-		if (jsonObject.has("layout")) {
-			return true;
-		}
-
-		return false;
+		return jsonObject.has("layout");
 	}
 
 	private void _replaceLinkContent(

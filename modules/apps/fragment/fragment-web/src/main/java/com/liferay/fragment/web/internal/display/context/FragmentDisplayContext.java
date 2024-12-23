@@ -743,19 +743,11 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_getKeywords());
 	}
 
 	public boolean isSelectedFragmentCollectionContributor() {
-		if (Validator.isNotNull(getFragmentCollectionKey())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getFragmentCollectionKey());
 	}
 
 	public boolean isViewResources() {
@@ -767,11 +759,7 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean showFragmentCollectionActions() {
-		if (!isSelectedFragmentCollectionContributor()) {
-			return true;
-		}
-
-		return false;
+		return !isSelectedFragmentCollectionContributor();
 	}
 
 	private long _getDefaultFragmentCollectionId() {

@@ -117,20 +117,12 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public boolean isApproved() {
-		if (isHead()) {
-			return true;
-		}
-
-		return false;
+		return isHead();
 	}
 
 	@Override
 	public boolean isDraft() {
-		if (isHead()) {
-			return false;
-		}
-
-		return true;
+		return !isHead();
 	}
 
 	@Override

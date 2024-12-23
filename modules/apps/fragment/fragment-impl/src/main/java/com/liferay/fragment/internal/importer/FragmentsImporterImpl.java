@@ -1159,36 +1159,21 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	}
 
 	private boolean _isFragmentCollection(String fileName) {
-		if (Objects.equals(
-				_getFileName(fileName),
-				FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_getFileName(fileName),
+			FragmentExportImportConstants.FILE_NAME_COLLECTION);
 	}
 
 	private boolean _isFragmentComposition(String fileName) {
-		if (Objects.equals(
-				_getFileName(fileName),
-				FragmentExportImportConstants.FILE_NAME_FRAGMENT_COMPOSITION)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_getFileName(fileName),
+			FragmentExportImportConstants.FILE_NAME_FRAGMENT_COMPOSITION);
 	}
 
 	private boolean _isFragmentEntry(String fileName) {
-		if (Objects.equals(
-				_getFileName(fileName),
-				FragmentExportImportConstants.FILE_NAME_FRAGMENT)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_getFileName(fileName),
+			FragmentExportImportConstants.FILE_NAME_FRAGMENT);
 	}
 
 	private String _replaceResourceReferences(

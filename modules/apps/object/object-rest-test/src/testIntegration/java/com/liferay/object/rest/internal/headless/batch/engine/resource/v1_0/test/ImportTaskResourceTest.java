@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +28,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Mauricio Valdivia
  */
-@FeatureFlags("LPD-29367")
 @RunWith(Arquillian.class)
 public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 

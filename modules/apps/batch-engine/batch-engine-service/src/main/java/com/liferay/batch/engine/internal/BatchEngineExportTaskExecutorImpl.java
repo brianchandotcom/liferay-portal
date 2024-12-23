@@ -27,7 +27,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -144,19 +143,17 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask, parameters,
 					unsyncByteArrayOutputStream)) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-29367")) {
-				oldNestedFieldsContext =
-					NestedFieldsContextThreadLocal.getNestedFieldsContext();
+			oldNestedFieldsContext =
+				NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-				NestedFieldsContextThreadLocal.setNestedFieldsContext(
-					new NestedFieldsContext(
-						NestedFieldsContextUtil.limitDepth(
-							GetterUtil.getInteger(
-								parameters.get("batchNestedFieldsDepth"))),
-						NestedFieldsContextUtil.toList(
-							MapUtil.getString(
-								parameters, "batchNestedFields"))));
-			}
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				new NestedFieldsContext(
+					NestedFieldsContextUtil.limitDepth(
+						GetterUtil.getInteger(
+							parameters.get("batchNestedFieldsDepth"))),
+					NestedFieldsContextUtil.toList(
+						MapUtil.getString(
+							parameters, "batchNestedFields"))));
 
 			int exportBatchSize = _getExportBatchSize(
 				batchEngineExportTask.getCompanyId());
@@ -206,10 +203,8 @@ public class BatchEngineExportTaskExecutorImpl
 			}
 		}
 		finally {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-29367")) {
-				NestedFieldsContextThreadLocal.setNestedFieldsContext(
-					oldNestedFieldsContext);
-			}
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				oldNestedFieldsContext);
 		}
 
 		byte[] content = unsyncByteArrayOutputStream.toByteArray();

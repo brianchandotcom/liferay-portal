@@ -35,7 +35,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 		<aui:option label="private-key-jwt" value="private_key_jwt" />
 	</aui:select>
 
-	<aui:input helpMessage="json-web-key-set-help" label="JSON Web Key Set" name="jwks" style="min-height: 100px;" type="textarea" />
+	<aui:input cssClass=".min-height-100" helpMessage="json-web-key-set-help" label="JSON Web Key Set" name="jwks" type="textarea" />
 
 	<aui:select helpMessage="client-profile-help" name="clientProfile">
 

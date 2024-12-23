@@ -221,15 +221,17 @@ public class LoginPostAction extends Action {
 	private AccountEntry _getAccountEntry(int commerceSiteType, long userId) {
 		AccountEntry accountEntry = null;
 
-		String[] accountTypes = {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON};
+		String[] accountEntryTypes = {
+			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+		};
 
 		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
-			accountTypes = new String[] {
+			accountEntryTypes = new String[] {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS
 			};
 		}
 		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X) {
-			accountTypes = new String[] {
+			accountEntryTypes = new String[] {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
 			};
@@ -238,7 +240,7 @@ public class LoginPostAction extends Action {
 		try {
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getUserAccountEntries(
-					userId, null, null, accountTypes, QueryUtil.ALL_POS,
+					userId, null, null, accountEntryTypes, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
 			if (accountEntries.size() != 1) {

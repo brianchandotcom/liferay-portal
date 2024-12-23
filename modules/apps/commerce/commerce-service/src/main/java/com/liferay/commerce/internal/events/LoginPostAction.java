@@ -84,7 +84,7 @@ public class LoginPostAction extends Action {
 					String cookieName = cookie.getName();
 
 					if (cookieName.startsWith(
-							CommerceOrder.class.getName() + StringPool.POUND)) {
+							_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
 
 						HttpServletRequest originalHttpServletRequest =
 							_portal.getOriginalServletRequest(

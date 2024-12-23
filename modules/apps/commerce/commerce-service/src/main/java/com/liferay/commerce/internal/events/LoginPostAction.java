@@ -280,21 +280,21 @@ public class LoginPostAction extends Action {
 		return null;
 	}
 
-	private Map<String, String> _parseAccountInformation(
+	private Map<String, String> _parseAccountEntryInformation(
 		int commerceSiteType, String cookieValue, User user) {
 
-		String accountName = user.getFullName();
-		String accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+		String accountEntryName = user.getFullName();
+		String accountEntryType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
 		String userEmailAddress = user.getEmailAddress();
 
 		String[] keyValues = cookieValue.split(StringPool.POUND);
 
 		for (String keyValue : keyValues) {
-			if (keyValue.startsWith("accountName=")) {
-				accountName = StringUtil.extractLast(
+			if (keyValue.startsWith("accountEntryName=")) {
+				accountEntryName = StringUtil.extractLast(
 					keyValue, StringPool.EQUAL);
 			}
-			else if (keyValue.startsWith("accountType=")) {
+			else if (keyValue.startsWith("accountEntryType=")) {
 				String value = StringUtil.extractLast(
 					keyValue, StringPool.EQUAL);
 
@@ -302,26 +302,26 @@ public class LoginPostAction extends Action {
 						AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS) ||
 					value.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
 
-					accountType = value;
+					accountEntryType = value;
 				}
 			}
-			else if (keyValue.startsWith("userEmail=")) {
+			else if (keyValue.startsWith("userEmailAddress=")) {
 				userEmailAddress = StringUtil.extractLast(
 					keyValue, StringPool.EQUAL);
 			}
 		}
 
 		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
-			accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+			accountEntryType = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
 		}
 		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) {
-			accountType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+			accountEntryType = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
 		}
 
 		return HashMapBuilder.put(
-			"accountName", accountName
+			"accountEntryName", accountEntryName
 		).put(
-			"accountType", accountType
+			"accountEntryType", accountEntryType
 		).put(
 			"userEmailAddress", userEmailAddress
 		).build();
@@ -364,7 +364,7 @@ public class LoginPostAction extends Action {
 
 			if (cookieName.startsWith(_COOKIE_NAME_PREFIX_ACCOUNT_ENTRY)) {
 				Map<String, String> accountInformation =
-					_parseAccountInformation(
+					_parseAccountEntryInformation(
 						_commerceAccountHelper.getCommerceSiteType(
 							_getCommerceChannelGroupId(cookieName)),
 						cookie.getValue(), user);
@@ -373,18 +373,22 @@ public class LoginPostAction extends Action {
 					"userEmailAddress");
 
 				if (userEmailAddress.equals(user.getEmailAddress())) {
-					String accountName = accountInformation.get("accountName");
-					String accountType = accountInformation.get("accountType");
+					String accountEntryName = accountInformation.get(
+						"accountEntryName");
+					String accountEntryType = accountInformation.get(
+						"accountEntryType");
 
 					accountEntry = _createAccountEntry(
-						accountName, accountType, user);
+						accountEntryName, accountEntryType, user);
 				}
 
 				CookiesManagerUtil.deleteCookies(
 					cookie.getDomain(), httpServletRequest, httpServletResponse,
 					cookieName);
 			}
-			else if (cookieName.startsWith(_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
+			else if (cookieName.startsWith(
+						_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
+
 				long commerceChannelGroupId = _getCommerceChannelGroupId(
 					cookieName);
 
@@ -431,7 +435,8 @@ public class LoginPostAction extends Action {
 					commerceOrder);
 
 				httpSession.setAttribute(
-					_COOKIE_NAME_PREFIX_COMMERCE_ORDER + commerceOrder.getGroupId(),
+					_COOKIE_NAME_PREFIX_COMMERCE_ORDER +
+						commerceOrder.getGroupId(),
 					commerceOrder.getUuid());
 			}
 		}

@@ -36,6 +36,7 @@ definition {
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Content Edit",
 				assetTitle = "WC Content",
+				isWebContent = "true",
 				saveAsDraft = "true");
 		}
 
@@ -3445,7 +3446,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Title Edited",
-				assetTitle = "WC Title");
+				assetTitle = "WC Title",
+				isWebContent = "true");
 		}
 
 		task ("Assert in title was porperty edited") {
@@ -6070,7 +6072,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Title Edited",
-				assetTitle = "WC Title");
+				assetTitle = "WC Title",
+				isWebContent = "true");
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
@@ -6159,7 +6162,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC WebContent New Title",
-				assetTitle = "WC WebContent Title");
+				assetTitle = "WC WebContent Title",
+				isWebContent = "true");
 		}
 
 		task ("Check if content is correct") {

@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -36,7 +37,8 @@ const test = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageManagementSiteTest
 );
 
 async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
@@ -675,6 +677,114 @@ test.describe('UI', () => {
 			page.getByText(newDisplayPageTemplateName, {exact: true})
 		).toBeVisible();
 	});
+
+	test(
+		'Can add form container and remap it',
+		{
+			tag: '@LPS-192722',
+		},
+		async ({
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create a display page template for Object
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Lemon Basket',
+				name: displayPageTemplateName,
+			});
+
+			// Edit display page template
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add and map form container
+
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Form Container'
+			);
+
+			await pageEditorPage.mapFormFragment(
+				await pageEditorPage.getFragmentId('Form Container'),
+				'Lemon Basket (Default)'
+			);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await pageEditorPage.selectEditable(
+				await pageEditorPage.getFragmentId('Heading'),
+				'element-text'
+			);
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {
+					field: 'Lemon Basket Color',
+				},
+				source: 'structure',
+			});
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Change content type
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Change Content Type'
+			);
+
+			await page
+				.getByLabel('Content Type', {exact: true})
+				.selectOption('All Fields');
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			// Assert that the form container is mapped to the new content type
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Form Container')
+			);
+
+			await expect(
+				page
+					.getByLabel('Content Type', {exact: true})
+					.getByRole('option', {selected: true})
+			).toHaveText('All Fields (Default)');
+
+			await pageEditorPage.selectEditable(
+				await pageEditorPage.getFragmentId('Heading'),
+				'element-text'
+			);
+
+			expect(
+				await page
+					.getByRole('combobox', {name: 'Field'})
+					.evaluate(
+						(element: HTMLSelectElement) =>
+							element.selectedOptions[0].innerText
+					)
+			).toBe('-- Unmapped --');
+		}
+	);
 });
 
 test.describe('Usages', () => {

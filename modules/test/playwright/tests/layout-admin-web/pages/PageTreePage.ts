@@ -13,20 +13,16 @@ export class PageTreePage {
 	}
 
 	async open() {
-		if (
-			!(await this.page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.isVisible())
-		) {
+		const pageTree = this.page
+			.getByLabel('Product Menu')
+			.locator('.treeview');
+
+		if (!(await pageTree.isVisible())) {
 			await this.page
 				.getByRole('button', {exact: true, name: 'Page Tree'})
 				.click();
 
-			await this.page
-				.getByLabel('Product Menu')
-				.locator('.treeview')
-				.waitFor();
+			await pageTree.waitFor();
 		}
 	}
 }

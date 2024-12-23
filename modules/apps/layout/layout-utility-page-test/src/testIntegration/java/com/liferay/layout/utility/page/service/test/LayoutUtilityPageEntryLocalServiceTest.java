@@ -6,7 +6,10 @@
 package com.liferay.layout.utility.page.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.utility.page.exception.DefaultLayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntryExternalReferenceCodeException;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -162,6 +165,62 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testSetDefaultLayoutUtilityPageEntry() throws Exception {
+		LayoutUtilityPageEntry layoutUtilityPageEntry1 =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, _serviceContext);
+
+		Assert.assertTrue(
+			layoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry2 =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				false, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, _serviceContext);
+
+		Assert.assertFalse(
+			layoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry2.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
+		try {
+			_layoutUtilityPageEntryLocalService.
+				setDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry2.getLayoutUtilityPageEntryId());
+
+			Assert.fail();
+		}
+		catch (DefaultLayoutUtilityPageEntry defaultLayoutUtilityPageEntry) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(defaultLayoutUtilityPageEntry);
+			}
+		}
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		layoutUtilityPageEntry2 =
+			_layoutUtilityPageEntryLocalService.
+				setDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry2.getLayoutUtilityPageEntryId());
+
+		Assert.assertTrue(
+			layoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
+
+		layoutUtilityPageEntry1 =
+			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntry(
+				layoutUtilityPageEntry1.getLayoutUtilityPageEntryId());
+
+		Assert.assertFalse(
+			layoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

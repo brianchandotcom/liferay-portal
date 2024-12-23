@@ -187,13 +187,8 @@ public class DefaultCommerceInventoryMethodImpl
 		long companyId, BigDecimal quantity, String sku,
 		String unitOfMeasureKey) {
 
-		if (BigDecimalUtil.lte(
-				quantity, getStockQuantity(companyId, sku, unitOfMeasureKey))) {
-
-			return true;
-		}
-
-		return false;
+		return BigDecimalUtil.lte(
+			quantity, getStockQuantity(companyId, sku, unitOfMeasureKey));
 	}
 
 	@Override

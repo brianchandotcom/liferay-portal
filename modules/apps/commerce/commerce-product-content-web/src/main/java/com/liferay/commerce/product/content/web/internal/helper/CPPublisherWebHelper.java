@@ -106,33 +106,21 @@ public class CPPublisherWebHelper {
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
-		if (Objects.equals(selectionStyle, "dataSource")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(selectionStyle, "dataSource");
 	}
 
 	public boolean isDynamicSelection(PortletPreferences portletPreferences) {
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
-		if (Objects.equals(selectionStyle, "dynamic")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(selectionStyle, "dynamic");
 	}
 
 	public boolean isManualSelection(PortletPreferences portletPreferences) {
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
-		if (Objects.equals(selectionStyle, "manual")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(selectionStyle, "manual");
 	}
 
 	public void removeAndStoreSelection(

@@ -1392,11 +1392,7 @@ public class CommerceOrderContentDisplayContext {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		if (commerceOrderItems.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !commerceOrderItems.isEmpty();
 	}
 
 	private CommerceOrderFieldsConfiguration

@@ -101,22 +101,14 @@ public class PartiallyShippedCommerceOrderStatusImpl
 			}
 		}
 
-		if (!allOrderItemsShipped) {
-			return true;
-		}
-
-		return false;
+		return !allOrderItemsShipped;
 	}
 
 	@Override
 	public boolean isValidForOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
-			return false;
-		}
-
-		return true;
+		return _commerceShippingHelper.isShippable(commerceOrder);
 	}
 
 	@Reference

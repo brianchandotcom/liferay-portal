@@ -40,11 +40,7 @@ public class CommerceDiscountValidatorResult implements Serializable {
 	}
 
 	public boolean hasMessageResult() {
-		if (Validator.isNotNull(getMessage())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getMessage());
 	}
 
 	public boolean isValid() {

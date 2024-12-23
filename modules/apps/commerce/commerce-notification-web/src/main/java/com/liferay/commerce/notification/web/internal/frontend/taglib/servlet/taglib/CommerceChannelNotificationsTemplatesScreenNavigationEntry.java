@@ -43,13 +43,8 @@ public class CommerceChannelNotificationsTemplatesScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, CommerceChannel commerceChannel) {
-		if (CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(
-				commerceChannel.getType())) {
-
-			return true;
-		}
-
-		return false;
+		return CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(
+			commerceChannel.getType());
 	}
 
 	@Override

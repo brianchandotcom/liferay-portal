@@ -80,13 +80,8 @@ public class AuthorizeNetCommercePaymentMethodConfigurationScreenNavigationEntry
 			return false;
 		}
 
-		if (AuthorizeNetCommercePaymentMethod.KEY.equals(
-				commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
-
-			return true;
-		}
-
-		return false;
+		return AuthorizeNetCommercePaymentMethod.KEY.equals(
+			commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 	}
 
 	@Override

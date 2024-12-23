@@ -148,14 +148,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		Agreement updatedAgreement = Agreement.get(
 			apiContext, agreement.getId());
 
-		if (Objects.equals(
-				PayPalCommercePaymentMethodConstants.ACTIVE,
-				updatedAgreement.getState())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			PayPalCommercePaymentMethodConstants.ACTIVE,
+			updatedAgreement.getState());
 	}
 
 	@Override
@@ -284,14 +279,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		Agreement updatedAgreement = Agreement.get(
 			apiContext, agreement.getId());
 
-		if (Objects.equals(
-				PayPalCommercePaymentMethodConstants.CANCELLED,
-				updatedAgreement.getState())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			PayPalCommercePaymentMethodConstants.CANCELLED,
+			updatedAgreement.getState());
 	}
 
 	@Override
@@ -830,14 +820,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		Agreement updatedAgreement = Agreement.get(
 			apiContext, agreement.getId());
 
-		if (Objects.equals(
-				PayPalCommercePaymentMethodConstants.SUSPENDED,
-				updatedAgreement.getState())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			PayPalCommercePaymentMethodConstants.SUSPENDED,
+			updatedAgreement.getState());
 	}
 
 	@Override

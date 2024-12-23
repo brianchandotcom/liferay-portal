@@ -1919,13 +1919,8 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private boolean _isStaticPriceType(Object value) {
-		if (Objects.equals(
-				value, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			value, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC);
 	}
 
 	private boolean _isSubscription(CPInstance cpInstance)

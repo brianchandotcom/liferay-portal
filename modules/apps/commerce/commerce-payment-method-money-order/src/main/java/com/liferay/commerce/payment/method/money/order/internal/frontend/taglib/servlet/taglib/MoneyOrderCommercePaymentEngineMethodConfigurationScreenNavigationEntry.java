@@ -82,13 +82,8 @@ public class
 			return false;
 		}
 
-		if (MoneyOrderCommercePaymentMethod.KEY.equals(
-				commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
-
-			return true;
-		}
-
-		return false;
+		return MoneyOrderCommercePaymentMethod.KEY.equals(
+			commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 	}
 
 	@Override

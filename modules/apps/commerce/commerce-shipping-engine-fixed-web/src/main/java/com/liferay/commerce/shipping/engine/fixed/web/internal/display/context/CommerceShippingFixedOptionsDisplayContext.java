@@ -158,11 +158,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 
 		String engineKey = commerceShippingMethod.getEngineKey();
 
-		if (engineKey.equals(FixedCommerceShippingEngine.KEY)) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals(FixedCommerceShippingEngine.KEY);
 	}
 
 	private final CommerceShippingFixedOptionService

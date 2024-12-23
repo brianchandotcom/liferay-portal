@@ -79,13 +79,8 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 			return false;
 		}
 
-		if (PayPalCommercePaymentMethod.KEY.equals(
-				commercePaymentMethod.getPaymentIntegrationKey())) {
-
-			return true;
-		}
-
-		return false;
+		return PayPalCommercePaymentMethod.KEY.equals(
+			commercePaymentMethod.getPaymentIntegrationKey());
 	}
 
 	@Override

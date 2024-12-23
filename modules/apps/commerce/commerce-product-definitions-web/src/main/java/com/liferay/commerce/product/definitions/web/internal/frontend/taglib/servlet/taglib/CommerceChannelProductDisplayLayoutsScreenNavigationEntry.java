@@ -67,13 +67,8 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationEntry
 			return false;
 		}
 
-		if (!CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(
-				commerceChannel.getType())) {
-
-			return false;
-		}
-
-		return true;
+		return CommerceChannelConstants.CHANNEL_TYPE_SITE.equals(
+			commerceChannel.getType());
 	}
 
 	@Override

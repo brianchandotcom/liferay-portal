@@ -55,14 +55,9 @@ public class CPOptionCategoryPermissionImpl
 			CPOptionCategory cpOptionCategory, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, cpOptionCategory.getCPOptionCategoryId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, cpOptionCategory.getCPOptionCategoryId(),
+			actionId);
 	}
 
 	@Override

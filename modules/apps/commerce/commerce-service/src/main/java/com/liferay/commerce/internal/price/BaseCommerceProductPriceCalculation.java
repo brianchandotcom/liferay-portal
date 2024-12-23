@@ -668,13 +668,8 @@ public abstract class BaseCommerceProductPriceCalculation
 	}
 
 	private boolean _isStaticPriceType(String value) {
-		if (Objects.equals(
-				value, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			value, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC);
 	}
 
 	private BigDecimal[] _toPriceArray(

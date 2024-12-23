@@ -707,11 +707,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 			cpInstance.getCPInstanceUuid(), cpDefinition.getCProductId(),
 			WorkflowConstants.STATUS_APPROVED);
 
-		if (!cpInstances.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !cpInstances.isEmpty();
 	}
 
 	@Override

@@ -308,21 +308,13 @@ public class CPSearchResultsDisplayContext {
 	public boolean isSelectionStyleADT() {
 		String selectionStyle = getSelectionStyle();
 
-		if (selectionStyle.equals("adt")) {
-			return true;
-		}
-
-		return false;
+		return selectionStyle.equals("adt");
 	}
 
 	public boolean isSelectionStyleCustomRenderer() {
 		String selectionStyle = getSelectionStyle();
 
-		if (selectionStyle.equals("custom")) {
-			return true;
-		}
-
-		return false;
+		return selectionStyle.equals("custom");
 	}
 
 	private SearchContainer<CPCatalogEntry> _buildSearchContainer(

@@ -77,34 +77,19 @@ public class CPDefinitionOptionRelImpl extends CPDefinitionOptionRelBaseImpl {
 
 	@Override
 	public boolean isPriceContributor() {
-		if (Validator.isNotNull(getPriceType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getPriceType());
 	}
 
 	@Override
 	public boolean isPriceTypeDynamic() {
-		if (Objects.equals(
-				getPriceType(),
-				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getPriceType(), CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC);
 	}
 
 	@Override
 	public boolean isPriceTypeStatic() {
-		if (Objects.equals(
-				getPriceType(), CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getPriceType(), CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC);
 	}
 
 	private UnicodeProperties _typeSettingsUnicodeProperties;

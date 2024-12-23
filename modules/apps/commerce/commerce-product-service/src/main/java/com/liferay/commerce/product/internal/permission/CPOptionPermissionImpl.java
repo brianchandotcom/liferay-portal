@@ -54,11 +54,7 @@ public class CPOptionPermissionImpl implements CPOptionPermission {
 			String actionId)
 		throws PortalException {
 
-		if (contains(permissionChecker, cpOption.getCPOptionId(), actionId)) {
-			return true;
-		}
-
-		return false;
+		return contains(permissionChecker, cpOption.getCPOptionId(), actionId);
 	}
 
 	@Override

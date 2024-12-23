@@ -82,13 +82,8 @@ public class
 			_log.error(portalException);
 		}
 
-		if (Validator.isNotNull(
-				cpDisplayLayout.getLayoutPageTemplateEntryUuid())) {
-
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(
+			cpDisplayLayout.getLayoutPageTemplateEntryUuid());
 	}
 
 	@Override

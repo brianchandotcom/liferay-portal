@@ -583,14 +583,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 	}
 
 	public boolean getUsePercentage(String commerceDiscountType) {
-		if (Objects.equals(
-				commerceDiscountType,
-				CommerceDiscountConstants.TYPE_PERCENTAGE)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			commerceDiscountType, CommerceDiscountConstants.TYPE_PERCENTAGE);
 	}
 
 	public boolean hasAddPermission() throws PortalException {

@@ -68,11 +68,7 @@ public class CartTotalCommerceDiscountRuleTypeImpl
 
 		BigDecimal cartTotal = new BigDecimal(settingsProperty);
 
-		if (BigDecimalUtil.gt(orderPrice, cartTotal)) {
-			return true;
-		}
-
-		return false;
+		return BigDecimalUtil.gt(orderPrice, cartTotal);
 	}
 
 	@Override

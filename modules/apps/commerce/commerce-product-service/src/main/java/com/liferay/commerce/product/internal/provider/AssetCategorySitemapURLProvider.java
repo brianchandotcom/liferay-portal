@@ -55,13 +55,8 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 	public boolean isInclude(long companyId, long groupId)
 		throws PortalException {
 
-		if (_sitemapConfigurationManager.includeCategoriesGroupEnabled(
-				companyId, groupId)) {
-
-			return true;
-		}
-
-		return false;
+		return _sitemapConfigurationManager.includeCategoriesGroupEnabled(
+			companyId, groupId);
 	}
 
 	@Override

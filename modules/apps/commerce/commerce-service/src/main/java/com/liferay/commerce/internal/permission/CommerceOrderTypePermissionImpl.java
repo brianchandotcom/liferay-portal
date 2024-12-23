@@ -56,14 +56,9 @@ public class CommerceOrderTypePermissionImpl
 			CommerceOrderType commerceOrderType, String actionId)
 		throws PortalException {
 
-		if (contains(
-				permissionChecker, commerceOrderType.getCommerceOrderTypeId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, commerceOrderType.getCommerceOrderTypeId(),
+			actionId);
 	}
 
 	@Override

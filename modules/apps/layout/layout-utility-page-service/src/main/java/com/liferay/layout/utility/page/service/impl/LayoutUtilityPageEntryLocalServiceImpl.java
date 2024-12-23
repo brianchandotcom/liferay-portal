@@ -7,6 +7,7 @@ package com.liferay.layout.utility.page.service.impl;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryDefaultTemplateException;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalServiceBaseImpl;
@@ -341,6 +342,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
 				layoutUtilityPageEntryId);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		if (!layout.isPublished()) {
+			throw new LayoutUtilityPageEntryDefaultTemplateException();
+		}
 
 		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.fetchByG_D_T_First(

@@ -23,8 +23,6 @@ definition {
 	macro expandPanel(panel = null) {
 		SetWindowSize(value1 = "1920,1540");
 
-		Portlet.waitForForm();
-
 		var key_panel = ${panel};
 
 		AssertVisible(

@@ -109,10 +109,7 @@ public class AutoUpgradeProcessTest {
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
-		Assert.assertEquals(
-			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertFalse(_upgradeProcessRun);
+		_assertNonupgrade();
 	}
 
 	@Test
@@ -124,10 +121,7 @@ public class AutoUpgradeProcessTest {
 
 		StartupHelperUtil.setNewRelease(false);
 
-		Assert.assertEquals(
-			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertFalse(_upgradeProcessRun);
+		_assertNonupgrade();
 	}
 
 	@Test
@@ -136,10 +130,7 @@ public class AutoUpgradeProcessTest {
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
-		Assert.assertEquals(
-			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertTrue(_upgradeProcessRun);
+		_assertUpgrade();
 	}
 
 	@Test
@@ -150,10 +141,7 @@ public class AutoUpgradeProcessTest {
 
 		StartupHelperUtil.setNewRelease(false);
 
-		Assert.assertEquals(
-			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertFalse(_upgradeProcessRun);
+		_assertUpgrade();
 	}
 
 	@Test
@@ -165,6 +153,17 @@ public class AutoUpgradeProcessTest {
 
 		StartupHelperUtil.setNewRelease(true);
 
+		_assertUpgrade();
+	}
+
+	private void _assertNonupgrade() {
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	private void _assertUpgrade() {
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
 

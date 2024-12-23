@@ -111,10 +111,8 @@ public class LanguageResourcesExtenderTest {
 						"test.bundle2", "test.bundle1", "test.bundle3"
 					})
 			},
-			new String[] {
-				_getRequireCapabilityAggregate(
-					new String[] {"test.bundle2", "test.bundle1"})
-			});
+			_getRequireCapabilityAggregate(
+				new String[] {"test.bundle2", "test.bundle1"}));
 
 		try {
 			bundle1.start();
@@ -580,7 +578,7 @@ public class LanguageResourcesExtenderTest {
 
 	private Bundle _installResourceBundle(
 			String bundleSymbolicName, String baseName,
-			String[] provideCapabilities, String[] requireCapabilities)
+			String[] provideCapabilities, String requireCapabilities)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -611,7 +609,7 @@ public class LanguageResourcesExtenderTest {
 
 	private void _writeManifest(
 			JarOutputStream jarOutputStream, String bundleSymbolicName,
-			String[] provideCapabilities, String[] requireCapabilities)
+			String[] provideCapabilities, String requireCapabilities)
 		throws Exception {
 
 		Manifest manifest = new Manifest();
@@ -631,8 +629,7 @@ public class LanguageResourcesExtenderTest {
 
 		if (requireCapabilities != null) {
 			attributes.putValue(
-				Constants.REQUIRE_CAPABILITY,
-				StringUtil.merge(requireCapabilities, StringPool.COMMA));
+				Constants.REQUIRE_CAPABILITY, requireCapabilities);
 		}
 
 		jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));

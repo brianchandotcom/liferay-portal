@@ -110,11 +110,7 @@ public class CookiesBannerConfigurationDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isStatePopUp()) {
-			return true;
-		}
-
-		return false;
+		return !themeDisplay.isStatePopUp();
 	}
 
 }

@@ -29,11 +29,7 @@ public class CookiesPreferenceHandlingConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10588")) {
-			return false;
-		}
-
-		return true;
+		return !FeatureFlagManagerUtil.isEnabled("LPD-10588");
 	}
 
 }

@@ -54,11 +54,7 @@ public abstract class BaseCookiesPreferenceHandlingConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10588")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPD-10588");
 	}
 
 	@Override

@@ -192,11 +192,7 @@ public class DDMFormLayoutFactoryHelper {
 	}
 
 	protected boolean isLocalizableValue(String value) {
-		if (StringUtil.startsWith(value, StringPool.PERCENT)) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.startsWith(value, StringPool.PERCENT);
 	}
 
 	protected void setDefaultLocale() {

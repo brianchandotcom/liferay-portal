@@ -543,11 +543,7 @@ public class DDMFormEvaluatorHelper {
 				_ddmFormEvaluatorEvaluateRequest.getLocale(), valueString);
 		}
 
-		if (Objects.equals(confirmationValue, valueString)) {
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(confirmationValue, valueString);
 	}
 
 	private boolean _isFieldEmpty(
@@ -566,14 +562,8 @@ public class DDMFormEvaluatorHelper {
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(ddmFormField.getType());
 
-		if (ddmFormFieldValueAccessor.isEmpty(
-				ddmFormFieldValue,
-				_ddmFormEvaluatorEvaluateRequest.getLocale())) {
-
-			return true;
-		}
-
-		return false;
+		return ddmFormFieldValueAccessor.isEmpty(
+			ddmFormFieldValue, _ddmFormEvaluatorEvaluateRequest.getLocale());
 	}
 
 	private boolean _isFieldNative(

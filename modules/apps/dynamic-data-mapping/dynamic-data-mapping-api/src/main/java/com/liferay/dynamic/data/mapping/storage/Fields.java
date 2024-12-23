@@ -58,11 +58,7 @@ public class Fields implements Iterable<Field>, Serializable {
 			return false;
 		}
 
-		if (fieldsList1.containsAll(fieldsList2)) {
-			return true;
-		}
-
-		return false;
+		return fieldsList1.containsAll(fieldsList2);
 	}
 
 	public Field get(String name) {

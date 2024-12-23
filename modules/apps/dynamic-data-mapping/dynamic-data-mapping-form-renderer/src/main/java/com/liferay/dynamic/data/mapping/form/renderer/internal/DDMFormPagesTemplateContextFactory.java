@@ -375,11 +375,7 @@ public class DDMFormPagesTemplateContextFactory {
 		Set<Integer> disabledPagesIndexes =
 			_ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes();
 
-		if (disabledPagesIndexes.contains(pageIndex)) {
-			return false;
-		}
-
-		return true;
+		return !disabledPagesIndexes.contains(pageIndex);
 	}
 
 	private boolean _isViewMode() {

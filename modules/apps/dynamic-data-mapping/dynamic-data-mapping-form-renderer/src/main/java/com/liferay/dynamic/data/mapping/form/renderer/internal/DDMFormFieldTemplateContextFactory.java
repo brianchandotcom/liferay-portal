@@ -465,11 +465,7 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	private boolean _isFieldSetField(DDMFormField ddmFormField) {
-		if (StringUtil.equals(ddmFormField.getType(), "fieldset")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(ddmFormField.getType(), "fieldset");
 	}
 
 	private void _setDDMFormFieldFieldSetTemplateContextContributedParameters(

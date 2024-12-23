@@ -42,11 +42,7 @@ public class DDMFormFieldValidationExpression implements Serializable {
 		DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
 			(DDMFormFieldValidationExpression)object;
 
-		if (Objects.equals(_name, ddmFormFieldValidationExpression._name)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_name, ddmFormFieldValidationExpression._name);
 	}
 
 	public String getExpression(

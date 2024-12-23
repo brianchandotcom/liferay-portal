@@ -45,15 +45,10 @@ public class OptionsDDMFormFieldTemplateContextContributor
 		).put(
 			"allowSpecialCharacters",
 			() -> {
-				if (Objects.equals(
-						ddmFormFieldRenderingContext.getPortletNamespace(),
-						_portal.getPortletNamespace(
-							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN))) {
-
-					return false;
-				}
-
-				return true;
+				return !Objects.equals(
+					ddmFormFieldRenderingContext.getPortletNamespace(),
+					_portal.getPortletNamespace(
+						DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
 			}
 		).put(
 			"defaultLanguageId",

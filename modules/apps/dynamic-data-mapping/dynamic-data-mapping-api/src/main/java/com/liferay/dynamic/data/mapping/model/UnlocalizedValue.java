@@ -44,11 +44,7 @@ public class UnlocalizedValue implements Value {
 
 		UnlocalizedValue unlocalizedValue = (UnlocalizedValue)object;
 
-		if (Objects.equals(_values, unlocalizedValue._values)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_values, unlocalizedValue._values);
 	}
 
 	@Override

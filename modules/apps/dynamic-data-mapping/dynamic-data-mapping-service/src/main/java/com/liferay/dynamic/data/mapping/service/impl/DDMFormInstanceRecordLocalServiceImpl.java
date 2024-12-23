@@ -877,11 +877,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		Map<String, Serializable> latestAttributes =
 			latestExpandoBridge.getAttributes();
 
-		if (!lastAttributes.equals(latestAttributes)) {
-			return false;
-		}
-
-		return true;
+		return lastAttributes.equals(latestAttributes);
 	}
 
 	private void _updateAsset(

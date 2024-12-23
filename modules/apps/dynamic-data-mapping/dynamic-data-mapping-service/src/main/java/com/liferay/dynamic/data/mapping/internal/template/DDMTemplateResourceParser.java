@@ -111,11 +111,7 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 
 	@Override
 	public boolean isTemplateResourceValid(String templateId, String langType) {
-		if (templateId.contains(TemplateConstants.TEMPLATE_SEPARATOR)) {
-			return true;
-		}
-
-		return false;
+		return templateId.contains(TemplateConstants.TEMPLATE_SEPARATOR);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

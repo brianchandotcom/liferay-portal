@@ -174,11 +174,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		Set<String> ddmFormFieldOptionsValues =
 			ddmFormFieldOptions.getOptionsValues();
 
-		if (ddmFormFieldOptionsValues.contains(operand)) {
-			return true;
-		}
-
-		return false;
+		return ddmFormFieldOptionsValues.contains(operand);
 	}
 
 	private void _normalizeDDMFormField(DDMFormField ddmFormField)

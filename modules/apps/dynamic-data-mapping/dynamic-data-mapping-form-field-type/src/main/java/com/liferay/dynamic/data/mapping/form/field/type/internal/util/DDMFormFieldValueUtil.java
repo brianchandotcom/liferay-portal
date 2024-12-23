@@ -133,11 +133,7 @@ public class DDMFormFieldValueUtil {
 	}
 
 	public static boolean isManualDataSourceType(DDMFormField ddmFormField) {
-		if (Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(ddmFormField.getDataSourceType(), "manual");
 	}
 
 	private static DDMFormFieldOptions _getDDMFormFieldOptions(

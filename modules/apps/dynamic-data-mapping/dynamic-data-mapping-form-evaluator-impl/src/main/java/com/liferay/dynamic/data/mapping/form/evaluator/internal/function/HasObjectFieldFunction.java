@@ -47,11 +47,7 @@ public class HasObjectFieldFunction
 	}
 
 	private boolean _apply(String[] objectFieldNames) {
-		if (ArrayUtil.isEmpty(objectFieldNames)) {
-			return false;
-		}
-
-		return true;
+		return ArrayUtil.isNotEmpty(objectFieldNames);
 	}
 
 }

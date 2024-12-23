@@ -442,21 +442,13 @@ public class DDMFormFieldFactoryHelper {
 	protected boolean isDDMFormFieldLocalizable() {
 		Class<?> returnType = _method.getReturnType();
 
-		if (returnType.isAssignableFrom(LocalizedValue.class)) {
-			return true;
-		}
-
-		return false;
+		return returnType.isAssignableFrom(LocalizedValue.class);
 	}
 
 	protected boolean isDDMFormFieldRepeatable() {
 		Class<?> returnType = _method.getReturnType();
 
-		if (returnType.isArray()) {
-			return true;
-		}
-
-		return false;
+		return returnType.isArray();
 	}
 
 	protected boolean isDDMFormFieldRequired() {

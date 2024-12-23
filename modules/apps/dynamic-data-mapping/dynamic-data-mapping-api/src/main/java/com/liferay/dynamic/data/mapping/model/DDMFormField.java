@@ -376,11 +376,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	public boolean hasProperty(String propertyKey) {
-		if (_properties.containsKey(propertyKey)) {
-			return true;
-		}
-
-		return false;
+		return _properties.containsKey(propertyKey);
 	}
 
 	public boolean isLocalizable() {
@@ -417,11 +413,7 @@ public class DDMFormField implements Serializable {
 	 * @review
 	 */
 	public boolean isTransient() {
-		if (Validator.isNull(getDataType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(getDataType());
 	}
 
 	public boolean isVisualProperty() {

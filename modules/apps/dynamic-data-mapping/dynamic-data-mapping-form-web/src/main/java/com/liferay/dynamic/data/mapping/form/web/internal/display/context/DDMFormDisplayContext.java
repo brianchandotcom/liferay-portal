@@ -774,11 +774,7 @@ public class DDMFormDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isSignedIn()) {
-			return true;
-		}
-
-		return false;
+		return themeDisplay.isSignedIn();
 	}
 
 	public boolean isPreview() throws PortalException {

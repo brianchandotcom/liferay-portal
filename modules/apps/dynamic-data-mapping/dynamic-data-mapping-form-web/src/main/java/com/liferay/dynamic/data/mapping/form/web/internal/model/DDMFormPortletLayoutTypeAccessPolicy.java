@@ -58,14 +58,8 @@ public class DDMFormPortletLayoutTypeAccessPolicy
 	protected boolean isAccessGrantedByPortletOnPage(
 		Layout layout, Portlet portlet) {
 
-		if (StringUtil.equalsIgnoreCase(
-				portlet.getPortletId(),
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equalsIgnoreCase(
+			portlet.getPortletId(), DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 	}
 
 }

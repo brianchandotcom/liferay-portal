@@ -498,11 +498,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private DDMFormValues _getDDMFormValues(

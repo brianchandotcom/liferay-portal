@@ -439,13 +439,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	}
 
 	private boolean _isDDMFormFieldParameter(String parameterName) {
-		if (parameterName.startsWith(
-				DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX)) {
-
-			return true;
-		}
-
-		return false;
+		return parameterName.startsWith(
+			DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX);
 	}
 
 	private void _poupulateDefaultDDMFormFieldParameterNames(

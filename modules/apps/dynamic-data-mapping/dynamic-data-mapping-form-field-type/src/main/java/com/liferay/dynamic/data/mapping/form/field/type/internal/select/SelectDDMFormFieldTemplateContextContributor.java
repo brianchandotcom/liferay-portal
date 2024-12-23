@@ -128,13 +128,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		ObjectField objectField) {
 
 		if (objectField != null) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				return true;
-			}
-
-			return false;
+			return objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST);
 		}
 
 		Map<String, Object> changedProperties =

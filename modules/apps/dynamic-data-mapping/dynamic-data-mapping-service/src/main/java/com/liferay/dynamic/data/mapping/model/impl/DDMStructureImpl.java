@@ -370,11 +370,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 				String name = structure.getName(locale);
 
-				if (name.equals(getName(locale))) {
-					return true;
-				}
-
-				return false;
+				return name.equals(getName(locale));
 			});
 
 		if (hasAmbiguousName) {
@@ -487,11 +483,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public boolean isFieldTransient(String fieldName) throws PortalException {
 		DDMFormField ddmFormField = _getDDMFormField(fieldName);
 
-		if (Validator.isNull(ddmFormField.getDataType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(ddmFormField.getDataType());
 	}
 
 	@Override
@@ -690,11 +682,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	private boolean _isFieldSet(DDMFormField ddmFormField) {
-		if (Objects.equals(ddmFormField.getType(), "fieldset")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(ddmFormField.getType(), "fieldset");
 	}
 
 	private void _setNestedDDMFormFields(DDMFormField ddmFormField) {

@@ -29,13 +29,8 @@ public class FutureDatesFunction
 		LocalDateTime localDateTime = DateParameterUtil.getLocalDateTime(
 			object1.toString());
 
-		if (localDateTime.isBefore(
-				DateParameterUtil.getLocalDateTime(object2.toString()))) {
-
-			return false;
-		}
-
-		return true;
+		return !localDateTime.isBefore(
+			DateParameterUtil.getLocalDateTime(object2.toString()));
 	}
 
 	@Override

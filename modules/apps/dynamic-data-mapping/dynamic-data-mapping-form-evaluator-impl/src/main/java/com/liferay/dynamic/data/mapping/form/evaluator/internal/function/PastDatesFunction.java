@@ -28,13 +28,8 @@ public class PastDatesFunction
 		LocalDateTime localDateTime = DateParameterUtil.getLocalDateTime(
 			object1.toString());
 
-		if (localDateTime.isAfter(
-				DateParameterUtil.getLocalDateTime(object2.toString()))) {
-
-			return false;
-		}
-
-		return true;
+		return !localDateTime.isAfter(
+			DateParameterUtil.getLocalDateTime(object2.toString()));
 	}
 
 	@Override

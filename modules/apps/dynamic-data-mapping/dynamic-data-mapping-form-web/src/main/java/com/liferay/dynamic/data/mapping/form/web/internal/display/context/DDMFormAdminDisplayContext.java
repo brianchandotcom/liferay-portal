@@ -1199,11 +1199,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public boolean hasValidDDMFormFields(DDMFormInstance ddmFormInstance) {
-		if (Validator.isNull(getInvalidDDMFormFieldType(ddmFormInstance))) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(getInvalidDDMFormFieldType(ddmFormInstance));
 	}
 
 	public boolean hasValidMappedObject(
@@ -1489,11 +1485,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	protected final DDMFormAdminRequestHelper ddmFormAdminRequestHelper;

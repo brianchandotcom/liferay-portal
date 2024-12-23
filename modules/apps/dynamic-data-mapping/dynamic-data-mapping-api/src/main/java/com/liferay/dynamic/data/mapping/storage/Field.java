@@ -213,11 +213,7 @@ public class Field implements Serializable {
 
 	public boolean isPrivate() {
 		try {
-			if (_name.startsWith(StringPool.UNDERLINE)) {
-				return true;
-			}
-
-			return false;
+			return _name.startsWith(StringPool.UNDERLINE);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -363,13 +363,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		Set<Configuration.ConfigurationAttribute> configurationAttributes =
 			_configuration.getAttributes();
 
-		if (configurationAttributes.contains(
-				Configuration.ConfigurationAttribute.READ_ONLY)) {
-
-			return true;
-		}
-
-		return false;
+		return configurationAttributes.contains(
+			Configuration.ConfigurationAttribute.READ_ONLY);
 	}
 
 	public boolean isStrictScope() {

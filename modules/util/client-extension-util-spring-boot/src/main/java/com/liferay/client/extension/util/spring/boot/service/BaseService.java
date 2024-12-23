@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot.service;
 
+import java.time.Duration;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
@@ -27,6 +30,9 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
+
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
 
 /**
  * @author Nilton Vieira
@@ -254,7 +260,24 @@ public abstract class BaseService {
 	}
 
 	private WebClient _getWebClient() {
+		ConnectionProvider connectionProvider = ConnectionProvider.builder(
+			"fixed"
+		).evictInBackground(
+			Duration.ofSeconds(120)
+		).maxConnections(
+			500
+		).maxIdleTime(
+			Duration.ofSeconds(20)
+		).maxLifeTime(
+			Duration.ofSeconds(60)
+		).pendingAcquireTimeout(
+			Duration.ofSeconds(60)
+		).build();
+
 		return WebClient.builder(
+		).clientConnector(
+			new ReactorClientHttpConnector(
+				HttpClient.create(connectionProvider))
 		).baseUrl(
 			getWebClientBaseURL()
 		).defaultHeader(

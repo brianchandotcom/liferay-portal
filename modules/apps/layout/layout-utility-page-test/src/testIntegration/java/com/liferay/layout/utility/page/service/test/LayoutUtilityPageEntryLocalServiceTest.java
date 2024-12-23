@@ -157,6 +157,10 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			"test-layout-utility-page",
 			layoutUtilityPageEntry.getExternalReferenceCode());
 
+		_testGetExternalReferenceCode(
+			layoutUtilityPageEntry.getExternalReferenceCode(),
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				"ERC", _group.getGroupId(), 0, 0, true,
@@ -165,6 +169,10 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			"ERC", layoutUtilityPageEntry.getExternalReferenceCode());
+
+		_testGetExternalReferenceCode(
+			layoutUtilityPageEntry.getExternalReferenceCode(),
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 	}
 
 	@Test
@@ -173,7 +181,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, _serviceContext);
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				_serviceContext);
 
 		Assert.assertTrue(
 			layoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
@@ -182,7 +191,8 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0, _serviceContext);
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				_serviceContext);
 
 		Assert.assertFalse(
 			layoutUtilityPageEntry2.isDefaultLayoutUtilityPageEntry());
@@ -223,6 +233,20 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 		Assert.assertFalse(
 			layoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+	}
+
+	private void _testGetExternalReferenceCode(
+			String externalReferenceCode, long layoutUtilityPageEntryId)
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(
+			layoutUtilityPageEntryId,
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1904,23 +1904,23 @@ public class ObjectRelationshipLocalServiceImpl
 					"an-edge-of-a-root-context");
 		}
 
-		if (objectDefinition1.isUnmodifiableSystemObject() ||
-			objectDefinition2.isUnmodifiableSystemObject()) {
-
-			throw new ObjectRelationshipEdgeException(
-				"System object definitions cannot inherit configurations",
-				"system-object-definitions-cannot-inherit-configurations");
-		}
-		else if ((objectDefinition1.isModifiableAndSystem() &&
-				  !objectDefinition2.isModifiableAndSystem()) ||
-				 (!objectDefinition1.isModifiableAndSystem() &&
-				  objectDefinition2.isModifiableAndSystem())) {
+		if ((objectDefinition1.isModifiableAndSystem() &&
+			 !objectDefinition2.isModifiableAndSystem()) ||
+			(!objectDefinition1.isModifiableAndSystem() &&
+			 objectDefinition2.isModifiableAndSystem())) {
 
 			throw new ObjectRelationshipEdgeException(
 				"Inheritance between modifiable system and custom object " +
 					"definitions is not allowed",
 				"inheritance-between-modifiable-system-and-custom-object-" +
 					"definitions-is-not-allowed");
+		}
+		else if (objectDefinition1.isUnmodifiableSystemObject() ||
+				 objectDefinition2.isUnmodifiableSystemObject()) {
+
+			throw new ObjectRelationshipEdgeException(
+				"System object definitions cannot inherit configurations",
+				"system-object-definitions-cannot-inherit-configurations");
 		}
 
 		// Circular reference in a root context must be validated before

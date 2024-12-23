@@ -80,6 +80,10 @@ public class WeavingClassLoader extends URLClassLoader {
 				}
 			}
 
+			if (data == null) {
+				return super.findClass(name);
+			}
+
 			if (Arrays.equals(oldData, data)) {
 				return _generateClass(name, data);
 			}

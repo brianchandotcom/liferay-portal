@@ -12,6 +12,7 @@ import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -62,7 +63,12 @@ public class CTOnDemandUserEventListener implements CTEventListener {
 				_ticketLocalService.deleteTicket(ticket);
 			}
 
-			_userLocalService.deleteUser(ctCollection.getOnDemandUserId());
+			User user = _userLocalService.fetchUser(
+				ctCollection.getOnDemandUserId());
+
+			if (user != null) {
+				_userLocalService.deleteUser(user);
+			}
 
 			ctCollection.setOnDemandUserId(0);
 

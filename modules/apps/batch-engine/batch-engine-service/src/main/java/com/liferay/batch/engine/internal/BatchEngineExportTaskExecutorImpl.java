@@ -152,8 +152,7 @@ public class BatchEngineExportTaskExecutorImpl
 						GetterUtil.getInteger(
 							parameters.get("batchNestedFieldsDepth"))),
 					NestedFieldsContextUtil.toList(
-						MapUtil.getString(
-							parameters, "batchNestedFields"))));
+						MapUtil.getString(parameters, "batchNestedFields"))));
 
 			int exportBatchSize = _getExportBatchSize(
 				batchEngineExportTask.getCompanyId());

@@ -170,6 +170,43 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 	await expect(configurationPanel).toBeVisible();
 });
 
+test(
+	'Check that the sidebar works in Arabic language',
+	{
+		tag: ['@LPD-44860'],
+	},
+	async ({apiHelpers, page, site}) => {
+
+		// Create a page and go to Arabic language editing mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(
+			`/ar/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
+
+		// Check that the sidebar works correctly
+
+		await page.locator('[data-panel-id="fragments_and_widgets"]').click();
+
+		await expect(
+			page.locator(
+				'.page-editor__sidebar__content.page-editor__sidebar__content--open.rtl'
+			)
+		).not.toBeVisible();
+
+		// Return to initial language
+
+		await page.goto(
+			`/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+	}
+);
+
 test('Checks sidebar accessibility', async ({
 	apiHelpers,
 	page,

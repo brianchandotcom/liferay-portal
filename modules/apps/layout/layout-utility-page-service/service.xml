@@ -65,6 +65,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DefaultLayoutUtilityPageEntry</exception>
 		<exception>LayoutUtilityPageEntryName</exception>
 	</exceptions>
 </service-builder>

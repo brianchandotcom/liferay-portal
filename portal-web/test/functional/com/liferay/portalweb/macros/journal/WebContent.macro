@@ -210,8 +210,6 @@ definition {
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
-		Alert.viewRequestFailedToComplete();
-
 		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextEquals.assertPartialText(

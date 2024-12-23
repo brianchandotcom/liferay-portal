@@ -78,7 +78,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testInitializationWhenAutoUpgradeDisabled() throws Exception {
+	public void testInitializationWhenAutoUpgradeDisabled() {
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
 		Assert.assertEquals(
@@ -88,9 +88,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNoninitializationWhenAutoUpgradeDisabledAndPortalNotUpgraded()
-		throws Exception {
-
+	public void testNoninitializationWhenAutoUpgradeDisabledAndPortalNotUpgraded() {
 		boolean originalPortalUpgraded = ReflectionTestUtil.getAndSetFieldValue(
 			_upgradeExecutor, "_portalUpgraded", false);
 
@@ -106,9 +104,19 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNonupgradeProcessWhenAutoUpgradeAndNoNewRelease()
-		throws Exception {
+	public void testNonupgradeWhenAutoUpgradeDisabled() {
+		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
+
+		Assert.assertEquals(
+			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
+
+		Assert.assertFalse(_upgradeProcessRun);
+	}
+
+	@Test
+	public void testNonupgradeWhenAutoUpgradeEnabledAndNoNewRelease() {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
@@ -122,23 +130,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNonupgradeProcessWhenAutoUpgradeDisabled()
-		throws Exception {
-
-		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
-
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
-
-		Assert.assertEquals(
-			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
-
-		Assert.assertFalse(_upgradeProcessRun);
-	}
-
-	@Test
-	public void testNonupgradeProcessWhenAutoUpgradeOnNewReleaseAndNoNewRelease()
-		throws Exception {
-
+	public void testNonupgradeWhenAutoUpgradeOnNewReleaseEnabledAndNoNewRelease() {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
 		PropsUtil.set(
@@ -153,7 +145,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeWhenAutoUpgradeEnabled() throws Exception {
+	public void testUpgradeWhenAutoUpgradeEnabled() {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
@@ -165,7 +157,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeWhenAutoUpgradeOnNewReleaseAndNewRelease()
+	public void testUpgradeWhenAutoUpgradeOnNewReleaseEnabledAndNewRelease()
 		throws Exception {
 
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
@@ -181,7 +173,7 @@ public class AutoUpgradeProcessTest {
 		Assert.assertTrue(_upgradeProcessRun);
 	}
 
-	private Release _registerNewUpgradeProcess() throws Exception {
+	private Release _registerNewUpgradeProcess() {
 		Bundle bundle = FrameworkUtil.getBundle(AutoUpgradeProcessTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();

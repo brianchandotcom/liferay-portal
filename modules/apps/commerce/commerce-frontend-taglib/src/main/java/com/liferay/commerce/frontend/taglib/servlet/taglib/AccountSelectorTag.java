@@ -163,11 +163,10 @@ public class AccountSelectorTag extends IncludeTag {
 				_commerceChannelId = commerceContext.getCommerceChannelId();
 			}
 
-			_userModelResourcePermission =
-				ServletContextUtil.getUserModelResourcePermission();
-
 			_commerceOrderTypeLocalService =
 				ServletContextUtil.getCommerceOrderTypeLocalService();
+			_userModelResourcePermission =
+				ServletContextUtil.getUserModelResourcePermission();
 
 			setServletContext(ServletContextUtil.getServletContext());
 		}

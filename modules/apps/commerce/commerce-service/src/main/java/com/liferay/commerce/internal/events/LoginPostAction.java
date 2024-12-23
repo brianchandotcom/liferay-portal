@@ -200,18 +200,16 @@ public class LoginPostAction extends Action {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		long userId = user.getUserId();
-
 		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setUserId(userId);
+		serviceContext.setUserId(user.getUserId());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name,
-			null, null, user.getEmailAddress(), null, StringPool.BLANK, type,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			name,null, null, user.getEmailAddress(), null, StringPool.BLANK,
+			type, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), userId);
+			accountEntry.getAccountEntryId(), user.getUserId());
 
 		if (type.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
 			_addBusinessAccountRoles(accountEntry, user);

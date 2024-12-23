@@ -49,7 +49,7 @@ public class AutoUpgradeProcessTest {
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 		_originalUpgradeDatabaseAutoRunFrequency = PropsUtil.get(
-			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY);
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE);
 	}
 
 	@After
@@ -60,7 +60,7 @@ public class AutoUpgradeProcessTest {
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
 			_originalUpgradeDatabaseAutoRun);
 		PropsUtil.set(
-			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY,
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE,
 			_originalUpgradeDatabaseAutoRunFrequency);
 
 		_upgradeProcessRun = false;
@@ -128,7 +128,8 @@ public class AutoUpgradeProcessTest {
 		StartupHelperUtil.setNewRelease(false);
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY, "release");
+		PropsUtil.set(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "release");
 
 		Assert.assertEquals(
 			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -145,7 +146,8 @@ public class AutoUpgradeProcessTest {
 		StartupHelperUtil.setNewRelease(true);
 
 		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
-		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY, "release");
+		PropsUtil.set(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE, "release");
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());

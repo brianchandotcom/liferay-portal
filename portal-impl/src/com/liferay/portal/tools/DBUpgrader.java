@@ -414,7 +414,7 @@ public class DBUpgrader {
 		}
 
 		if (!StringUtil.equalsIgnoreCase(
-				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_FREQUENCY),
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN_ON_NEW_RELEASE),
 				_UPGRADE_DATABASE_AUTO_RUN_RELEASE)) {
 
 			return true;

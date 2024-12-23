@@ -27,10 +27,8 @@ public class CommerceInventoryWarehousePortletResourcePermissionWrapper
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
 			CommerceInventoryConstants.RESOURCE_NAME,
-			(permissionChecker, name, group, actionId) -> {
-				return permissionChecker.hasPermission(
-					group, name, 0, actionId);
-			});
+			(permissionChecker, name, group, actionId) ->
+				permissionChecker.hasPermission(group, name, 0, actionId));
 	}
 
 }

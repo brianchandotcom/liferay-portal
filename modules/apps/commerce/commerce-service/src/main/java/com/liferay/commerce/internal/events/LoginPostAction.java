@@ -81,9 +81,9 @@ public class LoginPostAction extends Action {
 				}
 
 				for (Cookie cookie : cookies) {
-					String cookieKey = cookie.getName();
+					String cookieName = cookie.getName();
 
-					if (cookieKey.startsWith(
+					if (cookieName.startsWith(
 							CommerceOrder.class.getName() + StringPool.POUND)) {
 
 						HttpServletRequest originalHttpServletRequest =
@@ -93,13 +93,13 @@ public class LoginPostAction extends Action {
 						HttpSession httpSession =
 							originalHttpServletRequest.getSession();
 
-						httpSession.setAttribute(cookieKey, cookie.getValue());
+						httpSession.setAttribute(cookieName, cookie.getValue());
 
 						_updateGuestCommerceOrder(
 							cookie.getValue(),
 							Long.valueOf(
 								StringUtil.extractLast(
-									cookieKey, StringPool.POUND)),
+									cookieName, StringPool.POUND)),
 							httpServletRequest);
 					}
 				}
@@ -360,13 +360,13 @@ public class LoginPostAction extends Action {
 		User user = _portal.getUser(httpServletRequest);
 
 		for (Cookie cookie : cookies) {
-			String cookieKey = cookie.getName();
+			String cookieName = cookie.getName();
 
-			if (cookieKey.startsWith(_COOKIE_NAME_PREFIX_ACCOUNT_ENTRY)) {
+			if (cookieName.startsWith(_COOKIE_NAME_PREFIX_ACCOUNT_ENTRY)) {
 				Map<String, String> accountInformation =
 					_parseAccountInformation(
 						_commerceAccountHelper.getCommerceSiteType(
-							_getCommerceChannelGroupId(cookieKey)),
+							_getCommerceChannelGroupId(cookieName)),
 						cookie.getValue(), user);
 
 				String userEmailAddress = accountInformation.get(
@@ -382,11 +382,11 @@ public class LoginPostAction extends Action {
 
 				CookiesManagerUtil.deleteCookies(
 					cookie.getDomain(), httpServletRequest, httpServletResponse,
-					cookieKey);
+					cookieName);
 			}
-			else if (cookieKey.startsWith(_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
+			else if (cookieName.startsWith(_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
 				long commerceChannelGroupId = _getCommerceChannelGroupId(
-					cookieKey);
+					cookieName);
 
 				String commerceOrderUuid = cookie.getValue();
 

@@ -60,10 +60,10 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 				<aui:input helpMessage="metadata-cache-time-help" label="metadata-cache-time" name="metadataCacheTime" type="text" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getMetadataCacheTime() : OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT %>" />
 
 				<aui:input
+					cssClass="min-height-600"
 					helpMessage="oauth-client-info-json-help"
 					label="oauth-client-info-json"
 					name="infoJSON"
-					style="min-height: 600px;"
 					type="textarea"
 					value='<%=
 						JSONUtil.put(
@@ -85,10 +85,10 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 				<aui:input name="oAuthClientEntryId" type="hidden" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getOAuthClientEntryId() : 0 %>" />
 
 				<aui:input
+					cssClass="min-height-200"
 					helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-auth-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>'
 					label="oauth-client-default-auth-request-parameters-json"
 					name="authRequestParametersJSON"
-					style="min-height: 200px;"
 					type="textarea"
 					value='<%=
 						JSONUtil.put(
@@ -104,10 +104,10 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 				/>
 
 				<aui:input
+					cssClass="min-height-200"
 					helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-token-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>'
 					label="oauth-client-default-token-request-parameters-json"
 					name="tokenRequestParametersJSON"
-					style="min-height: 200px;"
 					type="textarea"
 					value='<%=
 						JSONUtil.put(
@@ -120,7 +120,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
-				<aui:input helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" style="min-height: 400px;" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
+				<aui:input cssClass="min-height-400" helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />

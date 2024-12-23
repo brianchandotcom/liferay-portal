@@ -53,7 +53,7 @@ public class JSImportMapsCacheTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{\"imports\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"},\"scopes\": {",
+				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {",
 				"\"a-scope\": {\"react\":",
 				"\"https://unpkg.com/react@19.0.0/index.js\"}}}"),
 			_getImportMaps(1));
@@ -61,14 +61,14 @@ public class JSImportMapsCacheTest {
 		jsImportMapsRegistration1.unregister();
 
 		Assert.assertEquals(
-			"{\"imports\": {},\"scopes\": {\"a-scope\": {\"react\":" +
+			"{\"imports\": {}, \"scopes\": {\"a-scope\": {\"react\":" +
 				"\"https://unpkg.com/react@19.0.0/index.js\"}}}",
 			_getImportMaps(1));
 
 		jsImportMapsRegistration2.unregister();
 
 		Assert.assertEquals(
-			"{\"imports\": {},\"scopes\": {}}", _getImportMaps(1));
+			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(1));
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class JSImportMapsCacheTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{\"imports\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"},\"scopes\": {",
+				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {",
 				"\"a-scope\": {\"react\":",
 				"\"https://unpkg.com/react@19.0.0/index.js\"}}}"),
 			_getImportMaps(1));
@@ -95,14 +95,14 @@ public class JSImportMapsCacheTest {
 		jsImportMapsRegistration1.unregister();
 
 		Assert.assertEquals(
-			"{\"imports\": {},\"scopes\": {\"a-scope\": {\"react\":" +
+			"{\"imports\": {}, \"scopes\": {\"a-scope\": {\"react\":" +
 				"\"https://unpkg.com/react@19.0.0/index.js\"}}}",
 			_getImportMaps(1));
 
 		jsImportMapsRegistration2.unregister();
 
 		Assert.assertEquals(
-			"{\"imports\": {},\"scopes\": {}}", _getImportMaps(1));
+			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(1));
 	}
 
 	@Test
@@ -129,16 +129,16 @@ public class JSImportMapsCacheTest {
 			StringBundler.concat(
 				"{\"imports\": {\"jquery\":",
 				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}",
-				",\"scopes\": {}}"),
+				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": ",
+				"{}}"),
 			_getImportMaps(1));
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{\"imports\": {\"jquery\":",
 				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"lodash\":",
-				"\"https://unpkg.com/lodash@4.17.21/lodash.js\"},",
-				"\"scopes\": {}}"),
+				"\"https://unpkg.com/lodash@4.17.21/lodash.js\"}, \"scopes\": ",
+				"{}}"),
 			_getImportMaps(2));
 
 		company2JSImportMapsRegistration.unregister();
@@ -147,13 +147,13 @@ public class JSImportMapsCacheTest {
 			StringBundler.concat(
 				"{\"imports\": {\"jquery\":",
 				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}",
-				",\"scopes\": {}}"),
+				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": ",
+				"{}}"),
 			_getImportMaps(1));
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{\"imports\": {\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"},",
+				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"}, ",
 				"\"scopes\": {}}"),
 			_getImportMaps(2));
 
@@ -161,10 +161,10 @@ public class JSImportMapsCacheTest {
 
 		Assert.assertEquals(
 			"{\"imports\": {\"react\":" +
-				"\"https://unpkg.com/react@19.0.0/index.js\"},\"scopes\": {}}",
+				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {}}",
 			_getImportMaps(1));
 		Assert.assertEquals(
-			"{\"imports\": {},\"scopes\": {}}", _getImportMaps(2));
+			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(2));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

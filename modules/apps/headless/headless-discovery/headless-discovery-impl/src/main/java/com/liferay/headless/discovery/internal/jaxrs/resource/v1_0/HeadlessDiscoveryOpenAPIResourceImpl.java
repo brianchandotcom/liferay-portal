@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,20 +114,50 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 					}
 				}
 
-				Method method = resourceClass.getDeclaredMethod(
-					"getOpenAPI", HttpServletRequest.class, String.class,
-					UriInfo.class);
+				for (Method declaredMethod :
+						resourceClass.getDeclaredMethods()) {
 
-				Response response = (Response)method.invoke(
-					resource, _httpServletRequest, "json",
-					_getUriInfo(path, version));
+					if (!Objects.equals(
+							declaredMethod.getName(), "getOpenAPI")) {
 
-				OpenAPIContext openAPIContext = new OpenAPIContext();
+						continue;
+					}
 
-				openAPIContext.setPath(path);
-				openAPIContext.setVersion(version);
+					boolean hasLongParameter = false;
 
-				responses.put(openAPIContext, response);
+					for (Class<?> parameterType :
+							declaredMethod.getParameterTypes()) {
+
+						if (parameterType == long.class) {
+							hasLongParameter = true;
+
+							break;
+						}
+					}
+
+					Response response;
+
+					if (hasLongParameter) {
+						response = (Response)declaredMethod.invoke(
+							resource, _company.getCompanyId(),
+							_httpServletRequest, type,
+							_getUriInfo(path, version));
+					}
+					else {
+						response = (Response)declaredMethod.invoke(
+							resource, _httpServletRequest, type,
+							_getUriInfo(path, version));
+					}
+
+					OpenAPIContext openAPIContext = new OpenAPIContext();
+
+					openAPIContext.setPath(path);
+					openAPIContext.setVersion(version);
+
+					responses.put(openAPIContext, response);
+
+					break;
+				}
 			}
 		}
 

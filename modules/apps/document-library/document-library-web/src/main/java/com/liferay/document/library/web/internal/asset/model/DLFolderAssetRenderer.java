@@ -218,11 +218,7 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public boolean isDisplayable() {
-		if (_folder.isMountPoint()) {
-			return false;
-		}
-
-		return true;
+		return !_folder.isMountPoint();
 	}
 
 	private final Folder _folder;

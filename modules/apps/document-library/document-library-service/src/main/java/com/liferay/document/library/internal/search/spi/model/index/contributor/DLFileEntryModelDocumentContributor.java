@@ -364,14 +364,8 @@ public class DLFileEntryModelDocumentContributor
 		String[] ignoreExtensions = _prefsProps.getStringArray(
 			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
 
-		if (ArrayUtil.contains(
-				ignoreExtensions,
-				StringPool.PERIOD + dlFileEntry.getExtension())) {
-
-			return false;
-		}
-
-		return true;
+		return !ArrayUtil.contains(
+			ignoreExtensions, StringPool.PERIOD + dlFileEntry.getExtension());
 	}
 
 	private boolean _isReadOnlyCtCollection() throws PortalException {

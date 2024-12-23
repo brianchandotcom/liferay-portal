@@ -868,14 +868,9 @@ public abstract class BasePreviewableDLProcessor implements DLProcessor {
 	protected boolean hasPreview(FileVersion fileVersion, String type)
 		throws Exception {
 
-		if (store.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID,
-				getPreviewFilePath(fileVersion, type), Store.VERSION_DEFAULT)) {
-
-			return true;
-		}
-
-		return false;
+		return store.hasFile(
+			fileVersion.getCompanyId(), REPOSITORY_ID,
+			getPreviewFilePath(fileVersion, type), Store.VERSION_DEFAULT);
 	}
 
 	protected boolean hasPreviews(FileVersion fileVersion) throws Exception {

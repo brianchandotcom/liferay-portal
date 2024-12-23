@@ -279,11 +279,7 @@ public class FolderActionDisplayContext {
 		DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
 			new DLPortletInstanceSettingsHelper(_dlRequestHelper);
 
-		if (dlPortletInstanceSettingsHelper.isShowActions()) {
-			return true;
-		}
-
-		return false;
+		return dlPortletInstanceSettingsHelper.isShowActions();
 	}
 
 	private String _getAddFileShortcutURL() {
@@ -753,27 +749,17 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_SHORTCUT)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.ADD_SHORTCUT);
 	}
 
 	private boolean _isAddFolderActionVisible() throws PortalException {
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_FOLDER)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.ADD_FOLDER);
 	}
 
 	private boolean _isAddMediaActionVisible() throws PortalException {
@@ -789,15 +775,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.ADD_DOCUMENT);
 	}
 
 	private boolean _isAddRepositoryActionVisible() throws PortalException {
@@ -807,15 +788,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.ADD_REPOSITORY)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.ADD_REPOSITORY);
 	}
 
 	private Boolean _isCopyActionVisible() throws PortalException {
@@ -827,11 +803,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (_hasViewPermission()) {
-			return true;
-		}
-
-		return false;
+		return _hasViewPermission();
 	}
 
 	private boolean _isDeleteExpiredTemporaryFileEntriesActionVisible() {
@@ -865,15 +837,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.DELETE)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.DELETE);
 	}
 
 	private boolean _isDownloadFolderActionVisible() throws PortalException {
@@ -885,11 +852,7 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (_hasViewPermission()) {
-			return true;
-		}
-
-		return false;
+		return _hasViewPermission();
 	}
 
 	private boolean _isEditFolderActionVisible() throws PortalException {
@@ -897,15 +860,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.UPDATE);
 	}
 
 	private boolean _isMoveFolderActionVisible() throws PortalException {
@@ -915,15 +873,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if (DLFolderPermission.contains(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.UPDATE);
 	}
 
 	private boolean _isMultipleUploadSupported() {

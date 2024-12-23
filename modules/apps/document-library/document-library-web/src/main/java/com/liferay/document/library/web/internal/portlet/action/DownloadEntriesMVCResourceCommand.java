@@ -260,11 +260,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			return false;
 		}
 
-		if (_isExternalRepositoryFolder(_dlAppService.getFolder(folderId))) {
-			return true;
-		}
-
-		return false;
+		return _isExternalRepositoryFolder(_dlAppService.getFolder(folderId));
 	}
 
 	private void _zipFileEntry(

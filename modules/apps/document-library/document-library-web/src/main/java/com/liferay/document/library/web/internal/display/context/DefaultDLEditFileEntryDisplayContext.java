@@ -340,11 +340,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isSaveButtonDisabled() {
-		if (_fileEntryDisplayContextHelper.isCheckedOutByOther()) {
-			return true;
-		}
-
-		return false;
+		return _fileEntryDisplayContextHelper.isCheckedOutByOther();
 	}
 
 	@Override

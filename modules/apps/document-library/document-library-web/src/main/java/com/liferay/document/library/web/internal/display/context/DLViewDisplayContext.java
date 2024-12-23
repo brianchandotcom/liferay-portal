@@ -331,19 +331,11 @@ public class DLViewDisplayContext {
 	}
 
 	public boolean isFileEntryMetadataSetsNavigation() {
-		if (Objects.equals(_getNavigation(), "file_entry_metadata_sets")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "file_entry_metadata_sets");
 	}
 
 	public boolean isFileEntryTypesNavigation() {
-		if (Objects.equals(_getNavigation(), "file_entry_types")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "file_entry_types");
 	}
 
 	public boolean isOpenInMSOfficeEnabled() {

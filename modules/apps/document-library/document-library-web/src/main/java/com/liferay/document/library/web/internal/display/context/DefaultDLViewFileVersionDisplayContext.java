@@ -303,11 +303,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isActionsVisible() {
-		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
-			return true;
-		}
-
-		return false;
+		return _dlPortletInstanceSettingsHelper.isShowActions();
 	}
 
 	@Override
@@ -328,11 +324,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isVersionInfoVisible() {
-		if (_isSystemDLFileEntryType()) {
-			return false;
-		}
-
-		return true;
+		return !_isSystemDLFileEntryType();
 	}
 
 	@Override

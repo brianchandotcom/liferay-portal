@@ -118,11 +118,7 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 		Map<String, Serializable> nextAttributes =
 			nextExpandoBridge.getAttributes();
 
-		if (!previousAttributes.equals(nextAttributes)) {
-			return true;
-		}
-
-		return false;
+		return !previousAttributes.equals(nextAttributes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

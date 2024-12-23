@@ -79,11 +79,7 @@ public class FolderHorizontalCard implements HorizontalCard {
 
 	@Override
 	public boolean isSelectable() {
-		if (_actions.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !_actions.isEmpty();
 	}
 
 	private final Set<String> _actions;

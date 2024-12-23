@@ -321,14 +321,9 @@ public class DLViewFileEntryDisplayContext {
 			return false;
 		}
 
-		if (DLFileEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), getFileEntry(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return DLFileEntryPermission.contains(
+			_themeDisplay.getPermissionChecker(), getFileEntry(),
+			ActionKeys.UPDATE);
 	}
 
 	public boolean isShowVersionDetails() {

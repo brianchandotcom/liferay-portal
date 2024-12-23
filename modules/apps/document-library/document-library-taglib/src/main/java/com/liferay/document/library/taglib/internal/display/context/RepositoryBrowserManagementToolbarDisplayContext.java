@@ -69,11 +69,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				if (user.isGuestUser()) {
-					return false;
-				}
-
-				return true;
+				return !user.isGuestUser();
 			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
@@ -154,11 +150,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		if (_actions.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !_actions.isEmpty();
 	}
 
 	@Override

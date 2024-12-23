@@ -355,19 +355,11 @@ public class RepositoryBrowserTagDisplayContext {
 	}
 
 	public boolean isDescriptiveDisplayStyle() {
-		if (Objects.equals(getDisplayStyle(), "descriptive")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "descriptive");
 	}
 
 	public boolean isIconDisplayStyle() {
-		if (Objects.equals(getDisplayStyle(), "icon")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
 	public boolean isRepositoryEntryNavigable(RepositoryEntry repositoryEntry) {

@@ -215,11 +215,7 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isLockedByMe() {
-		if (hasLock()) {
-			return true;
-		}
-
-		return false;
+		return hasLock();
 	}
 
 	public boolean isMoveActionAvailable() throws PortalException {

@@ -2083,11 +2083,7 @@ public class CMISRepository extends BaseCmisRepository {
 		Set<Action> allowableActionsSet =
 			allowableActions.getAllowableActions();
 
-		if (allowableActionsSet.contains(action)) {
-			return true;
-		}
-
-		return false;
+		return allowableActionsSet.contains(action);
 	}
 
 	private boolean _isAllVersionsSearchableSupported(Session session) {

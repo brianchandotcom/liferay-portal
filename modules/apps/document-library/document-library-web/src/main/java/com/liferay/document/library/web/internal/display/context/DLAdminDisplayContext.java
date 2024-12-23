@@ -475,27 +475,15 @@ public class DLAdminDisplayContext {
 	}
 
 	public boolean isNavigationHome() {
-		if (Objects.equals(getNavigation(), "home")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "home");
 	}
 
 	public boolean isNavigationMine() {
-		if (Objects.equals(getNavigation(), "mine")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "mine");
 	}
 
 	public boolean isNavigationRecent() {
-		if (Objects.equals(getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "recent");
 	}
 
 	public boolean isRootFolderInTrash() {
@@ -507,11 +495,7 @@ public class DLAdminDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isBlank(_getKeywords())) {
-			return false;
-		}
-
-		return true;
+		return !Validator.isBlank(_getKeywords());
 	}
 
 	public boolean isUpdateAutoTags() {

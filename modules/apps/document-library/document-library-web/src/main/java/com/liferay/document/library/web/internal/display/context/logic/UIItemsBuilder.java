@@ -777,11 +777,7 @@ public class UIItemsBuilder {
 
 		String portletName = portletDisplay.getPortletName();
 
-		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-			return false;
-		}
-
-		return true;
+		return portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 	}
 
 	public boolean isRevertToVersionActionAvailable() throws PortalException {
@@ -795,13 +791,8 @@ public class UIItemsBuilder {
 
 		FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
 
-		if (Objects.equals(
-				latestFileVersion.getVersion(), _fileVersion.getVersion())) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(
+			latestFileVersion.getVersion(), _fileVersion.getVersion());
 	}
 
 	public boolean isViewOriginalFileActionAvailable() {
@@ -1122,15 +1113,9 @@ public class UIItemsBuilder {
 	}
 
 	private boolean _isFileVersionContentTypeAllowed() {
-		if (Objects.equals(
-				_fileVersion.getMimeType(),
-				ContentTypes.
-					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(
+			_fileVersion.getMimeType(),
+			ContentTypes.APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML);
 	}
 
 	private boolean _isFileVersionExportable(boolean latestVersion) {
@@ -1154,14 +1139,9 @@ public class UIItemsBuilder {
 					StagedModelDataHandlerRegistryUtil.
 						getStagedModelDataHandler(FileEntry.class.getName());
 
-			if (ArrayUtil.contains(
-					stagedModelDataHandler.getExportableStatuses(),
-					fileVersion.getStatus())) {
-
-				return true;
-			}
-
-			return false;
+			return ArrayUtil.contains(
+				stagedModelDataHandler.getExportableStatuses(),
+				fileVersion.getStatus());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

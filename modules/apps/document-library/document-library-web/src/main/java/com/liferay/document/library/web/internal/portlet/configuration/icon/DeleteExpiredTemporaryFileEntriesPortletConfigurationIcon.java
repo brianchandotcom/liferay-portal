@@ -104,13 +104,8 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 					RepositoryProviderUtil.getLocalRepository(
 						folder.getRepositoryId());
 
-				if (localRepository.isCapabilityProvided(
-						TemporaryFileEntriesCapability.class)) {
-
-					return true;
-				}
-
-				return false;
+				return localRepository.isCapabilityProvided(
+					TemporaryFileEntriesCapability.class);
 			});
 	}
 

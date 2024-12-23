@@ -322,11 +322,7 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public boolean isDescriptiveDisplayStyle() {
-		if (Objects.equals(getDisplayStyle(), "descriptive")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "descriptive");
 	}
 
 	public boolean isDraggable(FileEntry fileEntry) throws PortalException {
@@ -360,11 +356,7 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public boolean isIconDisplayStyle() {
-		if (Objects.equals(getDisplayStyle(), "icon")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
 	public boolean isRootFolder() {
@@ -442,13 +434,8 @@ public class DLViewEntriesDisplayContext {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		if (_hasWorkflowDefinitionLink(
-				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId())) {
-
-			return true;
-		}
-
-		return false;
+		return _hasWorkflowDefinitionLink(
+			dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId());
 	}
 
 	private boolean _hasWorkflowDefinitionLink(

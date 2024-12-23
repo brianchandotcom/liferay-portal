@@ -1030,13 +1030,8 @@ public class DLAdminManagementToolbarDisplayContext
 	private boolean _isEnableOnBulk() {
 		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
 
-		if (_hasWorkflowDefinitionLink(
-				folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL)) {
-
-			return false;
-		}
-
-		return true;
+		return !_hasWorkflowDefinitionLink(
+			folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 	}
 
 	private boolean _isSearch() {

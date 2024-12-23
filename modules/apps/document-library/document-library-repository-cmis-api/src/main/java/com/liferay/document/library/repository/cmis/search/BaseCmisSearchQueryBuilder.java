@@ -257,11 +257,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			return false;
 		}
 
-		if (capabilityQuery.equals("fulltextonly")) {
-			return true;
-		}
-
-		return false;
+		return capabilityQuery.equals("fulltextonly");
 	}
 
 	protected void traverseContentQuery(

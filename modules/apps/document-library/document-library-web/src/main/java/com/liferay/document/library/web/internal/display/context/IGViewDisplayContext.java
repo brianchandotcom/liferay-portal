@@ -307,27 +307,15 @@ public class IGViewDisplayContext {
 	}
 
 	public boolean isTopLinkHome() {
-		if (Objects.equals(getTopLink(), "home")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTopLink(), "home");
 	}
 
 	public boolean isTopLinkMine() {
-		if (Objects.equals(getTopLink(), "mine")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTopLink(), "mine");
 	}
 
 	public boolean isTopLinkRecent() {
-		if (Objects.equals(getTopLink(), "recent")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTopLink(), "recent");
 	}
 
 	private Long _getAssetCategoryId() {

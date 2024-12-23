@@ -137,11 +137,7 @@ public class FileShortcutVerticalCard implements VerticalCard {
 
 	@Override
 	public boolean isSelectable() {
-		if (_actions.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !_actions.isEmpty();
 	}
 
 	private final Set<String> _actions;

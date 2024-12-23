@@ -104,16 +104,11 @@ public class MoveFolderPortletConfigurationIcon
 					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				if (ModelResourcePermissionUtil.contains(
-						_folderModelResourcePermission,
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getScopeGroupId(), folder.getFolderId(),
-						ActionKeys.UPDATE)) {
-
-					return true;
-				}
-
-				return false;
+				return ModelResourcePermissionUtil.contains(
+					_folderModelResourcePermission,
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), folder.getFolderId(),
+					ActionKeys.UPDATE);
 			});
 	}
 

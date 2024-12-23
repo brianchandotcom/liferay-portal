@@ -141,11 +141,7 @@ public class DLPortletInstanceSettingsHelper {
 	public boolean isShowTabs() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-			return true;
-		}
-
-		return false;
+		return portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 	}
 
 	private String[] _getAllEntryColumns() {

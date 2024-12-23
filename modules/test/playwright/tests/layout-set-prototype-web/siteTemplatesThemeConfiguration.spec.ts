@@ -3,50 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
-import {sitesPageTest} from '../../fixtures/sitesPageTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
-import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
-import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
-import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {UIElementsPage} from '../../pages/uielements/UIElementsPage';
 import getRandomString from '../../utils/getRandomString';
-import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
-import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
-import {LayoutSetPrototypePage} from './pages/LayoutSetPrototypePage';
 
 const test = mergeTests(
 	applicationsMenuPageTest,
-	journalPagesTest,
-	isolatedSiteTest,
-	layoutSetPrototypePageTest,
-	productMenuPageTest,
-	uiElementsPageTest,
-	pagesPagesTest,
-	pageViewModePagesTest,
-	webContentDisplayPageTest,
-	pageEditorPagesTest,
 	displayPageTemplatesPagesTest,
-	sitesPageTest,
-	serverAdministrationPageTest,
+	layoutSetPrototypePageTest,
+	pageEditorPagesTest,
 	loginTest(),
-	featureFlagsTest({
-		'LPD-39304': true,
-	}),
 	pagesAdminPagesTest
 );
 
@@ -60,26 +32,52 @@ test(
 		displayPageTemplatesPage,
 		layoutSetPrototypePage,
 		page,
-		pageEditorPage,
 		pagesAdminPage,
-		productMenuPage,
-		uiElementsPage,
 	}) => {
+
+		// Create Site Template
+
 		const siteTemplateName: string = getRandomString();
-		await createSiteTemplateAndConfigureTheirLayoutSetsTheme({
-			applicationsMenuPage,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: siteTemplateName,
-			uiElementsPage,
-		});
 
-		const siteTemplateUrl = page.url().match(/template-\d+/);
+		await applicationsMenuPage.goToSiteTemplates();
+		await layoutSetPrototypePage.addSiteTemplate(siteTemplateName);
+		await applicationsMenuPage.goToSiteTemplates();
 
-		await displayPageTemplatesPage.goto('/' + siteTemplateUrl[0]);
+		// Go to Site Template Configuration and configure a new theme for public pages
+
+		const siteTemplateFriendlyUrlPath =
+			'/' +
+			new URL(
+				await layoutSetPrototypePage.getSiteTemplateUrl(
+					siteTemplateName
+				)
+			).pathname
+				.split('/')
+				.at(-1);
+
+		await pagesAdminPage.gotoPagesConfiguration(
+			siteTemplateFriendlyUrlPath
+		);
+
+		await pagesAdminPage.page
+			.getByRole('button', {name: 'Change Current Theme'})
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Available Themes"]')
+			.getByRole('button', {name: 'Select Speedwell By Liferay,'})
+			.click();
+
+		await page
+			.getByRole('button', {
+				exact: true,
+				name: 'Save',
+			})
+			.click();
+
+		// Assert that the theme is applied to private pages too
+
+		await displayPageTemplatesPage.goto(siteTemplateFriendlyUrlPath);
 
 		const displayPageTemplateName = getRandomString();
 
@@ -89,67 +87,8 @@ test(
 			name: displayPageTemplateName,
 		});
 
-		await displayPageTemplatesPage.page
-			.getByRole('link', {name: displayPageTemplateName})
-			.click();
+		await page.getByRole('link', {name: displayPageTemplateName}).click();
 
 		await expect(page.getByText('Terms and Conditions')).toBeVisible();
 	}
 );
-
-async function createSiteTemplateAndConfigureTheirLayoutSetsTheme({
-	applicationsMenuPage,
-	layoutSetPrototypePage,
-	page,
-	pageEditorPage,
-	pagesAdminPage,
-	productMenuPage,
-	templateName,
-}: {
-	applicationsMenuPage: ApplicationsMenuPage;
-	layoutSetPrototypePage: LayoutSetPrototypePage;
-	page: Page;
-	pageEditorPage: PageEditorPage;
-	pagesAdminPage: PagesAdminPage;
-	productMenuPage: ProductMenuPage;
-	templateName: string;
-	uiElementsPage: UIElementsPage;
-}): Promise<void> {
-	await applicationsMenuPage.goToSiteTemplates();
-	await layoutSetPrototypePage.addSiteTemplate(templateName);
-	await applicationsMenuPage.goToSiteTemplates();
-	const siteTemplateUrl =
-		await layoutSetPrototypePage.getSiteTemplateUrl(templateName);
-
-	await page.goto(siteTemplateUrl);
-	await productMenuPage.checkIfAdecuateProductMenu(templateName);
-	await productMenuPage.openProductMenuIfClosed();
-
-	await productMenuPage.goToPages();
-	await pagesAdminPage.newButton.click();
-	await layoutSetPrototypePage.addTemplatePageButton.waitFor({
-		state: 'visible',
-	});
-	await layoutSetPrototypePage.addTemplatePageButton.click();
-	await pagesAdminPage.addPage({
-		name: templateName,
-	});
-
-	await pageEditorPage.publishPage();
-	await pagesAdminPage.page.getByLabel('Options', {exact: true}).click();
-	await pagesAdminPage.page
-		.getByRole('menuitem', {name: 'Configuration'})
-		.click();
-	await pagesAdminPage.page
-		.getByRole('button', {name: 'Change Current Theme'})
-		.click();
-	await pagesAdminPage.page
-		.frameLocator('iframe[title="Available Themes"]')
-		.getByRole('button', {name: 'Select Speedwell By Liferay,'})
-		.click();
-	await pagesAdminPage.page.getByRole('button', {name: 'Save'}).click();
-
-	await expect(
-		page.getByText('Success:Your request completed successfully.')
-	).toBeVisible();
-}

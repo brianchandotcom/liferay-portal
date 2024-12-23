@@ -101,6 +101,14 @@ $addedItemHighlightColor: #e6ffed;
 	.sheet .panel-group .panel-body {
 		margin-bottom: 0;
 	}
+
+	.border-bottom-2-black {
+		border-bottom: 2px solid #f0f0f0;
+	}
+
+	.min-height-100 {
+		min-height: 100px;
+	}
 }
 
 .portlet-oauth2-provider-authorize {

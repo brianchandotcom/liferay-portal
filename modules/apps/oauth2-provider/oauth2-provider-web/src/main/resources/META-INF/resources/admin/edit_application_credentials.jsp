@@ -87,7 +87,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 					<c:if test="<%= oAuth2Application != null %>">
-						<aui:fieldset cssClass="mb-3" style="border-bottom: 2px solid #F0F0F0;">
+						<aui:fieldset cssClass="border-bottom-2-black mb-3">
 							<react:component
 								module="{EditClientDetails} from oauth2-provider-web"
 								props='<%=

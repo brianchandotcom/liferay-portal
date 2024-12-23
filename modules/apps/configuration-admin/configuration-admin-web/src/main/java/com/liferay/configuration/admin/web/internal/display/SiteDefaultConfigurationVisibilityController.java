@@ -39,11 +39,7 @@ public class SiteDefaultConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (scope.equals(scope.GROUP.getValue())) {
-			return false;
-		}
-
-		return true;
+		return !scope.equals(scope.GROUP.getValue());
 	}
 
 }

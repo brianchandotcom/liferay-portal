@@ -58,7 +58,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			null, 1, null, false, null);
 
@@ -94,7 +94,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
@@ -103,7 +103,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-2=Test 2\nshared-language-key=Test 2"
 			).put(
-				"en", "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
 			).build(),
 			"test-bundle2", 1, true, true, null);
 		Bundle bundle3 = _installResourceBundle(
@@ -159,7 +159,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			null, 1, null, false, null,
 			_getProvideCapabilityLegacy(
@@ -205,7 +205,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			servletContextName, 1, false, true, null,
 			_getProvideCapabilityLegacy(
@@ -250,7 +250,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			"test-bundle", 1, true, true, null);
 
@@ -292,7 +292,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			servletContextName, 1, false, true, null);
 
@@ -324,7 +324,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			servletContextName, 1, false, true, null);
 
@@ -393,7 +393,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
@@ -402,7 +402,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-2=Test 2\nshared-language-key=Test 2"
 			).put(
-				"en", "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
 			).build(),
 			"test-bundle2", 1, false, true, null);
 
@@ -457,7 +457,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-1=Test 1\nshared-language-key=Test 1"
 			).put(
-				"en", "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
 			null, 1, null, false, null);
 		Bundle bundle2 = _installResourceBundle(
@@ -466,7 +466,7 @@ public class LanguageResourcesExtenderTest {
 				StringPool.BLANK,
 				"language-key-2=Test 2\nshared-language-key=Test 2"
 			).put(
-				"en", "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
 			).build(),
 			null, 2, null, false, null);
 

@@ -55,8 +55,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -72,10 +71,6 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertEquals(
 				"Test 1",
 				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
-			Assert.assertEquals(
-				"Test 1",
-				LanguageResources.getMessage(
-					LocaleUtil.ENGLISH, "shared-language-key"));
 
 			Assert.assertEquals(
 				"Enabled",
@@ -156,8 +151,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -175,10 +169,6 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertEquals(
 				"Test 1",
 				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
-			Assert.assertEquals(
-				"Test 1",
-				LanguageResources.getMessage(
-					LocaleUtil.ENGLISH, "shared-language-key"));
 
 			Assert.assertNull(
 				ResourceBundleLoaderUtil.
@@ -202,8 +192,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -247,8 +236,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -271,8 +259,6 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertEquals(
 				"Test 1", resourceBundle.getString("language-key-1"));
 			Assert.assertEquals("Test 1", resourceBundle.getString("about"));
-			Assert.assertEquals(
-				"Test 1", resourceBundle.getString("shared-language-key"));
 
 			Assert.assertFalse(resourceBundle.containsKey("enabled"));
 		}
@@ -289,8 +275,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -321,8 +306,7 @@ public class LanguageResourcesExtenderTest {
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringPool.BLANK, "language-key-1=Test 1"
 			).put(
 				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
 			).build(),
@@ -334,9 +318,6 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertNull(
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-1"));
-			Assert.assertNull(
-				LanguageResources.getMessage(
-					LocaleUtil.ENGLISH, "shared-language-key"));
 
 			Assert.assertEquals(
 				"About",
@@ -369,11 +350,6 @@ public class LanguageResourcesExtenderTest {
 
 			Assert.assertEquals("Test 1", resourceBundle1.getString("about"));
 			Assert.assertEquals("Test 1", resourceBundle2.getString("about"));
-
-			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("shared-language-key"));
-			Assert.assertEquals(
-				"Test 1", resourceBundle2.getString("shared-language-key"));
 
 			Assert.assertEquals(
 				"Enabled", resourceBundle1.getString("enabled"));

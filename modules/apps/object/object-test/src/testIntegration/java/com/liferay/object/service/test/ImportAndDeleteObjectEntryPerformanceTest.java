@@ -19,13 +19,20 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -54,9 +61,40 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 
 	@Test
 	public void testImportAndDeleteObjectEntry() throws Exception {
+		_addCompany();
 		_importObjectFolder();
 		_importObjectEntry();
 		_deleteObjectEntry();
+	}
+
+	private void _addCompany() throws Exception {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		TransactionConfig transactionConfig = builder.build();
+
+		try {
+			_company = TransactionInvokerUtil.invoke(
+				transactionConfig,
+				() -> {
+					Company company = CompanyLocalServiceUtil.addCompany(
+						null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME,
+						_VIRTUAL_HOST_NAME, 0, true, true, null, null, null,
+						null, null, null);
+
+					PortalInstances.initCompany(company);
+
+					return company;
+				});
+		}
+		catch (Exception exception) {
+			throw exception;
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
 	}
 
 	private String _createObjectEntryJSON() throws Exception {
@@ -80,9 +118,9 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(jsonArray.toString(), "application/json");
-			httpInvoker.userNameAndPassword(_USER_NAME_AND_PASSWORD);
+			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-			httpInvoker.path(_PATH);
+			httpInvoker.path(_getPath(_PATH_SUFFIX));
 
 			httpInvoker.invoke();
 
@@ -99,11 +137,11 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 	private JSONArray _getObjectEntryIdJSONArray() throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.userNameAndPassword(_USER_NAME_AND_PASSWORD);
+		httpInvoker.userNameAndPassword(_getUserNameAndPassword());
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
 		httpInvoker.path(
-			"http://localhost:8080/o/c/foos/?fields=id&pageSize=" +
-				_OBJECT_ENTRY_COUNT);
+			_getPath("/o/c/foos/?fields=id&pageSize=" + _OBJECT_ENTRY_COUNT));
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
@@ -111,6 +149,17 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			httpResponse.getContent());
 
 		return (JSONArray)jsonObject.get("items");
+	}
+
+	private String _getPath(String pathSuffix) {
+		return StringBundler.concat(
+			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
+	}
+
+	private String _getUserNameAndPassword() {
+		return StringBundler.concat(
+			"test@", _VIRTUAL_HOST_NAME, ":",
+			PropsValues.DEFAULT_ADMIN_PASSWORD);
 	}
 
 	private void _importObjectEntry() throws Exception {
@@ -122,9 +171,9 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(_createObjectEntryJSON(), "application/json");
-			httpInvoker.userNameAndPassword(_USER_NAME_AND_PASSWORD);
+			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-			httpInvoker.path(_PATH);
+			httpInvoker.path(_getPath(_PATH_SUFFIX));
 
 			httpInvoker.invoke();
 
@@ -150,8 +199,10 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			_objectFolderResourceFactory.create();
 
 		ObjectFolderResource objectFolderResource = builder.user(
-			TestPropsValues.getUser()
+			UserTestUtil.getAdminUser(_company.getCompanyId())
 		).build();
+
+		objectFolderResource.setContextCompany(_company);
 
 		JSONObject objectFolderJSONObject = _jsonFactory.createJSONObject(
 			StringUtil.read(
@@ -174,10 +225,12 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 
 	private static final int _OBJECT_ENTRY_COUNT = 100;
 
-	private static final String _PATH = "http://localhost:8080/o/c/foos/batch";
+	private static final String _PATH_SUFFIX = "/o/c/foos/batch";
 
-	private static final String _USER_NAME_AND_PASSWORD =
-		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private JSONFactory _jsonFactory;

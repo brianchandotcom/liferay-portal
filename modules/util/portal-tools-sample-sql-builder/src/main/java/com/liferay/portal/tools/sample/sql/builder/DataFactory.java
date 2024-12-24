@@ -400,6 +400,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -684,6 +685,12 @@ public class DataFactory {
 		ObjectDefinitionModel objectDefinitionModel,
 		List<ObjectFieldModel> objectFieldModels) {
 
+		if (!_dynamicObjectDefinitionTables.add(
+				objectDefinitionModel.getDBTableName())) {
+
+			return StringPool.BLANK;
+		}
+
 		List<ObjectField> objectFields = new ArrayList<>();
 
 		for (ObjectFieldModel objectFieldModel : objectFieldModels) {
@@ -707,6 +714,12 @@ public class DataFactory {
 
 		ObjectDefinition objectDefinition =
 			(ObjectDefinition)objectDefinitionModel;
+
+		if (!_dynamicObjectDefinitionTables.add(
+				objectDefinition.getExtensionDBTableName())) {
+
+			return StringPool.BLANK;
+		}
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			new DynamicObjectDefinitionTable(
@@ -8883,6 +8896,7 @@ public class DataFactory {
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private final SimpleCounter _dlFileEntryIdCounter;
+	private final Set<String> _dynamicObjectDefinitionTables = new HashSet<>();
 	private AddressModel _firstAddressModel;
 	private final List<String> _firstNames;
 	private final FriendlyURLNormalizer _friendlyURLNormalizer;

@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,12 +53,14 @@ public class LanguageResourcesExtenderTest {
 
 	@Test
 	public void testRegistration() throws Exception {
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			null, 1, null, false, null);
 
@@ -74,11 +77,11 @@ public class LanguageResourcesExtenderTest {
 			bundle.start();
 
 			Assert.assertEquals(
-				"Test 1",
+				value,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-1"));
 			Assert.assertEquals(
-				"Test 1",
+				value,
 				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 
 			Assert.assertEquals(
@@ -92,27 +95,34 @@ public class LanguageResourcesExtenderTest {
 
 	@Test
 	public void testRegistrationAggregate() throws Exception {
+		String value1 = RandomTestUtil.randomString();
+		String value2 = RandomTestUtil.randomString();
+		String value3 = RandomTestUtil.randomString();
+
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringBundler.concat(
+					"language-key-1=", value1, "\nshared-language-key=", value1)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value1
 			).build(),
 			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-2=Test 2\nshared-language-key=Test 2"
+				StringBundler.concat(
+					"language-key-2=", value2, "\nshared-language-key=", value2)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value2
 			).build(),
 			"test-bundle2", 1, true, true, null);
 		Bundle bundle3 = _installResourceBundle(
 			"test.bundle3",
-			Collections.singletonMap(StringPool.BLANK, "language-key-3=Test 3"),
+			Collections.singletonMap(
+				StringPool.BLANK, "language-key-3=" + value3),
 			"test-bundle3", 1, true, true,
 			"liferay.language.resources;filter:=\"(bundle.symbolic.name=" +
 				"test.bundle2)\",liferay.language.resources;filter:=\"(" +
@@ -144,12 +154,12 @@ public class LanguageResourcesExtenderTest {
 				resourceBundleLoader1.loadResourceBundle(LocaleUtil.ENGLISH);
 
 			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("language-key-1"));
+				value1, resourceBundle1.getString("language-key-1"));
 			Assert.assertFalse(resourceBundle1.containsKey("language-key-2"));
 			Assert.assertFalse(resourceBundle1.containsKey("language-key-3"));
-			Assert.assertEquals("Test 1", resourceBundle1.getString("about"));
+			Assert.assertEquals(value1, resourceBundle1.getString("about"));
 			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("shared-language-key"));
+				value1, resourceBundle1.getString("shared-language-key"));
 
 			ResourceBundleLoader resourceBundleLoader2 =
 				ResourceBundleLoaderUtil.
@@ -160,11 +170,11 @@ public class LanguageResourcesExtenderTest {
 
 			Assert.assertFalse(resourceBundle2.containsKey("language-key-1"));
 			Assert.assertEquals(
-				"Test 2", resourceBundle2.getString("language-key-2"));
+				value2, resourceBundle2.getString("language-key-2"));
 			Assert.assertFalse(resourceBundle2.containsKey("language-key-3"));
-			Assert.assertEquals("Test 2", resourceBundle2.getString("about"));
+			Assert.assertEquals(value2, resourceBundle2.getString("about"));
 			Assert.assertEquals(
-				"Test 2", resourceBundle2.getString("shared-language-key"));
+				value2, resourceBundle2.getString("shared-language-key"));
 
 			ResourceBundleLoader resourceBundleLoader3 =
 				ResourceBundleLoaderUtil.
@@ -174,14 +184,14 @@ public class LanguageResourcesExtenderTest {
 				resourceBundleLoader3.loadResourceBundle(LocaleUtil.ENGLISH);
 
 			Assert.assertEquals(
-				"Test 1", resourceBundle3.getString("language-key-1"));
+				value1, resourceBundle3.getString("language-key-1"));
 			Assert.assertEquals(
-				"Test 2", resourceBundle3.getString("language-key-2"));
+				value2, resourceBundle3.getString("language-key-2"));
 			Assert.assertEquals(
-				"Test 3", resourceBundle3.getString("language-key-3"));
-			Assert.assertEquals("Test 2", resourceBundle3.getString("about"));
+				value3, resourceBundle3.getString("language-key-3"));
+			Assert.assertEquals(value2, resourceBundle3.getString("about"));
 			Assert.assertEquals(
-				"Test 2", resourceBundle3.getString("shared-language-key"));
+				value2, resourceBundle3.getString("shared-language-key"));
 		}
 		finally {
 			bundle1.uninstall();
@@ -195,12 +205,14 @@ public class LanguageResourcesExtenderTest {
 		String bundleSymbolicName = "test.bundle";
 		String servletContextName = "test-bundle";
 
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			null, 1, null, false, null,
 			_getProvideCapabilityLegacy(
@@ -224,11 +236,11 @@ public class LanguageResourcesExtenderTest {
 			bundle.start();
 
 			Assert.assertEquals(
-				"Test 1",
+				value,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-1"));
 			Assert.assertEquals(
-				"Test 1",
+				value,
 				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 
 			Assert.assertNull(
@@ -250,12 +262,14 @@ public class LanguageResourcesExtenderTest {
 		String bundleSymbolicName = "test.bundle";
 		String servletContextName = "test-bundle";
 
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			servletContextName, 1, false, true, null,
 			_getProvideCapabilityLegacy(
@@ -294,12 +308,14 @@ public class LanguageResourcesExtenderTest {
 
 	@Test
 	public void testRegistrationExcludePortalResources() throws Exception {
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			"test.bundle",
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			"test-bundle", 1, true, true, null);
 
@@ -322,8 +338,8 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertNotNull(resourceBundle);
 
 			Assert.assertEquals(
-				"Test 1", resourceBundle.getString("language-key-1"));
-			Assert.assertEquals("Test 1", resourceBundle.getString("about"));
+				value, resourceBundle.getString("language-key-1"));
+			Assert.assertEquals(value, resourceBundle.getString("about"));
 
 			Assert.assertFalse(resourceBundle.containsKey("enabled"));
 		}
@@ -337,12 +353,14 @@ public class LanguageResourcesExtenderTest {
 		String bundleSymbolicName = "test.bundle";
 		String servletContextName = "test-bundle";
 
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			servletContextName, 1, false, true, null);
 
@@ -377,12 +395,14 @@ public class LanguageResourcesExtenderTest {
 		String bundleSymbolicName = "test.bundle";
 		String servletContextName = "test-bundle";
 
+		String value = RandomTestUtil.randomString();
+
 		Bundle bundle = _installResourceBundle(
 			bundleSymbolicName,
 			HashMapBuilder.put(
-				StringPool.BLANK, "language-key-1=Test 1"
+				StringPool.BLANK, "language-key-1=" + value
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value
 			).build(),
 			servletContextName, 1, false, true, null);
 
@@ -433,12 +453,12 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertNotNull(resourceBundle2);
 
 			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("language-key-1"));
+				value, resourceBundle1.getString("language-key-1"));
 			Assert.assertEquals(
-				"Test 1", resourceBundle2.getString("language-key-1"));
+				value, resourceBundle2.getString("language-key-1"));
 
-			Assert.assertEquals("Test 1", resourceBundle1.getString("about"));
-			Assert.assertEquals("Test 1", resourceBundle2.getString("about"));
+			Assert.assertEquals(value, resourceBundle1.getString("about"));
+			Assert.assertEquals(value, resourceBundle2.getString("about"));
 
 			Assert.assertEquals(
 				"Enabled", resourceBundle1.getString("enabled"));
@@ -452,22 +472,27 @@ public class LanguageResourcesExtenderTest {
 
 	@Test
 	public void testRegistrationModuleOnlyMultiple() throws Exception {
+		String value1 = RandomTestUtil.randomString();
+		String value2 = RandomTestUtil.randomString();
+
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringBundler.concat(
+					"language-key-1=", value1, "\nshared-language-key=", value1)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value1
 			).build(),
 			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-2=Test 2\nshared-language-key=Test 2"
+				StringBundler.concat(
+					"language-key-2=", value2, "\nshared-language-key=", value2)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value2
 			).build(),
 			"test-bundle2", 1, false, true, null);
 
@@ -501,16 +526,16 @@ public class LanguageResourcesExtenderTest {
 			Assert.assertNotNull(resourceBundle2);
 
 			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("language-key-1"));
-			Assert.assertEquals("Test 1", resourceBundle1.getString("about"));
+				value1, resourceBundle1.getString("language-key-1"));
+			Assert.assertEquals(value1, resourceBundle1.getString("about"));
 			Assert.assertEquals(
-				"Test 1", resourceBundle1.getString("shared-language-key"));
+				value1, resourceBundle1.getString("shared-language-key"));
 
 			Assert.assertEquals(
-				"Test 2", resourceBundle2.getString("language-key-2"));
-			Assert.assertEquals("Test 2", resourceBundle2.getString("about"));
+				value2, resourceBundle2.getString("language-key-2"));
+			Assert.assertEquals(value2, resourceBundle2.getString("about"));
 			Assert.assertEquals(
-				"Test 2", resourceBundle2.getString("shared-language-key"));
+				value2, resourceBundle2.getString("shared-language-key"));
 
 			Assert.assertFalse(resourceBundle1.containsKey("language-key-2"));
 			Assert.assertFalse(resourceBundle2.containsKey("language-key-1"));
@@ -523,22 +548,27 @@ public class LanguageResourcesExtenderTest {
 
 	@Test
 	public void testRegistrationServiceRanking() throws Exception {
+		String value1 = RandomTestUtil.randomString();
+		String value2 = RandomTestUtil.randomString();
+
 		Bundle bundle1 = _installResourceBundle(
 			"test.bundle1",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-1=Test 1\nshared-language-key=Test 1"
+				StringBundler.concat(
+					"language-key-1=", value1, "\nshared-language-key=", value1)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 1"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value1
 			).build(),
 			null, 1, null, false, null);
 		Bundle bundle2 = _installResourceBundle(
 			"test.bundle2",
 			HashMapBuilder.put(
 				StringPool.BLANK,
-				"language-key-2=Test 2\nshared-language-key=Test 2"
+				StringBundler.concat(
+					"language-key-2=", value2, "\nshared-language-key=", value2)
 			).put(
-				String.valueOf(LocaleUtil.ENGLISH), "about=Test 2"
+				String.valueOf(LocaleUtil.ENGLISH), "about=" + value2
 			).build(),
 			null, 2, null, false, null);
 
@@ -557,18 +587,18 @@ public class LanguageResourcesExtenderTest {
 			bundle2.start();
 
 			Assert.assertEquals(
-				"Test 1",
+				value1,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-1"));
 			Assert.assertEquals(
-				"Test 2",
+				value2,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-2"));
 			Assert.assertEquals(
-				"Test 2",
+				value2,
 				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 			Assert.assertEquals(
-				"Test 2",
+				value2,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "shared-language-key"));
 		}

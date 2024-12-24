@@ -8,11 +8,11 @@ package com.liferay.commerce.internal.inventory;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,17 +32,15 @@ public class CPInstanceOptionValueRelCommerceInventoryCheckerImpl
 	public List<CPInstanceOptionValueRel> filterByAvailability(
 		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
 
-		List<CPInstanceOptionValueRel> filtered = new ArrayList<>();
+		return TransformUtil.transform(
+			cpInstanceOptionValueRels,
+			cpInstanceOptionValueRel -> {
+				if (isAvailable(cpInstanceOptionValueRel)) {
+					return cpInstanceOptionValueRel;
+				}
 
-		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-				cpInstanceOptionValueRels) {
-
-			if (isAvailable(cpInstanceOptionValueRel)) {
-				filtered.add(cpInstanceOptionValueRel);
-			}
-		}
-
-		return filtered;
+				return null;
+			});
 	}
 
 	@Override

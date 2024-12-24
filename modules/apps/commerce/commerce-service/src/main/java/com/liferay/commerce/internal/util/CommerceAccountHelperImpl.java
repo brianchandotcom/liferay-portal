@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -584,22 +583,22 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 			return accountEntries;
 		}
 
-		List<AccountEntry> userAccountEntries = new ArrayList<>();
-
 		Set<Long> channelAccountEntryIds = new HashSet<>(
 			ListUtil.toList(
 				commerceChannelAccountEntryRels,
 				CommerceChannelAccountEntryRel::getAccountEntryId));
 
-		for (AccountEntry accountEntry : accountEntries) {
-			if (channelAccountEntryIds.contains(
-					accountEntry.getAccountEntryId())) {
+		return TransformUtil.transform(
+			accountEntries,
+			accountEntry -> {
+				if (channelAccountEntryIds.contains(
+						accountEntry.getAccountEntryId())) {
 
-				userAccountEntries.add(accountEntry);
-			}
-		}
+					return accountEntry;
+				}
 
-		return userAccountEntries;
+				return null;
+			});
 	}
 
 	private List<AccountEntry> _getCommerceChannelAccountEntries(

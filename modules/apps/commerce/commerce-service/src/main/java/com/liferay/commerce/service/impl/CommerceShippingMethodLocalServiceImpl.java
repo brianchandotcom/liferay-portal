@@ -11,6 +11,7 @@ import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.base.CommerceShippingMethodLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -237,28 +237,23 @@ public class CommerceShippingMethodLocalServiceImpl
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId, long countryId, boolean active) {
 
-		List<CommerceShippingMethod> filteredCommerceShippingMethods =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			commerceShippingMethodPersistence.findByG_A(groupId, active),
+			commerceShippingMethod -> {
+				boolean restricted =
+					_commerceAddressRestrictionLocalService.
+						isCommerceAddressRestricted(
+							CommerceShippingMethod.class.getName(),
+							commerceShippingMethod.
+								getCommerceShippingMethodId(),
+							countryId);
 
-		List<CommerceShippingMethod> commerceShippingMethods =
-			commerceShippingMethodPersistence.findByG_A(groupId, active);
+				if (!restricted) {
+					return commerceShippingMethod;
+				}
 
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			boolean restricted =
-				_commerceAddressRestrictionLocalService.
-					isCommerceAddressRestricted(
-						CommerceShippingMethod.class.getName(),
-						commerceShippingMethod.getCommerceShippingMethodId(),
-						countryId);
-
-			if (!restricted) {
-				filteredCommerceShippingMethods.add(commerceShippingMethod);
-			}
-		}
-
-		return filteredCommerceShippingMethods;
+				return null;
+			});
 	}
 
 	@Override

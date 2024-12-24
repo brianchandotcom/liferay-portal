@@ -1291,9 +1291,22 @@ export class PageEditorPage {
 				.isVisible();
 
 			if (hasRecentItems) {
-				await this.page
-					.getByRole('menuitem', {name: 'Select Item...'})
-					.click();
+				if (customMappingButtonLocator) {
+					await customMappingButtonLocator.click();
+				}
+				else {
+					await this.selectItemMappingButton.click();
+				}
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: this.page.getByRole('menuitem', {
+						name: 'Select Item...',
+					}),
+					trigger: customMappingButtonLocator
+						? customMappingButtonLocator
+						: this.selectItemMappingButton,
+				});
 			}
 
 			const iframe = this.page.frameLocator('iframe[title="Select"]');

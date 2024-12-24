@@ -97,16 +97,16 @@ public class ImageImportDDMFormFieldValueTransformer
 
 			Long classPK = fileEntryPKs.get(oldClassPK);
 
-			if (classPK == null) {
-				if (Validator.isNull(uuid)) {
-					return null;
-				}
-
-				return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-					uuid, portletDataContext.getScopeGroupId());
+			if (classPK != null) {
+				return _dlAppLocalService.getFileEntry(classPK);
 			}
 
-			return _dlAppLocalService.getFileEntry(classPK);
+			if (Validator.isNull(uuid)) {
+				return null;
+			}
+
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+				uuid, portletDataContext.getScopeGroupId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

@@ -11,4 +11,4 @@
 SharingConfiguration groupSharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.GROUP_SHARING_CONFIGURATION);
 %>
 
-<aui:input helpMessage="sharing-help" inlineLabel="right" label="sharing-enabled" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />
+<aui:input helpMessage="sharing-help" inlineLabel="right" label="enable-sharing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />

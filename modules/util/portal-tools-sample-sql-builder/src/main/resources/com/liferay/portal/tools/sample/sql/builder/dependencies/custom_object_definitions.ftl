@@ -1,5 +1,5 @@
 <#assign
-	dlFolderModel = dataFactory.newDLFolderModel("Objects_" + objectEntryPageCount)
+	dlFolderModel = dataFactory.newDLFolderModel("Objects_" + objectEntryPageCount + groupId)
 	listTypeDefinitionModel = dataFactory.newListTypeDefinitionModel()
 	objectDefinitionModel = dataFactory.newObjectDefinitionModel(objectFolderModel.getObjectFolderId(), "Ticket_" + objectEntryPageCount)
 

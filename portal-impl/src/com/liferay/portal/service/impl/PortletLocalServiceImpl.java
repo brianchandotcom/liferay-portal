@@ -399,7 +399,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portlet.setCategoryNames(SetUtil.fromArray(categoryNames));
 
-		_portletsMap.put(portlet.getRootPortletId(), portlet);
+		_companyLocalService.forEachCompanyId(
+			companyId -> _portletsMap.put(portlet.getRootPortletId(), portlet),
+			companyIds);
 
 		if (eagerDestroy) {
 			PortletInstanceFactoryUtil.clear(portlet, false);

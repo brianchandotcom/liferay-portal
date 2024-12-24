@@ -16,8 +16,13 @@ import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
-import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
+import getBasicWebContentStructureId, {
+	getWebContentStructureId,
+} from '../../utils/structured-content/getBasicWebContentStructureId';
+import {
+	ANIMALS_COLLECTION_NAME,
+	ANIMAL_DDM_STRUCTURE_KEY,
+} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -353,6 +358,110 @@ test(
 
 		await expect(page.locator('.component-heading')).toHaveText(
 			'Dogs, Cats'
+		);
+	}
+);
+
+test(
+	'Map specific display page template',
+	{
+		tag: ['@LPS-184193', '@LPS-191986'],
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Add display page template
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.journal.model.JournalArticle'
+			);
+
+		const animalWebContentStructureId = await getWebContentStructureId(
+			apiHelpers,
+			pageManagementSite.id,
+			ANIMAL_DDM_STRUCTURE_KEY
+		);
+
+		const displayPageTemplateName = getRandomString();
+
+		const displayPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					classTypeId: String(animalWebContentStructureId),
+					groupId: pageManagementSite.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+		// Add content page
+
+		const headingId = getRandomString();
+
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Map display page template to heading fragment
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+
+		await pageEditorPage.setLinkConfiguration({
+			mappingConfiguration: {
+				mapping: {
+					entity: 'Web Content',
+					entry: 'Animal 01 - Dogs and Cats categories',
+					field: displayPageTemplateName,
+					folder: 'Animals',
+				},
+			},
+			type: 'Mapped URL',
+		});
+
+		expect(
+			await page.getByLabel('URL', {exact: true}).inputValue()
+		).toContain(`/e/${displayPageTemplateName}/${className.classNameId}`);
+
+		await pageEditorPage.publishPage();
+
+		// Navigate to display page template
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Heading Example'})
+		).toHaveAttribute('rel', 'nofollow');
+
+		expect(
+			await page
+				.getByRole('link', {name: 'Heading Example'})
+				.getAttribute('href')
+		).toContain(`/e/${displayPageTemplateName}/${className.classNameId}`);
+
+		// Delete layout
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+
+		// Delete the display page
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId:
+					displayPage.layoutPageTemplateEntryId,
+			}
 		);
 	}
 );

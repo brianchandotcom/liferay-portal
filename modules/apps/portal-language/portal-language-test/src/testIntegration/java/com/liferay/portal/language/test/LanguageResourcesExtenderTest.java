@@ -17,17 +17,18 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 
-import java.io.InputStream;
-
-import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -54,7 +55,14 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistration() throws Exception {
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", "content1.Language", null, 1, null, false, null);
+			"test.bundle", "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			null, 1, null, false, null);
 
 		try {
 			bundle.start();
@@ -79,13 +87,27 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationAggregate() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", "test-bundle1", 1, false, true,
-			null);
+			"test.bundle1", "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", "test-bundle2", 1, true, true,
-			null);
+			"test.bundle2", "content2.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-2=Test 2\nshared-language-key=Test 2"
+			).put(
+				"en", "about=Test 2"
+			).build(),
+			"test-bundle2", 1, true, true, null);
 		Bundle bundle3 = _installResourceBundle(
-			"test.bundle3", "content3.Language", "test-bundle3", 1, true, true,
+			"test.bundle3", "content3.Language",
+			Collections.singletonMap(StringPool.BLANK, "language-key-3=Test 3"),
+			"test-bundle3", 1, true, true,
 			"liferay.language.resources;filter:=\"(bundle.symbolic.name=" +
 				"test.bundle2)\",liferay.language.resources;filter:=\"(" +
 					"bundle.symbolic.name=test.bundle1)\"",
@@ -131,7 +153,14 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", baseName, null, 1, null, false, null,
+			"test.bundle", baseName,
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			null, 1, null, false, null,
 			_getProvideCapabilityLegacy(
 				bundleSymbolicName, servletContextName, baseName, 1, false,
 				true));
@@ -169,8 +198,14 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, baseName, servletContextName, 1, false, true,
-			null,
+			bundleSymbolicName, baseName,
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			servletContextName, 1, false, true, null,
 			_getProvideCapabilityLegacy(
 				bundleSymbolicName, servletContextName, baseName, 2, true,
 				true));
@@ -209,8 +244,14 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationExcludePortalResources() throws Exception {
 		Bundle bundle = _installResourceBundle(
-			"test.bundle", "content1.Language", "test-bundle", 1, true, true,
-			null);
+			"test.bundle", "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			"test-bundle", 1, true, true, null);
 
 		try {
 			bundle.start();
@@ -245,8 +286,14 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, "content1.Language", servletContextName, 1,
-			false, true, null);
+			bundleSymbolicName, "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			servletContextName, 1, false, true, null);
 
 		try {
 			bundle.start();
@@ -271,8 +318,14 @@ public class LanguageResourcesExtenderTest {
 		String servletContextName = "test-bundle";
 
 		Bundle bundle = _installResourceBundle(
-			bundleSymbolicName, "content1.Language", servletContextName, 1,
-			false, true, null);
+			bundleSymbolicName, "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			servletContextName, 1, false, true, null);
 
 		try {
 			bundle.start();
@@ -331,11 +384,23 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationModuleOnlyMultiple() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", "test-bundle1", 1, false, true,
-			null);
+			"test.bundle1", "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			"test-bundle1", 1, false, true, null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", "test-bundle2", 1, false, true,
-			null);
+			"test.bundle2", "content2.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-2=Test 2\nshared-language-key=Test 2"
+			).put(
+				"en", "about=Test 2"
+			).build(),
+			"test-bundle2", 1, false, true, null);
 
 		try {
 			bundle1.start();
@@ -383,9 +448,23 @@ public class LanguageResourcesExtenderTest {
 	@Test
 	public void testRegistrationServiceRanking() throws Exception {
 		Bundle bundle1 = _installResourceBundle(
-			"test.bundle1", "content1.Language", null, 1, null, false, null);
+			"test.bundle1", "content1.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-1=Test 1\nshared-language-key=Test 1"
+			).put(
+				"en", "about=Test 1"
+			).build(),
+			null, 1, null, false, null);
 		Bundle bundle2 = _installResourceBundle(
-			"test.bundle2", "content2.Language", null, 2, null, false, null);
+			"test.bundle2", "content2.Language",
+			HashMapBuilder.put(
+				StringPool.BLANK,
+				"language-key-2=Test 2\nshared-language-key=Test 2"
+			).put(
+				"en", "about=Test 2"
+			).build(),
+			null, 2, null, false, null);
 
 		try {
 			bundle1.start();
@@ -493,9 +572,10 @@ public class LanguageResourcesExtenderTest {
 
 	private Bundle _installResourceBundle(
 			String bundleSymbolicName, String baseName,
-			String servletContextName, Integer serviceRanking,
-			Boolean excludePortalResources, Boolean moduleOnly,
-			String requireCapabilities, String... extraProvideCapabilities)
+			Map<String, String> languageProperties, String servletContextName,
+			Integer serviceRanking, Boolean excludePortalResources,
+			Boolean moduleOnly, String requireCapabilities,
+			String... extraProvideCapabilities)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -519,34 +599,29 @@ public class LanguageResourcesExtenderTest {
 							moduleOnly)),
 					requireCapabilities);
 
-				int index = baseName.lastIndexOf(CharPool.PERIOD);
+				for (Map.Entry<String, String> entry :
+						languageProperties.entrySet()) {
 
-				String path = baseName.substring(0, index);
-				String name = baseName.substring(index + 1);
+					String fileName = "Language.properties";
 
-				Enumeration<URL> enumeration = bundle.findEntries(
-					"com/liferay/portal/language/test/dependencies/" + path,
-					name.concat("*.properties"), false);
-
-				if (enumeration != null) {
-					while (enumeration.hasMoreElements()) {
-						URL url = enumeration.nextElement();
-
-						String urlPath = url.getPath();
-
-						String fileName = urlPath.substring(
-							urlPath.lastIndexOf(CharPool.SLASH) + 1);
-
-						jarOutputStream.putNextEntry(
-							new ZipEntry(path + StringPool.SLASH + fileName));
-
-						try (InputStream inputStream = url.openStream()) {
-							StreamUtil.transfer(
-								inputStream, jarOutputStream, false);
-						}
-
-						jarOutputStream.closeEntry();
+					if (Validator.isNotNull(entry.getKey())) {
+						fileName = "Language_" + entry.getKey() + ".properties";
 					}
+
+					String folderName = baseName.substring(
+						0, baseName.lastIndexOf(CharPool.PERIOD));
+
+					jarOutputStream.putNextEntry(
+						new ZipEntry(folderName + StringPool.SLASH + fileName));
+
+					String fileContent = entry.getValue();
+
+					StreamUtil.transfer(
+						new UnsyncByteArrayInputStream(
+							fileContent.getBytes(StandardCharsets.UTF_8)),
+						jarOutputStream, false);
+
+					jarOutputStream.closeEntry();
 				}
 			}
 

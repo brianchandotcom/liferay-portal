@@ -356,3 +356,90 @@ test(
 		);
 	}
 );
+
+test(
+	'Map web content field with url to image editable field and text editable field',
+	{
+		tag: '@LPS-98031',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a heading and image fragment
+
+		const headingId = getRandomString();
+
+		const headingFragment = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const imageId = getRandomString();
+
+		const imageFragment = getFragmentDefinition({
+			id: imageId,
+			key: 'BASIC_COMPONENT-image',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingFragment, imageFragment]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Map link to heading fragment and image fragment
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+
+		await pageEditorPage.setLinkConfiguration({
+			mappingConfiguration: {
+				mapping: {
+					entity: 'Web Content',
+					entry: 'Animal 01 - Dogs and Cats categories',
+					field: 'More Info Link',
+					folder: 'Animals',
+				},
+			},
+			type: 'Mapped URL',
+		});
+
+		await pageEditorPage.selectEditable(imageId, 'image-square');
+
+		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+
+		await pageEditorPage.setLinkConfiguration({
+			mappingConfiguration: {
+				mapping: {
+					entity: 'Web Content',
+					entry: 'Animal 02 - Dogs category',
+					field: 'More Info Link',
+					folder: 'Animals',
+				},
+			},
+			type: 'Mapped URL',
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Assert link in view mode
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Heading Example'})
+		).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Dog');
+
+		await expect(
+			page.locator('.component-image').getByRole('link')
+		).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Cat');
+
+		// Delete layout
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);

@@ -948,6 +948,53 @@ export class PageEditorPage {
 		);
 	}
 
+	async mapAction({entry, fragmentId}: {entry: string; fragmentId: string}) {
+		await this.selectFragment(fragmentId);
+
+		await this.changeConfiguration({
+			fieldLabel: 'Type',
+			tab: 'General',
+			value: 'Action',
+		});
+
+		await this.selectEditable(fragmentId, 'action');
+
+		await this.page.getByRole('tab', {exact: true, name: 'Action'}).click();
+
+		await this.setMappedItem({
+			entity: 'Student',
+			entry,
+			entryLocator: this.page
+				.frameLocator('iframe[title="Select"]')
+				.getByText(entry)
+				.first(),
+		});
+
+		await this.changeConfiguration({
+			fieldLabel: 'Action',
+			tab: 'Action',
+			value: 'addObjectEntryName',
+		});
+
+		await this.changeConfiguration({
+			fieldLabel: 'Success Interaction',
+			tab: 'Action',
+			value: 'displayPage',
+		});
+
+		await this.changeConfiguration({
+			fieldLabel: 'Display Page',
+			tab: 'Action',
+			value: 'ObjectEntry_displayPageURL',
+		});
+
+		await this.changeConfiguration({
+			fieldLabel: 'Error Interaction',
+			tab: 'Action',
+			value: 'notification',
+		});
+	}
+
 	async mapFormFragment(
 		fragmentId: string,
 		type: string,

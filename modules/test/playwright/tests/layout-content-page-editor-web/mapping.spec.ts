@@ -3,10 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectActionApi,
+	ObjectDefinitionApi,
+	ObjectField,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -19,10 +25,12 @@ import addApprovedStructuredContent from '../../utils/structured-content/addAppr
 import getBasicWebContentStructureId, {
 	getWebContentStructureId,
 } from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {
 	ANIMALS_COLLECTION_NAME,
 	ANIMAL_DDM_STRUCTURE_KEY,
 } from '../setup/page-management-site/constants/animals';
+import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -30,6 +38,7 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
@@ -550,5 +559,215 @@ test(
 		// Delete layout
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);
+
+test(
+	'Only success object action redirects to the display page template',
+	{
+		tag: '@LPS-195827',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create student object definition
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: potatoProviderObjectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'potatoProviderERC',
+				label: {
+					en_US: 'Potato Provider',
+				},
+				name: 'PotatoProvider',
+				objectFields: [
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'nameERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Name',
+						},
+						localized: false,
+						name: 'name',
+						required: false,
+					},
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'locationERC',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'Location',
+						},
+						localized: false,
+						name: 'location',
+						required: false,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Potato Providers',
+				},
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: potatoProviderObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		// Add object entries
+
+		const applicationName =
+			'c/' + potatoProviderObjectDefinition.name.toLowerCase() + 's';
+
+		const firstObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				location: 'Holland',
+				name: 'Holland Potatoes',
+			},
+			applicationName
+		);
+
+		const secondObjectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				location: 'Canary Islands',
+				name: 'Canary Potatoes',
+			},
+			applicationName
+		);
+
+		// Add object action
+
+		const objectActionApiClient =
+			await apiHelpers.buildRestClient(ObjectActionApi);
+
+		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+			potatoProviderObjectDefinition.externalReferenceCode,
+			{
+				active: true,
+				errorMessage: {
+					en_US: 'The location should be Canary Islands.',
+				},
+				label: {
+					en_US: 'addObjectEntryName',
+				},
+				name: 'addObjectEntryName',
+				objectActionExecutorKey: 'add-object-entry',
+				objectActionTriggerKey: 'standalone',
+				parameters: {
+					objectDefinitionExternalReferenceCode:
+						getObjectERC('Potato'),
+					predefinedValues: [
+						{
+							businessType: 'Text',
+							inputAsValue: false,
+							label: {
+								en_US: 'Location',
+							},
+							name: 'potatoOrigin',
+							value: 'location',
+						},
+					],
+				},
+				system: false,
+			}
+		);
+
+		// Add display page template
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				potatoProviderObjectDefinition.className
+			);
+
+		const displayPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: site.id,
+					name: getRandomString(),
+				}
+			);
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId:
+					displayPage.layoutPageTemplateEntryId,
+			}
+		);
+
+		// Create content page with a button fragment and go to edit mode
+
+		const firstButtonId = getRandomString();
+
+		const firstButtonDefinition = getFragmentDefinition({
+			id: firstButtonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const secondButtonId = getRandomString();
+
+		const secondButtonDefinition = getFragmentDefinition({
+			id: secondButtonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				firstButtonDefinition,
+				secondButtonDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Map standalone action to buttons
+
+		await pageEditorPage.mapAction({
+			entry: String(firstObjectEntry.id),
+			fragmentId: firstButtonId,
+		});
+
+		await pageEditorPage.mapAction({
+			entry: String(secondObjectEntry.id),
+			fragmentId: secondButtonId,
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		// Click first button and assert error
+
+		await page.getByText('Go Somewhere').first().click();
+
+		await waitForAlert(page, 'The location should be Canary Islands.', {
+			type: 'danger',
+		});
+
+		await expect(page).toHaveURL(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Click second button and assert success
+
+		await page.getByText('Go Somewhere').last().click();
+
+		await expect(
+			page.getByRole('heading', {name: String(secondObjectEntry.id)})
+		).toBeVisible();
 	}
 );

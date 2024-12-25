@@ -96,16 +96,16 @@ public class CommerceShippableOrderItemsFDSDataProvider
 						commerceShipmentId,
 						commerceOrderItem.getCommerceOrderItemId(), 0);
 
+				if (commerceShipmentItem != null) {
+					return null;
+				}
+
 				long commerceCatalogGroupId = 0;
 
 				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
 				if (cpDefinition != null) {
 					commerceCatalogGroupId = cpDefinition.getGroupId();
-				}
-
-				if (commerceShipmentItem != null) {
-					return null;
 				}
 
 				BigDecimal quantity = commerceOrderItem.getQuantity();

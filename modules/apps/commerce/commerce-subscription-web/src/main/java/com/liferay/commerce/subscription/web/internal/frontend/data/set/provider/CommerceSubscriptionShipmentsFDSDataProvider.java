@@ -24,6 +24,7 @@ import com.liferay.commerce.subscription.web.internal.model.Shipment;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,8 +66,6 @@ public class CommerceSubscriptionShipmentsFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Shipment> shipments = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -88,43 +86,40 @@ public class CommerceSubscriptionShipmentsFDSDataProvider
 				getCommerceShipmentItemsByCommerceOrderItemId(
 					commerceSubscriptionEntry.getCommerceOrderItemId());
 
-		for (CommerceShipmentItem commerceShipmentItem :
-				commerceShipmentItems) {
+		return TransformUtil.transform(
+			commerceShipmentItems,
+			commerceShipmentItem -> {
+				CommerceShipment commerceShipment =
+					_commerceShipmentService.getCommerceShipment(
+						commerceShipmentItem.getCommerceShipmentId());
 
-			CommerceShipment commerceShipment =
-				_commerceShipmentService.getCommerceShipment(
-					commerceShipmentItem.getCommerceShipmentId());
+				CommerceOrderItem commerceOrderItem =
+					_commerceOrderItemService.getCommerceOrderItem(
+						commerceShipmentItem.getCommerceOrderItemId());
 
-			CommerceOrderItem commerceOrderItem =
-				_commerceOrderItemService.getCommerceOrderItem(
-					commerceShipmentItem.getCommerceOrderItemId());
+				CommerceAddress commerceAddress =
+					_commerceAddressService.getCommerceAddress(
+						commerceShipment.getCommerceAddressId());
 
-			CommerceAddress commerceAddress =
-				_commerceAddressService.getCommerceAddress(
-					commerceShipment.getCommerceAddressId());
-
-			Shipment shipment = new Shipment(
-				dateTimeFormat.format(commerceShipment.getCreateDate()),
-				new Link(
-					String.valueOf(commerceShipment.getCommerceShipmentId()),
-					_getEditShipmentURL(
-						commerceShipment.getCommerceShipmentId(),
-						httpServletRequest)),
-				_getShipmentStatus(commerceShipment),
-				new Link(
-					String.valueOf(commerceOrderItem.getCommerceOrderId()),
-					_getEditCommerceOrderURL(
-						commerceOrderItem.getCommerceOrderId(),
-						httpServletRequest)),
-				StringBundler.concat(
-					commerceAddress.getName(), CharPool.SPACE,
-					commerceAddress.getStreet1()),
-				new Link(commerceShipment.getTrackingNumber(), ""));
-
-			shipments.add(shipment);
-		}
-
-		return shipments;
+				return new Shipment(
+					dateTimeFormat.format(commerceShipment.getCreateDate()),
+					new Link(
+						String.valueOf(
+							commerceShipment.getCommerceShipmentId()),
+						_getEditShipmentURL(
+							commerceShipment.getCommerceShipmentId(),
+							httpServletRequest)),
+					_getShipmentStatus(commerceShipment),
+					new Link(
+						String.valueOf(commerceOrderItem.getCommerceOrderId()),
+						_getEditCommerceOrderURL(
+							commerceOrderItem.getCommerceOrderId(),
+							httpServletRequest)),
+					StringBundler.concat(
+						commerceAddress.getName(), CharPool.SPACE,
+						commerceAddress.getStreet1()),
+					new Link(commerceShipment.getTrackingNumber(), ""));
+			});
 	}
 
 	@Override

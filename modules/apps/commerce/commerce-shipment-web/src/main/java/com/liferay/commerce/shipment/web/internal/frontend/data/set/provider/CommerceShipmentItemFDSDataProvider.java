@@ -10,7 +10,6 @@ import com.liferay.commerce.frontend.model.ShipmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -19,6 +18,7 @@ import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,59 +52,56 @@ public class CommerceShipmentItemFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<ShipmentItem> shipmentItems = new ArrayList<>();
-
 		long commerceShipmentId = ParamUtil.getLong(
 			httpServletRequest, "commerceShipmentId");
 
-		List<CommerceShipmentItem> commerceShipmentItems =
+		return TransformUtil.transform(
 			_commerceShipmentItemService.getCommerceShipmentItems(
 				commerceShipmentId, fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
+				fdsPagination.getEndPosition(), null),
+			commerceShipmentItem -> {
+				CommerceOrderItem commerceOrderItem =
+					_commerceOrderItemService.getCommerceOrderItem(
+						commerceShipmentItem.getCommerceOrderItemId());
 
-		for (CommerceShipmentItem commerceShipmentItem :
-				commerceShipmentItems) {
+				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+					_cpInstanceUnitOfMeasureLocalService.
+						fetchCPInstanceUnitOfMeasure(
+							commerceOrderItem.getCPInstanceId(),
+							commerceOrderItem.getUnitOfMeasureKey());
 
-			CommerceOrderItem commerceOrderItem =
-				_commerceOrderItemService.getCommerceOrderItem(
-					commerceShipmentItem.getCommerceOrderItemId());
+				String commerceInventoryWarehouseName = StringPool.BLANK;
 
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-				_cpInstanceUnitOfMeasureLocalService.
-					fetchCPInstanceUnitOfMeasure(
-						commerceOrderItem.getCPInstanceId(),
-						commerceOrderItem.getUnitOfMeasureKey());
+				if (commerceShipmentItem.getCommerceInventoryWarehouseId() >
+						0) {
 
-			String commerceInventoryWarehouseName = StringPool.BLANK;
+					try {
+						CommerceInventoryWarehouse commerceInventoryWarehouse =
+							_commerceInventoryWarehouseService.
+								fetchByCommerceInventoryWarehouse(
+									commerceShipmentItem.
+										getCommerceInventoryWarehouseId());
 
-			if (commerceShipmentItem.getCommerceInventoryWarehouseId() > 0) {
-				try {
-					CommerceInventoryWarehouse commerceInventoryWarehouse =
-						_commerceInventoryWarehouseService.
-							fetchByCommerceInventoryWarehouse(
-								commerceShipmentItem.
-									getCommerceInventoryWarehouseId());
-
-					if (commerceInventoryWarehouse != null) {
-						commerceInventoryWarehouseName =
-							commerceInventoryWarehouse.getName(
-								_portal.getLocale(httpServletRequest));
+						if (commerceInventoryWarehouse != null) {
+							commerceInventoryWarehouseName =
+								commerceInventoryWarehouse.getName(
+									_portal.getLocale(httpServletRequest));
+						}
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
 					}
 				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-			BigDecimal shipmentItemQuantity =
-				commerceShipmentItem.getQuantity();
-			BigDecimal shippedQuantity = commerceOrderItem.getShippedQuantity();
+				BigDecimal quantity = commerceOrderItem.getQuantity();
+				BigDecimal shipmentItemQuantity =
+					commerceShipmentItem.getQuantity();
+				BigDecimal shippedQuantity =
+					commerceOrderItem.getShippedQuantity();
 
-			shipmentItems.add(
-				new ShipmentItem(
+				return new ShipmentItem(
 					commerceShipmentItem.getExternalReferenceCode(),
 					commerceOrderItem.getCommerceOrderId(),
 					_commerceQuantityFormatter.format(
@@ -118,10 +114,8 @@ public class CommerceShipmentItemFDSDataProvider
 					_commerceQuantityFormatter.format(
 						cpInstanceUnitOfMeasure, shipmentItemQuantity),
 					commerceOrderItem.getUnitOfMeasureKey(),
-					commerceInventoryWarehouseName));
-		}
-
-		return shipmentItems;
+					commerceInventoryWarehouseName);
+			});
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityCompar
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -124,24 +125,16 @@ public class CommerceShippingRestrictionsPageFDSDataProvider
 		long countryId, List<CommerceShippingMethod> commerceShippingMethods,
 		String languageId) {
 
-		List<RestrictionField> restrictionFields = new ArrayList<>();
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			restrictionFields.add(
-				new RestrictionField(
-					commerceShippingMethod.getName(languageId),
-					String.valueOf(
-						commerceShippingMethod.getCommerceShippingMethodId()),
-					_commerceAddressRestrictionLocalService.
-						isCommerceShippingMethodRestricted(
-							commerceShippingMethod.
-								getCommerceShippingMethodId(),
-							countryId)));
-		}
-
-		return restrictionFields;
+		return TransformUtil.transform(
+			commerceShippingMethods,
+			commerceShippingMethod -> new RestrictionField(
+				commerceShippingMethod.getName(languageId),
+				String.valueOf(
+					commerceShippingMethod.getCommerceShippingMethodId()),
+				_commerceAddressRestrictionLocalService.
+					isCommerceShippingMethodRestricted(
+						commerceShippingMethod.getCommerceShippingMethodId(),
+						countryId)));
 	}
 
 	@Reference

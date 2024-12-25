@@ -15,6 +15,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFix
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,37 +59,27 @@ public class CommerceShippingFixedOptionFDSDataProvider
 			_commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				themeDisplay.getCompanyId(),
-				commerceShippingMethod.getGroupId(), commerceShippingMethodId,
-				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
-
-		List<ShippingFixedOption> shippingFixedOptions = new ArrayList<>();
-
-		commerceShippingFixedOptions = ListUtil.sort(
-			commerceShippingFixedOptions,
-			CommerceShippingFixedOptionPriorityComparator.getInstance(
-				sort.isReverse()));
-
-		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				commerceShippingFixedOptions) {
-
-			shippingFixedOptions.add(
-				new ShippingFixedOption(
-					HtmlUtil.escape(
-						commerceShippingFixedOption.getDescription(
-							themeDisplay.getLocale())),
-					HtmlUtil.escape(
-						commerceShippingFixedOption.getName(
-							themeDisplay.getLocale())),
-					commerceShippingFixedOption.getPriority(),
-					commerceShippingFixedOption.
-						getCommerceShippingFixedOptionId()));
-		}
-
-		return shippingFixedOptions;
+		return TransformUtil.transform(
+			ListUtil.sort(
+				_commerceShippingFixedOptionService.
+					getCommerceShippingFixedOptions(
+						themeDisplay.getCompanyId(),
+						commerceShippingMethod.getGroupId(),
+						commerceShippingMethodId, fdsKeywords.getKeywords(),
+						fdsPagination.getStartPosition(),
+						fdsPagination.getEndPosition()),
+				CommerceShippingFixedOptionPriorityComparator.getInstance(
+					sort.isReverse())),
+			commerceShippingFixedOption -> new ShippingFixedOption(
+				HtmlUtil.escape(
+					commerceShippingFixedOption.getDescription(
+						themeDisplay.getLocale())),
+				HtmlUtil.escape(
+					commerceShippingFixedOption.getName(
+						themeDisplay.getLocale())),
+				commerceShippingFixedOption.getPriority(),
+				commerceShippingFixedOption.
+					getCommerceShippingFixedOptionId()));
 	}
 
 	@Override

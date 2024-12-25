@@ -14,7 +14,6 @@ import com.liferay.commerce.frontend.model.OrderItem;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
@@ -29,6 +28,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,74 +62,69 @@ public class CommerceShippableOrderItemsFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<OrderItem> orderItems = new ArrayList<>();
-
 		long commerceShipmentId = ParamUtil.getLong(
 			httpServletRequest, "commerceShipmentId");
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
 
-		List<CommerceOrderItem> commerceOrderItems =
+		return TransformUtil.transform(
 			_commerceOrderItemLocalService.getCommerceOrderItems(
 				commerceShipment.getGroupId(),
 				commerceShipment.getCommerceAccountId(), orderStatuses,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+				fdsPagination.getEndPosition()),
+			commerceOrderItem -> {
+				if (!commerceOrderItem.isShippable()) {
+					return null;
+				}
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			if (!commerceOrderItem.isShippable()) {
-				continue;
-			}
+				CommerceOrder commerceOrder =
+					commerceOrderItem.getCommerceOrder();
 
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+				String iconName = _getAddressMatchIcon(
+					commerceShipment, commerceOrder);
 
-			String iconName = _getAddressMatchIcon(
-				commerceShipment, commerceOrder);
+				Icon icon = null;
 
-			Icon icon = null;
+				if (iconName != null) {
+					icon = new Icon(iconName);
+				}
 
-			if (iconName != null) {
-				icon = new Icon(iconName);
-			}
+				CommerceShipmentItem commerceShipmentItem =
+					_commerceShipmentItemService.fetchCommerceShipmentItem(
+						commerceShipmentId,
+						commerceOrderItem.getCommerceOrderItemId(), 0);
 
-			CommerceShipmentItem commerceShipmentItem =
-				_commerceShipmentItemService.fetchCommerceShipmentItem(
-					commerceShipmentId,
-					commerceOrderItem.getCommerceOrderItemId(), 0);
+				long commerceCatalogGroupId = 0;
 
-			long commerceCatalogGroupId = 0;
+				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+				if (cpDefinition != null) {
+					commerceCatalogGroupId = cpDefinition.getGroupId();
+				}
 
-			if (cpDefinition != null) {
-				commerceCatalogGroupId = cpDefinition.getGroupId();
-			}
+				if (commerceShipmentItem != null) {
+					return null;
+				}
 
-			if (commerceShipmentItem == null) {
 				BigDecimal quantity = commerceOrderItem.getQuantity();
 
-				orderItems.add(
-					new OrderItem(
-						_commerceInventoryEngine.getStockQuantity(
-							commerceOrderItem.getCompanyId(),
-							commerceOrder.getCommerceAccountId(),
-							commerceCatalogGroupId,
-							commerceOrderItem.getGroupId(),
-							commerceOrderItem.getSku(),
-							commerceOrderItem.getUnitOfMeasureKey()),
-						icon, commerceOrderItem.getCommerceOrderId(),
-						commerceOrderItem.getCommerceOrderItemId(),
-						quantity.subtract(
-							commerceOrderItem.getShippedQuantity()),
-						_getShippingMethodAndOptionName(
-							commerceOrder, httpServletRequest),
+				return new OrderItem(
+					_commerceInventoryEngine.getStockQuantity(
+						commerceOrderItem.getCompanyId(),
+						commerceOrder.getCommerceAccountId(),
+						commerceCatalogGroupId, commerceOrderItem.getGroupId(),
 						commerceOrderItem.getSku(),
-						commerceOrderItem.getUnitOfMeasureKey()));
-			}
-		}
-
-		return orderItems;
+						commerceOrderItem.getUnitOfMeasureKey()),
+					icon, commerceOrderItem.getCommerceOrderId(),
+					commerceOrderItem.getCommerceOrderItemId(),
+					quantity.subtract(commerceOrderItem.getShippedQuantity()),
+					_getShippingMethodAndOptionName(
+						commerceOrder, httpServletRequest),
+					commerceOrderItem.getSku(),
+					commerceOrderItem.getUnitOfMeasureKey());
+			});
 	}
 
 	@Override

@@ -410,7 +410,7 @@ public class TransactionalPortalCacheTest {
 		_testShardedTransactionalCache(false);
 	}
 
-	@Test(expected = Throwable.class)
+	@Test
 	public void testShardedTransactionalCacheWithException() {
 		_setEnableTransactionalCache(true);
 
@@ -450,7 +450,9 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Unable to do put", throwable.getMessage());
 		}
 
-		// Null safe closeable
+		Assert.assertNull(_portalCache.get(_KEY_1));
+
+		// Commit with exception, and CompanyThreadLocal returns null closeable
 
 		MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
 			Mockito.mockStatic(CompanyThreadLocal.class);
@@ -471,10 +473,39 @@ public class TransactionalPortalCacheTest {
 		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
 		Assert.assertNull(_portalCache.get(_KEY_1));
 
+		try {
+			TransactionalPortalCacheUtil.commit(false);
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Assert.assertEquals("Unable to do put", throwable.getMessage());
+		}
+
+		Assert.assertNull(_portalCache.get(_KEY_1));
+
+		// Commit without exception, and CompanyThreadLocal returns null
+		// closeable
+
+		_portalCache = new ShardedTestPortalCache<>(
+			"Sharded Test Portal Cache");
+
+		transactionalPortalCache = new TransactionalPortalCache<>(
+			_portalCache, false);
+
+		TransactionalPortalCacheUtil.begin();
+
+		_companyIdThreadLocal.set(companyId1);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_1));
+
 		TransactionalPortalCacheUtil.commit(false);
 
-		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_2, _portalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
 
 		companyThreadLocalMockedStatic.close();
 	}

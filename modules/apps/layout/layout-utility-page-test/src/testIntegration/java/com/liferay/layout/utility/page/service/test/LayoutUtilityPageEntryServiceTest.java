@@ -15,6 +15,8 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
@@ -99,9 +101,8 @@ public class LayoutUtilityPageEntryServiceTest {
 	public void testAddLayoutUtilityPageEntryWithoutAddPermission()
 		throws Exception {
 
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				RandomTestUtil.randomString(), _group.getGroupId(), 0, 0, true,
@@ -111,9 +112,9 @@ public class LayoutUtilityPageEntryServiceTest {
 			Assert.fail();
 		}
 		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
 		}
 	}
 
@@ -293,9 +294,8 @@ public class LayoutUtilityPageEntryServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
 				_serviceContext);
 
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getExternalReferenceCode(),
@@ -304,9 +304,9 @@ public class LayoutUtilityPageEntryServiceTest {
 			Assert.fail();
 		}
 		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
 		}
 	}
 
@@ -385,14 +385,15 @@ public class LayoutUtilityPageEntryServiceTest {
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()),
 			ActionKeys.VIEW);
 
-		UserTestUtil.setUser(
-			UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-		Assert.assertNotNull(
-			_layoutUtilityPageEntryService.
-				getLayoutUtilityPageEntryByExternalReferenceCode(
-					layoutUtilityPageEntry.getExternalReferenceCode(),
-					layoutUtilityPageEntry.getGroupId()));
+			Assert.assertNotNull(
+				_layoutUtilityPageEntryService.
+					getLayoutUtilityPageEntryByExternalReferenceCode(
+						layoutUtilityPageEntry.getExternalReferenceCode(),
+						layoutUtilityPageEntry.getGroupId()));
+		}
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -561,6 +562,9 @@ public class LayoutUtilityPageEntryServiceTest {
 			layoutUtilityPageEntry.getName(),
 			layout.getName(LocaleUtil.getSiteDefault()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutUtilityPageEntryServiceTest.class);
 
 	@DeleteAfterTestRun
 	private Group _group;

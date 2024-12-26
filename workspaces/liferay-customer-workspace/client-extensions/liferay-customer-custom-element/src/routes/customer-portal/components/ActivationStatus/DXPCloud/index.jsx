@@ -34,6 +34,7 @@ import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import AlreadySubmittedFormModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
 import PopoverIcon from './components/PopoverIcon';
+import ActivationCardLink from '../ActivationCardLink';
 
 const submittedModalTexts = {
 	paragraph: i18n.translate(
@@ -140,21 +141,10 @@ const ActivationStatusDXPCloud = ({
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
 				<>
-					<PopoverIcon
-						symbol="question-circle-full"
-						title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+					<ActivationCardLink
+						linkText={i18n.translate('go-to-product-console')}
+						url="https://console.liferay.cloud"
 					/>
-
-					<a
-						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-						href="https://console.liferay.cloud"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						{i18n.translate('go-to-product-console')}
-
-						<ClayIcon className="ml-1" symbol="order-arrow-right" />
-					</a>
 				</>
 			),
 			id: STATUS_TAG_TYPES.active,

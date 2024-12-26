@@ -2,9 +2,9 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {ButtonWithIcon} from '@clayui/core';
 import {Align} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 
 import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
@@ -13,7 +13,15 @@ import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../../utils/constants';
-import PopoverIcon from '../../DXPCloud/components/PopoverIcon';
+import ActivationCardLink from '../../ActivationCardLink';
+import {useGetAccountSubscriptions} from '~/common/services/liferay/graphql/account-subscriptions';
+
+const ACCEPTED_SUBSCRIPTIONS = ['Business Plan', 'Enterprise Plan'];
+
+const formatedSubscriptions = () =>
+	[...ACCEPTED_SUBSCRIPTIONS]
+		.map((projectName) => `'${projectName}'`)
+		.join(',');
 
 export default function getActivationStatusCardLayout(
 	lxcEnvironment,
@@ -22,61 +30,43 @@ export default function getActivationStatusCardLayout(
 	onInProgressClick,
 	userAccount
 ) {
+	const {data: subscriptionsData} = useGetAccountSubscriptions({
+		filter: `name in (${formatedSubscriptions()}) and accountSubscriptionGroupERC eq '${
+			project?.accountKey
+		}_liferay-saas'`,
+	});
+
+	const hasDevInstance =
+		!!subscriptionsData.c.accountSubscriptions.items.length;
+
 	return {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
 				<div className="d-flex flex-column">
-					<a
-						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-						href={`https://${lxcEnvironment?.projectId}.lxc.liferay.com`}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<PopoverIcon
-							symbol="question-circle-full"
-							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+					<ActivationCardLink
+						linkText={i18n.translate('go-to-liferay-saas')}
+						url={`https://${lxcEnvironment?.projectId}.lxc.liferay.com`}
+					/>
+
+					<ActivationCardLink
+						linkText={i18n.translate('go-to-uat')}
+						url={`https://${lxcEnvironment?.projectId}-uat.lxc.liferay.com`}
+					/>
+
+					{hasDevInstance && (
+						<ActivationCardLink
+							linkText={i18n.translate('go-to-dev')}
+							url={`https://${lxcEnvironment?.projectId}-dev.lxc.liferay.com`}
 						/>
-
-						{i18n.translate('go-to-liferay-saas')}
-
-						<ClayIcon className="ml-1" symbol="order-arrow-right" />
-					</a>
-
-					<a
-						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-						href={`https://${lxcEnvironment?.projectId}-uat.lxc.liferay.com`}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<PopoverIcon
-							symbol="question-circle-full"
-							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
-						/>
-
-						{i18n.translate('go-to-uat')}
-
-						<ClayIcon className="ml-1" symbol="order-arrow-right" />
-					</a>
+					)}
 
 					{project?.acWorkspaceGroupId && (
-						<a
-							className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-							href={`https://analytics.liferay.com/workspace/${project.acWorkspaceGroupId}/sites`}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<PopoverIcon
-								symbol="question-circle-full"
-								title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
-							/>
-
-							{i18n.translate('go-to-analytics-cloud-workspace')}
-
-							<ClayIcon
-								className="ml-1"
-								symbol="order-arrow-right"
-							/>
-						</a>
+						<ActivationCardLink
+							linkText={i18n.translate(
+								'go-to-analytics-cloud-workspace'
+							)}
+							url={`https://analytics.liferay.com/workspace/${project.acWorkspaceGroupId}/sites`}
+						/>
 					)}
 				</div>
 			),

@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
 import {Align} from '@clayui/drop-down';
@@ -32,6 +33,7 @@ import AnalyticsCloudModal from '../../AnalyticsCloudModal';
 import PopoverIcon from '../DXPCloud/components/PopoverIcon';
 import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
+import ActivationCardLink from '../ActivationCardLink';
 
 const ActivationStatusAnalyticsCloud = () => {
 	const [{project, subscriptionGroups, userAccount}, dispatch] =
@@ -99,23 +101,10 @@ const ActivationStatusAnalyticsCloud = () => {
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: project?.acWorkspaceGroupId && (
-				<>
-					<PopoverIcon
-						symbol="question-circle-full"
-						title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
-					/>
-
-					<a
-						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-						href={`https://analytics.liferay.com/workspace/${project?.acWorkspaceGroupId}/sites`}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						{i18n.translate('go-to-workspace')}
-
-						<ClayIcon className="ml-1" symbol="order-arrow-right" />
-					</a>
-				</>
+				<ActivationCardLink
+					linkText={i18n.translate('go-to-workspace')}
+					url={`https://analytics.liferay.com/workspace/${project?.acWorkspaceGroupId}/sites`}
+				/>
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(

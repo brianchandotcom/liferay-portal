@@ -5,7 +5,6 @@
 
 package com.liferay.site.admin.web.internal.initializer;
 
-import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -21,13 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
-import java.util.Date;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -105,9 +101,6 @@ public class BlankSiteInitializer implements SiteInitializer {
 			_importPageElement(draftLayout, pageElementJSON);
 
 			_importPageElement(layout, pageElementJSON);
-
-			_updateLayoutUtilityPageEntryLayouts(
-				draftLayout.getPlid(), layout.getPlid());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -128,35 +121,6 @@ public class BlankSiteInitializer implements SiteInitializer {
 		_layoutsImporter.importPageElement(
 			layout, layoutStructure, layoutStructure.getMainItemId(),
 			pageElementJSON, 0, true);
-	}
-
-	private void _updateLayoutUtilityPageEntryLayouts(
-			long draftLayoutPlid, long layoutPlid)
-		throws Exception {
-
-		Layout draftLayout = _layoutLocalService.getLayout(draftLayoutPlid);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			draftLayout.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.put(
-			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
-
-		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		_layoutLocalService.updateLayout(draftLayout);
-
-		Layout layout = _layoutLocalService.getLayout(layoutPlid);
-
-		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		layout = _layoutLocalService.updateLayout(layout);
-
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

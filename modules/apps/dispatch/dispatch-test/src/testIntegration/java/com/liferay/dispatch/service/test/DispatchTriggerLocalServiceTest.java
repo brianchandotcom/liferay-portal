@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -422,74 +423,87 @@ public class DispatchTriggerLocalServiceTest {
 	public void testUpdateDispatchTriggerWithCronExpressions()
 		throws Exception {
 
-		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(
-				UserTestUtil.addUser(), _getRandomDispatchExecutorType(), 1));
+		Calendar nowCalendar = CalendarFactoryUtil.getCalendar();
 
-		dispatchTrigger.setDispatchTaskClusterMode(
-			DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED.getMode());
+		nowCalendar.setTime(new Date());
 
-		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED;
+		Calendar futureCalendar = (Calendar)nowCalendar.clone();
 
-		// Start Date in past, before the cron expression
+		futureCalendar.add(Calendar.HOUR_OF_DAY, 12);
 
-		Calendar nowCalendar = CalendarFactoryUtil.getCalendar(
-			new Date(
-			).getTime());
+		String cronExpression = StringBundler.concat(
+			futureCalendar.get(Calendar.SECOND), " ",
+			futureCalendar.get(Calendar.MINUTE), " ",
+			futureCalendar.get(Calendar.HOUR_OF_DAY), " * * ? *");
 
-		nowCalendar.add(Calendar.HOUR_OF_DAY, 12);
+		// Start Date in the past, before the cron expression
 
-		String cronExpression =
-			"0 0 " + nowCalendar.get(Calendar.HOUR_OF_DAY) + " * * ? *";
+		Calendar startCalendar = (Calendar)nowCalendar.clone();
 
-		nowCalendar.add(0, 0);
+		startCalendar.add(Calendar.DAY_OF_MONTH, -1);
 
-		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-			nowCalendar.getTimeInMillis());
+		_testUpdateDispatchTriggerWithCronExpressions(
+			cronExpression,
+			CalendarFactoryUtil.getCalendar(
+				futureCalendar.get(Calendar.YEAR),
+				futureCalendar.get(Calendar.MONTH),
+				futureCalendar.get(Calendar.DAY_OF_MONTH),
+				futureCalendar.get(Calendar.HOUR_OF_DAY),
+				futureCalendar.get(Calendar.MINUTE),
+				futureCalendar.get(Calendar.SECOND)),
+			nowCalendar, startCalendar);
 
-		startCalendar.add(Calendar.DAY_OF_YEAR, -2);
+		// Start Date in the past, after the cron expression
+
+		startCalendar = (Calendar)nowCalendar.clone();
+
+		startCalendar.add(Calendar.DAY_OF_MONTH, -1);
+		startCalendar.add(Calendar.HOUR_OF_DAY, 14);
+
+		_testUpdateDispatchTriggerWithCronExpressions(
+			cronExpression,
+			CalendarFactoryUtil.getCalendar(
+				futureCalendar.get(Calendar.YEAR),
+				futureCalendar.get(Calendar.MONTH),
+				futureCalendar.get(Calendar.DAY_OF_MONTH),
+				futureCalendar.get(Calendar.HOUR_OF_DAY),
+				futureCalendar.get(Calendar.MINUTE),
+				futureCalendar.get(Calendar.SECOND)),
+			nowCalendar, startCalendar);
+
+		// Start Date in the future, before the cron expression
+
+		startCalendar = (Calendar)nowCalendar.clone();
 
 		startCalendar.add(Calendar.HOUR_OF_DAY, 10);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			dispatchTrigger, dispatchTaskClusterMode, startCalendar,
-			cronExpression);
+			cronExpression,
+			CalendarFactoryUtil.getCalendar(
+				futureCalendar.get(Calendar.YEAR),
+				futureCalendar.get(Calendar.MONTH),
+				futureCalendar.get(Calendar.DAY_OF_MONTH),
+				futureCalendar.get(Calendar.HOUR_OF_DAY),
+				futureCalendar.get(Calendar.MINUTE),
+				futureCalendar.get(Calendar.SECOND)),
+			nowCalendar, startCalendar);
 
-		// Start Date in past, after the cron expression
+		// Start Date in the future, after the cron expression
 
-		startCalendar = CalendarFactoryUtil.getCalendar(
-			nowCalendar.getTimeInMillis());
-
-		startCalendar.add(Calendar.DAY_OF_YEAR, -2);
-
-		startCalendar.add(Calendar.HOUR_OF_DAY, 14);
-
-		_testUpdateDispatchTriggerWithCronExpressions(
-			dispatchTrigger, dispatchTaskClusterMode, startCalendar,
-			cronExpression);
-
-		// Start Date in future, before the cron expression
-
-		startCalendar = CalendarFactoryUtil.getCalendar(
-			nowCalendar.getTimeInMillis());
-
-		startCalendar.add(Calendar.HOUR_OF_DAY, 10);
-
-		_testUpdateDispatchTriggerWithCronExpressions(
-			dispatchTrigger, dispatchTaskClusterMode, startCalendar,
-			cronExpression);
-
-		// Start Date in future, fater the cron expression
-
-		startCalendar = CalendarFactoryUtil.getCalendar(
-			nowCalendar.getTimeInMillis());
+		startCalendar = (Calendar)nowCalendar.clone();
 
 		startCalendar.add(Calendar.HOUR_OF_DAY, 14);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			dispatchTrigger, dispatchTaskClusterMode, startCalendar,
-			cronExpression);
+			cronExpression,
+			CalendarFactoryUtil.getCalendar(
+				futureCalendar.get(Calendar.YEAR),
+				futureCalendar.get(Calendar.MONTH),
+				futureCalendar.get(Calendar.DAY_OF_MONTH),
+				futureCalendar.get(Calendar.HOUR_OF_DAY),
+				futureCalendar.get(Calendar.MINUTE),
+				futureCalendar.get(Calendar.SECOND)),
+			nowCalendar, startCalendar);
 	}
 
 	@Test
@@ -674,31 +688,57 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	private void _testUpdateDispatchTriggerWithCronExpressions(
-			DispatchTrigger dispatchTrigger,
-			DispatchTaskClusterMode dispatchTaskClusterMode,
-			Calendar startCalendar, String cronExpression)
+			String cronExpression, Calendar expectedCalendar,
+			Calendar nowCalendar, Calendar startCalendar)
 		throws Exception {
 
-		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-			startCalendar.getTimeInMillis());
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				UserTestUtil.addUser(), _getRandomDispatchExecutorType(),
+				RandomTestUtil.nextInt()));
 
-		endCalendar.add(Calendar.DAY_OF_YEAR, 7);
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED;
+
+		dispatchTrigger.setDispatchTaskClusterMode(
+			dispatchTaskClusterMode.getMode());
+
+		Calendar endCalendar = (Calendar)nowCalendar.clone();
+
+		endCalendar.add(Calendar.YEAR, 1);
 
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), true, cronExpression,
 			dispatchTaskClusterMode, endCalendar.get(Calendar.MONTH),
 			endCalendar.get(Calendar.DAY_OF_MONTH),
-			endCalendar.get(Calendar.YEAR), 23, 59, false, true,
+			endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.HOUR),
+			endCalendar.get(Calendar.MINUTE), false, true,
 			startCalendar.get(Calendar.MONTH),
 			startCalendar.get(Calendar.DAY_OF_MONTH),
-			startCalendar.get(Calendar.YEAR), 23, 59, "UTC");
+			startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.HOUR),
+			startCalendar.get(Calendar.MINUTE), "UTC");
 
-		Thread.sleep(1500);
+		Thread.sleep(1000);
 
 		Assert.assertEquals(
 			0,
 			_dispatchLogLocalService.getDispatchLogsCount(
 				dispatchTrigger.getDispatchTriggerId()));
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
+				dispatchTaskClusterMode.getStorageType());
+
+		Assert.assertNotNull(schedulerResponse);
+
+		Date date = _schedulerEngineHelper.getNextFireTime(schedulerResponse);
+
+		Calendar nextFireCalendar = CalendarFactoryUtil.getCalendar();
+
+		nextFireCalendar.setTime(date);
+
+		Assert.assertEquals(expectedCalendar, nextFireCalendar);
 	}
 
 	@Inject

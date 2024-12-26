@@ -1654,6 +1654,14 @@ public class JournalDisplayContext {
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
+		long highlightedDDMStructureId = getHighlightedDDMStructureId();
+
+		if (highlightedDDMStructureId > 0) {
+			portletURL.setParameter(
+				"highlightedDDMStructureId",
+				String.valueOf(highlightedDDMStructureId));
+		}
+
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {

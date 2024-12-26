@@ -1,6 +1,6 @@
 <script>
 	const toggleClick = (link) => {
-		link.addEventListener("click", (event) => {
+    	link.addEventListener("click", (event) => {
 
 			event.preventDefault();
 			const targetId = link.getAttribute("href").substring(1);
@@ -15,30 +15,28 @@
 					top: elementPosition,
 				});
 			}
-		});
+    	});
 	}
 
 	document.addEventListener("DOMContentLoaded", () => {
-		const observer = new MutationObserver(() => {
+		const mutationObserver = new MutationObserver(() => {
 			const anchorLinks = document.querySelectorAll(".toc li a");
 
-			if (anchorLinks.length > 0) {
-				anchorLinks.forEach((link) => {
+			anchorLinks.forEach((anchorLink) => {
 
-					if (!link.dataset.observed) {
-						toggleClick(link)
-						link.dataset.observed = "true";
-					}
-				});
-				observer.disconnect();
-			}
+				if (!anchorLink.dataset.observed) {
+					toggleClick(anchorLink)
+					anchorLink.dataset.observed = "true";
+				}
+			});
+			mutationObserver.disconnect();
 		});
 
-		observer.observe(document.body, { childList: true, subtree: true });
+		mutationObserver.observe(document.body, { childList: true, subtree: true });
 		const anchorLinks = document.querySelectorAll("h1 a, h2 a, h3 a");
 
-		anchorLinks.forEach((link) => {
-			toggleClick(link)
+		anchorLinks.forEach((anchorLink) => {
+			toggleClick(anchorLink)
 		});
 	});
 </script>

@@ -482,7 +482,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_STANDALONE,
 			UnicodePropertiesBuilder.put(
-				"script", "println \"Hello World\""
+				"script", "println \"Hello World 1\""
 			).build(),
 			false);
 
@@ -691,7 +691,8 @@ public class ObjectActionLocalServiceTest {
 			objectEntryResource.putObjectEntryObjectActionObjectActionName(
 				objectEntry.getObjectEntryId(), objectAction4.getName());
 
-			_assertGroovyObjectActionExecutorArguments("John", objectEntry);
+			_assertGroovyObjectActionExecutorArguments(
+				"println \"Hello World 1\"", "John", "firstName", objectEntry);
 
 			// Update object entry
 
@@ -878,7 +879,7 @@ public class ObjectActionLocalServiceTest {
 				Arrays.asList(
 					objectRelationshipAA_AAA, objectRelationshipA_AA));
 
-			_addObjectAction(
+			ObjectAction rootUpdateAction = _addObjectAction(
 				objectDefinitionA.getObjectDefinitionId(),
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
@@ -888,7 +889,7 @@ public class ObjectActionLocalServiceTest {
 					"url", "https://onafterrootupdate.com"
 				).build());
 
-			ObjectEntry rootObjectEntry =
+			ObjectEntry rootObjectEntry1 =
 				_objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), 0,
 					objectDefinitionA.getObjectDefinitionId(),
@@ -910,7 +911,7 @@ public class ObjectActionLocalServiceTest {
 					"able", RandomTestUtil.randomString()
 				).put(
 					relationshipObjectField.getName(),
-					rootObjectEntry.getObjectEntryId()
+					rootObjectEntry1.getObjectEntryId()
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
@@ -946,8 +947,108 @@ public class ObjectActionLocalServiceTest {
 				objectDefinitionA, null, null,
 				WorkflowConstants.STATUS_APPROVED);
 
+			_objectActionLocalService.deleteObjectAction(rootUpdateAction);
+
+			// Hierarchy, on after add
+
+			_addObjectAction(
+				objectDefinitionA.getObjectDefinitionId(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"script", "println \"Hello World 2\""
+				).build());
+
+			_addObjectAction(
+				objectDefinitionAA.getObjectDefinitionId(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"script", "println \"Hello World 3\""
+				).build());
+
+			_addObjectAction(
+				objectDefinitionAAA.getObjectDefinitionId(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"script", "println \"Hello World 4\""
+				).build());
+
+			ObjectEntry rootObjectEntry2 =
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), 0,
+					objectDefinitionA.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"firstName", "Paul"
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				"Paul",
+				MapUtil.getString(
+					_objectEntryLocalService.getValues(
+						rootObjectEntry2.getObjectEntryId()),
+					"firstName"));
+
+			_assertGroovyObjectActionExecutorArguments(
+				"println \"Hello World 2\"", "Paul", "firstName",
+				rootObjectEntry2);
+
+			relationshipObjectField = _objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+			ObjectEntry objectEntryAA = _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				relationshipObjectField.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"able", "Peter"
+				).put(
+					relationshipObjectField.getName(),
+					rootObjectEntry2.getObjectEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				"Peter",
+				MapUtil.getString(
+					_objectEntryLocalService.getValues(
+						objectEntryAA.getObjectEntryId()),
+					"able"));
+
+			_assertGroovyObjectActionExecutorArguments(
+				"println \"Hello World 3\"", "Peter", "able", objectEntryAA);
+
+			relationshipObjectField = _objectFieldLocalService.getObjectField(
+				objectRelationshipAA_AAA.getObjectFieldId2());
+
+			ObjectEntry objectEntryAAA =
+				_objectEntryLocalService.addObjectEntry(
+					TestPropsValues.getUserId(), 0,
+					objectDefinitionAAA.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"able", "Philip"
+					).put(
+						relationshipObjectField.getName(),
+						objectEntryAA.getObjectEntryId()
+					).build(),
+					ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				"Philip",
+				MapUtil.getString(
+					_objectEntryLocalService.getValues(
+						objectEntryAAA.getObjectEntryId()),
+					"able"));
+
+			_assertGroovyObjectActionExecutorArguments(
+				"println \"Hello World 4\"", "Philip", "able", objectEntryAAA);
+
 			_objectEntryLocalService.deleteObjectEntry(
-				rootObjectEntry.getObjectEntryId());
+				rootObjectEntry1.getObjectEntryId());
+
+			_objectEntryLocalService.deleteObjectEntry(
+				rootObjectEntry2.getObjectEntryId());
 
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationshipA_AA.getExternalReferenceCode(),
@@ -1099,7 +1200,8 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
 
-		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
+		_assertGroovyObjectActionExecutorArguments(
+			"println \"Hello World\"", "João", "firstName", objectEntry);
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 
@@ -2635,26 +2737,6 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(
-		String firstName, ObjectEntry objectEntry) {
-
-		Assert.assertEquals(1, _argumentsList.size());
-
-		Object[] arguments = _argumentsList.poll();
-
-		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
-
-		Assert.assertEquals(
-			objectEntry.getExternalReferenceCode(),
-			inputObjects.get("externalReferenceCode"));
-		Assert.assertEquals(firstName, inputObjects.get("firstName"));
-		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), inputObjects.get("id"));
-
-		Assert.assertEquals(Collections.emptySet(), arguments[1]);
-		Assert.assertEquals("println \"Hello World\"", arguments[2]);
-	}
-
-	private void _assertGroovyObjectActionExecutorArguments(
 		String expectedObjectFieldValue, String objectFieldName) {
 
 		Assert.assertEquals(1, _argumentsList.size());
@@ -2665,6 +2747,27 @@ public class ObjectActionLocalServiceTest {
 
 		Assert.assertEquals(
 			expectedObjectFieldValue, inputObjects.get(objectFieldName));
+	}
+
+	private void _assertGroovyObjectActionExecutorArguments(
+		String expectedGroovyValue, String entryValue, String fieldName,
+		ObjectEntry objectEntry) {
+
+		Assert.assertEquals(1, _argumentsList.size());
+
+		Object[] arguments = _argumentsList.poll();
+
+		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			inputObjects.get("externalReferenceCode"));
+		Assert.assertEquals(entryValue, inputObjects.get(fieldName));
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), inputObjects.get("id"));
+
+		Assert.assertEquals(Collections.emptySet(), arguments[1]);
+		Assert.assertEquals(expectedGroovyValue, arguments[2]);
 	}
 
 	private void _assertNotificationQueueEntrySubject(String expectedSubject)

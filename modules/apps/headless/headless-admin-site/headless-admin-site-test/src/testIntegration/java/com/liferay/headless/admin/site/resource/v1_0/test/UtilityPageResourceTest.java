@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecification
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -89,20 +90,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 					postUtilityPage.getExternalReferenceCode(),
 					testGroup.getGroupId()));
 
-		try {
-			utilityPageResource.
-				deleteSiteSiteByExternalReferenceCodeUtilityPage(
-					testGroup.getExternalReferenceCode(),
-					postUtilityPage.getExternalReferenceCode());
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				utilityPageResource.
+					deleteSiteSiteByExternalReferenceCodeUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						postUtilityPage.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -122,19 +116,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		assertEquals(postUtilityPage, getUtilityPage);
 		assertValid(getUtilityPage);
 
-		try {
-			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
-				testGroup.getExternalReferenceCode(),
-				RandomTestUtil.randomString());
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				utilityPageResource.
+					getSiteSiteByExternalReferenceCodeUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString()));
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
@@ -254,19 +242,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
-		try {
-			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
-				testGroup.getExternalReferenceCode(),
-				RandomTestUtil.randomString(), randomUtilityPage());
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_assertProblemException(
+			"NOT_FOUND",
+			() ->
+				utilityPageResource.
+					patchSiteSiteByExternalReferenceCodeUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						RandomTestUtil.randomString(), randomUtilityPage()));
 	}
 
 	@Override
@@ -319,20 +301,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertFalse(layout.isPublished());
 
-		try {
-			_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+		_assertProblemException(
+			"BAD_REQUEST",
+			() -> _testPutSiteSiteByExternalReferenceCodeUtilityPage(
 				_getUtilityPage(
 					Boolean.TRUE,
-					layoutUtilityPageEntry.getExternalReferenceCode()));
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+					layoutUtilityPageEntry.getExternalReferenceCode())));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
@@ -454,6 +428,23 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			layout, utilityPage.getPageSpecifications());
+	}
+
+	private void _assertProblemException(
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	private UtilityPage _getUtilityPage(

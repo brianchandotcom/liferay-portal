@@ -2059,6 +2059,8 @@ public class ObjectDefinitionLocalServiceTest {
 				"AA", new String[0]
 			).build());
 
+		_addObjectAction("C_AA");
+
 		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA"));
 		_assertRootDescendantNodeObjectDefinition("C_AA");
 
@@ -2069,6 +2071,8 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAAAA", new String[0]
 			).build());
+
+		_addObjectAction("C_AAAAA");
 
 		_assertModelResourceNames(ListUtil.fromArray("C_AAAA", "C_AAAAA"));
 		_assertRootDescendantNodeObjectDefinition("C_AAAAA");
@@ -2093,8 +2097,7 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinitionAAA.getObjectDefinitionId());
 
-		_assertModelResourceNames(
-			ListUtil.fromArray("C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"));
+		_assertModelResourceNames(ListUtil.fromArray("C_A", "C_AA", "C_AAAAA"));
 		_assertRootDescendantNodeObjectDefinition("C_AAA");
 		_assertRootDescendantNodeObjectDefinition("C_AAAA");
 
@@ -2850,6 +2853,30 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())));
+	}
+
+	private void _addObjectAction(String objectDefinitionName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), objectDefinitionName);
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"secret", "standalone"
+			).put(
+				"url", "https://standalone.com"
+			).build(),
+			false);
 	}
 
 	private ObjectFolder _addObjectFolder() throws Exception {

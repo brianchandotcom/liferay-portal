@@ -50,14 +50,40 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 
 	@Test
 	public void testAddLayoutPageTemplateCollection() throws Exception {
+		String externalReferenceCode = StringUtil.randomString();
+
 		_layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				RandomTestUtil.randomString(), null,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					externalReferenceCode, TestPropsValues.getUserId(),
+					_group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), null,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
+
+			Assert.fail();
+		}
+		catch (DuplicateLayoutPageTemplateCollectionExternalReferenceCodeException
+					duplicateLayoutPageTemplateCollectionExternalReferenceCodeException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					duplicateLayoutPageTemplateCollectionExternalReferenceCodeException);
+			}
+		}
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
@@ -83,34 +109,6 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				_log.debug(layoutPageTemplateCollectionGroupIdException);
 			}
 		}
-	}
-
-	@Test(
-		expected = DuplicateLayoutPageTemplateCollectionExternalReferenceCodeException.class
-	)
-	public void testAddLayoutPageTemplateCollectionWithExistingExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.randomString();
-
-		_layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), null,
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-		_layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), null,
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test

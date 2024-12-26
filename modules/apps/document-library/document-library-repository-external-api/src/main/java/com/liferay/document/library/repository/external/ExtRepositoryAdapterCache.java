@@ -19,7 +19,7 @@ import java.util.Map;
 public class ExtRepositoryAdapterCache implements Cloneable {
 
 	public static ExtRepositoryAdapterCache getInstance() {
-		return _extRepositoryAdapterThreadLocal.get();
+		return _extRepositoryAdapter.get();
 	}
 
 	public void clear() {
@@ -89,7 +89,7 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 		ExtRepositoryAdapterCache.class);
 
 	private static final ThreadLocal<ExtRepositoryAdapterCache>
-		_extRepositoryAdapterThreadLocal = new CentralizedThreadLocal<>(
+		_extRepositoryAdapter = new CentralizedThreadLocal<>(
 			ExtRepositoryAdapterCache.class.getName(),
 			ExtRepositoryAdapterCache::new);
 

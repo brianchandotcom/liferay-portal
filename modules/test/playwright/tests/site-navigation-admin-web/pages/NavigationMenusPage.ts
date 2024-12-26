@@ -45,7 +45,10 @@ export class NavigationMenusPage {
 	async openAddPageModal() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Page'}),
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Page',
+			}),
 			trigger: this.addItemButton,
 		});
 

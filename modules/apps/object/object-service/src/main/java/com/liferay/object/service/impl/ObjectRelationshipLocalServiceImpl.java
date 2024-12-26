@@ -1905,9 +1905,9 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		if ((objectDefinition1.isModifiableAndSystem() &&
-			 !objectDefinition2.isModifiableAndSystem()) ||
-			(!objectDefinition1.isModifiableAndSystem() &&
-			 objectDefinition2.isModifiableAndSystem())) {
+			 !objectDefinition2.isSystem()) ||
+			(objectDefinition2.isModifiableAndSystem() &&
+			 !objectDefinition1.isSystem())) {
 
 			throw new ObjectRelationshipEdgeException(
 				"Inheritance between modifiable system and custom object " +

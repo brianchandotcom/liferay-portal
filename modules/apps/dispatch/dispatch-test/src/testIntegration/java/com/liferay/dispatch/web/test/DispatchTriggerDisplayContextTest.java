@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,6 +42,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -147,6 +150,20 @@ public class DispatchTriggerDisplayContextTest {
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.ALL_NODES;
 
+		Calendar nowCalendar = CalendarFactoryUtil.getCalendar();
+
+		nowCalendar.setTime(new Date());
+
+		Calendar endCalendar = (Calendar)nowCalendar.clone();
+
+		endCalendar.add(Calendar.DAY_OF_MONTH, 1);
+		endCalendar.add(Calendar.HOUR, 1);
+
+		Calendar startCalendar = (Calendar)nowCalendar.clone();
+
+		startCalendar.add(Calendar.DAY_OF_MONTH, -1);
+		startCalendar.add(Calendar.HOUR, -1);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
 				_companyLocalService.getCompany(user.getCompanyId()),
@@ -156,10 +173,23 @@ public class DispatchTriggerDisplayContextTest {
 				"active", "true", "cmd", "schedule", "cronExpression",
 				"* 0/5 * ? * MON-SAT", "dispatchTaskClusterMode",
 				String.valueOf(dispatchTaskClusterMode.getMode()),
-				"endDateMonth", "05", "endDateDay", "07", "endDateYear", "2022",
-				"endDateHour", "10", "endDateMinute", "30", "endDateAmPm", "1",
-				"startDateMonth", "05", "startDateDay", "07", "startDateYear",
-				"2022", "startDateHour", "09", "startDateMinute", "55",
+				"endDateMonth", String.valueOf(endCalendar.get(Calendar.MONTH)),
+				"endDateDay",
+				String.valueOf(endCalendar.get(Calendar.DAY_OF_MONTH)),
+				"endDateYear", String.valueOf(endCalendar.get(Calendar.YEAR)),
+				"endDateHour", String.valueOf(endCalendar.get(Calendar.HOUR)),
+				"endDateMinute",
+				String.valueOf(endCalendar.get(Calendar.MINUTE)), "endDateAmPm",
+				"1", "startDateMonth",
+				String.valueOf(startCalendar.get(Calendar.MONTH)),
+				"startDateDay",
+				String.valueOf(startCalendar.get(Calendar.DAY_OF_MONTH)),
+				"startDateYear",
+				String.valueOf(startCalendar.get(Calendar.YEAR)),
+				"startDateHour",
+				String.valueOf(startCalendar.get(Calendar.HOUR)),
+				"startDateMinute",
+				String.valueOf(startCalendar.get(Calendar.MINUTE)),
 				"startDateAmPm", "1");
 
 		_mvcActionCommand.processAction(

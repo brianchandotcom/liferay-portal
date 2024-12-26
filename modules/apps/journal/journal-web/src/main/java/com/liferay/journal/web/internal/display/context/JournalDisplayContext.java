@@ -1595,30 +1595,9 @@ public class JournalDisplayContext {
 			}
 		}
 
-		String navigation = ParamUtil.getString(
-			_httpServletRequest, "navigation");
-
-		if (Validator.isNotNull(navigation)) {
-			portletURL.setParameter(
-				"navigation", HtmlUtil.escapeJS(getNavigation()));
-		}
-
-		portletURL.setParameter(
-			"navigationMine", String.valueOf(isNavigationMine()));
-		portletURL.setParameter(
-			"navigationRecent", String.valueOf(isNavigationRecent()));
-
-		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
-
 		if (isNavigationStructure()) {
 			portletURL.setParameter(
 				"ddmStructureId", String.valueOf(getDDMStructureId()));
-		}
-
-		String status = ParamUtil.getString(_httpServletRequest, "status");
-
-		if (Validator.isNotNull(status)) {
-			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
 		String delta = ParamUtil.getString(_httpServletRequest, "delta");
@@ -1641,11 +1620,26 @@ public class JournalDisplayContext {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
+		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
+
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
+
+		String navigation = ParamUtil.getString(
+			_httpServletRequest, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter(
+				"navigation", HtmlUtil.escapeJS(getNavigation()));
+		}
+
+		portletURL.setParameter(
+			"navigationMine", String.valueOf(isNavigationMine()));
+		portletURL.setParameter(
+			"navigationRecent", String.valueOf(isNavigationRecent()));
 
 		String orderByCol = getOrderByCol();
 
@@ -1657,6 +1651,12 @@ public class JournalDisplayContext {
 
 		if (Validator.isNotNull(orderByType)) {
 			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		String status = ParamUtil.getString(_httpServletRequest, "status");
+
+		if (Validator.isNotNull(status)) {
+			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
 		if (Validator.isNotNull(tab)) {

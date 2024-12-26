@@ -522,7 +522,7 @@ pre[class*='language-'] {
 		align-self: flex-start;
 		padding-left: var(--spacer-2);
 		position: sticky;
-		top: 135px;
+		top: 185px;
 		width: 256px;
 
 		a {

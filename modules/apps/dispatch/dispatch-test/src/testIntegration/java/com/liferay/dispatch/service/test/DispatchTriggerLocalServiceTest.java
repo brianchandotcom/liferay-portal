@@ -444,7 +444,7 @@ public class DispatchTriggerLocalServiceTest {
 
 		_testUpdateDispatchTriggerWithCronExpressions(
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
-			nowCalendar, startCalendar);
+			startCalendar);
 
 		// Start Date in the future, before the cron expression
 
@@ -454,7 +454,7 @@ public class DispatchTriggerLocalServiceTest {
 
 		_testUpdateDispatchTriggerWithCronExpressions(
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
-			nowCalendar, startCalendar);
+			startCalendar);
 
 		// Start Date in the past, before the cron expression
 
@@ -464,7 +464,7 @@ public class DispatchTriggerLocalServiceTest {
 
 		_testUpdateDispatchTriggerWithCronExpressions(
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
-			nowCalendar, startCalendar);
+			startCalendar);
 
 		// Start Date in the past, after the cron expression
 
@@ -475,7 +475,7 @@ public class DispatchTriggerLocalServiceTest {
 
 		_testUpdateDispatchTriggerWithCronExpressions(
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
-			nowCalendar, startCalendar);
+			startCalendar);
 	}
 
 	@Test
@@ -677,7 +677,7 @@ public class DispatchTriggerLocalServiceTest {
 
 	private void _testUpdateDispatchTriggerWithCronExpressions(
 			String cronExpression, Calendar expectedCalendar,
-			Calendar nowCalendar, Calendar startCalendar)
+			Calendar startCalendar)
 		throws Exception {
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
@@ -691,8 +691,9 @@ public class DispatchTriggerLocalServiceTest {
 		dispatchTrigger.setDispatchTaskClusterMode(
 			dispatchTaskClusterMode.getMode());
 
-		Calendar endCalendar = (Calendar)nowCalendar.clone();
+		Calendar endCalendar = CalendarFactoryUtil.getCalendar();
 
+		endCalendar.setTime(new Date());
 		endCalendar.add(Calendar.YEAR, 1);
 
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(

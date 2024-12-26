@@ -471,32 +471,56 @@ test.describe('Fragments Panel', () => {
 		await expect(searchInput).toHaveValue('Headin');
 	});
 
-	test('Favorite section is empty when there are no favorites', async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		site,
-	}) => {
+	test(
+		'Select fragments as Favorites works correctly',
+		{tag: '@LPS-158746'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
 
-		// Create content page and go to edit mode
+			// Create content page and go to edit mode
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			siteId: site.id,
-			title: getRandomString(),
-		});
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		// Open the "Fragments and Widgets" panel
+			// Open the "Fragments and Widgets" panel
 
-		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
 
-		// Assert favorite section is empty
+			// Assert favorite section is empty
 
-		await expect(
-			page.getByRole('menuitem', {name: 'Favorites'})
-		).not.toBeVisible();
-	});
+			const favoritesSection = page.getByRole('menuitem', {
+				name: 'Favorites',
+			});
+
+			await expect(favoritesSection).not.toBeVisible();
+
+			// Switch to card view and add "External Video" fragment as favorite
+
+			await page.getByTitle('Switch to Card View').click();
+
+			await page.getByLabel('Mark External Video as Favorite').click();
+
+			// Check that the favorites section is shown with the corresponding fragment
+
+			await expect(favoritesSection).toBeVisible();
+
+			await expect(
+				page
+					.locator('.page-editor__collapse')
+					.filter({has: favoritesSection})
+			).toContainText('External Video');
+
+			// Reset favorites
+
+			await page
+				.getByLabel('Unmark External Video as Favorite')
+				.first()
+				.click();
+		}
+	);
 
 	test(
 		'A widget marked as favorite in a content page is also marked in a widget page',

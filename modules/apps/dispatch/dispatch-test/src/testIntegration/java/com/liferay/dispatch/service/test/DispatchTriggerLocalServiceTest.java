@@ -443,14 +443,7 @@ public class DispatchTriggerLocalServiceTest {
 		startCalendar.add(Calendar.HOUR_OF_DAY, 14);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			cronExpression,
-			CalendarFactoryUtil.getCalendar(
-				futureCalendar.get(Calendar.YEAR),
-				futureCalendar.get(Calendar.MONTH),
-				futureCalendar.get(Calendar.DAY_OF_MONTH),
-				futureCalendar.get(Calendar.HOUR_OF_DAY),
-				futureCalendar.get(Calendar.MINUTE),
-				futureCalendar.get(Calendar.SECOND)),
+			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			nowCalendar, startCalendar);
 
 		// Start Date in the future, before the cron expression
@@ -460,14 +453,7 @@ public class DispatchTriggerLocalServiceTest {
 		startCalendar.add(Calendar.HOUR_OF_DAY, 10);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			cronExpression,
-			CalendarFactoryUtil.getCalendar(
-				futureCalendar.get(Calendar.YEAR),
-				futureCalendar.get(Calendar.MONTH),
-				futureCalendar.get(Calendar.DAY_OF_MONTH),
-				futureCalendar.get(Calendar.HOUR_OF_DAY),
-				futureCalendar.get(Calendar.MINUTE),
-				futureCalendar.get(Calendar.SECOND)),
+			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			nowCalendar, startCalendar);
 
 		// Start Date in the past, before the cron expression
@@ -477,14 +463,7 @@ public class DispatchTriggerLocalServiceTest {
 		startCalendar.add(Calendar.DAY_OF_MONTH, -1);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			cronExpression,
-			CalendarFactoryUtil.getCalendar(
-				futureCalendar.get(Calendar.YEAR),
-				futureCalendar.get(Calendar.MONTH),
-				futureCalendar.get(Calendar.DAY_OF_MONTH),
-				futureCalendar.get(Calendar.HOUR_OF_DAY),
-				futureCalendar.get(Calendar.MINUTE),
-				futureCalendar.get(Calendar.SECOND)),
+			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			nowCalendar, startCalendar);
 
 		// Start Date in the past, after the cron expression
@@ -495,14 +474,7 @@ public class DispatchTriggerLocalServiceTest {
 		startCalendar.add(Calendar.HOUR_OF_DAY, 14);
 
 		_testUpdateDispatchTriggerWithCronExpressions(
-			cronExpression,
-			CalendarFactoryUtil.getCalendar(
-				futureCalendar.get(Calendar.YEAR),
-				futureCalendar.get(Calendar.MONTH),
-				futureCalendar.get(Calendar.DAY_OF_MONTH),
-				futureCalendar.get(Calendar.HOUR_OF_DAY),
-				futureCalendar.get(Calendar.MINUTE),
-				futureCalendar.get(Calendar.SECOND)),
+			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			nowCalendar, startCalendar);
 	}
 
@@ -650,6 +622,22 @@ public class DispatchTriggerLocalServiceTest {
 			(key, value) -> Assert.assertEquals(
 				expectedDispatchTaskSettingsUnicodeProperties.getProperty(key),
 				value));
+	}
+
+	private Calendar _getExpectedCalendar(
+		Calendar futureCalendar, Calendar startCalendar) {
+
+		Calendar calendar = (Calendar)futureCalendar.clone();
+
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		if (startCalendar.get(Calendar.DAY_OF_MONTH) == futureCalendar.get(
+				Calendar.DAY_OF_MONTH)) {
+
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
+
+		return calendar;
 	}
 
 	private String _getGroupName(DispatchTrigger dispatchTrigger) {

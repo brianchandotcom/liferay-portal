@@ -8,6 +8,7 @@ package com.liferay.layout.utility.page.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
@@ -448,6 +449,12 @@ public class LayoutUtilityPageEntryServiceTest {
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutUtilityPageEntry2.getPlid());
+
+			ContentLayoutTestUtil.publishLayout(
+				layout.fetchDraftLayout(), layout);
 
 			_layoutUtilityPageEntryService.setDefaultLayoutUtilityPageEntry(
 				layoutUtilityPageEntry2.getLayoutUtilityPageEntryId());

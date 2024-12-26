@@ -52,13 +52,24 @@ public class ObjectRelationshipTestUtil {
 			ObjectDefinition objectDefinition2, String deletionType)
 		throws PortalException {
 
+		return addObjectRelationship(
+			objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2, deletionType, StringUtil.randomId());
+	}
+
+	public static ObjectRelationship addObjectRelationship(
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String deletionType,
+			String name)
+		throws PortalException {
+
 		return objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
 			objectDefinition1.getObjectDefinitionId(),
 			objectDefinition2.getObjectDefinitionId(), 0, deletionType, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+			name, false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 }

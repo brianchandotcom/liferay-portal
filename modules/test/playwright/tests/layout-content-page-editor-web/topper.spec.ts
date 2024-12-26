@@ -161,3 +161,45 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Check that the fragment topper changes its top when it reaches the toolbar',
+	{tag: ['@LPS-104629']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const getTopValue = async () =>
+			await page
+				.locator('.page-editor__topper__bar')
+				.evaluate((element) =>
+					parseFloat(window.getComputedStyle(element).top)
+				);
+
+		// Create a content page with a Card fragment
+
+		const cardId = getRandomString();
+
+		const cardDefinition = getFragmentDefinition({
+			id: cardId,
+			key: 'BASIC_COMPONENT-card',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([cardDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Check the topper top when it reaches the toolbar
+
+		await pageEditorPage.selectFragment(cardId);
+
+		const topValue = await getTopValue();
+
+		await page.mouse.wheel(0, 50);
+
+		const nextTopValue = await getTopValue();
+
+		expect(nextTopValue).toBe(topValue + 26);
+	}
+);

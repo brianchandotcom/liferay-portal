@@ -62,6 +62,11 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		Assert.assertNotNull(
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
+
 		try {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
@@ -127,33 +132,16 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		Assert.assertNotNull(
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
+
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(
 				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertNull(
-			_layoutPageTemplateCollectionLocalService.
-				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
-					externalReferenceCode, _group.getGroupId()));
-	}
-
-	@Test
-	public void testFetchLayoutPageTemplateCollectionByExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.randomString();
-
-		_layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), null,
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));

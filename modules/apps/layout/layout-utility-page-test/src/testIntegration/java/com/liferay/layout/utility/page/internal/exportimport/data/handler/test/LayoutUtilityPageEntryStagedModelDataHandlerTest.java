@@ -12,11 +12,14 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -141,6 +144,11 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 			importedLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
 
 		initExport();
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
@@ -301,6 +309,9 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 	private static final String _TEST_NAME = "Test Layout Utility Page";
 
 	private static final String _TEST_TYPE = "test";
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutUtilityPageEntryLocalService

@@ -12,7 +12,9 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -225,21 +227,31 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		UtilityPage utilityPage =
-			testPostSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage(
-				randomUtilityPage());
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
 			Boolean.FALSE,
 			_getUtilityPage(
-				Boolean.FALSE, utilityPage.getExternalReferenceCode()));
+				Boolean.FALSE,
+				layoutUtilityPageEntry.getExternalReferenceCode()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
 			Boolean.TRUE,
 			_getUtilityPage(
-				Boolean.TRUE, utilityPage.getExternalReferenceCode()));
+				Boolean.TRUE,
+				layoutUtilityPageEntry.getExternalReferenceCode()));
 		_testPatchSiteSiteByExternalReferenceCodeUtilityPage(
 			Boolean.TRUE,
-			_getUtilityPage(null, utilityPage.getExternalReferenceCode()));
+			_getUtilityPage(
+				null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
 		try {
 			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
@@ -265,7 +277,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage utilityPage =
 			utilityPageResource.postSiteSiteByExternalReferenceCodeUtilityPage(
-				testGroup.getExternalReferenceCode(), randomUtilityPage());
+				testGroup.getExternalReferenceCode(),
+				_getUtilityPage(Boolean.FALSE, RandomTestUtil.randomString()));
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
@@ -294,12 +307,29 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(randomUtilityPage());
 
-		UtilityPage utilityPage =
-			testPostSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage(
-				randomUtilityPage());
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
-			_getUtilityPage(null, utilityPage.getExternalReferenceCode()));
+			_getUtilityPage(
+				Boolean.TRUE,
+				layoutUtilityPageEntry.getExternalReferenceCode()));
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			_getUtilityPage(
+				null, layoutUtilityPageEntry.getExternalReferenceCode()));
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			_getUtilityPage(
+				Boolean.FALSE,
+				layoutUtilityPageEntry.getExternalReferenceCode()));
 	}
 
 	@Ignore

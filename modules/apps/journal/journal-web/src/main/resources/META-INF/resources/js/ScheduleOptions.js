@@ -34,10 +34,7 @@ export default function ScheduleOptions({
 			const date = new Date(displayDate);
 
 			if (
-				date.valueOf() <=
-				new Date(
-					new Date().toLocaleString('en-US', {timeZone})
-				).valueOf()
+				date <= new Date(new Date().toLocaleString('en-US', {timeZone}))
 			) {
 				setError(
 					Liferay.Language.get('the-date-entered-is-in-the-past')

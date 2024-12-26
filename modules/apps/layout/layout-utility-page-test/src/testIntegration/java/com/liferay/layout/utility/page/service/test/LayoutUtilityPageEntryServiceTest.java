@@ -96,7 +96,9 @@ public class LayoutUtilityPageEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithoutAddPermission() throws Exception {
+	public void testAddLayoutUtilityPageEntryWithoutAddPermission()
+		throws Exception {
+
 		try {
 			UserTestUtil.setUser(
 				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));

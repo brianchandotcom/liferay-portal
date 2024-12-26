@@ -293,7 +293,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			if (GetterUtil.getBoolean(
 					httpServletRequest.getAttribute(
 						"com.liferay.portal.vulcan.internal.template.servlet." +
-							"RESTClientHttpRequest"))) {
+							"RESTClientHttpRequestDelegate"))) {
 
 				systemServiceAccessPolicyNames.add(
 					sapConfiguration.

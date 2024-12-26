@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
@@ -184,16 +185,20 @@ public class ObjectDefinitionResourcePermissionUtil {
 				continue;
 			}
 
-			String objectActionPermissionKeys = _getObjectActionPermissionKeys(
-				objectActionLocalService, node.getPrimaryKey(),
-				standaloneObjectActions);
-
 			ObjectDefinition rootDescendantNodeObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(
 					node.getPrimaryKey());
 
 			rootDescendantNodeObjectDefinitionClassNames.add(
 				rootDescendantNodeObjectDefinition.getClassName());
+
+			String objectActionPermissionKeys = _getObjectActionPermissionKeys(
+				objectActionLocalService, node.getPrimaryKey(),
+				standaloneObjectActions);
+
+			if (Validator.isNull(objectActionPermissionKeys)) {
+				continue;
+			}
 
 			modelResources = StringBundler.concat(
 				modelResources, "<model-resource><model-name>",

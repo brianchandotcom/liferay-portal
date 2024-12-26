@@ -246,7 +246,6 @@ definition {
 				dmDocumentTitle = "Document_1",
 				groupName = "Guest-staging",
 				mimeType = "image/jpeg",
-				site = "false",
 				sourceFileName = "Document_1.jpg");
 
 			for (var layoutUtilityPageName : list "404,500") {

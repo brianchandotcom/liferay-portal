@@ -1,6 +1,6 @@
 <script>
 	const toggleClick = (link) => {
-    	link.addEventListener("click", (event) => {
+		link.addEventListener("click", (event) => {
 
 			event.preventDefault();
 			const targetId = link.getAttribute("href").substring(1);
@@ -15,7 +15,7 @@
 					top: elementPosition,
 				});
 			}
-    	});
+		});
 	}
 
 	document.addEventListener("DOMContentLoaded", () => {

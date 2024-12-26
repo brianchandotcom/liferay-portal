@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -103,9 +104,12 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 
 		Assert.assertNotNull(href);
 
+		Layout layout = _layoutLocalService.getLayout(
+			layoutClassedModelUsage.getPlid());
+
 		Assert.assertTrue(
 			StringUtil.contains(
-				href, String.valueOf(layoutClassedModelUsage.getPlid()),
+				href, layout.getFriendlyURL(LocaleUtil.getDefault()),
 				StringPool.BLANK));
 
 		Assert.assertEquals("View in Page", dropdownItem.get("label"));
@@ -142,6 +146,7 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -172,6 +177,9 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 	@Inject
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	private ServiceContext _serviceContext;
 

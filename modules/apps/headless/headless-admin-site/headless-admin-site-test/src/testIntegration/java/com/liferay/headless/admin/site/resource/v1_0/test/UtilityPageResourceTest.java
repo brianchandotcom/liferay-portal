@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -302,6 +303,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-42587")
 	public void testPutSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
@@ -314,6 +316,23 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
+		try {
+			_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+				_getUtilityPage(
+					Boolean.TRUE,
+					layoutUtilityPageEntry.getExternalReferenceCode()));
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 

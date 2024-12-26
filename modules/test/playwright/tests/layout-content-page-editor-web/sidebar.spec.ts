@@ -2178,3 +2178,46 @@ test.describe('Rules Panel', () => {
 		});
 	});
 });
+
+test(
+	'Check the resize sidebar limits',
+	{tag: ['@LPS-153383']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const getStyle = async () =>
+			await page
+				.locator('.page-editor__theme-adapter-forms')
+				.evaluate((element) => element.getAttribute('style'));
+
+		// Create a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and check the sidebar limits
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		const resizer = page.getByLabel('Resize Sidebar');
+
+		await resizer.press('Enter');
+
+		for (let i = 0; i < 20; i++) {
+			await resizer.press('ArrowRight');
+		}
+
+		let style = await getStyle();
+
+		expect(style).toBe('--sidebar-content-width: 500px;');
+
+		for (let i = 0; i < 20; i++) {
+			await resizer.press('ArrowLeft');
+		}
+
+		style = await getStyle();
+
+		expect(style).toBe('--sidebar-content-width: 280px;');
+	}
+);

@@ -2034,11 +2034,8 @@ public class ObjectEntryLocalServiceTest {
 				objectField.getName(), objectEntry1.getObjectEntryId()
 			).build());
 
-		AssertUtils.assertFailure(
-			NoSuchResourceActionException.class,
-			objectDefinition2.getClassName() + StringPool.POUND +
-				objectAction.getName(),
-			() -> _hasResourcePermission(
+		Assert.assertFalse(
+			_hasResourcePermission(
 				objectAction, objectDefinition2, objectEntry3));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(

@@ -38,16 +38,20 @@ public class DispatchTriggerHelper {
 		throws DispatchTriggerSchedulerException {
 
 		Date now = new Date();
+
+		Date endDate = dispatchTrigger.getEndDate();
 		Date startDate = dispatchTrigger.getStartDate();
 
-		if ((startDate == null) || startDate.before(now)) {
+		if ((startDate != null) && startDate.before(now) &&
+			((endDate == null) ||
+			 (startDate.before(endDate) && endDate.after(now)))) {
+
 			startDate = now;
 		}
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTrigger), _getGroupName(dispatchTrigger),
-			startDate, dispatchTrigger.getEndDate(),
-			dispatchTrigger.getCronExpression(),
+			startDate, endDate, dispatchTrigger.getCronExpression(),
 			TimeZone.getTimeZone(timeZoneId));
 
 		Message message = new Message();

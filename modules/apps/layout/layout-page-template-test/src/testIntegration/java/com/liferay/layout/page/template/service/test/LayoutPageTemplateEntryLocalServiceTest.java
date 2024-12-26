@@ -126,30 +126,27 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				_log.debug(layoutPageTemplateEntryDefaultTemplateException);
 			}
 		}
-	}
 
-	@Test(
-		expected = DuplicateLayoutPageTemplateEntryExternalReferenceCodeException.class
-	)
-	public void testAddLayoutPageTemplateEntryWithExistingExternalReferenceCode()
-		throws Exception {
+		try {
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		String externalReferenceCode = RandomTestUtil.randomString();
+			Assert.fail();
+		}
+		catch (DuplicateLayoutPageTemplateEntryExternalReferenceCodeException
+					duplicateLayoutPageTemplateEntryExternalReferenceCodeException) {
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
-			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_DRAFT, _serviceContext);
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(),
-			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_DRAFT, _serviceContext);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					duplicateLayoutPageTemplateEntryExternalReferenceCodeException);
+			}
+		}
 	}
 
 	@Test

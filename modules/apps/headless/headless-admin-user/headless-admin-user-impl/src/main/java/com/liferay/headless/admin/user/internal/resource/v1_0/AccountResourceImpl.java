@@ -290,7 +290,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		long companyId;
+		long companyId = 0;
 
 		if (contextCompany != null) {
 			companyId = contextCompany.getCompanyId();

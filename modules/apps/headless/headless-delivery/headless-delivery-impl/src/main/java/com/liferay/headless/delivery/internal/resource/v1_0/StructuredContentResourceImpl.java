@@ -297,7 +297,7 @@ public class StructuredContentResourceImpl
 			entityFields = _entityFieldsProvider.provide(ddmStructure);
 		}
 
-		long companyId;
+		long companyId = 0;
 
 		if (contextCompany != null) {
 			companyId = contextCompany.getCompanyId();

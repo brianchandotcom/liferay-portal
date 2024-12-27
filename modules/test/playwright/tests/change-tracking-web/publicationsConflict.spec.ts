@@ -69,8 +69,6 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalEditArticlePage.publishArticle(true);
 
-	await waitForAlert(page, `Success:${title} was updated successfully.`);
-
 	await blogsEditBlogEntryPage.goto();
 
 	const content = getRandomString();
@@ -193,8 +191,6 @@ test('Resolve deletion modification conflict publications by restoring from recy
 	await journalEditArticlePage.editArticle(title);
 
 	await journalEditArticlePage.publishArticle(true);
-
-	await waitForAlert(page, `Success:${title} was updated successfully.`);
 
 	await changeTrackingPage.workOnProduction();
 

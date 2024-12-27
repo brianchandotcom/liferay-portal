@@ -141,6 +141,11 @@ public class LayoutServiceContextHelperImpl
 
 			_company = company;
 
+			_attributes = ConcurrentHashMapBuilder.<String, Object>put(
+				WebKeys.CTX,
+				ServletContextPool.get(_portal.getServletContextName())
+			).build();
+
 			_originalCompanyId = CompanyThreadLocal.getCompanyId();
 			_originalPermissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -148,11 +153,6 @@ public class LayoutServiceContextHelperImpl
 
 			_originalServiceContext =
 				ServiceContextThreadLocal.getServiceContext();
-
-			_attributes = ConcurrentHashMapBuilder.<String, Object>put(
-				WebKeys.CTX,
-				ServletContextPool.get(_portal.getServletContextName())
-			).build();
 
 			if (_originalServiceContext == null) {
 				_httpServletRequest = _createMockHttpServletRequest();

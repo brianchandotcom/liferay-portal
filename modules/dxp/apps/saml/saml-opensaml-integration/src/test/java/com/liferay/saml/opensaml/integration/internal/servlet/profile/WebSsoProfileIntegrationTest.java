@@ -352,7 +352,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		HttpSession mockHttpSession = mockHttpServletRequest.getSession();
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
 			new LRUMap<>(2);
 
 		samlSsoRequestContext1.setSAMLMessageContext(null);
@@ -398,7 +398,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			inboundSamlMessageId, messageInfoContext.getMessageId());
 
 		samlSsoRequestContexts =
-			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
+			(Map<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		Assert.assertEquals(
@@ -434,7 +434,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SamlSsoRequestContext samlSsoRequestContext2 =
 			new SamlSsoRequestContext(SP_ENTITY_ID, RELAY_STATE, null);
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
 			new LRUMap<>(2);
 
 		samlSsoRequestContexts.put(
@@ -488,7 +488,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		samlSsoRequestContexts =
-			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
+			(Map<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		Assert.assertEquals(
@@ -573,7 +573,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
 			SP_ENTITY_ID, RELAY_STATE, null);
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
 			new LRUMap<>(1);
 
 		samlSsoRequestContexts.put(
@@ -696,7 +696,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		samlSsoRequestContext.setSAMLMessageContext(null);
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
 			new LRUMap<>(1);
 
 		samlSsoRequestContexts.put(inboundSamlMessageId, samlSsoRequestContext);
@@ -732,7 +732,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			inboundSamlMessageId, messageInfoContext.getMessageId());
 
 		samlSsoRequestContexts =
-			(LRUMap<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
+			(Map<String, SamlSsoRequestContext>)mockHttpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		Assert.assertEquals(

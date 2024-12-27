@@ -1036,8 +1036,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		HttpSession httpSession, String samlMessageId,
 		SamlSsoRequestContext samlSsoRequestContext) {
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
-			(LRUMap<String, SamlSsoRequestContext>)httpSession.getAttribute(
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		if (samlSsoRequestContexts == null) {
@@ -1438,8 +1438,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private SamlSsoRequestContext _getSamlSsoRequestContext(
 		HttpSession httpSession, String samlMessageId) {
 
-		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
-			(LRUMap<String, SamlSsoRequestContext>)httpSession.getAttribute(
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
 				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
 		if (samlSsoRequestContexts == null) {

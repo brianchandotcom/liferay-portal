@@ -175,6 +175,7 @@ interface DataDefinitionCustomProperties {
 export interface Field<T = unknown> {
 	fieldName: string;
 	localizable?: boolean;
+	localizedObjectField?: boolean;
 	localizedValue?: LocalizedValue<T>;
 	multiple?: unknown;
 	nestedFields?: Field[];

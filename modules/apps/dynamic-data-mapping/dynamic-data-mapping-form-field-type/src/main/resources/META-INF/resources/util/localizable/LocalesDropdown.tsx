@@ -96,7 +96,8 @@ const LocalesDropdown = ({
 										visitor.mapFields(
 											(field) => {
 												if (
-													field.localizable &&
+													(field.localizedObjectField ||
+														field.localizable) &&
 													fieldName !==
 														field.fieldName
 												) {

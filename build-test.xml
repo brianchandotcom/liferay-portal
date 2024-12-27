@@ -7843,35 +7843,34 @@ ${docker.start.error}</fail>
 							JSONObject dockerJSONObject = dockerJSONArray.getJSONObject(0);
 
 							if (dockerJSONObject.has("Config")) {
-								JSONObject configObject = dockerJSONObject.getJSONObject("Config");
+								JSONObject configJSONObject = dockerJSONObject.getJSONObject("Config");
 
-								if (configObject.has("Env")) {
-
-									JSONArray envArray = configObject.getJSONArray("Env");
+								if (configJSONObject.has("Env")) {
+									JSONArray envJSONArray = configJSONObject.getJSONArray("Env");
 
 									String javaHomeString;
 									String pathString;
 
-									for (int i = 0; i < envArray.length(); i++) {
-										if (envArray.getString(i).contains("JAVA_HOME")) {
-											javaHomeString = envArray.getString(i).replace("JAVA_HOME=", "");
+									for (int i = 0; i < envJSONArray.length(); i++) {
+										if (envJSONArray.getString(i).contains("JAVA_HOME")) {
+											javaHomeString = envJSONArray.getString(i).replace("JAVA_HOME=", "");
 
 										}
 
-										if (envArray.getString(i).contains("PATH")) {
-											pathString = envArray.getString(i).replace("PATH=", "");
+										if (envJSONArray.getString(i).contains("PATH")) {
+											pathString = envJSONArray.getString(i).replace("PATH=", "");
 
 										}
 									}
 
-									String javaJDKHome = project.getProperty("java.jdk.home");
+									String javaJDKHomeString = project.getProperty("java.jdk.home");
 
 									if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
-											&& !JenkinsResultsParserUtil.isNullOrEmpty(javaHomeString)) {
-										if (!javaHomeString.equals(javaJDKHome)) {
-											pathString = javaJDKHome + "/bin:" + pathString;
+											&& !JenkinsResultsParserUtil.isNullOrEmpty(javaJDKHomeString)) {
+										if (!javaHomeString.equals(javaJDKHomeString)) {
+											pathString = javaJDKHomeString + "/bin:" + pathString;
 
-											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHome;
+											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHomeString;
 
 											project.setProperty("docker.java.run.options", dockerJavaRunOptions);
 										}

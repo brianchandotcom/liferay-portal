@@ -84,6 +84,14 @@ public class DDMFormInstanceReportLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public void deleteByFormInstanceId(long formInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ddmFormInstanceReportLocalService.deleteByFormInstanceId(
+			formInstanceId);
+	}
+
 	/**
 	 * Deletes the ddm form instance report from the database. Also notifies the appropriate model listeners.
 	 *

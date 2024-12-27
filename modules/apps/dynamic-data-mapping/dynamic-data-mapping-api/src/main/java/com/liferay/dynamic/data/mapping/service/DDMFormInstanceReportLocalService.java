@@ -92,6 +92,9 @@ public interface DDMFormInstanceReportLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteByFormInstanceId(long formInstanceId)
+		throws PortalException;
+
 	/**
 	 * Deletes the ddm form instance report from the database. Also notifies the appropriate model listeners.
 	 *

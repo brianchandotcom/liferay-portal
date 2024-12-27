@@ -662,6 +662,20 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public void deployObjectDefinitions() {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				List<ObjectDefinition> objectDefinitions =
+					objectDefinitionLocalService.getObjectDefinitions(
+						companyId, WorkflowConstants.STATUS_APPROVED);
+
+				for (ObjectDefinition objectDefinition : objectDefinitions) {
+					deployObjectDefinition(objectDefinition);
+				}
+			});
+	}
+
+	@Override
 	public ObjectDefinition enableAccountEntryRestricted(
 			ObjectRelationship objectRelationship)
 		throws PortalException {

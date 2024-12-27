@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryExternalReferenceCodeException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
@@ -91,8 +92,8 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
@@ -111,8 +112,8 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		try {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
@@ -131,8 +132,8 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getExternalReferenceCode(),
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				0, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
 				0, 0, WorkflowConstants.STATUS_DRAFT, _serviceContext);
@@ -179,8 +180,8 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);

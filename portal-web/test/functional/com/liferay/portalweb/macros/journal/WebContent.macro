@@ -460,7 +460,7 @@ definition {
 			vocabularyName = ${vocabularyName});
 
 		if (${allowMultipleCategories} == "false") {
-			Button.clickPublish();
+			WebContent.publishWithPermissions();
 
 			Alert.viewErrorMessage(errorMessage = "You cannot select more than one category for Vocabulary Name.");
 		}

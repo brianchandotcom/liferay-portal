@@ -317,7 +317,7 @@ definition {
 					categoryNameList = "Category Name",
 					vocabularyName = "Vocabulary Name");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("Assert the web content is added successfully") {
@@ -428,7 +428,7 @@ definition {
 					categoryNameList = "Category Name",
 					vocabularyName = "Vocabulary Name");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("Assert the web content is added successfully") {

@@ -25,9 +25,10 @@ const Checkbox: React.FC<IProps> = (props) => {
 };
 
 export default function Main({localizedObjectField, ...otherProps}: IProps) {
-	const Component = localizedObjectField
-		? CheckboxLocalizedObjectField
-		: Checkbox;
+	const Component =
+		Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
+			? CheckboxLocalizedObjectField
+			: Checkbox;
 
 	return (
 		<FieldBase {...otherProps} showLabel={false}>

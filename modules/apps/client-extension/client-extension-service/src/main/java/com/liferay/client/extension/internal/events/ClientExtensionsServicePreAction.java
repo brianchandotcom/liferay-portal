@@ -17,7 +17,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -98,12 +97,6 @@ public class ClientExtensionsServicePreAction extends Action {
 	}
 
 	private ThemeCSSCET _getControlPanelThemeCSSCET(Layout layout) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				layout.getCompanyId(), "LPD-34650")) {
-
-			return null;
-		}
-
 		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 				_portal.getClassNameId(Layout.class), layout.getPlid(),

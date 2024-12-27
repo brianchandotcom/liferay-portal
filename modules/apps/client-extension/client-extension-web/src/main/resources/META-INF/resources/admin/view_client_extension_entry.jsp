@@ -47,10 +47,6 @@ renderResponse.setTitle(viewClientExtensionEntryDisplayContext.getTitle());
 					String name = cetProperty.name();
 					String type = viewClientExtensionEntryDisplayContext.getType();
 					Object value = viewClientExtensionEntryDisplayContext.getValue(method);
-
-					if (!FeatureFlagManagerUtil.isEnabled("LPD-34650") && type.equals(ClientExtensionEntryConstants.TYPE_GLOBAL_CSS) && name.equals("scope")) {
-						continue;
-					}
 				%>
 
 					<c:choose>

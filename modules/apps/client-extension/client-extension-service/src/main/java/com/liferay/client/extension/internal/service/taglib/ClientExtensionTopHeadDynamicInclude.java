@@ -14,7 +14,6 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -70,12 +69,6 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 
 			_writeStyleSheet(
 				httpServletRequest, printWriter, globalCSSCET.getURL());
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-34650")) {
-
-			return;
 		}
 
 		try {

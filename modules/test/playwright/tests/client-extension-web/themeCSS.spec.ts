@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {styleBookPageTest} from '../../fixtures/styleBookPageTest';
@@ -160,9 +159,6 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 const controlPanelScopedTest = mergeTests(
 	loginTest(),
-	featureFlagsTest({
-		'LPD-34650': {enabled: true},
-	}),
 	clientExtensionsPageTest
 );
 

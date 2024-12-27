@@ -7,7 +7,6 @@ package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -38,9 +37,13 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		List<EntityField> entityFields = _getEntityFields();
-
-		return new TestEntityEntityModel(entityFields);
+		return new TestEntityEntityModel(
+			ListUtil.fromArray(
+				new StringEntityField(
+					"customAttribute1", locale -> "customAttribute1"),
+				new IntegerEntityField(
+					"customAttribute2", locale -> "customAttribute2"),
+				new BooleanEntityField("customFlag", locale -> "customFlag")));
 	}
 
 	@Override
@@ -88,15 +91,6 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 		testEntity.setId(oldTestEntity.getId());
 
 		return testEntity;
-	}
-
-	private List<EntityField> _getEntityFields() {
-		return ListUtil.fromArray(
-			new StringEntityField(
-				"customAttribute1", locale -> "customAttribute1"),
-			new IntegerEntityField(
-				"customAttribute2", locale -> "customAttribute2"),
-			new BooleanEntityField("customFlag", locale -> "customFlag"));
 	}
 
 	private static final List<TestEntity> _testEntities = new ArrayList<>();

@@ -7866,13 +7866,12 @@ ${docker.start.error}</fail>
 									String javaJDKHomeString = project.getProperty("java.jdk.home");
 
 									if (!JenkinsResultsParserUtil.isNullOrEmpty(pathString)
-											&& !JenkinsResultsParserUtil.isNullOrEmpty(javaJDKHomeString)) {
-										if (!javaHomeString.equals(javaJDKHomeString)) {
+										&& !JenkinsResultsParserUtil.isNullOrEmpty(javaJDKHomeString)
+										&& (!javaHomeString.equals(javaJDKHomeString)) {
+
 											pathString = javaJDKHomeString + "/bin:" + pathString;
 
-											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHomeString;
-
-											project.setProperty("docker.java.run.options", dockerJavaRunOptions);
+											project.setProperty("docker.java.run.options", " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHomeString);
 										}
 									}
 								}

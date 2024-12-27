@@ -13,14 +13,17 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
 import {createCategories} from '../../helpers/CreateCategories';
 import {DLFILE_STATUS} from '../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
@@ -29,11 +32,94 @@ const test = mergeTests(
 	applicationsMenuPageTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
-		'LPS-178052': {enabled: true},
+		'LPD-36446': true,
+		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	siteSettingsPagesTest
+);
+
+test(
+	'Check View Usage in Action Menu',
+	{
+		tag: '@LPD-43391',
+	},
+	async ({apiHelpers, documentLibraryPage, page, pageEditorPage, site}) => {
+		const documentTest = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/image1.jpeg')),
+			{
+				description: getRandomString(),
+				fileName: getRandomString(),
+				title: getRandomString(),
+			}
+		);
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {name: 'View Usages'}),
+			trigger: page.getByLabel('Actions', {exact: true}),
+		});
+		await expect(
+			page.getByRole('menuitem', {name: 'View Usages'})
+		).toHaveClass(/disabled/);
+
+		const imageId = getRandomString();
+		const imageFragment = getFragmentDefinition({
+			id: imageId,
+			key: 'BASIC_COMPONENT-image',
+		});
+
+		const layoutTitle = getRandomString();
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([imageFragment]),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(imageId, 'image-square');
+
+		await page.getByTitle('Select Image').click();
+
+		const imageCard = page
+			.frameLocator('iframe[title="Select"]')
+			.getByText(documentTest.title);
+
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: imageCard,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'View Usages'}),
+			trigger: page.getByLabel('Actions', {exact: true}),
+		});
+		await expect(page.getByRole('menubar')).toContainText('Pages (1)');
+		await expect(
+			page.getByRole('cell', {name: `${layoutTitle} (Draft)`})
+		).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'View in Page'}),
+			trigger: page
+				.getByRole('row', {name: `${layoutTitle} (Draft) Page Image`})
+				.getByLabel('Show Actions'),
+		});
+
+		await expect(
+			page.getByRole('heading', {name: layoutTitle})
+		).toBeVisible();
+	}
 );
 
 test(

@@ -75,7 +75,13 @@ export class VirtualInstancesPage {
 		await this.addInstanceVirtualInstanceInitializer.selectOption(
 			virtualInstanceInitializer
 		);
-		await this.addInstanceAddButton.click();
+
+		await Promise.all([
+			this.addInstanceAddButton.click(),
+			this.page.waitForResponse((response) =>
+				response.url().includes('add_instance')
+			),
+		]);
 
 		await this.page.waitForTimeout(1000);
 

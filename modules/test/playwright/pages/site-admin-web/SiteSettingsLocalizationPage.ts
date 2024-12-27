@@ -70,4 +70,32 @@ export class SiteSettingsLocalizationPage {
 
 		await this.page.waitForLoadState();
 	}
+
+	async disableAllLanguagesExceptSp(siteUrl?: Site['friendlyUrlPath']) {
+		await this.goto(siteUrl);
+
+		await this.page.getByLabel('Transfer Item Left to Right').click();
+
+		await this.page
+			.getByRole('listbox')
+			.first()
+			.selectOption([
+				'en_US',
+				'ar_SA',
+				'ca_ES',
+				'nl_NL',
+				'zh_CN',
+				'fi_FI',
+				'fr_FR',
+				'de_DE',
+				'hu_HU',
+				'ja_JP',
+				'pt_BR',
+				'sv_SE',
+			]);
+
+		await this.page.getByLabel('Transfer Item Left to Right').click();
+
+		await this.siteSettingsPage.saveConfiguration();
+	}
 }

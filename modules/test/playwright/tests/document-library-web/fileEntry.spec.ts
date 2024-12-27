@@ -8,10 +8,12 @@ import {createReadStream} from 'fs';
 import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
 import {createCategories} from '../../helpers/CreateCategories';
 import {DLFILE_STATUS} from '../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -24,12 +26,14 @@ import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidg
 
 const test = mergeTests(
 	apiHelpersTest,
+	applicationsMenuPageTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	siteSettingsPagesTest
 );
 
 test(
@@ -530,5 +534,65 @@ test(
 		await expect(
 			page.getByRole('button', {name: 'Versions'})
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'A non-localizable field in a Document Type cannot be entered if accessed from a site that does not use the global site language',
+	{
+		tag: '@LPP-53324',
+	},
+
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		documentLibraryEditDocumentTypesPage,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+		page,
+		site,
+		siteSettingsLocalizationPage,
+	}) => {
+		const dTypeTitle = getRandomString();
+
+		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithTextFieldRequiredNonLocalizable(
+			dTypeTitle,
+			'/global'
+		);
+
+		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
+			'Spanish (Spain)',
+			site.friendlyUrlPath
+		);
+
+		await siteSettingsLocalizationPage.disableAllLanguagesExceptSp(
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryEditFilePage.goToNewFileDifferentType(
+			dTypeTitle,
+			site.friendlyUrlPath
+		);
+
+		await page.getByLabel('Title Required').click();
+		await page.getByLabel('Title Required').fill(getRandomString());
+		await page.getByLabel('Text').click();
+		await page.getByLabel('Text').fill(getRandomString());
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		await apiHelpers.headlessSite.deleteSite(site.id);
+		await applicationsMenuPage.goToGlobalSite();
+		await documentLibraryPage.deleteDocumentType(dTypeTitle);
+
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
 	}
 );

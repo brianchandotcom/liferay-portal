@@ -100,7 +100,8 @@ export function ModalAddObjectField({
 	const showEnableTranslationToggle =
 		values.businessType === 'LongText' ||
 		values.businessType === 'RichText' ||
-		values.businessType === 'Text';
+		values.businessType === 'Text' ||
+		values.businessType === 'Boolean';
 
 	useEffect(() => {
 		const makeFetch = async () => {

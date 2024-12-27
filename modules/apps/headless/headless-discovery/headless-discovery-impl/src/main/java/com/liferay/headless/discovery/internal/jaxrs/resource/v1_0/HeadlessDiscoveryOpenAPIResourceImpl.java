@@ -114,50 +114,49 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 					}
 				}
 
+				Method method = null;
+
 				for (Method declaredMethod :
 						resourceClass.getDeclaredMethods()) {
 
-					if (!Objects.equals(
+					if (Objects.equals(
 							declaredMethod.getName(), "getOpenAPI")) {
 
-						continue;
+						method = declaredMethod;
+
+						break;
 					}
-
-					boolean hasLongParameter = false;
-
-					for (Class<?> parameterType :
-							declaredMethod.getParameterTypes()) {
-
-						if (parameterType == long.class) {
-							hasLongParameter = true;
-
-							break;
-						}
-					}
-
-					Response response;
-
-					if (hasLongParameter) {
-						response = (Response)declaredMethod.invoke(
-							resource, _company.getCompanyId(),
-							_httpServletRequest, type,
-							_getUriInfo(path, version));
-					}
-					else {
-						response = (Response)declaredMethod.invoke(
-							resource, _httpServletRequest, type,
-							_getUriInfo(path, version));
-					}
-
-					OpenAPIContext openAPIContext = new OpenAPIContext();
-
-					openAPIContext.setPath(path);
-					openAPIContext.setVersion(version);
-
-					responses.put(openAPIContext, response);
-
-					break;
 				}
+
+				List<Object> parameters = new ArrayList<>();
+
+				for (Class<?> parameterType : method.getParameterTypes()) {
+					if (parameterType == long.class) {
+						parameters.add(_company.getCompanyId());
+					}
+					else if (parameterType == HttpServletRequest.class) {
+						parameters.add(_httpServletRequest);
+					}
+					else if (parameterType == String.class) {
+						parameters.add("json");
+					}
+					else if (parameterType == UriInfo.class) {
+						parameters.add(_getUriInfo(path, version));
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn("Unexpected parameter type " + parameterType);
+					}
+				}
+
+				Response response = (Response)method.invoke(
+					resource, parameters.toArray(new Object[0]));
+
+				OpenAPIContext openAPIContext = new OpenAPIContext();
+
+				openAPIContext.setPath(path);
+				openAPIContext.setVersion(version);
+
+				responses.put(openAPIContext, response);
 			}
 		}
 

@@ -22,11 +22,11 @@ public class ObjectEntryThreadLocal {
 	}
 
 	public static boolean isDisassociateRelatedModels() {
-		return _disassociateRelatedModelsThreadLocal.get();
+		return _disassociateRelatedModels.get();
 	}
 
 	public static boolean isSkipObjectEntryResourcePermission() {
-		return _skipObjectEntryResourcePermissionThreadLocal.get();
+		return _skipObjectEntryResourcePermission.get();
 	}
 
 	public static boolean isSkipObjectValidationRules() {
@@ -34,7 +34,7 @@ public class ObjectEntryThreadLocal {
 	}
 
 	public static boolean isSkipReadOnlyObjectFieldsValidation() {
-		return _skipReadOnlyObjectFieldsValidationThreadLocal.get();
+		return _skipReadOnlyObjectFieldsValidation.get();
 	}
 
 	public static boolean isValidatedObjectEntry(long objectEntryId) {
@@ -46,13 +46,13 @@ public class ObjectEntryThreadLocal {
 	public static void setDisassociateRelatedModels(
 		boolean disassociateRelatedModels) {
 
-		_disassociateRelatedModelsThreadLocal.set(disassociateRelatedModels);
+		_disassociateRelatedModels.set(disassociateRelatedModels);
 	}
 
 	public static void setSkipObjectEntryResourcePermission(
 		boolean skipObjectEntryResourcePermission) {
 
-		_skipObjectEntryResourcePermissionThreadLocal.set(
+		_skipObjectEntryResourcePermission.set(
 			skipObjectEntryResourcePermission);
 	}
 
@@ -65,31 +65,27 @@ public class ObjectEntryThreadLocal {
 	public static void setSkipReadOnlyObjectFieldsValidation(
 		boolean skipReadOnlyValidation) {
 
-		_skipReadOnlyObjectFieldsValidationThreadLocal.set(
-			skipReadOnlyValidation);
+		_skipReadOnlyObjectFieldsValidation.set(skipReadOnlyValidation);
 	}
 
-	private static final ThreadLocal<Boolean>
-		_disassociateRelatedModelsThreadLocal = new CentralizedThreadLocal<>(
-			ObjectEntryThreadLocal.class +
-				"._disassociateRelatedModelsThreadLocal",
+	private static final ThreadLocal<Boolean> _disassociateRelatedModels =
+		new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._disassociateRelatedModels",
 			() -> false);
 	private static final ThreadLocal<Boolean>
-		_skipObjectEntryResourcePermissionThreadLocal =
-			new CentralizedThreadLocal<>(
-				ObjectEntryThreadLocal.class +
-					"._skipObjectEntryResourcePermissionThreadLocal",
-				() -> false);
+		_skipObjectEntryResourcePermission = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class +
+				"._skipObjectEntryResourcePermission",
+			() -> false);
 	private static final ThreadLocal<Boolean> _skipObjectValidationRules =
 		new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._skipObjectValidationRules",
 			() -> false);
 	private static final ThreadLocal<Boolean>
-		_skipReadOnlyObjectFieldsValidationThreadLocal =
-			new CentralizedThreadLocal<>(
-				ObjectEntryThreadLocal.class +
-					"._skipReadOnlyObjectFieldsValidationThreadLocal",
-				() -> false);
+		_skipReadOnlyObjectFieldsValidation = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class +
+				"._skipReadOnlyObjectFieldsValidation",
+			() -> false);
 	private static final ThreadLocal<Set<Long>> _validatedObjectEntryIds =
 		new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._validatedObjectEntryIds",

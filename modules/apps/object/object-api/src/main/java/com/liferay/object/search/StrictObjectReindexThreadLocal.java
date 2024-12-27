@@ -14,20 +14,18 @@ import com.liferay.petra.lang.SafeCloseable;
 public class StrictObjectReindexThreadLocal {
 
 	public static boolean isStrictObjectReindex() {
-		return _strictObjectReindexThreadLocal.get();
+		return _strictObjectReindex.get();
 	}
 
 	public static SafeCloseable setStrictObjectReindexWithSafeCloseable(
 		boolean strictObjectReindex) {
 
-		return _strictObjectReindexThreadLocal.setWithSafeCloseable(
-			strictObjectReindex);
+		return _strictObjectReindex.setWithSafeCloseable(strictObjectReindex);
 	}
 
-	private static final CentralizedThreadLocal<Boolean>
-		_strictObjectReindexThreadLocal = new CentralizedThreadLocal<>(
-			StrictObjectReindexThreadLocal.class +
-				"._strictObjectReindexThreadLocal",
+	private static final CentralizedThreadLocal<Boolean> _strictObjectReindex =
+		new CentralizedThreadLocal<>(
+			StrictObjectReindexThreadLocal.class + "._strictObjectReindex",
 			() -> Boolean.FALSE);
 
 }

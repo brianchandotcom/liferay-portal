@@ -1033,7 +1033,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	private void _bindSamlSsoRequestContext(
-		String samlMessageId, HttpSession httpSession,
+		HttpSession httpSession, String samlMessageId,
 		SamlSsoRequestContext samlSsoRequestContext) {
 
 		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
@@ -1120,10 +1120,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		SamlSsoRequestContext samlSsoRequestContext = _getSamlSsoRequestContext(
-			samlMessageId, httpSession);
+			httpSession, samlMessageId);
 
 		if (samlSsoRequestContext != null) {
-			_bindSamlSsoRequestContext(samlMessageId, httpSession, null);
+			_bindSamlSsoRequestContext(httpSession, samlMessageId, null);
 
 			MessageContext<?> messageContext = getMessageContext(
 				httpServletRequest, httpServletResponse,
@@ -1436,7 +1436,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	private SamlSsoRequestContext _getSamlSsoRequestContext(
-		String samlMessageId, HttpSession httpSession) {
+		HttpSession httpSession, String samlMessageId) {
 
 		LRUMap<String, SamlSsoRequestContext> samlSsoRequestContexts =
 			(LRUMap<String, SamlSsoRequestContext>)httpSession.getAttribute(
@@ -1980,7 +1980,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				(samlMessageInfoContext.getMessageId() != null)) {
 
 				_bindSamlSsoRequestContext(
-					samlMessageInfoContext.getMessageId(), httpSession,
+					httpSession, samlMessageInfoContext.getMessageId(),
 					samlSsoRequestContext);
 
 				redirectSB.append("?saml_message_id=");
@@ -1992,7 +1992,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			String samlMessageId = generateIdentifier(20);
 
 			_bindSamlSsoRequestContext(
-				samlMessageId, httpSession, samlSsoRequestContext);
+				httpSession, samlMessageId, samlSsoRequestContext);
 
 			redirectSB.append("?entityId=");
 			redirectSB.append(

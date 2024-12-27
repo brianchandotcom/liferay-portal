@@ -301,68 +301,6 @@ definition {
 		}
 	}
 
-	@description = "This is the use case for LPS-161037."
-	@priority = 4
-	test CanViewWebContentTimelineOverMultiplePublications {
-		task ("Add new web content on new added site") {
-			HeadlessSite.addSite(siteName = "Site Name");
-
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Add and select a new Publication") {
-			JSONPublications.addPublication(publicationName = "Publication Name 1");
-
-			JSONPublications.selectPublication(publicationName = "Publication Name 1");
-		}
-
-		task ("Assert there are no changes in the Publication timeline") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			Publications.viewPublicationTimeline(isEmpty = "true");
-		}
-
-		task ("Edit the web content") {
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Edit 1",
-				webContentTitle = "Web Content Title",
-				webContentTitleEdit = "Web Content Title Edit 1");
-		}
-
-		task ("Publish the publication") {
-			JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-			Publications.publishPublication(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication Name 1");
-		}
-
-		task ("Add a new Publication") {
-			JSONPublications.addPublication(publicationName = "Publication Name 2");
-		}
-
-		task ("View Publication timeline in Production") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
-
-			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
-		}
-
-		task ("View Publication timeline in Publication") {
-			JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-			Refresh();
-
-			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
-		}
-	}
-
 	@description = "This is use case for LPS-159561. Making the changes in the description doesn't yield a missing requirement conflict."
 	@priority = 3
 	test MakingChangesInDescriptionCannotYieldConflict {

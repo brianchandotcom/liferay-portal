@@ -126,7 +126,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 		_bundleContext = bundleContext;
 
-		_openingThreadLocal.set(Boolean.TRUE);
+		_opening.set(Boolean.TRUE);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SystemObjectDefinitionManager.class, null,
@@ -148,7 +148,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 							"Adding service " + systemObjectDefinitionManager);
 					}
 
-					if (!_openingThreadLocal.get()) {
+					if (!_opening.get()) {
 						_companyLocalService.forEachCompanyId(
 							companyId -> _apply(
 								companyId, systemObjectDefinitionManager));
@@ -177,7 +177,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 			});
 
-		_openingThreadLocal.set(Boolean.FALSE);
+		_opening.set(Boolean.FALSE);
 	}
 
 	@Deactivate
@@ -380,10 +380,10 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionManagerPortalInstanceLifecycleListener.class);
 
-	private static final ThreadLocal<Boolean> _openingThreadLocal =
+	private static final ThreadLocal<Boolean> _opening =
 		new CentralizedThreadLocal<>(
 			SystemObjectDefinitionManagerPortalInstanceLifecycleListener.class.
-				getName() + "._openingThreadLocal",
+				getName() + "._opening",
 			() -> Boolean.FALSE);
 
 	private BundleContext _bundleContext;

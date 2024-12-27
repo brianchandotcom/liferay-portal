@@ -694,6 +694,7 @@ public class DispatchTriggerLocalServiceTest {
 		Calendar endCalendar = CalendarFactoryUtil.getCalendar();
 
 		endCalendar.setTime(new Date());
+
 		endCalendar.add(Calendar.YEAR, 1);
 
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(

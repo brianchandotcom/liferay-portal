@@ -7853,8 +7853,6 @@ ${docker.start.error}</fail>
 									String pathString;
 
 									for (int i = 0; i < envArray.length(); i++) {
-										System.out.println("@@ cw env array: " + envArray.getString(i));
-
 										if (envArray.getString(i).contains("JAVA_HOME")) {
 											javaHomeString = envArray.getString(i).replace("JAVA_HOME=", "");
 

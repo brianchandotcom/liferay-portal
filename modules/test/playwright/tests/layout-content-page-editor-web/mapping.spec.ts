@@ -750,9 +750,15 @@ test(
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
+		// Wait a second for the page to load to get the buttons
+
+		await page.waitForTimeout(1000);
+
+		const buttons = page.getByText('Go Somewhere');
+
 		// Click first button and assert error
 
-		await page.getByText('Go Somewhere').first().click();
+		await buttons.first().click();
 
 		await waitForAlert(
 			page,
@@ -768,7 +774,7 @@ test(
 
 		// Click second button and assert success
 
-		await page.getByText('Go Somewhere').last().click();
+		await buttons.last().click();
 
 		await expect(
 			page.getByRole('heading', {name: String(secondObjectEntry.id)})

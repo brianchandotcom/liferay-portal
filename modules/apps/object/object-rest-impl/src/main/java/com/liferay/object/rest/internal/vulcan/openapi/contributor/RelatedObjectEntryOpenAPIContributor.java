@@ -97,8 +97,7 @@ public class RelatedObjectEntryOpenAPIContributor
 						systemObjectDefinition.getObjectDefinitionId())) {
 
 				_contribute(
-					openAPIContext.getCompanyId(), openAPI,
-					systemObjectDefinition, entry.getValue(),
+					openAPI, systemObjectDefinition, entry.getValue(),
 					systemObjectRelationship, openAPIContext.getVersion());
 			}
 		}
@@ -110,8 +109,7 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	private void _contribute(
-			long companyId, OpenAPI openAPI,
-			ObjectDefinition systemObjectDefinition,
+			OpenAPI openAPI, ObjectDefinition systemObjectDefinition,
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
 			ObjectRelationship systemObjectRelationship, String version)
 		throws Exception {
@@ -133,7 +131,7 @@ public class RelatedObjectEntryOpenAPIContributor
 				relatedObjectDefinition);
 
 		Map<String, Schema> relatedSchemas =
-			objectEntryOpenAPIResource.getSchemas(companyId);
+			objectEntryOpenAPIResource.getSchemas();
 
 		OpenAPIContributorUtil.copySchemas(
 			relatedSchemaName, relatedSchemas,

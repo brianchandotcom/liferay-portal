@@ -76,7 +76,7 @@ public class FieldProviderUtil {
 				objectDefinition);
 
 		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
-			companyId, uriInfo);
+			uriInfo);
 
 		return TransformUtil.transform(
 			fields.values(),

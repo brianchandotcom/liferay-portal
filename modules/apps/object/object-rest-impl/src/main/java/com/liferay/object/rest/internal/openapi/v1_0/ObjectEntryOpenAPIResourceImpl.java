@@ -91,14 +91,12 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	@Override
-	public Map<String, Field> getFields(long companyId, UriInfo uriInfo)
-		throws Exception {
-
+	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception {
 		DTOProperty objectEntryDTOProperty = _getObjectEntryDTOProperty(
 			_objectDefinition);
 
 		Response response = _getOpenAPI(
-			companyId, true,
+			_objectDefinition.getCompanyId(), true,
 			_getOpenAPISchemaFilter(objectEntryDTOProperty, _objectDefinition),
 			"json", uriInfo);
 
@@ -156,12 +154,11 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Override
 	public Response getOpenAPI(
-			long companyId, HttpServletRequest httpServletRequest, String type,
-			UriInfo uriInfo)
+			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
 		throws Exception {
 
 		return _getOpenAPI(
-			companyId, true,
+			_objectDefinition.getCompanyId(), true,
 			_getOpenAPISchemaFilter(
 				_getObjectEntryDTOProperty(_objectDefinition),
 				_objectDefinition),
@@ -169,9 +166,9 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	@Override
-	public Map<String, Schema> getSchemas(long companyId) throws Exception {
+	public Map<String, Schema> getSchemas() throws Exception {
 		Response response = _getOpenAPI(
-			companyId, false,
+			_objectDefinition.getCompanyId(), false,
 			_getOpenAPISchemaFilter(
 				_getObjectEntryDTOProperty(_objectDefinition),
 				_objectDefinition),

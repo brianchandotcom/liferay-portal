@@ -21,14 +21,12 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface ObjectEntryOpenAPIResource {
 
-	public Map<String, Field> getFields(long companyId, UriInfo uriInfo)
-		throws Exception;
+	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception;
 
 	public Response getOpenAPI(
-			long companyId, HttpServletRequest httpServletRequest, String type,
-			UriInfo uriInfo)
+			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
 		throws Exception;
 
-	public Map<String, Schema> getSchemas(long companyId) throws Exception;
+	public Map<String, Schema> getSchemas() throws Exception;
 
 }

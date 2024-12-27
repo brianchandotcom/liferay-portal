@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -114,42 +113,13 @@ public class HeadlessDiscoveryOpenAPIResourceImpl {
 					}
 				}
 
-				Method method = null;
-
-				for (Method declaredMethod :
-						resourceClass.getDeclaredMethods()) {
-
-					if (Objects.equals(
-							declaredMethod.getName(), "getOpenAPI")) {
-
-						method = declaredMethod;
-
-						break;
-					}
-				}
-
-				List<Object> parameters = new ArrayList<>();
-
-				for (Class<?> parameterType : method.getParameterTypes()) {
-					if (parameterType == long.class) {
-						parameters.add(_company.getCompanyId());
-					}
-					else if (parameterType == HttpServletRequest.class) {
-						parameters.add(_httpServletRequest);
-					}
-					else if (parameterType == String.class) {
-						parameters.add("json");
-					}
-					else if (parameterType == UriInfo.class) {
-						parameters.add(_getUriInfo(path, version));
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn("Unexpected parameter type " + parameterType);
-					}
-				}
+				Method method = resourceClass.getDeclaredMethod(
+					"getOpenAPI", HttpServletRequest.class, String.class,
+					UriInfo.class);
 
 				Response response = (Response)method.invoke(
-					resource, parameters.toArray(new Object[0]));
+					resource, _httpServletRequest, "json",
+					_getUriInfo(path, version));
 
 				OpenAPIContext openAPIContext = new OpenAPIContext();
 

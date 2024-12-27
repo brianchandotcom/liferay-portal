@@ -48,7 +48,7 @@ public class OpenAPIResourceImpl {
 				_objectDefinition);
 
 		return objectEntryOpenAPIResource.getOpenAPI(
-			_company.getCompanyId(), _httpServletRequest, type, _uriInfo);
+			_httpServletRequest, type, _uriInfo);
 	}
 
 	@Context

@@ -1,0 +1,14 @@
+{
+	"search": {
+		"en_US": {
+			"message": "Use this search to find specific results within your data.",
+			"url": "https://help.liferay.com/hc/en-us/articles/360031163631-Filter-Sort-and-Search"
+		}
+	},
+	"filter": {
+		"en_US": {
+			"message": "Use this filter to narrow down results using query conditions.",
+			"url": "https://help.liferay.com/hc/en-us/articles/360031163631-Filter-Sort-and-Search"
+		}
+	}
+}

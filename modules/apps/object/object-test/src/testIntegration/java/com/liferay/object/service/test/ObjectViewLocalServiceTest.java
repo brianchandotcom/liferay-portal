@@ -11,7 +11,6 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
@@ -37,6 +36,7 @@ import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -47,15 +47,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -470,6 +467,25 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewSortColumn("baker", "asc")));
 	}
 
+	private void _asserFailureObjectViewFilterColumn(
+		String errorMessage, String filter,
+		String relationshipObjectFieldName) {
+
+		AssertUtils.assertFailure(
+			ObjectViewFilterColumnException.class, errorMessage,
+			() -> _objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Collections.emptyList(),
+				Collections.singletonList(
+					_createObjectViewFilterColumn(
+						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
+						StringBundler.concat("{\"includes\": ", filter, "}"),
+						relationshipObjectFieldName)),
+				Collections.emptyList()));
+	}
+
 	private void _assertFailureAddOrUpdateObjectView(
 		Class<?> clazz, boolean defaultObjectView, String message,
 		ObjectView objectView, List<ObjectViewColumn> objectViewColumns,
@@ -521,19 +537,6 @@ public class ObjectViewLocalServiceTest {
 
 		Assert.assertEquals(
 			objectViewSortColumns.toString(), 2, objectViewSortColumns.size());
-	}
-
-	private ObjectRelationship _createObjectRelationship(
-			long objectDefinitionId1, long objectDefinitionId2)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			null, TestPropsValues.getUserId(), objectDefinitionId1,
-			objectDefinitionId2, 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	private ObjectViewColumn _createObjectViewColumn(
@@ -645,182 +648,100 @@ public class ObjectViewLocalServiceTest {
 		}
 	}
 
-	private void _testAddObjectViewRelationshipFilterColumn() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
+	private String _getRelationshipObjectFieldName(
+			ObjectDefinition objectDefinition1)
+		throws Exception {
 
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "title")));
-
-		ObjectRelationship objectRelationship = _createObjectRelationship(
-			objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition.getObjectDefinitionId());
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				_objectDefinition);
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		try {
-			_objectViewLocalService.addObjectView(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Arrays.asList(_createObjectViewColumn("Golf", "golf", false)),
-				Arrays.asList(
-					_createObjectViewFilterColumn(
-						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
-						StringBundler.concat(
-							"{\"includes\": [\"", externalReferenceCode,
-							"\"]}"),
-						objectField.getName())),
-				Collections.emptyList());
-		}
-		catch (ObjectViewFilterColumnException
-					objectViewFilterColumnException) {
+		return objectField.getName();
+	}
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"No ", objectDefinition1.getShortName(),
-					" exists with the external reference code ",
-					externalReferenceCode),
-				objectViewFilterColumnException.getMessage());
-		}
+	private void _testAddObjectViewRelationshipFilterColumn() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		String objectFieldName = objectField.getName();
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		List<String> objectFieldValues = Arrays.asList(
-			"[]", "[\"\"]", "[ ]", "[ , ]");
+		String relationshipObjectFieldName = _getRelationshipObjectFieldName(
+			objectDefinition);
 
-		for (String objectFieldValue : objectFieldValues) {
-			AssertUtils.assertFailure(
-				ObjectViewFilterColumnException.class,
-				StringBundler.concat(
-					"Object field name \"", objectFieldName,
-					"\" needs to have the filter type and JSON specified"),
-				() -> _objectViewLocalService.addObjectView(
-					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Collections.singletonList(
-						_createObjectViewColumn(
-							"Simon",
-							StringUtil.toLowerCase(
-								RandomStringUtils.randomAlphabetic(5)),
-							false)),
-					Collections.singletonList(
-						_createObjectViewFilterColumn(
-							ObjectViewFilterColumnConstants.
-								FILTER_TYPE_INCLUDES,
-							StringBundler.concat(
-								"{\"includes\": ", objectFieldValue, "}"),
-							objectFieldName)),
-					Collections.emptyList()));
-		}
+		_asserFailureObjectViewFilterColumn(
+			StringBundler.concat(
+				"No ", objectDefinition.getShortName(),
+				" exists with the external reference code ",
+				externalReferenceCode),
+			"[\"" + externalReferenceCode + "\"]", relationshipObjectFieldName);
 
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition1.getObjectDefinitionId());
+		long randomId = RandomTestUtil.randomLong();
 
-		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+		_asserFailureObjectViewFilterColumn(
+			"No User exists with the primary key " + randomId,
+			"[\"" + randomId + "\"]",
+			_getRelationshipObjectFieldName(
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					TestPropsValues.getCompanyId(), User.class.getName())));
+
+		String errorMessage = StringBundler.concat(
+			"Object field name \"", relationshipObjectFieldName,
+			"\" needs to have the filter type and JSON specified");
+
+		_asserFailureObjectViewFilterColumn(
+			errorMessage, "[]", relationshipObjectFieldName);
+		_asserFailureObjectViewFilterColumn(
+			errorMessage, "[\"\"]", relationshipObjectFieldName);
+		_asserFailureObjectViewFilterColumn(
+			errorMessage, "[ ]", relationshipObjectFieldName);
+		_asserFailureObjectViewFilterColumn(
+			errorMessage, "[ , ]", relationshipObjectFieldName);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition1.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"title", "Roger"
-			).build(),
+			objectDefinition.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn("How", "how", false)),
+			Collections.emptyList(),
 			Arrays.asList(
 				_createObjectViewFilterColumn(
 					ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
 					StringBundler.concat(
 						"{\"includes\": [\"",
-						objectEntry1.getExternalReferenceCode(), "\"]}"),
-					objectField.getName())),
+						objectEntry.getExternalReferenceCode(), "\"]}"),
+					relationshipObjectFieldName)),
 			Collections.emptyList());
 
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship.getObjectRelationshipId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		ObjectDefinition systemObjectDefinition = null;
-
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionLocalService.getSystemObjectDefinitions()) {
-
-			if (StringUtil.equals(objectDefinition.getName(), "User")) {
-				systemObjectDefinition = objectDefinition;
-
-				break;
-			}
-		}
-
-		Assert.assertNotNull(systemObjectDefinition);
-
-		objectRelationship = _createObjectRelationship(
-			systemObjectDefinition.getObjectDefinitionId(),
-			_objectDefinition.getObjectDefinitionId());
-
-		objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		long randomId = RandomTestUtil.randomLong();
-
-		try {
-			_objectViewLocalService.addObjectView(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Arrays.asList(_createObjectViewColumn("India", "india", false)),
-				Arrays.asList(
-					_createObjectViewFilterColumn(
-						ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
-						StringBundler.concat(
-							"{\"includes\": [\"", randomId, "\"]}"),
-						objectField.getName())),
-				Collections.emptyList());
-		}
-		catch (ObjectViewFilterColumnException
-					objectViewFilterColumnException) {
-
-			Assert.assertEquals(
-				"No User exists with the primary key " + randomId,
-				objectViewFilterColumnException.getMessage());
-		}
-
-		long[] userIds = new long[2];
-
-		for (int i = 0; i < 2; i++) {
-			User user = UserTestUtil.addUser();
-
-			userIds[i] = user.getUserId();
-		}
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn("York", "york", false)),
+			Collections.emptyList(),
 			Arrays.asList(
 				_createObjectViewFilterColumn(
 					ObjectViewFilterColumnConstants.FILTER_TYPE_INCLUDES,
 					StringBundler.concat(
-						"{\"includes\": [\"", userIds[0], "\",\"", userIds[1],
-						"\"]}"),
-					objectField.getName())),
+						"{\"includes\": [\"", user1.getUserId(), "\",\"",
+						user2.getUserId(), "\"]}"),
+					_getRelationshipObjectFieldName(
+						_objectDefinitionLocalService.
+							fetchObjectDefinitionByClassName(
+								TestPropsValues.getCompanyId(),
+								User.class.getName())))),
 			Collections.emptyList());
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship.getObjectRelationshipId());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
 	@Inject

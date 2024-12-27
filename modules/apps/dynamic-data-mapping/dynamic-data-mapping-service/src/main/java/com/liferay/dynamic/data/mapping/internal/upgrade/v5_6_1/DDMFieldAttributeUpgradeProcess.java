@@ -95,10 +95,20 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong(1);
 
-				preparedStatement2.setString(
-					1, _transform(companyId, resultSet.getString(4)));
-				preparedStatement2.setString(
-					2, _transform(companyId, resultSet.getString(5)));
+				String smallAttributeValue = _transform(
+					companyId, resultSet.getString(4));
+				String largeAttributeValue = _transform(
+					companyId, resultSet.getString(5));
+
+				if ((smallAttributeValue != null) &&
+					(smallAttributeValue.length() > 255)) {
+
+					largeAttributeValue = smallAttributeValue;
+					smallAttributeValue = null;
+				}
+
+				preparedStatement2.setString(1, smallAttributeValue);
+				preparedStatement2.setString(2, largeAttributeValue);
 
 				preparedStatement2.setLong(3, resultSet.getLong(2));
 				preparedStatement2.setLong(4, resultSet.getLong(3));

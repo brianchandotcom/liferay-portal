@@ -449,15 +449,14 @@ public class LanguageResourcesExtenderTest {
 
 			Assert.assertEquals(value, resourceBundle1.getString("about"));
 			Assert.assertEquals(
+				"Enabled", resourceBundle1.getString("enabled"));
+			Assert.assertEquals(
 				value, resourceBundle1.getString("language-key-1"));
 			Assert.assertEquals(value, resourceBundle2.getString("about"));
 			Assert.assertEquals(
-				value, resourceBundle2.getString("language-key-1"));
-
-			Assert.assertEquals(
-				"Enabled", resourceBundle1.getString("enabled"));
-			Assert.assertEquals(
 				"Enabled", resourceBundle2.getString("enabled"));
+			Assert.assertEquals(
+				value, resourceBundle2.getString("language-key-1"));
 		}
 		finally {
 			bundle.uninstall();
@@ -565,12 +564,12 @@ public class LanguageResourcesExtenderTest {
 			).build(),
 			null, 2, null, false, null);
 
+		Assert.assertEquals(
+			"About", LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 		Assert.assertNull(
 			LanguageResources.getMessage(LocaleUtil.ENGLISH, "language-key-1"));
 		Assert.assertNull(
 			LanguageResources.getMessage(LocaleUtil.ENGLISH, "language-key-2"));
-		Assert.assertEquals(
-			"About", LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 		Assert.assertNull(
 			LanguageResources.getMessage(
 				LocaleUtil.ENGLISH, "shared-language-key"));
@@ -580,6 +579,9 @@ public class LanguageResourcesExtenderTest {
 			bundle2.start();
 
 			Assert.assertEquals(
+				value2,
+				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
+			Assert.assertEquals(
 				value1,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-1"));
@@ -587,9 +589,6 @@ public class LanguageResourcesExtenderTest {
 				value2,
 				LanguageResources.getMessage(
 					LocaleUtil.ENGLISH, "language-key-2"));
-			Assert.assertEquals(
-				value2,
-				LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
 			Assert.assertEquals(
 				value2,
 				LanguageResources.getMessage(

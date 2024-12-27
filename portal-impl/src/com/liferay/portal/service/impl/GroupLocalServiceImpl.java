@@ -5099,7 +5099,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			throw new DuplicateGroupException(
 				StringBundler.concat(
-					"{companyId=", companyId, ", groupKey=", groupKey, "}"));
+					"{companyId=", companyId, ", groupId=", groupId,
+					", groupKey=", groupKey, "}"));
 		}
 
 		if (site || (type == GroupConstants.TYPE_DEPOT)) {

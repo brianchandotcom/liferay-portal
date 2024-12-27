@@ -7852,14 +7852,14 @@ ${docker.start.error}</fail>
 									String pathString;
 
 									for (int i = 0; i < envJSONArray.length(); i++) {
-										if (envJSONArray.getString(i).contains("JAVA_HOME")) {
-											javaHomeString = envJSONArray.getString(i).replace("JAVA_HOME=", "");
+										String envString = envJSONArray.getString(i);
 
+										if (envJSONArray.getString(i).contains("JAVA_HOME")) {
+											javaHomeString = envString.replace("JAVA_HOME=", "");
 										}
 
 										if (envJSONArray.getString(i).contains("PATH")) {
-											pathString = envJSONArray.getString(i).replace("PATH=", "");
-
+											pathString = envString.replace("PATH=", "");
 										}
 									}
 

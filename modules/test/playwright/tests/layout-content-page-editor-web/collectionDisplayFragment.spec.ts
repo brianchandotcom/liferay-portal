@@ -116,6 +116,206 @@ test(
 );
 
 testWithIsolatedSite(
+	'Check collection display pagination',
+	{
+		tag: '@LPS-146171',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add 25 blogs
+
+		for (let i = 0; i < 25; i++) {
+			await apiHelpers.headlessDelivery.postBlog(site.id);
+		}
+
+		// Create a content page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and add collection display with heading fragment
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.addFragment(
+			'Content Display',
+			'Collection Display'
+		);
+
+		await page.locator('.lfr-layout-structure-item-collection').click();
+
+		await pageEditorPage.chooseCollectionDisplayOption(
+			'Collection Providers',
+			'Highest Rated Assets'
+		);
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await pageEditorPage.addFragment(
+			'Basic Components',
+			'Heading',
+			page.locator('.page-editor__collection-item.empty').last()
+		);
+
+		// Assert pagination is visible by default
+
+		await expect(page.locator('.pagination-bar')).toBeVisible();
+
+		// Assert numeric is the default option
+
+		const collectionId =
+			await pageEditorPage.getFragmentId('Collection Display');
+
+		await pageEditorPage.selectFragment(collectionId);
+
+		const collectionStyle = page.getByLabel('CollectionStyle');
+
+		await expect(collectionStyle.getByLabel('Pagination')).toHaveValue(
+			'numeric'
+		);
+
+		// Assert display all pages is checked by default and display all collection items is not visible
+
+		await expect(
+			collectionStyle.getByLabel('Display All Pages')
+		).toBeChecked();
+
+		await expect(
+			collectionStyle.getByLabel('Display All Collection Items')
+		).not.toBeVisible();
+
+		// Assert default value for maximum number of items per page
+
+		await expect(
+			collectionStyle.getByLabel('Maximum Number of Items per Page')
+		).toHaveValue('20');
+
+		// Assert performance message
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Maximum Number of Items per Page',
+			tab: 'General',
+			value: '21',
+		});
+
+		await expect(
+			page.getByText(
+				'In edit mode, the number of elements displayed is limited to 20 due to performance.'
+			)
+		).toBeVisible();
+
+		// Assert maximum number of pages to display
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Maximum Number of Items per Page',
+			tab: 'General',
+			value: '3',
+		});
+
+		await expect(page.getByLabel('Go to page, 1')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 2')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 3')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 4')).not.toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 5')).not.toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 9')).toBeVisible();
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Display All Pages',
+			tab: 'General',
+			value: 'false',
+		});
+
+		await expect(
+			collectionStyle.getByLabel('Maximum Number of Pages to Display')
+		).toHaveValue('5');
+
+		await expect(page.getByLabel('Go to page, 1')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 2')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 3')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 4')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 5')).toBeVisible();
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Maximum Number of Pages to Display',
+			tab: 'General',
+			value: '2',
+		});
+
+		await expect(page.getByLabel('Go to page, 1')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 2')).toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 3')).not.toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 4')).not.toBeVisible();
+
+		await expect(page.getByLabel('Go to page, 5')).not.toBeVisible();
+
+		// Assert minimun value of maximum number of pagest to display
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Maximum Number of Pages to Display',
+			tab: 'General',
+			value: '-1',
+		});
+
+		await expect(
+			collectionStyle.getByLabel('Maximum Number of Pages to Display')
+		).toHaveValue('1');
+
+		// Change pagination configuration to none
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Pagination',
+			tab: 'General',
+			value: 'None',
+		});
+
+		// Assert pagination is not visbile
+
+		await expect(page.locator('.pagination-bar')).not.toBeVisible();
+
+		// Assert default value for maximun number of items to display
+
+		await expect(
+			collectionStyle.getByLabel('Maximum Number of Items to Display')
+		).toHaveValue('5');
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Maximum Number of Items to Display',
+			tab: 'General',
+			value: '50',
+		});
+
+		await expect(
+			collectionStyle.getByText('This collection has 25 items.')
+		).toBeVisible();
+
+		// Assert display all pages is not visible and display all collection items by default is disabled
+
+		await expect(
+			collectionStyle.getByLabel('Display All Pages')
+		).not.toBeVisible();
+
+		await expect(
+			collectionStyle.getByLabel('Display All Collection Items')
+		).not.toBeChecked();
+	}
+);
+
+testWithIsolatedSite(
 	'Checks the error message when trying to drag a fragment to an unmapped collection',
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 

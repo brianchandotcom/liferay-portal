@@ -5,7 +5,10 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -23,6 +26,7 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -38,6 +42,8 @@ public class LayoutLookAndFeelDisplayContextTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_setUpLanguageUtil();
+
 		Mockito.when(
 			_layoutsAdminDisplayContext.getSelLayout()
 		).thenReturn(
@@ -57,7 +63,8 @@ public class LayoutLookAndFeelDisplayContextTest {
 	}
 
 	@Test
-	public void testGetStyleBookEntryName() {
+	@TestInfo("LPD-45193")
+	public void testGetStyleBookEntryNameWithStyleBookEntry() {
 		String name = RandomTestUtil.randomString();
 
 		_setUpDefaultStyleBookEntryUtil(name);
@@ -70,6 +77,32 @@ public class LayoutLookAndFeelDisplayContextTest {
 
 		Assert.assertEquals(
 			name, _layoutLookAndFeelDisplayContext.getStyleBookEntryName());
+
+		_defaultStyleBookEntryUtilMockedStatic.when(
+			() -> DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_layout)
+		).thenReturn(
+			null
+		);
+
+		Assert.assertEquals(
+			"styles-from-theme",
+			_layoutLookAndFeelDisplayContext.getStyleBookEntryName());
+	}
+
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
+				1, String.class)
+		);
+
+		languageUtil.setLanguage(language);
 	}
 
 	private void _setUpDefaultStyleBookEntryUtil(String name) {

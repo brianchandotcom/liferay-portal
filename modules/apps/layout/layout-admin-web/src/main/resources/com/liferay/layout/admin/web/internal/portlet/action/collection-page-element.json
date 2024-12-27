@@ -53,11 +53,13 @@
 					},
 					{
 						"collectionViewportDefinition": {
+							"numberOfColumns": 1
 						},
 						"id": "portraitMobile"
 					},
 					{
 						"collectionViewportDefinition": {
+							"numberOfColumns": 1
 						},
 						"id": "tablet"
 					}

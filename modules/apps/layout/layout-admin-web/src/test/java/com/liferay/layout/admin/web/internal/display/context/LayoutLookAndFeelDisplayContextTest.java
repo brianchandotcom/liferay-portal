@@ -5,6 +5,9 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -54,12 +57,58 @@ public class LayoutLookAndFeelDisplayContextTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_defaultStyleBookEntryUtilMockedStatic.close();
+		_layoutPageTemplateEntryLocalServiceUtilMockedStatic.close();
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		_layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(
 			_httpServletRequest, _layoutsAdminDisplayContext, null);
+
+		_resetMocks();
+	}
+
+	@Test
+	public void testGetStyleBookEntryNameWithMasterLayoutWithStyleBookEntry() {
+		_setUpDefaultStyleBookEntryUtil(RandomTestUtil.randomString());
+		_setUpLayoutPageTemplateEntryLocalServiceUtil(
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+
+		Mockito.when(
+			_layout.getMasterLayoutPlid()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Assert.assertEquals(
+			"styles-from-master",
+			_layoutLookAndFeelDisplayContext.getStyleBookEntryName());
+	}
+
+	@Test
+	public void testGetStyleBookEntryNameWithNoEditableMasterLayout() {
+		_setUpDefaultStyleBookEntryUtil(RandomTestUtil.randomString());
+		_setUpLayoutPageTemplateEntryLocalServiceUtil(
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		Mockito.when(
+			_layout.getMasterLayoutPlid()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Assert.assertEquals(
+			"styles-by-default",
+			_layoutLookAndFeelDisplayContext.getStyleBookEntryName());
+	}
+
+	@Test
+	public void testGetStyleBookEntryNameWithoutMasterLayout() {
+		_setUpDefaultStyleBookEntryUtil(RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			"styles-by-default",
+			_layoutLookAndFeelDisplayContext.getStyleBookEntryName());
 	}
 
 	@Test
@@ -105,6 +154,13 @@ public class LayoutLookAndFeelDisplayContextTest {
 		languageUtil.setLanguage(language);
 	}
 
+	private void _resetMocks() {
+		_defaultStyleBookEntryUtilMockedStatic.reset();
+		_layoutPageTemplateEntryLocalServiceUtilMockedStatic.reset();
+
+		Mockito.reset(_layout);
+	}
+
 	private void _setUpDefaultStyleBookEntryUtil(String name) {
 		StyleBookEntry styleBookEntry = Mockito.mock(StyleBookEntry.class);
 
@@ -121,12 +177,34 @@ public class LayoutLookAndFeelDisplayContextTest {
 		);
 	}
 
+	private void _setUpLayoutPageTemplateEntryLocalServiceUtil(int type) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = Mockito.mock(
+			LayoutPageTemplateEntry.class);
+
+		Mockito.when(
+			layoutPageTemplateEntry.getType()
+		).thenReturn(
+			type
+		);
+
+		_layoutPageTemplateEntryLocalServiceUtilMockedStatic.when(
+			() ->
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(Mockito.anyLong())
+		).thenReturn(
+			layoutPageTemplateEntry
+		);
+	}
+
 	private static final MockedStatic<DefaultStyleBookEntryUtil>
 		_defaultStyleBookEntryUtilMockedStatic = Mockito.mockStatic(
 			DefaultStyleBookEntryUtil.class);
 	private static final HttpServletRequest _httpServletRequest =
 		new MockHttpServletRequest();
 	private static final Layout _layout = Mockito.mock(Layout.class);
+	private static final MockedStatic<LayoutPageTemplateEntryLocalServiceUtil>
+		_layoutPageTemplateEntryLocalServiceUtilMockedStatic =
+			Mockito.mockStatic(LayoutPageTemplateEntryLocalServiceUtil.class);
 	private static final LayoutsAdminDisplayContext
 		_layoutsAdminDisplayContext = Mockito.mock(
 			LayoutsAdminDisplayContext.class);

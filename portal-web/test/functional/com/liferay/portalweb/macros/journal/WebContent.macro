@@ -1850,7 +1850,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro scheduleExistingWCArticleWithPermissions(displayDate = null) {
+	macro scheduleWCArticleWithPermissions(displayDate = null) {
 		Button.clickPublish();
 
 		Click(locator1 = "WCEditWebContent#SCHEDULE_PUBLICATION_BUTTON");

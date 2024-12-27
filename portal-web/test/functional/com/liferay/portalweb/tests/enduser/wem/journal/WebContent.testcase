@@ -1387,11 +1387,7 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			WebContent.editDisplayDate(
-				displayDate = "01/01/2100",
-				displayTime = "01:01 AM");
-
-			WebContent.publishWithPermissions();
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-11-20 01:01");
 		}
 
 		task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {

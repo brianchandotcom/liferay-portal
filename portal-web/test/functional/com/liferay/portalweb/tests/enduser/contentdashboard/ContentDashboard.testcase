@@ -2439,9 +2439,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
-			WebContent.editDisplayDate(displayDate = "01/01/2100");
-
-			WebContent.publishExistingWCArticleWithPermissions();
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-01-01 01:00");
 		}
 
 		task ("Go to Content Dashboard and click on the title") {
@@ -4609,7 +4607,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Scheduled");
 
-			WebContent.scheduleExistingWCArticleWithPermissions(displayDate = "2100-11-20 01:00");
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-11-20 01:00");
 		}
 
 		task ("Filter asset at Content Dashboard using status") {

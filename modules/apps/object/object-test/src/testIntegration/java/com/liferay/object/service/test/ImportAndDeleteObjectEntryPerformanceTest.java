@@ -61,40 +61,10 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 
 	@Test
 	public void testImportAndDeleteObjectEntry() throws Exception {
-		_addCompany();
-		_importObjectFolder();
-		_importObjectEntry();
-		_deleteObjectEntry();
-	}
-
-	private void _addCompany() throws Exception {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		TransactionConfig transactionConfig = builder.build();
-
-		try {
-			_company = TransactionInvokerUtil.invoke(
-				transactionConfig,
-				() -> {
-					Company company = CompanyLocalServiceUtil.addCompany(
-						null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME,
-						_VIRTUAL_HOST_NAME, 0, true, true, null, null, null,
-						null, null, null);
-
-					PortalInstances.initCompany(company);
-
-					return company;
-				});
-		}
-		catch (Exception exception) {
-			throw exception;
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
+		_setUpCompany();
+		_setUpObjectFolder();
+		_testImportObjectEntry();
+		_testDeleteObjectEntry();
 	}
 
 	private String _createObjectEntryJSON() throws Exception {
@@ -105,33 +75,6 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 		}
 
 		return jsonArray.toString();
-	}
-
-	private void _deleteObjectEntry() throws Exception {
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				7000,
-				StringBundler.concat(
-					" Delete ", _OBJECT_ENTRY_COUNT, " Object Entries"))) {
-
-			JSONArray jsonArray = _getObjectEntryIdJSONArray();
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(jsonArray.toString(), "application/json");
-			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-			httpInvoker.path(_getPath(_PATH_SUFFIX));
-
-			httpInvoker.invoke();
-
-			long currentObjectEntryCount = _OBJECT_ENTRY_COUNT;
-
-			while (currentObjectEntryCount != 0) {
-				currentObjectEntryCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						_objectDefinition.getObjectDefinitionId());
-			}
-		}
 	}
 
 	private JSONArray _getObjectEntryIdJSONArray() throws Exception {
@@ -162,7 +105,89 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			PropsValues.DEFAULT_ADMIN_PASSWORD);
 	}
 
-	private void _importObjectEntry() throws Exception {
+	private void _setUpCompany() throws Exception {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		TransactionConfig transactionConfig = builder.build();
+
+		try {
+			_company = TransactionInvokerUtil.invoke(
+				transactionConfig,
+				() -> {
+					Company company = CompanyLocalServiceUtil.addCompany(
+						null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME,
+						_VIRTUAL_HOST_NAME, 0, true, true, null, null, null,
+						null, null, null);
+
+					PortalInstances.initCompany(company);
+
+					return company;
+				});
+		}
+		catch (Exception exception) {
+			throw exception;
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
+	}
+
+	private void _setUpObjectFolder() throws Exception {
+		ObjectFolderResource.Builder builder =
+			_objectFolderResourceFactory.create();
+
+		ObjectFolderResource objectFolderResource = builder.user(
+			UserTestUtil.getAdminUser(_company.getCompanyId())
+		).build();
+
+		objectFolderResource.setContextCompany(_company);
+
+		JSONObject objectFolderJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.read(
+				ImportAndDeleteObjectEntryPerformanceTest.class.
+					getClassLoader(),
+				"/object-folder-definition.json"));
+
+		ObjectFolder objectFolder = ObjectFolder.toDTO(
+			objectFolderJSONObject.toString());
+
+		objectFolder.setName("SampleObjectFolder");
+
+		objectFolderResource.putObjectFolderByExternalReferenceCode(
+			objectFolder.getExternalReferenceCode(), objectFolder);
+	}
+
+	private void _testDeleteObjectEntry() throws Exception {
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(
+				7000,
+				StringBundler.concat(
+					" Delete ", _OBJECT_ENTRY_COUNT, " Object Entries"))) {
+
+			JSONArray jsonArray = _getObjectEntryIdJSONArray();
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(jsonArray.toString(), "application/json");
+			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker.path(_getPath(_PATH_SUFFIX));
+
+			httpInvoker.invoke();
+
+			long currentObjectEntryCount = _OBJECT_ENTRY_COUNT;
+
+			while (currentObjectEntryCount != 0) {
+				currentObjectEntryCount =
+					_objectEntryLocalService.getObjectEntriesCount(
+						_objectDefinition.getObjectDefinitionId());
+			}
+		}
+	}
+
+	private void _testImportObjectEntry() throws Exception {
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
 				12000,
 				StringBundler.concat(
@@ -192,31 +217,6 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 						_objectDefinition.getObjectDefinitionId());
 			}
 		}
-	}
-
-	private void _importObjectFolder() throws Exception {
-		ObjectFolderResource.Builder builder =
-			_objectFolderResourceFactory.create();
-
-		ObjectFolderResource objectFolderResource = builder.user(
-			UserTestUtil.getAdminUser(_company.getCompanyId())
-		).build();
-
-		objectFolderResource.setContextCompany(_company);
-
-		JSONObject objectFolderJSONObject = _jsonFactory.createJSONObject(
-			StringUtil.read(
-				ImportAndDeleteObjectEntryPerformanceTest.class.
-					getClassLoader(),
-				"/object-folder-definition.json"));
-
-		ObjectFolder objectFolder = ObjectFolder.toDTO(
-			objectFolderJSONObject.toString());
-
-		objectFolder.setName("SampleObjectFolder");
-
-		objectFolderResource.putObjectFolderByExternalReferenceCode(
-			objectFolder.getExternalReferenceCode(), objectFolder);
 	}
 
 	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;

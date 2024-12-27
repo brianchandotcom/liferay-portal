@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -135,6 +136,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -1640,6 +1645,27 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
+	}
+
+	@Test
+	public void testDeployObjectDefinitions() throws Exception {
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
+			false);
+
+		_objectDefinitionLocalService.undeployObjectDefinition(
+			objectDefinition);
+
+		_objectDefinitionLocalService.deployObjectDefinitions();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectDefinitionLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Assert.assertNotNull(
+			bundleContext.getServiceReferences(
+				PersistedModelLocalService.class.getName(),
+				"(model.class.name=" + objectDefinition.getClassName() + ")"));
 	}
 
 	@Test

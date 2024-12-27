@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceLocalServiceBaseImpl;
@@ -231,9 +232,10 @@ public class DDMFormInstanceLocalServiceImpl
 	public void deleteFormInstance(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
-		_resourceLocalService.deleteResource(
-			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
+		// Delete the DDMFormInstanceReport first to avoid redundant updates
+		// in DDMFormInstanceRecordModelListener
+
+		_ddmFormInstanceReportLocalService.deleteByFormInstanceId(
 			ddmFormInstance.getFormInstanceId());
 
 		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecords(
@@ -247,6 +249,11 @@ public class DDMFormInstanceLocalServiceImpl
 		if (_ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
 			_ddmStructureLocalService.deleteStructure(structureId);
 		}
+
+		_resourceLocalService.deleteResource(
+			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			ddmFormInstance.getFormInstanceId());
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),
@@ -763,6 +770,10 @@ public class DDMFormInstanceLocalServiceImpl
 	@Reference
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
+
+	@Reference
+	private DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService;
 
 	@Reference
 	private DDMFormInstanceVersionLocalService

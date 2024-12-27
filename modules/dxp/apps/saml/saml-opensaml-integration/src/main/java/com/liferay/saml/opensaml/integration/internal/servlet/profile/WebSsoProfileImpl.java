@@ -356,8 +356,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 						inboundMessageContext.getSubcontext(
 							SAMLMessageInfoContext.class, true);
 
-					if ((messageContext != null) &&
-						samlMessageId.equals(
+					if (samlMessageId.equals(
 							samlMessageInfoContext.getMessageId())) {
 
 						return samlSsoRequestContext;
@@ -389,9 +388,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				SAMLPeerEntityContext samlPeerEntityContext =
 					messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-				if ((messageContext != null) &&
-					entityId.equals(samlPeerEntityContext.getEntityId())) {
-
+				if (entityId.equals(samlPeerEntityContext.getEntityId())) {
 					return samlSsoRequestContext;
 				}
 			}

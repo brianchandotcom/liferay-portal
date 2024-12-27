@@ -11,12 +11,15 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,6 +36,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.test.rule.Inject;
@@ -67,7 +72,27 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
+		_assertDDMFieldAttribute(
+			ddmFieldAttribute -> {
+				Assert.assertTrue(
+					Validator.isNull(
+						ddmFieldAttribute.getLargeAttributeValue()));
+				Assert.assertFalse(
+					Validator.isNull(
+						ddmFieldAttribute.getSmallAttributeValue()));
+			});
+
 		_runUpgrade();
+
+		_assertDDMFieldAttribute(
+			ddmFieldAttribute -> {
+				Assert.assertFalse(
+					Validator.isNull(
+						ddmFieldAttribute.getLargeAttributeValue()));
+				Assert.assertTrue(
+					Validator.isNull(
+						ddmFieldAttribute.getSmallAttributeValue()));
+			});
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getJournalArticle(
@@ -115,7 +140,8 @@ public class DDMFieldAttributeUpgradeProcessTest {
 										_dlFileEntry.getFileVersion()),
 									null, null),
 								"\"/><img src=\"/documents/d/orphan/document\"",
-								"/>")
+								"/><p>", RandomTestUtil.randomString(100),
+								"</p>")
 						).build()),
 					LanguageUtil.getLanguageId(LocaleUtil.US)),
 				"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");
@@ -128,6 +154,18 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 	private void _assertContains(String content, String fragment) {
 		Assert.assertTrue(content, content.contains(fragment));
+	}
+
+	private void _assertDDMFieldAttribute(
+			UnsafeConsumer<DDMFieldAttribute, Exception> unsafeConsumer)
+		throws Exception {
+
+		for (DDMFieldAttribute ddmFieldAttribute :
+				_ddmFieldLocalService.getDDMFieldAttributes(
+					_journalArticle.getId(), null)) {
+
+			unsafeConsumer.accept(ddmFieldAttribute);
+		}
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -148,6 +186,9 @@ public class DDMFieldAttributeUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

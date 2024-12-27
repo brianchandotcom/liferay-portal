@@ -43,6 +43,26 @@
 					},
 					"collectionType": "CollectionProvider"
 				},
+				"collectionViewports": [
+					{
+						"collectionViewportDefinition": {
+							"numberOfColumns": 1
+						},
+						"id": "landscapeMobile"
+					},
+					{
+						"collectionViewportDefinition": {
+							"numberOfColumns": 1
+						},
+						"id": "portraitMobile"
+					},
+					{
+						"collectionViewportDefinition": {
+							"numberOfColumns": 1
+						},
+						"id": "tablet"
+					}
+				],
 				"listStyle": "",
 				"numberOfColumns": 1,
 				"numberOfItems": 5

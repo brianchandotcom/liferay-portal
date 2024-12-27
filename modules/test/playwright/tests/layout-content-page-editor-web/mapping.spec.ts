@@ -754,9 +754,13 @@ test(
 
 		await page.getByText('Go Somewhere').first().click();
 
-		await waitForAlert(page, 'The location should be Canary Islands.', {
-			type: 'danger',
-		});
+		await waitForAlert(
+			page,
+			'Error:The location should be Canary Islands.',
+			{
+				type: 'danger',
+			}
+		);
 
 		await expect(page).toHaveURL(
 			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`

@@ -252,12 +252,12 @@ public class LayoutLookAndFeelDisplayContext {
 		StyleBookEntry defaultStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(selLayout);
 
-		if (selLayout.getStyleBookEntryId() > 0) {
-			return defaultStyleBookEntry.getName();
-		}
-
 		if (defaultStyleBookEntry == null) {
 			return LanguageUtil.get(_httpServletRequest, "styles-from-theme");
+		}
+
+		if (selLayout.getStyleBookEntryId() > 0) {
+			return defaultStyleBookEntry.getName();
 		}
 
 		if (hasEditableMasterLayout() &&

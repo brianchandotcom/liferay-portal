@@ -11,16 +11,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.rest.dto.v1_0.LearnMessage;
 import com.liferay.portal.language.rest.dto.v1_0.LearnMessageDetail;
 import com.liferay.portal.language.rest.resource.v1_0.LearnMessageResource;
-
 import com.liferay.portal.vulcan.pagination.Page;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ServiceScope;
 
-import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ws.rs.BadRequestException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Thiago Buarque

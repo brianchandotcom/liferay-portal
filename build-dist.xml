@@ -1442,7 +1442,7 @@ closeTemplate()
 						<echo file="${tstamp.value}/create-weblogic-domain.sh">
 							#!/bin/sh
 
-							export JDK_JAVA_OPTIONS="%JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
+							export JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
 							export MW_HOME="${app.server.weblogic.dir}"
 							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
@@ -1458,7 +1458,7 @@ closeTemplate()
 						<echo file="${tstamp.value}/create-weblogic-domain.sh">
 							#!/bin/sh
 
-							export JDK_JAVA_OPTIONS="%JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
+							export JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
 							export MW_HOME="${app.server.weblogic.dir}"
 							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 							export WL_HOME="${app.server.weblogic.wlserver.dir}"
@@ -1490,7 +1490,7 @@ closeTemplate()
 							# Any changes to this script may be lost when adding extensions to this configuration.
 
 							export DERBY_FLAG="false"
-							export JDK_JAVA_OPTIONS="%JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
+							export JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
 							export JAVA_OPTIONS="${JAVA_OPTIONS} ${app.server.weblogic.jvm.args} -da:org.apache.lucene... -da:org.aspectj... "
 							export MW_HOME="${app.server.weblogic.dir}"
 							export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
@@ -1678,7 +1678,7 @@ closeTemplate()
 				<![CDATA[
 					# Any changes to this script may be lost when adding extensions to this configuration.
 					export DERBY_FLAG="false"
-					export JDK_JAVA_OPTIONS="%JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
+					export JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS ${app.server.weblogic.jdk.java.options}"
 					export JAVA_OPTIONS="${JAVA_OPTIONS} ${app.server.weblogic.jvm.args} -da:org.apache.lucene... -da:org.aspectj... "
 					export MW_HOME="${app.server.weblogic.dir}"
 					export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"

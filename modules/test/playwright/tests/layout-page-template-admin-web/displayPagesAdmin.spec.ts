@@ -3,11 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectDefinitionApi,
+	ObjectField,
+} from '@liferay/object-admin-rest-client-js';
 import {Page, expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -27,8 +31,8 @@ import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePag
 import {JournalPage} from '../journal-web/pages/JournalPage';
 
 const test = mergeTests(
-	apiHelpersTest,
 	blogsPagesTest,
+	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
@@ -785,6 +789,87 @@ test.describe('UI', () => {
 			).toBe('-- Unmapped --');
 		}
 	);
+
+	test('Content type modal is displayed when mapped object definition does not exist anymore', async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+
+		// Create Object definition
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'stockERC',
+				label: {
+					en_US: 'stock',
+				},
+				name: 'Stock',
+				objectFields: [
+					{
+						DBType: ObjectField.DBTypeEnum.String,
+						businessType: ObjectField.BusinessTypeEnum.Text,
+						externalReferenceCode: 'nameERC',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'name',
+						},
+						name: 'name',
+						required: true,
+					},
+				],
+				pluralLabel: {
+					en_US: 'stocks',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		// Create display page template for object
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				objectDefinition.className
+			);
+
+		const displayPageTemplateName = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			{
+				classNameId: className.classNameId,
+				groupId: site.id,
+				name: displayPageTemplateName,
+			}
+		);
+
+		// Delete object definition
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition.id
+		);
+
+		// Check that content type modal is displayed when trying to edit display page template
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await displayPageTemplatesPage.clickMoreActions(
+			displayPageTemplateName,
+			'Edit'
+		);
+
+		await expect(
+			page.getByLabel('Select Content Type', {exact: true})
+		).toBeVisible();
+	});
 });
 
 test.describe('Usages', () => {

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceLocalServiceBaseImpl;
@@ -234,6 +235,9 @@ public class DDMFormInstanceLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
+			ddmFormInstance.getFormInstanceId());
+
+		_ddmFormInstanceReportLocalService.deleteByFormInstanceId(
 			ddmFormInstance.getFormInstanceId());
 
 		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecords(
@@ -763,6 +767,10 @@ public class DDMFormInstanceLocalServiceImpl
 	@Reference
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
+
+	@Reference
+	private DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService;
 
 	@Reference
 	private DDMFormInstanceVersionLocalService

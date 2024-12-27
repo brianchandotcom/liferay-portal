@@ -14,6 +14,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
@@ -112,6 +113,91 @@ test(
 		);
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
+	}
+);
+
+test(
+	'Can prefilter collection',
+	{
+		tag: '@LPS-166039',
+	},
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+
+		// Create definition for a collection mapped to Animals collection
+
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
+
+		const collectionId = getRandomString();
+
+		const relatedCollectionId = getRandomString();
+
+		const collectionDefinition = getCollectionDefinition({
+			classPK: animalsClassPK,
+			id: collectionId,
+			pageElements: [
+				getCollectionDefinition({
+					id: relatedCollectionId,
+					provider: 'Items with Categories in the Same Vocabularies',
+				}),
+			],
+		});
+
+		// Create a content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Pre-filter collection
+
+		await pageEditorPage.selectFragment(relatedCollectionId);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Filter Collection'}),
+			trigger: page.getByTitle('View Collection Options'),
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.locator('.dropdown-menu', {hasText: 'Blogs Entry'}),
+			trigger: page.getByLabel('Item Type'),
+		});
+
+		await page.locator('label').filter({hasText: 'Blogs Entry'}).click();
+
+		await page.locator('body').click();
+
+		// Assert empty message in filter collection
+
+		await expect(
+			page.getByText('There are 0 results for Blogs Entry.')
+		).toBeVisible();
+
+		await page.locator('.btn-primary', {hasText: 'Save'}).click();
+
+		// Assert empty message in edit mode
+
+		await expect(
+			page
+				.getByText(
+					'The collection is empty. To display your items, add them to the collection or choose a different collection.'
+				)
+				.first()
+		).toBeVisible();
 	}
 );
 

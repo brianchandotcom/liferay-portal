@@ -19,7 +19,10 @@ type Props = {
 	id: string;
 	listStyle?: ListStyle;
 	pageElements?: PageElement[];
-	provider?: 'Highest Rated Assets' | 'Recent Content';
+	provider?:
+		| 'Highest Rated Assets'
+		| 'Items with Categories in the Same Vocabularies'
+		| 'Recent Content';
 };
 
 const DEFAULT_CONFIG = {
@@ -30,6 +33,8 @@ const DEFAULT_CONFIG = {
 const COLLECTION_PROVIDERS = {
 	'Highest Rated Assets':
 		'com.liferay.asset.internal.info.collection.provider.HighestRatedAssetsInfoCollectionProvider',
+	'Items with Categories in the Same Vocabularies':
+		'com.liferay.asset.internal.info.collection.provider.AssetEntriesWithAssetCategoriesInTheSameAssetVocabulariesRelatedInfoItemCollectionProvider',
 	'Recent Content':
 		'com.liferay.asset.internal.info.collection.provider.RecentContentInfoCollectionProvider',
 };

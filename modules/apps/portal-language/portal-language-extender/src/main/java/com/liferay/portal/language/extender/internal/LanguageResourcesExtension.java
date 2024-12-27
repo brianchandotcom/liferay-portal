@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 
 import java.net.URL;
 
@@ -113,7 +114,7 @@ public class LanguageResourcesExtension {
 		AggregateResourceBundleLoader aggregateResourceBundleLoader =
 			new AggregateResourceBundleLoader(
 				resourceBundleLoader,
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
 		return new CacheResourceBundleLoader(aggregateResourceBundleLoader);
 	}

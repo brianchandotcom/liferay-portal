@@ -64,14 +64,13 @@ public class LanguageResourcesExtenderTest {
 			).build(),
 			null, 1, null, false, null);
 
-		Assert.assertNull(
-			LanguageResources.getMessage(LocaleUtil.ENGLISH, "language-key-1"));
 		Assert.assertEquals(
 			"About", LanguageResources.getMessage(LocaleUtil.ENGLISH, "about"));
-
 		Assert.assertEquals(
 			"Enabled",
 			LanguageResources.getMessage(LocaleUtil.ENGLISH, "enabled"));
+		Assert.assertNull(
+			LanguageResources.getMessage(LocaleUtil.ENGLISH, "language-key-1"));
 
 		try {
 			bundle.start();

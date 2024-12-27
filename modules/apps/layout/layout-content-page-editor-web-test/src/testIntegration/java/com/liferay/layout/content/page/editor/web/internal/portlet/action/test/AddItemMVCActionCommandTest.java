@@ -190,6 +190,20 @@ public class AddItemMVCActionCommandTest {
 		Assert.assertNotNull(mobileLandscapeConfigJSONObject);
 		Assert.assertEquals(
 			1, mobileLandscapeConfigJSONObject.get("numberOfColumns"));
+
+		JSONObject portraitMobileConfigJSONObject =
+			itemConfigJSONObject.getJSONObject(
+				ViewportSize.PORTRAIT_MOBILE.getViewportSizeId());
+
+		Assert.assertNotNull(portraitMobileConfigJSONObject);
+		Assert.assertEquals(
+			1, portraitMobileConfigJSONObject.get("numberOfColumns"));
+
+		JSONObject tabletConfigJSONObject = itemConfigJSONObject.getJSONObject(
+			ViewportSize.TABLET.getViewportSizeId());
+
+		Assert.assertNotNull(tabletConfigJSONObject);
+		Assert.assertEquals(1, tabletConfigJSONObject.get("numberOfColumns"));
 	}
 
 	@Test

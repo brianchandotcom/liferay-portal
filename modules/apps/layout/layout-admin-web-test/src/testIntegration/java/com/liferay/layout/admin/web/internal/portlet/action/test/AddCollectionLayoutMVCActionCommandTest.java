@@ -8,9 +8,12 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -51,6 +55,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -108,11 +114,14 @@ public class AddCollectionLayoutMVCActionCommandTest {
 			_mvcActionCommand, "_addCollectionLayout",
 			new Class<?>[] {ActionRequest.class},
 			_getMockLiferayPortletActionRequest(
-				_assetListEntry, parentLayout.getParentLayoutId(),
-				_themeDisplay));
+				String.valueOf(_assetListEntry.getAssetListEntryId()),
+				InfoListItemSelectorReturnType.class.getName(),
+				parentLayout.getParentLayoutId(), _themeDisplay));
 
 		_validateCollectionLayout(
-			layout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			String.valueOf(_assetListEntry.getAssetListEntryId()),
+			InfoListItemSelectorReturnType.class.getName(), layout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	@Test
@@ -121,11 +130,32 @@ public class AddCollectionLayoutMVCActionCommandTest {
 			_mvcActionCommand, "_addCollectionLayout",
 			new Class<?>[] {ActionRequest.class},
 			_getMockLiferayPortletActionRequest(
-				_assetListEntry, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				_themeDisplay));
+				String.valueOf(_assetListEntry.getAssetListEntryId()),
+				InfoListItemSelectorReturnType.class.getName(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _themeDisplay));
 
 		_validateCollectionLayout(
-			layout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			String.valueOf(_assetListEntry.getAssetListEntryId()),
+			InfoListItemSelectorReturnType.class.getName(), layout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	}
+
+	@Test
+	public void testAddCollectionProviderCollectionLayout() {
+		Layout layout = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_addCollectionLayout",
+			new Class<?>[] {ActionRequest.class},
+			_getMockLiferayPortletActionRequest(
+				"com.liferay.asset.internal.info.collection.provider." +
+					"HighestRatedAssetsInfoCollectionProvider",
+				InfoListProviderItemSelectorReturnType.class.getName(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _themeDisplay));
+
+		_validateCollectionLayout(
+			"com.liferay.asset.internal.info.collection.provider." +
+				"HighestRatedAssetsInfoCollectionProvider",
+			InfoListProviderItemSelectorReturnType.class.getName(), layout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	private AssetListEntry _addAssetListEntry(
@@ -152,7 +182,7 @@ public class AddCollectionLayoutMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-		AssetListEntry assetListEntry, long parentPlid,
+		String collectionPK, String collectionType, long parentPlid,
 		ThemeDisplay themeDisplay) {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -165,10 +195,9 @@ public class AddCollectionLayoutMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockLiferayPortletActionRequest.addParameter(
-			"collectionPK",
-			String.valueOf(assetListEntry.getAssetListEntryId()));
+			"collectionPK", collectionPK);
 		mockLiferayPortletActionRequest.addParameter(
-			"collectionType", InfoListItemSelectorReturnType.class.getName());
+			"collectionType", collectionType);
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 		mockLiferayPortletActionRequest.addParameter(
@@ -232,23 +261,30 @@ public class AddCollectionLayoutMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private void _validateCollectionLayout(Layout layout, long parentLayoutId) {
-		_validateLayoutProperties(layout, parentLayoutId);
-		_validateLayoutStructure(layout);
+	private void _validateCollectionLayout(
+		String collectionPK, String collectionType, Layout layout,
+		long parentLayoutId) {
+
+		_validateLayoutProperties(
+			collectionPK, collectionType, layout, parentLayoutId);
+		_validateLayoutStructure(collectionType, layout);
 	}
 
-	private void _validateLayoutProperties(Layout layout, long parentLayoutId) {
+	private void _validateLayoutProperties(
+		String collectionPK, String collectionType, Layout layout,
+		long parentLayoutId) {
+
 		Assert.assertEquals(parentLayoutId, layout.getParentLayoutId());
 		Assert.assertEquals(LayoutConstants.TYPE_COLLECTION, layout.getType());
 		Assert.assertEquals(
-			String.valueOf(_assetListEntry.getAssetListEntryId()),
-			layout.getTypeSettingsProperty("collectionPK"));
+			collectionPK, layout.getTypeSettingsProperty("collectionPK"));
 		Assert.assertEquals(
-			InfoListItemSelectorReturnType.class.getName(),
-			layout.getTypeSettingsProperty("collectionType"));
+			collectionType, layout.getTypeSettingsProperty("collectionType"));
 	}
 
-	private void _validateLayoutStructure(Layout layout) {
+	private void _validateLayoutStructure(
+		String collectionType, Layout layout) {
+
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		Assert.assertNotNull(draftLayout);
@@ -315,18 +351,49 @@ public class AddCollectionLayoutMVCActionCommandTest {
 
 		Assert.assertNotNull(collectionJSONObject);
 
-		Assert.assertEquals(
-			collectionJSONObject.getInt("classNameId"),
-			_portal.getClassNameId(AssetListEntry.class.getName()));
-		Assert.assertEquals(
-			collectionJSONObject.getLong("classPK"),
-			_assetListEntry.getAssetListEntryId());
-		Assert.assertEquals(
-			collectionJSONObject.get("title"), _assetListEntry.getTitle());
-		Assert.assertEquals(
-			collectionJSONObject.get("type"),
-			InfoListItemSelectorReturnType.class.getName());
+		if (Objects.equals(
+				collectionType,
+				InfoListItemSelectorReturnType.class.getName())) {
+
+			Assert.assertEquals(
+				_portal.getClassNameId(AssetListEntry.class.getName()),
+				collectionJSONObject.getInt("classNameId"));
+			Assert.assertEquals(
+				_assetListEntry.getAssetListEntryId(),
+				collectionJSONObject.getLong("classPK"));
+			Assert.assertEquals(
+				collectionJSONObject.get("title"), _assetListEntry.getTitle());
+			Assert.assertEquals(
+				collectionJSONObject.get("type"),
+				InfoListItemSelectorReturnType.class.getName());
+		}
+		else {
+			Assert.assertEquals(
+				"com.liferay.asset.internal.info.collection.provider." +
+					"HighestRatedAssetsInfoCollectionProvider",
+				collectionJSONObject.get("key"));
+			Assert.assertEquals(
+				"Highest Rated Assets", collectionJSONObject.get("title"));
+			Assert.assertEquals(
+				InfoListProviderItemSelectorReturnType.class.getName(),
+				collectionJSONObject.get("type"));
+		}
+
+		Map<String, JSONObject> viewportConfigurationJSONObjects =
+			collectionStyledLayoutStructureItem.
+				getViewportConfigurationJSONObjects();
+
+		for (ViewportSize viewportSize : _viewportSizes) {
+			Assert.assertEquals(
+				1,
+				GetterUtil.getInteger(
+					ResponsiveLayoutStructureUtil.getResponsivePropertyValue(
+						viewportSize, viewportConfigurationJSONObjects,
+						"numberOfColumns", 1)));
+		}
 	}
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private AssetListEntry _assetListEntry;
 

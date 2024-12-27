@@ -13,6 +13,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:friendly-url:friendly-url-api")
 	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib-clay")
 	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:info:info-list-provider-item-selector-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-criteria-api")
 	testIntegrationImplementation project(":apps:journal:journal-api")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")

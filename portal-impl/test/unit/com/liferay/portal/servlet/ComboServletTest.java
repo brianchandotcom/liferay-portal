@@ -264,9 +264,9 @@ public class ComboServletTest {
 			ReflectionTestUtil.getFieldValue(
 				_comboServlet, "_bytesArrayPortalCache");
 
-		String cacheKey = "[" + path + "]#null";
+		String key = "[" + path + "]#null";
 
-		Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
+		Assert.assertNull(bytesArrayPortalCache.get(key));
 
 		String responseContent = RandomTestUtil.randomString();
 
@@ -276,7 +276,7 @@ public class ComboServletTest {
 			_comboServlet.service(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-			byte[][] bytesArray = bytesArrayPortalCache.get(cacheKey);
+			byte[][] bytesArray = bytesArrayPortalCache.get(key);
 
 			Assert.assertNotNull(bytesArray);
 			Assert.assertEquals(
@@ -308,11 +308,9 @@ public class ComboServletTest {
 			ReflectionTestUtil.getFieldValue(
 				_comboServlet, "_bytesArrayPortalCache");
 
-		String cacheKey = "[" + path + "]#null";
+		String key = "[" + path + "]#null";
 
-		Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
-
-		// file size > max size
+		Assert.assertNull(bytesArrayPortalCache.get(key));
 
 		try (SafeCloseable safeCloseable = _setUpHttpServletResponse(
 				mockHttpServletResponse, responseContent + StringPool.STAR)) {
@@ -320,10 +318,8 @@ public class ComboServletTest {
 			_comboServlet.service(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-			Assert.assertNull(bytesArrayPortalCache.get(cacheKey));
+			Assert.assertNull(bytesArrayPortalCache.get(key));
 		}
-
-		// file size = max size
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
@@ -333,7 +329,7 @@ public class ComboServletTest {
 			_comboServlet.service(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-			byte[][] bytesArray = bytesArrayPortalCache.get(cacheKey);
+			byte[][] bytesArray = bytesArrayPortalCache.get(key);
 
 			Assert.assertNotNull(bytesArray);
 			Assert.assertEquals(

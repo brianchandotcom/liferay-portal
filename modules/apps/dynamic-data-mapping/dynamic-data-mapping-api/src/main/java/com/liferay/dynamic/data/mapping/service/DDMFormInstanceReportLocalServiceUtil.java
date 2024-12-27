@@ -82,6 +82,12 @@ public class DDMFormInstanceReportLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteByFormInstanceId(long formInstanceId)
+		throws PortalException {
+
+		getService().deleteByFormInstanceId(formInstanceId);
+	}
+
 	/**
 	 * Deletes the ddm form instance report from the database. Also notifies the appropriate model listeners.
 	 *

@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback } from "react";
-import { createRoot } from 'react-dom/client';
-import SwaggerUI from "swagger-ui-react";
 import ClayLink from '@clayui/link';
 import Icon from './Icon';
+import React, { useEffect, useCallback } from "react";
+import SwaggerUI from "swagger-ui-react";
+import { createRoot } from 'react-dom/client';
 
 const CustomSwaggerUI = ({ learnResources = [], ...props }) => {
   const addTooltips = useCallback(() => {

@@ -14,7 +14,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import org.osgi.framework.BundleContext;
@@ -38,7 +37,8 @@ public class VulcanBatchEnginePortletDataHandlerRegistry {
 		_serviceTracker = ServiceTrackerFactory.create(
 			bundleContext,
 			"(&(batch.engine.scope=company)" +
-				"(batch.engine.task.item.delegate=true))",
+				"(batch.engine.task.item.delegate=true)" +
+					"(batch.engine.task.item.delegate.portlet.id=*))",
 			new VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(
 				bundleContext));
 
@@ -94,13 +94,6 @@ public class VulcanBatchEnginePortletDataHandlerRegistry {
 			ServiceReference<VulcanBatchEngineTaskItemDelegate>
 				serviceReference) {
 
-			String portletId = (String)serviceReference.getProperty(
-				"batch.engine.task.item.delegate.portlet.id");
-
-			if (Validator.isNull(portletId)) {
-				return null;
-			}
-
 			VulcanBatchEnginePortletDataHandler
 				vulcanBatchEnginePortletDataHandler =
 					new VulcanBatchEnginePortletDataHandler(
@@ -116,7 +109,9 @@ public class VulcanBatchEnginePortletDataHandlerRegistry {
 			return _bundleContext.registerService(
 				PortletDataHandler.class, vulcanBatchEnginePortletDataHandler,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"javax.portlet.name", portletId
+					"javax.portlet.name",
+					(String)serviceReference.getProperty(
+						"batch.engine.task.item.delegate.portlet.id")
 				).build());
 		}
 

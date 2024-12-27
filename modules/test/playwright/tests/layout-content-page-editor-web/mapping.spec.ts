@@ -422,20 +422,20 @@ test(
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await pageEditorPage.selectEditable(headingId, 'element-text');
-
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
-
-		await pageEditorPage.setLinkConfiguration({
-			mappingConfiguration: {
-				mapping: {
-					entity: 'Web Content',
-					entry: 'Animal 01 - Dogs and Cats categories',
-					field: displayPageTemplateName,
-					folder: 'Animals',
+		await pageEditorPage.mapEditableLink({
+			editableId: 'element-text',
+			fragmentName: 'Heading',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						entity: 'Web Content',
+						entry: 'Animal 01 - Dogs and Cats categories',
+						field: displayPageTemplateName,
+						folder: 'Animals',
+					},
 				},
+				type: 'Mapped URL',
 			},
-			type: 'Mapped URL',
 		});
 
 		expect(
@@ -508,36 +508,36 @@ test(
 
 		// Map link to heading fragment and image fragment
 
-		await pageEditorPage.selectEditable(headingId, 'element-text');
-
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
-
-		await pageEditorPage.setLinkConfiguration({
-			mappingConfiguration: {
-				mapping: {
-					entity: 'Web Content',
-					entry: 'Animal 01 - Dogs and Cats categories',
-					field: 'More Info Link',
-					folder: 'Animals',
+		await pageEditorPage.mapEditableLink({
+			editableId: 'element-text',
+			fragmentName: 'Heading',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						entity: 'Web Content',
+						entry: 'Animal 01 - Dogs and Cats categories',
+						field: 'More Info Link',
+						folder: 'Animals',
+					},
 				},
+				type: 'Mapped URL',
 			},
-			type: 'Mapped URL',
 		});
 
-		await pageEditorPage.selectEditable(imageId, 'image-square');
-
-		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
-
-		await pageEditorPage.setLinkConfiguration({
-			mappingConfiguration: {
-				mapping: {
-					entity: 'Web Content',
-					entry: 'Animal 02 - Dogs category',
-					field: 'More Info Link',
-					folder: 'Animals',
+		await pageEditorPage.mapEditableLink({
+			editableId: 'image-square',
+			fragmentName: 'Image',
+			linkConfiguration: {
+				mappingConfiguration: {
+					mapping: {
+						entity: 'Web Content',
+						entry: 'Animal 02 - Dogs category',
+						field: 'More Info Link',
+						folder: 'Animals',
+					},
 				},
+				type: 'Mapped URL',
 			},
-			type: 'Mapped URL',
 		});
 
 		await pageEditorPage.publishPage();

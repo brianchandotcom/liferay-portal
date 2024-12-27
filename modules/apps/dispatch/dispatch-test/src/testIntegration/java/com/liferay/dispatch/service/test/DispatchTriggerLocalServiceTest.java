@@ -487,7 +487,7 @@ public class DispatchTriggerLocalServiceTest {
 			futureCalendar.get(Calendar.MINUTE), " ",
 			futureCalendar.get(Calendar.HOUR_OF_DAY), " * * ? *");
 
-		// Start Date in the future, after the cron expression
+		// Future start date after the cron expression
 
 		Calendar startCalendar = (Calendar)calendar.clone();
 
@@ -497,7 +497,7 @@ public class DispatchTriggerLocalServiceTest {
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			startCalendar);
 
-		// Start Date in the future, before the cron expression
+		// Future start date before the cron expression
 
 		startCalendar = (Calendar)calendar.clone();
 
@@ -507,7 +507,7 @@ public class DispatchTriggerLocalServiceTest {
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			startCalendar);
 
-		// Start Date in the past, before the cron expression
+		// Past start date before the cron expression
 
 		startCalendar = (Calendar)calendar.clone();
 
@@ -517,7 +517,7 @@ public class DispatchTriggerLocalServiceTest {
 			cronExpression, _getExpectedCalendar(futureCalendar, startCalendar),
 			startCalendar);
 
-		// Start Date in the past, after the cron expression
+		// Past start Date after the cron expression
 
 		startCalendar = (Calendar)calendar.clone();
 

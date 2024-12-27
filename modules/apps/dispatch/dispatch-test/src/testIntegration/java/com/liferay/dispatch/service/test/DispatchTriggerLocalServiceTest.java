@@ -471,7 +471,7 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateDispatchTriggerWithDifferentStartDate()
+	public void testUpdateDispatchTriggerWithCronExpressions()
 		throws Exception {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();

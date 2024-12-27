@@ -123,15 +123,22 @@ const objectFieldbusinessTypeInfo: {
 	},
 };
 
+function isLocalizable(businessType: ObjectFieldBusinessTypes) {
+	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = ['boolean'];
+
+	return localizableBusinessTypes.includes(businessType);
+}
+
 export function createObjectField(
 	businessType: keyof ObjectFieldBusinessTypesLabelName,
 	objectFieldBusinessTypeLabelName: LabelNameObject,
-	additionalSettings: Partial<ObjectField> = {}
+	additionalSettings: Partial<ObjectField> = {},
+	localizeAllLocalizable: boolean = false
 ): Partial<ObjectField> {
 	const baseObjectField: ObjectField = {
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
-		localized: false,
+		localized: !!(isLocalizable(businessType) && localizeAllLocalizable),
 		readOnly: ObjectField.ReadOnlyEnum.False,
 		readOnlyConditionExpression: '',
 		required: false,
@@ -201,11 +208,13 @@ function getRandomObjectFieldEntryValue(
 
 export async function mockObjectFields({
 	apiHelpers,
+	localizeAllLocalizable,
 	objectEntryReturn,
 	objectFieldBusinessTypes,
 	titleObjectFieldName,
 }: {
 	apiHelpers: ApiHelpers;
+	localizeAllLocalizable?: boolean;
 	objectEntryReturn?: {format: 'API' | 'UI'};
 	objectFieldBusinessTypes: ObjectFieldBusinessTypes[];
 	titleObjectFieldName?: ObjectFieldBusinessTypes;
@@ -314,7 +323,8 @@ export async function mockObjectFields({
 				objectFieldBusinessTypesLabelName[objectFieldBusinessType],
 				setObjectFieldsAdditionalSettings(
 					objectFieldBusinessType as ObjectFieldBusinessTypes
-				)
+				),
+				localizeAllLocalizable
 			)
 		);
 

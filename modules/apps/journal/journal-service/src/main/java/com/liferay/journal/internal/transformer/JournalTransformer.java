@@ -113,8 +113,7 @@ public class JournalTransformer {
 			String script, ThemeDisplay themeDisplay, String viewMode)
 		throws Exception {
 
-		Set<String> transformedArticleIds =
-			_transformedArticleIdsThreadLocal.get();
+		Set<String> transformedArticleIds = _transformedArticleIds.get();
 
 		String articleId = article.getArticleId();
 
@@ -1084,10 +1083,9 @@ public class JournalTransformer {
 		JournalTransformer.class.getName() + ".XmlAfterListener");
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		JournalTransformer.class.getName() + ".XmlBeforeListener");
-	private static final ThreadLocal<Set<String>>
-		_transformedArticleIdsThreadLocal = new CentralizedThreadLocal<>(
-			JournalTransformer.class.getName() +
-				"._transformedArticleIdsThreadLocal",
+	private static final ThreadLocal<Set<String>> _transformedArticleIds =
+		new CentralizedThreadLocal<>(
+			JournalTransformer.class.getName() + "._transformedArticleIds",
 			HashSet::new);
 
 }

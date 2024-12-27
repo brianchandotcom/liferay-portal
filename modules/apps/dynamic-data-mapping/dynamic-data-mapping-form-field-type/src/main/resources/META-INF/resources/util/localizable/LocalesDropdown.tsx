@@ -66,7 +66,7 @@ const LocalesDropdown = ({
 			<ClayDropDown.Menu
 				active={dropdownActive}
 				alignElementRef={alignElementRef}
-				onSetActive={setDropdownActive}
+				onActiveChange={setDropdownActive}
 				ref={dropdownMenuRef}
 			>
 				<ClayDropDown.ItemList>

@@ -27,7 +27,7 @@ import java.util.Map;
 public class TestEntityEntityModel implements EntityModel {
 
 	public TestEntityEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityFieldsMapFactory.create(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField("published", locale -> Field.STATUS),
 			new CollectionEntityField(
 				new IntegerEntityField("statusCode", locale -> Field.STATUS)),
@@ -52,6 +52,8 @@ public class TestEntityEntityModel implements EntityModel {
 			new IdEntityField(
 				"folderId", locale -> Field.FOLDER_ID,
 				locale -> Field.getSortableFieldName(Field.FOLDER_ID)),
+			new IdEntityField(
+				"id", locale -> Field.ENTRY_CLASS_PK, String::valueOf),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField("viewCount", locale -> "viewCount"),
 			new StringEntityField("description", locale -> Field.DESCRIPTION),

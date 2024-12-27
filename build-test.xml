@@ -7833,8 +7833,8 @@ ${docker.start.error}</fail>
 						<![CDATA[
 							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-							import org.json.JSONObject;
 							import org.json.JSONArray;
+							import org.json.JSONObject;
 
 							String dockerInspectOutput = project.getProperty("docker.inspect.output");
 
@@ -7874,7 +7874,7 @@ ${docker.start.error}</fail>
 											pathString = javaJDKHome + "/bin:" + pathString;
 
 											String dockerJavaRunOptions = " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHome;
-				
+
 											project.setProperty("docker.java.run.options", dockerJavaRunOptions);
 										}
 									}
@@ -7884,7 +7884,7 @@ ${docker.start.error}</fail>
 					</beanshell>
 				</then>
 			</if>
-			
+
 			<property name="docker.java.run.options" value="" />
 
 			<start-docker-container image="${operating.system.docker.image}" name="${operating.system.host}" options="${operating.system.docker.os.options}">\

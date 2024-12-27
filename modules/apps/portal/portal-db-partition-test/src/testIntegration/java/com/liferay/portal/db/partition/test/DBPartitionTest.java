@@ -874,9 +874,13 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletName);
 
-		_portletLocalService.deployRemotePortlet(
-			new long[] {companyId}, portlet, new String[] {"category.hidden"},
-			true, true);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			_portletLocalService.deployRemotePortlet(
+				new long[] {companyId}, portlet,
+				new String[] {"category.hidden"}, true, true);
+		}
 	}
 
 	private static final String _CLASS_NAME = DBPartitionTest.class.getName();

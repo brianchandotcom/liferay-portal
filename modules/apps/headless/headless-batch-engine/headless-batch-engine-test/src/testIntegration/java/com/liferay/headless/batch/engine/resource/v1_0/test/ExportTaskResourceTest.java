@@ -106,7 +106,11 @@ public class ExportTaskResourceTest {
 						StringUtil.startsWith(
 							className,
 							"com.liferay.object.rest.dto.v1_0.ObjectEntry#" +
-								"C_")) {
+								"C_") ||
+						Objects.equals(
+							className,
+							"com.liferay.headless.admin.workflow.dto.v1_0." +
+								"WorkflowDefinitionLink")) {
 
 						return null;
 					}

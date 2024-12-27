@@ -23,7 +23,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
-		'LPS-135430': true,
+		'LPS-135430': {enabled: true},
 	}),
 	loginTest(),
 	objectPagesTest

@@ -945,6 +945,14 @@ definition {
 
 			Navigator.openStagingSiteURL(siteName = "Site Name");
 
+			var count = 0;
+
+			while ((${count} != 3) && (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Staging Test Page"))) {
+				Navigator.openStagingSiteURL(siteName = "Site Name");
+
+				var count = ${count} + 1;
+			}
+
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();

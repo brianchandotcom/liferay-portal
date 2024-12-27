@@ -30,8 +30,8 @@ let dataSetLabel: string;
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPS-164563': true,
-		'LPS-178052': true,
+		'LPS-164563': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),

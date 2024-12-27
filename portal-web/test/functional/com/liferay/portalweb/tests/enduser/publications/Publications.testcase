@@ -1655,7 +1655,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContent.scheduleExistingWCArticleWithPermissions(displayDate = "01/01/2050");
+		WebContent.scheduleWCArticleWithPermissions(displayDate = "01/01/2050");
 
 		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",

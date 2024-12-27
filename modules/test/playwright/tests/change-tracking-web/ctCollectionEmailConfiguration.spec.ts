@@ -12,7 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 export const test = mergeTests(
 	changeTrackingPagesTest,
 	featureFlagsTest({
-		'LPD-11212': true,
+		'LPD-11212': {enabled: true},
 	}),
 	loginTest()
 );

@@ -10,9 +10,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,8 +66,6 @@ public class SalesAgentNotificationTermEvaluator
 	private List<String> _getEmailAddresses(Map<String, Object> termValues)
 		throws PortalException {
 
-		List<String> emailAddresses = new ArrayList<>();
-
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
 				GetterUtil.getLong(termValues.get("id")));
@@ -76,19 +73,19 @@ public class SalesAgentNotificationTermEvaluator
 		Role salesAgentRole = _roleLocalService.getRole(
 			commerceOrder.getCompanyId(), "Sales Agent");
 
-		List<User> roleUsers = _userLocalService.getRoleUsers(
-			salesAgentRole.getRoleId());
+		return TransformUtil.transform(
+			_userLocalService.getRoleUsers(salesAgentRole.getRoleId()),
+			user -> {
+				if (_accountEntryModelResourcePermission.contains(
+						_permissionCheckerFactory.create(user),
+						commerceOrder.getCommerceAccountId(),
+						ActionKeys.VIEW)) {
 
-		for (User user : roleUsers) {
-			if (_accountEntryModelResourcePermission.contains(
-					_permissionCheckerFactory.create(user),
-					commerceOrder.getCommerceAccountId(), ActionKeys.VIEW)) {
+					return user.getEmailAddress();
+				}
 
-				emailAddresses.add(user.getEmailAddress());
-			}
-		}
-
-		return emailAddresses;
+				return null;
+			});
 	}
 
 	private final ModelResourcePermission<AccountEntry>

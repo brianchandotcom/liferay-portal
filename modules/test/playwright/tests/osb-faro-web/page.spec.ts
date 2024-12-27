@@ -53,8 +53,8 @@ export const test = mergeTests(
 	assetPublisherPagesTest,
 	pageEditorPagesTest,
 	featureFlagsTest({
-		'LPD-39304': true,
-		'LPS-178052': true,
+		'LPD-39304': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	loginAnalyticsCloudTest(),
 	loginTest()

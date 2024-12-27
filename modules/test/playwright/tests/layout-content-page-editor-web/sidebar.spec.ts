@@ -38,9 +38,9 @@ const test = mergeTests(
 	applicationsMenuPageTest,
 	collectionsPagesTest,
 	featureFlagsTest({
-		'LPD-18221': true,
-		'LPS-169837': true,
-		'LPS-178052': true,
+		'LPD-18221': {enabled: true},
+		'LPS-169837': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
 	isolatedSiteTest,

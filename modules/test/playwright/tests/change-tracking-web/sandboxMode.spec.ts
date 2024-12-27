@@ -15,7 +15,7 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPD-20556': true,
+		'LPD-20556': {enabled: true},
 	}),
 	apiHelpersTest,
 	changeTrackingPagesTest,

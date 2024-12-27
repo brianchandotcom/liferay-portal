@@ -68,7 +68,7 @@ for (const sample of SAMPLES) {
 export const testInstanceScoped = mergeTests(
 	clientExtensionsPageTest,
 	featureFlagsTest({
-		'LPD-30371': true,
+		'LPD-30371': {enabled: true},
 	}),
 	loginTest(),
 	styleBookPageTest

@@ -52,7 +52,7 @@ export const test = mergeTests(
 	serverAdministrationPageTest,
 	loginTest(),
 	featureFlagsTest({
-		'LPD-39304': true,
+		'LPD-39304': {enabled: true},
 	}),
 	pagesAdminPagesTest
 );
@@ -60,7 +60,7 @@ export const test = mergeTests(
 const testWithPrivatePages = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-38869': true,
+		'LPD-38869': {enabled: true},
 	})
 );
 

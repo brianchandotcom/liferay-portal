@@ -24,7 +24,7 @@ export const test = mergeTests(
 	editEditorConfigContributorPageTest,
 	editorSamplesPageTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

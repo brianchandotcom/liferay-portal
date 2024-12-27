@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	openConfirmModal,
-	openSelectionModal,
-	setFormValues,
-} from 'frontend-js-web';
+import {openSelectionModal, setFormValues} from 'frontend-js-web';
 
 export const ACTIONS = {
 	assignRoles(itemData, portletNamespace) {
@@ -48,16 +44,7 @@ export const ACTIONS = {
 	},
 
 	deleteGroupUsers(itemData) {
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
-			),
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed) {
-					submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
-				}
-			},
-		});
+		submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
 	},
 
 	unassignRoles(itemData, portletNamespace) {

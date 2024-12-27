@@ -70,7 +70,7 @@ const expect = baseExpect.extend({
 const assetPublisherDeprecationTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
-		'LPD-39304': true,
+		'LPD-39304': {enabled: true},
 	})
 );
 
@@ -81,7 +81,7 @@ const prefixUrlTest = mergeTests(baseTest);
 const translationAndAutosaveTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
-		'LPD-11228': true,
+		'LPD-11228': {enabled: true},
 	})
 );
 

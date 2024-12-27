@@ -25,9 +25,9 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-40533': true,
-		'LPD-40534': true,
-		'LPS-178052': true,
+		'LPD-40533': {enabled: true},
+		'LPD-40534': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

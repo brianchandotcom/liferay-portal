@@ -13,7 +13,6 @@ import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.constants.CommerceTaxRateSettingFDSNames;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRate;
@@ -22,6 +21,7 @@ import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,31 +76,23 @@ public class CommerceTaxRateFDSDataProvider
 			_commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		List<CommerceTaxFixedRate> commerceTaxFixedRates =
+		return TransformUtil.transform(
 			_commerceTaxFixedRateService.getCommerceTaxFixedRates(
 				commerceChannel.getGroupId(), commerceTaxMethodId,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
+				fdsPagination.getEndPosition(), null),
+			commerceTaxFixedRate -> {
+				CPTaxCategory cpTaxCategory =
+					commerceTaxFixedRate.getCPTaxCategory();
 
-		List<TaxRate> taxRates = new ArrayList<>();
-
-		for (CommerceTaxFixedRate commerceTaxFixedRate :
-				commerceTaxFixedRates) {
-
-			CPTaxCategory cpTaxCategory =
-				commerceTaxFixedRate.getCPTaxCategory();
-
-			taxRates.add(
-				new TaxRate(
+				return new TaxRate(
 					cpTaxCategory.getName(themeDisplay.getLanguageId()),
 					_getLocalizedRate(
 						commerceCurrency, commerceTaxMethod.isPercentage(),
 						commerceTaxFixedRate.getRate(),
 						_portal.getLocale(httpServletRequest)),
-					commerceTaxFixedRate.getCommerceTaxFixedRateId()));
-		}
-
-		return taxRates;
+					commerceTaxFixedRate.getCommerceTaxFixedRateId());
+			});
 	}
 
 	@Override

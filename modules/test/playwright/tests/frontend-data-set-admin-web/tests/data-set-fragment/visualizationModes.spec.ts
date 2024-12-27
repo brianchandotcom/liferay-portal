@@ -15,7 +15,7 @@ import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	dataSetFragmentPageTest,

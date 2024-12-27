@@ -22,19 +22,20 @@ import java.util.function.Supplier;
 public class ScopedBeanManagerThreadLocal {
 
 	public static Runnable captureScopedBeanManagers() {
-		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _scopedBeanManager.get();
 
-		return () -> _threadLocal.set(scopedBeanManagers);
+		return () -> _scopedBeanManager.set(scopedBeanManagers);
 	}
 
 	public static ScopedBeanManager getCurrentScopedBeanManager() {
-		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _scopedBeanManager.get();
 
 		return scopedBeanManagers.peek();
 	}
 
 	public static Closeable install(ScopedBeanManager scopedBeanManager) {
-		Deque<ScopedBeanManager> scopedBeanManagerStack = _threadLocal.get();
+		Deque<ScopedBeanManager> scopedBeanManagerStack =
+			_scopedBeanManager.get();
 
 		scopedBeanManagerStack.push(scopedBeanManager);
 
@@ -50,7 +51,7 @@ public class ScopedBeanManagerThreadLocal {
 				if (scopedBeanManagerStack.isEmpty()) {
 					closingScopedBeanManager.destroyScopedBeans();
 
-					_threadLocal.remove();
+					_scopedBeanManager.remove();
 				}
 			}
 		};
@@ -61,7 +62,7 @@ public class ScopedBeanManagerThreadLocal {
 			UnsafeRunnable<T> unsafeRunnable)
 		throws T {
 
-		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _scopedBeanManager.get();
 
 		scopedBeanManagers.push(supplier.get());
 
@@ -78,15 +79,15 @@ public class ScopedBeanManagerThreadLocal {
 	}
 
 	public static void remove() {
-		_threadLocal.remove();
+		_scopedBeanManager.remove();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScopedBeanManagerThreadLocal.class);
 
-	private static final ThreadLocal<Deque<ScopedBeanManager>> _threadLocal =
-		new CentralizedThreadLocal<>(
-			ScopedBeanManagerThreadLocal.class + "._threadLocal",
+	private static final ThreadLocal<Deque<ScopedBeanManager>>
+		_scopedBeanManager = new CentralizedThreadLocal<>(
+			ScopedBeanManagerThreadLocal.class + "._scopedBeanManager",
 			ConcurrentLinkedDeque::new);
 
 }

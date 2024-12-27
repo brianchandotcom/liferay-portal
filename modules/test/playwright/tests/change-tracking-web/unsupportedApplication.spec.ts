@@ -11,7 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'COMMERCE-8087': true,
+		'COMMERCE-8087': {enabled: true},
 	}),
 	changeTrackingPagesTest,
 	applicationsMenuPageTest

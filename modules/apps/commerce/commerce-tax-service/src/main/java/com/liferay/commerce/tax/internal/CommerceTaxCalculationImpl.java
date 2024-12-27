@@ -21,9 +21,9 @@ import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.CommerceTaxValue;
 import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
-import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -210,8 +210,6 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		long commerceShippingAddressId, BigDecimal amount, boolean includeTax,
 		boolean shipping, long taxCategoryId) {
 
-		List<CommerceTaxValue> commerceTaxValues = new ArrayList<>();
-
 		CommerceTaxCalculateRequest commerceTaxCalculateRequest =
 			new CommerceTaxCalculateRequest();
 
@@ -225,34 +223,33 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		commerceTaxCalculateRequest.setShipping(shipping);
 		commerceTaxCalculateRequest.setTaxCategoryId(taxCategoryId);
 
-		List<CommerceTaxMethod> commerceTaxMethods =
-			_commerceTaxMethodLocalService.getCommerceTaxMethods(groupId, true);
+		return TransformUtil.transform(
+			_commerceTaxMethodLocalService.getCommerceTaxMethods(groupId, true),
+			commerceTaxMethod -> {
+				commerceTaxCalculateRequest.setCommerceTaxMethodId(
+					commerceTaxMethod.getCommerceTaxMethodId());
+				commerceTaxCalculateRequest.setPercentage(
+					commerceTaxMethod.isPercentage());
 
-		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
-			commerceTaxCalculateRequest.setCommerceTaxMethodId(
-				commerceTaxMethod.getCommerceTaxMethodId());
-			commerceTaxCalculateRequest.setPercentage(
-				commerceTaxMethod.isPercentage());
+				CommerceTaxEngine commerceTaxEngine =
+					_commerceTaxEngineRegistry.getCommerceTaxEngine(
+						commerceTaxMethod.getEngineKey());
 
-			CommerceTaxEngine commerceTaxEngine =
-				_commerceTaxEngineRegistry.getCommerceTaxEngine(
-					commerceTaxMethod.getEngineKey());
+				try {
+					CommerceTaxValue commerceTaxValue =
+						commerceTaxEngine.getCommerceTaxValue(
+							commerceTaxCalculateRequest);
 
-			try {
-				CommerceTaxValue commerceTaxValue =
-					commerceTaxEngine.getCommerceTaxValue(
-						commerceTaxCalculateRequest);
-
-				if (commerceTaxValue != null) {
-					commerceTaxValues.add(commerceTaxValue);
+					if (commerceTaxValue != null) {
+						return commerceTaxValue;
+					}
 				}
-			}
-			catch (CommerceTaxEngineException commerceTaxEngineException) {
-				_log.error(commerceTaxEngineException);
-			}
-		}
+				catch (CommerceTaxEngineException commerceTaxEngineException) {
+					_log.error(commerceTaxEngineException);
+				}
 
-		return commerceTaxValues;
+				return null;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

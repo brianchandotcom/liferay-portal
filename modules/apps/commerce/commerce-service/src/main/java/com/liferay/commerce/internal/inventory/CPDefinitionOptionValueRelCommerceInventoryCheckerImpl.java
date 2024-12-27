@@ -7,12 +7,12 @@ package com.liferay.commerce.internal.inventory;
 
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,17 +31,15 @@ public class CPDefinitionOptionValueRelCommerceInventoryCheckerImpl
 	public List<CPDefinitionOptionValueRel> filterByAvailability(
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels) {
 
-		List<CPDefinitionOptionValueRel> filtered = new ArrayList<>();
+		return TransformUtil.transform(
+			cpDefinitionOptionValueRels,
+			cpDefinitionOptionValueRel -> {
+				if (isAvailable(cpDefinitionOptionValueRel)) {
+					return cpDefinitionOptionValueRel;
+				}
 
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			if (isAvailable(cpDefinitionOptionValueRel)) {
-				filtered.add(cpDefinitionOptionValueRel);
-			}
-		}
-
-		return filtered;
+				return null;
+			});
 	}
 
 	@Override

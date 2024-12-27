@@ -286,23 +286,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNullCP(webContentContent = null) {
-		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		if (isSet(webContentContent)) {
-			CKEditor.addContentInWebContent(
-				content = ${webContentContent},
-				fieldLabel = "Content");
-		}
-
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		AssertTextPresent(value1 = "Please enter a valid title for the default language: en-US");
-	}
-
-	@summary = "Default summary"
 	macro addPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
@@ -477,7 +460,7 @@ definition {
 			vocabularyName = ${vocabularyName});
 
 		if (${allowMultipleCategories} == "false") {
-			Button.clickPublish();
+			WebContent.publishWithPermissions();
 
 			Alert.viewErrorMessage(errorMessage = "You cannot select more than one category for Vocabulary Name.");
 		}
@@ -1212,33 +1195,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDisplayDate(displayDate = null) {
-		Panel.expandPanel(panel = "Schedule");
-
-		DoubleClick(locator1 = "TextInput#DISPLAY_DATE");
-
-		Type.sendKeys(
-			locator1 = "TextInput#DISPLAY_DATE",
-			value1 = "keys=CONTROL,a");
-
-		KeyPress(
-			locator1 = "TextInput#DISPLAY_DATE",
-			value1 = "\BACK_SPACE");
-
-		Type.clickAtType(
-			locator1 = "TextInput#DISPLAY_DATE",
-			value1 = ${displayDate});
-
-		if (isSet(displayTime)) {
-			var displayTime = StringUtil.removeSpaces(${displayTime});
-
-			Type.sendKeys(
-				locator1 = "TextInput#DISPLAY_DATE_TIME",
-				value1 = ${displayTime});
-		}
-	}
-
-	@summary = "Default summary"
 	macro editDisplayPage(pageType = null, pageName = null, assetType = null) {
 		if (${assetType} == "Blogs Entry") {
 			Blogs.expandPanel(panel = "Display Page");
@@ -1426,23 +1382,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editNullCP(webContentContent = null) {
-		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
-
-		WebContent.addCP(webContentTitle = "");
-
-		if (isSet(webContentContent)) {
-			CKEditor.addContentInWebContent(
-				content = ${webContentContent},
-				fieldLabel = "Content");
-		}
-
-		WebContent.publishWithPermissions();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
-	}
-
-	@summary = "Default summary"
 	macro editViaContentPanel(fieldName = null, webContentTitle = null, saveAsDraft = null, webContentContentEdit = null, webContentSelectWcFile = null, webContentTitleEdit = null) {
 		PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 			itemName = ${webContentTitle},
@@ -1620,7 +1559,7 @@ definition {
 			field = "display",
 			minuteIncreaseValue = ${minuteIncrease});
 
-		WebContent.editDisplayDate(
+		WebContent.scheduleWCArticleWithPermissions(
 			displayDate = ${displayDate},
 			displayTime = ${displayTime});
 
@@ -1884,7 +1823,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro scheduleExistingWCArticleWithPermissions(displayDate = null) {
+	macro scheduleWCArticleWithPermissions(displayDate = null) {
 		Button.clickPublish();
 
 		Click(locator1 = "WCEditWebContent#SCHEDULE_PUBLICATION_BUTTON");

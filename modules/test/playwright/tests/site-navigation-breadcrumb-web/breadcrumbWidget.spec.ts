@@ -16,7 +16,7 @@ import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidg
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest()

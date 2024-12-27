@@ -317,7 +317,7 @@ definition {
 					categoryNameList = "Category Name",
 					vocabularyName = "Vocabulary Name");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("Assert the web content is added successfully") {
@@ -428,7 +428,7 @@ definition {
 					categoryNameList = "Category Name",
 					vocabularyName = "Vocabulary Name");
 
-				PortletEntry.publish();
+				WebContent.publishWithPermissions();
 			}
 
 			task ("Assert the web content is added successfully") {
@@ -1387,11 +1387,7 @@ definition {
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
-			WebContent.editDisplayDate(
-				displayDate = "01/01/2100",
-				displayTime = "01:01 AM");
-
-			WebContent.publishWithPermissions();
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-11-20 01:01");
 		}
 
 		task ("Add a page with a Web Content Display widget and display the Web Content article in the Web Content Display widget") {
@@ -1898,32 +1894,6 @@ definition {
 			AssertElementNotPresent(locator1 = "AssetCategorization#VOCABULARY");
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-		}
-	}
-
-	@description = "The content cannot be lost after try to publish a web content without title."
-	@priority = 4
-	test ViewContentNotLostWithBlankTitle {
-		task ("View cannot add a web content without title") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addNullCP(webContentContent = "Web Content Content");
-		}
-
-		task ("View content is still shown") {
-			WaitForElementPresent(
-				key_fieldLabel = "Content",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "Content",
-				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
-
-			AssertTextEquals(
-				locator1 = "CKEditor#BODY",
-				value1 = "Web Content Content");
 		}
 	}
 

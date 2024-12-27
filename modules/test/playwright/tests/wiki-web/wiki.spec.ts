@@ -14,7 +14,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPD-35013': true,
+		'LPD-35013': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
@@ -23,7 +23,7 @@ export const test = mergeTests(
 
 export const testWithWikiDeprecation = mergeTests(
 	featureFlagsTest({
-		'LPD-35013': false,
+		'LPD-35013': {enabled: false},
 	}),
 	loginTest(),
 	productMenuPageTest,

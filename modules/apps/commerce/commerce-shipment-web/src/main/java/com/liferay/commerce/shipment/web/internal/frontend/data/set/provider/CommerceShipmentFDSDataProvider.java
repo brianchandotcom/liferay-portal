@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,8 +69,6 @@ public class CommerceShipmentFDSDataProvider
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
-
-		List<Shipment> shipments = new ArrayList<>();
 
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
@@ -108,27 +105,29 @@ public class CommerceShipmentFDSDataProvider
 			DateFormat.MEDIUM, _portal.getLocale(httpServletRequest),
 			user.getTimeZone());
 
-		for (CommerceShipment commerceShipment : commerceShipments) {
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					commerceShipment.getGroupId());
+		return TransformUtil.transform(
+			commerceShipments,
+			commerceShipment -> {
+				CommerceChannel commerceChannel =
+					_commerceChannelLocalService.
+						getCommerceChannelByOrderGroupId(
+							commerceShipment.getGroupId());
 
-			String expectedDate = null;
+				String expectedDate = null;
 
-			if (commerceShipment.getExpectedDate() != null) {
-				expectedDate = dateFormat.format(
-					commerceShipment.getExpectedDate());
-			}
+				if (commerceShipment.getExpectedDate() != null) {
+					expectedDate = dateFormat.format(
+						commerceShipment.getExpectedDate());
+				}
 
-			String shippingDate = null;
+				String shippingDate = null;
 
-			if (commerceShipment.getShippingDate() != null) {
-				shippingDate = dateFormat.format(
-					commerceShipment.getShippingDate());
-			}
+				if (commerceShipment.getShippingDate() != null) {
+					shippingDate = dateFormat.format(
+						commerceShipment.getShippingDate());
+				}
 
-			shipments.add(
-				new Shipment(
+				return new Shipment(
 					commerceShipment.getAccountEntryName(),
 					_getDescriptiveAddress(commerceShipment),
 					commerceChannel.getName(),
@@ -142,10 +141,8 @@ public class CommerceShipmentFDSDataProvider
 							httpServletRequest,
 							CommerceShipmentConstants.getShipmentStatusLabel(
 								commerceShipment.getStatus()))),
-					commerceShipment.getTrackingNumber()));
-		}
-
-		return shipments;
+					commerceShipment.getTrackingNumber());
+			});
 	}
 
 	@Override

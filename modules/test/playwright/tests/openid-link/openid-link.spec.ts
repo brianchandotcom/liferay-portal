@@ -21,7 +21,7 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	openIdSettingsPagesTest,
 	featureFlagsTest({
-		'LPD-6378': true,
+		'LPD-6378': {enabled: true},
 	}),
 	utilityPagesPage
 );

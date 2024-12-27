@@ -209,8 +209,6 @@ definition {
 
 		WebContent.increaseDisplayDate(minuteIncrease = 2);
 
-		WebContent.publishWithPermissions();
-
 		TestUtils.hardRefresh();
 
 		AssertTextEquals(
@@ -234,8 +232,6 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		WebContent.increaseDisplayDate(minuteIncrease = 2);
-
-		WebContent.publishWithPermissions();
 
 		TestUtils.hardRefresh();
 
@@ -680,8 +676,6 @@ definition {
 
 			WebContent.increaseDisplayDate(minuteIncrease = 4);
 
-			WebContent.publishWithPermissions();
-
 			TestUtils.hardRefresh();
 
 			AssertTextEquals(
@@ -704,8 +698,6 @@ definition {
 				webContentTitle = "WC WebContent Title Default Company");
 
 			WebContent.increaseDisplayDate(minuteIncrease = 2);
-
-			WebContent.publishWithPermissions();
 
 			TestUtils.hardRefresh();
 

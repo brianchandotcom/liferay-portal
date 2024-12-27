@@ -26,7 +26,7 @@ const PICKLIST_VALUE_NAME = getRandomString();
 const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	filtersPageTest,
 	loginTest(),

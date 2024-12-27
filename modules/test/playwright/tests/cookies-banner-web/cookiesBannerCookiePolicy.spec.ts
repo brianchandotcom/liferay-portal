@@ -12,7 +12,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPD-10588': true,
+		'LPD-10588': {enabled: true},
 	}),
 	loginTest(),
 	systemSettingsPageTest

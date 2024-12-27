@@ -16,7 +16,7 @@ const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	customDataSetsPageTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	filtersPageTest,
 	loginTest()

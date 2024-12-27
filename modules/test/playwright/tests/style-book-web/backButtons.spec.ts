@@ -18,7 +18,7 @@ import {navigationMenusPagesTest} from '../site-navigation-admin-web/fixtures/na
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

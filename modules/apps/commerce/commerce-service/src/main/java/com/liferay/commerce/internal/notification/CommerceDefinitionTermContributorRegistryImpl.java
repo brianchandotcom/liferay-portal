@@ -10,9 +10,8 @@ import com.liferay.commerce.order.CommerceDefinitionTermContributorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -79,29 +78,10 @@ public class CommerceDefinitionTermContributorRegistryImpl
 						 <CommerceDefinitionTermContributor>>>
 							serviceTrackerMap) {
 
-		List
-			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommerceDefinitionTermContributor>>
-					commerceDefinitionTermContributorWrappers =
-						serviceTrackerMap.getService(key);
-
-		if (commerceDefinitionTermContributorWrappers == null) {
-			return Collections.emptyList();
-		}
-
-		List<CommerceDefinitionTermContributor>
-			commerceDefinitionTermContributors = new ArrayList<>();
-
-		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<CommerceDefinitionTermContributor>
-					tableActionProviderServiceWrapper :
-						commerceDefinitionTermContributorWrappers) {
-
-			commerceDefinitionTermContributors.add(
+		return TransformUtil.transform(
+			serviceTrackerMap.getService(key),
+			tableActionProviderServiceWrapper ->
 				tableActionProviderServiceWrapper.getService());
-		}
-
-		return commerceDefinitionTermContributors;
 	}
 
 	private ServiceTrackerMap

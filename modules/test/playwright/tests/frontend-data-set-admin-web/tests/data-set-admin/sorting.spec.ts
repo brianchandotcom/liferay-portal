@@ -18,8 +18,8 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	customDataSetsPageTest,
 	featureFlagsTest({
-		'LPS-164563': true,
-		'LPS-178052': true,
+		'LPS-164563': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	sortingPageTest,
 	loginTest()
@@ -662,8 +662,8 @@ export const applicationPageTest = mergeTests(
 	dataSetManagerApiHelpersTest,
 	customDataSetsPageTest,
 	featureFlagsTest({
-		'LPS-164563': true,
-		'LPS-178052': true,
+		'LPS-164563': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest()
 );

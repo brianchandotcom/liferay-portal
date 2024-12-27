@@ -19,7 +19,7 @@ export const test = mergeTests(
 	changeTrackingPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-20131': true,
+		'LPD-20131': {enabled: true},
 	})
 );
 

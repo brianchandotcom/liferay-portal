@@ -1114,8 +1114,6 @@ definition {
 			card = ${userScreenName},
 			item = "Remove Membership");
 
-		Confirm(value1 = "null");
-
 		Alert.viewSuccessMessage();
 	}
 

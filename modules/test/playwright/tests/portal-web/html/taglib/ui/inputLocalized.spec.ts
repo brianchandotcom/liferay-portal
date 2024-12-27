@@ -13,7 +13,7 @@ import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTes
 export const test = mergeTests(
 	isolatedSiteTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
 	samplePageTest

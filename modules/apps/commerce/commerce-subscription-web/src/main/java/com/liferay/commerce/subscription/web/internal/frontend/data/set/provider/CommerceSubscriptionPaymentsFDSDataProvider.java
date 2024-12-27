@@ -10,7 +10,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceOrderPayment;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
@@ -20,6 +19,7 @@ import com.liferay.commerce.subscription.web.internal.model.Payment;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +60,6 @@ public class CommerceSubscriptionPaymentsFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<Payment> orderPayments = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -82,23 +79,20 @@ public class CommerceSubscriptionPaymentsFDSDataProvider
 			_commerceOrderItemService.getCommerceOrderItem(
 				commerceSubscriptionEntry.getCommerceOrderItemId());
 
-		List<CommerceOrderPayment> commerceOrderPayments =
+		return TransformUtil.transform(
 			_commerceOrderPaymentLocalService.getCommerceOrderPayments(
 				commerceOrderItem.getCommerceOrderId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS, null),
+			commerceOrderPayment -> {
+				CommerceOrder commerceOrder =
+					commerceOrderItem.getCommerceOrder();
 
-		for (CommerceOrderPayment commerceOrderPayment :
-				commerceOrderPayments) {
+				CommerceCurrency commerceCurrency =
+					commerceOrder.getCommerceCurrency();
 
-			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+				BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
-			CommerceCurrency commerceCurrency =
-				commerceOrder.getCommerceCurrency();
-
-			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
-
-			orderPayments.add(
-				new Payment(
+				return new Payment(
 					new LabelField(
 						CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
 							commerceOrderPayment.getStatus()),
@@ -111,10 +105,8 @@ public class CommerceSubscriptionPaymentsFDSDataProvider
 					commerceOrderPayment.getCommerceOrderPaymentId(),
 					StringBundler.concat(
 						commerceCurrency.round(finalPrice), CharPool.SPACE,
-						commerceCurrency.getCode())));
-		}
-
-		return orderPayments;
+						commerceCurrency.getCode()));
+			});
 	}
 
 	@Override

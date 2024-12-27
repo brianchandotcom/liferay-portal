@@ -219,7 +219,7 @@ definition {
 
 			WebContent.addWithStructureCP(webContentText = "Edited Text Field");
 
-			WebContent.publishWithPermissions();
+			PortletEntry.save();
 		}
 
 		task ("Add a new user") {

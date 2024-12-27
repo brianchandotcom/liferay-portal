@@ -1951,49 +1951,16 @@ definition {
 		}
 	}
 
-	@description = "The user cannot add a web content, structure and template without a title."
+	@description = "The user cannot add a structure and template without a title."
 	@priority = 4
 	test WebContentAdministrationDataValidation {
-		task ("View cannot add web content without title") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addNullCP(webContentContent = "Web Content Content");
-		}
-
-		task ("Add a title and content then publish") {
-			WebContent.addCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-
-			WebContent.publishWithPermissions();
-		}
-
-		task ("View web content is shown") {
-			WebContent.viewTitle(webContentTitle = "Web Content Title");
-		}
-
-		task ("Edit the web content then try to publish again without a title") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.editNullCP(webContentContent = "Web Content Content 2");
-		}
-
-		task ("Add a new title and content to web content") {
-			WebContent.editCP(
-				webContentContentEdit = "WC WebContent Content Edit",
-				webContentTitle = "Web Content Title",
-				webContentTitleEdit = "WC WebContent Title Edit");
-		}
-
 		task ("View cannot add a structure without title") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.addNullCP();
 		}
 
-		task ("View cannot add a structure without title") {
+		task ("View cannot add a template without title") {
 			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
 			WebContentTemplates.addNullCP();

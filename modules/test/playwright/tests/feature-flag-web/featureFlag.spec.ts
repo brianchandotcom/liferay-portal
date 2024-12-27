@@ -16,8 +16,8 @@ const DEPENDENT_FEATURE_FLAG = 'LPD-00001';
 export const test = mergeTests(
 	featureFlagPagesTest,
 	featureFlagsTest({
-		[DEPENDENCY_FEATURE_FLAG]: false,
-		[DEPENDENT_FEATURE_FLAG]: false,
+		[DEPENDENCY_FEATURE_FLAG]: {enabled: false},
+		[DEPENDENT_FEATURE_FLAG]: {enabled: false},
 	}),
 	loginTest()
 );

@@ -24,7 +24,7 @@ import {pagesPagesTest} from './fixtures/pagesPagesTest';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
@@ -36,8 +36,8 @@ const test = mergeTests(
 const testWithPrivatePages = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-38869': true,
-		'LPS-178052': true,
+		'LPD-38869': {enabled: true},
+		'LPS-178052': {enabled: true},
 	})
 );
 

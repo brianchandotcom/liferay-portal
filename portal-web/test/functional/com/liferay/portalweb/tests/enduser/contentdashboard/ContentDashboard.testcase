@@ -36,6 +36,7 @@ definition {
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Content Edit",
 				assetTitle = "WC Content",
+				isWebContent = "true",
 				saveAsDraft = "true");
 		}
 
@@ -2438,9 +2439,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
-			WebContent.editDisplayDate(displayDate = "01/01/2100");
-
-			WebContent.publishExistingWCArticleWithPermissions();
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-01-01 01:00");
 		}
 
 		task ("Go to Content Dashboard and click on the title") {
@@ -3445,7 +3444,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Title Edited",
-				assetTitle = "WC Title");
+				assetTitle = "WC Title",
+				isWebContent = "true");
 		}
 
 		task ("Assert in title was porperty edited") {
@@ -4607,7 +4607,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Scheduled");
 
-			WebContent.scheduleExistingWCArticleWithPermissions(displayDate = "2100-11-20 01:00");
+			WebContent.scheduleWCArticleWithPermissions(displayDate = "2100-11-20 01:00");
 		}
 
 		task ("Filter asset at Content Dashboard using status") {
@@ -6070,7 +6070,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC Title Edited",
-				assetTitle = "WC Title");
+				assetTitle = "WC Title",
+				isWebContent = "true");
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
@@ -6159,7 +6160,8 @@ definition {
 
 			ContentDashboard.editAsset(
 				assetNewTitle = "WC WebContent New Title",
-				assetTitle = "WC WebContent Title");
+				assetTitle = "WC WebContent Title",
+				isWebContent = "true");
 		}
 
 		task ("Check if content is correct") {

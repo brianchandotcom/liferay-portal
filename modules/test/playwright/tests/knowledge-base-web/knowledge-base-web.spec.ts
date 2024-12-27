@@ -23,7 +23,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	knowledgeBasePages,
 	featureFlagsTest({
-		'LPD-11003': true,
+		'LPD-11003': {enabled: true},
 	}),
 	loginTest()
 );

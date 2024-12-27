@@ -19,7 +19,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	dataMigrationCenterPagesTest,
 	featureFlagsTest({
-		'COMMERCE-8087': true,
+		'COMMERCE-8087': {enabled: true},
 	}),
 	loginTest()
 );

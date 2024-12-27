@@ -14,8 +14,8 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	systemDataSetsPageTest,
 	featureFlagsTest({
-		'LPD-37531': true,
-		'LPS-164563': true,
+		'LPD-37531': {enabled: true},
+		'LPS-164563': {enabled: true},
 	}),
 	loginTest()
 );

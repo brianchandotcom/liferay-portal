@@ -13,7 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 const test = mergeTests(
 	documentLibraryPagesTest,
 	featureFlagsTest({
-		'LPD-11313': true,
+		'LPD-11313': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest()

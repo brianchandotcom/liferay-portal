@@ -15,6 +15,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFix
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,30 +54,21 @@ public class CommerceShippingFixedOptionSettingFDSDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long commerceShippingMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceShippingMethodId");
+		return TransformUtil.transform(
+			_commerceShippingFixedOptionRelService.
+				getCommerceShippingMethodFixedOptionRels(
+					ParamUtil.getLong(
+						httpServletRequest, "commerceShippingMethodId"),
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null),
+			commerceShippingFixedOptionRel -> {
+				CommerceShippingFixedOption commerceShippingFixedOption =
+					commerceShippingFixedOptionRel.
+						getCommerceShippingFixedOption();
+				CommerceShippingMethod commerceShippingMethod =
+					commerceShippingFixedOptionRel.getCommerceShippingMethod();
 
-		List<CommerceShippingFixedOptionRel>
-			commerceShippingMethodFixedOptionRels =
-				_commerceShippingFixedOptionRelService.
-					getCommerceShippingMethodFixedOptionRels(
-						commerceShippingMethodId,
-						fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition(), null);
-
-		List<ShippingFixedOptionSetting> shippingFixedOptionSettings =
-			new ArrayList<>();
-
-		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
-				commerceShippingMethodFixedOptionRels) {
-
-			CommerceShippingFixedOption commerceShippingFixedOption =
-				commerceShippingFixedOptionRel.getCommerceShippingFixedOption();
-			CommerceShippingMethod commerceShippingMethod =
-				commerceShippingFixedOptionRel.getCommerceShippingMethod();
-
-			shippingFixedOptionSettings.add(
-				new ShippingFixedOptionSetting(
+				return new ShippingFixedOptionSetting(
 					_getCountry(commerceShippingFixedOptionRel, themeDisplay),
 					_getRegion(commerceShippingFixedOptionRel),
 					commerceShippingFixedOptionRel.
@@ -89,10 +80,8 @@ public class CommerceShippingFixedOptionSettingFDSDataProvider
 					_getWarehouse(
 						commerceShippingFixedOptionRel,
 						themeDisplay.getLocale()),
-					_getZip(commerceShippingFixedOptionRel)));
-		}
-
-		return shippingFixedOptionSettings;
+					_getZip(commerceShippingFixedOptionRel));
+			});
 	}
 
 	@Override

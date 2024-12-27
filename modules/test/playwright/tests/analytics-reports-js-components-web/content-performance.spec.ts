@@ -114,7 +114,7 @@ export const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
 	featureFlagsTest({
-		'LPD-28830': true,
+		'LPD-28830': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

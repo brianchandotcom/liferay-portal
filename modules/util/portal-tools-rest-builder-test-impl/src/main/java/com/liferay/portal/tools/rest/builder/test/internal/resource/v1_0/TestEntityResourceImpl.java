@@ -39,11 +39,11 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 		return new TestEntityEntityModel(
 			ListUtil.fromArray(
-				new StringEntityField(
-					"customAttribute1", locale -> "customAttribute1"),
+				new BooleanEntityField("customFlag", locale -> "customFlag"),
 				new IntegerEntityField(
 					"customAttribute2", locale -> "customAttribute2"),
-				new BooleanEntityField("customFlag", locale -> "customFlag")));
+				new StringEntityField(
+					"customAttribute1", locale -> "customAttribute1")));
 	}
 
 	@Override

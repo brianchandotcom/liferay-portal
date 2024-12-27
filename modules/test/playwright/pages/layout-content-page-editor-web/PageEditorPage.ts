@@ -1075,9 +1075,9 @@ export class PageEditorPage {
 			| {layoutTitle: string; type: 'Page'}
 			| {mappingConfiguration: MappingConfiguration; type: 'Mapped URL'};
 	}) {
-		const buttonFragmentId = await this.getFragmentId(fragmentName);
+		const fragmentId = await this.getFragmentId(fragmentName);
 
-		await this.selectEditable(buttonFragmentId, editableId);
+		await this.selectEditable(fragmentId, editableId);
 
 		await this.page.getByRole('tab', {exact: true, name: 'Link'}).click();
 

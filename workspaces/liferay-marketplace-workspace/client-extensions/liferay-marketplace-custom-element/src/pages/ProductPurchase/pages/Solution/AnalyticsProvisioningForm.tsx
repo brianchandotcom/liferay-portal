@@ -9,19 +9,17 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
 import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 
 import HelpPopover from '../../../../components/HelpPopover';
 import {Input} from '../../../../components/Input/Input';
-import Loading from '../../../../components/Loading';
 import ProductPurchase from '../../../../components/ProductPurchase';
 import Select from '../../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
-import {ProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
+import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import regions from '../../constants/regions';
 import ProductPurchaseAnalytics from '../../services/ProductPurchaseAnalytics';
 
@@ -42,8 +40,8 @@ const countries = [...new Set([...regions.map(({country}) => country)])].sort();
 
 const AnalyticsProvisioning = () => {
 	const navigate = useNavigate();
-	const {product, selectedAccount} =
-		useOutletContext<ProductPurchaseOutletContext>();
+	const {handlePurchase, product, selectedAccount} =
+		useProductPurchaseOutletContext();
 	const {channel, properties} = useMarketplaceContext();
 	const [allowedEmailDomainsText, setAllowedEmailDomainsText] = useState('');
 	const [incidentReportContactsText, setIncidentReportContactsText] =
@@ -83,30 +81,15 @@ const AnalyticsProvisioning = () => {
 	const onSubmit = async (
 		form: z.infer<typeof zodSchema.analyticsProvisioning>
 	) => {
-		try {
-			const productPurchase = new ProductPurchaseAnalytics(
-				selectedAccount,
-				channel,
-				product
-			);
+		const productPurchase = new ProductPurchaseAnalytics(
+			selectedAccount,
+			channel,
+			product
+		);
 
-			const order = await productPurchase.create(form);
+		productPurchase.setForm(form);
 
-			Liferay.Util.openToast({
-				message: i18n.translate('your-request-completed-successfully'),
-				type: 'success',
-			});
-
-			navigate(`/thank-you?orderId=${order.id}`);
-		}
-		catch (error) {
-			console.error(error);
-
-			Liferay.Util.openToast({
-				message: i18n.translate('an-unexpected-error-occurred'),
-				type: 'danger',
-			});
-		}
+		await handlePurchase(undefined, productPurchase);
 	};
 
 	useEffect(() => {
@@ -128,13 +111,6 @@ const AnalyticsProvisioning = () => {
 			}}
 			title="Create an Analytics Cloud Workspace"
 		>
-			{formState.isSubmitting && (
-				<Loading.FullScreen>
-					Hang tight, <b>Analytics Cloud</b> workspace is being
-					provisioned by <b>Marketplace</b>.
-				</Loading.FullScreen>
-			)}
-
 			<h3 className="sheet-subtitle">General</h3>
 
 			<Input

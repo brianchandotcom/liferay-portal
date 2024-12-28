@@ -12,7 +12,7 @@ import {ProductTypeVocabulary, SolutionTypes} from '../../../enums/Product';
 import {Liferay} from '../../../liferay/liferay';
 import {getSiteURL} from '../../../utils/site';
 
-type ProductPurchaseThankYouProps = {
+type ProductPurchaseNextStepsProps = {
 	product: DeliveryProduct;
 	productTypeCategory: ProductTypeVocabulary;
 	solutionTypeSpecificationValue: SolutionTypes;
@@ -34,7 +34,7 @@ const trialLabels = {
 	},
 };
 
-const ProductPurchaseThankYou: React.FC<ProductPurchaseThankYouProps> = ({
+const ProductPurchaseNextSteps: React.FC<ProductPurchaseNextStepsProps> = ({
 	product,
 	productTypeCategory,
 	solutionTypeSpecificationValue,
@@ -104,4 +104,4 @@ const ProductPurchaseThankYou: React.FC<ProductPurchaseThankYouProps> = ({
 	);
 };
 
-export default ProductPurchaseThankYou;
+export default ProductPurchaseNextSteps;

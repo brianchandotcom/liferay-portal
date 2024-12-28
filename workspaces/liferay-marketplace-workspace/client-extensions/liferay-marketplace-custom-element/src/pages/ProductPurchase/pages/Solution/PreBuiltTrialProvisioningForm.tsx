@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 
 import {Header} from '../../../../components/Header/Header';
@@ -15,10 +15,9 @@ import {OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
-import {scrollToTop} from '../../../../utils/browser';
 import {getSiteURL} from '../../../../utils/site';
 import {usePurchasedOrders} from '../../../CustomerDashboard/usePurchasedOrders';
-import {ProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
+import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseSolutionTrial from '../../services/ProductPurchasePreBuiltTrial';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
@@ -50,10 +49,9 @@ const TrialUnavailable = () => (
 );
 
 const AccountForm = () => {
-	const {channel, properties} = useMarketplaceContext();
+	const {properties} = useMarketplaceContext();
 
-	const {product, selectedAccount} =
-		useOutletContext<ProductPurchaseOutletContext>();
+	const {handlePurchase, selectedAccount} = useProductPurchaseOutletContext();
 
 	const navigate = useNavigate();
 
@@ -72,27 +70,8 @@ const AccountForm = () => {
 		pageSize: 50,
 	});
 
-	const onSubmit = async () => {
-		const productPurchaseSolutionTrial = new ProductPurchaseSolutionTrial(
-			selectedAccount,
-			channel,
-			product
-		);
-
-		const order = await productPurchaseSolutionTrial.createOrder();
-
-		const maxTrialsReached =
-			await productPurchaseSolutionTrial.isTrialInHold();
-
-		scrollToTop();
-
-		navigate(
-			`/thank-you?orderId=${order.id}${maxTrialsReached ? '&state=hold' : ''}`,
-			{
-				replace: true,
-			}
-		);
-	};
+	const onSubmit = () =>
+		handlePurchase(undefined, ProductPurchaseSolutionTrial);
 
 	if (isLoading || isValidating) {
 		return <Loading />;

@@ -3,29 +3,45 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect} from 'react';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {ComponentProps, ReactNode, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import AccountSelection from '../../../components/Checkout/AccountSelection';
 import ProductPurchase from '../../../components/ProductPurchase';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
-import {scrollToTop} from '../../../utils/browser';
-import {ProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
+import {useProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
+import ProductPurchaseFooter from '../../../components/ProductPurchase/Footer';
 
-const ProductPurchaseAccountSelection = () => {
+type ProductPurchaseAccountSelectionProps = {
+	children?: ReactNode;
+	footerProps?: ComponentProps<typeof ProductPurchaseFooter>;
+};
+
+const ProductPurchaseAccountSelection: React.FC<
+	ProductPurchaseAccountSelectionProps
+> = ({children, footerProps}) => {
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
-	const {accounts, routes, selectedAccount, setSelectedAccount} =
-		useOutletContext<ProductPurchaseOutletContext>();
 
-	const nextRoutePath = routes[1].path;
+	const {
+		accounts,
+		productTypeRoute,
+		actions: {nextStep},
+		selectedAccount,
+		setSelectedAccount,
+	} = useProductPurchaseOutletContext();
+
+	const productTypeMetadata = productTypeRoute?.metadata;
 
 	useEffect(() => {
-		if (accounts.length === 1 && nextRoutePath) {
-			navigate(nextRoutePath);
+		if (
+			productTypeMetadata?.skipSingleAccountSelection &&
+			accounts.length === 1
+		) {
+			nextStep();
 		}
-	}, [accounts.length, navigate, nextRoutePath]);
+	}, [accounts.length, navigate]);
 
 	return (
 		<ProductPurchase.Shell
@@ -33,12 +49,9 @@ const ProductPurchaseAccountSelection = () => {
 				backButtonProps: {className: 'd-none'},
 				continueButtonProps: {
 					disabled: !selectedAccount,
-					onClick: () => {
-						scrollToTop();
-
-						navigate('form');
-					},
+					onClick: nextStep,
 				},
+				...footerProps,
 			}}
 			title={i18n.translate('account-selection')}
 		>
@@ -47,6 +60,8 @@ const ProductPurchaseAccountSelection = () => {
 				selectedAccount={selectedAccount}
 				userAccount={myUserAccount}
 			/>
+
+			{children}
 		</ProductPurchase.Shell>
 	);
 };

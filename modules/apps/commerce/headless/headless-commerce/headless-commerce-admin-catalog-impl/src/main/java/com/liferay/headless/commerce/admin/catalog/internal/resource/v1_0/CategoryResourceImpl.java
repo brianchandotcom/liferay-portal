@@ -26,7 +26,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -157,16 +156,11 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			List<AssetCategory> assetCategories, Locale locale)
 		throws Exception {
 
-		List<Category> categories = new ArrayList<>();
-
-		for (AssetCategory category : assetCategories) {
-			categories.add(
-				_categoryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						category.getCategoryId(), locale)));
-		}
-
-		return categories;
+		return transform(
+			assetCategories,
+			category -> _categoryDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					category.getCategoryId(), locale)));
 	}
 
 	private void _updateProductCategories(

@@ -25,7 +25,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -189,14 +188,10 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 			List<CPDefinitionLink> cpDefinitionLinks)
 		throws Exception {
 
-		List<RelatedProduct> relatedProducts = new ArrayList<>();
-
-		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			relatedProducts.add(
-				_toRelatedProduct(cpDefinitionLink.getCPDefinitionLinkId()));
-		}
-
-		return relatedProducts;
+		return transform(
+			cpDefinitionLinks,
+			cpDefinitionLink -> _toRelatedProduct(
+				cpDefinitionLink.getCPDefinitionLinkId()));
 	}
 
 	@Reference

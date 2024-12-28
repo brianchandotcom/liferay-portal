@@ -43,7 +43,6 @@ import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -662,17 +661,10 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries)
 		throws Exception {
 
-		List<Attachment> attachments = new ArrayList<>();
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			attachments.add(
-				_toAttachment(
-					cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
-		}
-
-		return attachments;
+		return transform(
+			cpAttachmentFileEntries,
+			cpAttachmentFileEntry -> _toAttachment(
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 	}
 
 	private Attachment _updateCPAttachmentFileEntry(

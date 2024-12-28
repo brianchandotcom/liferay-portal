@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -327,14 +326,10 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 			List<CPOptionValue> cpOptionValues)
 		throws Exception {
 
-		List<OptionValue> productOptionValues = new ArrayList<>();
-
-		for (CPOptionValue cpOptionValue : cpOptionValues) {
-			productOptionValues.add(
-				_toOptionValue(cpOptionValue.getCPOptionValueId()));
-		}
-
-		return productOptionValues;
+		return transform(
+			cpOptionValues,
+			cpOptionValue -> _toOptionValue(
+				cpOptionValue.getCPOptionValueId()));
 	}
 
 	private OptionValue _updateOptionValue(

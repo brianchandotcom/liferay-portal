@@ -613,16 +613,11 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	private List<Sku> _toSKUs(List<CPInstance> cpInstances, Locale locale)
 		throws Exception {
 
-		List<Sku> skus = new ArrayList<>();
-
-		for (CPInstance cpInstance : cpInstances) {
-			skus.add(
-				_skuDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpInstance.getCPInstanceId(), locale)));
-		}
-
-		return skus;
+		return transform(
+			cpInstances,
+			cpInstance -> _skuDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpInstance.getCPInstanceId(), locale)));
 	}
 
 	private Page<Sku> _toUnitOfMeasureSkusPage(Page<Long> cpInstanceIdsPage)

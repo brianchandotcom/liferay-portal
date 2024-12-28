@@ -26,7 +26,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -402,20 +401,13 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 				commerceInventoryWarehouseItems)
 		throws Exception {
 
-		List<WarehouseItem> warehouseItems = new ArrayList<>();
-
-		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
-				commerceInventoryWarehouseItems) {
-
-			warehouseItems.add(
-				_warehouseItemDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceInventoryWarehouseItem.
-							getCommerceInventoryWarehouseItemId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return warehouseItems;
+		return transform(
+			commerceInventoryWarehouseItems,
+			commerceInventoryWarehouseItem -> _warehouseItemDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseItemId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	private static final int _DEFAULT_INCREMENT_DAYS = 30;

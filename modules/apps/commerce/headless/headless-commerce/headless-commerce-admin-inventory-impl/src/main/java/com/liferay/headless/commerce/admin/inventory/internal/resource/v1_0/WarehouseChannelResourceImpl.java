@@ -30,7 +30,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -226,15 +225,10 @@ public class WarehouseChannelResourceImpl
 			List<CommerceChannelRel> commerceChannelRels)
 		throws Exception {
 
-		List<WarehouseChannel> warehouseChannels = new ArrayList<>();
-
-		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
-			warehouseChannels.add(
-				_toWarehouseChannel(
-					commerceChannelRel.getCommerceChannelRelId()));
-		}
-
-		return warehouseChannels;
+		return transform(
+			commerceChannelRels,
+			commerceChannelRel -> _toWarehouseChannel(
+				commerceChannelRel.getCommerceChannelRelId()));
 	}
 
 	@Reference(

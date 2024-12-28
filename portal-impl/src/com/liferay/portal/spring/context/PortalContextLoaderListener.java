@@ -359,7 +359,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		ExecutorService executorService =
 			SystemExecutorServiceUtil.getExecutorService();
 
-		Future<?> future = executorService.submit(
+		Future<Future<?>> future = executorService.submit(
 			() -> {
 				DBInitUtil.init();
 
@@ -367,7 +367,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 				InfrastructureUtil.setDataSource(dataSource);
 
-				executorService.submit(
+				return executorService.submit(
 					() -> {
 						PortalHibernateConfiguration
 							portalHibernateConfiguration =
@@ -388,13 +388,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 						return null;
 					});
-
-				return null;
 			});
 
 		ModuleFrameworkUtil.initFramework();
 
-		future.get();
+		Future<?> innerFuture = future.get();
+
+		innerFuture.get();
 
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 

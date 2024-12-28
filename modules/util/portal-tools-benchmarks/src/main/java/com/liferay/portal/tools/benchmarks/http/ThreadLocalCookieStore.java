@@ -21,49 +21,49 @@ import java.util.List;
 public class ThreadLocalCookieStore implements CookieStore {
 
 	public static SafeCloseable withSafeCloseable() {
-		_cookieStoreThreadLocal.set(_createCookieStore());
+		_cookieStore.set(_createCookieStore());
 
-		return _cookieStoreThreadLocal::remove;
+		return _cookieStore::remove;
 	}
 
 	@Override
 	public void add(URI uri, HttpCookie httpCookie) {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		cookieStore.add(uri, httpCookie);
 	}
 
 	@Override
 	public List<HttpCookie> get(URI uri) {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		return cookieStore.get(uri);
 	}
 
 	@Override
 	public List<HttpCookie> getCookies() {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		return cookieStore.getCookies();
 	}
 
 	@Override
 	public List<URI> getURIs() {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		return cookieStore.getURIs();
 	}
 
 	@Override
 	public boolean remove(URI uri, HttpCookie cookie) {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		return cookieStore.remove(uri, cookie);
 	}
 
 	@Override
 	public boolean removeAll() {
-		CookieStore cookieStore = _cookieStoreThreadLocal.get();
+		CookieStore cookieStore = _cookieStore.get();
 
 		return cookieStore.removeAll();
 	}
@@ -77,7 +77,7 @@ public class ThreadLocalCookieStore implements CookieStore {
 		return cookieManager.getCookieStore();
 	}
 
-	private static final ThreadLocal<CookieStore> _cookieStoreThreadLocal =
+	private static final ThreadLocal<CookieStore> _cookieStore =
 		CentralizedThreadLocal.withInitial(
 			ThreadLocalCookieStore::_createCookieStore);
 

@@ -44,12 +44,12 @@ public class TestBean {
 		if (value.length() > 0) {
 			threadLocalCache.put(_THREAD_LOCAL_CACHE_KEY, value);
 
-			_testThreadLocal.set(value);
+			_test.set(value);
 
 			return value;
 		}
 
-		if (_testThreadLocal.get() != null) {
+		if (_test.get() != null) {
 			throw new IllegalStateException(
 				"Short live thread local has not been cleared");
 		}
@@ -69,7 +69,7 @@ public class TestBean {
 	private static final String _THREAD_LOCAL_CACHE_KEY =
 		"thread_local_cache_key";
 
-	private static final ThreadLocal<String> _testThreadLocal =
+	private static final ThreadLocal<String> _test =
 		new CentralizedThreadLocal<>(true);
 
 }

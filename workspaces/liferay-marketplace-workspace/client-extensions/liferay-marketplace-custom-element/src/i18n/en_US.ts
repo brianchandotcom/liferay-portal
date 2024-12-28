@@ -233,6 +233,7 @@ export default {
 	'extension-optional': 'Extension (optional)',
 	'filter': 'Filter',
 	'first-name': 'First Name',
+	'form': 'form',
 	'fragment-collection-of-fragments': 'Fragment/Collection of Fragments',
 	'free': 'Free',
 	'fully-managed': 'Fully-Managed',

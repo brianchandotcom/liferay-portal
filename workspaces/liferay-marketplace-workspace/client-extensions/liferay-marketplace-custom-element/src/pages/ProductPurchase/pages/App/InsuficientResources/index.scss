@@ -1,0 +1,86 @@
+.contact-sales-page {
+	border: solid 1px #e2e2e4;
+	border-radius: 10px;
+
+	&-cards {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 2rem;
+		margin-top: 1.25rem;
+
+		.card-container {
+			justify-content: left;
+		}
+
+		.icon-container {
+			margin-bottom: 40px;
+		}
+	}
+
+	&-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		&-larger {
+			width: 100%;
+		}
+	}
+
+	&-content {
+		margin-bottom: 12rem;
+		margin-top: 10rem;
+		width: 37.5rem;
+	}
+
+	&-icon {
+		color: #0b5fff;
+	}
+
+	&-link {
+		display: flex;
+		font-size: 16px;
+		font-weight: 600;
+		justify-content: flex-end;
+		line-height: 24px;
+		margin-top: -2rem;
+		text-decoration: underline;
+
+		a {
+			cursor: pointer;
+		}
+	}
+
+	&-text {
+		color: #6c6c75;
+		margin-bottom: 2rem;
+
+		strong {
+			color: #282934;
+		}
+	}
+
+	&-no-resource {
+		background-color: #fbe3e3;
+		border-color: #ea7b7b !important;
+	}
+
+	&-required-resource-card {
+		font-size: 1rem;
+		font-weight: 400;
+	}
+
+	&-no-resource-card {
+		color: #da1414;
+		font-size: 1rem;
+		font-weight: 400;
+	}
+}
+
+.contact-sales-page {
+	&-form-group {
+		gap: 8px;
+	}
+}

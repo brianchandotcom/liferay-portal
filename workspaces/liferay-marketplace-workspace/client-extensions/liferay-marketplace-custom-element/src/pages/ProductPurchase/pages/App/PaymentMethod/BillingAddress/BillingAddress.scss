@@ -1,0 +1,76 @@
+.billing-address-section {
+	line-height: 20px;
+
+	&-card-addresses {
+		.radio-card-container {
+			margin-bottom: 17px;
+		}
+	}
+
+	&-card-new-address {
+		background-color: #fbfcfe;
+		border: 1px solid #e7efff;
+		color: #0b5fff;
+		font-size: 13px;
+		font-weight: 600;
+		height: 48px;
+		text-align: center;
+
+		svg {
+			height: 16px;
+			margin: 0;
+			padding-right: 4px;
+			width: 16px;
+		}
+
+		&:hover {
+			background-color: #e7efff;
+		}
+	}
+
+	&-card-container {
+		border: 1px solid #e2e2e4;
+		border-radius: 0.625rem;
+	}
+
+	&-card-header {
+		background-color: #f7f7f8;
+		border-radius: 0.625rem 0.625rem 0 0;
+		height: 3.5rem;
+		padding: 1.25rem 1rem;
+
+		button {
+			background: #fff;
+			border: 1px solid #0b5fff;
+			border-radius: 6px;
+			color: #0b5fff;
+			font-size: 14px;
+
+			&:hover {
+				background-color: #0b5fff;
+				color: #fff;
+			}
+		}
+
+		&-left-content {
+			color: #54555f;
+			font-size: 0.875rem;
+			font-weight: 600;
+			line-height: 1rem;
+		}
+	}
+
+	&-container {
+		gap: 0.625rem;
+		padding: 1.063rem;
+
+		&-double-input {
+			display: flex;
+			justify-content: space-between;
+
+			.form-group {
+				width: 247px;
+			}
+		}
+	}
+}

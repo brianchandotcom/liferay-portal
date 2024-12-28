@@ -5,12 +5,12 @@
 
 import {OrderTypes} from '../../../enums/Order';
 import trialOAuth2 from '../../../services/oauth/Trial';
-import ProductPurchase from './ProductPurchase';
+import ProductPurchase, {ProductPurchaseCart} from './ProductPurchase';
 
 export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = OrderTypes.SOLUTIONS7;
 
-	public async createOrder(cart?: Partial<Cart>): Promise<Cart> {
+	public async createOrder(cart?: ProductPurchaseCart): Promise<Cart> {
 		const order = await super.createOrder(cart);
 
 		await trialOAuth2.provisioningTrial(order.id);
@@ -18,7 +18,18 @@ export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 		return order;
 	}
 
-	public async isTrialInHold() {
+	public async getNextStepsLink(cart: Cart) {
+		const maxTrialsReached = await this.isTrialOnHold();
+
+		const searchParams = new URLSearchParams({
+			orderId: String(cart.id),
+			state: maxTrialsReached ? 'hold' : '',
+		});
+
+		return `/next-steps?${searchParams.toString()}`;
+	}
+
+	public async isTrialOnHold() {
 		const trialAvailability = await trialOAuth2.getAvailability();
 
 		return trialAvailability.fallback

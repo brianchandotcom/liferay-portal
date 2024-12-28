@@ -9,7 +9,12 @@ import analyticsOAuth2 from '../../../services/oauth/Analytics';
 import {sanitizeStringForURL} from '../../../utils/string';
 import ProductPurchase from './ProductPurchase';
 
+type AnalyticsProvisioningForm = z.infer<
+	typeof zodSchema.analyticsProvisioning
+>;
+
 export default class ProductPurchaseAnalytics extends ProductPurchase {
+	private form?: AnalyticsProvisioningForm;
 	protected orderTypeExternalReferenceCode = OrderTypes.ADDONS;
 
 	private async startProvisioning(
@@ -30,10 +35,18 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 		});
 	}
 
-	public async create(form: z.infer<typeof zodSchema.analyticsProvisioning>) {
+	setForm(form: AnalyticsProvisioningForm) {
+		this.form = form;
+	}
+
+	public async createOrder() {
+		if (!this.form) {
+			throw new Error('Form is missing.');
+		}
+
 		const order = await super.createOrder();
 
-		await this.startProvisioning(form, order.id);
+		await this.startProvisioning(this.form, order.id);
 
 		return order;
 	}

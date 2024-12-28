@@ -5,29 +5,57 @@
 
 import useSWR from 'swr';
 
+import {PRODUCT_SPECIFICATION_KEY} from '../../../enums/Product';
 import {Liferay} from '../../../liferay/liferay';
 import consoleOAuth2 from '../../../services/oauth/Console';
+import {ConsoleUserProject} from '../../../services/oauth/types';
+import {convertSize} from '../../../utils/filesize';
+import {getProductSpecificationValue} from '../../../utils/productUtils';
 
 const INSUFICIENT_RESOURCES = 0;
-const ONE_GB = 1024;
 
-const compareResource = (required: number, avaliable: number) =>
-	avaliable >= required;
-
-type convertMegabyteToGigabyteProps = {
-	inverseOperation?: boolean;
-	value: number;
-};
-
-const convertMegabyteToGigabyte = ({
-	inverseOperation = false,
-	value,
-}: convertMegabyteToGigabyteProps) => {
-	if (inverseOperation) {
-		return Number((value / ONE_GB).toFixed(2));
+const checkResources = (
+	product: DeliveryProduct,
+	project: ConsoleUserProject
+) => {
+	if (!project) {
+		return false;
 	}
 
-	return value * ONE_GB;
+	const instancesAvailable =
+		project.rootProjectPlanUsage.instance.limit -
+			project.rootProjectPlanUsage?.instance.used >
+		INSUFICIENT_RESOURCES;
+
+	if (!instancesAvailable) {
+		return false;
+	}
+
+	const compareResource = (
+		key: keyof ConsoleUserProject['rootProjectPlanUsage'],
+		resource: number | string
+	) => {
+		const limit = project?.rootProjectPlanUsage?.[key].limit ?? 0;
+		const used = project?.rootProjectPlanUsage?.[key].used ?? 0;
+
+		return limit - used > Number(resource);
+	};
+
+	const cpu = getProductSpecificationValue(
+		PRODUCT_SPECIFICATION_KEY.APP_BUILD_NUMBER_OF_CPUS,
+		product
+	);
+
+	const ram = getProductSpecificationValue(
+		PRODUCT_SPECIFICATION_KEY.APP_BUILD_RAM_IN_GBS,
+		product,
+		'0'
+	);
+
+	return (
+		compareResource('cpu', cpu) &&
+		compareResource('memory', convertSize(ram, 'GB', 'MB'))
+	);
 };
 
 const useGetResourceInfo = ({
@@ -50,56 +78,15 @@ const useGetResourceInfo = ({
 		(projects) => projects.rootProjectId === selectedProject
 	);
 
-	const suficientInstances =
-		project &&
-		project?.rootProjectPlanUsage?.instance?.limit -
-			project?.rootProjectPlanUsage?.instance?.used >
-			INSUFICIENT_RESOURCES;
-
-	let validateRamAndCpu = false;
-
-	if (project && selectedProject) {
-		validateRamAndCpu = ['ram', 'cpu']
-			.map(
-				(requirement) =>
-					product?.productSpecifications.find(
-						(specification: ProductSpecification) =>
-							specification.specificationKey === requirement
-					) || {}
-			)
-			.some((requirement) => {
-				if (requirement.specificationKey === 'ram') {
-					return compareResource(
-						convertMegabyteToGigabyte({
-							inverseOperation: true,
-							value: requirement.value,
-						}),
-						project?.rootProjectPlanUsage?.memory.limit -
-							project?.rootProjectPlanUsage?.memory.used
-					);
-				}
-
-				if (requirement.specificationKey === 'cpu') {
-					return compareResource(
-						requirement.value,
-						project?.rootProjectPlanUsage?.cpu.limit -
-							project?.rootProjectPlanUsage?.cpu.used
-					);
-				}
-			});
-	}
-
 	return {
 		hasConsoleProjectsAvailable: !shouldFetch
 			? true
 			: productUsages?.userProjects.length && !isLoading,
-		hasResources: suficientInstances && validateRamAndCpu,
+		hasResources: checkResources(product, project as ConsoleUserProject),
 		isLoading,
 		project,
 		resourceRequest: productUsages,
 	};
 };
-
-export {convertMegabyteToGigabyte};
 
 export default useGetResourceInfo;

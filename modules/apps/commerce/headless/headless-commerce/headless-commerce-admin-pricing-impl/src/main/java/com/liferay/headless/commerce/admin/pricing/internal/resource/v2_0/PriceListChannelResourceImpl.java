@@ -27,7 +27,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -183,18 +182,11 @@ public class PriceListChannelResourceImpl
 			List<CommercePriceListChannelRel> commercePriceListChannelRels)
 		throws Exception {
 
-		List<PriceListChannel> priceListChannels = new ArrayList<>();
-
-		for (CommercePriceListChannelRel commercePriceListChannelRel :
-				commercePriceListChannelRels) {
-
-			priceListChannels.add(
-				_toPriceListChannel(
-					commercePriceListChannelRel.
-						getCommercePriceListChannelRelId()));
-		}
-
-		return priceListChannels;
+		return transform(
+			commercePriceListChannelRels,
+			commercePriceListChannelRel -> _toPriceListChannel(
+				commercePriceListChannelRel.
+					getCommercePriceListChannelRelId()));
 	}
 
 	@Reference

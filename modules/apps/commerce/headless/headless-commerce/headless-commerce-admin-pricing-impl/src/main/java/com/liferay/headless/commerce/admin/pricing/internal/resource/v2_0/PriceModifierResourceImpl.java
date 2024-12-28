@@ -32,7 +32,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -311,17 +310,10 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 			List<CommercePriceModifier> commercePriceModifiers)
 		throws Exception {
 
-		List<PriceModifier> priceModifiers = new ArrayList<>();
-
-		for (CommercePriceModifier commercePriceModifier :
-				commercePriceModifiers) {
-
-			priceModifiers.add(
-				_toPriceModifier(
-					commercePriceModifier.getCommercePriceModifierId()));
-		}
-
-		return priceModifiers;
+		return transform(
+			commercePriceModifiers,
+			commercePriceModifier -> _toPriceModifier(
+				commercePriceModifier.getCommercePriceModifierId()));
 	}
 
 	private void _updateNestedResources(

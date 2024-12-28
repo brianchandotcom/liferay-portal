@@ -21,7 +21,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -186,19 +185,12 @@ public class PriceListAccountGroupResourceImpl
 				commercePriceListCommerceAccountGroupRels)
 		throws Exception {
 
-		List<PriceListAccountGroup> priceListAccountGroups = new ArrayList<>();
-
-		for (CommercePriceListCommerceAccountGroupRel
-				commercePriceListCommerceAccountGroupRel :
-					commercePriceListCommerceAccountGroupRels) {
-
-			priceListAccountGroups.add(
+		return transform(
+			commercePriceListCommerceAccountGroupRels,
+			commercePriceListCommerceAccountGroupRel ->
 				_toPriceListAccountGroup(
 					commercePriceListCommerceAccountGroupRel.
 						getCommercePriceListCommerceAccountGroupRelId()));
-		}
-
-		return priceListAccountGroups;
 	}
 
 	@Reference

@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -270,17 +269,10 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 			List<CommerceTierPriceEntry> commerceTierPriceEntries)
 		throws Exception {
 
-		List<TierPrice> tierPrices = new ArrayList<>();
-
-		for (CommerceTierPriceEntry commerceTierPriceEntry :
-				commerceTierPriceEntries) {
-
-			tierPrices.add(
-				_toTierPrice(
-					commerceTierPriceEntry.getCommerceTierPriceEntryId()));
-		}
-
-		return tierPrices;
+		return transform(
+			commerceTierPriceEntries,
+			commerceTierPriceEntry -> _toTierPrice(
+				commerceTierPriceEntry.getCommerceTierPriceEntryId()));
 	}
 
 	private CommerceTierPriceEntry _updateCommerceTierPriceEntry(

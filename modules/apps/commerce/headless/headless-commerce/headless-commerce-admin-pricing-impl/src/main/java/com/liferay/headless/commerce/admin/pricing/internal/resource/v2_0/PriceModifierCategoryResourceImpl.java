@@ -28,7 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -172,17 +171,10 @@ public class PriceModifierCategoryResourceImpl
 			List<CommercePriceModifierRel> commercePriceModifierRels)
 		throws Exception {
 
-		List<PriceModifierCategory> priceModifierCategories = new ArrayList<>();
-
-		for (CommercePriceModifierRel commercePriceModifierRel :
-				commercePriceModifierRels) {
-
-			priceModifierCategories.add(
-				_toPriceModifierCategory(
-					commercePriceModifierRel.getCommercePriceModifierRelId()));
-		}
-
-		return priceModifierCategories;
+		return transform(
+			commercePriceModifierRels,
+			commercePriceModifierRel -> _toPriceModifierCategory(
+				commercePriceModifierRel.getCommercePriceModifierRelId()));
 	}
 
 	private PriceModifierCategory _toPriceModifierCategory(

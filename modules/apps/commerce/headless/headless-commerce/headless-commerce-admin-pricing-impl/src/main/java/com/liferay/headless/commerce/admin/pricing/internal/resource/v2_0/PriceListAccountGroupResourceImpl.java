@@ -28,7 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -214,19 +213,12 @@ public class PriceListAccountGroupResourceImpl
 				commercePriceListCommerceAccountGroupRels)
 		throws Exception {
 
-		List<PriceListAccountGroup> priceListAccountGroups = new ArrayList<>();
-
-		for (CommercePriceListCommerceAccountGroupRel
-				commercePriceListCommerceAccountGroupRel :
-					commercePriceListCommerceAccountGroupRels) {
-
-			priceListAccountGroups.add(
+		return transform(
+			commercePriceListCommerceAccountGroupRels,
+			commercePriceListCommerceAccountGroupRel ->
 				_toPriceListAccountGroup(
 					commercePriceListCommerceAccountGroupRel.
 						getCommercePriceListCommerceAccountGroupRelId()));
-		}
-
-		return priceListAccountGroups;
 	}
 
 	@Reference

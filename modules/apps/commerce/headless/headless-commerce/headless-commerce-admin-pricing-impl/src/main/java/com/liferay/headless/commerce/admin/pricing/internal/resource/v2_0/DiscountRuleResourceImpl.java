@@ -25,7 +25,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -212,17 +211,10 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 			List<CommerceDiscountRule> commerceDiscountRules)
 		throws Exception {
 
-		List<DiscountRule> discountRules = new ArrayList<>();
-
-		for (CommerceDiscountRule commerceDiscountRule :
-				commerceDiscountRules) {
-
-			discountRules.add(
-				_toDiscountRule(
-					commerceDiscountRule.getCommerceDiscountRuleId()));
-		}
-
-		return discountRules;
+		return transform(
+			commerceDiscountRules,
+			commerceDiscountRule -> _toDiscountRule(
+				commerceDiscountRule.getCommerceDiscountRuleId()));
 	}
 
 	@Reference(

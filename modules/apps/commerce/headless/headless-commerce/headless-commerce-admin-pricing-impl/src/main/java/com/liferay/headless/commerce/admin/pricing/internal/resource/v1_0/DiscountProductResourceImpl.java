@@ -21,7 +21,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -154,15 +153,10 @@ public class DiscountProductResourceImpl
 			List<CommerceDiscountRel> commerceDiscountRels)
 		throws Exception {
 
-		List<DiscountProduct> discountProducts = new ArrayList<>();
-
-		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
-			discountProducts.add(
-				_toDiscountProduct(
-					commerceDiscountRel.getCommerceDiscountRelId()));
-		}
-
-		return discountProducts;
+		return transform(
+			commerceDiscountRels,
+			commerceDiscountRel -> _toDiscountProduct(
+				commerceDiscountRel.getCommerceDiscountRelId()));
 	}
 
 	@Reference

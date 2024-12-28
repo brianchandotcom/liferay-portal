@@ -47,7 +47,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -262,14 +261,10 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 			List<CommerceDiscount> commerceDiscounts)
 		throws Exception {
 
-		List<Discount> discounts = new ArrayList<>();
-
-		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
-			discounts.add(
-				_toDiscount(commerceDiscount.getCommerceDiscountId()));
-		}
-
-		return discounts;
+		return transform(
+			commerceDiscounts,
+			commerceDiscount -> _toDiscount(
+				commerceDiscount.getCommerceDiscountId()));
 	}
 
 	private CommerceDiscount _updateDiscount(

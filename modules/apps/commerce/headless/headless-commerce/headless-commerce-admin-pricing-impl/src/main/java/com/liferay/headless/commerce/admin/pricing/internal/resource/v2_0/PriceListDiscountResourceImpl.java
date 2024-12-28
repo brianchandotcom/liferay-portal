@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -158,18 +157,11 @@ public class PriceListDiscountResourceImpl
 			List<CommercePriceListDiscountRel> commercePriceListDiscountRels)
 		throws Exception {
 
-		List<PriceListDiscount> priceListDiscounts = new ArrayList<>();
-
-		for (CommercePriceListDiscountRel commercePriceListDiscountRel :
-				commercePriceListDiscountRels) {
-
-			priceListDiscounts.add(
-				_toPriceListDiscount(
-					commercePriceListDiscountRel.
-						getCommercePriceListDiscountRelId()));
-		}
-
-		return priceListDiscounts;
+		return transform(
+			commercePriceListDiscountRels,
+			commercePriceListDiscountRel -> _toPriceListDiscount(
+				commercePriceListDiscountRel.
+					getCommercePriceListDiscountRelId()));
 	}
 
 	@Reference

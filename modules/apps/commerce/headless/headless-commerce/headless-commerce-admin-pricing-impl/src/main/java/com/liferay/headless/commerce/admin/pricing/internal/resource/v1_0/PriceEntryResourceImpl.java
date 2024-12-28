@@ -30,7 +30,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -284,14 +283,10 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			List<CommercePriceEntry> commercePriceEntries)
 		throws Exception {
 
-		List<PriceEntry> priceEntries = new ArrayList<>();
-
-		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
-			priceEntries.add(
-				_toPriceEntry(commercePriceEntry.getCommercePriceEntryId()));
-		}
-
-		return priceEntries;
+		return transform(
+			commercePriceEntries,
+			commercePriceEntry -> _toPriceEntry(
+				commercePriceEntry.getCommercePriceEntryId()));
 	}
 
 	private PriceEntry _toPriceEntry(Long commercePriceEntryId)

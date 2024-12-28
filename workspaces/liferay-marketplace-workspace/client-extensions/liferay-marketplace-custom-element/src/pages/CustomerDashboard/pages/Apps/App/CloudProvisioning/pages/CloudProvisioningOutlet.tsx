@@ -19,15 +19,13 @@ import {useAccount} from '../../../../../../../hooks/data/useAccounts';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../../i18n';
 import zodSchema, {z, zodResolver} from '../../../../../../../schema/zod';
-import useGetResourceInfo, {
-	convertMegabyteToGigabyte,
-} from '../../../../../../GetApp/hooks/useGetResourceInfo';
-
-import '../index.scss';
 import consoleOAuth2 from '../../../../../../../services/oauth/Console';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
 import {scrollToTop} from '../../../../../../../utils/browser';
-import SelectedProjectBanner from '../components/SelectedProjectBanner';
+import {convertSize} from '../../../../../../../utils/filesize';
+import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
+
+import '../index.scss';
 
 const verifyAvailabilityToInstall = (
 	userProject: any,
@@ -38,10 +36,35 @@ const verifyAvailabilityToInstall = (
 
 	return (
 		availableCPU >= productRequirements?.cpu &&
-		availableRAM >=
-			convertMegabyteToGigabyte({value: productRequirements?.ram})
+		availableRAM >= convertSize(productRequirements?.ram, 'MB', 'GB')
 	);
 };
+
+const SelectedProjectBanner: React.FC<{project: any}> = ({project}) => (
+	<>
+		<hr />
+
+		<div className="align-items-center d-flex justify-content-between">
+			<small className="font-weight-bold">
+				{i18n.translate('selected-project')}
+			</small>
+
+			<span className="align-items-end d-flex flex-column">
+				<small className="font-weight-bold m-0">
+					{project?.rootProjectId.toUpperCase()}
+				</small>
+
+				<small className="subscription-banner-text text-nowrap">
+					{`${project?.environments.length} environments, ${project?.rootProjectPlanUsage.cpu.free} CPUs, ${convertSize(
+						project?.rootProjectPlanUsage.memory.free,
+						'GB',
+						'MB'
+					)} GB RAM`}
+				</small>
+			</span>
+		</div>
+	</>
+);
 
 const getProductRequirements = (product: DeliveryProduct) => {
 	const requirements = {

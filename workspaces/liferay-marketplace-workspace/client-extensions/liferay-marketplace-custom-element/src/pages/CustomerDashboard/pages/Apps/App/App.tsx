@@ -11,13 +11,14 @@ import i18n from '../../../../../i18n';
 import {formatDate} from '../../../../../utils/date';
 import formatLocaleCurrency from '../../../../../utils/formatLocaleCurrency';
 import {
-	getSpecificationByKey,
+	getProductPriceModel,
+	getProductSpecificationValue,
 	isCloudProduct,
 } from '../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../utils/util';
-import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
 import './App.scss';
+import {ProductSpecificationKey} from '../../../../../enums/Product';
 
 const getPriceList = (
 	isCloud: boolean,
@@ -82,7 +83,10 @@ const App = () => {
 	const {orderId} = useParams();
 	const {placedOrder, product} = useOutletContext<any>();
 
-	const licenseType = getSpecificationByKey('license-type', product);
+	const licenseType = getProductSpecificationValue(
+		ProductSpecificationKey.APP_LICENSING_TYPE,
+		product
+	);
 
 	const projectNameField =
 		Object.values(placedOrder.customFields).find((field) =>
@@ -128,7 +132,7 @@ const App = () => {
 							},
 							{
 								title: i18n.translate('license-type'),
-								value: licenseType?.value || '-',
+								value: licenseType || '-',
 							},
 						]}
 					/>

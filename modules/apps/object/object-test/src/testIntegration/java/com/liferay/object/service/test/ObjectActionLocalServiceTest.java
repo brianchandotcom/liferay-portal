@@ -1032,8 +1032,7 @@ public class ObjectActionLocalServiceTest {
 
 		Object clearObjectEntryIdsMapThreadLocal =
 			ReflectionTestUtil.getAndSetFieldValue(
-				ObjectActionThreadLocal.class,
-				"_clearObjectEntryIdsMapThreadLocal",
+				ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
 				new ThreadLocal<Boolean>() {
 
 					@Override
@@ -1053,8 +1052,7 @@ public class ObjectActionLocalServiceTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				ObjectActionThreadLocal.class,
-				"_clearObjectEntryIdsMapThreadLocal",
+				ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
 				clearObjectEntryIdsMapThreadLocal);
 		}
 	}

@@ -11,6 +11,7 @@ import {
 	ProductType,
 } from '../enums/Product';
 import i18n from '../i18n';
+import {getValueFromDeliverySpecifications} from './util';
 
 export function getProductFallback(): DeliveryProduct {
 	return {
@@ -43,18 +44,30 @@ export function getProductImageFallback(type: ProductImageFallbackCategories) {
 	return productImagesFallback[type] || '';
 }
 
-export function getSpecificationByKey(key: string, product: DeliveryProduct) {
+export function getProductSpecification(
+	key: PRODUCT_SPECIFICATION_KEY,
+	product: DeliveryProduct
+) {
 	return product?.productSpecifications?.find(
 		({specificationKey}) => specificationKey === key
 	);
+}
+
+export function getProductSpecificationValue<T = string>(
+	key: PRODUCT_SPECIFICATION_KEY,
+	product: DeliveryProduct,
+	value?: T
+) {
+	return getProductSpecification(key, product)?.value || (value as T);
 }
 
 export function isCloudProduct(product?: DeliveryProduct) {
 	return (
 		product?.productSpecifications?.some(
 			({specificationKey, value}) =>
-				specificationKey === 'type' && value === 'cloud'
-		) ?? false
+				specificationKey === PRODUCT_SPECIFICATION_KEY.APP_TYPE &&
+				value === ProductType.CLOUD
+		) || false
 	);
 }
 
@@ -106,6 +119,50 @@ export function getProductCategoriesByVocabularyName(
 		.map(({name}) => name);
 }
 
+export function getSkuByOptionValueKey(
+	product: DeliveryProduct,
+	skuOptionValueKey: SkuLicenseUsageTypeValue
+) {
+	return product.skus.find(
+		({purchasable, skuOptions}) =>
+			purchasable &&
+			skuOptions.find(
+				(skuOption) =>
+					[
+						SkuLicenseUsageType.CLOUD,
+						SkuLicenseUsageType.DXP,
+					].includes(skuOption.skuOptionKey as SkuLicenseUsageType) &&
+					skuOption.skuOptionValueKey === skuOptionValueKey
+			)
+	);
+}
+
+export function getProductPrice(product: DeliveryProduct) {
+	const {isFreeApp} = getProductPriceModel(product);
+
+	if (isFreeApp) {
+		return 'Free';
+	}
+
+	const standardSku = getSkuByOptionValueKey(
+		product,
+		SkuLicenseUsageTypeValue.STANDARD
+	);
+
+	const standardPrice = standardSku?.price?.priceFormatted || '';
+
+	const trialSku = getSkuByOptionValueKey(
+		product,
+		SkuLicenseUsageTypeValue.TRIAL
+	);
+
+	if (trialSku) {
+		return `30-day trial or ${standardPrice}`;
+	}
+
+	return standardPrice;
+}
+
 export function getProductType(product: DeliveryProduct) {
 	const specification = getSpecificationByKey(
 		ProductSpecificationKey.APP_TYPE,
@@ -115,5 +172,29 @@ export function getProductType(product: DeliveryProduct) {
 	return {
 		isCloud: specification?.value === ProductType.CLOUD,
 		isDXP: specification?.value === ProductType.DXP,
+	};
+}
+
+export function getLicenseTagText(product: DeliveryProduct) {
+	const licenseTypeSpecification = getValueFromDeliverySpecifications(
+		product.productSpecifications,
+		PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE
+	).toLowerCase();
+
+	return licenseTypeSpecification === PRODUCT_LICENSE_TYPE.Perpetual
+		? 'One-Time'
+		: 'Annually';
+}
+
+export function getProductPriceModel(product: DeliveryProduct) {
+	const priceModel = getProductSpecificationValue(
+		PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL,
+		product
+	);
+
+	return {
+		isFreeApp: priceModel === 'free',
+		isPaidApp: priceModel === 'paid',
+		priceModel,
 	};
 }

@@ -20,7 +20,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -216,17 +215,12 @@ public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 			List<CommerceOrderNote> commerceOrderNotes)
 		throws Exception {
 
-		List<OrderNote> orders = new ArrayList<>();
-
-		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
-			orders.add(
-				_orderNoteDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceOrderNote.getCommerceOrderNoteId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return orders;
+		return transform(
+			commerceOrderNotes,
+			commerceOrderNote -> _orderNoteDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					commerceOrderNote.getCommerceOrderNoteId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	private OrderNote _updateOrderNote(

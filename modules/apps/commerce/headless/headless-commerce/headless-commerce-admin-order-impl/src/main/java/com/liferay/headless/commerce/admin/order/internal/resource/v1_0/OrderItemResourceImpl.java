@@ -48,7 +48,6 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -621,16 +620,11 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			List<CommerceOrderItem> commerceOrderItems, Locale locale)
 		throws Exception {
 
-		List<OrderItem> orderItems = new ArrayList<>();
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderItems.add(
-				_orderItemDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceOrderItem.getCommerceOrderItemId(), locale)));
-		}
-
-		return orderItems;
+		return transform(
+			commerceOrderItems,
+			commerceOrderItem -> _orderItemDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					commerceOrderItem.getCommerceOrderItemId(), locale)));
 	}
 
 	private OrderItem _updateOrderItem(

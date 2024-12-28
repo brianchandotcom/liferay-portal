@@ -31,7 +31,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -246,18 +245,11 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 				commerceChannelAccountEntryRels)
 		throws Exception {
 
-		List<ChannelAccount> channelAccounts = new ArrayList<>();
-
-		for (CommerceChannelAccountEntryRel commerceChannelAccountEntryRel :
-				commerceChannelAccountEntryRels) {
-
-			channelAccounts.add(
-				_toChannelAccount(
-					commerceChannelAccountEntryRel.
-						getCommerceChannelAccountEntryRelId()));
-		}
-
-		return channelAccounts;
+		return transform(
+			commerceChannelAccountEntryRels,
+			commerceChannelAccountEntryRel -> _toChannelAccount(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId()));
 	}
 
 	@Reference

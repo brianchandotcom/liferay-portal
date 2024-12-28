@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -419,17 +418,12 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 			List<CommerceAddress> commerceAddresses)
 		throws Exception {
 
-		List<AccountAddress> accountAddresses = new ArrayList<>();
-
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-			accountAddresses.add(
-				_accountAddressDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceAddress.getCommerceAddressId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return accountAddresses;
+		return transform(
+			commerceAddresses,
+			commerceAddress -> _accountAddressDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					commerceAddress.getCommerceAddressId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	private void _updateDefaultBillingShippingAddressId(

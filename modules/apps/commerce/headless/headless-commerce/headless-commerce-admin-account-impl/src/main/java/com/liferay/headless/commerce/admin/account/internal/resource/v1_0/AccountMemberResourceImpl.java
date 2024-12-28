@@ -28,7 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -268,17 +267,12 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 			List<AccountEntryUserRel> accountEntryUserRels)
 		throws Exception {
 
-		List<AccountMember> accountMembers = new ArrayList<>();
-
-		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
-			accountMembers.add(
-				_accountMemberDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						accountEntryUserRel.getPrimaryKey(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return accountMembers;
+		return transform(
+			accountEntryUserRels,
+			accountEntryUserRel -> _accountMemberDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					accountEntryUserRel.getPrimaryKey(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	private void _updateAccountEntryUserRel(

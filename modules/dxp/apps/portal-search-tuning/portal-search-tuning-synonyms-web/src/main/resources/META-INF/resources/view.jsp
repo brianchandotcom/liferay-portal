@@ -13,7 +13,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymsDisplayContext" %>
@@ -42,7 +43,10 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteSynonymSetActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<clay:container-fluid
+	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
+>
+<aui:form action="<%= deleteSynonymSetActionURL %>" method="post" name="fm">
 	<aui:input name="deletedSynonymSetsString" type="hidden" value="" />
 
 	<liferay-ui:search-container
@@ -77,3 +81,4 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+</clay:container-fluid>

@@ -15,7 +15,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -57,6 +58,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 <liferay-frontend:edit-form
 	action="<%= addResultsRankingEntryURL %>"
+	fluid='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 	name="addResultRankingsFm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

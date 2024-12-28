@@ -105,7 +105,10 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	sortingURL="<%= rankingPortletDisplayContext.getSortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<clay:container-fluid
+	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
+>
+<aui:form method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-ui:search-container
@@ -230,3 +233,4 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+</clay:container-fluid>

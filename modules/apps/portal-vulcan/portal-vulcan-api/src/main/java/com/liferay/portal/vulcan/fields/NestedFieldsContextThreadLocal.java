@@ -23,18 +23,17 @@ public class NestedFieldsContextThreadLocal {
 	}
 
 	public static NestedFieldsContext getNestedFieldsContext() {
-		return _nestedContextThreadLocal.get();
+		return _nestedFieldsContext.get();
 	}
 
 	public static void setNestedFieldsContext(
 		NestedFieldsContext nestedFieldsContext) {
 
-		_nestedContextThreadLocal.set(nestedFieldsContext);
+		_nestedFieldsContext.set(nestedFieldsContext);
 	}
 
-	private static final ThreadLocal<NestedFieldsContext>
-		_nestedContextThreadLocal = new CentralizedThreadLocal<>(
-			NestedFieldsContextThreadLocal.class +
-				"._nestedFieldsContextThreadLocal");
+	private static final ThreadLocal<NestedFieldsContext> _nestedFieldsContext =
+		new CentralizedThreadLocal<>(
+			NestedFieldsContextThreadLocal.class + "._nestedFieldsContext");
 
 }

@@ -106,21 +106,6 @@ export function getOptionTrialBody() {
 	return {key: 'trial', name: {en_US: 'Trial'}, priority: 2};
 }
 
-export function getInitials(userName: string) {
-	const names = userName.trim().split(' ');
-	const lastNameIndex = names.length - 1;
-
-	const initials = names.reduce((initials, currentName, index) => {
-		if (!index || index === lastNameIndex) {
-			initials = `${initials}${currentName.charAt(0).toUpperCase()}`;
-		}
-
-		return initials;
-	});
-
-	return initials;
-}
-
 export function getThumbnailByProductAttachment(
 	images?: Partial<ProductAttachment | DeliveryProductAttachment>[]
 ): string | undefined {

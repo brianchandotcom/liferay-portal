@@ -36,7 +36,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -220,30 +219,26 @@ public class ProductOptionValueResourceImpl
 			Long productOptionValueId, Long skuId, SkuOption[] skuOptions)
 		throws Exception {
 
-		List<ProductOptionValue> productOptionValues = new ArrayList<>();
+		return transform(
+			cpDefinitionOptionValueRels,
+			cpDefinitionOptionValueRel -> {
+				DefaultDTOConverterContext defaultDTOConverterContext =
+					new DefaultDTOConverterContext(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId(),
+						contextAcceptLanguage.getPreferredLocale());
 
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
+				defaultDTOConverterContext.setAttribute(
+					"commerceContext", commerceContext);
+				defaultDTOConverterContext.setAttribute(
+					"productOptionValueId", productOptionValueId);
+				defaultDTOConverterContext.setAttribute("skuId", skuId);
+				defaultDTOConverterContext.setAttribute(
+					"skuOptions", skuOptions);
 
-			DefaultDTOConverterContext defaultDTOConverterContext =
-				new DefaultDTOConverterContext(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId(),
-					contextAcceptLanguage.getPreferredLocale());
-
-			defaultDTOConverterContext.setAttribute(
-				"commerceContext", commerceContext);
-			defaultDTOConverterContext.setAttribute(
-				"productOptionValueId", productOptionValueId);
-			defaultDTOConverterContext.setAttribute("skuId", skuId);
-			defaultDTOConverterContext.setAttribute("skuOptions", skuOptions);
-
-			productOptionValues.add(
-				_productOptionValueDTOConverter.toDTO(
-					defaultDTOConverterContext, cpDefinitionOptionValueRel));
-		}
-
-		return productOptionValues;
+				return _productOptionValueDTOConverter.toDTO(
+					defaultDTOConverterContext, cpDefinitionOptionValueRel);
+			});
 	}
 
 	@Reference

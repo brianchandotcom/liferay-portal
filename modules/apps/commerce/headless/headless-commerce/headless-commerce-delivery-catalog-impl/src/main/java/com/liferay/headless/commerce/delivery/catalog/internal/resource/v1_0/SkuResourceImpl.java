@@ -49,7 +49,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -383,17 +382,16 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			CPDefinition cpDefinition)
 		throws Exception {
 
-		List<Sku> skus = new ArrayList<>();
-
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		for (CPInstance cpInstance : cpInstances) {
-			String defaultUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
-				cpInstance.getCPInstanceId());
+		return transform(
+			cpInstances,
+			cpInstance -> {
+				String defaultUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+					cpInstance.getCPInstanceId());
 
-			skus.add(
-				_skuDTOConverter.toDTO(
+				return _skuDTOConverter.toDTO(
 					new SkuDTOConverterContext(
 						_getCommerceContext(accountId, commerceChannel),
 						contextCompany.getCompanyId(), cpDefinition,
@@ -401,10 +399,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 						_getDefaultQuantity(
 							cpInstance, defaultUnitOfMeasureKey),
 						cpInstance.getCPInstanceId(), null,
-						defaultUnitOfMeasureKey, contextUriInfo, contextUser)));
-		}
-
-		return skus;
+						defaultUnitOfMeasureKey, contextUriInfo, contextUser));
+			});
 	}
 
 	@Reference

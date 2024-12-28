@@ -23,7 +23,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -100,17 +99,12 @@ public class RelatedProductResourceImpl extends BaseRelatedProductResourceImpl {
 			List<CPDefinitionLink> cpDefinitionLinks)
 		throws Exception {
 
-		List<RelatedProduct> relatedProducts = new ArrayList<>();
-
-		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			relatedProducts.add(
-				_relatedProductDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						cpDefinitionLink.getCPDefinitionLinkId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return relatedProducts;
+		return transform(
+			cpDefinitionLinks,
+			cpDefinitionLink -> _relatedProductDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					cpDefinitionLink.getCPDefinitionLinkId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -74,17 +73,12 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 			List<AssetCategory> assetCategories)
 		throws Exception {
 
-		List<Category> categories = new ArrayList<>();
-
-		for (AssetCategory category : assetCategories) {
-			categories.add(
-				_categoryDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						category.getCategoryId(),
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return categories;
+		return transform(
+			assetCategories,
+			assetCategory -> _categoryDTOConverter.toDTO(
+				new DefaultDTOConverterContext(
+					assetCategory.getCategoryId(),
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference

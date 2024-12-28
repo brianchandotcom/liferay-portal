@@ -137,8 +137,7 @@ export function InformLicensingTermsPricePage({
 	const submitLicensePrice = async () => {
 		const skusJSON = await getProductIdSkusPage(appProductId);
 
-		// eslint-disable-next-line no-unsafe-optional-chaining
-		for (const sku of skusJSON?.items) {
+		for (const sku of skusJSON?.items || []) {
 			if (!isTrialSKU(sku)) {
 				await handlePostPriceEntryIdTierPrice(sku);
 				await patchSKUById(sku?.id, {

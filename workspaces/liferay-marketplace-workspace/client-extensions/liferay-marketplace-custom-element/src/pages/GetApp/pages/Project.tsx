@@ -14,10 +14,10 @@ import {MarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {ConsoleUserProject} from '../../../services/oauth/types';
+import {convertSize} from '../../../utils/filesize';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import Container from '../containers/Container';
-import {convertMegabyteToGigabyte} from '../hooks/useGetResourceInfo';
 
 import './index.scss';
 
@@ -28,12 +28,12 @@ const getCardContent = (project: ConsoleUserProject) => {
 
 	const environment = project.environments.length;
 
-	const memory = convertMegabyteToGigabyte({
-		inverseOperation: true,
-		value:
-			project.rootProjectPlanUsage.memory.limit -
+	const memory = convertSize(
+		project.rootProjectPlanUsage.memory.limit -
 			project.rootProjectPlanUsage.memory.used,
-	});
+		'MB',
+		'GB'
+	);
 
 	return `${environment} Environments , ${cpu} CPUs, ${memory} GB Ram`;
 };
@@ -150,7 +150,7 @@ const ProjectSelection = () => {
 										{project.rootProjectId.toUpperCase()}
 									</div>
 
-									<p className="m-0 project-selection-page-description-text">
+									<p className="m-0 project-selection-page-description-text text-nowrap">
 										{getCardContent(project)}
 									</p>
 								</div>

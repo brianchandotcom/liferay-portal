@@ -8,11 +8,11 @@ import {useOutletContext} from 'react-router-dom';
 import AccountSelection from '../../../components/Checkout/AccountSelection';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
+import {getProductPriceModel} from '../../../utils/productUtils';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import Container from '../containers/Container';
 import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
-import getProductPriceModel from '../utils/getProductPriceModel';
 
 const GetAppPage = () => {
 	const [

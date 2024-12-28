@@ -13,7 +13,7 @@ import {
 } from '../../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../../i18n';
-import {getSpecificationByKey} from '../../../../../../../utils/productUtils';
+import {getProductSpecification} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
 import {InstallStatus} from '../types';
@@ -78,7 +78,7 @@ const useProvisioningData = (orderId: string) => {
 
 	const productLicenseType = useMemo(
 		() =>
-			getSpecificationByKey(
+			getProductSpecification(
 				ProductSpecificationKey.APP_LICENSING_TYPE,
 				product as DeliveryProduct
 			)?.value || '',

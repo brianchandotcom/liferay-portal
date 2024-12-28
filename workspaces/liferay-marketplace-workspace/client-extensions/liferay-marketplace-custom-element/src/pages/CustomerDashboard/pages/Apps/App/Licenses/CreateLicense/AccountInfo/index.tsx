@@ -6,33 +6,33 @@
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 
+import {Liferay} from '../../../../../../../../liferay/liferay';
+
 import './index.scss';
 
 type AccountInfoProps = {
-	userAccount?: {
-		emailAddress?: string;
-		image?: string;
-		name?: string;
-	};
+	image?: string;
+	name?: string;
 };
 
-const AccountEmailInfo: React.FC<AccountInfoProps> = ({userAccount}) => (
+const AccountEmailInfo: React.FC<AccountInfoProps> = ({image, name}) => (
 	<div className="align-items-center d-flex">
 		<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
-			<strong>{userAccount?.name}</strong>
+			<strong>{name}</strong>
 
 			<div className="account-banner-email-text">
-				{userAccount?.emailAddress}
+				{Liferay.ThemeDisplay.getUserEmailAddress()}
 			</div>
 		</div>
 
 		<ClaySticker displayType="light" shape="circle" size="sm">
-			{userAccount?.image ? (
+			{image ? (
 				<ClaySticker.Image
 					alt="placeholder"
-					height="24"
-					src={userAccount?.image}
-					width="24"
+					draggable={false}
+					height={24}
+					src={image}
+					width={24}
 				/>
 			) : (
 				<ClayIcon symbol="picture" />

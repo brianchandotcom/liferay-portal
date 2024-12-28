@@ -9,7 +9,7 @@ import {z} from 'zod';
 import RadioCard from '../../../../../../../components/RadioCardList/components/RadioCard';
 import i18n from '../../../../../../../i18n';
 import zodSchema from '../../../../../../../schema/zod';
-import {convertMegabyteToGigabyte} from '../../../../../../GetApp/hooks/useGetResourceInfo';
+import {convertSize} from '../../../../../../../utils/filesize';
 import {CloudProvisioningOutletContext} from '../pages/CloudProvisioningOutlet';
 
 import './index.scss';
@@ -76,13 +76,11 @@ const ProjectRadio: React.FC<ProjectRadioType> = ({
 									</div>
 
 									<p className="m-0 project-selection-page-description-text">
-										{`${project.environments.length} Environments, ${project.rootProjectPlanUsage.cpu.free}CPUs, ${convertMegabyteToGigabyte(
-											{
-												inverseOperation: true,
-												value: project
-													.rootProjectPlanUsage.memory
-													.free,
-											}
+										{`${project.environments.length} Environments, ${project.rootProjectPlanUsage.cpu.free}CPUs, ${convertSize(
+											project.rootProjectPlanUsage.memory
+												.free,
+											'MB',
+											'GB'
 										)}GB RAM`}
 									</p>
 

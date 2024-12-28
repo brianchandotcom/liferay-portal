@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {LicenseType} from '../../../enums/Product';
 import {getValueFromDeliverySpecifications} from '../../../utils/util';
 import AccountEmailInfo from '../../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
@@ -34,7 +33,6 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
 	productBasePriceAndTrial,
 }) => {
 	const [{account, product}] = useGetAppContext();
-	const {myUserAccount} = useMarketplaceContext();
 
 	const productCreatorAccountName = product?.catalogName || '';
 
@@ -80,11 +78,8 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
 						</strong>
 
 						<AccountEmailInfo
-							userAccount={{
-								...myUserAccount,
-								...account,
-								image: account.logoURL,
-							}}
+							image={account.logoURL}
+							name={account.name}
 						/>
 					</div>
 				</>

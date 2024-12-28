@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-
-import './index.scss';
-
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {Outlet, useLocation} from 'react-router-dom';
 
@@ -16,13 +13,15 @@ import {AccountAndAppCard} from '../../../../components/Card/AccountAndAppCard';
 import {useDeliveryProduct} from '../../../../hooks/data/useProduct';
 import {ConsoleUserProject} from '../../../../services/oauth/types';
 import {baseURL} from '../../../../utils/api';
+import {convertSize} from '../../../../utils/filesize';
 import {getUrlParam} from '../../../../utils/getUrlParam';
 import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../../utils/util';
 import {useGetAppContext} from '../../GetAppContextProvider';
-import {convertMegabyteToGigabyte} from '../../hooks/useGetResourceInfo';
+
+import './index.scss';
 
 const getProductRequirements = (product: DeliveryProduct) => {
 	const requirements = {
@@ -57,12 +56,12 @@ const getUsageLabel = (
 		cpu:
 			project.rootProjectPlanUsage?.cpu.limit -
 			project.rootProjectPlanUsage?.cpu.used,
-		ram: convertMegabyteToGigabyte({
-			inverseOperation: true,
-			value:
-				project.rootProjectPlanUsage.memory.limit -
+		ram: convertSize(
+			project.rootProjectPlanUsage.memory.limit -
 				project.rootProjectPlanUsage?.memory?.used,
-		}),
+			'GB',
+			'MB'
+		),
 	};
 
 	return `${requirements.cpu - remainingResource.cpu}CPUs,

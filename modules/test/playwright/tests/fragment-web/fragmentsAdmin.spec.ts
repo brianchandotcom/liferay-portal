@@ -18,10 +18,6 @@ import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
-import {
-	disableSystemFeatureFlag,
-	enableSystemFeatureFlag,
-} from '../../utils/systemFeatureFlag';
 import {getTempDir} from '../../utils/temp';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {zipFolder} from '../../utils/zip';
@@ -40,6 +36,13 @@ const test = mergeTests(
 	fragmentsPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
+);
+
+const testDeprecatedFragmentSet = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-40529': {enabled: true, system: true},
+	})
 );
 
 async function checkBackButtonTitle(page: Page, title: string) {
@@ -1675,20 +1678,12 @@ test(
 	}
 );
 
-test(
+testDeprecatedFragmentSet(
 	'The deprecated label and button exist for the contributed Featured Content Fragment Set',
 	{
 		tag: '@LPD-42061',
 	},
 	async ({fragmentsPage, page, site}) => {
-
-		// Enable feature flag
-
-		await enableSystemFeatureFlag({
-			page,
-			title: 'Featured Content Fragment Set',
-			type: 'Deprecation',
-		});
 
 		// Go to fragment administration and look for the label
 
@@ -1707,13 +1702,5 @@ test(
 		await expect(
 			page.getByText('This feature is deprecated.')
 		).toBeVisible();
-
-		// Disable feature flag
-
-		await disableSystemFeatureFlag({
-			page,
-			title: 'Featured Content Fragment Set',
-			type: 'Deprecation',
-		});
 	}
 );

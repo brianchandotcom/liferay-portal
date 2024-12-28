@@ -10,6 +10,7 @@ import Body from './Body';
 import Feedback from './Feedback';
 import Footer from './Footer';
 import Header, {ProductPurchaseHeaderAccount as HeaderAccount} from './Header';
+import Price from './Price';
 import Shell from './Shell';
 import Steps from './Steps';
 
@@ -25,6 +26,7 @@ type ProductPurchaseChildrens = {
 	Footer: typeof Footer;
 	Header: typeof Header;
 	HeaderAccount: typeof HeaderAccount;
+	Price: typeof Price;
 	Shell: typeof Shell;
 	Steps: typeof Steps;
 };
@@ -45,6 +47,7 @@ ProductPurchase.Feedback = Feedback;
 ProductPurchase.Footer = Footer;
 ProductPurchase.Header = Header;
 ProductPurchase.HeaderAccount = HeaderAccount;
+ProductPurchase.Price = Price;
 ProductPurchase.Shell = Shell;
 ProductPurchase.Steps = Steps;
 

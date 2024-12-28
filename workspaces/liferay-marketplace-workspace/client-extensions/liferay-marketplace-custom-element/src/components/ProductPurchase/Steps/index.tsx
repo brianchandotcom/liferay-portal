@@ -7,20 +7,19 @@ import ClayMultiStepNav from '@clayui/multi-step-nav';
 import classNames from 'classnames';
 
 type Step = {
+	active: boolean;
 	key: string;
 	subTitle?: string;
 	title: string;
 };
 
 type ProductPurchaseStepsProps = {
-	activeKey: string;
 	className?: string;
 	onClickIndicator?: (step: Step) => void;
 	steps: Step[];
 };
 
 const ProductPurchaseSteps: React.FC<ProductPurchaseStepsProps> = ({
-	activeKey,
 	className,
 	onClickIndicator = () => null,
 	steps,
@@ -31,32 +30,26 @@ const ProductPurchaseSteps: React.FC<ProductPurchaseStepsProps> = ({
 			className
 		)}
 	>
-		{steps.map((step, i) => {
-			const {key, subTitle, title} = step;
-
-			const activeIndex = steps.findIndex(
-				(_step) => _step.key === activeKey
-			);
-
-			const complete = activeIndex > i;
-
-			return (
-				<ClayMultiStepNav.Item
-					active={activeKey === key}
-					expand={i + 1 !== steps.length}
-					key={i}
-					state={complete ? 'complete' : undefined}
-				>
-					<ClayMultiStepNav.Title>{title}</ClayMultiStepNav.Title>
-					<ClayMultiStepNav.Divider />
-					<ClayMultiStepNav.Indicator
-						label={1 + i}
-						onClick={() => onClickIndicator(step)}
-						subTitle={subTitle}
-					/>
-				</ClayMultiStepNav.Item>
-			);
-		})}
+		{steps.map((step, index) => (
+			<ClayMultiStepNav.Item
+				active={step.active}
+				expand={index + 1 !== steps.length}
+				key={index}
+				state={
+					steps.findIndex(({active}) => active) > index
+						? 'complete'
+						: undefined
+				}
+			>
+				<ClayMultiStepNav.Title>{step.title}</ClayMultiStepNav.Title>
+				<ClayMultiStepNav.Divider />
+				<ClayMultiStepNav.Indicator
+					label={1 + index}
+					onClick={() => onClickIndicator(step)}
+					subTitle={step.subTitle}
+				/>
+			</ClayMultiStepNav.Item>
+		))}
 	</ClayMultiStepNav>
 );
 

@@ -21,7 +21,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -222,19 +221,13 @@ public class AccountOrganizationResourceImpl
 			List<AccountEntryOrganizationRel> accountEntryOrganizationRels)
 		throws Exception {
 
-		List<AccountOrganization> accountOrganizations = new ArrayList<>();
-
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
-
-			accountOrganizations.add(
+		return transform(
+			accountEntryOrganizationRels,
+			accountEntryOrganizationRel ->
 				_accountOrganizationDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
 						accountEntryOrganizationRel.getPrimaryKey(),
 						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return accountOrganizations;
 	}
 
 	@Reference

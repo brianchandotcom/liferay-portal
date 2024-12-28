@@ -289,7 +289,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	@Test
-	public void testConcurrentAuthnRequest() throws Exception {
+	public void testDecodeAuthnRequestStageAuthenticatedWithConcurrentAuthnRequest()
+		throws Exception {
+
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
 		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
@@ -379,7 +381,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	@Test
-	public void testConcurrentAuthnRequestIdpInitiatedSsoAfterAuthentication()
+	public void testDecodeAuthnRequestIdpInitiatedSsoAfterAuthenticationWithConcurrentAuthnRequest()
 		throws Exception {
 
 		prepareIdentityProvider(IDP_ENTITY_ID);

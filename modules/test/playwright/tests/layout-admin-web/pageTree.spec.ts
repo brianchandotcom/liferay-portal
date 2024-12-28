@@ -14,6 +14,7 @@ import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import createUserWithPermissions from '../../utils/createUserWithPermissions';
+import dragAndDropElement from '../../utils/dragAndDropElement';
 import getRandomString from '../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
 import {performUserSwitch} from '../../utils/performLogin';
@@ -618,6 +619,78 @@ test(
 		).not.toBeVisible();
 
 		await expect(page.getByRole('link', {name: layoutTitle})).toBeVisible();
+	}
+);
+
+test(
+	'Reorganize pages via page tree',
+	{
+		tag: '@LPS-116428',
+	},
+	async ({apiHelpers, page, pageTreePage, site}) => {
+
+		// Add pages
+
+		const firstLayoutTitle = 'first layout';
+
+		const firstLayout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: firstLayoutTitle,
+		});
+
+		const secondLayoutTitle = 'second layout';
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: secondLayoutTitle,
+		});
+
+		const thirdLayoutTitle = 'third layout';
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: thirdLayoutTitle,
+		});
+
+		// Go to view mode
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${firstLayout.friendlyUrlPath}`
+		);
+
+		// Open the Product Menu
+
+		await openProductMenu(page);
+
+		// Open tree if it's not already open
+
+		await pageTreePage.open();
+
+		// Assert order
+
+		const treeViewItems = page.getByRole('treeitem');
+
+		await expect(treeViewItems.nth(1)).toContainText(firstLayoutTitle);
+
+		await expect(treeViewItems.nth(2)).toContainText(secondLayoutTitle);
+
+		await expect(treeViewItems.nth(3)).toContainText(thirdLayoutTitle);
+
+		// Reorder pages
+
+		await dragAndDropElement({
+			dragTarget: treeViewItems.nth(3),
+			dropTarget: treeViewItems.nth(1),
+			page,
+		});
+
+		// Assert order
+
+		await expect(treeViewItems.nth(1)).toContainText(firstLayoutTitle);
+
+		await expect(treeViewItems.nth(2)).toContainText(thirdLayoutTitle);
+
+		await expect(treeViewItems.nth(3)).toContainText(secondLayoutTitle);
 	}
 );
 

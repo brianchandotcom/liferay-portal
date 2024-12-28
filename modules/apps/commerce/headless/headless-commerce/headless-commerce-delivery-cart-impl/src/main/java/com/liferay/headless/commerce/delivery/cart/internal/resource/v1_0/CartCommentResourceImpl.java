@@ -27,7 +27,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -244,14 +243,10 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 			List<CommerceOrderNote> commerceOrderNotes)
 		throws Exception {
 
-		List<CartComment> orders = new ArrayList<>();
-
-		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
-			orders.add(
-				_toOrderNote(commerceOrderNote.getCommerceOrderNoteId()));
-		}
-
-		return orders;
+		return transform(
+			commerceOrderNotes,
+			commerceOrderNote -> _toOrderNote(
+				commerceOrderNote.getCommerceOrderNoteId()));
 	}
 
 	@Reference

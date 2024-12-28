@@ -3859,8 +3859,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Ticket ticket = _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			TicketConstants.TYPE_EMAIL_ADDRESS, emailAddress,
-			new Date(
-				System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2880)),
+			new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(2)),
 			serviceContext);
 
 		String verifyEmailAddressURL = StringBundler.concat(

@@ -18,6 +18,7 @@ import com.liferay.document.library.repository.external.model.ExtRepositoryFileV
 import com.liferay.document.library.repository.external.model.ExtRepositoryFolderAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapter;
 import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapterType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -686,21 +687,15 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws PortalException {
 
-		List<Long> subfolderIds = new ArrayList<>();
+		return TransformUtil.transform(
+			_extRepository.getSubfolderKeys(
+				getExtRepositoryObjectKey(folderId), recurse),
+			extRepositorySubfolderKey -> {
+				RepositoryEntry repositoryEntry = getRepositoryEntry(
+					extRepositorySubfolderKey);
 
-		String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
-
-		List<String> extRepositorySubfolderKeys =
-			_extRepository.getSubfolderKeys(extRepositoryFolderKey, recurse);
-
-		for (String extRepositorySubfolderKey : extRepositorySubfolderKeys) {
-			RepositoryEntry repositoryEntry = getRepositoryEntry(
-				extRepositorySubfolderKey);
-
-			subfolderIds.add(repositoryEntry.getRepositoryEntryId());
-		}
-
-		return subfolderIds;
+				return repositoryEntry.getRepositoryEntryId();
+			});
 	}
 
 	@Override
@@ -1220,22 +1215,25 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 		Set<String> allowedMimeTypes = new HashSet<>(Arrays.asList(mimeTypes));
 
-		List<T> filteredExtRepositoryObjects = new ArrayList<>();
+		return TransformUtil.transform(
+			extRepositoryObjects,
+			extRepositoryObject -> {
+				if (extRepositoryObject instanceof
+						ExtRepositoryFileEntryAdapter) {
 
-		for (T extRepositoryObject : extRepositoryObjects) {
-			if (extRepositoryObject instanceof ExtRepositoryFileEntryAdapter) {
-				ExtRepositoryFileEntryAdapter extRepositoryFileEntryAdapter =
-					(ExtRepositoryFileEntryAdapter)extRepositoryObject;
+					ExtRepositoryFileEntryAdapter
+						extRepositoryFileEntryAdapter =
+							(ExtRepositoryFileEntryAdapter)extRepositoryObject;
 
-				if (allowedMimeTypes.contains(
-						extRepositoryFileEntryAdapter.getMimeType())) {
+					if (allowedMimeTypes.contains(
+							extRepositoryFileEntryAdapter.getMimeType())) {
 
-					filteredExtRepositoryObjects.add(extRepositoryObject);
+						return extRepositoryObject;
+					}
+
+					return null;
 				}
-			}
-		}
-
-		return filteredExtRepositoryObjects;
+			});
 	}
 
 	private void _forceGetFileVersions(
@@ -1369,21 +1367,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 				List<ExtRepositoryFileVersion> extRepositoryFileVersions)
 		throws PortalException {
 
-		List<ExtRepositoryFileVersionAdapter> extRepositoryFileVersionAdapters =
-			new ArrayList<>();
-
-		for (ExtRepositoryFileVersion extRepositoryFileVersion :
-				extRepositoryFileVersions) {
-
-			ExtRepositoryFileVersionAdapter extRepositoryFileVersionAdapter =
-				_toExtRepositoryFileVersionAdapter(
-					extRepositoryFileEntryAdapter, extRepositoryFileVersion);
-
-			extRepositoryFileVersionAdapters.add(
-				extRepositoryFileVersionAdapter);
-		}
-
-		return extRepositoryFileVersionAdapters;
+		return TransformUtil.transform(
+			extRepositoryFileVersions,
+			extRepositoryFileVersion -> _toExtRepositoryFileVersionAdapter(
+				extRepositoryFileEntryAdapter, extRepositoryFileVersion));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1473,15 +1460,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 				List<? extends ExtRepositoryObject> extRepositoryObjects)
 		throws PortalException {
 
-		List<T> extRepositoryObjectAdapters = new ArrayList<>();
-
-		for (ExtRepositoryObject extRepositoryObject : extRepositoryObjects) {
-			extRepositoryObjectAdapters.add(
-				_toExtRepositoryObjectAdapter(
-					extRepositoryObjectAdapterType, extRepositoryObject));
-		}
-
-		return extRepositoryObjectAdapters;
+		return TransformUtil.transform(
+			extRepositoryObjects,
+			extRepositoryObject -> _toExtRepositoryObjectAdapter(
+				extRepositoryObjectAdapterType, extRepositoryObject));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

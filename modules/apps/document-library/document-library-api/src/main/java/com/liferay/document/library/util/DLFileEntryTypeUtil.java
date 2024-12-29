@@ -10,10 +10,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,19 +55,19 @@ public class DLFileEntryTypeUtil {
 	private static List<DDMStructure> _getDDMStructures(
 		List<DDMStructureLink> ddmStructureLinks) {
 
-		List<DDMStructure> ddmStructures = new ArrayList<>();
+		return TransformUtil.transform(
+			ddmStructureLinks,
+			ddmStructureLink -> {
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.fetchStructure(
+						ddmStructureLink.getStructureId());
 
-		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructureLink.getStructureId());
+				if (ddmStructure != null) {
+					return ddmStructure;
+				}
 
-			if (ddmStructure != null) {
-				ddmStructures.add(ddmStructure);
-			}
-		}
-
-		return ddmStructures;
+				return null;
+			});
 	}
 
 }

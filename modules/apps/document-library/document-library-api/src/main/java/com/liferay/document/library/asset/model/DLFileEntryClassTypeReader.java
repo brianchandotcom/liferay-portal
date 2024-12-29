@@ -12,11 +12,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,21 +29,13 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 	public List<ClassType> getAvailableClassTypes(
 		long[] groupIds, Locale locale) {
 
-		List<ClassType> classTypes = new ArrayList<>();
-
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds);
-
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			classTypes.add(
-				new DLFileEntryClassType(
-					dlFileEntryType.getFileEntryTypeId(),
-					dlFileEntryType.getName(locale), languageId));
-		}
-
-		return classTypes;
+		return TransformUtil.transform(
+			DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds),
+			dlFileEntryType -> new DLFileEntryClassType(
+				dlFileEntryType.getFileEntryTypeId(),
+				dlFileEntryType.getName(locale), languageId));
 	}
 
 	@Override

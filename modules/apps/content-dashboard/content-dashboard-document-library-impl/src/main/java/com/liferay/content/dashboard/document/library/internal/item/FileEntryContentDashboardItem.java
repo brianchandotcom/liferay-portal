@@ -16,7 +16,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActi
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemVersionActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
@@ -554,45 +553,36 @@ public class FileEntryContentDashboardItem
 		_getContentDashboardItemVersionActions(
 			FileVersion fileVersion, HttpServletRequest httpServletRequest) {
 
-		List<ContentDashboardItemVersionAction>
-			contentDashboardItemVersionActions = new ArrayList<>();
+		return TransformUtil.transform(
+			_contentDashboardItemVersionActionProviderRegistry.
+				getContentDashboardItemVersionActionProviders(
+					FileVersion.class.getName()),
+			contentDashboardItemVersionActionProvider -> {
+				if (!contentDashboardItemVersionActionProvider.isShow(
+						fileVersion, httpServletRequest)) {
 
-		List<ContentDashboardItemVersionActionProvider>
-			contentDashboardItemVersionActionProviders =
-				_contentDashboardItemVersionActionProviderRegistry.
-					getContentDashboardItemVersionActionProviders(
-						FileVersion.class.getName());
-
-		for (ContentDashboardItemVersionActionProvider
-				contentDashboardItemVersionActionProvider :
-					contentDashboardItemVersionActionProviders) {
-
-			if (!contentDashboardItemVersionActionProvider.isShow(
-					fileVersion, httpServletRequest)) {
-
-				continue;
-			}
-
-			try {
-				ContentDashboardItemVersionAction
-					contentDashboardItemVersionAction =
-						contentDashboardItemVersionActionProvider.
-							getContentDashboardItemVersionAction(
-								fileVersion, httpServletRequest);
-
-				if (contentDashboardItemVersionAction != null) {
-					contentDashboardItemVersionActions.add(
-						contentDashboardItemVersionAction);
+					return null;
 				}
-			}
-			catch (ContentDashboardItemVersionActionException
-						contentDashboardItemVersionActionException) {
 
-				_log.error(contentDashboardItemVersionActionException);
-			}
-		}
+				try {
+					ContentDashboardItemVersionAction
+						contentDashboardItemVersionAction =
+							contentDashboardItemVersionActionProvider.
+								getContentDashboardItemVersionAction(
+									fileVersion, httpServletRequest);
 
-		return contentDashboardItemVersionActions;
+					if (contentDashboardItemVersionAction != null) {
+						return contentDashboardItemVersionAction;
+					}
+				}
+				catch (ContentDashboardItemVersionActionException
+							contentDashboardItemVersionActionException) {
+
+					_log.error(contentDashboardItemVersionActionException);
+				}
+
+				return null;
+			});
 	}
 
 	private long _getDDMFormFieldsValueValue(

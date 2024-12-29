@@ -1218,21 +1218,22 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		return TransformUtil.transform(
 			extRepositoryObjects,
 			extRepositoryObject -> {
-				if (extRepositoryObject instanceof
-						ExtRepositoryFileEntryAdapter) {
-
-					ExtRepositoryFileEntryAdapter
-						extRepositoryFileEntryAdapter =
-							(ExtRepositoryFileEntryAdapter)extRepositoryObject;
-
-					if (allowedMimeTypes.contains(
-							extRepositoryFileEntryAdapter.getMimeType())) {
-
-						return extRepositoryObject;
-					}
+				if (!(extRepositoryObject instanceof
+						ExtRepositoryFileEntryAdapter)) {
 
 					return null;
 				}
+
+				ExtRepositoryFileEntryAdapter extRepositoryFileEntryAdapter =
+					(ExtRepositoryFileEntryAdapter)extRepositoryObject;
+
+				if (allowedMimeTypes.contains(
+						extRepositoryFileEntryAdapter.getMimeType())) {
+
+					return extRepositoryObject;
+				}
+
+				return null;
 			});
 	}
 

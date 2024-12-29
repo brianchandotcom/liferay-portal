@@ -1007,17 +1007,17 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			_dlAppService.getFileEntries(
 				webDAVRequest.getGroupId(), parentFolderId),
 			fileEntry -> {
-				if (!DLWebDAVUtil.isRepresentableTitle(
+				if (DLWebDAVUtil.isRepresentableTitle(
 						fileEntry.getFileName())) {
 
-					_log.error(
-						"Unrepresentable WebDAV title for file name " +
-							fileEntry.getFileName());
-
-					return null;
+					return _toResource(webDAVRequest, fileEntry, true);
 				}
 
-				return _toResource(webDAVRequest, fileEntry, true);
+				_log.error(
+					"Unrepresentable WebDAV title for file name " +
+						fileEntry.getFileName());
+
+				return null;
 			});
 	}
 

@@ -30,13 +30,15 @@ public class DDLRecordSetClassTypeReader implements ClassTypeReader {
 		return TransformUtil.transform(
 			DDLRecordSetServiceUtil.getRecordSets(groupIds),
 			recordSet -> {
-				if (recordSet.getScope() ==
+				if (recordSet.getScope() !=
 						DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
 
-					return new DDLRecordSetClassType(
-						recordSet.getRecordSetId(), recordSet.getName(locale),
-						LocaleUtil.toLanguageId(locale));
+					return null;
 				}
+
+				return new DDLRecordSetClassType(
+					recordSet.getRecordSetId(), recordSet.getName(locale),
+					LocaleUtil.toLanguageId(locale));
 			});
 	}
 

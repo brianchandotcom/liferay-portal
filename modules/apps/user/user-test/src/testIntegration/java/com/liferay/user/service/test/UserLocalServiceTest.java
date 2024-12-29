@@ -1262,19 +1262,19 @@ public class UserLocalServiceTest {
 				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 				TestPropsValues.getUserId()));
 
-		List<Ticket> tickets1 = _ticketLocalService.getTickets(
+		List<Ticket> tickets = _ticketLocalService.getTickets(
 			user.getCompanyId(), User.class.getName(), user.getUserId());
 
-		Ticket ticket = tickets1.get(0);
+		Ticket ticket = tickets.get(0);
 
 		Assert.assertFalse(ticket.isExpired());
 
 		_userLocalService.verifyEmailAddress(ticket.getKey());
 
-		List<Ticket> tickets2 = _ticketLocalService.getTickets(
+		tickets = _ticketLocalService.getTickets(
 			user.getCompanyId(), User.class.getName(), user.getUserId());
 
-		Assert.assertEquals(tickets2.toString(), 0, tickets2.size());
+		Assert.assertEquals(tickets.toString(), 0, tickets.size());
 
 		Assert.assertEquals(
 			Authenticator.SUCCESS,

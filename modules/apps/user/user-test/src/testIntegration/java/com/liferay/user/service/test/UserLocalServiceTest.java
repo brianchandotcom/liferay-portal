@@ -1239,9 +1239,7 @@ public class UserLocalServiceTest {
 
 		Ticket ticket = tickets.get(0);
 
-		Date expirationDate = new Date(System.currentTimeMillis());
-
-		ticket.setExpirationDate(expirationDate);
+		ticket.setExpirationDate(new Date(System.currentTimeMillis()));
 
 		ticket = _ticketLocalService.updateTicket(ticket);
 

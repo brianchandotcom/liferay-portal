@@ -2764,7 +2764,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-yaml.jar</file-name>
-				<version>2.18.2</version>
+				<version>2.17.2</version>
 				<project-name>Jackson-dataformat-YAML</project-name>
 				<project-url>https://github.com/FasterXML/jackson-dataformats-text</project-url>
 				<licenses>
@@ -6921,7 +6921,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxws-api.jar</file-name>
-				<version>2.3.0</version>
+				<version>2.3.1</version>
 				<project-name>JAX-WS (JSR 224) API</project-name>
 				<project-url>https://github.com/javaee/jax-ws-spec</project-url>
 				<licenses>

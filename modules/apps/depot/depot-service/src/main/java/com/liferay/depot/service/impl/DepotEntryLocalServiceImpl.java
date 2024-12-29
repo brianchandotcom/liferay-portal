@@ -10,7 +10,6 @@ import com.liferay.depot.exception.DepotEntryGroupException;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.exception.DepotEntryStagedException;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -189,19 +187,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			long groupId, boolean ddmStructuresAvailable, int start, int end)
 		throws PortalException {
 
-		List<DepotEntry> depotEntries = new ArrayList<>();
-
-		List<DepotEntryGroupRel> depotEntryGroupRels =
+		return TransformUtil.transform(
 			_depotEntryGroupRelPersistence.findByDDMSA_TGI(
-				ddmStructuresAvailable, groupId, start, end);
-
-		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-			depotEntries.add(
-				depotEntryLocalService.getDepotEntry(
-					depotEntryGroupRel.getDepotEntryId()));
-		}
-
-		return depotEntries;
+				ddmStructuresAvailable, groupId, start, end),
+			depotEntryGroupRel -> depotEntryLocalService.getDepotEntry(
+				depotEntryGroupRel.getDepotEntryId()));
 	}
 
 	@Override

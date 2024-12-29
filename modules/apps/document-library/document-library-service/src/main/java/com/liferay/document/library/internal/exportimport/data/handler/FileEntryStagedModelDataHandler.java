@@ -89,7 +89,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -151,18 +150,11 @@ public class FileEntryStagedModelDataHandler
 	public List<FileEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFileEntry> dlFileEntries =
+		return TransformUtil.transform(
 			_dlFileEntryLocalService.getDLFileEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<>());
-
-		List<FileEntry> fileEntries = new ArrayList<>();
-
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			fileEntries.add(new LiferayFileEntry(dlFileEntry));
-		}
-
-		return fileEntries;
+				new StagedModelModifiedDateComparator<>()),
+			dlFileEntry -> new LiferayFileEntry(dlFileEntry));
 	}
 
 	@Override

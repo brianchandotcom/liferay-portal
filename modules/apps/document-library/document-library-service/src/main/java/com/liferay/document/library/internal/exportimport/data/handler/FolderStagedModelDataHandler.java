@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,18 +92,11 @@ public class FolderStagedModelDataHandler
 	public List<Folder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFolder> dlFolders =
+		return TransformUtil.transform(
 			_dlFolderLocalService.getDLFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<>());
-
-		List<Folder> folders = new ArrayList<>();
-
-		for (DLFolder dlFolder : dlFolders) {
-			folders.add(new LiferayFolder(dlFolder));
-		}
-
-		return folders;
+				new StagedModelModifiedDateComparator<>()),
+			dlFolder -> new LiferayFolder(dlFolder));
 	}
 
 	@Override

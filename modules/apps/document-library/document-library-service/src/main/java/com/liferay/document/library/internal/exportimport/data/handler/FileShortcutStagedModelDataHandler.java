@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -97,18 +97,11 @@ public class FileShortcutStagedModelDataHandler
 	public List<FileShortcut> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<DLFileShortcut> dlFileShortcuts =
+		return TransformUtil.transform(
 			_dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<>());
-
-		List<FileShortcut> fileShortcuts = new ArrayList<>();
-
-		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
-			fileShortcuts.add(new LiferayFileShortcut(dlFileShortcut));
-		}
-
-		return fileShortcuts;
+				new StagedModelModifiedDateComparator<>()),
+			dlFileShortcut -> new LiferayFileShortcut(dlFileShortcut));
 	}
 
 	@Override

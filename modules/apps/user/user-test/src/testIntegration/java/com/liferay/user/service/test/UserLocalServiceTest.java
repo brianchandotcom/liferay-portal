@@ -1191,6 +1191,10 @@ public class UserLocalServiceTest {
 
 		Ticket ticket = tickets.get(0);
 
+		Assert.assertEquals(
+			TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
+		Assert.assertNotNull(ticket.getExpirationDate());
+
 		ticket.setExpirationDate(new Date(System.currentTimeMillis()));
 
 		ticket = _ticketLocalService.updateTicket(ticket);
@@ -1219,7 +1223,10 @@ public class UserLocalServiceTest {
 
 		Ticket ticket = tickets.get(0);
 
+		Assert.assertEquals(
+			TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
 		Assert.assertFalse(ticket.isExpired());
+		Assert.assertNotNull(ticket.getExpirationDate());
 
 		_userLocalService.verifyEmailAddress(ticket.getKey());
 

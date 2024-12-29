@@ -38,6 +38,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1002,24 +1003,22 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			WebDAVRequest webDAVRequest, long parentFolderId)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
+		return TransformUtil.transform(
+			_dlAppService.getFileEntries(
+				webDAVRequest.getGroupId(), parentFolderId),
+			fileEntry -> {
+				if (!DLWebDAVUtil.isRepresentableTitle(
+						fileEntry.getFileName())) {
 
-		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
-			webDAVRequest.getGroupId(), parentFolderId);
+					_log.error(
+						"Unrepresentable WebDAV title for file name " +
+							fileEntry.getFileName());
 
-		for (FileEntry fileEntry : fileEntries) {
-			if (!DLWebDAVUtil.isRepresentableTitle(fileEntry.getFileName())) {
-				_log.error(
-					"Unrepresentable WebDAV title for file name " +
-						fileEntry.getFileName());
+					return null;
+				}
 
-				continue;
-			}
-
-			resources.add(_toResource(webDAVRequest, fileEntry, true));
-		}
-
-		return resources;
+				return _toResource(webDAVRequest, fileEntry, true);
+			});
 	}
 
 	private FileEntry _getFileEntryByFileName(
@@ -1086,16 +1085,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			WebDAVRequest webDAVRequest, long parentFolderId)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<Folder> folders = _dlAppService.getFolders(
-			webDAVRequest.getGroupId(), parentFolderId, false);
-
-		for (Folder folder : folders) {
-			resources.add(_toResource(webDAVRequest, folder, true));
-		}
-
-		return resources;
+		return TransformUtil.transform(
+			_dlAppService.getFolders(
+				webDAVRequest.getGroupId(), parentFolderId, false),
+			folder -> _toResource(webDAVRequest, folder, true));
 	}
 
 	private long _getParentFolderId(long companyId, String[] pathArray)

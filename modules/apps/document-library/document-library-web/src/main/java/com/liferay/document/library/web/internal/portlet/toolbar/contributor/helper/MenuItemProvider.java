@@ -20,6 +20,7 @@ import com.liferay.document.library.visibility.controller.DLFileEntryTypeVisibil
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -474,34 +475,33 @@ public class MenuItemProvider {
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		List<MenuItem> menuItems = new ArrayList<>();
-
 		List<DLFileEntryType> fileEntryTypes = _getFileEntryTypes(
 			themeDisplay.getScopeGroupId(), folder);
 
-		for (DLFileEntryType fileEntryType : fileEntryTypes) {
-			try {
-				if ((fileEntryType.getFileEntryTypeId() !=
-						DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) &&
-					_isFileEntryTypeVisible(
-						themeDisplay.getUserId(), fileEntryType)) {
+		return TransformUtil.transform(
+			fileEntryTypes,
+			fileEntryType -> {
+				try {
+					if ((fileEntryType.getFileEntryTypeId() !=
+							DLFileEntryTypeConstants.
+								COMPANY_ID_BASIC_DOCUMENT) &&
+						_isFileEntryTypeVisible(
+							themeDisplay.getUserId(), fileEntryType)) {
 
-					MenuItem urlMenuItem = _getFileEntryTypeMenuItem(
-						folder, fileEntryTypes, fileEntryType, themeDisplay,
-						portletRequest);
-
-					menuItems.add(urlMenuItem);
+						return _getFileEntryTypeMenuItem(
+							folder, fileEntryTypes, fileEntryType, themeDisplay,
+							portletRequest);
+					}
 				}
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to add menu item for file entry type " +
-						fileEntryType.getName(),
-					portalException);
-			}
-		}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to add menu item for file entry type " +
+							fileEntryType.getName(),
+						portalException);
+				}
 
-		return menuItems;
+				return null;
+			});
 	}
 
 	private PortletURL _getPortletURL(

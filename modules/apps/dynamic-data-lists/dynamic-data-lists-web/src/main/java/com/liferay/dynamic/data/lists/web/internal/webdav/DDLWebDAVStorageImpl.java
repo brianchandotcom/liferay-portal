@@ -7,11 +7,10 @@ package com.liferay.dynamic.data.lists.web.internal.webdav;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -106,43 +105,25 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private List<Resource> _getStructures(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMStructure> ddmStructures =
+		return TransformUtil.transform(
 			_ddmStructureLocalService.getStructures(
 				webDAVRequest.getGroupId(),
-				_portal.getClassNameId(DDLRecordSet.class));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmStructure, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
+				_portal.getClassNameId(DDLRecordSet.class)),
+			ddmStructure -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmStructure, getRootPath(), true));
 	}
 
 	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMTemplate> ddmTemplates =
+		return TransformUtil.transform(
 			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
 				webDAVRequest.getGroupId(),
 				_portal.getClassNameId(DDLRecordSet.class),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmTemplate, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
+				QueryUtil.ALL_POS, null),
+			ddmTemplate -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true));
 	}
 
 	@Reference

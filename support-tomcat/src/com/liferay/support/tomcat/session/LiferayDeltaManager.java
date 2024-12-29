@@ -18,7 +18,6 @@ import java.util.function.Function;
 import org.apache.catalina.Session;
 import org.apache.catalina.ha.ClusterManager;
 import org.apache.catalina.ha.session.DeltaManager;
-import org.apache.catalina.ha.session.DeltaSession;
 
 /**
  * @author Shuyang Zhou
@@ -108,12 +107,6 @@ public class LiferayDeltaManager extends DeltaManager {
 				_runnables.add(super::getAllClusterSessions);
 			}
 		}
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	protected DeltaSession getNewDeltaSession() {
-		return new LiferayDeltaSession(this);
 	}
 
 	private static final CompletableFuture

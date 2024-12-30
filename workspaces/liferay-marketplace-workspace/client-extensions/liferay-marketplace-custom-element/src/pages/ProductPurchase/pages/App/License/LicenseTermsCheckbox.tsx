@@ -7,7 +7,7 @@ import Checkbox from '@clayui/form/lib/Checkbox';
 import {useSelector} from '@xstate/store/react';
 
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../../../enums/Product';
+import {ProductSpecificationKey} from '../../../../../enums/Product';
 import {Liferay} from '../../../../../liferay/liferay';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
@@ -27,7 +27,7 @@ const LicenseTermsCheckbox = () => {
 	const appUsageTerms = productSpecifications?.find(
 		(specification) =>
 			specification?.specificationKey ===
-			PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL
+			ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL
 	);
 
 	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://')

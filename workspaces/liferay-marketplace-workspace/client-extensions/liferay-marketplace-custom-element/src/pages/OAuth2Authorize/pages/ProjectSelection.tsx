@@ -10,9 +10,9 @@ import {Navigate, useNavigate} from 'react-router-dom';
 import RadioCard from '../../../components/RadioCardList/components/RadioCard';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {convertSize} from '../../../utils/filesize';
 import ContactSupport from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/ContactSupport';
 import {ProductCardRevamp} from '../../GetApp/components/ProductCard/ProductCard';
-import {convertMegabyteToGigabyte} from '../../GetApp/hooks/useGetResourceInfo';
 import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
 
 type ProjectSelectionProps = {
@@ -79,12 +79,11 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 								</div>
 
 								<small className="m-0 project-selection-page-description-text">
-									{`${project.environments.length} Environments, ${project.rootProjectPlanUsage.cpu.free} CPUs, ${convertMegabyteToGigabyte(
-										{
-											inverseOperation: true,
-											value: project.rootProjectPlanUsage
-												.memory.free,
-										}
+									{`${project.environments.length} Environments, ${project.rootProjectPlanUsage.cpu.free} CPUs, ${convertSize(
+										project.rootProjectPlanUsage.memory
+											.free,
+										'MB',
+										'GB'
 									)} GB RAM`}
 								</small>
 

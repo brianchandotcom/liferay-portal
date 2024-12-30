@@ -7,6 +7,7 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import QATable from '../../../../../components/QATable';
+import {ProductSpecificationKey} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {formatDate} from '../../../../../utils/date';
 import formatLocaleCurrency from '../../../../../utils/formatLocaleCurrency';
@@ -18,7 +19,6 @@ import {
 import {safeJSONParse} from '../../../../../utils/util';
 
 import './App.scss';
-import {ProductSpecificationKey} from '../../../../../enums/Product';
 
 const getPriceList = (
 	isCloud: boolean,

@@ -104,7 +104,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 						sendNotificationEmail: form.sendNotificationEmail,
 					}),
 				},
-			});
+			} as Cart);
 
 			await revalidate();
 

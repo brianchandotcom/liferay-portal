@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ORDER_TYPES} from '../../../enums/Order';
-import {ProductType} from '../../../enums/ProductType';
-import {SkuLicenseUsageTypeValue} from '../../../enums/Sku';
+import {Analytics} from '../../../core/Analytics';
+import {OrderTypes} from '../../../enums/Order';
+import {ProductType, SkuOptions} from '../../../enums/Product';
 import headlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {postEmailAppInformation} from '../../../utils/api';
 import {
@@ -14,7 +14,7 @@ import {
 	isCloudProduct,
 } from '../../../utils/productUtils';
 import {getSiteURL} from '../../../utils/site';
-import ProductPurchase, {ProductPurchaseCart} from './ProductPurchase';
+import ProductPurchase from './ProductPurchase';
 
 type ProductPurchaseCartOptions = {
 	isTrialSKU?: number;
@@ -24,18 +24,18 @@ export default class ProductPurchaseApp extends ProductPurchase {
 	protected analyticsTrack(): void {
 		const {isFreeApp} = getProductPriceModel(this.product);
 
-		this.Analytics.track('APP_PURCHASE', {
+		Analytics.track('APP_PURCHASE', {
 			isFreeApp,
 			productName: this.product.name,
 		});
 	}
 
 	public async createOrder(
-		cart: ProductPurchaseCart,
+		cart: Cart,
 		cartOptions: ProductPurchaseCartOptions
 	) {
 		const order = await super.createOrder(
-			this.getAppPurchaseCart(cart, cartOptions)
+			this.getAppPurchaseCart(cart, cartOptions) as Cart
 		);
 
 		await postEmailAppInformation({
@@ -52,7 +52,7 @@ export default class ProductPurchaseApp extends ProductPurchase {
 	}
 
 	private getAppPurchaseCart(
-		cart: ProductPurchaseCart,
+		cart: Cart,
 		cartOptions: ProductPurchaseCartOptions
 	) {
 		const orderTypeExternalReferenceCode =
@@ -71,8 +71,8 @@ export default class ProductPurchaseApp extends ProductPurchase {
 		}
 
 		const skuOptionValue = cartOptions?.isTrialSKU
-			? SkuLicenseUsageTypeValue.TRIAL
-			: SkuLicenseUsageTypeValue.STANDARD;
+			? SkuOptions.TRIAL
+			: SkuOptions.STANDARD;
 
 		return {
 			...baseCart,
@@ -95,9 +95,9 @@ export default class ProductPurchaseApp extends ProductPurchase {
 
 	static getOrderTypeExternalReferenceCode(product: DeliveryProduct) {
 		if (isCloudProduct(product)) {
-			return ORDER_TYPES.CLOUDAPP;
+			return OrderTypes.CLOUDAPP;
 		}
 
-		return ORDER_TYPES.DXPAPP;
+		return OrderTypes.DXPAPP;
 	}
 }

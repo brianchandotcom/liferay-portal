@@ -4,7 +4,7 @@
  */
 
 import i18n from '../../../../../../../i18n';
-import {convertMegabyteToGigabyte} from '../../../../../../GetApp/hooks/useGetResourceInfo';
+import {convertSize} from '../../../../../../../utils/filesize';
 import {ConsoleUserProjectWithExtension} from '../pages/CloudProvisioningOutlet';
 
 const SelectedProjectBanner: React.FC<{
@@ -24,11 +24,10 @@ const SelectedProjectBanner: React.FC<{
 				</small>
 
 				<small className="subscription-banner-text text-nowrap">
-					{`${project?.environments.length} environments, ${project?.rootProjectPlanUsage.cpu.free} CPUs, ${convertMegabyteToGigabyte(
-						{
-							inverseOperation: true,
-							value: project?.rootProjectPlanUsage.memory.free,
-						}
+					{`${project?.environments.length} environments, ${project?.rootProjectPlanUsage.cpu.free} CPUs, ${convertSize(
+						project?.rootProjectPlanUsage.memory.free,
+						'MB',
+						'GB'
 					)} GB RAM`}
 				</small>
 			</span>

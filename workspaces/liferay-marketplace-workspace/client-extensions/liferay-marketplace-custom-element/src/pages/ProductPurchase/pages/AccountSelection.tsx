@@ -4,14 +4,13 @@
  */
 
 import {ComponentProps, ReactNode, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import AccountSelection from '../../../components/Checkout/AccountSelection';
 import ProductPurchase from '../../../components/ProductPurchase';
+import ProductPurchaseFooter from '../../../components/ProductPurchase/Footer';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {useProductPurchaseOutletContext} from '../ProductPurchaseOutlet';
-import ProductPurchaseFooter from '../../../components/ProductPurchase/Footer';
 
 type ProductPurchaseAccountSelectionProps = {
 	children?: ReactNode;
@@ -22,12 +21,11 @@ const ProductPurchaseAccountSelection: React.FC<
 	ProductPurchaseAccountSelectionProps
 > = ({children, footerProps}) => {
 	const {myUserAccount} = useMarketplaceContext();
-	const navigate = useNavigate();
 
 	const {
 		accounts,
-		productTypeRoute,
 		actions: {nextStep},
+		productTypeRoute,
 		selectedAccount,
 		setSelectedAccount,
 	} = useProductPurchaseOutletContext();
@@ -41,7 +39,11 @@ const ProductPurchaseAccountSelection: React.FC<
 		) {
 			nextStep();
 		}
-	}, [accounts.length, navigate]);
+	}, [
+		accounts.length,
+		nextStep,
+		productTypeMetadata?.skipSingleAccountSelection,
+	]);
 
 	return (
 		<ProductPurchase.Shell

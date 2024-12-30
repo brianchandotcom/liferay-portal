@@ -5,7 +5,7 @@
 
 import useSWR from 'swr';
 
-import {PRODUCT_SPECIFICATION_KEY} from '../../../enums/Product';
+import {ProductSpecificationKey} from '../../../enums/Product';
 import {Liferay} from '../../../liferay/liferay';
 import consoleOAuth2 from '../../../services/oauth/Console';
 import {ConsoleUserProject} from '../../../services/oauth/types';
@@ -42,12 +42,12 @@ const checkResources = (
 	};
 
 	const cpu = getProductSpecificationValue(
-		PRODUCT_SPECIFICATION_KEY.APP_BUILD_NUMBER_OF_CPUS,
+		ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
 		product
 	);
 
 	const ram = getProductSpecificationValue(
-		PRODUCT_SPECIFICATION_KEY.APP_BUILD_RAM_IN_GBS,
+		ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
 		product,
 		'0'
 	);

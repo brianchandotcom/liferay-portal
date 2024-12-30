@@ -9,7 +9,7 @@ import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import LicenseCard from './LicenseCard';
 
 const PaidLicense = () => {
-	const {product, productPurchaseCart} = useProductPurchaseOutletContext();
+	const {product} = useProductPurchaseOutletContext();
 
 	const purchasebleSkus = (product.skus || []).filter(
 		(sku) =>
@@ -30,15 +30,16 @@ const PaidLicense = () => {
 
 				return (
 					<LicenseCard
-						cartUtil={productPurchaseCart}
 						key={index}
 						licenseType={
 							skuOption?.skuOptionValueKey?.toLocaleLowerCase() as string
 						}
-						licensetiers={product.skus?.filter(
-							({id, tierPrices}) =>
-								!!tierPrices.length && sku.id === id
-						)}
+						licensetiers={
+							product.skus?.filter(
+								({id, tierPrices}) =>
+									!!tierPrices?.length && sku.id === id
+							) as any
+						}
 						sku={sku}
 					/>
 				);

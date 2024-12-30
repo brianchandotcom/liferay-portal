@@ -110,9 +110,9 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 					? ProductPurchase
 					: new ProductPurchase(selectedAccount, channel, product);
 
-			const _cart = await _productPurchase.createOrder(cart, cartOptions);
+			const order = await _productPurchase.createOrder(cart, cartOptions);
 
-			const link = await _productPurchase.getNextStepsLink(_cart);
+			const link = await _productPurchase.getNextStepsLink(order);
 
 			if (link.startsWith('http')) {
 				window.location.href = link;

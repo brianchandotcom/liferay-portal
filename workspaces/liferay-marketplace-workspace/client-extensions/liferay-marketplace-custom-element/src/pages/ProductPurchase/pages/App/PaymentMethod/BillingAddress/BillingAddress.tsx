@@ -221,6 +221,7 @@ export function BillingAddress(props: BillingAddressProps) {
 
 				return (
 					<RadioCard
+						className="mb-4"
 						description={description}
 						key={index}
 						onChange={() => {

@@ -44,14 +44,14 @@ export const productTypeRoutes = {
 			{
 				element: AppAccountSelection,
 				index: true,
-				title: i18n.translate('account-selection'),
+				title: i18n.translate('account'),
 			},
 			{
 				element: ProjectSelection,
 				path: 'project',
 				stepVisible: (product: DeliveryProduct) =>
 					isCloudProduct(product),
-				title: i18n.translate('projects'),
+				title: i18n.translate('project'),
 			},
 			{
 				element: License,
@@ -61,7 +61,7 @@ export const productTypeRoutes = {
 			{
 				element: PaymentMethod,
 				path: 'payment-method',
-				title: i18n.translate('payment-method'),
+				title: i18n.translate('payment'),
 			},
 		],
 	},

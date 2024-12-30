@@ -7,6 +7,8 @@ import {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {Analytics} from '../../core/Analytics';
+import {SkuOptions} from '../../enums/Product';
 import useAccountAddresses from '../../hooks/useAccountAddresses';
 import useCart from '../../hooks/useCart';
 import useCommerceRegions from '../../hooks/useCommerceRegions';
@@ -20,6 +22,7 @@ import {
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
+import {getProductPriceModel} from '../../utils/productUtils';
 import {useGetAppContext} from './GetAppContextProvider';
 import ProductHeader from './containers/ProductHeader';
 import ProductStepWizard from './containers/ProductStepWizard';
@@ -30,9 +33,6 @@ import {getProductSpecificationValues} from './utils/getProductSpecificationValu
 import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
-import {SkuOptions} from '../../enums/Product';
-import {Analytics} from '../../core/Analytics';
-import {getProductPriceModel} from '../../utils/productUtils';
 import './styles/index.scss';
 
 const getProductBasePriceAndTrial = (

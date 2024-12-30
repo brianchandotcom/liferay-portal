@@ -70,8 +70,7 @@ const AccountForm = () => {
 		pageSize: 50,
 	});
 
-	const onSubmit = () =>
-		handlePurchase(undefined, ProductPurchaseSolutionTrial);
+	const onSubmit = () => handlePurchase(ProductPurchaseSolutionTrial);
 
 	if (isLoading || isValidating) {
 		return <Loading />;

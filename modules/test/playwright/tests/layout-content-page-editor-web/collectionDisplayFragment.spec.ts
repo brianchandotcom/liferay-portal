@@ -165,6 +165,10 @@ test(
 
 		await pageEditorPage.selectFragment(relatedCollectionId);
 
+		await page.locator('.page-editor__disabled-area').first().click();
+
+		await pageEditorPage.selectFragment(relatedCollectionId);
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Filter Collection'}),

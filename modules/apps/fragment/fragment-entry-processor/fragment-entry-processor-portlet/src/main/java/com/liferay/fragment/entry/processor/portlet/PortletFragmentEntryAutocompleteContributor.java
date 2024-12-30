@@ -8,6 +8,7 @@ package com.liferay.fragment.entry.processor.portlet;
 import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,15 +27,17 @@ public class PortletFragmentEntryAutocompleteContributor
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (String alias : _portletRegistry.getPortletAliases()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"content",
-					StringBundler.concat(
-						"<lfr-widget-", alias, "></lfr-widget-", alias, ">")
-				).put(
-					"name", "lfr-widget-" + alias
-				));
+		if (FeatureFlagManagerUtil.isEnabled("LPD-40535")) {
+			for (String alias : _portletRegistry.getPortletAliases()) {
+				jsonArray.put(
+					JSONUtil.put(
+						"content",
+						StringBundler.concat(
+							"<lfr-widget-", alias, "></lfr-widget-", alias, ">")
+					).put(
+						"name", "lfr-widget-" + alias
+					));
+			}
 		}
 
 		return jsonArray;

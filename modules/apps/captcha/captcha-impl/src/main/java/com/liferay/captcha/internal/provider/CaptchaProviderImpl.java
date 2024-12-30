@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Lily Chi
  */
-@Component(
-	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	service = CaptchaProvider.class
-)
+@Component(service = CaptchaProvider.class)
 public class CaptchaProviderImpl implements CaptchaProvider {
 
 	@Override

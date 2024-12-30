@@ -65,7 +65,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 				</div>
 			</div>
 
-			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="item-acceptance-step-help" label="item-acceptance-step" />
+			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="item-acceptance-step" label="item-acceptance-step" />
 
 			<div class="row">
 				<div class="col">

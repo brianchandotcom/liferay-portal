@@ -2096,9 +2096,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title 1");
 
-		WebContent.addCP(webContentTitle = "WebContent Title 1.1");
-
-		WebContent.publishWithPermissions();
+		WebContent.editCP(webContentTitleEdit = "WebContent Title 1.1");
 
 		WebContent.viewVersion(
 			version = "1.1",

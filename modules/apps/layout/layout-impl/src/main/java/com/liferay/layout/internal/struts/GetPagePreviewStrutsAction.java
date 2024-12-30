@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -174,13 +175,13 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			layout.includeLayoutContent(
 				httpServletRequest, httpServletResponse);
 
-			LayoutSet layoutSet = themeDisplay.getLayoutSet();
+			Theme theme = layout.getTheme();
 
 			Document document = Jsoup.parse(
 				ThemeUtil.include(
 					ServletContextPool.get(_portal.getServletContextName()),
 					httpServletRequest, httpServletResponse,
-					"portal_normal.ftl", layoutSet.getTheme(), false));
+					"portal_normal.ftl", theme, false));
 
 			Element element = document.getElementById("content");
 
@@ -188,7 +189,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Theme ", layoutSet.getThemeId(),
+							"Theme ", theme.getThemeId(),
 							" lacks a tag with ID 'content', replacing all ",
 							"body content."));
 				}

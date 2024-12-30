@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.frontend.data.set.provider.search,\
 	com.liferay.frontend.data.set.resolver,\
 	com.liferay.frontend.data.set.sort,\
+	com.liferay.frontend.data.set.url,\
 	com.liferay.frontend.data.set.view,\
 	com.liferay.frontend.data.set.view.cards,\
 	com.liferay.frontend.data.set.view.list,\

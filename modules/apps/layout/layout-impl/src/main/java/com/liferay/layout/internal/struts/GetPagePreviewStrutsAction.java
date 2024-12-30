@@ -132,14 +132,18 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 			themeDisplay.setLocale(LocaleUtil.fromLanguageId(languageId));
 
+			Layout layout = themeDisplay.getLayout();
+
+			Theme theme = layout.getTheme();
+
+			themeDisplay.setLookAndFeel(theme, layout.getColorScheme());
+
 			themeDisplay.setSignedIn(false);
 
 			User guestUser = _userLocalService.getGuestUser(
 				themeDisplay.getCompanyId());
 
 			themeDisplay.setUser(guestUser);
-
-			Layout layout = themeDisplay.getLayout();
 
 			layout.setClassNameId(0);
 
@@ -174,8 +178,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 			layout.includeLayoutContent(
 				httpServletRequest, httpServletResponse);
-
-			Theme theme = layout.getTheme();
 
 			Document document = Jsoup.parse(
 				ThemeUtil.include(

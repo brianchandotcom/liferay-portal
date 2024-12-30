@@ -6,6 +6,7 @@
 package com.liferay.layout.utility.page.status.internal.struts;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -91,13 +92,42 @@ public class StatusStrutsActionTest {
 	public void testExecuteWithThemeWithoutElementWithIdContent()
 		throws Exception {
 
-		_testExecute(
-			StringBundler.concat(_HTML_INIT, _STATUS_PAGE_CONTENT, _HTML_END),
-			StringBundler.concat(
-				_HTML_INIT + RandomTestUtil.randomString(), "<div id=\"",
-				RandomTestUtil.randomString(), "\">",
-				RandomTestUtil.randomString(), "</div>",
-				RandomTestUtil.randomString() + _HTML_END));
+		Mockito.reset(_log);
+		Mockito.when(
+			_log.isWarnEnabled()
+		).thenReturn(
+			true
+		);
+
+		String expected = StringBundler.concat(
+			_HTML_INIT, _STATUS_PAGE_CONTENT, _HTML_END);
+		String html = StringBundler.concat(
+			_HTML_INIT + RandomTestUtil.randomString(), "<div id=\"",
+			RandomTestUtil.randomString(), "\">", RandomTestUtil.randomString(),
+			"</div>", RandomTestUtil.randomString() + _HTML_END);
+
+		_testExecute(expected, html);
+
+		Mockito.verify(
+			_log
+		).isWarnEnabled();
+
+		Mockito.verify(
+			_log
+		).warn(
+			"Theme " + _layoutSet.getThemeId() +
+				" lacks a tag with ID 'content', replacing all body content."
+		);
+
+		Mockito.reset(_log);
+
+		_testExecute(expected, html);
+
+		Mockito.verify(
+			_log
+		).isWarnEnabled();
+
+		Mockito.verifyNoMoreInteractions(_log);
 	}
 
 	private static void _setUpHttpServletRequest() {
@@ -119,6 +149,12 @@ public class StatusStrutsActionTest {
 			_layoutSet.getTheme()
 		).thenReturn(
 			_theme
+		);
+
+		Mockito.when(
+			_layoutSet.getThemeId()
+		).thenReturn(
+			RandomTestUtil.randomString()
 		);
 
 		Mockito.when(
@@ -159,6 +195,8 @@ public class StatusStrutsActionTest {
 			_statusStrutsAction, "_layoutSetLocalService",
 			_layoutSetLocalService);
 
+		ReflectionTestUtil.setFieldValue(_statusStrutsAction, "_log", _log);
+
 		ReflectionTestUtil.setFieldValue(
 			_statusStrutsAction, "_servletContext", _servletContext);
 	}
@@ -194,6 +232,8 @@ public class StatusStrutsActionTest {
 
 	private static final String _STATUS_PAGE_CONTENT =
 		RandomTestUtil.randomString();
+
+	private static final Log _log = Mockito.mock(Log.class);
 
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);

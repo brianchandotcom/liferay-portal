@@ -174,10 +174,10 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: false,
 			target: page.locator('.dropdown-menu', {hasText: 'Blogs Entry'}),
-			trigger: page.getByLabel('Item Type'),
+			trigger: page.getByLabel('Item Type', {exact: true}),
 		});
 
-		await page.locator('label').filter({hasText: 'Blogs Entry'}).click();
+		await page.getByLabel('Blogs Entry').check();
 
 		await page.locator('body').click();
 
@@ -187,7 +187,7 @@ test(
 			page.getByText('There are 0 results for Blogs Entry.')
 		).toBeVisible();
 
-		await page.locator('.btn-primary', {hasText: 'Save'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		// Assert empty message in edit mode
 
@@ -231,7 +231,9 @@ testWithIsolatedSite(
 			'Collection Display'
 		);
 
-		await page.locator('.lfr-layout-structure-item-collection').click();
+		await pageEditorPage.selectFragment(
+			await pageEditorPage.getFragmentId('Collection Display')
+		);
 
 		await pageEditorPage.chooseCollectionDisplayOption(
 			'Collection Providers',

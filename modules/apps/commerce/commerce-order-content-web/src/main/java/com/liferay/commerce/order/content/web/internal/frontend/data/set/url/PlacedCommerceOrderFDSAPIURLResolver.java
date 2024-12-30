@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend.data.set.resolver;
+package com.liferay.commerce.order.content.web.internal.frontend.data.set.url;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.frontend.data.set.resolver.FDSAPIURLResolver;
+import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -21,18 +21,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Gianmarco Brunialti Masera
+ * @author Balazs Breier
  */
 @Component(
-	property = "fds.rest.application.key=/headless-commerce-delivery-cart/v1.0/Cart",
+	property = "fds.rest.application.key=/headless-commerce-delivery-order/v1.0/PlacedOrder",
 	service = FDSAPIURLResolver.class
 )
-public class PendingCommerceOrderFDSAPIURLResolver
-	implements FDSAPIURLResolver {
+public class PlacedCommerceOrderFDSAPIURLResolver implements FDSAPIURLResolver {
 
 	@Override
 	public String getSchema() {
-		return "Cart";
+		return "PlacedOrder";
 	}
 
 	@Override
@@ -43,28 +42,39 @@ public class PendingCommerceOrderFDSAPIURLResolver
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		AccountEntry accountEntry = commerceContext.getAccountEntry();
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(
-				commerceContext.getCommerceChannelId());
-		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+		_accountEntry = commerceContext.getAccountEntry();
+
+		if (_accountEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		_commerceChannel = _commerceChannelLocalService.getCommerceChannel(
+			commerceContext.getCommerceChannelId());
+
+		String externalReferenceCode = StringPool.BLANK;
+
+		if (baseURL.startsWith("/v1.0/channels/by-externalReferenceCode")) {
+			externalReferenceCode = _commerceChannel.getExternalReferenceCode();
+		}
 
 		return StringUtil.replace(
 			baseURL,
 			new String[] {
-				"{accountExternalReferenceCode}", "{accountId}", "{cartId}",
+				"{accountExternalReferenceCode}", "{accountId}",
 				"{channelExternalReferenceCode}", "{channelId}",
 				"{externalReferenceCode}"
 			},
 			new String[] {
-				accountEntry.getExternalReferenceCode(),
-				String.valueOf(accountEntry.getAccountEntryId()),
-				String.valueOf(commerceOrder.getCommerceOrderId()),
-				commerceChannel.getExternalReferenceCode(),
-				String.valueOf(commerceContext.getCommerceChannelId()),
-				commerceOrder.getExternalReferenceCode()
+				_accountEntry.getExternalReferenceCode(),
+				String.valueOf(_accountEntry.getAccountEntryId()),
+				_commerceChannel.getExternalReferenceCode(),
+				String.valueOf(_commerceChannel.getCommerceChannelId()),
+				externalReferenceCode
 			});
 	}
+
+	private AccountEntry _accountEntry;
+	private CommerceChannel _commerceChannel;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

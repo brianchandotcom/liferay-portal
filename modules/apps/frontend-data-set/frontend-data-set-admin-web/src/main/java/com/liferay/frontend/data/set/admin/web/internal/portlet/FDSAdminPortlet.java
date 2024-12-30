@@ -10,7 +10,7 @@ import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
 import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext;
-import com.liferay.frontend.data.set.resolver.FDSAPIURLResolverRegistry;
+import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;

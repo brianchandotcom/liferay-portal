@@ -47,7 +47,7 @@ export class DocumentLibraryEditDocumentTypesPage {
 		siteUrl?: Site['friendlyUrlPath']
 	) {
 		await this.goto(siteUrl);
-		await this.addField('Text');
+		await this.addField('Text', siteUrl);
 		await this.page.getByRole('tab', {name: 'Basic'}).click();
 		await this.page.getByLabel('Required Field').check();
 		await this.page.getByRole('tab', {name: 'Advanced'}).click();

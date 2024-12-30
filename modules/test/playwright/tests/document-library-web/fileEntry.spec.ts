@@ -574,12 +574,10 @@ test(
 			site.friendlyUrlPath
 		);
 
-		await page.getByLabel('Title Required').click();
 		await page.getByLabel('Title Required').fill(getRandomString());
-		await page.getByLabel('Text').click();
 		await page.getByLabel('Text').fill(getRandomString());
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+		await documentLibraryEditFilePage.publishButton.click();
 
 		await waitForAlert(
 			page,

@@ -52,7 +52,7 @@ public class CaptchaConfigurationTest {
 
 	@Test
 	public void testCompanyCaptchaConfiguration() throws Exception {
-		try (ConfigurationTemporarySwapper onfigurationTemporarySwapper =
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CaptchaConfiguration.class.getName(),
 					new HashMapDictionaryBuilder(
@@ -114,7 +114,7 @@ public class CaptchaConfigurationTest {
 
 	@Test
 	public void testSystemCaptchaConfiguration() throws Exception {
-		try (ConfigurationTemporarySwapper onfigurationTemporarySwapper =
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CaptchaConfiguration.class.getName(),
 					new HashMapDictionaryBuilder(

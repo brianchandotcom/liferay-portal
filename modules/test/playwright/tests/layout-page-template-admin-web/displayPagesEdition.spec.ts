@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -19,6 +20,7 @@ import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
 } from '../setup/page-management-site/constants/animals';
+import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -715,6 +717,128 @@ test.describe('Preview Item', () => {
 					timeout: 100,
 				});
 			}).toPass();
+		}
+	);
+});
+
+test.describe('Object Display page', () => {
+	test(
+		'Can display relationship element in display page',
+		{tag: '@LPS-191554'},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create DPT for Lemon Basket
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Lemon Basket',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add a collection display fragment with related collection provider
+
+			await pageEditorPage.addFragment(
+				'Content Display',
+				'Collection Display'
+			);
+
+			await pageEditorPage.chooseCollectionDisplayOption(
+				'Related Items Collection Providers',
+				'Lemon Basket to Lemon'
+			);
+
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Heading',
+				page.locator('.page-editor__collection-item.empty').last()
+			);
+
+			// Map editable to field
+
+			const headingFragmentId =
+				await pageEditorPage.getFragmentId('Heading');
+
+			await pageEditorPage.selectEditable(
+				headingFragmentId,
+				'element-text'
+			);
+
+			await page.getByLabel('Field').selectOption('Lemon History');
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create a lemon basket and lemons
+
+			const lemonBasket = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					lemonDimensions: ['large'],
+					material: 'plastic',
+				},
+				'c/lemonbaskets',
+				pageManagementSite.key
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					lemonHistory: 'one',
+					lemonSize: 'lemonSize',
+					lemonWeight: 5,
+					r_lemonBasketToLemons_c_lemonBasketId: lemonBasket.id,
+				},
+				'c/lemons',
+				pageManagementSite.key
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					lemonHistory: 'two',
+					lemonSize: 'lemonSize',
+					lemonWeight: 5,
+					r_lemonBasketToLemons_c_lemonBasketId: lemonBasket.id,
+				},
+				'c/lemons',
+				pageManagementSite.key
+			);
+
+			// Go to lemon basket display page
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon Basket')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${lemonBasket.id}`
+			);
+
+			// Assert collection contains all lemons
+
+			await expect(page.getByText('one')).toBeVisible();
+			await expect(page.getByText('two')).toBeVisible();
 		}
 	);
 });

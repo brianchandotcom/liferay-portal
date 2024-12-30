@@ -271,7 +271,7 @@ definition {
 		}
 
 		task ("View web content is shown in web content admin after published") {
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
 		}

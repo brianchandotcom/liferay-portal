@@ -125,6 +125,7 @@ export class HeadlessDeliveryApiHelper {
 		blog?: {
 			articleBody?: string;
 			headline?: string;
+			keywords?: string[];
 		}
 	): Promise<any> {
 		blog = {

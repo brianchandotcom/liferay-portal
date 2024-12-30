@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -86,6 +88,9 @@ public class RESTClientTemplateContextContributor
 			AccessControlContext accessControlContext =
 				AccessControlUtil.getAccessControlContext();
 
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			try {
 				AccessControlUtil.setAccessControlContext(null);
 
@@ -100,6 +105,8 @@ public class RESTClientTemplateContextContributor
 			}
 			finally {
 				AccessControlUtil.setAccessControlContext(accessControlContext);
+
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			}
 
 			String responseString = unsyncStringWriter.toString();

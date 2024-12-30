@@ -454,6 +454,7 @@ export default {
 		'Select the offering of Liferay your app is compatible with. The compatibility selections will determine on what platforms your app is tested.',
 	'select-the-versions-of-liferay-that-your-app-is-compatible-with':
 		'Select the versions of Liferay that your app is compatible with.',
+	'selected-project': 'Selected Project',
 	'self-managed': 'Self-Managed',
 	'send-request': 'Send Request',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',

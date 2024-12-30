@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect} from 'react';
 import {useSelector} from '@xstate/store/react';
+import {useCallback, useEffect} from 'react';
 
 import {Liferay} from '../liferay/liferay';
+import {cartStore} from '../pages/ProductPurchase/store';
 import headlessCommerceDeliveryCart from '../services/rest/HeadlessCommerceDeliveryCart';
 import {createCart} from '../utils/api';
-import {cartStore} from '../pages/ProductPurchase/store';
 
 const channelId = Liferay.CommerceContext.commerceChannelId;
 
@@ -79,7 +79,7 @@ const useProductPurchaseCart = (
 				.deleteCart(id)
 				.then(() => cartStore.send({type: 'reset'}))
 				.catch(console.error),
-		[setCart, setCartItems]
+		[]
 	);
 
 	useEffect(() => {
@@ -120,7 +120,7 @@ const useProductPurchaseCart = (
 
 			setCartItems(cartItems);
 		})();
-	}, [accountId, product?.id, removeCart, setCart, setCartItems]);
+	}, [accountId, product.productId, removeCart, setCart, setCartItems]);
 
 	return {
 		addCart,

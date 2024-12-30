@@ -37,7 +37,6 @@ const getPaymentMethods = (
 export function PaymentMethodSelector({
 	selectedPaymentMethod,
 	setSelectedPaymentMethod,
-	step,
 }: {
 	enableTrial: boolean;
 	selectedPaymentMethod: PaymentMethod;
@@ -66,7 +65,6 @@ export function PaymentMethodSelector({
 						}
 					}}
 					selected={paymentMethod.method === selectedPaymentMethod}
-					step={step}
 				/>
 			))}
 		</>

@@ -4,11 +4,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
-
-import './AppFlowListItem.scss';
-
 import classNames from 'classnames';
 
+import './AppFlowListItem.scss';
 interface AppFlowListItemProps {
 	checked?: boolean;
 	selected?: boolean;

@@ -9,18 +9,18 @@ import {useMemo} from 'react';
 
 import CardButton from '../../../../../components/CardButton/CardButton';
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import {SkuOptions} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
+import {getSkuByOptionValueKey} from '../../../../../utils/productUtils';
+import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {
 	LicenseType,
 	productPurchaseStore,
 } from '../../../store/AppPurchaseStore';
-import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
+import {PaymentMethodType} from '../../../types';
 import PaidLicense from './PaidLicense';
 import TrialLicense from './TrialLicense';
 
-import {getSkuByOptionValueKey} from '../../../../../utils/productUtils';
-import {SkuLicenseUsageTypeValue} from '../../../../../enums/Sku';
-import {PaymentMethodType} from '../../../types';
 import '../../../../GetApp/styles/index.scss';
 
 const isContinueButtonDisabled = () => {
@@ -52,11 +52,8 @@ const License = () => {
 	const licenseOptions = useMemo(
 		() => [
 			{
-				disabled: !getSkuByOptionValueKey(
-					product,
-					SkuLicenseUsageTypeValue.TRIAL
-				),
 				description: 'Try now. Pay later.',
+				disabled: !getSkuByOptionValueKey(product, SkuOptions.TRIAL),
 				icon: 'check-circle',
 				title: '30-day Trial',
 				type: 'TRIAL',
@@ -68,7 +65,7 @@ const License = () => {
 				type: 'PAID',
 			},
 		],
-		[]
+		[product]
 	);
 
 	const Component = licenseType === 'PAID' ? PaidLicense : TrialLicense;

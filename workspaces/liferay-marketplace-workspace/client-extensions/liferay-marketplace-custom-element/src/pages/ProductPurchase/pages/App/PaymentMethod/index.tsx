@@ -67,15 +67,15 @@ const isPrimaryButtonActive = () => {
 export default function PaymentMethod() {
 	const navigate = useNavigate();
 
-	const {payment: paymentStore, licenseType} = useSelector(
+	const {licenseType, payment: paymentStore} = useSelector(
 		productPurchaseStore,
 		(state) => state.context
 	);
 
 	const {
+		actions: {previousStep},
 		handlePurchase,
 		productPurchaseCart: {cart, cartItems},
-		actions: {previousStep},
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
@@ -88,7 +88,9 @@ export default function PaymentMethod() {
 
 		await handlePurchase(ProductPurchaseApp, {
 			...cart,
-			cartItems: cartItems,
+			billingAddress: paymentStore.billingAddress,
+			cartItems,
+			shippingAddress: paymentStore.billingAddress,
 		});
 	};
 
@@ -99,7 +101,7 @@ export default function PaymentMethod() {
 
 			navigate('/');
 		}
-	}, []);
+	}, [licenseType, navigate]);
 
 	const {data: addressResponse = {items: []}} = useAccountAddresses(
 		selectedAccount?.id

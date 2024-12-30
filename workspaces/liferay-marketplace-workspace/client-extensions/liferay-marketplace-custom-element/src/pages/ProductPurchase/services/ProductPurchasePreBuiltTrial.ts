@@ -5,12 +5,12 @@
 
 import {OrderTypes} from '../../../enums/Order';
 import trialOAuth2 from '../../../services/oauth/Trial';
-import ProductPurchase, {ProductPurchaseCart} from './ProductPurchase';
+import ProductPurchase from './ProductPurchase';
 
 export default class ProductPurchaseSolutionTrial extends ProductPurchase {
 	protected orderTypeExternalReferenceCode = OrderTypes.SOLUTIONS7;
 
-	public async createOrder(cart?: ProductPurchaseCart): Promise<Cart> {
+	public async createOrder(cart?: Cart): Promise<Cart> {
 		const order = await super.createOrder(cart);
 
 		await trialOAuth2.provisioningTrial(order.id);

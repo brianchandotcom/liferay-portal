@@ -33,7 +33,10 @@ const LicenseDetailsModalHeader: React.FC<LicenseDetailsModalHeaderProps> = ({
 			/>
 		</div>
 
-		<AccountEmailInfo userAccount={myUserAccount} />
+		<AccountEmailInfo
+			image={myUserAccount.logoURL}
+			name={myUserAccount.name}
+		/>
 	</div>
 );
 

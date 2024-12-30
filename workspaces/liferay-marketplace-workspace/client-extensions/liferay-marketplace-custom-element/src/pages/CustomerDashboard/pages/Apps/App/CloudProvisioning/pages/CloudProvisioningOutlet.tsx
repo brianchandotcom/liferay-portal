@@ -83,15 +83,6 @@ const getProductRequirements = (product: DeliveryProduct) => {
 	return requirements;
 };
 
-const steps = [
-	{key: '', title: i18n.translate('project')},
-	{key: 'environment', title: i18n.translate('environment')},
-	{
-		key: 'installation',
-		title: i18n.translate('installation'),
-	},
-];
-
 const CloudProvisioningOutlet = () => {
 	const {data: selectedAccount} = useAccount();
 	const {orderId} = useParams();
@@ -130,8 +121,6 @@ const CloudProvisioningOutlet = () => {
 		[resourceResponse?.resourceRequest?.userProjects, productRequirements]
 	);
 
-	const path = pathname.split('/').at(-1) as string;
-
 	const project = form.watch('project');
 
 	const onSubmit = async ({
@@ -166,9 +155,24 @@ const CloudProvisioningOutlet = () => {
 				</ProductPurchase.Header>
 
 				<ProductPurchase.Steps
-					activeKey={path === 'install' ? '' : path}
 					className="mt-5 px-8"
-					steps={steps}
+					steps={[
+						{
+							active: pathname === '/',
+							key: '',
+							title: i18n.translate('project'),
+						},
+						{
+							active: pathname === '/environment',
+							key: 'environment',
+							title: i18n.translate('environment'),
+						},
+						{
+							active: pathname === '/installation',
+							key: 'installation',
+							title: i18n.translate('installation'),
+						},
+					]}
 				/>
 
 				<ProductPurchase.Body>

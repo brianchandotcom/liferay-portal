@@ -89,7 +89,7 @@ const AnalyticsProvisioning = () => {
 
 		productPurchase.setForm(form);
 
-		await handlePurchase(undefined, productPurchase);
+		await handlePurchase(productPurchase);
 	};
 
 	useEffect(() => {

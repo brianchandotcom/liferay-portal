@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
@@ -85,6 +86,20 @@ public class StatusStrutsActionTest {
 				RandomTestUtil.randomString(), "</div>", bodyContentEnd));
 	}
 
+	@Test
+	@TestInfo("LPD-1226")
+	public void testExecuteWithThemeWithoutElementWithIdContent()
+		throws Exception {
+
+		_testExecute(
+			StringBundler.concat(_HTML_INIT, _STATUS_PAGE_CONTENT, _HTML_END),
+			StringBundler.concat(
+				_HTML_INIT + RandomTestUtil.randomString(), "<div id=\"",
+				RandomTestUtil.randomString(), "\">",
+				RandomTestUtil.randomString(), "</div>",
+				RandomTestUtil.randomString() + _HTML_END));
+	}
+
 	private static void _setUpHttpServletRequest() {
 		Mockito.when(
 			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
@@ -149,6 +164,8 @@ public class StatusStrutsActionTest {
 	}
 
 	private void _testExecute(String expected, String html) throws Exception {
+		_servletResponseUtilMockedStatic.clearInvocations();
+
 		_themeUtilMockedStatic.when(
 			() -> ThemeUtil.include(
 				_servletContext, _httpServletRequest, _httpServletResponse,

@@ -69,46 +69,7 @@ public class CaptchaConfigurationTest {
 							"createAccountCaptchaEnabled", true
 						).build())) {
 
-			String portletURL = PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					_getMockHttpServletRequest(), PortletKeys.LOGIN,
-					_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/login/create_account"
-			).setParameter(
-				"saveLastPath", false
-			).setPortletMode(
-				PortletMode.VIEW
-			).setWindowState(
-				WindowState.MAXIMIZED
-			).buildString();
-
-			HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(
-				portletURL
-			).openConnection();
-
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
-
-			boolean captchaRendered = false;
-
-			try (BufferedReader reader = new BufferedReader(
-					new InputStreamReader(
-						httpURLConnection.getInputStream()))) {
-
-				String line;
-
-				while ((line = reader.readLine()) != null) {
-					if (line.contains("CAPTCHA")) {
-						captchaRendered = true;
-
-						break;
-					}
-				}
-			}
-
-			Assert.assertTrue(captchaRendered);
+			Assert.assertTrue(_isCaptchaRendered());
 		}
 	}
 
@@ -122,46 +83,7 @@ public class CaptchaConfigurationTest {
 						"createAccountCaptchaEnabled", false
 					).build())) {
 
-			String portletURL = PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					_getMockHttpServletRequest(), PortletKeys.LOGIN,
-					_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/login/create_account"
-			).setParameter(
-				"saveLastPath", false
-			).setPortletMode(
-				PortletMode.VIEW
-			).setWindowState(
-				WindowState.MAXIMIZED
-			).buildString();
-
-			HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(
-				portletURL
-			).openConnection();
-
-			Assert.assertEquals(
-				HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
-
-			boolean captchaRendered = false;
-
-			try (BufferedReader reader = new BufferedReader(
-					new InputStreamReader(
-						httpURLConnection.getInputStream()))) {
-
-				String line;
-
-				while ((line = reader.readLine()) != null) {
-					if (line.contains("CAPTCHA")) {
-						captchaRendered = true;
-
-						break;
-					}
-				}
-			}
-
-			Assert.assertFalse(captchaRendered);
+			Assert.assertFalse(_isCaptchaRendered());
 		}
 	}
 
@@ -184,6 +106,44 @@ public class CaptchaConfigurationTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockHttpServletRequest;
+	}
+
+	private boolean _isCaptchaRendered() throws Exception {
+		String portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_getMockHttpServletRequest(), PortletKeys.LOGIN,
+				_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/login/create_account"
+		).setParameter(
+			"saveLastPath", false
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).buildString();
+
+		HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(
+			portletURL
+		).openConnection();
+
+		Assert.assertEquals(
+			HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
+
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(httpURLConnection.getInputStream()))) {
+
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				if (line.contains("CAPTCHA")) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	@Inject

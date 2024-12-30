@@ -1032,25 +1032,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext.getSamlSsoSessionId());
 	}
 
-	private void _bindSamlSsoRequestContext(
-		HttpSession httpSession, String samlMessageId,
-		SamlSsoRequestContext samlSsoRequestContext) {
-
-		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
-			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
-				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
-
-		if (samlSsoRequestContexts == null) {
-			samlSsoRequestContexts = new LRUMap<>(
-				_samlConfiguration.getMaxSamlSsoRequestContexts());
-
-			httpSession.setAttribute(
-				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
-		}
-
-		samlSsoRequestContexts.put(samlMessageId, samlSsoRequestContext);
-	}
-
 	private Decrypter _createDecrypter() {
 		DecryptionParametersResolver decryptionParametersResolver =
 			new BasicDecryptionParametersResolver();
@@ -1959,7 +1940,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			if ((samlMessageInfoContext != null) &&
 				(samlMessageInfoContext.getMessageId() != null)) {
 
-				_bindSamlSsoRequestContext(
+				_saveSamlSsoRequestContext(
 					httpSession, samlMessageInfoContext.getMessageId(),
 					samlSsoRequestContext);
 
@@ -1971,7 +1952,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		else if (samlPeerEntityContext.getEntityId() != null) {
 			String samlMessageId = generateIdentifier(20);
 
-			_bindSamlSsoRequestContext(
+			_saveSamlSsoRequestContext(
 				httpSession, samlMessageId, samlSsoRequestContext);
 
 			redirectSB.append("?entityId=");
@@ -1991,6 +1972,25 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
 		}
+	}
+
+	private void _saveSamlSsoRequestContext(
+		HttpSession httpSession, String samlMessageId,
+		SamlSsoRequestContext samlSsoRequestContext) {
+
+		Map<String, SamlSsoRequestContext> samlSsoRequestContexts =
+			(Map<String, SamlSsoRequestContext>)httpSession.getAttribute(
+				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
+
+		if (samlSsoRequestContexts == null) {
+			samlSsoRequestContexts = new LRUMap<>(
+				_samlConfiguration.getMaxSamlSsoRequestContexts());
+
+			httpSession.setAttribute(
+				SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContexts);
+		}
+
+		samlSsoRequestContexts.put(samlMessageId, samlSsoRequestContext);
 	}
 
 	private void _sendFailureResponse(

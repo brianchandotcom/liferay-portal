@@ -54,7 +54,12 @@ definition {
 			assetType = ${assetType},
 			pageName = ${pageName});
 
-		WebContent.publishExistingWCArticleWithPermissions();
+		if (${assetType} == "Web Content") {
+			WebContent.publishExistingWCArticleWithPermissions();
+		}
+		else {
+			PortletEntry.publish();
+		}
 	}
 
 	@summary = "Default summary"

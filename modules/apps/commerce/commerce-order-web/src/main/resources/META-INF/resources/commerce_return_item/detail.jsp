@@ -56,7 +56,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 		title='<%= LanguageUtil.get(request, "workflow-actions") %>'
 	>
 		<div class="sheet-section">
-			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="authorization-step-help" label="authorization-step" />
+			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="authorization-step" label="authorization-step" />
 
 			<div class="row">
 				<div class="col">

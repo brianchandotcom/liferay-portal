@@ -73,7 +73,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 				</div>
 			</div>
 
-			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="resolution-method-step-help" label="resolution-method-step" />
+			<aui:field-wrapper cssClass="sheet-subtitle" helpMessage="resolution-method-step" label="resolution-method-step" />
 
 			<div class="row">
 				<div class="col">

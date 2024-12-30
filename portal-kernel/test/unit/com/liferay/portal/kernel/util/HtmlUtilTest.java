@@ -169,6 +169,10 @@ public class HtmlUtilTest {
 		Assert.assertEquals(
 			"javascript%3aalert('hello');",
 			HtmlUtil.escapeJSLink("javascript:alert('hello');"));
+		Assert.assertEquals(
+			"http://localhost:8080/test?scope='javascript:;'",
+			HtmlUtil.escapeJSLink(
+				"http://localhost:8080/test?scope='javascript:;'"));
 	}
 
 	@Test

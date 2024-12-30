@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -23,6 +24,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -58,18 +61,28 @@ public class RESTClientTemplateContextContributorTest {
 		bundle.start();
 
 		try {
-			Assert.assertEquals(
-				200,
-				HTTPTestUtil.invokeToHttpCode(
-					JSONUtil.put(
-						"name", RandomTestUtil.randomString()
-					).put(
-						"templateKey",
-						"com.liferay.portal.vulcan.test.site.initializer"
-					).put(
-						"templateType", "site-initializer"
-					).toString(),
-					"headless-site/v1.0/sites", Http.Method.POST));
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"templateKey",
+					"com.liferay.portal.vulcan.test.site.initializer"
+				).put(
+					"templateType", "site-initializer"
+				).toString(),
+				"headless-site/v1.0/sites", Http.Method.POST);
+
+			HTTPTestUtil.customize(
+			).withoutModulePath(
+			).apply(
+				() -> Assert.assertThat(
+					HTTPTestUtil.invokeToString(
+						null,
+						"web" + jsonObject.getString("friendlyUrlPath") +
+							"/portal-vulcan-test",
+						Http.Method.GET),
+					CoreMatchers.containsString("Countries: spain"))
+			);
 		}
 		finally {
 			bundle.uninstall();

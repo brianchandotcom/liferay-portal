@@ -105,12 +105,17 @@ public class HTTPTestUtil {
 
 			_credentials = _newCredentials;
 
+			boolean defaultModulePath = _modulePath;
+
+			_modulePath = _newModulePath;
+
 			try {
 				unsafeRunnable.run();
 			}
 			finally {
 				_baseURL = defaultBaseURL;
 				_credentials = defaultCredentials;
+				_modulePath = defaultModulePath;
 			}
 		}
 
@@ -134,8 +139,15 @@ public class HTTPTestUtil {
 			return this;
 		}
 
+		public HTTPTestUtilCustomizer withoutModulePath() {
+			_newModulePath = false;
+
+			return this;
+		}
+
 		private String _newBaseURL = _baseURL;
 		private String _newCredentials = _credentials;
+		private boolean _newModulePath;
 
 	}
 
@@ -159,7 +171,14 @@ public class HTTPTestUtil {
 		}
 
 		options.setCookieSpec(Http.CookieSpec.STANDARD);
-		options.setLocation(_baseURL + "/o/" + endpoint);
+
+		if (_modulePath) {
+			options.setLocation(_baseURL + "/o/" + endpoint);
+		}
+		else {
+			options.setLocation(_baseURL + "/" + endpoint);
+		}
+
 		options.setMethod(httpMethod);
 
 		if (body != null) {
@@ -174,5 +193,6 @@ public class HTTPTestUtil {
 	private static String _baseURL = "http://localhost:8080";
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+	private static boolean _modulePath = true;
 
 }

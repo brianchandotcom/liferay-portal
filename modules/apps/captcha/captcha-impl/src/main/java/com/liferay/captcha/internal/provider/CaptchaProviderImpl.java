@@ -9,7 +9,10 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.Map;
 
@@ -28,7 +31,13 @@ import org.osgi.service.component.annotations.Deactivate;
 public class CaptchaProviderImpl implements CaptchaProvider {
 
 	@Override
-	public Captcha getCaptcha(CaptchaConfiguration captchaConfiguration) {
+	public Captcha getCaptcha() throws ConfigurationException {
+		CaptchaConfiguration captchaConfiguration =
+			(CaptchaConfiguration)
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					CaptchaConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
 		String captchaClassName = captchaConfiguration.captchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);

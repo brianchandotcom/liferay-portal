@@ -43,7 +43,7 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 		_checkCaptchaConfiguration();
 
 		com.liferay.portal.kernel.captcha.Captcha kernelCaptcha =
-			CaptchaUtil.getCaptcha(contextHttpServletRequest);
+			CaptchaUtil.getCaptcha();
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream()) {

@@ -182,12 +182,24 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 					httpServletRequest, httpServletResponse,
 					"portal_normal.ftl", layoutSet.getTheme(), false));
 
-			Element contentElement = document.getElementById("content");
+			Element element = document.getElementById("content");
+
+			if (element == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Theme ", layoutSet.getThemeId(),
+							" lacks a tag with ID 'content', replacing all ",
+							"body content."));
+				}
+
+				element = document.body();
+			}
 
 			StringBundler sb = (StringBundler)httpServletRequest.getAttribute(
 				WebKeys.LAYOUT_CONTENT);
 
-			contentElement.html(sb.toString());
+			element.html(sb.toString());
 
 			ServletResponseUtil.write(httpServletResponse, document.html());
 		}

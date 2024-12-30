@@ -29,15 +29,18 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 
 	@Override
 	public Captcha getCaptcha() throws ConfigurationException {
-		CaptchaConfiguration captchaConfiguration =
-			(CaptchaConfiguration)
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					CaptchaConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
 
 		String captchaClassName = captchaConfiguration.captchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
+	}
+
+	@Override
+	public CaptchaConfiguration getCaptchaConfiguration() throws ConfigurationException {
+		return ConfigurationProviderUtil.getCompanyConfiguration(
+				CaptchaConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
 	}
 
 	@Activate

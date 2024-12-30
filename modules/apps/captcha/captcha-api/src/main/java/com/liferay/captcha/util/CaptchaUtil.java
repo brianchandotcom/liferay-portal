@@ -5,9 +5,7 @@
 
 package com.liferay.captcha.util;
 
-import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
@@ -30,97 +28,54 @@ public class CaptchaUtil {
 	public static void check(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		getCaptcha(
-			httpServletRequest
-		).check(
-			httpServletRequest
-		);
+		getCaptcha().check(httpServletRequest);
 	}
 
 	public static void check(PortletRequest portletRequest)
 		throws CaptchaException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getCaptcha(
-			httpServletRequest
-		).check(
-			httpServletRequest
-		);
+		getCaptcha().check(PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void enforceCaptcha(HttpServletRequest httpServletRequest)
 		throws CaptchaConfigurationException {
 
-		getCaptcha(
-			httpServletRequest
-		).enforceCaptcha(
-			httpServletRequest
-		);
+		getCaptcha().enforceCaptcha(httpServletRequest);
 	}
 
 	public static void enforceCaptcha(PortletRequest portletRequest)
 		throws CaptchaConfigurationException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		getCaptcha(
-			httpServletRequest
-		).enforceCaptcha(
-			httpServletRequest
-		);
+		getCaptcha().enforceCaptcha(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static Captcha getCaptcha(HttpServletRequest httpServletRequest)
-		throws CaptchaConfigurationException {
-
+	public static Captcha getCaptcha() throws CaptchaConfigurationException {
 		try {
-			CaptchaConfiguration captchaConfiguration =
-				(CaptchaConfiguration)
-					ConfigurationProviderUtil.getCompanyConfiguration(
-						CaptchaConfiguration.class,
-						PortalUtil.getCompanyId(httpServletRequest));
-
 			CaptchaProvider captchaProvider = _captchaProviderSnapshot.get();
 
-			return captchaProvider.getCaptcha(captchaConfiguration);
+			return captchaProvider.getCaptcha();
 		}
 		catch (Exception exception) {
 			throw new CaptchaConfigurationException(exception);
 		}
 	}
 
-	public static String getTaglibPath(HttpServletRequest httpServletRequest)
-		throws CaptchaConfigurationException {
-
-		return getCaptcha(
-			httpServletRequest
-		).getTaglibPath();
+	public static String getTaglibPath() throws CaptchaConfigurationException {
+		return getCaptcha().getTaglibPath();
 	}
 
 	public static boolean isEnabled(HttpServletRequest httpServletRequest)
 		throws CaptchaConfigurationException {
 
-		return getCaptcha(
-			httpServletRequest
-		).isEnabled(
-			httpServletRequest
-		);
+		return getCaptcha().isEnabled(httpServletRequest);
 	}
 
 	public static boolean isEnabled(PortletRequest portletRequest)
 		throws CaptchaConfigurationException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		return getCaptcha(
-			httpServletRequest
-		).isEnabled(
-			httpServletRequest
-		);
+		return getCaptcha().isEnabled(
+			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	public static void serveImage(
@@ -128,11 +83,7 @@ public class CaptchaUtil {
 			HttpServletResponse httpServletResponse)
 		throws CaptchaConfigurationException, IOException {
 
-		getCaptcha(
-			httpServletRequest
-		).serveImage(
-			httpServletRequest, httpServletResponse
-		);
+		getCaptcha().serveImage(httpServletRequest, httpServletResponse);
 	}
 
 	private static final Snapshot<CaptchaProvider> _captchaProviderSnapshot =

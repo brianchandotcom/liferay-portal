@@ -135,6 +135,27 @@ public class GetPagePreviewStrutsActionTest {
 	}
 
 	@Test
+	@TestInfo("LPD-45260")
+	public void testGetPagePreviewContentPageWithSpecificTheme()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = _addLayout(group, false, LayoutConstants.TYPE_CONTENT);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			group.getGroupId(), false, "dialect_WAR_dialecttheme", null, null);
+
+		_assertContainsContent("dialect_WAR_dialecttheme");
+
+		_layoutLocalService.updateLookAndFeel(
+			group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			"classic_WAR_classictheme", "01", null);
+
+		_assertContainsContent("classic_WAR_classictheme");
+	}
+
+	@Test
 	public void testGetPagePreviewPageTemplate() throws Exception {
 		_addLayout(_group, true, LayoutConstants.TYPE_CONTENT);
 
@@ -169,7 +190,7 @@ public class GetPagePreviewStrutsActionTest {
 			mockHttpServletResponse.getStatus());
 	}
 
-	private void _addLayout(Group group, boolean privateLayout, String type)
+	private Layout _addLayout(Group group, boolean privateLayout, String type)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -190,6 +211,8 @@ public class GetPagePreviewStrutsActionTest {
 			null, layout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
+
+		return layout;
 	}
 
 	private void _assertContainsContent() throws Exception {

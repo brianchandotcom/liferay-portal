@@ -6,6 +6,9 @@
 package com.liferay.layout.utility.page.terms.of.use.internal.struts;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -73,14 +76,29 @@ public class TermsOfUseStrutsAction implements StrutsAction {
 				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
 				false));
 
-		Element contentElement = document.getElementById("content");
+		Element element = document.getElementById("content");
 
-		contentElement.html(unsyncStringWriter.toString());
+		if (element == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Theme ", layoutSet.getThemeId(),
+						" lacks a tag with ID 'content', replacing all body ",
+						"content."));
+			}
+
+			element = document.body();
+		}
+
+		element.html(unsyncStringWriter.toString());
 
 		ServletResponseUtil.write(httpServletResponse, document.html());
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TermsOfUseStrutsAction.class);
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

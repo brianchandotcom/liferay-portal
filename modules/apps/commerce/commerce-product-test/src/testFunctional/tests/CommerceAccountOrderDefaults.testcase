@@ -903,7 +903,7 @@ definition {
 
 			CommerceEntry.selectEntryEllipsis(entryName = "Euro");
 
-			DropdownMenuItem.click(menuItem = "Deactivate");
+			DropdownMenuItem.click(menuItem = "Toggle Active");
 
 			Account.openAccountsAdmin();
 
@@ -2470,7 +2470,7 @@ definition {
 
 			CommerceEntry.selectEntryEllipsis(entryName = "Euro");
 
-			DropdownMenuItem.click(menuItem = "Deactivate");
+			DropdownMenuItem.click(menuItem = "Toggle Active");
 		}
 
 		task ("When the admin sets a default currency for the account") {

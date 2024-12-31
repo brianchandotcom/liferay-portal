@@ -12,144 +12,25 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 %>
 
 <c:if test="<%= commerceCurrenciesDisplayContext.hasManageCommerceCurrencyPermission() %>">
-	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= new CommerceCurrenciesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commerceCurrenciesDisplayContext.getSearchContainer()) %>"
-		propsTransformer="{CommerceCurrenciesManagementToolbarPropsTransformer} from commerce-currency-web"
-	/>
-
-	<portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />
-
-	<aui:form action="<%= editCommerceCurrencyActionURL %>" cssClass="container" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-		<liferay-ui:search-container
-			id="commerceCurrencies"
-			searchContainer="<%= commerceCurrenciesDisplayContext.getSearchContainer() %>"
+	<div class="container-fluid container-xl mt-4">
+		<commerce-ui:panel
+			bodyClasses="flex-fill"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.commerce.currency.model.CommerceCurrency"
-				keyProperty="commerceCurrencyId"
-				modelVar="commerceCurrency"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="font-weight-bold important table-cell-expand"
-					href='<%=
-						PortletURLBuilder.createRenderURL(
-							renderResponse
-						).setMVCRenderCommandName(
-							"/commerce_currency/edit_commerce_currency"
-						).setRedirect(
-							currentURL
-						).setParameter(
-							"commerceCurrencyId", commerceCurrency.getCommerceCurrencyId()
-						).buildPortletURL()
-					%>'
-					name="name"
-					value="<%= HtmlUtil.escape(commerceCurrency.getName(locale)) %>"
+			<aui:form method="post" name="fm">
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+				<frontend-data-set:headless-display
+					apiURL="<%= commerceCurrenciesDisplayContext.getCurrencyApiURL() %>"
+					bulkActionDropdownItems="<%= commerceCurrenciesDisplayContext.getBulkActionDropdownItems() %>"
+					creationMenu="<%= commerceCurrenciesDisplayContext.getFDSCreationMenu() %>"
+					fdsActionDropdownItems="<%= commerceCurrenciesDisplayContext.getFDSActionDropdownItems() %>"
+					formName="fm"
+					id="<%= CommerceCurrencyFDSNames.COMMERCE_CURRENCIES %>"
+					selectedItemsKey="id"
+					selectionType="multiple"
+					style="fluid"
 				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="code"
-					value="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="exchange-rate"
-					value="<%= commerceCurrenciesDisplayContext.format(commerceCurrency.getRate()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="primary"
-				>
-					<c:if test="<%= commerceCurrency.isPrimary() %>">
-						<clay:icon
-							cssClass="text-success"
-							symbol="check"
-						/>
-					</c:if>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text
-					name="active"
-				>
-					<c:choose>
-						<c:when test="<%= commerceCurrency.isActive() %>">
-							<clay:icon
-								cssClass="text-success"
-								symbol="check"
-							/>
-						</c:when>
-						<c:otherwise>
-							<clay:icon
-								cssClass="text-danger"
-								symbol="times"
-							/>
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text
-					property="priority"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/currency_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-			/>
-		</liferay-ui:search-container>
-	</aui:form>
-
-	<aui:script>
-		function <portlet:namespace />deleteCommerceCurrencies() {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-currencies" />',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						const form = window.document['<portlet:namespace />fm'];
-
-						form['<portlet:namespace /><%= Constants.CMD %>'].value =
-							'<%= Constants.DELETE %>';
-						form['<portlet:namespace />deleteCommerceCurrencyIds'].value =
-							Liferay.Util.getCheckedCheckboxes(
-								form,
-								'<portlet:namespace />allRowIds'
-							);
-
-						submitForm(form);
-					}
-				},
-			});
-		}
-
-		function <portlet:namespace />updateExchangeRates() {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<liferay-ui:message key="are-you-sure-you-want-to-update-the-exchange-rate-of-the-selected-currencies" />',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						const form = window.document['<portlet:namespace />fm'];
-
-						form['<portlet:namespace /><%= Constants.CMD %>'].value =
-							'updateExchangeRates';
-						form[
-							'<portlet:namespace />updateCommerceCurrencyExchangeRateIds'
-						].value = Liferay.Util.getCheckedCheckboxes(
-							form,
-							'<portlet:namespace />allRowIds'
-						);
-
-						submitForm(form);
-					}
-				},
-			});
-		}
-	</aui:script>
+			</aui:form>
+		</commerce-ui:panel>
+	</div>
 </c:if>

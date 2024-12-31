@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.BooleanEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -22,6 +23,7 @@ public class CurrencyEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField("active", locale -> "active"),
 			new BooleanEntityField("primary", locale -> "primary"),
+			new DoubleEntityField("priority", locale -> "priority"),
 			new StringEntityField("code", locale -> "code"),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName("name")));

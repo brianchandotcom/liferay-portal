@@ -6,13 +6,18 @@
 package com.liferay.commerce.currency.web.internal.constants;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.commerce.currency.constants.CommerceCurrencyPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 public class CommerceCurrencyFDSNames {
 
 	public static final String ACCOUNT_ENTRY_CURRENCIES =
 		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryCurrencies";
+
+	public static final String COMMERCE_CURRENCIES =
+		CommerceCurrencyPortletKeys.COMMERCE_CURRENCY + "-currencies";
 
 }

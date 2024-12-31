@@ -64,7 +64,7 @@ export default function Connect({
 			await fetch(
 				createResourceURL(baseResourceURL, {
 					p_p_resource_id: '/marketplace_settings/connect',
-				}),
+				}).toString(),
 				{
 					body: objectToFormData(body),
 					method: 'POST',

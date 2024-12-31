@@ -15,11 +15,11 @@ import {Authorization, MarketplaceSettingsProps} from './types';
 const steps = [
 	{
 		Component: Connect,
-		title: 'Connect',
+		title: Liferay.Language.get('connect'),
 	},
 	{
 		Component: Status,
-		title: 'Status',
+		title: Liferay.Language.get('status'),
 	},
 ];
 
@@ -39,7 +39,7 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 		fetch(
 			createResourceURL(props.baseResourceURL, {
 				p_p_resource_id: '/marketplace_settings/get_authorization',
-			})
+			}).toString()
 		)
 			.then((response) => response.json())
 			.then((response) =>
@@ -55,7 +55,7 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 		await fetch(
 			createResourceURL(props.baseResourceURL, {
 				p_p_resource_id: '/marketplace_settings/disconnect',
-			}),
+			}).toString(),
 			{
 				method: 'POST',
 			}

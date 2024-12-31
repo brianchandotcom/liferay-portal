@@ -218,6 +218,11 @@
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][contains(@class,'icon-comments')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_ELLIPSES_ICON</td>
+	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[@title='Options']</td>
+	<td></td>
+</tr>
 
 <!--FRAGMENT_CUSTOM_STYLE-->
 

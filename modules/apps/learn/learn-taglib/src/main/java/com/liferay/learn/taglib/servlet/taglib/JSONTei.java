@@ -20,14 +20,14 @@ public class JSONTei extends TagExtraInfo {
 	public VariableInfo[] getVariableInfo(TagData tagData) {
 		String var = tagData.getAttributeString("var");
 
-		if (Validator.isNotNull(var)) {
-			return new VariableInfo[] {
-				new VariableInfo(
-					var, String.class.getName(), true, VariableInfo.AT_END)
-			};
+		if (Validator.isNull(var)) {
+			return null;
 		}
 
-		return null;
+		return new VariableInfo[] {
+			new VariableInfo(
+				var, String.class.getName(), true, VariableInfo.AT_END)
+		};
 	}
 
 }

@@ -18,6 +18,10 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -26,12 +30,16 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,15 +50,20 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 public class CommerceCurrenciesDisplayContext {
 
@@ -69,11 +82,49 @@ public class CommerceCurrenciesDisplayContext {
 		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			renderResponse);
+		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public String format(BigDecimal rate) throws PortalException {
 		return _commercePriceFormatter.format(
 			rate, PortalUtil.getLocale(_renderRequest));
+	}
+
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_currency/edit_commerce_currency"
+				).setCMD(
+					"updateExchangeRates"
+				).buildString(),
+				"reload", "update-exchange-rates",
+				LanguageUtil.get(_httpServletRequest, "update-exchange-rates"),
+				"patch", null, null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_currency/edit_commerce_currency"
+				).setCMD(
+					Constants.DELETE
+				).buildString(),
+				"trash", "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), "delete", null,
+				null));
 	}
 
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
@@ -105,6 +156,10 @@ public class CommerceCurrenciesDisplayContext {
 				CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
 	}
 
+	public String getCurrencyApiURL() {
+		return "/o/headless-commerce-admin-catalog/v1.0/currencies";
+	}
+
 	public String getDefaultFormatPattern() throws ConfigurationException {
 		return CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN;
 	}
@@ -134,6 +189,98 @@ public class CommerceCurrenciesDisplayContext {
 
 	public Iterable<String> getExchangeRateProviderKeys() {
 		return _exchangeRateProviderRegistry.getExchangeRateProviderKeys();
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws PortalException {
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/commerce_currency/edit_commerce_currency"
+				).setParameter(
+					"commerceCurrencyId", "{id}"
+				).buildString(),
+				"pencil", "view", LanguageUtil.get(_httpServletRequest, "edit"),
+				"get", null, null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_currency/edit_commerce_currency"
+				).setCMD(
+					"setActive"
+				).setParameter(
+					"active", Boolean.TRUE
+				).setParameter(
+					"commerceCurrencyId", "{id}"
+				).buildString(),
+				"pencil", "toggle-active",
+				LanguageUtil.get(_httpServletRequest, "toggle-active"), "patch",
+				null, null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_currency/edit_commerce_currency"
+				).setCMD(
+					"setPrimary"
+				).setParameter(
+					"commerceCurrencyId", "{id}"
+				).setParameter(
+					"primary", Boolean.TRUE
+				).buildString(),
+				"pencil", "primary",
+				LanguageUtil.get(_httpServletRequest, "primary"), "patch", null,
+				null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						CommerceCurrencyPortletKeys.COMMERCE_CURRENCY,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/commerce_currency/edit_commerce_currency"
+				).setCMD(
+					"updateExchangeRates"
+				).setParameter(
+					"commerceCurrencyId", "{id}"
+				).buildString(),
+				"reload", "update-exchange-rates",
+				LanguageUtil.get(_httpServletRequest, "update-exchange-rates"),
+				"get", null, null),
+			new FDSActionDropdownItem(
+				LanguageUtil.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				getCurrencyApiURL() + "/{id}", "trash", "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), "delete", null,
+				"async"));
+	}
+
+	public CreationMenu getFDSCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_liferayPortletResponse.createRenderURL(),
+					"mvcRenderCommandName",
+					"/commerce_currency/edit_commerce_currency", "redirect",
+					PortalUtil.getCurrentURL(_liferayPortletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-currency"));
+			}
+		).build();
 	}
 
 	public String getOrderByCol() {
@@ -308,6 +455,9 @@ public class CommerceCurrenciesDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ConfigurationProvider _configurationProvider;
 	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
+	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletResourcePermission _portletResourcePermission;

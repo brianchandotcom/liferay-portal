@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
+ * @author Luca Pellizzon
  */
 @Component(
 	property = {
@@ -122,7 +123,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			updateCommerceCurrencyExchangeRateIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
+				actionRequest, "id");
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -159,7 +160,7 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			deleteCommerceCurrencyIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
+				actionRequest, "id");
 		}
 
 		for (long deleteCommerceCurrencyId : deleteCommerceCurrencyIds) {
@@ -174,9 +175,11 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		long commerceCurrencyId = ParamUtil.getLong(
 			actionRequest, "commerceCurrencyId");
 
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
 
-		_commerceCurrencyService.setActive(commerceCurrencyId, active);
+		_commerceCurrencyService.setActive(
+			commerceCurrencyId, !commerceCurrency.isActive());
 	}
 
 	private void _setPrimary(ActionRequest actionRequest)

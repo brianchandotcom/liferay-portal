@@ -25,7 +25,7 @@ export class AnnouncementsWidgetConfigurationPage {
 		this.page = page;
 
 		this.configurationIframe = this.page.frameLocator(
-			'iframe[title*="Announcements"]'
+			'iframe[title*="Configuration"]'
 		);
 
 		this.distributionScopeOrganizationsTab =

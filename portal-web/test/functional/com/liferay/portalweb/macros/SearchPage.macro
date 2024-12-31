@@ -317,8 +317,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSearchBarWidget(federatedSearchKey = null, scopeParameterName = null, searchScope = null, keywordsParameterName = null, index = null) {
-		if (isSet(index)) {
+	macro configureSearchBarWidget(federatedSearchKey = null, scopeParameterName = null, searchScope = null, keywordsParameterName = null, index = null, isFragment = null) {
+		if (${isFragment} == "true") {
+			SearchPage.gotoSearchBarFragmentOptions(portletOption = "Configuration");
+		}
+		else if (isSet(index)) {
 			SearchPage.gotoSearchBarWidgetOptionsSpecific(
 				index = ${index},
 				portletOption = "Configuration");
@@ -590,6 +593,21 @@ definition {
 		AssertClick(
 			locator1 = "SearchPage#RESULT_TITLE",
 			value1 = ${searchAssetTitle});
+	}
+
+	@summary = "Default summary"
+	macro gotoSearchBarFragmentOptions(portletOption = null) {
+		Click(locator1 = "Search#SEARCH_BAR_WIDGET");
+
+		Click(
+			key_fragmentName = "Search Bar",
+			locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
+
+		if (isSet(portletOption)) {
+			var key_menuItem = ${portletOption};
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
 	@summary = "Default summary"

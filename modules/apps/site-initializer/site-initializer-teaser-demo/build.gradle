@@ -1,0 +1,8 @@
+processResources {
+	doLast {
+		copy {
+			from new File(projectDir, "src/main/resources/site-initializer/thumbnail.svg")
+			into new File(sourceSets.main.output.resourcesDir, "META-INF/resources")
+		}
+	}
+}

@@ -9,11 +9,9 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -29,8 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -39,9 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -51,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Sanz
  */
 @Component(
-	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	property = "captcha.engine.impl=com.liferay.captcha.recaptcha.ReCaptchaImpl",
 	service = Captcha.class
 )
@@ -75,16 +68,6 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		throw new UnsupportedOperationException();
-	}
-
-	@Activate
-	@Modified
-	@Override
-	protected void activate(Map<String, Object> properties) {
-		_captchaConfiguration = ConfigurableUtil.createConfigurable(
-			CaptchaConfiguration.class, properties);
-
-		setCaptchaConfiguration(_captchaConfiguration);
 	}
 
 	@Override
@@ -118,14 +101,17 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		Http.Options options = new Http.Options();
 
-		options.setLocation(_captchaConfiguration.reCaptchaVerifyURL());
-
 		try {
+			CaptchaConfiguration captchaConfiguration =
+				captchaProvider.getCaptchaConfiguration();
+
+			options.setLocation(captchaConfiguration.reCaptchaVerifyURL());
+
 			options.addPart(
-				"secret", _captchaConfiguration.reCaptchaPrivateKey());
+				"secret", captchaConfiguration.reCaptchaPrivateKey());
 		}
-		catch (SystemException systemException) {
-			_log.error(systemException);
+		catch (Throwable throwable) {
+			_log.error(throwable);
 		}
 
 		options.addPart("remoteip", httpServletRequest.getRemoteAddr());
@@ -200,8 +186,6 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	private static final String _TAGLIB_PATH = "/captcha/recaptcha.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
-
-	private volatile CaptchaConfiguration _captchaConfiguration;
 
 	@Reference
 	private JSONFactory _jsonFactory;

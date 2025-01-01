@@ -401,20 +401,21 @@ public class HtmlUtil {
 
 		link = StringUtil.trim(link);
 
-		int pos = link.indexOf(StringPool.COLON);
+		int index = link.indexOf(StringPool.COLON);
 
-		if (pos >= 10) {
-			String protocol = StringUtil.toLowerCase(
-				link.substring(pos-10, pos));
-
-			if ("javascript".equals(protocol)) {
-				return
-					link.substring(0, pos) + StringUtil.replaceFirst(
-						link.substring(pos), CharPool.COLON, "%3a");
-			}
+		if (index < 10) {
+			return link;
 		}
 
-		return link;
+		String protocol = StringUtil.toLowerCase(
+			link.substring(index - 10, pos));
+
+		if (!Objects.equals(protocol, "javascript")) {
+			return link;
+		}
+
+		return link.substring(0, pos) +
+			StringUtil.replaceFirst(link.substring(pos), CharPool.COLON, "%3a");
 	}
 
 	/**

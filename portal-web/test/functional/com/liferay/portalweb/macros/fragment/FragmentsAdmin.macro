@@ -150,10 +150,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableFeaturedContent() {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Feature Flags",

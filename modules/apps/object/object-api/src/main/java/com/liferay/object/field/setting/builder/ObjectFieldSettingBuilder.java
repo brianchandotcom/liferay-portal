@@ -6,7 +6,10 @@
 package com.liferay.object.field.setting.builder;
 
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Murilo Stodolni
@@ -19,6 +22,14 @@ public class ObjectFieldSettingBuilder {
 
 	public ObjectFieldSettingBuilder name(String name) {
 		_objectFieldSetting.setName(name);
+
+		return this;
+	}
+
+	public ObjectFieldSettingBuilder objectFilters(
+		List<ObjectFilter> objectFilters) {
+
+		_objectFieldSetting.setObjectFilters(objectFilters);
 
 		return this;
 	}

@@ -22,6 +22,17 @@ html#{$cadmin-selector} .cadmin {
 			border-radius: 4px;
 			margin-bottom: 12px;
 
+			&.disabled {
+				background-color: #f7f7f7;
+
+				.list-group-text,
+				.list-group-title,
+				.sticker {
+					background-color: #f7f7f7;
+					color: #757575;
+				}
+			}
+
 			&.selected {
 				background-color: #f0f5ff;
 				border-color: #80acff;
@@ -30,6 +41,10 @@ html#{$cadmin-selector} .cadmin {
 
 			.selection-control {
 				display: none;
+			}
+
+			.used-label {
+				margin: 0.5rem 0;
 			}
 		}
 	}

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.TypeLiteral;
@@ -117,7 +118,9 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 			}
 
 			try {
-				_beanManager.fireEvent(
+				Event<Object> event = _beanManager.getEvent();
+
+				event.fire(
 					new BeforeProcessViewEventImpl(
 						viewName, supportingViewEngine.getClass()));
 
@@ -126,7 +129,7 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 						configuration, portletRequest.getLocale(), mimeResponse,
 						models, portletRequest));
 
-				_beanManager.fireEvent(
+				event.fire(
 					new AfterProcessViewEventImpl(
 						viewName, supportingViewEngine.getClass()));
 			}

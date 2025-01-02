@@ -90,6 +90,23 @@ create table CPConfigurationEntry (
 	primary key (CPConfigurationEntryId, ctCollectionId)
 );
 
+create table CPConfigurationEntrySetting (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	CPConfigurationEntrySettingId LONG not null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPConfigurationEntryId LONG,
+	type_ INTEGER,
+	value TEXT null,
+	primary key (CPConfigurationEntrySettingId, ctCollectionId)
+);
+
 create table CPConfigurationList (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,

@@ -30,6 +30,6 @@ public class CPConfigurationEntrySettingTable {
 	private static final String _TABLE_NAME = "CPConfigurationEntrySetting";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table CPConfigurationEntrySetting (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPConfigurationEntrySettingId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPConfigurationEntryId LONG,setting TEXT null,type_ INTEGER,primary key (CPConfigurationEntrySettingId, ctCollectionId))";
+		"create table CPConfigurationEntrySetting (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPConfigurationEntrySettingId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPConfigurationEntryId LONG,type_ INTEGER,value TEXT null,primary key (CPConfigurationEntrySettingId, ctCollectionId))";
 
 }

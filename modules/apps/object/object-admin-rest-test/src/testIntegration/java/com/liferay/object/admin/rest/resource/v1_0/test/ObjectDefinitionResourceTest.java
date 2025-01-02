@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
@@ -24,6 +25,8 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -290,29 +293,25 @@ public class ObjectDefinitionResourceTest
 	public void testPostObjectDefinition() throws Exception {
 		super.testPostObjectDefinition();
 
+		// Enable index search
+
 		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
 
-		Status status = new Status() {
-			{
-				code = WorkflowConstants.STATUS_APPROVED;
-				label = WorkflowConstants.getStatusLabel(
-					WorkflowConstants.STATUS_APPROVED);
-				label_i18n = _language.get(
-					LanguageResources.getResourceBundle(
-						LocaleUtil.getDefault()),
-					WorkflowConstants.getStatusLabel(
-						WorkflowConstants.STATUS_APPROVED));
-			}
-		};
-
-		randomObjectDefinition.setStatus(status);
+		randomObjectDefinition.setEnableIndexSearch((Boolean)null);
+		randomObjectDefinition.setObjectFields((ObjectField[])null);
 
 		ObjectDefinition postObjectDefinition =
 			testPostObjectDefinition_addObjectDefinition(
 				randomObjectDefinition);
 
-		assertEquals(postObjectDefinition, randomObjectDefinition);
-		assertValid(postObjectDefinition);
+		Assert.assertTrue(postObjectDefinition.getEnableIndexSearch());
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(
+				ArrayUtil.filter(
+					postObjectDefinition.getObjectFields(),
+					objectField -> !objectField.getSystem())));
+
+		// Modifiable system object definition
 
 		String randomListTypeDefinitionExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -377,6 +376,55 @@ public class ObjectDefinitionResourceTest
 		Assert.assertNotNull(serviceBuilderlistTypeDefinition);
 		Assert.assertTrue(serviceBuilderlistTypeDefinition.isSystem());
 
+		// Object action
+
+		ObjectAction objectAction = new ObjectAction();
+
+		objectAction.setExternalReferenceCode(RandomTestUtil.randomString());
+		objectAction.setActive(true);
+		objectAction.setConditionExpression(StringPool.BLANK);
+		objectAction.setDescription(RandomTestUtil.randomString());
+		objectAction.setErrorMessage(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		objectAction.setLabel(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		objectAction.setName("a" + RandomTestUtil.randomString());
+		objectAction.setObjectActionExecutorKey(
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY);
+		objectAction.setObjectActionTriggerKey(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		objectAction.setParameters(
+			HashMapBuilder.put(
+				"objectDefinitionExternalReferenceCode", externalReferenceCode
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", RandomTestUtil.randomString()
+					).put(
+						"value", RandomTestUtil.randomString()
+					)
+				).toString()
+			).build());
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setObjectActions(
+			new ObjectAction[] {objectAction});
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		assertEquals(postObjectDefinition, randomObjectDefinition);
+		assertValid(postObjectDefinition);
+
+		// Object relationship
+
 		randomObjectDefinition = randomObjectDefinition();
 
 		ObjectRelationship objectRelationship = new ObjectRelationship();
@@ -425,20 +473,30 @@ public class ObjectDefinitionResourceTest
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
 
+		// Status
+
 		randomObjectDefinition = randomObjectDefinition();
 
-		randomObjectDefinition.setEnableIndexSearch((Boolean)null);
-		randomObjectDefinition.setObjectFields((ObjectField[])null);
+		Status status = new Status() {
+			{
+				code = WorkflowConstants.STATUS_APPROVED;
+				label = WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED);
+				label_i18n = _language.get(
+					LanguageResources.getResourceBundle(
+						LocaleUtil.getDefault()),
+					WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED));
+			}
+		};
+
+		randomObjectDefinition.setStatus(status);
 
 		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
 			randomObjectDefinition);
 
-		Assert.assertTrue(postObjectDefinition.getEnableIndexSearch());
-		Assert.assertTrue(
-			ArrayUtil.isEmpty(
-				ArrayUtil.filter(
-					postObjectDefinition.getObjectFields(),
-					objectField -> !objectField.getSystem())));
+		assertEquals(postObjectDefinition, randomObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	@Override

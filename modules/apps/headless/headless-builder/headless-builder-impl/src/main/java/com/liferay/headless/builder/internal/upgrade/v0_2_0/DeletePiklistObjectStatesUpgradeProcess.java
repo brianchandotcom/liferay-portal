@@ -69,6 +69,11 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			applicationStatusObjectField.getObjectFieldId());
 
+		applicationStatusObjectField.setState(false);
+
+		_objectFieldLocalService.updateObjectField(
+			applicationStatusObjectField);
+
 		ListTypeDefinition applicationStatusListTypeDefinition =
 			_listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
@@ -118,6 +123,11 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			applicationStatusObjectField.getObjectFieldId());
+
+		applicationStatusObjectField.setState(false);
+
+		_objectFieldLocalService.updateObjectField(
+			applicationStatusObjectField);
 
 		ListTypeDefinition applicationStatusListTypeDefinition =
 			_listTypeDefinitionLocalService.
@@ -169,6 +179,11 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			applicationStatusObjectField.getObjectFieldId());
 
+		applicationStatusObjectField.setState(false);
+
+		_objectFieldLocalService.updateObjectField(
+			applicationStatusObjectField);
+
 		ListTypeDefinition applicationStatusListTypeDefinition =
 			_listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
@@ -216,6 +231,11 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			applicationStatusObjectField.getObjectFieldId());
+
+		applicationStatusObjectField.setState(false);
+
+		_objectFieldLocalService.updateObjectField(
+			applicationStatusObjectField);
 
 		ListTypeDefinition applicationStatusListTypeDefinition =
 			_listTypeDefinitionLocalService.

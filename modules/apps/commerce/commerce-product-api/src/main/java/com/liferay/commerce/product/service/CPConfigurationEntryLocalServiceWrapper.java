@@ -106,13 +106,17 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPConfigurationEntries(long cpConfigurationListId) {
+	public void deleteCPConfigurationEntries(long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			cpConfigurationListId);
 	}
 
 	@Override
-	public void deleteCPConfigurationEntries(long classNameId, long classPK) {
+	public void deleteCPConfigurationEntries(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			classNameId, classPK);
 	}
@@ -126,10 +130,12 @@ public class CPConfigurationEntryLocalServiceWrapper
 	 *
 	 * @param cpConfigurationEntry the cp configuration entry
 	 * @return the cp configuration entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public CPConfigurationEntry deleteCPConfigurationEntry(
-		CPConfigurationEntry cpConfigurationEntry) {
+			CPConfigurationEntry cpConfigurationEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 			cpConfigurationEntry);
@@ -310,6 +316,14 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 		return _cpConfigurationEntryLocalService.
 			fetchCPConfigurationEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
+		CPConfigurationEntry cpConfigurationEntry) {
+
+		return _cpConfigurationEntryLocalService.
+			forceDeleteCPConfigurationEntry(cpConfigurationEntry);
 	}
 
 	@Override

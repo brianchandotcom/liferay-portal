@@ -6,59 +6,35 @@
 package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * Provides the local service interface for CPConfigurationEntrySetting. Methods of this
- * service will not have security checks based on the propagated JAAS
- * credentials because this service can only be accessed from within the same
- * VM.
+ * Provides the local service utility for CPConfigurationEntrySetting. This utility wraps
+ * <code>com.liferay.commerce.product.service.impl.CPConfigurationEntrySettingLocalServiceImpl</code> and
+ * is an access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Marco Leo
- * @see CPConfigurationEntrySettingLocalServiceUtil
+ * @see CPConfigurationEntrySettingLocalService
  * @generated
  */
-@CTAware
-@ProviderType
-@Transactional(
-	isolation = Isolation.PORTAL,
-	rollbackFor = {PortalException.class, SystemException.class}
-)
-public interface CPConfigurationEntrySettingLocalService
-	extends BaseLocalService, CTService<CPConfigurationEntrySetting>,
-			PersistedModelLocalService {
+public class CPConfigurationEntrySettingLocalServiceUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPConfigurationEntrySettingLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp configuration entry setting local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPConfigurationEntrySettingLocalServiceUtil} if injection and service tracking are not available.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPConfigurationEntrySettingLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -71,14 +47,21 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param cpConfigurationEntrySetting the cp configuration entry setting
 	 * @return the cp configuration entry setting that was added
 	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CPConfigurationEntrySetting addCPConfigurationEntrySetting(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting);
+	public static CPConfigurationEntrySetting addCPConfigurationEntrySetting(
+		CPConfigurationEntrySetting cpConfigurationEntrySetting) {
 
-	public CPConfigurationEntrySetting addCPConfigurationEntrySetting(
+		return getService().addCPConfigurationEntrySetting(
+			cpConfigurationEntrySetting);
+	}
+
+	public static CPConfigurationEntrySetting addCPConfigurationEntrySetting(
 			long userId, long groupId, long cpConfigurationEntryId, int type,
 			String value)
-		throws PortalException;
+		throws PortalException {
+
+		return getService().addCPConfigurationEntrySetting(
+			userId, groupId, cpConfigurationEntryId, type, value);
+	}
 
 	/**
 	 * Creates a new cp configuration entry setting with the primary key. Does not add the cp configuration entry setting to the database.
@@ -86,15 +69,22 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param CPConfigurationEntrySettingId the primary key for the new cp configuration entry setting
 	 * @return the new cp configuration entry setting
 	 */
-	@Transactional(enabled = false)
-	public CPConfigurationEntrySetting createCPConfigurationEntrySetting(
-		long CPConfigurationEntrySettingId);
+	public static CPConfigurationEntrySetting createCPConfigurationEntrySetting(
+		long CPConfigurationEntrySettingId) {
+
+		return getService().createCPConfigurationEntrySetting(
+			CPConfigurationEntrySettingId);
+	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	 * Deletes the cp configuration entry setting from the database. Also notifies the appropriate model listeners.
@@ -106,9 +96,12 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param cpConfigurationEntrySetting the cp configuration entry setting
 	 * @return the cp configuration entry setting that was removed
 	 */
-	@Indexable(type = IndexableType.DELETE)
-	public CPConfigurationEntrySetting deleteCPConfigurationEntrySetting(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting);
+	public static CPConfigurationEntrySetting deleteCPConfigurationEntrySetting(
+		CPConfigurationEntrySetting cpConfigurationEntrySetting) {
+
+		return getService().deleteCPConfigurationEntrySetting(
+			cpConfigurationEntrySetting);
+	}
 
 	/**
 	 * Deletes the cp configuration entry setting with the primary key from the database. Also notifies the appropriate model listeners.
@@ -121,26 +114,35 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @return the cp configuration entry setting that was removed
 	 * @throws PortalException if a cp configuration entry setting with the primary key could not be found
 	 */
-	@Indexable(type = IndexableType.DELETE)
-	public CPConfigurationEntrySetting deleteCPConfigurationEntrySetting(
+	public static CPConfigurationEntrySetting deleteCPConfigurationEntrySetting(
 			long CPConfigurationEntrySettingId)
-		throws PortalException;
+		throws PortalException {
+
+		return getService().deleteCPConfigurationEntrySetting(
+			CPConfigurationEntrySettingId);
+	}
 
 	/**
 	 * @throws PortalException
 	 */
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> T dslQuery(DSLQuery dslQuery);
+		return getService().deletePersistedModel(persistedModel);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int dslQueryCount(DSLQuery dslQuery);
+	public static <T> T dslQuery(DSLQuery dslQuery) {
+		return getService().dslQuery(dslQuery);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DynamicQuery dynamicQuery();
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
+
+	public static DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
 
 	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
@@ -148,8 +150,9 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
 
 	/**
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
@@ -163,9 +166,11 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
 
 	/**
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -180,10 +185,13 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
+	public static <T> List<T> dynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
+		OrderByComparator<T> orderByComparator) {
+
+		return getService().dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
+	}
 
 	/**
 	 * Returns the number of rows matching the dynamic query.
@@ -191,8 +199,9 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
 
 	/**
 	 * Returns the number of rows matching the dynamic query.
@@ -201,17 +210,26 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows matching the dynamic query
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
+	public static long dynamicQueryCount(
+		DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntrySetting fetchCPConfigurationEntrySetting(
-		long CPConfigurationEntrySettingId);
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntrySetting fetchCPConfigurationEntrySetting(
-		long cpConfigurationEntryId, int type);
+	public static CPConfigurationEntrySetting fetchCPConfigurationEntrySetting(
+		long CPConfigurationEntrySettingId) {
+
+		return getService().fetchCPConfigurationEntrySetting(
+			CPConfigurationEntrySettingId);
+	}
+
+	public static CPConfigurationEntrySetting fetchCPConfigurationEntrySetting(
+		long cpConfigurationEntryId, int type) {
+
+		return getService().fetchCPConfigurationEntrySetting(
+			cpConfigurationEntryId, type);
+	}
 
 	/**
 	 * Returns the cp configuration entry setting matching the UUID and group.
@@ -220,13 +238,19 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param groupId the primary key of the group
 	 * @return the matching cp configuration entry setting, or <code>null</code> if a matching cp configuration entry setting could not be found
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntrySetting
+	public static CPConfigurationEntrySetting
 		fetchCPConfigurationEntrySettingByUuidAndGroupId(
-			String uuid, long groupId);
+			String uuid, long groupId) {
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+		return getService().fetchCPConfigurationEntrySettingByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
+		return getService().getActionableDynamicQuery();
+	}
 
 	/**
 	 * Returns the cp configuration entry setting with the primary key.
@@ -235,10 +259,13 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @return the cp configuration entry setting
 	 * @throws PortalException if a cp configuration entry setting with the primary key could not be found
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntrySetting getCPConfigurationEntrySetting(
+	public static CPConfigurationEntrySetting getCPConfigurationEntrySetting(
 			long CPConfigurationEntrySettingId)
-		throws PortalException;
+		throws PortalException {
+
+		return getService().getCPConfigurationEntrySetting(
+			CPConfigurationEntrySettingId);
+	}
 
 	/**
 	 * Returns the cp configuration entry setting matching the UUID and group.
@@ -248,11 +275,14 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @return the matching cp configuration entry setting
 	 * @throws PortalException if a matching cp configuration entry setting could not be found
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPConfigurationEntrySetting
+	public static CPConfigurationEntrySetting
 			getCPConfigurationEntrySettingByUuidAndGroupId(
 				String uuid, long groupId)
-		throws PortalException;
+		throws PortalException {
+
+		return getService().getCPConfigurationEntrySettingByUuidAndGroupId(
+			uuid, groupId);
+	}
 
 	/**
 	 * Returns a range of all the cp configuration entry settings.
@@ -265,9 +295,11 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param end the upper bound of the range of cp configuration entry settings (not inclusive)
 	 * @return the range of cp configuration entry settings
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPConfigurationEntrySetting> getCPConfigurationEntrySettings(
-		int start, int end);
+	public static List<CPConfigurationEntrySetting>
+		getCPConfigurationEntrySettings(int start, int end) {
+
+		return getService().getCPConfigurationEntrySettings(start, end);
+	}
 
 	/**
 	 * Returns all the cp configuration entry settings matching the UUID and company.
@@ -276,10 +308,13 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param companyId the primary key of the company
 	 * @return the matching cp configuration entry settings, or an empty list if no matches were found
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPConfigurationEntrySetting>
+	public static List<CPConfigurationEntrySetting>
 		getCPConfigurationEntrySettingsByUuidAndCompanyId(
-			String uuid, long companyId);
+			String uuid, long companyId) {
+
+		return getService().getCPConfigurationEntrySettingsByUuidAndCompanyId(
+			uuid, companyId);
+	}
 
 	/**
 	 * Returns a range of cp configuration entry settings matching the UUID and company.
@@ -291,41 +326,56 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the range of matching cp configuration entry settings, or an empty list if no matches were found
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPConfigurationEntrySetting>
+	public static List<CPConfigurationEntrySetting>
 		getCPConfigurationEntrySettingsByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			OrderByComparator<CPConfigurationEntrySetting> orderByComparator);
+			OrderByComparator<CPConfigurationEntrySetting> orderByComparator) {
+
+		return getService().getCPConfigurationEntrySettingsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
 
 	/**
 	 * Returns the number of cp configuration entry settings.
 	 *
 	 * @return the number of cp configuration entry settings
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPConfigurationEntrySettingsCount();
+	public static int getCPConfigurationEntrySettingsCount() {
+		return getService().getCPConfigurationEntrySettingsCount();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static
+		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+			getIndexableActionableDynamicQuery() {
+
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public String getOSGiServiceIdentifier();
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
 
 	/**
 	 * @throws PortalException
 	 */
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	 * Updates the cp configuration entry setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -337,23 +387,20 @@ public interface CPConfigurationEntrySettingLocalService
 	 * @param cpConfigurationEntrySetting the cp configuration entry setting
 	 * @return the cp configuration entry setting that was updated
 	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CPConfigurationEntrySetting updateCPConfigurationEntrySetting(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting);
+	public static CPConfigurationEntrySetting updateCPConfigurationEntrySetting(
+		CPConfigurationEntrySetting cpConfigurationEntrySetting) {
 
-	@Override
-	@Transactional(enabled = false)
-	public CTPersistence<CPConfigurationEntrySetting> getCTPersistence();
+		return getService().updateCPConfigurationEntrySetting(
+			cpConfigurationEntrySetting);
+	}
 
-	@Override
-	@Transactional(enabled = false)
-	public Class<CPConfigurationEntrySetting> getModelClass();
+	public static CPConfigurationEntrySettingLocalService getService() {
+		return _serviceSnapshot.get();
+	}
 
-	@Override
-	@Transactional(rollbackFor = Throwable.class)
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<CPConfigurationEntrySetting>, R, E>
-				updateUnsafeFunction)
-		throws E;
+	private static final Snapshot<CPConfigurationEntrySettingLocalService>
+		_serviceSnapshot = new Snapshot<>(
+			CPConfigurationEntrySettingLocalServiceUtil.class,
+			CPConfigurationEntrySettingLocalService.class);
 
 }

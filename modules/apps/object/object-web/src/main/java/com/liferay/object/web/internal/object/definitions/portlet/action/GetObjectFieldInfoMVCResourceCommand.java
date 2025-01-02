@@ -125,7 +125,7 @@ public class GetObjectFieldInfoMVCResourceCommand
 							ddmExpressionOperator ->
 								_filterableDDMExpressionOperators.contains(
 									ddmExpressionOperator),
-							false, false, locale,
+							false, true, locale,
 							objectField.getObjectDefinitionId(),
 							objectField2 ->
 								_filterableObjectFieldBusinessTypes.contains(

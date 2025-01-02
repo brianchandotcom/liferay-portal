@@ -197,6 +197,10 @@ public class ObjectDefinitionLocalServiceUtil {
 		getService().deployObjectDefinition(objectDefinition);
 	}
 
+	public static void deployObjectDefinitions() {
+		getService().deployObjectDefinitions();
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

@@ -907,6 +907,11 @@ public class JspServlet extends HttpServlet {
 		}
 
 		@Override
+		public String getVirtualServerName() {
+			return _servletContext.getVirtualServerName();
+		}
+
+		@Override
 		public int hashCode() {
 			return _servletContext.hashCode();
 		}

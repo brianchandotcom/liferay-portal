@@ -96,6 +96,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1840,24 +1841,42 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchDisplayArticle(long groupId, String articleId) {
-		List<JournalArticle> articles = journalArticlePersistence.findByG_A_ST(
-			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+		Date now = new Date();
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			JournalArticleTable.INSTANCE
+		).from(
+			JournalArticleTable.INSTANCE
+		).where(
+			JournalArticleTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				JournalArticleTable.INSTANCE.articleId.eq(articleId)
+			).and(
+				JournalArticleTable.INSTANCE.displayDate.isNull(
+				).or(
+					JournalArticleTable.INSTANCE.displayDate.lt(now)
+				).withParentheses()
+			).and(
+				JournalArticleTable.INSTANCE.expirationDate.isNull(
+				).or(
+					JournalArticleTable.INSTANCE.expirationDate.gt(now)
+				).withParentheses()
+			).and(
+				JournalArticleTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_APPROVED)
+			)
+		).orderBy(
+			JournalArticleTable.INSTANCE.id.descending()
+		).limit(
+			0, 1
+		);
+
+		List<JournalArticle> articles = journalArticlePersistence.dslQuery(
+			dslQuery);
 
 		if (articles.isEmpty()) {
 			return null;
-		}
-
-		Date date = new Date();
-
-		for (JournalArticle article : articles) {
-			Date displayDate = article.getDisplayDate();
-			Date expirationDate = article.getExpirationDate();
-
-			if (((displayDate == null) || displayDate.before(date)) &&
-				((expirationDate == null) || expirationDate.after(date))) {
-
-				return article;
-			}
 		}
 
 		return articles.get(0);

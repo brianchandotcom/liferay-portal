@@ -103,14 +103,15 @@ public class CPConfigurationEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteCPConfigurationEntries(
-		long cpConfigurationListId) {
+	public static void deleteCPConfigurationEntries(long cpConfigurationListId)
+		throws PortalException {
 
 		getService().deleteCPConfigurationEntries(cpConfigurationListId);
 	}
 
 	public static void deleteCPConfigurationEntries(
-		long classNameId, long classPK) {
+			long classNameId, long classPK)
+		throws PortalException {
 
 		getService().deleteCPConfigurationEntries(classNameId, classPK);
 	}
@@ -124,9 +125,11 @@ public class CPConfigurationEntryLocalServiceUtil {
 	 *
 	 * @param cpConfigurationEntry the cp configuration entry
 	 * @return the cp configuration entry that was removed
+	 * @throws PortalException
 	 */
 	public static CPConfigurationEntry deleteCPConfigurationEntry(
-		CPConfigurationEntry cpConfigurationEntry) {
+			CPConfigurationEntry cpConfigurationEntry)
+		throws PortalException {
 
 		return getService().deleteCPConfigurationEntry(cpConfigurationEntry);
 	}
@@ -277,6 +280,13 @@ public class CPConfigurationEntryLocalServiceUtil {
 
 		return getService().fetchCPConfigurationEntryByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	public static CPConfigurationEntry forceDeleteCPConfigurationEntry(
+		CPConfigurationEntry cpConfigurationEntry) {
+
+		return getService().forceDeleteCPConfigurationEntry(
+			cpConfigurationEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

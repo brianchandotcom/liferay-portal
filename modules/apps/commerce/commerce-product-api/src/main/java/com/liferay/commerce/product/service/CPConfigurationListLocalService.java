@@ -151,7 +151,8 @@ public interface CPConfigurationListLocalService
 			long CPConfigurationListId)
 		throws PortalException;
 
-	public void deleteCPConfigurationLists(long companyId);
+	public void deleteCPConfigurationLists(long companyId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

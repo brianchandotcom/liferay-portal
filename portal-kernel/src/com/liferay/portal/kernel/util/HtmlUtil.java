@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -408,14 +409,14 @@ public class HtmlUtil {
 		}
 
 		String protocol = StringUtil.toLowerCase(
-			link.substring(index - 10, pos));
+			link.substring(index - 10, index));
 
 		if (!Objects.equals(protocol, "javascript")) {
 			return link;
 		}
 
-		return link.substring(0, pos) +
-			StringUtil.replaceFirst(link.substring(pos), CharPool.COLON, "%3a");
+		return link.substring(0, index) +
+			StringUtil.replaceFirst(link.substring(index), CharPool.COLON, "%3a");
 	}
 
 	/**

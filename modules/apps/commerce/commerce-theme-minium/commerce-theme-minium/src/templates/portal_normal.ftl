@@ -28,7 +28,7 @@
 	<#assign css_class = css_class + " minium-login" />
 </#if>
 
-<body class="${css_class}" id="content">
+<body class="${css_class}">
 	<@liferay_ui["quick-access"] contentId="#minium" />
 
 	<@liferay.control_menu />
@@ -54,7 +54,7 @@
 			<div class="minium-frame__content js-scroll-area">
 				<a name="minium-top"></a>
 
-				<div class="${minium_content_css_class}">
+				<div class="${minium_content_css_class}" id="content">
 					<#if selectable>
 						<@liferay_util["include"] page=content_include />
 					<#else>

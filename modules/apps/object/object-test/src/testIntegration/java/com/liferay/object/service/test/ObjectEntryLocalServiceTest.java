@@ -148,6 +148,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1534,6 +1535,133 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
+	}
+
+	@FeatureFlags("LPD-43542")
+	@Test
+	public void testAddObjectEntryWithFormulaObjectFieldAndRelationship()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, Collections.emptyList());
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"objectRelationship");
+
+		ObjectField objectField1 = ObjectFieldUtil.addCustomObjectField(
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition1.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition2.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		ObjectField objectField3 = ObjectFieldUtil.addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition2.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						String.format(
+							"r_objectRelationship_%s_%s + %s",
+							objectDefinition1.getPKObjectFieldName(),
+							objectField1.getName(), objectField2.getName())
+					).build())
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		Locale originalThemeDisplayLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		try {
+			int randomInt1 = RandomTestUtil.randomInt(1, 10);
+			int randomInt2 = RandomTestUtil.randomInt(1, 10);
+			int randomInt3 = RandomTestUtil.randomInt(1, 10);
+
+			ObjectEntry objectEntry = _addObjectEntry(
+				0, objectDefinition2.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"r_objectRelationship_" +
+						objectDefinition1.getPKObjectFieldName(),
+					() -> {
+						ObjectEntry relatedObjectEntry = _addObjectEntry(
+							0, objectDefinition1.getObjectDefinitionId(),
+							Collections.singletonMap(
+								objectField1.getI18nObjectFieldName(),
+								HashMapBuilder.put(
+									"en_US", randomInt1
+								).put(
+									"pt_BR", randomInt2
+								).build()));
+
+						return relatedObjectEntry.getObjectEntryId();
+					}
+				).put(
+					objectField2.getName(), randomInt3
+				).build());
+
+			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.BRAZIL);
+
+			Assert.assertEquals(
+				randomInt2 + randomInt3,
+				MapUtil.getInteger(
+					_objectEntryLocalService.getValues(objectEntry),
+					objectField3.getName()));
+
+			LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+
+			Assert.assertEquals(
+				randomInt1 + randomInt3,
+				MapUtil.getInteger(
+					_objectEntryLocalService.getValues(objectEntry),
+					objectField3.getName()));
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(originalThemeDisplayLocale);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition1);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2);
+		}
 	}
 
 	@Test

@@ -20,7 +20,7 @@ export interface AggregationFilters {
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType?: string;
-	label: LocalizedValue<string>;
+	label?: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;

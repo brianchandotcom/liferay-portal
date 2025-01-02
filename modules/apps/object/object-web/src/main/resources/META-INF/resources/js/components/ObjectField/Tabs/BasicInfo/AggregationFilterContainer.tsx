@@ -28,7 +28,7 @@ interface AggregationFilters {
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType?: string;
-	label: LocalizedValue<string>;
+	label?: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;
@@ -144,27 +144,28 @@ export function AggregationFilterContainer({
 			filterValues.length !== 0
 		) {
 			const newAggregationFilters = filterValues.map((parsedFilter) => {
-				const objectField = objectFields.find(
-					(objectField) => objectField.name === parsedFilter.filterBy
-				);
-
+				const filterBy = parsedFilter.filterBy;
 				const filterType = parsedFilter.filterType as string;
 
-				if (objectField && filterType) {
+				if (filterBy && filterType) {
+					const objectField = objectFields.find(
+						(objectField) => objectField.name === filterBy
+					);
+
 					const aggregationFilter: AggregationFilters = {
 						fieldLabel: stringUtils.getLocalizableLabel(
 							creationLanguageId2 as Liferay.Language.Locale,
-							objectField.label,
-							objectField.name
+							objectField?.label,
+							objectField?.name || filterBy
 						),
-						filterBy: parsedFilter.filterBy,
+						filterBy,
 						filterType,
-						label: objectField.label,
-						objectFieldBusinessType: objectField.businessType,
-						objectFieldName: objectField.name,
+						label: objectField?.label,
+						objectFieldBusinessType: objectField?.businessType,
+						objectFieldName: objectField?.name || filterBy,
 						value:
-							objectField.businessType === 'Integer' ||
-							objectField.businessType === 'LongInteger'
+							objectField?.businessType === 'Integer' ||
+							objectField?.businessType === 'LongInteger'
 								? (
 										parsedFilter.json as {
 											[key: string]: string;
@@ -172,6 +173,17 @@ export function AggregationFilterContainer({
 									)[filterType]
 								: undefined,
 					};
+
+					if (objectField === null || objectField === undefined) {
+						return {
+							...aggregationFilter,
+							value: (
+								parsedFilter.json as {
+									[key: string]: string;
+								}
+							)[filterType],
+						};
+					}
 
 					if (
 						objectField.businessType === 'Date' &&

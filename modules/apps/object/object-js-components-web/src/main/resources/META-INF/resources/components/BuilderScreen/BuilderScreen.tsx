@@ -214,7 +214,7 @@ export type TBuilderScreenItem = {
 	externalReferenceCode?: string;
 	fieldLabel?: string;
 	filterBy?: string;
-	label: LocalizedValue<string>;
+	label?: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;

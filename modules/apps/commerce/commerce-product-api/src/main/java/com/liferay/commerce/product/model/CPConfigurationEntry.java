@@ -56,4 +56,7 @@ public interface CPConfigurationEntry
 	public CPTaxCategory getCPTaxCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public CPConfigurationList getParentCPConfigurationList()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

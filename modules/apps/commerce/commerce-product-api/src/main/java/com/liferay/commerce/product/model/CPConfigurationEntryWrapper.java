@@ -609,6 +609,13 @@ public class CPConfigurationEntryWrapper
 		return model.getMvccVersion();
 	}
 
+	@Override
+	public CPConfigurationList getParentCPConfigurationList()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getParentCPConfigurationList();
+	}
+
 	/**
 	 * Returns the primary key of this cp configuration entry.
 	 *

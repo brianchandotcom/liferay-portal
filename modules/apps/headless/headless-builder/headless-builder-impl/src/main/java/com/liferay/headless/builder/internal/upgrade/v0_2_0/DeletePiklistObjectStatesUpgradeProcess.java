@@ -76,6 +76,10 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		applicationStatusListTypeDefinition.setName("Application Status");
 
+		applicationStatusListTypeDefinition =
+			_listTypeDefinitionLocalService.updateListTypeDefinition(
+				applicationStatusListTypeDefinition);
+
 		ListTypeEntry publishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
@@ -83,12 +87,17 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		publishedListTypeEntry.setExternalReferenceCode("PUBLISHED");
 
+		_listTypeEntryLocalService.updateListTypeEntry(publishedListTypeEntry);
+
 		ListTypeEntry unpublishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
 				"unpublished");
 
 		unpublishedListTypeEntry.setExternalReferenceCode("UNPUBLISHED");
+
+		_listTypeEntryLocalService.updateListTypeEntry(
+			unpublishedListTypeEntry);
 	}
 
 	private void _modifyHTTPMethodPicklist(Long companyId)
@@ -105,8 +114,7 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		ObjectField applicationStatusObjectField =
 			_objectFieldLocalService.fetchObjectField(
-				"HTTP_METHOD",
-				objectDefinition.getObjectDefinitionId());
+				"HTTP_METHOD", objectDefinition.getObjectDefinitionId());
 
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			applicationStatusObjectField.getObjectFieldId());
@@ -118,6 +126,10 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		applicationStatusListTypeDefinition.setName("HTTP Method");
 
+		applicationStatusListTypeDefinition =
+			_listTypeDefinitionLocalService.updateListTypeDefinition(
+				applicationStatusListTypeDefinition);
+
 		ListTypeEntry publishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
@@ -125,12 +137,17 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		publishedListTypeEntry.setExternalReferenceCode("GET");
 
+		_listTypeEntryLocalService.updateListTypeEntry(publishedListTypeEntry);
+
 		ListTypeEntry unpublishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
 				"post");
 
 		unpublishedListTypeEntry.setExternalReferenceCode("POST");
+
+		_listTypeEntryLocalService.updateListTypeEntry(
+			unpublishedListTypeEntry);
 	}
 
 	private void _modifyRetrieveTypePicklist(Long companyId)
@@ -159,6 +176,10 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		applicationStatusListTypeDefinition.setName("Retrieve Type");
 
+		applicationStatusListTypeDefinition =
+			_listTypeDefinitionLocalService.updateListTypeDefinition(
+				applicationStatusListTypeDefinition);
+
 		ListTypeEntry publishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
@@ -166,12 +187,17 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		publishedListTypeEntry.setExternalReferenceCode("COLLECTION");
 
+		_listTypeEntryLocalService.updateListTypeEntry(publishedListTypeEntry);
+
 		ListTypeEntry unpublishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
 				"singleElement");
 
 		unpublishedListTypeEntry.setExternalReferenceCode("SINGLE_ELEMENT");
+
+		_listTypeEntryLocalService.updateListTypeEntry(
+			unpublishedListTypeEntry);
 	}
 
 	private void _modifyScopePicklist(Long companyId) throws PortalException {
@@ -198,6 +224,10 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		applicationStatusListTypeDefinition.setName("Scope");
 
+		applicationStatusListTypeDefinition =
+			_listTypeDefinitionLocalService.updateListTypeDefinition(
+				applicationStatusListTypeDefinition);
+
 		ListTypeEntry publishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
@@ -205,12 +235,17 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 
 		publishedListTypeEntry.setExternalReferenceCode("COMPANY");
 
+		_listTypeEntryLocalService.updateListTypeEntry(publishedListTypeEntry);
+
 		ListTypeEntry unpublishedListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				applicationStatusListTypeDefinition.getListTypeDefinitionId(),
 				"site");
 
 		unpublishedListTypeEntry.setExternalReferenceCode("SITE");
+
+		_listTypeEntryLocalService.updateListTypeEntry(
+			unpublishedListTypeEntry);
 	}
 
 	private final CompanyLocalService _companyLocalService;

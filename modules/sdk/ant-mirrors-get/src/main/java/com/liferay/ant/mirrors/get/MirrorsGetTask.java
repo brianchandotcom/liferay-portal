@@ -134,10 +134,6 @@ public class MirrorsGetTask extends Task {
 
 		_path = matcher.group("path");
 
-		if (_path.startsWith("mirrors/")) {
-			_path = _path.replaceFirst("mirrors", _getMirrorsHostname());
-		}
-
 		while (_path.endsWith("/")) {
 			_path = _path.substring(0, _path.length() - 1);
 		}

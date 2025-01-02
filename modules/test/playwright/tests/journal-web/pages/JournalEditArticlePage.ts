@@ -289,11 +289,6 @@ export class JournalEditArticlePage {
 		await this.fillTitle(title);
 
 		await this.publishArticle(true);
-
-		await waitForAlert(
-			this.page,
-			`Success:${title} was updated successfully.`
-		);
 	}
 
 	async openDMItemSelectorForImages() {

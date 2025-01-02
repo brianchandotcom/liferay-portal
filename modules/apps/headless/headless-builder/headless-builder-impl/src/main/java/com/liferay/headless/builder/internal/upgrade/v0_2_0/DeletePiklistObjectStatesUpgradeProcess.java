@@ -43,27 +43,47 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				_modifyApplicationStatusPicklist(companyId);
-				_modifyHTTPMethodPicklist(companyId);
-				_modifyRetrieveTypePicklist(companyId);
-				_modifyScopePicklist(companyId);
+				_modifyPicklist(
+					companyId, "APPLICATION_STATUS_PICKLIST",
+					"Application Status", "PUBLISHED", "published",
+					"UNPUBLISHED", "unpublished", "L_API_APPLICATION",
+					"APPLICATION_STATUS");
+				_modifyPicklist(
+					companyId, "HTTP_METHOD_PICKLIST", "HTTP Method", "GET",
+					"get", "POST", "post", "L_API_ENDPOINT", "HTTP_METHOD");
+				_modifyPicklist(
+					companyId, "RETRIEVE_TYPE_PICKLIST", "Retrieve Type",
+					"COLLECTION", "collection", "SINGLE_ELEMENT",
+					"singleElement", "L_API_ENDPOINT", "RETRIEVE_TYPE");
+				_modifyPicklist(
+					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "company",
+					"SITE", "site", "L_API_ENDPOINT", "SCOPE");
 			});
 	}
 
-	private void _modifyApplicationStatusPicklist(Long companyId)
+	private void _modifyPicklist(
+			Long companyId, String listTypeDefinitionExternalReferenceCode,
+			String listTypeDefinitionName,
+			String listTypeEntry1ExternalReferenceCode,
+			String listTypeEntry1Key,
+			String listTypeEntry2ExternalReferenceCode,
+			String listTypeEntry2Key,
+			String objectDefinitionExternalReferenceCode,
+			String objectFieldExternalReferenceCode)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", companyId);
+					objectDefinitionExternalReferenceCode, companyId);
 
 		if (objectDefinition == null) {
 			return;
 		}
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			"APPLICATION_STATUS", objectDefinition.getObjectDefinitionId());
+			objectFieldExternalReferenceCode,
+			objectDefinition.getObjectDefinitionId());
 
 		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 			objectField.getObjectFieldId());
@@ -75,179 +95,33 @@ public class DeletePiklistObjectStatesUpgradeProcess extends UpgradeProcess {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
-					"APPLICATION_STATUS_PICKLIST", companyId);
+					listTypeDefinitionExternalReferenceCode, companyId);
 
-		listTypeDefinition.setName("Application Status");
-
-		listTypeDefinition =
-			_listTypeDefinitionLocalService.updateListTypeDefinition(
-				listTypeDefinition);
-
-		ListTypeEntry publishedListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "published");
-
-		publishedListTypeEntry.setExternalReferenceCode("PUBLISHED");
-
-		_listTypeEntryLocalService.updateListTypeEntry(publishedListTypeEntry);
-
-		ListTypeEntry unpublishedListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "unpublished");
-
-		unpublishedListTypeEntry.setExternalReferenceCode("UNPUBLISHED");
-
-		_listTypeEntryLocalService.updateListTypeEntry(
-			unpublishedListTypeEntry);
-	}
-
-	private void _modifyHTTPMethodPicklist(Long companyId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", companyId);
-
-		if (objectDefinition == null) {
-			return;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			"HTTP_METHOD", objectDefinition.getObjectDefinitionId());
-
-		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
-			objectField.getObjectFieldId());
-
-		objectField.setState(false);
-
-		_objectFieldLocalService.updateObjectField(objectField);
-
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"HTTP_METHOD_PICKLIST", companyId);
-
-		listTypeDefinition.setName("HTTP Method");
+		listTypeDefinition.setName(listTypeDefinitionName);
 
 		listTypeDefinition =
 			_listTypeDefinitionLocalService.updateListTypeDefinition(
 				listTypeDefinition);
 
-		ListTypeEntry getListTypeEntry =
+		ListTypeEntry listTypeEntry1 =
 			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "get");
+				listTypeDefinition.getListTypeDefinitionId(),
+				listTypeEntry1Key);
 
-		getListTypeEntry.setExternalReferenceCode("GET");
+		listTypeEntry1.setExternalReferenceCode(
+			listTypeEntry1ExternalReferenceCode);
 
-		_listTypeEntryLocalService.updateListTypeEntry(getListTypeEntry);
+		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry1);
 
-		ListTypeEntry postListTypeEntry =
+		ListTypeEntry listTypeEntry2 =
 			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "post");
+				listTypeDefinition.getListTypeDefinitionId(),
+				listTypeEntry2Key);
 
-		postListTypeEntry.setExternalReferenceCode("POST");
+		listTypeEntry2.setExternalReferenceCode(
+			listTypeEntry2ExternalReferenceCode);
 
-		_listTypeEntryLocalService.updateListTypeEntry(postListTypeEntry);
-	}
-
-	private void _modifyRetrieveTypePicklist(Long companyId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", companyId);
-
-		if (objectDefinition == null) {
-			return;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			"RETRIEVE_TYPE", objectDefinition.getObjectDefinitionId());
-
-		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
-			objectField.getObjectFieldId());
-
-		objectField.setState(false);
-
-		_objectFieldLocalService.updateObjectField(objectField);
-
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"RETRIEVE_TYPE_PICKLIST", companyId);
-
-		listTypeDefinition.setName("Retrieve Type");
-
-		listTypeDefinition =
-			_listTypeDefinitionLocalService.updateListTypeDefinition(
-				listTypeDefinition);
-
-		ListTypeEntry collectionListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "collection");
-
-		collectionListTypeEntry.setExternalReferenceCode("COLLECTION");
-
-		_listTypeEntryLocalService.updateListTypeEntry(collectionListTypeEntry);
-
-		ListTypeEntry singleElementListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "singleElement");
-
-		singleElementListTypeEntry.setExternalReferenceCode("SINGLE_ELEMENT");
-
-		_listTypeEntryLocalService.updateListTypeEntry(
-			singleElementListTypeEntry);
-	}
-
-	private void _modifyScopePicklist(Long companyId) throws PortalException {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", companyId);
-
-		if (objectDefinition == null) {
-			return;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			"SCOPE", objectDefinition.getObjectDefinitionId());
-
-		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
-			objectField.getObjectFieldId());
-
-		objectField.setState(false);
-
-		_objectFieldLocalService.updateObjectField(objectField);
-
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"SCOPE_PICKLIST", companyId);
-
-		listTypeDefinition.setName("Scope");
-
-		listTypeDefinition =
-			_listTypeDefinitionLocalService.updateListTypeDefinition(
-				listTypeDefinition);
-
-		ListTypeEntry companyListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "company");
-
-		companyListTypeEntry.setExternalReferenceCode("COMPANY");
-
-		_listTypeEntryLocalService.updateListTypeEntry(companyListTypeEntry);
-
-		ListTypeEntry siteListTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "site");
-
-		siteListTypeEntry.setExternalReferenceCode("SITE");
-
-		_listTypeEntryLocalService.updateListTypeEntry(siteListTypeEntry);
+		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry2);
 	}
 
 	private final CompanyLocalService _companyLocalService;

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -82,12 +83,12 @@ public class GetConflictInfoMVCResourceCommandTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			_assertGetConflictInfo("change-tracking-conflict-icon", "check");
+			_assertGetConflictInfo(null);
 
 			_journalArticle = JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
 
-			_assertGetConflictInfo("change-tracking-conflict-icon", "check");
+			_assertGetConflictInfo(null);
 		}
 	}
 
@@ -108,8 +109,7 @@ public class GetConflictInfoMVCResourceCommandTest {
 			_journalArticle = JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
 
-			_assertGetConflictInfo(
-				"change-tracking-conflict-icon-warning", "warning-full");
+			_assertGetConflictInfo("warning");
 		}
 	}
 
@@ -136,13 +136,11 @@ public class GetConflictInfoMVCResourceCommandTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			_assertGetConflictInfo(
-				"change-tracking-conflict-icon-danger", "warning-full");
+			_assertGetConflictInfo("danger");
 		}
 	}
 
-	private void _assertGetConflictInfo(
-			String expectedConflictIconClass, String expectedConflictIconName)
+	private void _assertGetConflictInfo(String expectedConflictKey)
 		throws Exception {
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
@@ -158,12 +156,12 @@ public class GetConflictInfoMVCResourceCommandTest {
 		JSONObject jsonObject = _getConflictInfoJSONObject(
 			mockLiferayResourceResponse);
 
-		Assert.assertEquals(
-			expectedConflictIconClass,
-			String.valueOf(jsonObject.get("conflictIconClass")));
-		Assert.assertEquals(
-			expectedConflictIconName,
-			String.valueOf(jsonObject.get("conflictIconName")));
+		if (Validator.isNull(expectedConflictKey)) {
+			Assert.assertEquals(0, jsonObject.length());
+		}
+		else {
+			Assert.assertNotNull(jsonObject.get(expectedConflictKey));
+		}
 	}
 
 	private JSONObject _getConflictInfoJSONObject(

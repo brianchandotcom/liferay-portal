@@ -334,33 +334,14 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 	await conflictWarning.waitFor();
 	await expect(conflictWarning).toBeVisible();
 
-	let conflictIcon = page.locator(
+	const conflictIcon = page.locator(
 		'.publication-timeline .change-tracking-conflict-icon-warning'
 	);
 	await conflictIcon.first().waitFor();
 	await expect(conflictIcon).toHaveCount(2);
-
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
-
-	// Refresh the page after turning off feature flag
-
-	await documentLibraryPage.goto(site.friendlyUrlPath);
-
-	const dlFileEntryLink = page.getByRole('link', {exact: true, name: title3});
-	await dlFileEntryLink.waitFor();
-	await dlFileEntryLink.click();
-
-	conflictIcon = page.locator('.change-tracking-conflict-icon-warning');
-	await conflictIcon.first().waitFor();
-	await expect(conflictIcon).toBeVisible();
-
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection2.body.id
-	);
 });
 
 test('LPD-26155 Production conflict info is visible when new changes have been made to production', async ({
-	apiHelpers,
 	changeTrackingPage,
 	ctCollection,
 	documentLibraryEditFilePage,
@@ -394,38 +375,6 @@ test('LPD-26155 Production conflict info is visible when new changes have been m
 	const prodConflictText = page.getByText('Production Conflict');
 	await prodConflictText.waitFor();
 	await expect(prodConflictText).toBeVisible();
-
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
-
-	// Refresh the page after turning off feature flag
-
-	await documentLibraryPage.goto(site.friendlyUrlPath);
-
-	const dlFileEntryLink = page.getByRole('link', {exact: true, name: title2});
-	await dlFileEntryLink.waitFor();
-	await dlFileEntryLink.click();
-
-	await prodConflictIcon.waitFor();
-	await expect(prodConflictIcon).toBeVisible();
-});
-
-test('LPD-26155 No conflict icon is visible when there are no conflicts', async ({
-	apiHelpers,
-	documentLibraryPage,
-	page,
-	site,
-}) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-20556', false);
-
-	await documentLibraryPage.goto(site.friendlyUrlPath);
-
-	const dlFileEntryLink = page.getByRole('link', {exact: true, name: title2});
-	await dlFileEntryLink.waitFor();
-	await dlFileEntryLink.click();
-
-	const noConflictIcon = page.locator('.change-tracking-conflict-icon');
-	await noConflictIcon.waitFor();
-	await expect(noConflictIcon).toBeVisible();
 });
 
 test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({

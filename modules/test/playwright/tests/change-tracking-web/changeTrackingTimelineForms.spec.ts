@@ -16,8 +16,8 @@ export const test = mergeTests(
 	formsPagesTest,
 	changeTrackingPagesTest,
 	featureFlagsTest({
-         'LPD-20556': {enabled: true},
-    })
+		'LPD-20556': {enabled: true},
+	})
 );
 
 test('LPD-39428 Assert publication timeline history is enabled for forms', async ({

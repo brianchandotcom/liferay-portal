@@ -35,16 +35,7 @@ import java.util.Locale;
  */
 public class ObjectEntrySearchUtil {
 
-	public static Predicate getLeftJoinLocalizationTablePredicate(
-			DynamicObjectDefinitionLocalizationTable
-				dynamicObjectDefinitionLocalizationTable,
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
-		throws PortalException {
-
-		if (dynamicObjectDefinitionLocalizationTable == null) {
-			return null;
-		}
-
+	public static String getLanguageId() throws PortalException {
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		if (locale == null) {
@@ -58,13 +49,26 @@ public class ObjectEntrySearchUtil {
 			locale = user.getLocale();
 		}
 
+		return LocaleUtil.toLanguageId(locale);
+	}
+
+	public static Predicate getLeftJoinLocalizationTablePredicate(
+			DynamicObjectDefinitionLocalizationTable
+				dynamicObjectDefinitionLocalizationTable,
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
+		throws PortalException {
+
+		if (dynamicObjectDefinitionLocalizationTable == null) {
+			return null;
+		}
+
 		return dynamicObjectDefinitionLocalizationTable.getForeignKeyColumn(
 		).eq(
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 		).and(
 			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn(
 			).eq(
-				LocaleUtil.toLanguageId(locale)
+				getLanguageId()
 			)
 		);
 	}

@@ -115,6 +115,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.sql.dsl.spi.query.QueryExpression;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -822,7 +823,7 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getObjectDefinitionId());
 
 		Expression<?>[] selectExpressions = _getSelectExpressions(
-			extensionDynamicObjectDefinitionTable, null);
+			extensionDynamicObjectDefinitionTable, primaryKey, null);
 
 		List<Object[]> rows = _list(
 			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
@@ -1282,10 +1283,13 @@ public class ObjectEntryLocalServiceImpl
 
 		Expression<?>[] selectExpressions = ArrayUtil.append(
 			_getSelectExpressions(dynamicObjectDefinitionLocalizationTable),
-			_getSelectExpressions(dynamicObjectDefinitionTable, null),
+			_getSelectExpressions(
+				dynamicObjectDefinitionTable, objectEntry.getObjectEntryId(),
+				null),
 			ArrayUtil.remove(
 				_getSelectExpressions(
-					extensionDynamicObjectDefinitionTable, null),
+					extensionDynamicObjectDefinitionTable,
+					objectEntry.getObjectEntryId(), null),
 				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()));
 
 		List<Object[]> rows = _list(
@@ -3207,6 +3211,108 @@ public class ObjectEntryLocalServiceImpl
 		return ObjectEntryTable.INSTANCE.objectEntryId;
 	}
 
+	private Map<String, Object> _getQueryExpressions(
+			ObjectDefinition objectDefinition2, long primaryKey, String script)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-43542")) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Object> queryExpressions = new HashMap<>();
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipPersistence.findByObjectDefinitionId2(
+					objectDefinition2.getObjectDefinitionId())) {
+
+			ObjectField relationshipObjectField =
+				_objectFieldLocalService.fetchObjectField(
+					objectRelationship.getObjectFieldId2());
+
+			if (!script.contains(
+					relationshipObjectField.getName() + StringPool.UNDERLINE)) {
+
+				continue;
+			}
+
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
+			Table<?> objectDefinition2Table = _objectFieldLocalService.getTable(
+				objectDefinition2.getObjectDefinitionId(),
+				relationshipObjectField.getName());
+
+			Column<?, Long> objectDefinition2PrimaryKeyColumn =
+				ObjectEntrySearchUtil.getPrimaryKeyColumn(
+					objectDefinition2.getPKObjectFieldDBColumnName(),
+					objectDefinition2Table);
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition1.getObjectDefinitionId())) {
+
+				String key =
+					relationshipObjectField.getName() + StringPool.UNDERLINE +
+						objectField.getName();
+
+				if (!script.contains(key)) {
+					continue;
+				}
+
+				Table<?> objectDefinition1Table =
+					_objectFieldLocalService.getTable(
+						objectDefinition1.getObjectDefinitionId(),
+						objectField.getName());
+
+				Column<?, Long> objectDefinition1PrimaryKeyColumn =
+					ObjectEntrySearchUtil.getPrimaryKeyColumn(
+						objectDefinition1.getPKObjectFieldDBColumnName(),
+						objectDefinition1Table);
+
+				Predicate predicate = null;
+
+				if (objectField.isLocalized()) {
+					DynamicObjectDefinitionLocalizationTable
+						dynamicObjectDefinitionLocalizationTable =
+							(DynamicObjectDefinitionLocalizationTable)
+								objectDefinition1Table;
+
+					predicate =
+						dynamicObjectDefinitionLocalizationTable.
+							getLanguageIdColumn(
+							).eq(
+								ObjectEntrySearchUtil.getLanguageId()
+							);
+				}
+
+				queryExpressions.put(
+					key,
+					new QueryExpression<>(
+						DSLQueryFactoryUtil.select(
+							objectDefinition1Table.getColumn(
+								objectField.getDBColumnName())
+						).from(
+							objectDefinition1Table
+						).innerJoinON(
+							objectDefinition2Table,
+							objectDefinition1PrimaryKeyColumn.eq(
+								(Column<?, Long>)
+									objectDefinition2Table.getColumn(
+										relationshipObjectField.getName()))
+						).where(
+							objectDefinition2PrimaryKeyColumn.eq(
+								primaryKey
+							).and(
+								predicate
+							)
+						)));
+			}
+		}
+
+		return queryExpressions;
+	}
+
 	private Predicate _getRelationshipObjectFieldPredicate(
 			Column<?, ?> column, ObjectField objectField, String search)
 		throws PortalException {
@@ -3353,7 +3459,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private Expression<?>[] _getSelectExpressions(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-			String[] selectedObjectFieldNames)
+			long primaryKey, String[] selectedObjectFieldNames)
 		throws PortalException {
 
 		List<Expression<?>> selectExpressions = new ArrayList<>();
@@ -3456,6 +3562,9 @@ public class ObjectEntryLocalServiceImpl
 						).build());
 
 				ddmExpression.setVariables(columns);
+				ddmExpression.setVariables(
+					_getQueryExpressions(
+						objectDefinition, primaryKey, String.valueOf(script)));
 
 				Class<?> clazz = Double.class;
 

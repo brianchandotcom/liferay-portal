@@ -4,12 +4,18 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import '../css/DataSets.scss';
 
 import ClayButton from '@clayui/button';
+import {ClayRadio} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import ClayList from '@clayui/list';
 import ClayModal from '@clayui/modal';
+import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import {fetch, navigate, openModal} from 'frontend-js-web';
 
 import {
@@ -20,6 +26,107 @@ import {
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 import {IDataSet, ISystemDataSet} from './utils/types';
+
+interface IFrontendDataSetContext {
+	onSelect: Function;
+	selectItems: Function;
+	selectable: boolean;
+	selectedItemsKey: keyof ISystemDataSet;
+	selectedItemsValue: Array<any>;
+}
+
+const SystemDataSetModalList = ({
+	frontendDataSetContext,
+	items,
+}: {
+	frontendDataSetContext: any;
+	items: Array<ISystemDataSet>;
+}) => {
+	const {
+		onSelect,
+		selectItems,
+		selectable,
+		selectedItemsKey,
+		selectedItemsValue,
+	} = useContext(frontendDataSetContext) as IFrontendDataSetContext;
+
+	return (
+		<ClayList>
+			{items.map((item) => {
+				return (
+					<ClayList.Item
+						className={classNames({
+							disabled: item.customized,
+							selectable,
+							selected: selectedItemsValue?.includes(
+								item[selectedItemsKey]
+							),
+						})}
+						flex
+						key={item.name}
+						onClick={() => {
+							if (selectable) {
+								selectItems(item[selectedItemsKey]);
+
+								onSelect({selectedItems: [item]});
+							}
+						}}
+					>
+						<ClayList.ItemField className="justify-content-center selection-control">
+							<ClayRadio
+								checked={
+									selectedItemsValue
+										? selectedItemsValue
+												.map((element) =>
+													String(element)
+												)
+												.includes(
+													String(
+														item[selectedItemsKey]
+													)
+												)
+										: false
+								}
+								onChange={() => {}}
+								value=""
+							/>
+						</ClayList.ItemField>
+
+						<ClayList.ItemField>
+							<ClaySticker displayType="dark">
+								<ClayIcon symbol={item.symbol} />
+							</ClaySticker>
+						</ClayList.ItemField>
+
+						<ClayList.ItemField
+							className="justify-content-center"
+							expand
+						>
+							<ClayList.ItemTitle>
+								{item.title}
+							</ClayList.ItemTitle>
+
+							<ClayList.ItemText>
+								{item.description}
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+
+						{item.customized && (
+							<ClayList.ItemField>
+								<ClayLabel
+									className="used-label"
+									displayType="warning"
+								>
+									{Liferay.Language.get('used')}
+								</ClayLabel>
+							</ClayList.ItemField>
+						)}
+					</ClayList.Item>
+				);
+			})}
+		</ClayList>
+	);
+};
 
 const SelectSystemDataSetModalContent = ({
 	closeModal,
@@ -90,13 +197,7 @@ const SelectSystemDataSetModalContent = ({
 					selectionType="single"
 					views={[
 						{
-							contentRenderer: 'list',
-							name: 'list',
-							schema: {
-								description: 'description',
-								symbol: 'symbol',
-								title: 'title',
-							},
+							component: SystemDataSetModalList,
 						},
 					]}
 				/>
@@ -224,6 +325,7 @@ const SystemDataSets = ({
 								systemDataSets={systemDataSets}
 							/>
 						),
+						size: 'lg',
 					});
 				},
 			},

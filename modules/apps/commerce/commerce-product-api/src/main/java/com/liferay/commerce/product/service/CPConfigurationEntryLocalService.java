@@ -109,9 +109,11 @@ public interface CPConfigurationEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCPConfigurationEntries(long cpConfigurationListId);
+	public void deleteCPConfigurationEntries(long cpConfigurationListId)
+		throws PortalException;
 
-	public void deleteCPConfigurationEntries(long classNameId, long classPK);
+	public void deleteCPConfigurationEntries(long classNameId, long classPK)
+		throws PortalException;
 
 	/**
 	 * Deletes the cp configuration entry from the database. Also notifies the appropriate model listeners.
@@ -122,10 +124,12 @@ public interface CPConfigurationEntryLocalService
 	 *
 	 * @param cpConfigurationEntry the cp configuration entry
 	 * @return the cp configuration entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public CPConfigurationEntry deleteCPConfigurationEntry(
-		CPConfigurationEntry cpConfigurationEntry);
+			CPConfigurationEntry cpConfigurationEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the cp configuration entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -245,6 +249,9 @@ public interface CPConfigurationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndGroupId(
 		String uuid, long groupId);
+
+	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
+		CPConfigurationEntry cpConfigurationEntry);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

@@ -141,11 +141,13 @@ public abstract class CPConfigurationEntryLocalServiceBaseImpl
 	 *
 	 * @param cpConfigurationEntry the cp configuration entry
 	 * @return the cp configuration entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPConfigurationEntry deleteCPConfigurationEntry(
-		CPConfigurationEntry cpConfigurationEntry) {
+			CPConfigurationEntry cpConfigurationEntry)
+		throws PortalException {
 
 		return cpConfigurationEntryPersistence.remove(cpConfigurationEntry);
 	}

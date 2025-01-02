@@ -348,6 +348,13 @@ public class CPConfigurationListWrapper
 		return model.getName();
 	}
 
+	@Override
+	public CPConfigurationList getParentCPConfigurationList()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getParentCPConfigurationList();
+	}
+
 	/**
 	 * Returns the parent cp configuration list ID of this cp configuration list.
 	 *

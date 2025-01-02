@@ -421,22 +421,24 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 				ZipEntry subsystemZipEntry = enumeration.nextElement();
 
-				if (StringUtil.endsWith(subsystemZipEntry.getName(), ".lpkg")) {
-					File file = null;
+				if (!StringUtil.endsWith(
+						subsystemZipEntry.getName(), ".lpkg")) {
 
-					try (InputStream subsystemInputStream =
-							zipFile.getInputStream(subsystemZipEntry)) {
-
-						file = FileUtil.createTempFile(subsystemInputStream);
-
-						return _getMarketplaceProperties(file);
-					}
-					finally {
-						FileUtil.delete(file);
-					}
+					return null;
 				}
 
-				return null;
+				File file = null;
+
+				try (InputStream subsystemInputStream = zipFile.getInputStream(
+						subsystemZipEntry)) {
+
+					file = FileUtil.createTempFile(subsystemInputStream);
+
+					return _getMarketplaceProperties(file);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
 			}
 
 			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {

@@ -71,12 +71,12 @@ public class LoginUtil {
 		).put(
 			"[$PASSWORD_RESET_URL$]",
 			() -> {
-				if (showPasswordTerms) {
-					return LanguageUtil.get(
-						themeDisplay.getLocale(), "the-password-reset-url");
+				if (!showPasswordTerms) {
+					return null;
 				}
 
-				return null;
+				return LanguageUtil.get(
+					themeDisplay.getLocale(), "the-password-reset-url");
 			}
 		).put(
 			"[$PORTAL_URL$]",

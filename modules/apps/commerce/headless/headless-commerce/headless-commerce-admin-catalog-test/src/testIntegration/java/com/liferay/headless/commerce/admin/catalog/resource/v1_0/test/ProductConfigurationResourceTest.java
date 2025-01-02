@@ -7,7 +7,6 @@ package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -75,14 +74,6 @@ public class ProductConfigurationResourceTest
 		_masterCPConfigurationList =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				_commerceCatalog.getGroupId());
-
-		_cpConfigurationList =
-			_cpConfigurationListLocalService.addCPConfigurationList(
-				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
-				_user.getUserId(),
-				_masterCPConfigurationList.getCPConfigurationListId(), false,
-				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
-				0, true);
 	}
 
 	@After
@@ -643,8 +634,6 @@ public class ProductConfigurationResourceTest
 	private CProductLocalService _cProductLocalService;
 
 	private CPConfigurationList _masterCPConfigurationList;
-
-	private CPConfigurationList _cpConfigurationList;
 	private User _user;
 
 }

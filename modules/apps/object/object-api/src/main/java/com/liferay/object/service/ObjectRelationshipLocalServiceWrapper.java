@@ -664,6 +664,14 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectRelationshipLocalService.updateUserId(
+			companyId, oldUserId, newUserId);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _objectRelationshipLocalService.getBasePersistence();
 	}

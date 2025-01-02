@@ -790,7 +790,7 @@ definition {
 
 		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2024-12-31",
+			expirationDate = "2099-12-31",
 			groupName = "Test Site Name",
 			permanent = "true",
 			sourceURL = "test-source-page");
@@ -1061,7 +1061,7 @@ definition {
 
 		JSONRedirect.updateEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2024-12-31",
+			expirationDate = "2099-12-31",
 			groupName = "Test Site Name",
 			permanent = "true",
 			sourceURL = "test-source-page");
@@ -1070,7 +1070,7 @@ definition {
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/24",
+			expirationDate = "12/31/99",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
@@ -1304,7 +1304,7 @@ definition {
 
 		JSONRedirect.updateEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2024-12-31",
+			expirationDate = "2099-12-31",
 			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 

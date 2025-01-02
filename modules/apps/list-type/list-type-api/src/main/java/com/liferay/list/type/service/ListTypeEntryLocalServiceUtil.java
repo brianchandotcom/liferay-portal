@@ -414,6 +414,13 @@ public class ListTypeEntryLocalServiceUtil {
 			externalReferenceCode, listTypeEntryId, nameMap);
 	}
 
+	public static void updateUserId(
+			long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		getService().updateUserId(companyId, oldUserId, newUserId);
+	}
+
 	public static ListTypeEntryLocalService getService() {
 		return _serviceSnapshot.get();
 	}

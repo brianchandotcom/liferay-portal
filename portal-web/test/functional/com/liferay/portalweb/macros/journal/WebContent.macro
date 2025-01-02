@@ -1553,17 +1553,11 @@ definition {
 
 	@summary = "Default summary"
 	macro increaseDisplayDate(minuteIncrease = null) {
-		var displayDate = DateTimeSchedule.getCurrentDisplayDate(field = "display");
-		var currentTime = DateTimeSchedule.getCurrentDisplayTime(field = "display");
-		var displayTime = DateTimeSchedule.increaseDisplayTime(
-			field = "display",
-			minuteIncreaseValue = ${minuteIncrease});
+		var displayDate = DateUtil.getDateOffsetByMinutes(${minuteIncrease}, "yyyy-MM-dd HH:mm");
 
-		WebContent.scheduleWCArticleWithPermissions(
-			displayDate = ${displayDate},
-			displayTime = ${displayTime});
+		WebContent.scheduleWCArticleWithPermissions(displayDate = ${displayDate});
 
-		echo("Web Content display time increased ${minuteIncrease} minutes, changed from ${currentTime} to ${displayTime}");
+		echo("Web Content display date increased ${minuteIncrease} minutes, changed to ${displayDate}");
 	}
 
 	@summary = "Default summary"

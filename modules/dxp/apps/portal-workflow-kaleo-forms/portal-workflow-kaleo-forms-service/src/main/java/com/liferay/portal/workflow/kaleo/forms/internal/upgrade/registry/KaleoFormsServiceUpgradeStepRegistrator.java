@@ -42,7 +42,7 @@ public class KaleoFormsServiceUpgradeStepRegistrator
 				SchemaUpgradeProcess());
 
 		registry.register(
-			"1.0.0", "1.0.0-step-1",
+			"1.0.0", "1.0.0.step-1",
 			new com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_1.
 				KaleoProcessUpgradeProcess());
 

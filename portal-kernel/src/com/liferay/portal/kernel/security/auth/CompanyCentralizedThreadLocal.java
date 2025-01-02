@@ -23,7 +23,21 @@ public class CompanyCentralizedThreadLocal<T>
 	public static List<CompanyCentralizedThreadLocal<?>>
 		getCompanyCentralizedThreadLocals() {
 
-		return _companyCentralizedThreadLocals;
+		List<CompanyCentralizedThreadLocal<?>> companyCentralizedThreadLocals =
+			new ArrayList<>();
+
+		for (CentralizedThreadLocal<?> shortLivedThreadLocal :
+				getShortLivedThreadLocals().keySet()) {
+
+			if (shortLivedThreadLocal instanceof
+					CompanyCentralizedThreadLocal) {
+
+				companyCentralizedThreadLocals.add(
+					(CompanyCentralizedThreadLocal<?>)shortLivedThreadLocal);
+			}
+		}
+
+		return companyCentralizedThreadLocals;
 	}
 
 	public CompanyCentralizedThreadLocal(String name) {

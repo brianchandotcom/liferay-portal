@@ -41,26 +41,17 @@ public class CompanyCentralizedThreadLocal<T>
 	}
 
 	public CompanyCentralizedThreadLocal(String name) {
-		this(name, () -> null, true);
+		super(name, () -> null, null, true);
 	}
 
 	public CompanyCentralizedThreadLocal(String name, Supplier<T> supplier) {
-		this(name, supplier, true);
+		super(name, supplier, null, true);
 	}
 
 	public CompanyCentralizedThreadLocal(
-		String name, Supplier<T> supplier, boolean shortLived) {
+		String name, Supplier<T> supplier, Function<T, T> copyFunction) {
 
-		this(name, supplier, null, shortLived);
-	}
-
-	public CompanyCentralizedThreadLocal(
-		String name, Supplier<T> supplier, Function<T, T> copyFunction,
-		boolean shortLived) {
-
-		super(name, supplier, copyFunction, shortLived);
-
-		_companyCentralizedThreadLocals.add(this);
+		super(name, supplier, copyFunction, true);
 	}
 
 	@Override
@@ -76,8 +67,5 @@ public class CompanyCentralizedThreadLocal<T>
 
 		return super.setWithSafeCloseable(value);
 	}
-
-	private static final List<CompanyCentralizedThreadLocal<?>>
-		_companyCentralizedThreadLocals = new ArrayList<>();
 
 }

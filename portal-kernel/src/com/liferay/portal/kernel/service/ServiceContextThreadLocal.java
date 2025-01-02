@@ -60,7 +60,6 @@ public class ServiceContextThreadLocal {
 				}
 
 				return cloneServiceContexts;
-			},
-			true);
+			});
 
 }

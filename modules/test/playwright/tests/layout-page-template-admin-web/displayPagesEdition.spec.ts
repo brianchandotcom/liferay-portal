@@ -3,31 +3,46 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
+import {
+	ObjectActionApi,
+	ObjectDefinitionApi,
+	ObjectField,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
+import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {getWebContentStructureId} from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../utils/waitForAlert';
+import {applicationPageTest} from '../frontend-data-set-admin-web/tests/data-set-admin/sorting.spec';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
 } from '../setup/page-management-site/constants/animals';
 import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
+import {goToObjectEntity} from '../setup/page-management-site/utils/goToObjectEntity';
 
 const test = mergeTests(
-	apiHelpersTest,
+	applicationsMenuPageTest,
+	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	pageEditorPagesTest,
 	loginTest(),
 	pageManagementSiteTest,
+	isolatedSiteTest,
 	pagesPagesTest
 );
 
@@ -839,6 +854,200 @@ test.describe('Object Display page', () => {
 
 			await expect(page.getByText('one')).toBeVisible();
 			await expect(page.getByText('two')).toBeVisible();
+		}
+	);
+
+	test(
+		'Can map an object action',
+		{tag: '@LPS-165556'},
+		async ({
+			apiHelpers,
+			applicationsMenuPage,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Create ticket object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: ticketObjectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'ticketERC',
+					label: {
+						en_US: 'Ticket',
+					},
+					name: 'Ticket',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'textERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Text',
+							},
+							localized: false,
+							name: 'text',
+							required: false,
+						},
+					],
+					panelCategoryKey: 'control_panel.users',
+					pluralLabel: {
+						en_US: 'Tickets',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: ticketObjectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Add object entry
+
+			const applicationName =
+				'c/' + ticketObjectDefinition.name.toLowerCase() + 's';
+
+			const ticketObjectEntry =
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						text: 'text1',
+					},
+					applicationName
+				);
+
+			// Add object action
+
+			const objectActionApiClient =
+				await apiHelpers.buildRestClient(ObjectActionApi);
+
+			await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				ticketObjectDefinition.externalReferenceCode,
+				{
+					active: true,
+					errorMessage: {
+						en_US: 'The location should be Canary Islands.',
+					},
+					label: {
+						en_US: 'addObjectEntryName',
+					},
+					name: 'addObjectEntryName',
+					objectActionExecutorKey: 'add-object-entry',
+					objectActionTriggerKey: 'standalone',
+					parameters: {
+						objectDefinitionExternalReferenceCode:
+							ticketObjectDefinition.externalReferenceCode,
+						predefinedValues: [
+							{
+								businessType: 'Text',
+								inputAsValue: true,
+								label: {
+									en_US: 'Text',
+								},
+								name: 'text',
+								value: 'sample text',
+							},
+						],
+					},
+					system: false,
+				}
+			);
+
+			// Add display page template
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					ticketObjectDefinition.className
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			const displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: site.id,
+						name: displayPageTemplateName,
+					}
+				);
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+				{
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+
+			// Add button and configure it to execute action
+
+			displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			await pageEditorPage.addFragment('Basic Components', 'Button');
+
+			const buttonId = await pageEditorPage.getFragmentId('Button');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Type',
+				fragmentId: buttonId,
+				tab: 'General',
+				value: 'Action',
+			});
+
+			await pageEditorPage.selectEditable(buttonId, 'action');
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Action',
+				tab: 'Action',
+				value: 'addObjectEntryName',
+			});
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Success Interaction',
+				tab: 'Action',
+				value: 'Show Notification',
+			});
+
+			// Publish display page template
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to display page and execute action
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${ticketObjectEntry.id}`
+			);
+
+			// Wait for action button to be ready
+
+			await page.waitForTimeout(1000);
+
+			// Execute action
+
+			await page.getByRole('button', {name: 'Go somewhere'}).click();
+
+			await waitForAlert(page);
+
+			// Check object entry was created
+
+			await applicationsMenuPage.goToControlPanel();
+
+			page.getByRole('menuitem', {
+				exact: true,
+				name: 'Tickets',
+			}).click();
+
+			await expect(page.getByText('sample text')).toBeVisible();
 		}
 	);
 });

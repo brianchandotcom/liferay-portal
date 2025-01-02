@@ -63,11 +63,11 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select DDMFieldAttribute.companyId, ",
-					"DDMFieldAttribute.ctCollectionId, ",
+					"select DDMFieldAttribute.ctCollectionId, ",
 					"DDMFieldAttribute.fieldAttributeId, ",
-					"DDMFieldAttribute.smallAttributeValue, ",
-					"DDMFieldAttribute.largeAttributeValue from DDMStructure ",
+					"DDMFieldAttribute.companyId, ",
+					"DDMFieldAttribute.largeAttributeValue, ",
+					"DDMFieldAttribute.smallAttributeValue from DDMStructure ",
 					"inner join DDMStructureVersion on ",
 					"DDMStructure.ctCollectionId = ",
 					"DDMStructureVersion.ctCollectionId and ",
@@ -84,8 +84,8 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
-					"update DDMFieldAttribute set smallAttributeValue = ?, " +
-						"largeAttributeValue = ? where ctCollectionId = ? " +
+					"update DDMFieldAttribute set largeAttributeValue = ?, " +
+						"smallAttributeValue = ? where ctCollectionId = ? " +
 							"and fieldAttributeId = ?")) {
 
 			preparedStatement1.setLong(1, classNameId);
@@ -93,11 +93,11 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
+				long companyId = resultSet.getLong(3);
 
-				String smallAttributeValue = _transform(
-					companyId, resultSet.getString(4));
 				String largeAttributeValue = _transform(
+					companyId, resultSet.getString(4));
+				String smallAttributeValue = _transform(
 					companyId, resultSet.getString(5));
 
 				if ((smallAttributeValue != null) &&
@@ -107,11 +107,11 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 					smallAttributeValue = null;
 				}
 
-				preparedStatement2.setString(1, smallAttributeValue);
-				preparedStatement2.setString(2, largeAttributeValue);
+				preparedStatement2.setString(1, largeAttributeValue);
+				preparedStatement2.setString(2, smallAttributeValue);
 
-				preparedStatement2.setLong(3, resultSet.getLong(2));
-				preparedStatement2.setLong(4, resultSet.getLong(3));
+				preparedStatement2.setLong(3, resultSet.getLong(1));
+				preparedStatement2.setLong(4, resultSet.getLong(2));
 
 				preparedStatement2.addBatch();
 			}

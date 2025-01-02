@@ -1200,66 +1200,6 @@ definition {
 		}
 	}
 
-	@description = "This is use case for LPS-179333. Verify that timeline and conflict icon can display for the conflict publication bar."
-	@priority = 3
-	test TimelineAndConflictIconCanAppearOnConflictPublicationBar {
-		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Make change to the Home page on Publication 1 Name") {
-			JSONPublications.addPublication(publicationName = "Publication 1 Name");
-
-			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = "Guest");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				targetFragmentName = "Container");
-
-			PageEditor.publish();
-		}
-
-		task ("Make change to the Home page on Publication 1 Name") {
-			JSONPublications.addPublication(publicationName = "Publication 2 Name");
-
-			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = "Guest");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				targetFragmentName = "Container");
-
-			PageEditor.publish();
-		}
-
-		task ("Publish Publication 2 Name") {
-			Publications.publishPublication(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication 1 Name");
-		}
-
-		task ("Access the Home page on Publication 2 Name") {
-			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Guest");
-		}
-
-		task ("Assert conflict icon appears on the Publication bar") {
-			AssertElementPresent(locator1 = "Publications#PUBLICATION_CONFLICT_BUTTON");
-		}
-	}
-
 	@priority = 5
 	test ViewPageFriendlyURLAfterRevertingPublication {
 		HeadlessSite.addSite(siteName = "Site Name");

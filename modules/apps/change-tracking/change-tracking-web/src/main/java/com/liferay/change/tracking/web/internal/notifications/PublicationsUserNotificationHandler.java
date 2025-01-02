@@ -74,6 +74,12 @@ public class PublicationsUserNotificationHandler
 				return _scheduledPublicationUserNotificationHandler;
 			}
 
+			if (notificationType ==
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
+
+				return _publicationChangeSizeClassificationUserNotificationHandler;
+			}
+
 			return null;
 		}
 		catch (JSONException jsonException) {
@@ -90,6 +96,10 @@ public class PublicationsUserNotificationHandler
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private PublicationChangeSizeClassificationUserNotificationHandler
+		_publicationChangeSizeClassificationUserNotificationHandler;
 
 	@Reference
 	private PublicationInviteUserNotificationHandler

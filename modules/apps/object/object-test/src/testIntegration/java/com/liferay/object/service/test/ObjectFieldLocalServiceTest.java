@@ -14,6 +14,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
@@ -50,11 +51,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -65,6 +68,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -409,6 +413,55 @@ public class ObjectFieldLocalServiceTest {
 					objectRelationshipName
 				).objectDefinitionId(
 					objectDefinition2.getObjectDefinitionId()
+				).build()));
+
+		ObjectFilter objectFilter =
+			_objectFilterLocalService.createObjectFilter(0L);
+
+		objectFilter.setFilterBy(RandomTestUtil.randomString());
+		objectFilter.setFilterType(ObjectFilterConstants.TYPE_EQUALS);
+		objectFilter.setJSON(
+			JSONUtil.put(
+				ObjectFilterConstants.TYPE_EQUALS, RandomTestUtil.randomInt()
+			).toString());
+
+		Assert.assertNotNull(
+			_addCustomObjectField(
+				new AggregationObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).objectDefinitionId(
+					objectDefinition1.getObjectDefinitionId()
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILTERS
+						).objectFilters(
+							Arrays.asList(objectFilter)
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FUNCTION
+						).value(
+							ObjectFieldSettingConstants.VALUE_MAX
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_OBJECT_FIELD_NAME
+						).value(
+							"a" + RandomTestUtil.randomString()
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_OBJECT_RELATIONSHIP_NAME
+						).value(
+							objectRelationshipName
+						).build())
 				).build()));
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
@@ -2812,6 +2865,9 @@ public class ObjectFieldLocalServiceTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectFilterLocalService _objectFilterLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

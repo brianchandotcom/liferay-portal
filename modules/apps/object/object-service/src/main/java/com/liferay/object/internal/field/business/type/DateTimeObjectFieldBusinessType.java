@@ -99,11 +99,11 @@ public class DateTimeObjectFieldBusinessType
 	}
 
 	@Override
-	public Map<Locale, Object> getLocalizedValues(
+	public Map<String, Object> getLocalizedValues(
 			ObjectField objectField, Long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Map<Locale, Object> localizedValues =
+		Map<String, Object> localizedValues =
 			ObjectFieldBusinessType.super.getLocalizedValues(
 				objectField, userId, values);
 
@@ -113,7 +113,7 @@ public class DateTimeObjectFieldBusinessType
 
 		User user = _userLocalService.getUser(userId);
 
-		for (Map.Entry<Locale, Object> entry : localizedValues.entrySet()) {
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
 			localizedValues.put(
 				entry.getKey(),
 				_getTimestamp(

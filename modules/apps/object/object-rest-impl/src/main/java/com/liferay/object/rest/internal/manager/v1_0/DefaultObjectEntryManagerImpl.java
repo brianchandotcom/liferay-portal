@@ -1771,7 +1771,7 @@ public class DefaultObjectEntryManagerImpl
 					_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
 						objectField.getBusinessType());
 
-				Map<Locale, Object> localizedValues =
+				Map<String, Object> localizedValues =
 					objectFieldBusinessType.getLocalizedValues(
 						objectField, serviceContext.getUserId(),
 						objectEntry.getProperties());

@@ -267,11 +267,7 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	}
 
 	public boolean isClusterModeSingle(String type) {
-		if (_dispatchTaskExecutorRegistry.isClusterModeSingle(type)) {
-			return true;
-		}
-
-		return false;
+		return _dispatchTaskExecutorRegistry.isClusterModeSingle(type);
 	}
 
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;

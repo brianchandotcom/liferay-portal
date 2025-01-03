@@ -54,11 +54,7 @@ public class TalendArchive {
 	}
 
 	public boolean hasJVMOptions() {
-		if (Validator.isNotNull(_jvmOptions)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_jvmOptions);
 	}
 
 	public static class Builder {

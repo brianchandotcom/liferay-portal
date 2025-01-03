@@ -965,11 +965,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		private boolean _isFieldSet(Map<String, Object> field) {
-			if (Objects.equals(field.get("type"), "fieldset")) {
-				return true;
-			}
-
-			return false;
+			return Objects.equals(field.get("type"), "fieldset");
 		}
 
 		private void _populateDDMFormFieldSettingsContext(

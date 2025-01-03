@@ -1286,4 +1286,225 @@ test.describe('Object Display page', () => {
 			).toContain('attachment.png');
 		}
 	);
+
+	test(
+		'Can edit values in display page',
+		{
+			tag: '@LPS-182999',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Create list definitions
+
+			const genrePicklist =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				genrePicklist.externalReferenceCode,
+				'horror'
+			);
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				genrePicklist.externalReferenceCode,
+				'musical'
+			);
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				genrePicklist.externalReferenceCode,
+				'thriller'
+			);
+
+			apiHelpers.data.push({
+				id: genrePicklist.id,
+				type: 'listTypeDefinition',
+			});
+
+			const originPicklist =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				originPicklist.externalReferenceCode,
+				'hollywood'
+			);
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				originPicklist.externalReferenceCode,
+				'bollywood'
+			);
+
+			apiHelpers.data.push({
+				id: originPicklist.id,
+				type: 'listTypeDefinition',
+			});
+
+			// Create object definition
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'filmERC',
+					label: {
+						en_US: 'Film',
+					},
+					name: 'Film',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType:
+								ObjectField.BusinessTypeEnum
+									.MultiselectPicklist,
+							externalReferenceCode: 'genreERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Genre',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								genrePicklist.externalReferenceCode,
+							name: 'genre',
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							externalReferenceCode: 'originERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Origin',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								originPicklist.externalReferenceCode,
+							name: 'origin',
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.DateTime,
+							externalReferenceCode: 'releaseDateERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Release Date',
+							},
+							name: 'releaseDate',
+							objectFieldSettings: [
+								{
+									name: 'timeStorage',
+									value: {},
+								},
+							],
+						},
+					],
+					pluralLabel: {
+						en_US: 'Films',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a display page
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					objectDefinition.externalReferenceCode
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			// Edit display display page and add form container
+
+			displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await pageEditorPage.mapFormFragment(
+				await pageEditorPage.getFragmentId('Form Container'),
+				'Film (Default)'
+			);
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create an Object Entry
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					genre: ['horror', 'thriller'],
+					origin: 'hollywood',
+					releaseDate: '2025-01-10T17:26:00Z',
+				},
+				'c/films'
+			);
+
+			// Go to the display page and edit the values
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			await page.getByLabel('horror', {exact: true}).uncheck();
+
+			await page.locator('.select-from-list').getByRole('button').click();
+
+			await page.getByRole('option', {name: 'bollywood'}).click();
+
+			await page.getByLabel('Release Date').fill('2020-03-02T05:15');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Check that the values were updated
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			await expect(
+				page.getByLabel('horror', {exact: true})
+			).not.toBeChecked();
+			await expect(
+				page.getByLabel('musical', {exact: true})
+			).not.toBeChecked();
+			await expect(
+				page.getByLabel('thriller', {exact: true})
+			).toBeChecked();
+
+			await expect(page.getByLabel('Origin')).toHaveValue('bollywood');
+
+			await expect(page.getByLabel('Release Date')).toHaveValue(
+				'2020-03-02T05:15'
+			);
+		}
+	);
 });

@@ -456,6 +456,17 @@ public class ObjectEntryLocalServiceTest {
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
+
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				_irrelevantObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(),
+				0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	@After
@@ -892,6 +903,29 @@ public class ObjectEntryLocalServiceTest {
 				).put(
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
+
+		String objectFieldName = _objectFieldLocalService.getObjectField(
+			_objectRelationship.getObjectFieldId2()).getName();
+
+		_objectFieldLocalService.updateRequired(
+			_objectRelationship.getObjectFieldId2(), true);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.Required.class,
+			StringBundler.concat(
+				"No value was provided for required object field ", '"',
+				objectFieldName, '"'),
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "john@liferay.com"
+				).put(
+					"firstName", "Judas"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build()));
+
+		_objectFieldLocalService.updateRequired(
+			_objectRelationship.getObjectFieldId2(), false);
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.Required.class,
@@ -2222,11 +2256,17 @@ public class ObjectEntryLocalServiceTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		_objectFieldLocalService.updateRequired(
+			_objectRelationship.getObjectFieldId2(), true);
+
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
 
 		_assertCount(8);
+
+		_objectFieldLocalService.updateRequired(
+			_objectRelationship.getObjectFieldId2(), false);
 	}
 
 	@FeatureFlags("LPD-31212")
@@ -4277,6 +4317,13 @@ public class ObjectEntryLocalServiceTest {
 			0, _objectDefinition.getObjectDefinitionId(), values);
 	}
 
+	private ObjectEntry _addDraftObjectEntry(Map<String, Serializable> values)
+		throws Exception {
+
+		return _addObjectEntry(
+			0, _draftObjectDefinition.getObjectDefinitionId(), values);
+	}
+
 	private ObjectValidationRule _addObjectValidationRule(
 			ObjectDefinition objectDefinition, String script)
 		throws PortalException {
@@ -4366,6 +4413,23 @@ public class ObjectEntryLocalServiceTest {
 			count,
 			_objectEntryLocalService.getObjectEntriesCount(
 				0, _objectDefinition.getObjectDefinitionId()));
+		Assert.assertEquals(count, _count());
+	}
+
+	private void _assertDraftCount(int count) throws Exception {
+		Assert.assertEquals(
+			count,
+			_assetEntryLocalService.getEntriesCount(
+				new AssetEntryQuery() {
+					{
+						setClassName(_draftObjectDefinition.getClassName());
+						setVisible(null);
+					}
+				}));
+		Assert.assertEquals(
+			count,
+			_objectEntryLocalService.getObjectEntriesCount(
+				0, _draftObjectDefinition.getObjectDefinitionId()));
 		Assert.assertEquals(count, _count());
 	}
 
@@ -5211,6 +5275,8 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private  ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

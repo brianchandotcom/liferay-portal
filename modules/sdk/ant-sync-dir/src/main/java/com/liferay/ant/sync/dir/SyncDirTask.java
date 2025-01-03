@@ -31,6 +31,18 @@ public class SyncDirTask extends Task {
 	public void execute() throws BuildException {
 		_checkConfiguration();
 
+		File syncDirExecutedFile = new File(_toDir, ".sync-dir-executed");
+
+		if (syncDirExecutedFile.exists() &&
+			(System.getenv("JENKINS_HOME") != null)) {
+
+			log(
+				"Files have already been synchronized from " + _dir + " into " +
+					_toDir);
+
+			return;
+		}
+
 		log("Synchronizing " + _dir + " into " + _toDir);
 
 		long start = System.currentTimeMillis();
@@ -40,6 +52,15 @@ public class SyncDirTask extends Task {
 		log(
 			count + " files synchronized in " +
 				(System.currentTimeMillis() - start) + "ms");
+
+		if (System.getenv("JENKINS_HOME") != null) {
+			try {
+				syncDirExecutedFile.createNewFile();
+			}
+			catch (IOException ioException) {
+				log("Unable to create " + syncDirExecutedFile);
+			}
+		}
 	}
 
 	public void setDir(File dir) {

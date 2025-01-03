@@ -57,7 +57,8 @@ public class PortalHotfixRelease {
 	}
 
 	public PortalHotfixRelease(URL portalHotfixReleaseURL) {
-		_portalHotfixReleaseURL = portalHotfixReleaseURL;
+		_portalHotfixReleaseURL = _getURL(
+			String.valueOf(portalHotfixReleaseURL));
 
 		_portalFixpackRelease = null;
 		_portalRelease = null;
@@ -67,7 +68,8 @@ public class PortalHotfixRelease {
 		URL portalHotfixReleaseURL, PortalFixpackRelease portalFixpackRelease,
 		PortalRelease portalRelease) {
 
-		_portalHotfixReleaseURL = portalHotfixReleaseURL;
+		_portalHotfixReleaseURL = _getURL(
+			String.valueOf(portalHotfixReleaseURL));
 		_portalFixpackRelease = portalFixpackRelease;
 		_portalRelease = portalRelease;
 	}
@@ -294,6 +296,16 @@ public class PortalHotfixRelease {
 	}
 
 	private URL _getURL(String urlString) {
+		if (!JenkinsResultsParserUtil.isURL(urlString)) {
+			return null;
+		}
+
+		Matcher matcher = _mirrorsURLPattern.matcher(urlString);
+
+		if (matcher.matches()) {
+			urlString = "https://" + matcher.group("urlPath");
+		}
+
 		try {
 			return new URL(urlString);
 		}
@@ -328,6 +340,8 @@ public class PortalHotfixRelease {
 		"https?://.+/(?<hotfixName>liferay-(hotfix|security-de|security-dxp|" +
 			"dxp-\\d{4}.q\\d+.\\d+-hotfix)-" +
 				"(?<hotfixVersion>\\d+)(-\\d{6}-\\d)?(-)?(\\d{4})?)");
+	private static final Pattern _mirrorsURLPattern = Pattern.compile(
+		"https?://(mirrors(.lax.liferay.com)?/)?(?<urlPath>.+)");
 	private static final Pattern _packageNamePattern = Pattern.compile(
 		"(?<packageName>[\\.\\w]+|[\\-\\w]+)(-\\d.*)?\\.jar");
 

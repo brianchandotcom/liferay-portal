@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Node;
 
 /**
@@ -33,7 +32,15 @@ public class PortalRelease {
 	public PortalRelease(String portalVersion) {
 		URL bundlesBaseURL = null;
 
+		String mirrorsHostname = _getMirrorsHostname();
+
 		for (String baseURLString : _BASE_URL_STRINGS) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(mirrorsHostname) &&
+				baseURLString.startsWith("http://mirrors.lax.liferay.com")) {
+
+				continue;
+			}
+
 			String bundlesBaseURLString =
 				baseURLString + "/" + portalVersion.replaceAll("\\.u", "-u");
 
@@ -41,18 +48,18 @@ public class PortalRelease {
 
 			try {
 				bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
-					bundlesBaseURLString + "/", true, 0, 5, 0);
+					bundlesBaseURLString + "/", true, 1, 5, 0);
 
 				bundlesBaseURL = new URL(bundlesBaseURLString);
 
 				break;
 			}
-			catch (IOException ioException) {
+			catch (Exception exception) {
 			}
 
 			try {
 				String xml = JenkinsResultsParserUtil.toString(
-					baseURLString + "/");
+					baseURLString + "/", true, 1, 5, 0);
 
 				xml = xml.substring(xml.indexOf("<html>"));
 
@@ -83,7 +90,7 @@ public class PortalRelease {
 
 						break;
 					}
-					catch (IOException ioException) {
+					catch (Exception exception) {
 					}
 				}
 
@@ -93,7 +100,7 @@ public class PortalRelease {
 					break;
 				}
 			}
-			catch (DocumentException | IOException exception) {
+			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
 		}
@@ -499,6 +506,16 @@ public class PortalRelease {
 		}
 	}
 
+	private String _getMirrorsHostname() {
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"mirrors.hostname");
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
 	private URL _getRemoteURL(String urlString) {
 		if (urlString == null) {
 			return null;
@@ -675,8 +692,10 @@ public class PortalRelease {
 
 	private static final String[] _BASE_URL_STRINGS = {
 		"http://mirrors.lax.liferay.com/releases.liferay.com/portal",
+		"http://mirrors.lax.liferay.com/releases.liferay.com/dxp",
 		"http://mirrors.lax.liferay.com/files.liferay.com/private/ee/portal",
 		"https://releases.liferay.com/portal",
+		"https://releases.liferay.com/dxp",
 		"https://files.liferay.com/private/ee/portal"
 	};
 

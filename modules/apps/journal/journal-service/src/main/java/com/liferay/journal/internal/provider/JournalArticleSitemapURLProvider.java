@@ -67,13 +67,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	public boolean isInclude(long companyId, long groupId)
 		throws PortalException {
 
-		if (_sitemapConfigurationManager.includeWebContentGroupEnabled(
-				companyId, groupId)) {
-
-			return true;
-		}
-
-		return false;
+		return _sitemapConfigurationManager.includeWebContentGroupEnabled(
+			companyId, groupId);
 	}
 
 	@Override

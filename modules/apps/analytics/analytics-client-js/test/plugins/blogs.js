@@ -310,12 +310,12 @@ describe('Blogs Plugin', () => {
 			document.body.removeChild(element);
 		});
 
-		it('is fired when view a blog with view and impression actions and correct types', async () => {
-			blogTypes.forEach(async (type) => {
-				[
-					{action: 'view', eventId: 'blogViewed'},
-					{action: 'impression', eventId: 'blogImpressionMade'},
-				].forEach(async (props) => {
+		blogTypes.forEach(async (type) => {
+			[
+				{action: 'view', eventId: 'blogViewed'},
+				{action: 'impression', eventId: 'blogImpressionMade'},
+			].forEach(async (props) => {
+				it(`is fired ${props.eventId} when view a blog with action ${props.action} and type: ${type}`, async () => {
 					const element = createBlogElementWithAction(
 						props.action,
 						type
@@ -350,9 +350,10 @@ describe('Blogs Plugin', () => {
 							applicationId,
 							eventId: props.eventId,
 							properties: expect.objectContaining({
-								action: props.action,
-								articleId: 'assetId',
+								entryId: 'assetId',
+								numberOfWords: 8,
 								subtype: 'basic-blog',
+								title: 'assetTitle',
 								type,
 							}),
 						})

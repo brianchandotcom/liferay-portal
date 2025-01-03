@@ -591,13 +591,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 		String priceDisplayType = commerceChannel.getPriceDisplayType();
 
-		if (priceDisplayType.equals(
-				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
-
-			return true;
-		}
-
-		return false;
+		return priceDisplayType.equals(
+			CommercePricingConstants.TAX_INCLUDED_IN_PRICE);
 	}
 
 	private ReplacementSku _toReplacementSku(

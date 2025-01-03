@@ -11,6 +11,8 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -67,6 +70,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BatchProcessor;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -74,11 +78,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserLastLoginDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
+import com.liferay.portal.service.impl.UserLocalServiceImpl;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -1036,6 +1044,37 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateLastLogin() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_assertLastLogin(user.getUserId(), user.getLoginIP());
+
+		AopInvocationHandler aopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				_userLocalService, AopInvocationHandler.class);
+
+		ServiceWrapper<UserLocalService> serviceWrapper =
+			(ServiceWrapper<UserLocalService>)aopInvocationHandler.getTarget();
+
+		ClassLoaderBeanHandler classLoaderBeanHandler =
+			(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+				serviceWrapper.getWrappedService());
+
+		UserLocalServiceImpl userLocalServiceImpl =
+			(UserLocalServiceImpl)classLoaderBeanHandler.getBean();
+
+		BatchProcessor batchProcessor = ReflectionTestUtil.getFieldValue(
+			userLocalServiceImpl, "_batchProcessor");
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					batchProcessor, "_batchSize", 0)) {
+
+			_assertLastLogin(user.getUserId(), user.getLoginIP());
+		}
+	}
+
+	@Test
 	public void testUpdatePassword() throws Exception {
 		User user = UserTestUtil.addUser();
 		String password = RandomTestUtil.randomString(
@@ -1200,6 +1239,22 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(1, user.getFailedLoginAttempts());
 
 		return user;
+	}
+
+	private void _assertLastLogin(long userId, String loginIP)
+		throws Exception {
+
+		User user = _userLocalService.updateLastLogin(userId, loginIP);
+
+		Date expectedLastLoginDate = user.getLastLoginDate();
+		Date expectedLoginDate = user.getLoginDate();
+
+		EntityCacheUtil.clearCache(UserImpl.class);
+
+		user = _userLocalService.getUser(userId);
+
+		Assert.assertEquals(expectedLastLoginDate, user.getLastLoginDate());
+		Assert.assertEquals(expectedLoginDate, user.getLoginDate());
 	}
 
 	private User _assertLockout(

@@ -28,6 +28,8 @@ buildscript {
 
 	if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
 		dependencies {
+			classpath group: "biz.aQute.bnd", name: "aQute.libg", version: "7.0.0"
+			classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "7.0.0"
 			classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "7.0.0"
 			classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
 		}

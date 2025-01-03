@@ -57,14 +57,9 @@ public class JournalImageDDMFormFieldItemSelectorCriterionContributor
 	public boolean isVisible(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		if (Objects.equals(
-				ddmFormFieldRenderingContext.getPortletNamespace(),
-				_portal.getPortletNamespace(JournalPortletKeys.JOURNAL))) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ddmFormFieldRenderingContext.getPortletNamespace(),
+			_portal.getPortletNamespace(JournalPortletKeys.JOURNAL));
 	}
 
 	private long _getResourcePrimaryKey(long groupId, String articleId) {

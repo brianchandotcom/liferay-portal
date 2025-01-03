@@ -760,11 +760,7 @@ public class JournalContentDisplayContext {
 			_journalContentPortletInstanceConfiguration.
 				ddmTemplateExternalReferenceCode();
 
-		if (Validator.isNotNull(ddmTemplateExternalReferenceCode)) {
-			return false;
-		}
-
-		return true;
+		return Validator.isNull(ddmTemplateExternalReferenceCode);
 	}
 
 	public boolean isEnabledContentMetadataAssetAddonEntry(String key) {
@@ -779,11 +775,7 @@ public class JournalContentDisplayContext {
 		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
 			contentMetadataAssetAddonEntryKeysString);
 
-		if (ArrayUtil.contains(contentMetadataAssetAddonEntryKeys, key)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(contentMetadataAssetAddonEntryKeys, key);
 	}
 
 	public boolean isEnabledConversion(String extension) {
@@ -809,11 +801,7 @@ public class JournalContentDisplayContext {
 		String[] userToolAssetAddonEntryKeys = StringUtil.split(
 			userToolAssetAddonEntryKeysString);
 
-		if (ArrayUtil.contains(userToolAssetAddonEntryKeys, key)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(userToolAssetAddonEntryKeys, key);
 	}
 
 	public boolean isEnableViewCountIncrement() {

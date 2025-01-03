@@ -94,11 +94,7 @@ public class DispatchLogSearchContainerFactory {
 	}
 
 	private static boolean _isAscending(String orderByType) {
-		if (Objects.equals(orderByType, "desc")) {
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(orderByType, "desc");
 	}
 
 }

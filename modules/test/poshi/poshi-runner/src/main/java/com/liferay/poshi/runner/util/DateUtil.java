@@ -81,6 +81,13 @@ public class DateUtil {
 			Calendar.MINUTE, Integer.valueOf(offset), pattern);
 	}
 
+	public static String getDateOffsetByMinutes(
+		String offset, String pattern, String timeZoneID) {
+
+		return getFormattedDate(
+			Calendar.MINUTE, Integer.valueOf(offset), pattern, timeZoneID);
+	}
+
 	public static String getDateOffsetByMonths(String offset, String pattern) {
 		return getFormattedDate(
 			Calendar.MONTH, Integer.valueOf(offset), pattern);
@@ -114,6 +121,12 @@ public class DateUtil {
 		int field, int offset, String pattern) {
 
 		return _format(_getOffsetDate(field, offset), pattern);
+	}
+
+	public static String getFormattedDate(
+		int field, int offset, String pattern, String timeZoneID) {
+
+		return _format(_getOffsetDate(field, offset), pattern, timeZoneID);
 	}
 
 	public static String getFormattedDate(String offsetDays, String pattern) {

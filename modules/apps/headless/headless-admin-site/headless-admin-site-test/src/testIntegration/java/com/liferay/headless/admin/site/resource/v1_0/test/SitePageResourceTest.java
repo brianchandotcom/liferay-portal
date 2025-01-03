@@ -1003,9 +1003,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		PageSettings pageSettings = sitePage.getPageSettings();
 
 		pageSettings.setHiddenFromNavigation(
-			() -> {
-				return !pageSettings.getHiddenFromNavigation();
-			});
+			() -> !pageSettings.getHiddenFromNavigation());
 
 		_assertPatchSiteSiteByExternalReferenceCodeSitePage(
 			sitePage,

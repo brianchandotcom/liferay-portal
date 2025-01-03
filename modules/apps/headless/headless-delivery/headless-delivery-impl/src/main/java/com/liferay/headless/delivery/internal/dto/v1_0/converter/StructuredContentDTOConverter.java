@@ -292,11 +292,9 @@ public class StructuredContentDTOConverter
 						() -> LocalizedMapUtil.getI18nMap(
 							acceptAllLanguages, ddmTemplate.getNameMap()));
 					setMarkedAsDefault(
-						() -> {
-							return Objects.equals(
-								ddmTemplate.getTemplateKey(),
-								journalArticle.getDDMTemplateKey());
-						});
+						() -> Objects.equals(
+							ddmTemplate.getTemplateKey(),
+							journalArticle.getDDMTemplateKey()));
 					setRenderedContentURL(
 						() -> JaxRsLinkUtil.getJaxRsLink(
 							"headless-delivery",

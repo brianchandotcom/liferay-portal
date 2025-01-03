@@ -37,7 +37,11 @@ export function TranslationOptionsContainer({
 			(Liferay.FeatureFlags['LPD-32050'] &&
 				(values.businessType === 'Boolean' ||
 					values.businessType === 'Date' ||
-					values.businessType === 'DateTime'))) &&
+					values.businessType === 'DateTime' ||
+					values.businessType === 'Decimal' ||
+					values.businessType === 'Integer' ||
+					values.businessType === 'LongInteger' ||
+					values.businessType === 'PrecisionDecimal'))) &&
 		!values.system;
 
 	return (

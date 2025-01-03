@@ -198,22 +198,14 @@ public class OpenIdConnectTokenRequestUtilTest {
 		_clientAndServer.stop();
 	}
 
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void testRequestOIDCAuthorizationGrantWithNullIdToken()
 		throws Exception {
 
-		try {
-			OpenIdConnectTokenRequestUtil.request(
-				_mockAuthenticationSuccessResponse, _mockCodeVerifier,
-				_mockNonce, _mockOIDCClientInformation,
-				_mockOIDCProviderMetadata, URI.create("http://localhost:63636"),
-				_tokenRequestParameters);
-
-			Assert.fail("Should throw NullPointerException");
-		}
-		catch (NullPointerException nullPointerException) {
-			Assert.assertNull(nullPointerException.getMessage());
-		}
+		OpenIdConnectTokenRequestUtil.request(
+			_mockAuthenticationSuccessResponse, _mockCodeVerifier, _mockNonce,
+			_mockOIDCClientInformation, _mockOIDCProviderMetadata,
+			URI.create("http://localhost:63636"), _tokenRequestParameters);
 	}
 
 	@Test

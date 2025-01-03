@@ -32,11 +32,14 @@ import com.liferay.object.internal.security.permission.resource.util.ObjectDefin
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -802,30 +805,38 @@ public class ObjectActionLocalServiceImpl
 				objectActionExecutorKey,
 				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
 
-			long objectDefinitionId = GetterUtil.getLong(
-				parametersUnicodeProperties.get("objectDefinitionId"));
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectDefinitionId);
+			ObjectDefinition objectDefinition;
 
 			String objectDefinitionExternalReferenceCode = GetterUtil.getString(
 				parametersUnicodeProperties.remove(
 					"objectDefinitionExternalReferenceCode"));
 
 			if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
-				ObjectDefinition existingObjectDefinition =
-					_objectDefinitionPersistence.fetchByERC_C(
-						objectDefinitionExternalReferenceCode, companyId);
+				objectDefinition = _objectDefinitionPersistence.fetchByERC_C(
+					objectDefinitionExternalReferenceCode, companyId);
 
-				if (existingObjectDefinition != null) {
-					objectDefinition = existingObjectDefinition;
+				if (objectDefinition == null) {
+					ObjectFolder defaultObjectFolder =
+						_objectFolderLocalService.getOrAddDefaultObjectFolder(
+							companyId);
 
-					parametersUnicodeProperties.put(
-						"objectDefinitionId",
-						String.valueOf(
-							objectDefinition.getObjectDefinitionId()));
+					objectDefinition =
+						ObjectDefinitionLocalServiceUtil.addObjectDefinition(
+							objectDefinitionExternalReferenceCode, userId,
+							defaultObjectFolder.getObjectFolderId(), true,
+							false);
 				}
+
+				parametersUnicodeProperties.put(
+					"objectDefinitionId",
+					String.valueOf(objectDefinition.getObjectDefinitionId()));
+			}
+			else {
+				objectDefinition =
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						GetterUtil.getLong(
+							parametersUnicodeProperties.get(
+								"objectDefinitionId")));
 			}
 
 			if ((objectDefinition == null) ||
@@ -1057,6 +1068,9 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

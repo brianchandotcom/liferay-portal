@@ -8,6 +8,7 @@ const path = require('path');
 const esbuild = {
 	bundle: true,
 	entryPoints: [path.resolve('src', 'index.js')],
+	minify: true,
 	outfile: path.resolve('build', 'analytics-all-min.js'),
 	sourcemap: true,
 	target: ['es2020'],

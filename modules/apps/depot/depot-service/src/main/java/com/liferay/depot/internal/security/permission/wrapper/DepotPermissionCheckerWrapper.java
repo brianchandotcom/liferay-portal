@@ -243,14 +243,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 		Group liveGroup = StagingUtil.getLiveGroup(group);
 
-		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), liveGroup.getGroupId(),
-				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
-
-			return true;
-		}
-
-		return false;
+		return _userGroupRoleLocalService.hasUserGroupRole(
+			getUserId(), liveGroup.getGroupId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true);
 	}
 
 	private boolean _isDepotGroupOwner(Group group) {
@@ -326,14 +321,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 		Group liveGroup = StagingUtil.getLiveGroup(group);
 
-		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), liveGroup.getGroupId(),
-				DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
-
-			return true;
-		}
-
-		return false;
+		return _userGroupRoleLocalService.hasUserGroupRole(
+			getUserId(), liveGroup.getGroupId(),
+			DepotRolesConstants.ASSET_LIBRARY_OWNER, true);
 	}
 
 	private boolean _isOrAddToPermissionCache(

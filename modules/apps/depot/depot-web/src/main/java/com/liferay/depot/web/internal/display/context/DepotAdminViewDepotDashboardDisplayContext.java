@@ -90,11 +90,7 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 	}
 
 	public boolean isPrimaryPanelCategory(PanelCategory panelCategory) {
-		if (Objects.equals(panelCategory.getKey(), _PANEL_CATEGORY_KEYS[0])) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(panelCategory.getKey(), _PANEL_CATEGORY_KEYS[0]);
 	}
 
 	private String _getIcon(PanelApp panelApp) {

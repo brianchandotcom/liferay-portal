@@ -193,14 +193,9 @@ public class DepotAdminManagementToolbarDisplayContext
 	private boolean _hasDeleteDepotEntryPermission(DepotEntry depotEntry)
 		throws PortalException {
 
-		if (!DepotEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				depotEntry.getDepotEntryId(), ActionKeys.DELETE)) {
-
-			return false;
-		}
-
-		return true;
+		return DepotEntryPermission.contains(
+			_themeDisplay.getPermissionChecker(), depotEntry.getDepotEntryId(),
+			ActionKeys.DELETE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

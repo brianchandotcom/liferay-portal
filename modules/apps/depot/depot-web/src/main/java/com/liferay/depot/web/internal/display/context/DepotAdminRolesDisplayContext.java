@@ -132,13 +132,8 @@ public class DepotAdminRolesDisplayContext {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (!Objects.equals(
-				portletDisplay.getPortletName(), myAccountPortletId)) {
-
-			return true;
-		}
-
-		return false;
+		return !Objects.equals(
+			portletDisplay.getPortletName(), myAccountPortletId);
 	}
 
 	private boolean _contains(UserGroupRole userGroupRole) {

@@ -310,11 +310,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			return false;
 		}
 
-		if (group.isStaged()) {
-			return true;
-		}
-
-		return false;
+		return group.isStaged();
 	}
 
 	private void _validateName(String name) throws PortalException {

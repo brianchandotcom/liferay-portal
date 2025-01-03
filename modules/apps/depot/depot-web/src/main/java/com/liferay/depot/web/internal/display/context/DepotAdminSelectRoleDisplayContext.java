@@ -352,13 +352,8 @@ public class DepotAdminSelectRoleDisplayContext {
 				userId = _user.getUserId();
 			}
 
-			if (SiteMembershipPolicyUtil.isRoleAllowed(
-					userId, groupId, role.getRoleId())) {
-
-				return true;
-			}
-
-			return false;
+			return SiteMembershipPolicyUtil.isRoleAllowed(
+				userId, groupId, role.getRoleId());
 		}
 
 		/**

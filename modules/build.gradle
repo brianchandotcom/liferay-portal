@@ -25,6 +25,13 @@ import org.gradle.util.GUtil
 
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
+
+	if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
+		dependencies {
+			classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "7.0.0"
+			classpath group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+		}
+	}
 }
 
 apply plugin: "com.liferay.yarn.defaults.plugin"
@@ -74,22 +81,6 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	}
 
 	bndPrintJarFiles = new ConcurrentSkipListSet<File>()
-}
-
-if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
-	configurations {
-		jakarta
-	}
-
-	dependencies {
-		jakarta group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
-	}
-
-	repositories {
-		maven {
-			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
-	}
 }
 
 if (FileUtil.exists(rootProject, "private/yarn.lock")) {
@@ -801,7 +792,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -817,7 +808,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -831,7 +822,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -845,7 +836,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						_transformToJakarta(rootProject.configurations.jakarta, jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
 						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
@@ -970,7 +961,7 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	return true
 }
 
-private void _transformToJakarta(FileCollection jakartaClasspath, FileCollection jarFiles, File outputDir, Task task) {
+private void _transformToJakarta(FileCollection jarFiles, File outputDir, Task task) {
 	jarFiles.files.each {
 		File jarFile ->
 
@@ -978,15 +969,7 @@ private void _transformToJakarta(FileCollection jakartaClasspath, FileCollection
 
 		File file = new File(outputDir, fileName)
 
-		task.project.delete(file)
-
-		task.project.javaexec {
-			args = [jarFile.getAbsolutePath(), file.getAbsolutePath()]
-			classpath = jakartaClasspath
-			errorOutput = new ByteArrayOutputStream()
-			main = "org.eclipse.transformer.cli.JakartaTransformerCLI"
-			standardOutput = new ByteArrayOutputStream()
-		}
+		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}))
 
 		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
 	}

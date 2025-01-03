@@ -674,3 +674,428 @@ test('LPD-45736 Order items are split on the mini cart with quick add to cart wh
 	).toBeVisible();
 	await expect(commerceMiniCartPage.miniCartItem(productName)).toHaveCount(2);
 });
+
+test('COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity', async ({
+	apiHelpers,
+	commerceMiniCartPage,
+	commerceThemeMiniumCatalogPage,
+	page,
+}) => {
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Buyer ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+				primaryKey: '0',
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 3,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'ADD_COMMERCE_ORDER',
+					'CHECKOUT_OPEN_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
+					'VIEW_BILLING_ADDRESS',
+					'VIEW_COMMERCE_ORDERS',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+				],
+				primaryKey: '0',
+				resourceName: 'com.liferay.commerce.order',
+				scope: 3,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+		role.id,
+		user.id
+	);
+
+	apiHelpers.data.push({
+		id: `${role.id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
+
+	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+	const product = (
+		await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+			new URLSearchParams({
+				filter: `name eq 'U-Joint'`,
+			})
+		)
+	).items[0];
+
+	const productName = product.name['en_US'];
+
+	await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+		product.productId,
+		{
+			name: {en_US: productName},
+			productConfiguration: {
+				minOrderQuantity: 6,
+				multipleOrderQuantity: 5,
+			},
+		}
+	);
+
+	const patchedProduct = (
+		await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+			new URLSearchParams({
+				filter: `name eq 'U-Joint'`,
+				nestedFields: `skus,productConfiguration`,
+			})
+		)
+	).items[0];
+
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 10,
+					skuId: patchedProduct.skus[0].id,
+				},
+			],
+			currencyCode: 'USD',
+		},
+		channel.id
+	);
+
+	const multipleQuantity = commerceThemeMiniumCatalogPage.getMultipleQuantity(
+		0,
+		patchedProduct.productConfiguration.multipleOrderQuantity
+	);
+	const minQuantity = commerceThemeMiniumCatalogPage.getProductMinQuantity(
+		patchedProduct.productConfiguration.minOrderQuantity,
+		multipleQuantity
+	);
+	const maxQuantity = commerceThemeMiniumCatalogPage.getProductMaxQuantity(
+		patchedProduct.productConfiguration.maxOrderQuantity,
+		multipleQuantity
+	);
+
+	await performLogout(page);
+	await performLogin(page, user.alternateName);
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.miniCartButton.click();
+
+	await expect(
+		commerceThemeMiniumCatalogPage.quantitySelector(
+			commerceMiniCartPage.miniCartItem(productName)
+		)
+	).toHaveValue(cart.cartItems[0].quantity.toString());
+
+	let minQuantityNotSatisfied;
+	let multipleQuantityNotSatisfied;
+	let maxQuantityNotSatisfied;
+
+	for (const quantitySelectorActualQuantity of [5, 20]) {
+		await commerceThemeMiniumCatalogPage
+			.quantitySelector(commerceMiniCartPage.miniCartItem(productName))
+			.fill(`${quantitySelectorActualQuantity}`);
+
+		maxQuantityNotSatisfied = quantitySelectorActualQuantity > maxQuantity;
+		minQuantityNotSatisfied = quantitySelectorActualQuantity < minQuantity;
+		multipleQuantityNotSatisfied = !Number.isInteger(
+			quantitySelectorActualQuantity / multipleQuantity
+		);
+
+		if (quantitySelectorActualQuantity === 5) {
+			await expect(
+				commerceMiniCartPage.miniCartInvalidQuantityMessage
+			).toBeVisible();
+		}
+
+		await commerceThemeMiniumCatalogPage.checkQuantitiesInPopOverMessages(
+			maxQuantity,
+			minQuantity,
+			multipleQuantity,
+			maxQuantityNotSatisfied,
+			minQuantityNotSatisfied,
+			multipleQuantityNotSatisfied
+		);
+	}
+});
+
+test('COMMERCE-12370. As a buyer I can add to cart a SKU with single UOM', async ({
+	apiHelpers,
+	commerceMiniCartPage,
+	commerceThemeMiniumCatalogPage,
+	page,
+	productDetailsPage,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Buyer ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+				primaryKey: '0',
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 3,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'ADD_COMMERCE_ORDER',
+					'CHECKOUT_OPEN_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
+					'VIEW_BILLING_ADDRESS',
+					'VIEW_COMMERCE_ORDERS',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+				],
+				primaryKey: '0',
+				resourceName: 'com.liferay.commerce.order',
+				scope: 3,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+		role.id,
+		user.id
+	);
+
+	apiHelpers.data.push({
+		id: `${role.id}_${user.id}`,
+		type: 'roleUserAccountAssociation',
+	});
+
+	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+	const product = (
+		await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+			new URLSearchParams({
+				filter: `name eq 'Abs Sensor'`,
+				nestedFields: `skus,productConfiguration`,
+			})
+		)
+	).items[0];
+
+	const productName = product.name['en_US'];
+
+	await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+		product.skus[0].id,
+		{
+			active: false,
+			name: {en_US: 'UOM1'},
+			priority: 0,
+		}
+	);
+
+	const skuUOM2 =
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			product.skus[0].id,
+			{
+				basePrice: 25,
+				incrementalOrderQuantity: 0.6,
+				name: {en_US: 'UOM2'},
+				precision: 1,
+				priority: 0,
+			}
+		);
+
+	const multipleQuantity = commerceThemeMiniumCatalogPage.getMultipleQuantity(
+		skuUOM2.incrementalOrderQuantity,
+		product.productConfiguration.multipleOrderQuantity,
+		skuUOM2.precision
+	);
+	const maxQuantity = commerceThemeMiniumCatalogPage.getProductMaxQuantity(
+		product.productConfiguration.maxOrderQuantity,
+		multipleQuantity,
+		skuUOM2.precision
+	);
+	const minQuantity = commerceThemeMiniumCatalogPage.getProductMinQuantity(
+		product.productConfiguration.minOrderQuantity,
+		multipleQuantity,
+		skuUOM2.precision
+	);
+
+	await performLogout(page);
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceThemeMiniumCatalogPage.selectSorting('Name Ascending');
+
+	await expect(
+		commerceThemeMiniumCatalogPage.productCardAddToCartButton(productName)
+	).not.toHaveClass(/not-allowed/);
+
+	await expect(
+		commerceThemeMiniumCatalogPage.quantitySelector(
+			commerceThemeMiniumCatalogPage.productCard(productName)
+		)
+	).toHaveValue(`${minQuantity}`);
+
+	await expect(
+		commerceThemeMiniumCatalogPage.quantitySelectorErrorContainer(
+			commerceThemeMiniumCatalogPage.productCard(productName)
+		)
+	).not.toHaveClass(/has-error/);
+
+	await commerceThemeMiniumCatalogPage
+		.quantitySelector(
+			commerceThemeMiniumCatalogPage.productCard(productName)
+		)
+		.focus();
+
+	await commerceThemeMiniumCatalogPage.checkQuantitiesInPopOverMessages(
+		maxQuantity,
+		minQuantity,
+		multipleQuantity
+	);
+
+	try {
+		await commerceThemeMiniumCatalogPage
+			.productCardAddToCartButton(productName)
+			.click();
+
+		await commerceMiniCartPage.miniCartButton.click();
+
+		await expect(
+			commerceMiniCartPage.miniCartItem(productName)
+		).toBeVisible();
+
+		await expect(page.getByText(skuUOM2.key, {exact: true})).toBeVisible();
+
+		await expect(commerceMiniCartPage.miniCartTotalPrice).toHaveText(
+			'$ 125.00'
+		);
+
+		await page.goto(`/web/${site.name}/p/` + productName);
+
+		await expect(page.locator('select')).toHaveAttribute('disabled');
+
+		await commerceThemeMiniumCatalogPage
+			.quantitySelector(page.locator('.product-detail'))
+			.fill('1.2');
+
+		await expect(
+			commerceThemeMiniumCatalogPage.quantitySelectorErrorContainer(
+				page.locator('.product-detail')
+			)
+		).toHaveClass(/has-error/);
+		await expect(productDetailsPage.addToCartButton).toHaveClass(
+			/not-allowed/
+		);
+
+		const maxQuantityNotSatisfied = false;
+		const minQuantityNotSatisfied = true;
+		const multipleQuantityNotSatisfied = false;
+
+		await commerceThemeMiniumCatalogPage.checkQuantitiesInPopOverMessages(
+			maxQuantity,
+			minQuantity,
+			multipleQuantity,
+			maxQuantityNotSatisfied,
+			minQuantityNotSatisfied,
+			multipleQuantityNotSatisfied
+		);
+
+		await commerceThemeMiniumCatalogPage
+			.quantitySelector(page.locator('.product-detail'))
+			.fill(`${minQuantity}`);
+
+		await expect(
+			commerceThemeMiniumCatalogPage.quantitySelector(
+				page.locator('.product-detail')
+			)
+		).toHaveValue(`${minQuantity}`);
+
+		await commerceThemeMiniumCatalogPage.checkQuantitiesInPopOverMessages(
+			maxQuantity,
+			minQuantity,
+			multipleQuantity
+		);
+
+		await productDetailsPage.addToCartButton.click();
+
+		await commerceMiniCartPage.miniCartButton.click();
+
+		await expect(
+			commerceMiniCartPage.miniCartItem(productName)
+		).toBeVisible();
+
+		await expect(
+			commerceThemeMiniumCatalogPage.quantitySelector(
+				commerceMiniCartPage.miniCartItem(productName)
+			)
+		).toHaveValue(`${minQuantity * 2}`);
+
+		await expect(page.getByText(skuUOM2.key, {exact: true})).toBeVisible();
+
+		await expect(commerceMiniCartPage.miniCartTotalPrice).toHaveText(
+			'$ 250.00'
+		);
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
+});

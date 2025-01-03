@@ -13,6 +13,7 @@ export class CommerceMiniCartPage {
 	readonly editUnitOfMeasureLabel: Locator;
 	readonly miniCartButton: Locator;
 	readonly miniCartButtonClose: Locator;
+	readonly miniCartInvalidQuantityMessage: Locator;
 	readonly miniCartItem: (productName: string) => Locator;
 	readonly miniCartItemsContainer: Locator;
 	readonly miniCartItemPrice: (text: RegExp) => Locator;
@@ -54,6 +55,10 @@ export class CommerceMiniCartPage {
 		});
 		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
+		this.miniCartInvalidQuantityMessage = page.getByText(
+			'The product quantity is not valid.',
+			{exact: true}
+		);
 		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
 		this.miniCartItem = (productName: string) =>
 			page.locator('div.mini-cart-item').filter({hasText: productName});

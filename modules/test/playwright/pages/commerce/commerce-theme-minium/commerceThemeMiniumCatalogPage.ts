@@ -22,6 +22,9 @@ export class CommerceThemeMiniumCatalogPage {
 		accountName: string
 	) => Locator;
 	readonly quantitySelector: (targetLocator: Locator) => Locator;
+	readonly quantitySelectorErrorContainer: (
+		targetLocator: Locator
+	) => Locator;
 	readonly optionsButton: Locator;
 	readonly orderByButton: Locator;
 	readonly page: Page;
@@ -68,6 +71,8 @@ export class CommerceThemeMiniumCatalogPage {
 				.filter({hasText: accountName});
 		this.quantitySelector = (targetLocator: Locator) =>
 			targetLocator.getByRole('spinbutton');
+		this.quantitySelectorErrorContainer = (targetLocator: Locator) =>
+			this.quantitySelector(targetLocator).locator('..');
 		this.optionsButton = page
 			.locator(
 				'[id^="portlet_com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"]'
@@ -93,24 +98,123 @@ export class CommerceThemeMiniumCatalogPage {
 			});
 	}
 
-	async checkQuantitiesInPopOverMessages(
-		minQuantity: string,
-		maxQuantity: string,
-		multipleQuantity: string
+	getProductMinQuantity(
+		minQuantity = 1,
+		multipleQuantity = 1,
+		precision = 0
 	) {
-		await expect(
-			this.popOverMessage('Min quantity per order is ' + minQuantity)
-		).toBeVisible();
-		await expect(
-			this.popOverMessage(
-				'Maximum quantity per order is ' + maxQuantity + '.'
-			)
-		).toBeVisible();
-		await expect(
-			this.popOverMessage(
-				'Quantity must be a multiple of ' + multipleQuantity
-			)
-		).toBeVisible();
+		let result = multipleQuantity;
+
+		while (result < minQuantity) {
+			result += result;
+		}
+
+		return parseFloat(result.toFixed(precision));
+	}
+
+	getMultipleQuantity(
+		incrementalOrderQuantity = 0,
+		multipleQuantity = 1,
+		precision = 0
+	) {
+		if (incrementalOrderQuantity === 0) {
+			return multipleQuantity;
+		}
+
+		const scalingFactor = Math.pow(10, precision);
+
+		const roundedValue =
+			Math.round(
+				(incrementalOrderQuantity + Number.EPSILON) * scalingFactor
+			) / scalingFactor;
+
+		let result = roundedValue % multipleQuantity;
+
+		if (roundedValue < multipleQuantity) {
+			result =
+				incrementalOrderQuantity * scalingFactor * multipleQuantity;
+			if (Number.isInteger(result / 2)) {
+				return parseFloat((result / 2).toFixed(precision));
+			}
+
+			return parseFloat(
+				(
+					incrementalOrderQuantity *
+					scalingFactor *
+					multipleQuantity
+				).toFixed(precision)
+			);
+		}
+
+		if (result !== 0) {
+			return parseFloat(
+				(roundedValue - result + multipleQuantity).toFixed(precision)
+			);
+		}
+	}
+
+	getProductMaxQuantity(
+		maxQuantity: number,
+		multipleQuantity: number,
+		precision = 0
+	) {
+		const maxDifference = maxQuantity % multipleQuantity;
+
+		if (!maxDifference) {
+			return parseFloat(maxQuantity.toFixed(precision));
+		}
+
+		return parseFloat(
+			Number(maxQuantity - maxDifference).toFixed(precision)
+		);
+	}
+
+	async checkQuantitiesInPopOverMessages(
+		maxQuantity: number,
+		minQuantity: number,
+		multipleQuantity: number,
+		maxQuantityNotSatisfied = false,
+		minQuantityNotSatisfied = false,
+		multipleQuantityNotSatisfied = false
+	) {
+		if (multipleQuantityNotSatisfied) {
+			await expect(
+				this.popOverMessage(
+					'Quantity must be a multiple of ' + multipleQuantity
+				)
+			).toHaveClass('text-danger');
+		}
+		else {
+			await expect(
+				this.popOverMessage(
+					'Quantity must be a multiple of ' + multipleQuantity
+				)
+			).toBeVisible();
+		}
+		if (minQuantityNotSatisfied) {
+			await expect(
+				this.popOverMessage('Min quantity per order is ' + minQuantity)
+			).toHaveClass('text-danger');
+		}
+		else {
+			await expect(
+				this.popOverMessage('Min quantity per order is ' + minQuantity)
+			).toBeVisible();
+		}
+		if (maxQuantityNotSatisfied) {
+			await expect(
+				this.popOverMessage(
+					'Maximum quantity per order is ' + maxQuantity + '.'
+				)
+			).toHaveClass('text-danger');
+		}
+		else {
+			await expect(
+				this.popOverMessage(
+					'Maximum quantity per order is ' + maxQuantity + '.'
+				)
+			).toBeVisible();
+		}
 	}
 
 	async selectSorting(orderByText: string) {

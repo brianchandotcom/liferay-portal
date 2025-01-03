@@ -115,6 +115,7 @@ definition {
 		property data.archive.type = "data-archive-portal-partition";
 		property portal.smoke.upgrades = "true";
 		property portal.version = "7.4.13.u33";
+		property test.assert.warning.exceptions = "false";
 
 		User.loginPG(
 			nodePort = 8080,

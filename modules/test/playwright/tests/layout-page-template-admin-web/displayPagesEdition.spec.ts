@@ -1143,4 +1143,147 @@ test.describe('Object Display page', () => {
 			await expect(row).toContainText('5');
 		}
 	);
+
+	test(
+		'Can map object attachment to image fragment',
+		{
+			tag: '@LPS-182999',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			site,
+		}) => {
+
+			// Create object definition with attachment field
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'attachmentERC',
+					label: {
+						en_US: 'Attachment',
+					},
+					name: 'Attachment',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.Attachment,
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'customAttachment',
+							},
+							name: 'customAttachment',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'documentsAndMedia',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: '100',
+								} as any,
+							],
+							required: false,
+							type: ObjectField.TypeEnum.Long,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Attachments',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a default display page
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					objectDefinition.externalReferenceCode
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			// Edit display display page and map image fragment to attachment field
+
+			displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			await pageEditorPage.addFragment('Basic Components', 'Image');
+
+			await pageEditorPage.selectEditable(
+				await pageEditorPage.getFragmentId('Image'),
+				'image-square'
+			);
+
+			await page.getByLabel('Source Selection').selectOption('Mapping');
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {field: 'Preview URL'},
+				source: 'structure',
+			});
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create an object with attachment
+
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					customAttachment: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: 'attachment.png',
+					},
+				},
+				'c/attachments'
+			);
+
+			apiHelpers.data.push({
+				id: objectEntry.customAttachment.id,
+				type: 'document',
+			});
+
+			// Check that the mapping is working
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+			);
+
+			expect(
+				await page.locator('.component-image img').getAttribute('src')
+			).toContain('attachment.png');
+		}
+	);
 });

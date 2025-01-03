@@ -1030,17 +1030,16 @@ public class ObjectActionLocalServiceTest {
 		_testAddObjectActionWithCircularReference(4);
 		_testAddObjectActionWithCircularReference(6);
 
-		Object clearObjectEntryIdsMapThreadLocal =
-			ReflectionTestUtil.getAndSetFieldValue(
-				ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
-				new ThreadLocal<Boolean>() {
+		Object clearObjectEntryIdsMap = ReflectionTestUtil.getAndSetFieldValue(
+			ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
+			new ThreadLocal<Boolean>() {
 
-					@Override
-					public Boolean get() {
-						return true;
-					}
+				@Override
+				public Boolean get() {
+					return true;
+				}
 
-				});
+			});
 
 		try {
 			_testAddObjectActionWithCircularReference(8);
@@ -1053,7 +1052,7 @@ public class ObjectActionLocalServiceTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
-				clearObjectEntryIdsMapThreadLocal);
+				clearObjectEntryIdsMap);
 		}
 	}
 

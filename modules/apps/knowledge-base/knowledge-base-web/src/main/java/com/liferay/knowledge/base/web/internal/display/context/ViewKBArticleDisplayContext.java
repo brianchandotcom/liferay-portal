@@ -99,14 +99,9 @@ public class ViewKBArticleDisplayContext {
 	}
 
 	private boolean _hasSubscription(KBArticle kbArticle) {
-		if (SubscriptionLocalServiceUtil.isSubscribed(
-				_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
-
-			return true;
-		}
-
-		return false;
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 	}
 
 	private boolean _hasSubscriptionPermission(KBArticle kbArticle)

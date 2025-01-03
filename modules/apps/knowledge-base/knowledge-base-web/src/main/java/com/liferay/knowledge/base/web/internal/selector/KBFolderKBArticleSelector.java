@@ -164,11 +164,7 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		List<Long> ancestorKBFolderIds =
 			parentKBFolder.getAncestorKBFolderIds();
 
-		if (ancestorKBFolderIds.contains(kbFolder.getKbFolderId())) {
-			return true;
-		}
-
-		return false;
+		return ancestorKBFolderIds.contains(kbFolder.getKbFolderId());
 	}
 
 	private KBArticleSelection _findFirstKBArticle(

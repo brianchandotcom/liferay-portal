@@ -799,11 +799,11 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(configurations.compileOnly.files.findAll { it.name.endsWith(".jar") })
 
 						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
-						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+						classpath = files(configurations.compileOnly.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
 				}
 
@@ -813,11 +813,11 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(configurations.testIntegrationImplementation.findAll { it.name.endsWith(".jar") })
 
 						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
-						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+						classpath = files(configurations.testIntegrationImplementation - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
 				}
 
@@ -827,11 +827,11 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(configurations.testImplementation.files.findAll { it.name.endsWith(".jar") })
 
 						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
 
-						classpath = files(classpath.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+						classpath = files(configurations.testImplementation - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
 				}
 			}
@@ -962,9 +962,22 @@ private void _transformToJakarta(FileCollection jarFiles, File outputDir, Task t
 
 		File file = new File(outputDir, fileName)
 
-		org.eclipse.transformer.cli.JakartaTransformerCLI.runWith(new org.eclipse.transformer.cli.JakartaTransformerCLI(System.out, System.out, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}))
+		task.project.delete(file)
 
-		task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+		OutputStream errStream = new ByteArrayOutputStream()
+		OutputStream outStream = new ByteArrayOutputStream()
+
+		PrintStream err = new PrintStream(errStream)
+		PrintStream out = new PrintStream(outStream)
+
+		org.eclipse.transformer.Transformer.ResultCode resultCode = new org.eclipse.transformer.cli.JakartaTransformerCLI(out, err, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}).run()
+
+		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
+			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+		}
+		else {
+			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errStream}")
+		}
 	}
 }
 

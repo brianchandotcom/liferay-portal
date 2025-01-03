@@ -116,11 +116,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 			_objectEntryHelper.getUniqueObjectFieldNames(
 				companyId, (String)values.get("mainObjectDefinitionERC"));
 
-		if (uniqueObjectFields.contains(pathParameter)) {
-			return true;
-		}
-
-		return false;
+		return uniqueObjectFields.contains(pathParameter);
 	}
 
 	private void _validate(ObjectEntry objectEntry) {

@@ -367,13 +367,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			return true;
 		}
 
-		if (!Objects.deepEquals(
-				sitePage1.getPageSettings(), sitePage2.getPageSettings())) {
-
-			return false;
-		}
-
-		return true;
+		return Objects.deepEquals(
+			sitePage1.getPageSettings(), sitePage2.getPageSettings());
 	}
 
 	@Override
@@ -1009,11 +1004,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		pageSettings.setHiddenFromNavigation(
 			() -> {
-				if (pageSettings.getHiddenFromNavigation()) {
-					return false;
-				}
-
-				return true;
+				return !pageSettings.getHiddenFromNavigation();
 			});
 
 		_assertPatchSiteSiteByExternalReferenceCodeSitePage(

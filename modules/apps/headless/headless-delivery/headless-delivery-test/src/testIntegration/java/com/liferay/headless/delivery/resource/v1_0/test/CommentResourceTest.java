@@ -720,11 +720,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 	@Override
 	protected boolean equals(Comment comment1, Comment comment2) {
-		if (Objects.equals(_formatHTML(comment1), _formatHTML(comment2))) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_formatHTML(comment1), _formatHTML(comment2));
 	}
 
 	@Override

@@ -65,14 +65,8 @@ public class ValidationHelper {
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				externalReferenceCode)) {
-
-			return false;
-		}
-
-		return true;
+		return Objects.equals(
+			objectDefinition.getExternalReferenceCode(), externalReferenceCode);
 	}
 
 	public void validateAPIEndpointRelationship(

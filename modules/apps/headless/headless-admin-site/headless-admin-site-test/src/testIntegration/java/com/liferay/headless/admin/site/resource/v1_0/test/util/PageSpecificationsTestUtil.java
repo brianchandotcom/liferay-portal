@@ -264,13 +264,8 @@ public class PageSpecificationsTestUtil {
 	}
 
 	private static boolean _isPublished(Layout draftLayout) {
-		if (GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"))) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
 	}
 
 }

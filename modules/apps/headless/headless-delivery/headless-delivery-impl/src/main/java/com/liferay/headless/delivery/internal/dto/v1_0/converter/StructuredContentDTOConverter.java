@@ -293,14 +293,9 @@ public class StructuredContentDTOConverter
 							acceptAllLanguages, ddmTemplate.getNameMap()));
 					setMarkedAsDefault(
 						() -> {
-							if (Objects.equals(
-									ddmTemplate.getTemplateKey(),
-									journalArticle.getDDMTemplateKey())) {
-
-								return true;
-							}
-
-							return false;
+							return Objects.equals(
+								ddmTemplate.getTemplateKey(),
+								journalArticle.getDDMTemplateKey());
 						});
 					setRenderedContentURL(
 						() -> JaxRsLinkUtil.getJaxRsLink(

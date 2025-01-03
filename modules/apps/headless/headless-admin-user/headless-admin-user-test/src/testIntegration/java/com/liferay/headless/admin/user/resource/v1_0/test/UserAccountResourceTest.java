@@ -1722,15 +1722,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private boolean _hasRole(Role role, User user) throws Exception {
-		if (_hasRole(
-				role,
-				_getUserAccountRoleBriefs(
-					userAccountResource.getUserAccount(user.getUserId())))) {
-
-			return true;
-		}
-
-		return false;
+		return _hasRole(
+			role,
+			_getUserAccountRoleBriefs(
+				userAccountResource.getUserAccount(user.getUserId())));
 	}
 
 	private EmailAddress _randomEmailAddress() throws Exception {

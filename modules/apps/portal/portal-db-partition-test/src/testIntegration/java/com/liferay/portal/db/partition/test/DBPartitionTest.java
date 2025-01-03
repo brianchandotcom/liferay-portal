@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -521,13 +520,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testDeployRemotePortlet() throws Exception {
-		Company company = companyLocalService.fetchCompanyByVirtualHost(
-			TestPropsValues.COMPANY_WEB_ID);
-
 		String portletName = RandomTestUtil.randomString();
 
 		try {
-			_deployRemotePortlet(company.getCompanyId(), portletName);
+			_deployRemotePortlet(TestPropsValues.getCompanyId(), portletName);
 
 			long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 
@@ -535,13 +531,13 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						company.getCompanyId())) {
+						TestPropsValues.getCompanyId())) {
 
 				Portlet portlet = _portletLocalService.getPortletById(
 					portletName);
 
 				Assert.assertEquals(
-					company.getCompanyId(), portlet.getCompanyId());
+					TestPropsValues.getCompanyId(), portlet.getCompanyId());
 			}
 
 			try (SafeCloseable safeCloseable =

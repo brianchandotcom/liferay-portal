@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTemplateContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -162,14 +163,14 @@ public class DDMFormTemplateContextFactoryTest {
 		Assert.assertEquals(
 			"ddm.simple_form", ddmFormTemplateContext.get("templateNamespace"));
 
-		Map<String, Map<String, String>[]> validations =
-			(Map<String, Map<String, String>[]>)ddmFormTemplateContext.get(
-				"validations");
+		Map<String, Object[]> validations =
+			(Map<String, Object[]>)ddmFormTemplateContext.get("validations");
 
 		Assert.assertEquals(validations.toString(), 3, validations.size());
 
 		_assertValidations(
-			ListUtil.fromArray(validations.get("date")),
+			TransformUtil.transformToList(
+				validations.get("date"), object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "Range"
@@ -195,7 +196,9 @@ public class DDMFormTemplateContextFactoryTest {
 					"template", "pastDates({name}, \"{parameter}\")"
 				).build()));
 		_assertValidations(
-			ListUtil.fromArray(validations.get("numeric")),
+			TransformUtil.transformToList(
+				validations.get("numeric"),
+				object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "Is Equal To"
@@ -240,7 +243,9 @@ public class DDMFormTemplateContextFactoryTest {
 					"template", "{name} != {parameter}"
 				).build()));
 		_assertValidations(
-			ListUtil.fromArray(validations.get("string")),
+			TransformUtil.transformToList(
+				validations.get("string"),
+				object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "Contains"
@@ -288,14 +293,14 @@ public class DDMFormTemplateContextFactoryTest {
 			LocaleUtil.BRAZIL
 		).build();
 
-		validations =
-			(Map<String, Map<String, String>[]>)ddmFormTemplateContext.get(
-				"validations");
+		validations = (Map<String, Object[]>)ddmFormTemplateContext.get(
+			"validations");
 
 		Assert.assertEquals(validations.toString(), 3, validations.size());
 
 		_assertValidations(
-			ListUtil.fromArray(validations.get("date")),
+			TransformUtil.transformToList(
+				validations.get("date"), object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "Faixa"
@@ -321,7 +326,9 @@ public class DDMFormTemplateContextFactoryTest {
 					"template", "pastDates({name}, \"{parameter}\")"
 				).build()));
 		_assertValidations(
-			ListUtil.fromArray(validations.get("numeric")),
+			TransformUtil.transformToList(
+				validations.get("numeric"),
+				object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "É igual a"
@@ -366,7 +373,9 @@ public class DDMFormTemplateContextFactoryTest {
 					"template", "{name} != {parameter}"
 				).build()));
 		_assertValidations(
-			ListUtil.fromArray(validations.get("string")),
+			TransformUtil.transformToList(
+				validations.get("string"),
+				object -> (Map<String, String>)object),
 			ListUtil.fromArray(
 				HashMapBuilder.put(
 					"label", "Contêm"

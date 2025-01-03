@@ -978,19 +978,24 @@ private void _transformToJakarta(FileCollection jarFiles, File outputDir, Task t
 
 		task.project.delete(file)
 
-		OutputStream errStream = new ByteArrayOutputStream()
-		OutputStream outStream = new ByteArrayOutputStream()
+		Class<?> jakartaTransformerCLIClass = Class.forName("org.eclipse.transformer.cli.JakartaTransformerCLI")
 
-		PrintStream err = new PrintStream(errStream)
-		PrintStream out = new PrintStream(outStream)
+		Object jakartaTransformerCLIClassConstructor = jakartaTransformerCLIClass.getConstructor(PrintStream, PrintStream, String[].class)
 
-		org.eclipse.transformer.Transformer.ResultCode resultCode = new org.eclipse.transformer.cli.JakartaTransformerCLI(out, err, new String[] {jarFile.getAbsolutePath(), file.getAbsolutePath()}).run()
+		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream())
+		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream())
+
+		Object jakartaTransformerCLIInstance = jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, [jarFile.absolutePath, file.absolutePath] as String[])
+
+		Object runMethod = jakartaTransformerCLIClass.getMethod("run")
+
+		Object resultCode = runMethod.invoke(jakartaTransformerCLIInstance)
 
 		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
 			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
 		}
 		else {
-			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errStream}")
+			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errorPrintStream}")
 		}
 	}
 }

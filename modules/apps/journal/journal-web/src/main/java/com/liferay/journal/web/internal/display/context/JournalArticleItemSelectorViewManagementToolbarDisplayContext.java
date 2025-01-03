@@ -207,14 +207,8 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	private boolean _isEverywhereScopeFilter() {
-		if (Objects.equals(
-				ParamUtil.getString(httpServletRequest, "scope"),
-				"everywhere")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ParamUtil.getString(httpServletRequest, "scope"), "everywhere");
 	}
 
 	private final JournalArticleItemSelectorViewDisplayContext

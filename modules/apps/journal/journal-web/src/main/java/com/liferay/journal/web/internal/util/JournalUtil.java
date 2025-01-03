@@ -302,11 +302,7 @@ public class JournalUtil {
 	}
 
 	public static boolean isEditDefaultValues(JournalArticle article) {
-		if (!isClassNameIdDefault(article)) {
-			return true;
-		}
-
-		return false;
+		return !isClassNameIdDefault(article);
 	}
 
 	public static boolean isIncludeVersionHistory() {

@@ -1237,11 +1237,7 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	private boolean _isShowPublishArticlesAction() {
-		if (_isShowPublishAction()) {
-			return true;
-		}
-
-		return false;
+		return _isShowPublishAction();
 	}
 
 	private boolean _isTrashEnabled() {

@@ -116,14 +116,9 @@ public class JournalFeedsManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (JournalPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_FEED)) {
-
-			return true;
-		}
-
-		return false;
+		return JournalPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.ADD_FEED);
 	}
 
 	@Override

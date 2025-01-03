@@ -1228,11 +1228,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isCommentsTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "comments")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTab(), "comments");
 	}
 
 	public boolean isFilterApplied() {
@@ -1278,11 +1274,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationHome() {
-		if (Objects.equals(getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "all");
 	}
 
 	public boolean isNavigationMine() {
@@ -1308,19 +1300,11 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationStructure() {
-		if (Objects.equals(getNavigation(), "structure")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "structure");
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	public boolean isShowComments() throws PortalException {
@@ -1376,35 +1360,19 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isTypeVersions() {
-		if (Objects.equals(getType(), "versions")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getType(), "versions");
 	}
 
 	public boolean isTypeWebContent() {
-		if (Objects.equals(getType(), "web-content")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getType(), "web-content");
 	}
 
 	public boolean isVersionsTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "versions")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTab(), "versions");
 	}
 
 	public boolean isWebContentTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "web-content")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getTab(), "web-content");
 	}
 
 	private JournalDisplayContext(
@@ -1979,19 +1947,11 @@ public class JournalDisplayContext {
 	}
 
 	private boolean _isSearchInAllFields() {
-		if (Objects.equals(_getSearchIn(), "all-fields")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getSearchIn(), "all-fields");
 	}
 
 	private boolean _isSearchLocationCurrentFolder() {
-		if (Objects.equals(_getSearchLocation(), "current-folder")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getSearchLocation(), "current-folder");
 	}
 
 	private void _populateSearchContext(

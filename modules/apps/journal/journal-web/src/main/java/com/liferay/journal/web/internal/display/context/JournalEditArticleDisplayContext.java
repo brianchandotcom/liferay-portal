@@ -1778,11 +1778,7 @@ public class JournalEditArticleDisplayContext {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-11228")) {
 
-			if (Validator.isNotNull(_article.getArticleId())) {
-				return false;
-			}
-
-			return true;
+			return Validator.isNull(_article.getArticleId());
 		}
 
 		JournalArticle oldestArticle =

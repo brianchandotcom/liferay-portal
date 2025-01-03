@@ -493,11 +493,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	public boolean isShowBreadcrumb() {
 		Group group = _themeDisplay.getScopeGroup();
 
-		if (group.isLayout()) {
-			return false;
-		}
-
-		return true;
+		return !group.isLayout();
 	}
 
 	public boolean showArticleId() {
@@ -683,14 +679,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	private boolean _isEverywhereScopeFilter() {
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "scope"),
-				"everywhere")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ParamUtil.getString(_httpServletRequest, "scope"), "everywhere");
 	}
 
 	private void _populateSearchContext(

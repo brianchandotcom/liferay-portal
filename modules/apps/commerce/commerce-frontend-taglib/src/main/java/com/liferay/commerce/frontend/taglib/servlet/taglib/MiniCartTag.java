@@ -347,11 +347,7 @@ public class MiniCartTag extends IncludeTag {
 					commerceChannelGroupId,
 					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
-		if (commerceOrderCheckoutConfiguration.guestCheckoutEnabled()) {
-			return true;
-		}
-
-		return false;
+		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}
 
 	private boolean _isRequestQuoteEnabled() throws PortalException {

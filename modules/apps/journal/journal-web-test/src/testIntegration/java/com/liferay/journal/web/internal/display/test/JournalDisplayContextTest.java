@@ -44,6 +44,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletURL;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,6 +75,20 @@ public class JournalDisplayContextTest {
 			_group.getGroupId());
 
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testGetPortletURLWithHighlightedDDMStructureIdParameter()
+		throws Exception {
+
+		PortletURL portletURL = _getPortletURL("123456", "tab1");
+
+		Assert.assertNotNull(portletURL);
+
+		String portletURLString = portletURL.toString();
+
+		Assert.assertTrue(
+			portletURLString.contains("highlightedDDMStructureId=123456"));
 	}
 
 	@Test
@@ -149,6 +164,23 @@ public class JournalDisplayContextTest {
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
 
 		return mockLiferayPortletRenderRequest;
+	}
+
+	private PortletURL _getPortletURL(
+			String highlightedDDMStructureId, String tab)
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_renderPortlet();
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"highlightedDDMStructureId", highlightedDDMStructureId);
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"com.liferay.journal.web.internal.display.context." +
+					"JournalDisplayContext"),
+			"getPortletURL", new Class<?>[] {String.class}, tab);
 	}
 
 	private SearchContainer<Object> _getSearchContainer() throws Exception {

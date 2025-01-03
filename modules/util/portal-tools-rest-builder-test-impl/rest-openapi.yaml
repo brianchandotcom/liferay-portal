@@ -89,11 +89,6 @@ components:
                     ChildTestEntity3: "#/components/schemas/ChildTestEntity3"
                 propertyName: type
             properties:
-                creatorId:
-                    format: int64
-                    type: integer
-                customFields:
-                    type: object
                 dateCreated:
                     format: date-time
                     type: string
@@ -103,17 +98,6 @@ components:
                 description:
                     type: string
                 documentId:
-                    format: int64
-                    type: integer
-                expirationDate:
-                    format: date
-                    type: string
-                folderId:
-                    format: int64
-                    type: integer
-                friendlyUrl:
-                    type: string
-                groupId:
                     format: int64
                     type: integer
                 id:
@@ -128,25 +112,16 @@ components:
                     type: string
                 nestedTestEntity:
                     $ref: "#/components/schemas/NestedTestEntity"
-                priority:
-                    type: integer
                 self:
                     type: string
                 testEntities:
-                    items:
-                        $ref: "#/components/schemas/TestEntity"
-                    type: array
-                title:
-                    type: string
+                    $ref: "#/components/schemas/TestEntity"
                 type:
                     enum:
                         - ChildTestEntity1
                         - ChildTestEntity2
                         - ChildTestEntity3
                     type: string
-                viewCount:
-                    format: int64
-                    type: integer
             type: object
         TestEntityAddress:
             description:

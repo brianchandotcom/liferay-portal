@@ -5,11 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IntegerEntityField;
-import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.internal.entity.v1_0.TestEntityEntityModel;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.TestEntityResource;
@@ -34,16 +30,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return new TestEntityEntityModel(
-			ListUtil.fromArray(
-				new BooleanEntityField("customFlag", locale -> "customFlag"),
-				new IntegerEntityField(
-					"customAttribute2", locale -> "customAttribute2"),
-				new StringEntityField(
-					"customAttribute1", locale -> "customAttribute1")));
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return new TestEntityEntityModel();
 	}
 
 	@Override

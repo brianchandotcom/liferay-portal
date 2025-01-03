@@ -35,11 +35,7 @@ public class OAuth2State implements Serializable {
 	}
 
 	public boolean isValid(String state) {
-		if (!_state.equals(state)) {
-			return false;
-		}
-
-		return true;
+		return _state.equals(state);
 	}
 
 	private static final long serialVersionUID = 1180494919540636880L;

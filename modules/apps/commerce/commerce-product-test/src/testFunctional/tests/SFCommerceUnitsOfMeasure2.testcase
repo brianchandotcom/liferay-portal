@@ -624,7 +624,7 @@ definition {
 		}
 
 		task ("And assert that the quantity selector pop-up does not show any error message") {
-			for (var parameterList : list "min:1,max:10000,multiple:3") {
+			for (var parameterList : list "min:3,max:9999,multiple:3") {
 				var parameter = StringUtil.extractFirst(${parameterList}, ":");
 				var quantity = StringUtil.extractLast(${parameterList}, ":");
 
@@ -671,7 +671,7 @@ definition {
 		}
 
 		task ("Then an error message “Quantity must be a multiple of 3") {
-			for (var parameterList : list "min:1,max:10000,multiple:3") {
+			for (var parameterList : list "min:3,max:9999,multiple:3") {
 				var parameter = StringUtil.extractFirst(${parameterList}, ":");
 				var quantity = StringUtil.extractLast(${parameterList}, ":");
 
@@ -696,7 +696,7 @@ definition {
 		}
 
 		task ("Then assert that the quantity selector pop-up does not show any error message") {
-			for (var parameterList : list "min:1,max:10000,multiple:3") {
+			for (var parameterList : list "min:3,max:9999,multiple:3") {
 				var parameter = StringUtil.extractFirst(${parameterList}, ":");
 				var quantity = StringUtil.extractLast(${parameterList}, ":");
 

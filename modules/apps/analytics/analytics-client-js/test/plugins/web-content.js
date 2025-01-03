@@ -376,12 +376,12 @@ describe('WebContent Plugin', () => {
 			document.body.removeChild(element);
 		});
 
-		it('is fired when view a webContent with view and impression actions and correct types', async () => {
-			webContentTypes.forEach(async (type) => {
-				[
-					{action: 'view', eventId: 'webContentViewed'},
-					{action: 'impression', eventId: 'webContentImpressionMade'},
-				].forEach(async (props) => {
+		webContentTypes.forEach(async (type) => {
+			[
+				{action: 'view', eventId: 'webContentViewed'},
+				{action: 'impression', eventId: 'webContentImpressionMade'},
+			].forEach(async (props) => {
+				it(`is fired ${props.eventId} when view a web content with action ${props.action} and type: ${type}`, async () => {
 					const element = createWebContentElementWithAction(
 						props.action,
 						type
@@ -416,9 +416,9 @@ describe('WebContent Plugin', () => {
 							applicationId,
 							eventId: props.eventId,
 							properties: expect.objectContaining({
-								action: props.action,
 								articleId: 'assetId',
 								subtype: 'basic-web-content',
+								title: 'assetTitle',
 								type,
 							}),
 						})

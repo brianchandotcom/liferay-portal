@@ -576,6 +576,26 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testDeployRemoteSystemPortlet() throws Exception {
+		String portletName = RandomTestUtil.randomString();
+
+		try {
+			_deployRemotePortlet(CompanyConstants.SYSTEM, portletName);
+
+			Portlet portlet = _portletLocalService.getPortletById(portletName);
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> Assert.assertEquals(
+					portlet, _portletLocalService.getPortletById(portletName)));
+		}
+		finally {
+			Portlet portlet = _portletLocalService.getPortletById(portletName);
+
+			_portletLocalService.destroyRemotePortlet(portlet);
+		}
+	}
+
+	@Test
 	public void testDropIndexControlTable() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -873,6 +893,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletName);
+
+		companyId = (companyId == CompanyConstants.SYSTEM) ?
+			PortalInstancePool.getDefaultCompanyId() : companyId;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {

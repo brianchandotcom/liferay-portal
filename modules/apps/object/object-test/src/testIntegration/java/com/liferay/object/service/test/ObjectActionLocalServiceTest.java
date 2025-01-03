@@ -494,7 +494,7 @@ public class ObjectActionLocalServiceTest {
 			false);
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
-			"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+			"objectDefinitionId", RandomTestUtil.randomLong()
 		).put(
 			"predefinedValues",
 			JSONUtil.putAll(
@@ -540,6 +540,10 @@ public class ObjectActionLocalServiceTest {
 					objectActionParametersException.getMessageKeys(),
 					"objectDefinitionId"));
 		}
+
+		unicodeProperties.setProperty(
+			"objectDefinitionId",
+			String.valueOf(_objectDefinition.getObjectDefinitionId()));
 
 		ObjectAction objectAction5 = _addObjectAction(
 			RandomTestUtil.randomString(),

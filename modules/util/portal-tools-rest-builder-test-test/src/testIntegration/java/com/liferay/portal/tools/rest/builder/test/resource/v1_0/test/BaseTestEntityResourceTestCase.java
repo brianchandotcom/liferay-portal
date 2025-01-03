@@ -172,11 +172,9 @@ public abstract class BaseTestEntityResourceTestCase {
 		TestEntity testEntity = randomTestEntity();
 
 		testEntity.setDescription(regex);
-		testEntity.setFriendlyUrl(regex);
 		testEntity.setJsonProperty(regex);
 		testEntity.setName(regex);
 		testEntity.setSelf(regex);
-		testEntity.setTitle(regex);
 
 		String json = TestEntitySerDes.toJSON(testEntity);
 
@@ -185,11 +183,9 @@ public abstract class BaseTestEntityResourceTestCase {
 		testEntity = TestEntitySerDes.toDTO(json);
 
 		Assert.assertEquals(regex, testEntity.getDescription());
-		Assert.assertEquals(regex, testEntity.getFriendlyUrl());
 		Assert.assertEquals(regex, testEntity.getJsonProperty());
 		Assert.assertEquals(regex, testEntity.getName());
 		Assert.assertEquals(regex, testEntity.getSelf());
-		Assert.assertEquals(regex, testEntity.getTitle());
 	}
 
 	@Test
@@ -247,25 +243,16 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1() {
 			{
-				creatorId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
-				expirationDate = RandomTestUtil.nextDate();
-				folderId = RandomTestUtil.randomLong();
-				friendlyUrl = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				groupId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				priority = RandomTestUtil.randomInt();
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				viewCount = RandomTestUtil.randomLong();
 				property1 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 
@@ -279,25 +266,16 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2() {
 			{
-				creatorId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
-				expirationDate = RandomTestUtil.nextDate();
-				folderId = RandomTestUtil.randomLong();
-				friendlyUrl = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				groupId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				priority = RandomTestUtil.randomInt();
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				viewCount = RandomTestUtil.randomLong();
 				property2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 
@@ -311,25 +289,16 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3() {
 			{
-				creatorId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				documentId = RandomTestUtil.randomLong();
-				expirationDate = RandomTestUtil.nextDate();
-				folderId = RandomTestUtil.randomLong();
-				friendlyUrl = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				groupId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				jsonProperty = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				priority = RandomTestUtil.randomInt();
 				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				viewCount = RandomTestUtil.randomLong();
 
 				type = Type.create("ChildTestEntity3");
 			}
@@ -523,22 +492,6 @@ public abstract class BaseTestEntityResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("creatorId", additionalAssertFieldName)) {
-				if (testEntity.getCreatorId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("customFields", additionalAssertFieldName)) {
-				if (testEntity.getCustomFields() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (testEntity.getDescription() == null) {
 					valid = false;
@@ -549,38 +502,6 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("documentId", additionalAssertFieldName)) {
 				if (testEntity.getDocumentId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
-				if (testEntity.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("folderId", additionalAssertFieldName)) {
-				if (testEntity.getFolderId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("friendlyUrl", additionalAssertFieldName)) {
-				if (testEntity.getFriendlyUrl() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("groupId", additionalAssertFieldName)) {
-				if (testEntity.getGroupId() == null) {
 					valid = false;
 				}
 
@@ -611,14 +532,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("priority", additionalAssertFieldName)) {
-				if (testEntity.getPriority() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("self", additionalAssertFieldName)) {
 				if (testEntity.getSelf() == null) {
 					valid = false;
@@ -635,24 +548,8 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (testEntity.getTitle() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (testEntity.getType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("viewCount", additionalAssertFieldName)) {
-				if (testEntity.getViewCount() == null) {
 					valid = false;
 				}
 
@@ -800,28 +697,6 @@ public abstract class BaseTestEntityResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("creatorId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getCreatorId(),
-						testEntity2.getCreatorId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("customFields", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getCustomFields(),
-						testEntity2.getCustomFields())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						testEntity1.getDateCreated(),
@@ -859,48 +734,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						testEntity1.getDocumentId(),
 						testEntity2.getDocumentId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getExpirationDate(),
-						testEntity2.getExpirationDate())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("folderId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getFolderId(), testEntity2.getFolderId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("friendlyUrl", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getFriendlyUrl(),
-						testEntity2.getFriendlyUrl())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("groupId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getGroupId(), testEntity2.getGroupId())) {
 
 					return false;
 				}
@@ -950,16 +783,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("priority", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getPriority(), testEntity2.getPriority())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("self", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						testEntity1.getSelf(), testEntity2.getSelf())) {
@@ -981,30 +804,9 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getTitle(), testEntity2.getTitle())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						testEntity1.getType(), testEntity2.getType())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("viewCount", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getViewCount(),
-						testEntity2.getViewCount())) {
 
 					return false;
 				}
@@ -1153,16 +955,6 @@ public abstract class BaseTestEntityResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("creatorId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("customFields")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				Date date = testEntity.getDateCreated();
@@ -1276,93 +1068,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("expirationDate")) {
-			if (operator.equals("between")) {
-				Date date = testEntity.getExpirationDate();
-
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(_dateFormat.format(testEntity.getExpirationDate()));
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("folderId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("friendlyUrl")) {
-			Object object = testEntity.getFriendlyUrl();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("groupId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1465,12 +1170,6 @@ public abstract class BaseTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priority")) {
-			sb.append(String.valueOf(testEntity.getPriority()));
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("self")) {
 			Object object = testEntity.getSelf();
 
@@ -1522,58 +1221,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("title")) {
-			Object object = testEntity.getTitle();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("viewCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1625,28 +1273,18 @@ public abstract class BaseTestEntityResourceTestCase {
 			() -> {
 				ChildTestEntity1 testEntity = new ChildTestEntity1();
 
-				testEntity.setCreatorId(RandomTestUtil.randomLong());
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setExpirationDate(RandomTestUtil.nextDate());
-				testEntity.setFolderId(RandomTestUtil.randomLong());
-				testEntity.setFriendlyUrl(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setGroupId(RandomTestUtil.randomLong());
 				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setPriority(RandomTestUtil.randomInt());
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setTitle(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setViewCount(RandomTestUtil.randomLong());
 
 				testEntity.setProperty1(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -1658,28 +1296,18 @@ public abstract class BaseTestEntityResourceTestCase {
 			() -> {
 				ChildTestEntity2 testEntity = new ChildTestEntity2();
 
-				testEntity.setCreatorId(RandomTestUtil.randomLong());
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setExpirationDate(RandomTestUtil.nextDate());
-				testEntity.setFolderId(RandomTestUtil.randomLong());
-				testEntity.setFriendlyUrl(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setGroupId(RandomTestUtil.randomLong());
 				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setPriority(RandomTestUtil.randomInt());
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setTitle(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setViewCount(RandomTestUtil.randomLong());
 
 				testEntity.setProperty2(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -1691,28 +1319,18 @@ public abstract class BaseTestEntityResourceTestCase {
 			() -> {
 				ChildTestEntity3 testEntity = new ChildTestEntity3();
 
-				testEntity.setCreatorId(RandomTestUtil.randomLong());
 				testEntity.setDateCreated(RandomTestUtil.nextDate());
 				testEntity.setDateModified(RandomTestUtil.nextDate());
 				testEntity.setDescription(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setExpirationDate(RandomTestUtil.nextDate());
-				testEntity.setFolderId(RandomTestUtil.randomLong());
-				testEntity.setFriendlyUrl(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setGroupId(RandomTestUtil.randomLong());
 				testEntity.setId(RandomTestUtil.randomLong());
 				testEntity.setJsonProperty(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 				testEntity.setName(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setPriority(RandomTestUtil.randomInt());
 				testEntity.setSelf(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setTitle(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setViewCount(RandomTestUtil.randomLong());
 
 				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
 

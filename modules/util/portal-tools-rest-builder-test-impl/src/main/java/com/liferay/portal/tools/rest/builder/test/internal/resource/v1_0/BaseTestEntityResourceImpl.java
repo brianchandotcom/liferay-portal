@@ -167,7 +167,7 @@ public abstract class BaseTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/test-entities' -d $'{"creatorId": ___, "customFields": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "expirationDate": ___, "folderId": ___, "friendlyUrl": ___, "groupId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "priority": ___, "self": ___, "testEntities": ___, "title": ___, "type": ___, "viewCount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/test-entities' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
@@ -277,7 +277,7 @@ public abstract class BaseTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"creatorId": ___, "customFields": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "expirationDate": ___, "folderId": ___, "friendlyUrl": ___, "groupId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "priority": ___, "self": ___, "testEntities": ___, "title": ___, "type": ___, "viewCount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -312,10 +312,6 @@ public abstract class BaseTestEntityResourceImpl
 
 		TestEntity existingTestEntity = getTestEntity(testEntityId);
 
-		if (testEntity.getCreatorId() != null) {
-			existingTestEntity.setCreatorId(testEntity.getCreatorId());
-		}
-
 		if (testEntity.getDateCreated() != null) {
 			existingTestEntity.setDateCreated(testEntity.getDateCreated());
 		}
@@ -332,23 +328,6 @@ public abstract class BaseTestEntityResourceImpl
 			existingTestEntity.setDocumentId(testEntity.getDocumentId());
 		}
 
-		if (testEntity.getExpirationDate() != null) {
-			existingTestEntity.setExpirationDate(
-				testEntity.getExpirationDate());
-		}
-
-		if (testEntity.getFolderId() != null) {
-			existingTestEntity.setFolderId(testEntity.getFolderId());
-		}
-
-		if (testEntity.getFriendlyUrl() != null) {
-			existingTestEntity.setFriendlyUrl(testEntity.getFriendlyUrl());
-		}
-
-		if (testEntity.getGroupId() != null) {
-			existingTestEntity.setGroupId(testEntity.getGroupId());
-		}
-
 		if (testEntity.getJsonProperty() != null) {
 			existingTestEntity.setJsonProperty(testEntity.getJsonProperty());
 		}
@@ -357,24 +336,12 @@ public abstract class BaseTestEntityResourceImpl
 			existingTestEntity.setName(testEntity.getName());
 		}
 
-		if (testEntity.getPriority() != null) {
-			existingTestEntity.setPriority(testEntity.getPriority());
-		}
-
 		if (testEntity.getSelf() != null) {
 			existingTestEntity.setSelf(testEntity.getSelf());
 		}
 
-		if (testEntity.getTitle() != null) {
-			existingTestEntity.setTitle(testEntity.getTitle());
-		}
-
 		if (testEntity.getType() != null) {
 			existingTestEntity.setType(testEntity.getType());
-		}
-
-		if (testEntity.getViewCount() != null) {
-			existingTestEntity.setViewCount(testEntity.getViewCount());
 		}
 
 		preparePatch(testEntity, existingTestEntity);
@@ -386,7 +353,7 @@ public abstract class BaseTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"creatorId": ___, "customFields": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "expirationDate": ___, "folderId": ___, "friendlyUrl": ___, "groupId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "priority": ___, "self": ___, "testEntities": ___, "title": ___, "type": ___, "viewCount": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/test-entities/{testEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -79,89 +78,6 @@ public abstract class TestEntity implements Serializable {
 	public static TestEntity unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(TestEntity.class, json);
 	}
-
-	@Schema
-	public Long getCreatorId() {
-		if (_creatorIdSupplier != null) {
-			creatorId = _creatorIdSupplier.get();
-
-			_creatorIdSupplier = null;
-		}
-
-		return creatorId;
-	}
-
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
-
-		_creatorIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCreatorId(
-		UnsafeSupplier<Long, Exception> creatorIdUnsafeSupplier) {
-
-		_creatorIdSupplier = () -> {
-			try {
-				return creatorIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long creatorId;
-
-	@JsonIgnore
-	private Supplier<Long> _creatorIdSupplier;
-
-	@Schema
-	@Valid
-	public Object getCustomFields() {
-		if (_customFieldsSupplier != null) {
-			customFields = _customFieldsSupplier.get();
-
-			_customFieldsSupplier = null;
-		}
-
-		return customFields;
-	}
-
-	public void setCustomFields(Object customFields) {
-		this.customFields = customFields;
-
-		_customFieldsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCustomFields(
-		UnsafeSupplier<Object, Exception> customFieldsUnsafeSupplier) {
-
-		_customFieldsSupplier = () -> {
-			try {
-				return customFieldsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object customFields;
-
-	@JsonIgnore
-	private Supplier<Object> _customFieldsSupplier;
 
 	@Schema
 	public Date getDateCreated() {
@@ -328,170 +244,6 @@ public abstract class TestEntity implements Serializable {
 	private Supplier<Long> _documentIdSupplier;
 
 	@Schema
-	public Date getExpirationDate() {
-		if (_expirationDateSupplier != null) {
-			expirationDate = _expirationDateSupplier.get();
-
-			_expirationDateSupplier = null;
-		}
-
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-
-		_expirationDateSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setExpirationDate(
-		UnsafeSupplier<Date, Exception> expirationDateUnsafeSupplier) {
-
-		_expirationDateSupplier = () -> {
-			try {
-				return expirationDateUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date expirationDate;
-
-	@JsonIgnore
-	private Supplier<Date> _expirationDateSupplier;
-
-	@Schema
-	public Long getFolderId() {
-		if (_folderIdSupplier != null) {
-			folderId = _folderIdSupplier.get();
-
-			_folderIdSupplier = null;
-		}
-
-		return folderId;
-	}
-
-	public void setFolderId(Long folderId) {
-		this.folderId = folderId;
-
-		_folderIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFolderId(
-		UnsafeSupplier<Long, Exception> folderIdUnsafeSupplier) {
-
-		_folderIdSupplier = () -> {
-			try {
-				return folderIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long folderId;
-
-	@JsonIgnore
-	private Supplier<Long> _folderIdSupplier;
-
-	@Schema
-	public String getFriendlyUrl() {
-		if (_friendlyUrlSupplier != null) {
-			friendlyUrl = _friendlyUrlSupplier.get();
-
-			_friendlyUrlSupplier = null;
-		}
-
-		return friendlyUrl;
-	}
-
-	public void setFriendlyUrl(String friendlyUrl) {
-		this.friendlyUrl = friendlyUrl;
-
-		_friendlyUrlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFriendlyUrl(
-		UnsafeSupplier<String, Exception> friendlyUrlUnsafeSupplier) {
-
-		_friendlyUrlSupplier = () -> {
-			try {
-				return friendlyUrlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String friendlyUrl;
-
-	@JsonIgnore
-	private Supplier<String> _friendlyUrlSupplier;
-
-	@Schema
-	public Long getGroupId() {
-		if (_groupIdSupplier != null) {
-			groupId = _groupIdSupplier.get();
-
-			_groupIdSupplier = null;
-		}
-
-		return groupId;
-	}
-
-	public void setGroupId(Long groupId) {
-		this.groupId = groupId;
-
-		_groupIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setGroupId(
-		UnsafeSupplier<Long, Exception> groupIdUnsafeSupplier) {
-
-		_groupIdSupplier = () -> {
-			try {
-				return groupIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long groupId;
-
-	@JsonIgnore
-	private Supplier<Long> _groupIdSupplier;
-
-	@Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -655,47 +407,6 @@ public abstract class TestEntity implements Serializable {
 	private Supplier<NestedTestEntity> _nestedTestEntitySupplier;
 
 	@Schema
-	public Integer getPriority() {
-		if (_prioritySupplier != null) {
-			priority = _prioritySupplier.get();
-
-			_prioritySupplier = null;
-		}
-
-		return priority;
-	}
-
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-
-		_prioritySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setPriority(
-		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
-
-		_prioritySupplier = () -> {
-			try {
-				return priorityUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer priority;
-
-	@JsonIgnore
-	private Supplier<Integer> _prioritySupplier;
-
-	@Schema
 	public String getSelf() {
 		if (_selfSupplier != null) {
 			self = _selfSupplier.get();
@@ -736,7 +447,7 @@ public abstract class TestEntity implements Serializable {
 
 	@Schema
 	@Valid
-	public TestEntity[] getTestEntities() {
+	public TestEntity getTestEntities() {
 		if (_testEntitiesSupplier != null) {
 			testEntities = _testEntitiesSupplier.get();
 
@@ -746,7 +457,7 @@ public abstract class TestEntity implements Serializable {
 		return testEntities;
 	}
 
-	public void setTestEntities(TestEntity[] testEntities) {
+	public void setTestEntities(TestEntity testEntities) {
 		this.testEntities = testEntities;
 
 		_testEntitiesSupplier = null;
@@ -754,7 +465,7 @@ public abstract class TestEntity implements Serializable {
 
 	@JsonIgnore
 	public void setTestEntities(
-		UnsafeSupplier<TestEntity[], Exception> testEntitiesUnsafeSupplier) {
+		UnsafeSupplier<TestEntity, Exception> testEntitiesUnsafeSupplier) {
 
 		_testEntitiesSupplier = () -> {
 			try {
@@ -771,51 +482,10 @@ public abstract class TestEntity implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TestEntity[] testEntities;
+	protected TestEntity testEntities;
 
 	@JsonIgnore
-	private Supplier<TestEntity[]> _testEntitiesSupplier;
-
-	@Schema
-	public String getTitle() {
-		if (_titleSupplier != null) {
-			title = _titleSupplier.get();
-
-			_titleSupplier = null;
-		}
-
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-
-		_titleSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		_titleSupplier = () -> {
-			try {
-				return titleUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
-
-	@JsonIgnore
-	private Supplier<String> _titleSupplier;
+	private Supplier<TestEntity> _testEntitiesSupplier;
 
 	@JsonGetter("type")
 	@Schema
@@ -869,47 +539,6 @@ public abstract class TestEntity implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema
-	public Long getViewCount() {
-		if (_viewCountSupplier != null) {
-			viewCount = _viewCountSupplier.get();
-
-			_viewCountSupplier = null;
-		}
-
-		return viewCount;
-	}
-
-	public void setViewCount(Long viewCount) {
-		this.viewCount = viewCount;
-
-		_viewCountSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setViewCount(
-		UnsafeSupplier<Long, Exception> viewCountUnsafeSupplier) {
-
-		_viewCountSupplier = () -> {
-			try {
-				return viewCountUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long viewCount;
-
-	@JsonIgnore
-	private Supplier<Long> _viewCountSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -939,41 +568,6 @@ public abstract class TestEntity implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		Long creatorId = getCreatorId();
-
-		if (creatorId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creatorId\": ");
-
-			sb.append(creatorId);
-		}
-
-		Object customFields = getCustomFields();
-
-		if (customFields != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customFields\": ");
-
-			if (customFields instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)customFields));
-			}
-			else if (customFields instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)customFields));
-				sb.append("\"");
-			}
-			else {
-				sb.append(customFields);
-			}
-		}
 
 		Date dateCreated = getDateCreated();
 
@@ -1035,62 +629,6 @@ public abstract class TestEntity implements Serializable {
 			sb.append(documentId);
 		}
 
-		Date expirationDate = getExpirationDate();
-
-		if (expirationDate != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"expirationDate\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(expirationDate));
-
-			sb.append("\"");
-		}
-
-		Long folderId = getFolderId();
-
-		if (folderId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"folderId\": ");
-
-			sb.append(folderId);
-		}
-
-		String friendlyUrl = getFriendlyUrl();
-
-		if (friendlyUrl != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"friendlyUrl\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(friendlyUrl));
-
-			sb.append("\"");
-		}
-
-		Long groupId = getGroupId();
-
-		if (groupId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"groupId\": ");
-
-			sb.append(groupId);
-		}
-
 		Long id = getId();
 
 		if (id != null) {
@@ -1147,18 +685,6 @@ public abstract class TestEntity implements Serializable {
 			sb.append(String.valueOf(nestedTestEntity));
 		}
 
-		Integer priority = getPriority();
-
-		if (priority != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"priority\": ");
-
-			sb.append(priority);
-		}
-
 		String self = getSelf();
 
 		if (self != null) {
@@ -1175,7 +701,7 @@ public abstract class TestEntity implements Serializable {
 			sb.append("\"");
 		}
 
-		TestEntity[] testEntities = getTestEntities();
+		TestEntity testEntities = getTestEntities();
 
 		if (testEntities != null) {
 			if (sb.length() > 1) {
@@ -1184,33 +710,7 @@ public abstract class TestEntity implements Serializable {
 
 			sb.append("\"testEntities\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < testEntities.length; i++) {
-				sb.append(String.valueOf(testEntities[i]));
-
-				if ((i + 1) < testEntities.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		String title = getTitle();
-
-		if (title != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(title));
-
-			sb.append("\"");
+			sb.append(String.valueOf(testEntities));
 		}
 
 		Type type = getType();
@@ -1227,18 +727,6 @@ public abstract class TestEntity implements Serializable {
 			sb.append(type);
 
 			sb.append("\"");
-		}
-
-		Long viewCount = getViewCount();
-
-		if (viewCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewCount\": ");
-
-			sb.append(viewCount);
 		}
 
 		sb.append("}");

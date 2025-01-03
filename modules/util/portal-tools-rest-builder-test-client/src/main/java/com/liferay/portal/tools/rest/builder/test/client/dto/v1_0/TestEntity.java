@@ -26,48 +26,6 @@ public abstract class TestEntity implements Cloneable, Serializable {
 		return TestEntitySerDes.toDTO(json);
 	}
 
-	public Long getCreatorId() {
-		return creatorId;
-	}
-
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
-	}
-
-	public void setCreatorId(
-		UnsafeSupplier<Long, Exception> creatorIdUnsafeSupplier) {
-
-		try {
-			creatorId = creatorIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long creatorId;
-
-	public Object getCustomFields() {
-		return customFields;
-	}
-
-	public void setCustomFields(Object customFields) {
-		this.customFields = customFields;
-	}
-
-	public void setCustomFields(
-		UnsafeSupplier<Object, Exception> customFieldsUnsafeSupplier) {
-
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object customFields;
-
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -152,90 +110,6 @@ public abstract class TestEntity implements Cloneable, Serializable {
 
 	protected Long documentId;
 
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	public void setExpirationDate(
-		UnsafeSupplier<Date, Exception> expirationDateUnsafeSupplier) {
-
-		try {
-			expirationDate = expirationDateUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date expirationDate;
-
-	public Long getFolderId() {
-		return folderId;
-	}
-
-	public void setFolderId(Long folderId) {
-		this.folderId = folderId;
-	}
-
-	public void setFolderId(
-		UnsafeSupplier<Long, Exception> folderIdUnsafeSupplier) {
-
-		try {
-			folderId = folderIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long folderId;
-
-	public String getFriendlyUrl() {
-		return friendlyUrl;
-	}
-
-	public void setFriendlyUrl(String friendlyUrl) {
-		this.friendlyUrl = friendlyUrl;
-	}
-
-	public void setFriendlyUrl(
-		UnsafeSupplier<String, Exception> friendlyUrlUnsafeSupplier) {
-
-		try {
-			friendlyUrl = friendlyUrlUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String friendlyUrl;
-
-	public Long getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Long groupId) {
-		this.groupId = groupId;
-	}
-
-	public void setGroupId(
-		UnsafeSupplier<Long, Exception> groupIdUnsafeSupplier) {
-
-		try {
-			groupId = groupIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long groupId;
-
 	public Long getId() {
 		return id;
 	}
@@ -317,27 +191,6 @@ public abstract class TestEntity implements Cloneable, Serializable {
 
 	protected NestedTestEntity nestedTestEntity;
 
-	public Integer getPriority() {
-		return priority;
-	}
-
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
-
-	public void setPriority(
-		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
-
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer priority;
-
 	public String getSelf() {
 		return self;
 	}
@@ -357,16 +210,16 @@ public abstract class TestEntity implements Cloneable, Serializable {
 
 	protected String self;
 
-	public TestEntity[] getTestEntities() {
+	public TestEntity getTestEntities() {
 		return testEntities;
 	}
 
-	public void setTestEntities(TestEntity[] testEntities) {
+	public void setTestEntities(TestEntity testEntities) {
 		this.testEntities = testEntities;
 	}
 
 	public void setTestEntities(
-		UnsafeSupplier<TestEntity[], Exception> testEntitiesUnsafeSupplier) {
+		UnsafeSupplier<TestEntity, Exception> testEntitiesUnsafeSupplier) {
 
 		try {
 			testEntities = testEntitiesUnsafeSupplier.get();
@@ -376,28 +229,7 @@ public abstract class TestEntity implements Cloneable, Serializable {
 		}
 	}
 
-	protected TestEntity[] testEntities;
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String title;
+	protected TestEntity testEntities;
 
 	public Type getType() {
 		return type;
@@ -425,27 +257,6 @@ public abstract class TestEntity implements Cloneable, Serializable {
 	}
 
 	protected Type type;
-
-	public Long getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Long viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public void setViewCount(
-		UnsafeSupplier<Long, Exception> viewCountUnsafeSupplier) {
-
-		try {
-			viewCount = viewCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long viewCount;
 
 	@Override
 	public TestEntity clone() throws CloneNotSupportedException {

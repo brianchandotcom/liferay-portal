@@ -2177,10 +2177,15 @@ public class GraphQLServletExtender {
 			GraphQLFieldDefinition graphQLFieldDefinition =
 				dataFetchingEnvironment.getFieldDefinition();
 
+			GraphQLFieldDefinition fieldGraphQLFieldDefinition = _addField(
+				graphQLFieldDefinition.getType(), fieldName);
+
 			DataFetcher<?> dataFetcher = graphQLCodeRegistry.getDataFetcher(
-				(GraphQLFieldsContainer)graphQLNamedTypes.get(
-					GraphQLConstants.NAMESPACE_QUERY),
-				_addField(graphQLFieldDefinition.getType(), fieldName));
+				FieldCoordinates.coordinates(
+					(GraphQLFieldsContainer)graphQLNamedTypes.get(
+						GraphQLConstants.NAMESPACE_QUERY),
+					fieldGraphQLFieldDefinition),
+				fieldGraphQLFieldDefinition);
 
 			DataFetchingEnvironmentImpl.Builder dataFetchingEnvironmentBuilder =
 				DataFetchingEnvironmentImpl.newDataFetchingEnvironment(
@@ -2570,11 +2575,16 @@ public class GraphQLServletExtender {
 			String fieldName = _getFieldName(
 				dataFetchingEnvironment, graphQLSchema);
 
+			GraphQLFieldDefinition fieldGraphQLFieldDefinition = _addField(
+				graphQLFieldDefinition.getType(), fieldName,
+				graphQLFieldDefinition.getArgument("id"));
+
 			DataFetcher<?> dataFetcher = graphQLCodeRegistry.getDataFetcher(
-				(GraphQLFieldsContainer)dataFetchingEnvironment.getParentType(),
-				_addField(
-					graphQLFieldDefinition.getType(), fieldName,
-					graphQLFieldDefinition.getArgument("id")));
+				FieldCoordinates.coordinates(
+					(GraphQLFieldsContainer)
+						dataFetchingEnvironment.getParentType(),
+					fieldGraphQLFieldDefinition),
+				fieldGraphQLFieldDefinition);
 
 			DataFetchingEnvironmentImpl.Builder dataFetchingEnvironmentBuilder =
 				DataFetchingEnvironmentImpl.newDataFetchingEnvironment(

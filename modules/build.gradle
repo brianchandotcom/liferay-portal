@@ -790,6 +790,20 @@ gradle.beforeProject {
 						classpath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
 					}
 				}
+
+				tasks.named("generateJSPJava") {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						compileJSP.dependsOn "${it.dependencyProject.path}:jar"
+					}
+
+					doFirst {
+						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
+
+						_transformToJakarta(jarFiles, file("$buildDir/jakarta-transformer/${it.name}"), it)
+
+						jspCClasspath = files(configurations.jspC.files - jarFiles) + files(fileTree(dir: file("$buildDir/jakarta-transformer/${it.name}")))
+					}
+				}
 			}
 
 			pluginManager.withPlugin("java") {

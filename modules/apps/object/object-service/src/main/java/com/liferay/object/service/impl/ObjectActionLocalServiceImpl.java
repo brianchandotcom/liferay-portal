@@ -839,14 +839,7 @@ public class ObjectActionLocalServiceImpl
 								"objectDefinitionId")));
 			}
 
-			if ((objectDefinition == null) ||
-				(Objects.equals(
-					objectActionExecutorKey,
-					ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY) &&
-				 (!objectDefinition.isActive() ||
-				  !objectDefinition.isApproved()) &&
-				 !objectDefinition.isModifiableAndSystem())) {
-
+			if (objectDefinition == null) {
 				errorMessageKeys.put("objectDefinitionId", "invalid");
 			}
 			else {
@@ -965,8 +958,11 @@ public class ObjectActionLocalServiceImpl
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 				objectDefinitionId, name);
 
-			if ((objectField == null) ||
-				objectField.compareBusinessType(
+			if (objectField == null) {
+				continue;
+			}
+
+			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
 
 				predefinedValuesErrorMessageKeys.put(name, "invalid");

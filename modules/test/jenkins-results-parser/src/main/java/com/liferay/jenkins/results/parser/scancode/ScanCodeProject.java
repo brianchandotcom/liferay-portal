@@ -35,7 +35,8 @@ public class ScanCodeProject {
 
 	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
-		_pipelineName = pipelineName;
+
+		_pipelineNames.add(pipelineName);
 	}
 
 	public void addFileInput(String filePath)
@@ -64,6 +65,8 @@ public class ScanCodeProject {
 
 	public void addPipeline(String pipelineName)
 		throws IOException, TimeoutException {
+
+		_pipelineNames.add(pipelineName);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -216,7 +219,7 @@ public class ScanCodeProject {
 				dockerTag, " Docker Scan-",
 				_simpleDateFormat.format(new Date()))
 		).put(
-			"pipeline", _pipelineName
+			"pipeline", "analyze_docker_image"
 		);
 
 		return jsonObject;
@@ -270,7 +273,7 @@ public class ScanCodeProject {
 		).put(
 			"name", "Master Daily Scan-" + _simpleDateFormat.format(new Date())
 		).put(
-			"pipeline", _pipelineName
+			"pipeline", "inspect_packages"
 		);
 
 		return jsonObject;
@@ -309,14 +312,10 @@ public class ScanCodeProject {
 				portalReleaseVersion, " Scan-",
 				_simpleDateFormat.format(new Date()))
 		).put(
-			"pipeline", _pipelineName + ":Java,Javascript"
+			"pipeline", "map_deploy_to_develop:Java,Javascript"
 		);
 
 		return jsonObject;
-	}
-
-	public String getPipelineName() {
-		return _pipelineName;
 	}
 
 	public String getPipelineRunURL(String pipelineName) {
@@ -400,16 +399,18 @@ public class ScanCodeProject {
 
 		JSONObject jsonObject = null;
 
-		if (_pipelineName.equals("inspect_packages")) {
+		String pipelineName = _pipelineNames.get(0);
+
+		if (pipelineName.equals("inspect_packages")) {
 			jsonObject = getInspectPackagesJSONObject();
 		}
-		else if (_pipelineName.equals("analyze_docker_image")) {
+		else if (pipelineName.equals("analyze_docker_image")) {
 			String dockerTag = JenkinsResultsParserUtil.getBuildParameter(
 				_buildURL, "LIFERAY_DOCKER_TAG");
 
 			jsonObject = getAnalyzeDockerImageJSONObject(dockerTag);
 		}
-		else if (_pipelineName.equals("map_deploy_to_develop")) {
+		else if (pipelineName.equals("map_deploy_to_develop")) {
 			jsonObject = getMapDevelopToDeployJSONObject();
 		}
 
@@ -472,15 +473,9 @@ public class ScanCodeProject {
 		sb.append("|");
 		sb.append(_projectName);
 		sb.append(">\n");
-		sb.append("*Pipeline:* ");
 
-		if (_pipelineName.equals("inspect_packages")) {
-			sb.append(_pipelineName);
-			sb.append(", populate_purldb");
-		}
-		else {
-			sb.append(_pipelineName);
-		}
+		sb.append("*Pipeline(s):* ");
+		sb.append(String.join(", ", _pipelineNames));
 
 		sb.append("\n");
 		sb.append("*Status:* ");
@@ -590,7 +585,7 @@ public class ScanCodeProject {
 
 				Object run = jsonArray.get(0);
 
-				if (pipelineName.equals("populate_purldb")) {
+				if (_pipelineNames.size() > 1) {
 					run = jsonArray.get(1);
 				}
 
@@ -696,7 +691,7 @@ public class ScanCodeProject {
 	}
 
 	private final String _buildURL;
-	private final String _pipelineName;
+	private final List<String> _pipelineNames = new ArrayList<>();
 	private String _projectAPIURL;
 	private String _projectID;
 	private String _projectName;

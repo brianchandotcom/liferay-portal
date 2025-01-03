@@ -132,15 +132,10 @@ public class KBArticleViewDisplayContext {
 		KBServiceConfigurationProvider kbServiceConfigurationProvider =
 			_kbServiceConfigurationProviderSnapshot.get();
 
-		if (nowLocalDateTime.isAfter(
-				expirationDateLocalDateTime.minusWeeks(
-					kbServiceConfigurationProvider.
-						getExpirationDateNotificationDateWeeks()))) {
-
-			return true;
-		}
-
-		return false;
+		return nowLocalDateTime.isAfter(
+			expirationDateLocalDateTime.minusWeeks(
+				kbServiceConfigurationProvider.
+					getExpirationDateNotificationDateWeeks()));
 	}
 
 	private static final Snapshot<KBServiceConfigurationProvider>

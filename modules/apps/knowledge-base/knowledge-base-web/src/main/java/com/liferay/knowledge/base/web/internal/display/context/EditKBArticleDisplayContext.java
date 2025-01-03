@@ -428,21 +428,13 @@ public class EditKBArticleDisplayContext {
 	}
 
 	public boolean isHeaderVisible() {
-		if (isPortletTitleBasedNavigation()) {
-			return true;
-		}
-
-		return false;
+		return isPortletTitleBasedNavigation();
 	}
 
 	public boolean isKBArticleSectionSelected(String section)
 		throws ConfigurationException {
 
-		if (ArrayUtil.contains(_getKBArticleSections(), section)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(_getKBArticleSections(), section);
 	}
 
 	public boolean isNavigationBarVisible() {
@@ -513,11 +505,7 @@ public class EditKBArticleDisplayContext {
 	}
 
 	public boolean isSchedulerEnabled() {
-		if (PropsValues.SCHEDULER_ENABLED) {
-			return true;
-		}
-
-		return false;
+		return PropsValues.SCHEDULER_ENABLED;
 	}
 
 	public boolean isSourceURLEnabled() {

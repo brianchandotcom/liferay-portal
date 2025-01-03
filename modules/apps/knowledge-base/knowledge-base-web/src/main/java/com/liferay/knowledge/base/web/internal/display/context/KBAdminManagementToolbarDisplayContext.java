@@ -434,11 +434,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_getKeywords());
 	}
 
 	public boolean isShowInfoButton() {
@@ -446,11 +442,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public boolean isTrashEnabled() throws PortalException {
-		if (_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())) {
-			return true;
-		}
-
-		return false;
+		return _trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId());
 	}
 
 	private SearchContainer<Object> _createSearchContainer()

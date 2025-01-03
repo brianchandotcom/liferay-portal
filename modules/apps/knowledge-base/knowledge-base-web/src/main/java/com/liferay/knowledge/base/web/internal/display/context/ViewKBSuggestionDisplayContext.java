@@ -204,14 +204,9 @@ public class ViewKBSuggestionDisplayContext {
 	}
 
 	public boolean hasDeleteKBCommentPermission() throws PortalException {
-		if (KBCommentPermission.contains(
-				_themeDisplay.getPermissionChecker(), _getKBComment(),
-				KBActionKeys.DELETE)) {
-
-			return true;
-		}
-
-		return false;
+		return KBCommentPermission.contains(
+			_themeDisplay.getPermissionChecker(), _getKBComment(),
+			KBActionKeys.DELETE);
 	}
 
 	public boolean isKBCommentActionsVisible() throws PortalException {
@@ -259,14 +254,9 @@ public class ViewKBSuggestionDisplayContext {
 	}
 
 	private boolean _hasUpdateKBArticlePermission() throws PortalException {
-		if (KBArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), _getKBArticle(),
-				KBActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return KBArticlePermission.contains(
+			_themeDisplay.getPermissionChecker(), _getKBArticle(),
+			KBActionKeys.UPDATE);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

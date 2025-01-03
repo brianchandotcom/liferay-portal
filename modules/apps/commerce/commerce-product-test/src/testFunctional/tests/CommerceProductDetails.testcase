@@ -2753,95 +2753,6 @@ definition {
 
 	}
 
-	@description = "COMMERCE-6364. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = 5
-	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
-		property portal.acceptance = "true";
-
-		// TODO Review
-
-		var minimumQuantity = 6;
-		var multipleQuantity = 5;
-		var product = "U-Joint";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceProducts.openProductsAdmin();
-
-		CommerceNavigator.searchEntry(entryName = ${product});
-
-		CommerceNavigator.gotoEntry(entryName = ${product});
-
-		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
-
-		Type(
-			key_text = "Minimum Order Quantity",
-			locator1 = "TextInput#ANY",
-			value1 = ${minimumQuantity});
-
-		Type(
-			key_text = "Multiple Order Quantity",
-			locator1 = "TextInput#ANY",
-			value1 = ${multipleQuantity});
-
-		Button.clickPublish();
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-		Click(
-			key_productName = ${product},
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertTextEquals(
-			key_productName = ${product},
-			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
-			value1 = 10);
-
-		for (var quantity : list "5,20") {
-			Type(
-				key_productName = ${product},
-				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
-				value1 = ${quantity});
-
-			AssertTextEquals(
-				key_productName = ${product},
-				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
-				value1 = ${quantity});
-
-			if (${quantity} == 5) {
-				var minimumConditionNotSatisfied = "true";
-
-				AssertElementPresent(
-					key_productName = ${product},
-					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
-			}
-			else {
-				var minimumConditionNotSatisfied = "false";
-				var multipleConditionNotSatisfied = "false";
-
-				AssertElementNotPresent(
-					key_productName = ${product},
-					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
-			}
-
-			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = ${minimumConditionNotSatisfied},
-				quantity = ${minimumQuantity},
-				quantityConfiguration = "min");
-
-			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = ${multipleConditionNotSatisfied},
-				quantity = ${multipleQuantity},
-				quantityConfiguration = "multiple");
-		}
-	}
-
 	@description = "COMMERCE-6366. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
 	@priority = 5
 	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
@@ -2928,7 +2839,7 @@ definition {
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
 				conditionNotSatisfied = ${minimumConditionNotSatisfied},
-				quantity = ${minimumQuantity},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "min");
 
 			FrontStore.viewQuantitySelectorPopoverListItem(

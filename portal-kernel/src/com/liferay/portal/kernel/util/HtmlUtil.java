@@ -415,10 +415,11 @@ public class HtmlUtil {
 			return link;
 		}
 
-		String escapedLinkPart = StringUtil.replaceFirst(
+		String part1 = link.substring(0, index);
+		String part2 = StringUtil.replaceFirst(
 			link.substring(index), CharPool.COLON, "%3a");
 
-		return link.substring(0, index) + escapedLinkPart;
+		return part1 + part2;
 	}
 
 	/**

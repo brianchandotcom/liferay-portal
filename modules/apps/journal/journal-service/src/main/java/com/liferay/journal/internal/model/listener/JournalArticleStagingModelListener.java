@@ -208,11 +208,7 @@ public class JournalArticleStagingModelListener
 			return false;
 		}
 
-		if (_stagingGroupHelper.isStagingGroup(group)) {
-			return true;
-		}
-
-		return false;
+		return _stagingGroupHelper.isStagingGroup(group);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -10,7 +10,6 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
@@ -19,15 +18,11 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {getWebContentStructureId} from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {applicationPageTest} from '../frontend-data-set-admin-web/tests/data-set-admin/sorting.spec';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
-import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {
 	ANIMAL_01_FRIENDLY_URL,
 	ANIMAL_DDM_STRUCTURE_KEY,
@@ -1048,6 +1043,104 @@ test.describe('Object Display page', () => {
 			}).click();
 
 			await expect(page.getByText('sample text')).toBeVisible();
+		}
+	);
+
+	test(
+		'Can edit one field from an object in a display page',
+		{
+			tag: '@LPS-191389',
+		},
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
+
+			// Create a default display page for lemon object
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: pageManagementSite.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+			// Edit display page template and add a form container when only one field
+
+			displayPageTemplatesPage.goto(pageManagementSite.friendlyUrlPath);
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await pageEditorPage.mapFormFragment(
+				await pageEditorPage.getFragmentId('Form Container'),
+				'Lemon (Default)',
+				['Lemon Size']
+			);
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Create a lemon object entry
+
+			const lemonObjectEntry =
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						lemonHistory: 'one',
+						lemonSize: 'lemonSize',
+						lemonWeight: 5,
+					},
+					'c/lemons',
+					pageManagementSite.key
+				);
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${lemonObjectEntry.id}`
+			);
+
+			// Edit only the lemon size field
+
+			await page
+				.getByLabel('Lemon Size', {exact: true})
+				.fill('lemonSize2');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Go to admin and check that only lemon size was updated
+
+			goToObjectEntity({
+				entityName: 'Lemon',
+				page,
+			});
+
+			const row = page.locator('.dnd-tbody .dnd-tr').first();
+
+			await expect(row).toContainText('one');
+			await expect(row).toContainText('lemonSize2');
+			await expect(row).toContainText('5');
 		}
 	);
 });

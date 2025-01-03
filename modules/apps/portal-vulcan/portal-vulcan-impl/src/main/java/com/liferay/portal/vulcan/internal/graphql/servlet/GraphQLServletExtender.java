@@ -199,6 +199,7 @@ import java.util.SortedMap;
 import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -2643,6 +2644,15 @@ public class GraphQLServletExtender {
 		implements DataFetcherExceptionHandler {
 
 		@Override
+		public CompletableFuture<DataFetcherExceptionHandlerResult>
+			handleException(
+				DataFetcherExceptionHandlerParameters
+					dataFetcherExceptionHandlerParameters) {
+
+			return CompletableFuture.completedFuture(
+				onException(dataFetcherExceptionHandlerParameters));
+		}
+
 		public DataFetcherExceptionHandlerResult onException(
 			DataFetcherExceptionHandlerParameters
 				dataFetcherExceptionHandlerParameters) {

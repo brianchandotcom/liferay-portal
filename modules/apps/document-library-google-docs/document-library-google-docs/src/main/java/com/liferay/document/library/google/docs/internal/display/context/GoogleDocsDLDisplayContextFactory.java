@@ -185,13 +185,8 @@ public class GoogleDocsDLDisplayContextFactory
 					_configurationProvider.getCompanyConfiguration(
 						DLGoogleDriveCompanyConfiguration.class, companyId);
 
-			if (Validator.isNotNull(
-					dlGoogleDriveCompanyConfiguration.pickerAPIKey())) {
-
-				return true;
-			}
-
-			return false;
+			return Validator.isNotNull(
+				dlGoogleDriveCompanyConfiguration.pickerAPIKey());
 		}
 		catch (ConfigurationException configurationException) {
 			return ReflectionUtil.throwException(configurationException);

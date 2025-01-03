@@ -37,13 +37,8 @@ public class GoogleDocsDLFileEntryTypeVisibilityController
 						DLGoogleDriveCompanyConfiguration.class,
 						dlFileEntryType.getCompanyId());
 
-			if (Validator.isNull(
-					dlGoogleDriveCompanyConfiguration.pickerAPIKey())) {
-
-				return false;
-			}
-
-			return true;
+			return Validator.isNotNull(
+				dlGoogleDriveCompanyConfiguration.pickerAPIKey());
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);

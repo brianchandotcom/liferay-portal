@@ -66,13 +66,13 @@ public class CategoryModifiedDateComparator<T> extends OrderByComparator<T> {
 	}
 
 	protected Date getModifiedDate(Object object) {
-		if (object instanceof MBCategory) {
-			MBCategory mbCategory = (MBCategory)object;
-
-			return mbCategory.getModifiedDate();
+		if (!(object instanceof MBCategory)) {
+			return null;
 		}
 
-		return null;
+		MBCategory mbCategory = (MBCategory)object;
+
+		return mbCategory.getModifiedDate();
 	}
 
 	private CategoryModifiedDateComparator(boolean ascending) {

@@ -62,13 +62,13 @@ public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 	}
 
 	protected String getCategoryName(Object object) {
-		if (object instanceof MBCategory) {
-			MBCategory mbCategory = (MBCategory)object;
-
-			return mbCategory.getName();
+		if (!(object instanceof MBCategory)) {
+			return null;
 		}
 
-		return null;
+		MBCategory mbCategory = (MBCategory)object;
+
+		return mbCategory.getName();
 	}
 
 	private CategoryTitleComparator(boolean ascending) {

@@ -77,13 +77,13 @@ public class MBObjectsComparator<T> extends OrderByComparator<T> {
 			return mbCategory.getModifiedDate();
 		}
 
-		if (object instanceof MBThread) {
-			MBThread mbThread = (MBThread)object;
-
-			return mbThread.getModifiedDate();
+		if (!(object instanceof MBThread)) {
+			return null;
 		}
 
-		return null;
+		MBThread mbThread = (MBThread)object;
+
+		return mbThread.getModifiedDate();
 	}
 
 	private MBObjectsComparator(boolean ascending) {

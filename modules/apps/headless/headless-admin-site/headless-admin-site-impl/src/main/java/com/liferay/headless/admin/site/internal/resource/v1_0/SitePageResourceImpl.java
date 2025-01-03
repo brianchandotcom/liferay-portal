@@ -449,13 +449,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return defaultValue;
 		}
 
-		if (GetterUtil.getBoolean(
-				pageSettings.getHiddenFromNavigation(), defaultValue)) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			pageSettings.getHiddenFromNavigation(), defaultValue);
 	}
 
 	private SitePage _toSitePage(Layout layout) throws Exception {

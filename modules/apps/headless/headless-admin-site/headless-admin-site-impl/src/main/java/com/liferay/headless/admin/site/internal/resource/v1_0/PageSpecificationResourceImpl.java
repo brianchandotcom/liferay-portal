@@ -472,11 +472,7 @@ public class PageSpecificationResourceImpl
 			return false;
 		}
 
-		if (layout.isDraftLayout()) {
-			return true;
-		}
-
-		return false;
+		return layout.isDraftLayout();
 	}
 
 	private void _preparePatch(

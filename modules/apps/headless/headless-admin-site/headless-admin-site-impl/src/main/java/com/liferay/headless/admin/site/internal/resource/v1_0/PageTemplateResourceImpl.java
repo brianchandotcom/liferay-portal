@@ -494,14 +494,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	private boolean _isTypeWidgetPageTemplate(PageTemplate pageTemplate) {
-		if (Objects.equals(
-				pageTemplate.getType(),
-				PageTemplate.Type.WIDGET_PAGE_TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			pageTemplate.getType(), PageTemplate.Type.WIDGET_PAGE_TEMPLATE);
 	}
 
 	private void _preparePatch(

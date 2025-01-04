@@ -23,6 +23,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderDetailsModalHeader: (headname: string) => Promise<Locator>;
 	readonly orderDetailsModalField: (fieldName: string) => Promise<Locator>;
 	readonly orderDetailsTab: (tabName: string) => Promise<Locator>;
+	readonly orderNotesLink: Locator;
 	readonly page: Page;
 	readonly paymentMethodRadioButton: (
 		paymentMethod: string
@@ -72,6 +73,10 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.orderDetailsTab = async (tabName: string) => {
 			return page.getByRole('link', {exact: true, name: tabName});
 		};
+		this.orderNotesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Notes',
+		});
 		this.page = page;
 		this.paymentMethodRadioButton = async (paymentMethod: string) => {
 			return this.editPaymentMethodFrame

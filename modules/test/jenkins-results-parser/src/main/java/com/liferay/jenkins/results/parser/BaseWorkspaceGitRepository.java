@@ -298,6 +298,11 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public void setPatchSHAs(List<String> patchSHAs) {
+		_patchSHAs = patchSHAs;
+	}
+
+	@Override
 	public void setRebase(boolean rebase) {
 		_rebase = rebase;
 	}
@@ -345,6 +350,17 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		gitWorkingDirectory.reset("--hard " + localGitBranch.getSHA());
+
+		if ((_patchSHAs != null) && !_patchSHAs.isEmpty()) {
+			for (String patchSHA : _patchSHAs) {
+				try {
+					gitWorkingDirectory.cherryPick(patchSHA.trim());
+				}
+				catch (Exception exception) {
+					gitWorkingDirectory.reset("--hard");
+				}
+			}
+		}
 
 		gitWorkingDirectory.clean();
 
@@ -787,6 +803,7 @@ public abstract class BaseWorkspaceGitRepository
 	private String _branchName;
 	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private LocalGitBranch _localGitBranch;
+	private List<String> _patchSHAs;
 	private final Set<String> _propertyOptions = new HashSet<>();
 	private boolean _rebase;
 	private RemoteGitRef _senderRemoteGitRef;

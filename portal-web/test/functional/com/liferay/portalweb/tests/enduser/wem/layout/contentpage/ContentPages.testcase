@@ -727,6 +727,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164269. The page creator could view a tooltip with the page URL when mapping a fragment on sites and libraries."
+	@priority = 4
+	test ViewPageURLOnTooltipWhenSelectPageItem {
+		task ("Given a page creator opens the link to page modal") {
+			task ("Get the guest site name") {
+				Navigator.openURL();
+
+				var defaultSiteName = selenium.getText("Home#SITE_NAME");
+			}
+
+			task ("Publish content page") {
+				JSONLayout.publishLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Content Page Name");
+			}
+
+			task ("Add a Button fragment to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = ${randomSiteName});
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Button");
+			}
+
+			task ("Map Link field with to Page") {
+				PageEditorEditableLink.gotoEditableFieldLink(
+					fragmentName = "Button",
+					id = "link");
+
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Page");
+			}
+
+			task ("Open the Select modal of Page Link") {
+				Click(
+					key_fieldLabel = "Page",
+					key_text = "plus",
+					locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Portlet.expandTree();
+			}
+		}
+
+		task ("When the page creator hovers on the content page item") {
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Content Page Name",
+				locator1 = "Treeview#NODE_ITEM");
+
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Content Page Name",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Then the page creator could view a tooltip with the page url") {
+			AssertVisible(
+				key_content = "/web/${siteURLKey}/content-page-name",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("When the page creator hovers on the content page item from another site on Sites and Libraries") {
+			Click(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+			LexiconCard.clickCardTitle(card = ${defaultSiteName});
+
+			Portlet.expandTree();
+
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Home",
+				locator1 = "Treeview#NODE_ITEM");
+
+			MouseOver.javaScriptFocus(
+				key_nodeName = "Home",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Then the page creator could view a tooltip with the page url") {
+			AssertVisible(
+				key_content = "/home",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-154530. View custom values matches in spacing on page editor."
 	@priority = 4
 	test ViewValuesMatchesInSpacingOnPageEditor {

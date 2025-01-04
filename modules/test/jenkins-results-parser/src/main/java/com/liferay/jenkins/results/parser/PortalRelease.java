@@ -32,15 +32,7 @@ public class PortalRelease {
 	public PortalRelease(String portalVersion) {
 		URL bundlesBaseURL = null;
 
-		String mirrorsHostname = _getMirrorsHostname();
-
 		for (String baseURLString : _BASE_URL_STRINGS) {
-			if (JenkinsResultsParserUtil.isNullOrEmpty(mirrorsHostname) &&
-				baseURLString.startsWith("http://mirrors.lax.liferay.com")) {
-
-				continue;
-			}
-
 			String bundlesBaseURLString =
 				baseURLString + "/" + portalVersion.replaceAll("\\.u", "-u");
 
@@ -506,16 +498,6 @@ public class PortalRelease {
 		}
 	}
 
-	private String _getMirrorsHostname() {
-		try {
-			return JenkinsResultsParserUtil.getBuildProperty(
-				"mirrors.hostname");
-		}
-		catch (IOException ioException) {
-			return null;
-		}
-	}
-
 	private URL _getRemoteURL(String urlString) {
 		if (urlString == null) {
 			return null;
@@ -691,9 +673,6 @@ public class PortalRelease {
 	}
 
 	private static final String[] _BASE_URL_STRINGS = {
-		"http://mirrors.lax.liferay.com/releases.liferay.com/portal",
-		"http://mirrors.lax.liferay.com/releases.liferay.com/dxp",
-		"http://mirrors.lax.liferay.com/files.liferay.com/private/ee/portal",
 		"https://releases.liferay.com/portal",
 		"https://releases.liferay.com/dxp",
 		"https://files.liferay.com/private/ee/portal"

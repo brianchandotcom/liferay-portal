@@ -12,6 +12,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.BatchProcessor;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -93,7 +93,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.DigesterImpl;
 
+import java.sql.Connection;
+
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -1047,8 +1050,6 @@ public class UserLocalServiceTest {
 	public void testUpdateLastLogin() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		_assertLastLogin(user.getUserId(), user.getLoginIP());
-
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				_userLocalService, AopInvocationHandler.class);
@@ -1063,15 +1064,23 @@ public class UserLocalServiceTest {
 		UserLocalServiceImpl userLocalServiceImpl =
 			(UserLocalServiceImpl)classLoaderBeanHandler.getBean();
 
-		BatchProcessor batchProcessor = ReflectionTestUtil.getFieldValue(
-			userLocalServiceImpl, "_batchProcessor");
+		user.setLoginDate(new Date());
+		user.setLastLoginDate(new Date());
 
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					batchProcessor, "_batchSize", 0)) {
-
-			_assertLastLogin(user.getUserId(), user.getLoginIP());
+		try (Connection connection = DataAccess.getConnection()) {
+			ReflectionTestUtil.invoke(
+				userLocalServiceImpl, "_updateLastLogin",
+				new Class<?>[] {Connection.class, List.class}, connection,
+				Collections.singletonList(user));
 		}
+
+		EntityCacheUtil.clearCache(UserImpl.class);
+
+		User updatedUser = _userLocalService.getUser(user.getUserId());
+
+		Assert.assertEquals(user.getLoginDate(), updatedUser.getLoginDate());
+		Assert.assertEquals(
+			user.getLastLoginDate(), updatedUser.getLastLoginDate());
 	}
 
 	@Test
@@ -1239,22 +1248,6 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(1, user.getFailedLoginAttempts());
 
 		return user;
-	}
-
-	private void _assertLastLogin(long userId, String loginIP)
-		throws Exception {
-
-		User user = _userLocalService.updateLastLogin(userId, loginIP);
-
-		Date expectedLastLoginDate = user.getLastLoginDate();
-		Date expectedLoginDate = user.getLoginDate();
-
-		EntityCacheUtil.clearCache(UserImpl.class);
-
-		user = _userLocalService.getUser(userId);
-
-		Assert.assertEquals(expectedLastLoginDate, user.getLastLoginDate());
-		Assert.assertEquals(expectedLoginDate, user.getLoginDate());
 	}
 
 	private User _assertLockout(

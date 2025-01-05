@@ -667,3 +667,128 @@ test('LPD-43013 Edit child configuration list', async ({
 		commerceAdminProductConfigurationListPage.expirationDateInput
 	).toBeEnabled();
 });
+
+test('LPD-44818 Show difference icons', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductConfigurationEntriesPage,
+	commerceAdminProductConfigurationEntryPage,
+	commerceAdminProductConfigurationListPage,
+	commerceAdminProductConfigurationListsPage,
+	page,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	const configurationLists =
+		await apiHelpers.headlessCommerceAdminCatalog.getProductConfigurationListsPage();
+
+	expect(configurationLists.items?.length).toBeGreaterThan(0);
+
+	const configurationList = configurationLists.items.find((item) =>
+		item.name.includes(catalog.name)
+	);
+
+	expect(configurationList).not.toBeNull();
+
+	await applicationsMenuPage.goToCommerceProductConfigurationLists();
+
+	await (
+		await commerceAdminProductConfigurationListsPage.tableRowLink({
+			colIndex: 0,
+			rowValue: configurationList.name,
+		})
+	).click();
+
+	await commerceAdminProductConfigurationListPage.entriesMenuItem.click();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.table
+	).toBeVisible();
+	await expect(
+		commerceAdminProductConfigurationListPage.saveButton
+	).not.toBeVisible();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon()
+	).toHaveCount(0);
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 0,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.sidePanelTitle
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
+		'400'
+	);
+	await commerceAdminProductConfigurationEntryPage.visibleInput.click();
+
+	await commerceAdminProductConfigurationEntryPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon()
+	).toHaveCount(3);
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon(
+			(
+				await commerceAdminProductConfigurationEntriesPage.tableRow(
+					0,
+					product.name['en_US']
+				)
+			).column
+		)
+	).toHaveCount(1);
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon(
+			(
+				await commerceAdminProductConfigurationEntriesPage.tableRow(
+					1,
+					'no'
+				)
+			).column
+		)
+	).toHaveCount(1);
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon(
+			(
+				await commerceAdminProductConfigurationEntriesPage.tableRow(
+					2,
+					'yes'
+				)
+			).column
+		)
+	).toHaveCount(0);
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 0,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
+		'10000'
+	);
+	await commerceAdminProductConfigurationEntryPage.visibleInput.click();
+
+	await commerceAdminProductConfigurationEntryPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon()
+	).toHaveCount(0);
+});

@@ -43,20 +43,8 @@ public class CommerceOrderAddressNotificationTermProvider
 			"commerce-order-billing-address-street3",
 			"[%COMMERCEORDER_BILLING_ADDRESS_STREET3%]"
 		).put(
-			"shipping-address-city",
-			"[%COMMERCEORDER_SHIPPING_ADDRESS_CITY%]"
-		).put(
-			"shipping-address-country",
-			"[%COMMERCEORDER_SHIPPING_ADDRESS_COUNTRY%]"
-		).put(
 			"commerce-order-shipping-address-name",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_NAME%]"
-		).put(
-			"shipping-address-phone-number",
-			"[%COMMERCEORDER_SHIPPING_ADDRESS_PHONE_NUMBER%]"
-		).put(
-			"shipping-address-region",
-			"[%COMMERCEORDER_SHIPPING_ADDRESS_REGION%]"
 		).put(
 			"commerce-order-shipping-address-street1",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_STREET1%]"
@@ -67,8 +55,18 @@ public class CommerceOrderAddressNotificationTermProvider
 			"commerce-order-shipping-address-street3",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_STREET3%]"
 		).put(
-			"shipping-address-zip",
-			"[%COMMERCEORDER_SHIPPING_ADDRESS_ZIP%]"
+			"shipping-address-city", "[%COMMERCEORDER_SHIPPING_ADDRESS_CITY%]"
+		).put(
+			"shipping-address-country",
+			"[%COMMERCEORDER_SHIPPING_ADDRESS_COUNTRY%]"
+		).put(
+			"shipping-address-phone-number",
+			"[%COMMERCEORDER_SHIPPING_ADDRESS_PHONE_NUMBER%]"
+		).put(
+			"shipping-address-region",
+			"[%COMMERCEORDER_SHIPPING_ADDRESS_REGION%]"
+		).put(
+			"shipping-address-zip", "[%COMMERCEORDER_SHIPPING_ADDRESS_ZIP%]"
 		).build();
 	}
 

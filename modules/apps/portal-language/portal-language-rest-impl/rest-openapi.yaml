@@ -1,22 +1,13 @@
 components:
     schemas:
-        Message:
-            properties:
-                key:
-                    type: string
-                languageId:
-                    type: string
-                value:
-                    type: string
-            type: object
         LearnMessage:
             properties:
                 key:
                     type: string
                 learnMessageDetails:
-                    type: array
                     items:
-                        $ref: '#/components/schemas/LearnMessageDetail'
+                        $ref: "#/components/schemas/LearnMessageDetail"
+                    type: array
             type: object
         LearnMessageDetail:
             properties:
@@ -25,6 +16,15 @@ components:
                 message:
                     type: string
                 url:
+                    type: string
+            type: object
+        Message:
+            properties:
+                key:
+                    type: string
+                languageId:
+                    type: string
+                value:
                     type: string
             type: object
 info:
@@ -48,12 +48,12 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: languageId
+                  name: key
                   required: false
                   schema:
                       type: string
                 - in: query
-                  name: key
+                  name: languageId
                   required: false
                   schema:
                       type: string
@@ -68,7 +68,7 @@ paths:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/LearnMessage"
-            tags: [ "LearnMessage" ]
+            tags: ["LearnMessage"]
     "/messages":
         delete:
             operationId: deleteMessage

@@ -31,7 +31,7 @@ const APIGUI = () => {
 	const [showGraphQL, setShowGraphQL] = useState(false);
 	const [headers, setHeaders] = useState([{key: '', value: ''}]);
 	const [origin, setOrigin] = useState('');
-	const [learnResources, setLearnResources] = useState({});
+	const [learnResources, setLearnResources] = useState([]);
 
 	const {observer, onClose} = useModal({
 		onClose: () => setShowHeaders(false),

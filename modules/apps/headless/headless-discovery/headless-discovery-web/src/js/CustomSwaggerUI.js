@@ -4,94 +4,118 @@
  */
 
 import ClayLink from '@clayui/link';
-import React, {useCallback, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {createRoot} from 'react-dom/client';
 import SwaggerUI from 'swagger-ui-react';
 
 import Icon from './Icon';
 
-const CustomSwaggerUI = ({learnResources = [], ...props}) => {
-	const addTooltips = useCallback(() => {
-		if (!Array.isArray(learnResources)) {return;}
+const CustomSwaggerUI = ({learnResources = [], ...swaggerProps}) => {
+	const resourceMap = useMemo(() => {
+		if (!Array.isArray(learnResources)) {
+			return new Map();
+		}
 
-		learnResources.forEach(({key, learnMessageDetails}) => {
+		return new Map(
+			learnResources.map(({key, learnMessageDetails}) => [
+				key,
+				learnMessageDetails,
+			])
+		);
+	}, [learnResources]);
+
+	const createTooltipContent = useCallback(
+		(key, container) => {
+			const messageDetails = resourceMap.get(key)?.[0];
+			if (!messageDetails) {
+				return;
+			}
+
+			const tooltipContainer = document.createElement('div');
+			tooltipContainer.className = 'tooltip-container';
+			tooltipContainer.innerHTML = ` <span class="tooltip-icon">
+										   		<div id="tooltip-icon-wrapper-${key}"></div>
+										   </span>
+										   <span class="tooltip-text">
+										   		<div id="tooltip-content-${key}"></div>
+										   </span>`;
+
+			container.appendChild(tooltipContainer);
+
+			const iconWrapper = tooltipContainer.querySelector(
+				`#tooltip-icon-wrapper-${key}`
+			);
+			if (iconWrapper) {
+				const iconRoot = createRoot(iconWrapper);
+				iconRoot.render(<Icon symbol="question-circle" />);
+			}
+
+			const tooltipContent = tooltipContainer.querySelector(
+				`#tooltip-content-${key}`
+			);
+			if (tooltipContent) {
+				const messageRoot = createRoot(tooltipContent);
+				messageRoot.render(
+					<ClayLink
+						href={messageDetails.url}
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						{messageDetails.message}
+					</ClayLink>
+				);
+			}
+		},
+		[resourceMap]
+	);
+
+	const addTooltips = useCallback(() => {
+		if (resourceMap.size === 0) {
+			return;
+		}
+
+		resourceMap.forEach((_, key) => {
 			const rows = document.querySelectorAll(
 				`[data-param-name='${key}']`
 			);
 
 			rows.forEach((row) => {
-				if (row && !row.querySelector('.tooltip-container')) {
-					const inputContainer = row.querySelector(
-						'td.parameters-col_description'
-					);
-
-					if (inputContainer) {
-						const tooltipContainer = document.createElement('div');
-						tooltipContainer.className = 'tooltip-container';
-
-						tooltipContainer.innerHTML = `
-              <span class="tooltip-icon">
-                <div id="tooltip-icon-wrapper-${key}"></div>
-              </span>
-              <span class="tooltip-text">
-                <div id="tooltip-content-${key}"></div>
-              </span>
-            `;
-
-						inputContainer.appendChild(tooltipContainer);
-
-						const iconWrapper = tooltipContainer.querySelector(
-							`#tooltip-icon-wrapper-${key}`
-						);
-						if (iconWrapper) {
-							const iconRoot = createRoot(iconWrapper);
-							iconRoot.render(<Icon symbol="question-circle" />);
-						}
-
-						const tooltipContent = tooltipContainer.querySelector(
-							`#tooltip-content-${key}`
-						);
-						if (tooltipContent && learnMessageDetails?.[0]) {
-							const messageRoot = createRoot(tooltipContent);
-							messageRoot.render(
-								<ClayLink
-									href={learnMessageDetails[0].url}
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									{learnMessageDetails[0].message}
-								</ClayLink>
-							);
-						}
-					}
+				const inputContainer = row.querySelector(
+					'td.parameters-col_description'
+				);
+				if (
+					inputContainer &&
+					!row.querySelector('.tooltip-container')
+				) {
+					createTooltipContent(key, inputContainer);
 				}
 			});
 		});
-	}, [learnResources]);
+	}, [resourceMap, createTooltipContent]);
 
 	useEffect(() => {
-		const addTooltipsWithDelay = () => {
-			Promise.resolve().then(addTooltips);
+		const swaggerContainer = document.getElementById('swagger-main');
+		if (!swaggerContainer) {
+			return;
+		}
+
+		const addTooltipsWithRAF = () => {
+			requestAnimationFrame(addTooltips);
 		};
 
-		addTooltipsWithDelay();
+		addTooltipsWithRAF();
 
-		const swaggerContainer = document.getElementById('swagger-main');
-		const observer = new MutationObserver(addTooltipsWithDelay);
-
-		if (swaggerContainer) {
-			observer.observe(swaggerContainer, {
-				childList: true,
-				subtree: true,
-			});
-		}
+		const observer = new MutationObserver(addTooltipsWithRAF);
+		observer.observe(swaggerContainer, {
+			childList: true,
+			subtree: true,
+		});
 
 		return () => {
 			observer.disconnect();
 		};
 	}, [addTooltips]);
-
-	const {learnResources: _, ...swaggerProps} = props;
 
 	return (
 		<div id="swagger-main">
@@ -100,4 +124,20 @@ const CustomSwaggerUI = ({learnResources = [], ...props}) => {
 	);
 };
 
-export default CustomSwaggerUI;
+CustomSwaggerUI.propTypes = {
+	learnResources: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string.isRequired,
+			learnMessageDetails: PropTypes.arrayOf(
+				PropTypes.shape({
+					languageId: PropTypes.string.isRequired,
+					message: PropTypes.string.isRequired,
+					url: PropTypes.string.isRequired,
+				})
+			).isRequired,
+		})
+	),
+	swaggerProps: PropTypes.object,
+};
+
+export default React.memo(CustomSwaggerUI);

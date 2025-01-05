@@ -43,19 +43,19 @@ public class CommerceOrderAddressNotificationTermProvider
 			"commerce-order-billing-address-street3",
 			"[%COMMERCEORDER_BILLING_ADDRESS_STREET3%]"
 		).put(
-			"commerce-order-shipping-address-city",
+			"shipping-address-city",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_CITY%]"
 		).put(
-			"commerce-order-shipping-address-country",
+			"shipping-address-country",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_COUNTRY%]"
 		).put(
 			"commerce-order-shipping-address-name",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_NAME%]"
 		).put(
-			"commerce-order-shipping-address-phone-number",
+			"shipping-address-phone-number",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_PHONE_NUMBER%]"
 		).put(
-			"commerce-order-shipping-address-region",
+			"shipping-address-region",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_REGION%]"
 		).put(
 			"commerce-order-shipping-address-street1",
@@ -67,7 +67,7 @@ public class CommerceOrderAddressNotificationTermProvider
 			"commerce-order-shipping-address-street3",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_STREET3%]"
 		).put(
-			"commerce-order-shipping-address-zip",
+			"shipping-address-zip",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_ZIP%]"
 		).build();
 	}

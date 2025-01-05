@@ -12,6 +12,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -154,6 +155,24 @@ public class CentralizedThreadLocalTest {
 
 		Assert.assertFalse(
 			centralizedThreadLocal1.equals(centralizedThreadLocal2));
+	}
+
+	@Test
+	public void testGetShortLivedThreadLocals() {
+		CentralizedThreadLocal<?> centralizedThreadLocal =
+			new CentralizedThreadLocal<>(true);
+
+		centralizedThreadLocal.set(null);
+
+		Assert.assertEquals(
+			new HashMap<CentralizedThreadLocal<?>, Object>() {
+				{
+					put(centralizedThreadLocal, null);
+				}
+			},
+			CentralizedThreadLocal.getShortLivedThreadLocals());
+
+		centralizedThreadLocal.remove();
 	}
 
 	@Test

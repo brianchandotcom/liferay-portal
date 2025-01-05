@@ -220,12 +220,9 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 				CentralizedThreadLocal<Object> centralizedThreadLocal =
 					(CentralizedThreadLocal<Object>)entry._key;
 
-				Object value = centralizedThreadLocal._copyFunction.apply(
-					entry._value);
-
-				if (value != null) {
-					map.put(centralizedThreadLocal, value);
-				}
+				map.put(
+					centralizedThreadLocal,
+					centralizedThreadLocal._copyFunction.apply(entry._value));
 
 				entry = entry._next;
 			}

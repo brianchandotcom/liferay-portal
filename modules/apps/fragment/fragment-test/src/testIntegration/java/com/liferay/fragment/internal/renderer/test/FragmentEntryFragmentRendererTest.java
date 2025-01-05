@@ -126,6 +126,37 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPS-146373")
+	public void testAddMappedFragmentEntryLinkWithPrefixURL() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
+			JSONUtil.put(
+				"element-text",
+				JSONUtil.put(
+					"config",
+					JSONUtil.put(
+						"href",
+						JSONUtil.put(
+							LocaleUtil.toLanguageId(
+								LocaleUtil.getSiteDefault()),
+							"test@liferay.com")
+					).put(
+						"mapperType", "link"
+					).put(
+						"prefix", "mailto:"
+					)
+				).put(
+					"defaultValue", "Heading Example"
+				)));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(content.contains("mailto:test@liferay.com"));
+	}
+
+	@Test
 	public void testAddMappedFragmentEntryLinkWithURL() throws Exception {
 		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
 			JSONUtil.put(

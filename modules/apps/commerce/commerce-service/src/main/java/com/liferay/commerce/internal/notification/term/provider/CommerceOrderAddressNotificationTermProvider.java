@@ -19,20 +19,20 @@ public class CommerceOrderAddressNotificationTermProvider
 	@Override
 	public Map<String, String> getNotificationTerms() {
 		return HashMapBuilder.put(
-			"billing-address-city",
-			"[%COMMERCEORDER_BILLING_ADDRESS_CITY%]"
+			"billing-address-city", "[%COMMERCEORDER_BILLING_ADDRESS_CITY%]"
 		).put(
 			"billing-address-country",
 			"[%COMMERCEORDER_BILLING_ADDRESS_COUNTRY%]"
 		).put(
-			"commerce-order-billing-address-name",
-			"[%COMMERCEORDER_BILLING_ADDRESS_NAME%]"
-		).put(
 			"billing-address-phone-number",
 			"[%COMMERCEORDER_BILLING_ADDRESS_PHONE_NUMBER%]"
 		).put(
-			"billing-address-region",
-			"[%COMMERCEORDER_BILLING_ADDRESS_REGION%]"
+			"billing-address-region", "[%COMMERCEORDER_BILLING_ADDRESS_REGION%]"
+		).put(
+			"billing-address-zip", "[%COMMERCEORDER_BILLING_ADDRESS_ZIP%]"
+		).put(
+			"commerce-order-billing-address-name",
+			"[%COMMERCEORDER_BILLING_ADDRESS_NAME%]"
 		).put(
 			"commerce-order-billing-address-street1",
 			"[%COMMERCEORDER_BILLING_ADDRESS_STREET1%]"
@@ -42,9 +42,6 @@ public class CommerceOrderAddressNotificationTermProvider
 		).put(
 			"commerce-order-billing-address-street3",
 			"[%COMMERCEORDER_BILLING_ADDRESS_STREET3%]"
-		).put(
-			"billing-address-zip",
-			"[%COMMERCEORDER_BILLING_ADDRESS_ZIP%]"
 		).put(
 			"commerce-order-shipping-address-city",
 			"[%COMMERCEORDER_SHIPPING_ADDRESS_CITY%]"

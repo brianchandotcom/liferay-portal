@@ -7,6 +7,8 @@
 		"@clayui/icon": "3.111.0",
 		"@clayui/layout": "3.111.0",
 		"@clayui/modal": "3.122.0",
+		"@clayui/link": "^3.111.0",
+		"prop-types": "15.7.2",
 		"graphiql": "1.4.7",
 		"graphql": "^15.0.0",
 		"react": "18.2.0",

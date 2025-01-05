@@ -224,6 +224,8 @@ public class CompanyThreadLocal {
 
 				safeCloseables.add(
 					companyCentralizedThreadLocal.setWithSafeCloseable(null));
+
+				companyCentralizedThreadLocal.remove();
 			}
 		}
 

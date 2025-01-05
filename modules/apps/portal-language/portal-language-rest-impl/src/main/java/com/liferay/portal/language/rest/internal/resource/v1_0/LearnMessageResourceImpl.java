@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.ws.rs.BadRequestException;
 
@@ -34,58 +35,68 @@ public class LearnMessageResourceImpl extends BaseLearnMessageResourceImpl {
 
 	@Override
 	public Page<LearnMessage> getLearnMessagesResourcePage(
-		String resource, String languageId, String key)
+			String resource, String languageId, String key)
 		throws Exception {
 
-		JSONObject jsonObject = LearnMessageUtil.getJSONObject(resource);
+		JSONObject resourceJSONObject = LearnMessageUtil.getJSONObject(
+			resource);
 
-		if (Validator.isNull(jsonObject)) {
+		if (Objects.isNull(resourceJSONObject)) {
 			throw new BadRequestException(
 				"Learn-resource name must have a \"resource\" file");
 		}
 
 		if (Validator.isNotNull(key)) {
-			return Page.of(_getSingleLearnMessage(jsonObject, key, languageId));
+			return Page.of(
+				_getSingleLearnMessage(resourceJSONObject, key, languageId));
 		}
 
-		return Page.of(_getAllLearnMessages(jsonObject, languageId));
+		return Page.of(_getAllLearnMessages(resourceJSONObject, languageId));
 	}
 
-	private List<LearnMessage> _getSingleLearnMessage(
-		JSONObject jsonObject, String key, String languageId) {
+	private LearnMessage _createLearnMessage(
+		String key, LearnMessageDetail detail) {
 
-		JSONObject messageObject = jsonObject.getJSONObject(key);
+		LearnMessage learnMessage = new LearnMessage();
 
-		if (Validator.isNull(messageObject)) {
-			return Collections.emptyList();
-		}
+		learnMessage.setKey(() -> key);
+		learnMessage.setLearnMessageDetails(
+			() -> new LearnMessageDetail[] {detail});
 
-		LearnMessageDetail detail = _getLearnMessageDetail(messageObject, languageId);
+		return learnMessage;
+	}
 
-		if (Validator.isNull(detail)) {
-			return Collections.emptyList();
-		}
+	private LearnMessageDetail _createLearnMessageDetail(
+		String languageId, JSONObject languageJSONObject) {
 
-		return Collections.singletonList(_createLearnMessage(key, detail));
+		LearnMessageDetail detail = new LearnMessageDetail();
+
+		detail.setLanguageId(() -> languageId);
+		detail.setMessage(() -> languageJSONObject.getString("message"));
+		detail.setUrl(() -> languageJSONObject.getString("url"));
+
+		return detail;
 	}
 
 	private List<LearnMessage> _getAllLearnMessages(
 		JSONObject jsonObject, String languageId) {
 
 		List<LearnMessage> learnMessages = new ArrayList<>();
-		Iterator<String> keys = jsonObject.keys();
+		Iterator<String> keysIterator = jsonObject.keys();
 
-		while (keys.hasNext()) {
-			String currentKey = keys.next();
-			JSONObject messageObject = jsonObject.getJSONObject(currentKey);
+		while (keysIterator.hasNext()) {
+			String currentKey = keysIterator.next();
 
-			if (Validator.isNull(messageObject)) {
+			JSONObject messageJSONObject = jsonObject.getJSONObject(currentKey);
+
+			if (Objects.isNull(messageJSONObject)) {
 				continue;
 			}
 
-			LearnMessageDetail detail = _getLearnMessageDetail(messageObject, languageId);
+			LearnMessageDetail detail = _getLearnMessageDetail(
+				messageJSONObject, languageId);
 
-			if (Validator.isNull(detail)) {
+			if (Objects.isNull(detail)) {
 				continue;
 			}
 
@@ -96,55 +107,54 @@ public class LearnMessageResourceImpl extends BaseLearnMessageResourceImpl {
 	}
 
 	private LearnMessageDetail _getLearnMessageDetail(
-		JSONObject messageObject, String languageId) {
+		JSONObject messageJSONObject, String languageId) {
 
-		JSONObject languageObject;
+		JSONObject languageJSONObject;
 
 		if (Validator.isNotNull(languageId)) {
-			languageObject = messageObject.getJSONObject(languageId);
+			languageJSONObject = messageJSONObject.getJSONObject(languageId);
 
-			if (Validator.isNull(languageObject)) {
+			if (Objects.isNull(languageJSONObject)) {
 				return null;
 			}
 
-			return _createLearnMessageDetail(languageId, languageObject);
+			return _createLearnMessageDetail(languageId, languageJSONObject);
 		}
 
-		Iterator<String> languageKeys = messageObject.keys();
+		Iterator<String> languageKeysIterator = messageJSONObject.keys();
 
-		if (!languageKeys.hasNext()) {
+		if (!languageKeysIterator.hasNext()) {
 			return null;
 		}
 
-		String firstLanguageId = languageKeys.next();
-		languageObject = messageObject.getJSONObject(firstLanguageId);
+		String firstLanguageId = languageKeysIterator.next();
 
-		if (Validator.isNull(languageObject)) {
+		languageJSONObject = messageJSONObject.getJSONObject(firstLanguageId);
+
+		if (Objects.isNull(languageJSONObject)) {
 			return null;
 		}
 
-		return _createLearnMessageDetail(firstLanguageId, languageObject);
+		return _createLearnMessageDetail(firstLanguageId, languageJSONObject);
 	}
 
-	private static LearnMessage _createLearnMessage(
-		String key, LearnMessageDetail detail) {
+	private List<LearnMessage> _getSingleLearnMessage(
+		JSONObject jsonObject, String key, String languageId) {
 
-		LearnMessage learnMessage = new LearnMessage();
-		learnMessage.setKey(key);
-		learnMessage.setLearnMessageDetails(new LearnMessageDetail[]{detail});
+		JSONObject messageJSONObject = jsonObject.getJSONObject(key);
 
-		return learnMessage;
-	}
+		if (Objects.isNull(messageJSONObject)) {
+			return Collections.emptyList();
+		}
 
-	private LearnMessageDetail _createLearnMessageDetail(
-		String languageId, JSONObject languageObject) {
+		LearnMessageDetail detail = _getLearnMessageDetail(
+			messageJSONObject, languageId);
 
-		LearnMessageDetail detail = new LearnMessageDetail();
-		detail.setLanguageId(languageId);
-		detail.setMessage(languageObject.getString("message"));
-		detail.setUrl(languageObject.getString("url"));
+		if (Objects.isNull(detail)) {
+			return Collections.emptyList();
+		}
 
-		return detail;
+		return Collections.singletonList(_createLearnMessage(key, detail));
 	}
 
 }

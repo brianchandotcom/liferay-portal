@@ -11,9 +11,9 @@ import ClayModal, {useModal} from '@clayui/modal';
 import GraphiQL from 'graphiql';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import CustomSwaggerUI from './CustomSwaggerUI';
 import Icon from './Icon';
 import apiFetch from './util/apiFetch';
-import CustomSwaggerUI from './CustomSwaggerUI';
 
 import 'graphiql/graphiql.css';
 
@@ -58,10 +58,14 @@ const APIGUI = () => {
 			);
 		});
 
-		apiFetch(contextPath + '/o/language/v1.0/learn-message/headless-discovery-web?languageId=en_US', 'get', {})
-			.then((response) => {
-				setLearnResources(response.items);
-			});
+		apiFetch(
+			contextPath +
+				'/o/language/v1.0/learn-message/headless-discovery-web?languageId=en_US',
+			'get',
+			{}
+		).then((response) => {
+			setLearnResources(response.items);
+		});
 	}, [contextPath]);
 
 	const graphQLFetcher = useCallback(
@@ -317,8 +321,8 @@ const APIGUI = () => {
 					</ClayAlert>
 				) : (
 					<CustomSwaggerUI
-						learnResources={learnResources}
 						displayOperationId={true}
+						learnResources={learnResources}
 						requestInterceptor={requestInterceptor}
 						supportedSubmitMethods={[
 							'get',

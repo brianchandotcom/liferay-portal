@@ -93,8 +93,6 @@ public class OpenIdConnectTokenRequestUtilTest {
 			)
 		);
 
-		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
-
 		OIDCTokenResponse oidcTokenResponse = Mockito.mock(
 			OIDCTokenResponse.class);
 		TokenRequest mockTokenRequest = Mockito.mock(TokenRequest.class);
@@ -150,6 +148,8 @@ public class OpenIdConnectTokenRequestUtilTest {
 		).thenReturn(
 			new URI[] {URI.create("http://localhost:63636")}
 		);
+
+		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
 
 		Mockito.when(
 			mockTokenRequest.toHTTPRequest()

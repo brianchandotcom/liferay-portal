@@ -78,13 +78,13 @@ public class MBObjectsTitleComparator<T> extends OrderByComparator<T> {
 			return mbCategory.getName();
 		}
 
-		if (object instanceof MBThread) {
-			MBThread mbThread = (MBThread)object;
-
-			return mbThread.getTitle();
+		if (!(object instanceof MBThread)) {
+			return null;
 		}
 
-		return null;
+		MBThread mbThread = (MBThread)object;
+
+		return mbThread.getTitle();
 	}
 
 	private MBObjectsTitleComparator(boolean ascending) {

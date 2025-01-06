@@ -15,8 +15,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class Authorization {
 
-	public Authorization(String accessToken, String settings, String url) {
+	public Authorization(
+		String accessToken, String serviceURL, String settings, String url) {
+
 		this.accessToken = accessToken;
+		this.serviceURL = serviceURL;
 		this.settings = settings;
 		this.url = url;
 	}
@@ -25,6 +28,8 @@ public class Authorization {
 		return JSONUtil.put(
 			"accessToken", accessToken
 		).put(
+			"serviceURL", serviceURL
+		).put(
 			"settings", JSONFactoryUtil.createJSONObject(settings)
 		).put(
 			"url", url
@@ -32,6 +37,7 @@ public class Authorization {
 	}
 
 	public String accessToken;
+	public String serviceURL;
 	public String settings;
 	public String url;
 

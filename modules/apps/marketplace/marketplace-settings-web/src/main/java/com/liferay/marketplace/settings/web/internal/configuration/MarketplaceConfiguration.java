@@ -40,6 +40,9 @@ public interface MarketplaceConfiguration {
 	public String refreshToken();
 
 	@Meta.AD(required = false)
+	public String serviceURL();
+
+	@Meta.AD(required = false)
 	public String settings();
 
 	@Meta.AD(required = false)

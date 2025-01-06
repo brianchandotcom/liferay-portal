@@ -213,23 +213,22 @@ public class OpenIdConnectTokenRequestUtilTest {
 		Assert.assertEquals(
 			_oidcTokens,
 			OpenIdConnectTokenRequestUtil.request(
-				_oidcClientInformation, _oidcProviderMetadata,
-				_refreshToken, _tokenRequestParameters));
+				_oidcClientInformation, _oidcProviderMetadata, _refreshToken,
+				_tokenRequestParameters));
 	}
 
+	private static AuthenticationSuccessResponse _authenticationSuccessResponse;
 	private static ClientAndServer _clientAndServer;
-	private static AuthenticationSuccessResponse
-		_authenticationSuccessResponse;
 	private static CodeVerifier _codeVerifier;
 	private static Nonce _nonce;
 	private static OIDCClientInformation _oidcClientInformation;
 	private static OIDCProviderMetadata _oidcProviderMetadata;
-	private static OIDCTokens _oidcTokens;
-	private static RefreshToken _refreshToken;
 	private static MockedStatic<OIDCTokenResponseParser>
 		_oidcTokenResponseParserMockedStatic;
+	private static OIDCTokens _oidcTokens;
 	private static MockedStatic<OpenIdConnectRequestParametersUtil>
 		_openIdConnectRequestParametersUtilMockedStatic;
+	private static RefreshToken _refreshToken;
 	private static String _tokenRequestParameters;
 
 }

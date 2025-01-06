@@ -163,15 +163,14 @@ public class ObjectEntryAssetRenderer
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay != null) {
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					getClassName(),
-					new ClassPKInfoItemIdentifier(getClassPK())),
-				themeDisplay);
+		if (themeDisplay == null) {
+			return null;
 		}
 
-		return null;
+		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			new InfoItemReference(
+				getClassName(), new ClassPKInfoItemIdentifier(getClassPK())),
+			themeDisplay);
 	}
 
 	@Override
@@ -179,15 +178,14 @@ public class ObjectEntryAssetRenderer
 			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
 		throws Exception {
 
-		if (themeDisplay != null) {
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					getClassName(),
-					new ClassPKInfoItemIdentifier(getClassPK())),
-				themeDisplay);
+		if (themeDisplay == null) {
+			return null;
 		}
 
-		return null;
+		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+			new InfoItemReference(
+				getClassName(), new ClassPKInfoItemIdentifier(getClassPK())),
+			themeDisplay);
 	}
 
 	@Override

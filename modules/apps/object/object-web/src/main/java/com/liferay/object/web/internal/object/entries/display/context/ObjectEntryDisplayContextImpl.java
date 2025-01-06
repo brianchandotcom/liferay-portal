@@ -1072,29 +1072,29 @@ public class ObjectEntryDisplayContextImpl
 			defaultMaxLength = 280;
 		}
 
-		if ((defaultMaxLength > 0) &&
-			GetterUtil.getBoolean(properties.get("showCounter"))) {
+		if ((defaultMaxLength <= 0) ||
+			!GetterUtil.getBoolean(properties.get("showCounter"))) {
 
-			DDMFormFieldValidation ddmFormFieldValidation =
-				new DDMFormFieldValidation();
-
-			DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
-				new DDMFormFieldValidationExpression();
-
-			int maxLength = GetterUtil.getInteger(
-				properties.get("maxLength"), defaultMaxLength);
-
-			ddmFormFieldValidationExpression.setValue(
-				StringBundler.concat(
-					"length(", objectFieldName, ") <= ", maxLength));
-
-			ddmFormFieldValidation.setDDMFormFieldValidationExpression(
-				ddmFormFieldValidationExpression);
-
-			return ddmFormFieldValidation;
+			return null;
 		}
 
-		return null;
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
+			new DDMFormFieldValidationExpression();
+
+		int maxLength = GetterUtil.getInteger(
+			properties.get("maxLength"), defaultMaxLength);
+
+		ddmFormFieldValidationExpression.setValue(
+			StringBundler.concat(
+				"length(", objectFieldName, ") <= ", maxLength));
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			ddmFormFieldValidationExpression);
+
+		return ddmFormFieldValidation;
 	}
 
 	private DDMFormValues _getDDMFormValues(

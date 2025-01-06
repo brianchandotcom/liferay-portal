@@ -292,15 +292,15 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		if (themeDisplay != null) {
-			WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
-
-			webImage.setAlt(user.getFullName());
-
-			return webImage;
+		if (themeDisplay == null) {
+			return null;
 		}
 
-		return null;
+		WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
+
+		webImage.setAlt(user.getFullName());
+
+		return webImage;
 	}
 
 	private final DisplayPageInfoItemFieldSetProvider

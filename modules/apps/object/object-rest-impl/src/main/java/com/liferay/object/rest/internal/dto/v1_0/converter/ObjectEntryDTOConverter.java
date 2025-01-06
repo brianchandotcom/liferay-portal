@@ -713,18 +713,17 @@ public class ObjectEntryDTOConverter
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		if (objectScopeProvider.isGroupAware()) {
-			Group group = _groupLocalService.fetchGroup(
-				objectEntry.getGroupId());
-
-			if (group == null) {
-				return null;
-			}
-
-			return group.getGroupKey();
+		if (!objectScopeProvider.isGroupAware()) {
+			return null;
 		}
 
-		return null;
+		Group group = _groupLocalService.fetchGroup(objectEntry.getGroupId());
+
+		if (group == null) {
+			return null;
+		}
+
+		return group.getGroupKey();
 	}
 
 	private Serializable _getValue(

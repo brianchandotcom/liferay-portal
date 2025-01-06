@@ -106,7 +106,7 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 	}
 }
 
-buildDir = new File(rootDir.parentFile, "build")
+File portalBuildDir = new File(rootDir.parentFile, "build")
 
 for (String gradleVersion in ["8.5"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
@@ -124,7 +124,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/lib/**/*.jar"
 
 		includeEmptyDirs = false
-		into new File(buildDir, "gradle-${gradleVersion}")
+		into new File(portalBuildDir, "gradle-${gradleVersion}")
 	}
 
 	tasks.create(name: "extractGradleSources${suffix}", type: Copy) {
@@ -139,7 +139,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/src/**"
 
 		includeEmptyDirs = false
-		into new File(buildDir, "gradle-${gradleVersion}-sources")
+		into new File(portalBuildDir, "gradle-${gradleVersion}-sources")
 	}
 }
 
@@ -785,7 +785,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jarFiles, it)
+						classpath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jarFiles, portalBuildDir, it)
 					}
 				}
 
@@ -797,7 +797,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
 
-						jspCClasspath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jarFiles, it)
+						jspCClasspath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jarFiles, portalBuildDir, it)
 					}
 				}
 			}
@@ -811,7 +811,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.compileOnly.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.compileOnly.files - jarFiles) + _transformToJakarta(jarFiles, it)
+						classpath = files(configurations.compileOnly.files - jarFiles) + _transformToJakarta(jarFiles, portalBuildDir, it)
 					}
 				}
 
@@ -823,7 +823,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.testIntegrationImplementation.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.testIntegrationImplementation - jarFiles) + _transformToJakarta(jarFiles, it)
+						classpath = files(configurations.testIntegrationImplementation - jarFiles) + _transformToJakarta(jarFiles, portalBuildDir, it)
 					}
 				}
 
@@ -835,7 +835,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(configurations.testImplementation.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.testImplementation - jarFiles) + _transformToJakarta(jarFiles, it)
+						classpath = files(configurations.testImplementation - jarFiles) + _transformToJakarta(jarFiles, portalBuildDir, it)
 					}
 				}
 			}
@@ -958,8 +958,8 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	return true
 }
 
-private FileCollection _transformToJakarta(FileCollection jarFiles, Task task) {
-	def transformedDir = new File(task.project.rootProject.projectDir, "../out/transformed")
+private FileCollection _transformToJakarta(FileCollection jarFiles, File portalBuildDir, Task task) {
+	def transformedDir = new File(portalBuildDir, "_jakarta-transformer")
 	FileCollection newJarFiles = task.project.objects.fileCollection()
 
 	jarFiles.files.each {
@@ -970,7 +970,7 @@ private FileCollection _transformToJakarta(FileCollection jarFiles, Task task) {
 		File file = new File(transformedDir, fileName)
 
 		if (file.exists()) {
-			task.logger.lifecycle "Jakarta: EXISTING ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+			task.logger.lifecycle "Jakarta: EXISTING ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, transformedDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, transformedDir.parentFile.parentFile.parentFile)}"
 
 			newJarFiles.from(file)
 
@@ -990,7 +990,7 @@ private FileCollection _transformToJakarta(FileCollection jarFiles, Task task) {
 		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
 			newJarFiles.from(file)
 
-			task.logger.lifecycle "Jakarta: TRANSFORMED ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, task.project.rootProject.projectDir.parentFile.parentFile)} -> ${FileUtil.relativize(file, task.project.projectDir.parentFile)}"
+			task.logger.lifecycle "Jakarta: TRANSFORMED ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, transformedDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, transformedDir.parentFile.parentFile.parentFile)}"
 		}
 		else {
 			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errorPrintStream}")

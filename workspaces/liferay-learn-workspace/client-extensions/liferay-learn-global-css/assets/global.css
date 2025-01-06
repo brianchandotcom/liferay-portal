@@ -72,7 +72,7 @@ pre[class*='language-'] {
 	line-height: 1rem;
 	padding: 0.125rem 0.5rem;
 	white-space: normal;
-	word-break: break-all;
+	word-break: auto-phrase;
 }
 
 :not(pre) > code[class*='language-'] .token {
@@ -468,6 +468,7 @@ pre[class*='language-'] {
 				padding: var(--spacer-2, 0.5rem) var(--spacer-3, 1rem);
 				position: relative;
 				vertical-align: middle;
+				word-break: auto-phrase;
 			}
 
 			th {

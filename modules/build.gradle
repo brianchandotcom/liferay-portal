@@ -974,10 +974,10 @@ private FileCollection _transformToJakarta(File jakartaOutputDir, FileCollection
 
 		File file = new File(jakartaOutputDir, fileName)
 
-		if (file.exists()) {
-			task.logger.lifecycle "Jakarta: EXISTING ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
+		newJarFiles.from(file)
 
-			newJarFiles.from(file)
+		if (file.exists()) {
+			task.logger.lifecycle "Jakarta: CACHE ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
 
 			return
 		}
@@ -993,12 +993,10 @@ private FileCollection _transformToJakarta(File jakartaOutputDir, FileCollection
 		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, [jarFile.absolutePath, file.absolutePath] as String[]))
 
 		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
-			newJarFiles.from(file)
-
-			task.logger.lifecycle "Jakarta: TRANSFORMED ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
+			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
 		}
 		else {
-			throw new GradleException("Jakarta Transformer ERROR: ${resultCode}\n${errorPrintStream}")
+			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
 		}
 	}
 

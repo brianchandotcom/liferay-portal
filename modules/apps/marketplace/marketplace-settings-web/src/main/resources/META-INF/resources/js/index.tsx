@@ -23,6 +23,8 @@ const steps = [
 	},
 ];
 
+const searchParams = new URLSearchParams(window.location.search);
+
 export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 	const [authorization, setAuthorization] = useState<Authorization>({
 		data: null,
@@ -69,6 +71,8 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 			type: 'success',
 		});
 
+		setStep(0);
+
 		setAuthorization({data: null, hasAuthorization: false, loading: false});
 	};
 
@@ -93,7 +97,12 @@ export function MarketplaceSettings(props: MarketplaceSettingsProps) {
 
 			<Component
 				authorization={authorization}
-				marketplaceSettingsProps={props}
+				marketplaceSettingsProps={{
+					...props,
+					clientId: searchParams.get('clientId') || props.clientId,
+					redirect: searchParams.get('redirect') || props.redirect,
+					url: searchParams.get('url') || props.url,
+				}}
 				onDisconnect={onDisconnect}
 				onNext={onNext}
 				setAuthorization={setAuthorization}

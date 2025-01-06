@@ -230,14 +230,14 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	}
 
 	private ObjectField _getObjectField(ObjectDefinition objectDefinition) {
-		if ((objectDefinition != null) &&
-			(objectDefinition.getTitleObjectFieldId() > 0)) {
+		if ((objectDefinition == null) ||
+			(objectDefinition.getTitleObjectFieldId() <= 0)) {
 
-			return _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getTitleObjectFieldId());
+			return null;
 		}
 
-		return null;
+		return _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getTitleObjectFieldId());
 	}
 
 	private String _getObjectFieldBusinessType(

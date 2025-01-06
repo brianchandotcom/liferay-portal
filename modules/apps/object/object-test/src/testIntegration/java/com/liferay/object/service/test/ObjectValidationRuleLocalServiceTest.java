@@ -1102,17 +1102,17 @@ public class ObjectValidationRuleLocalServiceTest {
 				(proxy, method, arguments) -> {
 					_argumentsList.add(arguments);
 
-					if (Objects.equals(
+					if (!Objects.equals(
 							method.getDeclaringClass(),
-							ObjectScriptingExecutor.class) &&
-						Objects.equals(method.getName(), "execute")) {
+							ObjectScriptingExecutor.class) ||
+						!Objects.equals(method.getName(), "execute")) {
 
-						return HashMapBuilder.<String, Object>put(
-							"validationCriteriaMet", true
-						).build();
+						return null;
 					}
 
-					return null;
+					return HashMapBuilder.<String, Object>put(
+						"validationCriteriaMet", true
+					).build();
 				}));
 	}
 

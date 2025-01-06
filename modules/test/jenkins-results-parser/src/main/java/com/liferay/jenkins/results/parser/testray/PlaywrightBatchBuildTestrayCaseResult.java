@@ -55,7 +55,81 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	@Override
 	public String getErrors() {
-		return getTestResultErrors();
+		String testResultErrors = null;
+
+		Build build = getBuild();
+
+		TestResult testResult = getTestResult();
+
+		if (testResult == null) {
+			if (build == null) {
+				return "Unable to run build on CI";
+			}
+
+			String result = build.getResult();
+
+			testResultErrors = "Failed prior to running test";
+
+			if (result == null) {
+				testResultErrors = "Unable to finish build on CI";
+			}
+
+			if (result.equals("ABORTED")) {
+				testResultErrors =
+					build.getJobName() + " timed out after 2 hours";
+			}
+
+			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
+				testResultErrors = "Unable to run test on CI";
+			}
+
+			String failureMessage = build.getFailureMessage();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(failureMessage)) {
+				return testResultErrors;
+			}
+
+			return testResultErrors + ": " + failureMessage;
+		}
+
+		if (testResult.isSkipped()) {
+			return "Failed to run test on CI";
+		}
+
+		if (!testResult.isFailing()) {
+			return null;
+		}
+
+		testResultErrors = testResult.getErrorDetails();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
+			testResultErrors = build.getFailureMessage();
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
+			return "Failed for unknown reason";
+		}
+
+		String testResultStackTrace = testResult.getErrorStackTrace();
+
+		if (testResultStackTrace.length() > 500) {
+			int index = testResultStackTrace.indexOf("›");
+
+			return testResultStackTrace.substring(index, 500);
+		}
+
+		if (testResultErrors.contains("\n")) {
+			testResultErrors = testResultErrors.substring(
+				0, testResultErrors.indexOf("\n"));
+		}
+
+		testResultErrors = testResultErrors.trim();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testResultErrors)) {
+			return "Failed for unknown reason";
+		}
+
+		return testResultErrors;
 	}
 
 	@Override

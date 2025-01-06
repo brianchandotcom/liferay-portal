@@ -66,13 +66,13 @@ public class ThreadTitleComparator<T> extends OrderByComparator<T> {
 	}
 
 	protected String getThreadTitle(Object object) {
-		if (object instanceof MBThread) {
-			MBThread mbThread = (MBThread)object;
-
-			return mbThread.getTitle();
+		if (!(object instanceof MBThread)) {
+			return null;
 		}
 
-		return null;
+		MBThread mbThread = (MBThread)object;
+
+		return mbThread.getTitle();
 	}
 
 	private ThreadTitleComparator(boolean ascending) {

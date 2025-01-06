@@ -65,13 +65,13 @@ public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 	}
 
 	protected Date getModifiedDate(Object object) {
-		if (object instanceof MBThread) {
-			MBThread mbThread = (MBThread)object;
-
-			return mbThread.getModifiedDate();
+		if (!(object instanceof MBThread)) {
+			return null;
 		}
 
-		return null;
+		MBThread mbThread = (MBThread)object;
+
+		return mbThread.getModifiedDate();
 	}
 
 	private ThreadModifiedDateComparator(boolean ascending) {

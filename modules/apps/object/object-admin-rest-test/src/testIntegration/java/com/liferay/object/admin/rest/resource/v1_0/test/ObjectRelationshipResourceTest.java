@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
  * @author Javier Gamarra
  * @author Murilo Stodolni
  */
-@FeatureFlags("LPS-187142")
+@FeatureFlags("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectRelationshipResourceTest
 	extends BaseObjectRelationshipResourceTestCase {

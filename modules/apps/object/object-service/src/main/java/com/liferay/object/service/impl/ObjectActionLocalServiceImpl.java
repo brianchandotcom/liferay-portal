@@ -531,7 +531,7 @@ public class ObjectActionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-34594") ||
 			objectDefinition.isRootNode()) {
 
 			return;
@@ -695,7 +695,7 @@ public class ObjectActionLocalServiceImpl
 		throws PortalException {
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPS-187142") &&
+				objectDefinition.getCompanyId(), "LPD-34594") &&
 			StringUtil.equals(
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&

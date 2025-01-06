@@ -21,7 +21,7 @@ import java.util.List;
 public class ObjectActionTriggerUtil {
 
 	public static List<ObjectActionTrigger> getDefaultObjectActionTriggers() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-34594")) {
 			return ListUtil.filter(
 				_defaultObjectActionTriggers,
 				objectActionTrigger -> !StringUtil.equals(

@@ -92,7 +92,7 @@ export default function ObjectDefinitionNodeHeader({
 				</div>
 
 				<div>
-					{Liferay.FeatureFlags['LPS-187142'] && (
+					{Liferay.FeatureFlags['LPD-34594'] && (
 						<ClayLabel
 							className={classNames('label-inverse-secondary', {
 								'label-inverse-info':

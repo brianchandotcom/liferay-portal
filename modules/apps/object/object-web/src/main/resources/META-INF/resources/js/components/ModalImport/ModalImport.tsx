@@ -103,7 +103,7 @@ export default function ModalImport({
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (Liferay.FeatureFlags['LPS-187142'] && importedObjectDefinitions) {
+		if (Liferay.FeatureFlags['LPD-34594'] && importedObjectDefinitions) {
 			handleImportMultiplesObjectDefinitions({
 				importURL,
 				importedObjectDefinitions,
@@ -188,7 +188,7 @@ export default function ModalImport({
 				/>
 			)}
 
-			{Liferay.FeatureFlags['LPS-187142'] &&
+			{Liferay.FeatureFlags['LPD-34594'] &&
 				failedModalVisible &&
 				importedObjectDefinitions &&
 				error?.type === 'importMultipleObjectDefinitions' && (

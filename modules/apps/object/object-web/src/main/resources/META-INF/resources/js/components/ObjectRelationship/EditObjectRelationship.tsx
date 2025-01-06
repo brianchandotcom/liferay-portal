@@ -59,7 +59,7 @@ export default function EditObjectRelationship({
 		catch (error: unknown) {
 			const {message} = error as Error;
 
-			if (!Liferay.FeatureFlags['LPS-187142']) {
+			if (!Liferay.FeatureFlags['LPD-34594']) {
 				openToast({message, type: 'danger'});
 			}
 			else {

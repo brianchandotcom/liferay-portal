@@ -445,7 +445,7 @@ export function ObjectRelationshipFormBase({
 
 			{onChangeInheritanceCheckbox &&
 				values.type === 'oneToMany' &&
-				Liferay.FeatureFlags['LPS-187142'] && (
+				Liferay.FeatureFlags['LPD-34594'] && (
 					<ObjectRelationshipInheritanceCheckbox
 						onChange={onChangeInheritanceCheckbox}
 						values={values}

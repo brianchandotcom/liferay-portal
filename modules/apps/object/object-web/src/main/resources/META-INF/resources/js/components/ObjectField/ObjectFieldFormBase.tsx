@@ -299,7 +299,7 @@ export default function ObjectFieldFormBase({
 			oneToManyObjectRelationship &&
 			oneToManyObjectRelationship.deletionType !== 'disassociate'
 		) {
-			return Liferay.FeatureFlags['LPS-187142']
+			return Liferay.FeatureFlags['LPD-34594']
 				? oneToManyObjectRelationship.edge
 				: false;
 		}

@@ -26,7 +26,7 @@ export function ObjectRelationshipDeletionTypeSelect({
 	return (
 		<SingleSelect
 			disabled={
-				readOnly || (Liferay.FeatureFlags['LPS-187142'] && values.edge)
+				readOnly || (Liferay.FeatureFlags['LPD-34594'] && values.edge)
 			}
 			id="lfr-objects__object-relationship-deletion-type"
 			items={objectRelationshipDeletionTypes}

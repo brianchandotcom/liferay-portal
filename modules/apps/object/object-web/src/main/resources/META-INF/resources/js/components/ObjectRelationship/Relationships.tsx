@@ -158,7 +158,7 @@ export default function Relationships({
 	const fields = useMemo(() => {
 		const updatedTableFields = [...tableFields];
 
-		if (Liferay.FeatureFlags['LPS-187142']) {
+		if (Liferay.FeatureFlags['LPD-34594']) {
 			const inheritanceField = {
 				contentRenderer: 'ObjectRelationshipInheritanceDataRenderer',
 				expand: false,
@@ -214,7 +214,7 @@ export default function Relationships({
 			itemData: ObjectRelationship;
 		}) {
 			if (action.data.id === 'deleteObjectRelationship') {
-				if (itemData.edge && Liferay.FeatureFlags['LPS-187142']) {
+				if (itemData.edge && Liferay.FeatureFlags['LPD-34594']) {
 					setShowDeletionNotAllowedModal(true);
 
 					return;
@@ -337,7 +337,7 @@ export default function Relationships({
 			)}
 
 			{showDeletionNotAllowedModal &&
-				Liferay.FeatureFlags['LPS-187142'] && (
+				Liferay.FeatureFlags['LPD-34594'] && (
 					<ModalDeletionNotAllowed
 						content={
 							<span

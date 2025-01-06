@@ -48,7 +48,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pedro Leite
  */
-@FeatureFlags("LPS-187142")
+@FeatureFlags("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectEntryDisplayContextTest {
 

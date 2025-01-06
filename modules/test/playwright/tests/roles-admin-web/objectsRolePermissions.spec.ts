@@ -21,7 +21,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPS-187142': {enabled: true},
+		'LPD-34594': {enabled: true},
 	}),
 	loginTest(),
 	rolesPagesTest

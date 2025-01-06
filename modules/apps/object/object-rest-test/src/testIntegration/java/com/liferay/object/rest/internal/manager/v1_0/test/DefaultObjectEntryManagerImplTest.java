@@ -194,7 +194,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags({"LPD-32050", "LPS-164801", "LPS-172017", "LPS-187142"})
+@FeatureFlags({"LPD-32050", "LPD-34594", "LPS-164801", "LPS-172017"})
 @RunWith(Arquillian.class)
 public class DefaultObjectEntryManagerImplTest
 	extends BaseObjectEntryManagerImplTestCase {

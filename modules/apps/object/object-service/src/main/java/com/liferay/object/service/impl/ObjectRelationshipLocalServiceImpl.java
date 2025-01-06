@@ -1003,13 +1003,13 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (edge && !objectRelationship.isEdge() &&
 			FeatureFlagManagerUtil.isEnabled(
-				objectRelationship.getCompanyId(), "LPS-187142")) {
+				objectRelationship.getCompanyId(), "LPD-34594")) {
 
 			_bindObjectDefinitions(objectRelationship);
 		}
 		else if (!edge && objectRelationship.isEdge() &&
 				 FeatureFlagManagerUtil.isEnabled(
-					 objectRelationship.getCompanyId(), "LPS-187142")) {
+					 objectRelationship.getCompanyId(), "LPD-34594")) {
 
 			_unbindObjectDefinitions(objectRelationship);
 		}
@@ -1272,7 +1272,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (edge &&
 			FeatureFlagManagerUtil.isEnabled(
-				objectRelationship.getCompanyId(), "LPS-187142")) {
+				objectRelationship.getCompanyId(), "LPD-34594")) {
 
 			_bindObjectDefinitions(objectRelationship);
 		}
@@ -1879,7 +1879,7 @@ public class ObjectRelationshipLocalServiceImpl
 		if (!edge ||
 			((objectRelationship != null) && objectRelationship.isEdge()) ||
 			!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition1.getCompanyId(), "LPS-187142")) {
+				objectDefinition1.getCompanyId(), "LPD-34594")) {
 
 			return;
 		}

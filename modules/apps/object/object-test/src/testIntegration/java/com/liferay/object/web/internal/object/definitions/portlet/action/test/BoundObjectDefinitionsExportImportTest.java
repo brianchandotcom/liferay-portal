@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Sá
  */
-@FeatureFlags("LPS-187142")
+@FeatureFlags("LPD-34594")
 @RunWith(Arquillian.class)
 public class BoundObjectDefinitionsExportImportTest
 	extends BaseExportImportTestCase {

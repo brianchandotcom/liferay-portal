@@ -218,7 +218,7 @@ export function ViewObjectDefinitionsModals({
 
 			{showModal.objectDefinitionOnRootModelDeletionNotAllowed &&
 				selectedObjectDefinition &&
-				Liferay.FeatureFlags['LPS-187142'] && (
+				Liferay.FeatureFlags['LPD-34594'] && (
 					<ModalDeletionNotAllowed
 						content={
 							<span
@@ -241,7 +241,7 @@ export function ViewObjectDefinitionsModals({
 
 			{showModal.objectFieldDeletionNotAllowed &&
 				selectedObjectDefinition &&
-				Liferay.FeatureFlags['LPS-187142'] && (
+				Liferay.FeatureFlags['LPD-34594'] && (
 					<ModalDeletionNotAllowed
 						content={
 							<span

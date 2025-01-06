@@ -220,7 +220,7 @@ export default function ViewObjectDefinitions({
 		}) => {
 			if (
 				action.data.id === 'bind' &&
-				Liferay.FeatureFlags['LPS-187142']
+				Liferay.FeatureFlags['LPD-34594']
 			) {
 				setSelectedObjectDefinition(itemData);
 
@@ -233,7 +233,7 @@ export default function ViewObjectDefinitions({
 			if (action.data.id === 'deleteObjectDefinition') {
 				if (
 					itemData.rootObjectDefinitionExternalReferenceCode &&
-					Liferay.FeatureFlags['LPS-187142']
+					Liferay.FeatureFlags['LPD-34594']
 				) {
 					setSelectedObjectDefinition(itemData);
 
@@ -266,7 +266,7 @@ export default function ViewObjectDefinitions({
 
 			if (
 				action.data.id === 'unbind' &&
-				Liferay.FeatureFlags['LPS-187142']
+				Liferay.FeatureFlags['LPD-34594']
 			) {
 				setSelectedObjectDefinition(itemData);
 
@@ -378,7 +378,7 @@ export default function ViewObjectDefinitions({
 	const fields = useMemo(() => {
 		const updatedTableFields = [...tableFields];
 
-		if (Liferay.FeatureFlags['LPS-187142']) {
+		if (Liferay.FeatureFlags['LPD-34594']) {
 			const inheritanceField = {
 				contentRenderer: 'objectDefinitionInheritanceDataRenderer',
 				expand: false,

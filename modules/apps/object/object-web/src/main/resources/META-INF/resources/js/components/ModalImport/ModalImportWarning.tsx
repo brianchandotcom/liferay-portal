@@ -65,7 +65,7 @@ export function ModalImportWarning({
 						}
 					)}
 
-					{Liferay.FeatureFlags['LPS-187142'] &&
+					{Liferay.FeatureFlags['LPD-34594'] &&
 						!!existingObjectDefinitions?.length && (
 							<>
 								<Table

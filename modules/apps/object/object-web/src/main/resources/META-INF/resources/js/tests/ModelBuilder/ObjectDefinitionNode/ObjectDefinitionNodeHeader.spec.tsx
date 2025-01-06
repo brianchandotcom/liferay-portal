@@ -33,11 +33,11 @@ jest.mock('react-flow-renderer', () => {
 
 describe('Object Definition Node Header', () => {
 	afterAll(() => {
-		window.Liferay.FeatureFlags['LPS-187142'] = false;
+		window.Liferay.FeatureFlags['LPD-34594'] = false;
 	});
 
 	beforeAll(() => {
-		window.Liferay.FeatureFlags['LPS-187142'] = true;
+		window.Liferay.FeatureFlags['LPD-34594'] = true;
 	});
 
 	it('has root object label when it is a parent', () => {

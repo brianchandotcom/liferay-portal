@@ -142,7 +142,7 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			"deletionType", objectRelationship.getDeletionType()
 		).put(
 			"edge",
-			FeatureFlagManagerUtil.isEnabled("LPS-187142") ?
+			FeatureFlagManagerUtil.isEnabled("LPD-34594") ?
 				objectRelationship.isEdge() : null
 		).put(
 			"id", Long.valueOf(objectRelationship.getObjectRelationshipId())

@@ -52,7 +52,7 @@ public class ExportBoundObjectDefinitionsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-34594")) {
 			throw new UnsupportedOperationException();
 		}
 

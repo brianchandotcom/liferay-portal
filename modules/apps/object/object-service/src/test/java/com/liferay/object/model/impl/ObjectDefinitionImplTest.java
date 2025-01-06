@@ -80,7 +80,7 @@ public class ObjectDefinitionImplTest {
 		}
 	}
 
-	@FeatureFlags("LPS-187142")
+	@FeatureFlags("LPD-34594")
 	@Test
 	public void testGetRESTContextPathRootDescendantNode() {
 

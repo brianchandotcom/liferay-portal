@@ -67,7 +67,7 @@ public class ObjectRelationshipDTOConverter
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled(
 								serviceBuilderObjectRelationship.getCompanyId(),
-								"LPS-187142")) {
+								"LPD-34594")) {
 
 							return null;
 						}

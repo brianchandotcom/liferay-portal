@@ -115,7 +115,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				objectEntry, user);
 
 			if (!FeatureFlagManagerUtil.isEnabled(
-					objectEntry.getCompanyId(), "LPS-187142")) {
+					objectEntry.getCompanyId(), "LPD-34594")) {
 
 				return;
 			}

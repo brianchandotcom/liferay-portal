@@ -59,17 +59,17 @@ public class MBMailUtil {
 		).put(
 			"[$MAILING_LIST_ADDRESS$]",
 			() -> {
-				if (PrefsPropsUtil.getBoolean(
+				if (!PrefsPropsUtil.getBoolean(
 						themeDisplay.getCompanyId(),
 						PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
 						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
 
-					return LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"the-email-address-of-the-mailing-list");
+					return null;
 				}
 
-				return null;
+				return LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-email-address-of-the-mailing-list");
 			}
 		).put(
 			"[$MESSAGE_BODY$]",
@@ -169,17 +169,17 @@ public class MBMailUtil {
 		).put(
 			"[$MAILING_LIST_ADDRESS$]",
 			() -> {
-				if (PrefsPropsUtil.getBoolean(
+				if (!PrefsPropsUtil.getBoolean(
 						themeDisplay.getCompanyId(),
 						PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED,
 						PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED)) {
 
-					return LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"the-email-address-of-the-mailing-list");
+					return null;
 				}
 
-				return null;
+				return LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-email-address-of-the-mailing-list");
 			}
 		).put(
 			"[$MESSAGE_USER_ADDRESS$]",

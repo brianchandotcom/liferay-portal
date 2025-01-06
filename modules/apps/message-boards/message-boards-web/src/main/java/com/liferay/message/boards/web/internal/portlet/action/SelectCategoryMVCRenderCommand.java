@@ -58,17 +58,15 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 		String mbCategoryExternalReferenceCode = ParamUtil.getString(
 			renderRequest, "mbCategoryExternalReferenceCode");
 
-		if (!Validator.isBlank(mbCategoryExternalReferenceCode)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			return _mbCategoryLocalService.
-				fetchMBCategoryByExternalReferenceCode(
-					mbCategoryExternalReferenceCode,
-					themeDisplay.getScopeGroupId());
+		if (Validator.isBlank(mbCategoryExternalReferenceCode)) {
+			return null;
 		}
 
-		return null;
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _mbCategoryLocalService.fetchMBCategoryByExternalReferenceCode(
+			mbCategoryExternalReferenceCode, themeDisplay.getScopeGroupId());
 	}
 
 	@Reference

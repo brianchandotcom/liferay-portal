@@ -93,16 +93,51 @@ public class OpenIdConnectTokenRequestUtilTest {
 			)
 		);
 
+		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
+
 		Mockito.when(
-			_oidcProviderMetadata.getTokenEndpointURI()
+			httpRequest.send()
 		).thenReturn(
-			URI.create("http://localhost:63636")
+			httpResponse
 		);
 
 		Mockito.when(
-			_oidcProviderMetadata.getJWKSetURI()
+			_authenticationSuccessResponse.getAuthorizationCode()
 		).thenReturn(
-			URI.create("http://localhost:63636")
+			Mockito.mock(AuthorizationCode.class)
+		);
+
+		Mockito.when(
+			_oidcClientInformation.getID()
+		).thenReturn(
+			new ClientID("clientID")
+		);
+
+		OIDCClientMetadata oidcClientMetadata = Mockito.mock(
+			OIDCClientMetadata.class);
+
+		Mockito.when(
+			oidcClientMetadata.getIDTokenJWSAlg()
+		).thenReturn(
+			new JWSAlgorithm("algorithm")
+		);
+
+		Mockito.when(
+			_oidcClientInformation.getOIDCMetadata()
+		).thenReturn(
+			oidcClientMetadata
+		);
+
+		Mockito.when(
+			_oidcClientInformation.getOIDCMetadata()
+		).thenReturn(
+			oidcClientMetadata
+		);
+
+		Mockito.when(
+			_oidcClientInformation.getSecret()
+		).thenReturn(
+			new Secret("secret")
 		);
 
 		Mockito.when(
@@ -112,47 +147,15 @@ public class OpenIdConnectTokenRequestUtilTest {
 		);
 
 		Mockito.when(
-			_oidcClientInformation.getID()
+			_oidcProviderMetadata.getJWKSetURI()
 		).thenReturn(
-			new ClientID("clientID")
+			URI.create("http://localhost:63636")
 		);
 
 		Mockito.when(
-			_oidcClientInformation.getSecret()
+			_oidcProviderMetadata.getTokenEndpointURI()
 		).thenReturn(
-			new Secret("secret")
-		);
-
-		OIDCClientMetadata oidcClientMetadata = Mockito.mock(
-			OIDCClientMetadata.class);
-
-		Mockito.when(
-			_oidcClientInformation.getOIDCMetadata()
-		).thenReturn(
-			oidcClientMetadata
-		);
-
-		Mockito.when(
-			oidcClientMetadata.getIDTokenJWSAlg()
-		).thenReturn(
-			new JWSAlgorithm("algorithm")
-		);
-
-		_openIdConnectRequestParametersUtilMockedStatic.when(
-			() -> OpenIdConnectRequestParametersUtil.getResourceURIs(
-				Mockito.any())
-		).thenReturn(
-			new URI[] {URI.create("http://localhost:63636")}
-		);
-
-		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
-
-		Mockito.when(
-			Mockito.mock(
-				TokenRequest.class
-			).toHTTPRequest()
-		).thenReturn(
-			httpRequest
+			URI.create("http://localhost:63636")
 		);
 
 		OIDCTokenResponse oidcTokenResponse = Mockito.mock(
@@ -165,27 +168,30 @@ public class OpenIdConnectTokenRequestUtilTest {
 		);
 
 		Mockito.when(
-			oidcTokenResponse.getOIDCTokens()
-		).thenReturn(
-			_oidcTokens
-		);
-
-		Mockito.when(
-			httpRequest.send()
-		).thenReturn(
-			httpResponse
-		);
-
-		Mockito.when(
 			_oidcTokens.getIDToken()
 		).thenReturn(
 			null
 		);
 
 		Mockito.when(
-			_authenticationSuccessResponse.getAuthorizationCode()
+			oidcTokenResponse.getOIDCTokens()
 		).thenReturn(
-			Mockito.mock(AuthorizationCode.class)
+			_oidcTokens
+		);
+
+		_openIdConnectRequestParametersUtilMockedStatic.when(
+			() -> OpenIdConnectRequestParametersUtil.getResourceURIs(
+				Mockito.any())
+		).thenReturn(
+			new URI[] {URI.create("http://localhost:63636")}
+		);
+
+		Mockito.when(
+			Mockito.mock(
+				TokenRequest.class
+			).toHTTPRequest()
+		).thenReturn(
+			httpRequest
 		);
 	}
 

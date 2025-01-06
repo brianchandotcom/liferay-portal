@@ -523,6 +523,21 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		String portletName = RandomTestUtil.randomString();
 
 		try {
+			_deployRemotePortlet(CompanyConstants.SYSTEM, portletName);
+
+			Portlet portlet = _portletLocalService.getPortletById(portletName);
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> Assert.assertEquals(
+					portlet, _portletLocalService.getPortletById(portletName)));
+		}
+		finally {
+			Portlet portlet = _portletLocalService.getPortletById(portletName);
+
+			_portletLocalService.destroyRemotePortlet(portlet);
+		}
+
+		try {
 			_deployRemotePortlet(TestPropsValues.getCompanyId(), portletName);
 
 			long defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
@@ -568,26 +583,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						_portletLocalService.destroyRemotePortlet(portlet);
 					}
 				});
-		}
-	}
-
-	@Test
-	public void testDeployRemoteSystemPortlet() throws Exception {
-		String portletName = RandomTestUtil.randomString();
-
-		try {
-			_deployRemotePortlet(CompanyConstants.SYSTEM, portletName);
-
-			Portlet portlet = _portletLocalService.getPortletById(portletName);
-
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> Assert.assertEquals(
-					portlet, _portletLocalService.getPortletById(portletName)));
-		}
-		finally {
-			Portlet portlet = _portletLocalService.getPortletById(portletName);
-
-			_portletLocalService.destroyRemotePortlet(portlet);
 		}
 	}
 

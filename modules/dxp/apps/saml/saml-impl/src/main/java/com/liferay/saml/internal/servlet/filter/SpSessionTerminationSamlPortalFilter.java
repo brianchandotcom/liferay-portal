@@ -7,6 +7,7 @@ package com.liferay.saml.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -51,7 +52,7 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (httpServletRequest.getAttribute("COMPANY_ID") == null) {
+		if (httpServletRequest.getAttribute(WebKeys.COMPANY_ID) == null) {
 			PortalInstances.getCompanyId(httpServletRequest);
 		}
 

@@ -89,19 +89,19 @@ public class GetObjectFieldInfoMVCResourceCommand
 			).put(
 				"objectRelationshipId",
 				() -> {
-					if (StringUtil.equals(
+					if (!StringUtil.equals(
 							objectField.getBusinessType(),
 							ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-						ObjectRelationship objectRelationship =
-							_objectRelationshipLocalService.
-								fetchObjectRelationshipByObjectFieldId2(
-									objectField.getObjectFieldId());
-
-						return objectRelationship.getObjectRelationshipId();
+						return null;
 					}
 
-					return null;
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectFieldId2(
+								objectField.getObjectFieldId());
+
+					return objectRelationship.getObjectRelationshipId();
 				}
 			).put(
 				"readOnlySidebarElements",

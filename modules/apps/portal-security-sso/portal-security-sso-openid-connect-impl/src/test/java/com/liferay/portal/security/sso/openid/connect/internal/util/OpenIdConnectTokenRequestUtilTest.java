@@ -57,8 +57,22 @@ public class OpenIdConnectTokenRequestUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
+		_authenticationSuccessResponse = Mockito.mock(
+			AuthenticationSuccessResponse.class);
 		_clientAndServer = ClientAndServer.startClientAndServer(63636);
+		_codeVerifier = Mockito.mock(CodeVerifier.class);
+		_nonce = Mockito.mock(Nonce.class);
+		_oidcClientInformation = Mockito.mock(OIDCClientInformation.class);
+		_oidcProviderMetadata = Mockito.mock(OIDCProviderMetadata.class);
+		_oidcTokenResponseParserMockedStatic = Mockito.mockStatic(
+			OIDCTokenResponseParser.class);
+		_oidcTokens = Mockito.mock(OIDCTokens.class);
+		_openIdConnectRequestParametersUtilMockedStatic = Mockito.mockStatic(
+			OpenIdConnectRequestParametersUtil.class);
+		_refreshToken = Mockito.mock(RefreshToken.class);
+		_tokenRequestParameters = "{}";
+
+		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
 
 		new MockServerClient(
 			"localhost", 63636
@@ -79,21 +93,11 @@ public class OpenIdConnectTokenRequestUtilTest {
 			)
 		);
 
-		_oidcClientInformation = Mockito.mock(OIDCClientInformation.class);
-		_oidcProviderMetadata = Mockito.mock(OIDCProviderMetadata.class);
-		_refreshToken = Mockito.mock(RefreshToken.class);
-		_openIdConnectRequestParametersUtilMockedStatic = Mockito.mockStatic(
-			OpenIdConnectRequestParametersUtil.class);
 		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
 
-		_oidcTokenResponseParserMockedStatic = Mockito.mockStatic(
-			OIDCTokenResponseParser.class);
 		OIDCTokenResponse oidcTokenResponse = Mockito.mock(
 			OIDCTokenResponse.class);
-		_oidcTokens = Mockito.mock(OIDCTokens.class);
 		TokenRequest mockTokenRequest = Mockito.mock(TokenRequest.class);
-
-		_tokenRequestParameters = "{}";
 
 		Mockito.when(
 			_oidcProviderMetadata.getTokenEndpointURI()
@@ -177,12 +181,8 @@ public class OpenIdConnectTokenRequestUtilTest {
 			null
 		);
 
-		_authenticationSuccessResponse = Mockito.mock(
-			AuthenticationSuccessResponse.class);
 		AuthorizationCode mockAuthorizationCode = Mockito.mock(
 			AuthorizationCode.class);
-		_codeVerifier = Mockito.mock(CodeVerifier.class);
-		_nonce = Mockito.mock(Nonce.class);
 
 		Mockito.when(
 			_authenticationSuccessResponse.getAuthorizationCode()

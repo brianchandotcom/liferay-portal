@@ -135,6 +135,14 @@ html#{$cadmin-selector} .cadmin {
 	opacity: 0.5;
 }
 
+.publications-table {
+	a {
+		p.list-group-title {
+			cursor: pointer;
+		}
+	}
+}
+
 .select-publications {
 	.list-group,
 	.management-bar,

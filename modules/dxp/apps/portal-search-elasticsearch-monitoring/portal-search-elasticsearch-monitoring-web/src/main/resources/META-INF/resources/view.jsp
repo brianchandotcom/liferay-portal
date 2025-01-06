@@ -12,7 +12,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <liferay-theme:defineObjects />
 
-<iframe id="<portlet:namespace />iframe" scrolling="yes" src="<%= application.getContextPath() %>/monitoring-proxy/app/monitoring" style="bottom: 0px; height: 100%; left: 0px; min-height: 600px; overflow: hidden; overflow-x: hidden; overflow-y: hidden; position: relative; right: 0px; top: 0px; width: 100%;"></iframe>
+<iframe class="elasticsearch-monitoring-iframe" id="<portlet:namespace />iframe" scrolling="yes" src="<%= application.getContextPath() %>/monitoring-proxy/app/monitoring"></iframe>
 
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');

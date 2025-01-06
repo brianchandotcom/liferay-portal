@@ -8,3 +8,19 @@
 		padding: 10px;
 	}
 }
+
+.portlet-elasticsearch-monitoring {
+	.elasticsearch-monitoring-iframe {
+		bottom: 0px;
+		height: 100%;
+		left: 0px;
+		min-height: 600px;
+		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: hidden;
+		position: relative;
+		right: 0px;
+		top: 0px;
+		width: 100%;
+	}
+}

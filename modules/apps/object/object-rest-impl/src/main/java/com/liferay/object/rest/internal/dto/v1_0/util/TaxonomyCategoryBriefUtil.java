@@ -61,31 +61,30 @@ public class TaxonomyCategoryBriefUtil {
 
 		String nestedFields = queryParameters.getFirst("nestedFields");
 
-		if (Validator.isNotNull(nestedFields) &&
-			nestedFields.contains("embeddedTaxonomyCategory")) {
+		if (Validator.isNull(nestedFields) ||
+			!nestedFields.contains("embeddedTaxonomyCategory")) {
 
-			DTOConverterRegistry dtoConverterRegistry =
-				dtoConverterContext.getDTOConverterRegistry();
-
-			DTOConverter<?, ?> dtoConverter =
-				dtoConverterRegistry.getDTOConverter(
-					"Liferay.Headless.Admin.Taxonomy",
-					AssetCategory.class.getName(), "v1.0");
-
-			if (dtoConverter == null) {
-				return null;
-			}
-
-			return dtoConverter.toDTO(
-				new DefaultDTOConverterContext(
-					dtoConverterContext.isAcceptAllLanguages(),
-					Collections.emptyMap(), dtoConverterRegistry,
-					dtoConverterContext.getHttpServletRequest(), categoryId,
-					dtoConverterContext.getLocale(), uriInfo,
-					dtoConverterContext.getUser()));
+			return null;
 		}
 
-		return null;
+		DTOConverterRegistry dtoConverterRegistry =
+			dtoConverterContext.getDTOConverterRegistry();
+
+		DTOConverter<?, ?> dtoConverter = dtoConverterRegistry.getDTOConverter(
+			"Liferay.Headless.Admin.Taxonomy", AssetCategory.class.getName(),
+			"v1.0");
+
+		if (dtoConverter == null) {
+			return null;
+		}
+
+		return dtoConverter.toDTO(
+			new DefaultDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(),
+				Collections.emptyMap(), dtoConverterRegistry,
+				dtoConverterContext.getHttpServletRequest(), categoryId,
+				dtoConverterContext.getLocale(), uriInfo,
+				dtoConverterContext.getUser()));
 	}
 
 }

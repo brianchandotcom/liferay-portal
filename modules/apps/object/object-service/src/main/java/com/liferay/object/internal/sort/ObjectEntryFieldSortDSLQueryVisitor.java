@@ -153,15 +153,15 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 	}
 
 	private String _getSuffix(Sort sort) {
-		if (_isParentComplexField(sort)) {
-			return StringUtil.replace(
-				StringUtil.removeLast(
-					sort.getFieldPath(),
-					CharPool.FORWARD_SLASH + sort.getFieldName()),
-				CharPool.FORWARD_SLASH, CharPool.UNDERLINE);
+		if (!_isParentComplexField(sort)) {
+			return null;
 		}
 
-		return null;
+		return StringUtil.replace(
+			StringUtil.removeLast(
+				sort.getFieldPath(),
+				CharPool.FORWARD_SLASH + sort.getFieldName()),
+			CharPool.FORWARD_SLASH, CharPool.UNDERLINE);
 	}
 
 	private boolean _isParentComplexField(Sort sort) {

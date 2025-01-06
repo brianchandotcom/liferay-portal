@@ -146,15 +146,15 @@ public class ObjectStateFlowLocalServiceImpl
 			return addDefaultObjectStateFlow(newObjectField);
 		}
 
-		if (oldObjectField.getListTypeDefinitionId() !=
+		if (oldObjectField.getListTypeDefinitionId() ==
 				newObjectField.getListTypeDefinitionId()) {
 
-			deleteObjectFieldObjectStateFlow(oldObjectField.getObjectFieldId());
-
-			return addDefaultObjectStateFlow(newObjectField);
+			return null;
 		}
 
-		return null;
+		deleteObjectFieldObjectStateFlow(oldObjectField.getObjectFieldId());
+
+		return addDefaultObjectStateFlow(newObjectField);
 	}
 
 	@Override

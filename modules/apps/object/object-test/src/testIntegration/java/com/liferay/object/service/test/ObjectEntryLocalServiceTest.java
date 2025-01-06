@@ -1539,7 +1539,7 @@ public class ObjectEntryLocalServiceTest {
 
 	@FeatureFlags("LPD-43542")
 	@Test
-	public void testAddObjectEntryWithFormulaObjectFieldAndRelationship()
+	public void testAddObjectEntryWithFormulaObjectFieldAndObjectRelationship()
 		throws Exception {
 
 		ObjectDefinition objectDefinition1 =

@@ -50,13 +50,14 @@ export default function Connect({
 		) as Window;
 
 		const handleMessage = async (event: MessageEvent) => {
-			const {code, settings} = event.data;
+			const {code, serviceURL, settings} = event.data;
 
 			const body = {
 				[`${portletNamespace}clientId`]: oAuth2.clientId,
 				[`${portletNamespace}code`]: code,
 				[`${portletNamespace}codeVerifier`]: code_verifier,
 				[`${portletNamespace}redirect`]: oAuth2.redirect,
+				[`${portletNamespace}serviceURL`]: serviceURL,
 				[`${portletNamespace}settings`]: settings || {},
 				[`${portletNamespace}url`]: oAuth2.url,
 			};

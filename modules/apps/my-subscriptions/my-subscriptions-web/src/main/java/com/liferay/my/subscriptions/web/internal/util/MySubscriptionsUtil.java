@@ -134,28 +134,28 @@ public class MySubscriptionsUtil {
 					MBMessage.class.getName(), PortletProvider.Action.VIEW));
 		}
 
-		if (className.equals(WikiNode.class.getName())) {
-			long plid = PortalUtil.getPlidFromPortletId(
-				themeDisplay.getScopeGroupId(), WikiPortletKeys.WIKI);
-
-			if (plid == 0) {
-				return null;
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(
-				PortalUtil.getLayoutFullURL(
-					LayoutLocalServiceUtil.getLayout(plid), themeDisplay));
-			sb.append(Portal.FRIENDLY_URL_SEPARATOR);
-			sb.append("wiki/");
-			sb.append(classPK);
-			sb.append("/all_pages");
-
-			return sb.toString();
+		if (!className.equals(WikiNode.class.getName())) {
+			return null;
 		}
 
-		return null;
+		long plid = PortalUtil.getPlidFromPortletId(
+			themeDisplay.getScopeGroupId(), WikiPortletKeys.WIKI);
+
+		if (plid == 0) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(
+			PortalUtil.getLayoutFullURL(
+				LayoutLocalServiceUtil.getLayout(plid), themeDisplay));
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("wiki/");
+		sb.append(classPK);
+		sb.append("/all_pages");
+
+		return sb.toString();
 	}
 
 	public static String getTitleText(

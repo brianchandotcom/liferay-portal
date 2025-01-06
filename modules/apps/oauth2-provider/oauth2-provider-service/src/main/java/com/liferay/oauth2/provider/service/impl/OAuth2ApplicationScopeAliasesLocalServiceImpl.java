@@ -171,14 +171,14 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		List<String> assignedScopeAliases = getScopeAliasesList(
 			oAuth2ApplicationScopeAliasesId);
 
-		if ((scopeAliases.size() == assignedScopeAliases.size()) &&
-			assignedScopeAliases.containsAll(scopeAliases)) {
+		if ((scopeAliases.size() != assignedScopeAliases.size()) ||
+			!assignedScopeAliases.containsAll(scopeAliases)) {
 
-			return fetchOAuth2ApplicationScopeAliases(
-				oAuth2ApplicationScopeAliasesId);
+			return null;
 		}
 
-		return null;
+		return fetchOAuth2ApplicationScopeAliases(
+			oAuth2ApplicationScopeAliasesId);
 	}
 
 	@Override

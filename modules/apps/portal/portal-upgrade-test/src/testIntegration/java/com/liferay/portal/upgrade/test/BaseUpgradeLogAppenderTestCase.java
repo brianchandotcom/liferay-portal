@@ -943,8 +943,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testUpgradeReportDisabled() throws Exception {
-		boolean originalUpgradeEnable = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
+		boolean originalUpgradeReportEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_ENABLED", false);
 
 		try {
 			_appender.start();
@@ -962,7 +963,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				PropsValues.class, "UPGRADE_REPORT_ENABLED",
-				originalUpgradeEnable);
+				originalUpgradeReportEnabled);
 		}
 	}
 

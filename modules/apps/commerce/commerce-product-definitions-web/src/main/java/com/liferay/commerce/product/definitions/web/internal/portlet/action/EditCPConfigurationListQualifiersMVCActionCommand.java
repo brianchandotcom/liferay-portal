@@ -12,7 +12,7 @@ import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.service.CPConfigurationListRelService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCPConfigurationListQualifiersMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

@@ -12,12 +12,13 @@ public class Payload {
 
 	public Payload(
 		String clientId, String code, String codeVerifier, String redirect,
-		String settings, String url) {
+		String serviceURL, String settings, String url) {
 
 		this.clientId = clientId;
 		this.code = code;
 		this.codeVerifier = codeVerifier;
 		this.redirect = redirect;
+		this.serviceURL = serviceURL;
 		this.settings = settings;
 		this.url = url;
 	}
@@ -26,6 +27,7 @@ public class Payload {
 	public String code;
 	public String codeVerifier;
 	public String redirect;
+	public String serviceURL;
 	public String settings;
 	public String url;
 

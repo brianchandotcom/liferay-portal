@@ -64,6 +64,7 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Authorization authorization = new Authorization(
 			marketplaceConfiguration.accessToken(),
+			marketplaceConfiguration.serviceURL(),
 			marketplaceConfiguration.settings(),
 			marketplaceConfiguration.url());
 
@@ -72,6 +73,7 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 				marketplaceConfiguration.clientId(),
 				marketplaceConfiguration.code(), null,
 				marketplaceConfiguration.redirect(),
+				marketplaceConfiguration.serviceURL(),
 				marketplaceConfiguration.settings(),
 				marketplaceConfiguration.url());
 

@@ -78,14 +78,16 @@ public class MarketplaceHttp {
 			).put(
 				"refreshToken", jsonObject.getString("refresh_token")
 			).put(
+				"serviceURL", payload.serviceURL
+			).put(
 				"settings", payload.settings
 			).put(
 				"url", payload.url
 			).build());
 
 		return new Authorization(
-			jsonObject.getString("access_token"), payload.settings,
-			payload.url);
+			jsonObject.getString("access_token"), payload.serviceURL,
+			payload.settings, payload.url);
 	}
 
 	private String _toFormEncodedString(Map<String, String> map)

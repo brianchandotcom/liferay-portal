@@ -58,6 +58,7 @@ public class ConnectMVCResourceCommand extends BaseMVCResourceCommand {
 				ParamUtil.getString(resourceRequest, "code"),
 				ParamUtil.getString(resourceRequest, "codeVerifier"),
 				ParamUtil.getString(resourceRequest, "redirect"),
+				ParamUtil.getString(resourceRequest, "serviceURL"),
 				ParamUtil.getString(resourceRequest, "settings"),
 				ParamUtil.getString(resourceRequest, "url")),
 			null);

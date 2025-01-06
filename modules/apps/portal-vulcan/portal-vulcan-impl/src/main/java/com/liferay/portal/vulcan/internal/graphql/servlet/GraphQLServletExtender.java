@@ -2572,7 +2572,6 @@ public class GraphQLServletExtender {
 
 			GraphQLFieldDefinition graphQLFieldDefinition =
 				dataFetchingEnvironment.getFieldDefinition();
-
 			String fieldName = _getFieldName(
 				dataFetchingEnvironment, graphQLSchema);
 

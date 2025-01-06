@@ -93,8 +93,6 @@ public class OpenIdConnectTokenRequestUtilTest {
 			)
 		);
 
-		OIDCTokenResponse oidcTokenResponse = Mockito.mock(
-			OIDCTokenResponse.class);
 		TokenRequest mockTokenRequest = Mockito.mock(TokenRequest.class);
 
 		Mockito.when(
@@ -156,6 +154,9 @@ public class OpenIdConnectTokenRequestUtilTest {
 		).thenReturn(
 			httpRequest
 		);
+
+		OIDCTokenResponse oidcTokenResponse = Mockito.mock(
+			OIDCTokenResponse.class);
 
 		_oidcTokenResponseParserMockedStatic.when(
 			() -> OIDCTokenResponseParser.parse(Mockito.any(HTTPResponse.class))

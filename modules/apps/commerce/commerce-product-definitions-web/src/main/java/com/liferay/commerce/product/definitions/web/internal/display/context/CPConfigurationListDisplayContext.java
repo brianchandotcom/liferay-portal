@@ -323,6 +323,24 @@ public class CPConfigurationListDisplayContext {
 					null, null, "save",
 					liferayPortletResponse.getNamespace() + "saveButton"));
 		}
+		else if ((cpConfigurationList != null) &&
+				 Objects.equals(
+					 httpServletRequest.getParameter(
+						 "screenNavigationCategoryKey"),
+					 "qualifiers")) {
+
+			HeaderActionModel saveHeaderActionModel = new HeaderActionModel(
+				"btn-primary", liferayPortletResponse.getNamespace() + "fm",
+				PortletURLBuilder.createActionURL(
+					liferayPortletResponse
+				).setActionName(
+					"/cp_configuration_lists" +
+						"/edit_cp_configuration_list_qualifiers"
+				).buildString(),
+				null, "save");
+
+			headerActionModels.add(saveHeaderActionModel);
+		}
 
 		return headerActionModels;
 	}

@@ -190,10 +190,9 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			if (element == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						StringBundler.concat(
-							"Theme ", theme.getThemeId(),
-							" lacks a tag with ID 'content', replacing all ",
-							"body content."));
+						"Replacing all body content because theme " +
+							theme.getThemeId() +
+								" lacks a tag with ID \"content\"");
 				}
 
 				element = document.body();

@@ -115,8 +115,8 @@ public class StatusStrutsActionTest {
 		Mockito.verify(
 			_log
 		).warn(
-			"Theme " + _layoutSet.getThemeId() +
-				" lacks a tag with ID 'content', replacing all body content."
+			"Replacing all body content because theme " +
+				_layoutSet.getThemeId() + " lacks a tag with ID \"content\""
 		);
 
 		Mockito.reset(_log);
@@ -194,9 +194,7 @@ public class StatusStrutsActionTest {
 		ReflectionTestUtil.setFieldValue(
 			_statusStrutsAction, "_layoutSetLocalService",
 			_layoutSetLocalService);
-
 		ReflectionTestUtil.setFieldValue(_statusStrutsAction, "_log", _log);
-
 		ReflectionTestUtil.setFieldValue(
 			_statusStrutsAction, "_servletContext", _servletContext);
 	}

@@ -197,9 +197,9 @@ public class OpenIdConnectTokenRequestUtilTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_openIdConnectRequestParametersUtilMockedStatic.close();
-		_oidcTokenResponseParserMockedStatic.close();
 		_clientAndServer.stop();
+		_oidcTokenResponseParserMockedStatic.close();
+		_openIdConnectRequestParametersUtilMockedStatic.close();
 	}
 
 	@Test(expected = NullPointerException.class)

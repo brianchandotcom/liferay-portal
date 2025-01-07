@@ -6983,8 +6983,6 @@ log.sanitizer.enabled=false</echo>
 
 	<macrodef name="set-up-search-engine">
 		<sequential>
-			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
 			<if>
 				<not>
 					<isset property="app.server.name" />
@@ -6997,32 +6995,65 @@ log.sanitizer.enabled=false</echo>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 			<get-testcase-property property.name="solr.enabled" />
 
-			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+			<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
+				<isset property="test.batch.name" />
+			</condition>
 
 			<if>
 				<or>
-					<equals arg1="${solr.enabled}" arg2="true" />
-					<equals arg1="${suite.search.engine}" arg2="solr" />
+					<contains string="${test.batch.name}" substring="solr" />
+					<contains string="${test.batch.name}" substring="opensearch2" />
+					<contains string="${test.batch.name}" substring="remote-elasticsearch" />
 				</or>
 				<then>
-					<ant antfile="build-test-solr.xml" target="start-solr" />
+					<if>
+						<equals arg1="${test.batch.name}" arg2="solr" />
+						<then>
+							<ant antfile="build-test-solr.xml" target="start-solr" />
+						</then>
+						<elseif>
+							<contains string="${test.batch.name}" substring="opensearch2" />
+							<then>
+								<ant antfile="build-test-opensearch2.xml" target="start-opensearch" />
+							</then>
+						</elseif>
+						<elseif>
+							<contains string="${test.batch.name}" substring="remote-elasticsearch" />
+							<then>
+								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+							</then>
+						</elseif>
+					</if>
 				</then>
-				<elseif>
-					<contains string="${suite.search.engine}" substring="opensearch2" />
-					<then>
-						<ant antfile="build-test-opensearch2.xml" target="start-opensearch" />
-					</then>
-				</elseif>
-				<elseif>
-					<or>
-						<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
-						<equals arg1="${app.server.type}" arg2="websphere" />
-						<istrue value="${remote.elasticsearch.enabled}" />
-					</or>
-					<then>
-						<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
-					</then>
-				</elseif>
+				<else>
+					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+					<if>
+						<or>
+							<equals arg1="${solr.enabled}" arg2="true" />
+							<equals arg1="${suite.search.engine}" arg2="solr" />
+						</or>
+						<then>
+							<ant antfile="build-test-solr.xml" target="start-solr" />
+						</then>
+						<elseif>
+							<contains string="${suite.search.engine}" substring="opensearch2" />
+							<then>
+								<ant antfile="build-test-opensearch2.xml" target="start-opensearch" />
+							</then>
+						</elseif>
+						<elseif>
+							<or>
+								<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
+								<equals arg1="${app.server.type}" arg2="websphere" />
+								<istrue value="${remote.elasticsearch.enabled}" />
+							</or>
+							<then>
+								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+							</then>
+						</elseif>
+					</if>
+				</else>
 			</if>
 
 			<get-testcase-property property.name="delete.sidecar.bundle" />

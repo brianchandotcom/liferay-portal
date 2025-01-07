@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
 
@@ -53,16 +52,19 @@ public class DDMFormPortletPreferencesUpgradeProcess
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		String formInstanceId = portletPreferences.getValue(
-			"formInstanceId", StringPool.BLANK);
+		long formInstanceId = GetterUtil.getLong(
+			portletPreferences.getValue("formInstanceId", StringPool.BLANK));
 
-		if (Validator.isNull(formInstanceId)) {
+		if (formInstanceId == 0) {
 			return xml;
 		}
 
 		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceLocalService.getFormInstance(
-				GetterUtil.getLong(formInstanceId));
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(formInstanceId);
+
+		if (ddmFormInstance == null) {
+			return xml;
+		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			ddmFormInstance.getStructureId());

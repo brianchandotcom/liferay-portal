@@ -8,6 +8,7 @@ package com.liferay.change.tracking.web.internal.notifications;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.web.internal.util.CTScoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -59,7 +60,13 @@ public class PublicationChangeSizeClassificationUserNotificationHandler
 			new Object[] {
 				ctCollection.getName(),
 				_language.get(
-					locale, jsonObject.getString("sizeClassification"))
+					locale,
+					CTScoreUtil.getSizeClassification(
+						jsonObject.getInt("originalScore"))),
+				_language.get(
+					locale,
+					CTScoreUtil.getSizeClassification(
+						jsonObject.getInt("score")))
 			},
 			false);
 	}

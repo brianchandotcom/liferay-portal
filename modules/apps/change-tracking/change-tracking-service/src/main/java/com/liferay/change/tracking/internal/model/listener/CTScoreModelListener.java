@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,15 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CTScoreModelListener extends BaseModelListener<CTScore> {
 
 	@Override
-	public void onAfterUpdate(CTScore oldCTScore, CTScore ctScore)
+	public void onAfterUpdate(CTScore originalCTScore, CTScore ctScore)
 		throws ModelListenerException {
 
-		String sizeClassification = _getSizeClassification(ctScore.getScore());
-
-		if (!Objects.equals(
-				_getSizeClassification(oldCTScore.getScore()),
-				sizeClassification)) {
-
+		if (originalCTScore.getScore() != ctScore.getScore()) {
 			long ctCollectionId = ctScore.getCtCollectionId();
 
 			try {
@@ -63,7 +57,9 @@ public class CTScoreModelListener extends BaseModelListener<CTScore> {
 						UserNotificationDefinition.
 							NOTIFICATION_TYPE_UPDATE_ENTRY
 					).put(
-						"sizeClassification", sizeClassification
+						"originalScore", originalCTScore.getScore()
+					).put(
+						"score", ctScore.getScore()
 					),
 					ArrayUtil.toLongArray(userIds));
 			}
@@ -72,17 +68,6 @@ public class CTScoreModelListener extends BaseModelListener<CTScore> {
 					"Unable to send user notification events", portalException);
 			}
 		}
-	}
-
-	private String _getSizeClassification(int score) {
-		if (score > 20000) {
-			return "large";
-		}
-		else if (score > 10000) {
-			return "medium";
-		}
-
-		return "small";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

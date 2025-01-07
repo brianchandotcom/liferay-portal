@@ -4,16 +4,15 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-import {PublicationScoreLabel} from '../components/PublicationScoreLabel';
-
 export default function ChangeTrackingOverview({
 	itemsOverview,
-	publicationScore,
+	publicationSizeClassification,
 }) {
 	return (
 		<ClayPanel
@@ -27,9 +26,13 @@ export default function ChangeTrackingOverview({
 						</ClayLayout.ContentCol>
 
 						<ClayLayout.ContentCol>
-							<PublicationScoreLabel
-								publicationScore={publicationScore}
-							/>
+							{publicationSizeClassification ? (
+								<ClayLabel displayType="info">
+									{Liferay.Language.get('publication-size') +
+										': ' +
+										publicationSizeClassification}
+								</ClayLabel>
+							) : null}
 						</ClayLayout.ContentCol>
 					</ClayLayout.ContentRow>
 				</ClayPanel.Title>

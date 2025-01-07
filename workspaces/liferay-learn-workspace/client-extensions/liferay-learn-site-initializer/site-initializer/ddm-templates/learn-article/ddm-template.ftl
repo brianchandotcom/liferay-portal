@@ -1,45 +1,26 @@
 <script>
-	const toggleClick = (link) => {
-		link.addEventListener("click", (event) => {
-			event.preventDefault();
+	const toggleClick = (selectors) => {
+		var elements = document.querySelectorAll(selectors);
 
-			const targetId = link.getAttribute("href").substring(1);
+		elements.forEach((element) => {
+			element.addEventListener("click", (event) => {
+				event.preventDefault();
 
-			const targetElement = document.getElementById(targetId);
+				const anchorElement = document.getElementById(element.getAttribute("id").replace("toc-", ""));
 
-			if (targetElement) {
-				const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY - 190;
-
-				window.scrollTo({
-					behavior: "smooth",
-					top: elementPosition,
-				});
-			}
+				if (anchorElement) {
+					window.scrollTo({
+						behavior: "smooth",
+						top: anchorElement.getBoundingClientRect().top + window.scrollY - 190,
+					});
+				}
+			});
 		});
 	}
 
-	document.addEventListener("DOMContentLoaded", () => {
-		const mutationObserver = new MutationObserver(() => {
-			const elements = document.querySelectorAll(".toc li a");
-
-			elements.forEach((element) => {
-
-				if (!element.dataset.observed) {
-					toggleClick(element)
-					element.dataset.observed = "true";
-				}
-			});
-
-			mutationObserver.disconnect();
-		});
-
-		mutationObserver.observe(document.body, { childList: true, subtree: true });
-		
-		const elements = document.querySelectorAll("h1 a, h2 a, h3 a");
-
-		elements.forEach((element) => {
-			toggleClick(element)
-		});
+	window.addEventListener('load', function() {
+		toggleClick("h1 a, h2 a, h3 a");
+		toggleClick(".toc li a");
 	});
 </script>
 

@@ -4561,17 +4561,14 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
-
 		boolean skipObjectActionExecution =
 			ObjectActionThreadLocal.isSkipObjectActionExecution();
-
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
 			_skipModelListeners.set(skipModelListener);
 
 			ObjectActionThreadLocal.setSkipObjectActionExecution(true);
-
 			WorkflowThreadLocal.setEnabled(true);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -4584,7 +4581,6 @@ public class ObjectEntryLocalServiceImpl
 
 			ObjectActionThreadLocal.setSkipObjectActionExecution(
 				skipObjectActionExecution);
-
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
 	}

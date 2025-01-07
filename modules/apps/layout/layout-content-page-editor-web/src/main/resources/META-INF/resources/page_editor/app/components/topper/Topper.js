@@ -203,8 +203,10 @@ function TopperContent({
 
 	const isTarget =
 		(isOverTarget || isKeyboardTarget(toControlsId(item.itemId))) &&
-		!isUnmappedCollection(item) &&
-		!isUnmappedForm(item);
+		!(
+			dropTargetPosition === TARGET_POSITIONS.MIDDLE &&
+			(isUnmappedCollection(item) || isUnmappedForm(item))
+		);
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 

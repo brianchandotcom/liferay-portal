@@ -871,6 +871,77 @@ test.describe('Design configuration', () => {
 			await deleteClientExtension(apiHelpers, clientExtension2);
 		}
 	);
+
+	test(
+		'Check draft alert is shown when it applies',
+		{tag: ['@LPS-175136']},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pageEditorPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create page
+
+			const pageName = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: pageName,
+			});
+
+			// Go to Design configuration and change something
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(pageName, 'Design');
+
+			await expect(async () => {
+				await page
+					.getByText('Define a custom theme for this page')
+					.click();
+
+				await expect(
+					page.getByRole('checkbox', {name: 'Show Footer'})
+				).toBeEnabled({
+					timeout: 1000,
+				});
+			}).toPass();
+
+			// Save and check alert is displayed
+
+			await pageConfigurationPage.save();
+
+			await expect(
+				page.getByText(
+					'These design configurations are now saved in a draft'
+				)
+			).toBeVisible();
+
+			// Publish page via page editor and check alert is not displayed
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.publishPage();
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(pageName, 'Design');
+
+			await page
+				.getByText('Define a custom theme for this page')
+				.waitFor();
+
+			await expect(
+				page.getByText(
+					'These design configurations are now saved in a draft'
+				)
+			).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('SEO configuration', () => {

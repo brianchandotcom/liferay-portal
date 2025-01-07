@@ -102,7 +102,9 @@ export function ModalAddObjectField({
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text' ||
 		(Liferay.FeatureFlags['LPD-32050'] &&
-			values.businessType === 'Boolean');
+			(values.businessType === 'Boolean' ||
+				values.businessType === 'Date' ||
+				values.businessType === 'DateTime'));
 
 	useEffect(() => {
 		const makeFetch = async () => {

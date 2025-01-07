@@ -120,14 +120,14 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	private void _contributeToFilterableFields(
 		int depth, EntityField entityField,
 		Map<EntityField, Integer> entityFieldsDepth, String fieldName,
-		Map<EntityField, String> filterableFiels) {
+		Map<EntityField, String> filterableFields) {
 
 		if (!(entityField instanceof ComplexEntityField)) {
 			entityFieldsDepth.compute(
 				entityField,
 				(key, previousDepth) -> {
 					if ((previousDepth == null) || (previousDepth > depth)) {
-						filterableFiels.put(entityField, fieldName);
+						filterableFields.put(entityField, fieldName);
 
 						return depth;
 					}
@@ -154,7 +154,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 			_contributeToFilterableFields(
 				depth + 1, entry.getValue(), entityFieldsDepth,
-				fieldName + "/" + entry.getKey(), filterableFiels);
+				fieldName + "/" + entry.getKey(), filterableFields);
 		}
 	}
 

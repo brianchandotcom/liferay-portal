@@ -17,7 +17,12 @@ type EditableConfigurationTab = 'Action' | 'Image Source' | 'Link' | 'Mapping';
 
 type FragmentConfigurationTab = 'Advanced' | 'General' | 'Styles';
 
-type ConfigurationTab = EditableConfigurationTab | FragmentConfigurationTab;
+type PageDesignOptionsTab = 'Style Book';
+
+type ConfigurationTab =
+	| EditableConfigurationTab
+	| FragmentConfigurationTab
+	| PageDesignOptionsTab;
 
 type SidebarTab =
 	| 'Browser'

@@ -126,7 +126,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								<%= journalDisplayContext.getArticleSubtitle(curArticle) %>
 							</span>
 
-							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
+							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curArticle.getFolder()) %>">
 								<c:choose>
 									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 										<liferay-site-navigation:breadcrumb
@@ -251,7 +251,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							cssClass="table-cell-expand-smallest table-cell-minw-200"
 							name="path"
 						>
-							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
+							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curArticle.getFolder()) %>">
 								<c:choose>
 									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 										<liferay-site-navigation:breadcrumb
@@ -399,7 +399,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								<%= journalDisplayContext.getFolderSubtitle(curFolder) %>
 							</span>
 
-							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
+							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curFolder.getParentFolder()) %>">
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
 									cssClass="c-pl-0 c-pt-0"
@@ -485,7 +485,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							cssClass="table-cell-expand-smallest table-cell-minw-200"
 							name="path"
 						>
-							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
+							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curFolder.getParentFolder()) %>">
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
 									cssClass="c-pl-0 c-pt-0"

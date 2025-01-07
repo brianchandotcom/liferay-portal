@@ -1323,6 +1323,21 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isShowBreadcrumb(JournalFolder journalFolder)
+		throws PortalException {
+
+		if (isSearch() && (journalFolder != null) &&
+			((journalFolder.getFolderId() <= 0) ||
+			 JournalFolderPermission.contains(
+				 _themeDisplay.getPermissionChecker(), journalFolder,
+				 ActionKeys.VIEW))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowComments() throws PortalException {
 		if (Objects.equals(_getSearchIn(), "comments")) {
 			return true;

@@ -362,6 +362,14 @@ public class CPConfigurationEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK) {
+
+		return _cpConfigurationEntryLocalService.getCPConfigurationEntries(
+			classNameId, classPK);
+	}
+
+	@Override
+	public java.util.List<CPConfigurationEntry> getCPConfigurationEntries(
 		long classNameId, long classPK, boolean visible) {
 
 		return _cpConfigurationEntryLocalService.getCPConfigurationEntries(

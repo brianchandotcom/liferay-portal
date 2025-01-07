@@ -277,6 +277,10 @@ public interface CPConfigurationEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPConfigurationEntry> getCPConfigurationEntries(
 		long classNameId, long classPK, boolean visible);
 
 	/**

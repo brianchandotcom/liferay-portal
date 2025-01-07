@@ -54,6 +54,9 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	@Override
 	public boolean equals(Object object);
 
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long cpConfigurationListId);
+
 	public CPConfigurationEntry fetchMasterCPConfigurationEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -61,10 +64,6 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			int type, int status)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public CPConfigurationEntry fetchCPConfigurationEntry(
-			long cpConfigurationListId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
@@ -111,6 +110,9 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public java.util.Map<java.util.Locale, String> getUrlTitleMap();
 
 	public int hashCode();
+
+	public boolean isVisible(long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setDeliverySubscriptionTypeSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties

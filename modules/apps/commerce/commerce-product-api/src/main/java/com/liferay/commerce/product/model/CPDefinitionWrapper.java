@@ -420,6 +420,13 @@ public class CPDefinitionWrapper
 	}
 
 	@Override
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long cpConfigurationListId) {
+
+		return model.fetchCPConfigurationEntry(cpConfigurationListId);
+	}
+
+	@Override
 	public CPConfigurationEntry fetchMasterCPConfigurationEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -482,14 +489,6 @@ public class CPDefinitionWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getCPAttachmentFileEntries(type, status);
-	}
-
-	@Override
-	public CPConfigurationEntry fetchCPConfigurationEntry(
-			long cpConfigurationListId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.fetchCPConfigurationEntry(cpConfigurationListId);
 	}
 
 	/**
@@ -1419,6 +1418,13 @@ public class CPDefinitionWrapper
 	@Override
 	public boolean isTelcoOrElectronics() {
 		return model.isTelcoOrElectronics();
+	}
+
+	@Override
+	public boolean isVisible(long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isVisible(cpConfigurationListId);
 	}
 
 	@Override

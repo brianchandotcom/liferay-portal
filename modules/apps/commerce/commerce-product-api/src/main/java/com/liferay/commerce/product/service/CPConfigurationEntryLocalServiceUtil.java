@@ -319,6 +319,12 @@ public class CPConfigurationEntryLocalServiceUtil {
 	}
 
 	public static List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK) {
+
+		return getService().getCPConfigurationEntries(classNameId, classPK);
+	}
+
+	public static List<CPConfigurationEntry> getCPConfigurationEntries(
 		long classNameId, long classPK, boolean visible) {
 
 		return getService().getCPConfigurationEntries(

@@ -27,6 +27,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -36,6 +37,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -104,14 +106,22 @@ public class CommerceSearchResource {
 
 			List<SearchItemModel> searchItemModels = new ArrayList<>();
 
+			CommerceContext commerceContext = _commerceContextFactory.create(
+				themeDisplay.getCompanyId(),
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(
+						themeDisplay.getScopeGroupId()),
+				themeDisplay.getUserId(), 0, 0);
+
 			searchItemModels.addAll(
 				_searchProducts(
 					themeDisplay.getCompanyId(), layout.getGroupId(),
-					queryString, themeDisplay));
+					commerceContext, queryString, themeDisplay));
 
 			if (themeDisplay.isSignedIn()) {
 				searchItemModels.addAll(
-					_searchAccounts(queryString, themeDisplay));
+					_searchAccounts(
+						commerceContext, queryString, themeDisplay));
 
 				searchItemModels.addAll(
 					_searchOrders(queryString, themeDisplay));
@@ -339,16 +349,11 @@ public class CommerceSearchResource {
 	}
 
 	private List<SearchItemModel> _searchAccounts(
-			String queryString, ThemeDisplay themeDisplay)
+			CommerceContext commerceContext, String queryString,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<SearchItemModel> searchItemModels = new ArrayList<>();
-
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			themeDisplay.getCompanyId(),
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				themeDisplay.getScopeGroupId()),
-			themeDisplay.getUserId(), 0, 0);
 
 		AccountList accountList = _commerceAccountResource.getAccountList(
 			themeDisplay.getUserId(),
@@ -440,8 +445,8 @@ public class CommerceSearchResource {
 	}
 
 	private List<SearchItemModel> _searchProducts(
-			long companyId, long groupId, String queryString,
-			ThemeDisplay themeDisplay)
+			long companyId, long groupId, CommerceContext commerceContext,
+			String queryString, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<SearchItemModel> searchItemModels = new ArrayList<>();
@@ -460,11 +465,6 @@ public class CommerceSearchResource {
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
 				themeDisplay.getScopeGroupId());
 
-		if (commerceChannel != null) {
-			attributes.put(
-				"commerceChannelGroupId", commerceChannel.getGroupId());
-		}
-
 		long accountEntryId = 0;
 
 		AccountEntry accountEntry =
@@ -473,10 +473,25 @@ public class CommerceSearchResource {
 
 		if (accountEntry != null) {
 			accountEntryId = accountEntry.getAccountEntryId();
+		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
 			attributes.put(
-				"commerceAccountGroupIds",
-				_accountGroupLocalService.getAccountGroupIds(accountEntryId));
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				commerceContext.getCPConfigurationListIds());
+		}
+		else {
+			if (commerceChannel != null) {
+				attributes.put(
+					"commerceChannelGroupId", commerceChannel.getGroupId());
+			}
+
+			if (accountEntry != null) {
+				attributes.put(
+					"commerceAccountGroupIds",
+					_accountGroupLocalService.getAccountGroupIds(
+						accountEntryId));
+			}
 		}
 
 		searchContext.setAttributes(attributes);

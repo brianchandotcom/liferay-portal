@@ -270,6 +270,13 @@ public class CPConfigurationEntryLocalServiceImpl
 
 	@Override
 	public List<CPConfigurationEntry> getCPConfigurationEntries(
+		long classNameId, long classPK) {
+
+		return cpConfigurationEntryPersistence.findByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public List<CPConfigurationEntry> getCPConfigurationEntries(
 		long classNameId, long classPK, boolean visible) {
 
 		return cpConfigurationEntryPersistence.findByC_C_V(
@@ -332,7 +339,16 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setWeight(weight);
 		cpConfigurationEntry.setWidth(width);
 
-		return cpConfigurationEntryPersistence.update(cpConfigurationEntry);
+		cpConfigurationEntry = cpConfigurationEntryPersistence.update(
+			cpConfigurationEntry);
+
+		if (cpConfigurationEntry.getClassNameId() ==
+				_classNameLocalService.getClassNameId(CPDefinition.class)) {
+
+			_reindexCPDefinition(cpConfigurationEntry.getClassPK());
+		}
+
+		return cpConfigurationEntry;
 	}
 
 	private CPConfigurationEntrySetting _fetchCPConfigurationEntrySetting(

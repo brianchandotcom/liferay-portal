@@ -8,6 +8,8 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.shared.
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
@@ -19,6 +21,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.search.facet.SerializableFacet;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -162,30 +165,41 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-				themeDisplay.getScopeGroupId());
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			CommerceContext commerceContext =
+				(CommerceContext)renderRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
 
-		if (commerceChannel != null) {
 			searchContext.setAttribute(
-				"commerceChannelGroupId", commerceChannel.getGroupId());
-
-			AccountEntry accountEntry =
-				_commerceAccountHelper.getCurrentAccountEntry(
-					commerceChannel.getGroupId(),
-					_portal.getHttpServletRequest(renderRequest));
-
-			if (accountEntry != null) {
-				searchContext.setAttribute(
-					"accountEntryId", accountEntry.getAccountEntryId());
-				searchContext.setAttribute(
-					"commerceAccountGroupIds",
-					_accountGroupLocalService.getAccountGroupIds(
-						accountEntry.getAccountEntryId()));
-			}
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				commerceContext.getCPConfigurationListIds());
 		}
+		else {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+					themeDisplay.getScopeGroupId());
 
-		searchContext.setAttribute("secure", Boolean.TRUE);
+			if (commerceChannel != null) {
+				searchContext.setAttribute(
+					"commerceChannelGroupId", commerceChannel.getGroupId());
+
+				AccountEntry accountEntry =
+					_commerceAccountHelper.getCurrentAccountEntry(
+						commerceChannel.getGroupId(),
+						_portal.getHttpServletRequest(renderRequest));
+
+				if (accountEntry != null) {
+					searchContext.setAttribute(
+						"accountEntryId", accountEntry.getAccountEntryId());
+					searchContext.setAttribute(
+						"commerceAccountGroupIds",
+						_accountGroupLocalService.getAccountGroupIds(
+							accountEntry.getAccountEntryId()));
+				}
+			}
+
+			searchContext.setAttribute("secure", Boolean.TRUE);
+		}
 
 		return searchContext;
 	}

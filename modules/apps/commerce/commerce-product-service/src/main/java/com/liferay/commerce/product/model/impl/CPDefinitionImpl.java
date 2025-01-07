@@ -6,11 +6,14 @@
 package com.liferay.commerce.product.model.impl;
 
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
+import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
+import com.liferay.commerce.product.exception.NoSuchCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
@@ -22,6 +25,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalServiceUtil;
 import com.liferay.commerce.product.service.CPConfigurationListLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
@@ -43,6 +47,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -195,6 +200,43 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
 			getCPDefinitionId(), type, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public CPConfigurationEntry getCPConfigurationEntry(
+			long cpConfigurationListId)
+		throws PortalException {
+
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
+				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
+				getCPDefinitionId());
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			if (cpConfigurationEntry.getCPConfigurationListId() ==
+					cpConfigurationListId) {
+
+				return cpConfigurationEntry;
+			}
+
+			CPConfigurationEntrySetting cpConfigurationEntrySetting =
+				CPConfigurationEntrySettingLocalServiceUtil.
+					fetchCPConfigurationEntrySetting(
+						cpConfigurationEntry.getCPConfigurationEntryId(),
+						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+			if ((cpConfigurationEntrySetting != null) &&
+				StringUtil.contains(
+					cpConfigurationEntrySetting.getSetting(),
+					String.valueOf(cpConfigurationListId))) {
+
+				return cpConfigurationEntry;
+			}
+		}
+
+		throw new NoSuchCPConfigurationEntryException();
 	}
 
 	@Override
@@ -422,6 +464,42 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public int hashCode() {
 		return super.hashCode();
+	}
+
+	@Override
+	public boolean isVisible(long cpConfigurationListId)
+		throws PortalException {
+
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
+				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
+				getCPDefinitionId(), true);
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			if (cpConfigurationEntry.getCPConfigurationListId() ==
+					cpConfigurationListId) {
+
+				return true;
+			}
+
+			CPConfigurationEntrySetting cpConfigurationEntrySetting =
+				CPConfigurationEntrySettingLocalServiceUtil.
+					fetchCPConfigurationEntrySetting(
+						cpConfigurationEntry.getCPConfigurationEntryId(),
+						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+			if ((cpConfigurationEntrySetting != null) &&
+				StringUtil.contains(
+					cpConfigurationEntrySetting.getSetting(),
+					String.valueOf(cpConfigurationListId))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

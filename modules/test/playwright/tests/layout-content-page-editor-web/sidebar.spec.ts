@@ -1835,6 +1835,59 @@ test.describe('Page Design Options', () => {
 			).toBeAttached();
 		}
 	);
+
+	test(
+		'Select a Style Book and check that the styles change',
+		{
+			tag: '@LPS-154530',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a button
+
+			const buttonId = getRandomString();
+
+			const buttonDefinition = getFragmentDefinition({
+				id: buttonId,
+				key: 'BASIC_COMPONENT-button',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([buttonDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.selectFragment(buttonId);
+
+			await pageEditorPage.goToConfigurationTab('Styles');
+
+			await expect(page.getByLabel('Margin Top')).toContainText('0');
+
+			// Go to Page Design Options tab
+
+			await pageEditorPage.goToSidebarTab('Page Design Options');
+
+			// Select the custom stylebook "Page Management Style Book"
+
+			await pageEditorPage.goToConfigurationTab('Style Book');
+
+			await page.getByText('Page Management Style Book').click();
+
+			// Check that the styles have changed
+
+			await pageEditorPage.selectFragment(buttonId);
+
+			await pageEditorPage.goToConfigurationTab('Styles');
+
+			await expect(page.getByLabel('Margin Top')).toContainText('-32px');
+		}
+	);
 });
 
 test.describe('Rules Panel', () => {

@@ -208,16 +208,6 @@ public class EditInfoItemStrutsActionTest {
 	}
 
 	@Test
-	public void testAddInfoItemInvalidLongTooBig() throws Exception {
-		_testAddInfoItemWithInvalidData(null, null, "9007199254740992");
-	}
-
-	@Test
-	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
-		_testAddInfoItemWithInvalidData(null, null, "-9007199254740992");
-	}
-
-	@Test
 	@TestInfo("LPS-151402")
 	public void testAddInfoItemInvalidListTypeEntryValue() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
@@ -249,6 +239,16 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertTrue(object instanceof InfoFormException);
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+	}
+
+	@Test
+	public void testAddInfoItemInvalidLongTooBig() throws Exception {
+		_testAddInfoItemWithInvalidData(null, null, "9007199254740992");
+	}
+
+	@Test
+	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
+		_testAddInfoItemWithInvalidData(null, null, "-9007199254740992");
 	}
 
 	@Test

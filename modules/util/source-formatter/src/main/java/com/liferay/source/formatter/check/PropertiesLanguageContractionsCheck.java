@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
@@ -59,9 +60,10 @@ public class PropertiesLanguageContractionsCheck extends BaseFileCheck {
 
 						addMessage(
 							fileName,
-							"Do not use contraction \"" + contraction +
-								"\" in the description of key \"" + array[0] +
-									"\"",
+							StringBundler.concat(
+								"Do not use contraction \"", contraction, "\"",
+								" in the description of key \"", array[0],
+								"\""),
 							lineNumber);
 					}
 				}

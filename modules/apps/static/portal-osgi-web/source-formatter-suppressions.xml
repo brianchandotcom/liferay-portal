@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="MethodNamingCheck" files="portal-osgi-web-servlet-jsp-compiler/src/main/java/com/liferay/portal/osgi/web/servlet/jsp/compiler/internal/JspServlet\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaXMLSecurityCheck" files="portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
 	</source-check>

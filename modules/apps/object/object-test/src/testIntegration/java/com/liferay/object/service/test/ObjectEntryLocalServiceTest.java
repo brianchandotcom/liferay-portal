@@ -1537,6 +1537,94 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectEntryWithHierarchyAndLocalizedValues()
+		throws Exception {
+
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).localized(
+			true
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).build();
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, Collections.singletonList(objectField));
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionA,
+					objectDefinitionAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship1"),
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					objectDefinitionAAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship2")));
+
+		Map<String, Serializable> localizedValues =
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getI18nObjectFieldName(),
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).put(
+					"pt_BR", RandomTestUtil.randomString()
+				).build()
+			).build();
+
+		ObjectEntry objectEntryA = _addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(), localizedValues);
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues, objectEntryA, objectField);
+
+		ObjectEntry objectEntryAA = _addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>putAll(
+				localizedValues
+			).put(
+				"r_objectRelationship1_" +
+					objectDefinitionA.getPKObjectFieldName(),
+				objectEntryA.getObjectEntryId()
+			).build());
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues, objectEntryAA, objectField);
+
+		ObjectEntry objectEntryAAA = _addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>putAll(
+				localizedValues
+			).put(
+				"r_objectRelationship2_" +
+					objectDefinitionAA.getPKObjectFieldName(),
+				objectEntryAA.getObjectEntryId()
+			).build());
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues, objectEntryAAA, objectField);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName(),
+				objectDefinitionAAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
 	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
 
 		// Composite key field values must be unique
@@ -4057,6 +4145,19 @@ public class ObjectEntryLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
+	}
+
+	private void _assertObjectEntryLocalizedValues(
+			Map<String, Serializable> expectedLocalizedValues,
+			ObjectEntry objectEntry, ObjectField objectField)
+		throws Exception {
+
+		Map<String, Serializable> actualLocalizedValues =
+			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			expectedLocalizedValues.get(objectField.getI18nObjectFieldName()),
+			actualLocalizedValues.get(objectField.getI18nObjectFieldName()));
 	}
 
 	private void _assertObjectEntryValues(

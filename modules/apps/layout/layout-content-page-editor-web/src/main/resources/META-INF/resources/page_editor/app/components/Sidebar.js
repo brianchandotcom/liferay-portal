@@ -4,11 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {
-	ReactDOMServer,
-	ReactPortal,
-	useStateSafe,
-} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useStateSafe} from '@liferay/frontend-js-react-web';
 import {Resizer} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
@@ -54,18 +50,19 @@ function getActiveSidebarPanel({
 	return {sidebarPanel: panel, sidebarPanelId: panel.sidebarPanelId};
 }
 
-const getOpenShortcutModalTooltip = () => (
-	<>
-		<div>{Liferay.Language.get('open-keyboard-shortcuts')}</div>
-		<kbd className="c-kbd c-kbd-dark mt-1">
-			<kbd className="c-kbd">⇧</kbd>
+const getOpenShortcutModalTooltipMarkup = () =>
+	`
+	<div>${Liferay.Language.get('open-keyboard-shortcuts')}</div>
+	<kbd class="c-kbd c-kbd-dark mt-1">
+		<kbd class="c-kbd">⇧</kbd>
 
-			<span className="c-kbd-separator">+</span>
+		<span class="c-kbd-separator">+</span>
 
-			<kbd className="c-kbd">?</kbd>
-		</kbd>
-	</>
-);
+		<kbd class="c-kbd">?</kbd>
+	</kbd>
+`
+		.replaceAll('\n', '')
+		.replaceAll('\t', '');
 
 export default function Sidebar() {
 	const dropClearRef = useDropClear();
@@ -199,7 +196,7 @@ export default function Sidebar() {
 		}
 	};
 
-	const shortcutButtonTitle = getOpenShortcutModalTooltip();
+	const shortcutButtonTitle = getOpenShortcutModalTooltipMarkup();
 
 	return (
 		<ReactPortal className="cadmin">
@@ -256,9 +253,7 @@ export default function Sidebar() {
 						aria-haspopup="dialog"
 						aria-labelledby={shortcutButtonTitleId}
 						className="mt-auto"
-						data-title={ReactDOMServer.renderToString(
-							shortcutButtonTitle
-						)}
+						data-title={shortcutButtonTitle}
 						data-title-set-as-html
 						data-tooltip-align="left"
 						displayType="unstyled"

@@ -4,7 +4,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ReactDOMServer} from '@liferay/frontend-js-react-web';
 import {useId} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
@@ -19,7 +18,7 @@ export default function HideSidebarButton() {
 	const buttonTitle = useMemo(() => {
 		const keyLabel = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
 
-		return getOpenMenuTooltip(keyLabel);
+		return getOpenMenuTooltipMarkup(keyLabel);
 	}, []);
 
 	return (
@@ -27,7 +26,7 @@ export default function HideSidebarButton() {
 			<ClayButtonWithIcon
 				aria-labelledby={id}
 				className="btn btn-secondary"
-				data-title={ReactDOMServer.renderToString(buttonTitle)}
+				data-title={buttonTitle}
 				data-title-set-as-html
 				displayType="secondary"
 				onClick={onToggleSidebars}
@@ -36,29 +35,31 @@ export default function HideSidebarButton() {
 				type="button"
 			/>
 
-			<div className="sr-only" id={id}>
-				{buttonTitle}
-			</div>
+			<div
+				className="sr-only"
+				dangerouslySetInnerHTML={{__html: buttonTitle}}
+				id={id}
+			/>
 		</>
 	);
 }
 
-const getOpenMenuTooltip = (keyLabel) => (
-	<>
-		<span className="d-block">
-			{Liferay.Language.get('toggle-sidebars')}
+const getOpenMenuTooltipMarkup = (keyLabel) =>
+	`
+		<span class="d-block">
+			${Liferay.Language.get('toggle-sidebars')}
 		</span>
 
-		<kbd className="c-kbd c-kbd-dark mt-1">
-			<kbd className="c-kbd">{keyLabel}</kbd>
+		<kbd class="c-kbd c-kbd-dark mt-1">
+			<kbd class="c-kbd">${keyLabel}</kbd>
 
-			<span className="c-kbd-separator">+</span>
+			<span class="c-kbd-separator">+</span>
 
-			<kbd className="c-kbd">⇧</kbd>
+			<kbd class="c-kbd">⇧</kbd>
 
-			<span className="c-kbd-separator">+</span>
+			<span class="c-kbd-separator">+</span>
 
-			<kbd className="c-kbd">.</kbd>
-		</kbd>
-	</>
-);
+			<kbd class="c-kbd">.</kbd>
+		</kbd>`
+		.replaceAll('\n', '')
+		.replaceAll('\t', '');

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -104,7 +105,7 @@ public class GoogleGadgetServlet extends HttpServlet {
 		sb.append("<Content type=\"html\">");
 		sb.append("<![CDATA[");
 		sb.append("<iframe frameborder=\"0\" height=\"100%\" src=\"");
-		sb.append(widgetURL);
+		sb.append(HtmlUtil.escape(widgetURL));
 		sb.append("\" width=\"100%\">");
 		sb.append("</iframe>");
 		sb.append("]]>");

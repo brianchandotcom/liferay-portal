@@ -699,6 +699,12 @@ type UserAccount = {
 	password: string;
 	roleBriefs: {id: number; name: string}[];
 	type: string;
+	userAccountContactInformation: {
+		telephones: {
+			extension: string;
+			phoneNumber: string;
+		}[];
+	};
 };
 
 type VirtualItem = {

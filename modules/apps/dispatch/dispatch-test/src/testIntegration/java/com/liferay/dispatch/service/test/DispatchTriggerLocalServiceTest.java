@@ -673,7 +673,6 @@ public class DispatchTriggerLocalServiceTest {
 		return TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST;
 	}
 
-
 	private void _testUpdateDispatchTriggerWithCronExpressions(
 			String cronExpression, Calendar expectedCalendar,
 			Calendar startCalendar)

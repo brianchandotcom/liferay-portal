@@ -191,7 +191,7 @@ describe('The SLAFormPage component should', () => {
 				'define-the-sla-duration-and-calendar-format'
 			);
 			const durationLabel = getByText('DURATION');
-			const pauseDescription = getByText('time-wont-be-considered-when');
+			const pauseDescription = getByText('time-will-not-be-considered-when');
 			const pauseField = getByText('pause');
 			const startDescription = getByText('time-will-begin-counting-when');
 			const stopDescription = getByText('time-will-stop-counting-when');

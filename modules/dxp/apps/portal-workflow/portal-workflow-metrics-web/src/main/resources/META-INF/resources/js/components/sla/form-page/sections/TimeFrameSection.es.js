@@ -102,7 +102,7 @@ export default function TimeFrameSection() {
 					>
 						<div className="form-text">
 							{Liferay.Language.get(
-								'time-wont-be-considered-when'
+								'time-will-not-be-considered-when'
 							)}
 						</div>
 

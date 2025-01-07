@@ -4520,29 +4520,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		Node rootNode = tree.getRootNode();
+		_assertFailureUpdateObjectEntry(ActionKeys.UPDATE, tree);
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(), _objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				AssertUtils.assertFailure(
-					PrincipalException.MustHavePermission.class,
-					StringBundler.concat(
-						"User ", _user.getUserId(),
-						" must have UPDATE permission for ",
-						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootNode.getPrimaryKey()),
-					() -> _defaultObjectEntryManager.updateObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getObjectEntryId(),
-						_defaultObjectEntryManager.getObjectEntry(
-							_simpleDTOConverterContext, objectDefinition,
-							objectEntry.getObjectEntryId())));
-			});
+		// Users should be able to update object entries restricted to
+		// accounts to which they belong to
 
 		_addResourcePermission(
 			ActionKeys.UPDATE, _rootObjectDefinition, _buyerRole);
@@ -4561,6 +4542,25 @@ public class DefaultObjectEntryManagerImplTest
 						_simpleDTOConverterContext, objectDefinition,
 						objectEntry.getObjectEntryId()));
 			});
+
+		// Users should be prevented from updating object entries
+		// restricted to accounts they do not belong to
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(accountEntry2, _accountManagerRole, _user);
+
+		_addResourcePermission(
+			ActionKeys.UPDATE, _rootObjectDefinition, _accountManagerRole);
+
+		_assertFailureUpdateObjectEntry(ActionKeys.VIEW, tree);
+
+		_addResourcePermission(
+			ActionKeys.VIEW, _rootObjectDefinition, _accountManagerRole);
+
+		_assertFailureUpdateObjectEntry(ActionKeys.VIEW, tree);
 	}
 
 	@Test
@@ -5125,6 +5125,34 @@ public class DefaultObjectEntryManagerImplTest
 						String.valueOf(expectedValue)
 					).build();
 				}
+			});
+	}
+
+	private void _assertFailureUpdateObjectEntry(String actionId, Tree tree)
+		throws Exception {
+
+		Node rootNode = tree.getRootNode();
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				AssertUtils.assertFailure(
+					PrincipalException.MustHavePermission.class,
+					StringBundler.concat(
+						"User ", _user.getUserId(), " must have ", actionId,
+						" permission for ",
+						_rootObjectDefinition.getClassName(), StringPool.SPACE,
+						rootNode.getPrimaryKey()),
+					() -> _defaultObjectEntryManager.updateObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntry.getObjectEntryId(),
+						_defaultObjectEntryManager.getObjectEntry(
+							_simpleDTOConverterContext, objectDefinition,
+							objectEntry.getObjectEntryId())));
 			});
 	}
 

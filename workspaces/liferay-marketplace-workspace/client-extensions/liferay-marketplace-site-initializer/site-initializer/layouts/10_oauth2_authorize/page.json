@@ -1,0 +1,27 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/authorize",
+	"hidden": true,
+	"name": "Authorize",
+	"name_i18n": {
+		"en_US": "Authorize"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
+	"system": false,
+	"type": "content"
+}

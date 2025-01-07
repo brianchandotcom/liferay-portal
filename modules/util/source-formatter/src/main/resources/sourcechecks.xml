@@ -1533,6 +1533,7 @@
 		<check name="PropertiesLanguageContractionsCheck">
 			<category name="Styling" />
 			<description name="Finds contractions (such as `can't` or `you're`)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="PropertiesLanguageKeysCheck">
 			<category name="Bug Prevention" />

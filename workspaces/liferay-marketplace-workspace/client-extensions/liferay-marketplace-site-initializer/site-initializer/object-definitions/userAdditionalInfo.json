@@ -103,6 +103,7 @@
 			"type": "String"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "User Additional Infos"

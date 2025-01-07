@@ -29,6 +29,7 @@
 			"type": "String"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"pluralLabel": {
 		"en_US": "License Types Description"
 	},

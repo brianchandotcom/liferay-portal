@@ -66,6 +66,7 @@
 			"type": "Clob"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"pluralLabel": {
 		"en_US": "Contacts Sales"
 	},

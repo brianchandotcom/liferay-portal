@@ -19,6 +19,7 @@
 			"type": "String"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"pluralLabel": {
 		"en_US": "OAuth2 DXP Authorizations"
 	},

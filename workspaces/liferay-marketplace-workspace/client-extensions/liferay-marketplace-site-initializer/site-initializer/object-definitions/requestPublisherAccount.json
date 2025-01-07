@@ -84,6 +84,7 @@
 			"type": "String"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Request Publisher Account"

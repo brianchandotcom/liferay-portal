@@ -61,6 +61,7 @@
 			"type": "Long"
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"pluralLabel": {
 		"en_US": "Publisher Assets"
 	},

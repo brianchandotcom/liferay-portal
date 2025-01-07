@@ -59,6 +59,7 @@
 			"required": false
 		}
 	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Get App Information"

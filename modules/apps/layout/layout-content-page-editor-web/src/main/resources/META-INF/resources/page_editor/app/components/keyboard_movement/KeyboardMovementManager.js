@@ -48,6 +48,7 @@ import {isMultistepForm} from '../../utils/isMultistepForm';
 import isStepper from '../../utils/isStepper';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {openFormConversionModal} from '../../utils/openFormConversionModal';
+import {fromControlsId} from '../layout_data_items/Collection';
 
 const DIRECTIONS = {
 	down: 'down',
@@ -125,24 +126,44 @@ export default function KeyboardMovementManager() {
 							})
 						: moveItems({
 								itemIds: sources.map(({itemId}) => itemId),
-								onMoveEnd: (layoutData) => {
+								onMoveEnd: (updatedLayoutData) => {
+
+									// The item is being moved inside a collection
+
 									if (
 										hasCollectionParent(
-											layoutData.items[targetId],
-											layoutData
+											updatedLayoutData.items[targetId],
+											updatedLayoutData
 										)
 									) {
 										const itemIds = sources.map(
 											({itemId}) =>
 												getFirstControlsId({
-													item: layoutData.items[
-														itemId
-													],
-													layoutData,
+													item: updatedLayoutData
+														.items[itemId],
+													layoutData:
+														updatedLayoutData,
 												})
 										);
 
 										selectItems(itemIds);
+									}
+
+									// The item is being moved outside a collection
+
+									else if (
+										hasCollectionParent(
+											layoutDataRef.current.items[
+												targetId
+											],
+											layoutDataRef.current
+										)
+									) {
+										selectItems(
+											sources.map(({itemId}) =>
+												fromControlsId(itemId)
+											)
+										);
 									}
 								},
 								parentItemIds: [targetId],

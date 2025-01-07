@@ -12,6 +12,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
+import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
@@ -349,21 +350,35 @@ function NodeContent({
 				})
 			: moveItems({
 					itemIds: activeItemIds,
-					onMoveEnd: (layoutData) => {
+					onMoveEnd: (updatedLayoutData) => {
+
+						// The item is being moved inside a collection
+
 						if (
 							hasCollectionParent(
-								layoutData.items[parentItemId],
-								layoutData
+								updatedLayoutData.items[parentItemId],
+								updatedLayoutData
 							)
 						) {
 							const itemIds = activeItemIds.map((id) =>
 								getFirstControlsId({
-									item: layoutData.items[id],
-									layoutData,
+									item: updatedLayoutData.items[id],
+									layoutData: updatedLayoutData,
 								})
 							);
 
 							selectItems(itemIds);
+						}
+
+						// The item is being moved outside a collection
+
+						else if (
+							hasCollectionParent(
+								layoutDataRef.current.items[node.id],
+								layoutDataRef.current
+							)
+						) {
+							selectItems(activeItemIds.map(fromControlsId));
 						}
 					},
 					parentItemIds: [parentItemId],

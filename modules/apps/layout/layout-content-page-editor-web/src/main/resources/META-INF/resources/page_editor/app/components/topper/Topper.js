@@ -39,6 +39,7 @@ import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
+	useSelectorRef,
 } from '../../contexts/StoreContext';
 import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
@@ -53,11 +54,13 @@ import {
 	useDragItem,
 	useDropTarget,
 } from '../../utils/drag_and_drop/useDragAndDrop';
+import {hasCollectionParent} from '../../utils/hasCollectionParent';
 import isStepper from '../../utils/isStepper';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {isUnmappedForm} from '../../utils/isUnmappedForm';
 import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
+import {fromControlsId} from '../layout_data_items/Collection';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
 
@@ -115,6 +118,8 @@ function TopperContent({
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 	const isMultiSelect = activeItemIds.length > 1;
 	const isKeyboardTarget = useIsMovementTarget();
+
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
 	const toControlsId = useToControlsId();
 
@@ -174,8 +179,19 @@ function TopperContent({
 			: moveItems({
 					itemIds: activeItemIds,
 					onMoveEnd: () => {
+
+						// The item is being moved inside a collection
+
 						if (toControlsId) {
 							selectItems(activeItemIds.map(toControlsId));
+						}
+
+						// The item is being moved outside a collection
+
+						else if (
+							hasCollectionParent(item, layoutDataRef.current)
+						) {
+							selectItems(activeItemIds.map(fromControlsId));
 						}
 					},
 					parentItemIds: [parentItemId],

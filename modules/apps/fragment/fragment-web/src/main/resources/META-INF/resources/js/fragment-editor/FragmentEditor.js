@@ -94,7 +94,10 @@ const FragmentEditor = ({
 	]);
 
 	const handlePublishClick = () => {
-		if (Liferay.FeatureFlags['LPD-40535'] && html.includes('widget')) {
+		if (
+			Liferay.FeatureFlags['LPD-40535'] &&
+			(html.includes('widget') || html.includes('runtime'))
+		) {
 			EmbeddedWidgetsModal({onPublish: publish});
 		}
 		else {

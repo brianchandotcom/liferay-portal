@@ -40,7 +40,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 	}
 
 	@Override

@@ -149,7 +149,8 @@ public class ImportAndDeleteObjectEntryPerformanceTest {
 			StringUtil.read(
 				ImportAndDeleteObjectEntryPerformanceTest.class.
 					getClassLoader(),
-				"/object-folder-definition.json"));
+				"/com/liferay/object/web/internal/object/definitions/portlet" +
+					"/action/test/dependencies/test-object-folder-4.json"));
 
 		ObjectFolder objectFolder = ObjectFolder.toDTO(
 			objectFolderJSONObject.toString());

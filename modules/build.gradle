@@ -875,10 +875,6 @@ if (bndPrintJarFiles != null) {
 gradle.taskGraph.whenReady {
 	TaskExecutionGraph taskExecutionGraph ->
 
-	if (Boolean.getBoolean("build.jakarta.transformer.enabled") && gradle.startParameter.taskNames.contains("clean")) {
-		delete jakartaOutputDir
-	}
-
 	taskExecutionGraph.allTasks.each {
 		Task task ->
 

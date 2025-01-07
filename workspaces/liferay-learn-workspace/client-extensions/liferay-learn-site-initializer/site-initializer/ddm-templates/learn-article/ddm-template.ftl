@@ -1,5 +1,5 @@
 <script>
-	const toggleClick = (selectors) => {
+	const _addEventListener = (selectors) => {
 		var elements = document.querySelectorAll(selectors);
 
 		elements.forEach((element) => {
@@ -19,8 +19,8 @@
 	}
 
 	window.addEventListener('load', function() {
-		toggleClick("h1 a, h2 a, h3 a");
-		toggleClick(".toc li a");
+		_addEventListener("h1 a, h2 a, h3 a");
+		_addEventListener(".toc li a");
 	});
 </script>
 

@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.sql.PreparedStatement;
@@ -40,18 +39,11 @@ public abstract class BaseStaleUserIdUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				User defaultServiceAccountUser =
-					_userLocalService.fetchUserByScreenName(
-						resultSet.getLong("companyId"),
-						"default-service-account");
-
-				if (defaultServiceAccountUser == null) {
-					continue;
-				}
-
 				preparedStatement2.setLong(
-					1, defaultServiceAccountUser.getUserId());
-
+					1,
+					_userLocalService.getUserIdByScreenName(
+						resultSet.getLong("companyId"),
+						"default-service-account"));
 				preparedStatement2.setLong(2, resultSet.getLong(columnName));
 
 				preparedStatement2.addBatch();

@@ -247,11 +247,11 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:if>
 
-						<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand-smallest table-cell-minw-200"
-								name="path"
-							>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-200"
+							name="path"
+						>
+							<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
 								<c:choose>
 									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 										<liferay-site-navigation:breadcrumb
@@ -266,8 +266,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										/>
 									</c:otherwise>
 								</c:choose>
-							</liferay-ui:search-container-column-text>
-						</c:if>
+							</c:if>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-100"
@@ -481,17 +481,17 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:if>
 
-						<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand-smallest table-cell-minw-200"
-								name="path"
-							>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-cell-minw-200"
+							name="path"
+						>
+							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
 									cssClass="c-pl-0 c-pt-0"
 								/>
-							</liferay-ui:search-container-column-text>
-						</c:if>
+							</c:if>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-150"

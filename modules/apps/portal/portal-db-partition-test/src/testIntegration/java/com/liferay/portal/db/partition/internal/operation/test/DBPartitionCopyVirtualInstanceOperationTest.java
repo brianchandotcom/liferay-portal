@@ -17,6 +17,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,6 +37,10 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 
 		_company = _companyLocalService.fetchCompanyByVirtualHost(
 			TestPropsValues.COMPANY_WEB_ID);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 	}
 
 	@Override

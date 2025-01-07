@@ -18,6 +18,7 @@ import ProjectSelection from './pages/Apps/App/CloudProvisioning/pages/ProjectSe
 import Download from './pages/Apps/App/Download/Download';
 import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
+import Connections from './pages/Connections';
 import Solutions from './pages/Solutions';
 import ConnectionTokens from './pages/Solutions/ConnectionTokens';
 import Solution from './pages/Solutions/Solution';
@@ -29,6 +30,9 @@ const CustomerDashboardRouter = () => {
 			<Routes>
 				<Route element={<CustomerDashboardOutlet />}>
 					<Route element={<Apps />} index />
+
+					<Route element={<Connections />} path="connections" />
+
 					<Route element={<AppOutlet />} path="order/:orderId">
 						<Route element={<App />} index />
 

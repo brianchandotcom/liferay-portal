@@ -9,6 +9,83 @@ declare module '*.svg' {
 
 declare module 'warning';
 
+type Account = {
+	customFields?: CustomField[];
+	description: string;
+	emailAddress: string;
+	externalReferenceCode: string;
+	id: number;
+	logoURL?: string;
+	name: string;
+	taxId: string;
+	type: string;
+};
+
+type AccountBrief = {
+	customFields?: any;
+	externalReferenceCode: string;
+	id: number;
+	logoURL?: string;
+	name: string;
+	roleBriefs: RoleBrief[];
+};
+
+type AccountGroup = {
+	customFields: {};
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
+type AccountPostalAddresses = {
+	addressCountry: string;
+	addressLocality: string;
+	addressRegion: string;
+	addressType: string;
+	id: number;
+	name: string;
+	postalCode: number;
+	primary: boolean;
+	streetAddressLine1: string;
+	streetAddressLine2: string;
+	streetAddressLine3: string;
+};
+
+type AccountRole = {
+	accountId: number;
+	description: string;
+	displayName: string;
+	id: number;
+	name: string;
+	roleId: number;
+};
+
+type ActionMap<M extends {[index: string]: any}> = {
+	[Key in keyof M]: M[Key] extends undefined
+		? {
+				type: Key;
+			}
+		: {
+				payload: M[Key];
+				type: Key;
+			};
+};
+
+type AdditionalInfoBody = {
+	acceptInviteStatus: boolean;
+	accountName: string;
+	emailOfMember: string;
+	id?: number;
+	inviteURL: string;
+	inviterName: string;
+	mothersName: string;
+	r_accountEntryToUserAdditionalInfo_accountEntryId: number;
+	r_userToUserAddInfo_userId: string;
+	roles: string;
+	sendType: {key: string; name: string};
+	userFirstName: string;
+};
+
 type AnalyticsProject = {
 	accountKey: string;
 	accountName: string;
@@ -28,30 +105,6 @@ type AnalyticsProject = {
 	stateStartDate: null;
 	timeZone: TimeZone;
 	userId: number;
-};
-
-type TimeZone = {
-	country: string;
-	displayTimeZone: string;
-	timeZoneId: string;
-};
-
-type FaroSubscription = {
-	active: boolean;
-	addOns: any[];
-	endDate: null;
-	individualsCountSinceLastAnniversary: number;
-	individualsCounts: null;
-	individualsLimit: number;
-	individualsStatus: number;
-	lastAnniversaryDate: null;
-	name: string;
-	pageViewsCountSinceLastAnniversary: number;
-	pageViewsCounts: null;
-	pageViewsLimit: number;
-	pageViewsStatus: number;
-	startDate: number;
-	syncedIndividualsCount: number;
 };
 
 type AnalyticsViews = {
@@ -103,134 +156,14 @@ type AnalyticsViews = {
 	total: number;
 };
 
-type PublisherRequestInfo = {
-	emailAddress?: string;
-	extension?: string;
-	firstName?: string;
-	id?: number;
-	lastName?: string;
-	phone?: {
-		code: string;
-		flag: string;
-	};
-	phoneNumber?: string;
-	publisherType: string[];
-	requestDescription?: string;
-	requestStatus?: {
-		key: string;
-		name: string;
-	};
-};
-
-type ListTypeDefinition = {
-	externalReferenceCode: string;
-	id: number;
-	listTypeEntries: {
-		externalReferenceCode: string;
-		key: string;
-		name: string;
-		name_i18n: {
-			[key: string]: string;
-		};
-	}[];
-	name: string;
-};
-
-type Account = {
-	customFields?: CustomField[];
-	description: string;
-	emailAddress: string;
-	externalReferenceCode: string;
-	id: number;
-	logoURL?: string;
-	name: string;
-	taxId: string;
-	type: string;
-};
-
-type Categories = {
-	externalReferenceCode: string;
-	id: string;
-	name: string;
-	value?: string;
-	vocabulary: string;
-};
-
-interface CheckboxVersion {
-	isChecked: boolean;
-	versionName: string;
-}
-
-type CustomField = {
-	customValue: {
-		data: string | string[];
-	};
-	dataType?: string;
-	name: string;
-};
-
-type ActionMap<M extends {[index: string]: any}> = {
-	[Key in keyof M]: M[Key] extends undefined
-		? {
-				type: Key;
-			}
-		: {
-				payload: M[Key];
-				type: Key;
-			};
-};
-
-type AccountBrief = {
-	customFields?: any;
-	externalReferenceCode: string;
-	id: number;
-	logoURL?: string;
-	name: string;
-	roleBriefs: RoleBrief[];
-};
-
-type AccountPostalAddresses = {
-	addressCountry: string;
-	addressLocality: string;
-	addressRegion: string;
-	addressType: string;
-	id: number;
-	name: string;
-	postalCode: number;
-	primary: boolean;
-	streetAddressLine1: string;
-	streetAddressLine2: string;
-	streetAddressLine3: string;
-};
-
-type AccountPostalAddresses = {
-	addressCountry: string;
-	addressLocality: string;
-	addressRegion: string;
-	addressType: string;
-	id: number;
-	name: string;
-	postalCode: number;
-	primary: boolean;
-	streetAddressLine1: string;
-	streetAddressLine2: string;
-	streetAddressLine3: string;
-};
-
-type AccountGroup = {
-	customFields: {};
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-};
-
-type AccountRole = {
-	accountId: number;
-	description: string;
-	displayName: string;
-	id: number;
-	name: string;
-	roleId: number;
+type APIResponse<Query = any> = {
+	actions: ObjectActions;
+	facets: Facets[];
+	items: Query[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
 };
 
 type Availability = {
@@ -290,6 +223,14 @@ type CartItem = {
 	skuId: number;
 };
 
+type Categories = {
+	externalReferenceCode: string;
+	id: string;
+	name: string;
+	value?: string;
+	vocabulary: string;
+};
+
 type Catalog = {
 	accountId: number | null;
 	currencyCode: string;
@@ -300,35 +241,6 @@ type Catalog = {
 	system: boolean;
 };
 
-type ContactSales = {
-	accountName: string;
-	additionalAppsRequested?: string | undefined;
-	comments?: string | undefined;
-	email: string;
-	name: string;
-};
-
-type EmailAppInformation = {
-	dashboardLink: string;
-	orderID: number;
-	priceModel?: string;
-	productName?: string;
-	productType: string;
-};
-
-type Vocabulary = {
-	description: string;
-	externalReferenceCode: string;
-	id: string;
-	name: string;
-	parentTaxonomyVocabulary: {
-		id: number;
-		name: string;
-	};
-	siteId: number;
-	taxonomyVocabularyId: number;
-};
-
 type Channel = {
 	channelId: number;
 	currencyCode: string;
@@ -337,6 +249,55 @@ type Channel = {
 	name: string;
 	siteGroupId: number;
 	type: string;
+};
+
+type CheckboxRole = {
+	isChecked: boolean;
+	roleName: string;
+};
+
+type CheckboxVersion = {
+	isChecked: boolean;
+	versionName: string;
+};
+
+type CommerceAccount = {
+	active: boolean;
+	logoURL: string;
+	taxId: string;
+} & Omit<Account, 'description'>;
+
+type CommerceOption = {
+	id: number;
+	key: string;
+	name: string;
+};
+
+type ContactSales = {
+	accountName: string;
+	additionalAppsRequested?: string | undefined;
+	comments?: string | undefined;
+	email: string;
+	name: string;
+};
+
+type Creator = {
+	additionalName: string;
+	contentType: string;
+	externalReferenceCode: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	image: string;
+	name: string;
+};
+
+type CustomField = {
+	customValue: {
+		data: string | string[];
+	};
+	dataType?: string;
+	name: string;
 };
 
 type DefaultProperties = {
@@ -351,16 +312,101 @@ type DefaultProperties = {
 	trialEulaURL: string;
 };
 
-interface CommerceAccount extends Omit<Account, 'description'> {
-	active: boolean;
-	logoURL: string;
-	taxId: string;
-}
-
-type CommerceOption = {
+type DeliveryProduct = {
+	attachments: DeliveryProductAttachment[];
+	catalogName?: string;
+	categories: ProductCategories[];
+	createDate: string;
+	customFields?: CustomField[];
+	description: string;
+	externalReferenceCode: string;
 	id: number;
-	key: string;
+	images: ProductImages[];
+	modifiedDate: string;
 	name: string;
+	productId: number;
+	productSpecifications: DeliveryProductSpecification[];
+	productType: string;
+	shortDescription: string;
+	skus: DeliverySKU[];
+	urlImage: string;
+};
+
+type DeliveryProductAttachment = {
+	customFields: CustomField[];
+	galleryEnabled: boolean;
+	id: number;
+	priority: number;
+	src: string;
+	tags?: string[];
+	title: string;
+	type: number;
+};
+
+type DeliveryProductSpecification = {
+	id: number;
+	optionCategoryId: number;
+	priority: number;
+	specificationGroupKey: string;
+	specificationGroupTitle: string;
+	specificationId: number;
+	specificationKey: string;
+	specificationTitle: string;
+	value: string;
+};
+
+type DeliverySKU = {
+	customFields?: CustomField[];
+	externalReferenceCode: string;
+	id: number;
+	price: {price: number; priceFormatted: string};
+	purchasable: boolean;
+	sku: string;
+	skuOptions: DeliverySKUOption[];
+	tierPrices?: TierPrice[];
+};
+
+type DeliverySKUOption = {
+	skuOptionKey: string;
+	skuOptionValueKey: string;
+};
+
+type FaroSubscription = {
+	active: boolean;
+	addOns: any[];
+	endDate: null;
+	individualsCountSinceLastAnniversary: number;
+	individualsCounts: null;
+	individualsLimit: number;
+	individualsStatus: number;
+	lastAnniversaryDate: null;
+	name: string;
+	pageViewsCountSinceLastAnniversary: number;
+	pageViewsCounts: null;
+	pageViewsLimit: number;
+	pageViewsStatus: number;
+	startDate: number;
+	syncedIndividualsCount: number;
+};
+
+type ListTypeDefinition = {
+	externalReferenceCode: string;
+	id: number;
+	listTypeEntries: {
+		externalReferenceCode: string;
+		key: string;
+		name: string;
+		name_i18n: {
+			[key: string]: string;
+		};
+	}[];
+	name: string;
+};
+
+type OfferingType = {
+	description: string;
+	disabled?: boolean;
+	label: string;
 };
 
 type Order = {
@@ -417,9 +463,23 @@ type OrderType = {
 	name: {[key: string]: string};
 };
 
+type OptionCategory = {
+	description?: {[key: string]: string};
+	id?: number;
+	key?: string;
+	priority?: number;
+	title?: {[key: string]: string};
+};
+
 type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
 
-interface PlacedOrder {
+type PermissionDescription = {
+	permissionName: string;
+	permissionTooltip: string;
+	permittedRoles: string[];
+};
+
+type PlacedOrder = {
 	account: string;
 	accountId: number;
 	author: string;
@@ -440,9 +500,9 @@ interface PlacedOrder {
 		label: string;
 		label_i18n: string;
 	};
-}
+};
 
-interface PlacedOrderItems {
+type PlacedOrderItems = {
 	id: number;
 	name: string;
 	options: string;
@@ -459,28 +519,9 @@ interface PlacedOrderItems {
 	version: string;
 	virtualItemURLs: string;
 	virtualItems: VirtualItem[];
-}
+};
 
-interface VirtualItem {
-	productVersion?: String;
-	url: string;
-	usages: number;
-	version: string;
-}
-
-interface PostalAddressResponse {
-	addressCountry: string;
-	addressLocality: string;
-	addressRegion: string;
-	addressType: string;
-	id: number;
-	name: string;
-	postalCode: string;
-	streetAddressLine1: string;
-	streetAddressLine2: string;
-}
-
-interface PostCartResponse {
+type PostCartResponse = {
 	account: string;
 	accountId: number;
 	author: string;
@@ -506,13 +547,13 @@ interface PostCartResponse {
 	paymentStatusLabel: string;
 	purchaseOrderNumber: string;
 	status: string;
-}
+};
 
-interface PostCheckoutCartResponse extends PostCartResponse {
+type PostCheckoutCartResponse = {
 	cartItems: CartItem[];
-}
+} & PostCartResponse;
 
-interface Product {
+type Product = {
 	active: boolean;
 	attachments: ProductAttachment[];
 	catalog: Catalog;
@@ -540,65 +581,9 @@ interface Product {
 		label: string;
 		label_i18n: string;
 	};
-}
-
-interface DeliveryProductAttachment {
-	customFields: CustomField[];
-	galleryEnabled: boolean;
-	id: number;
-	priority: number;
-	src: string;
-	tags?: string[];
-	title: string;
-	type: number;
-}
-
-interface DeliveryProductSpecification {
-	id: number;
-	optionCategoryId: number;
-	priority: number;
-	specificationGroupKey: string;
-	specificationGroupTitle: string;
-	specificationId: number;
-	specificationKey: string;
-	specificationTitle: string;
-	value: string;
-}
-
-type DeliverySKU = {
-	customFields?: CustomField[];
-	externalReferenceCode: string;
-	id: number;
-	price: {price: number; priceFormatted: string};
-	purchasable: boolean;
-	sku: string;
-	skuOptions: DeliverySKUOption[];
-	tierPrices?: TierPrice[];
 };
 
-type DeliverySKUOption = {skuOptionKey: string; skuOptionValueKey: string};
-
-interface DeliveryProduct {
-	attachments: DeliveryProductAttachment[];
-	catalogName?: string;
-	categories: ProductCategories[];
-	createDate: string;
-	customFields?: CustomField[];
-	description: string;
-	externalReferenceCode: string;
-	id: number;
-	images: ProductImages[];
-	modifiedDate: string;
-	name: string;
-	productId: number;
-	productSpecifications: DeliveryProductSpecification[];
-	productType: string;
-	shortDescription: string;
-	skus: DeliverySKU[];
-	urlImage: string;
-}
-
-interface ProductAttachment {
+type ProductAttachment = {
 	customFields?: CustomField[];
 	externalReferenceCode: string;
 	fileEntryId: number;
@@ -608,7 +593,7 @@ interface ProductAttachment {
 	src: string;
 	tags?: string[];
 	title: {[key: string]: string};
-}
+};
 
 type ProductCategories = {
 	externalReferenceCode: string;
@@ -617,50 +602,13 @@ type ProductCategories = {
 	vocabulary: string;
 };
 
-interface ProductImages extends ProductAttachment {}
+type ProductImages = ProductAttachment;
 
 type ProductOptionItem = {
 	id: number;
 	key: string;
 	name: string;
 	optionId: number;
-};
-
-type RoleBrief = {
-	id: number;
-	name: string;
-};
-
-type PermissionDescription = {
-	permissionName: string;
-	permissionTooltip: string;
-	permittedRoles: string[];
-};
-
-type SKU = {
-	cost: number;
-	customFields?: CustomField[];
-	externalReferenceCode: string;
-	id: number;
-	price: number;
-	sku: string;
-	skuOptions: {key: string; value: string}[];
-};
-
-type OptionCategory = {
-	description?: {[key: string]: string};
-	id?: number;
-	key?: string;
-	priority?: number;
-	title?: {[key: string]: string};
-};
-
-type Specification = {
-	description?: {[key: string]: string};
-	id?: number;
-	key?: string;
-	optionCategory?: OptionCategory;
-	title?: {[key: string]: string};
 };
 
 type ProductSpecification = {
@@ -673,11 +621,64 @@ type ProductSpecification = {
 	value: {[key: string]: string};
 };
 
+type PublisherRequestInfo = {
+	emailAddress?: string;
+	extension?: string;
+	firstName?: string;
+	id?: number;
+	lastName?: string;
+	phone?: {
+		code: string;
+		flag: string;
+	};
+	phoneNumber?: string;
+	publisherType: string[];
+	requestDescription?: string;
+	requestStatus?: {
+		key: string;
+		name: string;
+	};
+};
+
+type RadioOption<T> = {
+	index: number;
+	value: T;
+};
+
+type RoleBrief = {
+	id: number;
+	name: string;
+};
+
+type SKU = {
+	cost: number;
+	customFields?: CustomField[];
+	externalReferenceCode: string;
+	id: number;
+	price: number;
+	sku: string;
+	skuOptions: {key: string; value: string}[];
+};
+
+type Specification = {
+	description?: {[key: string]: string};
+	id?: number;
+	key?: string;
+	optionCategory?: OptionCategory;
+	title?: {[key: string]: string};
+};
+
 type TierPrice = {
 	currency: string;
 	price: number;
 	priceFormatted: string;
 	quantity: number;
+};
+
+type TimeZone = {
+	country: string;
+	displayTimeZone: string;
+	timeZoneId: string;
 };
 
 type UserAccount = {
@@ -698,105 +699,11 @@ type UserAccount = {
 	password: string;
 	roleBriefs: {id: number; name: string}[];
 	type: string;
-	userAccountContactInformation?: {
-		telephones?: UserAccoutTelephone[];
-	};
 };
 
-type RequestBody = {
-	[keys: string]: string;
-};
-
-interface CheckboxRole {
-	isChecked: boolean;
-	roleName: string;
-}
-
-type UserLogged = {
-	accountBriefs: AccountBrief[];
-	isAdminAccount: boolean;
-	isCustomerAccount: boolean;
-	isPublisherAccount: boolean;
-};
-
-type AdditionalInfoBody = {
-	acceptInviteStatus: boolean;
-	accountName: string;
-	emailOfMember: string;
-	id?: number;
-	inviteURL: string;
-	inviterName: string;
-	mothersName: string;
-	r_accountEntryToUserAdditionalInfo_accountEntryId: number;
-	r_userToUserAddInfo_userId: string;
-	roles: string;
-	sendType: {key: string; name: string};
-	userFirstName: string;
-};
-
-type PhonesFlags = {
-	code: string;
-	flag: string;
-};
-
-type Industries = {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: {
-		'en-US': string;
-	};
-};
-
-type UserAccoutTelephone = {
-	extension?: string;
-	id?: number;
-	phoneNumber?: string;
-	phoneType?: string;
-	primary?: boolean;
-};
-
-type UserForm = {
-	accountQuantity: number;
-	accountSelected: Account | undefined;
-	accounts: Account[];
-	companyName: string;
-	emailAddress: string;
-	extension?: string | undefined;
-	familyName: string;
-	givenName: string;
-	industry: string;
-	phone: PhonesFlags;
-	phoneNumber: string;
-};
-
-type OfferingType = {
-	description: string;
-	disabled?: boolean;
-	label: string;
-};
-
-type OrderInfo = {
-	account: Account | UserForm;
-	product?: Product;
-	sku?: number;
-	specifications?: ProductSpecification[];
-};
-
-type RadioOption<T> = {
-	index: number;
-	value: T;
-};
-
-type StorageType = 'persisted' | 'temporary';
-
-type APIResponse<Query = any> = {
-	actions: ObjectActions;
-	facets: Facets[];
-	items: Query[];
-	lastPage: number;
-	page: number;
-	pageSize: number;
-	totalCount: number;
+type VirtualItem = {
+	productVersion?: String;
+	url: string;
+	usages: number;
+	version: string;
 };

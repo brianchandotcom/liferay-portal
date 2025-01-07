@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,16 +8,26 @@ package com.liferay.headless.builder.upgrade.v0_2_0.test;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -28,8 +38,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Alejandro Tardín
+ * @author Alberto Javier Moreno Lage
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @FeatureFlags("LPS-178642")
 public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
@@ -109,6 +120,69 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 			_listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
 					"SCOPE_PICKLIST", TestPropsValues.getCompanyId()));
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/00-old-list-type-definition.json")),
+			"headless-batch-engine/v1.0/import-task/com.liferay.headless." +
+				"admin.list.type.dto.v1_0.ListTypeDefinition",
+			Http.Method.POST);
+
+		_waitForImportCompletion(jsonObject);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			new String(
+				FileUtil.getBytes(
+					getClass(), "dependencies/01-old-object-definition.json")),
+			"headless-batch-engine/v1.0/import-task/com.liferay.object.admin." +
+				"rest.dto.v1_0.ObjectDefinition",
+			Http.Method.POST);
+
+		_waitForImportCompletion(jsonObject);
+
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator,
+			"com.liferay.headless.builder.internal.upgrade.v0_2_0." +
+				"ModifyAPIBuilderPicklistsUpgradeProcess");
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		try {
+			SystemProperties.clear("liferay.mode");
+
+			StartupHelperUtil.setUpgrading(true);
+
+			upgradeProcess.upgrade();
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+
+			StartupHelperUtil.setUpgrading(false);
+		}
+	}
+
+	private void _waitForImportCompletion(JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task",
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode")),
+				Http.Method.GET);
+
+			String actualExecuteStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
+				StringUtil.equals(actualExecuteStatus, "FAILED")) {
+
+				break;
+			}
+		}
 	}
 
 	private static StopWatch _originalStopWatch;
@@ -123,8 +197,5 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

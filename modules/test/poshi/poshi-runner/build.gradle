@@ -3,9 +3,6 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 apply plugin: "com.liferay.poshi.runner"
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildCSS {
 	ext {
 		autoClean = false
@@ -43,6 +40,9 @@ dependencies {
 }
 
 task release(type: ReplaceRegexTask)
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 deploy {
 	from configurations.runtimeOnly

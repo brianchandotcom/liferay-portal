@@ -7,12 +7,17 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldValueUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.NumericDDMFormFieldTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -45,7 +50,13 @@ public class NumericDDMFormFieldTemplateContextContributor
 		String dataType = GetterUtil.getString(
 			DDMFormFieldTypeUtil.getChangedPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext, "dataType"));
+
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
+
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
 
 		return HashMapBuilder.<String, Object>put(
 			"confirmationErrorMessage",
@@ -66,6 +77,8 @@ public class NumericDDMFormFieldTemplateContextContributor
 			"htmlAutocompleteAttribute",
 			GetterUtil.getString(
 				ddmFormField.getProperty("htmlAutocompleteAttribute"))
+		).put(
+			"localizedObjectField", localizedObjectField
 		).put(
 			"placeholder",
 			DDMFormFieldTypeUtil.getPropertyValue(
@@ -88,16 +101,32 @@ public class NumericDDMFormFieldTemplateContextContributor
 		).put(
 			"value",
 			() -> {
-				String value = _htmlParser.extractText(
-					ddmFormFieldRenderingContext.getValue());
+				if (localizedObjectField) {
+					JSONObject localizedValueJSONObject =
+						DDMFormFieldValueUtil.getValueJSONObject(
+							ddmFormFieldRenderingContext);
 
-				if (Objects.equals(value, "NaN")) {
-					return StringPool.BLANK;
+					Map<String, Object> localizedValue =
+						localizedValueJSONObject.toMap();
+
+					for (Map.Entry<String, Object> entry :
+							localizedValue.entrySet()) {
+
+						localizedValue.put(
+							entry.getKey(),
+							_getValue(String.valueOf(entry.getValue())));
+					}
+
+					return _jsonFactory.createJSONObject(localizedValue);
 				}
 
 				return getFormattedValue(
-					ddmFormFieldRenderingContext, locale, value);
+					ddmFormFieldRenderingContext, locale,
+					_getValue(ddmFormFieldRenderingContext.getValue()));
 			}
+		).putAll(
+			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
+				ddmForm.getDefaultLocale())
 		).putAll(
 			NumericDDMFormFieldTypeUtil.getParameters(
 				dataType, ddmFormField, ddmFormFieldRenderingContext)
@@ -124,7 +153,20 @@ public class NumericDDMFormFieldTemplateContextContributor
 		return value;
 	}
 
+	private String _getValue(String value) {
+		value = _htmlParser.extractText(value);
+
+		if (Objects.equals(value, "NaN")) {
+			return StringPool.BLANK;
+		}
+
+		return value;
+	}
+
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

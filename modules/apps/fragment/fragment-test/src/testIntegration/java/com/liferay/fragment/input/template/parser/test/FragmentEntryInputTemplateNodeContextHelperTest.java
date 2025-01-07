@@ -141,7 +141,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	}
 
 	@Test
-	public void testGetMultiPicklistSelectInfoFieldTypeValue()
+	public void testGetMultiselectPicklistSelectInfoFieldTypeValue()
 		throws Exception {
 
 		ListTypeEntry listTypeEntry2 = _listTypeEntries.get(1);

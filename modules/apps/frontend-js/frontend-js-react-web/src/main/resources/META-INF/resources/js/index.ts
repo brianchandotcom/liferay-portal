@@ -15,7 +15,6 @@ export {default as useStateSafe} from './hooks/useStateSafe';
 export {default as useThunk} from './hooks/useThunk';
 export {default as useTimeout} from './hooks/useTimeout';
 export {default as render} from './render';
-export {default as ReactDOMServer} from 'react-dom/server';
 
 // Egregious hack because react-dnd expects `window.process` to exist:
 //

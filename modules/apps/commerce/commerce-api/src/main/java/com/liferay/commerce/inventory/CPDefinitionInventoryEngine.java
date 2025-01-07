@@ -17,35 +17,44 @@ import java.util.Locale;
  */
 public interface CPDefinitionInventoryEngine {
 
-	public String[] getAllowedOrderQuantities(CPInstance cpInstance)
+	public String[] getAllowedOrderQuantities(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public String getAvailabilityEstimate(CPInstance cpInstance, Locale locale)
+	public String getAvailabilityEstimate(
+			long cpConfigurationListId, CPInstance cpInstance, Locale locale)
 		throws PortalException;
 
 	public String getKey();
 
 	public String getLabel(Locale locale);
 
-	public BigDecimal getMaxOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMaxOrderQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public BigDecimal getMinOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMinOrderQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public BigDecimal getMinStockQuantity(CPInstance cpInstance)
+	public BigDecimal getMinStockQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public BigDecimal getMultipleOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMultipleOrderQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public boolean isBackOrderAllowed(CPInstance cpInstance)
+	public boolean isBackOrderAllowed(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public boolean isDisplayAvailability(CPInstance cpInstance)
+	public boolean isDisplayAvailability(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
-	public boolean isDisplayStockQuantity(CPInstance cpInstance)
+	public boolean isDisplayStockQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException;
 
 }

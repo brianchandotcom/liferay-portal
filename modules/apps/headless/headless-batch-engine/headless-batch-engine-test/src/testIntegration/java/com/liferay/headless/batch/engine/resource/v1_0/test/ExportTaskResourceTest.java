@@ -317,10 +317,11 @@ public class ExportTaskResourceTest {
 	);
 
 	private static final List<String> _untestableDTOClassNames = Arrays.asList(
-		"com.liferay.headless.admin.user.dto.v1_0.PostalAddress",
-		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		"com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory",
-		"com.liferay.headless.delivery.dto.v1_0.WikiPage");
+		"com.liferay.headless.admin.user.dto.v1_0.PostalAddress",
+		"com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinitionLink",
+		"com.liferay.headless.delivery.dto.v1_0.WikiPage",
+		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship");
 
 	@Inject
 	private static VulcanBatchEngineTaskItemDelegateRegistry

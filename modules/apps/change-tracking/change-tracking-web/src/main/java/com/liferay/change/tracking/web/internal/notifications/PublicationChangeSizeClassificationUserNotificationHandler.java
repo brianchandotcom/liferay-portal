@@ -56,7 +56,7 @@ public class PublicationChangeSizeClassificationUserNotificationHandler
 		Locale locale = serviceContext.getLocale();
 
 		return _language.format(
-			locale, "the-publication-x-is-now-a-x",
+			locale, "the-size-of-publication-x-has-changed-from-x-to-x",
 			new Object[] {
 				ctCollection.getName(),
 				_language.get(

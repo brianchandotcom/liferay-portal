@@ -65,7 +65,7 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(0, cpInstance)) {
 			return true;
 		}
 

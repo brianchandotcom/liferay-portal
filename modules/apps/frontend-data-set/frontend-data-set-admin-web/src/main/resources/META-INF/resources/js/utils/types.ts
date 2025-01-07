@@ -73,6 +73,18 @@ export interface IDataSet {
 	tableSectionsOrder?: string;
 }
 
+export interface ISystemDataSet {
+	additionalAPIURLParameters: string;
+	defaultItemsPerPage: number;
+	description: string;
+	name: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+	symbol: string;
+	title: string;
+}
+
 export interface IField {
 	children?: Array<IField>;
 	format?: EFieldFormat;

@@ -12,6 +12,10 @@
 		module="{SystemDataSets} from frontend-data-set-admin-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"importSystemDataSetURL", fdsAdminDisplayContext.getImportSystemDataSetURL()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
 				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
 			).build()
 		%>'

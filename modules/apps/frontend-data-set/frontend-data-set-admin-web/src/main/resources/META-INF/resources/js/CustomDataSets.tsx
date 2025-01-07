@@ -27,7 +27,7 @@ import {
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
-import {IDataSet} from './utils/types';
+import {IDataSet, ISystemDataSet} from './utils/types';
 
 const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
 const DEFAULT_ITEMS_PER_PAGE = 20;
@@ -519,6 +519,7 @@ const CustomDataSets = ({
 	permissionsURL,
 	resolvedRESTSchemas,
 	restApplications,
+	systemDataSets,
 }: {
 	editDataSetURL: string;
 	hasAddDataSetObjectEntryPermission: boolean;
@@ -526,7 +527,20 @@ const CustomDataSets = ({
 	permissionsURL: string;
 	resolvedRESTSchemas: Array<string>;
 	restApplications: Array<string>;
+	systemDataSets: Array<ISystemDataSet>;
 }) => {
+	const getAPIURL = () => {
+		if (!systemDataSets.length) {
+			return API_URL.DATA_SETS;
+		}
+
+		const systemDataSetNames: string = systemDataSets
+			.map((systemDataSet) => `'${systemDataSet.name}'`)
+			.join(',');
+
+		return `${API_URL.DATA_SETS}?filter=not (externalReferenceCode in (${systemDataSetNames}))`;
+	};
+
 	const getEditURL = (itemData: IDataSet) => {
 		const url = new URL(editDataSetURL);
 
@@ -653,7 +667,7 @@ const CustomDataSets = ({
 		<div className="custom-data-sets data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={API_URL.DATA_SETS}
+				apiURL={getAPIURL()}
 				creationMenu={
 					hasAddDataSetObjectEntryPermission
 						? creationMenu

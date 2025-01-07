@@ -23,6 +23,8 @@
 				"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
 			).put(
 				"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
+			).put(
+				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
 			).build()
 		%>'
 	/>

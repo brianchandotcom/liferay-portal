@@ -529,6 +529,8 @@ export default {
 		'You cannot upload more than {0} files.',
 	'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project':
 		'You currently do not have access to any Cloud Projects. Please login as a user that has access to a project or contact your project administrator to add you to a project.',
+	'you-currently-do-not-have-access-to-any-cloud-projects-which-may-restrict-the-functionalities-available-to-you':
+		'You currently do not have access to any Cloud Projects, which may restrict the functionalities available to you.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

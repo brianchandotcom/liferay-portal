@@ -1483,6 +1483,22 @@ test.describe('Styles Configuration', () => {
 			})
 		).toBe('5px');
 
+		// Change Margin Top value to a custom value
+
+		await pageEditorPage.changeFragmentSpacing(
+			headingId,
+			'Margin Top',
+			'auto',
+			'custom'
+		);
+		expect(
+			await pageEditorPage.getFragmentStyle({
+				fragmentId: headingId,
+				isTopperStyle: true,
+				style: 'marginTop',
+			})
+		).toBe('0px');
+
 		// Change Margin Top with token value and check change is applied
 
 		await pageEditorPage.changeFragmentSpacing(

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -32,6 +33,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -71,6 +73,13 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 		PortletPreferences portletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, _portletId);
 
+		portletPreferences.setValue(
+			"formInstanceId", String.valueOf(RandomTestUtil.randomLong()));
+
+		_runUpgrade();
+
+		_assertPortletPreferences(Collections.emptyMap());
+
 		DDMFormInstance ddmFormInstance =
 			DDMFormInstanceTestUtil.addDDMFormInstance(
 				_group, TestPropsValues.getUserId());
@@ -95,16 +104,7 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 				"groupId", String.valueOf(_group.getGroupId())
 			).build());
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-		}
+		_runUpgrade();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			ddmFormInstance.getStructureId());
@@ -139,6 +139,19 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 
 			Assert.assertArrayEquals(
 				new String[] {entry.getValue()}, map.get(entry.getKey()));
+		}
+	}
+
+	private void _runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
 		}
 	}
 

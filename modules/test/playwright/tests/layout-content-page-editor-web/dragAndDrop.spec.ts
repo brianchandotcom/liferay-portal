@@ -471,6 +471,22 @@ test(
 		await expect(
 			page.locator('.page-editor__topper__title', {hasText: 'Heading'})
 		).toBeVisible();
+
+		// Drag it outside again and check it's selected
+
+		await pageEditorPage.dragTreeNode({
+			position: 'top',
+			source: {label: 'Heading'},
+			target: {label: 'Collection Display'},
+		});
+
+		await expect(
+			page.locator('.page-editor__page-structure__tree-node').nth(0)
+		).toContainText('Heading');
+
+		await expect(
+			page.locator('.page-editor__topper__title', {hasText: 'Heading'})
+		).toBeVisible();
 	}
 );
 

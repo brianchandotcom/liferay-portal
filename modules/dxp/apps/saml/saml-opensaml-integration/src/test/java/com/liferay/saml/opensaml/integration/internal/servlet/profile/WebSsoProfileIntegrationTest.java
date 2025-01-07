@@ -348,7 +348,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_getMessageContextSubcontext(
 				samlSsoRequestContext, SAMLSelfEntityContext.class),
 			IDP_ENTITY_ID, IDPSSODescriptor.class);
-
 		_assertAbstractSAMLEntityContext(
 			_getMessageContextSubcontext(
 				samlSsoRequestContext, SAMLPeerEntityContext.class),
@@ -390,17 +389,15 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl.decodeAuthnRequest(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
-		_assertSamlSsoRequestContexts(1, mockHttpServletRequest.getSession());
-
 		_assertAbstractSAMLEntityContext(
 			_getMessageContextSubcontext(
 				samlSsoRequestContext, SAMLSelfEntityContext.class),
 			IDP_ENTITY_ID, IDPSSODescriptor.class);
-
 		_assertAbstractSAMLEntityContext(
 			_getMessageContextSubcontext(
 				samlSsoRequestContext, SAMLPeerEntityContext.class),
 			SP_ENTITY_ID, SPSSODescriptor.class);
+		_assertSamlSsoRequestContexts(1, mockHttpServletRequest.getSession());
 
 		SAMLBindingContext samlBindingContext = _getMessageContextSubcontext(
 			samlSsoRequestContext, SAMLBindingContext.class);

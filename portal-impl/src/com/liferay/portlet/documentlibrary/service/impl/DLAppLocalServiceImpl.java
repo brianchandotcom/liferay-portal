@@ -981,15 +981,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Subscribe the user to changes in the file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  groupId the primary key of the file entry's group
-	 * @param  fileEntryId the primary key of the file entry
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public void subscribeFileEntry(long userId, long groupId, long fileEntryId)
 		throws PortalException {
@@ -1024,15 +1015,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 	}
 
-	/**
-	 * Unsubscribe the user from changes in the file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param userId the primary key of the user
-	 * @param groupId the primary key of the file entry's group
-	 * @param fileEntryId the primary key of the file entry
-	 * @throws PortalException if a portal exception occurred
-	 */
 	public void unsubscribeFileEntry(
 			long userId, long groupId, long fileEntryId)
 		throws PortalException {

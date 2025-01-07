@@ -2679,14 +2679,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Subscribe the user to changes in the file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param  groupId the primary key of the file entry's group
-	 * @param  fileEntryId the primary key of the file entry
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public void subscribeFileEntry(long groupId, long fileEntryId)
 		throws PortalException {
@@ -2779,14 +2771,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		repository.unlockFolder(parentFolderId, name, lockUuid);
 	}
 
-	/**
-	 * Unsubscribe the user from changes in the file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param  groupId the primary key of the file entry's group
-	 * @param  fileEntryId the primary key of the file entry
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public void unsubscribeFileEntry(long groupId, long fileEntryId)
 		throws PortalException {

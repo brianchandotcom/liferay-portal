@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -50,6 +52,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -357,12 +360,23 @@ public class SearchBarPortletDisplayContextFactory {
 			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 
-		User user = themeDisplay.getUser();
+		List<Layout> layouts = themeDisplay.getLayouts();
 
-		List<UserGroup> userGroupList = user.getUserGroups();
+		Long scopeGroupClassPK = themeDisplay.getScopeGroup().getClassPK();
 
-		for (UserGroup userGroup : userGroupList) {
-			try {
+		try {
+			User user;
+
+			if(scopeGroupClassPK == themeDisplay.getUserId()) {
+				user = UserLocalServiceUtil.getUserById(
+					scopeGroupClassPK);
+			} else {
+				user = themeDisplay.getUser();
+			}
+
+			List<UserGroup> userGroupList = user.getUserGroups();
+
+			for (UserGroup userGroup : userGroupList) {
 				layout = fetchLayoutByFriendlyURL(
 					userGroup.getGroupId(), _slashify(destinationString));
 
@@ -370,9 +384,9 @@ public class SearchBarPortletDisplayContextFactory {
 					return getLayoutFriendlyURL(layout, themeDisplay);
 				}
 			}
-			catch (PortalException portalException) {
-				throw new RuntimeException(portalException);
-			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 
 		return null;

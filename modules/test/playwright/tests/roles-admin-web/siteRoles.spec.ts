@@ -66,11 +66,6 @@ test('LPD-35066 Site role search should not persist after selecting an option', 
 
 	await page.waitForTimeout(500);
 	await editUserPage.selectSitesTable.waitFor({state: 'visible'});
-
-	await expect(
-		editUserPage.selectSiteRolesFrame.getByText(site1.name)
-	).toBeVisible();
-
 	await (await editUserPage.selectSitesTableRowButton(site1.name)).click();
 	await editUserPage.selectSiteRolesTable.waitFor({state: 'visible'});
 

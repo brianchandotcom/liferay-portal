@@ -178,7 +178,7 @@ test('Allow changing image resolution in other viewports', async ({
 });
 
 test(
-	'Allow rotating an image via Page Content panel',
+	'Allow rotating and resizing an image via Page Content panel',
 	{tag: ['@LPS-133933']},
 	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
@@ -202,6 +202,13 @@ test(
 		// Select the image directly
 
 		await pageEditorPage.selectDirectImage('orange.jpg', imageId);
+
+		// Check current width
+
+		await page
+			.getByLabel('Configuration Panel')
+			.getByText('355px')
+			.waitFor();
 
 		// Go to page contents panel and edit image
 
@@ -229,6 +236,21 @@ test(
 			).toBeVisible({timeout: 1000});
 		}).toPass();
 
+		// Resize image
+
+		const resizer = page.locator('.cropper-point.point-w');
+
+		const x = await resizer.evaluate(
+			(element) => element.getBoundingClientRect().x
+		);
+
+		await resizer.hover();
+		await page.mouse.down();
+		await page.mouse.move(x + 20, 0);
+		await page.mouse.up();
+
+		// Save
+
 		await page.getByRole('button', {name: 'Save'}).click();
 
 		// Check version of image
@@ -236,5 +258,22 @@ test(
 		await expect(
 			page.locator('.page-editor__editable[src*="version=2.0"]')
 		).toBeVisible();
+
+		// Check width is not 355 anymore
+
+		await page.locator('header.page-editor__disabled-area').click();
+
+		await page.getByText('Select a Page Element', {exact: true}).waitFor();
+
+		await pageEditorPage.selectEditable(imageId, 'image-square');
+
+		await page
+			.getByLabel('Configuration Panel')
+			.getByText('Width:')
+			.waitFor();
+
+		await expect(
+			page.getByLabel('Configuration Panel').getByText('355px')
+		).not.toBeVisible();
 	}
 );

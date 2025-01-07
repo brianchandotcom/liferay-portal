@@ -246,7 +246,6 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
-
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),

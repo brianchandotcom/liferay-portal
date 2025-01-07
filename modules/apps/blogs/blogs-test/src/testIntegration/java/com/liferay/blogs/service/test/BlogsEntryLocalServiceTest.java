@@ -404,7 +404,6 @@ public class BlogsEntryLocalServiceTest {
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
-
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
@@ -1285,7 +1284,6 @@ public class BlogsEntryLocalServiceTest {
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
-
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),

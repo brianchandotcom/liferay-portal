@@ -21,14 +21,18 @@ import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -127,7 +131,8 @@ public class ProductHelperImpl implements ProductHelper {
 	}
 
 	@Override
-	public ProductSettingsModel getProductSettingsModel(long cpDefinitionId)
+	public ProductSettingsModel getProductSettingsModel(
+			long cpDefinitionId, CommerceContext commerceContext)
 		throws PortalException {
 
 		ProductSettingsModel productSettingsModel = new ProductSettingsModel();
@@ -139,31 +144,67 @@ public class ProductHelperImpl implements ProductHelper {
 		BigDecimal multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
-		CPDefinitionInventory cpDefinitionInventory =
-			_cpDefinitionInventoryLocalService.
-				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
 
-		if (cpDefinitionInventory != null) {
-			minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
-			maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
-			multipleQuantity = cpDefinitionInventory.getMultipleOrderQuantity();
+			if (cpDefinition != null) {
+				CPConfigurationEntry cpConfigurationEntry =
+					cpDefinition.getCPConfigurationEntry(
+						commerceContext.getCPConfigurationListId(
+							cpDefinition.getGroupId()));
 
-			BigDecimal[] allowedOrderQuantitiesArray =
-				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
+				minOrderQuantity = cpConfigurationEntry.getMinOrderQuantity();
+				maxOrderQuantity = cpConfigurationEntry.getMaxOrderQuantity();
+				multipleQuantity =
+					cpConfigurationEntry.getMultipleOrderQuantity();
 
-			if ((allowedOrderQuantitiesArray != null) &&
-				(allowedOrderQuantitiesArray.length > 0)) {
+				BigDecimal[] allowedOrderQuantitiesArray =
+					cpConfigurationEntry.getAllowedOrderQuantitiesArray();
 
-				productSettingsModel.setAllowedQuantities(
-					allowedOrderQuantitiesArray);
+				if ((allowedOrderQuantitiesArray != null) &&
+					(allowedOrderQuantitiesArray.length > 0)) {
+
+					productSettingsModel.setAllowedQuantities(
+						allowedOrderQuantitiesArray);
+				}
+
+				productSettingsModel.setBackOrders(
+					cpConfigurationEntry.isBackOrders());
+				productSettingsModel.setLowStockQuantity(
+					cpConfigurationEntry.getMinStockQuantity());
+				productSettingsModel.setShowAvailabilityDot(
+					cpConfigurationEntry.isDisplayAvailability());
 			}
+		}
+		else {
+			CPDefinitionInventory cpDefinitionInventory =
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
-			productSettingsModel.setBackOrders(
-				cpDefinitionInventory.isBackOrders());
-			productSettingsModel.setLowStockQuantity(
-				cpDefinitionInventory.getMinStockQuantity());
-			productSettingsModel.setShowAvailabilityDot(
-				cpDefinitionInventory.isDisplayAvailability());
+			if (cpDefinitionInventory != null) {
+				minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
+				maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
+				multipleQuantity =
+					cpDefinitionInventory.getMultipleOrderQuantity();
+
+				BigDecimal[] allowedOrderQuantitiesArray =
+					cpDefinitionInventory.getAllowedOrderQuantitiesArray();
+
+				if ((allowedOrderQuantitiesArray != null) &&
+					(allowedOrderQuantitiesArray.length > 0)) {
+
+					productSettingsModel.setAllowedQuantities(
+						allowedOrderQuantitiesArray);
+				}
+
+				productSettingsModel.setBackOrders(
+					cpDefinitionInventory.isBackOrders());
+				productSettingsModel.setLowStockQuantity(
+					cpDefinitionInventory.getMinStockQuantity());
+				productSettingsModel.setShowAvailabilityDot(
+					cpDefinitionInventory.isDisplayAvailability());
+			}
 		}
 
 		productSettingsModel.setMinQuantity(minOrderQuantity);
@@ -305,6 +346,9 @@ public class ProductHelperImpl implements ProductHelper {
 	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

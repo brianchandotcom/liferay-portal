@@ -2220,33 +2220,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		Tree tree = _createObjectEntryTree(accountEntry1, StringPool.BLANK);
 
-		_addResourcePermission(
-			ActionKeys.VIEW, _rootObjectDefinition, _buyerRole);
-
 		_user = _addUser();
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		Node rootNode = tree.getRootNode();
+		_assertFailureDeleteObjectEntry(ActionKeys.DELETE, tree);
 
-		TreeTestUtil.forEachNodeObjectEntry(
-			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			_objectEntryLocalService,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				AssertUtils.assertFailure(
-					PrincipalException.MustHavePermission.class,
-					StringBundler.concat(
-						"User ", _user.getUserId(),
-						" must have DELETE permission for ",
-						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootNode.getPrimaryKey()),
-					() -> _defaultObjectEntryManager.deleteObjectEntry(
-						objectDefinition, objectEntry.getObjectEntryId()));
-			});
+		// Users should be able to delete object entries restricted to accounts
+		// to which they belong
 
 		_addResourcePermission(
 			ActionKeys.DELETE, _rootObjectDefinition, _buyerRole);
@@ -2262,6 +2243,27 @@ public class DefaultObjectEntryManagerImplTest
 				_defaultObjectEntryManager.deleteObjectEntry(
 					objectDefinition, objectEntry.getObjectEntryId());
 			});
+
+		// Users should be prevented from deleting object entries restricted to
+		// accounts they do not belong to
+
+		tree = _createObjectEntryTree(accountEntry1, StringPool.BLANK);
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(accountEntry2, _accountManagerRole, _user);
+
+		_addResourcePermission(
+			ActionKeys.DELETE, _rootObjectDefinition, _accountManagerRole);
+
+		_assertFailureDeleteObjectEntry(ActionKeys.VIEW, tree);
+
+		_addResourcePermission(
+			ActionKeys.VIEW, _rootObjectDefinition, _accountManagerRole);
+
+		_assertFailureDeleteObjectEntry(ActionKeys.VIEW, tree);
 	}
 
 	@Test
@@ -5125,6 +5127,31 @@ public class DefaultObjectEntryManagerImplTest
 						String.valueOf(expectedValue)
 					).build();
 				}
+			});
+	}
+
+	private void _assertFailureDeleteObjectEntry(String actionId, Tree tree)
+		throws Exception {
+
+		Node rootNode = tree.getRootNode();
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				AssertUtils.assertFailure(
+					PrincipalException.MustHavePermission.class,
+					StringBundler.concat(
+						"User ", _user.getUserId(), " must have ", actionId,
+						" permission for ",
+						_rootObjectDefinition.getClassName(), StringPool.SPACE,
+						rootNode.getPrimaryKey()),
+					() -> _defaultObjectEntryManager.deleteObjectEntry(
+						objectDefinition, objectEntry.getObjectEntryId()));
 			});
 	}
 

@@ -337,11 +337,13 @@ test(
 test(
 	'Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed',
 	{tag: '@LPS-102566'},
-	async ({masterPagesPage, pageEditorPage, pagesAdminPage, site}) => {
+	async ({masterPagesPage, page, pageEditorPage, pagesAdminPage, site}) => {
 		const masterName = getRandomString();
 
 		let buttonId: string;
 		let buttonFragment: Locator;
+		let containerId: string;
+		let containerFragment: Locator;
 		let headingId: string;
 		let headingFragment: Locator;
 
@@ -352,15 +354,23 @@ test(
 			await masterPagesPage.editMaster(masterName);
 
 			await pageEditorPage.addFragment('Basic Components', 'Button');
-			await pageEditorPage.addFragment('Basic Components', 'Heading');
+			await pageEditorPage.addFragment('Layout Elements', 'Container');
+			await pageEditorPage.addFragment(
+				'Basic Components',
+				'Heading',
+				page.locator('[data-name="Container"]')
+			);
 
 			buttonId = await pageEditorPage.getFragmentId('Button');
 			buttonFragment = pageEditorPage.getFragment(buttonId);
+			containerId = await pageEditorPage.getFragmentId('Container');
+			containerFragment = pageEditorPage.getFragment(containerId);
 			headingId = await pageEditorPage.getFragmentId('Heading');
 			headingFragment = pageEditorPage.getFragment(headingId);
 
-			await pageEditorPage.hideFragment(headingId);
+			await pageEditorPage.hideFragment(containerId);
 
+			await expect(containerFragment).not.toBeVisible();
 			await expect(headingFragment).not.toBeVisible();
 
 			await pageEditorPage.publishPage();

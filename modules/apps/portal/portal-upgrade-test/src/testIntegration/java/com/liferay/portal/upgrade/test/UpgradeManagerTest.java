@@ -74,6 +74,8 @@ public class UpgradeManagerTest {
 	public void testUpgradeManager() throws Exception {
 		_restartComponentEnabler(true);
 
+		Assert.assertTrue(_isUpgradeManagerMBeanRegistered());
+
 		String originalResult = ReflectionTestUtil.getFieldValue(
 			_upgradeRecorder, "_result");
 		String originalType = ReflectionTestUtil.getFieldValue(

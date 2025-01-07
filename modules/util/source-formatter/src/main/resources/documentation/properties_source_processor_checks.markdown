@@ -12,6 +12,7 @@ PropertiesEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | 
 PropertiesEnvironmentVariablesCheck | [Documentation](documentation_checks.markdown#documentation-checks) | Verifies that the environment property in the documentation matches the property name. |
 PropertiesFeatureFlagsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Generate feature flags in `portal.properties` file. |
 PropertiesImportedFilesContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `imported-files.properties` file. |
+PropertiesLanguageContractionsCheck | [Styling](styling_checks.markdown#styling-checks) | Finds contractions (such as `can't` or `you're`). |
 [PropertiesLanguageKeysCheck](check/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there is no HTML markup in language keys. |
 PropertiesLanguageKeysContextCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks if the language keys include a word of context to indicate specific meaning. |
 PropertiesLanguageKeysOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sort language keys in `Language.properties` file. |

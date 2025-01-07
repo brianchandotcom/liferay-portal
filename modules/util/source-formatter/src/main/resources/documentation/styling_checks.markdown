@@ -148,6 +148,7 @@ PropertiesCommentsCheck | .eslintignore, .prettierignore or .properties | Valida
 PropertiesDefinitionKeysCheck | .eslintignore, .prettierignore or .properties | Sorts definition keys in `liferay-plugin-package.properties` file. |
 PropertiesDependenciesFileCheck | .eslintignore, .prettierignore or .properties | Sorts the properties in `dependencies.properties` file. |
 PropertiesEmptyLinesCheck | .eslintignore, .prettierignore or .properties | Finds missing and unnecessary empty lines. |
+PropertiesLanguageContractionsCheck | .eslintignore, .prettierignore or .properties | Finds contractions (such as `can't` or `you're`). |
 PropertiesLanguageKeysOrderCheck | .eslintignore, .prettierignore or .properties | Sort language keys in `Language.properties` file. |
 PropertiesLanguageStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
 PropertiesLongLinesCheck | .eslintignore, .prettierignore or .properties | Finds lines that are longer than the specified maximum line length. |

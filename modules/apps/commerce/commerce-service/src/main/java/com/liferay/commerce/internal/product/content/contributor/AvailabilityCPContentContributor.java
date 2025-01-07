@@ -79,21 +79,27 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		boolean displayAvailability =
-			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
+			cpDefinitionInventoryEngine.isDisplayAvailability(
+				commerceContext.getCPConfigurationListId(
+					cpInstance.getGroupId()),
+				cpInstance);
 
 		if (displayAvailability) {
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 			String availabilityStatus =
 				_commerceInventoryEngine.getAvailabilityStatus(
 					cpInstance.getCompanyId(), accountEntry.getAccountEntryId(),
 					cpInstance.getGroupId(), commerceChannel.getGroupId(),
-					cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
+					cpDefinitionInventoryEngine.getMinStockQuantity(
+						commerceContext.getCPConfigurationListId(
+							cpInstance.getGroupId()),
+						cpInstance),
 					cpInstance.getSku(), StringPool.BLANK);
 
 			ThemeDisplay themeDisplay =

@@ -103,7 +103,7 @@ public class AddToCartTag extends IncludeTag {
 				_productId = _cpCatalogEntry.getCProductId();
 
 				_productSettingsModel = _productHelper.getProductSettingsModel(
-					_cpCatalogEntry.getCPDefinitionId());
+					_cpCatalogEntry.getCPDefinitionId(), commerceContext);
 
 				BigDecimal multipleQuantity =
 					_productSettingsModel.getMultipleQuantity();

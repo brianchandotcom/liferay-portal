@@ -263,6 +263,8 @@ public class CommerceOrderGenerator {
 					getCPDefinitionInventoryEngine(cpDefinitionInventory);
 
 			BigDecimal maxOrderQuantity = _getMaxOrderQuantity(
+				commerceContext.getCPConfigurationListId(
+					cpInstance.getGroupId()),
 				cpInstance, cpDefinitionInventoryEngine);
 
 			if (BigDecimalUtil.lt(maxOrderQuantity, BigDecimal.ZERO)) {
@@ -273,7 +275,10 @@ public class CommerceOrderGenerator {
 
 			try {
 				BigDecimal minOrderQuantity =
-					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+					cpDefinitionInventoryEngine.getMinOrderQuantity(
+						commerceContext.getCPConfigurationListId(
+							cpInstance.getGroupId()),
+						cpInstance);
 
 				if (BigDecimalUtil.lt(maxOrderQuantity, minOrderQuantity)) {
 					continue;
@@ -441,7 +446,7 @@ public class CommerceOrderGenerator {
 	}
 
 	private BigDecimal _getMaxOrderQuantity(
-			CPInstance cpInstance,
+			long cpConfigurationListId, CPInstance cpInstance,
 			CPDefinitionInventoryEngine cpDefinitionInventoryEngine)
 		throws PortalException {
 
@@ -450,7 +455,8 @@ public class CommerceOrderGenerator {
 			cpInstance.getSku(), StringPool.BLANK);
 
 		BigDecimal maxOrderQuantity =
-			cpDefinitionInventoryEngine.getMaxOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMaxOrderQuantity(
+				cpConfigurationListId, cpInstance);
 
 		if (BigDecimalUtil.lt(stockQuantity, maxOrderQuantity)) {
 			return stockQuantity;

@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
@@ -21,6 +23,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -34,6 +38,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,6 +51,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -91,7 +97,14 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		if (!cpDefinition.isApproved() || !cpDefinition.isPublished()) {
+		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+
+		if (!cpDefinition.isApproved() || !cpDefinition.isPublished() ||
+			(FeatureFlagManagerUtil.isEnabled("LPD-10889") &&
+			 !cpDefinition.isVisible(
+				 commerceContext.getCPConfigurationListId(
+					 cpDefinition.getGroupId())))) {
+
 			return null;
 		}
 
@@ -410,6 +423,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CPDefinitionHelperImpl.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
@@ -417,6 +433,13 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationEntrySettingLocalService
+		_cpConfigurationEntrySettingLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

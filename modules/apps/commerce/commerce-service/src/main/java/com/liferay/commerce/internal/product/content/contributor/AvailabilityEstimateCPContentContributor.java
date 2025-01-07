@@ -104,7 +104,10 @@ public class AvailabilityEstimateCPContentContributor
 
 		if (BigDecimalUtil.gt(
 				stockQuantity,
-				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance))) {
+				cpDefinitionInventoryEngine.getMinStockQuantity(
+					commerceContext.getCPConfigurationListId(
+						cpDefinitionInventory.getGroupId()),
+					cpInstance))) {
 
 			available = true;
 		}
@@ -119,6 +122,8 @@ public class AvailabilityEstimateCPContentContributor
 				_getAvailabilityEstimateLabel(
 					themeDisplay.getLocale(),
 					cpDefinitionInventoryEngine.getAvailabilityEstimate(
+						commerceContext.getCPConfigurationListId(
+							cpInstance.getGroupId()),
 						cpInstance, themeDisplay.getLocale())));
 		}
 

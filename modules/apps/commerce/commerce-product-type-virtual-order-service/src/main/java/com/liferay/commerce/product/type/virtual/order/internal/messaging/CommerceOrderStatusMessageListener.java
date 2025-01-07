@@ -112,9 +112,14 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		if (BigDecimalUtil.lte(
 				stockQuantity,
-				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance))) {
+				cpDefinitionInventoryEngine.getMinStockQuantity(
+					commerceOrder.getCPConfigurationListId(
+						cpInstance.getGroupId()),
+					cpInstance))) {
 
 			commerceLowStockActivity.execute(cpInstance);
 		}

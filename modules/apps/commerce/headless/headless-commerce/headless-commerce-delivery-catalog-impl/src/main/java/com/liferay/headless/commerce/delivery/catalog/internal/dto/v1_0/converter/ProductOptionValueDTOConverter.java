@@ -324,14 +324,22 @@ public class ProductOptionValueDTOConverter
 										(cpInstance == null) ? 0 :
 											cpInstance.getCPInstanceId()
 									).cpInstanceMinQuantity(
-										_getMinOrderQuantity(cpInstance)
+										_getMinOrderQuantity(
+											commerceContext.
+												getCPConfigurationListId(
+													cpInstance.getGroupId()),
+											cpInstance)
 									).cpInstanceUnitOfMeasureKey(
 										cpDefinitionOptionValueRel.
 											getUnitOfMeasureKey()
 									).selectedCPInstanceId(
 										selectedCPInstance.getCPInstanceId()
 									).selectedCPInstanceMinQuantity(
-										_getMinOrderQuantity(selectedCPInstance)
+										_getMinOrderQuantity(
+											commerceContext.
+												getCPConfigurationListId(
+													cpInstance.getGroupId()),
+											selectedCPInstance)
 									).selectedCPDefinitionOptionValueRel(
 										selectedCPDefinitionOptionValueRel
 									).selectedCPInstanceUnitOfMeasureKey(
@@ -652,7 +660,8 @@ public class ProductOptionValueDTOConverter
 		return null;
 	}
 
-	private BigDecimal _getMinOrderQuantity(CPInstance cpInstance)
+	private BigDecimal _getMinOrderQuantity(
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException {
 
 		if (cpInstance == null) {
@@ -668,7 +677,8 @@ public class ProductOptionValueDTOConverter
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		return cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+		return cpDefinitionInventoryEngine.getMinOrderQuantity(
+			cpConfigurationListId, cpInstance);
 	}
 
 	private CPDefinitionOptionValueRel _getSelectedCPDefinitionOptionValueRel(

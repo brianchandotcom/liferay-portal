@@ -75,7 +75,9 @@ public class DefaultCommerceOrderValidatorImpl
 				cpDefinitionInventory);
 
 		BigDecimal minOrderQuantity =
-			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMinOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if (BigDecimalUtil.lt(quantity, minOrderQuantity)) {
 			return new CommerceOrderValidatorResult(
@@ -86,7 +88,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		BigDecimal maxOrderQuantity =
-			cpDefinitionInventoryEngine.getMaxOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMaxOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if (BigDecimalUtil.gt(maxOrderQuantity, BigDecimal.ZERO) &&
 			BigDecimalUtil.gt(quantity, maxOrderQuantity)) {
@@ -99,7 +103,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		String[] allowedOrderQuantities =
-			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
+			cpDefinitionInventoryEngine.getAllowedOrderQuantities(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
@@ -112,7 +118,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		BigDecimal multipleOrderQuantity =
-			cpDefinitionInventoryEngine.getMultipleOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMultipleOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if (!BigDecimalUtil.eq(
 				quantity.remainder(multipleOrderQuantity), BigDecimal.ZERO)) {
@@ -147,8 +155,12 @@ public class DefaultCommerceOrderValidatorImpl
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		BigDecimal minOrderQuantity =
-			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMinOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 
@@ -161,7 +173,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		BigDecimal maxOrderQuantity =
-			cpDefinitionInventoryEngine.getMaxOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMaxOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if (BigDecimalUtil.gt(maxOrderQuantity, BigDecimal.ZERO) &&
 			BigDecimalUtil.gt(quantity, maxOrderQuantity)) {
@@ -174,7 +188,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		String[] allowedOrderQuantities =
-			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
+			cpDefinitionInventoryEngine.getAllowedOrderQuantities(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
@@ -187,7 +203,9 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		BigDecimal multipleOrderQuantity =
-			cpDefinitionInventoryEngine.getMultipleOrderQuantity(cpInstance);
+			cpDefinitionInventoryEngine.getMultipleOrderQuantity(
+				commerceOrder.getCPConfigurationListId(cpInstance.getGroupId()),
+				cpInstance);
 
 		if (!BigDecimalUtil.eq(
 				quantity.remainder(multipleOrderQuantity), BigDecimal.ZERO)) {

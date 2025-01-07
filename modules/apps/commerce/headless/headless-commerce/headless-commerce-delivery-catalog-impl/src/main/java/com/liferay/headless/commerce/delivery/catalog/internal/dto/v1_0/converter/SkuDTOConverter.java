@@ -149,8 +149,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						accountEntry.getAccountEntryId(),
 						cpInstance.getGroupId(),
 						commerceContext.getCommerceChannelGroupId(),
-						skuDTOConverterContext.getCompanyId(), cpInstance,
-						cpInstance.getSku(),
+						skuDTOConverterContext.getCompanyId(),
+						commerceContext.getCPConfigurationListId(
+							cpInstance.getGroupId()),
+						cpInstance, cpInstance.getSku(),
 						skuDTOConverterContext.getUnitOfMeasureKey(),
 						skuDTOConverterContext.getLocale()));
 				setBackOrderAllowed(
@@ -167,6 +169,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 										cpDefinitionInventory);
 
 						return cpDefinitionInventoryEngine.isBackOrderAllowed(
+							commerceContext.getCPConfigurationListId(
+								cpInstance.getGroupId()),
 							cpInstance);
 					});
 				setCustomFields(
@@ -220,10 +224,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						skuDTOConverterContext.getQuantity()));
 				setProductConfiguration(
 					() -> _productConfigurationDTOConverter.toDTO(
-						new DefaultDTOConverterContext(
-							_dtoConverterRegistry,
-							cpInstance.getCPDefinitionId(),
-							skuDTOConverterContext.getLocale(), null, null)));
+						new ProductConfigurationDTOConverterContext(
+							commerceContext, cpInstance.getCPDefinitionId(),
+							skuDTOConverterContext.getLocale())));
 				setProductId(
 					() -> {
 						CPDefinition cpDefinition =
@@ -314,19 +317,22 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private Availability _getAvailability(
 			long accountEntryId, long commerceCatalogGroupId,
-			long commerceChannelGroupId, long companyId, CPInstance cpInstance,
-			String sku, String unitOfMeasureKey, Locale locale)
+			long commerceChannelGroupId, long companyId,
+			long cpConfigurationListId, CPInstance cpInstance, String sku,
+			String unitOfMeasureKey, Locale locale)
 		throws Exception {
 
 		Availability availability = new Availability();
 
-		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
+		if (_cpDefinitionInventoryEngine.isDisplayAvailability(
+				cpConfigurationListId, cpInstance)) {
+
 			if (Objects.equals(
 					_commerceInventoryEngine.getAvailabilityStatus(
 						cpInstance.getCompanyId(), accountEntryId,
 						commerceCatalogGroupId, commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
-							cpInstance),
+							cpConfigurationListId, cpInstance),
 						cpInstance.getSku(), unitOfMeasureKey),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
@@ -341,7 +347,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			}
 		}
 
-		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
+		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(
+				cpConfigurationListId, cpInstance)) {
+
 			availability.setStockQuantity(
 				() -> _commerceInventoryEngine.getStockQuantity(
 					companyId, accountEntryId, commerceCatalogGroupId,

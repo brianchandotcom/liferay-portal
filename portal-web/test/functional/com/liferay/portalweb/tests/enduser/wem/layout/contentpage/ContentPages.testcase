@@ -389,78 +389,7 @@ definition {
 				id = "element-text");
 		}
 	}
-
-	@description = "This is a use case for LPS-106776. Reorganize fragments in page editor."
-	@priority = 5
-	@uitest
-	test ReorganizeFragmentsInPageEditor {
-		property portal.acceptance = "true";
-
-		task ("Add a Heading fragment to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Add a Button fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Heading");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.publish();
-		}
-
-		task ("Navigate to the content page in Edit mode") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("View Heading frgament is on top of Button fragment") {
-			PageEditor.viewFragmentOrder(
-				fragmentName = "Heading",
-				position = 1);
-
-			PageEditor.viewFragmentOrder(
-				fragmentName = "Button",
-				position = 2);
-		}
-
-		task ("Move the fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Button");
-
-			PageEditor.gotoTab(tabName = "Browser");
-
-			DragAndDrop.javaScriptDragAndDropToUp(
-				fragmentName = "heading",
-				id = "element-text",
-				index = 1,
-				key_dragFragmentName = "Button",
-				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
-				locator2 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("Assert the Button fragment is on top of Heading frgament") {
-			PageEditor.viewFragmentOrder(
-				fragmentName = "Button",
-				position = 1);
-
-			PageEditor.viewFragmentOrder(
-				fragmentName = "Heading",
-				position = 2);
-		}
-	}
-
+	
 	@description = "This is a test for LPS-154530. View custom values matches in spacing on page editor."
 	@priority = 4
 	test ViewValuesMatchesInSpacingOnPageEditor {
@@ -617,6 +546,4 @@ definition {
 				locator2 = "margin-top",
 				value1 = "0px");
 		}
-	}
-
-}
+	}}

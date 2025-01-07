@@ -392,9 +392,12 @@ export class PageEditorPage {
 
 			await this.page.getByRole('menuitem', {name: unit}).click();
 
-			const input = this.page.getByRole('spinbutton', {
-				name: spacingType,
-			});
+			const input = this.page.getByRole(
+				unit === 'custom' ? 'textbox' : 'spinbutton',
+				{
+					name: spacingType,
+				}
+			);
 
 			await fillAndClickOutside(this.page, input, value);
 

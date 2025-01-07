@@ -215,122 +215,145 @@ test.describe('General configuration', () => {
 	);
 });
 
-test.describe('Page types configuration', () => {
-	test('Can configure an embedded page', async ({
-		apiHelpers,
-		page,
-		pageConfigurationPage,
-		pagesAdminPage,
-		site,
-	}) => {
-		await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			options: {
-				type: 'embedded',
-			},
-			title: 'Embedded',
-		});
+test.describe('Design configuration', () => {
+	test(
+		'Add CSS extension to page',
+		{
+			tag: '@LPS-153656',
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+			// Create a new CSS client extension with a script element attribute
 
-		await pageConfigurationPage.setInputValueAndSave(
-			page.getByLabel('URL').first(),
-			'Embedded',
-			'General',
-			'https://www.google.com'
-		);
+			const clientExtensionName = getRandomString();
 
-		// Check URL was updated
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+			// Create a layout
 
-		await pageConfigurationPage.goToSection('Embedded', 'General');
+			const layoutTitle = getRandomString();
 
-		await expect(page.getByLabel('URL').first()).toHaveValue(
-			'https://www.google.com'
-		);
-	});
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
 
-	test('Can configure a full page application', async ({
-		apiHelpers,
-		page,
-		pageConfigurationPage,
-		pagesAdminPage,
-		site,
-	}) => {
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			options: {
-				type: 'full_page_application',
-			},
-			title: 'Full Page Application',
-		});
+			// Apply CSS client extension to page
 
-		await pagesAdminPage.goto(site.friendlyUrlPath);
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
+			});
 
-		await pageConfigurationPage.goToSection(
-			'Full Page Application',
-			'General'
-		);
+			// Check CSS is attached to the page in view mode
 
-		await selectAndExpectToHaveValue({
-			optionLabel: 'Wiki',
-			select: page.getByLabel('Full Page Application'),
-		});
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
 
-		await pageConfigurationPage.save();
+			await expect(
+				page.locator('link[href="https://www.example.com/style.css"]')
+			).toBeAttached();
 
-		// Go to view mode of page
+			// Clean up
 
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-		await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
-	});
-
-	test('Can configure a panel page', async ({
-		apiHelpers,
-		page,
-		pageConfigurationPage,
-		pagesAdminPage,
-		site,
-	}) => {
-
-		// Create page and go to General configuration
-
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			options: {
-				type: 'panel',
-			},
-			title: 'Panel',
-		});
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await pageConfigurationPage.goToSection('Panel', 'General');
-
-		// Select Collaboration application
-
-		await page
-			.locator('.treeview-link[data-id*="collaboration"]')
-			.getByRole('checkbox')
-			.check();
-
-		await pageConfigurationPage.save();
-
-		// Go to view mode of page
-
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-		await expect(
-			page.getByRole('link', {exact: true, name: 'Blogs'})
-		).toBeVisible();
-	});
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
 
 	test(
-		'Can configure a link to page',
+		'Inherited CSS extensions from master pages should be read-only mode',
 		{
-			tag: '@LPS-159631',
+			tag: '@LPS-153656',
+		},
+		async ({
+			apiHelpers,
+			masterPagesPage,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new CSS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
+
+			// Add master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			// Apply CSS client extension to master page
+
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
+			});
+
+			// Publish master page
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				title: layoutTitle,
+			});
+
+			// Check inherited CSS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await expect(
+				page.locator('.global-css-cets-configuration tr', {
+					has: page.getByText('From Master'),
+				})
+			).toHaveClass(/disabled/);
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Inherited CSS extensions from pages should be read-only mode',
+		{
+			tag: '@LPS-153658',
 		},
 		async ({
 			apiHelpers,
@@ -340,89 +363,512 @@ test.describe('Page types configuration', () => {
 			site,
 		}) => {
 
-			// Create widget page
+			// Create a new CSS client extension with a style element attribute
 
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: getRandomString(),
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalCSS',
+						url: 'https://www.example.com/style.css',
+					}
+				);
+
+			// Apply CSS client extension to all pages
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalCSS',
 			});
 
-			// Create link to URL page
+			// Create a layout
 
-			const linkToURLTitle = getRandomString();
+			const layoutTitle = getRandomString();
 
 			await apiHelpers.jsonWebServicesLayout.addLayout({
 				groupId: site.id,
-				options: {
-					type: 'url',
-				},
-				title: linkToURLTitle,
+				title: layoutTitle,
 			});
 
-			// Update URL
+			// Check inherited CSS client extension is read-only
 
 			await pagesAdminPage.goto(site.friendlyUrlPath);
 
-			await pageConfigurationPage.setInputValueAndSave(
-				page.getByLabel('URL').first(),
-				linkToURLTitle,
-				'General',
-				'https://www.google.com'
-			);
-
-			// Navigate to page
-
-			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
-
-			// Check target is not set
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
 
 			await expect(
-				page.getByRole('menuitem', {name: linkToURLTitle})
-			).not.toHaveAttribute('target');
+				page.locator('.global-css-cets-configuration tr', {
+					has: page.getByText('From Pages'),
+				})
+			).toHaveClass(/disabled/);
 
-			// Update specific target to _blank
+			// Clean up
 
-			await pagesAdminPage.goto(site.friendlyUrlPath);
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
 
-			await pageConfigurationPage.setInputValueAndSave(
-				page.getByLabel('Target', {exact: true}),
-				linkToURLTitle,
-				'General',
-				'_blank'
-			);
+	test(
+		'Add JS extension to page',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
 
-			// Navigate to page
+			// Create a new JS client extension with a script element attribute
 
-			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+			const clientExtensionName = getRandomString();
 
-			// Check target is set to _blank
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalJS',
+						url: 'https://www.example.com/script.js',
+					}
+				);
 
-			await expect(
-				page.getByRole('menuitem', {name: linkToURLTitle})
-			).toHaveAttribute('target', '_blank');
+			// Create a layout
 
-			// Update target type to new tab
+			const layoutTitle = getRandomString();
 
-			await pagesAdminPage.goto(site.friendlyUrlPath);
-
-			await pageConfigurationPage.goToSection(linkToURLTitle, 'General');
-
-			await selectAndExpectToHaveValue({
-				optionLabel: 'New Tab',
-				select: page.getByLabel('Target type'),
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
 			});
 
-			await pageConfigurationPage.save();
+			// Apply JS client extension to page
 
-			// Navigate to page
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalJS',
+			});
 
-			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+			// Check JS is attached to the page in view mode
 
-			// Check target is set to _blank
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
 
 			await expect(
-				page.getByRole('menuitem', {name: linkToURLTitle})
-			).toHaveAttribute('target', '_blank');
+				page.locator(`script[src="https://www.example.com/script.js"]`)
+			).toBeAttached();
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Inherited JS extensions from master pages should be read-only mode',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({
+			apiHelpers,
+			masterPagesPage,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new JS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalJS',
+						url: 'https://www.example.com/script.js',
+					}
+				);
+
+			// Add master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			// Apply JS client extension to master page
+
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalJS',
+			});
+
+			// Publish master page
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				title: layoutTitle,
+			});
+
+			// Check inherited JS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
+
+			await expect(
+				page.locator('.global-js-cets-configuration tr', {
+					has: page.getByText('From Master'),
+				})
+			).toHaveClass(/disabled/);
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Inherited JS extensions from pages should be read-only mode',
+		{
+			tag: '@LPS-153658',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a new JS client extension with a script element attribute
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'globalJS',
+						url: 'https://www.example.com/script.js',
+					}
+				);
+
+			// Apply JS client extension to all pages
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'globalJS',
+			});
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Check inherited JS client extension is read-only
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
+
+			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
+
+			await expect(
+				page.locator('.global-js-cets-configuration tr', {
+					has: page.getByText('From Pages'),
+				})
+			).toHaveClass(/disabled/);
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Add theme favicon to page',
+		{
+			tag: ['@LPS-153654', '@LPS-153903'],
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create a new theme favicon client extension
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'themeFavicon',
+						url: 'https://www.google.com/favicon.ico',
+					}
+				);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Assert default theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Apply theme favicon client extension to page
+
+			await pagesAdminPage.changeFavicon(
+				layoutTitle,
+				path.join(__dirname, '/dependencies/thumbnail.jpg'),
+				site.friendlyUrlPath
+			);
+
+			// Assert custom theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator('link[href*="thumbnail.jpg"][rel="icon"]')
+			).toBeAttached();
+
+			// Clear theme favicon
+
+			await pagesAdminPage.clearThemeFaviconClientExtension({
+				layoutTitle,
+				siteUrl: site.friendlyUrlPath,
+			});
+
+			// Assert default theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Add theme favicon extension client extension to pages',
+		{
+			tag: '@LPS-153654',
+		},
+		async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+			// Create a new theme favicon client extension
+
+			const clientExtensionName = getRandomString();
+
+			const clientExtension =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName,
+						type: 'themeFavicon',
+						url: 'https://www.google.com/favicon.ico',
+					}
+				);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: layoutTitle,
+			});
+
+			// Assert default theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Apply theme favicon client extension to page
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'themeFavicon',
+			});
+
+			// Assert custom theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="https://www.google.com/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Clear theme favicon
+
+			await pagesAdminPage.clearThemeFaviconClientExtension({
+				siteUrl: site.friendlyUrlPath,
+			});
+
+			// Assert default theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension);
+		}
+	);
+
+	test(
+		'Inherited theme favicon client extension from master pages',
+		{
+			tag: '@LPS-153654',
+		},
+		async ({apiHelpers, masterPagesPage, page, pagesAdminPage, site}) => {
+
+			// Create a new theme favicon client extension
+
+			const clientExtensionName1 = getRandomString();
+
+			const clientExtension1 =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName1,
+						type: 'themeFavicon',
+						url: 'https://www.google.com/favicon.ico',
+					}
+				);
+
+			const clientExtensionName2 = getRandomString();
+
+			const clientExtension2 =
+				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
+					{
+						name: clientExtensionName2,
+						type: 'themeFavicon',
+						url: 'https://www.nba.com/favicon.ico',
+					}
+				);
+
+			// Add master page
+
+			const layoutPageTemplateEntryName = getRandomString();
+
+			const masterPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+					{
+						groupId: site.id,
+						name: layoutPageTemplateEntryName,
+						type: 'master-layout',
+					}
+				);
+
+			// Apply theme favicon client extension to master page
+
+			await masterPagesPage.selectClientExtension({
+				clientExtensionName: clientExtensionName1,
+				layoutTitle: layoutPageTemplateEntryName,
+				siteUrl: site.friendlyUrlPath,
+				type: 'themeFavicon',
+			});
+
+			// Publish master page
+
+			await masterPagesPage.goto(site.friendlyUrlPath);
+			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
+
+			// Create a layout
+
+			const layoutTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				masterLayoutPlid: masterPage.plid,
+				title: layoutTitle,
+			});
+
+			// Assert custom master theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="https://www.google.com/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Apply theme favicon client extension to page
+
+			await pagesAdminPage.selectClientExtension({
+				clientExtensionName: clientExtensionName2,
+				layoutTitle,
+				siteUrl: site.friendlyUrlPath,
+				type: 'themeFavicon',
+			});
+
+			// Assert custom page theme favicon in view mode
+
+			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
+
+			await expect(
+				page.locator(
+					'link[href*="https://www.nba.com/favicon.ico"][rel="icon"]'
+				)
+			).toBeAttached();
+
+			// Clean up
+
+			await deleteClientExtension(apiHelpers, clientExtension1);
+
+			await deleteClientExtension(apiHelpers, clientExtension2);
 		}
 	);
 });
@@ -904,6 +1350,218 @@ test.describe('SEO configuration', () => {
 	);
 });
 
+test.describe('Page types configuration', () => {
+	test('Can configure an embedded page', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'embedded',
+			},
+			title: 'Embedded',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.setInputValueAndSave(
+			page.getByLabel('URL').first(),
+			'Embedded',
+			'General',
+			'https://www.google.com'
+		);
+
+		// Check URL was updated
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection('Embedded', 'General');
+
+		await expect(page.getByLabel('URL').first()).toHaveValue(
+			'https://www.google.com'
+		);
+	});
+
+	test('Can configure a full page application', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'full_page_application',
+			},
+			title: 'Full Page Application',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection(
+			'Full Page Application',
+			'General'
+		);
+
+		await selectAndExpectToHaveValue({
+			optionLabel: 'Wiki',
+			select: page.getByLabel('Full Page Application'),
+		});
+
+		await pageConfigurationPage.save();
+
+		// Go to view mode of page
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
+	});
+
+	test('Can configure a panel page', async ({
+		apiHelpers,
+		page,
+		pageConfigurationPage,
+		pagesAdminPage,
+		site,
+	}) => {
+
+		// Create page and go to General configuration
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'panel',
+			},
+			title: 'Panel',
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pageConfigurationPage.goToSection('Panel', 'General');
+
+		// Select Collaboration application
+
+		await page
+			.locator('.treeview-link[data-id*="collaboration"]')
+			.getByRole('checkbox')
+			.check();
+
+		await pageConfigurationPage.save();
+
+		// Go to view mode of page
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(
+			page.getByRole('link', {exact: true, name: 'Blogs'})
+		).toBeVisible();
+	});
+
+	test(
+		'Can configure a link to page',
+		{
+			tag: '@LPS-159631',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create widget page
+
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: getRandomString(),
+			});
+
+			// Create link to URL page
+
+			const linkToURLTitle = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {
+					type: 'url',
+				},
+				title: linkToURLTitle,
+			});
+
+			// Update URL
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.setInputValueAndSave(
+				page.getByLabel('URL').first(),
+				linkToURLTitle,
+				'General',
+				'https://www.google.com'
+			);
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is not set
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).not.toHaveAttribute('target');
+
+			// Update specific target to _blank
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.setInputValueAndSave(
+				page.getByLabel('Target', {exact: true}),
+				linkToURLTitle,
+				'General',
+				'_blank'
+			);
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is set to _blank
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).toHaveAttribute('target', '_blank');
+
+			// Update target type to new tab
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(linkToURLTitle, 'General');
+
+			await selectAndExpectToHaveValue({
+				optionLabel: 'New Tab',
+				select: page.getByLabel('Target type'),
+			});
+
+			await pageConfigurationPage.save();
+
+			// Navigate to page
+
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Check target is set to _blank
+
+			await expect(
+				page.getByRole('menuitem', {name: linkToURLTitle})
+			).toHaveAttribute('target', '_blank');
+		}
+	);
+});
+
 test.describe('Utility Page', () => {
 	test(
 		'Asserts the Utility Pages configuration view',
@@ -939,668 +1597,6 @@ test.describe('Utility Page', () => {
 			expect(
 				await page.getByTitle('More Page Design Options').count()
 			).toEqual(0);
-		}
-	);
-});
-
-test.describe('CSS Client Extensions', () => {
-	test(
-		'Add CSS extension to page',
-		{
-			tag: '@LPS-153656',
-		},
-		async ({apiHelpers, page, pagesAdminPage, site}) => {
-
-			// Create a new CSS client extension with a script element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalCSS',
-						url: 'https://www.example.com/style.css',
-					}
-				);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Apply CSS client extension to page
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
-				layoutTitle,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalCSS',
-			});
-
-			// Check CSS is attached to the page in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator('link[href="https://www.example.com/style.css"]')
-			).toBeAttached();
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Inherited CSS extensions from master pages should be read-only mode',
-		{
-			tag: '@LPS-153656',
-		},
-		async ({
-			apiHelpers,
-			masterPagesPage,
-			page,
-			pageConfigurationPage,
-			pagesAdminPage,
-			site,
-		}) => {
-
-			// Create a new CSS client extension with a script element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalCSS',
-						url: 'https://www.example.com/style.css',
-					}
-				);
-
-			// Add master page
-
-			const layoutPageTemplateEntryName = getRandomString();
-
-			const masterPage =
-				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
-					{
-						groupId: site.id,
-						name: layoutPageTemplateEntryName,
-						type: 'master-layout',
-					}
-				);
-
-			// Apply CSS client extension to master page
-
-			await masterPagesPage.selectClientExtension({
-				clientExtensionName,
-				layoutTitle: layoutPageTemplateEntryName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalCSS',
-			});
-
-			// Publish master page
-
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
-				title: layoutTitle,
-			});
-
-			// Check inherited CSS client extension is read-only
-
-			await pagesAdminPage.goto(site.friendlyUrlPath);
-
-			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
-
-			await expect(
-				page.locator('.global-css-cets-configuration tr', {
-					has: page.getByText('From Master'),
-				})
-			).toHaveClass(/disabled/);
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Inherited CSS extensions from pages should be read-only mode',
-		{
-			tag: '@LPS-153658',
-		},
-		async ({
-			apiHelpers,
-			page,
-			pageConfigurationPage,
-			pagesAdminPage,
-			site,
-		}) => {
-
-			// Create a new CSS client extension with a style element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalCSS',
-						url: 'https://www.example.com/style.css',
-					}
-				);
-
-			// Apply CSS client extension to all pages
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalCSS',
-			});
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Check inherited CSS client extension is read-only
-
-			await pagesAdminPage.goto(site.friendlyUrlPath);
-
-			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
-
-			await expect(
-				page.locator('.global-css-cets-configuration tr', {
-					has: page.getByText('From Pages'),
-				})
-			).toHaveClass(/disabled/);
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-});
-
-test.describe('JavaScript Client Extensions', () => {
-	test(
-		'Add JS extension to page',
-		{
-			tag: '@LPS-153658',
-		},
-		async ({apiHelpers, page, pagesAdminPage, site}) => {
-
-			// Create a new JS client extension with a script element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalJS',
-						url: 'https://www.example.com/script.js',
-					}
-				);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Apply JS client extension to page
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
-				layoutTitle,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalJS',
-			});
-
-			// Check JS is attached to the page in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(`script[src="https://www.example.com/script.js"]`)
-			).toBeAttached();
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Inherited JS extensions from master pages should be read-only mode',
-		{
-			tag: '@LPS-153658',
-		},
-		async ({
-			apiHelpers,
-			masterPagesPage,
-			page,
-			pageConfigurationPage,
-			pagesAdminPage,
-			site,
-		}) => {
-
-			// Create a new JS client extension with a script element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalJS',
-						url: 'https://www.example.com/script.js',
-					}
-				);
-
-			// Add master page
-
-			const layoutPageTemplateEntryName = getRandomString();
-
-			const masterPage =
-				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
-					{
-						groupId: site.id,
-						name: layoutPageTemplateEntryName,
-						type: 'master-layout',
-					}
-				);
-
-			// Apply JS client extension to master page
-
-			await masterPagesPage.selectClientExtension({
-				clientExtensionName,
-				layoutTitle: layoutPageTemplateEntryName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalJS',
-			});
-
-			// Publish master page
-
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
-				title: layoutTitle,
-			});
-
-			// Check inherited JS client extension is read-only
-
-			await pagesAdminPage.goto(site.friendlyUrlPath);
-
-			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
-
-			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
-
-			await expect(
-				page.locator('.global-js-cets-configuration tr', {
-					has: page.getByText('From Master'),
-				})
-			).toHaveClass(/disabled/);
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Inherited JS extensions from pages should be read-only mode',
-		{
-			tag: '@LPS-153658',
-		},
-		async ({
-			apiHelpers,
-			page,
-			pageConfigurationPage,
-			pagesAdminPage,
-			site,
-		}) => {
-
-			// Create a new JS client extension with a script element attribute
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'globalJS',
-						url: 'https://www.example.com/script.js',
-					}
-				);
-
-			// Apply JS client extension to all pages
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'globalJS',
-			});
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Check inherited JS client extension is read-only
-
-			await pagesAdminPage.goto(site.friendlyUrlPath);
-
-			await pageConfigurationPage.goToSection(layoutTitle, 'Design');
-
-			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
-
-			await expect(
-				page.locator('.global-js-cets-configuration tr', {
-					has: page.getByText('From Pages'),
-				})
-			).toHaveClass(/disabled/);
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-});
-
-test.describe('Theme Favicon', () => {
-	test(
-		'Add theme favicon to page',
-		{
-			tag: ['@LPS-153654', '@LPS-153903'],
-		},
-		async ({apiHelpers, page, pagesAdminPage, site}) => {
-
-			// Create a new theme favicon client extension
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'themeFavicon',
-						url: 'https://www.google.com/favicon.ico',
-					}
-				);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Assert default theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Apply theme favicon client extension to page
-
-			await pagesAdminPage.changeFavicon(
-				layoutTitle,
-				path.join(__dirname, '/dependencies/thumbnail.jpg'),
-				site.friendlyUrlPath
-			);
-
-			// Assert custom theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator('link[href*="thumbnail.jpg"][rel="icon"]')
-			).toBeAttached();
-
-			// Clear theme favicon
-
-			await pagesAdminPage.clearThemeFaviconClientExtension({
-				layoutTitle,
-				siteUrl: site.friendlyUrlPath,
-			});
-
-			// Assert default theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Add theme favicon extension client extension to pages',
-		{
-			tag: '@LPS-153654',
-		},
-		async ({apiHelpers, page, pagesAdminPage, site}) => {
-
-			// Create a new theme favicon client extension
-
-			const clientExtensionName = getRandomString();
-
-			const clientExtension =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName,
-						type: 'themeFavicon',
-						url: 'https://www.google.com/favicon.ico',
-					}
-				);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: layoutTitle,
-			});
-
-			// Assert default theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Apply theme favicon client extension to page
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'themeFavicon',
-			});
-
-			// Assert custom theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="https://www.google.com/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Clear theme favicon
-
-			await pagesAdminPage.clearThemeFaviconClientExtension({
-				siteUrl: site.friendlyUrlPath,
-			});
-
-			// Assert default theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="classic-theme/images/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension);
-		}
-	);
-
-	test(
-		'Inherited theme favicon client extension from master pages',
-		{
-			tag: '@LPS-153654',
-		},
-		async ({apiHelpers, masterPagesPage, page, pagesAdminPage, site}) => {
-
-			// Create a new theme favicon client extension
-
-			const clientExtensionName1 = getRandomString();
-
-			const clientExtension1 =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName1,
-						type: 'themeFavicon',
-						url: 'https://www.google.com/favicon.ico',
-					}
-				);
-
-			const clientExtensionName2 = getRandomString();
-
-			const clientExtension2 =
-				await apiHelpers.jsonWebServicesClientExtension.addClientExtension(
-					{
-						name: clientExtensionName2,
-						type: 'themeFavicon',
-						url: 'https://www.nba.com/favicon.ico',
-					}
-				);
-
-			// Add master page
-
-			const layoutPageTemplateEntryName = getRandomString();
-
-			const masterPage =
-				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
-					{
-						groupId: site.id,
-						name: layoutPageTemplateEntryName,
-						type: 'master-layout',
-					}
-				);
-
-			// Apply theme favicon client extension to master page
-
-			await masterPagesPage.selectClientExtension({
-				clientExtensionName: clientExtensionName1,
-				layoutTitle: layoutPageTemplateEntryName,
-				siteUrl: site.friendlyUrlPath,
-				type: 'themeFavicon',
-			});
-
-			// Publish master page
-
-			await masterPagesPage.goto(site.friendlyUrlPath);
-			await masterPagesPage.publishMaster(layoutPageTemplateEntryName);
-
-			// Create a layout
-
-			const layoutTitle = getRandomString();
-
-			await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				masterLayoutPlid: masterPage.plid,
-				title: layoutTitle,
-			});
-
-			// Assert custom master theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="https://www.google.com/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Apply theme favicon client extension to page
-
-			await pagesAdminPage.selectClientExtension({
-				clientExtensionName: clientExtensionName2,
-				layoutTitle,
-				siteUrl: site.friendlyUrlPath,
-				type: 'themeFavicon',
-			});
-
-			// Assert custom page theme favicon in view mode
-
-			await page.goto(`/web${site.friendlyUrlPath}/${layoutTitle}`);
-
-			await expect(
-				page.locator(
-					'link[href*="https://www.nba.com/favicon.ico"][rel="icon"]'
-				)
-			).toBeAttached();
-
-			// Clean up
-
-			await deleteClientExtension(apiHelpers, clientExtension1);
-
-			await deleteClientExtension(apiHelpers, clientExtension2);
 		}
 	);
 });

@@ -42,7 +42,7 @@ public abstract class BaseCommerceInventoryChecker<T>
 
 	protected boolean isBackOrderAllowed(CPInstance cpInstance) {
 		try {
-			if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
+			if (cpDefinitionInventoryEngine.isBackOrderAllowed(0, cpInstance)) {
 				return true;
 			}
 		}

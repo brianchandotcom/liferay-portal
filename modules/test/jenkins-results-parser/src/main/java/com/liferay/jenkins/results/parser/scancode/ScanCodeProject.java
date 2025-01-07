@@ -474,7 +474,9 @@ public class ScanCodeProject {
 		sb.append(_projectName);
 		sb.append(">\n");
 
-		sb.append("*Pipeline(s):* ");
+		sb.append(
+			JenkinsResultsParserUtil.getNounForm(
+				_pipelineNames.size(), "*Pipelines:* ", "*Pipeline:* "));
 		sb.append(String.join(", ", _pipelineNames));
 
 		sb.append("\n");

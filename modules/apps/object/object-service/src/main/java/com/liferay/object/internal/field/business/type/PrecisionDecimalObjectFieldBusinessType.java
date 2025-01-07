@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -59,11 +60,15 @@ public class PrecisionDecimalObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
 			FieldConstants.DATA_TYPE, FieldConstants.DOUBLE
+		).putAll(
+			ObjectFieldBusinessType.super.getProperties(
+				objectField, objectFieldRenderingContext)
 		).build();
 	}
 

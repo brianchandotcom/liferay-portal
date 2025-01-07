@@ -49,7 +49,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public String encodeRedirectUrl(String url) {
 		throw new UnsupportedOperationException();
 	}
@@ -63,7 +62,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public String encodeUrl(String string) {
 		throw new UnsupportedOperationException();
 	}
@@ -212,7 +210,6 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public void setStatus(int status, String message) {
 		throw new UnsupportedOperationException();
 	}

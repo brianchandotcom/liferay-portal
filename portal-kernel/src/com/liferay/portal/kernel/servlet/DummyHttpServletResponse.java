@@ -41,7 +41,6 @@ public class DummyHttpServletResponse implements HttpServletResponse {
 		return false;
 	}
 
-	@Override
 	public String encodeRedirectUrl(String url) {
 		return null;
 	}
@@ -51,7 +50,6 @@ public class DummyHttpServletResponse implements HttpServletResponse {
 		return null;
 	}
 
-	@Override
 	public String encodeUrl(String url) {
 		return null;
 	}
@@ -180,7 +178,6 @@ public class DummyHttpServletResponse implements HttpServletResponse {
 	public void setStatus(int status) {
 	}
 
-	@Override
 	public void setStatus(int status, String message) {
 	}
 

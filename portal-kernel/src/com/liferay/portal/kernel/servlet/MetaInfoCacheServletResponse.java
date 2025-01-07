@@ -93,8 +93,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 			}
 
 			if (metaInfoDataBag._status != SC_OK) {
-				httpServletResponse.setStatus(
-					metaInfoDataBag._status, metaInfoDataBag._statusMessage);
+				httpServletResponse.setStatus(metaInfoDataBag._status);
 			}
 		}
 	}
@@ -339,7 +338,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		_metaData._headers.clear();
 		_metaData._locale = null;
 		_metaData._status = SC_OK;
-		_metaData._statusMessage = null;
 
 		// calledGetOutputStream and calledGetWriter should be cleared by
 		// resetBuffer() in subclass.
@@ -552,17 +550,9 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		super.setStatus(status);
 	}
 
-	@Override
 	@SuppressWarnings("deprecation")
 	public void setStatus(int status, String statusMessage) {
-		if (isCommitted()) {
-			return;
-		}
-
-		_metaData._status = status;
-		_metaData._statusMessage = statusMessage;
-
-		super.setStatus(status, statusMessage);
+		setStatus(status);
 	}
 
 	@Override
@@ -589,7 +579,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		private Locale _locale;
 		private String _location;
 		private int _status = SC_OK;
-		private String _statusMessage;
 
 	}
 

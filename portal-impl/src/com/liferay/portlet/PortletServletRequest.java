@@ -353,7 +353,6 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public String getRealPath(String path) {
 		return null;
 	}

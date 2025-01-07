@@ -86,7 +86,6 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public String encodeRedirectUrl(String url) {
 		return null;
 	}
@@ -100,7 +99,6 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public String encodeUrl(String url) {
 		return _portletResponse.encodeURL(url);
 	}
@@ -361,7 +359,6 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public void setStatus(int status, String message) {
 		setStatus(status);
 	}

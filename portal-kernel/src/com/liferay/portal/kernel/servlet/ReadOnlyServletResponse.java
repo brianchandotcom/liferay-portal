@@ -104,7 +104,6 @@ public class ReadOnlyServletResponse extends HttpServletResponseWrapper {
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated
-	@Override
 	public void setStatus(int status, String message) {
 	}
 

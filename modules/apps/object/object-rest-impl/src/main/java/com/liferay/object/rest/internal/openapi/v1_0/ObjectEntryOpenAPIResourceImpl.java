@@ -195,14 +195,10 @@ public class ObjectEntryOpenAPIResourceImpl
 			dtoProperty.setDTOProperties(
 				Arrays.asList(
 					new DTOProperty(
-						HashMapBuilder.<String, Object>put(
-							"x-parent-map", "properties"
-						).build(),
+						Collections.singletonMap("x-parent-map", "properties"),
 						"id", Long.class.getSimpleName()),
 					new DTOProperty(
-						HashMapBuilder.<String, Object>put(
-							"x-parent-map", "properties"
-						).build(),
+						Collections.singletonMap("x-parent-map", "properties"),
 						"name", String.class.getSimpleName())));
 			dtoProperty.setRequired(objectField.isRequired());
 
@@ -282,14 +278,10 @@ public class ObjectEntryOpenAPIResourceImpl
 			dtoProperty.setDTOProperties(
 				Arrays.asList(
 					new DTOProperty(
-						HashMapBuilder.<String, Object>put(
-							"x-parent-map", "properties"
-						).build(),
+						Collections.singletonMap("x-parent-map", "properties"),
 						"key", String.class.getSimpleName()),
 					new DTOProperty(
-						HashMapBuilder.<String, Object>put(
-							"x-parent-map", "properties"
-						).build(),
+						Collections.singletonMap("x-parent-map", "properties"),
 						"name", String.class.getSimpleName())));
 			dtoProperty.setRequired(objectField.isRequired());
 
@@ -301,9 +293,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			return ListUtil.fromArray(
 				new DTOProperty(
-					HashMapBuilder.<String, Object>put(
-						"x-parent-map", "properties"
-					).build(),
+					Collections.singletonMap("x-parent-map", "properties"),
 					objectField.getName(), Double.class.getSimpleName()) {
 
 					{
@@ -363,9 +353,7 @@ public class ObjectEntryOpenAPIResourceImpl
 					}
 				},
 				new RelationshipDTOProperty(
-					HashMapBuilder.<String, Object>put(
-						"x-parent-map", "properties"
-					).build(),
+					Collections.singletonMap("x-parent-map", "properties"),
 					relationshipName + "ERC", relationshipName,
 					String.class.getSimpleName()) {
 
@@ -413,9 +401,7 @@ public class ObjectEntryOpenAPIResourceImpl
 			if (objectField.isLocalized()) {
 				dtoProperties.add(
 					new DTOProperty(
-						HashMapBuilder.<String, Object>put(
-							"x-parent-map", "properties"
-						).build(),
+						Collections.singletonMap("x-parent-map", "properties"),
 						objectField.getI18nObjectFieldName(),
 						Map.class.getSimpleName()) {
 

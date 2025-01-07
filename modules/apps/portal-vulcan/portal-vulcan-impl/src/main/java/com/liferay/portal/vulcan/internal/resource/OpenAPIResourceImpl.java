@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1096,7 +1097,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 					ArraySchema arraySchema = new ArraySchema();
 
 					arraySchema.setDescription(dtoProperty.getDescription());
-					arraySchema.setExtensions(dtoProperty.getExtensions());
+					arraySchema.setExtensions(
+						HashMapBuilder.putAll(
+							dtoProperty.getExtensions()
+						).build());
 					arraySchema.setName(dtoProperty.getName());
 					arraySchema.setType("array");
 
@@ -1129,7 +1133,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				Schema<Object> schema = new Schema<>();
 
 				schema.setDescription(dtoProperty.getDescription());
-				schema.setExtensions(dtoProperty.getExtensions());
+				schema.setExtensions(
+					HashMapBuilder.putAll(
+						dtoProperty.getExtensions()
+					).build());
 				schema.setName(dtoProperty.getName());
 				schema.setReadOnly(dtoProperty.getReadOnly());
 
@@ -1249,7 +1256,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 							schema.setDescription(
 								childDTOProperty1.getDescription());
 							schema.setExtensions(
-								childDTOProperty1.getExtensions());
+								HashMapBuilder.putAll(
+									childDTOProperty1.getExtensions()
+								).build());
 							schema.setName(childDTOProperty1.getName());
 							schema.setType("object");
 

@@ -370,7 +370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectMultiPicklistFieldEntryViaUI(picklistOptionList = null) {
+	macro addObjectMultiselectPicklistFieldEntryViaUI(picklistOptionList = null) {
 		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTIONS_MULTIPICKLIST");

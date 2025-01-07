@@ -35,7 +35,7 @@ const useGetResourceInfo = ({
 	selectedProject,
 	shouldFetch,
 }: {
-	product: any;
+	product?: any;
 	selectedProject?: string;
 	shouldFetch: boolean;
 }) => {

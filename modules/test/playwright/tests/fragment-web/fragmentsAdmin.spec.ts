@@ -1237,7 +1237,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Export'}),
-			trigger: page.getByTitle('Fragment Sets Options'),
+			trigger: page.locator('.navbar-nav').getByLabel('Show Actions'),
 		});
 
 		const iframe = page.frameLocator('iframe[title="Export Fragment Set"]');
@@ -1278,7 +1278,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Import'}),
-			trigger: page.getByTitle('Fragment Sets Options'),
+			trigger: page.locator('.navbar-nav').getByLabel('Show Actions'),
 		});
 
 		await fragmentsPage.importFile(download.suggestedFilename(), filePath);
@@ -1368,7 +1368,7 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Import'}),
-			trigger: page.getByLabel('Show Actions'),
+			trigger: page.locator('.navbar-nav').getByLabel('Show Actions'),
 		});
 
 		await fragmentsPage.importFile(download.suggestedFilename(), filePath);

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -52,7 +51,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -360,17 +358,13 @@ public class SearchBarPortletDisplayContextFactory {
 			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 
-		List<Layout> layouts = themeDisplay.getLayouts();
-
-		Long scopeGroupClassPK = themeDisplay.getScopeGroup().getClassPK();
+		long scopeGroupClassPK = themeDisplay.getScopeGroup(
+		).getClassPK();
 
 		try {
-			User user;
+			User user = UserLocalServiceUtil.fetchUserById(scopeGroupClassPK);
 
-			if(scopeGroupClassPK == themeDisplay.getUserId()) {
-				user = UserLocalServiceUtil.getUserById(
-					scopeGroupClassPK);
-			} else {
+			if (user == null) {
 				user = themeDisplay.getUser();
 			}
 

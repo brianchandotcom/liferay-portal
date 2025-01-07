@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -361,13 +360,6 @@ public class ServiceBuilder {
 			}
 
 			ArgumentsUtil.processMainException(arguments, exception);
-		}
-
-		try {
-			ClearThreadLocalUtil.clearThreadLocal();
-		}
-		catch (Throwable throwable) {
-			throwable.printStackTrace();
 		}
 
 		Introspector.flushCaches();

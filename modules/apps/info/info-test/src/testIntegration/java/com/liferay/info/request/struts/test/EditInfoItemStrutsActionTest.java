@@ -219,7 +219,7 @@ public class EditInfoItemStrutsActionTest {
 
 	@Test
 	@TestInfo("LPS-151402")
-	public void testAddInfoItemInvalidPicklistValue() throws Exception {
+	public void testAddInfoItemInvalidListTypeEntryValue() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 

@@ -34,7 +34,8 @@ public interface ProductHelper {
 			CommerceContext commerceContext, Locale locale)
 		throws PortalException;
 
-	public ProductSettingsModel getProductSettingsModel(long cpDefinitionId)
+	public ProductSettingsModel getProductSettingsModel(
+			long cpDefinitionId, CommerceContext commerceContext)
 		throws PortalException;
 
 }

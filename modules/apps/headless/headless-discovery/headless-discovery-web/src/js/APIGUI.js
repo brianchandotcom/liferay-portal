@@ -10,12 +10,14 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 import GraphiQL from 'graphiql';
 import React, {useCallback, useEffect, useState} from 'react';
+import SwaggerUI from 'swagger-ui-react';
 
-import CustomSwaggerUI from './CustomSwaggerUI';
 import Icon from './Icon';
 import apiFetch from './util/apiFetch';
 
 import 'graphiql/graphiql.css';
+
+import learnSwaggerUIPlugin from './swagger-ui/plugins/learn';
 
 const APIGUI = () => {
 	const contextPath = window.location.pathname.substring(
@@ -31,7 +33,6 @@ const APIGUI = () => {
 	const [showGraphQL, setShowGraphQL] = useState(false);
 	const [headers, setHeaders] = useState([{key: '', value: ''}]);
 	const [origin, setOrigin] = useState('');
-	const [learnResources, setLearnResources] = useState([]);
 
 	const {observer, onClose} = useModal({
 		onClose: () => setShowHeaders(false),
@@ -56,15 +57,6 @@ const APIGUI = () => {
 					.flatMap((key) => response[key])
 					.map((url) => url.replace('openapi.yaml', 'openapi.json'))
 			);
-		});
-
-		apiFetch(
-			contextPath +
-				'/o/language/v1.0/learn-message/headless-discovery-web?languageId=en_US',
-			'get',
-			{}
-		).then((response) => {
-			setLearnResources(response.items);
 		});
 	}, [contextPath]);
 
@@ -320,9 +312,9 @@ const APIGUI = () => {
 						Forbidden access.
 					</ClayAlert>
 				) : (
-					<CustomSwaggerUI
+					<SwaggerUI
 						displayOperationId={true}
-						learnResources={learnResources}
+						plugins={[learnSwaggerUIPlugin(contextPath)]}
 						requestInterceptor={requestInterceptor}
 						supportedSubmitMethods={[
 							'get',

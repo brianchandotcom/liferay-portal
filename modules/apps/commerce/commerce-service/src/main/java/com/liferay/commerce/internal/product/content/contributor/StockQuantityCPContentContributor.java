@@ -75,15 +75,18 @@ public class StockQuantityCPContentContributor implements CPContentContributor {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		boolean displayStockQuantity =
-			cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance);
+			cpDefinitionInventoryEngine.isDisplayStockQuantity(
+				commerceContext.getCPConfigurationListId(
+					cpInstance.getGroupId()),
+				cpInstance);
 
 		if (displayStockQuantity) {
 			long accountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
-
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
 

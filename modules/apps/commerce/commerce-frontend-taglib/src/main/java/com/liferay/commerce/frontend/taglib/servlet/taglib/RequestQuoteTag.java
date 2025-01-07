@@ -306,7 +306,7 @@ public class RequestQuoteTag extends IncludeTag {
 
 		ProductSettingsModel productSettingsModel =
 			_productHelper.getProductSettingsModel(
-				_cpCatalogEntry.getCPDefinitionId());
+				_cpCatalogEntry.getCPDefinitionId(), commerceContext);
 
 		return _productHelper.getPriceModel(
 			cpInstanceId, StringPool.BLANK,

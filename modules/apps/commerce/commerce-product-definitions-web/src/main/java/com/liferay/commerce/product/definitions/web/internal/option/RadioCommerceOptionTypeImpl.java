@@ -125,7 +125,7 @@ public class RadioCommerceOptionTypeImpl implements CommerceOptionType {
 
 			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(
-					cpDefinition.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId(), commerceContext);
 
 			minQuantity = productSettingsModel.getMinQuantity();
 

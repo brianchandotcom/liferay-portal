@@ -448,7 +448,7 @@ public class CommerceCartResource {
 
 			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(
-					commerceOrderItem.getCPDefinitionId());
+					commerceOrderItem.getCPDefinitionId(), commerceContext);
 
 			BigDecimal quantity = commerceOrderItem.getQuantity();
 

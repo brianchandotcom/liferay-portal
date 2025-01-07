@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -162,6 +163,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			long accountEntryId, long commerceChannelGroupId, long cpInstanceId)
 		throws PortalException {
 
+		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
 
@@ -169,16 +172,22 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			_cpAvailabilityChecker.check(
 				accountEntryId, commerceChannelGroupId, cpInstance,
 				StringPool.BLANK,
-				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(
+					commerceContext.getCPConfigurationListId(
+						cpInstance.getGroupId()),
+					cpInstance))) {
 
 			return null;
 		}
 
+		cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			cpInstance.getReplacementCProductId(),
+			cpInstance.getReplacementCPInstanceUuid());
+
 		return _fetchFirstAvailableReplacementCPInstance(
 			accountEntryId, commerceChannelGroupId,
-			_cpInstanceLocalService.fetchCProductInstance(
-				cpInstance.getReplacementCProductId(),
-				cpInstance.getReplacementCPInstanceUuid()));
+			commerceContext.getCPConfigurationListId(cpInstance.getGroupId()),
+			cpInstance);
 	}
 
 	@Override
@@ -896,20 +905,21 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	private CPInstance _fetchFirstAvailableReplacementCPInstance(
 			long accountEntryId, long commerceChannelGroupId,
-			CPInstance cpInstance)
+			long cpConfigurationListId, CPInstance cpInstance)
 		throws PortalException {
 
 		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
 			_cpAvailabilityChecker.check(
 				accountEntryId, commerceChannelGroupId, cpInstance,
 				StringPool.BLANK,
-				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(
+					cpConfigurationListId, cpInstance))) {
 
 			return cpInstance;
 		}
 
 		return _fetchFirstAvailableReplacementCPInstance(
-			accountEntryId, commerceChannelGroupId,
+			accountEntryId, commerceChannelGroupId, cpConfigurationListId,
 			_cpInstanceLocalService.fetchCProductInstance(
 				cpInstance.getReplacementCProductId(),
 				cpInstance.getReplacementCPInstanceUuid()));

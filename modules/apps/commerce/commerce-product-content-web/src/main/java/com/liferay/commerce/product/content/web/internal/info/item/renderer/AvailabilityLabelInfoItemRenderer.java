@@ -6,6 +6,8 @@
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.helper.ProductHelper;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.model.CPDefinitionInventory;
@@ -112,7 +114,9 @@ public class AvailabilityLabelInfoItemRenderer
 			if (cpSku != null) {
 				ProductSettingsModel productSettingsModel =
 					_productHelper.getProductSettingsModel(
-						cpDefinition.getCPDefinitionId());
+						cpDefinition.getCPDefinitionId(),
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT));
 
 				if (productSettingsModel.isShowAvailabilityDot()) {
 					JSONObject availabilityContentContributorValueJSONObject =

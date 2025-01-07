@@ -122,7 +122,7 @@ public class SelectDateCommerceOptionTypeImpl implements CommerceOptionType {
 		else {
 			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(
-					cpDefinition.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId(), commerceContext);
 
 			minQuantity = productSettingsModel.getMinQuantity();
 

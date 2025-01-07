@@ -88,8 +88,9 @@ public class AggregationObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
 			"readOnly", true

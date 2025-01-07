@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,14 +44,19 @@ public abstract class BaseObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
-		return new HashMap<>(
+		return HashMapBuilder.<String, Object>putAll(
 			getObjectFieldSettingsValues(
 				objectFieldSettingLocalService.
 					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId())));
+						objectField.getObjectFieldId()))
+		).putAll(
+			ObjectFieldBusinessType.super.getProperties(
+				objectField, objectFieldRenderingContext)
+		).build();
 	}
 
 	protected Map<String, String> getObjectFieldSettingsValues(

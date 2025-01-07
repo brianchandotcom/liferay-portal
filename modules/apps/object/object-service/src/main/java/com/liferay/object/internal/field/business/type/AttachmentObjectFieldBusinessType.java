@@ -85,8 +85,9 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
 		Map<String, Object> properties = super.getProperties(
 			objectField, objectFieldRenderingContext);

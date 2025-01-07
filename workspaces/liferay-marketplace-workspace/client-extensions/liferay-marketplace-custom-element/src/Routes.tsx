@@ -14,7 +14,7 @@ const lazyRoutes = {
 				'./pages/AdministratorDashboard/AdministratorDashboardRouter'
 			)
 	),
-	'authorize': React.lazy(
+	'oauth2-authorize': React.lazy(
 		() => import('./pages/OAuth2Authorize/OAuth2AuthorizeRouter')
 	),
 	'get-app': React.lazy(() => import('./pages/GetApp/GetAppRouter')),

@@ -61,8 +61,8 @@ public class PropertiesLanguageContractionsCheck extends BaseFileCheck {
 						addMessage(
 							fileName,
 							StringBundler.concat(
-								"Do not use contraction \"", contraction, "\"",
-								" in the description of key \"", array[0],
+								"Do not use contraction \"", contraction,
+								"\" in the description of key \"", array[0],
 								"\""),
 							lineNumber);
 					}

@@ -11,6 +11,8 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -37,9 +39,11 @@ public class TestCustomCommerceContextFactory
 	public CommerceContext create(HttpServletRequest httpServletRequest) {
 		return new TestCustomCommerceContextHttp(
 			httpServletRequest, _accountGroupLocalService,
-			_commerceAccountHelper, _commerceChannelAccountEntryRelLocalService,
+			_commerceAccountHelper, _commerceCatalogLocalService,
+			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
-			_commerceOrderHttpHelper, _configurationProvider, _portal);
+			_commerceOrderHttpHelper, _configurationProvider,
+			_cpConfigurationListLocalService, _portal);
 	}
 
 	@Override
@@ -50,9 +54,11 @@ public class TestCustomCommerceContextFactory
 		return new TestCustomCommerceContext(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			_accountEntryLocalService, _accountGroupLocalService,
+			_commerceCatalogLocalService,
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
-			_commerceOrderService, _configurationProvider);
+			_commerceOrderService, _configurationProvider,
+			_cpConfigurationListLocalService);
 	}
 
 	@Reference
@@ -63,6 +69,9 @@ public class TestCustomCommerceContextFactory
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommerceChannelAccountEntryRelLocalService
@@ -82,6 +91,9 @@ public class TestCustomCommerceContextFactory
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private Portal _portal;

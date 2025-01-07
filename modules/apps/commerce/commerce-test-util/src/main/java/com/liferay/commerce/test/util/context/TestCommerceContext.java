@@ -87,6 +87,16 @@ public class TestCommerceContext implements CommerceContext {
 		return 0;
 	}
 
+	@Override
+	public long getCPConfigurationListId(long groupId) {
+		return 0;
+	}
+
+	@Override
+	public long[] getCPConfigurationListIds() {
+		return new long[0];
+	}
+
 	private final AccountEntry _accountEntry;
 	private final CommerceChannel _commerceChannel;
 	private final CommerceCurrency _commerceCurrency;

@@ -34,4 +34,8 @@ public interface CommerceContext extends Serializable {
 
 	public int getCommerceSiteType();
 
+	public long getCPConfigurationListId(long groupId) throws PortalException;
+
+	public long[] getCPConfigurationListIds() throws PortalException;
+
 }

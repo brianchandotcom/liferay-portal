@@ -17,12 +17,18 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
 import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,9 +36,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,21 +56,26 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		HttpServletRequest httpServletRequest,
 		AccountGroupLocalService accountGroupLocalService,
 		CommerceAccountHelper commerceAccountHelper,
+		CommerceCatalogLocalService commerceCatalogLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderHttpHelper commerceOrderHttpHelper,
-		ConfigurationProvider configurationProvider, Portal portal) {
+		ConfigurationProvider configurationProvider,
+		CPConfigurationListLocalService cpConfigurationListLocalService,
+		Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
 		_accountGroupLocalService = accountGroupLocalService;
 		_commerceAccountHelper = commerceAccountHelper;
+		_commerceCatalogLocalService = commerceCatalogLocalService;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
+		_cpConfigurationListLocalService = cpConfigurationListLocalService;
 		_portal = portal;
 
 		try {
@@ -263,6 +277,27 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		return _commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
 
+	@Override
+	public long getCPConfigurationListId(long groupId) throws PortalException {
+		Map<Long, CPConfigurationList> cpConfigurationListMap =
+			_getCPConfigurationListMap();
+
+		CPConfigurationList cpConfigurationList = cpConfigurationListMap.get(
+			groupId);
+
+		return cpConfigurationList.getCPConfigurationListId();
+	}
+
+	@Override
+	public long[] getCPConfigurationListIds() throws PortalException {
+		Map<Long, CPConfigurationList> cpConfigurationListMap =
+			_getCPConfigurationListMap();
+
+		return TransformUtil.transformToLongArray(
+			cpConfigurationListMap.values(),
+			CPConfigurationList::getCPConfigurationListId);
+	}
+
 	private CommerceChannel _fetchCommerceChannel() throws PortalException {
 		return _commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
 			_portal.getScopeGroupId(_httpServletRequest));
@@ -308,6 +343,41 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		return commerceCurrency;
 	}
 
+	private Map<Long, CPConfigurationList> _getCPConfigurationListMap()
+		throws PortalException {
+
+		if (MapUtil.isEmpty(_cpConfigurationListMap)) {
+			_cpConfigurationListMap = new HashMap<>();
+
+			CommerceOrder commerceOrder = getCommerceOrder();
+
+			long orderTypeId = 0;
+
+			if (commerceOrder != null) {
+				orderTypeId = commerceOrder.getCommerceOrderTypeId();
+			}
+
+			for (long groupId :
+					TransformUtil.transformToLongArray(
+						_commerceCatalogLocalService.getCommerceCatalogs(
+							_portal.getCompanyId(_httpServletRequest), false),
+						CommerceCatalog::getGroupId)) {
+
+				List<CPConfigurationList> cpConfigurationLists =
+					_cpConfigurationListLocalService.getCPConfigurationLists(
+						_portal.getCompanyId(_httpServletRequest), groupId,
+						CommerceUtil.getCommerceAccountId(this),
+						getCommerceAccountGroupIds(), getCommerceChannelId(),
+						orderTypeId);
+
+				_cpConfigurationListMap.put(
+					groupId, cpConfigurationLists.get(0));
+			}
+		}
+
+		return _cpConfigurationListMap;
+	}
+
 	private boolean _isChannelAccountEntry(
 		long accountEntryId, long commerceChannelId) {
 
@@ -340,6 +410,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceAccountHelper _commerceAccountHelper;
+	private final CommerceCatalogLocalService _commerceCatalogLocalService;
 	private final CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
@@ -347,6 +418,9 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private final CPConfigurationListLocalService
+		_cpConfigurationListLocalService;
+	private Map<Long, CPConfigurationList> _cpConfigurationListMap;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

@@ -126,7 +126,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/lib/**/*.jar"
 
 		includeEmptyDirs = false
-		into new File(portalBuildDir, "gradle-${gradleVersion}")
+		into new File(rootProject.buildDir, "gradle-${gradleVersion}")
 	}
 
 	tasks.create(name: "extractGradleSources${suffix}", type: Copy) {
@@ -141,7 +141,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/src/**"
 
 		includeEmptyDirs = false
-		into new File(portalBuildDir, "gradle-${gradleVersion}-sources")
+		into new File(rootProject.buildDir, "gradle-${gradleVersion}-sources")
 	}
 }
 

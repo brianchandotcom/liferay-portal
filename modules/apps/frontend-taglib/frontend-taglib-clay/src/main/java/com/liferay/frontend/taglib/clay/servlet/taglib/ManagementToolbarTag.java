@@ -756,20 +756,18 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			pageContext);
 
 		Boolean disabled = isDisabled();
+
 		Integer itemsTotal = getItemsTotal();
 		String localizedItemsType = _getLocalizedItemsType();
 		Integer selectedItems = getSelectedItems();
 
 		if (isSelectable()) {
 			jspWriter.write("<li class=\"nav-item\"><div class=\"");
-			jspWriter.write("custom-control custom-checkbox\"><label><input");
+			jspWriter.write(
+				"custom-control custom-checkbox\"><label><input disabled");
 
 			if (active) {
 				jspWriter.write(" checked");
-			}
-
-			if (disabled) {
-				jspWriter.write(" disabled");
 			}
 
 			jspWriter.write(" aria-label=\"");

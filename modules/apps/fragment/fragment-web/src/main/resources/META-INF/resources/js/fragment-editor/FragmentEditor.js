@@ -11,6 +11,7 @@ import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
+import EmbeddedWidgetsModal from './EmbeddedWidgetsModal';
 import {FieldTypeSelector} from './FieldTypeSelector';
 import FragmentPreview from './FragmentPreview';
 import createFile from './createFile';
@@ -91,6 +92,15 @@ const FragmentEditor = ({
 		previousJs,
 		js,
 	]);
+
+	const handlePublishClick = () => {
+		if (html.includes('widget')) {
+			EmbeddedWidgetsModal({onPublish: publish});
+		}
+		else {
+			publish();
+		}
+	};
 
 	const publish = () => {
 		const formData = new FormData();
@@ -245,7 +255,7 @@ const FragmentEditor = ({
 												changesStatus ===
 												CHANGES_STATUS.saving
 											}
-											onClick={publish}
+											onClick={handlePublishClick}
 											type="button"
 										>
 											<span className="lfr-btn-label">

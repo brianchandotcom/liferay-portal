@@ -1222,72 +1222,82 @@ public class UserLocalServiceTest {
 
 	@Test(expected = NoSuchTicketException.class)
 	public void testVerifyEmailAddressWithExpiredTicket() throws Exception {
-		User user = _userLocalService.addUserWithWorkflow(
-			0, TestPropsValues.getCompanyId(), false, "test", "test", false,
-			RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
-			StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
-			null, true,
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				TestPropsValues.getUserId()));
+		try (SafeCloseable safeCloseable =
+				_updateCompanyStrangersVerifyWithSafeCloseable(
+					TestPropsValues.getCompanyId(), true)) {
 
-		List<Ticket> tickets = _ticketLocalService.getTickets(
-			user.getCompanyId(), User.class.getName(), user.getUserId());
+			User user = _userLocalService.addUserWithWorkflow(
+				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+				StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
+				null, true,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		Ticket ticket = tickets.get(0);
+			List<Ticket> tickets = _ticketLocalService.getTickets(
+				user.getCompanyId(), User.class.getName(), user.getUserId());
 
-		Assert.assertEquals(
-			TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
-		Assert.assertNotNull(ticket.getExpirationDate());
+			Ticket ticket = tickets.get(0);
 
-		ticket.setExpirationDate(new Date(System.currentTimeMillis()));
+			Assert.assertEquals(
+				TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
+			Assert.assertNotNull(ticket.getExpirationDate());
 
-		ticket = _ticketLocalService.updateTicket(ticket);
+			ticket.setExpirationDate(new Date(System.currentTimeMillis()));
 
-		Assert.assertTrue(ticket.isExpired());
+			ticket = _ticketLocalService.updateTicket(ticket);
 
-		_userLocalService.verifyEmailAddress(ticket.getKey());
+			Assert.assertTrue(ticket.isExpired());
+
+			_userLocalService.verifyEmailAddress(ticket.getKey());
+		}
 	}
 
 	@Test
 	public void testVerifyEmailAddressWithValidTicket() throws Exception {
-		User user = _userLocalService.addUserWithWorkflow(
-			0, TestPropsValues.getCompanyId(), false, "test", "test", false,
-			RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
-			StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
-			null, true,
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				TestPropsValues.getUserId()));
+		try (SafeCloseable safeCloseable =
+				_updateCompanyStrangersVerifyWithSafeCloseable(
+					TestPropsValues.getCompanyId(), true)) {
 
-		List<Ticket> tickets = _ticketLocalService.getTickets(
-			user.getCompanyId(), User.class.getName(), user.getUserId());
+			User user = _userLocalService.addUserWithWorkflow(
+				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+				StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
+				null, true,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-		Ticket ticket = tickets.get(0);
+			List<Ticket> tickets = _ticketLocalService.getTickets(
+				user.getCompanyId(), User.class.getName(), user.getUserId());
 
-		Assert.assertEquals(
-			TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
-		Assert.assertFalse(ticket.isExpired());
-		Assert.assertNotNull(ticket.getExpirationDate());
+			Ticket ticket = tickets.get(0);
 
-		_userLocalService.verifyEmailAddress(ticket.getKey());
+			Assert.assertEquals(
+				TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
+			Assert.assertFalse(ticket.isExpired());
+			Assert.assertNotNull(ticket.getExpirationDate());
 
-		tickets = _ticketLocalService.getTickets(
-			user.getCompanyId(), User.class.getName(), user.getUserId());
+			_userLocalService.verifyEmailAddress(ticket.getKey());
 
-		Assert.assertEquals(tickets.toString(), 0, tickets.size());
+			tickets = _ticketLocalService.getTickets(
+				user.getCompanyId(), User.class.getName(), user.getUserId());
 
-		Assert.assertEquals(
-			Authenticator.SUCCESS,
-			_userLocalService.authenticateByEmailAddress(
-				user.getCompanyId(), user.getEmailAddress(), "test", null, null,
-				null));
+			Assert.assertEquals(tickets.toString(), 0, tickets.size());
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getEmailAddress(), "test", null,
+					null, null));
+		}
 	}
 
 	private long[] _addUsers(int numberOfUsers) throws Exception {
@@ -1338,6 +1348,26 @@ public class UserLocalServiceTest {
 		Assert.assertFalse(user.isLockout());
 
 		return user;
+	}
+
+	private SafeCloseable _updateCompanyStrangersVerifyWithSafeCloseable(
+			long companyId, boolean strangersVerify)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		boolean originalStrangersVerify = company.isStrangersVerify();
+
+		_companyLocalService.updateSecurity(
+			companyId, company.getAuthType(), company.isAutoLogin(),
+			company.isSendPasswordResetLink(), company.isStrangers(),
+			company.isStrangersWithMx(), strangersVerify, company.isSiteLogo());
+
+		return () -> _companyLocalService.updateSecurity(
+			companyId, company.getAuthType(), company.isAutoLogin(),
+			company.isSendPasswordResetLink(), company.isStrangers(),
+			company.isStrangersWithMx(), originalStrangersVerify,
+			company.isSiteLogo());
 	}
 
 	private static Company _company;

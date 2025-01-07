@@ -26,7 +26,6 @@ import org.junit.runner.RunWith;
 /**
  * @author István András Dézsi
  */
-@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 public class DBPartitionCopyVirtualInstanceOperationTest
 	extends BaseVirtualInstanceOperationTestCase {

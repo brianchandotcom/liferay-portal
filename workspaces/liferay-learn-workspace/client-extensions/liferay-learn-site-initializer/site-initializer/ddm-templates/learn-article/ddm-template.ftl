@@ -20,13 +20,13 @@
 
 	document.addEventListener("DOMContentLoaded", () => {
 		const mutationObserver = new MutationObserver(() => {
-			const anchorLinks = document.querySelectorAll(".toc li a");
+			const elements = document.querySelectorAll(".toc li a");
 
-			anchorLinks.forEach((anchorLink) => {
+			elements.forEach((element) => {
 
-				if (!anchorLink.dataset.observed) {
-					toggleClick(anchorLink)
-					anchorLink.dataset.observed = "true";
+				if (!element.dataset.observed) {
+					toggleClick(element)
+					element.dataset.observed = "true";
 				}
 			});
 
@@ -35,10 +35,10 @@
 
 		mutationObserver.observe(document.body, { childList: true, subtree: true });
 		
-		const anchorLinks = document.querySelectorAll("h1 a, h2 a, h3 a");
+		const elements = document.querySelectorAll("h1 a, h2 a, h3 a");
 
-		anchorLinks.forEach((anchorLink) => {
-			toggleClick(anchorLink)
+		elements.forEach((element) => {
+			toggleClick(element)
 		});
 	});
 </script>

@@ -7869,10 +7869,9 @@ ${docker.start.error}</fail>
 										&& !JenkinsResultsParserUtil.isNullOrEmpty(javaJDKHomeString)
 										&& (!javaHomeString.equals(javaJDKHomeString)) {
 
-											pathString = javaJDKHomeString + "/bin:" + pathString;
+										pathString = javaJDKHomeString + "/bin:" + pathString;
 
-											project.setProperty("docker.java.run.options", " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHomeString);
-										}
+										project.setProperty("docker.java.run.options", " -e PATH=" + pathString + " -e JAVA_HOME=" + javaJDKHomeString);
 									}
 								}
 							}

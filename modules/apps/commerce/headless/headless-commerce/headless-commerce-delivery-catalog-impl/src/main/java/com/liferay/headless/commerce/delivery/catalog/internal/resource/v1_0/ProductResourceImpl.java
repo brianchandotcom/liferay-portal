@@ -13,6 +13,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
@@ -34,6 +35,7 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResou
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -107,11 +109,18 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
 
-		return _toProduct(
-			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-				contextUser.getUserId(), 0, commerceAccountId),
-			cpDefinition);
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+			contextUser.getUserId(), 0, commerceAccountId);
+
+		if (!cpDefinition.isVisible(
+				commerceContext.getCPConfigurationListId(
+					cpDefinition.getGroupId()))) {
+
+			return null;
+		}
+
+		return _toProduct(commerceContext, cpDefinition);
 	}
 
 	@Override
@@ -157,6 +166,16 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		searchContext.setCompanyId(contextCompany.getCompanyId());
 		searchContext.setKeywords(search);
 
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+			contextUser.getUserId(), 0, commerceAccountId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			searchContext.setAttribute(
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				commerceContext.getCPConfigurationListIds());
+		}
+
 		CPQuery cpQuery = new CPQuery();
 
 		cpQuery.setOrderByCol1("title");
@@ -166,9 +185,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		return Page.of(
 			_toProducts(
-				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-					contextUser.getUserId(), 0, commerceAccountId),
+				commerceContext,
 				_cpDefinitionHelper.search(
 					commerceChannel.getGroupId(), searchContext, cpQuery,
 					pagination.getStartPosition(),

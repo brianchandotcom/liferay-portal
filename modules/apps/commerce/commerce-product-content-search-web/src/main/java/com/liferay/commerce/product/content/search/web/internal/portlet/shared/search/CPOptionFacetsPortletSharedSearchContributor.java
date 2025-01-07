@@ -8,6 +8,8 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.shared.
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
@@ -19,6 +21,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.search.facet.SerializableFacet;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,9 +87,6 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			RenderRequest renderRequest =
 				portletSharedSearchSettings.getRenderRequest();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			int frequencyThreshold = 1;
 			int maxOptions = 10;
 			int maxTerms = 10;
@@ -140,35 +140,52 @@ public class CPOptionFacetsPortletSharedSearchContributor
 				portletSharedSearchSettings.addFacet(serializableFacet);
 			}
 
-			long commerceChannelGroupId = 0;
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+				CommerceContext commerceContext =
+					(CommerceContext)renderRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-					themeDisplay.getScopeGroupId());
-
-			if (commerceChannel != null) {
-				commerceChannelGroupId = commerceChannel.getGroupId();
-			}
-
-			if (commerceChannelGroupId > 0) {
 				searchContext.setAttribute(
-					CPField.COMMERCE_CHANNEL_GROUP_ID, commerceChannelGroupId);
-				searchContext.setAttribute("secure", Boolean.TRUE);
+					CPField.CP_CONFIGURATION_LIST_IDS,
+					commerceContext.getCPConfigurationListIds());
+			}
+			else {
+				long commerceChannelGroupId = 0;
 
-				AccountEntry accountEntry =
-					_commerceAccountHelper.getCurrentAccountEntry(
-						commerceChannelGroupId, themeDisplay.getRequest());
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				long[] commerceAccountGroupIds = null;
+				CommerceChannel commerceChannel =
+					_commerceChannelLocalService.
+						fetchCommerceChannelBySiteGroupId(
+							themeDisplay.getScopeGroupId());
 
-				if (accountEntry != null) {
-					commerceAccountGroupIds =
-						_accountGroupLocalService.getAccountGroupIds(
-							accountEntry.getAccountEntryId());
+				if (commerceChannel != null) {
+					commerceChannelGroupId = commerceChannel.getGroupId();
 				}
 
-				searchContext.setAttribute(
-					"commerceAccountGroupIds", commerceAccountGroupIds);
+				if (commerceChannelGroupId > 0) {
+					searchContext.setAttribute(
+						CPField.COMMERCE_CHANNEL_GROUP_ID,
+						commerceChannelGroupId);
+					searchContext.setAttribute("secure", Boolean.TRUE);
+
+					AccountEntry accountEntry =
+						_commerceAccountHelper.getCurrentAccountEntry(
+							commerceChannelGroupId, themeDisplay.getRequest());
+
+					long[] commerceAccountGroupIds = null;
+
+					if (accountEntry != null) {
+						commerceAccountGroupIds =
+							_accountGroupLocalService.getAccountGroupIds(
+								accountEntry.getAccountEntryId());
+					}
+
+					searchContext.setAttribute(
+						"commerceAccountGroupIds", commerceAccountGroupIds);
+				}
 			}
 		}
 		catch (Exception exception) {

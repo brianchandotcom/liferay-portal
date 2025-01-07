@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPConfigurationListRelTable;
 import com.liferay.commerce.product.model.CPConfigurationListTable;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
@@ -122,9 +123,12 @@ public class CPConfigurationListLocalServiceImpl
 
 		if (parentCPConfigurationListId > 0) {
 			Set<Long> classPKs = new HashSet<>();
-			Indexer<CPConfigurationEntry> indexer =
+			Indexer<CPConfigurationEntry> cpConfigurationEntryIndexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					CPConfigurationEntry.class);
+
+			Indexer<CPDefinition> cpDefinitionIndexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
 
 			while (parentCPConfigurationListId > 0) {
 				for (CPConfigurationEntry cpConfigurationEntry :
@@ -160,9 +164,13 @@ public class CPConfigurationListLocalServiceImpl
 
 					classPKs.add(cpConfigurationEntry.getClassPK());
 
-					indexer.reindex(
+					cpConfigurationEntryIndexer.reindex(
 						CPConfigurationEntry.class.getName(),
 						cpConfigurationEntry.getCPConfigurationEntryId());
+
+					cpDefinitionIndexer.reindex(
+						CPDefinition.class.getName(),
+						cpConfigurationEntry.getClassPK());
 				}
 
 				CPConfigurationList parentCPConfigurationList =

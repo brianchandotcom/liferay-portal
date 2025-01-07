@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.openapi.contributor;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -26,9 +27,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.Schema;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
@@ -67,20 +73,8 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				continue;
 			}
 
-			Map<EntityField, Integer> entityFieldsDepth = new HashMap<>();
-			Map<EntityField, String> filterableFields = new HashMap<>();
-
-			for (Map.Entry<String, EntityField> entry :
-					entityFieldsMap.entrySet()) {
-
-				_contributeToFilterableFields(
-					0, entry.getValue(), entityFieldsDepth, entry.getKey(),
-					filterableFields);
-			}
-
 			schema.addExtension(
-				"x-filterable",
-				ListUtil.sort(new ArrayList<>(filterableFields.values())));
+				"x-filterable", _getFilterableFields(entityFieldsMap));
 		}
 	}
 
@@ -115,47 +109,6 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private void _contributeToFilterableFields(
-		int depth, EntityField entityField,
-		Map<EntityField, Integer> entityFieldsDepth, String fieldName,
-		Map<EntityField, String> filterableFields) {
-
-		if (!(entityField instanceof ComplexEntityField)) {
-			entityFieldsDepth.compute(
-				entityField,
-				(key, previousDepth) -> {
-					if ((previousDepth == null) || (previousDepth > depth)) {
-						filterableFields.put(entityField, fieldName);
-
-						return depth;
-					}
-
-					return previousDepth;
-				});
-
-			return;
-		}
-
-		ComplexEntityField complexEntityField = (ComplexEntityField)entityField;
-
-		if (entityFieldsDepth.containsKey(entityField)) {
-			return;
-		}
-
-		entityFieldsDepth.put(entityField, depth);
-
-		Map<String, EntityField> entityFieldsMap =
-			complexEntityField.getEntityFieldsMap();
-
-		for (Map.Entry<String, EntityField> entry :
-				entityFieldsMap.entrySet()) {
-
-			_contributeToFilterableFields(
-				depth + 1, entry.getValue(), entityFieldsDepth,
-				fieldName + "/" + entry.getKey(), filterableFields);
-		}
 	}
 
 	private String _encodeKey(
@@ -247,6 +200,46 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		return null;
+	}
+
+	private List<String> _getFilterableFields(
+		Map<String, EntityField> entityFieldsMap) {
+
+		Queue<Map.Entry<String, EntityField>> entryQueue = new LinkedList<>(
+			entityFieldsMap.entrySet());
+
+		List<String> filterableFields = new ArrayList<>();
+		Set<EntityField> visitedEntityFields = new HashSet<>();
+
+		while (!entryQueue.isEmpty()) {
+			Map.Entry<String, EntityField> entry = entryQueue.poll();
+
+			EntityField entityField = entry.getValue();
+
+			if (entityField instanceof ComplexEntityField) {
+				ComplexEntityField complexEntityField =
+					(ComplexEntityField)entityField;
+
+				if (!visitedEntityFields.add(complexEntityField)) {
+					continue;
+				}
+
+				Map<String, EntityField> currentEntityFieldsMap =
+					complexEntityField.getEntityFieldsMap();
+
+				entryQueue.addAll(
+					TransformUtil.transform(
+						currentEntityFieldsMap.entrySet(),
+						childEntry -> new AbstractMap.SimpleEntry<>(
+							entry.getKey() + "/" + childEntry.getKey(),
+							childEntry.getValue())));
+			}
+			else {
+				filterableFields.add(entry.getKey());
+			}
+		}
+
+		return ListUtil.sort(filterableFields);
 	}
 
 	private BundleContext _bundleContext;

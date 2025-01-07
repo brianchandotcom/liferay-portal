@@ -1,0 +1,26 @@
+{
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountToOAuth2DxpAuthorization_accountEntryId",
+	"label": {
+		"en_US": "OAuth2 DXP Authorization"
+	},
+	"name": "OAuth2DxpAuthorization",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Connection Source"
+			},
+			"name": "connectionSource",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "OAuth2 DXP Authorizations"
+	},
+	"scope": "company"
+}

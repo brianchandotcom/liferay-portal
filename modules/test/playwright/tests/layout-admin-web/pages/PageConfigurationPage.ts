@@ -11,6 +11,13 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
+type PageConfigurationSection =
+	| 'General'
+	| 'Design'
+	| 'SEO'
+	| 'Open Graph'
+	| 'Custom Meta Tags';
+
 export class PageConfigurationPage {
 	readonly page: Page;
 
@@ -44,7 +51,7 @@ export class PageConfigurationPage {
 		await fillAndClickOutside(this.page, this.url, url);
 	}
 
-	async goToSection(pageTitle: string, section: string) {
+	async goToSection(pageTitle: string, section: PageConfigurationSection) {
 		await this.pagesAdminPage.clickOnAction('Configure', pageTitle);
 
 		await this.page
@@ -116,7 +123,7 @@ export class PageConfigurationPage {
 	async setInputValueAndSave(
 		element: Locator,
 		layoutTitle: string,
-		section: string,
+		section: PageConfigurationSection,
 		value: string
 	) {
 		await this.goToSection(layoutTitle, section);

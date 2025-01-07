@@ -8,6 +8,9 @@ package com.liferay.journal.web.internal.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -107,6 +110,26 @@ public class JournalDisplayContextTest {
 		Assert.assertEquals(count, searchContainer.getTotal());
 	}
 
+	@Test
+	public void testIsShowBreadcrumb() throws Exception {
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		Assert.assertTrue(
+			_isShowBreadcrumb(
+				"test",
+				journalFolderFixture.addFolder(
+					_group.getGroupId(), RandomTestUtil.randomString())));
+
+		Assert.assertFalse(
+			_isShowBreadcrumb(
+				"",
+				journalFolderFixture.addFolder(
+					_group.getGroupId(), RandomTestUtil.randomString())));
+
+		Assert.assertFalse(_isShowBreadcrumb("test", null));
+	}
+
 	private void _addJournalArticle(String title) throws Exception {
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -194,6 +217,23 @@ public class JournalDisplayContextTest {
 		return themeDisplay;
 	}
 
+	private boolean _isShowBreadcrumb(
+			String keywords, JournalFolder journalFolder)
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_renderPortlet();
+
+		mockLiferayPortletRenderRequest.setParameter("keywords", keywords);
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"com.liferay.journal.web.internal.display.context." +
+					"JournalDisplayContext"),
+			"isShowBreadcrumb", new Class<?>[] {JournalFolder.class},
+			journalFolder);
+	}
+
 	private MockLiferayPortletRenderRequest _renderPortlet() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
@@ -214,6 +254,9 @@ public class JournalDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.journal.web.internal.portlet.JournalPortlet"

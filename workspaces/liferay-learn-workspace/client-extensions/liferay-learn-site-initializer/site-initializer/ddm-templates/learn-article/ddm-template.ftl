@@ -19,8 +19,8 @@
 	}
 
 	window.addEventListener('load', function() {
-		_addEventListener("h1 a, h2 a, h3 a");
 		_addEventListener(".toc li a");
+		_addEventListener("h1 a, h2 a, h3 a");
 	});
 </script>
 

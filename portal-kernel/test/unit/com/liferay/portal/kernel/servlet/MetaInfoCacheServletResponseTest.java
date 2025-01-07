@@ -655,7 +655,7 @@ public class MetaInfoCacheServletResponseTest {
 		Assert.assertEquals(
 			LocaleUtil.US, toMetaInfoCacheServletResponse.getLocale());
 		Assert.assertEquals(2048, contentLengthReference.get());
-		Assert.assertEquals("moved", messageReference.get());
+		Assert.assertNull(messageReference.get());
 		Assert.assertEquals(302, statusReference.get());
 
 		// Finish response after commit
@@ -1535,7 +1535,7 @@ public class MetaInfoCacheServletResponseTest {
 
 		metaInfoCacheServletResponse.setStatus(400, "Bad Page");
 
-		Assert.assertEquals("Bad Page", messageReference.get());
+		Assert.assertNull(messageReference.get());
 		Assert.assertEquals(400, metaInfoCacheServletResponse.getStatus());
 		Assert.assertEquals(400, statusReference.get());
 

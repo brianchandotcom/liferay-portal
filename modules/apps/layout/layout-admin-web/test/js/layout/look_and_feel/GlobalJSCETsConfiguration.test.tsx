@@ -35,6 +35,7 @@ describe('GlobalJSCETsConfiguration', () => {
 			<GlobalJSCETsConfiguration
 				globalJSCETSelectorURL=""
 				globalJSCETs={[]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -55,6 +56,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -75,26 +77,28 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
 		);
 
-		const selectElement = document.querySelector('.load-type-select');
+		const selectElement =
+			document.querySelector<HTMLInputElement>('.load-type-select');
 
-		expect(selectElement.value).toBe('default');
+		expect(selectElement?.value).toBe('default');
 
-		fireEvent.change(selectElement, {
+		fireEvent.change(selectElement as Element, {
 			target: {value: 'async'},
 		});
 
-		expect(selectElement.value).toBe('async');
+		expect(selectElement?.value).toBe('async');
 
-		fireEvent.change(selectElement, {
+		fireEvent.change(selectElement as Element, {
 			target: {value: 'defer'},
 		});
 
-		expect(selectElement.value).toBe('defer');
+		expect(selectElement?.value).toBe('defer');
 	});
 
 	it('renders a hidden input with the list of selected extensions', async () => {
@@ -116,6 +120,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS v2',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -137,6 +142,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -171,6 +177,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -253,6 +260,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						scriptLocation: 'bottom',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>
@@ -336,6 +344,7 @@ describe('GlobalJSCETsConfiguration', () => {
 						name: 'Nice Global JS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalJSCETsEventName=""
 			/>

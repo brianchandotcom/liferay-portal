@@ -27,6 +27,7 @@ describe('ThemeCSSReplacementSelector', () => {
 	it('shows selected theme CSS', async () => {
 		render(
 			<ThemeCSSReplacementSelector
+				isReadOnly={false}
 				placeholder=""
 				portletNamespace=""
 				selectThemeCSSClientExtensionEventName=""
@@ -52,6 +53,7 @@ describe('ThemeCSSReplacementSelector', () => {
 
 		render(
 			<ThemeCSSReplacementSelector
+				isReadOnly={false}
 				placeholder=""
 				portletNamespace=""
 				selectThemeCSSClientExtensionEventName=""
@@ -61,7 +63,9 @@ describe('ThemeCSSReplacementSelector', () => {
 			/>
 		);
 
-		userEvent.click(await screen.findByRole('button', {name: 'select'}));
+		await userEvent.click(
+			await screen.findByRole('button', {name: 'select'})
+		);
 		expect(openSelectionModal).toHaveBeenCalled();
 
 		await screen.findByDisplayValue('New Theme CSS');
@@ -80,6 +84,7 @@ describe('ThemeCSSReplacementSelector', () => {
 
 		render(
 			<ThemeCSSReplacementSelector
+				isReadOnly={false}
 				placeholder=""
 				portletNamespace=""
 				selectThemeCSSClientExtensionEventName=""
@@ -89,7 +94,9 @@ describe('ThemeCSSReplacementSelector', () => {
 			/>
 		);
 
-		userEvent.click(await screen.findByRole('button', {name: 'replace'}));
+		await userEvent.click(
+			await screen.findByRole('button', {name: 'replace'})
+		);
 		expect(openSelectionModal).toHaveBeenCalled();
 
 		await screen.findByDisplayValue('Replaced Theme CSS');
@@ -99,6 +106,7 @@ describe('ThemeCSSReplacementSelector', () => {
 	it('allows removing existing theme CSS', async () => {
 		render(
 			<ThemeCSSReplacementSelector
+				isReadOnly={false}
 				placeholder=""
 				portletNamespace=""
 				selectThemeCSSClientExtensionEventName=""
@@ -108,14 +116,16 @@ describe('ThemeCSSReplacementSelector', () => {
 			/>
 		);
 
-		userEvent.click(await screen.findByRole('button', {name: 'delete'}));
+		await userEvent.click(
+			await screen.findByRole('button', {name: 'delete'})
+		);
 
 		expect(
-			await screen.queryByDisplayValue('Old Theme CSS')
+			screen.queryByDisplayValue('Old Theme CSS')
 		).not.toBeInTheDocument();
 
 		expect(
-			await screen.queryByDisplayValue('old-theme-css')
+			screen.queryByDisplayValue('old-theme-css')
 		).not.toBeInTheDocument();
 	});
 });

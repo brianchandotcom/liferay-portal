@@ -36,6 +36,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 			<GlobalCSSCETsConfiguration
 				globalCSSCETSelectorURL=""
 				globalCSSCETs={[]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>
@@ -56,6 +57,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 						name: 'Nice Global CSS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>
@@ -82,6 +84,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 						name: 'Nice Global CSS v2',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>
@@ -103,18 +106,19 @@ describe('GlobalCSSCETsConfiguration', () => {
 						name: 'Nice Global CSS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>
 		);
 
-		userEvent.click(
+		await userEvent.click(
 			await screen.findByRole('button', {
 				name: 'add-css-client-extensions',
 			})
 		);
 
-		expect(openSelectionModal).toHaveBeenCalled();
+		expect(openSelectionModalMock).toHaveBeenCalled();
 	});
 
 	it('removes duplicated extensions if any', async () => {
@@ -131,12 +135,13 @@ describe('GlobalCSSCETsConfiguration', () => {
 						name: 'Nice Global CSS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>
 		);
 
-		userEvent.click(
+		await userEvent.click(
 			await screen.findByRole('button', {
 				name: 'add-css-client-extensions',
 			})
@@ -187,6 +192,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 						name: 'Nice Global CSS',
 					},
 				]}
+				isReadOnly={false}
 				portletNamespace=""
 				selectGlobalCSSCETsEventName=""
 			/>

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -377,10 +378,8 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testCopyDBPartitionCompany() throws Exception {
 		int rulesCount = _getRulesCount(defaultPartitionName);
 
-		Company company = CompanyTestUtil.addCompany();
-
 		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		String name = RandomTestUtil.randomString();
 		String virtualHostname = StringUtil.toLowerCase(
@@ -391,7 +390,8 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try {
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
-				company.getCompanyId(), null, name, virtualHostname, webId);
+				TestPropsValues.getCompanyId(), null, name, virtualHostname,
+				webId);
 
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
@@ -403,15 +403,15 @@ public class CompanyLocalServiceDBPartitionTest
 			companyLocalService.deleteCompany(copiedCompany);
 
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
-				company.getCompanyId(), copiedCompanyId, name, virtualHostname,
-				webId);
+				TestPropsValues.getCompanyId(), copiedCompanyId, name,
+				virtualHostname, webId);
 
 			Assert.assertEquals(copiedCompanyId, copiedCompany.getCompanyId());
 
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
 			_assertCopyDBPartitionCompanyId(
-				company.getCompanyId(), copiedCompany.getCompanyId());
+				TestPropsValues.getCompanyId(), copiedCompany.getCompanyId());
 
 			Assert.assertEquals(
 				rulesCount,
@@ -424,10 +424,12 @@ public class CompanyLocalServiceDBPartitionTest
 			safeCloseable.close();
 		}
 		finally {
-			companyLocalService.deleteCompany(company.getCompanyId());
-
 			if (copiedCompany != null) {
 				companyLocalService.deleteCompany(copiedCompany.getCompanyId());
+			}
+
+			if (configuration != null) {
+				ConfigurationTestUtil.deleteConfiguration(configuration);
 			}
 		}
 	}

@@ -24,6 +24,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
@@ -168,10 +170,22 @@ public class CTPublishBackgroundTaskExecutor
 			ctServicePublisher.addCTEntry(ctEntry);
 		}
 
+		BackgroundTaskStatus backgroundTaskStatus =
+			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
+				backgroundTask.getBackgroundTaskId());
+
+		double publishedCount = 0;
+		double ctServicePublisherCount = ctServicePublishers.size();
+
 		for (CTServicePublisher<?> ctServicePublisher :
 				ctServicePublishers.values()) {
 
 			ctServicePublisher.publish();
+
+			publishedCount++;
+
+			backgroundTaskStatus.setAttribute(
+				"currentPercentage", publishedCount / ctServicePublisherCount);
 		}
 
 		for (CTTableMapperHelper ctTableMapperHelper :
@@ -282,6 +296,9 @@ public class CTPublishBackgroundTaskExecutor
 		CTPublishBackgroundTaskExecutor.class);
 
 	private BackgroundTaskExecutor _backgroundTaskExecutor;
+
+	@Reference
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

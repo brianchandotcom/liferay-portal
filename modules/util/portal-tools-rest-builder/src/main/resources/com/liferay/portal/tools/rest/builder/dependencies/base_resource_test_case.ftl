@@ -1739,6 +1739,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(random${schemaName}, put${schemaName});
 					assertValid(put${schemaName});
 
+					<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+						Assert.assertNull(put${schemaName}.getPermissions());
+					</#if>
+
 					${schemaName} get${schemaName} =
 
 					<#assign getJavaMethodSignature = javaMethodSignature.methodName?replace("put", "get", "f") />
@@ -1756,6 +1760,39 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 						assertValid(get${schemaName}, multipartFiles);
+					</#if>
+
+					<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+						${schemaName} randomPermissions${schemaName} = randomPermissions${schemaName}();
+
+						put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+							<@getPutParameters
+								hasMultipartFiles = true
+								javaMethodSignature = javaMethodSignature
+								newSchemaVarNamePrefix = "randomPermissions"
+								schemaName = schemaName
+								schemaVarName = schemaVarName
+								schemaVarNamePrefix = "post"
+							/>
+						);
+
+						assertEquals(randomPermissions${schemaName}, put${schemaName});
+						assertValid(put${schemaName});
+
+						Assert.assertNull(put${schemaName}.getPermissions());
+
+						put${schemaName} = permissions${schemaName}Resource.${javaMethodSignature.methodName}(
+							<@getPutParameters
+								hasMultipartFiles = true
+								javaMethodSignature = javaMethodSignature
+								newSchemaVarNamePrefix = "randomPermissions"
+								schemaName = schemaName
+								schemaVarName = schemaVarName
+								schemaVarNamePrefix = "post"
+							/>
+						);
+
+						Assert.assertNotNull(put${schemaName}.getPermissions());
 					</#if>
 				</#if>
 

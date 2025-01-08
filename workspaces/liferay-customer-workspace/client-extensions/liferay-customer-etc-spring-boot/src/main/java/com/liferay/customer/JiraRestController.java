@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,17 +52,22 @@ public class JiraRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.GET,
-		path = "/jira/security-vulnerabilities/versions"
+		path = "/jira/security-vulnerabilities/affected-versions"
 	)
 	public ResponseEntity<String> get() throws Exception {
 		try {
-			JSONArray jsonArray = _getVersionsJSONArray(
-				_jiraSecurityVulnerabilityProject);
+			if ((_affectedVersionsJSONArray == null) ||
+				(_affectedVersionsExpirationTime <=
+					System.currentTimeMillis())) {
 
-			JSONArray responseJSONArray = _flattenJSONArray(jsonArray);
+				_affectedVersionsJSONArray = _getAffectedVersionsJSONArray();
+
+				_affectedVersionsExpirationTime =
+					System.currentTimeMillis() + Time.DAY;
+			}
 
 			return new ResponseEntity<>(
-				responseJSONArray.toString(), HttpStatus.OK);
+				_affectedVersionsJSONArray.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -302,6 +310,65 @@ public class JiraRestController extends BaseRestController {
 		return flattenedJSONArray;
 	}
 
+	private JSONArray _getAffectedVersionsJSONArray() throws Exception {
+		try {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("project = '");
+			sb.append(_jiraSecurityVulnerabilityProject);
+			sb.append("' AND ");
+			sb.append(
+				_getJQLCustomField(
+					_jiraSecurityVulnerabilityFieldPublishingStatus));
+			sb.append(" = 'Ready for Publishing' AND ");
+			sb.append(
+				_getJQLCustomField(
+					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
+			sb.append(" <= now()");
+
+			String[] issueFields = {_FIELD_VERSIONS};
+
+			Set<String> affectedVersions = new TreeSet<>();
+
+			for (int i = 0; true; i += 100) {
+				JSONObject jsonObject = _search(
+					sb.toString(), 100, issueFields, i);
+
+				JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
+
+				if (issuesJSONArray.length() <= 0) {
+					break;
+				}
+
+				for (int j = 0; j < issuesJSONArray.length(); j++) {
+					JSONObject issueJSONObject = issuesJSONArray.getJSONObject(
+						j);
+
+					JSONObject fieldsJSONObject = issueJSONObject.getJSONObject(
+						"fields");
+
+					JSONArray versionsJSONArray = fieldsJSONObject.getJSONArray(
+						"versions");
+
+					for (int k = 0; k < versionsJSONArray.length(); k++) {
+						JSONObject versionJSONObject =
+							versionsJSONArray.getJSONObject(k);
+
+						affectedVersions.add(
+							versionJSONObject.optString("name"));
+					}
+				}
+			}
+
+			return new JSONArray(affectedVersions);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to fetch affected versions", exception);
+		}
+
+		return _affectedVersionsJSONArray;
+	}
+
 	private String _getCredentials() {
 		String jiraUserNameAndJiraApiToken =
 			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
@@ -385,35 +452,6 @@ public class JiraRestController extends BaseRestController {
 		}
 
 		return rolesNames;
-	}
-
-	private JSONArray _getVersionsJSONArray(String project) throws Exception {
-		try {
-			return new JSONArray(
-				WebClient.create(
-					_jiraURL
-				).get(
-				).uri(
-					StringBundler.concat(
-						_URL_REST_API_2, "/project/", project, "/versions")
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to fetch Jira versions with project " + project,
-					exception);
-			}
-		}
-
-		return null;
 	}
 
 	private boolean _hasEarlyPublishAccess(Jwt jwt) {
@@ -631,6 +669,9 @@ public class JiraRestController extends BaseRestController {
 	private static final String _URL_REST_API_2 = "/rest/api/2";
 
 	private static final Log _log = LogFactory.getLog(JiraRestController.class);
+
+	private long _affectedVersionsExpirationTime;
+	private JSONArray _affectedVersionsJSONArray;
 
 	@Value("${liferay.customer.jira.api.email.address}")
 	private String _jiraAPIEmailAddress;

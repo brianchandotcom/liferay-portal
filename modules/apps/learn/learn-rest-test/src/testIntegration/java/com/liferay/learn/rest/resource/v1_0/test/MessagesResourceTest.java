@@ -6,14 +6,40 @@
 package com.liferay.learn.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.learn.LearnMessageUtil;
+import com.liferay.learn.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import org.junit.Ignore;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Thiago Buarque
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class MessagesResourceTest extends BaseMessagesResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetMessages() throws Exception {
+		String resource = "click-to-chat-web";
+
+		HttpInvoker.HttpResponse httpResponse =
+			messagesResource.getMessagesHttpResponse(resource);
+
+		JSONAssert.assertEquals(
+			LearnMessageUtil.getJSONObject(
+				resource
+			).toString(),
+			httpResponse.getContent(), true);
+
+		httpResponse = messagesResource.getMessagesHttpResponse(
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals("{}", httpResponse.getContent());
+	}
+
 }

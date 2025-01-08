@@ -1801,18 +1801,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!activation.jar</file-name>
-				<version>1.1.1</version>
-				<project-name>Sun Java System Application Server</project-name>
-				<project-url>http://java.sun.com/javase/technologies/desktop/javabeans/jaf/index.jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
-						<license-url>https://glassfish.dev.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!asm.jar</file-name>
 				<version>5.0.4</version>
 				<project-name>ASM Core</project-name>
@@ -3140,18 +3128,6 @@
 					<license>
 						<license-name>Bouncy Castle Licence</license-name>
 						<license-url>https://www.bouncycastle.org/licence.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!activation.jar</file-name>
-				<version>1.1.1</version>
-				<project-name>Sun Java System Application Server</project-name>
-				<project-url>http://java.sun.com/javase/technologies/desktop/javabeans/jaf/index.jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
-						<license-url>https://glassfish.dev.java.net/public/CDDLv1.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5661,7 +5637,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/activation.jar</file-name>
-				<version>1.1</version>
+				<version>1.1.1</version>
 				<project-name>JavaBeans Activation Framework</project-name>
 				<project-url>http://java.sun.com/products/javabeans/jaf</project-url>
 				<licenses>

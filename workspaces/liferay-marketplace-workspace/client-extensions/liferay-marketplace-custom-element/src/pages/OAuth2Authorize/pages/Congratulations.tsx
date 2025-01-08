@@ -4,28 +4,26 @@
  */
 
 import {useEffect} from 'react';
+import {Navigate} from 'react-router-dom';
 
 import CongratulationsIcon from '../../../assets/icons/congratulations_icon.svg';
 import SearchBuilder from '../../../core/SearchBuilder';
+import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import fetcher from '../../../services/fetcher';
 import dxpOAuth2Client from '../../../services/oauth/DXP';
 import {safeJSONParse} from '../../../utils/util';
 import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
-import i18n from '../../../i18n';
-import {Navigate} from 'react-router-dom';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
 const POST_MESSAGE_TIMEOUT = 3000;
 
 const Congratulations = () => {
-	const {myUserAccount, selectedAccount, environment, project} =
+	const {environment, myUserAccount, project, selectedAccount} =
 		useOAuth2OutletContext();
 
-	if (!selectedAccount) {
-		return <Navigate to="/" />;
-	}
+	const cloudProject = `${project.rootProjectId}-${environment.projectId}`;
 
 	useEffect(() => {
 		const {origin} = safeJSONParse(urlSearchParams.get('state'), {
@@ -50,7 +48,7 @@ const Congratulations = () => {
 			settings: {
 				accountId: selectedAccount?.id,
 				channelId: Liferay.CommerceContext.commerceChannelId,
-				cloudProject: `${project.rootProjectId}-${environment.projectId}`,
+				cloudProject,
 				references: {
 					paymentMethodFilter: SearchBuilder.lambda(
 						'categoryNames',
@@ -61,6 +59,7 @@ const Congratulations = () => {
 			},
 		};
 
+		// eslint-disable-next-line no-console
 		console.info(
 			`Dispatching post message to ${origin} with the following payload`,
 			payload
@@ -69,7 +68,11 @@ const Congratulations = () => {
 		setTimeout(() => {
 			window?.opener?.postMessage(payload, origin);
 		}, POST_MESSAGE_TIMEOUT);
-	}, [myUserAccount, selectedAccount]);
+	}, [cloudProject, myUserAccount, selectedAccount]);
+
+	if (!selectedAccount) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<div className="align-items-center border d-flex flex-column justify-content-center p-5 rounded">

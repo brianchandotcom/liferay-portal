@@ -5,15 +5,16 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseTestBatch<T extends BatchBuildData>
 	implements TestBatch<T> {
-
-	public JDK getJDK() {
-		return _jdk;
-	}
 
 	@Override
 	public void run() {
@@ -31,14 +32,14 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 	protected BaseTestBatch(T batchBuildData, Workspace workspace) {
 		_batchBuildData = batchBuildData;
 		_workspace = workspace;
-
-		_jdk = JDKFactory.getJDK("jdk8");
 	}
 
 	protected abstract void executeBatch() throws AntException;
 
 	protected String getAntOpts(String batchName) {
-		return _jdk.getAntOpts();
+		return JenkinsResultsParserUtil.combine(
+			_getBuildProperty("java.jdk.opts.default.runtime", batchName),
+			" -XX:+IgnoreUnrecognizedVMOptions");
 	}
 
 	protected T getBatchBuildData() {
@@ -46,13 +47,30 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 	}
 
 	protected String getJavaHome(String batchName) {
-		return _jdk.getJavaHome();
+		return _getBuildProperty("java.jdk.default.compile", batchName);
+	}
+
+	protected String getJavaOpts(String batchName) {
+		return JenkinsResultsParserUtil.combine(
+			_getBuildProperty("java.jdk.opts.default.runtime", batchName),
+			" -XX:+IgnoreUnrecognizedVMOptions");
 	}
 
 	protected String getPath(String batchName) {
 		String path = System.getenv("PATH");
 
-		return path.replaceAll("jdk", _jdk.getName());
+		if (JenkinsResultsParserUtil.isNullOrEmpty(path)) {
+			return null;
+		}
+
+		Matcher javaHomeMatcher = _javaHomePattern.matcher(path);
+
+		if (javaHomeMatcher.find()) {
+			path = path.replace(
+				javaHomeMatcher.group(), getJavaHome(batchName));
+		}
+
+		return path;
 	}
 
 	protected Workspace getWorkspace() {
@@ -61,8 +79,24 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 
 	protected abstract void publishResults();
 
+	private String _getBuildProperty(String baseProperty, String batchName) {
+		WorkspaceGitRepository workspaceGitRepository =
+			_workspace.getPrimaryWorkspaceGitRepository();
+
+		try {
+			return JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(), baseProperty,
+				workspaceGitRepository.getUpstreamBranchName(), batchName);
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
+	private static final Pattern _javaHomePattern = Pattern.compile(
+		"/opt/java/(jdk|zulu)[^:]+");
+
 	private final T _batchBuildData;
-	private final JDK _jdk;
 	private final Workspace _workspace;
 
 }

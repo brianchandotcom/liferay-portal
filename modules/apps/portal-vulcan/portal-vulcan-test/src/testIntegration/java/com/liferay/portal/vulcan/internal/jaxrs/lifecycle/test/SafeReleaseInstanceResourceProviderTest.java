@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -182,6 +183,10 @@ public class SafeReleaseInstanceResourceProviderTest {
 		@Override
 		public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap) {
 			return Collections::emptyMap;
+		}
+
+		@Override
+		public void setContextCompany(Company contextCompany) {
 		}
 
 		@GET

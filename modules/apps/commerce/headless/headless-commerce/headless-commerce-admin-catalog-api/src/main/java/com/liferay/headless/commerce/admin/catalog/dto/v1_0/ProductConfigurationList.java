@@ -391,33 +391,29 @@ public class ProductConfigurationList implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "true")
-	public Boolean getMasterProductConfigurationList() {
-		if (_masterProductConfigurationListSupplier != null) {
-			masterProductConfigurationList =
-				_masterProductConfigurationListSupplier.get();
+	public Boolean getMaster() {
+		if (_masterSupplier != null) {
+			master = _masterSupplier.get();
 
-			_masterProductConfigurationListSupplier = null;
+			_masterSupplier = null;
 		}
 
-		return masterProductConfigurationList;
+		return master;
 	}
 
-	public void setMasterProductConfigurationList(
-		Boolean masterProductConfigurationList) {
+	public void setMaster(Boolean master) {
+		this.master = master;
 
-		this.masterProductConfigurationList = masterProductConfigurationList;
-
-		_masterProductConfigurationListSupplier = null;
+		_masterSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMasterProductConfigurationList(
-		UnsafeSupplier<Boolean, Exception>
-			masterProductConfigurationListUnsafeSupplier) {
+	public void setMaster(
+		UnsafeSupplier<Boolean, Exception> masterUnsafeSupplier) {
 
-		_masterProductConfigurationListSupplier = () -> {
+		_masterSupplier = () -> {
 			try {
-				return masterProductConfigurationListUnsafeSupplier.get();
+				return masterUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -430,10 +426,10 @@ public class ProductConfigurationList implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean masterProductConfigurationList;
+	protected Boolean master;
 
 	@JsonIgnore
-	private Supplier<Boolean> _masterProductConfigurationListSupplier;
+	private Supplier<Boolean> _masterSupplier;
 
 	@Schema(example = "Hand Saw")
 	public String getName() {
@@ -795,17 +791,16 @@ public class ProductConfigurationList implements Serializable {
 			sb.append(id);
 		}
 
-		Boolean masterProductConfigurationList =
-			getMasterProductConfigurationList();
+		Boolean master = getMaster();
 
-		if (masterProductConfigurationList != null) {
+		if (master != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterProductConfigurationList\": ");
+			sb.append("\"master\": ");
 
-			sb.append(masterProductConfigurationList);
+			sb.append(master);
 		}
 
 		String name = getName();

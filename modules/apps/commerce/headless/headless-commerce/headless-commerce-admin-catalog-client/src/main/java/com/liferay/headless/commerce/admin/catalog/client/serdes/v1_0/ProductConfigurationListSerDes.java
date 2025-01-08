@@ -167,17 +167,14 @@ public class ProductConfigurationListSerDes {
 			sb.append(productConfigurationList.getId());
 		}
 
-		if (productConfigurationList.getMasterProductConfigurationList() !=
-				null) {
-
+		if (productConfigurationList.getMaster() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"masterProductConfigurationList\": ");
+			sb.append("\"master\": ");
 
-			sb.append(
-				productConfigurationList.getMasterProductConfigurationList());
+			sb.append(productConfigurationList.getMaster());
 		}
 
 		if (productConfigurationList.getName() != null) {
@@ -357,17 +354,12 @@ public class ProductConfigurationListSerDes {
 			map.put("id", String.valueOf(productConfigurationList.getId()));
 		}
 
-		if (productConfigurationList.getMasterProductConfigurationList() ==
-				null) {
-
-			map.put("masterProductConfigurationList", null);
+		if (productConfigurationList.getMaster() == null) {
+			map.put("master", null);
 		}
 		else {
 			map.put(
-				"masterProductConfigurationList",
-				String.valueOf(
-					productConfigurationList.
-						getMasterProductConfigurationList()));
+				"master", String.valueOf(productConfigurationList.getMaster()));
 		}
 
 		if (productConfigurationList.getName() == null) {
@@ -464,10 +456,7 @@ public class ProductConfigurationListSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"masterProductConfigurationList")) {
-
+			else if (Objects.equals(jsonParserFieldName, "master")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
@@ -551,12 +540,9 @@ public class ProductConfigurationListSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"masterProductConfigurationList")) {
-
+			else if (Objects.equals(jsonParserFieldName, "master")) {
 				if (jsonParserFieldValue != null) {
-					productConfigurationList.setMasterProductConfigurationList(
+					productConfigurationList.setMaster(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

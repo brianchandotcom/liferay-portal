@@ -198,30 +198,26 @@ public class ProductConfigurationList implements Cloneable, Serializable {
 
 	protected Long id;
 
-	public Boolean getMasterProductConfigurationList() {
-		return masterProductConfigurationList;
+	public Boolean getMaster() {
+		return master;
 	}
 
-	public void setMasterProductConfigurationList(
-		Boolean masterProductConfigurationList) {
-
-		this.masterProductConfigurationList = masterProductConfigurationList;
+	public void setMaster(Boolean master) {
+		this.master = master;
 	}
 
-	public void setMasterProductConfigurationList(
-		UnsafeSupplier<Boolean, Exception>
-			masterProductConfigurationListUnsafeSupplier) {
+	public void setMaster(
+		UnsafeSupplier<Boolean, Exception> masterUnsafeSupplier) {
 
 		try {
-			masterProductConfigurationList =
-				masterProductConfigurationListUnsafeSupplier.get();
+			master = masterUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean masterProductConfigurationList;
+	protected Boolean master;
 
 	public String getName() {
 		return name;

@@ -52,7 +52,8 @@ public class ResourceTestCaseOpenAPIParser {
 					_getReturnType(
 						configYAML.getApiPackagePath(),
 						resourceJavaMethodSignature.getReturnType(),
-						_getVersion(openAPIYAML))));
+						_getVersion(openAPIYAML)),
+					resourceJavaMethodSignature.getParentSchemaName()));
 		}
 
 		return javaMethodSignatures;

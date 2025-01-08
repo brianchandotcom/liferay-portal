@@ -38,9 +38,16 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 <#assign
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+	generatePermissionsJavaMethodSignatures = []
 
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 />
+
+<#list javaMethodSignatures as javaMethodSignature>
+	<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)>
+		<#assign generatePermissionsJavaMethodSignatures = generatePermissionsJavaMethodSignatures + [javaMethodSignature] />
+	</#if>
+</#list>
 
 <#if generateDepotEntry>
 	import com.liferay.depot.model.DepotEntry;
@@ -152,15 +159,27 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		com.liferay.portal.kernel.model.User testCompanyAdminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		${schemaName}Resource.Builder builder = ${schemaName}Resource.builder();
-
-		${schemaVarName}Resource = builder.authentication(
+		${schemaVarName}Resource = ${schemaName}Resource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
+			permissions${schemaName}Resource = ${schemaName}Resource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).parameter(
+				"nestedFields", "permissions"
+			).build();
+		</#if>
 	}
 
 	@After
@@ -626,6 +645,34 @@ public abstract class Base${schemaName}ResourceTestCase {
 							${javaMethodParameter.parameterName}<#sep>, </#sep>
 						</#list>
 					));
+
+					<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+						for (${schemaName} ${schemaVarName} : page.getItems()) {
+							Assert.assertNull(${schemaVarName}.getPermissions());
+						}
+
+						page = permissions${schemaName}Resource.${javaMethodSignature.methodName}(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
+
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(1, 10)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								${javaMethodParameter.parameterName}
+							<#else>
+								null
+							</#if>
+						</#list>
+
+						);
+
+						for (${schemaName} ${schemaVarName} : page.getItems()) {
+							Assert.assertNotNull(${schemaVarName}.getPermissions());
+						}
+					</#if>
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
 						<#assign deleteJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) />
@@ -3258,6 +3305,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
+
+	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
+		protected ${schemaName}Resource permissions${schemaName}Resource;
+	</#if>
+
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 

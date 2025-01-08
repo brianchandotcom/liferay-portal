@@ -22,17 +22,6 @@ public class JavaMethodSignature {
 		String path, PathItem pathItem, Operation operation,
 		Set<String> requestBodyMediaTypes, String schemaName,
 		List<JavaMethodParameter> javaMethodParameters, String methodName,
-		String returnType) {
-
-		this(
-			path, pathItem, operation, requestBodyMediaTypes, schemaName,
-			javaMethodParameters, methodName, returnType, null);
-	}
-
-	public JavaMethodSignature(
-		String path, PathItem pathItem, Operation operation,
-		Set<String> requestBodyMediaTypes, String schemaName,
-		List<JavaMethodParameter> javaMethodParameters, String methodName,
 		String returnType, String parentSchemaName) {
 
 		_path = path;

@@ -176,67 +176,69 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 			StartupHelperUtil.setUpgrading(false);
 		}
 
-		ObjectField httpMethodObjectField =
-			_objectFieldLocalService.getObjectField(
-				"HTTP_METHOD",
-				apiEndpointObjectDefinition.getObjectDefinitionId());
+		_assertExpectedChanges(
+			apiApplicationObjectDefinition, "APPLICATION_STATUS",
+			"APPLICATION_STATUS_PICKLIST", "Application Status", "draft",
+			"published", "DRAFT", "PUBLISHED");
 
-		Assert.assertFalse(httpMethodObjectField.isState());
+		_assertExpectedChanges(
+			apiEndpointObjectDefinition, "HTTP_METHOD", "HTTP_METHOD_PICKLIST",
+			"HTTP Method", "get", "post", "GET", "POST");
+
+		_assertExpectedChanges(
+			apiEndpointObjectDefinition, "RETRIEVE_TYPE",
+			"RETRIEVE_TYPE_PICKLIST", "Retrieve Type", "collection",
+			"singleElement", "COLLECTION", "SINGLE_ELEMENT");
+
+		_assertExpectedChanges(
+			apiEndpointObjectDefinition, "SCOPE", "SCOPE_PICKLIST", "Scope",
+			"company", "site", "COMPANY", "SITE");
+	}
+
+	private void _assertExpectedChanges(
+			ObjectDefinition objectDefinition,
+			String objectFieldExternalReferenceCode,
+			String listTypeExternalReferenceCode,
+			String expectedListTypeDefinitionName, String listTypeEntry1Key,
+			String listTypeEntry2Key,
+			String expectedListTypeEntry1ExternalReferenceCode,
+			String expectedListTypeEntry2ExternalReferenceCode)
+		throws Exception {
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectFieldExternalReferenceCode,
+			objectDefinition.getObjectDefinitionId());
+
+		Assert.assertFalse(objectField.isState());
 
 		Assert.assertNull(
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				httpMethodObjectField.getObjectFieldId()));
+				objectField.getObjectFieldId()));
 
-		ListTypeDefinition httpMethodListTypeDefinition =
+		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.
 				getListTypeDefinitionByExternalReferenceCode(
-					"HTTP_METHOD_PICKLIST", TestPropsValues.getCompanyId());
+					listTypeExternalReferenceCode,
+					TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			"HTTP Method", httpMethodListTypeDefinition.getName());
+			expectedListTypeDefinitionName, listTypeDefinition.getName());
 
-		ListTypeEntry listTypeEntry1 =
+		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
-				httpMethodListTypeDefinition.getListTypeDefinitionId(), "GET");
+				listTypeDefinition.getListTypeDefinitionId(),
+				listTypeEntry1Key);
 
-		Assert.assertEquals("GET", listTypeEntry1.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedListTypeEntry1ExternalReferenceCode,
+			listTypeEntry.getExternalReferenceCode());
 
-		ListTypeEntry listTypeEntry2 =
-			_listTypeEntryLocalService.getListTypeEntry(
-				httpMethodListTypeDefinition.getListTypeDefinitionId(), "POST");
+		listTypeEntry = _listTypeEntryLocalService.getListTypeEntry(
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntry2Key);
 
-		Assert.assertEquals("POST", listTypeEntry2.getExternalReferenceCode());
-
-		ObjectField retrieveTypeObjectField =
-			_objectFieldLocalService.getObjectField(
-				"RETRIEVE_TYPE",
-				apiEndpointObjectDefinition.getObjectDefinitionId());
-
-		Assert.assertFalse(retrieveTypeObjectField.isState());
-
-		Assert.assertNull(
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				retrieveTypeObjectField.getObjectFieldId()));
-
-		ObjectField scopeObjectField = _objectFieldLocalService.getObjectField(
-			"SCOPE", apiEndpointObjectDefinition.getObjectDefinitionId());
-
-		Assert.assertFalse(scopeObjectField.isState());
-
-		Assert.assertNull(
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				scopeObjectField.getObjectFieldId()));
-
-		ObjectField applicationStatusObjectField =
-			_objectFieldLocalService.getObjectField(
-				"APPLICATION_STATUS",
-				apiApplicationObjectDefinition.getObjectDefinitionId());
-
-		Assert.assertFalse(applicationStatusObjectField.isState());
-
-		Assert.assertNull(
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				applicationStatusObjectField.getObjectFieldId()));
+		Assert.assertEquals(
+			expectedListTypeEntry2ExternalReferenceCode,
+			listTypeEntry.getExternalReferenceCode());
 	}
 
 	private void _waitForImportCompletion(JSONObject jsonObject)

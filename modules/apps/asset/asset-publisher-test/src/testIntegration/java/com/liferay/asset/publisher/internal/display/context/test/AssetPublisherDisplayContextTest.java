@@ -252,18 +252,16 @@ public class AssetPublisherDisplayContextTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setPortletName(
 			AssetPublisherPortletKeys.ASSET_PUBLISHER);
-
 		portletDisplay.setPortletPreferences(portletPreferences);
 
+		themeDisplay.setCompany(_company);
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(_layout.getGroupId());
 		themeDisplay.setSiteGroupId(_layout.getGroupId());

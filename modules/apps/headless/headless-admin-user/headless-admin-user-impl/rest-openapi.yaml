@@ -6268,6 +6268,61 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Site"
             tags: ["Site"]
+    "/sites/by-friendly-url-path/{friendlyUrlPath}/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/selected":
+        get:
+            description:
+                Gets the selected property of a user assigned to an account for a specific site
+            parameters:
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: userAccountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+                        application/xml:
+                            schema:
+                                type: boolean
+            tags: ["UserAccount"]
+        patch:
+            description:
+                Updates the selected property of a user assigned to an account for a specific site
+            parameters:
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: accountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: userAccountExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserAccount"]
     "/sites/{siteId}":
         get:
             operationId: getSite
@@ -6288,6 +6343,67 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Site"
             tags: ["Site"]
+    "/sites/{siteId}/accounts/{accountId}/user-accounts/{userAccountId}/selected":
+        get:
+            description:
+                Gets the selected property of a user assigned to an account for a specific site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+                        application/xml:
+                            schema:
+                                type: boolean
+            tags: ["UserAccount"]
+        patch:
+            description:
+                Updates the selected property of a user assigned to an account for a specific site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserAccount"]
     "/sites/{siteId}/segments":
         get:
             description:

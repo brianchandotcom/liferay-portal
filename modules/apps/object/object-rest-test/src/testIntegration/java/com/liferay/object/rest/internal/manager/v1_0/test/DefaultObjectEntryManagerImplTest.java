@@ -636,25 +636,27 @@ public class DefaultObjectEntryManagerImplTest
 				"oneToManyRelationshipName", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
+		_objectRelationshipName = objectRelationship1.getName();
+
 		_addAggregationObjectField(
 			"precisionDecimalObjectFieldName", "AVERAGE",
 			_objectDefinition1.getObjectDefinitionId(),
-			"averageAggregationObjectFieldName", objectRelationship1.getName());
+			"averageAggregationObjectFieldName", _objectRelationshipName);
 		_addAggregationObjectField(
 			null, "COUNT", _objectDefinition1.getObjectDefinitionId(),
-			"countAggregationObjectFieldName1", objectRelationship1.getName());
+			"countAggregationObjectFieldName1", _objectRelationshipName);
 		_addAggregationObjectField(
 			"integerObjectFieldName", "MAX",
 			_objectDefinition1.getObjectDefinitionId(),
-			"maxAggregationObjectFieldName", objectRelationship1.getName());
+			"maxAggregationObjectFieldName", _objectRelationshipName);
 		_addAggregationObjectField(
 			"longIntegerObjectFieldName", "MIN",
 			_objectDefinition1.getObjectDefinitionId(),
-			"minAggregationObjectFieldName", objectRelationship1.getName());
+			"minAggregationObjectFieldName", _objectRelationshipName);
 		_addAggregationObjectField(
 			"decimalObjectFieldName", "SUM",
 			_objectDefinition1.getObjectDefinitionId(),
-			"sumAggregationObjectFieldName", objectRelationship1.getName());
+			"sumAggregationObjectFieldName", _objectRelationshipName);
 
 		ObjectField objectField = objectFieldLocalService.getObjectField(
 			objectRelationship1.getObjectFieldId2());
@@ -1156,6 +1158,31 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Aggregation field with filters
 
+		String objectFieldName1 = "a" + RandomTestUtil.randomString();
+		String objectFieldName2 = "a" + RandomTestUtil.randomString();
+
+		_addAggregationObjectField(
+			objectFieldName2, "MAX", _objectDefinition1.getObjectDefinitionId(),
+			objectFieldName1, _objectRelationshipName);
+
+		ObjectField objectField1 = objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(), objectFieldName1);
+
+		_objectFilterLocalService.addObjectFilter(
+			adminUser.getUserId(), objectField1.getObjectFieldId(),
+			objectFieldName2, ObjectFilterConstants.TYPE_NOT_EQUALS,
+			"{\"ne\": \"25\"}");
+
+		_addCustomObjectField(
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				objectFieldName2
+			).objectDefinitionId(
+				_objectDefinition2.getObjectDefinitionId()
+			).build());
+
 		ObjectEntry parentObjectEntry1 =
 			_defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
@@ -1179,11 +1206,11 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipERCObjectFieldName,
 							"newExternalReferenceCode"
 						).put(
+							objectFieldName2, 15
+						).put(
 							"dateObjectFieldName", "2020-01-02"
 						).put(
 							"decimalObjectFieldName", 15.7
-						).put(
-							"integerObjectFieldName", 15
 						).put(
 							"longIntegerObjectFieldName", 100L
 						).put(
@@ -1207,14 +1234,14 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipERCObjectFieldName,
 							"newExternalReferenceCode"
 						).put(
+							objectFieldName2, 10
+						).put(
 							"attachmentObjectFieldName",
 							_getAttachmentObjectFieldValue()
 						).put(
 							"dateObjectFieldName", "2022-01-01"
 						).put(
 							"decimalObjectFieldName", 15.5
-						).put(
-							"integerObjectFieldName", 10
 						).put(
 							"longIntegerObjectFieldName", 50000L
 						).put(
@@ -1235,20 +1262,20 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Aggregation field with filter (date range with date and time)
 
-		ObjectField objectField = objectFieldLocalService.getObjectField(
+		String currentDateString = _simpleDateFormat.format(new Date());
+
+		ObjectField objectField2 = objectFieldLocalService.getObjectField(
 			_objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName1");
 
-		String currentDateString = _simpleDateFormat.format(new Date());
-
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(), "createDate",
-			ObjectFilterConstants.TYPE_DATE_RANGE,
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
+			"createDate", ObjectFilterConstants.TYPE_DATE_RANGE,
 			StringBundler.concat(
 				"{\"le\": \"", currentDateString, "\", \"ge\": \"",
 				currentDateString, "\"}"));
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
 			"modifiedDate", ObjectFilterConstants.TYPE_DATE_RANGE,
 			StringBundler.concat(
 				"{\"le\": \"", currentDateString, "\", \"ge\": \"",
@@ -1259,7 +1286,7 @@ public class DefaultObjectEntryManagerImplTest
 		// Aggregation field with filter (date range with date only)
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
 			"dateObjectFieldName", ObjectFilterConstants.TYPE_DATE_RANGE,
 			"{\"le\": \"2020-01-02\", \"ge\": \"2020-01-02\"}");
 
@@ -1268,62 +1295,94 @@ public class DefaultObjectEntryManagerImplTest
 		// Aggregation field with filter (equals and not equals)
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
-			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
+			objectFieldName2, ObjectFilterConstants.TYPE_EQUALS,
 			"{\"eq\": \"15\"}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
-			"integerObjectFieldName", ObjectFilterConstants.TYPE_NOT_EQUALS,
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
+			objectFieldName2, ObjectFilterConstants.TYPE_NOT_EQUALS,
 			"{\"ne\":\"15\"}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
+			objectField2.getObjectFieldId());
+
+		ObjectEntry childObjectEntry3 =
+			_defaultObjectEntryManager.addObjectEntry(
+				dtoConverterContext, _objectDefinition2,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipERCObjectFieldName,
+							"newExternalReferenceCode"
+						).put(
+							objectFieldName2, 25
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry1.getId()),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName1, "15"
+					).build();
+				}
+			});
+
+		_objectEntryLocalService.deleteObjectEntry(childObjectEntry3.getId());
+
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(
+			objectField1.getObjectFieldId());
 
 		// Aggregation field with filter (excludes and includes with a string)
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
 			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
 			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(),
+			adminUser.getUserId(), objectField2.getObjectFieldId(),
 			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
 			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
+			objectField2.getObjectFieldId());
 
 		// Aggregation field with filter (excludes and includes with an int)
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(), "status",
+			adminUser.getUserId(), objectField2.getObjectFieldId(), "status",
 			ObjectFilterConstants.TYPE_EXCLUDES,
 			"{\"not\":{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}}");
 
 		_assertCountAggregationObjectFieldValue(0, parentObjectEntry1);
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
+			objectField2.getObjectFieldId());
 
 		_objectFilterLocalService.addObjectFilter(
-			adminUser.getUserId(), objectField.getObjectFieldId(), "status",
+			adminUser.getUserId(), objectField2.getObjectFieldId(), "status",
 			ObjectFilterConstants.TYPE_INCLUDES,
 			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
 
 		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
 		_objectFilterLocalService.deleteObjectFieldObjectFilter(
-			objectField.getObjectFieldId());
+			objectField2.getObjectFieldId());
 
 		// Aggregation field without filters
 
@@ -1334,12 +1393,12 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName1, "15"
+					).put(
 						"averageAggregationObjectFieldName",
 						"0.5555555554444444"
 					).put(
 						"countAggregationObjectFieldName1", "2"
-					).put(
-						"maxAggregationObjectFieldName", "15"
 					).put(
 						"minAggregationObjectFieldName", "100"
 					).put(
@@ -1363,12 +1422,12 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName1, "10"
+					).put(
 						"averageAggregationObjectFieldName",
 						"0.1234567891234567"
 					).put(
 						"countAggregationObjectFieldName1", "1"
-					).put(
-						"maxAggregationObjectFieldName", "10"
 					).put(
 						"minAggregationObjectFieldName", "50000"
 					).put(
@@ -1392,11 +1451,11 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
+						objectFieldName1, "0"
+					).put(
 						"averageAggregationObjectFieldName", "0"
 					).put(
 						"countAggregationObjectFieldName1", "0"
-					).put(
-						"maxAggregationObjectFieldName", "0"
 					).put(
 						"minAggregationObjectFieldName", "0"
 					).put(
@@ -1438,22 +1497,6 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry childObjectEntry3 =
-			_defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectRelationshipTestUtil.relateObjectEntries(
-			parentObjectEntry2.getId(), childObjectEntry3.getId(),
-			objectRelationship, adminUser.getUserId());
-
 		ObjectEntry childObjectEntry4 =
 			_defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
@@ -1470,6 +1513,22 @@ public class DefaultObjectEntryManagerImplTest
 			parentObjectEntry2.getId(), childObjectEntry4.getId(),
 			objectRelationship, adminUser.getUserId());
 
+		ObjectEntry childObjectEntry5 =
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			parentObjectEntry2.getId(), childObjectEntry5.getId(),
+			objectRelationship, adminUser.getUserId());
+
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
@@ -1483,7 +1542,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition1, childObjectEntry3.getId());
+			_objectDefinition1, childObjectEntry4.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -1498,7 +1557,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition1, childObjectEntry4.getId());
+			_objectDefinition1, childObjectEntry5.getId());
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntry(
@@ -5866,6 +5925,8 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private String _objectRelationshipName;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

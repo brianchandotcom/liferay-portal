@@ -41,20 +41,19 @@ export default function propsTransformer({
 					.then((response) => response.json())
 					.then((json) => {
 						if (json) {
-							if (json.label) {
-								setPercentage(100);
-
-								label = json.label;
-							}
-							else if (
+							if (
 								Object.hasOwnProperty.call(json, 'percentage')
 							) {
 								setPercentage(json.percentage);
 							}
+
+							if (json.label) {
+								label = json.label;
+							}
 						}
 					})
 					.catch(() => {});
-			}, 1000);
+			}, 200);
 
 			return () => clearInterval(interval);
 		}, [props]);

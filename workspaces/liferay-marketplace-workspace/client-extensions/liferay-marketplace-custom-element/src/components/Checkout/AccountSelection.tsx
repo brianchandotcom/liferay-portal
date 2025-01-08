@@ -18,6 +18,7 @@ type AccountSelectionProps = {
 	enabledAccountRoles?: string[];
 	onSelectAccount: (account: Account) => void;
 	selectedAccount: Account | undefined;
+	showAccountsAvailableText?: boolean;
 	showContactSupport?: boolean;
 	userAccount?: UserAccount;
 };
@@ -28,6 +29,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	enabledAccountRoles,
 	onSelectAccount,
 	selectedAccount,
+	showAccountsAvailableText = true,
 	showContactSupport = true,
 	userAccount,
 }) => {
@@ -95,13 +97,17 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 
 	return (
 		<div>
-			<p className="mb-4 secondary-text">
-				{`Accounts available for `}
+			{showAccountsAvailableText && (
+				<p className="mb-4 secondary-text">
+					{`Accounts available for `}
 
-				<strong>{Liferay.ThemeDisplay.getUserEmailAddress()}</strong>
+					<strong>
+						{Liferay.ThemeDisplay.getUserEmailAddress()}
+					</strong>
 
-				{` (you)`}
-			</p>
+					{` (you)`}
+				</p>
+			)}
 
 			{isLoading ? (
 				<ClayLoadingIndicator />

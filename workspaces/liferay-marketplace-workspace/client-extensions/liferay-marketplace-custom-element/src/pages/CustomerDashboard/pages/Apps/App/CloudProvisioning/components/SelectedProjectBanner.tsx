@@ -15,7 +15,7 @@ const SelectedProjectBanner: React.FC<{
 
 		<div className="align-items-center d-flex justify-content-between">
 			<small className="font-weight-bold">
-				{i18n.translate('selected-project')}
+				{i18n.translate('project-selected')}
 			</small>
 
 			<span className="align-items-end d-flex flex-column">

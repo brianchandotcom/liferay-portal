@@ -45,8 +45,7 @@ public class ProductConfigurationListDTOConverter
 				setExternalReferenceCode(
 					cpConfigurationList::getExternalReferenceCode);
 				setId(cpConfigurationList::getCPConfigurationListId);
-				setMasterProductConfigurationList(
-					cpConfigurationList::getMasterCPConfigurationList);
+				setMaster(cpConfigurationList::getMaster);
 				setName(cpConfigurationList::getName);
 				setParentProductConfigurationListId(
 					cpConfigurationList::getParentCPConfigurationListId);

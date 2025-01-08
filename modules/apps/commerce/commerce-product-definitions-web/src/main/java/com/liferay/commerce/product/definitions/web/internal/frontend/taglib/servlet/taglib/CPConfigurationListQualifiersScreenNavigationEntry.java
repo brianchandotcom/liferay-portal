@@ -53,7 +53,7 @@ public class CPConfigurationListQualifiersScreenNavigationEntry
 	public boolean isVisible(
 		User user, CPConfigurationList cpConfigurationList) {
 
-		return !cpConfigurationList.isMasterCPConfigurationList();
+		return !cpConfigurationList.isMaster();
 	}
 
 	@Override

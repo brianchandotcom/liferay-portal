@@ -123,7 +123,7 @@ public class CPConfigurationListLocalServiceTest {
 
 		CPConfigurationList cpConfigurationList = cpConfigurationLists.get(0);
 
-		Assert.assertTrue(cpConfigurationList.isMasterCPConfigurationList());
+		Assert.assertTrue(cpConfigurationList.isMaster());
 
 		_cpConfigurationListLocalService.deleteCPConfigurationList(
 			cpConfigurationList);

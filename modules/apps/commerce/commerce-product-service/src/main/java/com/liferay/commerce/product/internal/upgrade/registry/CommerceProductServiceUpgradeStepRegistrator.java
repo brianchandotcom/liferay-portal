@@ -651,6 +651,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"5.25.1", "5.26.0",
+			UpgradeProcessFactory.alterColumnName(
+				"CPConfigurationList", "masterCPConfigurationList",
+				"master BOOLEAN"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

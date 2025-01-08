@@ -569,6 +569,74 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async dragToFragment({
+		drop = true,
+		position,
+		source,
+		targetId,
+	}: {
+		drop?: boolean;
+		position: 'bottom' | 'middle' | 'top';
+		source: Locator;
+		targetId: string;
+	}) {
+
+		// Try dragging source until movement preview appears
+
+		await expect(async () => {
+			const sourceBox = await source.boundingBox();
+
+			await source.hover({timeout: 1000});
+
+			await this.page.mouse.down();
+
+			await this.page.mouse.move(sourceBox.x + 5, sourceBox.y + 5);
+
+			await this.page
+				.getByLabel('Movement Preview')
+				.waitFor({timeout: 1000});
+		}).toPass();
+
+		// Move it to target until drag feedback appears
+
+		await expect(async () => {
+			const target = this.page.locator(
+				`.lfr-layout-structure-item-topper-${targetId}`
+			);
+			const targetBox = await target.boundingBox();
+
+			const randomX = Math.random() * targetBox.width;
+
+			const y =
+				position === 'top'
+					? targetBox.y + 10
+					: position === 'bottom'
+						? targetBox.y + targetBox.height - 10
+						: targetBox.y + targetBox.height / 2;
+
+			await this.page.mouse.move(targetBox.x + randomX, y, {steps: 10});
+
+			const dragCssClass =
+				position === 'top'
+					? 'drag-over-top'
+					: position === 'bottom'
+						? 'drag-over-bottom'
+						: 'drag-over-middle';
+
+			await expect(target).toHaveClass(new RegExp(dragCssClass), {
+				timeout: 1000,
+			});
+		}).toPass({timeout: 10000});
+
+		// Drop if specified
+
+		if (drop) {
+			await this.page.mouse.up();
+
+			await this.waitForChangesSaved();
+		}
+	}
+
 	async dragTreeNode({
 		position = 'middle',
 		source,

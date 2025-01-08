@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Marketplace Web
+Bundle-SymbolicName: com.liferay.marketplace.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /marketplace-web
+-dsannotations-options: inherit

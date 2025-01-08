@@ -11,7 +11,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:portal-language:portal-language-override-api")
 	compileOnly project(":apps:portal-language:portal-language-rest-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

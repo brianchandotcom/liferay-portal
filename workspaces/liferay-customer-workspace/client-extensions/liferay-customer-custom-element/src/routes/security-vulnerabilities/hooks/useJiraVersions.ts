@@ -20,14 +20,10 @@ const useJiraVersions = () => {
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
-					.fetch('/jira/security-vulnerabilities/versions')
+					.fetch('/jira/security-vulnerabilities/affected-versions')
 					.then((response) => response.json());
 
-			const sortedVersions = [...response].sort((a, b) =>
-				b.localeCompare(a)
-			);
-
-			setJiraVersions(sortedVersions);
+			setJiraVersions(response);
 		}
 		catch (error) {
 			console.error('Error fetching Jira data:', error);

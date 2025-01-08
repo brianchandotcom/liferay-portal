@@ -190,7 +190,7 @@ const SecurityVulnerabilitiesItem = () => {
 								__html: jiraToHtml(
 									jiraIssue[JiraEnum.FIELDS]?.[
 										JiraEnum.DESCRIPTION
-									] || ''
+									]?.replace(/\n(?!\||\n)/g, '<br>') || ''
 								),
 							}}
 						/>

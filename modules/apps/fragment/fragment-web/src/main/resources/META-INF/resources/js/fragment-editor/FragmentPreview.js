@@ -4,13 +4,9 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {
-	useEventListener,
-	useIsMounted,
-	usePrevious,
-} from '@liferay/frontend-js-react-web';
+import {useEventListener, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {cancelDebounce, debounce, fetch} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import createFile from './createFile';
@@ -54,11 +50,6 @@ const PREVIEW_SIZES_LABELS = {
 	'tablet-portrait': Liferay.Language.get('tablet'),
 };
 
-const stopEventPropagation = (event) => {
-	event.preventDefault();
-	event.stopPropagation();
-};
-
 const FragmentPreview = ({configuration, css, html, js, urls = {}}) => {
 	const iframeRef = useRef();
 	const ref = useRef();
@@ -69,87 +60,44 @@ const FragmentPreview = ({configuration, css, html, js, urls = {}}) => {
 
 	const isMounted = useIsMounted();
 
-	/* eslint-disable-next-line react-hooks/exhaustive-deps */
-	const updatePreview = useCallback(
-		debounce(() => {
-			if (!loading && isMounted()) {
-				setLoading(true);
+	const updatePreviewStyles = useCallback(() => {
+		const ratio = SIZE_RATIOS[currentPreviewSize];
 
-				const formData = new FormData();
+		if (ratio && ref.current) {
+			const wrapperRect = ref.current.getBoundingClientRect();
 
-				formData.append(`configuration`, configuration);
-				formData.append(`css`, createFile('css', css));
-				formData.append(`html`, createFile('html', html));
-				formData.append(`js`, createFile('js', js));
+			const scale = Math.min(
+				(wrapperRect.width * 0.9) / ratio.width,
+				(wrapperRect.height * 0.8) / ratio.height
+			);
 
-				fetch(urls.render, {
-					body: formData,
-					method: 'POST',
-				})
-					.then((response) => response.text())
-					.then((response) => {
-						if (isMounted()) {
-							setLoading(false);
-						}
-
-						iframeRef.current.contentWindow.postMessage(
-							JSON.stringify({data: response}),
-							'*'
-						);
-					});
-			}
-		}, 500),
-		[configuration, css, html, js, iframeRef]
-	);
-
-	/* eslint-disable-next-line react-hooks/exhaustive-deps */
-	const updatePreviewStyles = useCallback(
-		debounce(() => {
-			const ratio = SIZE_RATIOS[currentPreviewSize];
-
-			if (ratio && ref.current) {
-				const wrapperRect = ref.current.getBoundingClientRect();
-
-				const scale = Math.min(
-					(wrapperRect.width * 0.9) / ratio.width,
-					(wrapperRect.height * 0.8) / ratio.height
-				);
-
-				setPreviewStyles({
-					height: ratio.height ? `${ratio.height * scale}px` : '',
-					width: ratio.width ? `${ratio.width * scale}px` : '',
-				});
-			}
-		}, 100),
-		[currentPreviewSize]
-	);
-
-	const previousUpdatePreview = usePrevious(updatePreview);
-	const previousUpdatePreviewStyles = usePrevious(updatePreviewStyles);
+			setPreviewStyles({
+				height: ratio.height ? `${ratio.height * scale}px` : '',
+				width: ratio.width ? `${ratio.width * scale}px` : '',
+			});
+		}
+	}, [currentPreviewSize]);
 
 	useEffect(() => {
-		if (previousUpdatePreview && previousUpdatePreview !== updatePreview) {
-			cancelDebounce(previousUpdatePreview);
-			updatePreview();
-		}
-	}, [previousUpdatePreview, updatePreview]);
+		updatePreviewStyles();
+	}, [updatePreviewStyles]);
 
 	useEffect(() => {
-		if (
-			previousUpdatePreviewStyles &&
-			previousUpdatePreviewStyles !== updatePreviewStyles
-		) {
-			cancelDebounce(previousUpdatePreviewStyles);
-			updatePreviewStyles();
+		if (!isMounted()) {
+			return;
 		}
-	}, [previousUpdatePreviewStyles, updatePreviewStyles]);
 
-	useEventListener(
-		'click',
-		stopEventPropagation,
-		true,
-		iframeRef.current && iframeRef.current.contentWindow
-	);
+		updatePreviewDebounced({
+			configuration,
+			css,
+			html,
+			iframe: iframeRef.current,
+			isMounted,
+			js,
+			renderUrl: urls.render,
+			setLoading,
+		});
+	}, [configuration, css, isMounted, html, js, urls]);
 
 	useEventListener('resize', updatePreviewStyles, true, window);
 
@@ -191,7 +139,31 @@ const FragmentPreview = ({configuration, css, html, js, urls = {}}) => {
 
 				<iframe
 					className="fragment-preview__content"
-					onLoad={updatePreview}
+					onClickCapture={(event) => {
+						event.preventDefault();
+						event.stopPropagation();
+					}}
+					onLoad={(event) => {
+						event.target.contentWindow.addEventListener(
+							'click',
+							(event) => {
+								event.preventDefault();
+								event.stopPropagation();
+							}
+						);
+
+						updatePreviewDebounced({
+							configuration,
+							css,
+							html,
+							iframe: iframeRef.current,
+							isMounted,
+							js,
+							loading,
+							renderUrl: urls.render,
+							setLoading,
+						});
+					}}
 					ref={iframeRef}
 					src={urls.preview}
 				></iframe>
@@ -199,5 +171,44 @@ const FragmentPreview = ({configuration, css, html, js, urls = {}}) => {
 		</div>
 	);
 };
+
+const updatePreviewDebounced = debounce(
+	({
+		configuration,
+		css,
+		html,
+		iframe,
+		isMounted,
+		js,
+		renderUrl,
+		setLoading,
+	}) => {
+		setLoading(true);
+
+		const formData = new FormData();
+
+		formData.append(`configuration`, configuration);
+		formData.append(`css`, createFile('css', css));
+		formData.append(`html`, createFile('html', html));
+		formData.append(`js`, createFile('js', js));
+
+		fetch(renderUrl, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.text())
+			.then((response) => {
+				if (isMounted()) {
+					setLoading(false);
+				}
+
+				iframe.contentWindow.postMessage(
+					JSON.stringify({data: response}),
+					'*'
+				);
+			});
+	},
+	500
+);
 
 export default FragmentPreview;

@@ -106,9 +106,9 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 	}
 }
 
-File portalBuildDir = new File(rootDir.parentFile, "build")
+buildDir = new File(rootDir.parentFile, "build")
 
-File jakartaOutputDir = new File(portalBuildDir, "_jakarta-transformer")
+File jakartaOutputDir = new File(buildDir, "_jakarta-transformer")
 
 for (String gradleVersion in ["8.5"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
@@ -126,7 +126,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/lib/**/*.jar"
 
 		includeEmptyDirs = false
-		into new File(rootProject.buildDir, "gradle-${gradleVersion}")
+		into new File(buildDir, "gradle-${gradleVersion}")
 	}
 
 	tasks.create(name: "extractGradleSources${suffix}", type: Copy) {
@@ -141,7 +141,7 @@ for (String gradleVersion in ["8.5"]) {
 		include "gradle-${gradleVersion}/src/**"
 
 		includeEmptyDirs = false
-		into new File(rootProject.buildDir, "gradle-${gradleVersion}-sources")
+		into new File(buildDir, "gradle-${gradleVersion}-sources")
 	}
 }
 

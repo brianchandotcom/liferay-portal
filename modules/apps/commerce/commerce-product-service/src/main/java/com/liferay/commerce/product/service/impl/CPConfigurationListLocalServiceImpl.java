@@ -137,9 +137,9 @@ public class CPConfigurationListLocalServiceImpl
 								CPConfigurationEntrySettingConstants.
 									TYPE_INDEX_IDS);
 
-					cpConfigurationEntrySetting.setSetting(
+					cpConfigurationEntrySetting.setValue(
 						StringBundler.concat(
-							cpConfigurationEntrySetting.getSetting(),
+							cpConfigurationEntrySetting.getValue(),
 							StringPool.COMMA,
 							cpConfigurationList.getCPConfigurationListId()));
 

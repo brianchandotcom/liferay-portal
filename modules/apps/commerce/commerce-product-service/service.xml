@@ -400,7 +400,7 @@
 		<!-- Other fields -->
 
 		<column name="CPConfigurationEntryId" type="long" />
-		<column name="setting" type="String" />
+		<column name="value" type="String" />
 		<column name="type" type="int" />
 
 		<!-- Order -->

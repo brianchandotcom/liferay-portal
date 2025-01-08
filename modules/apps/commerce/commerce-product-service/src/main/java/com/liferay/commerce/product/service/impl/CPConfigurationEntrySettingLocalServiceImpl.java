@@ -44,7 +44,7 @@ public class CPConfigurationEntrySettingLocalServiceImpl
 
 		cpConfigurationEntrySetting.setCPConfigurationEntryId(
 			cpConfigurationEntryId);
-		cpConfigurationEntrySetting.setSetting(setting);
+		cpConfigurationEntrySetting.setValue(setting);
 		cpConfigurationEntrySetting.setType(type);
 
 		return cpConfigurationEntrySettingPersistence.update(

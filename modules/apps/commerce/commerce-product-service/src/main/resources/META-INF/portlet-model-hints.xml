@@ -149,6 +149,23 @@
 		<field name="weight" type="double" />
 		<field name="width" type="double" />
 	</model>
+	<model name="com.liferay.commerce.product.model.CPConfigurationEntrySetting">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
+		<field name="CPConfigurationEntrySettingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPConfigurationEntryId" type="long" />
+		<field name="value" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="type" type="int" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPConfigurationList">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

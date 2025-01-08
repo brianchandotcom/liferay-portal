@@ -904,9 +904,8 @@ public class ObjectEntryLocalServiceTest {
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
 
-		String objectFieldName = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2()
-		).getName();
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectRelationship.getObjectFieldId2());
 
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship.getObjectFieldId2(), true);
@@ -915,7 +914,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryValuesException.Required.class,
 			StringBundler.concat(
 				"No value was provided for required object field ", '"',
-				objectFieldName, '"'),
+				objectField.getName(), '"'),
 			() -> _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddressRequired", "john@liferay.com"
@@ -3205,8 +3204,6 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectRelationship.getObjectFieldId2());
 
-		String objectFieldName = objectField.getName();
-
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.
@@ -3263,7 +3260,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("listTypeEntryKey1", values.get("state"));
 		Assert.assertEquals(null, values.get("time"));
 		Assert.assertEquals(0D, values.get("weight"));
-		Assert.assertEquals(0L, values.get(objectFieldName));
+		Assert.assertEquals(0L, values.get(objectField.getName()));
 		Assert.assertEquals(
 			"", values.get(objectRelationshipERCObjectFieldName));
 		Assert.assertEquals(

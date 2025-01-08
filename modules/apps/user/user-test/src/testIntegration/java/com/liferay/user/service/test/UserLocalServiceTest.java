@@ -1221,7 +1221,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchTicketException.class)
-	public void testVerifyEmailAddressWithExpiredTicket() throws Exception {
+	public void testVerifyEmailAddress() throws Exception {
 		try (SafeCloseable safeCloseable =
 				_updateCompanyStrangersVerifyWithSafeCloseable(
 					TestPropsValues.getCompanyId(), true)) {
@@ -1258,7 +1258,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testVerifyEmailAddressWithValidTicket() throws Exception {
+	public void testVerifyEmailAddress() throws Exception {
 		try (SafeCloseable safeCloseable =
 				_updateCompanyStrangersVerifyWithSafeCloseable(
 					TestPropsValues.getCompanyId(), true)) {

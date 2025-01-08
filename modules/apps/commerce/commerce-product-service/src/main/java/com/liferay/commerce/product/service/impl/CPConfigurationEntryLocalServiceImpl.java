@@ -113,8 +113,8 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		_cpConfigurationEntrySettingLocalService.addCPConfigurationEntrySetting(
 			userId, groupId, cpConfigurationEntry.getCPConfigurationEntryId(),
-			StringPool.BLANK,
-			CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+			CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS,
+			StringPool.BLANK);
 
 		if (cpConfigurationEntry.getParentCPConfigurationList() == null) {
 			return cpConfigurationEntry;
@@ -123,15 +123,15 @@ public class CPConfigurationEntryLocalServiceImpl
 		CPConfigurationEntrySetting cpConfigurationEntrySetting =
 			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
 
-		cpConfigurationEntrySetting.setSetting(
+		cpConfigurationEntrySetting.setValue(
 			StringUtil.merge(
 				ArrayUtil.filter(
 					TransformUtil.transformToLongArray(
 						StringUtil.split(
-							cpConfigurationEntrySetting.getSetting()),
+							cpConfigurationEntrySetting.getValue()),
 						Long::valueOf),
-					filterCPConfigurationListId ->
-						filterCPConfigurationListId != cpConfigurationListId),
+					curCPConfigurationListId ->
+						curCPConfigurationListId != cpConfigurationListId),
 				StringPool.COMMA));
 
 		cpConfigurationEntrySetting =
@@ -197,19 +197,19 @@ public class CPConfigurationEntryLocalServiceImpl
 			cpConfigurationEntry.getCPConfigurationListId());
 
 		if ((cpConfigurationEntrySetting != null) &&
-			Validator.isNotNull(cpConfigurationEntrySetting.getSetting())) {
+			Validator.isNotNull(cpConfigurationEntrySetting.getValue())) {
 
 			setting = StringBundler.concat(
 				setting, StringPool.COMMA,
-				cpConfigurationEntrySetting.getSetting());
+				cpConfigurationEntrySetting.getValue());
 		}
 
-		String parentCPConfigurationEntrySettingSetting =
-			parentCPConfigurationEntrySetting.getSetting();
+		String parentCPConfigurationEntrySettingValue =
+			parentCPConfigurationEntrySetting.getValue();
 
-		parentCPConfigurationEntrySetting.setSetting(
+		parentCPConfigurationEntrySetting.setValue(
 			StringBundler.concat(
-				parentCPConfigurationEntrySettingSetting, StringPool.COMMA,
+				parentCPConfigurationEntrySettingValue, StringPool.COMMA,
 				setting));
 
 		_cpConfigurationEntrySettingLocalService.

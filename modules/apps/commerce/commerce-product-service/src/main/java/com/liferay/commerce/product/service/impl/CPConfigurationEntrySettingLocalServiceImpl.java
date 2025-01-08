@@ -27,8 +27,8 @@ public class CPConfigurationEntrySettingLocalServiceImpl
 
 	@Override
 	public CPConfigurationEntrySetting addCPConfigurationEntrySetting(
-			long userId, long groupId, long cpConfigurationEntryId,
-			String setting, int type)
+			long userId, long groupId, long cpConfigurationEntryId, int type,
+			String value)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -44,8 +44,8 @@ public class CPConfigurationEntrySettingLocalServiceImpl
 
 		cpConfigurationEntrySetting.setCPConfigurationEntryId(
 			cpConfigurationEntryId);
-		cpConfigurationEntrySetting.setSetting(setting);
 		cpConfigurationEntrySetting.setType(type);
+		cpConfigurationEntrySetting.setValue(value);
 
 		return cpConfigurationEntrySettingPersistence.update(
 			cpConfigurationEntrySetting);

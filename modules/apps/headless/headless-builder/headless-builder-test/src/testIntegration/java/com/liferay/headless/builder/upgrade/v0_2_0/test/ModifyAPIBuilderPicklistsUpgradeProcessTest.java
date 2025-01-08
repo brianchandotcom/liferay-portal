@@ -6,7 +6,10 @@
 package com.liferay.headless.builder.upgrade.v0_2_0.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -184,6 +187,26 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
 				httpMethodObjectField.getObjectFieldId()));
 
+		ListTypeDefinition httpMethodListTypeDefinition =
+			_listTypeDefinitionLocalService.
+				getListTypeDefinitionByExternalReferenceCode(
+					"HTTP_METHOD_PICKLIST", TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			"HTTP Method", httpMethodListTypeDefinition.getName());
+
+		ListTypeEntry listTypeEntry1 =
+			_listTypeEntryLocalService.getListTypeEntry(
+				httpMethodListTypeDefinition.getListTypeDefinitionId(), "GET");
+
+		Assert.assertEquals("GET", listTypeEntry1.getExternalReferenceCode());
+
+		ListTypeEntry listTypeEntry2 =
+			_listTypeEntryLocalService.getListTypeEntry(
+				httpMethodListTypeDefinition.getListTypeDefinitionId(), "POST");
+
+		Assert.assertEquals("POST", listTypeEntry2.getExternalReferenceCode());
+
 		ObjectField retrieveTypeObjectField =
 			_objectFieldLocalService.getObjectField(
 				"RETRIEVE_TYPE",
@@ -247,6 +270,9 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

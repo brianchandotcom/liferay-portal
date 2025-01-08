@@ -3,94 +3,35 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import {useForm} from 'react-hook-form';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import withProviders from '../../hoc/withProviders';
-import zodSchema, {z, zodResolver} from '../../schema/zod';
-import {ConsoleUserProjectWithExtension} from '../CustomerDashboard/pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
-import useGetResourceInfo from '../GetApp/hooks/useGetResourceInfo';
-import useAccounts from '../ProductPurchase/hooks/useAccounts';
-import AccountSelectionStep from './pages/AccountSelectionStep';
+import OAuth2AuthorizeOutlet from './OAuth2AuthorizeOutlet';
+import AccountSelection from './pages/AccountSelection';
 import Congratulations from './pages/Congratulations';
-import EnvironmentSelectionStep from './pages/EnvironmentSelectionStep';
-import ProjectSelectionStep from './pages/ProjectSelectionStep';
+import EnvironmentSelectionStep from './pages/EnvironmentSelection';
+import ProjectSelectionStep from './pages/ProjectSelection';
 
-const OAuth2AuthorizeRouter = () => {
-	const resourceResponse = useGetResourceInfo({
-		selectedProject: undefined,
-		shouldFetch: true,
-	});
+const OAuth2AuthorizeRouter = () => (
+	<HashRouter>
+		<Routes>
+			<Route element={<OAuth2AuthorizeOutlet />} path="/">
+				<Route element={<AccountSelection />} index />
 
-	const {myUserAccount} = useMarketplaceContext();
-	const {selectedAccount, setSelectedAccount} = useAccounts();
-	const projects = useMemo(
-		() => resourceResponse?.resourceRequest?.userProjects || [],
-		[resourceResponse]
-	);
+				<Route element={<Congratulations />} path="congratulations" />
 
-	const {setValue, watch} = useForm<
-		z.infer<typeof zodSchema.installProductSchema>
-	>({
-		resolver: zodResolver(zodSchema.installProductSchema),
-	});
-	const {environment, project} = watch();
+				<Route
+					element={<EnvironmentSelectionStep />}
+					path="environment-selection"
+				/>
 
-	return (
-		<div className="container mt-5">
-			<HashRouter>
-				<Routes>
-					<Route
-						element={
-							<AccountSelectionStep
-								myUserAccount={myUserAccount}
-								selectedAccount={selectedAccount}
-								setSelectedAccount={setSelectedAccount}
-							/>
-						}
-						path="/*"
-					/>
-					<Route
-						element={
-							<ProjectSelectionStep
-								myUserAccount={myUserAccount}
-								projects={
-									projects as ConsoleUserProjectWithExtension[]
-								}
-								selProject={project}
-								selectedAccount={selectedAccount}
-								setValue={setValue}
-							/>
-						}
-						path="project-selection"
-					/>
-					<Route
-						element={
-							<EnvironmentSelectionStep
-								environment={environment}
-								myUserAccount={myUserAccount}
-								project={project}
-								selectedAccount={selectedAccount}
-								setValue={setValue}
-							/>
-						}
-						path="environment-selection"
-					/>
-					<Route
-						element={
-							<Congratulations
-								myUserAccount={myUserAccount}
-								selectedAccount={selectedAccount}
-							/>
-						}
-						path="congratulations"
-					/>
-				</Routes>
-			</HashRouter>
-		</div>
-	);
-};
+				<Route
+					element={<ProjectSelectionStep />}
+					path="project-selection"
+				/>
+			</Route>
+		</Routes>
+	</HashRouter>
+);
 
 export default withProviders(OAuth2AuthorizeRouter);

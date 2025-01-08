@@ -50,4 +50,6 @@ public interface PasswordEncryptor {
 			String encryptedPassword, boolean upgradeHashSecurity)
 		throws PwdEncryptorException;
 
+	public String getFullAlgorithmConfiguration(String encryptedPassword);
+
 }

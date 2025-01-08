@@ -6,13 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {spritemap} from '../../Icon';
 import apiFetch from '../../util/apiFetch';
@@ -20,37 +14,21 @@ import apiFetch from '../../util/apiFetch';
 const LearnContext = createContext();
 
 function LearnAppWrapper(props) {
-	const [learnResources, setLearnResources] = useState([]);
+	const [learnResources, setLearnResources] = useState({});
 
 	useEffect(() => {
 		apiFetch(
 			window.location.pathname.substring(
 				0,
 				window.location.pathname.indexOf('/o/')
-			) +
-				'/o/language/v1.0/learn-message/headless-discovery-web?languageId=en_US',
+			) + '/o/learn/v1.0/messages/headless-discovery-web.json',
 			'get',
 			{}
-		).then((response) => {
-			setLearnResources(response.items);
-		});
+		).then(setLearnResources);
 	}, []);
 
 	return (
-		<LearnContext.Provider
-			value={useMemo(() => {
-				if (!Array.isArray(learnResources)) {
-					return new Map();
-				}
-
-				return new Map(
-					learnResources.map(({key, learnMessageDetails}) => [
-						key,
-						learnMessageDetails,
-					])
-				);
-			}, [learnResources])}
-		>
+		<LearnContext.Provider value={learnResources}>
 			{props.children}
 		</LearnContext.Provider>
 	);
@@ -58,7 +36,7 @@ function LearnAppWrapper(props) {
 
 function LearnInputWrapper(props) {
 	const learnResources = useContext(LearnContext);
-	const messageDetails = learnResources.get(props.field)?.[0];
+	const messageDetails = learnResources[props.field]?.['en_US'];
 	const [openPopover, setOpenPopover] = useState(false);
 
 	return (

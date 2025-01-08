@@ -177,32 +177,32 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 		}
 
 		_assertExpectedChanges(
-			apiApplicationObjectDefinition, "APPLICATION_STATUS",
-			"APPLICATION_STATUS_PICKLIST", "Application Status", "draft",
-			"published", "DRAFT", "PUBLISHED");
+			"Application Status", "DRAFT", "PUBLISHED", "draft", "published",
+			"APPLICATION_STATUS_PICKLIST", apiApplicationObjectDefinition,
+			"APPLICATION_STATUS");
 
 		_assertExpectedChanges(
-			apiEndpointObjectDefinition, "HTTP_METHOD", "HTTP_METHOD_PICKLIST",
-			"HTTP Method", "get", "post", "GET", "POST");
+			"HTTP Method", "GET", "POST", "get", "post", "HTTP_METHOD_PICKLIST",
+			apiEndpointObjectDefinition, "HTTP_METHOD");
 
 		_assertExpectedChanges(
-			apiEndpointObjectDefinition, "RETRIEVE_TYPE",
-			"RETRIEVE_TYPE_PICKLIST", "Retrieve Type", "collection",
-			"singleElement", "COLLECTION", "SINGLE_ELEMENT");
+			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
+			"singleElement", "RETRIEVE_TYPE_PICKLIST",
+			apiEndpointObjectDefinition, "RETRIEVE_TYPE");
 
 		_assertExpectedChanges(
-			apiEndpointObjectDefinition, "SCOPE", "SCOPE_PICKLIST", "Scope",
-			"company", "site", "COMPANY", "SITE");
+			"Scope", "COMPANY", "SITE", "company", "site", "SCOPE_PICKLIST",
+			apiEndpointObjectDefinition, "SCOPE");
 	}
 
 	private void _assertExpectedChanges(
-			ObjectDefinition objectDefinition,
-			String objectFieldExternalReferenceCode,
-			String listTypeExternalReferenceCode,
-			String expectedListTypeDefinitionName, String listTypeEntry1Key,
-			String listTypeEntry2Key,
+			String expectedListTypeDefinitionName,
 			String expectedListTypeEntry1ExternalReferenceCode,
-			String expectedListTypeEntry2ExternalReferenceCode)
+			String expectedListTypeEntry2ExternalReferenceCode,
+			String listTypeEntry1Key, String listTypeEntry2Key,
+			String listTypeExternalReferenceCode,
+			ObjectDefinition objectDefinition,
+			String objectFieldExternalReferenceCode)
 		throws Exception {
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(

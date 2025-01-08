@@ -96,21 +96,15 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_API_SCHEMA", TestPropsValues.getCompanyId()));
 
-		ObjectDefinition apiEndpointObjectDefinition =
+		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
+					"L_API_ENDPOINT", TestPropsValues.getCompanyId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			apiEndpointObjectDefinition);
-
-		ObjectDefinition apiApplicationObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", TestPropsValues.getCompanyId());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			apiApplicationObjectDefinition);
+					"L_API_APPLICATION", TestPropsValues.getCompanyId()));
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinitionLocalService.
@@ -179,23 +173,33 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 			StartupHelperUtil.setUpgrading(false);
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_API_APPLICATION", TestPropsValues.getCompanyId());
+
 		_assertExpectedChanges(
-			"Application Status", "DRAFT", "PUBLISHED", "draft", "published",
-			"APPLICATION_STATUS_PICKLIST", apiApplicationObjectDefinition,
+			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
+			"unpublished", "APPLICATION_STATUS_PICKLIST", objectDefinition,
 			"APPLICATION_STATUS");
+
+		objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
 
 		_assertExpectedChanges(
 			"HTTP Method", "GET", "POST", "get", "post", "HTTP_METHOD_PICKLIST",
-			apiEndpointObjectDefinition, "HTTP_METHOD");
+			objectDefinition, "HTTP_METHOD");
 
 		_assertExpectedChanges(
 			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
-			"singleElement", "RETRIEVE_TYPE_PICKLIST",
-			apiEndpointObjectDefinition, "RETRIEVE_TYPE");
+			"singleElement", "RETRIEVE_TYPE_PICKLIST", objectDefinition,
+			"RETRIEVE_TYPE");
 
 		_assertExpectedChanges(
 			"Scope", "COMPANY", "SITE", "company", "site", "SCOPE_PICKLIST",
-			apiEndpointObjectDefinition, "SCOPE");
+			objectDefinition, "SCOPE");
 	}
 
 	private void _assertExpectedChanges(

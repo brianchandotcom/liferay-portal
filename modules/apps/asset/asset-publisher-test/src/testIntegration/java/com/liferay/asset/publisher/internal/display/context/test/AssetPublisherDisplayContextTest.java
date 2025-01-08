@@ -187,16 +187,16 @@ public class AssetPublisherDisplayContextTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry entry = _assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		entry.setCreateDate(createDate);
-		entry.setModifiedDate(modifiedDate);
-		entry.setPublishDate(publishedDate);
-		entry.setPriority(priority);
+		assetEntry.setCreateDate(createDate);
+		assetEntry.setModifiedDate(modifiedDate);
+		assetEntry.setPublishDate(publishedDate);
+		assetEntry.setPriority(priority);
 
-		return _assetEntryLocalService.updateAssetEntry(entry);
+		return _assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
 	private List<AssetEntry> _testGetAssetEntryResultsFilterAssetsByTags(

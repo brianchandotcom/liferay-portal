@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 
 import CongratulationsIcon from '../../../assets/icons/congratulations_icon.svg';
 import SearchBuilder from '../../../core/SearchBuilder';
@@ -11,43 +11,64 @@ import {Liferay} from '../../../liferay/liferay';
 import fetcher from '../../../services/fetcher';
 import dxpOAuth2Client from '../../../services/oauth/DXP';
 import {safeJSONParse} from '../../../utils/util';
-import {CongratulationsStepType} from '../types';
+import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
+import i18n from '../../../i18n';
+import {Navigate} from 'react-router-dom';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
-const Congratulations = ({
-	myUserAccount,
-	selectedAccount,
-}: CongratulationsStepType) => {
-	useEffect(() => {
-		const state = safeJSONParse(urlSearchParams.get('state'), {origin: ''});
+const POST_MESSAGE_TIMEOUT = 3000;
 
-		fetcher.post('o/c/oauth2dxpauthorizations/', {
-			connectionSource: state.origin,
+const Congratulations = () => {
+	const {myUserAccount, selectedAccount, environment, project} =
+		useOAuth2OutletContext();
+
+	if (!selectedAccount) {
+		return <Navigate to="/" />;
+	}
+
+	useEffect(() => {
+		const {origin} = safeJSONParse(urlSearchParams.get('state'), {
+			origin: null,
+		});
+
+		if (!origin) {
+			return console.warn('Origin state is not present.');
+		}
+
+		fetcher.post('o/c/oauth2dxpauthorizations', {
+			connectionSource: origin,
 			r_accountToOAuth2DxpAuthorization_accountEntryId:
 				selectedAccount?.id,
 		});
 
-		window?.opener?.postMessage(
-			{
-				code: urlSearchParams.get('code'),
-				myUserAccount,
-				selectedAccount,
-				serviceURL: dxpOAuth2Client.oAuth2Client.homePageURL,
-				settings: {
-					accountId: selectedAccount.id,
-					channelId: Liferay.CommerceContext.commerceChannelId,
-					references: {
-						paymentMethodFilter: SearchBuilder.lambda(
-							'categoryNames',
-							'Payment Integration'
-						),
-					},
-					siteId: Liferay.ThemeDisplay.getScopeGroupId(),
+		const payload = {
+			code: urlSearchParams.get('code'),
+			myUserAccount,
+			selectedAccount,
+			serviceURL: dxpOAuth2Client.oAuth2Client.homePageURL,
+			settings: {
+				accountId: selectedAccount?.id,
+				channelId: Liferay.CommerceContext.commerceChannelId,
+				cloudProject: `${project.rootProjectId}-${environment.projectId}`,
+				references: {
+					paymentMethodFilter: SearchBuilder.lambda(
+						'categoryNames',
+						'Payment Integration'
+					),
 				},
+				siteId: Liferay.ThemeDisplay.getScopeGroupId(),
 			},
-			state.origin
+		};
+
+		console.info(
+			`Dispatching post message to ${origin} with the following payload`,
+			payload
 		);
+
+		setTimeout(() => {
+			window?.opener?.postMessage(payload, origin);
+		}, POST_MESSAGE_TIMEOUT);
 	}, [myUserAccount, selectedAccount]);
 
 	return (
@@ -60,10 +81,12 @@ const Congratulations = ({
 				/>
 			</div>
 
-			<h1 className="pt-7">Congratulations</h1>
+			<h1 className="pt-7">{i18n.translate('congratulations')}</h1>
+
 			<p className="align-items-center d-flex mt-4 px-3 secondary-text">
-				You are one step away from finalizing your connection with the
-				Marketplace, this window will close automatically.
+				{i18n.translate(
+					'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace-this-window-will-close-automatically'
+				)}
 			</p>
 		</div>
 	);

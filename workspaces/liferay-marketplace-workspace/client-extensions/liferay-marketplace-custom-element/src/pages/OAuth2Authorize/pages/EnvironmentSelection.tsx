@@ -5,48 +5,54 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
-import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 
 import RadioCard from '../../../components/RadioCardList/components/RadioCard';
 import ContactSupport from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/ContactSupport';
 import SelectedProjectBanner from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/SelectedProjectBanner';
 import {ProductCardRevamp} from '../../GetApp/components/ProductCard/ProductCard';
-import {EnvironmentSelectionStepType} from '../types';
+import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
+import {ConsoleUserProjectWithExtension} from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
+import i18n from '../../../i18n';
 
-const EnvironmentSelectionStep = ({
-	environment,
-	myUserAccount,
-	project,
-	selectedAccount,
-	setValue,
-}: EnvironmentSelectionStepType) => {
+const EnvironmentSelection = () => {
+	const {
+		environment,
+		myUserAccount,
+		project,
+		selectedAccount,
+		setValue,
+
+		singleProject,
+	} = useOAuth2OutletContext();
+
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (!selectedAccount) {
-			navigate('/');
-		}
-	}, [selectedAccount, navigate]);
+	if (!selectedAccount || !project) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<div>
 			<ProductCardRevamp
-				icon={selectedAccount?.logoURL || ''}
+				icon={selectedAccount?.logoURL as string}
 				subtitle={myUserAccount.name}
-				title={selectedAccount?.name || 'Account Name'}
+				title={selectedAccount?.name as string}
 			>
-				<SelectedProjectBanner project={project} />
+				<SelectedProjectBanner
+					project={project as ConsoleUserProjectWithExtension}
+				/>
 			</ProductCardRevamp>
+
 			<div className="border my-7 p-3 py-6 rounded">
 				<h1 className="d-flex justify-content-center">
-					Environment Selection
+					{i18n.translate('environment-selection')}
 				</h1>
 
-				<p className="d-flex">
-					Environments available in{' '}
-					<strong>{project?.rootProjectId}</strong>{' '}
-				</p>
+				<small className="d-flex py-4">
+					Environments available in
+					<strong className="ml-1">{project?.rootProjectId}</strong>
+				</small>
 
 				{project?.environments?.map((projectEnvironment, index) => {
 					const handleSelectRadio = (
@@ -55,9 +61,6 @@ const EnvironmentSelectionStep = ({
 							projectId: string;
 						}>
 					) => setValue('environment', selectedRadio.value);
-
-					const [projectName = '', environmentName = ''] =
-						projectEnvironment.projectId.split('-');
 
 					return (
 						<RadioCard
@@ -76,18 +79,14 @@ const EnvironmentSelectionStep = ({
 							}
 							title={
 								<>
-									<div>
-										<span className="h5 mr-3">
-											{projectName.toUpperCase()}
-										</span>
+									<span className="h5 mr-3">
+										{project.rootProjectId.toUpperCase()}
+									</span>
 
-										<ClayBadge
-											className="text-uppercase"
-											label={environmentName}
-										>
-											{environmentName}
-										</ClayBadge>
-									</div>
+									<ClayBadge
+										className="text-uppercase"
+										label={projectEnvironment.projectId}
+									/>
 								</>
 							}
 						/>
@@ -99,16 +98,18 @@ const EnvironmentSelectionStep = ({
 				<div className="d-flex justify-content-end mt-4">
 					<ClayButton
 						className="btn-outline-secondary mr-3"
-						onClick={() => navigate('/project-selection')}
+						onClick={() =>
+							navigate(singleProject ? '/' : '/project-selection')
+						}
 					>
-						Back
+						{i18n.translate('back')}
 					</ClayButton>
 
 					<ClayButton
 						disabled={!environment}
 						onClick={() => navigate('/congratulations')}
 					>
-						Continue
+						{i18n.translate('continue')}
 					</ClayButton>
 				</div>
 			</div>
@@ -116,4 +117,4 @@ const EnvironmentSelectionStep = ({
 	);
 };
 
-export default EnvironmentSelectionStep;
+export default EnvironmentSelection;

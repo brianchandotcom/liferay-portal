@@ -334,18 +334,13 @@ public class DDMFormFieldTemplateContextFactory {
 	private List<Map<String, String>> _createOptions(
 		List<KeyValuePair> keyValuePairs) {
 
-		List<Map<String, String>> list = new ArrayList<>();
-
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			list.add(
-				HashMapBuilder.put(
-					"label", keyValuePair.getValue()
-				).put(
-					"value", keyValuePair.getKey()
-				).build());
-		}
-
-		return list;
+		return TransformUtil.transform(
+			keyValuePairs,
+			keyValuePair -> HashMapBuilder.put(
+				"label", keyValuePair.getValue()
+			).put(
+				"value", keyValuePair.getKey()
+			).build());
 	}
 
 	private String _getAffixedDDMFormFieldParameterName(

@@ -157,16 +157,11 @@ public class DDMFormPagesTemplateContextFactory {
 	private List<Object> _createColumnsTemplateContext(
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
 
-		List<Object> columnsTemplateContext = new ArrayList<>();
-
-		for (DDMFormLayoutColumn ddmFormLayoutColumn : ddmFormLayoutColumns) {
-			columnsTemplateContext.add(
-				_createColumnTemplateContext(
-					ddmFormLayoutColumn.getDDMFormFieldNames(),
-					ddmFormLayoutColumn.getSize()));
-		}
-
-		return columnsTemplateContext;
+		return TransformUtil.transform(
+			ddmFormLayoutColumns,
+			ddmFormLayoutColumn -> _createColumnTemplateContext(
+				ddmFormLayoutColumn.getDDMFormFieldNames(),
+				ddmFormLayoutColumn.getSize()));
 	}
 
 	private Map<String, Object> _createColumnTemplateContext(
@@ -270,14 +265,9 @@ public class DDMFormPagesTemplateContextFactory {
 	private List<Object> _createRowsTemplateContext(
 		List<DDMFormLayoutRow> ddmFormLayoutRows) {
 
-		List<Object> rowsTemplateContext = new ArrayList<>();
-
-		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
-			rowsTemplateContext.add(
-				_createRowTemplateContext(ddmFormLayoutRow));
-		}
-
-		return rowsTemplateContext;
+		return TransformUtil.transform(
+			ddmFormLayoutRows,
+			ddmFormLayoutRow -> _createRowTemplateContext(ddmFormLayoutRow));
 	}
 
 	private Map<String, Object> _createRowTemplateContext(

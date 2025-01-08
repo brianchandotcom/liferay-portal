@@ -103,25 +103,23 @@ public class ModifyAPIBuilderPicklistsUpgradeProcess extends UpgradeProcess {
 			_listTypeDefinitionLocalService.updateListTypeDefinition(
 				listTypeDefinition);
 
-		ListTypeEntry listTypeEntry1 =
+		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinition.getListTypeDefinitionId(),
 				listTypeEntry1Key);
 
-		listTypeEntry1.setExternalReferenceCode(
+		listTypeEntry.setExternalReferenceCode(
 			listTypeEntry1ExternalReferenceCode);
 
-		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry1);
+		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry);
 
-		ListTypeEntry listTypeEntry2 =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(),
-				listTypeEntry2Key);
+		listTypeEntry = _listTypeEntryLocalService.getListTypeEntry(
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntry2Key);
 
-		listTypeEntry2.setExternalReferenceCode(
+		listTypeEntry.setExternalReferenceCode(
 			listTypeEntry2ExternalReferenceCode);
 
-		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry2);
+		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry);
 	}
 
 	private final CompanyLocalService _companyLocalService;

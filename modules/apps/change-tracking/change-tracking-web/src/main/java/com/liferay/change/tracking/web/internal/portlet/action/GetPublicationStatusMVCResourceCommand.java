@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -63,10 +64,15 @@ public class GetPublicationStatusMVCResourceCommand
 		CTProcess ctProcess = _ctProcessLocalService.fetchCTProcess(
 			ctProcessId);
 
+		String displayType = "danger";
+		String label = _language.get(httpServletRequest, "failed");
+		boolean published = false;
+		int percentage = -1;
+
 		if (ctProcess == null) {
 			_writeJSON(
-				resourceRequest, resourceResponse, "danger",
-				_language.get(httpServletRequest, "failed"), false);
+				resourceRequest, resourceResponse, displayType, label,
+				percentage, published);
 
 			return;
 		}
@@ -77,34 +83,27 @@ public class GetPublicationStatusMVCResourceCommand
 
 		if (backgroundTask == null) {
 			_writeJSON(
-				resourceRequest, resourceResponse, "danger",
-				_language.get(httpServletRequest, "failed"), false);
+				resourceRequest, resourceResponse, displayType, label,
+				percentage, published);
 
 			return;
 		}
+
+		BackgroundTaskDisplay backgroundTaskDisplay =
+			_backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
+				backgroundTask.getBackgroundTaskId());
+
+		percentage = backgroundTaskDisplay.getPercentage();
 
 		if (backgroundTask.getStatus() ==
 				BackgroundTaskConstants.STATUS_IN_PROGRESS) {
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"percentage",
-					() -> {
-						BackgroundTaskDisplay backgroundTaskDisplay =
-							_backgroundTaskDisplayFactory.
-								getBackgroundTaskDisplay(
-									backgroundTask.getBackgroundTaskId());
-
-						return backgroundTaskDisplay.getPercentage();
-					}));
+				JSONUtil.put("percentage", percentage));
 
 			return;
 		}
-
-		String displayType = "danger";
-		String label = _language.get(httpServletRequest, "failed");
-		boolean published = false;
 
 		if ((backgroundTask.getStatus() ==
 				BackgroundTaskConstants.STATUS_FAILED) &&
@@ -118,7 +117,7 @@ public class GetPublicationStatusMVCResourceCommand
 
 			_writeJSON(
 				resourceRequest, resourceResponse, displayType, label,
-				published);
+				percentage, published);
 
 			throw new PortalException(
 				StringBundler.concat(
@@ -139,23 +138,29 @@ public class GetPublicationStatusMVCResourceCommand
 		}
 
 		_writeJSON(
-			resourceRequest, resourceResponse, displayType, label, published);
+			resourceRequest, resourceResponse, displayType, label, percentage,
+			published);
 	}
 
 	private void _writeJSON(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			String displayType, String label, boolean published)
+			String displayType, String label, int percentage, boolean published)
 		throws IOException {
 
+		JSONObject jsonObject = JSONUtil.put(
+			"displayType", displayType
+		).put(
+			"label", label
+		).put(
+			"published", published
+		);
+
+		if (percentage >= 0) {
+			jsonObject.put("percentage", percentage);
+		}
+
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"displayType", displayType
-			).put(
-				"label", label
-			).put(
-				"published", published
-			));
+			resourceRequest, resourceResponse, jsonObject);
 	}
 
 	@Reference

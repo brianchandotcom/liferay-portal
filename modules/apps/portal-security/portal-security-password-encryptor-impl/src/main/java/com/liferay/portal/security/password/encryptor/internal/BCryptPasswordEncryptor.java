@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,8 +57,26 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 		return BCrypt.hashpw(plainTextPassword, salt);
 	}
 
+	@Override
+	public String getFullAlgorithmConfiguration(String encryptedPassword) {
+		String rounds = String.valueOf(_ROUNDS);
+
+		Matcher matcher = _encryptedPasswordPattern.matcher(encryptedPassword);
+
+		if (matcher.find()) {
+			rounds = matcher.group(1);
+		}
+
+		String algorithm = encryptedPassword.substring(
+			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
+
+		return StringBundler.concat(algorithm, CharPool.FORWARD_SLASH, rounds);
+	}
+
 	private static final int _ROUNDS = 10;
 
+	private static final Pattern _encryptedPasswordPattern = Pattern.compile(
+		"\\{BCrypt}\\$2a\\$(\\d+)\\$", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _pattern = Pattern.compile(
 		"^BCrypt/([0-9]+)$", Pattern.CASE_INSENSITIVE);
 

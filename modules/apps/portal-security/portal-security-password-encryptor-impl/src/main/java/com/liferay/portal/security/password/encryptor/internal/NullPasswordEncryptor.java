@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,6 +26,12 @@ public class NullPasswordEncryptor implements PasswordEncryptor {
 		boolean upgradeHashSecurity) {
 
 		return plainTextPassword;
+	}
+
+	@Override
+	public String getFullAlgorithmConfiguration(String encryptedPassword) {
+		return encryptedPassword.substring(
+			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
 	}
 
 }

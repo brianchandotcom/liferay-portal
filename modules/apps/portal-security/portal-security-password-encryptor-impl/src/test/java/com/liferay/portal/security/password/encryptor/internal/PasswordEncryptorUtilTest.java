@@ -344,6 +344,11 @@ public class PasswordEncryptorUtilTest {
 				algorithm.substring(algorithm.indexOf('/') + 1);
 		}
 
+		@Override
+		public String getFullAlgorithmConfiguration(String encryptedPassword) {
+			return null;
+		}
+
 	}
 
 }

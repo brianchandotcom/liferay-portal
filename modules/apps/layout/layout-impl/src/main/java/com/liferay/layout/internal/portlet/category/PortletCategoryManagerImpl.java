@@ -491,6 +491,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
 				JSONUtil.put(
+					"deprecated", _isDeprecated(portlet)
+				).put(
 					"embedded",
 					() -> {
 						if (deletedFragmentEntryLinksPortletNames.contains(
@@ -570,6 +572,21 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			portalPreferences,
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 			"sortedPortletCategoryKeys");
+	}
+
+	private boolean _isDeprecated(Portlet portlet) {
+		if (portlet == null) {
+			return false;
+		}
+
+		PortletManager portletManager = _serviceTrackerMap.getService(
+			portlet.getRootPortletId());
+
+		if ((portletManager != null) && portletManager.isDeprecated()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isVisible(Layout layout, Portlet portlet) {

@@ -1460,6 +1460,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertValid(post${schemaName}, multipartFiles);
 				</#if>
 
+				<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+					${schemaName} randomPermissions${schemaName}1 = randomPermissions${schemaName}();
+
+					${schemaName} postPermissions${schemaName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(randomPermissions${schemaName}1);
+
+					Assert.assertNull(postPermissions${schemaName}1.getPermissions());
+
+					${schemaName} randomPermissions${schemaName}2 = randomPermissions${schemaName}();
+
+					${schemaName} postPermissions${schemaName}2 = test${javaMethodSignature.methodName?cap_first}_addPermissions${schemaName}(randomPermissions${schemaName}2);
+
+					Assert.assertNotNull(postPermissions${schemaName}2.getPermissions());
+				</#if>
+
 				<#if schema.discriminator?has_content>
 					<#assign discriminatorPropertyName = schema.discriminator.propertyName />
 
@@ -1530,6 +1544,30 @@ public abstract class Base${schemaName}ResourceTestCase {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			}
+
+			<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_addPermissions${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
+					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1)>
+						<#assign
+							firstPathJavaMethodParameter = javaMethodSignature.pathJavaMethodParameters[0]
+							modifiedPathJavaMethodParameterName = firstPathJavaMethodParameter.parameterName?remove_beginning("parent")?remove_ending("Id")?cap_first
+						/>
+
+						<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(javaMethodSignature.methodName, "post" + modifiedPathJavaMethodParameterName + schemaName)>
+							<#if freeMarkerTool.isCollection(javaMethodSignature, javaMethodSignatures, modifiedPathJavaMethodParameterName + schemaNames)>
+								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaNames}Page_get<#if stringUtil.startsWith(firstPathJavaMethodParameter.parameterName, "parent")>Parent</#if>${modifiedPathJavaMethodParameterName}Id(), ${schemaVarName}
+							<#else>
+								return permissions${schemaName}Resource.post${modifiedPathJavaMethodParameterName}${schemaName}(testGet${modifiedPathJavaMethodParameterName}${schemaName}_get${modifiedPathJavaMethodParameterName}Id(${schemaVarName})
+							</#if>
+							);
+						<#else>
+							throw new UnsupportedOperationException("This method needs to be implemented");
+						</#if>
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
+				}
+			</#if>
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "put") && javaMethodSignature.methodName?contains("Permission")>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
@@ -3284,6 +3322,28 @@ public abstract class Base${schemaName}ResourceTestCase {
 		protected ${schemaName} randomPatch${schemaName}() throws Exception {
 			return random${schemaName}();
 		}
+
+		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
+			protected ${schemaName} randomPermissions${schemaName}() throws Exception {
+				${schemaName} ${schemaVarName} = random${schemaName}();
+
+				com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+					RoleConstants.TYPE_REGULAR);
+
+				${schemaVarName}.setPermissions(
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}
+				);
+
+				return ${schemaVarName};
+			}
+		</#if>
 	</#if>
 
 	<#list relatedSchemaNames as relatedSchemaName>

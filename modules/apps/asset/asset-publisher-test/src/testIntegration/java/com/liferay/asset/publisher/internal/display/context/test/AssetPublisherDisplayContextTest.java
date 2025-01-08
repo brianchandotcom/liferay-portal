@@ -115,7 +115,7 @@ public class AssetPublisherDisplayContextTest {
 	public void testGetAssetEntryResultsFilterAssetsByTags() throws Exception {
 		String tag = RandomTestUtil.randomString();
 
-		JournalArticle journalArticle = _addArticle(new String[] {tag});
+		JournalArticle journalArticle = _addJournalArticle(new String[] {tag});
 
 		AssetEntry expectedAssetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
@@ -167,7 +167,7 @@ public class AssetPublisherDisplayContextTest {
 			Arrays.asList(assetEntry2, assetEntry3, assetEntry1));
 	}
 
-	private JournalArticle _addArticle(String[] tagNames) throws Exception {
+	private JournalArticle _addJournalArticle(String[] tagNames) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 

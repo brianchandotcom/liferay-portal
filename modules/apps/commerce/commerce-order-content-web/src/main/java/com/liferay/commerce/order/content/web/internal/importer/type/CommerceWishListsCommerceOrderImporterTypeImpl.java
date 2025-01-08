@@ -199,7 +199,9 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			CPInstance firstAvailableReplacementCPInstance =
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 					commerceOrder.getCommerceAccountId(),
-					commerceChannelGroupId, cpInstance.getCPInstanceId());
+					commerceChannelGroupId,
+					commerceOrder.getCommerceOrderTypeId(),
+					cpInstance.getCPInstanceId());
 
 			if (firstAvailableReplacementCPInstance != null) {
 				commerceOrderImporterItemImpl.setReplacingSKU(

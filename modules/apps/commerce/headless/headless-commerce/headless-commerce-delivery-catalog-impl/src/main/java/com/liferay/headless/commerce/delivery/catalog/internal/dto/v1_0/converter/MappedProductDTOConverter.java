@@ -125,7 +125,7 @@ public class MappedProductDTOConverter
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 				accountEntry.getAccountEntryId(),
-				commerceContext.getCommerceChannelGroupId(), cpInstanceId);
+				commerceContext.getCommerceChannelGroupId(), 0, cpInstanceId);
 
 		return new MappedProduct() {
 			{

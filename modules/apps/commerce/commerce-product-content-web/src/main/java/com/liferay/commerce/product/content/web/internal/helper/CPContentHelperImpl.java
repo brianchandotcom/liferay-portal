@@ -17,6 +17,7 @@ import com.liferay.commerce.media.CommerceCatalogDefaultImage;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
@@ -509,13 +510,21 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		long commerceOrderTypeId = 0;
+
+		if (commerceOrder != null) {
+			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
+		}
+
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 				accountEntry.getAccountEntryId(),
 				commerceContext.getCommerceChannelGroupId(),
-				cpSku.getCPInstanceId());
+				commerceOrderTypeId, cpSku.getCPInstanceId());
 
 		if (firstAvailableReplacementCPInstance == null) {
 			return StringPool.BLANK;
@@ -673,13 +682,21 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		long commerceOrderTypeId = 0;
+
+		if (commerceOrder != null) {
+			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
+		}
+
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		CPInstance firstAvailableReplacementCPInstance =
 			_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 				accountEntry.getAccountEntryId(),
 				commerceContext.getCommerceChannelGroupId(),
-				cpSku.getCPInstanceId());
+				commerceOrderTypeId, cpSku.getCPInstanceId());
 
 		if (firstAvailableReplacementCPInstance != null) {
 			return true;

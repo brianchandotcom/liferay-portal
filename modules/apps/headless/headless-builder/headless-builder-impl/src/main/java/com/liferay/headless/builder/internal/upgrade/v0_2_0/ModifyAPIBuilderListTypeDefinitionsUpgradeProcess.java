@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Alberto Javier Moreno Lage
  */
-public class ModifyAPIBuilderPicklistsUpgradeProcess extends UpgradeProcess {
+public class ModifyAPIBuilderListTypeDefinitionsUpgradeProcess
+	extends UpgradeProcess {
 
-	public ModifyAPIBuilderPicklistsUpgradeProcess(
+	public ModifyAPIBuilderListTypeDefinitionsUpgradeProcess(
 		CompanyLocalService companyLocalService,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,

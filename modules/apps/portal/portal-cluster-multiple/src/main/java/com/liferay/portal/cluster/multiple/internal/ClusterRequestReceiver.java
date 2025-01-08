@@ -109,7 +109,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 		finally {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-			CentralizedThreadLocal.clearShortLivedThreadLocals();
+			CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 		}
 	}
 

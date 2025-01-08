@@ -86,7 +86,8 @@ public class DDMFormInstanceReportPortalExecutor {
 				public void afterExecute(
 					Runnable runnable, Throwable throwable) {
 
-					CentralizedThreadLocal.clearShortLivedThreadLocals();
+					CentralizedThreadLocal.
+						clearShortLivedCentralizedThreadLocals();
 				}
 
 			});

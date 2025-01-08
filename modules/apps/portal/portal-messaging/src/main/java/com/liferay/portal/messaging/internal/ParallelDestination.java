@@ -56,7 +56,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 							ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 							CentralizedThreadLocal.
-								clearShortLivedThreadLocals();
+								clearShortLivedCentralizedThreadLocals();
 						}
 					}
 				}

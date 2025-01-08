@@ -15,7 +15,7 @@ public class ClearThreadLocalThreadPoolHandler
 
 	@Override
 	public void afterExecute(Runnable runnable, Throwable throwable) {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 }

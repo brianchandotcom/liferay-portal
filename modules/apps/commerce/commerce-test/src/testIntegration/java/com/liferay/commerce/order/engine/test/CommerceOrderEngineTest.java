@@ -158,7 +158,7 @@ public class CommerceOrderEngineTest {
 	public void tearDown() throws PortalException {
 		_commerceOrderLocalService.deleteCommerceOrder(_commerceOrder);
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Test

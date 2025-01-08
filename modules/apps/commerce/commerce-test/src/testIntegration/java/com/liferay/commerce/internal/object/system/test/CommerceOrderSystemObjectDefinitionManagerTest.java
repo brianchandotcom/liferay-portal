@@ -87,7 +87,7 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 		_commerceOrderLocalService.deleteCommerceOrders(
 			_commerceChannel.getGroupId());
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Test

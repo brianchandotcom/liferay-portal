@@ -62,7 +62,8 @@ public class SerialDestination extends BaseAsyncDestination {
 					if (Thread.currentThread() != currentThread) {
 						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-						CentralizedThreadLocal.clearShortLivedThreadLocals();
+						CentralizedThreadLocal.
+							clearShortLivedCentralizedThreadLocals();
 					}
 				}
 			}

@@ -16,12 +16,12 @@ public class CleanUpServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Override
 	public void init() {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 }

@@ -108,7 +108,7 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		// Thread local registry
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	protected void shutdownLevel7() {

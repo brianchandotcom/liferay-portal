@@ -20,7 +20,7 @@ public class ClearThreadLocalClassTestRule extends ClassTestRule<Void> {
 
 	@Override
 	protected void afterClass(Description description, Void v) {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Override

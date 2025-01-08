@@ -154,7 +154,8 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 				public void afterExecute(
 					Runnable runnable, Throwable throwable) {
 
-					CentralizedThreadLocal.clearShortLivedThreadLocals();
+					CentralizedThreadLocal.
+						clearShortLivedCentralizedThreadLocals();
 				}
 
 			});

@@ -9,6 +9,9 @@ import {
 	createAutoCorrectedDatePipe,
 	datetimeUtils,
 } from '@liferay/object-js-components-web';
+
+// @ts-ignore
+
 import moment from 'moment/min/moment-with-locales';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
@@ -16,10 +19,77 @@ import {createTextMaskInputElement} from 'text-mask-core';
 import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {getTooltipTitle} from '../util/tooltip';
 
+import type {Locale, LocalizedValue} from '../types';
+
 const DIGIT_REGEX = /\d/;
 
+interface DatePickerProps {
+	defaultLanguageId: Locale;
+	dir: 'ltr' | 'rtl';
+	displayErrors?: boolean;
+	errorMessage?: string;
+	htmlAutocompleteAttribute: string;
+	locale: Locale;
+	localizable: boolean;
+	localizedValue?: LocalizedValue<string>;
+	months: string[];
+	name: string;
+	onBlur: any;
+	onChange: any;
+	onFocus: any;
+	predefinedValue?: string;
+	readOnly: boolean;
+	required: boolean;
+	type: 'date' | 'date_time';
+	valid: boolean;
+	value: string;
+	weekdaysShort: string[];
+}
+
+enum FirstDayOfWeek {
+	Sunday = 0,
+	Monday = 1,
+	Tuesday = 2,
+	Wednesday = 3,
+	Thursday = 4,
+	Friday = 5,
+	Saturday = 6,
+}
+
+type Date = {
+	formattedDate: string;
+	locale?: string;
+	name?: string;
+	predefinedValue?: string;
+	rawDate?: string;
+	years?: {
+		end: number;
+		start: number;
+	};
+};
+
+type DateMaskParams = {
+	clayFormat?: string;
+	firstDayOfWeek?: FirstDayOfWeek;
+	isDateTime?: boolean;
+	momentFormat?: string;
+	months?: string[];
+	placeholder?: string;
+	serverFormat?: string;
+	use12Hours?: boolean;
+	weekdaysShort?: string[];
+};
+
+type MaskRef = {
+	state: {
+		previousConformedValue: string;
+		previousPlaceholder: string;
+	};
+	update: (value: string) => void;
+};
+
 export default function DatePicker({
-	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+	defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId(),
 	dir,
 	displayErrors,
 	errorMessage,
@@ -34,14 +104,15 @@ export default function DatePicker({
 	onFocus,
 	predefinedValue,
 	readOnly,
+	required,
 	type,
 	valid,
 	value,
 	weekdaysShort,
 	...otherProps
-}) {
+}: DatePickerProps) {
 	const inputRef = useRef(null);
-	const maskRef = useRef();
+	const maskRef = useRef<null | MaskRef>(null);
 	const [validField, setValidField] = useState({
 		displayErrors,
 		errorMessage,
@@ -50,20 +121,23 @@ export default function DatePicker({
 	const {
 		clayFormat,
 		firstDayOfWeek,
-		isDateTime,
-		momentFormat,
-		placeholder,
-		serverFormat,
+		isDateTime = false,
+		momentFormat = '',
+		placeholder = '',
+		serverFormat = '',
 		use12Hours,
 	} = useMemo(() => {
-		return datetimeUtils.generateDateConfigurations({
+		let dateMaskParameters: DateMaskParams = {};
+		dateMaskParameters = datetimeUtils.generateDateConfigurations({
 			defaultLanguageId,
 			locale,
 			type,
 		});
+
+		return dateMaskParameters;
 	}, [defaultLanguageId, locale, type]);
 
-	const date = useMemo(() => {
+	const date: Date = useMemo(() => {
 		let formattedDate = '';
 		let year = moment().year();
 		const rawDate =
@@ -148,7 +222,7 @@ export default function DatePicker({
 		});
 	}, [momentFormat]);
 
-	const handleValueChange = (value) => {
+	const handleValueChange = (value: string) => {
 		const nextState = datetimeUtils.generateDate({
 			isDateTime,
 			momentFormat,
@@ -166,7 +240,7 @@ export default function DatePicker({
 	const [expanded, setExpanded] = useState(false);
 
 	const handleBlur = () => {
-		if (!otherProps.required) {
+		if (!required) {
 			const isInputFilled = DIGIT_REGEX.test(formattedDate);
 
 			const isValidMomentFormat = moment(
@@ -195,7 +269,7 @@ export default function DatePicker({
 		}
 
 		setValidField({
-			displayErrors: errorMessage && !valid,
+			displayErrors: !!errorMessage && !valid,
 			errorMessage,
 			valid,
 		});
@@ -203,7 +277,7 @@ export default function DatePicker({
 		onBlur?.();
 	};
 
-	const handleExpandedChange = (value) => {
+	const handleExpandedChange = (value: boolean) => {
 		if (value !== expanded) {
 			setExpanded(value);
 
@@ -220,17 +294,19 @@ export default function DatePicker({
 			}
 		}
 	};
-	const onInputMask = ({target: {value}}) => {
+	const onInputMask: React.FocusEventHandler<HTMLInputElement> = ({
+		target: {value},
+	}) => {
 		try {
-			maskRef.current.update(value);
+			maskRef.current?.update(value);
 		}
 		catch (error) {
-			maskRef.current.update('');
+			maskRef.current?.update('');
 		}
 	};
 
 	useEffect(() => {
-		if (otherProps.required) {
+		if (required) {
 			setValidField({
 				displayErrors,
 				errorMessage,
@@ -240,14 +316,12 @@ export default function DatePicker({
 
 		if (predefinedValue && !valid) {
 			setValidField({
-				displayErrors: errorMessage && !valid,
+				displayErrors: !!errorMessage && !valid,
 				errorMessage,
 				valid,
 			});
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [displayErrors, errorMessage, valid]);
+	}, [displayErrors, errorMessage, required, predefinedValue, valid]);
 
 	return (
 		<FieldBase
@@ -269,7 +343,7 @@ export default function DatePicker({
 						{...(htmlAutocompleteAttribute && {
 							autoComplete: htmlAutocompleteAttribute,
 						})}
-						aria-required={otherProps.required}
+						aria-required={required}
 						ariaLabels={{
 							buttonChooseDate: `${Liferay.Language.get(
 								'select-date'

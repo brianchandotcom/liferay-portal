@@ -209,6 +209,7 @@ public class UpgradePartitionedConfigurationTableTest
 						configurationEntryEntry.getValue();
 
 					Assert.assertTrue(
+						logMessage,
 						logMessage.contains(
 							StringBundler.concat(
 								StringUtil.upperCaseFirstLetter(

@@ -606,26 +606,22 @@ public class CPDefinitionModelDocumentContributor
 					_classNameLocalService.getClassNameId(CPDefinition.class),
 					cpDefinitionId, true)) {
 
+			cpConfigurationListIds.add(
+				String.valueOf(
+					cpConfigurationEntry.getCPConfigurationListId()));
+
 			CPConfigurationEntrySetting cpConfigurationEntrySetting =
 				_cpConfigurationEntrySettingLocalService.
 					fetchCPConfigurationEntrySetting(
 						cpConfigurationEntry.getCPConfigurationEntryId(),
 						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
-			cpConfigurationListIds.add(
-				String.valueOf(
-					cpConfigurationEntry.getCPConfigurationListId()));
-
 			if (cpConfigurationEntrySetting == null) {
 				continue;
 			}
 
 			cpConfigurationListIds.addAll(
-				StringUtil.split(cpConfigurationEntrySetting.getSetting()));
-		}
-
-		if (cpConfigurationListIds.isEmpty()) {
-			return new String[0];
+				StringUtil.split(cpConfigurationEntrySetting.getValue()));
 		}
 
 		return cpConfigurationListIds.toArray(new String[0]);

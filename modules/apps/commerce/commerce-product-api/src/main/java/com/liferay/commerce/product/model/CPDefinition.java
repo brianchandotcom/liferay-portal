@@ -63,6 +63,10 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 			int type, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+			long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
 
 	public java.util.List<CPDefinitionSpecificationOptionValue>

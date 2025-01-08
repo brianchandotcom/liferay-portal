@@ -150,7 +150,7 @@ public class ProductHelperImpl implements ProductHelper {
 
 			if (cpDefinition != null) {
 				CPConfigurationEntry cpConfigurationEntry =
-					cpDefinition.getCPConfigurationEntry(
+					cpDefinition.fetchCPConfigurationEntry(
 						commerceContext.getCPConfigurationListId(
 							cpDefinition.getGroupId()));
 

@@ -10,7 +10,6 @@ import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstan
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
-import com.liferay.commerce.product.exception.NoSuchCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
@@ -154,6 +153,17 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+		long cpConfigurationListId) {
+
+		return _fetchCPConfigurationEntry(
+			cpConfigurationListId,
+			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
+				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
+				getCPDefinitionId()));
+	}
+
+	@Override
 	public CPConfigurationEntry fetchMasterCPConfigurationEntry()
 		throws PortalException {
 
@@ -200,43 +210,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
 			getCPDefinitionId(), type, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
-	}
-
-	@Override
-	public CPConfigurationEntry getCPConfigurationEntry(
-			long cpConfigurationListId)
-		throws PortalException {
-
-		List<CPConfigurationEntry> cpConfigurationEntries =
-			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
-				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
-				getCPDefinitionId());
-
-		for (CPConfigurationEntry cpConfigurationEntry :
-				cpConfigurationEntries) {
-
-			if (cpConfigurationEntry.getCPConfigurationListId() ==
-					cpConfigurationListId) {
-
-				return cpConfigurationEntry;
-			}
-
-			CPConfigurationEntrySetting cpConfigurationEntrySetting =
-				CPConfigurationEntrySettingLocalServiceUtil.
-					fetchCPConfigurationEntrySetting(
-						cpConfigurationEntry.getCPConfigurationEntryId(),
-						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-			if ((cpConfigurationEntrySetting != null) &&
-				StringUtil.contains(
-					cpConfigurationEntrySetting.getSetting(),
-					String.valueOf(cpConfigurationListId))) {
-
-				return cpConfigurationEntry;
-			}
-		}
-
-		throw new NoSuchCPConfigurationEntryException();
 	}
 
 	@Override
@@ -470,36 +443,17 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public boolean isVisible(long cpConfigurationListId)
 		throws PortalException {
 
-		List<CPConfigurationEntry> cpConfigurationEntries =
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId,
 			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
 				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
-				getCPDefinitionId(), true);
+				getCPDefinitionId(), true));
 
-		for (CPConfigurationEntry cpConfigurationEntry :
-				cpConfigurationEntries) {
-
-			if (cpConfigurationEntry.getCPConfigurationListId() ==
-					cpConfigurationListId) {
-
-				return true;
-			}
-
-			CPConfigurationEntrySetting cpConfigurationEntrySetting =
-				CPConfigurationEntrySettingLocalServiceUtil.
-					fetchCPConfigurationEntrySetting(
-						cpConfigurationEntry.getCPConfigurationEntryId(),
-						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-			if ((cpConfigurationEntrySetting != null) &&
-				StringUtil.contains(
-					cpConfigurationEntrySetting.getSetting(),
-					String.valueOf(cpConfigurationListId))) {
-
-				return true;
-			}
+		if (cpConfigurationEntry == null) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
@@ -570,6 +524,37 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	@Override
 	public void setUrlTitleMap(Map<Locale, String> urlTitleMap) {
 		_urlTitleMap = urlTitleMap;
+	}
+
+	private CPConfigurationEntry _fetchCPConfigurationEntry(
+		long cpConfigurationListId,
+		List<CPConfigurationEntry> cpConfigurationEntries) {
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			if (cpConfigurationEntry.getCPConfigurationListId() ==
+					cpConfigurationListId) {
+
+				return cpConfigurationEntry;
+			}
+
+			CPConfigurationEntrySetting cpConfigurationEntrySetting =
+				CPConfigurationEntrySettingLocalServiceUtil.
+					fetchCPConfigurationEntrySetting(
+						cpConfigurationEntry.getCPConfigurationEntryId(),
+						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+			if ((cpConfigurationEntrySetting != null) &&
+				StringUtil.contains(
+					cpConfigurationEntrySetting.getValue(),
+					String.valueOf(cpConfigurationListId))) {
+
+				return cpConfigurationEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

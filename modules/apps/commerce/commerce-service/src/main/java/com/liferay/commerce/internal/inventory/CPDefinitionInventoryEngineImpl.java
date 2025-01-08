@@ -64,7 +64,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return ArrayUtil.toStringArray(
 			cpConfigurationEntry.getAllowedOrderQuantitiesArray());
@@ -128,7 +128,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.getMaxOrderQuantity();
 	}
@@ -155,7 +155,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.getMinOrderQuantity();
 	}
@@ -181,7 +181,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.getMinStockQuantity();
 	}
@@ -208,7 +208,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.getMultipleOrderQuantity();
 	}
@@ -234,7 +234,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.isBackOrders();
 	}
@@ -260,7 +260,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.isDisplayAvailability();
 	}
@@ -286,7 +286,7 @@ public class CPDefinitionInventoryEngineImpl
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.getCPConfigurationEntry(cpConfigurationListId);
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
 		return cpConfigurationEntry.isDisplayStockQuantity();
 	}

@@ -484,6 +484,14 @@ public class CPDefinitionWrapper
 		return model.getCPAttachmentFileEntries(type, status);
 	}
 
+	@Override
+	public CPConfigurationEntry fetchCPConfigurationEntry(
+			long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.fetchCPConfigurationEntry(cpConfigurationListId);
+	}
+
 	/**
 	 * Returns the cp definition ID of this cp definition.
 	 *

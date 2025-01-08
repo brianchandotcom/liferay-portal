@@ -282,33 +282,34 @@ public class BaseCommerceContext implements CommerceContext {
 	private Map<Long, CPConfigurationList> _getCPConfigurationListMap()
 		throws PortalException {
 
-		if (MapUtil.isEmpty(_cpConfigurationListMap)) {
-			_cpConfigurationListMap = new HashMap<>();
+		if (MapUtil.isNotEmpty(_cpConfigurationListMap)) {
+			return _cpConfigurationListMap;
+		}
 
-			CommerceOrder commerceOrder = getCommerceOrder();
+		_cpConfigurationListMap = new HashMap<>();
 
-			long orderTypeId = 0;
+		long orderTypeId = 0;
 
-			if (commerceOrder != null) {
-				orderTypeId = commerceOrder.getCommerceOrderTypeId();
-			}
+		CommerceOrder commerceOrder = getCommerceOrder();
 
-			for (long groupId :
-					TransformUtil.transformToLongArray(
-						_commerceCatalogLocalService.getCommerceCatalogs(
-							_companyId, false),
-						CommerceCatalog::getGroupId)) {
+		if (commerceOrder != null) {
+			orderTypeId = commerceOrder.getCommerceOrderTypeId();
+		}
 
-				List<CPConfigurationList> cpConfigurationLists =
-					_cpConfigurationListLocalService.getCPConfigurationLists(
-						_companyId, groupId,
-						CommerceUtil.getCommerceAccountId(this),
-						getCommerceAccountGroupIds(), getCommerceChannelId(),
-						orderTypeId);
+		for (long groupId :
+				TransformUtil.transformToLongArray(
+					_commerceCatalogLocalService.getCommerceCatalogs(
+						_companyId, false),
+					CommerceCatalog::getGroupId)) {
 
-				_cpConfigurationListMap.put(
-					groupId, cpConfigurationLists.get(0));
-			}
+			List<CPConfigurationList> cpConfigurationLists =
+				_cpConfigurationListLocalService.getCPConfigurationLists(
+					_companyId, groupId,
+					CommerceUtil.getCommerceAccountId(this),
+					getCommerceAccountGroupIds(), getCommerceChannelId(),
+					orderTypeId);
+
+			_cpConfigurationListMap.put(groupId, cpConfigurationLists.get(0));
 		}
 
 		return _cpConfigurationListMap;

@@ -185,8 +185,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			cpInstance.getReplacementCPInstanceUuid());
 
 		return _fetchFirstAvailableReplacementCPInstance(
-			accountEntryId, commerceChannelGroupId,
-			commerceContext.getCPConfigurationListId(cpInstance.getGroupId()),
+			accountEntryId, commerceChannelGroupId, commerceContext,
 			cpInstance);
 	}
 
@@ -905,7 +904,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	private CPInstance _fetchFirstAvailableReplacementCPInstance(
 			long accountEntryId, long commerceChannelGroupId,
-			long cpConfigurationListId, CPInstance cpInstance)
+			CommerceContext commerceContext, CPInstance cpInstance)
 		throws PortalException {
 
 		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
@@ -913,13 +912,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				accountEntryId, commerceChannelGroupId, cpInstance,
 				StringPool.BLANK,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(
-					cpConfigurationListId, cpInstance))) {
+					commerceContext.getCPConfigurationListId(
+						cpInstance.getGroupId()),
+					cpInstance))) {
 
 			return cpInstance;
 		}
 
 		return _fetchFirstAvailableReplacementCPInstance(
-			accountEntryId, commerceChannelGroupId, cpConfigurationListId,
+			accountEntryId, commerceChannelGroupId, commerceContext,
 			_cpInstanceLocalService.fetchCProductInstance(
 				cpInstance.getReplacementCProductId(),
 				cpInstance.getReplacementCPInstanceUuid()));

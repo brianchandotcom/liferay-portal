@@ -55,7 +55,7 @@ public class ProductConfigurationDTOConverter
 				productConfigurationDTOConverterContext.getCommerceContext();
 
 			CPConfigurationEntry cpConfigurationEntry =
-				cpDefinition.getCPConfigurationEntry(
+				cpDefinition.fetchCPConfigurationEntry(
 					commerceContext.getCPConfigurationListId(
 						cpDefinition.getGroupId()));
 

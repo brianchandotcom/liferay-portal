@@ -130,16 +130,16 @@ const SystemDataSetModalList = ({
 
 const SelectSystemDataSetModalContent = ({
 	closeModal,
+	getSystemDataSetsURL,
 	importSystemDataSetURL,
 	loadData,
 	namespace,
-	systemDataSets,
 }: {
 	closeModal: Function;
+	getSystemDataSetsURL: string;
 	importSystemDataSetURL: string;
 	loadData: Function;
 	namespace: string;
-	systemDataSets: Array<ISystemDataSet>;
 }) => {
 	const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
 	const [selectedSystemDataSet, setSelectedSystemDataSet] =
@@ -184,8 +184,8 @@ const SelectSystemDataSetModalContent = ({
 			<ClayModal.Body>
 				<FrontendDataSet
 					{...FDS_DEFAULT_PROPS}
+					apiURL={getSystemDataSetsURL}
 					id="SystemDataSets"
-					items={systemDataSets}
 					onSelect={({
 						selectedItems,
 					}: {
@@ -229,11 +229,13 @@ const SelectSystemDataSetModalContent = ({
 
 const SystemDataSets = ({
 	editDataSetURL,
+	getSystemDataSetsURL,
 	importSystemDataSetURL,
 	namespace,
 	systemDataSets,
 }: {
 	editDataSetURL: string;
+	getSystemDataSetsURL: string;
 	importSystemDataSetURL: string;
 	namespace: string;
 	systemDataSets: Array<ISystemDataSet>;
@@ -319,10 +321,10 @@ const SystemDataSets = ({
 						}) => (
 							<SelectSystemDataSetModalContent
 								closeModal={closeModal}
+								getSystemDataSetsURL={getSystemDataSetsURL}
 								importSystemDataSetURL={importSystemDataSetURL}
 								loadData={loadData}
 								namespace={namespace}
-								systemDataSets={systemDataSets}
 							/>
 						),
 						size: 'lg',

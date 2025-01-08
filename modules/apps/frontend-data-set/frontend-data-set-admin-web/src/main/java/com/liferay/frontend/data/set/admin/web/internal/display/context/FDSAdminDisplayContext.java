@@ -142,6 +142,19 @@ public class FDSAdminDisplayContext {
 			));
 	}
 
+	public String getGetSystemDataSetsURL() {
+		ResourceURL resourceURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_renderRequest, _themeDisplay.getScopeGroup(),
+				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
+				RenderRequest.RESOURCE_PHASE);
+
+		resourceURL.setResourceID(
+			"/frontend_data_set_admin/get_system_data_sets");
+
+		return resourceURL.toString();
+	}
+
 	public String getImportSystemDataSetURL() {
 		ResourceURL resourceURL =
 			(ResourceURL)PortalUtil.getControlPanelPortletURL(

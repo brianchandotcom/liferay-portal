@@ -1220,43 +1220,6 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	@Test(expected = NoSuchTicketException.class)
-	public void testVerifyEmailAddress() throws Exception {
-		try (SafeCloseable safeCloseable =
-				_updateCompanyStrangersVerifyWithSafeCloseable(
-					TestPropsValues.getCompanyId(), true)) {
-
-			User user = _userLocalService.addUserWithWorkflow(
-				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
-				RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
-				StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
-				null, true,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(),
-					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-
-			List<Ticket> tickets = _ticketLocalService.getTickets(
-				user.getCompanyId(), User.class.getName(), user.getUserId());
-
-			Ticket ticket = tickets.get(0);
-
-			Assert.assertEquals(
-				TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
-			Assert.assertNotNull(ticket.getExpirationDate());
-
-			ticket.setExpirationDate(new Date(System.currentTimeMillis()));
-
-			ticket = _ticketLocalService.updateTicket(ticket);
-
-			Assert.assertTrue(ticket.isExpired());
-
-			_userLocalService.verifyEmailAddress(ticket.getKey());
-		}
-	}
-
 	@Test
 	public void testVerifyEmailAddress() throws Exception {
 		try (SafeCloseable safeCloseable =
@@ -1297,6 +1260,45 @@ public class UserLocalServiceTest {
 				_userLocalService.authenticateByEmailAddress(
 					user.getCompanyId(), user.getEmailAddress(), "test", null,
 					null, null));
+		}
+
+		try (SafeCloseable safeCloseable =
+				_updateCompanyStrangersVerifyWithSafeCloseable(
+					TestPropsValues.getCompanyId(), true)) {
+
+			User user = _userLocalService.addUserWithWorkflow(
+				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com", LocaleUtil.US,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
+				StringPool.BLANK, UserConstants.TYPE_REGULAR, null, null, null,
+				null, true,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+			List<Ticket> tickets = _ticketLocalService.getTickets(
+				user.getCompanyId(), User.class.getName(), user.getUserId());
+
+			Ticket ticket = tickets.get(0);
+
+			Assert.assertEquals(
+				TicketConstants.TYPE_EMAIL_ADDRESS, ticket.getType());
+			Assert.assertNotNull(ticket.getExpirationDate());
+
+			ticket.setExpirationDate(new Date(System.currentTimeMillis()));
+
+			ticket = _ticketLocalService.updateTicket(ticket);
+
+			Assert.assertTrue(ticket.isExpired());
+
+			_userLocalService.verifyEmailAddress(ticket.getKey());
+
+			Assert.fail();
+		}
+		catch (NoSuchTicketException noSuchTicketException) {
+			Assert.assertNotNull(noSuchTicketException);
 		}
 	}
 

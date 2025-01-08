@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
-import {spritemap} from '../../Icon';
+import Icon from '../../Icon';
 import apiFetch from '../../util/apiFetch';
 
 const LearnContext = createContext();
@@ -47,13 +46,9 @@ function LearnInputWrapper(props) {
 					onShowChange={setOpenPopover}
 					show={openPopover}
 					trigger={
-						<ClayButtonWithIcon
-							className="ml-2"
-							displayType="link"
-							size="sm"
-							spritemap={spritemap}
-							symbol="question-circle"
-						/>
+						<button className="btn-unstyled ml-2">
+							<Icon symbol="question-circle" />
+						</button>
 					}
 				>
 					<ClayLink

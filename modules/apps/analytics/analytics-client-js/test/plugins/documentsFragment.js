@@ -25,16 +25,6 @@ const createElementTitle = () => {
 	return node;
 };
 
-const createFragmentWithImage = () => {
-	const node = createElement(`
-		<img src="..." data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my image" data-analytics-asset-type="${documentType}" data-analytics-asset-action="view" />
-	`);
-
-	document.body.appendChild(node);
-
-	return node;
-};
-
 const createFragmentWithLink = () => {
 	const node = createElement(`
 		<a data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my document with link" data-analytics-asset-type="${documentType}" data-analytics-asset-action="download" href="#">
@@ -207,36 +197,6 @@ describe('Documents Plugin', () => {
 		);
 	});
 
-	describe('documentPreviewed event', () => {
-		it('is fired when clicking in a fragment with a image', async () => {
-			const documentsElement = createFragmentWithImage();
-
-			const domContentLoaded = new Event('DOMContentLoaded');
-
-			await document.dispatchEvent(domContentLoaded);
-
-			const events = Analytics.getEvents().filter(
-				({eventId}) => eventId === 'documentPreviewed'
-			);
-
-			expect(events.length).toBeGreaterThanOrEqual(1);
-
-			expect(events[0]).toEqual(
-				expect.objectContaining({
-					applicationId: 'Document',
-					eventId: 'documentPreviewed',
-					properties: {
-						fileEntryId: 'myDocumentId',
-						title: 'my image',
-						type: documentType,
-					},
-				})
-			);
-
-			document.body.removeChild(documentsElement);
-		});
-	});
-
 	describe('documents events with actions', () => {
 		const createDocumentsElementWithAction = (action) => {
 			const setDataset = (element, data) => {
@@ -267,7 +227,7 @@ describe('Documents Plugin', () => {
 			return documentElement;
 		};
 
-		it('is not fired when preview a document with an incorrect action value', async () => {
+		it('is not fired when impression a document with an incorrect action value', async () => {
 			const element = createDocumentsElementWithAction('unknown');
 
 			const domContentLoaded = new Event('DOMContentLoaded');
@@ -277,7 +237,7 @@ describe('Documents Plugin', () => {
 			await wait(250);
 
 			const events = Analytics.getEvents().filter(
-				({eventId}) => eventId === 'documentPreviewed'
+				({eventId}) => eventId === 'documentImpressionMade'
 			);
 
 			expect(events.length).toBeGreaterThanOrEqual(0);
@@ -286,7 +246,6 @@ describe('Documents Plugin', () => {
 		});
 
 		[
-			{action: 'view', eventId: 'documentPreviewed'},
 			{action: 'impression', eventId: 'documentImpressionMade'},
 			{action: 'download', eventId: 'documentImpressionMade'},
 		].forEach(async (props) => {

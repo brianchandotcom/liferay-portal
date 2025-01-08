@@ -22,9 +22,9 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 	noCloudProjectsAvailable,
 }) => {
 	const {
+		project: selectedProject,
 		projects,
 		setValue,
-		project: selectedProject,
 	} = useOAuth2OutletContext();
 
 	if (noCloudProjectsAvailable) {
@@ -107,9 +107,9 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 const ProjectSelectionLayout = () => {
 	const {
 		myUserAccount,
+		project: selectedProject,
 		projects,
 		selectedAccount,
-		project: selectedProject,
 		singleAccount,
 		singleProject,
 	} = useOAuth2OutletContext();

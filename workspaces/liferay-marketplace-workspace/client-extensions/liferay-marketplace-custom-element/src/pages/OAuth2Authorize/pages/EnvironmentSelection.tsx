@@ -8,12 +8,12 @@ import ClayButton from '@clayui/button';
 import {Navigate, useNavigate} from 'react-router-dom';
 
 import RadioCard from '../../../components/RadioCardList/components/RadioCard';
+import i18n from '../../../i18n';
 import ContactSupport from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/ContactSupport';
 import SelectedProjectBanner from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/SelectedProjectBanner';
+import {ConsoleUserProjectWithExtension} from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
 import {ProductCardRevamp} from '../../GetApp/components/ProductCard/ProductCard';
 import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
-import {ConsoleUserProjectWithExtension} from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/pages/CloudProvisioningOutlet';
-import i18n from '../../../i18n';
 
 const EnvironmentSelection = () => {
 	const {

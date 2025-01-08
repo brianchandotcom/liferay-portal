@@ -21,10 +21,6 @@ import ColorPicker from './ColorPicker/ColorPicker.es';
 
 // @ts-ignore
 
-import DatePicker from './DatePicker/DatePicker.es';
-
-// @ts-ignore
-
 import DocumentLibrary from './DocumentLibrary/DocumentLibrary.es';
 import ReactFieldBase from './FieldBase/ReactFieldBase.es';
 
@@ -101,6 +97,7 @@ import Text from './Text/Text.es';
 import Validation from './Validation/Validation';
 
 export {default as Checkbox} from './Checkbox/Checkbox';
+export {default as DatePicker} from './DatePicker/DatePicker';
 export {default as Numeric} from './Numeric/Numeric';
 export {default as NumericInputMask} from './NumericInputMask/NumericInputMask';
 export {default as MultipleSelection} from './Select/MultipleSelect';
@@ -111,7 +108,6 @@ export {
 	Captcha,
 	CheckboxMultiple,
 	ColorPicker,
-	DatePicker,
 	DocumentLibrary,
 	FieldSet,
 	Geolocation,

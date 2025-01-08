@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.18"
 	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"

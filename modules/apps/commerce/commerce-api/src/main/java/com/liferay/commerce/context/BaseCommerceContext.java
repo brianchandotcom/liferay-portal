@@ -32,6 +32,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -220,6 +221,10 @@ public class BaseCommerceContext implements CommerceContext {
 
 	@Override
 	public long getCPConfigurationListId(long groupId) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			return 0;
+		}
+
 		Map<Long, CPConfigurationList> cpConfigurationListMap =
 			_getCPConfigurationListMap();
 

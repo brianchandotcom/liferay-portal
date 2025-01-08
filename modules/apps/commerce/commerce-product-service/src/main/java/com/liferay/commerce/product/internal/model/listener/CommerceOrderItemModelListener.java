@@ -42,6 +42,7 @@ public class CommerceOrderItemModelListener
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 					commerceOrder.getCommerceAccountId(),
 					commerceOrderItem.getGroupId(),
+					commerceOrder.getCommerceOrderTypeId(),
 					cpInstance.getCPInstanceId());
 
 			if ((firstAvailableReplacementCPInstance == null) ||

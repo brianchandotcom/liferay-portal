@@ -5,8 +5,8 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -23,18 +23,22 @@ import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.internal.catalog.CPSkuImpl;
 import com.liferay.commerce.product.internal.util.comparator.CPDefinitionOptionRelComparator;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
@@ -43,6 +47,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -160,10 +165,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public CPInstance fetchFirstAvailableReplacementCPInstance(
-			long accountEntryId, long commerceChannelGroupId, long cpInstanceId)
+			long accountEntryId, long commerceChannelGroupId,
+			long commerceOrderTypeId, long cpInstanceId)
 		throws PortalException {
-
-		CommerceContext commerceContext = CommerceContextThreadLocal.get();
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
@@ -173,8 +177,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				accountEntryId, commerceChannelGroupId, cpInstance,
 				StringPool.BLANK,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(
-					commerceContext.getCPConfigurationListId(
-						cpInstance.getGroupId()),
+					_getCPConfigurationListId(
+						accountEntryId, commerceChannelGroupId,
+						commerceOrderTypeId, cpInstance),
 					cpInstance))) {
 
 			return null;
@@ -185,8 +190,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			cpInstance.getReplacementCPInstanceUuid());
 
 		return _fetchFirstAvailableReplacementCPInstance(
-			accountEntryId, commerceChannelGroupId, commerceContext,
-			cpInstance);
+			accountEntryId, commerceChannelGroupId, 0, cpInstance);
 	}
 
 	@Override
@@ -903,8 +907,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	private CPInstance _fetchFirstAvailableReplacementCPInstance(
-			long accountEntryId, long commerceChannelGroupId,
-			CommerceContext commerceContext, CPInstance cpInstance)
+			long accountEntryId, long commerceChannelGroupId, long orderTypeId,
+			CPInstance cpInstance)
 		throws PortalException {
 
 		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
@@ -912,18 +916,44 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				accountEntryId, commerceChannelGroupId, cpInstance,
 				StringPool.BLANK,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(
-					commerceContext.getCPConfigurationListId(
-						cpInstance.getGroupId()),
+					_getCPConfigurationListId(
+						accountEntryId, commerceChannelGroupId, orderTypeId,
+						cpInstance),
 					cpInstance))) {
 
 			return cpInstance;
 		}
 
 		return _fetchFirstAvailableReplacementCPInstance(
-			accountEntryId, commerceChannelGroupId, commerceContext,
+			accountEntryId, commerceChannelGroupId, orderTypeId,
 			_cpInstanceLocalService.fetchCProductInstance(
 				cpInstance.getReplacementCProductId(),
 				cpInstance.getReplacementCPInstanceUuid()));
+	}
+
+	private long _getCPConfigurationListId(
+			long accountEntryId, long commerceChannelGroupId,
+			long commerceOrderTypeId, CPInstance cpInstance)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			return 0;
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceChannelGroupId);
+
+		List<CPConfigurationList> cpConfigurationLists =
+			_cpConfigurationListLocalService.getCPConfigurationLists(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				accountEntryId,
+				_accountGroupLocalService.getAccountGroupIds(accountEntryId),
+				commerceChannel.getCommerceChannelId(), commerceOrderTypeId);
+
+		CPConfigurationList cpConfigurationList = cpConfigurationLists.get(0);
+
+		return cpConfigurationList.getCPConfigurationListId();
 	}
 
 	private long _getTopId(Map<Long, Integer> idIdHits) {
@@ -966,7 +996,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPInstanceHelperImpl.class);
 
 	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceMediaProvider _commerceMediaProvider;
@@ -995,6 +1031,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private CPCollectionProviderHelper _cpCollectionProviderHelper;
+
+	@Reference
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
 	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;

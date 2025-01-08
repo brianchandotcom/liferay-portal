@@ -327,7 +327,8 @@ public class ProductOptionValueDTOConverter
 										_getMinOrderQuantity(
 											commerceContext.
 												getCPConfigurationListId(
-													cpInstance.getGroupId()),
+													cpDefinitionOptionRel.
+														getGroupId()),
 											cpInstance)
 									).cpInstanceUnitOfMeasureKey(
 										cpDefinitionOptionValueRel.
@@ -338,7 +339,8 @@ public class ProductOptionValueDTOConverter
 										_getMinOrderQuantity(
 											commerceContext.
 												getCPConfigurationListId(
-													cpInstance.getGroupId()),
+													cpDefinitionOptionRel.
+														getGroupId()),
 											selectedCPInstance)
 									).selectedCPDefinitionOptionValueRel(
 										selectedCPDefinitionOptionValueRel

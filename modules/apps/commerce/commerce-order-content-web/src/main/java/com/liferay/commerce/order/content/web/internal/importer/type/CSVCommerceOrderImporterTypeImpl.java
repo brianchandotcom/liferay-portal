@@ -122,7 +122,8 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		_commerceOrderImporterItemImpls = _getCommerceOrderImporterItemImpls(
 			commerceOrder.getCompanyId(), commerceOrder.getCommerceAccountId(),
-			commerceChannel.getGroupId(), (FileEntry)object);
+			commerceChannel.getGroupId(),
+			commerceOrder.getCommerceOrderTypeId(), (FileEntry)object);
 
 		int start = 0;
 		int end = _commerceOrderImporterItemImpls.length;
@@ -227,7 +228,7 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	private CommerceOrderImporterItemImpl[] _getCommerceOrderImporterItemImpls(
 			long companyId, long accountEntryId, long commerceChannelGroupId,
-			FileEntry fileEntry)
+			long commerceOrderTypeId, FileEntry fileEntry)
 		throws Exception {
 
 		CSVParser csvParser = _getCSVParser(fileEntry);
@@ -235,7 +236,8 @@ public class CSVCommerceOrderImporterTypeImpl
 		return TransformUtil.transformToArray(
 			csvParser.getRecords(),
 			csvRecord -> _toCommerceOrderImporterItemImpl(
-				companyId, accountEntryId, commerceChannelGroupId, csvRecord),
+				companyId, accountEntryId, commerceChannelGroupId,
+				commerceOrderTypeId, csvRecord),
 			CommerceOrderImporterItemImpl.class);
 	}
 
@@ -259,7 +261,7 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	private CommerceOrderImporterItemImpl _toCommerceOrderImporterItemImpl(
 			long companyId, long accountEntryId, long commerceChannelGroupId,
-			CSVRecord csvRecord)
+			long commerceOrderTypeId, CSVRecord csvRecord)
 		throws Exception {
 
 		String sku = GetterUtil.getString(csvRecord.get("sku"));
@@ -305,7 +307,7 @@ public class CSVCommerceOrderImporterTypeImpl
 		else {
 			CPInstance firstAvailableReplacementCPInstance =
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
-					accountEntryId, commerceChannelGroupId,
+					accountEntryId, commerceChannelGroupId, commerceOrderTypeId,
 					cpInstance.getCPInstanceId());
 
 			if ((firstAvailableReplacementCPInstance != null) &&

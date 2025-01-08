@@ -113,7 +113,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 			contextUser.getUserId(), 0, commerceAccountId);
 
-		if (!cpDefinition.isVisible(
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889") &&
+			!cpDefinition.isVisible(
 				commerceContext.getCPConfigurationListId(
 					cpDefinition.getGroupId()))) {
 

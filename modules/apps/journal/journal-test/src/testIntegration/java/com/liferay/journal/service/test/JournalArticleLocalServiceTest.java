@@ -1270,7 +1270,6 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(1, article.getVersion(), 0);
 
 		article = JournalTestUtil.updateArticle(article);
-
 		article = JournalTestUtil.updateArticle(article);
 
 		JournalArticle articleToExpire = JournalTestUtil.updateArticle(article);

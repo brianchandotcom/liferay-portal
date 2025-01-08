@@ -130,12 +130,6 @@ public class JournalDisplayContextTest {
 		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
 
-		Assert.assertTrue(
-			_isShowBreadcrumb(
-				"test",
-				journalFolderFixture.addFolder(
-					_group.getGroupId(), RandomTestUtil.randomString())));
-
 		Assert.assertFalse(
 			_isShowBreadcrumb(
 				"",
@@ -143,6 +137,11 @@ public class JournalDisplayContextTest {
 					_group.getGroupId(), RandomTestUtil.randomString())));
 
 		Assert.assertFalse(_isShowBreadcrumb("test", null));
+		Assert.assertTrue(
+			_isShowBreadcrumb(
+				"test",
+				journalFolderFixture.addFolder(
+					_group.getGroupId(), RandomTestUtil.randomString())));
 	}
 
 	private void _addJournalArticle(String title) throws Exception {

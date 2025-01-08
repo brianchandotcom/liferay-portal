@@ -2134,9 +2134,12 @@ public class RESTBuilder {
 	private void _invokeClientJSGenerator(String openAPIYAMLString)
 		throws Exception {
 
-		File baseClientJSDir = new File(
-			StringUtil.removeLast(_configDir.getPath(), "-impl") +
-				"-client-js");
+		String basePath = StringUtil.removeLast(_configDir.getPath(), "-impl");
+
+		basePath +=
+			basePath.endsWith("-rest") ? "-client-js" : "-rest-client-js";
+
+		File baseClientJSDir = new File(basePath);
 
 		FileUtil.write(
 			new File(baseClientJSDir, "build.gradle"), StringPool.BLANK);

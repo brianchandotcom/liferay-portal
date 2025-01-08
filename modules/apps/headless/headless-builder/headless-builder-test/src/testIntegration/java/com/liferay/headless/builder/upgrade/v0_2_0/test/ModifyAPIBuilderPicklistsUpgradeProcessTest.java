@@ -7,7 +7,10 @@ package com.liferay.headless.builder.upgrade.v0_2_0.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,6 +35,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -85,15 +89,21 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_API_SCHEMA", TestPropsValues.getCompanyId()));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
+		ObjectDefinition apiEndpointObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", TestPropsValues.getCompanyId()));
+					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
+			apiEndpointObjectDefinition);
+
+		ObjectDefinition apiApplicationObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", TestPropsValues.getCompanyId()));
+					"L_API_APPLICATION", TestPropsValues.getCompanyId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			apiApplicationObjectDefinition);
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinitionLocalService.
@@ -161,6 +171,32 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 			StartupHelperUtil.setUpgrading(false);
 		}
+
+		ObjectField httpMethodObjectField =
+			_objectFieldLocalService.getObjectField(
+				"HTTP_METHOD",
+				apiEndpointObjectDefinition.getObjectDefinitionId());
+
+		Assert.assertFalse(httpMethodObjectField.isState());
+
+		ObjectField retrieveTypeObjectField =
+			_objectFieldLocalService.getObjectField(
+				"RETRIEVE_TYPE",
+				apiEndpointObjectDefinition.getObjectDefinitionId());
+
+		Assert.assertFalse(retrieveTypeObjectField.isState());
+
+		ObjectField scopeObjectField = _objectFieldLocalService.getObjectField(
+			"SCOPE", apiEndpointObjectDefinition.getObjectDefinitionId());
+
+		Assert.assertFalse(scopeObjectField.isState());
+
+		ObjectField applicationStatusObjectField =
+			_objectFieldLocalService.getObjectField(
+				"APPLICATION_STATUS",
+				apiApplicationObjectDefinition.getObjectDefinitionId());
+
+		Assert.assertFalse(applicationStatusObjectField.isState());
 	}
 
 	private void _waitForImportCompletion(JSONObject jsonObject)
@@ -197,5 +233,8 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

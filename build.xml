@@ -69,19 +69,21 @@
 					</else>
 				</if>
 
-				<if>
-					<equals arg1="${clean.temp.dir}" arg2="true" />
-					<then>
-						<delete dir="${app.server.temp.dir}" />
-					</then>
-				</if>
+				<sequential>
+					<if>
+						<equals arg1="${clean.work.dir}" arg2="true" />
+						<then>
+							<delete dir="${app.server.work.dir}" />
+						</then>
+					</if>
 
-				<if>
-					<equals arg1="${clean.work.dir}" arg2="true" />
-					<then>
-						<delete dir="${app.server.work.dir}" />
-					</then>
-				</if>
+					<if>
+						<equals arg1="${clean.temp.dir}" arg2="true" />
+						<then>
+							<delete dir="${app.server.temp.dir}" />
+						</then>
+					</if>
+				</sequential>
 			</parallel>
 		</sequential>
 	</macrodef>

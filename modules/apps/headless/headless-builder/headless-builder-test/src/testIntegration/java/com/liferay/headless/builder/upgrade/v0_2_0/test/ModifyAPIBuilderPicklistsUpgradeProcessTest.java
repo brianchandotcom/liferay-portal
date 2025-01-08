@@ -73,6 +73,9 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 	@Test
 	public void testUpgrade() throws Exception {
+
+		// Deletion order is relevant to avoid constraint errors
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(

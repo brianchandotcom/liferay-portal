@@ -973,7 +973,7 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	return true
 }
 
-private FileCollection _transformToJakarta(File jakartaOutputDir, FileCollection jarFiles, Task task) {
+private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, FileCollection jarFiles, Task task) {
 	FileCollection newJarFiles = task.project.objects.fileCollection()
 
 	jarFiles.files.each {

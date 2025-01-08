@@ -440,7 +440,7 @@
 		<!-- Other fields -->
 
 		<column name="parentCPConfigurationListId" type="long" />
-		<column name="masterCPConfigurationList" type="boolean" />
+		<column name="master" type="boolean" />
 		<column name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="displayDate" type="Date" />
@@ -473,7 +473,7 @@
 		</finder>
 		<finder name="G_M" return-type="CPConfigurationList">
 			<finder-column name="groupId" />
-			<finder-column name="masterCPConfigurationList" />
+			<finder-column name="master" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="displayDate" />
@@ -1528,6 +1528,7 @@
 		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
 		<exception>CPConfigurationEntryQuantity</exception>
+		<exception>CPConfigurationListMaster</exception>
 		<exception>CPConfigurationListParentCPConfigurationListGroupId</exception>
 		<exception>CPDefinitionDeliveryMaxSubscriptionCycles</exception>
 		<exception>CPDefinitionDeliverySubscriptionLength</exception>
@@ -1602,7 +1603,6 @@
 		<exception>DuplicateCPSpecificationOptionKey</exception>
 		<exception>DuplicateCPSpecificationOptionListTypeDefinitionRel</exception>
 		<exception>DuplicateCPTaxCategory</exception>
-		<exception>InvalidCPConfigurationList</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 		<exception>RequiredCPConfigurationList</exception>
 		<exception>RequiredCPOption</exception>

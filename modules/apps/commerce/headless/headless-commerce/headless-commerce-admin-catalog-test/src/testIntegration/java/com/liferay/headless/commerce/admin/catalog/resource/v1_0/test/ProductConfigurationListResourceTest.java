@@ -60,7 +60,7 @@ public class ProductConfigurationListResourceTest
 					_commerceCatalog.getExternalReferenceCode());
 				setCatalogId(_commerceCatalog.getCommerceCatalogId());
 				setExternalReferenceCode(RandomTestUtil.randomString());
-				setMasterProductConfigurationList(false);
+				setMaster(false);
 				setName(RandomTestUtil.randomString());
 				setParentProductConfigurationListId(
 					_masterCPConfigurationList.getCPConfigurationListId());

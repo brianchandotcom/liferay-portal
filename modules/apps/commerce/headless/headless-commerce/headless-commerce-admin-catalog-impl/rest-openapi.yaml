@@ -1444,7 +1444,7 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
-                masterProductConfigurationList:
+                master:
                     example: true
                     type: boolean
                 name:

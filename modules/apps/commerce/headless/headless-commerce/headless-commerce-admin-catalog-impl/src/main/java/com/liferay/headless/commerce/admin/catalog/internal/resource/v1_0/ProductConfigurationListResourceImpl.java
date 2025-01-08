@@ -163,7 +163,7 @@ public class ProductConfigurationListResourceImpl
 				cpConfigurationList.getCPConfigurationListId(),
 				cpConfigurationList.getGroupId(),
 				cpConfigurationList.getParentCPConfigurationListId(),
-				cpConfigurationList.isMasterCPConfigurationList(),
+				cpConfigurationList.isMaster(),
 				GetterUtil.getString(
 					productConfigurationList.getName(),
 					cpConfigurationList.getName()),
@@ -254,9 +254,7 @@ public class ProductConfigurationListResourceImpl
 				GetterUtil.getLong(
 					productConfigurationList.
 						getParentProductConfigurationListId()),
-				GetterUtil.getBoolean(
-					productConfigurationList.
-						getMasterProductConfigurationList()),
+				GetterUtil.getBoolean(productConfigurationList.getMaster()),
 				GetterUtil.getString(productConfigurationList.getName()),
 				GetterUtil.getDouble(productConfigurationList.getPriority()),
 				displayDateConfig.getMonth(), displayDateConfig.getDay(),
@@ -298,7 +296,7 @@ public class ProductConfigurationListResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			() -> {
-				if (cpConfigurationList.isMasterCPConfigurationList()) {
+				if (cpConfigurationList.isMaster()) {
 					return null;
 				}
 

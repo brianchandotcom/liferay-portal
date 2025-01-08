@@ -11,8 +11,8 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupTable;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
+import com.liferay.commerce.product.exception.CPConfigurationListMasterException;
 import com.liferay.commerce.product.exception.DuplicateCPConfigurationListRelException;
-import com.liferay.commerce.product.exception.InvalidCPConfigurationListException;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPConfigurationListRel;
 import com.liferay.commerce.product.model.CPConfigurationListRelTable;
@@ -345,8 +345,8 @@ public class CPConfigurationListRelLocalServiceImpl
 			_cpConfigurationListLocalService.getCPConfigurationList(
 				cpConfigurationListId);
 
-		if (cpConfigurationList.isMasterCPConfigurationList()) {
-			throw new InvalidCPConfigurationListException();
+		if (cpConfigurationList.isMaster()) {
+			throw new CPConfigurationListMasterException();
 		}
 
 		CPConfigurationListRel cpConfigurationListRel =

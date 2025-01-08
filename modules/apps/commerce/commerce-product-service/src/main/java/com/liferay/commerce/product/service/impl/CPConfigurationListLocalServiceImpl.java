@@ -59,19 +59,17 @@ public class CPConfigurationListLocalServiceImpl
 	@Override
 	public CPConfigurationList addCPConfigurationList(
 			String externalReferenceCode, long groupId, long userId,
-			long parentCPConfigurationListId, boolean masterCPConfigurationList,
-			String name, double priority, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire)
+			long parentCPConfigurationListId, boolean master, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(
-			groupId, 0, masterCPConfigurationList, parentCPConfigurationListId);
+		_validate(groupId, 0, master, parentCPConfigurationListId);
 
 		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -98,8 +96,7 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setUserName(user.getFullName());
 		cpConfigurationList.setParentCPConfigurationListId(
 			parentCPConfigurationListId);
-		cpConfigurationList.setMasterCPConfigurationList(
-			masterCPConfigurationList);
+		cpConfigurationList.setMaster(master);
 		cpConfigurationList.setName(name);
 		cpConfigurationList.setPriority(priority);
 		cpConfigurationList.setDisplayDate(displayDate);
@@ -161,7 +158,7 @@ public class CPConfigurationListLocalServiceImpl
 					parentCPConfigurationList.getParentCPConfigurationListId();
 			}
 		}
-		else if (masterCPConfigurationList) {
+		else if (master) {
 			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
 				null, userId, groupId,
 				_portal.getClassNameId(CPConfigurationList.class),
@@ -183,10 +180,10 @@ public class CPConfigurationListLocalServiceImpl
 	@Override
 	public CPConfigurationList addOrUpdateCPConfigurationList(
 			String externalReferenceCode, long companyId, long groupId,
-			long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			long userId, long parentCPConfigurationListId, boolean master,
+			String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)
@@ -202,19 +199,19 @@ public class CPConfigurationListLocalServiceImpl
 					updateCPConfigurationList(
 						externalReferenceCode,
 						cpConfigurationList.getCPConfigurationListId(), groupId,
-						userId, parentCPConfigurationListId,
-						masterCPConfigurationList, name, priority,
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute, neverExpire);
+						userId, parentCPConfigurationListId, master, name,
+						priority, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, neverExpire);
 			}
 		}
 
 		return cpConfigurationListLocalService.addCPConfigurationList(
 			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
-			masterCPConfigurationList, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			master, name, priority, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire);
 	}
@@ -226,7 +223,7 @@ public class CPConfigurationListLocalServiceImpl
 			CPConfigurationList cpConfigurationList)
 		throws PortalException {
 
-		if (cpConfigurationList.isMasterCPConfigurationList()) {
+		if (cpConfigurationList.isMaster()) {
 			throw new RequiredCPConfigurationListException();
 		}
 
@@ -301,9 +298,9 @@ public class CPConfigurationListLocalServiceImpl
 	public CPConfigurationList updateCPConfigurationList(
 			String externalReferenceCode, long cpConfigurationListId,
 			long groupId, long userId, long parentCPConfigurationListId,
-			boolean masterCPConfigurationList, String name, double priority,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			boolean master, String name, double priority, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire)
@@ -312,7 +309,7 @@ public class CPConfigurationListLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
-			groupId, cpConfigurationListId, masterCPConfigurationList,
+			groupId, cpConfigurationListId, master,
 			parentCPConfigurationListId);
 
 		Date expirationDate = null;
@@ -337,8 +334,7 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setGroupId(groupId);
 		cpConfigurationList.setParentCPConfigurationListId(
 			parentCPConfigurationListId);
-		cpConfigurationList.setMasterCPConfigurationList(
-			masterCPConfigurationList);
+		cpConfigurationList.setMaster(master);
 		cpConfigurationList.setName(name);
 		cpConfigurationList.setPriority(priority);
 		cpConfigurationList.setDisplayDate(displayDate);

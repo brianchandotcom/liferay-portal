@@ -1852,74 +1852,6 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testExecuteObjectActionWithConditionExpressionInSystemObjectDefinition()
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				TestPropsValues.getCompanyId(), "User");
-
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"name"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).userId(
-				TestPropsValues.getUserId()
-			).build());
-
-		_objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true,
-			"oldValue(\"name\") == \"Paul\"", RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_GROOVY,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			new UnicodeProperties(), false);
-
-		Map<String, Object> values = HashMapBuilder.<String, Object>put(
-			"alternateName", RandomTestUtil.randomString()
-		).put(
-			"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
-		).put(
-			"familyName", RandomTestUtil.randomString()
-		).put(
-			"givenName", RandomTestUtil.randomString()
-		).build();
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager("User");
-
-		long userId = systemObjectDefinitionManager.addBaseModel(
-			TestPropsValues.getUser(),
-			HashMapBuilder.putAll(
-				values
-			).put(
-				"name", "Paul"
-			).build());
-
-		Assert.assertNull(_argumentsList.poll());
-
-		systemObjectDefinitionManager.updateBaseModel(
-			userId, TestPropsValues.getUser(),
-			HashMapBuilder.putAll(
-				values
-			).put(
-				"name", RandomTestUtil.randomString()
-			).build());
-
-		Assert.assertNotNull(_argumentsList.poll());
-
-		_objectFieldLocalService.deleteObjectField(objectField);
-	}
-
-	@Test
 	public void testExecuteObjectActionWithConditionExpressionInCustomObjectDefinition()
 		throws Exception {
 
@@ -2092,6 +2024,74 @@ public class ObjectActionLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId()));
 
 		_objectActionLocalService.deleteObjectAction(objectAction4);
+	}
+
+	@Test
+	public void testExecuteObjectActionWithConditionExpressionInSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				TestPropsValues.getCompanyId(), "User");
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"name"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true,
+			"oldValue(\"name\") == \"Paul\"", RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			new UnicodeProperties(), false);
+
+		Map<String, Object> values = HashMapBuilder.<String, Object>put(
+			"alternateName", RandomTestUtil.randomString()
+		).put(
+			"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
+		).put(
+			"familyName", RandomTestUtil.randomString()
+		).put(
+			"givenName", RandomTestUtil.randomString()
+		).build();
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		long userId = systemObjectDefinitionManager.addBaseModel(
+			TestPropsValues.getUser(),
+			HashMapBuilder.putAll(
+				values
+			).put(
+				"name", "Paul"
+			).build());
+
+		Assert.assertNull(_argumentsList.poll());
+
+		systemObjectDefinitionManager.updateBaseModel(
+			userId, TestPropsValues.getUser(),
+			HashMapBuilder.putAll(
+				values
+			).put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		Assert.assertNotNull(_argumentsList.poll());
+
+		_objectFieldLocalService.deleteObjectField(objectField);
 	}
 
 	@Test

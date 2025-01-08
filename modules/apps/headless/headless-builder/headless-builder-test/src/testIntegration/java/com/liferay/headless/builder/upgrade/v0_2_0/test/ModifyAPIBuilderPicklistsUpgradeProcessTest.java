@@ -209,11 +209,11 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 			objectFieldExternalReferenceCode,
 			objectDefinition.getObjectDefinitionId());
 
-		Assert.assertFalse(objectField.isState());
-
 		Assert.assertNull(
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
 				objectField.getObjectFieldId()));
+
+		Assert.assertFalse(objectField.isState());
 
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.

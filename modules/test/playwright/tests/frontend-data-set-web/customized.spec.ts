@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -43,71 +43,82 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 test(
 	'Check behavior of custom views',
 	{
-		tag: [
-			'@LPS-114812',
-			'@LPS-130101',
-			'@LPS-158545',
-			'@LPS-163823',
-			'@LPS-164691',
-		],
+		tag: ['@LPS-130101'],
 	},
 	async ({fdsSamplePage, page}) => {
-		let actionsDropdownId: string;
-		let customViewsDropdownId: string;
+		let actionsDropdown: Locator;
+		let customViewsDropdown: Locator;
+		let columnsVisibilityDropdown: Locator;
+
 		const customView1Name = getRandomString();
 		const customView2Name = getRandomString();
 
-		await test.step('Get dropdown ids reference', async () => {
-			actionsDropdownId =
+		await test.step('Get dropdown references', async () => {
+
+			// Click on dropdown toggle button adds the aria-controls attribute
+
+			await fdsSamplePage.customViewsActionsButton.click();
+
+			const actionsDropdownId =
 				await fdsSamplePage.customViewsActionsButton.getAttribute(
 					'aria-controls'
 				);
 
-			// Custom Views dropdown adds the aria-controls attribute after first click
+			actionsDropdown = page.locator(`#${actionsDropdownId}`);
 
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			customViewsDropdownId =
+			const customViewsDropdownId =
 				await fdsSamplePage.customViewsSelectorButton.getAttribute(
 					'aria-controls'
 				);
+
+			customViewsDropdown = page.locator(`#${customViewsDropdownId}`);
+
+			await fdsSamplePage.table.manageColumnsVisibilityButton.click();
+
+			const columnsVisibilityDropdownId =
+				await fdsSamplePage.table.manageColumnsVisibilityButton.getAttribute(
+					'aria-controls'
+				);
+
+			columnsVisibilityDropdown = page.locator(
+				`#${columnsVisibilityDropdownId}`
+			);
 		});
 
 		await test.step('Create a custom views and set it as the default one', async () => {
 			await fdsSamplePage.customViewsActionsButton.click();
 
-			await page
-				.locator(`#${actionsDropdownId}`)
+			await actionsDropdown
 				.filter({has: page.getByRole('menu')})
 				.waitFor();
 
-			await expect(
-				page.locator(`#${actionsDropdownId}`).getByRole('menuitem')
-			).toHaveText('Save View As...');
+			const menuItem = actionsDropdown.getByRole('menuitem', {
+				name: 'Save View As...',
+			});
 
-			await page
-				.locator(`#${actionsDropdownId}`)
-				.getByRole('menuitem', {name: 'Save View As...'})
-				.click();
+			await expect(menuItem).toBeVisible();
+
+			await menuItem.click();
 
 			await expect(fdsSamplePage.customViewsSaveModal).toBeInViewport();
 
 			await fdsSamplePage.customViewsSaveModal
 				.getByLabel('NameRequired')
 				.fill(customView1Name);
+
 			await fdsSamplePage.customViewsSaveModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 
 			await fdsSamplePage.customViewsActionsButton.click();
 
-			await page
-				.locator(`#${actionsDropdownId}`)
+			await actionsDropdown
 				.filter({has: page.getByRole('menu')})
 				.waitFor();
 
-			await page
-				.locator(`#${actionsDropdownId}`)
+			await actionsDropdown
 				.getByRole('menuitem', {name: 'Save View As...'})
 				.click();
 
@@ -126,44 +137,23 @@ test(
 
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			await expect(
-				page.locator(`#${customViewsDropdownId}`).getByRole('option')
-			).toHaveCount(3);
+			await expect(customViewsDropdown.getByRole('option')).toHaveCount(
+				3
+			);
 		});
 
-		await test.step('Edit a custom view settings', async () => {
-			await expect(
-				page.locator('.dnd-table').locator('.dnd-th')
-			).toHaveCount(10);
+		await test.step('Edit custom view, by changing visibility of one column', async () => {
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(10);
 
-			const tableFieldsDropdownId =
-				await fdsSamplePage.fdsTableOpenFieldsMenu.getAttribute(
-					'aria-controls'
-				);
+			await fdsSamplePage.table.manageColumnsVisibilityButton.click();
 
-			await fdsSamplePage.fdsTableOpenFieldsMenu.click();
-
-			await page
-				.locator(`#${tableFieldsDropdownId}`)
-				.filter({has: page.getByRole('menu')})
-				.waitFor();
-
-			await page
-				.locator(`#${tableFieldsDropdownId}`)
+			await columnsVisibilityDropdown
 				.getByRole('menuitem', {name: 'Description'})
 				.click();
 
-			await expect(
-				page.locator('.dnd-table').locator('.dnd-th')
-			).toHaveCount(9);
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
 
 			await fdsSamplePage.customViewsActionsButton.click();
-
-			await page.locator(`#${actionsDropdownId}`).waitFor();
-
-			page.locator(`#${actionsDropdownId}`).getByRole('menuitem', {
-				name: 'Save View',
-			});
 
 			page.keyboard.press('Escape');
 		});
@@ -173,47 +163,39 @@ test(
 				customView2Name
 			);
 
-			await expect(
-				page.locator('.dnd-table').locator('.dnd-th')
-			).toHaveCount(9);
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
+
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			await page.locator(`#${customViewsDropdownId}`).waitFor();
+			await customViewsDropdown.waitFor();
 
-			await page
-				.locator(`#${customViewsDropdownId}`)
+			await customViewsDropdown
 				.getByRole('option', {name: 'Default View'})
 				.click();
 
-			await expect(
-				page.locator('.dnd-table').locator('.dnd-th')
-			).toHaveCount(10);
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(10);
 		});
 
 		await test.step('Can change a custom view name', async () => {
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			await page.locator(`#${customViewsDropdownId}`).waitFor();
+			await customViewsDropdown.waitFor();
 
-			await page
-				.locator(`#${customViewsDropdownId}`)
+			await customViewsDropdown
 				.getByRole('option', {name: customView2Name})
 				.click();
 
 			await fdsSamplePage.customViewsActionsButton.click();
 
-			await page.locator(`#${actionsDropdownId}`).waitFor();
+			await actionsDropdown.waitFor();
 
-			await expect(
-				page
-					.locator(`#${actionsDropdownId}`)
-					.getByRole('menuitem', {name: 'Rename View'})
-			).toBeVisible();
+			const menuItem = actionsDropdown.getByRole('menuitem', {
+				name: 'Rename View',
+			});
 
-			await page
-				.locator(`#${actionsDropdownId}`)
-				.getByRole('menuitem', {name: 'Rename View'})
-				.click();
+			await expect(menuItem).toBeVisible();
+
+			await menuItem.click();
 
 			await expect(fdsSamplePage.customViewsSaveModal).toBeInViewport();
 
@@ -235,27 +217,23 @@ test(
 		await test.step('Delete a custom view', async () => {
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			await page.locator(`#${customViewsDropdownId}`).waitFor();
+			await customViewsDropdown.waitFor();
 
-			await page
-				.locator(`#${customViewsDropdownId}`)
+			await customViewsDropdown
 				.getByRole('option', {name: customView1Name})
 				.click();
 
 			await fdsSamplePage.customViewsActionsButton.click();
 
-			await page.locator(`#${actionsDropdownId}`).waitFor();
+			await actionsDropdown.waitFor();
 
-			await expect(
-				page
-					.locator(`#${actionsDropdownId}`)
-					.getByRole('menuitem', {name: 'Delete View'})
-			).toBeVisible();
+			const menuItem = actionsDropdown.getByRole('menuitem', {
+				name: 'Delete View',
+			});
 
-			await page
-				.locator(`#${actionsDropdownId}`)
-				.getByRole('menuitem', {name: 'Delete View'})
-				.click();
+			await expect(menuItem).toBeVisible();
+
+			await menuItem.click();
 
 			await expect(fdsSamplePage.customViewsDeleteAlert).toBeVisible();
 
@@ -265,18 +243,16 @@ test(
 
 			await fdsSamplePage.customViewsSelectorButton.click();
 
-			await page.locator(`#${customViewsDropdownId}`).waitFor();
+			await customViewsDropdown.waitFor();
 
 			await expect(
-				page
-					.locator(`#${customViewsDropdownId}`)
-					.getByRole('option', {name: customView1Name})
+				customViewsDropdown.getByRole('option', {name: customView1Name})
 			).not.toBeVisible();
 		});
 	}
 );
 
-test('Check behavior of item actions', async ({page}) => {
+test('Check behavior of item actions', async ({fdsSamplePage, page}) => {
 	const sidePanelActionLabelWithActionTitle = 'Side Panel With Action Title';
 	const sidePanelActionLabelWithContentTitle =
 		'Side Panel With Content Title';
@@ -286,58 +262,35 @@ test('Check behavior of item actions', async ({page}) => {
 	const sidePanelActionTitle = 'Side Panel Title Provided by Action';
 	const sidePanelContentTitle = 'Side Panel Title Provided by Page';
 
-	const datasetRow =
-		await test.step('Check that the Item Actions dropdown is present in table row', async () => {
-			await page
-				.locator('.dnd-td.item-actions')
-				.first()
-				.waitFor({state: 'attached'});
+	const itemActionsCell = fdsSamplePage.table.itemActionsCells.first();
 
-			const tableRow = page.locator('.dnd-td.item-actions').first();
+	const itemActionButton = itemActionsCell.getByRole('button', {
+		exact: true,
+		name: 'Actions',
+	});
 
-			expect(
-				tableRow.getByRole('button', {
-					exact: true,
-					name: 'Actions',
-				})
-			).toBeVisible;
+	await test.step('Check that the Item Actions dropdown is present in table row', async () => {
+		await expect(itemActionButton).toBeVisible();
 
-			const button = tableRow.getByRole('button', {
-				exact: true,
-				name: 'Actions',
-			});
-			const dropdownId = await button.getAttribute('aria-controls');
+		const dropdownId = await itemActionButton.getAttribute('aria-controls');
 
-			await button.click();
+		await itemActionButton.click();
 
-			await page
-				.locator(`#${dropdownId}`)
-				.filter({has: page.getByRole('menu')})
-				.waitFor();
+		await page
+			.locator(`#${dropdownId}`)
+			.filter({has: page.getByRole('menu')})
+			.waitFor();
 
-			await expect(
-				page.locator(`#${dropdownId}`).getByRole('menuitem')
-			).toHaveCount(13);
+		await expect(
+			page.locator(`#${dropdownId}`).getByRole('menuitem')
+		).toHaveCount(13);
 
-			await page.keyboard.press('Escape');
-
-			return tableRow;
-		});
-
-	const itemActionButton =
-		await test.step('Check that the Item Action menu is present', async () => {
-			const button = datasetRow.getByRole('button', {
-				exact: true,
-				name: 'Actions',
-			});
-
-			await expect(button).toBeInViewport();
-
-			return button;
-		});
+		await page.keyboard.press('Escape');
+	});
 
 	await test.step('Side Panel action opens a side panel with content title', async () => {
 		const dropdownId = await itemActionButton.getAttribute('aria-controls');
+
 		await itemActionButton.click();
 
 		await page
@@ -353,22 +306,21 @@ test('Check behavior of item actions', async ({page}) => {
 			})
 			.click();
 
-		await page.getByRole('tabpanel').waitFor();
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
 
-		const sidePanel = page.getByRole('tabpanel');
-
-		await expect(sidePanel).toBeInViewport();
-
-		const iframeElement = await sidePanel.locator('iframe').elementHandle();
-
-		const frame = await iframeElement.contentFrame();
+		const frame = fdsSamplePage.sidePanelFrame;
 
 		await frame.getByText(sidePanelContentTitle).waitFor();
+
 		await expect(frame.getByText(sidePanelContentTitle)).toHaveCount(1);
+
+		await expect(
+			frame.getByText('This is a side panel with a title.')
+		).toBeVisible();
 
 		await page.keyboard.press('Escape');
 
-		await expect(sidePanel).not.toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
 	});
 
 	await test.step('Side Panel action opens a side panel with action title', async () => {
@@ -388,26 +340,25 @@ test('Check behavior of item actions', async ({page}) => {
 			})
 			.click();
 
-		await page.getByRole('tabpanel').waitFor();
-
-		const sidePanel = page.getByRole('tabpanel');
-
-		await expect(sidePanel).toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
 
 		await page.getByText(sidePanelActionTitle).waitFor();
+
 		await expect(page.getByText(sidePanelActionTitle)).toHaveCount(1);
 
-		const iframeElement = await sidePanel.locator('iframe').elementHandle();
-
-		const frame = await iframeElement.contentFrame();
+		const frame = fdsSamplePage.sidePanelFrame;
 
 		await expect(
 			frame.locator('.side-panel-iframe-header')
 		).not.toBeInViewport();
 
+		await expect(
+			frame.getByText('This is a side panel without a title.')
+		).toBeVisible();
+
 		await page.keyboard.press('Escape');
 
-		await expect(sidePanel).not.toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
 	});
 
 	await test.step('Side Panel action opens a side panel with duplicated title', async () => {
@@ -427,18 +378,13 @@ test('Check behavior of item actions', async ({page}) => {
 			})
 			.click();
 
-		await page.getByRole('tabpanel').waitFor();
-
-		const sidePanel = page.getByRole('tabpanel');
-
-		await expect(sidePanel).toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
 
 		await page.getByText(sidePanelActionTitle).waitFor();
+
 		await expect(page.getByText(sidePanelActionTitle)).toHaveCount(1);
 
-		const iframeElement = await sidePanel.locator('iframe').elementHandle();
-
-		const frame = await iframeElement.contentFrame();
+		const frame = fdsSamplePage.sidePanelFrame;
 
 		await expect(
 			frame.locator('.side-panel-iframe-header')
@@ -449,11 +395,12 @@ test('Check behavior of item actions', async ({page}) => {
 
 		await page.keyboard.press('Escape');
 
-		await expect(sidePanel).not.toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
 	});
 
 	await test.step('Side Panel action opens a side panel without title', async () => {
 		const dropdownId = await itemActionButton.getAttribute('aria-controls');
+
 		await itemActionButton.click();
 
 		await page
@@ -469,11 +416,7 @@ test('Check behavior of item actions', async ({page}) => {
 			})
 			.click();
 
-		await page.getByRole('tabpanel').waitFor();
-
-		const sidePanel = page.getByRole('tabpanel');
-
-		await expect(sidePanel).toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toBeInViewport();
 
 		await expect(page.locator('.fds-side-panel-title')).toBeInViewport();
 		const panelTitle = await page
@@ -482,24 +425,26 @@ test('Check behavior of item actions', async ({page}) => {
 
 		expect(panelTitle).toEqual(['']);
 
-		const iframeElement = await sidePanel.locator('iframe').elementHandle();
-
-		const frame = await iframeElement.contentFrame();
+		const frame = fdsSamplePage.sidePanelFrame;
 
 		await expect(
 			frame.locator('.side-panel-iframe-header')
 		).not.toBeInViewport();
 
+		await expect(
+			frame.getByText('This is a side panel without a title.')
+		).toBeVisible();
+
 		await page.keyboard.press('Escape');
 
-		await expect(sidePanel).not.toBeInViewport();
+		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
 	});
 });
 
-test('Use client extensions', async ({page}) => {
+test('Use client extensions', async ({fdsSamplePage, page}) => {
 	await test.step('Assert that the cell renderer is invoked and the apple emoji is visible', async () => {
-		const firstColorCell = page
-			.locator('.dnd-tbody > div > div:nth-child(7)')
+		const firstColorCell = fdsSamplePage.table.container
+			.locator('td.cell-color')
 			.first();
 
 		await expect(firstColorCell).toContainText('🍏');
@@ -526,7 +471,7 @@ test('Use client extensions', async ({page}) => {
 
 		await expect(filterInput).toBeInViewport();
 
-		filterInput.fill("title eq 'Sample97'");
+		await filterInput.fill("title eq 'Sample97'");
 
 		await expect(filterInput).toHaveValue("title eq 'Sample97'");
 
@@ -538,11 +483,126 @@ test('Use client extensions', async ({page}) => {
 
 		await expect(page.getByText('Sample97', {exact: true})).toBeVisible();
 
-		const rowCount = await page.locator('.dnd-tbody > .dnd-tr').count();
+		const bodyRows = fdsSamplePage.table.container.locator('tbody tr');
 
-		expect(rowCount).toEqual(1);
+		expect(await bodyRows.count()).toEqual(1);
 	});
 });
+
+test(
+	'Sort columns and assert visibility',
+	{tag: '@LPS-193005'},
+	async ({page}) => {
+		await test.step('Sorting ID and Title column in ascending order', async () => {
+			const idColumnHeader = page
+				.getByRole('columnheader')
+				.getByText('ID');
+
+			await expect(idColumnHeader).toBeInViewport();
+
+			let cells = await page.locator('td').allInnerTexts();
+
+			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
+			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
+			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
+			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
+
+			await Promise.all([
+				idColumnHeader.click(),
+				page.waitForResponse(
+					(response: any) => response.status() === 200
+				),
+			]);
+
+			const ascendingIDCells = [
+				cells[1],
+				cells[11],
+				cells[21],
+				cells[31],
+				cells[41],
+				cells[51],
+				cells[61],
+				cells[71],
+				cells[81],
+				cells[91],
+			].sort();
+
+			await expect(page.locator('td').nth(1)).toHaveText(
+				ascendingIDCells[0]
+			);
+			await expect(page.locator('td').nth(11)).toHaveText(
+				ascendingIDCells[1]
+			);
+			await expect(page.locator('td').nth(21)).toHaveText(
+				ascendingIDCells[2]
+			);
+			await expect(page.locator('td').nth(31)).toHaveText(
+				ascendingIDCells[3]
+			);
+
+			const titleColumnHeader = page
+				.getByRole('columnheader')
+				.getByText('Title');
+
+			await Promise.all([
+				titleColumnHeader.click(),
+				page.waitForResponse(
+					(response: any) => response.status() === 200
+				),
+			]);
+
+			cells = await page.locator('td').allInnerTexts();
+
+			const ascendingTitleCells = [
+				cells[2],
+				cells[12],
+				cells[22],
+				cells[32],
+				cells[42],
+				cells[52],
+				cells[62],
+				cells[72],
+				cells[82],
+				cells[92],
+			].sort((a, b) => new Intl.Collator('en').compare(a, b));
+
+			await expect(page.locator('td').nth(2)).toHaveText(
+				ascendingTitleCells[0]
+			);
+			await expect(page.locator('td').nth(12)).toHaveText(
+				ascendingTitleCells[1]
+			);
+			await expect(page.locator('td').nth(22)).toHaveText(
+				ascendingTitleCells[2]
+			);
+			await expect(page.locator('td').nth(32)).toHaveText(
+				ascendingTitleCells[3]
+			);
+		});
+
+		await test.step('Hide the Title column', async () => {
+			const titleColumnHeader = page
+				.getByRole('columnheader')
+				.getByText('Title');
+
+			await expect(titleColumnHeader).toBeAttached();
+
+			const button = page.getByLabel('Manage Columns Visibility');
+
+			await expect(button).toBeAttached();
+
+			await button.click();
+
+			const titleMenuItem = page.getByRole('menuitem').nth(1);
+
+			await titleMenuItem.click();
+
+			await expect(
+				page.getByRole('columnheader').getByText('Title')
+			).toBeHidden();
+		});
+	}
+);
 
 accountSettingsTest(
 	'Set time zone from theme display in a datetime renderer',

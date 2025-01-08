@@ -161,17 +161,11 @@ test(
 		});
 
 		await test.step('Assert that the data set is available on the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
-				state: 'visible',
-			});
-
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.table.container).toBeInViewport();
 
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['ID', 'Field Name', '']);
 		});
@@ -218,7 +212,7 @@ test(
 			).toBeInViewport();
 
 			await expect(
-				await dataSetFragmentPage.tableWrapper
+				await dataSetFragmentPage.table.container
 			).not.toBeInViewport();
 		});
 	}
@@ -375,24 +369,21 @@ test(
 		});
 
 		await test.step('Assert that the Data Set is available on the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
+			await dataSetFragmentPage.table.container.waitFor({
 				state: 'visible',
 			});
 
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.table.container).toBeInViewport();
 
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['Title', 'Description', '']);
 
 			expect(
-				await page
-					.locator('.dnd-tbody > .dnd-tr')
-					.locator('.dnd-td')
+				await dataSetFragmentPage.table.bodyRows
+					.locator('td')
 					.allInnerTexts()
 			).toEqual(
 				expect.arrayContaining([
@@ -405,7 +396,7 @@ test(
 		await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async () => {
 			await dataSetFragmentPage.editPage({layout});
 
-			await dataSetFragmentPage.tableWrapper.click();
+			await dataSetFragmentPage.table.container.click();
 
 			await dataSetFragmentPage.changeDataSetButton.click();
 
@@ -436,25 +427,22 @@ test(
 		});
 
 		await test.step('Assert that the User Schema (Roles) Data Set is available on the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
+			await dataSetFragmentPage.table.container.waitFor({
 				state: 'visible',
 			});
 
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.table.container).toBeInViewport();
 
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['Role Type', 'Name', '']);
 
 			expect(
-				await page
-					.locator('.dnd-tbody > .dnd-tr')
+				await dataSetFragmentPage.table.bodyRows
 					.first()
-					.locator('.dnd-td')
+					.locator('td')
 					.allInnerTexts()
 			).toEqual(['organization', 'Account Manager', '']);
 		});
@@ -462,7 +450,7 @@ test(
 		await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async () => {
 			await dataSetFragmentPage.editPage({layout});
 
-			await dataSetFragmentPage.tableWrapper.click();
+			await dataSetFragmentPage.table.container.click();
 
 			await dataSetFragmentPage.changeDataSetButton.click();
 
@@ -495,27 +483,24 @@ test(
 		});
 
 		await test.step('Assert that the Taxonomy Vocabulary Data Set is available on the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
+			await dataSetFragmentPage.table.container.waitFor({
 				state: 'visible',
 			});
 
 			await expect(
-				await dataSetFragmentPage.tableWrapper
+				await dataSetFragmentPage.table.container
 			).toBeInViewport();
 
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['Vocabulary Name', 'Number of Categories', '']);
 
 			expect(
-				await page
-					.locator('.dnd-tbody > .dnd-tr')
+				await dataSetFragmentPage.table.bodyRows
 					.first()
-					.locator('.dnd-td')
+					.locator('td')
 					.allInnerTexts()
 			).toEqual(['Topic', '0', '']);
 		});

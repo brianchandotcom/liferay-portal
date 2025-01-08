@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
@@ -17,10 +17,16 @@ export class FDSSamplePage {
 	readonly customViewsDeleteAlert: Locator;
 	readonly customViewsSaveModal: Locator;
 	readonly customViewsSelectorButton: Locator;
-	readonly fdsTableCloseFieldsMenu: Locator;
-	readonly fdsTableOpenFieldsMenu: Locator;
 	readonly page: Page;
+	readonly sidePanel: Locator;
+	readonly sidePanelFrame: FrameLocator;
 	readonly tablist: Locator;
+	readonly table: {
+		container: Locator;
+		headerCells: Locator;
+		itemActionsCells: Locator;
+		manageColumnsVisibilityButton: Locator;
+	};
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
@@ -36,10 +42,21 @@ export class FDSSamplePage {
 		this.customViewsSelectorButton = page.getByLabel('Views', {
 			exact: true,
 		});
-		this.fdsTableCloseFieldsMenu = page.getByLabel('Close Fields Menu');
-		this.fdsTableOpenFieldsMenu = page.getByLabel('Open Fields Menu');
 		this.page = page;
+		this.sidePanel = page.locator('.fds-side-panel');
+		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');
 		this.tablist = page.getByRole('tablist');
+
+		const tableContainer = page.locator('.fds table');
+
+		this.table = {
+			container: tableContainer,
+			headerCells: tableContainer.locator('th'),
+			itemActionsCells: tableContainer.locator('.cell-item-actions'),
+			manageColumnsVisibilityButton: tableContainer.getByTitle(
+				'Manage Columns Visibility'
+			),
+		};
 	}
 
 	async selectTab(label: string) {

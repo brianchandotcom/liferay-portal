@@ -32,7 +32,14 @@ export class DataSetFragmentPage {
 	readonly selectDataSetModalFrame: FrameLocator;
 	readonly selectDataSetButton: Locator;
 	readonly selectedDataSetInput: Locator;
-	readonly tableWrapper: Locator;
+	readonly sidePanel: Locator;
+	readonly sidePanelFrame: FrameLocator;
+	readonly table: {
+		bodyRows: Locator;
+		container: Locator;
+		headRow: Locator;
+		itemActionsCells: Locator;
+	};
 
 	constructor(page: Page) {
 		this.activeViewSelector = page.getByLabel('Show View Options');
@@ -77,7 +84,18 @@ export class DataSetFragmentPage {
 		this.selectedDataSetInput = page
 			.getByLabel('Configuration Panel')
 			.getByLabel('Data Set View', {exact: true});
-		this.tableWrapper = page.locator('.dnd-table');
+
+		this.sidePanel = page.locator('.fds-side-panel');
+		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');
+
+		const tableContainer = page.locator('.fds table');
+
+		this.table = {
+			bodyRows: tableContainer.locator('tbody tr'),
+			container: tableContainer,
+			headRow: tableContainer.locator('thead tr'),
+			itemActionsCells: tableContainer.locator('td.cell-item-actions'),
+		};
 	}
 
 	async goto() {
@@ -206,18 +224,11 @@ export class DataSetFragmentPage {
 	}
 
 	async sortBy(columnName: string) {
-		await this.page
-			.locator('.dnd-table > .dnd-thead > .dnd-tr')
-			.getByRole('button', {name: columnName})
-			.waitFor();
-
 		await Promise.all([
-			this.page
-				.locator('.dnd-table > .dnd-thead > .dnd-tr')
-				.getByRole('button', {name: columnName})
-				.click(),
+			this.table.headRow.locator('th', {hasText: columnName}).click(),
+
 			this.page.waitForResponse(
-				(response) =>
+				(response: any) =>
 					response.status() === 200 &&
 					response.url().includes('/data-set-admin/')
 			),

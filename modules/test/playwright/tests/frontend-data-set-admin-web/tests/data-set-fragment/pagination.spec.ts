@@ -110,10 +110,8 @@ test.describe('Data Set Pagination configuration in the fragment', () => {
 
 		await test.step('Frontend Data Set Table is in the page', async () => {
 			expect(
-				await dataSetFragmentPage.page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['Label', 'Id', '']);
 		});

@@ -7,6 +7,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {waitForAlert} from '../../../../../utils/waitForAlert';
 import {API_ENDPOINT_PATH, DEFAULT_LABEL} from '../../../utils/constants';
 
 export class CustomDataSetsPage {
@@ -21,7 +22,6 @@ export class CustomDataSetsPage {
 	readonly dataSetPermissionsButton: Locator;
 	readonly dataSetPermissionsMenuItem: Locator;
 	readonly dataSetsEmptyState: Locator;
-	readonly dataSetsTable: Locator;
 	readonly dataSetsTabs: Locator;
 	readonly newDataSetButton: Locator;
 	readonly newDataSetModal: {
@@ -40,6 +40,11 @@ export class CustomDataSetsPage {
 	private readonly pageContainer: Locator;
 	readonly permissionsModal: FrameLocator;
 	readonly systemDataSetsTab: Locator;
+	readonly table: {
+		bodyRows: Locator;
+		container: Locator;
+		headRow: Locator;
+	};
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
@@ -68,7 +73,6 @@ export class CustomDataSetsPage {
 			name: 'Permissions',
 		});
 		this.dataSetsEmptyState = page.locator('.c-empty-state');
-		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
 		this.dataSetsTabs = page
 			.locator('.navbar-nav')
 			.filter({hasText: 'Custom Data SetsSystem Data Sets'});
@@ -99,6 +103,14 @@ export class CustomDataSetsPage {
 		this.systemDataSetsTab = page
 			.locator('.nav-item')
 			.filter({hasText: 'System Data Sets'});
+
+		const tableContainer = page.locator('.fds table');
+
+		this.table = {
+			bodyRows: tableContainer.locator('tbody tr'),
+			container: tableContainer,
+			headRow: tableContainer.locator('thead tr'),
+		};
 	}
 
 	async createDataSet({
@@ -112,19 +124,23 @@ export class CustomDataSetsPage {
 		restEndpoint?: string;
 		restSchema?: string;
 	} = {}) {
-		await this.newDataSetButton.click();
-		await this.newDataSetModal.nameInput.waitFor();
+		const modal = this.newDataSetModal;
 
-		await this.newDataSetModal.nameInput.fill(name);
-		await this.newDataSetModal.restApplicationField.click();
-		await this.newDataSetModal.restApplicationOptions
+		await this.newDataSetButton.click();
+
+		await modal.nameInput.fill(name);
+
+		await modal.restApplicationField.click();
+
+		await modal.restApplicationOptions
 			.getByRole('option', {name: restApplication})
 			.click();
-		await this.newDataSetModal.restSchemaField.waitFor();
-		await this.newDataSetModal.restSchemaField.click();
+
+		await modal.restSchemaField.click();
+
 		await this.page.getByRole('textbox', {name: 'Search'}).fill(restSchema);
-		await this.newDataSetModal.restSchemaOptions.waitFor();
-		await this.newDataSetModal.restSchemaOptions
+
+		await modal.restSchemaOptions
 			.getByRole('option', {exact: true, name: restSchema})
 			.click();
 
@@ -134,19 +150,21 @@ export class CustomDataSetsPage {
 			.first()
 			.click();
 
-		await this.newDataSetModal.restEndpointField.click();
+		await modal.restEndpointField.click();
+
 		await this.page
 			.getByRole('textbox', {name: 'Search'})
 			.fill(restEndpoint);
-		await this.newDataSetModal.restEndpointOptions.waitFor();
-		await this.newDataSetModal.restEndpointOptions
+
+		await modal.restEndpointOptions
 			.getByRole('option', {name: restEndpoint})
 			.click();
-		await this.newDataSetModal.restEndpointField.click();
 
-		await this.newDataSetModal.saveButton.click();
+		await modal.restEndpointField.click();
 
-		await this.newDataSetModal.heading.isHidden();
+		await modal.saveButton.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async goto({
@@ -176,9 +194,9 @@ export class CustomDataSetsPage {
 	async deleteDataSet(name = DEFAULT_LABEL.DATA_SET) {
 		await this.goto();
 
-		const datasetTestRow = await this.page
-			.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-			.filter({hasText: name});
+		const datasetTestRow = await this.table.bodyRows.filter({
+			hasText: name,
+		});
 
 		await datasetTestRow
 			.first()
@@ -192,19 +210,12 @@ export class CustomDataSetsPage {
 		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 	}
 
-	async sortBy(columnName) {
-		await this.page
-			.locator('.dnd-table > .dnd-thead > .dnd-tr')
-			.getByRole('button', {name: columnName})
-			.waitFor();
-
+	async sortBy(columnName: string) {
 		await Promise.all([
-			this.page
-				.locator('.dnd-table > .dnd-thead > .dnd-tr')
-				.getByRole('button', {name: columnName})
-				.click(),
+			this.table.headRow.locator('th', {hasText: columnName}).click(),
+
 			this.page.waitForResponse(
-				(response) =>
+				(response: any) =>
 					response.status() === 200 &&
 					response.url().includes(`${API_ENDPOINT_PATH}?`)
 			),

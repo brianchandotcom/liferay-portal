@@ -170,7 +170,6 @@ test.describe('Item Actions in Data Set fragment', () => {
 		const modalItemActionName = 'Modal item action';
 		const modalItemActionTitle = 'Modal title';
 		const sidePanelItemActionName = 'SidePanel item action';
-		const sidePanelItemActionUrl = liferayConfig.environment.baseUrl;
 
 		await test.step('Create Item Actions', async () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
@@ -207,16 +206,16 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 		const datasetRow =
 			await test.step('Check that the Item Actions dropdown is present in table row', async () => {
-				const tableRow = await page
-					.locator('.dnd-td.item-actions')
-					.first();
+				const tableRow = dataSetFragmentPage.table.bodyRows
+					.first()
+					.locator('td.cell-item-actions');
 
 				await expect(
 					tableRow.getByRole('button', {
 						exact: true,
 						name: 'Actions',
 					})
-				).toBeVisible;
+				).toBeVisible();
 
 				const button = await tableRow.getByRole('button', {
 					exact: true,
@@ -300,23 +299,19 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
-			await page.getByRole('tabpanel').waitFor();
+			const frame = dataSetFragmentPage.sidePanelFrame;
 
-			const sidePanel = await page.getByRole('tabpanel');
+			await expect(
+				frame.locator('.side-panel-iframe-header')
+			).not.toBeInViewport();
 
-			const iframeElement = await sidePanel
-				.locator('iframe')
-				.elementHandle();
-
-			const frame = await iframeElement.contentFrame();
-
-			await frame.waitForURL(
-				new RegExp(`.*${sidePanelItemActionUrl}`, 'i')
-			);
+			await expect(frame.getByTitle('Go to Liferay DXP')).toBeVisible();
 
 			await page.keyboard.press('Escape');
 
-			await expect(sidePanel).not.toBeInViewport();
+			await expect(dataSetFragmentPage.sidePanel).toHaveClass(
+				/is-hidden/
+			);
 		});
 	});
 
@@ -429,24 +424,25 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Action is visible in the Table visualization mode', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
+			await dataSetFragmentPage.table.container.waitFor({
 				state: 'visible',
 			});
 
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
+			await expect(dataSetFragmentPage.table.container).toBeInViewport();
 
-			const tableRow = page.locator('.dnd-td.item-actions').first();
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-			const itemId = await tableRow
-				.locator('.dnd-td')
+			const itemId = await dataSetFragmentPage.table.bodyRows
+				.locator('td')
 				.first()
 				.allInnerTexts();
 
-			const tableActionLink = await tableRow.getByLabel(
+			const tableActionLink = await itemActionsCell.getByLabel(
 				LINK_ITEM_ACTION_NAME
 			);
 
-			await expect(
+			expect(
 				(await tableActionLink.getAttribute('href')).valueOf()
 			).toContain(`/detail/${itemId}`);
 		});
@@ -498,58 +494,54 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
-		const datasetRow =
-			await test.step('Check data set items have two item actions', async () => {
-				const tableRow = page.locator('.dnd-td.item-actions').first();
+		await test.step('Check data set items have two item actions', async () => {
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-				await expect(
-					tableRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					})
-				).toBeVisible();
-
-				const button = await tableRow.getByRole('button', {
-					exact: true,
-					name: 'Actions',
-				});
-				const dropdownId = await button.getAttribute('aria-controls');
-
-				await button.click();
-
-				await page
-					.locator(`#${dropdownId}`)
-					.filter({has: page.getByRole('menu')})
-					.waitFor();
-
-				await expect(
-					page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {name: asyncItemActionName})
-				).toBeVisible();
-
-				await expect(
-					page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {name: headlessItemActionName})
-				).toBeVisible();
-
-				await expect(
-					page.locator(`#${dropdownId}`).getByRole('menuitem', {
-						name: nonAvailableHeadlessItemActionName,
-					})
-				).not.toBeVisible();
-
-				await page.keyboard.press('Escape');
-
-				return tableRow;
-			});
-
-		await test.step('Click in the headless item action executes the action', async () => {
-			const button = datasetRow.getByRole('button', {
+			const button = itemActionsCell.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
+
+			await expect(button).toBeVisible();
+
+			const dropdownId = await button.getAttribute('aria-controls');
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await expect(
+				page
+					.locator(`#${dropdownId}`)
+					.getByRole('menuitem', {name: asyncItemActionName})
+			).toBeVisible();
+
+			await expect(
+				page
+					.locator(`#${dropdownId}`)
+					.getByRole('menuitem', {name: headlessItemActionName})
+			).toBeVisible();
+
+			await expect(
+				page.locator(`#${dropdownId}`).getByRole('menuitem', {
+					name: nonAvailableHeadlessItemActionName,
+				})
+			).not.toBeVisible();
+
+			await page.keyboard.press('Escape');
+		});
+
+		await test.step('Click in the headless item action executes the action', async () => {
+			const button = dataSetFragmentPage.table.bodyRows
+				.first()
+				.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
 
 			const dropdownId = await button.getAttribute('aria-controls');
 
@@ -572,11 +564,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
-			const nextTableRow = await page
-				.locator('.dnd-td.item-actions')
-				.first();
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-			const button = await nextTableRow.getByRole('button', {
+			const button = itemActionsCell.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
@@ -642,19 +633,16 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Check data set items have two item actions', async () => {
-			const tableRow = await page.locator('.dnd-td.item-actions').first();
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-			await expect(
-				tableRow.getByRole('button', {
-					exact: true,
-					name: 'Actions',
-				})
-			).toBeVisible;
-
-			const button = await tableRow.getByRole('button', {
+			const button = itemActionsCell.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
+
+			await expect(button).toBeVisible();
+
 			const dropdownId = await button.getAttribute('aria-controls');
 
 			await button.click();
@@ -680,9 +668,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Click in the headless item action executes the action', async () => {
-			const tableRow = await page.locator('.dnd-td.item-actions').first();
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-			const button = await tableRow.getByRole('button', {
+			const button = itemActionsCell.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
@@ -714,11 +703,10 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
-			const nextTableRow = await page
-				.locator('.dnd-td.item-actions')
-				.first();
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-			const button = await nextTableRow.getByRole('button', {
+			const button = itemActionsCell.getByRole('button', {
 				exact: true,
 				name: 'Actions',
 			});
@@ -776,25 +764,22 @@ test.describe('Item Actions in Data Set fragment', () => {
 			});
 		});
 
-		const datasetRow =
-			await test.step('Checkt that the Item Actions is present in table row', async () => {
-				const tableRow = await page
-					.locator('.dnd-td.item-actions')
-					.first();
+		await test.step('Checkt that the Item Actions is present in table row', async () => {
+			const itemActionsCell =
+				dataSetFragmentPage.table.itemActionsCells.first();
 
-				await expect(tableRow.getByRole('button')).toBeVisible();
-
-				return tableRow;
-			});
+			await expect(itemActionsCell.getByRole('button')).toBeVisible();
+		});
 
 		await test.step('Click in the async Item Action shows an error toast.', async () => {
-			await datasetRow
+			await dataSetFragmentPage.table.bodyRows
+				.first()
 				.getByRole('button', {name: asyncItemActionName})
 				.click();
 
 			await page.getByRole('alert').waitFor();
 
-			const alert = await page.getByRole('alert').first();
+			const alert = page.getByRole('alert').first();
 
 			await expect(alert).toHaveText(
 				'Error:An unexpected error occurred.'

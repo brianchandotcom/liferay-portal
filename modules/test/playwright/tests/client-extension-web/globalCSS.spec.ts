@@ -19,7 +19,7 @@ const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-global-css-2',
 		name: 'Liferay Sample Global CSS 2',
-		url: '/o/liferay-sample-global-css-2/global.cea1eb44e40462f5db2b.css',
+		url: '/o/liferay-sample-global-css-2/global.d5f481e0882afe84cab9.css',
 	},
 ];
 
@@ -32,8 +32,11 @@ for (const sample of SAMPLES) {
 
 		await viewClientExtensionPage.goto();
 
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
-		expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			sample.name
+		);
+
+		await expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
 			sample.url
 		);
 	});

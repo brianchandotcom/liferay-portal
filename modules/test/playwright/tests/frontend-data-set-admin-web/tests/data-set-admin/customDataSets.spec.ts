@@ -11,6 +11,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {API_ENDPOINT_PATH} from '../../utils/constants';
 import {customDataSetsPageTest} from './fixtures/customDataSetsPageTest';
+import {CustomDataSetsPage} from './pages/CustomDataSetsPage';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -65,81 +66,72 @@ const tableSectionsWithSpecialCharactersDataSetConfig = {
 	restSchema: 'DataSetTableSection',
 };
 
-async function assertTableActionLabels(page) {
-	await test.step('Assert table action labels', async () => {
-		await page.locator('.dnd-td.item-actions').first().waitFor();
+async function assertTableActionLabels(customDataSetsPage: CustomDataSetsPage) {
+	await customDataSetsPage.table.bodyRows
+		.locator('td.cell-item-actions')
+		.first()
+		.locator('.dropdown-toggle')
+		.click();
 
-		await page
-			.locator('.dnd-td.item-actions')
-			.first()
-			.locator('.dropdown-toggle')
-			.click();
+	const tableItemActions = await customDataSetsPage.page
+		.locator('.dropdown-menu')
+		.filter({has: customDataSetsPage.page.locator('span.pr-2')})
+		.first()
+		.locator('.dropdown-item')
+		.allInnerTexts();
 
-		const tableItemActions = await page
-			.locator('.dropdown-menu')
-			.filter({has: page.locator('span.pr-2')})
-			.first()
-			.locator('.dropdown-item')
-			.allInnerTexts();
+	const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
-		const expectedLabels = ['Edit', 'Permissions', 'Delete'];
-
-		await expect(tableItemActions).toEqual(expectedLabels);
-	});
+	await expect(tableItemActions).toEqual(expectedLabels);
 }
 
-async function assertTableCellContent({dataSetConfig, page, rowIndex = 0}) {
-	await test.step('Assert table cell content', async () => {
-		await page
-			.locator('.dnd-table > .dnd-tbody > .dnd-tr')
-			.first()
-			.waitFor();
+async function assertTableCellContent({
+	customDataSetsPage,
+	dataSetConfig,
+	rowIndex = 0,
+}: {
+	customDataSetsPage: CustomDataSetsPage;
+	dataSetConfig: any;
+	rowIndex?: number;
+}) {
+	await customDataSetsPage.table.bodyRows.first().waitFor();
 
-		const tableRowContent = await page
-			.locator('.dnd-tbody > .dnd-tr')
-			.nth(rowIndex)
-			.locator('.dnd-td');
+	const tableRowContent = await customDataSetsPage.table.bodyRows
+		.nth(rowIndex)
+		.locator('td');
 
-		const expectedRowContent = [
-			dataSetConfig.name,
-			dataSetConfig.restApplication,
-			dataSetConfig.restSchema,
-			dataSetConfig.restEndpoint,
-		];
+	const expectedRowContent = [
+		dataSetConfig.name,
+		dataSetConfig.restApplication,
+		dataSetConfig.restSchema,
+		dataSetConfig.restEndpoint,
+	];
 
-		await expect(tableRowContent).toContainText(expectedRowContent);
-	});
+	await expect(tableRowContent).toContainText(expectedRowContent);
 }
 
-async function assertTableColumnLabels(page) {
-	await test.step('Assert table column labels', async () => {
-		await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+async function assertTableColumnLabels(customDataSetsPage: CustomDataSetsPage) {
+	const tableColumnLabels = await customDataSetsPage.table.headRow
+		.locator('th')
+		.allInnerTexts();
 
-		const tableColumnLabels = await page
-			.locator('.dnd-thead > .dnd-tr')
-			.first()
-			.locator('.dnd-th')
-			.allInnerTexts();
+	const expectedLabels = [
+		'Name',
+		'REST Application',
+		'REST Schema',
+		'REST Endpoint',
+		'Modified Date',
+		'',
+	];
 
-		const expectedLabels = [
-			'Name',
-			'REST Application',
-			'REST Schema',
-			'REST Endpoint',
-			'Modified Date',
-			'',
-		];
-
-		expect(tableColumnLabels).toEqual(expectedLabels);
-	});
+	expect(tableColumnLabels).toEqual(expectedLabels);
 }
 
-async function assertTableRowsCount(page, rowsCount) {
-	await test.step(`Assert table has ${rowsCount} rows`, async () => {
-		const rows = await page.locator('.dnd-table > .dnd-tbody > .dnd-tr');
-
-		expect(rows).toHaveCount(rowsCount);
-	});
+async function assertTableRowsCount(
+	customDataSetsPage: CustomDataSetsPage,
+	rowsCount: number
+) {
+	expect(customDataSetsPage.table.bodyRows).toHaveCount(rowsCount);
 }
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
@@ -155,7 +147,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 test(
 	'Create data set via UI',
 	{tag: '@LPS-178858'},
-	async ({customDataSetsPage, page}) => {
+	async ({customDataSetsPage}) => {
 		await test.step('Navigate to Data Set page', async () => {
 			await customDataSetsPage.goto();
 			await expect(
@@ -169,14 +161,14 @@ test(
 			await customDataSetsPage.createDataSet(tableSectionsDataSetConfig);
 		});
 
-		await assertTableColumnLabels(page);
+		await assertTableColumnLabels(customDataSetsPage);
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: tableSectionsDataSetConfig,
-			page,
 		});
 
-		await assertTableActionLabels(page);
+		await assertTableActionLabels(customDataSetsPage);
 
 		await test.step('Delete Data Set', async () => {
 			await customDataSetsPage.deleteDataSet(
@@ -186,17 +178,20 @@ test(
 	}
 );
 
-test('Create parameterized data set', async ({customDataSetsPage, page}) => {
+test('Create parameterized data set', async ({customDataSetsPage}) => {
 	await test.step('Create Data Set', async () => {
 		await customDataSetsPage.goto();
 		await customDataSetsPage.createDataSet(blogPostsDataSetConfig);
 	});
 
-	await assertTableColumnLabels(page);
+	await assertTableColumnLabels(customDataSetsPage);
 
-	await assertTableCellContent({dataSetConfig: blogPostsDataSetConfig, page});
+	await assertTableCellContent({
+		customDataSetsPage,
+		dataSetConfig: blogPostsDataSetConfig,
+	});
 
-	await assertTableActionLabels(page);
+	await assertTableActionLabels(customDataSetsPage);
 
 	await test.step('Delete Data Set', async () => {
 		await customDataSetsPage.deleteDataSet(blogPostsDataSetConfig.name);
@@ -277,7 +272,7 @@ test('Can paginate created Data Sets', async ({
 		await customDataSetsPage.goto();
 	});
 
-	await assertTableRowsCount(page, 5);
+	await assertTableRowsCount(customDataSetsPage, 5);
 
 	await test.step('Change page size', async () => {
 		const itemsPerPageButton = page.getByLabel('Items Per Page');
@@ -300,7 +295,7 @@ test('Can paginate created Data Sets', async ({
 		await expect(itemsPerPageButton).toContainText('4 Items');
 	});
 
-	await assertTableRowsCount(page, 4);
+	await assertTableRowsCount(customDataSetsPage, 4);
 
 	await test.step('Navigate to Data Set page 2', async () => {
 		await page.getByLabel('Go to page, 2').click();
@@ -308,7 +303,7 @@ test('Can paginate created Data Sets', async ({
 		await page.getByText('Showing 5 to 5 of 5 entries.').isVisible();
 	});
 
-	await assertTableRowsCount(page, 1);
+	await assertTableRowsCount(customDataSetsPage, 1);
 
 	await test.step('Delete Data Set from current page', async () => {
 		const dataSetActionsButton = await page.getByRole('button', {
@@ -335,7 +330,7 @@ test('Can paginate created Data Sets', async ({
 		await page.getByRole('dialog').waitFor({state: 'hidden'});
 	});
 
-	await assertTableRowsCount(page, 4);
+	await assertTableRowsCount(customDataSetsPage, 4);
 });
 
 test('Sort data sets by different columns', async ({
@@ -386,27 +381,27 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.goto();
 	});
 
-	await assertTableRowsCount(page, 4);
+	await assertTableRowsCount(customDataSetsPage, 4);
 
 	await test.step('Check data sets default sort is by creation date, in descending order', async () => {
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 	});
@@ -415,46 +410,46 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.sortBy('Name');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 
 		await customDataSetsPage.sortBy('Name');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 	});
@@ -468,46 +463,46 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.sortBy('REST Endpoint');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 
 		await customDataSetsPage.sortBy('REST Endpoint');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 	});
@@ -521,46 +516,46 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.sortBy('REST Schema');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 
 		await customDataSetsPage.sortBy('REST Schema');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 	});
@@ -574,23 +569,23 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.sortBy('Modified Date');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 
@@ -604,23 +599,23 @@ test('Sort data sets by different columns', async ({
 		await customDataSetsPage.sortBy('Modified Date');
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			page,
 			rowIndex: 0,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			page,
 			rowIndex: 1,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: skusDataSetConfig,
-			page,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			page,
 			rowIndex: 3,
 		});
 	});
@@ -661,14 +656,13 @@ test(
 		});
 
 		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
-			page,
 		});
 
 		await test.step('Select the Delete Data Set action, then click Cancel button', async () => {
-			const datasetTestRow = await page
-				.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-				.filter({
+			const datasetTestRow =
+				await customDataSetsPage.table.bodyRows.filter({
 					hasText:
 						tableSectionsWithSpecialCharactersDataSetConfig.name,
 				});
@@ -685,15 +679,14 @@ test(
 			await deleteModal.getByRole('button', {name: 'Cancel'}).click();
 
 			await assertTableCellContent({
+				customDataSetsPage,
 				dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
-				page,
 			});
 		});
 
 		await test.step('Select the Delete Data Set action, then click X button', async () => {
-			const datasetTestRow = await page
-				.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
-				.filter({
+			const datasetTestRow =
+				await customDataSetsPage.table.bodyRows.filter({
 					hasText:
 						tableSectionsWithSpecialCharactersDataSetConfig.name,
 				});
@@ -710,8 +703,8 @@ test(
 			await deleteModal.getByRole('button', {name: 'Close'}).click();
 
 			await assertTableCellContent({
+				customDataSetsPage,
 				dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
-				page,
 			});
 		});
 

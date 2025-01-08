@@ -253,10 +253,7 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 		).toBeVisible();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tbody > div')
-				.first()
-				.locator('.dnd-td')
+			dataSetFragmentPage.table.bodyRows.first().locator('td')
 		).toHaveText(['boolean', 'No', '']);
 
 		await expect(
@@ -360,10 +357,7 @@ test('Selection filter of type "Object Picklist" can be configured to use single
 		).toBeVisible();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tbody > div')
-				.first()
-				.locator('.dnd-td')
+			dataSetFragmentPage.table.bodyRows.first().locator('td')
 		).toHaveText(['boolean', 'No', '']);
 
 		await expect(
@@ -491,10 +485,7 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 		await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tbody > div')
-				.first()
-				.locator('.dnd-td')
+			dataSetFragmentPage.table.bodyRows.first().locator('td')
 		).toHaveText(['default', 'No', '']);
 
 		await expect(
@@ -525,10 +516,7 @@ test('Selection filter of type "Object Picklist" can be configured to include or
 		await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tbody > div')
-				.first()
-				.locator('.dnd-td')
+			dataSetFragmentPage.table.bodyRows.first().locator('td')
 		).toHaveText(['boolean', 'No', '']);
 
 		await expect(
@@ -669,14 +657,13 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 		).toBeVisible();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tr')
+			dataSetFragmentPage.table.bodyRows
 				.filter({
 					has: dataSetFragmentPage.page
 						.getByText('integer', {exact: true})
 						.first(),
 				})
-				.locator('.dnd-td')
+				.locator('td')
 				.nth(1)
 		).toHaveText(['integer']);
 
@@ -718,14 +705,13 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 		).toBeVisible();
 
 		await expect(
-			dataSetFragmentPage.page
-				.locator('.dnd-tr')
+			dataSetFragmentPage.table.bodyRows
 				.filter({
 					has: dataSetFragmentPage.page
 						.getByText('boolean', {exact: true})
 						.first(),
 				})
-				.locator('.dnd-td')
+				.locator('td')
 				.nth(1)
 		).toHaveText(['boolean']);
 

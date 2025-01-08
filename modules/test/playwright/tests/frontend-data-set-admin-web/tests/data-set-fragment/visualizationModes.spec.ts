@@ -167,17 +167,9 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		});
 
 		await test.step('Data Set Table is in the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
-				state: 'visible',
-			});
-
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
-
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual(['Data Set Label', 'Table Section Label', 'Id', '']);
 		});
@@ -229,7 +221,6 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		dataSetFragmentPage,
 		dataSetManagerApiHelpers,
 		layout,
-		page,
 	}) => {
 		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
 		const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
@@ -254,25 +245,16 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		});
 
 		await test.step('Data Set Table is in the page', async () => {
-			await dataSetFragmentPage.tableWrapper.waitFor({
-				state: 'visible',
-			});
-
-			await expect(dataSetFragmentPage.tableWrapper).toBeInViewport();
-
 			expect(
-				await page
-					.locator('.dnd-thead > div')
-					.first()
-					.locator('.dnd-th')
+				await dataSetFragmentPage.table.headRow
+					.locator('th')
 					.allInnerTexts()
 			).toEqual([SAMPLE_SCALAR_ARRAY_FIELD, '']);
 
 			expect(
-				await page
-					.locator('.dnd-tbody > div')
+				await dataSetFragmentPage.table.bodyRows
 					.first()
-					.locator('.dnd-td')
+					.locator('td')
 					.allInnerTexts()
 			).toEqual(['one, two, three', '']);
 		});

@@ -80,12 +80,13 @@ test.describe('Parameters in Data Set Fragment', () => {
 		});
 
 		await test.step('Check that the sorting is applied', async () => {
-			const firstNameText = await dataSetFragmentPage.tableWrapper
-				.locator('.dnd-tbody .dnd-tr:first-child .dnd-td:first-child')
+			const firstNameText = await dataSetFragmentPage.table.bodyRows
+				.first()
+				.locator('td:first-child')
 				.textContent();
 
-			const lastNameText = await dataSetFragmentPage.tableWrapper
-				.locator('.dnd-tbody .dnd-tr:last-child .dnd-td:first-child')
+			const lastNameText = await dataSetFragmentPage.table.container
+				.locator('tbody tr:last-child td:first-child')
 				.textContent();
 
 			expect(firstNameText > lastNameText).toBeTruthy();
@@ -130,8 +131,8 @@ test.describe('Parameters in Data Set Fragment', () => {
 		});
 
 		await test.step('Check that the filter is applied', async () => {
-			const tableNameCellTexts = await dataSetFragmentPage.tableWrapper
-				.locator(`.dnd-tbody > .dnd-tr > .dnd-td:nth-child(1)`)
+			const tableNameCellTexts = await dataSetFragmentPage.table.bodyRows
+				.locator('td:nth-child(1)')
 				.allInnerTexts();
 
 			expect(

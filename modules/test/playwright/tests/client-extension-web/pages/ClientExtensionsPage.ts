@@ -215,12 +215,9 @@ export class ClientExtensionsPage {
 	}
 
 	getRowByText(text: string) {
-		return this.page
-			.locator('.dnd-tbody')
-			.locator('.dnd-tr')
-			.filter({
-				has: this.page.getByText(text, {exact: true}).first(),
-			});
+		return this.page.locator('.fds tbody tr').filter({
+			has: this.page.getByText(text, {exact: true}).first(),
+		});
 	}
 
 	async viewClientExtension(clientExtensionName: string) {
@@ -234,13 +231,13 @@ export class ClientExtensionsPage {
 		configuredFrom: string
 	) {
 		await expect(
-			this.getRowByText(clientExtensionName).locator('.dnd-td').nth(3)
+			this.getRowByText(clientExtensionName).locator('td').nth(3)
 		).toHaveText(configuredFrom);
 	}
 
 	async assertName(clientExtensionName: string) {
 		await expect(
-			this.getRowByText(clientExtensionName).locator('.dnd-td').nth(0)
+			this.getRowByText(clientExtensionName).locator('td').nth(0)
 		).toBeVisible();
 	}
 
@@ -257,7 +254,7 @@ export class ClientExtensionsPage {
 
 	async openItemActionsDropdown(clientExtensionName: string) {
 		await this.page
-			.locator('.dnd-tr')
+			.locator('.fds tr')
 			.filter({has: this.page.getByText(clientExtensionName)})
 			.getByRole('button', {
 				name: 'Actions',

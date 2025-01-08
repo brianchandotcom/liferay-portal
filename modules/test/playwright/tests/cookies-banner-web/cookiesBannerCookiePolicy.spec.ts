@@ -118,13 +118,13 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 				objectDefinitionPortlets[objectDefinitionPortletIndex];
 
 			await expect(
-				objectDefinitionPortlet.locator('.dnd-thead')
+				objectDefinitionPortlet.locator('.fds thead')
 			).toBeVisible({
 				timeout: 100 * 1000,
 			});
 
 			const tableRows = await objectDefinitionPortlet
-				.locator('.dnd-tr')
+				.locator('.fds tr')
 				.all();
 
 			expect(tableRows.length).toBeGreaterThan(0);

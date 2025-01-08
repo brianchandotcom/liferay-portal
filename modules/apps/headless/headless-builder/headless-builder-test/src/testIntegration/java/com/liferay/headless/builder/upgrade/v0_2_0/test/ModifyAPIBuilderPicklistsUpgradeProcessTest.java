@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -179,6 +180,10 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 		Assert.assertFalse(httpMethodObjectField.isState());
 
+		Assert.assertNull(
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				httpMethodObjectField.getObjectFieldId()));
+
 		ObjectField retrieveTypeObjectField =
 			_objectFieldLocalService.getObjectField(
 				"RETRIEVE_TYPE",
@@ -186,10 +191,18 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 		Assert.assertFalse(retrieveTypeObjectField.isState());
 
+		Assert.assertNull(
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				retrieveTypeObjectField.getObjectFieldId()));
+
 		ObjectField scopeObjectField = _objectFieldLocalService.getObjectField(
 			"SCOPE", apiEndpointObjectDefinition.getObjectDefinitionId());
 
 		Assert.assertFalse(scopeObjectField.isState());
+
+		Assert.assertNull(
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				scopeObjectField.getObjectFieldId()));
 
 		ObjectField applicationStatusObjectField =
 			_objectFieldLocalService.getObjectField(
@@ -197,6 +210,10 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 				apiApplicationObjectDefinition.getObjectDefinitionId());
 
 		Assert.assertFalse(applicationStatusObjectField.isState());
+
+		Assert.assertNull(
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				applicationStatusObjectField.getObjectFieldId()));
 	}
 
 	private void _waitForImportCompletion(JSONObject jsonObject)
@@ -236,5 +253,8 @@ public class ModifyAPIBuilderPicklistsUpgradeProcessTest extends BaseTestCase {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
 
 }

@@ -8160,7 +8160,7 @@ public class ObjectEntryResourceTest {
 	public void testPostCustomObjectEntryWithOneToManyRequiredRelationshipValidation()
 		throws Exception {
 
-		JSONObject customObjectJSONObject1 = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 			).toString(),
@@ -8186,7 +8186,7 @@ public class ObjectEntryResourceTest {
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
 				).put(
-					objectFieldName, customObjectJSONObject1.getLong("id")
+					objectFieldName, jsonObject.getLong("id")
 				).toString(),
 				_objectDefinition2.getRESTContextPath(), Http.Method.POST
 			).getJSONObject(

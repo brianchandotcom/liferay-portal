@@ -213,7 +213,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertNotNull(cpConfigurationEntrySetting);
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList1.getCPConfigurationListId())));
 
@@ -240,7 +240,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertNotNull(cpConfigurationEntrySetting);
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList2.getCPConfigurationListId())));
 
@@ -271,7 +271,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertNotNull(cpConfigurationEntrySetting);
 		Assert.assertFalse(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList2.getCPConfigurationListId())));
 
@@ -292,7 +292,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList3.getCPConfigurationListId())));
 
@@ -304,7 +304,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		Assert.assertFalse(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList3.getCPConfigurationListId())));
 
@@ -319,12 +319,12 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList2.getCPConfigurationListId())));
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList3.getCPConfigurationListId())));
 	}
@@ -396,7 +396,7 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertNotNull(cpConfigurationEntrySetting);
 		Assert.assertTrue(
 			StringUtil.contains(
-				cpConfigurationEntrySetting.getSetting(),
+				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList.getCPConfigurationListId())));
 	}

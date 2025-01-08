@@ -130,7 +130,7 @@ public class CPConfigurationEntryModelDocumentContributor
 		}
 
 		return TransformUtil.transformToLongArray(
-			StringUtil.split(cpConfigurationEntrySetting.getSetting()),
+			StringUtil.split(cpConfigurationEntrySetting.getValue()),
 			Long::valueOf);
 	}
 

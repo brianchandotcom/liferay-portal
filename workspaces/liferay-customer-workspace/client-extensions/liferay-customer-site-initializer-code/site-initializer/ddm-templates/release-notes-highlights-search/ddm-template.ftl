@@ -210,33 +210,40 @@
 
 				<#if restArticle?has_content>
 					<div class="align-items-stretch pt-2 search-results-entry">
-						<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled">
-							<div class="product-capabilities">
-								<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-									<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
+						<#assign
+							articleTitle = restArticle.title
+							dashedTitle = restArticle.title?replace(" ", "-")
+						/>
 
-									<#if taxonomyVocabularyName == "Product Capabilities">
-										<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
-											${taxonomyCategoryBrief.taxonomyCategoryName}
-										</span>
-									</#if>
-								</#list>
+						<a class="text-decoration-none" href="#${dashedTitle}" id="${dashedTitle}">
+							<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled">
+								<div class="product-capabilities">
+									<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
+										<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
+
+										<#if taxonomyVocabularyName == "Product Capabilities">
+											<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
+												${taxonomyCategoryBrief.taxonomyCategoryName}
+											</span>
+											</#if>
+										</#list>
+								</div>
+
+								${articleTitle}
+
+								<div class="description search-results-entry-content">
+									<#list restArticle.contentFields as fieldData>
+										<#if fieldData.contentFieldValue.data?has_content && validator.isNotNull(fieldData.contentFieldValue.data)>
+											<#assign webContentData = fieldData.contentFieldValue.data />
+
+											<div>
+												${webContentData}
+											</div>
+											</#if>
+										</#list>
+								</div>
 							</div>
-
-							${restArticle.title}
-
-							<div class="description search-results-entry-content">
-								<#list restArticle.contentFields as fieldData>
-									<#if fieldData.contentFieldValue.data?has_content && validator.isNotNull(fieldData.contentFieldValue.data)>
-										<#assign webContentData = fieldData.contentFieldValue.data />
-
-										<div>
-											${webContentData}
-										</div>
-									</#if>
-								</#list>
-							</div>
-						</div>
+						</a>
 
 						<#if restArticle.relatedContents?has_content>
 							<div class="pb-2">

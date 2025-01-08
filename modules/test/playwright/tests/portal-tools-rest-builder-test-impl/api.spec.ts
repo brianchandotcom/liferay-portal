@@ -6,7 +6,7 @@
 import {
 	TestEntity,
 	TestEntityApi,
-} from '@liferay/portal-tools-rest-builder-test-client-js';
+} from '@liferay/portal-tools-rest-builder-test-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';

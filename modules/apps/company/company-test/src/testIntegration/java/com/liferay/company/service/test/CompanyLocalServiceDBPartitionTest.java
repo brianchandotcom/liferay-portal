@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -400,6 +402,8 @@ public class CompanyLocalServiceDBPartitionTest
 
 			_assertCompanyConfiguration(copiedCompanyId, configuration);
 
+			_addCopyDBPartitionCompanyCache(copiedCompanyId);
+
 			companyLocalService.deleteCompany(copiedCompany);
 
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
@@ -407,6 +411,8 @@ public class CompanyLocalServiceDBPartitionTest
 				virtualHostname, webId);
 
 			Assert.assertEquals(copiedCompanyId, copiedCompany.getCompanyId());
+
+			_assertCopyDBPartitionCompanyCache(copiedCompanyId);
 
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
@@ -424,12 +430,20 @@ public class CompanyLocalServiceDBPartitionTest
 			safeCloseable.close();
 		}
 		finally {
-			if (copiedCompany != null) {
-				companyLocalService.deleteCompany(copiedCompany.getCompanyId());
+			if (_className1 != null) {
+				_classNameLocalService.deleteClassName(_className1);
+			}
+
+			if (_className2 != null) {
+				_classNameLocalService.deleteClassName(_className2);
 			}
 
 			if (configuration != null) {
 				ConfigurationTestUtil.deleteConfiguration(configuration);
+			}
+
+			if (copiedCompany != null) {
+				companyLocalService.deleteCompany(copiedCompany.getCompanyId());
 			}
 		}
 	}
@@ -690,6 +704,27 @@ public class CompanyLocalServiceDBPartitionTest
 			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
+	private void _addCopyDBPartitionCompanyCache(long companyId) {
+		_className1 = _classNameLocalService.addClassName(_CLASS_NAME_1);
+		_className2 = _classNameLocalService.addClassName(_CLASS_NAME_2);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			// reverse order to generate different classNameIds
+
+			_classNameLocalService.addClassName(_CLASS_NAME_2);
+
+			_classNameLocalService.addClassName(_CLASS_NAME_1);
+
+			_counter = _counterLocalService.increment(
+				CompanyLocalServiceDBPartitionTest.class.getName());
+
+			_counterLocalService.reset(
+				CompanyLocalServiceDBPartitionTest.class.getName(), 100000);
+		}
+	}
+
 	private void _assertCompanyConfiguration(
 			long companyId, Configuration configuration)
 		throws SQLException {
@@ -746,6 +781,24 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertEquals(webId, company.getWebId());
 
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
+	}
+
+	private void _assertCopyDBPartitionCompanyCache(long companyId) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			Assert.assertEquals(
+				_className1,
+				_classNameLocalService.getClassName(_CLASS_NAME_1));
+			Assert.assertEquals(
+				_className2,
+				_classNameLocalService.getClassName(_CLASS_NAME_2));
+
+			Assert.assertEquals(
+				_counter,
+				_counterLocalService.increment(
+					CompanyLocalServiceDBPartitionTest.class.getName()));
+		}
 	}
 
 	private void _assertCopyDBPartitionCompanyId(
@@ -973,6 +1026,20 @@ public class CompanyLocalServiceDBPartitionTest
 
 		return viewNames.size();
 	}
+
+	private static final String _CLASS_NAME_1 =
+		CompanyLocalServiceDBPartitionTest.class.getName() + 1;
+
+	private static final String _CLASS_NAME_2 =
+		CompanyLocalServiceDBPartitionTest.class.getName() + 2;
+
+	private static ClassName _className1;
+	private static ClassName _className2;
+
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
+	private static long _counter;
 
 	@Inject
 	private static CounterLocalService _counterLocalService;

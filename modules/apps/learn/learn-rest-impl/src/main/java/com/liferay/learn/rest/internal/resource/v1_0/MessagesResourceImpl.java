@@ -5,7 +5,11 @@
 
 package com.liferay.learn.rest.internal.resource.v1_0;
 
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.learn.rest.resource.v1_0.MessagesResource;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -18,4 +22,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = MessagesResource.class
 )
 public class MessagesResourceImpl extends BaseMessagesResourceImpl {
+
+	@Override
+	public Response getMessages(String resource) {
+		return Response.ok(
+			LearnMessageUtil.getJSONObject(
+				resource
+			).toString()
+		).type(
+			MediaType.APPLICATION_JSON_TYPE
+		).build();
+	}
+
 }

@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.DeprecatedInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.sort.Sort;
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = InfoCollectionProvider.class)
 public class MostViewedAssetsInfoCollectionProvider
 	extends BaseAssetsInfoCollectionProvider
-	implements InfoCollectionProvider<AssetEntry> {
+	implements DeprecatedInfoCollectionProvider<AssetEntry>,
+			   InfoCollectionProvider<AssetEntry> {
 
 	@Override
 	public InfoPage<AssetEntry> getCollectionInfoPage(

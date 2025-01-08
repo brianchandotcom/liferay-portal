@@ -115,7 +115,8 @@ public class AssetPublisherDisplayContextTest {
 	public void testGetAssetEntryResultsFilterByAssetTags() throws Exception {
 		String assetTagName = RandomTestUtil.randomString();
 
-		JournalArticle journalArticle = _addJournalArticle(new String[] {assetTagName});
+		JournalArticle journalArticle = _addJournalArticle(
+			new String[] {assetTagName});
 
 		AssetEntry expectedAssetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
@@ -129,22 +130,22 @@ public class AssetPublisherDisplayContextTest {
 
 		portletPreferences.setValue("selectionStyle", "dynamic");
 
-		_testGetAssetEntryResultsFilterByAssetTags(_getAssetEntryResults(portletPreferences), 2);
+		_testGetAssetEntryResultsFilterByAssetTags(
+			_getAssetEntryResults(portletPreferences), 2);
 
 		portletPreferences.setValue("queryContains0", "true");
 		portletPreferences.setValue("queryName0", "assetTags");
 		portletPreferences.setValue("queryValues0", assetTagName);
 
-		List<AssetEntry> assetEntries = _testGetAssetEntryResultsFilterByAssetTags(
-			_getAssetEntryResults(portletPreferences), 1);
+		List<AssetEntry> assetEntries =
+			_testGetAssetEntryResultsFilterByAssetTags(
+				_getAssetEntryResults(portletPreferences), 1);
 
 		Assert.assertEquals(expectedAssetEntry, assetEntries.get(0));
 	}
 
 	@Test
-	public void testGetAssetEntryResultsOrderJournalArticles()
-		throws Exception {
-
+	public void testGetAssetEntryResultsOrderByColumn() throws Exception {
 		Date date = new Date();
 
 		AssetEntry assetEntry1 = _addAssetEntry(date, date, date, 0.9);
@@ -157,25 +158,14 @@ public class AssetPublisherDisplayContextTest {
 
 		AssetEntry assetEntry3 = _addAssetEntry(date, date, date, 0.3);
 
-		_testGetAssetEntryResultsOrderJournalArticles(
+		_testGetAssetEntryResultsOrderByColumn(
 			"createDate", Arrays.asList(assetEntry2, assetEntry3, assetEntry1));
-		_testGetAssetEntryResultsOrderJournalArticles(
+		_testGetAssetEntryResultsOrderByColumn(
 			"modifiedDate",
 			Arrays.asList(assetEntry2, assetEntry3, assetEntry1));
-		_testGetAssetEntryResultsOrderJournalArticles(
+		_testGetAssetEntryResultsOrderByColumn(
 			"publishedDate",
 			Arrays.asList(assetEntry2, assetEntry3, assetEntry1));
-	}
-
-	private JournalArticle _addJournalArticle(String[] assetTagNames) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setAssetTagNames(assetTagNames);
-
-		return JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	private AssetEntry _addAssetEntry(
@@ -199,20 +189,17 @@ public class AssetPublisherDisplayContextTest {
 		return _assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
-	private List<AssetEntry> _testGetAssetEntryResultsFilterByAssetTags(
-		List<AssetEntryResult> assetEntryResults, int expectedAssetEntries) {
+	private JournalArticle _addJournalArticle(String[] assetTagNames)
+		throws Exception {
 
-		Assert.assertEquals(
-			assetEntryResults.toString(), 1, assetEntryResults.size());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetEntryResult assetEntryResult = assetEntryResults.get(0);
+		serviceContext.setAssetTagNames(assetTagNames);
 
-		List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
-
-		Assert.assertEquals(
-			assetEntries.toString(), expectedAssetEntries, assetEntries.size());
-
-		return assetEntries;
+		return JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	private List<AssetEntryResult> _getAssetEntryResults(
@@ -285,7 +272,23 @@ public class AssetPublisherDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private void _testGetAssetEntryResultsOrderJournalArticles(
+	private List<AssetEntry> _testGetAssetEntryResultsFilterByAssetTags(
+		List<AssetEntryResult> assetEntryResults, int expectedAssetEntries) {
+
+		Assert.assertEquals(
+			assetEntryResults.toString(), 1, assetEntryResults.size());
+
+		AssetEntryResult assetEntryResult = assetEntryResults.get(0);
+
+		List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();
+
+		Assert.assertEquals(
+			assetEntries.toString(), expectedAssetEntries, assetEntries.size());
+
+		return assetEntries;
+	}
+
+	private void _testGetAssetEntryResultsOrderByColumn(
 			String orderByColumn, List<AssetEntry> expectedAssetEntries)
 		throws Exception {
 

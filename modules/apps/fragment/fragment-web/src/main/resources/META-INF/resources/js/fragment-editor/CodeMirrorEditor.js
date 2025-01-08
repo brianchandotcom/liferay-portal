@@ -245,7 +245,11 @@ const CodeMirrorEditor = ({
 					'Ctrl-Space': readOnly ? '' : 'autocomplete',
 				},
 				foldGutter: true,
-				gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+				gutters: [
+					'CodeMirror-warning',
+					'CodeMirror-linenumbers',
+					'CodeMirror-foldgutter',
+				],
 				hintOptions: {
 					completeSingle: false,
 					customDataAttributes,
@@ -266,7 +270,44 @@ const CodeMirrorEditor = ({
 				viewportMargin: Infinity,
 			});
 
+			const updateWarningsInGutter = () => {
+				codeMirror.clearGutter('CodeMirror-warning');
+				const lineCount = codeMirror.lineCount();
+
+				const widgetRegex = new RegExp('<lfr-widget(?:-[^>]+)?>', 'g');
+
+				for (let i = 0; i < lineCount; i++) {
+					const lineContent = codeMirror.getLine(i);
+
+					if (
+						widgetRegex.test(lineContent) ||
+						lineContent.includes('[@liferay_portlet["runtime"]')
+					) {
+						const warningIcon = document.createElement('div');
+						warningIcon.className = 'warning-icon';
+						warningIcon.title =
+							'Embedding widgets within fragments is a deprecated practice that can cause performance issues.';
+						warningIcon.dataset.tooltipAlign = 'right';
+						warningIcon.innerHTML = `
+						<svg class="lexicon-icon lexicon-icon-warning-full" focusable="false">
+							<use href="${Liferay.Icons.spritemap}#warning-full" />
+						</svg>`;
+
+						codeMirror.setGutterMarker(
+							i,
+							'CodeMirror-warning',
+							warningIcon
+						);
+					}
+				}
+			};
+
 			codeMirror.on('change', (cm) => {
+				if (Liferay.FeatureFlags['LPD-40535']) {
+					codeMirror.operation(() => {
+						updateWarningsInGutter();
+					});
+				}
 				onChange(cm.getValue());
 			});
 

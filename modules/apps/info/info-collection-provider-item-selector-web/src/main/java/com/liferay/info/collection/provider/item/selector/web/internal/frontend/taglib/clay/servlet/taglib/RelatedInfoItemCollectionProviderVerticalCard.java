@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.collection.provider.BetaInfoCollectionProvider;
+import com.liferay.info.collection.provider.DeprecatedInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -61,6 +62,19 @@ public class RelatedInfoItemCollectionProviderVerticalCard
 					labelItem.setDisplayType("info");
 					labelItem.setLabel(
 						LanguageUtil.get(themeDisplay.getLocale(), "beta"));
+				}
+			).build();
+		}
+
+		if (_relatedInfoItemCollectionProvider instanceof
+				DeprecatedInfoCollectionProvider<?>) {
+
+			return LabelItemListBuilder.add(
+				labelItem -> {
+					labelItem.setDisplayType("warning");
+					labelItem.setLabel(
+						LanguageUtil.get(
+							themeDisplay.getLocale(), "deprecated"));
 				}
 			).build();
 		}

@@ -12,6 +12,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.sort.Sort;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +62,11 @@ public class MostViewedAssetsInfoCollectionProvider
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "most-viewed-assets");
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return FeatureFlagManagerUtil.isEnabled("LPD-40530");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

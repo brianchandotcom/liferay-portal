@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayForm from '@clayui/form';
 import {Toggle} from '@liferay/object-js-components-web';
 import React from 'react';
@@ -20,7 +21,16 @@ export function TranslationsContainer({
 	setValues,
 	values,
 }: TranslationsContainerProps) {
-	return (
+	return Liferay.FeatureFlags['LPD-32050'] ? (
+		<ClayAlert
+			displayType="info"
+			title={`${Liferay.Language.get('info')}:`}
+		>
+			{`${Liferay.Language.get(
+				'enable-or-disable-translation-for-fields-individually'
+			)} `}
+		</ClayAlert>
+	) : (
 		<div className="lfr-objects-translations-container">
 			<ClayForm.Group>
 				<Toggle

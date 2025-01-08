@@ -37,7 +37,7 @@ export default function getActivationStatusCardLayout(
 	});
 
 	const hasDevInstance =
-		!!subscriptionsData.c.accountSubscriptions.items.length;
+		!!subscriptionsData?.c.accountSubscriptions.items.length;
 
 	return {
 		[STATUS_TAG_TYPE_NAMES.active]: {

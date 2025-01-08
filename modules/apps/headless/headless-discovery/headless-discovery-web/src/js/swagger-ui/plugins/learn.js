@@ -43,6 +43,7 @@ function LearnInputWrapper(props) {
 			{props.children}
 			{messageDetails && (
 				<ClayPopover
+					closeOnClickOutside
 					onShowChange={setOpenPopover}
 					show={openPopover}
 					trigger={

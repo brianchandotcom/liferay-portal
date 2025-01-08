@@ -535,3 +535,65 @@ test(
 		}).toPass();
 	}
 );
+
+test(
+	'Check correct feedback is shown when dragging over an unmapped collection',
+	{tag: ['@LPD-44466']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add a content page with a collection display and go to edit mode
+
+		const collectionId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getCollectionDefinition({
+					id: collectionId,
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page.getByText('Select a Page Element', {exact: true}).waitFor();
+
+		// Go to Fragments and Widgets sidebar panel
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		// Check we can drag a fragment from the list on top of the Collection
+
+		const heading = page.locator(
+			'.page-editor__fragments-widgets__tab-list-item',
+			{
+				hasText: 'Heading',
+			}
+		);
+
+		await pageEditorPage.dragToFragment({
+			position: 'top',
+			source: heading,
+			targetId: collectionId,
+		});
+
+		// Check we can drag a fragment from the list on bottom of the Collection
+
+		await pageEditorPage.dragToFragment({
+			position: 'bottom',
+			source: heading,
+			targetId: collectionId,
+		});
+
+		// Check we can not drag a fragment from the list on middle of the Collection
+
+		await expect(async () => {
+			await pageEditorPage.dragToFragment({
+				position: 'middle',
+				source: heading,
+				targetId: collectionId,
+			});
+		}).rejects.toThrow();
+	}
+);

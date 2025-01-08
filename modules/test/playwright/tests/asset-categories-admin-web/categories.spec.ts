@@ -93,16 +93,16 @@ test('User can move a category and subcategory.', async ({
 	page,
 	site,
 }) => {
-    let categories = [];
-    const categoryName1 = 'category-1';
+	let categories = [];
+	const categoryName1 = 'category-1';
 	const categoryName2 = 'category-2';
 	const vocabularyName1 = 'vocabulary one';
 	const vocabularyName2 = 'vocabulary two';
 
 	await test.step('add two vocabularies', async () => {
-        categories = await createCategories({
+		categories = await createCategories({
 			apiHelpers,
-            categoryNames: [{name: categoryName1}, {name: categoryName2}],
+			categoryNames: [{name: categoryName1}, {name: categoryName2}],
 			siteId: site.id,
 			vocabularyName: vocabularyName1,
 		});

@@ -131,7 +131,7 @@ public class GraphWalkerPortalExecutor {
 				public void afterExecute(
 					Runnable runnable, Throwable throwable) {
 
-					CentralizedThreadLocal.clearShortLivedThreadLocals();
+					CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 				}
 
 			});

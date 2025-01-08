@@ -27,7 +27,7 @@ public class ThreadLocalFilter
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Override

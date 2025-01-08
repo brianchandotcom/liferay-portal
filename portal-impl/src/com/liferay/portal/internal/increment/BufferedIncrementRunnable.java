@@ -83,7 +83,7 @@ public class BufferedIncrementRunnable implements Runnable {
 		if (_dispatchThread != Thread.currentThread()) {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-			CentralizedThreadLocal.clearShortLivedThreadLocals();
+			CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 		}
 	}
 

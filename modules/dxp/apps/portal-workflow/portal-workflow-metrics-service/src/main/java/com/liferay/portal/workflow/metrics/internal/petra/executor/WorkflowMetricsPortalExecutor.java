@@ -94,7 +94,7 @@ public class WorkflowMetricsPortalExecutor {
 				public void afterExecute(
 					Runnable runnable, Throwable throwable) {
 
-					CentralizedThreadLocal.clearShortLivedThreadLocals();
+					CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 				}
 
 			});

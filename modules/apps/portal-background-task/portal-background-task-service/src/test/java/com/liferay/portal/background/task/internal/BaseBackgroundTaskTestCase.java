@@ -196,7 +196,7 @@ public abstract class BaseBackgroundTaskTestCase {
 	private void _resetThreadLocals() {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	private static final boolean _CLUSTER_INVOKE_ENABLED = true;

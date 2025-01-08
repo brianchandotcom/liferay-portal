@@ -79,8 +79,8 @@ public class TransactionalPortalCacheTest {
 
 	@Before
 	public void setUp() {
-		CentralizedThreadLocal.clearLongLivedThreadLocals();
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearLongLivedCentralizedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 
 		_companyIdThreadLocal = ReflectionTestUtil.getFieldValue(
 			CompanyThreadLocal.class, "_companyId");
@@ -96,7 +96,7 @@ public class TransactionalPortalCacheTest {
 
 	@After
 	public void tearDown() {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
 	}
 
 	@Test

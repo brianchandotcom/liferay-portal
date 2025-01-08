@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	closest,
-	getClosestAssetElement,
-	isTrackable,
-	transformAssetTypeToSelector,
-} from '../utils/assets';
+import {isTrackable, transformAssetTypeToSelector} from '../utils/assets';
 import {DOCUMENT} from '../utils/constants';
 import {onReady} from '../utils/events';
 
@@ -49,7 +44,10 @@ function getDocumentPayload({dataset}) {
  */
 function trackDocumentDownloaded(analytics) {
 	const onClick = ({target}) => {
-		if (isTrackable(target) && target.dataset.analyticsAssetAction === 'download') {
+		if (
+			isTrackable(target) &&
+			target.dataset.analyticsAssetAction === 'download'
+		) {
 			analytics.send(
 				'documentDownloaded',
 				applicationId,
@@ -100,17 +98,10 @@ function documents(analytics) {
 			(isTrackable(element) &&
 				element.dataset.analyticsAssetAction === 'download'),
 	});
-	const stopTrackingDocumentPreviewed = trackDocument(analytics, {
-		eventId: 'documentPreviewed',
-		isTrackable: (element) =>
-			isTrackable(element) &&
-			element.dataset.analyticsAssetAction === 'view',
-	});
 
 	return () => {
 		stopTrackingDocumentDownloaded();
 		stopTrackingDocumentImpressionMade();
-		stopTrackingDocumentPreviewed();
 	};
 }
 

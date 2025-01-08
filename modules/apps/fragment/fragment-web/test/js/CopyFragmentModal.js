@@ -11,14 +11,20 @@ import React from 'react';
 import CopyFragmentModal from '../../src/main/resources/META-INF/resources/js/CopyFragmentModal';
 
 const renderComponent = ({fragmentCollections = []} = {}) => {
-	return render(
-		<CopyFragmentModal fragmentCollections={fragmentCollections} />
-	);
+	const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+
+	render(<CopyFragmentModal fragmentCollections={fragmentCollections} />);
+
+	return user;
 };
 
 describe('CopyFragmentModal', () => {
 	beforeAll(() => {
 		jest.useFakeTimers();
+
+		// This is due to the usage of jsdom 13 for compatibility reasons
+
+		window.document.getSelection = jest.fn();
 	});
 
 	it('renders fragment collection form with message when no there is no fragment collections', () => {
@@ -49,8 +55,8 @@ describe('CopyFragmentModal', () => {
 		expect(screen.getByLabelText('fragment-sets')).toBeInTheDocument();
 	});
 
-	it('renders fragment collections from without message when clicking on the save in new set button', () => {
-		renderComponent({
+	it('renders fragment collections from without message when clicking on the save in new set button', async () => {
+		const user = renderComponent({
 			fragmentCollections: [
 				{fragmentCollectionId: 1, name: 'fragment-collection'},
 			],
@@ -62,7 +68,7 @@ describe('CopyFragmentModal', () => {
 
 		const button = screen.getByText('save-in-new-set');
 
-		userEvent.click(button);
+		await user.click(button);
 
 		expect(screen.getByLabelText('name')).toBeInTheDocument();
 
@@ -73,8 +79,8 @@ describe('CopyFragmentModal', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('show required validation when no name is introduced', () => {
-		renderComponent();
+	it('show required validation when no name is introduced', async () => {
+		const user = renderComponent();
 
 		act(() => {
 			jest.runAllTimers();
@@ -84,13 +90,13 @@ describe('CopyFragmentModal', () => {
 			target: {value: ''},
 		});
 
-		userEvent.click(screen.getByText('save'));
+		await user.click(screen.getByText('save'));
 
 		expect(screen.getByText('x-field-is-required')).toBeInTheDocument();
 	});
 
-	it('show required validation when no fragment collection is introduced', () => {
-		renderComponent();
+	it('show required validation when no fragment collection is introduced', async () => {
+		const user = renderComponent();
 
 		act(() => {
 			jest.runAllTimers();
@@ -100,7 +106,7 @@ describe('CopyFragmentModal', () => {
 			target: {value: ''},
 		});
 
-		userEvent.click(screen.getByText('save'));
+		await user.click(screen.getByText('save'));
 
 		expect(screen.getByText('x-field-is-required')).toBeInTheDocument();
 	});

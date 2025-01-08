@@ -28,9 +28,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -99,7 +98,8 @@ public class UpgradePartitionedConfigurationTableTest
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
-		_company = CompanyTestUtil.addCompany(true);
+		Company company = companyLocalService.fetchCompanyByVirtualHost(
+			TestPropsValues.COMPANY_WEB_ID);
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
@@ -113,9 +113,6 @@ public class UpgradePartitionedConfigurationTableTest
 				}
 			});
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			_company.getCompanyId(), GroupConstants.GUEST);
-
 		Map<Long, ConfigurationEntry> validConfigurationEntries =
 			HashMapBuilder.<Long, ConfigurationEntry>put(
 				_companyId,
@@ -127,15 +124,20 @@ public class UpgradePartitionedConfigurationTableTest
 					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 					RandomTestUtil.randomLong())
 			).put(
-				_company.getCompanyId(),
-				new ConfigurationEntry(
-					ExtendedObjectClassDefinition.Scope.GROUP,
-					group.getGroupId())
+				company.getCompanyId(),
+				() -> {
+					Group group = GroupLocalServiceUtil.getGroup(
+						company.getCompanyId(), GroupConstants.GUEST);
+
+					return new ConfigurationEntry(
+						ExtendedObjectClassDefinition.Scope.GROUP,
+						group.getGroupId());
+				}
 			).put(
-				_company.getCompanyId(),
+				company.getCompanyId(),
 				new ConfigurationEntry(
 					ExtendedObjectClassDefinition.Scope.COMPANY,
-					_company.getCompanyId())
+					company.getCompanyId())
 			).build();
 
 		long randomCompanyId = RandomTestUtil.randomLong();
@@ -309,9 +311,6 @@ public class UpgradePartitionedConfigurationTableTest
 	private static ResourceActionLocalService _resourceActionLocalService;
 
 	private static Map<String, ResourceAction> _resourceActions;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	private class ConfigurationEntry {
 

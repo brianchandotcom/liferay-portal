@@ -1313,6 +1313,56 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					assertEquals(post${schemaName}, get${schemaName});
 					assertValid(get${schemaName});
+
+					<#if generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)>
+						Assert.assertNull(get${schemaName}.getPermissions());
+
+						get${schemaName} = permissions${schemaName}Resource.${javaMethodSignature.methodName}(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if !javaMethodParameter?is_first>
+								,
+							</#if>
+
+							<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+								Pagination.of(1, 2)
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+									post${schemaName}.getId()
+								<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+									<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+										post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+									<#else>
+										<#assign
+											addGetterMethod = true
+											defaultImplementationGetterMethod = true
+										/>
+									</#if>
+								<#else>
+									<#assign
+										addGetterMethod = true
+										defaultImplementationGetterMethod = false
+									/>
+								</#if>
+							<#else>
+								null
+							</#if>
+
+							<#if addGetterMethod>
+								<#if defaultImplementationGetterMethod>
+									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(post${schemaName})
+								<#else>
+									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+								</#if>
+
+								<#assign addGetterMethod = false />
+							</#if>
+						</#list>
+
+						);
+
+						Assert.assertNotNull(get${schemaName}.getPermissions());
+					</#if>
 				<#else>
 					Assert.assertTrue(false);
 				</#if>

@@ -187,6 +187,21 @@ exports[`SidebarPanelInfoView renders 1`] = `
               categorization
             </button>
           </li>
+          <li
+            class="nav-item flex-shrink-0"
+            role="none"
+          >
+            <button
+              aria-controls="performance"
+              aria-selected="false"
+              class="nav-link btn btn-unstyled"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              performance
+            </button>
+          </li>
           <div
             class="dropdown"
             innerprops="[object Object]"
@@ -1518,6 +1533,21 @@ exports[`SidebarPanelInfoView renders 1`] = `
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div
+              aria-labelledby="tab-2"
+              class="tab-pane fade flex-shrink-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div
+                class="analytics-reports"
+              >
+                <span
+                  aria-hidden="true"
+                  class="my-5 loading-animation"
+                />
               </div>
             </div>
             <div

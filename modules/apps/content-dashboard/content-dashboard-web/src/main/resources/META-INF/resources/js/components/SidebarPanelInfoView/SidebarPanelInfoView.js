@@ -208,20 +208,18 @@ const SidebarPanelInfoView = ({
 							</ClayTabs.Item>
 						)}
 
-						{!!Liferay.FeatureFlags['LPD-28830'] && (
-							<ClayTabs.Item
-								active={activeTabKeyValue === TABS.performance}
-								className="flex-shrink-0"
-								innerProps={{
-									'aria-controls': 'performance',
-								}}
-								onClick={() =>
-									setActiveTabKeyValue(TABS.performance)
-								}
-							>
-								{Liferay.Language.get('performance')}
-							</ClayTabs.Item>
-						)}
+						<ClayTabs.Item
+							active={activeTabKeyValue === TABS.performance}
+							className="flex-shrink-0"
+							innerProps={{
+								'aria-controls': 'performance',
+							}}
+							onClick={() =>
+								setActiveTabKeyValue(TABS.performance)
+							}
+						>
+							{Liferay.Language.get('performance')}
+						</ClayTabs.Item>
 
 						{!!getItemVersionsURL && !hasCategorization && (
 							<ClayTabs.Item
@@ -301,7 +299,7 @@ const SidebarPanelInfoView = ({
 							</ClayTabs.TabPane>
 						)}
 
-						{!!Liferay.FeatureFlags['LPD-28830'] && showTabs && (
+						{showTabs && (
 							<ClayTabs.TabPane
 								aria-labelledby={`tab-${TABS.performance}`}
 								className="flex-shrink-0"

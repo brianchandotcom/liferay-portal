@@ -5,11 +5,13 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -46,6 +48,10 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		super.setUp();
 
 		_ddmFormField.setDDMForm(getDDMForm());
+
+		ReflectionTestUtil.setFieldValue(
+			_numericDDMFormFieldTemplateContextContributor, "_jsonFactory",
+			new JSONFactoryImpl());
 
 		_setUpHtmlParser();
 	}
@@ -160,6 +166,17 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetLocalizedObjectFieldTrue() {
+		_ddmFormField.setProperty("localizedObjectField", true);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, createDDMFormFieldRenderingContext());
+
+		Assert.assertTrue((boolean)parameters.get("localizedObjectField"));
+	}
+
+	@Test
 	public void testGetNumericInputMaskChangedProperties() {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			createDDMFormFieldRenderingContext();
@@ -257,8 +274,31 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(".", symbols.get("thousandsSeparator"));
 	}
 
+	@Test
+	public void testGetValue() {
+		_ddmFormField.setProperty("localizedObjectField", true);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext();
+
+		String value = JSONUtil.put(
+			"en_US", "5"
+		).put(
+			"pt_BR", "9.47"
+		).toString();
+
+		ddmFormFieldRenderingContext.setValue(value);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				_ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals(value, String.valueOf(parameters.get("value")));
+	}
+
 	private DDMFormField _createDDMFormFieldWithInputMask() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", DDMFormFieldTypeConstants.NUMERIC);
 
 		ddmFormField.setDDMForm(getDDMForm());
 
@@ -272,7 +312,8 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	}
 
 	private DDMFormField _createDDMFormFieldWithNumericInputMask() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", DDMFormFieldTypeConstants.NUMERIC);
 
 		ddmFormField.setDDMForm(getDDMForm());
 
@@ -310,10 +351,22 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		).thenReturn(
 			StringPool.BLANK
 		);
+
+		Mockito.when(
+			_htmlParser.extractText("5")
+		).thenReturn(
+			"5"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("9.47")
+		).thenReturn(
+			"9.47"
+		);
 	}
 
 	private final DDMFormField _ddmFormField = new DDMFormField(
-		"field", "numeric");
+		"field", DDMFormFieldTypeConstants.NUMERIC);
 	private final HtmlParser _htmlParser = Mockito.mock(HtmlParser.class);
 	private final Locale _locale = LocaleUtil.US;
 	private final NumericDDMFormFieldTemplateContextContributor

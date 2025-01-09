@@ -100,8 +100,7 @@ public class CTCollectionTestUtil {
 				groupId, DLFileEntryMetadata.class.getName());
 		}
 
-		CTScore ctScore = CTScoreLocalServiceUtil.fetchCTScoreByCTCollectionId(
-			ctCollectionId);
+		CTScore ctScore = CTScoreLocalServiceUtil.fetchCTScore(ctCollectionId);
 
 		ctScore.setScore(score);
 

@@ -29,10 +29,12 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
+import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,12 +80,8 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 			score += _calculate(ctEntry.getModelClassNameId());
 		}
 
-		long ctScoreId = counterLocalService.increment(CTScore.class.getName());
+		CTScore ctScore = ctScorePersistence.create(ctCollectionId);
 
-		CTScore ctScore = ctScorePersistence.create(ctScoreId);
-
-		ctScore.setCompanyId(ctCollection.getCompanyId());
-		ctScore.setCtCollectionId(ctCollectionId);
 		ctScore.setScore(score);
 
 		return ctScorePersistence.update(ctScore);
@@ -92,33 +90,31 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
+		acceptor = SQLStateAcceptor.class,
 		properties = {
 			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.hibernate.StaleObjectStateException"
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION + "," + SQLStateAcceptor.SQLSTATE_TRANSACTION_ROLLBACK
 			)
 		}
 	)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public CTScore decrementScore(long ctCollectionId, long modelClassNameId) {
 		return _updateScore(ctCollectionId, modelClassNameId, false);
-	}
-
-	public CTScore fetchCTScoreByCTCollectionId(long ctCollectionId) {
-		return ctScorePersistence.fetchByCtCollectionId(ctCollectionId);
 	}
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
+		acceptor = SQLStateAcceptor.class,
 		properties = {
 			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.hibernate.StaleObjectStateException"
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION + "," + SQLStateAcceptor.SQLSTATE_TRANSACTION_ROLLBACK
 			)
 		}
 	)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public CTScore incrementScore(long ctCollectionId, long modelClassNameId) {
 		return _updateScore(ctCollectionId, modelClassNameId, true);
 	}
@@ -233,29 +229,26 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 	private CTScore _updateScore(
 		long ctCollectionId, long modelClassNameId, boolean increment) {
 
-		CTScore ctScore = ctScorePersistence.fetchByCtCollectionId(
+		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
+
+		if (ctCollection == null) {
+			return null;
+		}
+
+		CTScore ctScore = ctScorePersistence.fetchByPrimaryKey(ctCollectionId);
 
 		if (ctScore == null) {
 			return addCTScore(ctCollectionId);
 		}
 
-		int score = ctScore.getScore();
+		int score = _calculate(modelClassNameId);
 
-		if (increment) {
-			score += _calculate(modelClassNameId);
-		}
-		else {
-			score -= _calculate(modelClassNameId);
+		if (!increment) {
+			score *= -1;
 		}
 
-		if (score < 0) {
-			score = 0;
-		}
-
-		ctScore.setScore(score);
-
-		return ctScorePersistence.update(ctScore);
+		return ctScoreFinder.updateScore(ctCollectionId, score);
 	}
 
 	private static final int _COUNT_DIVISOR = 50000000;

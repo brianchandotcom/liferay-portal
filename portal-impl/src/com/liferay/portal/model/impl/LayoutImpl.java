@@ -1429,15 +1429,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
-	public boolean isTypeCollection() {
-		if (Objects.equals(getType(), LayoutConstants.TYPE_COLLECTION)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isTypeContent() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTENT) ||
 			Objects.equals(getType(), LayoutConstants.TYPE_UTILITY) ||

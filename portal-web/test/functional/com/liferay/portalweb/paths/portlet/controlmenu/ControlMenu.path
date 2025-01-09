@@ -51,11 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_COLLECTION_PAGE_ITEM_BUTTON</td>
-	<td>//*[@data-qa-id='controlMenu']//*[@*='${key_title}']//*[name()='svg'][contains(@class,'lexicon-icon-plus')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='info']</td>
 	<td></td>

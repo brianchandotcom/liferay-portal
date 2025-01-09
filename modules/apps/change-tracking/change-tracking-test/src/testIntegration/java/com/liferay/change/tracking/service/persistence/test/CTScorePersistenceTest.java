@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -118,8 +116,6 @@ public class CTScorePersistenceTest {
 
 		newCTScore.setCompanyId(RandomTestUtil.nextLong());
 
-		newCTScore.setCtCollectionId(RandomTestUtil.nextLong());
-
 		newCTScore.setScore(RandomTestUtil.nextInt());
 
 		_ctScores.add(_persistence.update(newCTScore));
@@ -130,20 +126,11 @@ public class CTScorePersistenceTest {
 		Assert.assertEquals(
 			existingCTScore.getMvccVersion(), newCTScore.getMvccVersion());
 		Assert.assertEquals(
-			existingCTScore.getCtScoreId(), newCTScore.getCtScoreId());
-		Assert.assertEquals(
-			existingCTScore.getCompanyId(), newCTScore.getCompanyId());
-		Assert.assertEquals(
 			existingCTScore.getCtCollectionId(),
 			newCTScore.getCtCollectionId());
+		Assert.assertEquals(
+			existingCTScore.getCompanyId(), newCTScore.getCompanyId());
 		Assert.assertEquals(existingCTScore.getScore(), newCTScore.getScore());
-	}
-
-	@Test
-	public void testCountByCtCollectionId() throws Exception {
-		_persistence.countByCtCollectionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCtCollectionId(0L);
 	}
 
 	@Test
@@ -171,8 +158,8 @@ public class CTScorePersistenceTest {
 
 	protected OrderByComparator<CTScore> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CTScore", "mvccVersion", true, "ctScoreId", true, "companyId",
-			true, "ctCollectionId", true, "score", true);
+			"CTScore", "mvccVersion", true, "ctCollectionId", true, "companyId",
+			true, "score", true);
 	}
 
 	@Test
@@ -314,7 +301,8 @@ public class CTScorePersistenceTest {
 			CTScore.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("ctScoreId", newCTScore.getCtScoreId()));
+			RestrictionsFactoryUtil.eq(
+				"ctCollectionId", newCTScore.getCtCollectionId()));
 
 		List<CTScore> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -331,7 +319,8 @@ public class CTScorePersistenceTest {
 			CTScore.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("ctScoreId", RandomTestUtil.nextLong()));
+			RestrictionsFactoryUtil.eq(
+				"ctCollectionId", RandomTestUtil.nextLong()));
 
 		List<CTScore> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -345,21 +334,22 @@ public class CTScorePersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			CTScore.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ctScoreId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("ctCollectionId"));
 
-		Object newCtScoreId = newCTScore.getCtScoreId();
+		Object newCtCollectionId = newCTScore.getCtCollectionId();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"ctScoreId", new Object[] {newCtScoreId}));
+				"ctCollectionId", new Object[] {newCtCollectionId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingCtScoreId = result.get(0);
+		Object existingCtCollectionId = result.get(0);
 
-		Assert.assertEquals(existingCtScoreId, newCtScoreId);
+		Assert.assertEquals(existingCtCollectionId, newCtCollectionId);
 	}
 
 	@Test
@@ -367,71 +357,16 @@ public class CTScorePersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			CTScore.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ctScoreId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("ctCollectionId"));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"ctScoreId", new Object[] {RandomTestUtil.nextLong()}));
+				"ctCollectionId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
-	}
-
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		CTScore newCTScore = addCTScore();
-
-		_persistence.clearCache();
-
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newCTScore.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CTScore newCTScore = addCTScore();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CTScore.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("ctScoreId", newCTScore.getCtScoreId()));
-
-		List<CTScore> result = _persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CTScore ctScore) {
-		Assert.assertEquals(
-			Long.valueOf(ctScore.getCtCollectionId()),
-			ReflectionTestUtil.<Long>invoke(
-				ctScore, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "ctCollectionId"));
 	}
 
 	protected CTScore addCTScore() throws Exception {
@@ -442,8 +377,6 @@ public class CTScorePersistenceTest {
 		ctScore.setMvccVersion(RandomTestUtil.nextLong());
 
 		ctScore.setCompanyId(RandomTestUtil.nextLong());
-
-		ctScore.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ctScore.setScore(RandomTestUtil.nextInt());
 

@@ -37,7 +37,7 @@ public class CTScoreCacheModel
 
 		CTScoreCacheModel ctScoreCacheModel = (CTScoreCacheModel)object;
 
-		if ((ctScoreId == ctScoreCacheModel.ctScoreId) &&
+		if ((ctCollectionId == ctScoreCacheModel.ctCollectionId) &&
 			(mvccVersion == ctScoreCacheModel.mvccVersion)) {
 
 			return true;
@@ -48,7 +48,7 @@ public class CTScoreCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, ctScoreId);
+		int hashCode = HashUtil.hash(0, ctCollectionId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -65,16 +65,14 @@ public class CTScoreCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctScoreId=");
-		sb.append(ctScoreId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", score=");
 		sb.append(score);
 		sb.append("}");
@@ -87,9 +85,8 @@ public class CTScoreCacheModel
 		CTScoreImpl ctScoreImpl = new CTScoreImpl();
 
 		ctScoreImpl.setMvccVersion(mvccVersion);
-		ctScoreImpl.setCtScoreId(ctScoreId);
-		ctScoreImpl.setCompanyId(companyId);
 		ctScoreImpl.setCtCollectionId(ctCollectionId);
+		ctScoreImpl.setCompanyId(companyId);
 		ctScoreImpl.setScore(score);
 
 		ctScoreImpl.resetOriginalValues();
@@ -101,11 +98,9 @@ public class CTScoreCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctScoreId = objectInput.readLong();
+		ctCollectionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
-
-		ctCollectionId = objectInput.readLong();
 
 		score = objectInput.readInt();
 	}
@@ -114,19 +109,16 @@ public class CTScoreCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(ctScoreId);
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(companyId);
-
-		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeInt(score);
 	}
 
 	public long mvccVersion;
-	public long ctScoreId;
-	public long companyId;
 	public long ctCollectionId;
+	public long companyId;
 	public int score;
 
 }

@@ -86,13 +86,13 @@ public abstract class CTScoreLocalServiceBaseImpl
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
-	 * @param ctScoreId the primary key for the new ct score
+	 * @param ctCollectionId the primary key for the new ct score
 	 * @return the new ct score
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public CTScore createCTScore(long ctScoreId) {
-		return ctScorePersistence.create(ctScoreId);
+	public CTScore createCTScore(long ctCollectionId) {
+		return ctScorePersistence.create(ctCollectionId);
 	}
 
 	/**
@@ -102,14 +102,14 @@ public abstract class CTScoreLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect CTScoreLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score that was removed
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTScore deleteCTScore(long ctScoreId) throws PortalException {
-		return ctScorePersistence.remove(ctScoreId);
+	public CTScore deleteCTScore(long ctCollectionId) throws PortalException {
+		return ctScorePersistence.remove(ctCollectionId);
 	}
 
 	/**
@@ -228,20 +228,20 @@ public abstract class CTScoreLocalServiceBaseImpl
 	}
 
 	@Override
-	public CTScore fetchCTScore(long ctScoreId) {
-		return ctScorePersistence.fetchByPrimaryKey(ctScoreId);
+	public CTScore fetchCTScore(long ctCollectionId) {
+		return ctScorePersistence.fetchByPrimaryKey(ctCollectionId);
 	}
 
 	/**
 	 * Returns the ct score with the primary key.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Override
-	public CTScore getCTScore(long ctScoreId) throws PortalException {
-		return ctScorePersistence.findByPrimaryKey(ctScoreId);
+	public CTScore getCTScore(long ctCollectionId) throws PortalException {
+		return ctScorePersistence.findByPrimaryKey(ctCollectionId);
 	}
 
 	@Override
@@ -253,7 +253,7 @@ public abstract class CTScoreLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CTScore.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("ctScoreId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("ctCollectionId");
 
 		return actionableDynamicQuery;
 	}
@@ -270,7 +270,8 @@ public abstract class CTScoreLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CTScore.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("ctScoreId");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"ctCollectionId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -282,7 +283,7 @@ public abstract class CTScoreLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CTScore.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("ctScoreId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("ctCollectionId");
 	}
 
 	/**

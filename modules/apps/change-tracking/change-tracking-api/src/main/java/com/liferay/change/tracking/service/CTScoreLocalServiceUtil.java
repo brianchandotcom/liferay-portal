@@ -58,11 +58,11 @@ public class CTScoreLocalServiceUtil {
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
-	 * @param ctScoreId the primary key for the new ct score
+	 * @param ctCollectionId the primary key for the new ct score
 	 * @return the new ct score
 	 */
-	public static CTScore createCTScore(long ctScoreId) {
-		return getService().createCTScore(ctScoreId);
+	public static CTScore createCTScore(long ctCollectionId) {
+		return getService().createCTScore(ctCollectionId);
 	}
 
 	/**
@@ -102,12 +102,14 @@ public class CTScoreLocalServiceUtil {
 	 * <strong>Important:</strong> Inspect CTScoreLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score that was removed
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
-	public static CTScore deleteCTScore(long ctScoreId) throws PortalException {
-		return getService().deleteCTScore(ctScoreId);
+	public static CTScore deleteCTScore(long ctCollectionId)
+		throws PortalException {
+
+		return getService().deleteCTScore(ctCollectionId);
 	}
 
 	/**
@@ -205,12 +207,8 @@ public class CTScoreLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CTScore fetchCTScore(long ctScoreId) {
-		return getService().fetchCTScore(ctScoreId);
-	}
-
-	public static CTScore fetchCTScoreByCTCollectionId(long ctCollectionId) {
-		return getService().fetchCTScoreByCTCollectionId(ctCollectionId);
+	public static CTScore fetchCTScore(long ctCollectionId) {
+		return getService().fetchCTScore(ctCollectionId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -222,12 +220,14 @@ public class CTScoreLocalServiceUtil {
 	/**
 	 * Returns the ct score with the primary key.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
-	public static CTScore getCTScore(long ctScoreId) throws PortalException {
-		return getService().getCTScore(ctScoreId);
+	public static CTScore getCTScore(long ctCollectionId)
+		throws PortalException {
+
+		return getService().getCTScore(ctCollectionId);
 	}
 
 	/**

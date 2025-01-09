@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -57,9 +56,8 @@ public class CTScoreModelImpl
 	public static final String TABLE_NAME = "CTScore";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctScoreId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"score", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"score", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -67,21 +65,21 @@ public class CTScoreModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctScoreId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("score", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTScore (mvccVersion LONG default 0 not null,ctScoreId LONG not null primary key,companyId LONG,ctCollectionId LONG,score INTEGER)";
+		"create table CTScore (mvccVersion LONG default 0 not null,ctCollectionId LONG not null primary key,companyId LONG,score INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTScore";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY ctScore.ctScoreId ASC";
+		" ORDER BY ctScore.ctCollectionId ASC";
 
-	public static final String ORDER_BY_SQL = " ORDER BY CTScore.ctScoreId ASC";
+	public static final String ORDER_BY_SQL =
+		" ORDER BY CTScore.ctCollectionId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -90,17 +88,11 @@ public class CTScoreModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CTSCOREID_COLUMN_BITMASK = 2L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -121,17 +113,17 @@ public class CTScoreModelImpl
 
 	@Override
 	public long getPrimaryKey() {
-		return _ctScoreId;
+		return _ctCollectionId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setCtScoreId(primaryKey);
+		setCtCollectionId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _ctScoreId;
+		return _ctCollectionId;
 	}
 
 	@Override
@@ -211,10 +203,9 @@ public class CTScoreModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", CTScore::getMvccVersion);
-			attributeGetterFunctions.put("ctScoreId", CTScore::getCtScoreId);
-			attributeGetterFunctions.put("companyId", CTScore::getCompanyId);
 			attributeGetterFunctions.put(
 				"ctCollectionId", CTScore::getCtCollectionId);
+			attributeGetterFunctions.put("companyId", CTScore::getCompanyId);
 			attributeGetterFunctions.put("score", CTScore::getScore);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -236,12 +227,10 @@ public class CTScoreModelImpl
 				"mvccVersion",
 				(BiConsumer<CTScore, Long>)CTScore::setMvccVersion);
 			attributeSetterBiConsumers.put(
-				"ctScoreId", (BiConsumer<CTScore, Long>)CTScore::setCtScoreId);
-			attributeSetterBiConsumers.put(
-				"companyId", (BiConsumer<CTScore, Long>)CTScore::setCompanyId);
-			attributeSetterBiConsumers.put(
 				"ctCollectionId",
 				(BiConsumer<CTScore, Long>)CTScore::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"companyId", (BiConsumer<CTScore, Long>)CTScore::setCompanyId);
 			attributeSetterBiConsumers.put(
 				"score", (BiConsumer<CTScore, Integer>)CTScore::setScore);
 
@@ -266,17 +255,17 @@ public class CTScoreModelImpl
 	}
 
 	@Override
-	public long getCtScoreId() {
-		return _ctScoreId;
+	public long getCtCollectionId() {
+		return _ctCollectionId;
 	}
 
 	@Override
-	public void setCtScoreId(long ctScoreId) {
+	public void setCtCollectionId(long ctCollectionId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_ctScoreId = ctScoreId;
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -291,30 +280,6 @@ public class CTScoreModelImpl
 		}
 
 		_companyId = companyId;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCtCollectionId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("ctCollectionId"));
 	}
 
 	@Override
@@ -388,9 +353,8 @@ public class CTScoreModelImpl
 		CTScoreImpl ctScoreImpl = new CTScoreImpl();
 
 		ctScoreImpl.setMvccVersion(getMvccVersion());
-		ctScoreImpl.setCtScoreId(getCtScoreId());
-		ctScoreImpl.setCompanyId(getCompanyId());
 		ctScoreImpl.setCtCollectionId(getCtCollectionId());
+		ctScoreImpl.setCompanyId(getCompanyId());
 		ctScoreImpl.setScore(getScore());
 
 		ctScoreImpl.resetOriginalValues();
@@ -404,12 +368,10 @@ public class CTScoreModelImpl
 
 		ctScoreImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
-		ctScoreImpl.setCtScoreId(
-			this.<Long>getColumnOriginalValue("ctScoreId"));
-		ctScoreImpl.setCompanyId(
-			this.<Long>getColumnOriginalValue("companyId"));
 		ctScoreImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctScoreImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
 		ctScoreImpl.setScore(this.<Integer>getColumnOriginalValue("score"));
 
 		return ctScoreImpl;
@@ -488,11 +450,9 @@ public class CTScoreModelImpl
 
 		ctScoreCacheModel.mvccVersion = getMvccVersion();
 
-		ctScoreCacheModel.ctScoreId = getCtScoreId();
+		ctScoreCacheModel.ctCollectionId = getCtCollectionId();
 
 		ctScoreCacheModel.companyId = getCompanyId();
-
-		ctScoreCacheModel.ctCollectionId = getCtCollectionId();
 
 		ctScoreCacheModel.score = getScore();
 
@@ -558,9 +518,8 @@ public class CTScoreModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctScoreId;
-	private long _companyId;
 	private long _ctCollectionId;
+	private long _companyId;
 	private int _score;
 
 	public <T> T getColumnValue(String columnName) {
@@ -592,9 +551,8 @@ public class CTScoreModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctScoreId", _ctScoreId);
-		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("score", _score);
 	}
 
@@ -611,13 +569,11 @@ public class CTScoreModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctScoreId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
 		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("ctCollectionId", 8L);
-
-		columnBitmasks.put("score", 16L);
+		columnBitmasks.put("score", 8L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

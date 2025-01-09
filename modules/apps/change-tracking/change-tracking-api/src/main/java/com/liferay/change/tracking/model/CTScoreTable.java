@@ -23,12 +23,10 @@ public class CTScoreTable extends BaseTable<CTScoreTable> {
 
 	public final Column<CTScoreTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<CTScoreTable, Long> ctScoreId = createColumn(
-		"ctScoreId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<CTScoreTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CTScoreTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CTScoreTable, Long> ctCollectionId = createColumn(
-		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CTScoreTable, Integer> score = createColumn(
 		"score", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

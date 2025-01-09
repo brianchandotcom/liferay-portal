@@ -1446,8 +1446,7 @@ public class SitePage implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		COLLECTION_PAGE("CollectionPage"), CONTENT_PAGE("ContentPage"),
-		WIDGET_PAGE("WidgetPage");
+		CONTENT_PAGE("ContentPage"), WIDGET_PAGE("WidgetPage");
 
 		@JsonCreator
 		public static Type create(String value) {

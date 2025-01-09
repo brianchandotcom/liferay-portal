@@ -47,10 +47,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "CollectionPageSettings",
-			value = CollectionPageSettings.class
-		),
-		@JsonSubTypes.Type(
 			name = "ContentPageSettings", value = ContentPageSettings.class
 		),
 		@JsonSubTypes.Type(
@@ -472,7 +468,6 @@ public abstract class PageSettings implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		COLLECTION_PAGE_SETTINGS("CollectionPageSettings"),
 		CONTENT_PAGE_SETTINGS("ContentPageSettings"),
 		WIDGET_PAGE_SETTINGS("WidgetPageSettings");
 

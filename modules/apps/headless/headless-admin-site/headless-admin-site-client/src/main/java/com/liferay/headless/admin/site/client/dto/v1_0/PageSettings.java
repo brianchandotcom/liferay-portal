@@ -195,7 +195,6 @@ public abstract class PageSettings implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		COLLECTION_PAGE_SETTINGS("CollectionPageSettings"),
 		CONTENT_PAGE_SETTINGS("ContentPageSettings"),
 		WIDGET_PAGE_SETTINGS("WidgetPageSettings");
 

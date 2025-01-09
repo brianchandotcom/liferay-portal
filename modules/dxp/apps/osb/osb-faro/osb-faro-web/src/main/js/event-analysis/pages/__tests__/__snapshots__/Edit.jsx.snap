@@ -117,10 +117,32 @@ exports[`Event Analysis Edit should render 1`] = `
               </div>
             </div>
             <div
-              class="event-analysis-toolbar-right-content"
+              class="d-flex event-analysis-toolbar-right-content"
             >
+              <div
+                class="event-analysis-download-report mr-2"
+              >
+                <div
+                  class="download-report"
+                >
+                  <button
+                    class="btn btn-outline-borderless btn-sm btn-outline-secondary"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-download mr-2"
+                      role="presentation"
+                    >
+                      <use
+                        href="#download"
+                      />
+                    </svg>
+                    Download Reports
+                  </button>
+                </div>
+              </div>
               <button
-                class="button-root mr-2 btn btn-sm btn-primary"
+                class="button-root ml-1 mr-2 btn btn-sm btn-primary"
                 disabled=""
                 type="submit"
               >
@@ -145,6 +167,7 @@ exports[`Event Analysis Edit should render 1`] = `
       >
         <div
           class="card card-root event-analysis-editor-root"
+          id="container.report.eventAnalysisPage"
         >
           <div
             class="event-analysis-builder-root d-flex flex-column"

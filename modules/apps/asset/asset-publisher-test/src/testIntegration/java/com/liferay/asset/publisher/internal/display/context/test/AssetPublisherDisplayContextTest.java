@@ -296,9 +296,10 @@ public class AssetPublisherDisplayContextTest {
 		portletPreferences.setValue("orderByType1", "ASC");
 		portletPreferences.setValue("selectionStyle", "dynamic");
 
-		List<AssetEntry> assetEntries = _assertAndGetAssetEntries(
-			_getAssetEntryResults(portletPreferences),
-			expectedAssetEntries.size());
+		List<AssetEntry> assetEntries =
+			_testGetAssetEntryResultsFilterByAssetTags(
+				_getAssetEntryResults(portletPreferences),
+				expectedAssetEntries.size());
 
 		for (int i = 0; i < assetEntries.size(); i++) {
 			Assert.assertEquals(
@@ -307,7 +308,7 @@ public class AssetPublisherDisplayContextTest {
 
 		portletPreferences.setValue("orderByType1", "DESC");
 
-		assetEntries = _assertAndGetAssetEntries(
+		assetEntries = _testGetAssetEntryResultsFilterByAssetTags(
 			_getAssetEntryResults(portletPreferences),
 			expectedAssetEntries.size());
 

@@ -8,11 +8,17 @@ package com.liferay.frontend.data.set.admin.web.internal.portlet.action;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
@@ -40,6 +46,13 @@ public class GetSystemDataSetsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ObjectDefinition dataSetObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				themeDisplay.getCompanyId(), "DataSet");
+
 		Set<String> systemFDSNames =
 			_systemFDSEntryRegistry.getSystemFDSNames();
 
@@ -60,9 +73,23 @@ public class GetSystemDataSetsMVCResourceCommand
 								_systemFDSEntryRegistry.getSystemFDSEntry(
 									systemFDSName);
 
+							ObjectEntry objectEntry =
+								_objectEntryLocalService.fetchObjectEntry(
+									systemFDSEntry.getName(),
+									dataSetObjectDefinition.
+										getObjectDefinitionId());
+
+							boolean customized = false;
+
+							if (objectEntry != null) {
+								customized = true;
+							}
+
 							return JSONUtil.put(
 								"additionalAPIURLParameters",
 								systemFDSEntry.getAdditionalAPIURLParameters()
+							).put(
+								"customized", customized
 							).put(
 								"defaultItemsPerPage",
 								systemFDSEntry.getDefaultItemsPerPage()
@@ -88,6 +115,12 @@ public class GetSystemDataSetsMVCResourceCommand
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private SystemFDSEntryRegistry _systemFDSEntryRegistry;

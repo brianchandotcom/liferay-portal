@@ -708,6 +708,165 @@
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": false,
+			"externalReferenceCode": "P2S3_EXAM_RESULT",
+			"label": {
+				"en_US": "P2S3 Exam Result"
+			},
+			"modifiable": true,
+			"name": "P2S3ExamResult",
+			"objectFields": [
+				{
+					"DBType": "DateTime",
+					"businessType": "DateTime",
+					"externalReferenceCode": "DATE",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Date"
+					},
+					"localized": false,
+					"name": "date",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "DateTime",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EMAIL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "E-mail"
+					},
+					"localized": false,
+					"name": "email",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXAM_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Exam Name"
+					},
+					"localized": false,
+					"name": "examName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FIRST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "First Name"
+					},
+					"localized": false,
+					"name": "firstName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LAST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Last Name"
+					},
+					"localized": false,
+					"name": "lastName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "RESULT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Result"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_RESULT",
+					"localized": false,
+					"name": "result",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TEST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Test Name"
+					},
+					"localized": false,
+					"name": "testName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Exam Results"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3examresults",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": false,
 			"externalReferenceCode": "P2S3_EXTERNAL_MEDIA",
 			"label": {
 				"en_US": "P2S3 External Media"

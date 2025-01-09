@@ -5,12 +5,19 @@
 
 package com.liferay.layout.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface PortletManager {
+
+	public default boolean isDeprecated() {
+		return false;
+	}
 
 	public boolean isVisible(Layout layout);
 

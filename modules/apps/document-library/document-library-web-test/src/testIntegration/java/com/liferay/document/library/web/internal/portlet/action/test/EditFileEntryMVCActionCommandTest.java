@@ -111,7 +111,7 @@ public class EditFileEntryMVCActionCommandTest {
 			true, TestPropsValues.getUser(),
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), null,
+					_getMockHttpServletRequest(), null,
 					HashMapBuilder.put(
 						"groupId",
 						Collections.singletonList(
@@ -157,7 +157,7 @@ public class EditFileEntryMVCActionCommandTest {
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), null,
+					_getMockHttpServletRequest(), null,
 					HashMapBuilder.put(
 						"groupId",
 						Collections.singletonList(
@@ -225,7 +225,7 @@ public class EditFileEntryMVCActionCommandTest {
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), null,
+					_getMockHttpServletRequest(), null,
 					HashMapBuilder.put(
 						"groupId",
 						Collections.singletonList(
@@ -293,7 +293,7 @@ public class EditFileEntryMVCActionCommandTest {
 		UploadPortletRequest uploadPortletRequest =
 			UploadTestUtil.createUploadPortletRequest(
 				UploadTestUtil.createUploadServletRequest(
-					new MockHttpServletRequest(), null,
+					_getMockHttpServletRequest(), null,
 					HashMapBuilder.put(
 						"groupId",
 						Collections.singletonList(
@@ -404,6 +404,16 @@ public class EditFileEntryMVCActionCommandTest {
 
 		return (LiferayPortletConfig)PortletConfigFactoryUtil.create(
 			portlet, null);
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		return mockHttpServletRequest;
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

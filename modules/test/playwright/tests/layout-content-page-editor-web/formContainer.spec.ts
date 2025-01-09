@@ -4314,7 +4314,7 @@ test.describe('Multistep', () => {
 
 	test(
 		'Can change step with the stepper fragment',
-		{tag: '@LPD-10727'},
+		{tag: ['@LPD-10727', '@LPD-45551']},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
 			// Get the id of Lemon object from the site initializer
@@ -4385,6 +4385,19 @@ test.describe('Multistep', () => {
 
 			await expect(button).toBeVisible();
 			await expect(heading).not.toBeVisible();
+
+			// Check in other viewports too
+
+			await pageEditorPage.switchViewport('Tablet');
+
+			const viewportIframe = page.frameLocator(
+				'.page-editor__global-context-iframe'
+			);
+
+			await viewportIframe.locator(`.multi-step-icon`).nth(1).click();
+
+			await expect(viewportIframe.locator(button)).toBeVisible();
+			await expect(viewportIframe.locator(heading)).not.toBeVisible();
 		}
 	);
 

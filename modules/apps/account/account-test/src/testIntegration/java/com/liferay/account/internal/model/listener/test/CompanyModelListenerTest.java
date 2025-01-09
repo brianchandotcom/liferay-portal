@@ -56,6 +56,10 @@ public class CompanyModelListenerTest {
 				accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 				null, null);
 
+			_companyLocalService.deleteCompany(company);
+
+			company = null;
+
 			Assert.assertNull(
 				_accountEntryLocalService.fetchAccountEntry(
 					accountEntry.getAccountEntryId()));
@@ -65,7 +69,9 @@ public class CompanyModelListenerTest {
 					accountRole.getAccountRoleId()));
 		}
 		finally {
-			_companyLocalService.deleteCompany(company);
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
 		}
 	}
 

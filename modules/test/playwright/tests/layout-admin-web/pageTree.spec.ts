@@ -250,7 +250,7 @@ test(
 
 		await page
 			.getByRole('button')
-			.filter({hasText: 'Most Viewed Assets'})
+			.filter({hasText: 'Highest Rated Assets'})
 			.click();
 
 		const collectionPageName = getRandomString();

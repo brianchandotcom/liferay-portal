@@ -25,6 +25,11 @@ import org.osgi.service.component.annotations.Component;
 public class WikiNavigationPortletManager implements PortletManager {
 
 	@Override
+	public boolean isDeprecated() {
+		return true;
+	}
+
+	@Override
 	public boolean isVisible(Layout layout) {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				layout.getCompanyId(), "LPD-35013")) {

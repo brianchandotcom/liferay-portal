@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.0.33"
+	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.3.0"
 	compileInclude group: "junit", name: "junit", version: "4.13.1"
 	compileInclude project(":core:petra:petra-function")
 	compileInclude project(":core:petra:petra-lang")

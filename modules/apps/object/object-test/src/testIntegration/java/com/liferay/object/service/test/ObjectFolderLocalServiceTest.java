@@ -149,13 +149,13 @@ public class ObjectFolderLocalServiceTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company);
-
 		ObjectFolder objectFolder = null;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
+
+			PortalInstances.initCompany(company);
 
 			User user = UserTestUtil.getAdminUser(company.getCompanyId());
 

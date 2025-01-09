@@ -48,14 +48,14 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addOmniadminUser();
-
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		String originalName = PrincipalThreadLocal.getName();
 
 		try {
+			User user = UserTestUtil.addOmniadminUser();
+
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
@@ -75,14 +75,14 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 	public void testShouldNotAddUserFromAnotherCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User user = UserTestUtil.addCompanyAdminUser(company);
-
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		String originalName = PrincipalThreadLocal.getName();
 
 		try {
+			User user = UserTestUtil.addCompanyAdminUser(company);
+
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 

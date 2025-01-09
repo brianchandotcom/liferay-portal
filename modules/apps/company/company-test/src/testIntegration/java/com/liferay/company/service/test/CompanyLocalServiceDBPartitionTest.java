@@ -224,16 +224,19 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testAddDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
-
-		String pid = configuration.getPid();
-
-		companyLocalService.extractDBPartitionCompany(company.getCompanyId());
-
-		boolean standaloneDBPartition = true;
+		boolean standaloneDBPartition = false;
 
 		try {
+			Configuration configuration = _createFactoryConfiguration(
+				company.getCompanyId());
+
+			String pid = configuration.getPid();
+
+			companyLocalService.extractDBPartitionCompany(
+				company.getCompanyId());
+
+			standaloneDBPartition = true;
+
 			_assertConfiguration(pid, false);
 
 			String name = "new" + company.getName();
@@ -379,17 +382,17 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
-
-		String name = RandomTestUtil.randomString();
-		String virtualHostname = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-		String webId = RandomTestUtil.randomString();
-
 		Company copiedCompany = null;
 
 		try {
+			Configuration configuration = _createFactoryConfiguration(
+				company.getCompanyId());
+
+			String name = RandomTestUtil.randomString();
+			String virtualHostname = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+			String webId = RandomTestUtil.randomString();
+
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
 				company.getCompanyId(), null, name, virtualHostname, webId);
 
@@ -521,31 +524,36 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
+		try {
+			Configuration configuration = _createFactoryConfiguration(
+				company.getCompanyId());
 
-		String pid = configuration.getPid();
+			String pid = configuration.getPid();
 
-		int dbPartitionsCount = _getDBPartitionsCount();
+			int dbPartitionsCount = _getDBPartitionsCount();
 
-		companyLocalService.deleteCompany(company);
+			Assert.assertFalse(
+				ArrayUtil.contains(
+					_getCompanyIdsBySQL(), company.getCompanyId()));
+			Assert.assertEquals(dbPartitionsCount - 1, _getDBPartitionsCount());
 
-		Assert.assertFalse(
-			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
-		Assert.assertEquals(dbPartitionsCount - 1, _getDBPartitionsCount());
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+			BundleContext bundleContext = bundle.getBundleContext();
 
-		BundleContext bundleContext = bundle.getBundleContext();
+			Collection<ServiceReference<Portlet>> serviceReferences =
+				bundleContext.getServiceReferences(
+					Portlet.class,
+					"(com.liferay.portlet.company=" + company.getCompanyId() +
+						")");
 
-		Collection<ServiceReference<Portlet>> serviceReferences =
-			bundleContext.getServiceReferences(
-				Portlet.class,
-				"(com.liferay.portlet.company=" + company.getCompanyId() + ")");
+			Assert.assertTrue(serviceReferences.isEmpty());
 
-		Assert.assertTrue(serviceReferences.isEmpty());
-
-		_assertConfiguration(pid, false);
+			_assertConfiguration(pid, false);
+		}
+		finally {
+			companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test

@@ -87,10 +87,10 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1);
-		PortalInstances.initCompany(company2);
-
 		try {
+			PortalInstances.initCompany(company1);
+			PortalInstances.initCompany(company2);
+
 			setUpPortlet(
 				_internalClassTestPortlet,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -194,12 +194,12 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1);
-		PortalInstances.initCompany(company2);
-
 		String displayCategory = RandomTestUtil.randomString();
 
 		try {
+			PortalInstances.initCompany(company1);
+			PortalInstances.initCompany(company2);
+
 			setUpPortlet(
 				_internalClassTestPortlet,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -259,12 +259,12 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1);
-		PortalInstances.initCompany(company2);
-
 		String displayCategory = RandomTestUtil.randomString();
 
 		try {
+			PortalInstances.initCompany(company1);
+			PortalInstances.initCompany(company2);
+
 			setUpPortlet(
 				_internalClassTestPortlet,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -349,10 +349,10 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1);
-		PortalInstances.initCompany(company2);
-
 		try {
+			PortalInstances.initCompany(company1);
+			PortalInstances.initCompany(company2);
+
 			setUpPortlet(
 				_internalClassTestPortlet,
 				HashMapDictionaryBuilder.<String, Object>put(

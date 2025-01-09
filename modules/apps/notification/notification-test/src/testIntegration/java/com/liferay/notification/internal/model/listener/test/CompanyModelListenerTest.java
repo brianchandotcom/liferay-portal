@@ -63,53 +63,66 @@ public class CompanyModelListenerTest {
 
 		CompanyThreadLocal.setCompanyId(_companyId);
 
-		NotificationRecipientSetting notificationRecipientSetting =
-			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
-				"userScreenName", _user.getScreenName());
+		try {
+			NotificationRecipientSetting notificationRecipientSetting =
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"userScreenName", _user.getScreenName());
 
-		Assert.assertEquals(
-			_companyId, notificationRecipientSetting.getCompanyId());
+			Assert.assertEquals(
+				_companyId, notificationRecipientSetting.getCompanyId());
 
-		NotificationContext notificationContext =
-			NotificationTemplateUtil.createNotificationContext(
-				Collections.singletonList(notificationRecipientSetting),
-				NotificationConstants.TYPE_USER_NOTIFICATION);
+			NotificationContext notificationContext =
+				NotificationTemplateUtil.createNotificationContext(
+					Collections.singletonList(notificationRecipientSetting),
+					NotificationConstants.TYPE_USER_NOTIFICATION);
 
-		NotificationQueueEntry notificationQueueEntry =
-			_notificationQueueEntryLocalService.addNotificationQueueEntry(
-				notificationContext);
+			NotificationQueueEntry notificationQueueEntry =
+				_notificationQueueEntryLocalService.addNotificationQueueEntry(
+					notificationContext);
 
-		Assert.assertEquals(_companyId, notificationQueueEntry.getCompanyId());
+			Assert.assertEquals(
+				_companyId, notificationQueueEntry.getCompanyId());
 
-		NotificationTemplate notificationTemplate =
-			_notificationTemplateLocalService.addNotificationTemplate(
-				notificationContext);
+			NotificationTemplate notificationTemplate =
+				_notificationTemplateLocalService.addNotificationTemplate(
+					notificationContext);
 
-		Assert.assertEquals(_companyId, notificationTemplate.getCompanyId());
+			Assert.assertEquals(
+				_companyId, notificationTemplate.getCompanyId());
 
-		NotificationRecipient notificationRecipient =
-			notificationTemplate.getNotificationRecipient();
+			NotificationRecipient notificationRecipient =
+				notificationTemplate.getNotificationRecipient();
 
-		Assert.assertEquals(_companyId, notificationRecipient.getCompanyId());
+			Assert.assertEquals(
+				_companyId, notificationRecipient.getCompanyId());
 
-		CompanyThreadLocal.setCompanyId(originalCompanyId);
+			CompanyThreadLocal.setCompanyId(originalCompanyId);
 
-		_companyLocalService.deleteCompany(_companyId);
+			_companyLocalService.deleteCompany(_companyId);
 
-		Assert.assertNull(
-			_notificationQueueEntryLocalService.fetchNotificationQueueEntry(
-				notificationQueueEntry.getNotificationQueueEntryId()));
-		Assert.assertNull(
-			_notificationRecipientLocalService.fetchNotificationRecipient(
-				notificationRecipient.getNotificationRecipientId()));
-		Assert.assertNull(
-			_notificationRecipientSettingLocalService.
-				fetchNotificationRecipientSetting(
-					notificationRecipientSetting.
-						getNotificationRecipientSettingId()));
-		Assert.assertNull(
-			_notificationTemplateLocalService.fetchNotificationTemplate(
-				notificationTemplate.getNotificationTemplateId()));
+			Assert.assertNull(
+				_notificationQueueEntryLocalService.fetchNotificationQueueEntry(
+					notificationQueueEntry.getNotificationQueueEntryId()));
+			Assert.assertNull(
+				_notificationRecipientLocalService.fetchNotificationRecipient(
+					notificationRecipient.getNotificationRecipientId()));
+			Assert.assertNull(
+				_notificationRecipientSettingLocalService.
+					fetchNotificationRecipientSetting(
+						notificationRecipientSetting.
+							getNotificationRecipientSettingId()));
+			Assert.assertNull(
+				_notificationTemplateLocalService.fetchNotificationTemplate(
+					notificationTemplate.getNotificationTemplateId()));
+		}
+		finally {
+			if (CompanyThreadLocal.getCompanyId() == _companyId) {
+				CompanyThreadLocal.setCompanyId(originalCompanyId);
+
+				_companyLocalService.deleteCompany(_companyId);
+			}
+		}
 	}
 
 	private long _companyId;

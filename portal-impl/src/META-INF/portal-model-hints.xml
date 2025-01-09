@@ -1471,6 +1471,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="referrerClassNameId" type="long" />
 		<field name="parentSystemEventId" type="long" />
 		<field name="systemEventSetKey" type="long" />

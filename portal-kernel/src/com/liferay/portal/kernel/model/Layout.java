@@ -428,8 +428,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeAssetDisplay();
 
-	public boolean isTypeCollection();
-
 	public boolean isTypeContent();
 
 	public boolean isTypeControlPanel();

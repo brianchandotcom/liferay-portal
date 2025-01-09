@@ -1871,11 +1871,6 @@ public class LayoutWrapper
 	}
 
 	@Override
-	public boolean isTypeCollection() {
-		return model.isTypeCollection();
-	}
-
-	@Override
 	public boolean isTypeContent() {
 		return model.isTypeContent();
 	}

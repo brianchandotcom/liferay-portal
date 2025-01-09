@@ -2020,6 +2020,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		deployObjectDefinition(objectDefinition1);
 
+		objectDefinition1.setPreviousRESTContextPath(null);
+
 		boolean containsDraftDescendantNodeObjectDefinitions = false;
 		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
 			new ObjectDefinitionTreeFactory(

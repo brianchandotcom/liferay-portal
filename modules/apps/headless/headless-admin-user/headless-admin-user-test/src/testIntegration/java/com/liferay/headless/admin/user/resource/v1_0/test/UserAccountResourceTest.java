@@ -192,7 +192,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		indexer.reindex(_testUser);
 
-		_accountEntry = _getAccountEntry();
+		_accountEntry = _addAccountEntry();
 
 		User otherUser = UserTestUtil.addUser(false);
 
@@ -341,6 +341,142 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetSiteAccountUserAccountSelected() throws Exception {
+		AccountEntry accountEntry1 = _addAccountEntry();
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user.getUserId());
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), user.getUserId());
+
+		Assert.assertFalse(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+				user.getUserId()));
+		Assert.assertFalse(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry2.getAccountEntryId(),
+				user.getUserId()));
+
+		userAccountResource.patchSiteAccountUserAccountSelected(
+			testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+			user.getUserId());
+
+		Assert.assertTrue(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+				user.getUserId()));
+		Assert.assertFalse(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry2.getAccountEntryId(),
+				user.getUserId()));
+
+		userAccountResource.patchSiteAccountUserAccountSelected(
+			testGroup.getGroupId(), accountEntry2.getAccountEntryId(),
+			user.getUserId());
+
+		Assert.assertFalse(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+				user.getUserId()));
+		Assert.assertTrue(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry2.getAccountEntryId(),
+				user.getUserId()));
+
+		AccountEntry accountEntry3 = _addAccountEntry();
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getSiteAccountUserAccountSelectedHttpResponse(
+				testGroup.getGroupId(), accountEntry3.getAccountEntryId(),
+				user.getUserId()));
+	}
+
+	@Override
+	@Test
+	public void testGetSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
+		throws Exception {
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user.getUserId());
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), user.getUserId());
+
+		Assert.assertFalse(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry1.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+		Assert.assertFalse(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry2.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+
+		userAccountResource.
+			patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+				testGroup.getFriendlyURL(),
+				accountEntry1.getExternalReferenceCode(),
+				user.getExternalReferenceCode());
+
+		Assert.assertTrue(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry1.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+		Assert.assertFalse(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry2.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+
+		userAccountResource.
+			patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+				testGroup.getFriendlyURL(),
+				accountEntry2.getExternalReferenceCode(),
+				user.getExternalReferenceCode());
+
+		Assert.assertFalse(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry1.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+		Assert.assertTrue(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry2.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+
+		AccountEntry accountEntry3 = _addAccountEntry();
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
+					testGroup.getFriendlyURL(),
+					accountEntry3.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -674,6 +810,80 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Arrays.asList(
 				UserAccountSerDes.toDTOs(
 					userAccountsJSONObject.getString("items"))));
+	}
+
+	@Override
+	@Test
+	public void testPatchSiteAccountUserAccountSelected() throws Exception {
+		AccountEntry accountEntry1 = _addAccountEntry();
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user.getUserId());
+
+		Assert.assertFalse(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+				user.getUserId()));
+
+		userAccountResource.patchSiteAccountUserAccountSelected(
+			testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+			user.getUserId());
+
+		Assert.assertTrue(
+			userAccountResource.getSiteAccountUserAccountSelected(
+				testGroup.getGroupId(), accountEntry1.getAccountEntryId(),
+				user.getUserId()));
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.patchSiteAccountUserAccountSelectedHttpResponse(
+				testGroup.getGroupId(), accountEntry2.getAccountEntryId(),
+				user.getUserId()));
+	}
+
+	@Override
+	@Test
+	public void testPatchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected()
+		throws Exception {
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), user.getUserId());
+
+		Assert.assertFalse(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry1.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+
+		userAccountResource.
+			patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+				testGroup.getFriendlyURL(),
+				accountEntry1.getExternalReferenceCode(),
+				user.getExternalReferenceCode());
+
+		Assert.assertTrue(
+			userAccountResource.
+				getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected(
+					testGroup.getFriendlyURL(),
+					accountEntry1.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
+
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelectedHttpResponse(
+					testGroup.getFriendlyURL(),
+					accountEntry2.getExternalReferenceCode(),
+					user.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -1548,6 +1758,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			randomUserAccount());
 	}
 
+	private AccountEntry _addAccountEntry() throws Exception {
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
+			null, null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		return _accountEntryLocalService.updateAccountEntry(accountEntry);
+	}
+
 	private UserAccount _addAccountUserAccount(
 			Long accountId, UserAccount userAccount)
 		throws Exception {
@@ -1672,21 +1897,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	private AccountEntry _getAccountEntry() throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
-			null, null, null, null,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
 	private Long _getAccountEntryId() {

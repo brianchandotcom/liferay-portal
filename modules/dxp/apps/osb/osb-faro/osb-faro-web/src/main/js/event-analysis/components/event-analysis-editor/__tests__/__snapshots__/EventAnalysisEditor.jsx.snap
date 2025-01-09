@@ -4,6 +4,7 @@ exports[`Event Analysis Editor render 1`] = `
 <div>
   <div
     class="card card-root event-analysis-editor-root"
+    id="container.report.eventAnalysisPage"
   >
     <div
       class="event-analysis-builder-root d-flex flex-column"

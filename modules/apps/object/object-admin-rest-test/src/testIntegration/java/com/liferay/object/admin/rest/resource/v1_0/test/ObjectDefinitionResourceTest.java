@@ -526,6 +526,7 @@ public class ObjectDefinitionResourceTest
 		assertValid(postObjectDefinition);
 	}
 
+	@FeatureFlags("LPD-32050")
 	@Override
 	@Test
 	public void testPutObjectDefinition() throws Exception {
@@ -693,6 +694,94 @@ public class ObjectDefinitionResourceTest
 							WorkflowConstants.STATUS_APPROVED));
 				}
 			});
+
+		// Enable localization
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setEnableLocalization(false);
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap("en_US", "Column");
+						localized = true;
+						name = StringUtil.randomId();
+					}
+				}
+			});
+		randomObjectDefinition.setStatus(
+			() -> new Status() {
+				{
+					code = WorkflowConstants.STATUS_APPROVED;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_APPROVED));
+				}
+			});
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		Assert.assertTrue(postObjectDefinition.getEnableLocalization());
+
+		ObjectField[] localizedObjectFields = ArrayUtil.filter(
+			postObjectDefinition.getObjectFields(), ObjectField::getLocalized);
+
+		Assert.assertEquals(
+			Arrays.toString(localizedObjectFields), 1,
+			localizedObjectFields.length);
+
+		postObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap("en_US", "Column");
+						localized = false;
+						name = StringUtil.randomId();
+					}
+				}
+			});
+
+		postObjectDefinition = objectDefinitionResource.putObjectDefinition(
+			postObjectDefinition.getId(), postObjectDefinition);
+
+		Assert.assertTrue(postObjectDefinition.getEnableLocalization());
+
+		localizedObjectFields = ArrayUtil.filter(
+			postObjectDefinition.getObjectFields(), ObjectField::getLocalized);
+
+		Assert.assertEquals(
+			Arrays.toString(localizedObjectFields), 0,
+			localizedObjectFields.length);
+
+		postObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap("en_US", "Column");
+						localized = true;
+						name = StringUtil.randomId();
+					}
+				}
+			});
+
+		localizedObjectFields = ArrayUtil.filter(
+			postObjectDefinition.getObjectFields(), ObjectField::getLocalized);
+
+		Assert.assertEquals(
+			Arrays.toString(localizedObjectFields), 1,
+			localizedObjectFields.length);
 
 		// Modifiable system object definition
 

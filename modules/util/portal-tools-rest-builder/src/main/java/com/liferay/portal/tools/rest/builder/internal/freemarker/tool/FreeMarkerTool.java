@@ -1075,25 +1075,35 @@ public class FreeMarkerTool {
 			javaMethodSignature.getParentSchemaName());
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
-		if (methodName.equals(
+		if (!(methodName.equals(
 				StringBundler.concat(
 					"get", parentSchemaName, pluralSchemaName, "Page")) ||
-			methodName.equals("get" + parentSchemaName + schemaName) ||
-			methodName.equals(
-				StringBundler.concat(
-					"get", parentSchemaName, schemaName,
-					"ByExternalReferenceCode")) ||
-			methodName.equals("post" + parentSchemaName + schemaName) ||
-			methodName.equals("put" + parentSchemaName + schemaName) ||
-			methodName.equals(
-				StringBundler.concat(
-					"put", parentSchemaName, schemaName,
-					"ByExternalReferenceCode"))) {
+			  methodName.equals("get" + parentSchemaName + schemaName) ||
+			  methodName.equals(
+				  StringBundler.concat(
+					  "get", parentSchemaName, schemaName,
+					  "ByExternalReferenceCode")) ||
+			  methodName.equals("post" + parentSchemaName + schemaName) ||
+			  methodName.equals("put" + parentSchemaName + schemaName) ||
+			  methodName.equals(
+				  StringBundler.concat(
+					  "put", parentSchemaName, schemaName,
+					  "ByExternalReferenceCode")))) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		Schema permissionsSchema = propertySchemas.get("permissions");
+
+		if (permissionsSchema.isReadOnly() || permissionsSchema.isWriteOnly()) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"The `", schemaName, ".permissions` attribute cannot be ",
+					permissionsSchema.isReadOnly() ? "readOnly " : "writeOnly ",
+					"to autogenerate the permissions code"));
+		}
+
+		return true;
 	}
 
 	public boolean isParameter(

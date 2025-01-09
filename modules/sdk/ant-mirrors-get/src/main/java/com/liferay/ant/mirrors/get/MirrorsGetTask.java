@@ -282,6 +282,54 @@ public class MirrorsGetTask extends Task {
 		_downloadFile(sourceURL, targetFile);
 	}
 
+	private void _downloadGCPFile(File targetFile) {
+		File gcpCredentialsFile = _getGCPCredentialsFile();
+		String gsURL = _getGSURL();
+
+		if ((gcpCredentialsFile == null) || (gsURL == null)) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Downloading ");
+		sb.append(gsURL);
+		sb.append(" to ");
+		sb.append(targetFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		try {
+			Process process = _executeCommands(
+				new String[] {
+					"gcloud", "auth", "activate-service-account", "--key-file",
+					gcpCredentialsFile.toString()
+				});
+
+			if (process.exitValue() != 0) {
+				System.out.println(
+					"WARNING: Failed to activated service account.");
+
+				return;
+			}
+
+			process = _executeCommands(
+				new String[] {
+					"gcloud", "storage", "cp", gsURL, targetFile.toString()
+				});
+
+			if (process.exitValue() != 0) {
+				System.out.println(
+					"WARNING: Failed to download file from " + gsURL + ".");
+			}
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"WARNING: Failed to run GCP commands to download file.");
+		}
+	}
+
 	private void _execute() throws IOException {
 		if (_src.startsWith("file:")) {
 			File srcFile = new File(_src.substring("file:".length()));
@@ -331,6 +379,21 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (!mirrorsCacheFile.exists()) {
+			_downloadGCPFile(mirrorsCacheTempFile);
+
+			if (mirrorsCacheTempFile.exists()) {
+				_moveFile(mirrorsCacheTempFile, mirrorsCacheFile);
+
+				if (_dest.exists() && _dest.isDirectory()) {
+					_copyFile(mirrorsCacheFile, new File(_dest, _fileName));
+				}
+				else {
+					_copyFile(mirrorsCacheFile, _dest);
+				}
+
+				return;
+			}
+
 			String mirrorsHostname = _getMirrorsHostname();
 
 			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
@@ -404,6 +467,54 @@ public class MirrorsGetTask extends Task {
 		process.waitFor();
 
 		return process;
+	}
+
+	private String _getGCPBucketName() {
+		if (_gcpBucketName != null) {
+			return _gcpBucketName;
+		}
+
+		Project project = getProject();
+
+		_gcpBucketName = project.getProperty(
+			"mirrors.gcp.bucket.name[" + _hostName + "]");
+
+		return _gcpBucketName;
+	}
+
+	private File _getGCPCredentialsFile() {
+		if (_gcpCredentialsFile != null) {
+			return _gcpCredentialsFile;
+		}
+
+		Project project = getProject();
+
+		String gcpCredentialsFilePath = project.getProperty(
+			"mirrors.gcp.credentials.file[" + _hostName + "]");
+
+		if (gcpCredentialsFilePath == null) {
+			return null;
+		}
+
+		File gcpCredentialsFile = new File(gcpCredentialsFilePath);
+
+		if (!gcpCredentialsFile.exists()) {
+			return null;
+		}
+
+		_gcpCredentialsFile = gcpCredentialsFile;
+
+		return _gcpCredentialsFile;
+	}
+
+	private String _getGSURL() {
+		String gcpBucketName = _getGCPBucketName();
+
+		if (gcpBucketName == null) {
+			return null;
+		}
+
+		return "gs://" + gcpBucketName + "/" + _path + "/" + _fileName;
 	}
 
 	private URL _getLocalURL() {
@@ -919,6 +1030,8 @@ public class MirrorsGetTask extends Task {
 	private File _dest;
 	private String _fileName;
 	private boolean _force;
+	private String _gcpBucketName;
+	private File _gcpCredentialsFile;
 	private String _hostName;
 	private boolean _ignoreErrors;
 	private String _mirrorsHostname;

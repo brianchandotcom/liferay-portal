@@ -39,8 +39,6 @@ Import-Package:\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.lang.jstl;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.lang.jstl.parser;version='[1.2.3,2.0)',\
-	org.apache.taglibs.standard.lang.jstl.test;version='[1.2.3,2.0)',\
-	org.apache.taglibs.standard.lang.jstl.test.beans;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.lang.support;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.resources;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tag.common.core;version='[1.2.3,2.0)',\

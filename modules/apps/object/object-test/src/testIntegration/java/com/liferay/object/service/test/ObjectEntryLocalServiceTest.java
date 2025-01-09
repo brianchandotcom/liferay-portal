@@ -1753,226 +1753,127 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddObjectEntryWithObjectDefinitionTreeAndWithObjectValidationRule()
+	public void testAddObjectEntryWithHierarchyAndObjectValidationRule()
 		throws Exception {
 
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).build();
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+		ObjectDefinition objectDefinitionAAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, Collections.singletonList(objectField));
+
+		ObjectValidationRule objectValidationRuleA = _addObjectValidationRule(
+			objectDefinitionA,
+			String.format("not(isEmpty(%s))", objectField.getName()));
+		ObjectValidationRule objectValidationRuleAA = _addObjectValidationRule(
+			objectDefinitionAA,
+			String.format("not(isEmpty(%s))", objectField.getName()));
+		ObjectValidationRule objectValidationRuleAAA = _addObjectValidationRule(
+			objectDefinitionAAA,
+			String.format("not(isEmpty(%s))", objectField.getName()));
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionA,
+					objectDefinitionAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship1"),
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					objectDefinitionAAA,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					"objectRelationship2")));
+
+		ObjectEntry objectEntryA = _addObjectEntry(
+			0, objectDefinitionA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).build());
+
+		ObjectEntry objectEntryAA = _addObjectEntry(
+			0, objectDefinitionAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship1_" +
+					objectDefinitionA.getPKObjectFieldName(),
+				objectEntryA.getObjectEntryId()
+			).build());
+
+		_addObjectEntry(
+			0, objectDefinitionAAA.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), RandomTestUtil.randomString()
+			).put(
+				"r_objectRelationship2_" +
+					objectDefinitionAA.getPKObjectFieldName(),
+				objectEntryAA.getObjectEntryId()
+			).build());
+
 		try {
-			Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				true,
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"B"}
-				).put(
-					"B", new String[] {"C"}
-				).put(
-					"C", new String[0]
-				).build());
-
-			TreeTestUtil.assertObjectDefinitionTree(
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"B"}
-				).put(
-					"B", new String[] {"C"}
-				).put(
-					"C", new String[0]
-				).build(),
-				objectDefinitionTree, _objectDefinitionLocalService);
-
-			ObjectDefinition objectDefinitionA =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_A");
-			ObjectDefinition objectDefinitionB =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_B");
-			ObjectDefinition objectDefinitionC =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_C");
-
-			List<ObjectDefinition> objectDefinitionList = Arrays.asList(
-				objectDefinitionA, objectDefinitionB, objectDefinitionC);
-
-			for (ObjectDefinition objectDefinition : objectDefinitionList) {
-				ObjectField objectField1 = ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"FirstName", "firstName", false);
-
-				objectField1.setObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId());
-
-				_addCustomObjectField(objectField1);
-
-				ObjectField objectField2 = ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"LastName", "lastName", false);
-
-				objectField2.setObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId());
-
-				_addCustomObjectField(objectField2);
-
-				ObjectField objectField3 = ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"Nickname", "nickname", false);
-
-				objectField3.setObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId());
-
-				_addCustomObjectField(objectField3);
-
-				_objectValidationRuleLocalService.addObjectValidationRule(
-					StringPool.BLANK, TestPropsValues.getUserId(),
-					objectDefinition.getObjectDefinitionId(), true,
-					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-					LocalizedMapUtil.getLocalizedMap(
-						"Field value can not be empty"),
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-					String.format("not(isEmpty(%s))", "firstName"), false,
-					Collections.emptyList());
-			}
-
-			List<ObjectRelationship> objectRelationshipListA =
-				_objectRelationshipLocalService.getAllObjectRelationships(
-					objectDefinitionA.getObjectDefinitionId());
-
-			List<ObjectRelationship> objectRelationshipListB =
-				_objectRelationshipLocalService.getAllObjectRelationships(
-					objectDefinitionB.getObjectDefinitionId());
-
-			ObjectRelationship objectRelationshipA_B =
-				objectRelationshipListA.get(0);
-			ObjectRelationship objectRelationshipB_C =
-				objectRelationshipListB.get(1);
-
-			ObjectEntry objectEntryA = _addObjectEntry(
+			_addObjectEntry(
 				0, objectDefinitionA.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomTestUtil.randomString()
-				).put(
-					"lastName", RandomTestUtil.randomString()
-				).put(
-					"nickname", RandomTestUtil.randomString()
-				).build());
+				Collections.emptyMap());
 
-			ObjectField relationshipObjectFieldA_B =
-				_objectFieldLocalService.getObjectField(
-					objectRelationshipA_B.getObjectFieldId2());
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRuleA);
+		}
 
-			ObjectEntry objectEntryB = _addObjectEntry(
-				0, objectDefinitionB.getObjectDefinitionId(),
+		try {
+			_addObjectEntry(
+				0, objectDefinitionAA.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomTestUtil.randomString()
-				).put(
-					"lastName", RandomTestUtil.randomString()
-				).put(
-					"nickname", RandomTestUtil.randomString()
-				).put(
-					relationshipObjectFieldA_B.getName(),
+					"r_objectRelationship1_" +
+						objectDefinitionA.getPKObjectFieldName(),
 					objectEntryA.getObjectEntryId()
 				).build());
 
-			ObjectField relationshipObjectFieldB_C =
-				_objectFieldLocalService.getObjectField(
-					objectRelationshipB_C.getObjectFieldId2());
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRuleAA);
+		}
 
+		try {
 			_addObjectEntry(
-				0, objectDefinitionC.getObjectDefinitionId(),
+				0, objectDefinitionAAA.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomTestUtil.randomString()
-				).put(
-					"lastName", RandomTestUtil.randomString()
-				).put(
-					"nickname", RandomTestUtil.randomString()
-				).put(
-					relationshipObjectFieldB_C.getName(),
-					objectEntryB.getObjectEntryId()
+					"r_objectRelationship2_" +
+						objectDefinitionAA.getPKObjectFieldName(),
+					objectEntryAA.getObjectEntryId()
 				).build());
 
-			List<ObjectEntry> objectDefinitionAEntries =
-				_objectEntryLocalService.getObjectEntries(
-					0, objectDefinitionA.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Assert.assertEquals(
-				objectDefinitionAEntries.toString(), 1,
-				objectDefinitionAEntries.size());
-
-			List<ObjectEntry> objectDefinitionBEntries =
-				_objectEntryLocalService.getObjectEntries(
-					0, objectDefinitionB.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Assert.assertEquals(
-				objectDefinitionBEntries.toString(), 1,
-				objectDefinitionAEntries.size());
-
-			List<ObjectEntry> objectDefinitionCEntries =
-				_objectEntryLocalService.getObjectEntries(
-					0, objectDefinitionC.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Assert.assertEquals(
-				objectDefinitionCEntries.toString(), 1,
-				objectDefinitionAEntries.size());
-
-			AssertUtils.assertFailure(
-				ModelListenerException.class,
-				ObjectValidationRuleEngineException.class.getName() +
-					": Field value can not be empty",
-				() -> _addObjectEntry(
-					0, objectDefinitionA.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"firstName", ""
-					).put(
-						"lastName", RandomTestUtil.randomString()
-					).put(
-						"nickname", RandomTestUtil.randomString()
-					).build()));
-
-			AssertUtils.assertFailure(
-				ModelListenerException.class,
-				ObjectValidationRuleEngineException.class.getName() +
-					": Field value can not be empty",
-				() -> _addObjectEntry(
-					0, objectDefinitionB.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"firstName", ""
-					).put(
-						"lastName", RandomTestUtil.randomString()
-					).put(
-						"nickname", RandomTestUtil.randomString()
-					).put(
-						relationshipObjectFieldA_B.getName(),
-						objectEntryA.getObjectEntryId()
-					).build()));
-
-			AssertUtils.assertFailure(
-				ModelListenerException.class,
-				ObjectValidationRuleEngineException.class.getName() +
-					": Field value can not be empty",
-				() -> _addObjectEntry(
-					0, objectDefinitionC.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"firstName", ""
-					).put(
-						"lastName", RandomTestUtil.randomString()
-					).put(
-						"nickname", RandomTestUtil.randomString()
-					).put(
-						relationshipObjectFieldB_C.getName(),
-						objectEntryA.getObjectEntryId()
-					).build()));
+			Assert.fail();
 		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService,
-				new String[] {"C_A", "C_B", "C_C"}, _objectEntryLocalService,
-				_objectRelationshipLocalService);
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRuleAAA);
 		}
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionAA.getName(),
+				objectDefinitionAAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

@@ -870,6 +870,16 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"postOrganizationUserAccountsPageExportBatch"));
 					put(
+						"mutation#patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"patchSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected"));
+					put(
+						"mutation#patchSiteAccountUserAccountSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"patchSiteAccountUserAccountSelected"));
+					put(
 						"mutation#createSiteUserAccountsPageExportBatch",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
@@ -1381,6 +1391,16 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getOrganizationUserAccountsPage"));
 					put(
+						"query#byFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected"));
+					put(
+						"query#accountUserAccountSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getSiteAccountUserAccountSelected"));
+					put(
 						"query#siteUserAccounts",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
@@ -1741,6 +1761,11 @@ public class ServletDataImpl implements ServletData {
 							AccountRoleResourceImpl.class,
 							"getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage"));
 					put(
+						"query#Site.accountUserAccountSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getSiteAccountUserAccountSelected"));
+					put(
 						"query#Site.segments",
 						new ObjectValuePair<>(
 							SegmentResourceImpl.class, "getSiteSegmentsPage"));
@@ -1769,6 +1794,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WebUrlResourceImpl.class,
 							"getUserAccountByExternalReferenceCodeWebUrlsPage"));
+					put(
+						"query#Site.byFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getSiteByFriendlyUrlPathAccountByExternalReferenceCodeAccountExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeSelected"));
 					put(
 						"query#Account.organizationByExternalReferenceCode",
 						new ObjectValuePair<>(

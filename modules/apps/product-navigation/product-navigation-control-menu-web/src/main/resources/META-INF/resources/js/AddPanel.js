@@ -78,6 +78,7 @@ export function updateUsedWidget({item, used = true, widgets}) {
 const normalizeWidget = (widget) => {
 	return {
 		data: {
+			deprecated: widget.deprecated,
 			instanceable: widget.instanceable,
 			portletId: widget.portletId,
 			portletItemId: widget.portletItemId || null,

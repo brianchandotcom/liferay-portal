@@ -1276,12 +1276,9 @@ public class UserLocalServiceTest {
 		return user;
 	}
 
-	private void _testVerifyEmailAddress(boolean expiredTicket)
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				_updateCompanyStrangersVerifyWithSafeCloseable(
-					TestPropsValues.getCompanyId(), true)) {
+	private void _testVerifyEmailAddress(boolean expired) throws Exception {
+		try (SafeCloseable safeCloseable = _updateSecurityWithSafeCloseable(
+				TestPropsValues.getCompanyId(), true)) {
 
 			User user = _userLocalService.addUserWithWorkflow(
 				0, TestPropsValues.getCompanyId(), false, "test", "test", false,
@@ -1305,7 +1302,7 @@ public class UserLocalServiceTest {
 			Assert.assertFalse(ticket.isExpired());
 			Assert.assertNotNull(ticket.getExpirationDate());
 
-			if (expiredTicket) {
+			if (expired) {
 				try {
 					ticket.setExpirationDate(
 						new Date(System.currentTimeMillis()));
@@ -1340,7 +1337,7 @@ public class UserLocalServiceTest {
 		}
 	}
 
-	private SafeCloseable _updateCompanyStrangersVerifyWithSafeCloseable(
+	private SafeCloseable _updateSecurityWithSafeCloseable(
 			long companyId, boolean strangersVerify)
 		throws PortalException {
 

@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,6 +75,11 @@ public class GetConflictInfoMVCResourceCommandTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString());
 		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test

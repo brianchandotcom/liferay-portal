@@ -125,6 +125,22 @@
 			"name": "P2S3 Quiz Question Type"
 		},
 		{
+			"externalReferenceCode": "P2S3_RESULT",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "FAIL",
+					"key": "fail",
+					"name": "Fail"
+				},
+				{
+					"externalReferenceCode": "PASS",
+					"key": "pass",
+					"name": "Pass"
+				}
+			],
+			"name": "P2S3 Result"
+		},
+		{
 			"externalReferenceCode": "P2S3_STEP_TYPE",
 			"listTypeEntries": [
 				{

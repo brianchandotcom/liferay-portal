@@ -169,6 +169,10 @@ public class NavItem implements Serializable {
 		return _children;
 	}
 
+	public String getDisplayIcon() throws Exception {
+		return StringPool.BLANK;
+	}
+
 	public Map<String, Serializable> getExpandoAttributes() {
 		if (_layout != null) {
 			ExpandoBridge expandoBridge = _layout.getExpandoBridge();

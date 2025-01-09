@@ -67,6 +67,16 @@ public interface SiteNavigationMenuItemType {
 		throw new UnsupportedOperationException();
 	}
 
+	public default String getDisplayIcon(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.fastLoad(
+			siteNavigationMenuItem.getTypeSettings()
+		).build();
+
+		return unicodeProperties.getProperty("displayIcon", StringPool.BLANK);
+	}
+
 	public default String getIcon() {
 		return "magic";
 	}

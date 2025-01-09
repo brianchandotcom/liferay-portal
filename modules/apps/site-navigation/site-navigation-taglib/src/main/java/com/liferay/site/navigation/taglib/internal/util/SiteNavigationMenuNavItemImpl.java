@@ -84,6 +84,12 @@ public class SiteNavigationMenuNavItemImpl
 	}
 
 	@Override
+	public String getDisplayIcon() {
+		return _siteNavigationMenuItemType.getDisplayIcon(
+			_siteNavigationMenuItem);
+	}
+
+	@Override
 	public Map<String, Serializable> getExpandoAttributes() {
 		Map<String, Serializable> expandoAttributes =
 			super.getExpandoAttributes();

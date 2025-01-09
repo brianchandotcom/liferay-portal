@@ -1745,6 +1745,10 @@ public class ObjectRelationshipLocalServiceImpl
 		_updateObjectDefinitionTree(
 			objectDefinition2, oldRootObjectDefinitionId2,
 			newRootObjectDefinitionId2);
+
+		if (objectDefinition2.isRootNode()) {
+			_deployObjectDefinition(objectDefinition2);
+		}
 	}
 
 	private void _updateObjectDefinitionTree(

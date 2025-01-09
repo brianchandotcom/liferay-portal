@@ -128,16 +128,27 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	}
 
 	public static DDMFormInstanceRecord deleteFormInstanceRecord(
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			boolean updateDDMFormInstanceReport)
+		throws PortalException {
+
+		return getService().deleteFormInstanceRecord(
+			ddmFormInstanceRecord, updateDDMFormInstanceReport);
+	}
+
+	public static DDMFormInstanceRecord deleteFormInstanceRecord(
 			long ddmFormInstanceRecordId)
 		throws PortalException {
 
 		return getService().deleteFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
-	public static void deleteFormInstanceRecords(long ddmFormInstanceId)
+	public static void deleteFormInstanceRecords(
+			long ddmFormInstanceId, boolean updateDDMFormInstanceReport)
 		throws PortalException {
 
-		getService().deleteFormInstanceRecords(ddmFormInstanceId);
+		getService().deleteFormInstanceRecords(
+			ddmFormInstanceId, updateDDMFormInstanceReport);
 	}
 
 	/**

@@ -136,13 +136,18 @@ public interface DDMFormInstanceRecordLocalService
 			long formInstanceRecordId)
 		throws PortalException;
 
+	public DDMFormInstanceRecord deleteFormInstanceRecord(
+			DDMFormInstanceRecord ddmFormInstanceRecord)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
 	public DDMFormInstanceRecord deleteFormInstanceRecord(
-			DDMFormInstanceRecord ddmFormInstanceRecord)
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			boolean updateDDMFormInstanceReport)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
@@ -150,7 +155,8 @@ public interface DDMFormInstanceRecordLocalService
 			long ddmFormInstanceRecordId)
 		throws PortalException;
 
-	public void deleteFormInstanceRecords(long ddmFormInstanceId)
+	public void deleteFormInstanceRecords(
+			long ddmFormInstanceId, boolean updateDDMFormInstanceReport)
 		throws PortalException;
 
 	/**

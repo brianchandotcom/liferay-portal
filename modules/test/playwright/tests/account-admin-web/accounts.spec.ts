@@ -11,6 +11,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -21,6 +22,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	loginTest(),
+	usersAndOrganizationsPagesTest,
 	serverAdministrationPageTest
 );
 
@@ -429,5 +431,73 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 		await expect(
 			(await accountsPage.accountsTableRow(1, account.name, true)).row
 		).toBeVisible();
+	}
+});
+
+test('LPD-45545 Can add and remove organizations in bulk', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', (dialog) => dialog.accept());
+
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	for (let i = 1; i < 5; i++) {
+		await apiHelpers.headlessAdminUser.postOrganization({
+			name: `Organization ${i}`,
+		});
+	}
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+
+	await accountsPage.organizationsTab.click();
+	await accountsPage.newButton.click();
+
+	for (let i = 1; i < 5; i++) {
+		await (
+			await accountsPage.organizationAssignmentCheckBox(
+				`Organization ${i}`
+			)
+		).check();
+	}
+
+	await accountsPage.organizationAssignButton.click();
+
+	await waitForAlert(page);
+
+	for (let i = 1; i < 5; i++) {
+		await expect(
+			accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
+		).toBeVisible();
+	}
+
+	for (const index of [1, 3]) {
+		await (
+			await accountsPage.accountOrganizationsCheckbox(
+				`Organization ${index}`
+			)
+		).check();
+	}
+
+	await accountsPage.removeAccountOrganizationButton.click();
+
+	await waitForAlert(page);
+
+	for (let i = 1; i < 5; i++) {
+		if (i % 2 === 0) {
+			await expect(
+				accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
+			).not.toBeVisible();
+		}
 	}
 });

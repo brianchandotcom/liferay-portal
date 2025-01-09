@@ -2197,6 +2197,13 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
+		TreeTestUtil.unbind(
+			objectDefinitionA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_assertModelResourceNames(ListUtil.fromArray("C_A"));
+		_assertModelResourceNames(ListUtil.fromArray("C_AA", "C_AAAAA"));
+
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
 			new String[] {"C_A", "C_AA", "C_AAA", "C_AAAA", "C_AAAAA"},

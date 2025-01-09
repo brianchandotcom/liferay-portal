@@ -506,6 +506,10 @@ definition {
 	macro startImportAndWaitForSuccess() {
 		Button.click(button = "Next");
 
+		WaitForElementPresent(
+			key_text = "Start Import",
+			locator1 = "Button#ANY");
+
 		Button.click(button = "Start Import");
 
 		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");

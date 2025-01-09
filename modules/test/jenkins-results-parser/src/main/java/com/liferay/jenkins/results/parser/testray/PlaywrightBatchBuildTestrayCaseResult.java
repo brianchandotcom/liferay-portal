@@ -75,8 +75,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			}
 
 			if (result.equals("ABORTED")) {
-				errors =
-					build.getJobName() + " timed out after 2 hours";
+				errors = build.getJobName() + " timed out after 2 hours";
 			}
 
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
@@ -119,8 +118,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		}
 
 		if (errors.contains("\n")) {
-			errors = errors.substring(
-				0, errors.indexOf("\n"));
+			errors = errors.substring(0, errors.indexOf("\n"));
 		}
 
 		errors = errors.trim();

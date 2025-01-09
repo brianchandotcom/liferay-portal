@@ -10245,9 +10245,9 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 
 		<exec dir="${module.base.dir}" executable="/bin/bash" failonerror="true" logError="true">
-			<env key="MAVEN_OPTS" value="-XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"/>
-			<arg value="-c"/>
-			<arg value="mvn clean package ${build.profiles}"/>
+			<env key="MAVEN_OPTS" value="-XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED" />
+			<arg value="-c" />
+			<arg value="mvn clean package ${build.profiles}" />
 		</exec>
 
 		<copy

@@ -24,10 +24,14 @@ export class OrganizationManagementPage {
 	readonly addUserModalUsersEmails: Locator;
 	readonly addUserNode: Locator;
 	readonly chart: Locator;
+	readonly collapseAllButton: Locator;
+	readonly infoText: (text: string) => Locator;
 	readonly menuButton: (container: Locator) => Locator;
 	readonly organizationNode: (organizationName: string) => Locator;
 	readonly page: Page;
 	readonly removeItem: Locator;
+	readonly searchedEntry: (name: string) => Locator;
+	readonly searchInput: Locator;
 	readonly userNode: (userName: string) => Locator;
 
 	constructor(page: Page) {
@@ -53,6 +57,13 @@ export class OrganizationManagementPage {
 		});
 		this.addUserModalRoles = page.getByLabel('Roles');
 		this.chart = page.locator('svg.svg-chart');
+		this.collapseAllButton = page.getByRole('button', {
+			exact: true,
+			name: 'Collapse All',
+		});
+		this.infoText = (text) => {
+			return page.getByText(text);
+		};
 		this.menuButton = (container) => {
 			return container.locator('.node-menu-wrapper');
 		};
@@ -61,7 +72,6 @@ export class OrganizationManagementPage {
 			exact: true,
 			name: 'Remove',
 		});
-
 		this.accountNode = (accountName) => {
 			return this.chart
 				.locator('g.chart-item-account')
@@ -82,6 +92,10 @@ export class OrganizationManagementPage {
 				.locator('g.chart-item-organization')
 				.filter({hasText: organizationName});
 		};
+		this.searchedEntry = (name) => {
+			return page.getByRole('menuitem', {name: new RegExp(name)});
+		};
+		this.searchInput = page.getByPlaceholder('Type Here');
 		this.userNode = (userName) => {
 			return this.chart
 				.locator('g.chart-item-user')

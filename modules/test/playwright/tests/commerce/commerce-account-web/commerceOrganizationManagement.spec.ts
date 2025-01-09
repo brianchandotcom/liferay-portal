@@ -27,6 +27,87 @@ async function waitForAnimationEnd(locator: Locator) {
 	return handle?.dispose();
 }
 
+test('LPD-44149 Can search an entry present multiple times in organization management', async ({
+	apiHelpers,
+	organizationManagementPage,
+	usersAndOrganizationsPage,
+}) => {
+	const organization1 = await apiHelpers.headlessAdminUser.postOrganization();
+
+	const organization2 = await apiHelpers.headlessAdminUser.postOrganization();
+
+	const organization3 = await apiHelpers.headlessAdminUser.postOrganization({
+		parentOrganization: {
+			externalReferenceCode: organization1.externalReferenceCode,
+		},
+	});
+
+	const accounts = [];
+	const data = [
+		{
+			emailAddress: 'buyer@liferay.com',
+			organizationId: organization3.id,
+		},
+		{
+			emailAddress: 'test@liferay.com',
+			organizationId: organization2.id,
+		},
+		{
+			emailAddress: 'buyer@liferay.com',
+			organizationId: organization2.id,
+		},
+	];
+
+	for (const item of data) {
+		const account = await apiHelpers.headlessAdminUser.postAccount();
+		accounts.push(account);
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[item.emailAddress]
+		);
+
+		await apiHelpers.headlessAdminUser.postAccountOrganization(
+			account.id,
+			item.organizationId
+		);
+	}
+
+	const userName1 = 'buyer';
+	const userName2 = 'Test';
+
+	await usersAndOrganizationsPage.goToOrganizationChart();
+
+	await expect(organizationManagementPage.chart).toBeVisible();
+
+	await organizationManagementPage.searchInput.fill(userName1);
+	await organizationManagementPage.searchedEntry(userName1).click();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.userNode(userName1).first()
+	);
+
+	await expect(organizationManagementPage.userNode(userName1)).toHaveCount(2);
+	await expect(organizationManagementPage.userNode(userName2)).toHaveCount(0);
+	await expect(
+		organizationManagementPage.infoText(`2 Results for ${userName1}`)
+	).toBeVisible();
+
+	await organizationManagementPage.collapseAllButton.click();
+
+	await organizationManagementPage.searchInput.fill(userName2);
+	await organizationManagementPage.searchedEntry(userName2).click();
+
+	await waitForAnimationEnd(organizationManagementPage.userNode(userName2));
+
+	await expect(organizationManagementPage.userNode(userName1)).toHaveCount(0);
+	await expect(organizationManagementPage.userNode(userName2)).toHaveCount(1);
+	await expect(
+		organizationManagementPage.infoText(`1 Result for ${userName2}`)
+	).toBeVisible();
+});
+
 test('LPD-30190 Can move accounts and organizations in the widget', async ({
 	apiHelpers,
 	organizationManagementPage,

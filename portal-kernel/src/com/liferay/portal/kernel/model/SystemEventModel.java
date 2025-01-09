@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SystemEventModel
 	extends AttachedModel, BaseModel<SystemEvent>, CTModel<SystemEvent>,
-			MVCCModel, ShardedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -239,6 +239,23 @@ public interface SystemEventModel
 	 * @param classUuid the class uuid of this system event
 	 */
 	public void setClassUuid(String classUuid);
+
+	/**
+	 * Returns the external reference code of this system event.
+	 *
+	 * @return the external reference code of this system event
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this system event.
+	 *
+	 * @param externalReferenceCode the external reference code of this system event
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the referrer class name ID of this system event.

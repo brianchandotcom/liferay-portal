@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -330,18 +331,9 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public List<DDMTemplate> getTemplates() throws PortalException {
-		List<DDMTemplate> templates = new ArrayList<>();
-
-		List<com.liferay.dynamic.data.mapping.model.DDMTemplate> ddmTemplates =
-			_ddmStructure.getTemplates();
-
-		for (com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate :
-				ddmTemplates) {
-
-			templates.add(new DDMTemplateImpl(ddmTemplate));
-		}
-
-		return templates;
+		return TransformUtil.transform(
+			_ddmStructure.getTemplates(),
+			ddmTemplate -> new DDMTemplateImpl(ddmTemplate));
 	}
 
 	@Override

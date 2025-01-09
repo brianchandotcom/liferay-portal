@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -621,47 +622,45 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 	private List<DDMFormFieldValue> _upgradeDDMFormValuesHierarchy(
 		List<DDMFormFieldValue> ddmFormFieldValues, long contentId) {
 
-		List<DDMFormFieldValue> newDDMFormFieldValues = new ArrayList<>();
+		return TransformUtil.transform(
+			ddmFormFieldValues,
+			ddmFormFieldValue -> {
+				String type = ddmFormFieldValue.getType();
 
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			String type = ddmFormFieldValue.getType();
+				if (ListUtil.isNotEmpty(
+						ddmFormFieldValue.getNestedDDMFormFieldValues()) &&
+					(type != null) &&
+					!com.liferay.portal.kernel.util.StringUtil.equals(
+						type, "fieldset")) {
 
-			if (ListUtil.isNotEmpty(
-					ddmFormFieldValue.getNestedDDMFormFieldValues()) &&
-				(type != null) &&
-				!com.liferay.portal.kernel.util.StringUtil.equals(
-					type, "fieldset")) {
+					DDMFormFieldValue newDDMFormFieldValue =
+						new DDMFormFieldValue() {
+							{
+								setInstanceId(
+									com.liferay.portal.kernel.util.StringUtil.
+										randomString());
+								setName(
+									ddmFormFieldValue.getName() + "FieldSet");
+							}
+						};
 
-				DDMFormFieldValue newDDMFormFieldValue =
-					new DDMFormFieldValue() {
-						{
-							setInstanceId(
-								com.liferay.portal.kernel.util.StringUtil.
-									randomString());
-							setName(ddmFormFieldValue.getName() + "FieldSet");
-						}
-					};
+					List<DDMFormFieldValue> nestedDDMFormFieldValues =
+						new ArrayList<>(
+							ddmFormFieldValue.getNestedDDMFormFieldValues());
 
-				List<DDMFormFieldValue> nestedDDMFormFieldValues =
-					new ArrayList<>(
-						ddmFormFieldValue.getNestedDDMFormFieldValues());
+					ddmFormFieldValue.setNestedDDMFormFields(new ArrayList<>());
 
-				ddmFormFieldValue.setNestedDDMFormFields(new ArrayList<>());
+					newDDMFormFieldValue.setNestedDDMFormFields(
+						ListUtil.concat(
+							Collections.singletonList(ddmFormFieldValue),
+							_upgradeDDMFormValuesHierarchy(
+								nestedDDMFormFieldValues, contentId)));
 
-				newDDMFormFieldValue.setNestedDDMFormFields(
-					ListUtil.concat(
-						Collections.singletonList(ddmFormFieldValue),
-						_upgradeDDMFormValuesHierarchy(
-							nestedDDMFormFieldValues, contentId)));
+					return newDDMFormFieldValue;
+				}
 
-				newDDMFormFieldValues.add(newDDMFormFieldValue);
-			}
-			else {
-				newDDMFormFieldValues.add(ddmFormFieldValue);
-			}
-		}
-
-		return newDDMFormFieldValues;
+				return ddmFormFieldValue;
+			});
 	}
 
 	private static final String _CLASS_NAME_DDL_RECORD_SET =

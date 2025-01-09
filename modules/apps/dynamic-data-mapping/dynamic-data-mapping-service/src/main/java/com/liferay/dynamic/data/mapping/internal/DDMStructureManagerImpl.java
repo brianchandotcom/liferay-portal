@@ -11,10 +11,10 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,19 +85,10 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId) {
 
-		List<DDMStructure> ddmStructures = new ArrayList<>();
-
-		List<com.liferay.dynamic.data.mapping.model.DDMStructure> structures =
+		return TransformUtil.transform(
 			_ddmStructureLocalService.getClassStructures(
-				companyId, classNameId);
-
-		for (com.liferay.dynamic.data.mapping.model.DDMStructure structure :
-				structures) {
-
-			ddmStructures.add(new DDMStructureImpl(structure));
-		}
-
-		return ddmStructures;
+				companyId, classNameId),
+			structure -> new DDMStructureImpl(structure));
 	}
 
 	@Override

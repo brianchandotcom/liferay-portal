@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -242,13 +243,8 @@ public class FieldsToDDMFormValuesConverterImpl
 	private List<String> _getDDMFormFieldNames(
 		List<DDMFormField> ddmFormFields) {
 
-		List<String> fieldNames = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			fieldNames.add(ddmFormField.getName());
-		}
-
-		return fieldNames;
+		return TransformUtil.transform(
+			ddmFormFields, ddmFormField -> ddmFormField.getName());
 	}
 
 	private void _setDDMFormFieldValueInstanceId(

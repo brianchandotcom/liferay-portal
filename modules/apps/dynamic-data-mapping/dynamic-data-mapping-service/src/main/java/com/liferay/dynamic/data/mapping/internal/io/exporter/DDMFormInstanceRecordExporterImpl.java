@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -159,58 +159,55 @@ public class DDMFormInstanceRecordExporterImpl
 			List<DDMFormInstanceRecord> ddmFormInstanceRecords, Locale locale)
 		throws Exception {
 
-		List<Map<String, String>> ddmFormFieldValues = new ArrayList<>();
-
 		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale);
 
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				ddmFormInstanceRecords) {
+		return TransformUtil.transform(
+			ddmFormInstanceRecords,
+			ddmFormInstanceRecord -> {
+				DDMFormValues ddmFormValues =
+					ddmFormInstanceRecord.getDDMFormValues();
 
-			DDMFormValues ddmFormValues =
-				ddmFormInstanceRecord.getDDMFormValues();
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+					ddmFormValues.getDDMFormFieldValuesReferencesMap(true);
 
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesReferencesMap(true);
+				Map<String, String> ddmFormFieldsValue = new LinkedHashMap<>();
 
-			Map<String, String> ddmFormFieldsValue = new LinkedHashMap<>();
+				for (Map.Entry<String, DDMFormField> entry :
+						ddmFormFields.entrySet()) {
 
-			for (Map.Entry<String, DDMFormField> entry :
-					ddmFormFields.entrySet()) {
-
-				if (!ddmFormFieldValuesMap.containsKey(entry.getKey())) {
-					ddmFormFieldsValue.put(entry.getKey(), StringPool.BLANK);
+					if (!ddmFormFieldValuesMap.containsKey(entry.getKey())) {
+						ddmFormFieldsValue.put(
+							entry.getKey(), StringPool.BLANK);
+					}
+					else {
+						ddmFormFieldsValue.put(
+							entry.getKey(),
+							getDDMFormFieldValue(
+								entry.getValue(), ddmFormFieldValuesMap,
+								ddmFormValues.getDefaultLocale()));
+					}
 				}
-				else {
-					ddmFormFieldsValue.put(
-						entry.getKey(),
-						getDDMFormFieldValue(
-							entry.getValue(), ddmFormFieldValuesMap,
-							ddmFormValues.getDefaultLocale()));
-				}
-			}
 
-			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-				ddmFormInstanceRecord.getFormInstanceRecordVersion();
+				DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+					ddmFormInstanceRecord.getFormInstanceRecordVersion();
 
-			ddmFormFieldsValue.put(
-				_KEY_AUTHOR, ddmFormInstanceRecordVersion.getUserName());
+				ddmFormFieldsValue.put(
+					_KEY_AUTHOR, ddmFormInstanceRecordVersion.getUserName());
 
-			ddmFormFieldsValue.put(
-				_KEY_LANGUAGE_ID,
-				LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()));
-			ddmFormFieldsValue.put(
-				_KEY_MODIFIED_DATE,
-				dateTimeFormat.format(
-					ddmFormInstanceRecordVersion.getStatusDate()));
-			ddmFormFieldsValue.put(
-				_KEY_STATUS,
-				getStatusMessage(
-					ddmFormInstanceRecordVersion.getStatus(), locale));
+				ddmFormFieldsValue.put(
+					_KEY_LANGUAGE_ID,
+					LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()));
+				ddmFormFieldsValue.put(
+					_KEY_MODIFIED_DATE,
+					dateTimeFormat.format(
+						ddmFormInstanceRecordVersion.getStatusDate()));
+				ddmFormFieldsValue.put(
+					_KEY_STATUS,
+					getStatusMessage(
+						ddmFormInstanceRecordVersion.getStatus(), locale));
 
-			ddmFormFieldValues.add(ddmFormFieldsValue);
-		}
-
-		return ddmFormFieldValues;
+				return ddmFormFieldsValue;
+			});
 	}
 
 	protected Map<String, DDMFormField> getDistinctFields(
@@ -254,20 +251,12 @@ public class DDMFormInstanceRecordExporterImpl
 			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
 				ddmFormInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		ddmFormInstanceVersions = ListUtil.sort(
-			ddmFormInstanceVersions,
-			new FormInstanceVersionVersionComparator());
-
-		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
-
-		for (DDMFormInstanceVersion ddmFormInstanceVersion :
-				ddmFormInstanceVersions) {
-
-			ddmStructureVersions.add(
+		return TransformUtil.transform(
+			ListUtil.sort(
+				ddmFormInstanceVersions,
+				new FormInstanceVersionVersionComparator()),
+			ddmFormInstanceVersion ->
 				ddmFormInstanceVersion.getStructureVersion());
-		}
-
-		return ddmStructureVersions;
 	}
 
 	protected byte[] write(

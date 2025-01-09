@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUt
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -539,13 +540,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	protected List<String> getDDMFormFieldNames(
 		List<DDMFormField> ddmFormFields) {
 
-		List<String> fieldNames = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			fieldNames.add(ddmFormField.getName());
-		}
-
-		return fieldNames;
+		return TransformUtil.transform(
+			ddmFormFields, ddmFormField -> ddmFormField.getName());
 	}
 
 	protected DDMStructure getParentDDMStructure() throws PortalException {

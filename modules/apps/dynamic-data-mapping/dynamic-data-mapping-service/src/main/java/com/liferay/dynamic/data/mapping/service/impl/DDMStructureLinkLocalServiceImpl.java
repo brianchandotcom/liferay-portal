@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLinkLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -160,16 +160,9 @@ public class DDMStructureLinkLocalServiceImpl
 			long classNameId, long classPK)
 		throws PortalException {
 
-		List<DDMStructure> structures = new ArrayList<>();
-
-		List<DDMStructureLink> structureLinks = getStructureLinks(
-			classNameId, classPK);
-
-		for (DDMStructureLink structureLink : structureLinks) {
-			structures.add(structureLink.getStructure());
-		}
-
-		return structures;
+		return TransformUtil.transform(
+			getStructureLinks(classNameId, classPK),
+			structureLink -> structureLink.getStructure());
 	}
 
 	@Override
@@ -177,16 +170,9 @@ public class DDMStructureLinkLocalServiceImpl
 			long classNameId, long classPK, int start, int end)
 		throws PortalException {
 
-		List<DDMStructure> structures = new ArrayList<>();
-
-		List<DDMStructureLink> structureLinks = getStructureLinks(
-			classNameId, classPK, start, end);
-
-		for (DDMStructureLink structureLink : structureLinks) {
-			structures.add(structureLink.getStructure());
-		}
-
-		return structures;
+		return TransformUtil.transform(
+			getStructureLinks(classNameId, classPK, start, end),
+			structureLink -> structureLink.getStructure());
 	}
 
 	@Override
@@ -214,17 +200,10 @@ public class DDMStructureLinkLocalServiceImpl
 			OrderByComparator<DDMStructureLink> orderByComparator)
 		throws PortalException {
 
-		List<DDMStructure> structures = new ArrayList<>();
-
-		List<DDMStructureLink> structureLinks =
+		return TransformUtil.transform(
 			ddmStructureLinkFinder.findByKeywords(
-				classNameId, classPK, keywords, start, end, orderByComparator);
-
-		for (DDMStructureLink structureLink : structureLinks) {
-			structures.add(structureLink.getStructure());
-		}
-
-		return structures;
+				classNameId, classPK, keywords, start, end, orderByComparator),
+			structureLink -> structureLink.getStructure());
 	}
 
 	@Override

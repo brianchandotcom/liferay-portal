@@ -345,25 +345,29 @@ function addPortletAction(items, action, portletId) {
 
 function sortItems(items) {
 
-	// Sort items by label
+	// Sort items by group and label
 
-	items.sort((a, b) => a.label.localeCompare(b.label));
+	items.sort((a, b) => {
+		if (a.group === b.group) {
+			return a.label.localeCompare(b.label);
+		}
 
-	// Group items by group
-
-	const groups = Object.groupBy(items, ({group}) => group);
+		return a.group - b.group;
+	});
 
 	// Add dividers
 
-	const nextItems = Object.values(groups).reduce((acc, items, index) => {
-		if (index > 0) {
-			acc.push({
+	const nextItems = [];
+
+	for (const [index, item] of items.entries()) {
+		if (index && item.group !== items[index - 1].group) {
+			nextItems.push({
 				type: 'divider',
 			});
 		}
 
-		return acc.concat(items);
-	}, []);
+		nextItems.push(item);
+	}
 
 	return nextItems;
 }

@@ -807,6 +807,47 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testOutdatedPasswordAlgorithmIsUpdatedAfterLogin()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		String password = "password";
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), password, password, false, true);
+
+		Assert.assertTrue(
+			user.getPassword(
+			).startsWith(
+				"{PBKDF2WITHHMACSHA1}"
+			));
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					UserLocalServiceImpl.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getDisplayEmailAddress(),
+					password, null, null, null));
+
+			user = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				"{SHA-384}qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1Eb" +
+					"FmGYMlM5oDEfRnDB4On",
+				user.getPassword());
+		}
+	}
+
+	@Test
 	public void testPasswordHistory() throws Exception {
 		User user = UserTestUtil.addUser();
 

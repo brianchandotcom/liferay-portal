@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -51,13 +52,25 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		String value = MapUtil.getString(values, objectField.getName());
+		if (objectField.isLocalized()) {
+			Map<String, Object> localizedValues =
+				ObjectFieldBusinessType.super.getLocalizedValues(
+					objectField, userId, values);
 
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
+			if (localizedValues == null) {
+				return null;
+			}
+
+			for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+				localizedValues.put(
+					entry.getKey(),
+					_getValue(GetterUtil.getString(entry.getValue())));
+			}
+
+			return localizedValues;
 		}
 
-		return value.replaceAll(".[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.*", "");
+		return _getValue(MapUtil.getString(values, objectField.getName()));
 	}
 
 	@Override
@@ -78,6 +91,14 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 	@Override
 	public boolean isLocalizable() {
 		return true;
+	}
+
+	private String _getValue(String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return value.replaceAll(".[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.*", "");
 	}
 
 	@Reference

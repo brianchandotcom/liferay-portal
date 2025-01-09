@@ -75,21 +75,45 @@ public class DateTimeObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd HH:mm");
+
+		User user = _userLocalService.getUser(userId);
+
+		if (objectField.isLocalized()) {
+			Map<String, Object> localizedValues =
+				ObjectFieldBusinessType.super.getLocalizedValues(
+					objectField, userId, values);
+
+			if (localizedValues == null) {
+				return null;
+			}
+
+			for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+				localizedValues.put(
+					entry.getKey(),
+					dateTimeFormatter.format(
+						_getLocalDateTime(
+							StringPool.UTC,
+							ObjectFieldSettingUtil.getTimeZoneId(
+								objectField.getObjectFieldSettings(), user),
+							GetterUtil.getString(entry.getValue()))));
+			}
+
+			return localizedValues;
+		}
+
 		String value = MapUtil.getString(values, objectField.getName());
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
-			"yyyy-MM-dd HH:mm");
-
 		return dateTimeFormatter.format(
 			_getLocalDateTime(
 				StringPool.UTC,
 				ObjectFieldSettingUtil.getTimeZoneId(
-					objectField.getObjectFieldSettings(),
-					_userLocalService.getUser(userId)),
+					objectField.getObjectFieldSettings(), user),
 				value));
 	}
 

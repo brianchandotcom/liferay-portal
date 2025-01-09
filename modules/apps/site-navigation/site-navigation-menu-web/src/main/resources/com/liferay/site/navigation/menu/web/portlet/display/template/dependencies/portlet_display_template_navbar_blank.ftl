@@ -42,10 +42,7 @@
 
 						<#assign nav_item_caret>
 							<span class="lfr-nav-child-toggle">
-								<@liferay_aui.icon
-									image="angle-down"
-									markupView="lexicon"
-								/>
+								<@clay["icon"] symbol="angle-down" />
 							</span>
 						</#assign>
 

@@ -53,6 +53,7 @@ import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -83,6 +84,11 @@ public class PublicationUserNotificationHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(_group);
 	}
 
 	@Test

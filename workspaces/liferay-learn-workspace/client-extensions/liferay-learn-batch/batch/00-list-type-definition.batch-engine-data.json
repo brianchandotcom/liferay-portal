@@ -160,6 +160,27 @@
 				}
 			],
 			"name": "P2S3 Step Type"
+		},
+		{
+			"externalReferenceCode": "P2S3_SYNCHRONIZATION_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "FAILED",
+					"key": "failed",
+					"name": "Failed"
+				},
+				{
+					"externalReferenceCode": "IN_PROGRESS",
+					"key": "inProgress",
+					"name": "In Progress"
+				},
+				{
+					"externalReferenceCode": "SUCCESSFUL",
+					"key": "successful",
+					"name": "Successful"
+				}
+			],
+			"name": "P2S3 Synchronization Status"
 		}
 	]
 }

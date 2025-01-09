@@ -5,17 +5,10 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionPageSettings;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
@@ -24,8 +17,6 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -283,7 +274,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n()), null,
 			null, null, null,
 			SitePageTypeUtil.toInternalType(sitePage.getType()),
-			_getTypeSettings(groupId, sitePage),
+			_getTypeSettings(sitePage),
 			_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				sitePage.getFriendlyUrlPath_i18n()),
@@ -313,106 +304,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return layout.getLayoutId();
 	}
 
-	private String _getTypeSettings(
-			CollectionPageSettings collectionPageSettings, long groupId)
-		throws Exception {
-
-		CollectionReference collectionReference =
-			collectionPageSettings.getCollectionReference();
-
-		if (collectionReference == null) {
-			return null;
-		}
-
-		if (collectionReference.getCollectionType() == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		CollectionReference.CollectionType collectionType =
-			collectionReference.getCollectionType();
-
-		if (collectionType == CollectionReference.CollectionType.COLLECTION) {
-			ItemExternalReference itemExternalReference =
-				(ItemExternalReference)
-					collectionPageSettings.getCollectionReference();
-
-			if (!Objects.equals(
-					AssetListEntry.class.getName(),
-					itemExternalReference.getClassName()) ||
-				Validator.isNull(
-					itemExternalReference.getExternalReferenceCode())) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			long scopeGroupId = groupId;
-
-			Scope scope = itemExternalReference.getScope();
-
-			if (scope != null) {
-				scopeGroupId = GroupUtil.getGroupId(
-					true, true, contextCompany.getCompanyId(),
-					scope.getExternalReferenceCode());
-			}
-
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.
-					fetchAssetListEntryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						scopeGroupId);
-
-			if (assetListEntry == null) {
-				throw new UnsupportedOperationException();
-			}
-
-			return UnicodePropertiesBuilder.put(
-				"collectionPK", assetListEntry.getAssetListEntryId()
-			).setProperty(
-				"collectionType", InfoListItemSelectorReturnType.class.getName()
-			).buildString();
-		}
-
-		if ((collectionType !=
-				CollectionReference.CollectionType.COLLECTION_PROVIDER) ||
-			!(collectionReference instanceof ClassNameReference)) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		return UnicodePropertiesBuilder.put(
-			"collectionPK",
-			() -> {
-				ClassNameReference classNameReference =
-					(ClassNameReference)collectionReference;
-
-				if (Validator.isNull(classNameReference.getClassName())) {
-					throw new UnsupportedOperationException();
-				}
-
-				return classNameReference.getClassName();
-			}
-		).put(
-			"collectionType",
-			InfoListProviderItemSelectorReturnType.class.getName()
-		).buildString();
-	}
-
-	private String _getTypeSettings(long groupId, SitePage sitePage)
-		throws Exception {
-
+	private String _getTypeSettings(SitePage sitePage) {
 		PageSettings pageSettings = sitePage.getPageSettings();
 
 		if (pageSettings == null) {
 			return null;
-		}
-
-		if (sitePage.getType() == SitePage.Type.COLLECTION_PAGE) {
-			if (!(pageSettings instanceof CollectionPageSettings)) {
-				throw new UnsupportedOperationException();
-			}
-
-			return _getTypeSettings(
-				(CollectionPageSettings)pageSettings, groupId);
 		}
 
 		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
@@ -493,7 +389,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getGroupId(), contextHttpServletRequest,
 				contextUser.getUserId()));
 
-		String typeSettings = _getTypeSettings(layout.getGroupId(), sitePage);
+		String typeSettings = _getTypeSettings(sitePage);
 
 		if (typeSettings == null) {
 			return layout;
@@ -519,9 +415,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 	}
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

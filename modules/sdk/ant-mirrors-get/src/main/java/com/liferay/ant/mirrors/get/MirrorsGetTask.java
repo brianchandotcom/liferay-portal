@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Base64;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
@@ -110,7 +111,54 @@ public class MirrorsGetTask extends Task {
 			return;
 		}
 
-		matcher = _srcPattern.matcher(_src);
+		if (_src.startsWith("gs:")) {
+			matcher = _gsURLPattern.matcher(_src);
+
+			if (!matcher.find()) {
+				throw new RuntimeException("Invalid src attribute: " + _src);
+			}
+
+			_fileName = matcher.group("fileName");
+
+			_gcpBucketName = matcher.group("bucketName");
+
+			Map<String, Object> properties = project.getProperties();
+
+			for (String propertyName : properties.keySet()) {
+				Matcher gcpBucketPropertyNameMatcher =
+					_gcpBucketPropertyNamePattern.matcher(propertyName);
+
+				if (!gcpBucketPropertyNameMatcher.matches()) {
+					continue;
+				}
+
+				_hostName = gcpBucketPropertyNameMatcher.group("hostName");
+
+				break;
+			}
+
+			if (_hostName == null) {
+				throw new RuntimeException(
+					"Please set mirrors.gcp.bucket.name[__hostname__]");
+			}
+
+			_gcpCredentialsFile = _getGCPCredentialsFile();
+
+			if (_gcpCredentialsFile == null) {
+				throw new RuntimeException(
+					"Please set mirrors.gcp.credentials.file[__hostname__]");
+			}
+
+			_path = matcher.group("path");
+
+			while (_path.endsWith("/")) {
+				_path = _path.substring(0, _path.length() - 1);
+			}
+
+			return;
+		}
+
+		matcher = _httpURLPattern.matcher(_src);
 
 		if (!matcher.find()) {
 			throw new RuntimeException("Invalid src attribute: " + _src);
@@ -1017,13 +1065,17 @@ public class MirrorsGetTask extends Task {
 
 	private static final Pattern _basicAuthenticationURLPattern =
 		Pattern.compile("(https?://)([^:]+):([^@]+)@(.+)");
+	private static final Pattern _gcpBucketPropertyNamePattern =
+		Pattern.compile("mirrors.gcp.bucket.name\\[(?<hostName>[^\\]]+)\\]");
+	private static final Pattern _gsURLPattern = Pattern.compile(
+		"gs://(?<bucketName>[^/]+)/(?<path>.+/)(?<fileName>.+)");
+	private static final Pattern _httpURLPattern = Pattern.compile(
+		"https?://(?<mirrorsHostname>mirrors(\\.[^\\.]+\\.liferay.com)?/)?" +
+			"(?<hostName>[^/]+(/\\d+)?)/(?<path>.+/)(?<fileName>.+)");
 	private static final Pattern _mirrorsHostNamePattern = Pattern.compile(
 		"^mirrors\\.[^\\.]+\\.liferay.com/");
 	private static final Pattern _releaseHostNamePattern = Pattern.compile(
 		"(release-\\d+|release.liferay.com)/(?<id>\\d+)");
-	private static final Pattern _srcPattern = Pattern.compile(
-		"https?://(?<mirrorsHostname>mirrors(\\.[^\\.]+\\.liferay.com)?/)?" +
-			"(?<hostName>[^/]+(/\\d+)?)/(?<path>.+/)(?<fileName>.+)");
 	private static final Pattern _testHostNamePattern = Pattern.compile(
 		"test-\\d+-\\d+");
 

@@ -23,6 +23,7 @@ const ImageSelectorImage = ({
 }) => {
 	const containerRef = useRef();
 	const imageRef = useRef();
+	const imagePositionRef = useRef({x: 0, y: 0});
 
 	const [imagePosition, setImagePosition] = useState({x: 0, y: 0});
 	const [imageRelativePosition, setImageRelativePosition] = useState();
@@ -104,10 +105,12 @@ const ImageSelectorImage = ({
 			}
 		}
 
-		setImagePosition({
+		imagePositionRef.current = {
 			x: horizontalPos,
 			y: verticalPos,
-		});
+		};
+
+		setImagePosition(imagePositionRef.current);
 	};
 
 	const handleMouseUp = (event) => {
@@ -118,8 +121,8 @@ const ImageSelectorImage = ({
 
 		const cropRegion = getCropRegion(imageRef.current, {
 			height: containerRef.current.offsetHeight,
-			x: Math.abs(imagePosition.x),
-			y: Math.abs(imagePosition.y),
+			x: Math.abs(imagePositionRef.current.x),
+			y: Math.abs(imagePositionRef.current.y),
 		});
 
 		onImageCrop(cropRegion);

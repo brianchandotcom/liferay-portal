@@ -29,6 +29,7 @@ export enum ReportContainer {
 	DownloadsByLocationCard = 'container.report.downloadsByLocationCard',
 	DownloadsByTechnologyCard = 'container.report.downloadsByTechnologyCard',
 	EnrichedProfilesCard = 'container.report.enrichedProfilesCard',
+	EventAnalysisPage = 'container.report.eventAnalysisPage',
 	InterestsCard = 'container.report.interestsCard',
 	SearchTermsCard = 'container.report.searchTermsCard',
 	SegmentCompositionCard = 'container.report.segmentCompositionCard',
@@ -88,6 +89,10 @@ export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
 	[ReportContainer.EnrichedProfilesCard]: {
 		label: Liferay.Language.get('enriched-profiles'),
 		layout: 2
+	},
+	[ReportContainer.EventAnalysisPage]: {
+		label: Liferay.Language.get('event-analysis'),
+		layout: 1
 	},
 	[ReportContainer.InterestsCard]: {
 		label: Liferay.Language.get('interests'),
@@ -172,6 +177,7 @@ export type TransformedContainer = TReportContainer & {
 export interface IDownloadReport {
 	dateRangeDescription?: string;
 	disabled: boolean;
+	infoMessage?: string;
 	showDateRange?: boolean;
 	subtitle: string;
 	title: string;
@@ -226,6 +232,9 @@ const getContainers = async (
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	dateRangeDescription,
 	disabled,
+	infoMessage = Liferay.Language.get(
+		'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
+	),
 	showDateRange,
 	subtitle,
 	title,
@@ -261,9 +270,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 				<DownloadReportModal
 					dateRangeDescription={dateRangeDescription}
 					disabled={!filteredContainers.length}
-					infoMessage={Liferay.Language.get(
-						'the-dashboard-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
-					)}
+					infoMessage={infoMessage}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					onSubmit={() => {
@@ -350,37 +357,39 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					}}
 					showDateRange={showDateRange}
 				>
-					<ClayForm.Group className='mt-3'>
-						<label>
-							<Text size={3}>
-								{Liferay.Language.get('dashboard-reports')}
-							</Text>
-						</label>
+					{Object.values(containers).length > 1 && (
+						<ClayForm.Group className='mt-3'>
+							<label>
+								<Text size={3}>
+									{Liferay.Language.get('dashboard-reports')}
+								</Text>
+							</label>
 
-						<p>
-							<Text size={3}>
-								{Liferay.Language.get(
-									'select-the-reports-to-be-exported-as-a-single-PDF-file'
-								)}
-							</Text>
-						</p>
+							<p>
+								<Text size={3}>
+									{Liferay.Language.get(
+										'select-the-reports-to-be-exported-as-a-single-PDF-file'
+									)}
+								</Text>
+							</p>
 
-						{Object.values(containers).map(({id, label}) => (
-							<Checkbox
-								key={id}
-								label={label}
-								onChange={newValue => {
-									setContainers({
-										...containers,
-										[id]: {
-											...containers[id],
-											checked: newValue
-										}
-									});
-								}}
-							/>
-						))}
-					</ClayForm.Group>
+							{Object.values(containers).map(({id, label}) => (
+								<Checkbox
+									key={id}
+									label={label}
+									onChange={newValue => {
+										setContainers({
+											...containers,
+											[id]: {
+												...containers[id],
+												checked: newValue
+											}
+										});
+									}}
+								/>
+							))}
+						</ClayForm.Group>
+					)}
 				</DownloadReportModal>
 			)}
 		</div>

@@ -109,6 +109,12 @@ public class LayoutServiceUpgradeStepRegistrator
 				LayoutPrivateLayoutsUpgradeProcess(
 					_companyLocalService, _portalPreferencesLocalService,
 					_releaseFeatureFlagManager));
+
+		registry.register(
+			"1.4.4", "1.5.0",
+			UpgradeProcessFactory.runSQL(
+				"update Layout set type_ = 'content' where type_ = " +
+					"'collection'"));
 	}
 
 	@Reference

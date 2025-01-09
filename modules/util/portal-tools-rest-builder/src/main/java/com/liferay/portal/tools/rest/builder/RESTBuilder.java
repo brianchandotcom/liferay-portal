@@ -1573,7 +1573,9 @@ public class RESTBuilder {
 					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
 
 				if (x == -1) {
-					x = yamlString.indexOf(javaMethodSignature.getPath() + ":");
+					x = yamlString.indexOf(
+						" " + javaMethodSignature.getPath() + ":");
+					x = x + 1;
 				}
 
 				String pathLine = yamlString.substring(

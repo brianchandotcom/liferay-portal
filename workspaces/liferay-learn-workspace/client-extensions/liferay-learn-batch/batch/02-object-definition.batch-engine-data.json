@@ -864,6 +864,86 @@
 		{
 			"active": true,
 			"defaultLanguageId": "en_US",
+			"enableCategorization": false,
+			"enableLocalization": false,
+			"enableObjectEntryDraft": false,
+			"externalReferenceCode": "P2S3_EXAM_RESULT_SYNCHRONIZATION",
+			"label": {
+				"en_US": "P2S3 Exam Result Synchronization"
+			},
+			"modifiable": true,
+			"name": "P2S3ExamResultSynchronization",
+			"objectFields": [
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Exam Result Amount"
+					},
+					"localized": false,
+					"name": "examResultAmount",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "EXECUTION_TIME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Execution Time"
+					},
+					"localized": false,
+					"name": "executionTime",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Long",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "SYNCHRONIZATION_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Synchronization Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_SYNCHRONIZATION_STATUS",
+					"localized": false,
+					"name": "synchronizationStatus",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"pluralLabel": {
+				"en_US": "P2S3 Exam Results Synchronizations"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3examresultssynchronizations",
+			"scope": "site",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableLocalization": true,
 			"enableObjectEntryDraft": false,

@@ -38,13 +38,13 @@ import com.liferay.change.tracking.model.CTScore;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
+import com.liferay.change.tracking.service.CTScoreLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.change.tracking.service.persistence.CTCommentPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
-import com.liferay.change.tracking.service.persistence.CTScorePersistence;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -155,6 +155,8 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);
+
+		_ctScoreLocalService.addCTScore(ctCollectionId);
 
 		_resourceLocalService.addResources(
 			ctCollection.getCompanyId(), 0, ctCollection.getUserId(),
@@ -520,11 +522,11 @@ public class CTCollectionLocalServiceImpl
 		_ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
-		CTScore ctScore = _ctScorePersistence.fetchByCtCollectionId(
+		CTScore ctScore = _ctScoreLocalService.fetchCTScore(
 			ctCollection.getCtCollectionId());
 
 		if (ctScore != null) {
-			_ctScorePersistence.remove(ctScore);
+			_ctScoreLocalService.deleteCTScore(ctScore);
 		}
 
 		Group group = _groupLocalService.fetchGroup(
@@ -1613,7 +1615,7 @@ public class CTCollectionLocalServiceImpl
 	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Reference
-	private CTScorePersistence _ctScorePersistence;
+	private CTScoreLocalService _ctScoreLocalService;
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;

@@ -25,7 +25,7 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 
 	@Override
 	public int getScore() {
-		CTScore ctScore = CTScoreLocalServiceUtil.fetchCTScoreByCTCollectionId(
+		CTScore ctScore = CTScoreLocalServiceUtil.fetchCTScore(
 			getCtCollectionId());
 
 		if (ctScore == null) {

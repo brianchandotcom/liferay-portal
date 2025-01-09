@@ -132,61 +132,6 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.click();
 	}
 
-	async addCollectionPage({
-		collectionName,
-		draft = false,
-		name,
-		parent,
-	}: {
-		collectionName: string;
-		draft?: boolean;
-		name: string;
-		parent?: string;
-	}) {
-
-		// If no parent specified, just create from toolbar
-
-		if (!parent) {
-			await this.newButton.click();
-
-			await this.page
-				.getByRole('menuitem')
-				.getByText('Collection Page', {exact: true})
-				.click();
-		}
-
-		// If parent is specified, create child page
-
-		else {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.page.getByRole('menuitem', {
-					name: 'Add Collection Page',
-				}),
-				trigger: this.page
-					.locator('li', {has: this.page.getByText(parent)})
-					.getByTitle('Add Child Page'),
-			});
-		}
-
-		await this.page
-			.getByRole('button')
-			.filter({hasText: collectionName})
-			.click();
-
-		// Select template and fill name
-
-		await this.addPage({
-			name,
-		});
-
-		// Publish is draft param is false
-
-		if (!draft) {
-			await this.pageEditorPage.publishPage();
-		}
-	}
-
 	async addPage({
 		name,
 		template = 'Blank',

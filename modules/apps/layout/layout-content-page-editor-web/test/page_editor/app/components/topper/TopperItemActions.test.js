@@ -10,8 +10,12 @@ import React from 'react';
 
 import TopperItemActions from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/TopperItemActions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {ClipboardContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
+import {
+	ClipboardContextProvider,
+	useSetClipboard,
+} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import deleteItem from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import pasteItems from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItems';
 
 jest.mock(
@@ -87,8 +91,7 @@ const renderTopperItemActions = ({
 };
 
 describe('TopperItemActions', () => {
-
-	/* it('does not open TopperItemActions if disabled', () => {
+	it('does not open TopperItemActions if disabled', () => {
 		const {baseElement} = renderTopperItemActions({isDisabled: true});
 
 		expect(baseElement.querySelector('.dropdown')).toBeInTheDocument();
@@ -143,7 +146,7 @@ describe('TopperItemActions', () => {
 		);
 
 		Liferay.FeatureFlags['LPD-18221'] = false;
-	});*/
+	});
 
 	it('calls pasteItem when Paste action is pressed', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;

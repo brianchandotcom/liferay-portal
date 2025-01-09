@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "org.apache.felix", name: "org.apache.felix.configurator", transitive: false, version: "1.0.14"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.configurator", transitive: false, version: "1.0.18"
 }
 
 jarSources {

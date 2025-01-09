@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.graphql.dto.v1_0;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -116,6 +117,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		for (ObjectField objectField : objectFields) {
+			if (ObjectFieldUtil.isMetadata(objectField.getName())) {
+				continue;
+			}
+
 			if (Objects.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {

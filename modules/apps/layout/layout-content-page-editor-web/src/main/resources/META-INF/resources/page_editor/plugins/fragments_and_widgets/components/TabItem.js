@@ -7,6 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {FeatureIndicator} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
@@ -199,10 +200,23 @@ const ListItem = ({
 				className="align-items-center d-flex h-100 justify-content-between w-100"
 				ref={handlerRef}
 			>
-				<div className="align-items-center d-flex page-editor__fragments-widgets__tab-list-item-body">
-					<ClayIcon className="mr-3" symbol={item.icon} />
+				<ClayIcon
+					className="flex-shrink-0 mr-3 mt-0"
+					symbol={item.icon}
+				/>
 
-					<div className="title">{item.label}</div>
+				<div className="align-items-center d-flex flex-wrap page-editor__fragments-widgets__tab-list-item-body">
+					<div
+						className={classNames('title', {
+							'mr-2': item.deprecated,
+						})}
+					>
+						{item.label}
+					</div>
+
+					{item.deprecated ? (
+						<FeatureIndicator type="deprecated" />
+					) : null}
 				</div>
 
 				{!disabled && (

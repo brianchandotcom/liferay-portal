@@ -100,9 +100,11 @@ describe('Event Analysis Edit', () => {
 	afterEach(cleanup);
 
 	it('should render', async () => {
-		const {container} = render(<WrappedComponent />);
+		const {container, getByText} = render(<WrappedComponent />);
 
 		await waitForLoadingToBeRemoved(container);
+
+		expect(getByText('Download Reports')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

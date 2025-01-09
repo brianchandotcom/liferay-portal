@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -358,29 +359,30 @@ public class SearchBarPortletDisplayContextFactory {
 			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 
-		long scopeGroupClassPK = themeDisplay.getScopeGroup(
-		).getClassPK();
+		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		try {
-			User user = UserLocalServiceUtil.fetchUserById(scopeGroupClassPK);
+		long scopeGroupClassPK = scopeGroup.getClassPK();
 
-			if (user == null) {
-				user = themeDisplay.getUser();
-			}
+		User user = UserLocalServiceUtil.fetchUserById(scopeGroupClassPK);
 
-			List<UserGroup> userGroupList = user.getUserGroups();
+		if (user == null) {
+			user = themeDisplay.getUser();
+		}
 
-			for (UserGroup userGroup : userGroupList) {
+		List<UserGroup> userGroupList = user.getUserGroups();
+
+		for (UserGroup userGroup : userGroupList) {
+			try {
 				layout = fetchLayoutByFriendlyURL(
 					userGroup.getGroupId(), _slashify(destinationString));
-
-				if (layout != null) {
-					return getLayoutFriendlyURL(layout, themeDisplay);
-				}
 			}
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+
+			if (layout != null) {
+				return getLayoutFriendlyURL(layout, themeDisplay);
+			}
 		}
 
 		return null;

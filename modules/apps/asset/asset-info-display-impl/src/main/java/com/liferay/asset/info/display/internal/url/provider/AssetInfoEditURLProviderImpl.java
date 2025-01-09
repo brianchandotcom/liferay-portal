@@ -85,6 +85,24 @@ public class AssetInfoEditURLProviderImpl implements AssetInfoEditURLProvider {
 				}
 			}
 
+			if (Validator.isNotNull(redirect)) {
+				String backURL = ParamUtil.getString(
+					httpServletRequest, "backURL");
+
+				if (Validator.isNotNull(backURL)) {
+					redirect = HttpComponentsUtil.addParameter(
+						redirect, "p_l_back_url", backURL);
+				}
+
+				String backURLTitle = ParamUtil.getString(
+					httpServletRequest, "backURLTitle");
+
+				if (Validator.isNotNull(backURLTitle)) {
+					redirect = HttpComponentsUtil.addParameter(
+						redirect, "p_l_back_url_title", backURLTitle);
+				}
+			}
+
 			PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
 				httpServletRequest, LiferayWindowState.NORMAL, redirect);
 

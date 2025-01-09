@@ -182,6 +182,10 @@
 			padding: 0.5rem 1rem 0rem 0.625rem;
 		}
 
+		.search-results .search-results-entry .search-results-entry-title a {
+			color: var(--color-neutral-10, #282934);
+		}
+
 		.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
 			color: var(--color-neutral-10, #282934);
 			font-size: 1rem;
@@ -215,35 +219,35 @@
 							dashedTitle = restArticle.title?replace(" ", "-")
 						/>
 
-						<a class="text-decoration-none" href="#${dashedTitle}" id="${dashedTitle}">
-							<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled">
-								<div class="product-capabilities">
-									<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-										<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
+						<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled" id="${dashedTitle}">
+							<div class="product-capabilities">
+								<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
+									<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
 
-										<#if taxonomyVocabularyName == "Product Capabilities">
-											<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
-												${taxonomyCategoryBrief.taxonomyCategoryName}
-											</span>
-											</#if>
-										</#list>
-								</div>
-
-								${articleTitle}
-
-								<div class="description search-results-entry-content">
-									<#list restArticle.contentFields as fieldData>
-										<#if fieldData.contentFieldValue.data?has_content && validator.isNotNull(fieldData.contentFieldValue.data)>
-											<#assign webContentData = fieldData.contentFieldValue.data />
-
-											<div>
-												${webContentData}
-											</div>
-											</#if>
-										</#list>
-								</div>
+									<#if taxonomyVocabularyName == "Product Capabilities">
+										<span class="font-weight-normal label label-secondary label-tonal-info m-0 px-2 text-paragraph-sm">
+											${taxonomyCategoryBrief.taxonomyCategoryName}
+										</span>
+									</#if>
+								</#list>
 							</div>
-						</a>
+
+							<a class="text-decoration-none" href="#${dashedTitle}">
+								${articleTitle}
+							</a>
+
+							<div class="description search-results-entry-content">
+								<#list restArticle.contentFields as fieldData>
+									<#if fieldData.contentFieldValue.data?has_content && validator.isNotNull(fieldData.contentFieldValue.data)>
+										<#assign webContentData = fieldData.contentFieldValue.data />
+
+										<div>
+											${webContentData}
+										</div>
+									</#if>
+								</#list>
+							</div>
+						</div>
 
 						<#if restArticle.relatedContents?has_content>
 							<div class="pb-2">

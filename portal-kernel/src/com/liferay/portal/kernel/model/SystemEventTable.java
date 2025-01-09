@@ -46,6 +46,10 @@ public class SystemEventTable extends BaseTable<SystemEventTable> {
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SystemEventTable, String> classUuid = createColumn(
 		"classUuid", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SystemEventTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SystemEventTable, Long> referrerClassNameId =
 		createColumn(
 			"referrerClassNameId", Long.class, Types.BIGINT,

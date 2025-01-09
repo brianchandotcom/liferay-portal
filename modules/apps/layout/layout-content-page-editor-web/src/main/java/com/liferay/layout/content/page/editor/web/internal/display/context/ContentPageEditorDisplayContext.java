@@ -143,7 +143,6 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1785,12 +1784,22 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getResourceURL(String resourceID) {
-		ResourceURL resourceURL = renderResponse.createResourceURL();
-
-		resourceURL.setResourceID(resourceID);
-
-		return HttpComponentsUtil.addParameter(
-			resourceURL.toString(), "p_l_mode", Constants.EDIT);
+		return ResourceURLBuilder.createResourceURL(
+			renderResponse.createResourceURL()
+		).setBackURL(
+			ParamUtil.getString(
+				portal.getOriginalServletRequest(httpServletRequest),
+				"p_l_back_url", themeDisplay.getURLCurrent())
+		).setParameter(
+			"backURLTitle",
+			ParamUtil.getString(
+				portal.getOriginalServletRequest(httpServletRequest),
+				"p_l_back_url_title")
+		).setParameter(
+			"p_l_mode", Constants.EDIT
+		).setResourceID(
+			resourceID
+		).buildString();
 	}
 
 	private List<String> _getRestrictedItemIds() throws Exception {

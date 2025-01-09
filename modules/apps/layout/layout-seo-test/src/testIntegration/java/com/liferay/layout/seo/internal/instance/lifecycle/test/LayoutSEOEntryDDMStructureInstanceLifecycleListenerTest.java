@@ -40,11 +40,9 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListenerTest {
 
 	@Test
 	public void testAddCompany() throws Exception {
-		Company company = null;
+		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			company = CompanyTestUtil.addCompany();
-
 			Assert.assertNotNull(
 				_ddmStructureLocalService.fetchStructure(
 					company.getGroupId(),
@@ -53,9 +51,7 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListenerTest {
 					"custom-meta-tags"));
 		}
 		finally {
-			if (company != null) {
-				_companyLocalService.deleteCompany(company.getCompanyId());
-			}
+			_companyLocalService.deleteCompany(company.getCompanyId());
 		}
 	}
 

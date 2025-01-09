@@ -71,7 +71,9 @@ describe('Import', () => {
 		const button = await findByRole('button', {name: /cancel/i});
 		expect(button.disabled).toBeFalsy();
 
-		userEvent.click(button);
+		await userEvent.click(button, {
+			advanceTimers: jest.advanceTimersByTime,
+		});
 
 		expect(navigate).toHaveBeenCalled();
 	});

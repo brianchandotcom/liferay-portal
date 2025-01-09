@@ -26,6 +26,11 @@
 		"react-dom": "18.2.0",
 		"uuid": "9.0.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup-config.js"
+		]
+	},
 	"main": "js/index.ts",
 	"name": "@liferay/layout-js-components-web",
 	"optionalDependencies": {
@@ -35,7 +40,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "USE_REACT_16=true node-scripts test"
+		"test": "node-scripts test"
 	},
 	"version": "1.0.31"
 }

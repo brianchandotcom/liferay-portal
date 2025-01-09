@@ -70,8 +70,12 @@ const renderColorPicker = ({
 		</StyleErrorsContextProvider>
 	);
 
-const onTypeValue = (input: HTMLInputElement, value: string) => {
-	userEvent.type(input, value);
+const onTypeValue = async (input: HTMLInputElement, value: string) => {
+	await userEvent.clear(input);
+
+	if (value) {
+		await userEvent.type(input, value);
+	}
 
 	fireEvent.blur(input);
 };
@@ -85,22 +89,22 @@ describe('ColorPicker', () => {
 		).toBeInTheDocument();
 	});
 
-	it('clears the value and sets "default"', () => {
+	it('clears the value and sets "default"', async () => {
 		const onValueSelect = jest.fn();
 
 		const {getByTitle} = renderColorPicker({onValueSelect});
 
-		userEvent.click(getByTitle('clear-selection'));
+		await userEvent.click(getByTitle('clear-selection'));
 
 		expect(onValueSelect).toBeCalledWith('Color Picker', '');
 	});
 
-	it('clears the value and sets the default value of the field if it exists', () => {
+	it('clears the value and sets the default value of the field if it exists', async () => {
 		const {baseElement, getByTitle} = renderColorPicker({
 			field: {...FIELD, defaultValue: '#abcabc'},
 		});
 
-		userEvent.click(getByTitle('clear-selection'));
+		await userEvent.click(getByTitle('clear-selection'));
 
 		expect(baseElement.querySelector('input')).toHaveValue('#ABCABC');
 	});
@@ -113,20 +117,20 @@ describe('ColorPicker', () => {
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
-		it('shows action buttons when the color picker is clicked', () => {
+		it('shows action buttons when the color picker is clicked', async () => {
 			const {baseElement, getByLabelText} = renderColorPicker();
 
-			userEvent.click(getByLabelText('Green'));
+			await userEvent.click(getByLabelText('Green'));
 
 			expect(baseElement.querySelector(COLOR_PICKER_CLASS)).toHaveClass(
 				'hovered'
 			);
 		});
 
-		it('change to input color picker when detach token button is clicked', () => {
+		it('change to input color picker when detach token button is clicked', async () => {
 			const {baseElement, getByTitle} = renderColorPicker();
 
-			userEvent.click(getByTitle('detach-style'));
+			await userEvent.click(getByTitle('detach-style'));
 
 			expect(getByTitle('value-from-stylebook')).toBeInTheDocument();
 			expect(baseElement.querySelector('input')).toHaveValue('#9BE169');
@@ -145,18 +149,18 @@ describe('ColorPicker', () => {
 			).not.toBeInTheDocument();
 		});
 
-		it('disabled the color when the token references itself', () => {
+		it('disabled the color when the token references itself', async () => {
 			const {getByTitle} = renderColorPicker({
 				field: {...FIELD, name: 'orange'},
 				value: '#fff',
 			});
 
-			userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByTitle('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 		});
 
-		it('disables the colors when the tokens are mutually referenced', () => {
+		it('disables the colors when the tokens are mutually referenced', async () => {
 			const {getByTitle} = renderColorPicker({
 				editedTokenValues: {
 					orange: {
@@ -168,7 +172,7 @@ describe('ColorPicker', () => {
 				value: '#fff',
 			});
 
-			userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByTitle('value-from-stylebook'));
 
 			expect(getByTitle('Orange')).toBeDisabled();
 			expect(getByTitle('Blue')).toBeDisabled();
@@ -188,118 +192,124 @@ describe('ColorPicker', () => {
 			).toBeInTheDocument();
 		});
 
-		it('change to dropdown color picker when value from stylebook button is clicked', () => {
+		it('change to dropdown color picker when value from stylebook button is clicked', async () => {
 			const {getByLabelText, getByTitle} = renderColorPicker({
 				value: '#fff',
 			});
 
-			userEvent.click(getByTitle('value-from-stylebook'));
-			userEvent.click(getByTitle('Blue'));
+			await userEvent.click(getByTitle('value-from-stylebook'));
+			await userEvent.click(getByTitle('Blue'));
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Blue')).toBeInTheDocument();
 		});
 
-		it('sets a token if the written value is an existing token', () => {
+		it('sets a token if the written value is an existing token', async () => {
 			const {baseElement, getByLabelText, getByTitle} = renderColorPicker(
 				{
 					value: '#fff',
 				}
 			);
 
-			onTypeValue(baseElement.querySelector('input')!, 'green');
+			await onTypeValue(baseElement.querySelector('input')!, 'green');
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
 		});
 
-		it('sets the previous value when the input value is removed', () => {
+		it('sets the previous value when the input value is removed', async () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
 			const input = baseElement.querySelector('input')!;
 
-			onTypeValue(input, '');
+			await onTypeValue(input, '');
 
 			expect(input).toHaveValue('#444444');
 		});
 
-		it('sets the previous value when the input value is an invalid hexcolor', () => {
+		it('sets the previous value when the input value is an invalid hexcolor', async () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
 			const input = baseElement.querySelector('input')!;
 
-			onTypeValue(input, '#44');
+			await onTypeValue(input, '#44');
 
 			expect(input).toHaveValue('#444444');
 		});
 
-		it('takes a 6-digit hexcolor even if the input value has more digits', () => {
+		it('takes a 6-digit hexcolor even if the input value has more digits', async () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
 			const input = baseElement.querySelector('input')!;
 
-			onTypeValue(input, '#55555555555');
+			await onTypeValue(input, '#55555555555');
 
 			expect(input).toHaveValue('#555555');
 		});
 
-		it('converts the 3-digit hexcolor to a 6-digit hexcolor', () => {
+		it('converts the 3-digit hexcolor to a 6-digit hexcolor', async () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
 			const input = baseElement.querySelector('input')!;
 
-			onTypeValue(input, '#abc');
+			await onTypeValue(input, '#abc');
 
 			expect(input).toHaveValue('#AABBCC');
 		});
 
 		describe('Input errors', () => {
-			it('restores previous value when the written token does not exist', () => {
+			it('restores previous value when the written token does not exist', async () => {
 				const {baseElement} = renderColorPicker({
 					value: '#FFF',
 				});
 
 				const input = baseElement.querySelector('input')!;
 
-				onTypeValue(input, 'prim');
+				await onTypeValue(input, 'prim');
 
 				expect(input).toHaveValue('#FFF');
 			});
 
-			it('clears an error when the clear selection button is clicked', () => {
+			it('clears an error when the clear selection button is clicked', async () => {
 				const {baseElement, getByTitle, queryByText} =
 					renderColorPicker({
 						field: {...FIELD, name: 'orange'},
 						value: '#fff',
 					});
 
-				onTypeValue(baseElement.querySelector('input')!, 'orange');
+				await onTypeValue(
+					baseElement.querySelector('input')!,
+					'orange'
+				);
 
-				userEvent.click(getByTitle('clear-selection'));
+				await userEvent.click(getByTitle('clear-selection'));
 
 				expect(
 					queryByText('tokens-cannot-reference-itself')
 				).not.toBeInTheDocument();
 			});
 
-			it('renders an error when the written token is the same that the name field', () => {
+			it('renders an error when the written token is the same that the name field', async () => {
 				const {baseElement, getByText} = renderColorPicker({
 					field: {...FIELD, name: 'orange'},
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input')!, 'orange');
+				await onTypeValue(
+					baseElement.querySelector('input')!,
+					'orange'
+				);
 
 				expect(
 					getByText('tokens-cannot-reference-itself')
 				).toBeInTheDocument();
 			});
 
-			it('renders an error when two tokens are mutually referenced', () => {
+			it('renders an error when two tokens are mutually referenced', async () => {
 				const {baseElement, getByText} = renderColorPicker({
 					editedTokenValues: {
 						blue: {
@@ -311,7 +321,7 @@ describe('ColorPicker', () => {
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input')!, 'blue');
+				await onTypeValue(baseElement.querySelector('input')!, 'blue');
 
 				expect(
 					getByText('tokens-cannot-be-mutually-referenced')

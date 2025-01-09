@@ -92,7 +92,7 @@ describe('ExperienceSelector', () => {
 	it('renders name, status and segment in each option', async () => {
 		const {findByRole, findByText} = renderComponent();
 
-		userEvent.click(await findByRole('combobox'));
+		await userEvent.click(await findByRole('combobox'));
 
 		expect(await findByText('Experience 1')).toBeInTheDocument();
 		expect(await findByText('Inactive')).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('ExperienceSelector', () => {
 	it('calls navigate when an option is selected', async () => {
 		const {findByRole} = renderComponent();
 
-		userEvent.click(await findByRole('combobox'));
+		await userEvent.click(await findByRole('combobox'));
 
 		const button = await findByRole('option', {
 			name: 'Experience 1 segment: Segment 1 Inactive',

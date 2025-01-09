@@ -27,12 +27,12 @@ public interface CTScore extends CTScoreModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTScoreImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CTScore, Long> CT_SCORE_ID_ACCESSOR =
+	public static final Accessor<CTScore, Long> CT_COLLECTION_ID_ACCESSOR =
 		new Accessor<CTScore, Long>() {
 
 			@Override
 			public Long get(CTScore ctScore) {
-				return ctScore.getCtScoreId();
+				return ctScore.getCtCollectionId();
 			}
 
 			@Override

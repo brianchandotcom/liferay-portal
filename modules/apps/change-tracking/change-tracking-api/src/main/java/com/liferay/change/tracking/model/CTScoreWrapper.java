@@ -33,9 +33,8 @@ public class CTScoreWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctScoreId", getCtScoreId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("score", getScore());
 
 		return attributes;
@@ -49,22 +48,16 @@ public class CTScoreWrapper
 			setMvccVersion(mvccVersion);
 		}
 
-		Long ctScoreId = (Long)attributes.get("ctScoreId");
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
 
-		if (ctScoreId != null) {
-			setCtScoreId(ctScoreId);
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Integer score = (Integer)attributes.get("score");
@@ -97,16 +90,6 @@ public class CTScoreWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
-	}
-
-	/**
-	 * Returns the ct score ID of this ct score.
-	 *
-	 * @return the ct score ID of this ct score
-	 */
-	@Override
-	public long getCtScoreId() {
-		return model.getCtScoreId();
 	}
 
 	/**
@@ -162,16 +145,6 @@ public class CTScoreWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Sets the ct score ID of this ct score.
-	 *
-	 * @param ctScoreId the ct score ID of this ct score
-	 */
-	@Override
-	public void setCtScoreId(long ctScoreId) {
-		model.setCtScoreId(ctScoreId);
 	}
 
 	/**

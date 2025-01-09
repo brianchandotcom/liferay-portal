@@ -76,11 +76,11 @@ public interface CTScoreLocalService
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
-	 * @param ctScoreId the primary key for the new ct score
+	 * @param ctCollectionId the primary key for the new ct score
 	 * @return the new ct score
 	 */
 	@Transactional(enabled = false)
-	public CTScore createCTScore(long ctScoreId);
+	public CTScore createCTScore(long ctCollectionId);
 
 	/**
 	 * @throws PortalException
@@ -120,12 +120,12 @@ public interface CTScoreLocalService
 	 * <strong>Important:</strong> Inspect CTScoreLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score that was removed
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public CTScore deleteCTScore(long ctScoreId) throws PortalException;
+	public CTScore deleteCTScore(long ctCollectionId) throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -207,10 +207,7 @@ public interface CTScoreLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTScore fetchCTScore(long ctScoreId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTScore fetchCTScoreByCTCollectionId(long ctCollectionId);
+	public CTScore fetchCTScore(long ctCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -218,12 +215,12 @@ public interface CTScoreLocalService
 	/**
 	 * Returns the ct score with the primary key.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CTScore getCTScore(long ctScoreId) throws PortalException;
+	public CTScore getCTScore(long ctCollectionId) throws PortalException;
 
 	/**
 	 * Returns a range of all the ct scores.

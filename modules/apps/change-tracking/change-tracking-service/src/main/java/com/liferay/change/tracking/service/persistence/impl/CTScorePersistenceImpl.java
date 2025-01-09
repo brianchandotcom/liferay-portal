@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -31,11 +30,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -79,170 +75,6 @@ public class CTScorePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathFetchByCtCollectionId;
-
-	/**
-	 * Returns the ct score where ctCollectionId = &#63; or throws a <code>NoSuchScoreException</code> if it could not be found.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score
-	 * @throws NoSuchScoreException if a matching ct score could not be found
-	 */
-	@Override
-	public CTScore findByCtCollectionId(long ctCollectionId)
-		throws NoSuchScoreException {
-
-		CTScore ctScore = fetchByCtCollectionId(ctCollectionId);
-
-		if (ctScore == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ctCollectionId=");
-			sb.append(ctCollectionId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchScoreException(sb.toString());
-		}
-
-		return ctScore;
-	}
-
-	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	@Override
-	public CTScore fetchByCtCollectionId(long ctCollectionId) {
-		return fetchByCtCollectionId(ctCollectionId, true);
-	}
-
-	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	@Override
-	public CTScore fetchByCtCollectionId(
-		long ctCollectionId, boolean useFinderCache) {
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {ctCollectionId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCtCollectionId, finderArgs, this);
-		}
-
-		if (result instanceof CTScore) {
-			CTScore ctScore = (CTScore)result;
-
-			if (ctCollectionId != ctScore.getCtCollectionId()) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_CTSCORE_WHERE);
-
-			sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				List<CTScore> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCtCollectionId, finderArgs, list);
-					}
-				}
-				else {
-					CTScore ctScore = list.get(0);
-
-					result = ctScore;
-
-					cacheResult(ctScore);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CTScore)result;
-		}
-	}
-
-	/**
-	 * Removes the ct score where ctCollectionId = &#63; from the database.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the ct score that was removed
-	 */
-	@Override
-	public CTScore removeByCtCollectionId(long ctCollectionId)
-		throws NoSuchScoreException {
-
-		CTScore ctScore = findByCtCollectionId(ctCollectionId);
-
-		return remove(ctScore);
-	}
-
-	/**
-	 * Returns the number of ct scores where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the number of matching ct scores
-	 */
-	@Override
-	public int countByCtCollectionId(long ctCollectionId) {
-		CTScore ctScore = fetchByCtCollectionId(ctCollectionId);
-
-		if (ctScore == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
-		"ctScore.ctCollectionId = ?";
 
 	public CTScorePersistenceImpl() {
 		setModelClass(CTScore.class);
@@ -262,10 +94,6 @@ public class CTScorePersistenceImpl
 	public void cacheResult(CTScore ctScore) {
 		entityCache.putResult(
 			CTScoreImpl.class, ctScore.getPrimaryKey(), ctScore);
-
-		finderCache.putResult(
-			_finderPathFetchByCtCollectionId,
-			new Object[] {ctScore.getCtCollectionId()}, ctScore);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -335,25 +163,18 @@ public class CTScorePersistenceImpl
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CTScoreModelImpl ctScoreModelImpl) {
-		Object[] args = new Object[] {ctScoreModelImpl.getCtCollectionId()};
-
-		finderCache.putResult(
-			_finderPathFetchByCtCollectionId, args, ctScoreModelImpl);
-	}
-
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
-	 * @param ctScoreId the primary key for the new ct score
+	 * @param ctCollectionId the primary key for the new ct score
 	 * @return the new ct score
 	 */
 	@Override
-	public CTScore create(long ctScoreId) {
+	public CTScore create(long ctCollectionId) {
 		CTScore ctScore = new CTScoreImpl();
 
 		ctScore.setNew(true);
-		ctScore.setPrimaryKey(ctScoreId);
+		ctScore.setPrimaryKey(ctCollectionId);
 
 		ctScore.setCompanyId(CompanyThreadLocal.getCompanyId());
 
@@ -363,13 +184,13 @@ public class CTScorePersistenceImpl
 	/**
 	 * Removes the ct score with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score that was removed
 	 * @throws NoSuchScoreException if a ct score with the primary key could not be found
 	 */
 	@Override
-	public CTScore remove(long ctScoreId) throws NoSuchScoreException {
-		return remove((Serializable)ctScoreId);
+	public CTScore remove(long ctCollectionId) throws NoSuchScoreException {
+		return remove((Serializable)ctCollectionId);
 	}
 
 	/**
@@ -445,24 +266,6 @@ public class CTScorePersistenceImpl
 	public CTScore updateImpl(CTScore ctScore) {
 		boolean isNew = ctScore.isNew();
 
-		if (!(ctScore instanceof CTScoreModelImpl)) {
-			InvocationHandler invocationHandler = null;
-
-			if (ProxyUtil.isProxyClass(ctScore.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(ctScore);
-
-				throw new IllegalArgumentException(
-					"Implement ModelWrapper in ctScore proxy " +
-						invocationHandler.getClass());
-			}
-
-			throw new IllegalArgumentException(
-				"Implement ModelWrapper in custom CTScore implementation " +
-					ctScore.getClass());
-		}
-
-		CTScoreModelImpl ctScoreModelImpl = (CTScoreModelImpl)ctScore;
-
 		Session session = null;
 
 		try {
@@ -482,9 +285,7 @@ public class CTScorePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(CTScoreImpl.class, ctScoreModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctScoreModelImpl);
+		entityCache.putResult(CTScoreImpl.class, ctScore, false, true);
 
 		if (isNew) {
 			ctScore.setNew(false);
@@ -523,26 +324,26 @@ public class CTScorePersistenceImpl
 	/**
 	 * Returns the ct score with the primary key or throws a <code>NoSuchScoreException</code> if it could not be found.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score
 	 * @throws NoSuchScoreException if a ct score with the primary key could not be found
 	 */
 	@Override
-	public CTScore findByPrimaryKey(long ctScoreId)
+	public CTScore findByPrimaryKey(long ctCollectionId)
 		throws NoSuchScoreException {
 
-		return findByPrimaryKey((Serializable)ctScoreId);
+		return findByPrimaryKey((Serializable)ctCollectionId);
 	}
 
 	/**
 	 * Returns the ct score with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score, or <code>null</code> if a ct score with the primary key could not be found
 	 */
 	@Override
-	public CTScore fetchByPrimaryKey(long ctScoreId) {
-		return fetchByPrimaryKey((Serializable)ctScoreId);
+	public CTScore fetchByPrimaryKey(long ctCollectionId) {
+		return fetchByPrimaryKey((Serializable)ctCollectionId);
 	}
 
 	/**
@@ -731,7 +532,7 @@ public class CTScorePersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "ctScoreId";
+		return "ctCollectionId";
 	}
 
 	@Override
@@ -763,11 +564,6 @@ public class CTScorePersistenceImpl
 		_finderPathCountAll = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
-
-		_finderPathFetchByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
 
 		CTScoreUtil.setPersistence(this);
 	}
@@ -814,22 +610,13 @@ public class CTScorePersistenceImpl
 	private static final String _SQL_SELECT_CTSCORE =
 		"SELECT ctScore FROM CTScore ctScore";
 
-	private static final String _SQL_SELECT_CTSCORE_WHERE =
-		"SELECT ctScore FROM CTScore ctScore WHERE ";
-
 	private static final String _SQL_COUNT_CTSCORE =
 		"SELECT COUNT(ctScore) FROM CTScore ctScore";
-
-	private static final String _SQL_COUNT_CTSCORE_WHERE =
-		"SELECT COUNT(ctScore) FROM CTScore ctScore WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctScore.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No CTScore exists with the primary key ";
-
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTScore exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTScorePersistenceImpl.class);

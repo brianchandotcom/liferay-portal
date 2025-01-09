@@ -53,14 +53,14 @@ public class CTScoreLocalServiceWrapper
 	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
-	 * @param ctScoreId the primary key for the new ct score
+	 * @param ctCollectionId the primary key for the new ct score
 	 * @return the new ct score
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTScore createCTScore(
-		long ctScoreId) {
+		long ctCollectionId) {
 
-		return _ctScoreLocalService.createCTScore(ctScoreId);
+		return _ctScoreLocalService.createCTScore(ctCollectionId);
 	}
 
 	/**
@@ -106,16 +106,16 @@ public class CTScoreLocalServiceWrapper
 	 * <strong>Important:</strong> Inspect CTScoreLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score that was removed
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTScore deleteCTScore(
-			long ctScoreId)
+			long ctCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _ctScoreLocalService.deleteCTScore(ctScoreId);
+		return _ctScoreLocalService.deleteCTScore(ctCollectionId);
 	}
 
 	/**
@@ -232,17 +232,9 @@ public class CTScoreLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTScore fetchCTScore(
-		long ctScoreId) {
+		long ctCollectionId) {
 
-		return _ctScoreLocalService.fetchCTScore(ctScoreId);
-	}
-
-	@Override
-	public com.liferay.change.tracking.model.CTScore
-		fetchCTScoreByCTCollectionId(long ctCollectionId) {
-
-		return _ctScoreLocalService.fetchCTScoreByCTCollectionId(
-			ctCollectionId);
+		return _ctScoreLocalService.fetchCTScore(ctCollectionId);
 	}
 
 	@Override
@@ -255,15 +247,16 @@ public class CTScoreLocalServiceWrapper
 	/**
 	 * Returns the ct score with the primary key.
 	 *
-	 * @param ctScoreId the primary key of the ct score
+	 * @param ctCollectionId the primary key of the ct score
 	 * @return the ct score
 	 * @throws PortalException if a ct score with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.change.tracking.model.CTScore getCTScore(long ctScoreId)
+	public com.liferay.change.tracking.model.CTScore getCTScore(
+			long ctCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _ctScoreLocalService.getCTScore(ctScoreId);
+		return _ctScoreLocalService.getCTScore(ctCollectionId);
 	}
 
 	/**

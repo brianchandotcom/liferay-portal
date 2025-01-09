@@ -63,18 +63,18 @@ public interface CTScoreModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
-	 * Returns the ct score ID of this ct score.
+	 * Returns the ct collection ID of this ct score.
 	 *
-	 * @return the ct score ID of this ct score
+	 * @return the ct collection ID of this ct score
 	 */
-	public long getCtScoreId();
+	public long getCtCollectionId();
 
 	/**
-	 * Sets the ct score ID of this ct score.
+	 * Sets the ct collection ID of this ct score.
 	 *
-	 * @param ctScoreId the ct score ID of this ct score
+	 * @param ctCollectionId the ct collection ID of this ct score
 	 */
-	public void setCtScoreId(long ctScoreId);
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the company ID of this ct score.
@@ -91,20 +91,6 @@ public interface CTScoreModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the ct collection ID of this ct score.
-	 *
-	 * @return the ct collection ID of this ct score
-	 */
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this ct score.
-	 *
-	 * @param ctCollectionId the ct collection ID of this ct score
-	 */
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the score of this ct score.

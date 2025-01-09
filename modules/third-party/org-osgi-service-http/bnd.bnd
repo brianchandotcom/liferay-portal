@@ -1,9 +1,4 @@
 Bundle-SymbolicName: org.osgi.service.http
-Bundle-Version: 3.5.0-20150611.165350-3.LIFERAY-PATCHED-2
-Export-Package:\
-	org.osgi.service.http;version=1.2.1,\
-	org.osgi.service.http.context;version=1.0,\
-	org.osgi.service.http.runtime;version=1.0,\
-	org.osgi.service.http.runtime.dto;version=1.0,\
-	org.osgi.service.http.whiteboard;version=1.0
--includeresource: @org.osgi.service.http-[0-9.]*.jar!/org/osgi/service/http/**
+Bundle-Version: 1.2.2.LIFERAY-PATCHED-1
+Export-Package: org.osgi.service.http;version=1.2.2
+-includeresource: @org.osgi.service.http-[0-9.]*.jar

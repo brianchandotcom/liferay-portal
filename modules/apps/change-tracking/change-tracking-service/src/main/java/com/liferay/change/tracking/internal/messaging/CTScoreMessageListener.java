@@ -35,7 +35,7 @@ public class CTScoreMessageListener extends BaseMessageListener {
 	protected void activate(BundleContext bundleContext) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 				CTDestinationNames.CT_SCORE);
 
 		Destination destination = _destinationFactory.createDestination(

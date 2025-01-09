@@ -1,8 +1,11 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
+import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import React from 'react';
 import TitleEditor from 'shared/components/TitleEditor';
 import {Routes, toRoute} from 'shared/util/router';
+import {useChannelContext} from 'shared/context/channel';
+import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
 
 interface IEventAnalysisToolbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -12,7 +15,11 @@ interface IEventAnalysisToolbarProps extends React.HTMLAttributes<HTMLElement> {
 const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 	isValid
 }) => {
+	const dataSourceStates = useDataSource();
+
 	const {channelId, groupId} = useParams();
+
+	const {selectedChannel} = useChannelContext();
 
 	return (
 		<div className='event-analysis-toolbar-root'>
@@ -23,9 +30,20 @@ const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 				/>
 			</div>
 
-			<div className='event-analysis-toolbar-right-content'>
+			<div className='d-flex event-analysis-toolbar-right-content'>
+				<div className='event-analysis-download-report mr-2'>
+					<DownloadPDFReport
+						disabled={dataSourceStates.empty}
+						infoMessage={Liferay.Language.get(
+							'the-report-will-be-downloaded-exactly-as-it-is-displayed-on-your-screen.-please-verify-if-the-desired-tabs-and-filters-are-selected-before-proceeding'
+						)}
+						subtitle={selectedChannel?.name}
+						title={Liferay.Language.get('event-analysis-report')}
+					/>
+				</div>
+
 				<ClayButton
-					className='button-root mr-2'
+					className='button-root ml-1 mr-2'
 					disabled={!isValid}
 					displayType='primary'
 					size='sm'

@@ -45,10 +45,11 @@ public class StyleBookManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public StyleBookManagementToolbarDisplayContext(
+		CETManager cetManager,
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, CETManager cetManager,
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
+		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<StyleBookEntry> searchContainer) {
 
 		super(

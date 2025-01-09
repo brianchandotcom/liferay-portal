@@ -86,12 +86,12 @@ describe('', () => {
 		expect(screen.getByText('thisistheinitialscript')).toBeInTheDocument();
 	});
 
-	it('includes the variable in the script when clicked', () => {
+	it('includes the variable in the script when clicked', async () => {
 		renderApp();
 
 		const variableButton = screen.getByText('variableTemplate1');
 
-		userEvent.click(variableButton);
+		await userEvent.click(variableButton);
 
 		expect(screen.getByText('this is a variable 1')).toBeInTheDocument();
 	});
@@ -106,23 +106,23 @@ describe('', () => {
 		expect(screen.getByText('this is a tooltip 1')).toBeInTheDocument();
 	});
 
-	it('filters variable groups when search', () => {
+	it('filters variable groups when search', async () => {
 		renderApp();
 
 		const searchInput = screen.getByLabelText('search');
 
-		userEvent.type(searchInput, 'variableTemplate2');
+		await userEvent.type(searchInput, 'variableTemplate2');
 
 		expect(screen.queryByText('variableTemplate2')).toBeInTheDocument();
 		expect(screen.queryByText('variableTemplate1')).not.toBeInTheDocument();
 	});
 
-	it('no result when searching', () => {
+	it('no result when searching', async () => {
 		renderApp();
 
 		const searchInput = screen.getByLabelText('search');
 
-		userEvent.type(searchInput, 'anotherVariable');
+		await userEvent.type(searchInput, 'anotherVariable');
 
 		expect(screen.queryByText('no-results-found')).toBeInTheDocument();
 	});

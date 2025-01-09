@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Learn REST API
-Bundle-SymbolicName: com.liferay.learn.rest.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.learn.rest.resource.v1_0

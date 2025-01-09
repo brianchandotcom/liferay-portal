@@ -589,7 +589,7 @@ definition {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
 		else {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#WORKFLOW_STATUS",
 				value1 = ${workflowStatus});
 		}

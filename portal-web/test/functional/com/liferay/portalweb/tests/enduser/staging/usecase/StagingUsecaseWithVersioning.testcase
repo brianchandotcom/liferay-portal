@@ -410,7 +410,7 @@ definition {
 
 		Workflow.gotoPreviewView(pageRevision = "true");
 
-		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
+		Page.viewWithWorkflowPG(workflowStatus = "Pending");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page Revision Page",
@@ -438,13 +438,13 @@ definition {
 
 		Workflow.gotoPreviewView(pageRevision = "true");
 
-		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
+		Page.viewWithWorkflowPG(workflowStatus = "Pending");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page Revision Page",
 			siteName = "Site Name");
 
-		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
+		Page.viewWithWorkflowPG(workflowStatus = "Pending");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

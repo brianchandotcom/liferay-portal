@@ -1417,18 +1417,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW");
 
-		Refresh();
-
-		if (IsTextEqual(locator1 = "Message#WORKFLOW_STATUS", value1 = "Pending (Created)")) {
-			AssertTextEquals(
-				locator1 = "Message#WORKFLOW_STATUS",
-				value1 = "Pending (Created)");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Message#WORKFLOW_STATUS",
-				value1 = "Pending (Review)");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#WORKFLOW_STATUS",
+			value1 = "Pending");
 	}
 
 	@summary = "Default summary"

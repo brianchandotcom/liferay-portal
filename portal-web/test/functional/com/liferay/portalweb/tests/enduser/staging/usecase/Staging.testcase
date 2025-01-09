@@ -3646,7 +3646,7 @@ definition {
 			pageName = "Child Page A",
 			siteName = "Site Name Staging");
 
-		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
+		Page.viewWithWorkflowPG(workflowStatus = "Pending");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Page Edit",

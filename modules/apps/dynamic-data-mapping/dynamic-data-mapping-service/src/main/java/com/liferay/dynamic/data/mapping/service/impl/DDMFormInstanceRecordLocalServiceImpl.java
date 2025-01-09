@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
@@ -19,12 +20,14 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
@@ -231,6 +234,14 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return ddmFormInstanceRecord;
 	}
 
+	@Override
+	public DDMFormInstanceRecord deleteFormInstanceRecord(
+			DDMFormInstanceRecord ddmFormInstanceRecord)
+		throws PortalException {
+
+		return deleteFormInstanceRecord(ddmFormInstanceRecord, true);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
@@ -238,8 +249,27 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		type = SystemEventConstants.TYPE_DELETE
 	)
 	public DDMFormInstanceRecord deleteFormInstanceRecord(
-			DDMFormInstanceRecord ddmFormInstanceRecord)
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			boolean updateDDMFormInstanceReport)
 		throws PortalException {
+
+		if ((ddmFormInstanceRecord.getStatus() ==
+				WorkflowConstants.STATUS_APPROVED) &&
+			updateDDMFormInstanceReport) {
+
+			DDMFormInstanceReport ddmFormInstanceReport =
+				_ddmFormInstanceReportLocalService.
+					getFormInstanceReportByFormInstanceId(
+						ddmFormInstanceRecord.getFormInstanceId());
+
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+				ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
+
+			_ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
+				ddmFormInstanceReport.getFormInstanceReportId(),
+				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
+				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
+		}
 
 		ddmFormInstanceRecordPersistence.remove(ddmFormInstanceRecord);
 
@@ -277,7 +307,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFormInstanceRecords(long ddmFormInstanceId)
+	public void deleteFormInstanceRecords(
+			long ddmFormInstanceId, boolean updateDDMFormInstanceReport)
 		throws PortalException {
 
 		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
@@ -287,7 +318,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		for (DDMFormInstanceRecord ddmFormInstanceRecord :
 				ddmFormInstanceRecords) {
 
-			deleteFormInstanceRecord(ddmFormInstanceRecord);
+			deleteFormInstanceRecord(
+				ddmFormInstanceRecord, updateDDMFormInstanceReport);
 		}
 	}
 
@@ -1044,6 +1076,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	@Reference
 	private DDMFormInstanceRecordVersionPersistence
 		_ddmFormInstanceRecordVersionPersistence;
+
+	@Reference
+	private DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService;
 
 	@Reference
 	private DDMFormValuesValidator _ddmFormValuesValidator;

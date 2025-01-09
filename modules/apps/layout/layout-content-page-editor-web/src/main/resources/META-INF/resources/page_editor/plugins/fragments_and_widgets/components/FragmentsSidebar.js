@@ -81,6 +81,7 @@ export function normalizeWidget(widget) {
 			portletId: widget.portletId,
 			portletItemId: widget.portletItemId || null,
 		},
+		deprecated: widget.deprecated,
 		disabled: !widget.instanceable && (widget.used || widget.embedded),
 		highlighted: widget.highlighted,
 		icon: widget.instanceable ? 'square-hole-multi' : 'square-hole',

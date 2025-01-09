@@ -7,6 +7,7 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTScore;
 import com.liferay.change.tracking.service.CTScoreLocalService;
+import com.liferay.change.tracking.service.persistence.CTScoreFinder;
 import com.liferay.change.tracking.service.persistence.CTScorePersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -436,6 +437,9 @@ public abstract class CTScoreLocalServiceBaseImpl
 
 	@Reference
 	protected CTScorePersistence ctScorePersistence;
+
+	@Reference
+	protected CTScoreFinder ctScoreFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -62,19 +62,6 @@ components:
                         The client extension's external reference code.
                     type: string
             type: object
-        CollectionPageSettings:
-            allOf:
-                - $ref: "#/components/schemas/PageSettings"
-                - properties:
-                      collectionReference:
-                          $ref: "#/components/schemas/CollectionReference"
-                          writeOnly: true
-                  required:
-                      - collectionReference
-            # @review
-            description:
-                The settings of a collection page.
-            type: object
         CollectionReference:
             # @review
             description:
@@ -2196,7 +2183,6 @@ components:
         PageSettings:
             discriminator:
                 mapping:
-                    CollectionPageSettings: "#/components/schemas/CollectionPageSettings"
                     ContentPageSettings: "#/components/schemas/ContentPageSettings"
                     WidgetPageSettings: "#/components/schemas/WidgetPageSettings"
                 propertyName: type
@@ -2230,7 +2216,6 @@ components:
                         The page's SEO settings.
                 type:
                     enum:
-                        - CollectionPageSettings
                         - ContentPageSettings
                         - WidgetPageSettings
                     type: string
@@ -2810,7 +2795,6 @@ components:
                     type: array
                 type:
                     enum:
-                        - CollectionPage
                         - ContentPage
                         - WidgetPage
                     type: string

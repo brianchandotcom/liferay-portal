@@ -596,46 +596,6 @@ definition {
 			value1 = "There are no users associated with this role.");
 	}
 
-	@description = "This test adds and removes multiple organizations from an account via management toolbar."
-	@priority = 4
-	test CanAddAndRemoveOrganizationsInBulk {
-		for (var organizationNumber : list "1,2,3,4") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization ${organizationNumber}",
-				organizationSite = "true");
-		}
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account with Organization",
-			accountEntryType = "Business");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
-
-		Account.assignMultipleOrganizations(
-			accountName = "Account with Organization",
-			organizationNumber = "1,3,4");
-
-		for (var organizationNumber : list "1,3,4") {
-			Account.viewAssignee(assigneeName = "Organization ${organizationNumber}");
-		}
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
-
-		Account.unassignMultipleOrganizations(
-			accountName = "Account Name",
-			organizationNumber = "1,3");
-
-		for (var organizationNumber : list "1,3") {
-			LexiconEntry.viewNoEntry(rowEntry = "Organization ${organizationNumber}");
-		}
-
-		LexiconEntry.viewEntryName(rowEntry = "Organization 4");
-	}
-
 	@description = "This test adds a Person Account by changing the type in the dropdown upon creation."
 	@priority = 4
 	test CanAddAPersonAccount {

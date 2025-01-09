@@ -577,7 +577,15 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
 
-			if (objectDefinition.isEnableLocalization()) {
+			List<ObjectField> localizedObjectFields =
+				_objectFieldLocalService.getLocalizedObjectFields(
+					objectDefinition.getObjectDefinitionId());
+
+			if ((!FeatureFlagManagerUtil.isEnabled(
+					objectDefinition.getCompanyId(), "LPD-32050") &&
+				 objectDefinition.isEnableLocalization()) ||
+				!localizedObjectFields.isEmpty()) {
+
 				_deleteFromTable(
 					objectDefinition.getLocalizationDBTableName(),
 					objectDefinition.getPKObjectFieldDBColumnName(),

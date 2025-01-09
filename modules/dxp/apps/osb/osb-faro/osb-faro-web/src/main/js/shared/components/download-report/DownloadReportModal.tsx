@@ -51,53 +51,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 	return (
 		<ClayModal observer={observer}>
-			<ClayForm
-				onSubmit={event => {
-					event.preventDefault();
-
-					setSubmitDisabled(true);
-
-					onClose();
-
-					if (type === 'CSV') {
-						onSubmit(rangeSelectors);
-
-						return;
-					}
-
-					if (rangeSelectors) {
-						history.push(
-							setUriQueryValues(
-								pickBy({
-									downloadReport: true,
-									...rangeSelectors
-								})
-							)
-						);
-
-						const observer = new MutationObserver(() => {
-							const loadingElement = document.querySelectorAll(
-								'.page-container .loading-animation'
-							);
-
-							if (!loadingElement.length) {
-								observer.disconnect();
-
-								onSubmit();
-							}
-						});
-
-						observer.observe(document.body, {
-							attributes: true,
-							characterData: true,
-							childList: true,
-							subtree: true
-						});
-					} else {
-						onSubmit();
-					}
-				}}
-			>
+			<ClayForm>
 				<div className='modal-content'>
 					<ClayModal.Header>
 						{Liferay.Language.get('download-reports')}
@@ -150,7 +104,52 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 								<ClayButton
 									data-testid='submit'
 									disabled={disabled || submitDisabled}
-									type='submit'
+									onClick={() => {
+										setSubmitDisabled(true);
+
+										onClose();
+
+										if (type === ReportType.CSV) {
+											onSubmit(rangeSelectors);
+											return;
+										}
+
+										if (rangeSelectors) {
+											history.push(
+												setUriQueryValues(
+													pickBy({
+														downloadReport: true,
+														...rangeSelectors
+													})
+												)
+											);
+
+											const observer = new MutationObserver(
+												() => {
+													const loadingElement = document.querySelectorAll(
+														'.page-container .loading-animation'
+													);
+
+													if (
+														!loadingElement.length
+													) {
+														observer.disconnect();
+
+														onSubmit();
+													}
+												}
+											);
+
+											observer.observe(document.body, {
+												attributes: true,
+												characterData: true,
+												childList: true,
+												subtree: true
+											});
+										} else {
+											onSubmit();
+										}
+									}}
 								>
 									{Liferay.Language.get('download')}
 								</ClayButton>

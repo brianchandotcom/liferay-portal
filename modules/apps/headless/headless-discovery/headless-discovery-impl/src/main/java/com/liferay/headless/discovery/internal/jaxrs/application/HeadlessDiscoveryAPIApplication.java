@@ -11,7 +11,9 @@ import com.liferay.headless.discovery.internal.configuration.HeadlessDiscoveryCo
 import com.liferay.headless.discovery.internal.dto.Hint;
 import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -117,6 +119,13 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 					html, "src=\"headless-discovery-web-min.js\"",
 					"src=\"" + _portal.getPathContext() +
 						"/o/api/headless-discovery-web-min.js\"");
+				html = StringUtil.replace(
+					html, "</head>",
+					StringBundler.concat(
+						"<script>window.learnResources=",
+						LearnMessageUtil.getJSONObject(
+							"headless-discovery-web"),
+						";</script></head>"));
 
 				String finalHtml = html;
 

@@ -5,37 +5,12 @@
 
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import Icon from '../../Icon';
-import apiFetch from '../../util/apiFetch';
-
-const LearnContext = createContext();
-
-function LearnAppWrapper(props) {
-	const [learnResources, setLearnResources] = useState({});
-
-	useEffect(() => {
-		apiFetch(
-			window.location.pathname.substring(
-				0,
-				window.location.pathname.indexOf('/o/')
-			) + '/o/learn/v1.0/messages/headless-discovery-web.json',
-			'get',
-			{}
-		).then(setLearnResources);
-	}, []);
-
-	return (
-		<LearnContext.Provider value={learnResources}>
-			{props.children}
-		</LearnContext.Provider>
-	);
-}
 
 function LearnInputWrapper(props) {
-	const learnResources = useContext(LearnContext);
-	const messageDetails = learnResources[props.field]?.['en_US'];
+	const messageDetails = window.learnResources[props.field]?.['en_US'];
 	const [openPopover, setOpenPopover] = useState(false);
 
 	return (
@@ -68,13 +43,6 @@ function LearnInputWrapper(props) {
 function learnSwaggerUIPlugin() {
 	return {
 		wrapComponents: {
-			App: (Original) => (props) => {
-				return (
-					<LearnAppWrapper>
-						<Original {...props} />
-					</LearnAppWrapper>
-				);
-			},
 			JsonSchema_string: (Original) => (props) => {
 				return (
 					<LearnInputWrapper field={props.description}>

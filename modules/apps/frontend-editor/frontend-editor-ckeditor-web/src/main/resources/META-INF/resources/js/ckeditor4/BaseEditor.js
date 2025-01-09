@@ -104,6 +104,10 @@ const BaseEditor = forwardRef(
 				data = data.replace(/(\u200B){7}/, '');
 			}
 
+			if (editor.config?.extraPlugins.search(/bbcode|creole/) > -1) {
+				return data;
+			}
+
 			return createElementFromHTML(data);
 		}, [contents]);
 

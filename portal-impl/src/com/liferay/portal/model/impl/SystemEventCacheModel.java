@@ -68,7 +68,7 @@ public class SystemEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,8 @@ public class SystemEventCacheModel
 		sb.append(classPK);
 		sb.append(", classUuid=");
 		sb.append(classUuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", referrerClassNameId=");
 		sb.append(referrerClassNameId);
 		sb.append(", parentSystemEventId=");
@@ -142,6 +144,13 @@ public class SystemEventCacheModel
 			systemEventImpl.setClassUuid(classUuid);
 		}
 
+		if (externalReferenceCode == null) {
+			systemEventImpl.setExternalReferenceCode("");
+		}
+		else {
+			systemEventImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		systemEventImpl.setReferrerClassNameId(referrerClassNameId);
 		systemEventImpl.setParentSystemEventId(parentSystemEventId);
 		systemEventImpl.setSystemEventSetKey(systemEventSetKey);
@@ -181,6 +190,7 @@ public class SystemEventCacheModel
 
 		classPK = objectInput.readLong();
 		classUuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		referrerClassNameId = objectInput.readLong();
 
@@ -226,6 +236,13 @@ public class SystemEventCacheModel
 			objectOutput.writeUTF(classUuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(referrerClassNameId);
 
 		objectOutput.writeLong(parentSystemEventId);
@@ -253,6 +270,7 @@ public class SystemEventCacheModel
 	public long classNameId;
 	public long classPK;
 	public String classUuid;
+	public String externalReferenceCode;
 	public long referrerClassNameId;
 	public long parentSystemEventId;
 	public long systemEventSetKey;

@@ -7,6 +7,7 @@ import React from 'react';
 import {CalculationTypes, Event} from 'event-analysis/utils/types';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {RangeSelectors} from 'shared/types';
+import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 
 interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
@@ -31,7 +32,10 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 	rangeSelectors,
 	type
 }) => (
-	<Card className='event-analysis-editor-root'>
+	<Card
+		className='event-analysis-editor-root'
+		reportContainer={ReportContainer.EventAnalysisPage}
+	>
 		<EventAnalysisBuilder event={event} onEventChange={onEventChange} />
 
 		<div className='options-container d-flex justify-content-between'>

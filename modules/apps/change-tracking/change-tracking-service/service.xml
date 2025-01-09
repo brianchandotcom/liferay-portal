@@ -339,7 +339,7 @@
 
 		<!-- PK fields -->
 
-		<column name="ctScoreId" primary="true" type="long" />
+		<column name="ctCollectionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -347,14 +347,7 @@
 
 		<!-- Other fields -->
 
-		<column name="ctCollectionId" type="long" />
 		<column name="score" type="int" />
-
-		<!-- Finder methods -->
-
-		<finder name="CtCollectionId" return-type="CTScore" unique="true">
-			<finder-column name="ctCollectionId" />
-		</finder>
 	</entity>
 	<exceptions>
 		<exception>CTCollectionDescription</exception>

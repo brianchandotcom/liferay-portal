@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
@@ -247,13 +246,11 @@ public class DDMFormInstanceRecordExporterImpl
 			long ddmFormInstanceId)
 		throws Exception {
 
-		List<DDMFormInstanceVersion> ddmFormInstanceVersions =
-			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
-				ddmFormInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
 		return TransformUtil.transform(
 			ListUtil.sort(
-				ddmFormInstanceVersions,
+				ddmFormInstanceVersionLocalService.getFormInstanceVersions(
+					ddmFormInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null),
 				new FormInstanceVersionVersionComparator()),
 			ddmFormInstanceVersion ->
 				ddmFormInstanceVersion.getStructureVersion());

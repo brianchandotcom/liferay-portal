@@ -5,7 +5,6 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -113,9 +112,6 @@ async function goToAssetLibraries(page: Page) {
 export const test = mergeTests(
 	blogsPagesTest,
 	contentDashboardPagesTest,
-	featureFlagsTest({
-		'LPD-28830': {enabled: true},
-	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	loginAnalyticsCloudTest(),

@@ -7,7 +7,6 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -26,9 +25,6 @@ export const test = mergeTests(
 	contentDashboardPagesTest,
 	dataApiHelpersTest,
 	isolatedSiteTest,
-	featureFlagsTest({
-		'LPD-28830': {enabled: true},
-	}),
 	loginAnalyticsCloudTest(),
 	loginTest()
 );

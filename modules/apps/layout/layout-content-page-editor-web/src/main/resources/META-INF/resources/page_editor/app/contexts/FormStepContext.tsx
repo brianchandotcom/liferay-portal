@@ -6,6 +6,7 @@
 import React, {ReactNode, useContext, useEffect, useState} from 'react';
 
 import {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
+import {useGlobalContext} from '../contexts/GlobalContext';
 import getLayoutDataItemUniqueClassName from '../utils/getLayoutDataItemUniqueClassName';
 
 const FormStepContext = React.createContext<{
@@ -22,6 +23,7 @@ function FormStepContextProvider({
 	form: FormLayoutDataItem;
 }) {
 	const [activeStep, setActiveStep] = useState<number>(0);
+	const globalContext = useGlobalContext();
 
 	useEffect(() => {
 		const onStepChange = ({
@@ -48,14 +50,17 @@ function FormStepContextProvider({
 			}
 		};
 
-		Liferay.on('formFragment:changeStep', onStepChange);
+		globalContext.window.Liferay.on(
+			'formFragment:changeStep',
+			onStepChange
+		);
 
 		return () =>
-			Liferay.detach(
+			globalContext.window.Liferay.detach(
 				'formFragment:changeStep',
 				onStepChange as () => void
 			);
-	}, [activeStep, form]);
+	}, [activeStep, globalContext.window, form]);
 
 	return (
 		<FormStepContext.Provider

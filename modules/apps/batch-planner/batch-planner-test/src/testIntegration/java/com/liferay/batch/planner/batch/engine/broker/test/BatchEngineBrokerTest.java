@@ -221,9 +221,9 @@ public class BatchEngineBrokerTest {
 				_objectDefinition2.getObjectDefinitionId());
 		}
 
-		if (_company2 != null) {
-			_companyLocalService.deleteCompany(_company2);
-			_company2 = null;
+		if (_company != null) {
+			_companyLocalService.deleteCompany(_company);
+			_company = null;
 		}
 
 		_objectEncryptionAlgorithmSafeCloseable.close();
@@ -622,13 +622,13 @@ public class BatchEngineBrokerTest {
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		_company2 = CompanyTestUtil.addCompany(true);
+		_company = CompanyTestUtil.addCompany(true);
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_company2.getCompanyId())) {
+					_company.getCompanyId())) {
 
-			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+			User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(user));
@@ -639,9 +639,9 @@ public class BatchEngineBrokerTest {
 				name, ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
 			_addObjectEntry(
-				_company2.getCompanyId(),
-				_addDLFileEntry(_company2.getGroupId(), user.getUserId()),
-				RandomTestUtil.randomString(), _company2.getGroupId(),
+				_company.getCompanyId(),
+				_addDLFileEntry(_company.getGroupId(), user.getUserId()),
+				RandomTestUtil.randomString(), _company.getGroupId(),
 				_objectDefinition2, user.getUserId());
 		}
 		finally {
@@ -1676,7 +1676,7 @@ public class BatchEngineBrokerTest {
 	@Inject
 	private BatchPlannerPolicyLocalService _batchPlannerPolicyLocalService;
 
-	private Company _company2;
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

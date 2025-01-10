@@ -7001,9 +7001,9 @@ log.sanitizer.enabled=false</echo>
 
 			<if>
 				<or>
-					<contains string="${test.batch.name}" substring="solr" />
 					<contains string="${test.batch.name}" substring="opensearch2" />
 					<contains string="${test.batch.name}" substring="remote-elasticsearch" />
+					<contains string="${test.batch.name}" substring="solr" />
 				</or>
 				<then>
 					<if>

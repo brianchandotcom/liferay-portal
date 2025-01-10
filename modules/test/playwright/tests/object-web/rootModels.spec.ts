@@ -27,6 +27,10 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
+test.beforeEach(({page}) => {
+	page.setViewportSize({height: 1080, width: 1920});
+});
+
 test.describe('Manage root model elements through View Object Entries', () => {
 	test('assert management of object entries that are account restricted', async ({
 		apiHelpers,
@@ -801,7 +805,9 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			// Check if error alert is displayed in the modal.
 
 			await expect(
-				page.getByText('Error:Unable to bind the')
+				page.getByText(
+					'To enable inheritance, the object definitions must have the same scope.'
+				)
 			).toBeVisible();
 
 			await objectRelationshipFormPage.selectManyRecordsOf(

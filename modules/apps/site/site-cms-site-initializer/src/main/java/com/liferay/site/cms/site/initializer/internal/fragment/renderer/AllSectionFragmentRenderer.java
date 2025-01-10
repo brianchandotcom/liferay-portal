@@ -76,9 +76,9 @@ public class AllSectionFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HeadlessDisplayTag headlessDisplayTag = new HeadlessDisplayTag();
-
 		try {
+			HeadlessDisplayTag headlessDisplayTag = new HeadlessDisplayTag();
+
 			headlessDisplayTag.setApiURL(
 				"/o/search/v1.0/search?emptySearch=true");
 			headlessDisplayTag.setBulkActionDropdownItems(new ArrayList<>());

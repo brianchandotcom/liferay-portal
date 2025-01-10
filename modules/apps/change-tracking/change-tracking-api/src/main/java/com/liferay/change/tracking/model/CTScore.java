@@ -47,4 +47,6 @@ public interface CTScore extends CTScoreModel, PersistedModel {
 
 		};
 
+	public String getSizeClassification();
+
 }

@@ -140,6 +140,11 @@ public class CTScoreWrapper
 	}
 
 	@Override
+	public String getSizeClassification() {
+		return model.getSizeClassification();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

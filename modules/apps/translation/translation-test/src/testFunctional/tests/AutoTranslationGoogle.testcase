@@ -392,7 +392,7 @@ definition {
 			webContentRichText = "This is the content of the rich text field",
 			webContentTitle = "This is the title of the rich text field");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -465,7 +465,7 @@ definition {
 			webContentTextFieldLabel = "Text Box",
 			webContentTitle = "Web content title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
@@ -535,7 +535,7 @@ definition {
 			webContentText = "Test text",
 			webContentTitle = "Web content title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",

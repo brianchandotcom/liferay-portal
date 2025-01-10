@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,7 +37,11 @@ public class CTScoreModelListener extends BaseModelListener<CTScore> {
 	public void onAfterUpdate(CTScore originalCTScore, CTScore ctScore)
 		throws ModelListenerException {
 
-		if (originalCTScore.getScore() == ctScore.getScore()) {
+		String originalSizeClassification =
+			originalCTScore.getSizeClassification();
+		String sizeClassification = ctScore.getSizeClassification();
+
+		if (Objects.equals(originalSizeClassification, sizeClassification)) {
 			return;
 		}
 
@@ -59,9 +64,9 @@ public class CTScoreModelListener extends BaseModelListener<CTScore> {
 					"notificationType",
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY
 				).put(
-					"originalScore", originalCTScore.getScore()
+					"originalSizeClassification", originalSizeClassification
 				).put(
-					"score", ctScore.getScore()
+					"sizeClassification", sizeClassification
 				),
 				ArrayUtil.toLongArray(userIds));
 		}

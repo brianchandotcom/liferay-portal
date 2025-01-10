@@ -2560,6 +2560,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "peter@liferay.com"
 			).put(
 				"firstName", "Peter"
@@ -2576,6 +2578,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId()));
 
 		values = HashMapBuilder.<String, Serializable>put(
+			"emailAddressDomain", "@liferay.com"
+		).put(
 			"emailAddressRequired", "peter@liferay.com"
 		).put(
 			"firstName", "Pedro"
@@ -3396,7 +3400,7 @@ public class ObjectEntryLocalServiceTest {
 					objectDefinition, user.getUserId());
 
 		Assert.assertEquals(0L, extensionValues.get("longField"));
-		Assert.assertNull(extensionValues.get("textField"));
+		Assert.assertEquals(StringPool.BLANK, extensionValues.get("textField"));
 
 		_objectFieldLocalService.deleteObjectField(
 			objectField1.getObjectFieldId());
@@ -3419,6 +3423,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values1 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "peter@liferay.com"
 			).put(
 				"firstName", "Peter"
@@ -3443,6 +3449,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values2 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "james@liferay.com"
 			).put(
 				"firstName", "James"
@@ -3469,6 +3477,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values3 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
 				"firstName", "John"
@@ -3555,10 +3565,10 @@ public class ObjectEntryLocalServiceTest {
 			"john@liferay.com", values.get("emailAddressRequired"));
 		Assert.assertEquals("John", values.get("firstName"));
 		Assert.assertEquals(0D, values.get("height"));
-		Assert.assertEquals(null, values.get("lastName"));
-		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(StringPool.BLANK, values.get("lastName"));
+		Assert.assertEquals(StringPool.BLANK, values.get("middleName"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
-		Assert.assertEquals(null, values.get("listTypeEntryKey"));
+		Assert.assertEquals(StringPool.BLANK, values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(StringPool.BLANK, values.get("script"));
@@ -3603,6 +3613,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values1 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "peter@liferay.com"
 			).put(
 				"firstName", "Peter"
@@ -3627,6 +3639,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values2 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "james@liferay.com"
 			).put(
 				"firstName", "James"
@@ -3652,6 +3666,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Map<String, Serializable> values3 =
 			HashMapBuilder.<String, Serializable>put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
 				"firstName", "John"
@@ -4067,10 +4083,10 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("João", values.get("firstName"));
 		Assert.assertEquals(0D, values.get("height"));
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
-		Assert.assertEquals(null, values.get("listTypeEntryKey"));
+		Assert.assertEquals(StringPool.BLANK, values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
-		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(StringPool.BLANK, values.get("middleName"));
 		Assert.assertEquals(
 			"multipleListTypeEntryKey3, multipleListTypeEntryKey4",
 			values.get("multipleListTypeEntriesKey"));
@@ -4152,7 +4168,7 @@ public class ObjectEntryLocalServiceTest {
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
-		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(StringPool.BLANK, values.get("middleName"));
 		Assert.assertEquals(
 			"multipleListTypeEntryKey5, multipleListTypeEntryKey6",
 			values.get("multipleListTypeEntriesKey"));
@@ -4196,7 +4212,7 @@ public class ObjectEntryLocalServiceTest {
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
-		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(StringPool.BLANK, values.get("middleName"));
 		Assert.assertEquals(
 			"multipleListTypeEntryKey5, multipleListTypeEntryKey6",
 			values.get("multipleListTypeEntriesKey"));

@@ -1930,7 +1930,8 @@ public class DefaultObjectEntryManagerImplTest
 						objectEntryId2)));
 
 			_updateAndAssertObjectEntryWithPicklistObjectField(
-				null, null, objectDefinition, objectEntryId1);
+				StringPool.BLANK, StringPool.BLANK, objectDefinition,
+				objectEntryId1);
 			_updateAndAssertObjectEntryWithPicklistObjectField(
 				StringPool.BLANK, StringPool.BLANK, objectDefinition,
 				objectEntryId2);

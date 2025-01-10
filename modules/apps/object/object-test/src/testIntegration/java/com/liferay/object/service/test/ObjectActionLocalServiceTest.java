@@ -838,9 +838,9 @@ public class ObjectActionLocalServiceTest {
 				serviceContext);
 
 			_assertWebhookObjectAction(
-				null, "Peter", null,
+				null, "Peter", StringPool.BLANK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-				_objectDefinition, "John", null,
+				_objectDefinition, "John", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED);
 
 			// Hierarchy, root object entry

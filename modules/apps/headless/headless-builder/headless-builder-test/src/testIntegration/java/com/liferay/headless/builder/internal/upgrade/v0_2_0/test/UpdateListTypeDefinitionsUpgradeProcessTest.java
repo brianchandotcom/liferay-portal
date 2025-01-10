@@ -50,8 +50,7 @@ import org.junit.Test;
  */
 @DataGuard(scope = DataGuard.Scope.NONE)
 @FeatureFlags("LPS-178642")
-public class ModifyAPIBuilderListTypeDefinitionsUpgradeProcessTest
-	extends BaseTestCase {
+public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 
 	@ClassRule
 	@Rule
@@ -157,7 +156,7 @@ public class ModifyAPIBuilderListTypeDefinitionsUpgradeProcessTest
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.headless.builder.internal.upgrade.v0_2_0." +
-				"ModifyAPIBuilderListTypeDefinitionsUpgradeProcess");
+				"UpdateListTypeDefinitionsUpgradeProcess");
 
 		String liferayMode = SystemProperties.get("liferay.mode");
 

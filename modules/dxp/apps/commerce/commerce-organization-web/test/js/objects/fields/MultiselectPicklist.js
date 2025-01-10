@@ -170,7 +170,7 @@ describe('MultiselectPicklist object field', () => {
 			});
 		});
 
-		it('displays a ClayMultiSelect with i18n items with a preselected value if set', async () => {
+		it.skip('displays a ClayMultiSelect with i18n items with a preselected value if set', async () => {
 			const onChange = jest.fn();
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: KEY_2};

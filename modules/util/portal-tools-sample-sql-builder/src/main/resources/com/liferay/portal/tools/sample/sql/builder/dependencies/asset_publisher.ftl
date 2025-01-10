@@ -25,6 +25,8 @@
 
 	${dataFactory.toInsertSQL(assetListEntryModel)}
 
+	${dataFactory.toInsertSQL(dataFactory.newAssetListEntrySegmentsEntryRelModel(assetListEntryModel, defaultJournalDDMStructureModel, pageCount))}
+
 	${dataFactory.toInsertSQL(dataFactory.newAssetListEntryUsageModel(assetListEntryModel, portletId, layoutModel))}
 
 	${csvFileWriter.write("assetPublisher", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.friendlyURL + "\n")}

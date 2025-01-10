@@ -23,8 +23,10 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListEntryUsageConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRelModel;
 import com.liferay.asset.list.model.AssetListEntryUsageModel;
 import com.liferay.asset.list.model.impl.AssetListEntryModelImpl;
+import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelModelImpl;
 import com.liferay.asset.list.model.impl.AssetListEntryUsageModelImpl;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
@@ -303,6 +305,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1238,6 +1241,148 @@ public class DataFactory {
 		assetListEntryModel.setExternalReferenceCode(uuid);
 
 		return assetListEntryModel;
+	}
+
+	public AssetListEntrySegmentsEntryRelModel
+		newAssetListEntrySegmentsEntryRelModel(
+			AssetListEntryModel assetListEntryModel,
+			DDMStructureModel ddmStructureModel, int currentIndex) {
+
+		AssetListEntrySegmentsEntryRelModel
+			assetListEntrySegmentsEntryRelModel =
+				new AssetListEntrySegmentsEntryRelModelImpl();
+
+		// PK fields
+
+		assetListEntrySegmentsEntryRelModel.setAssetListEntrySegmentsEntryRelId(
+			_counter.get());
+
+		// Group instance
+
+		long groupId = assetListEntryModel.getGroupId();
+
+		assetListEntrySegmentsEntryRelModel.setGroupId(groupId);
+
+		// Audit fields
+
+		assetListEntrySegmentsEntryRelModel.setCompanyId(_companyId);
+		assetListEntrySegmentsEntryRelModel.setUserId(_sampleUserId);
+		assetListEntrySegmentsEntryRelModel.setUserName(_SAMPLE_USER_NAME);
+		assetListEntrySegmentsEntryRelModel.setCreateDate(new Date());
+		assetListEntrySegmentsEntryRelModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		assetListEntrySegmentsEntryRelModel.setAssetListEntryId(
+			assetListEntryModel.getAssetListEntryId());
+		assetListEntrySegmentsEntryRelModel.setPriority(0);
+		assetListEntrySegmentsEntryRelModel.setSegmentsEntryId(
+			SegmentsEntryConstants.ID_DEFAULT);
+
+		Map<String, String> map = HashMapBuilder.<String, String>create(
+			11
+		).put(
+			"anyAssetType", Boolean.FALSE.toString()
+		).put(
+			"classNameIds",
+			_assetClassNameIds[0] + StringPool.COMMA + _assetClassNameIds[1]
+		).put(
+			"classTypeIdsDLFileEntryAssetRendererFactory",
+			String.valueOf(_DEFAULT_DL_FILE_ENTRY_TYPE_ID)
+		).put(
+			"classTypeIdsJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructureModel.getStructureId())
+		).put(
+			"groupIds", String.valueOf(groupId)
+		).put(
+			"orderByColumn1", "modifiedDate"
+		).put(
+			"orderByColumn2", "title"
+		).put(
+			"orderByType1", "DESC"
+		).put(
+			"orderByType2", "ASC"
+		).put(
+			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory",
+			Boolean.FALSE.toString()
+		).put(
+			"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory",
+			Boolean.FALSE.toString()
+		).build();
+
+		if (currentIndex == 1) {
+			map.put("queryAndOperator0", Boolean.TRUE.toString());
+			map.put("queryContains0", Boolean.TRUE.toString());
+			map.put("queryName0", "assetTags");
+		}
+		else {
+			String assetPublisherQueryName = "assetCategories";
+
+			if ((currentIndex % 2) == 0) {
+				assetPublisherQueryName = "assetTags";
+			}
+
+			ObjectValuePair<String[], Integer> objectValuePair = null;
+
+			Integer startIndex = _assetPublisherQueryStartIndexes.get(groupId);
+
+			if (startIndex == null) {
+				startIndex = 0;
+			}
+
+			if (assetPublisherQueryName.equals("assetCategories")) {
+				Map<Long, List<AssetCategoryModel>> assetCategoryModelsMap =
+					_assetCategoryModelsMaps[(int)groupId - 1];
+
+				List<AssetCategoryModel> assetCategoryModels =
+					assetCategoryModelsMap.get(
+						getNextAssetClassNameId(groupId));
+
+				objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
+					assetCategoryModels, startIndex);
+			}
+			else {
+				Map<Long, List<AssetTagModel>> assetTagModelsMap =
+					_assetTagModelsMaps[(int)groupId - 1];
+
+				List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
+					getNextAssetClassNameId(groupId));
+
+				objectValuePair = getAssetPublisherAssetTagsQueryValues(
+					assetTagModels, startIndex);
+			}
+
+			String[] assetPublisherQueryValues = objectValuePair.getKey();
+
+			map.put("queryAndOperator0", Boolean.FALSE.toString());
+			map.put("queryAndOperator1", Boolean.FALSE.toString());
+			map.put("queryContains0", Boolean.TRUE.toString());
+			map.put("queryContains1", Boolean.FALSE.toString());
+			map.put("queryName0", assetPublisherQueryName);
+			map.put("queryName1", assetPublisherQueryName);
+			map.put(
+				"queryValues0",
+				StringBundler.concat(
+					assetPublisherQueryValues[0], StringPool.COMMA,
+					assetPublisherQueryValues[1], StringPool.COMMA,
+					assetPublisherQueryValues[2]));
+			map.put("queryValues1", assetPublisherQueryValues[3]);
+		}
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			map, true
+		).build();
+
+		assetListEntrySegmentsEntryRelModel.setTypeSettings(
+			unicodeProperties.toString());
+
+		assetListEntrySegmentsEntryRelModel.setLastPublishDate(null);
+
+		// Autogenerated fields
+
+		assetListEntrySegmentsEntryRelModel.setUuid(SequentialUUID.generate());
+
+		return assetListEntrySegmentsEntryRelModel;
 	}
 
 	public AssetListEntryUsageModel newAssetListEntryUsageModel(
@@ -8370,6 +8515,9 @@ public class DataFactory {
 				}
 				else if (name.equals("AccountERObjectFieldId")) {
 					name = "AccountEntryRestrictedObjectFieldId";
+				}
+				else if (name.equals("AlEntrySegmentsEntryRelId")) {
+					name = "AssetListEntrySegmentsEntryRelId";
 				}
 				else if (name.equals("CdnEnabled")) {
 					name = "CDNEnabled";

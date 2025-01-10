@@ -25,6 +25,8 @@
 
 	${dataFactory.toInsertSQL(assetListEntryModel)}
 
+	${dataFactory.toInsertSQL(dataFactory.newAssetListEntryUsageModel(assetListEntryModel, portletId, layoutModel))}
+
 	${csvFileWriter.write("assetPublisher", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout _layoutModel = layoutModel />

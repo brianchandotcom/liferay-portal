@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 export class ObjectRelationshipFormPage {
 	readonly inheritanceCheckbox: Locator;
+	readonly inheritanceInfo: Locator;
 	readonly labelInput: Locator;
 	readonly manyRecordsOfSelect: Locator;
 	readonly nameInput: Locator;
@@ -20,6 +21,9 @@ export class ObjectRelationshipFormPage {
 		this.inheritanceCheckbox = page
 			.locator(formContainerSelector)
 			.getByLabel('Enable Inheritance');
+		this.inheritanceInfo = page.getByText(
+			'Info:When enabled, permissions are inherited, all API endpoints are grouped under the parent, and the relationship field is always mandatory.'
+		);
 		this.labelInput = page
 			.locator(formContainerSelector)
 			.getByLabel('LabelMandatory');

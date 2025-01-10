@@ -798,7 +798,9 @@ test.describe('Manage root models elements through Objects Admin', () => {
 
 			// Check if info alert is displayed in the modal when the inheritance is enabled.
 
-			await expect(page.getByText('Info:When enabled,')).toBeVisible();
+			await expect(
+				objectRelationshipFormPage.inheritanceInfo
+			).toBeVisible();
 
 			await objectRelationshipFormPage.saveButton.click();
 
@@ -829,7 +831,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			// Check if success toast is displayed after creating a relationship.
 
 			await expect(
-				page.getByText('Success:Relationship was')
+				page.getByText('Relationship was created successfully')
 			).toBeVisible();
 
 			const viewRelationshipLink = page.getByRole('link', {

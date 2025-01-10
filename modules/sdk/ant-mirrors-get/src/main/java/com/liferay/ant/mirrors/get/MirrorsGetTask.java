@@ -5,9 +5,11 @@
 
 package com.liferay.ant.mirrors.get;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,12 +30,15 @@ import java.util.Base64;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipFile;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Checksum;
+import org.apache.tools.tar.TarEntry;
+import org.apache.tools.tar.TarInputStream;
 
 /**
  * @author Peter Yoo
@@ -238,6 +243,15 @@ public class MirrorsGetTask extends Task {
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " failed checksum");
+		}
+
+		if (_isTarGzFileName(targetFile.getName()) &&
+			!_isTarGzFile(targetFile)) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid Tar Gz file");
 		}
 
 		if (_isZipFileName(targetFile.getName()) && !_isZipFile(targetFile)) {
@@ -667,6 +681,49 @@ public class MirrorsGetTask extends Task {
 
 	private boolean _is7zFileName(String fileName) {
 		if (fileName.endsWith(".7z")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isTarGzFile(File file) throws IOException {
+		if (!file.exists()) {
+			return false;
+		}
+
+		try (GZIPInputStream gzipInputStream = new GZIPInputStream(
+				new FileInputStream(file));
+			InputStream bufferedInputStream = new BufferedInputStream(
+				gzipInputStream);
+			TarInputStream tarInputStream = new TarInputStream(
+				bufferedInputStream)) {
+
+			TarEntry tarEntry;
+
+			while ((tarEntry = tarInputStream.getNextEntry()) != null) {
+				if (tarEntry.isDirectory()) {
+					continue;
+				}
+
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+
+				while ((bytesRead = tarInputStream.read(buffer)) != -1) {
+				}
+			}
+
+			return true;
+		}
+		catch (IOException ioException) {
+			System.out.println(file.getPath() + " is an invalid Tar Gz file.");
+
+			return false;
+		}
+	}
+
+	private boolean _isTarGzFileName(String fileName) {
+		if (fileName.endsWith(".tar.gz") || fileName.endsWith(".tgz")) {
 			return true;
 		}
 

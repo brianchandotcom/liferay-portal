@@ -85,7 +85,11 @@ const EnvironmentSelection = () => {
 
 									<ClayBadge
 										className="text-uppercase"
-										label={projectEnvironment.projectId}
+										label={
+											projectEnvironment.projectId.split(
+												'-'
+											)[1]
+										}
 									/>
 								</>
 							}

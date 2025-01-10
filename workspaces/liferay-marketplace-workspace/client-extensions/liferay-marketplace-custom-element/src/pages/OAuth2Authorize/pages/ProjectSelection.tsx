@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Navigate, useNavigate} from 'react-router-dom';
 
 import RadioCard from '../../../components/RadioCardList/components/RadioCard';
@@ -106,6 +107,7 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 
 const ProjectSelectionLayout = () => {
 	const {
+		loading,
 		myUserAccount,
 		project: selectedProject,
 		projects,
@@ -140,9 +142,19 @@ const ProjectSelectionLayout = () => {
 			/>
 
 			<div className="border my-7 p-3 py-6 rounded">
-				<ProjectSelection
-					noCloudProjectsAvailable={noCloudProjectsAvailable}
-				/>
+				{loading ? (
+					<div className="m-6 p-8">
+						<ClayLoadingIndicator
+							displayType="primary"
+							shape="squares"
+							size="lg"
+						/>
+					</div>
+				) : (
+					<ProjectSelection
+						noCloudProjectsAvailable={noCloudProjectsAvailable}
+					/>
+				)}
 			</div>
 
 			<div className="d-flex justify-content-end mt-4">

@@ -301,6 +301,11 @@ public class CTCollectionWrapper
 		return model.getScore();
 	}
 
+	@Override
+	public String getScoreSizeClassification() {
+		return model.getScoreSizeClassification();
+	}
+
 	/**
 	 * Returns the shareable of this ct collection.
 	 *

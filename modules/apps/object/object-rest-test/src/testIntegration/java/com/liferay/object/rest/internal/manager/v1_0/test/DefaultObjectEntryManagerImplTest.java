@@ -2335,10 +2335,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		_assertFailureDeleteObjectEntry(ActionKeys.DELETE, tree);
+		_testDeleteObjectEntryWithAccountEntryRestricted2(ActionKeys.DELETE, tree);
 
-		// Users should be able to delete object entries restricted to accounts
-		// to which they belong
+		// Users can delete object entries from accounts that they belong to
 
 		_addResourcePermission(
 			ActionKeys.DELETE, _rootObjectDefinition, _buyerRole);
@@ -2355,8 +2354,8 @@ public class DefaultObjectEntryManagerImplTest
 					objectDefinition, objectEntry.getObjectEntryId());
 			});
 
-		// Users should be prevented from deleting object entries restricted to
-		// accounts they do not belong to
+		// Users cannot delete object entries from accounts that they do not
+		// belong to
 
 		tree = _createObjectEntryTree(accountEntry1, StringPool.BLANK);
 
@@ -2369,12 +2368,12 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(
 			ActionKeys.DELETE, _rootObjectDefinition, _accountManagerRole);
 
-		_assertFailureDeleteObjectEntry(ActionKeys.VIEW, tree);
+		_testDeleteObjectEntryWithAccountEntryRestricted2(ActionKeys.VIEW, tree);
 
 		_addResourcePermission(
 			ActionKeys.VIEW, _rootObjectDefinition, _accountManagerRole);
 
-		_assertFailureDeleteObjectEntry(ActionKeys.VIEW, tree);
+		_testDeleteObjectEntryWithAccountEntryRestricted2(ActionKeys.VIEW, tree);
 	}
 
 	@Test
@@ -4709,10 +4708,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		_assertFailureUpdateObjectEntry(ActionKeys.UPDATE, tree);
+		_testUpdateObjectEntryWithAccountEntryRestricted2(ActionKeys.UPDATE, tree);
 
-		// Users should be able to update object entries restricted to
-		// accounts to which they belong to
+		// Users can delete object entries from accounts that they belong to
 
 		_addResourcePermission(
 			ActionKeys.UPDATE, _rootObjectDefinition, _buyerRole);
@@ -4732,8 +4730,8 @@ public class DefaultObjectEntryManagerImplTest
 						objectEntry.getObjectEntryId()));
 			});
 
-		// Users should be prevented from updating object entries
-		// restricted to accounts they do not belong to
+		// Users cannot delete object entries from accounts that they do not
+		// belong to
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -4744,12 +4742,12 @@ public class DefaultObjectEntryManagerImplTest
 		_addResourcePermission(
 			ActionKeys.UPDATE, _rootObjectDefinition, _accountManagerRole);
 
-		_assertFailureUpdateObjectEntry(ActionKeys.VIEW, tree);
+		_testUpdateObjectEntryWithAccountEntryRestricted2(ActionKeys.VIEW, tree);
 
 		_addResourcePermission(
 			ActionKeys.VIEW, _rootObjectDefinition, _accountManagerRole);
 
-		_assertFailureUpdateObjectEntry(ActionKeys.VIEW, tree);
+		_testUpdateObjectEntryWithAccountEntryRestricted2(ActionKeys.VIEW, tree);
 	}
 
 	@Test
@@ -5355,7 +5353,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
-	private void _assertFailureDeleteObjectEntry(String actionId, Tree tree)
+	private void _testDeleteObjectEntryWithAccountEntryRestricted2(String actionId, Tree tree)
 		throws Exception {
 
 		Node rootNode = tree.getRootNode();
@@ -5380,7 +5378,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
-	private void _assertFailureUpdateObjectEntry(String actionId, Tree tree)
+	private void _testUpdateObjectEntryWithAccountEntryRestricted2(String actionId, Tree tree)
 		throws Exception {
 
 		Node rootNode = tree.getRootNode();

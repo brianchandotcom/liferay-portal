@@ -1,5 +1,12 @@
 # Poshi Runner Change Log
 
+## 1.0.495
+
+### Other
+
+* [LRCI-5090](https://liferay.atlassian.net/browse/LRCI-5090) - failing test related to Poshi Runner when compiled with JDK 17
+* [LRCI-5173](https://liferay.atlassian.net/browse/LRCI-5173) - Change source compatibility to JDK8 for poshi
+
 ## 1.0.494
 
 ### Other

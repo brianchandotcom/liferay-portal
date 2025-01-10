@@ -5313,7 +5313,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertListEntries(
-		List<ListEntry> actualListTypeEntries,
+		List<ListEntry> listEntries,
 		List<Object> values) {
 
 		if (ListUtil.isEmpty(values)) {
@@ -5323,7 +5323,7 @@ public class DefaultObjectEntryManagerImplTest
 		for (Object value : values) {
 			Assert.assertTrue(
 				ListUtil.exists(
-					actualListTypeEntries,
+					listEntries,
 					listEntry -> {
 						if (value instanceof String) {
 							return Objects.equals(
@@ -5336,14 +5336,14 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertListEntry(
-		ListEntry actualListTypeEntry, Object value) {
+		ListEntry listEntry, Object value) {
 
 		if (value instanceof String) {
 			Assert.assertEquals(
-				value, actualListTypeEntry.getKey());
+				value, listEntry.getKey());
 		}
 		else {
-			Assert.assertEquals(value, actualListTypeEntry);
+			Assert.assertEquals(value, listEntry);
 		}
 	}
 

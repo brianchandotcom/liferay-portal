@@ -4,6 +4,8 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -409,5 +411,58 @@ test(
 				`/web${site.friendlyUrlPath}/b/${expectedCategoriesPartialURL}/${title}`
 			);
 		});
+	}
+);
+
+test(
+	'Update the cover image position correctly after a drag',
+	{
+		tag: '@LPD-45514',
+	},
+	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
+		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+		await blogsEditBlogEntryPage.editBlogEntry({
+			content: getRandomString(),
+			publish: false,
+			title: getRandomString(),
+		});
+
+		const coverImageTitle = 'image1.jpeg';
+
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/image1.jpeg')),
+			{
+				description: getRandomString(),
+				fileName: getRandomString(),
+				title: coverImageTitle,
+			}
+		);
+		await blogsEditBlogEntryPage.selectCoverImage(coverImageTitle);
+
+		// Simulate mouse movement to drag the image
+
+		const coverImage = await page.getByRole('img', {name: 'Current Image'});
+
+		const coverImageSize = await coverImage.boundingBox();
+
+		await coverImage.hover();
+		await page.mouse.down();
+		await page.mouse.move(
+			coverImageSize.x + coverImageSize.width / 2,
+			coverImageSize.y + coverImageSize.height / 2 - 25,
+		);
+		await page.mouse.up();
+
+		const coverImageCropRegionValue = await page
+			.locator(
+				'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_coverImageFileEntryCropRegion'
+			)
+			.inputValue();
+
+		const topValue = JSON.parse(coverImageCropRegionValue).y;
+
+		expect(topValue).toBeGreaterThan(20);
 	}
 );

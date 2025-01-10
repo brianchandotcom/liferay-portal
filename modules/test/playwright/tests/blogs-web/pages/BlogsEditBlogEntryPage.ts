@@ -124,6 +124,22 @@ export class BlogsEditBlogEntryPage {
 		await waitForAlert(this.page);
 	}
 
+	async selectCoverImage(coverImageTitle) {
+		await this.page.getByRole('button', {name: 'Select File'}).click();
+
+		const itemSelectorDialog = await this.page.frameLocator(
+			'iframe[title="Select File"]'
+		);
+
+		await itemSelectorDialog
+			.getByRole('link', {name: 'Documents and Media'})
+			.click();
+
+		await itemSelectorDialog.getByText("Sites and Libraries").waitFor();
+
+		await itemSelectorDialog.getByText(coverImageTitle).click();
+	}
+
 	async selectSpecificDisplayPage(displayPageName: string) {
 		const displayPageFieldSet = await openFieldset(
 			this.page,

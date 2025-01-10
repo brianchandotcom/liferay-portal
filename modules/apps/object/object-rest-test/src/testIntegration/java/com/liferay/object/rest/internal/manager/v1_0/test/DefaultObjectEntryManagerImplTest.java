@@ -5314,36 +5314,36 @@ public class DefaultObjectEntryManagerImplTest
 
 	private void _assertListTypeEntries(
 		List<ListEntry> actualListTypeEntries,
-		List<Object> expectedListTypeEntries) {
+		List<Object> values) {
 
-		if (ListUtil.isEmpty(expectedListTypeEntries)) {
+		if (ListUtil.isEmpty(values)) {
 			return;
 		}
 
-		for (Object expectedListTypeEntry : expectedListTypeEntries) {
+		for (Object value : values) {
 			Assert.assertTrue(
 				ListUtil.exists(
 					actualListTypeEntries,
 					listEntry -> {
-						if (expectedListTypeEntry instanceof String) {
+						if (value instanceof String) {
 							return Objects.equals(
-								expectedListTypeEntry, listEntry.getKey());
+								value, listEntry.getKey());
 						}
 
-						return Objects.equals(expectedListTypeEntry, listEntry);
+						return Objects.equals(value, listEntry);
 					}));
 		}
 	}
 
 	private void _assertListTypeEntry(
-		ListEntry actualListTypeEntry, Object expectedListTypeEntry) {
+		ListEntry actualListTypeEntry, Object value) {
 
-		if (expectedListTypeEntry instanceof String) {
+		if (value instanceof String) {
 			Assert.assertEquals(
-				expectedListTypeEntry, actualListTypeEntry.getKey());
+				value, actualListTypeEntry.getKey());
 		}
 		else {
-			Assert.assertEquals(expectedListTypeEntry, actualListTypeEntry);
+			Assert.assertEquals(value, actualListTypeEntry);
 		}
 	}
 

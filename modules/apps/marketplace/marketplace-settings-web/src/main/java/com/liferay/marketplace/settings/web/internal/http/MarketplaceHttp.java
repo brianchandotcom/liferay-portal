@@ -70,11 +70,15 @@ public class MarketplaceHttp {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"accessToken", jsonObject.getString("access_token")
 			).put(
+				"clientId", payload.clientId
+			).put(
 				"code", payload.code
 			).put(
 				"expiresIn",
 				System.currentTimeMillis() +
 					(jsonObject.getLong("expires_in") * 1000)
+			).put(
+				"redirect", payload.redirect
 			).put(
 				"refreshToken", jsonObject.getString("refresh_token")
 			).put(

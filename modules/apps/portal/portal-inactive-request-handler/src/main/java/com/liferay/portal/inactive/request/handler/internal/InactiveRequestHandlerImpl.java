@@ -8,24 +8,19 @@ package com.liferay.portal.inactive.request.handler.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.net.URL;
 
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,21 +57,24 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 			return;
 		}
 
-		httpServletResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
+		render(httpServletRequest, httpServletResponse, messageKey);
+	}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+	public void render(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String messageKey) {
 
-		String message = _language.get(
-			_portal.getLocale(httpServletRequest), messageKey,
-			StringPool.BLANK);
+		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/inactive.jsp");
 
-		if (Validator.isNull(message)) {
-			message = HtmlUtil.escape(messageKey);
+			httpServletRequest.setAttribute("MESSAGE", messageKey);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-
-		String html = StringUtil.replace(_content, "[$MESSAGE$]", message);
-
-		printWriter.print(html);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Activate
@@ -127,11 +125,10 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 	private String _content = StringPool.BLANK;
 
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.inactive.request.handler)"
+	)
+	private ServletContext _servletContext;
 
 	private volatile boolean _showInactiveRequestMessage;
 

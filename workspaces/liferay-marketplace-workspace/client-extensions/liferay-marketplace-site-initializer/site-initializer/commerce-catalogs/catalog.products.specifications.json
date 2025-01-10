@@ -35,7 +35,7 @@
 		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-DEVELOPER-NAME",
 		"description": "Developer Name",
-		"facetable": false,
+		"facetable": true,
 		"key": "developer-name",
 		"title": "Developer Name"
 	},

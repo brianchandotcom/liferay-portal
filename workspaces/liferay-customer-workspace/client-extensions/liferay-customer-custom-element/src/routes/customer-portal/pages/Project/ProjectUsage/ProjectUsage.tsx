@@ -36,7 +36,7 @@ const ProjectUsage = () => {
 						<ContactBanner
 							className="mb-5"
 							description={i18n.translate(
-								'project-usage-metrics-are-available-for-liferay-saas-customers-on-liferays-latest-billing-model'
+								'project-metrics-are-available-for-liferay-saas-customers-on-liferays-latest-usage-based-model'
 							)}
 							title={i18n.translate(
 								'this-project-is-on-a-legacy-billing-model'
@@ -121,7 +121,7 @@ const ProjectUsage = () => {
 
 								<ContactBanner
 									description={i18n.translate(
-										'dont-let-resource-limits-put-your-project-at-risk'
+										'dont-let-resource-limit-your-project'
 									)}
 									title={i18n.translate(
 										'need-more-project-resources'

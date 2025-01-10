@@ -7825,6 +7825,10 @@ ${docker.start.error}</fail>
 			<if>
 				<isset property="java.jdk.home" />
 				<then>
+					<exec executable="docker">
+						<arg line="pull ${operating.system.docker.image}" />
+					</exec>
+
 					<exec executable="docker" outputproperty="docker.inspect.output">
 						<arg line="inspect ${operating.system.docker.image}" />
 					</exec>

@@ -133,6 +133,11 @@ export class ViewObjectEntriesPage {
 		await this.page.getByRole('option', {name: optionName}).click();
 	}
 
+	async selectDropdownItemWithSearch(optionName: string) {
+		await this.page.getByPlaceholder('Search').click();
+		await this.page.getByRole('menuitem', {name: optionName}).click();
+	}
+
 	async selectFileFromDocumentsAndMedia(fileName: string) {
 		await this.selectFileButton.click();
 
@@ -194,7 +199,7 @@ export class ViewObjectEntriesPage {
 			`/${regionalCode}/group${siteUrl ?? '/guest'}${
 				PORTLET_URLS.objects
 			}_${objectDefinitionClassNameSuffix}`,
-			{waitUntil: 'load'}
+			{waitUntil: 'networkidle'}
 		);
 	}
 }

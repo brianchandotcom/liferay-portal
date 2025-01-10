@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class EditObjectDetailsPage {
+	readonly accountRestrictionToggle: Locator;
 	readonly detailsTabItem: Locator;
 	readonly page: Page;
 	readonly publishButton: Locator;
@@ -15,6 +16,10 @@ export class EditObjectDetailsPage {
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 
 	constructor(page: Page) {
+		this.accountRestrictionToggle = page.getByLabel(
+			'Enable Account Restriction',
+			{exact: true}
+		);
 		this.detailsTabItem = page.getByRole('link', {name: 'Details'});
 		this.page = page;
 		this.publishButton = page.getByRole('button', {
@@ -23,6 +28,13 @@ export class EditObjectDetailsPage {
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
+	}
+
+	async enableAccountRestriction(fieldName: string) {
+		await this.accountRestrictionToggle.check();
+
+		await this.page.getByText('Select an Option').click();
+		await this.page.getByRole('option', {name: fieldName}).click();
 	}
 
 	async goto(objectDefinitionLabel: string) {

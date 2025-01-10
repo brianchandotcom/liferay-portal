@@ -198,7 +198,12 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 			_log.error(exception);
 		}
-
+/* here needs to change, remember to check if it returns a number */
+		document.addNumber(
+				"pageViewsUsage", _getUsage(faroSubscriptionDisplay.getPageViewsCountSinceLastAnniversary(), faroSubscriptionDisplay.getPageViewsCountLimit())
+		);
+		document.addNumber(
+				"individualsUsage", _getUsage(faroSubscriptionDisplay.getIndividualsCountSinceLastAnniversary(), faroSubscriptionDisplay.getIndividualsLimit()));
 		document.addNumber(
 			"pageViewsLimit", faroSubscriptionDisplay.getPageViewsLimit());
 		document.addKeyword(
@@ -224,6 +229,16 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 		}
 
 		return document;
+	}
+	
+	private double _getUsage(long count, long limit) {
+		if ((count == 0) || (limit == 0)) {
+			return 0.0;
+		}
+
+		double usage = 100.0 * count / limit;
+
+		return ((long) (usage * 100)) / 100.0;
 	}
 
 	@Override
@@ -287,5 +302,6 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
 
 }

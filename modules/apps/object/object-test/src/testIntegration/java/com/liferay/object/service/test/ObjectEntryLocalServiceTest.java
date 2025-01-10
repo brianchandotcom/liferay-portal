@@ -195,6 +195,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -2991,6 +2992,59 @@ public class ObjectEntryLocalServiceTest {
 			draftObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			publishedObjectDefinition);
+	}
+
+	@Test
+	public void testDeleteObjectEntryWithObjectDefinitionTree()
+		throws Exception {
+
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			rootObjectDefinition.getObjectDefinitionId());
+
+		ObjectEntry rootObjectEntry = _objectEntryLocalService.getObjectEntry(
+			"A1", rootObjectDefinition.getObjectDefinitionId());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			rootObjectEntry.getObjectEntryId());
+
+		Iterator<Node> iterator = objectEntryTree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			AssertUtils.assertFailure(
+				NoSuchObjectEntryException.class,
+				"No ObjectEntry exists with the primary key " +
+					node.getPrimaryKey(),
+				() -> _objectEntryLocalService.getObjectEntry(
+					node.getPrimaryKey()));
+		}
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

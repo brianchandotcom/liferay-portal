@@ -29,7 +29,6 @@ import com.liferay.change.tracking.web.internal.frontend.data.set.filter.TypeNam
 import com.liferay.change.tracking.web.internal.frontend.data.set.filter.UserSelectionFDSFilter;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
-import com.liferay.change.tracking.web.internal.util.CTScoreUtil;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -406,7 +405,7 @@ public class ViewChangesDisplayContext {
 			"itemsOverview", itemsOverviewJSONArray
 		).put(
 			"publicationSizeClassification",
-			CTScoreUtil.getSizeClassification(_ctCollection.getScore())
+			_ctCollection.getScoreSizeClassification()
 		).build();
 	}
 

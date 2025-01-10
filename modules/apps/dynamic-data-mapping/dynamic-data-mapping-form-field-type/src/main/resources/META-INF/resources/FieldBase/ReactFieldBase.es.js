@@ -268,12 +268,13 @@ export default function FieldBase({
 	const popoverOrTooltip = !!popover || !!tooltip;
 	const showFor =
 		type === 'date' ||
+		type === 'date_time' ||
 		type === 'document_library' ||
-		type === 'text' ||
-		type === 'numeric' ||
 		type === 'image' ||
+		type === 'numeric' ||
 		type === 'rich_text' ||
-		type === 'search_location';
+		type === 'search_location' ||
+		type === 'text';
 	const readFieldDetails = !showFor;
 	const hasFieldDetails =
 		accessible && fieldDetails && readFieldDetails && type !== 'select';

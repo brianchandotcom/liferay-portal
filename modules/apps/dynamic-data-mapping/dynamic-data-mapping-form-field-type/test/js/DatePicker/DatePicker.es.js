@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import moment from 'moment';
 import React from 'react';
 
-import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
+import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker';
 
 describe('DatePicker', () => {
 	it('renders the help text', () => {

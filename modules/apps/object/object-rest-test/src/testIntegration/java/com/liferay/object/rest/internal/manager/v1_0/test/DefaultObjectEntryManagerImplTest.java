@@ -4824,7 +4824,7 @@ public class DefaultObjectEntryManagerImplTest
 				expectedEntry.getKey(),
 				_localizedMultiselectPicklistObjectFieldName)) {
 
-			_assertListTypeEntries(
+			_assertListEntries(
 				(List<ListEntry>)actualObjectEntryProperties.get(
 					expectedEntry.getKey()),
 				(List<Object>)expectedEntry.getValue());
@@ -4840,7 +4840,7 @@ public class DefaultObjectEntryManagerImplTest
 				(Map<String, Object>)expectedEntry.getValue();
 
 			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
-				_assertListTypeEntries(
+				_assertListEntries(
 					(List<ListEntry>)actualValues.get(entry.getKey()),
 					(List<Object>)entry.getValue());
 			}
@@ -4973,7 +4973,7 @@ public class DefaultObjectEntryManagerImplTest
 				 Objects.equals(
 					 expectedEntry.getKey(), "picklistObjectFieldName")) {
 
-			_assertListTypeEntry(
+			_assertListEntry(
 				(ListEntry)actualObjectEntryProperties.get(
 					expectedEntry.getKey()),
 				expectedEntry.getValue());
@@ -4989,7 +4989,7 @@ public class DefaultObjectEntryManagerImplTest
 				(Map<String, Object>)expectedEntry.getValue();
 
 			for (Map.Entry<String, Object> entry : expectedValues.entrySet()) {
-				_assertListTypeEntry(
+				_assertListEntry(
 					(ListEntry)actualValues.get(entry.getKey()),
 					entry.getValue());
 			}
@@ -5312,7 +5312,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
-	private void _assertListTypeEntries(
+	private void _assertListEntries(
 		List<ListEntry> actualListTypeEntries,
 		List<Object> values) {
 
@@ -5335,7 +5335,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
-	private void _assertListTypeEntry(
+	private void _assertListEntry(
 		ListEntry actualListTypeEntry, Object value) {
 
 		if (value instanceof String) {

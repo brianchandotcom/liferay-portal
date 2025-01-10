@@ -39,7 +39,7 @@ public class FragmentsContentPageEditorSidebarPanel
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "fragments-and-widgets");
+		return _language.get(locale, "components");
 	}
 
 	@Override

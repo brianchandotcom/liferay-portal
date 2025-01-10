@@ -225,7 +225,7 @@ export default function FragmentsSidebar() {
 	return (
 		<>
 			<SidebarPanelHeader>
-				{Liferay.Language.get('fragments-and-widgets')}
+				{Liferay.Language.get('components')}
 			</SidebarPanelHeader>
 
 			<SearchResultsMessage numberOfResults={numberOfResults} />

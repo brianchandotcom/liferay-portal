@@ -37,7 +37,7 @@
 		persistState=true
 		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')}">
 		<ul class="list-unstyled">
-			<#list entries as entry>
+			<#list entries?sort_by("displayName") as entry>
 				<li class="color-neutral-2 facet-value py-1">
 					<div class="custom-checkbox custom-control font-weight-normal">
 						<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">

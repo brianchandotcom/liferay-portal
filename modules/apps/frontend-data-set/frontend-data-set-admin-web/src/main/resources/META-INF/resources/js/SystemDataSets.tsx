@@ -141,7 +141,7 @@ const SelectSystemDataSetModalContent = ({
 	loadData: Function;
 	namespace: string;
 }) => {
-	const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
+	const [createButtonDisabled, setCreateButtonDisabled] = useState(true);
 	const [selectedSystemDataSet, setSelectedSystemDataSet] =
 		useState<ISystemDataSet | null>(null);
 
@@ -215,7 +215,9 @@ const SelectSystemDataSetModalContent = ({
 						</ClayButton>
 
 						<ClayButton
-							disabled={createButtonDisabled}
+							disabled={
+								createButtonDisabled && !selectedSystemDataSet
+							}
 							onClick={onCreateButtonClick}
 						>
 							{Liferay.Language.get('create')}

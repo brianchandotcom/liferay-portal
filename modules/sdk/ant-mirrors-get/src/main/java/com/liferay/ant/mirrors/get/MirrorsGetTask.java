@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
@@ -111,13 +112,9 @@ public class MirrorsGetTask extends Task {
 			return;
 		}
 
-		if (_src.startsWith("gs:")) {
-			matcher = _gsURLPattern.matcher(_src);
+		matcher = _gsURLPattern.matcher(_src);
 
-			if (!matcher.find()) {
-				throw new RuntimeException("Invalid src attribute: " + _src);
-			}
-
+		if (matcher.matches()) {
 			_fileName = matcher.group("fileName");
 
 			_gcpBucketName = matcher.group("bucketName");
@@ -125,28 +122,29 @@ public class MirrorsGetTask extends Task {
 			Map<String, Object> properties = project.getProperties();
 
 			for (String propertyName : properties.keySet()) {
-				Matcher gcpBucketPropertyNameMatcher =
-					_gcpBucketPropertyNamePattern.matcher(propertyName);
+				Matcher bucketHostNamePropertyMatcher =
+					_bucketHostNamePropertyPattern.matcher(propertyName);
 
-				if (!gcpBucketPropertyNameMatcher.matches()) {
+				if (!bucketHostNamePropertyMatcher.matches()) {
 					continue;
 				}
 
-				_hostName = gcpBucketPropertyNameMatcher.group("hostName");
+				if (!Objects.equals(
+						_gcpBucketName,
+						bucketHostNamePropertyMatcher.group("bucketName"))) {
+
+					continue;
+				}
+
+				_hostName = project.getProperty(propertyName);
 
 				break;
 			}
 
 			if (_hostName == null) {
 				throw new RuntimeException(
-					"Please set mirrors.gcp.bucket.name[__hostname__]");
-			}
-
-			_gcpCredentialsFile = _getGCPCredentialsFile();
-
-			if (_gcpCredentialsFile == null) {
-				throw new RuntimeException(
-					"Please set mirrors.gcp.credentials.file[__hostname__]");
+					"Please set 'mirrors.gcp.bucket.hostname[" +
+						_gcpBucketName + "]'.");
 			}
 
 			_path = matcher.group("path");
@@ -331,10 +329,25 @@ public class MirrorsGetTask extends Task {
 	}
 
 	private void _downloadGCPFile(File targetFile) {
-		File gcpCredentialsFile = _getGCPCredentialsFile();
 		String gsURL = _getGSURL();
 
-		if ((gcpCredentialsFile == null) || (gsURL == null)) {
+		if (gsURL == null) {
+			return;
+		}
+
+		File gcpCredentialsFile = _getGCPCredentialsFile();
+
+		if (gcpCredentialsFile == null) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Unable to download from ");
+			sb.append(gsURL);
+			sb.append(" unless 'mirrors.gcp.credentials.file[");
+			sb.append(_getGCPBucketName());
+			sb.append("]' is set.");
+
+			System.out.println(sb.toString());
+
 			return;
 		}
 
@@ -522,10 +535,30 @@ public class MirrorsGetTask extends Task {
 			return _gcpBucketName;
 		}
 
-		Project project = getProject();
+		if (_hostName == null) {
+			return null;
+		}
 
-		_gcpBucketName = project.getProperty(
-			"mirrors.gcp.bucket.name[" + _hostName + "]");
+		Map<String, Object> properties = project.getProperties();
+
+		for (String propertyName : properties.keySet()) {
+			Matcher bucketHostNamePropertyMatcher =
+				_bucketHostNamePropertyPattern.matcher(propertyName);
+
+			if (!bucketHostNamePropertyMatcher.matches()) {
+				continue;
+			}
+
+			if (!Objects.equals(
+					_hostName, project.getProperty(propertyName))) {
+
+				continue;
+			}
+
+			_gcpBucketName = bucketHostNamePropertyMatcher.group("bucketName");
+
+			break;
+		}
 
 		return _gcpBucketName;
 	}
@@ -535,10 +568,16 @@ public class MirrorsGetTask extends Task {
 			return _gcpCredentialsFile;
 		}
 
+		String gcpBucketName = _getGCPBucketName();
+
+		if (gcpBucketName == null) {
+			return null;
+		}
+
 		Project project = getProject();
 
 		String gcpCredentialsFilePath = project.getProperty(
-			"mirrors.gcp.credentials.file[" + _hostName + "]");
+			"mirrors.gcp.credentials.file[" + gcpBucketName + "]");
 
 		if (gcpCredentialsFilePath == null) {
 			return null;
@@ -1065,8 +1104,9 @@ public class MirrorsGetTask extends Task {
 
 	private static final Pattern _basicAuthenticationURLPattern =
 		Pattern.compile("(https?://)([^:]+):([^@]+)@(.+)");
-	private static final Pattern _gcpBucketPropertyNamePattern =
-		Pattern.compile("mirrors.gcp.bucket.name\\[(?<hostName>[^\\]]+)\\]");
+	private static final Pattern _bucketHostNamePropertyPattern =
+		Pattern.compile(
+			"mirrors.gcp.bucket.hostname\\[(?<bucketName>[^\\]]+)\\]");
 	private static final Pattern _gsURLPattern = Pattern.compile(
 		"gs://(?<bucketName>[^/]+)/(?<path>.+/)(?<fileName>.+)");
 	private static final Pattern _httpURLPattern = Pattern.compile(

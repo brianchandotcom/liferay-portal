@@ -11,16 +11,40 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import RawDOM from '../../common/components/RawDOM';
 import {config} from '../config/index';
 
-const GlobalContext = React.createContext([{document, window}, () => {}]);
+type GlobalContextValueType = {
+	document: Document;
+	iframe?: HTMLIFrameElement;
+	window: Window;
+};
 
-export function GlobalContextFrame({children, useIframe}) {
-	const [baseElement, setBaseElement] = useState(null);
-	const [iframeContext, setIframeContext] = useState(null);
-	const [iframeElement, setIframeElement] = useState(null);
+type GlobalContextType = [
+	GlobalContextValueType,
+	(value: GlobalContextValueType) => void,
+];
+
+const DEFAULT_GLOBAL_CONTEXT: GlobalContextValueType = {document, window};
+
+const GlobalContext = React.createContext<GlobalContextType>([
+	DEFAULT_GLOBAL_CONTEXT,
+	() => {},
+]);
+
+export function GlobalContextFrame({
+	children,
+	useIframe,
+}: {
+	children: React.ReactNode;
+	useIframe: boolean;
+}) {
+	const [baseElement, setBaseElement] = useState<HTMLElement | null>(null);
+	const [iframeContext, setIframeContext] =
+		useState<GlobalContextValueType | null>(null);
+	const [iframeElement, setIframeElement] =
+		useState<HTMLIFrameElement | null>(null);
 	const isMounted = useIsMounted();
 	const [loadIframe, setLoadIframe] = useState(false);
 	const localContext = useMemo(() => ({document, window}), []);
-	const [, setGlobalContext] = useContext(GlobalContext);
+	const [, setGlobalContext] = useContext<GlobalContextType>(GlobalContext);
 
 	useEffect(() => {
 		if (useIframe && !loadIframe) {
@@ -29,17 +53,21 @@ export function GlobalContextFrame({children, useIframe}) {
 	}, [useIframe, loadIframe]);
 
 	useEffect(() => {
-		let timeoutId = null;
+		let timeoutId: NodeJS.Timeout | null = null;
 
 		const handleIframeLoaded = () => {
-			if (!isMounted() || !iframeElement) {
+			if (
+				!isMounted() ||
+				!iframeElement ||
+				!iframeElement.contentDocument
+			) {
 				return;
 			}
 
 			const pageEditorStylesLinkId = `${config.portletNamespace}pageEditorStylesLink`;
 
 			if (
-				!iframeElement.contentDocument.getElementById(
+				!iframeElement.contentDocument?.getElementById(
 					pageEditorStylesLinkId
 				)
 			) {
@@ -63,15 +91,18 @@ export function GlobalContextFrame({children, useIframe}) {
 					));
 
 			if (element) {
+
+				// False positive - react-compiler/react-compiler
+				// eslint-disable-next-line react-compiler/react-compiler
 				element.innerHTML = '';
 
-				iframeElement.contentWindow.requestAnimationFrame(() => {
+				iframeElement.contentWindow?.requestAnimationFrame(() => {
 					setBaseElement(element);
 
 					setIframeContext({
-						document: iframeElement.contentDocument,
+						document: iframeElement.contentDocument!,
 						iframe: iframeElement,
-						window: iframeElement.contentWindow,
+						window: iframeElement.contentWindow!,
 					});
 				});
 			}
@@ -86,7 +117,9 @@ export function GlobalContextFrame({children, useIframe}) {
 		}
 
 		return () => {
-			clearTimeout(timeoutId);
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
 
 			if (iframeElement) {
 				iframeElement.removeEventListener('load', handleIframeLoaded);
@@ -94,19 +127,19 @@ export function GlobalContextFrame({children, useIframe}) {
 
 			if (isMounted()) {
 				setBaseElement(null);
-				setIframeContext(null);
+				setIframeContext(DEFAULT_GLOBAL_CONTEXT);
 			}
 		};
 	}, [iframeElement, isMounted]);
 
-	let context;
+	let context: GlobalContextValueType | null = null;
 	let content;
 
 	if (useIframe && baseElement && iframeContext) {
 		content = <ReactPortal container={baseElement}>{children}</ReactPortal>;
 		context = iframeContext;
 
-		iframeElement.classList.remove(
+		iframeElement?.classList.remove(
 			'page-editor__global-context-iframe--hidden',
 			'page-editor__global-context-iframe--loading'
 		);
@@ -127,7 +160,7 @@ export function GlobalContextFrame({children, useIframe}) {
 	}
 
 	useEffect(() => {
-		setGlobalContext(context);
+		setGlobalContext(context!);
 	}, [context, setGlobalContext]);
 
 	return (
@@ -145,7 +178,7 @@ export function GlobalContextFrame({children, useIframe}) {
 							);
 						}
 
-						setIframeElement(element);
+						setIframeElement(element as HTMLIFrameElement);
 					}}
 				/>
 			) : null}
@@ -157,9 +190,9 @@ GlobalContextFrame.propTypes = {
 	useIframe: PropTypes.bool,
 };
 
-export function GlobalContextProvider({children}) {
+export function GlobalContextProvider({children}: {children: React.ReactNode}) {
 	return (
-		<GlobalContext.Provider value={useState({document, window})}>
+		<GlobalContext.Provider value={useState(DEFAULT_GLOBAL_CONTEXT)}>
 			{children}
 		</GlobalContext.Provider>
 	);

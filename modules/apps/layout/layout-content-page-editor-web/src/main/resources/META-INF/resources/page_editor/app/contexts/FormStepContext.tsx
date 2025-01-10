@@ -33,7 +33,7 @@ function FormStepContextProvider({
 			emitter: HTMLElement;
 			step: number | 'next' | 'previous';
 		}) => {
-			const formElement = document.querySelector(
+			const formElement = globalContext.document.querySelector(
 				`.${getLayoutDataItemUniqueClassName(form.itemId)}`
 			);
 
@@ -60,7 +60,7 @@ function FormStepContextProvider({
 				'formFragment:changeStep',
 				onStepChange as () => void
 			);
-	}, [activeStep, globalContext.window, form]);
+	}, [activeStep, form, globalContext.document, globalContext.window]);
 
 	return (
 		<FormStepContext.Provider

@@ -768,8 +768,6 @@ definition {
 			card = ${userScreenName},
 			item = "Remove Membership");
 
-		Confirm(value1 = "null");
-
 		Alert.viewSuccessMessage();
 	}
 
@@ -793,8 +791,6 @@ definition {
 				item = "Remove Membership",
 				tableEntry = ${orgName});
 		}
-
-		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}

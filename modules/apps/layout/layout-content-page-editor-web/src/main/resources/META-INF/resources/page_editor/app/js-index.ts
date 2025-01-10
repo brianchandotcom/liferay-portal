@@ -5,4 +5,12 @@
 
 // @ts-ignore
 
+export {useActivationOrigin} from './contexts/ControlsContext';
+
+// @ts-ignore
+
+export {useActiveItemIds} from './contexts/ControlsContext';
+
+// @ts-ignore
+
 export {default as addFragment} from './thunks/addFragment';

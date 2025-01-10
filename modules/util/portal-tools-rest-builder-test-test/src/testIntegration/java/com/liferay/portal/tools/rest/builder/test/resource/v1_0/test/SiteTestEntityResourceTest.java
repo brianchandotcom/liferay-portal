@@ -7,14 +7,18 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class SiteTestEntityResourceTest
 	extends BaseSiteTestEntityResourceTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"description"};
+	}
+
 }

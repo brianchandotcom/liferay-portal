@@ -49,8 +49,8 @@ export default function Status({
 							'congratulations-x-you-have-successfully-connected-x-to-marketplace-instance'
 						),
 						[
-							`<strong>${myUserAccount.name}</strong>`,
-							`<strong>${selectedAccount.name}</strong>`,
+							`<strong>${myUserAccount?.name}</strong>`,
+							`<strong>${selectedAccount?.name}</strong>`,
 						]
 					),
 				}}

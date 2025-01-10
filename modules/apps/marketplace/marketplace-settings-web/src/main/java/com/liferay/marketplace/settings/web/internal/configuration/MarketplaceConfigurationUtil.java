@@ -6,8 +6,6 @@
 package com.liferay.marketplace.settings.web.internal.configuration;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 import java.util.Dictionary;
 
@@ -38,9 +36,5 @@ public class MarketplaceConfigurationUtil {
 		ConfigurationProviderUtil.saveCompanyConfiguration(
 			MarketplaceConfiguration.class, companyId, properties);
 	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			MarketplaceConfigurationUtil.class.getClassLoader(), "marketplace");
 
 }

@@ -9,28 +9,25 @@ import com.liferay.marketplace.settings.web.internal.configuration.MarketplaceCo
 import com.liferay.marketplace.settings.web.internal.model.Authorization;
 import com.liferay.marketplace.settings.web.internal.model.Payload;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 
 import java.net.URLEncoder;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Keven Leone
  */
-@Component(service = MarketplaceHttp.class)
 public class MarketplaceHttp {
 
-	public Authorization exchangeToken(
+	public static Authorization exchangeToken(
 			long companyId, Payload payload, String refreshToken)
 		throws Exception {
 
@@ -62,8 +59,8 @@ public class MarketplaceHttp {
 		options.setLocation(payload.url + "/o/oauth2/token");
 		options.setMethod(Http.Method.POST);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			new String(_http.URLtoByteArray(options)));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(HttpUtil.URLtoByteArray(options)));
 
 		MarketplaceConfigurationUtil.saveMarketplaceConfiguration(
 			companyId,
@@ -94,7 +91,7 @@ public class MarketplaceHttp {
 			payload.settings, payload.url);
 	}
 
-	private String _toFormEncodedString(Map<String, String> map)
+	private static String _toFormEncodedString(Map<String, String> map)
 		throws Exception {
 
 		StringBuilder encodedString = new StringBuilder();
@@ -115,11 +112,5 @@ public class MarketplaceHttp {
 
 		return encodedString.toString();
 	}
-
-	@Reference
-	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

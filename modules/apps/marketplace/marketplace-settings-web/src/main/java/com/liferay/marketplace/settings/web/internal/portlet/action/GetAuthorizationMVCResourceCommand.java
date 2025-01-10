@@ -77,7 +77,7 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 				marketplaceConfiguration.settings(),
 				marketplaceConfiguration.url());
 
-			authorization = _marketplaceHttp.exchangeToken(
+			authorization = MarketplaceHttp.exchangeToken(
 				themeDisplay.getCompanyId(), payload,
 				marketplaceConfiguration.refreshToken());
 		}
@@ -94,8 +94,5 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private MarketplaceHttp _marketplaceHttp;
 
 }

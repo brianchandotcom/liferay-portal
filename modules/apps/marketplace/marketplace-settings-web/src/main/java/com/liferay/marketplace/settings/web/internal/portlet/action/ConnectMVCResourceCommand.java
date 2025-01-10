@@ -22,7 +22,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Keven Leone
@@ -51,7 +50,7 @@ public class ConnectMVCResourceCommand extends BaseMVCResourceCommand {
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
 
-		Authorization authorization = _marketplaceHttp.exchangeToken(
+		Authorization authorization = MarketplaceHttp.exchangeToken(
 			themeDisplay.getCompanyId(),
 			new Payload(
 				ParamUtil.getString(resourceRequest, "clientId"),
@@ -66,8 +65,5 @@ public class ConnectMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, authorization.toJSONObject());
 	}
-
-	@Reference
-	private MarketplaceHttp _marketplaceHttp;
 
 }

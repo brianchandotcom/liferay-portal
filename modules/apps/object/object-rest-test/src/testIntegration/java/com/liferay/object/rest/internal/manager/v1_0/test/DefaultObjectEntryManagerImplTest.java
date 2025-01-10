@@ -1263,7 +1263,6 @@ public class DefaultObjectEntryManagerImplTest
 		// Aggregation field with filter (date range with date and time)
 
 		String currentDateString = _simpleDateFormat.format(new Date());
-
 		ObjectField objectField2 = objectFieldLocalService.getObjectField(
 			_objectDefinition1.getObjectDefinitionId(),
 			"countAggregationObjectFieldName1");

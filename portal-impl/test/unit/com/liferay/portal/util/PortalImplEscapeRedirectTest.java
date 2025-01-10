@@ -252,6 +252,18 @@ public class PortalImplEscapeRedirectTest {
 	}
 
 	@Test
+	public void testEscapeRedirectWithProtocols() throws Exception {
+		Assert.assertNull(_portalImpl.escapeRedirect("file://localhost"));
+		Assert.assertNull(_portalImpl.escapeRedirect("ftp://localhost"));
+		Assert.assertEquals(
+			"http://localhost", _portalImpl.escapeRedirect("http://localhost"));
+		Assert.assertEquals(
+			"https://localhost",
+			_portalImpl.escapeRedirect("https://localhost"));
+		Assert.assertNull(_portalImpl.escapeRedirect("javascript://localhost"));
+	}
+
+	@Test
 	public void testEscapeRedirectWithRelativeURL() throws Exception {
 
 		// Relative path
@@ -380,12 +392,18 @@ public class PortalImplEscapeRedirectTest {
 		}
 
 		@Override
+		public String[] getAllowedProtocols(long companyId) {
+			return GetterUtil.getStringValues(allowedProtocols);
+		}
+
+		@Override
 		public String getSecurityMode(long companyId) {
 			return GetterUtil.getString(securityMode);
 		}
 
 		protected String[] allowedDomains = {"localhost", "PORTAL_DOMAINS"};
 		protected String[] allowedIPs = {"127.0.0.1", "SERVER_IP"};
+		protected String[] allowedProtocols = {"http", "https"};
 		protected String securityMode = "domain";
 
 	}

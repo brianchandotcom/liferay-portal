@@ -16,6 +16,16 @@
 			"required": true
 		},
 		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Draft Comment Body"
+			},
+			"name": "draftCommentBody"
+		},
+		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -54,6 +64,15 @@
 			},
 			"name": "md5Checksum",
 			"required": false
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "State"
+			},
+			"name": "state"
 		},
 		{
 			"DBType": "String",

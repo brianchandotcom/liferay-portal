@@ -234,7 +234,7 @@ public class FileEntryContentDashboardItem
 		ContentDashboardItemVersion contentDashboardItemVersion =
 			_getLastContentDashboardItemVersion(locale);
 
-		if ((getUserId() == userId) &&
+		if ((contentDashboardItemVersion != null) && (getUserId() == userId) &&
 			Objects.equals(
 				contentDashboardItemVersion.getLabel(),
 				_language.get(
@@ -663,6 +663,10 @@ public class FileEntryContentDashboardItem
 
 		List<ContentDashboardItemVersion> contentDashboardItemVersions =
 			getLatestContentDashboardItemVersions(locale);
+
+		if (ListUtil.isEmpty(contentDashboardItemVersions)) {
+			return null;
+		}
 
 		return contentDashboardItemVersions.get(
 			contentDashboardItemVersions.size() - 1);

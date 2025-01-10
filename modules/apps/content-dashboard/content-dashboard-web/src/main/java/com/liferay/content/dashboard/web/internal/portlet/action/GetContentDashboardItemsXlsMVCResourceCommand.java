@@ -155,6 +155,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 						contentDashboardItem.
 							getLatestContentDashboardItemVersions(locale);
 
+				if (ListUtil.isEmpty(latestContentDashboardItemVersions)) {
+					return StringPool.BLANK;
+				}
+
 				ContentDashboardItemVersion contentDashboardItemVersion =
 					latestContentDashboardItemVersions.get(0);
 

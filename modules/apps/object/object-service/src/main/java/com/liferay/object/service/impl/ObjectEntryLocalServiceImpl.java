@@ -4394,7 +4394,13 @@ public class ObjectEntryLocalServiceImpl
 			values.put(name, number);
 		}
 		else if (javaTypeClass == String.class) {
-			values.put(name, (String)object);
+			String string = (String)object;
+
+			if (string == null) {
+				string = StringPool.BLANK;
+			}
+
+			values.put(name, string);
 		}
 		else if (javaTypeClass == Timestamp.class) {
 			values.put(name, (Timestamp)object);

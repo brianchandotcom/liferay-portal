@@ -67,7 +67,10 @@ public abstract class BaseTestBatch<T extends BatchBuildData>
 
 		if (javaHomeMatcher.find()) {
 			path = path.replace(
-				javaHomeMatcher.group(), getJavaHome(batchName));
+				javaHomeMatcher.group(), getJavaHome(batchName) + "/bin");
+		}
+		else {
+			path = getJavaHome(batchName) + "/bin:" + path;
 		}
 
 		return path;

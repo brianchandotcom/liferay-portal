@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Business Event to Business Event Versions"
+	},
+	"name": "businessEventtoBusinesssEventVersions",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:BusinessEvent$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BusinessEventVersion$]",
+	"objectDefinitionName2": "BusinessEventVersion",
+	"type": "oneToMany"
+}

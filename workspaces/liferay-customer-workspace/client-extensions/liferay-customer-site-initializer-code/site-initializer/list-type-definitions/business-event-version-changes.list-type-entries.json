@@ -1,0 +1,26 @@
+[
+	{
+		"key": "created",
+		"name": "Created",
+		"name_i18n": {
+			"en-US": "Created"
+		},
+		"type": "string"
+	},
+	{
+		"key": "edited",
+		"name": "Edited",
+		"name_i18n": {
+			"en-US": "Edited"
+		},
+		"type": "string"
+	},
+	{
+		"key": "goLive",
+		"name": "Go-Live",
+		"name_i18n": {
+			"en-US": "Go-Live"
+		},
+		"type": "string"
+	}
+]

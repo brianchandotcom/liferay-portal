@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Account Entry to Business Events"
+	},
+	"name": "accountEntryToBusinessEvents",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BusinessEvent$]",
+	"objectDefinitionName2": "BusinessEvent",
+	"type": "oneToMany"
+}

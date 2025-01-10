@@ -550,6 +550,12 @@ export class ApplicationsMenuPage {
 		await this.usersAndOrganizationsItem.click();
 	}
 
+	async goToUsersAndOrganizationsWithLimitedAccess() {
+		await this.homePage.openApplicationMenu();
+		await this.controlPanelButton.click();
+		await this.usersAndOrganizationsItem.click();
+	}
+
 	async goToVirtualInstances() {
 		await this.goto();
 		await this.controlPanelButton.click();

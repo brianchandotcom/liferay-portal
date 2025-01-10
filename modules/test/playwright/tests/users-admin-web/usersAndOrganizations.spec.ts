@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -537,4 +538,100 @@ test('LPD-42940 Can Bulk Activate Users', async ({
 				.row
 		).toBeVisible();
 	}
+});
+
+test('LPD-35634 Organization Administrator can activate and deactivate users', async ({
+	apiHelpers,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	page.on('dialog', (dialog) => dialog.accept());
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization();
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization.id,
+		user.emailAddress
+	);
+
+	apiHelpers.data.push({
+		id: `${organization.id}_${user.emailAddress}`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	const organizationAdministratorRole =
+		await apiHelpers.headlessAdminUser.getRoleByName(
+			'Organization Administrator'
+		);
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
+		organizationAdministratorRole.id.toString(),
+		user.id,
+		organization.id
+	);
+
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization.id,
+		user2.emailAddress
+	);
+
+	apiHelpers.data.push({
+		id: `${organization.id}_${user2.emailAddress}`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await performLogout(page);
+	await performLogin(page, user.alternateName);
+
+	await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
+
+	await (
+		await usersAndOrganizationsPage.organizationsTableRowLink(
+			organization.name
+		)
+	).click();
+
+	await (
+		await usersAndOrganizationsPage.organizationUsersTableRowActions(
+			`${user2.name}`
+		)
+	).click();
+
+	await usersAndOrganizationsPage.deactivateUserMenuItem.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		await usersAndOrganizationsPage.organizationUsersTableRowStatusLink(
+			user2.name,
+			'Inactive'
+		)
+	).toBeVisible();
+
+	await (
+		await usersAndOrganizationsPage.organizationUsersTableRowActions(
+			user2.name
+		)
+	).click();
+
+	await usersAndOrganizationsPage.activateUserMenuItem.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		await usersAndOrganizationsPage.organizationUsersTableRowStatusLink(
+			user2.name,
+			'Active'
+		)
+	).toBeVisible();
 });

@@ -50,13 +50,13 @@ function FormStepContextProvider({
 			}
 		};
 
-		globalContext.window.Liferay.on(
+		(globalContext.window as any).Liferay.on(
 			'formFragment:changeStep',
 			onStepChange
 		);
 
 		return () =>
-			globalContext.window.Liferay.detach(
+			(globalContext.window as any).Liferay.detach(
 				'formFragment:changeStep',
 				onStepChange as () => void
 			);

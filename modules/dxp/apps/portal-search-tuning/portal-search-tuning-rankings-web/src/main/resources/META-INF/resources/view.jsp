@@ -108,129 +108,129 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 <clay:container-fluid
 	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 >
-<aui:form method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:form method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<liferay-ui:search-container
-		id="resultsRankingEntries"
-		searchContainer="<%= rankingPortletDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext"
-			keyProperty="uid"
-			modelVar="rankingEntryDisplayContextModelVar"
+		<liferay-ui:search-container
+			id="resultsRankingEntries"
+			searchContainer="<%= rankingPortletDisplayContext.getSearchContainer() %>"
 		>
-
-			<%
-			RankingEntryDisplayContext rankingEntryDisplayContext = rankingEntryDisplayContextModelVar;
-			%>
-
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/result_rankings/edit_results_rankings" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
-				<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
-				<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
-				<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
-				<portlet:param name="status" value="<%= rankingEntryDisplayContext.getStatus() %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="search-query"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext"
+				keyProperty="uid"
+				modelVar="rankingEntryDisplayContextModelVar"
 			>
-				<div class="list-group-title">
-					<a href="<%= rowURL %>">
-						<%= HtmlUtil.escape(rankingEntryDisplayContext.getKeywords()) %>
-					</a>
-				</div>
-			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="aliases"
-			>
-				<div class="list-group-subtext">
-					<%= HtmlUtil.escape(rankingEntryDisplayContext.getAliases()) %>
-				</div>
-			</liferay-ui:search-container-column-text>
+				<%
+				RankingEntryDisplayContext rankingEntryDisplayContext = rankingEntryDisplayContextModelVar;
+				%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="pinned-results"
-				value="<%= rankingEntryDisplayContext.getPinnedResultsCount() %>"
-			/>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/result_rankings/edit_results_rankings" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
+					<portlet:param name="aliases" value="<%= rankingEntryDisplayContext.getAliases() %>" />
+					<portlet:param name="companyId" value="<%= String.valueOf(themeDisplay.getCompanyId()) %>" />
+					<portlet:param name="keywords" value="<%= rankingEntryDisplayContext.getKeywords() %>" />
+					<portlet:param name="status" value="<%= rankingEntryDisplayContext.getStatus() %>" />
+				</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="hidden-results"
-				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="search-query"
+				>
+					<div class="list-group-title">
+						<a href="<%= rowURL %>">
+							<%= HtmlUtil.escape(rankingEntryDisplayContext.getKeywords()) %>
+						</a>
+					</div>
+				</liferay-ui:search-container-column-text>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-6368") %>'>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="aliases"
+				>
+					<div class="list-group-subtext">
+						<%= HtmlUtil.escape(rankingEntryDisplayContext.getAliases()) %>
+					</div>
+				</liferay-ui:search-container-column-text>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-cell-minw-150"
-					name="scope"
+					name="pinned-results"
+					value="<%= rankingEntryDisplayContext.getPinnedResultsCount() %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="hidden-results"
+					value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
+				/>
+
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-6368") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smallest table-cell-minw-150"
+						name="scope"
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getGroupExternalReferenceCode()) %>">
+
+								<%
+								Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
+								%>
+
+								<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>">
+									<liferay-ui:message key="site" />
+								</span>
+							</c:when>
+							<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
+
+								<%
+								String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
+								%>
+
+								<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>">
+									<liferay-ui:message key="blueprint" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="everything" />
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+				</c:if>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="status"
 				>
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getGroupExternalReferenceCode()) %>">
-
-							<%
-							Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
-							%>
-
-							<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>">
-								<liferay-ui:message key="site" />
-							</span>
-						</c:when>
-						<c:when test="<%= Validator.isNotNull(rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode()) %>">
-
-							<%
-							String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
-							%>
-
-							<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>">
-								<liferay-ui:message key="blueprint" />
-							</span>
+						<c:when test="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_NOT_APPLICABLE) %>">
+							<div class="label label-warning">
+								<span class="label-item label-item-expand">
+									<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
+								</span>
+							</div>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message key="everything" />
+							<div class="label <%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? "label-success" : "label-secondary" %>">
+								<span class="label-item label-item-expand">
+									<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
+								</span>
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>
-			</c:if>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-minw-150"
-				name="status"
-			>
-				<c:choose>
-					<c:when test="<%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_NOT_APPLICABLE) %>">
-						<div class="label label-warning">
-							<span class="label-item label-item-expand">
-								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
-							</span>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="label <%= Objects.equals(rankingEntryDisplayContext.getStatus(), ResultRankingsConstants.STATUS_ACTIVE) ? "label-success" : "label-secondary" %>">
-							<span class="label-item label-item-expand">
-								<liferay-ui:message key="<%= rankingEntryDisplayContext.getStatus() %>" />
-							</span>
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/view_results_rankings_entry_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/view_results_rankings_entry_action.jsp"
+			<liferay-ui:search-iterator
+				markupView="lexicon"
 			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+		</liferay-ui:search-container>
+	</aui:form>
 </clay:container-fluid>

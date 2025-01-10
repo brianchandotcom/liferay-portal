@@ -211,7 +211,7 @@ modules/apps/portal-background-task/    @liferay-core-infra
 modules/apps/portal-cache/    @liferay-core-infra
 modules/apps/portal-configuration/
 modules/apps/portal-crypto-hash/
-modules/apps/portal-instances/
+modules/apps/portal-instances/    @liferay-database-infra
 modules/apps/portal-language/
 modules/apps/portal-language/portal-language-override-api/    @liferay-platform-experience
 modules/apps/portal-language/portal-language-override-service/    @liferay-platform-experience

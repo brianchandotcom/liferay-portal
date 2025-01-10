@@ -14,6 +14,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {pushToApiHelpersData} from '../../utils/pushToApiHelpersData';
 
 export const test = mergeTests(
@@ -24,6 +26,335 @@ export const test = mergeTests(
 	loginTest(),
 	objectPagesTest
 );
+
+test.describe('Manage root model elements through View Object Entries', () => {
+	test('assert management of object entries that are account restricted', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+		viewObjectDefinitionsPage,
+		viewObjectEntriesPage,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+
+			// Create two custom objects
+
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					panelCategoryKey: 'control_panel.object',
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					panelCategoryKey: 'control_panel.object',
+					status: {code: 0},
+					titleObjectFieldName: 'textField',
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			// Create an role for users to manage object entries by control panel
+
+			const companyId = await page.evaluate(() => {
+				return Liferay.ThemeDisplay.getCompanyId();
+			});
+
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: 'Object entry manager ' + getRandomString(),
+				rolePermissions: [
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition1.className.split('#')[1]}`,
+						scope: 1,
+					},
+					{
+						actionIds: ['ADD_OBJECT_ENTRY'],
+						primaryKey: companyId,
+						resourceName: `com.liferay.object#${objectDefinition1.id}`,
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role.id, type: 'role'});
+
+			// Create 2 accounts and 2 users
+
+			const account1 = await apiHelpers.headlessAdminUser.postAccount();
+
+			const account2 = await apiHelpers.headlessAdminUser.postAccount();
+
+			apiHelpers.data.push({id: account1.id, type: 'account'});
+
+			apiHelpers.data.push({id: account2.id, type: 'account'});
+
+			const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			apiHelpers.data.push({
+				id: user1.id,
+				type: 'userAccount',
+			});
+
+			apiHelpers.data.push({
+				id: user2.id,
+				type: 'userAccount',
+			});
+
+			// Assign users to respective accounts and role
+
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account1.id,
+				[user1.emailAddress]
+			);
+
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account2.id,
+				[user2.emailAddress]
+			);
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user1.id
+			);
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user2.id
+			);
+
+			// Create an object relationship from Account object to Custom Object 1
+
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
+
+			const {body: objectRelationship} =
+				await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_ACCOUNT',
+					{
+						label: {
+							en_US: 'objectRelationshipLabel' + getRandomInt(),
+						},
+						name:
+							'objectRelationshipName' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionId1: 32183,
+						objectDefinitionId2: objectDefinition1.id,
+						objectDefinitionName2: objectDefinition1.name,
+						type: ObjectRelationship.TypeEnum.OneToMany,
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			// Create an inheritance relationship between Custom Object 1 and Custom Object 2
+
+			const {body: objectRelationshipInherited} =
+				await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						edge: true,
+						label: {
+							en_US: 'objectRelationshipLabel' + getRandomInt(),
+						},
+						name:
+							'objectRelationshipName' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: ObjectRelationship.TypeEnum.OneToMany,
+					}
+				);
+
+			objectRelationships.push(objectRelationshipInherited);
+
+			apiHelpers.data.push({
+				id: objectRelationshipInherited.id,
+				type: 'objectRelationship',
+			});
+
+			// Enable the toggle related to account restricted in custom object 1
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.actionsButton.first().waitFor();
+
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				objectDefinition1.name
+			);
+
+			await editObjectDetailsPage.enableAccountRestriction(
+				objectRelationship.label['en_us']
+			);
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			const toastAlertContainer = page.locator(
+				'#ToastAlertContainer .alert-success'
+			);
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition1.label['en_US']
+			);
+
+			await viewObjectEntriesPage.selectDropdownItemWithSearch(
+				account1.name
+			);
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel: 'textField',
+				objectFieldValue: 'a1',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await toastAlertContainer.getByLabel('Close').click();
+
+			await page
+				.getByRole('link', {name: objectDefinition2.name})
+				.click();
+
+			await viewObjectEntriesPage.addObjectEntryButton.click();
+
+			await page.getByRole('textbox', {name: 'textField'}).fill('b1');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
+
+			await viewObjectEntriesPage.addObjectEntryButton.click();
+
+			await viewObjectEntriesPage.selectDropdownItemWithSearch(
+				account2.name
+			);
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldLabel: 'textField',
+				objectFieldValue: 'a2',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await toastAlertContainer.getByLabel('Close').click();
+
+			await page
+				.getByRole('link', {name: objectDefinition2.name})
+				.click();
+
+			await viewObjectEntriesPage.addObjectEntryButton.click();
+
+			await page.getByRole('textbox', {name: 'textField'}).fill('b2');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			// Log in with user 1, check for entries related to account1
+
+			userData[user1.alternateName] = {
+				name: user1.givenName,
+				password: 'test',
+				surname: user1.familyName,
+			};
+
+			await performLogout(page);
+			await performLogin(page, user1.alternateName);
+
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
+
+			await expect(page.getByText(account1.name)).toBeVisible();
+			await expect(page.getByText(account2.name)).not.toBeVisible();
+
+			await page.getByLabel('View').click();
+
+			await page
+				.getByRole('link', {name: objectDefinition2.name})
+				.click();
+
+			await expect(page.getByText('b1')).toBeVisible();
+
+			// Log in with user 2, check for entries related to account2
+
+			userData[user2.alternateName] = {
+				name: user2.givenName,
+				password: 'test',
+				surname: user2.familyName,
+			};
+
+			await performLogout(page);
+			await performLogin(page, user2.alternateName);
+
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
+
+			await expect(page.getByText(account2.name)).toBeVisible();
+			await expect(page.getByText(account1.name)).not.toBeVisible();
+
+			await page.getByLabel('View').click();
+
+			await page
+				.getByRole('link', {name: objectDefinition2.name})
+				.click();
+
+			await expect(page.getByText('b2')).toBeVisible();
+		}
+		finally {
+			await performLogout(page);
+			await performLogin(page, 'test');
+
+			const objectRelationshipApiClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipApi);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipApiClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
+});
 
 test.describe('Manage root models elements through Objects Admin', () => {
 	test('cannot delete an object definition with inheritance enabled on its relationship', async ({

@@ -300,23 +300,18 @@ public class TransactionalPortalCacheUtil {
 				return;
 			}
 
-			_markers.compute(
-				_portalCacheName,
-				(key, placeHolder) -> {
-					if (placeHolder != _marker) {
-						commitByRemove = true;
-					}
+			if (readOnly) {
+				if (_markers.get(_portalCacheName) == _marker) {
+					doCommit();
+				}
+			}
+			else {
+				if (_markers.remove(_portalCacheName) != _marker) {
+					commitByRemove = true;
+				}
 
-					if (!readOnly || !commitByRemove) {
-						doCommit();
-					}
-
-					if (readOnly) {
-						return placeHolder;
-					}
-
-					return null;
-				});
+				doCommit();
+			}
 		}
 
 		@Override

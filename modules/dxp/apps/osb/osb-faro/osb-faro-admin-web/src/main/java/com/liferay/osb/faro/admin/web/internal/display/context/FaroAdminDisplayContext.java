@@ -180,10 +180,10 @@ public class FaroAdminDisplayContext {
 			orderByCol += "_sortable";
 		}
 
-		boolean reverse = false;
+		boolean reverse = true;
 
 		if (_orderByType.equals("asc")) {
-			reverse = true;
+			reverse = false;
 		}
 
 		searchContext.setSorts(new Sort(orderByCol, reverse));

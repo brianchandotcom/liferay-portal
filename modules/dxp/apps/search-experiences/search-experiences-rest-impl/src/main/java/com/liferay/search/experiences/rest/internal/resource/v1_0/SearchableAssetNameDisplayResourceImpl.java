@@ -5,15 +5,22 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetNameDisplay;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +52,7 @@ public class SearchableAssetNameDisplayResourceImpl
 						setClassName(() -> className1);
 						setDisplayName(
 							() -> _getDisplayName(className1, languageId));
+						setHasSubtype(() -> _gethasSubtype(className1));
 					}
 				}));
 	}
@@ -69,8 +77,29 @@ public class SearchableAssetNameDisplayResourceImpl
 		return modelResource;
 	}
 
+	private Boolean _gethasSubtype(String className) {
+		String lookupClassName = className;
+
+		if (lookupClassName.equals(DLFileEntry.class.getName())) {
+			lookupClassName = DLFileEntryMetadata.class.getName();
+		}
+
+		List<DDMStructure> classStructures =
+			_ddmStructureLocalService.getClassStructures(
+				contextCompany.getCompanyId(),
+				_portal.getClassNameId(lookupClassName));
+
+		return !classStructures.isEmpty();
+	}
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SearchableAssetClassNamesProvider

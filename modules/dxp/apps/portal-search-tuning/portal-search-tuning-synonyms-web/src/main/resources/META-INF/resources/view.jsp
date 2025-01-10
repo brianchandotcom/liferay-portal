@@ -62,9 +62,11 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 					colspan="<%= 2 %>"
 					cssClass="table-cell-expand table-title"
 				>
-					<aui:a href="<%= synonymSetDisplayContext.getEditRenderURL() %>">
-						<%= HtmlUtil.escape(synonymSetDisplayContext.getDisplayedSynonymSet()) %>
-					</aui:a>
+					<clay:link
+						href="<%= synonymSetDisplayContext.getEditRenderURL() %>"
+						label="<%= HtmlUtil.escape(synonymSetDisplayContext.getDisplayedSynonymSet()) %>"
+						translated="<%= false %>"
+					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>

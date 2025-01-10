@@ -6,19 +6,25 @@
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export function hasFormStepParent(
+/**
+ * Returns the parent form step index or null
+ * if it doesn't find any parent form step
+ */
+export function getFormStepIndex(
 	item: LayoutDataItem,
 	layoutData: LayoutData | null
-): boolean {
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.formStep) {
-		return true;
-	}
-
+): number | null {
 	const parent = layoutData?.items?.[item.parentId];
 
-	if (!parent) {
-		return false;
+	if (item.type === LAYOUT_DATA_ITEM_TYPES.formStep) {
+		const index = parent!.children.indexOf(item.itemId);
+
+		return index;
 	}
 
-	return hasFormStepParent(parent, layoutData);
+	if (!parent) {
+		return null;
+	}
+
+	return getFormStepIndex(parent, layoutData);
 }

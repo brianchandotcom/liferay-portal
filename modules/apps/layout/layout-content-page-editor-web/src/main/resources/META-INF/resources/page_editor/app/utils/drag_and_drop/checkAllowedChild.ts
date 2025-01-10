@@ -19,10 +19,10 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {getStepperChild} from '../../utils/getStepperChild';
 import {formIsMapped} from '../formIsMapped';
 import {getFormParent} from '../getFormParent';
+import {getFormStepIndex} from '../getFormStepIndex';
 import getItemWidget from '../getItemWidget';
 import getWidget from '../getWidget';
 import {hasCollectionParent} from '../hasCollectionParent';
-import {hasFormStepParent} from '../hasFormStepParent';
 import isLocalizationSelect from '../isLocalizationSelect';
 import {isMultistepForm} from '../isMultistepForm';
 import isStepper from '../isStepper';
@@ -154,7 +154,7 @@ export default function checkAllowedChild(
 	if (
 		!isStepper(child) &&
 		isMultistepForm(formParent) &&
-		!hasFormStepParent(parent, layoutData)
+		getFormStepIndex(parent, layoutData) === null
 	) {
 		return {reason: 'targeting-step-container', valid: false};
 	}

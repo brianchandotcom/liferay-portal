@@ -207,10 +207,6 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			return "id";
 		}
 
-		if (objectField.isLocalized()) {
-			return objectField.getI18nObjectFieldName();
-		}
-
 		String objectFieldName = objectField.getName();
 
 		objectFieldName = StringUtil.replace(

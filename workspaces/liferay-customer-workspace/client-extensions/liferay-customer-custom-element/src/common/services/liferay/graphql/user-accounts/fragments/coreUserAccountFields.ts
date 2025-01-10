@@ -21,6 +21,7 @@ export const CORE_USER_ACCOUNT_FIELDS = gql`
 		id
 		isLiferayStaff @client
 		isLoggedUser @client
+		isPartner @client
 		isProvisioning @client
 		lastLoginDate
 		name

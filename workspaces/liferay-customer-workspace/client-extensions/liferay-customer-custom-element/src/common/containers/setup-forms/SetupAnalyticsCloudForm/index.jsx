@@ -257,7 +257,6 @@ const SetupAnalyticsCloudPage = ({
 							'[%AC_EMAIL_DOMAINS]':
 								analyticsCloud.allowedEmailDomains ||
 								BLANK_TEXT,
-
 							'[%AC_INCIDENT_REPORT_CONTACT]': emailsCriticalIncident,
 							'[%AC_OWNER_EMAIL]':
 								analyticsCloud.ownerEmailAddress,
@@ -269,6 +268,10 @@ const SetupAnalyticsCloudPage = ({
 							'[%AC_WORKSPACE_NAME]':
 								analyticsCloud.workspaceName,
 							'[%PROJECT_ID]': project?.code,
+							'[%PROJECT_SALESFORCE_ACCOUNT_LINK]':
+							    project?.salesforceAccountKey ? "https://liferay.lightning.force.com/lightning/r/Account/" + project?.salesforceAccountKey + "/view" : BLANK_TEXT,
+							'[%PROJECT_SALESFORCE_PROJECT_LINK]':
+							    project?.salesforceProjectKey ? "https://liferay.lightning.force.com/lightning/r/Project__c/" + project?.salesforceProjectKey + "/view" : BLANK_TEXT,
 						}
 					);
 				}

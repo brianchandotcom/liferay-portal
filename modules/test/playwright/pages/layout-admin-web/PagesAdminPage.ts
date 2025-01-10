@@ -41,7 +41,7 @@ export class PagesAdminPage {
 		});
 		this.newButton = page
 			.locator('.management-bar')
-			.getByRole('button', {name: 'New'});
+			.getByText('New', {exact: true});
 		this.pageEditorPage = new PageEditorPage(this.page);
 		this.pageTitleBox = addPageIFrame.locator(
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
@@ -183,15 +183,8 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.click();
 	}
 
-	async addWidgetPage({
-		addButtonLabel = 'Page',
-		name,
-	}: {
-		addButtonLabel?: string;
-		name: string;
-	}) {
+	async addWidgetPage({name}: {name: string}) {
 		await this.createNewPage({
-			addButtonLabel,
 			draft: true,
 			name,
 			template: 'Widget Page',
@@ -301,13 +294,11 @@ export class PagesAdminPage {
 	}
 
 	async createNewPage({
-		addButtonLabel = 'Page',
 		draft = false,
 		name,
 		parent,
 		template,
 	}: {
-		addButtonLabel?: string;
 		draft?: boolean;
 		name: string;
 		parent?: string;
@@ -318,11 +309,6 @@ export class PagesAdminPage {
 
 		if (!parent) {
 			await this.newButton.click();
-
-			await this.page
-				.getByRole('menuitem')
-				.getByText(addButtonLabel, {exact: true})
-				.click();
 		}
 
 		// If parent is specified, create child page
@@ -392,11 +378,6 @@ export class PagesAdminPage {
 
 	async gotoSelectTemplates(templateSetName: string) {
 		await this.newButton.click();
-
-		await this.page
-			.getByRole('menuitem')
-			.getByText('Page', {exact: true})
-			.click();
 
 		await this.page
 			.getByRole('menuitem')

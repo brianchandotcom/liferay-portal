@@ -49,7 +49,6 @@ test('LPD-42499 Assert correct message appears in Checking changes page', async 
 	await productMenuPage.goToPages();
 
 	await pagesAdminPage.createNewPage({
-		addButtonLabel: 'Page',
 		draft: true,
 		name: layoutTitle,
 		template: 'Blank',

@@ -21,10 +21,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Alberto Javier Moreno Lage
  */
-public class ModifyAPIBuilderListTypeDefinitionsUpgradeProcess
-	extends UpgradeProcess {
+public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 
-	public ModifyAPIBuilderListTypeDefinitionsUpgradeProcess(
+	public UpdateListTypeDefinitionsUpgradeProcess(
 		CompanyLocalService companyLocalService,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,
@@ -44,25 +43,25 @@ public class ModifyAPIBuilderListTypeDefinitionsUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				_modifyPicklist(
+				_updateListTypeDefinition(
 					companyId, "APPLICATION_STATUS_PICKLIST",
 					"Application Status", "PUBLISHED", "published",
 					"UNPUBLISHED", "unpublished", "L_API_APPLICATION",
 					"APPLICATION_STATUS");
-				_modifyPicklist(
+				_updateListTypeDefinition(
 					companyId, "HTTP_METHOD_PICKLIST", "HTTP Method", "GET",
 					"get", "POST", "post", "L_API_ENDPOINT", "HTTP_METHOD");
-				_modifyPicklist(
+				_updateListTypeDefinition(
 					companyId, "RETRIEVE_TYPE_PICKLIST", "Retrieve Type",
 					"COLLECTION", "collection", "SINGLE_ELEMENT",
 					"singleElement", "L_API_ENDPOINT", "RETRIEVE_TYPE");
-				_modifyPicklist(
+				_updateListTypeDefinition(
 					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "company",
 					"SITE", "site", "L_API_ENDPOINT", "SCOPE");
 			});
 	}
 
-	private void _modifyPicklist(
+	private void _updateListTypeDefinition(
 			Long companyId, String listTypeDefinitionExternalReferenceCode,
 			String listTypeDefinitionName,
 			String listTypeEntry1ExternalReferenceCode,

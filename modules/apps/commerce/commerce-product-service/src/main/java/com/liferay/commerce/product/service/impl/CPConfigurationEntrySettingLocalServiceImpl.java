@@ -41,7 +41,6 @@ public class CPConfigurationEntrySettingLocalServiceImpl
 		cpConfigurationEntrySetting.setCompanyId(user.getCompanyId());
 		cpConfigurationEntrySetting.setUserId(user.getUserId());
 		cpConfigurationEntrySetting.setUserName(user.getFullName());
-
 		cpConfigurationEntrySetting.setCPConfigurationEntryId(
 			cpConfigurationEntryId);
 		cpConfigurationEntrySetting.setType(type);

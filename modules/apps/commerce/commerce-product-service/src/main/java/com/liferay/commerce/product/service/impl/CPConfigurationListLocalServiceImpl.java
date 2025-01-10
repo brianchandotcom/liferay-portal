@@ -109,11 +109,10 @@ public class CPConfigurationListLocalServiceImpl
 			cpConfigurationList);
 
 		if (parentCPConfigurationListId > 0) {
+			Set<Long> classPKs = new HashSet<>();
 			Indexer<CPConfigurationEntry> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(
 					CPConfigurationEntry.class);
-
-			Set<Long> visited = new HashSet<>();
 
 			while (parentCPConfigurationListId > 0) {
 				for (CPConfigurationEntry cpConfigurationEntry :
@@ -124,7 +123,7 @@ public class CPConfigurationListLocalServiceImpl
 					if (Objects.equals(
 							cpConfigurationEntry.getClassName(),
 							CPConfigurationList.class.getName()) ||
-						visited.contains(cpConfigurationEntry.getClassPK())) {
+						classPKs.contains(cpConfigurationEntry.getClassPK())) {
 
 						continue;
 					}
@@ -147,7 +146,7 @@ public class CPConfigurationListLocalServiceImpl
 						updateCPConfigurationEntrySetting(
 							cpConfigurationEntrySetting);
 
-					visited.add(cpConfigurationEntry.getClassPK());
+					classPKs.add(cpConfigurationEntry.getClassPK());
 
 					indexer.reindex(
 						CPConfigurationEntry.class.getName(),

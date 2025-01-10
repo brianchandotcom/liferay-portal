@@ -122,7 +122,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 				html = StringUtil.replace(
 					html, "</head>",
 					StringBundler.concat(
-						"<script>window.learnResources=",
+						"<script>window.learnResources = ",
 						LearnMessageUtil.getJSONObject(
 							"headless-discovery-web"),
 						";</script></head>"));

@@ -5,17 +5,11 @@
 
 package com.liferay.portal.inactive.request.handler.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
-import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
-
-import java.net.URL;
 
 import java.util.Map;
 
@@ -24,7 +18,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -82,28 +75,6 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		modified(properties);
-
-		Bundle bundle = bundleContext.getBundle();
-
-		URL url = bundle.getResource(_INACTIVE_HTML_FILE_NAME);
-
-		if (url == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to load " + _INACTIVE_HTML_FILE_NAME);
-			}
-
-			return;
-		}
-
-		try {
-			_content = URLUtil.toString(url);
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to read " + _INACTIVE_HTML_FILE_NAME, ioException);
-			}
-		}
 	}
 
 	@Modified
@@ -116,14 +87,6 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		_showInactiveRequestMessage =
 			inactiveRequestHandlerConfiguration.showInactiveRequestMessage();
 	}
-
-	private static final String _INACTIVE_HTML_FILE_NAME =
-		"com/liferay/portal/dependencies/inactive.html";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InactiveRequestHandlerImpl.class);
-
-	private String _content = StringPool.BLANK;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.inactive.request.handler)"

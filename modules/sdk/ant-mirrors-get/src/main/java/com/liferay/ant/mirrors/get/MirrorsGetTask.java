@@ -130,11 +130,8 @@ public class MirrorsGetTask extends Task {
 				Matcher bucketHostNamePropertyMatcher =
 					_bucketHostNamePropertyPattern.matcher(propertyName);
 
-				if (!bucketHostNamePropertyMatcher.matches()) {
-					continue;
-				}
-
-				if (!Objects.equals(
+				if (!bucketHostNamePropertyMatcher.matches() ||
+					!Objects.equals(
 						_gcpBucketName,
 						bucketHostNamePropertyMatcher.group("bucketName"))) {
 
@@ -567,12 +564,8 @@ public class MirrorsGetTask extends Task {
 			Matcher bucketHostNamePropertyMatcher =
 				_bucketHostNamePropertyPattern.matcher(propertyName);
 
-			if (!bucketHostNamePropertyMatcher.matches()) {
-				continue;
-			}
-
-			if (!Objects.equals(
-					_hostName, project.getProperty(propertyName))) {
+			if (!bucketHostNamePropertyMatcher.matches() ||
+				!Objects.equals(_hostName, project.getProperty(propertyName))) {
 
 				continue;
 			}

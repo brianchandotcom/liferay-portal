@@ -253,18 +253,7 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-guest-allowed-false-test" +
 				"/guestAllowed");
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
-			InputStream inputStream = url.openStream()) {
-
-			Assert.fail();
-		}
-		catch (IOException ioException) {
-			String message = ioException.getMessage();
-
-			Assert.assertTrue(
-				message.startsWith("Server returned HTTP response code: 403"));
-		}
+		_assertResponseCode(url.openConnection(), "403");
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
@@ -294,18 +283,7 @@ public class AuthVerifierTest {
 
 		connection.setRequestProperty("Authorization", basicAuthToken);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
-			InputStream inputStream = connection.getInputStream()) {
-
-			Assert.fail();
-		}
-		catch (IOException ioException) {
-			String message = ioException.getMessage();
-
-			Assert.assertTrue(
-				message.startsWith("Server returned HTTP response code: 401"));
-		}
+		_assertResponseCode(connection, "401");
 	}
 
 	@Test
@@ -322,18 +300,7 @@ public class AuthVerifierTest {
 
 		connection.setRequestProperty("Authorization", oAuthToken);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
-			InputStream inputStream = connection.getInputStream()) {
-
-			Assert.fail();
-		}
-		catch (IOException ioException) {
-			String message = ioException.getMessage();
-
-			Assert.assertTrue(
-				message.startsWith("Server returned HTTP response code: 401"));
-		}
+		_assertResponseCode(connection, "401");
 	}
 
 	@Test
@@ -566,6 +533,22 @@ public class AuthVerifierTest {
 				new ServletContextHelper(_bundleContext.getBundle()) {
 				},
 				properties));
+	}
+
+	private void _assertResponseCode(URLConnection connection, String code) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
+			InputStream inputStream = connection.getInputStream()) {
+
+			Assert.fail();
+		}
+		catch (IOException ioException) {
+			String message = ioException.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith(
+					"Server returned HTTP response code: " + code));
+		}
 	}
 
 	private static BundleContext _bundleContext;

@@ -5,7 +5,6 @@ dependencies {
 	compileInclude group: "commons-configuration", name: "commons-configuration", version: "1.8"
 	compileInclude group: "io.reactivex", name: "rxjava", version: "1.2.0"
 	compileInclude group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.9"
-	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.3"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -17,6 +16,7 @@ dependencies {
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.1.1"
+	compileOnly group: "org.ow2.asm", name: "asm", version: "9.7"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portal:portal-json-web-service-client")

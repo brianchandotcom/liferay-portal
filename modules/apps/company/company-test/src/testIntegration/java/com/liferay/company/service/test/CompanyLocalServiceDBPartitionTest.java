@@ -6,7 +6,11 @@
 package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.counter.kernel.service.persistence.CounterFinder;
+import com.liferay.counter.model.CounterRegister;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,10 +24,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -33,11 +45,20 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.registry.RepositoryClassDefinition;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
+import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -63,6 +84,7 @@ import javax.portlet.Portlet;
 
 import org.apache.felix.cm.PersistenceManager;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -75,6 +97,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -109,6 +132,15 @@ public class CompanyLocalServiceDBPartitionTest
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_regenerateResourceActions();
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	@Test
@@ -542,17 +574,20 @@ public class CompanyLocalServiceDBPartitionTest
 
 		String pid = configuration.getPid();
 
+		_createRepositoriesCache(company);
+
+		_assertCache(company.getCompanyId(), true);
+
 		int dbPartitionsCount = _getDBPartitionsCount();
 
 		companyLocalService.deleteCompany(company);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
+
 		Assert.assertEquals(dbPartitionsCount - 1, _getDBPartitionsCount());
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Collection<ServiceReference<Portlet>> serviceReferences =
 			bundleContext.getServiceReferences(
@@ -560,6 +595,8 @@ public class CompanyLocalServiceDBPartitionTest
 				"(com.liferay.portlet.company=" + company.getCompanyId() + ")");
 
 		Assert.assertTrue(serviceReferences.isEmpty());
+
+		_assertCache(company.getCompanyId(), false);
 
 		_assertConfiguration(pid, false);
 	}
@@ -723,6 +760,55 @@ public class CompanyLocalServiceDBPartitionTest
 			_counterLocalService.reset(
 				CompanyLocalServiceDBPartitionTest.class.getName(), 100000);
 		}
+	}
+
+	private void _assertCache(long companyId, boolean cached) throws Exception {
+		Map<Long, Map<String, Long>> classNameIdsMap =
+			ReflectionTestUtil.getFieldValue(
+				Class.forName(
+					ClassNameLocalServiceImpl.class.getName() +
+						"$ClassNamePool"),
+				"_classNameIdsMap");
+
+		Assert.assertEquals(cached, classNameIdsMap.containsKey(companyId));
+
+		Map<Long, Map<Long, ClassName>> classNamesMap =
+			ReflectionTestUtil.getFieldValue(
+				Class.forName(
+					ClassNameLocalServiceImpl.class.getName() +
+						"$ClassNamePool"),
+				"_classNamesMap");
+
+		Assert.assertEquals(cached, classNamesMap.containsKey(companyId));
+
+		Map<String, CounterRegister> counterRegisterMap =
+			ReflectionTestUtil.getFieldValue(
+				_counterFinder, "_counterRegisterMap");
+
+		Assert.assertEquals(
+			cached,
+			counterRegisterMap.containsKey(
+				Counter.class.getName() + StringPool.AT + companyId));
+
+		RepositoryClassDefinition repositoryClassDefinition =
+			RepositoryClassDefinitionCatalogUtil.getRepositoryClassDefinition(
+				companyId, CompanyLocalServiceDBPartitionTest.class.getName());
+
+		Assert.assertNotNull(repositoryClassDefinition);
+
+		Assert.assertEquals(
+			cached,
+			MapUtil.isNotEmpty(
+				(Map<Long, Map<Long, LocalRepository>>)
+					ReflectionTestUtil.getFieldValue(
+						repositoryClassDefinition, "_localRepositoriesMap")));
+
+		Assert.assertEquals(
+			cached,
+			MapUtil.isNotEmpty(
+				(Map<Long, Map<Long, Repository>>)
+					ReflectionTestUtil.getFieldValue(
+						repositoryClassDefinition, "_repositoriesMap")));
 	}
 
 	private void _assertCompanyConfiguration(
@@ -948,6 +1034,43 @@ public class CompanyLocalServiceDBPartitionTest
 		return _configurationAdmin.getConfiguration(pid);
 	}
 
+	private void _createRepositoriesCache(Company company) throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			RepositoryDefiner.class, _getRepositoryDefiner(),
+			MapUtil.singletonDictionary(
+				"companyId", String.valueOf(company.getCompanyId())));
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
+
+			Repository repository = _repositoryLocalService.addRepository(
+				null, adminUser.getUserId(), company.getGroupId(),
+				_portal.getClassNameId(LiferayRepository.class.getName()),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new UnicodeProperties(), true,
+				ServiceContextTestUtil.getServiceContext(company.getGroupId()));
+
+			RepositoryClassDefinition repositoryClassDefinition =
+				RepositoryClassDefinitionCatalogUtil.
+					getRepositoryClassDefinition(
+						company.getCompanyId(),
+						CompanyLocalServiceDBPartitionTest.class.getName());
+
+			repositoryClassDefinition.setRepositoryFactory(_repositoryFactory);
+
+			repositoryClassDefinition.createLocalRepository(
+				repository.getRepositoryId());
+			repositoryClassDefinition.createRepository(
+				repository.getRepositoryId());
+		}
+	}
+
 	private long[] _getCompanyIdsBySQL() {
 		return ReflectionTestUtil.invoke(
 			PortalInstancePool.class, "_getCompanyIdsBySQL", null, null);
@@ -991,6 +1114,23 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		return objectNames;
+	}
+
+	private RepositoryDefiner _getRepositoryDefiner() {
+		return (RepositoryDefiner)ProxyUtil.newProxyInstance(
+			RepositoryDefiner.class.getClassLoader(),
+			new Class<?>[] {RepositoryDefiner.class},
+			(proxy, method, args) -> {
+				if (Objects.equals(method.getName(), "getClassName")) {
+					return CompanyLocalServiceDBPartitionTest.class.getName();
+				}
+
+				if (Objects.equals(method.getName(), "isExternalRepository")) {
+					return false;
+				}
+
+				return null;
+			});
 	}
 
 	private int _getRulesCount(String partitionName) throws SQLException {
@@ -1061,9 +1201,26 @@ public class CompanyLocalServiceDBPartitionTest
 	private Company _company2;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
+	private CounterFinder _counterFinder;
+
+	@Inject
 	private PersistenceManager _persistenceManager;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private RepositoryFactory _repositoryFactory;
+
+	@Inject
+	private RepositoryLocalService _repositoryLocalService;
+
+	private ServiceRegistration<RepositoryDefiner> _serviceRegistration;
 
 }

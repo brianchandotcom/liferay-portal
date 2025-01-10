@@ -43,9 +43,5 @@
 
 	${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
 
-	<#assign assetPublisherPortletPreferencesModels = dataFactory.newAssetPublisherPortletPreferenceValueModels(assetPublisherPortletPreferencesModel, groupId, pageCount) />
-
-	<#list assetPublisherPortletPreferencesModels as assetPublisherPortletPreferencesModel>
-		${dataFactory.toInsertSQL(assetPublisherPortletPreferencesModel)}
-	</#list>
+	${dataFactory.toInsertSQL(dataFactory.newAssetPublisherPortletPreferenceValueModels(assetListEntryModel, assetPublisherPortletPreferencesModel))}
 </#list>

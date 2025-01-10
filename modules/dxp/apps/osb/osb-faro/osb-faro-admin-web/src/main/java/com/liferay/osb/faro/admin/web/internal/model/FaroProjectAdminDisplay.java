@@ -69,12 +69,14 @@ public class FaroProjectAdminDisplay {
 			_individualsCount = subscriptionJSONObject.getLong(
 				"individualsCountSinceLastAnniversary");
 
-			_individualsUsage = _getUsage(_individualsCount, _individualsLimit);
+			_individualsUsage = document.get("individualsUsage");
 
 			_pageViewsCount = subscriptionJSONObject.getLong(
 				"pageViewsCountSinceLastAnniversary");
 
-			_pageViewsUsage = _getUsage(_pageViewsCount, _pageViewsLimit);
+			_pageViewsUsage = document.get("pageViewsUsage");
+
+			/*  need to make changes here */
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -278,13 +280,8 @@ public class FaroProjectAdminDisplay {
 		return null;
 	}
 
-	private String _getUsage(long count, long limit) {
-		if ((count == 0) || (limit == 0)) {
-			return "0";
-		}
+//	some changes might be needed here, check how it returns
 
-		return _decimalFormat.format(100D * count / limit);
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroProjectAdminDisplay.class);

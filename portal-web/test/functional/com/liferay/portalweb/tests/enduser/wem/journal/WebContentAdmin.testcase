@@ -677,13 +677,15 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(
+			locale = "es-ES",
+			translated = "true");
 
 		WebContent.addCP(
 			webContentContent = "WC Contenido de la web Contenido",
 			webContentTitle = "WC Contenido de la web Titulo");
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

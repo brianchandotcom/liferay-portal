@@ -9,6 +9,9 @@ import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -16,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,9 +28,10 @@ import org.springframework.stereotype.Component;
 public class TicketAttachmentService extends BaseService {
 
 	public TicketAttachment addTicketAttachment(
-			Jwt jwt, String accountKey, String externalReferenceCode,
-			String fileName, String fileSize, String md5Checksum,
-			int statusCode, String type, long zendeskTicketId)
+			String authorization, String accountKey,
+			String externalReferenceCode, String fileName, String fileSize,
+			String md5Checksum, int statusCode, String type,
+			long zendeskTicketId)
 		throws Exception {
 
 		JSONObject requestJSONObject = new JSONObject();
@@ -65,14 +68,14 @@ public class TicketAttachmentService extends BaseService {
 
 		JSONObject jsonObject = new JSONObject(
 			post(
-				"Bearer " + jwt.getTokenValue(), requestJSONObject.toString(),
+				authorization, requestJSONObject.toString(),
 				"/o/c/ticketattachments"));
 
 		return new TicketAttachment(jsonObject);
 	}
 
 	public TicketAttachment approveTicketAttachment(
-			Jwt jwt, long ticketAttachmentId)
+			String authorization, long ticketAttachmentId)
 		throws Exception {
 
 		JSONObject requestJSONObject = new JSONObject();
@@ -85,27 +88,27 @@ public class TicketAttachmentService extends BaseService {
 
 		JSONObject jsonObject = new JSONObject(
 			patch(
-				"Bearer " + jwt.getTokenValue(), requestJSONObject.toString(),
+				authorization, requestJSONObject.toString(),
 				"/o/c/ticketattachments/" + ticketAttachmentId));
 
 		return new TicketAttachment(jsonObject);
 	}
 
-	public void deleteTicketAttachment(Jwt jwt, long ticketAttachmentId)
+	public void deleteTicketAttachment(
+			String authorization, long ticketAttachmentId)
 		throws Exception {
 
 		delete(
-			"Bearer " + jwt.getTokenValue(), "",
-			"/o/c/ticketattachments/" + ticketAttachmentId);
+			authorization, "", "/o/c/ticketattachments/" + ticketAttachmentId);
 	}
 
 	public TicketAttachment fetchTicketAttachment(
-		Jwt jwt, long ticketAttachmentId) {
+		String authorization, long ticketAttachmentId) {
 
 		try {
 			JSONObject jsonObject = new JSONObject(
 				get(
-					"Bearer " + jwt.getTokenValue(),
+					authorization,
 					"/o/c/ticketattachments/" + ticketAttachmentId));
 
 			return new TicketAttachment(jsonObject);
@@ -123,7 +126,8 @@ public class TicketAttachmentService extends BaseService {
 	}
 
 	public TicketAttachment fetchTicketAttachment(
-			Jwt jwt, String fileName, String md5Checksum, long zendeskTicketId)
+			String authorization, String fileName, String md5Checksum,
+			long zendeskTicketId)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(6);
@@ -140,7 +144,7 @@ public class TicketAttachmentService extends BaseService {
 		sb.append(zendeskTicketId);
 
 		JSONObject jsonObject = new JSONObject(
-			get("Bearer " + jwt.getTokenValue(), sb.toString()));
+			get(authorization, sb.toString()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -151,16 +155,62 @@ public class TicketAttachmentService extends BaseService {
 		return null;
 	}
 
+	public List<TicketAttachment> searchTicketAttachments(
+			String authorization, String filter)
+		throws Exception {
+
+		JSONObject jsonObject = new JSONObject(
+			get(authorization, "/o/c/ticketattachments?filter=" + filter));
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		List<TicketAttachment> ticketAttachments = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			ticketAttachments.add(
+				new TicketAttachment(jsonArray.getJSONObject(i)));
+		}
+
+		return ticketAttachments;
+	}
+
+	public TicketAttachment updateTicketAttachmentDraftCommentBody(
+			String authorization, long ticketAttachmentId,
+			String draftCommentBody)
+		throws Exception {
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("draftCommentBody", draftCommentBody);
+
+		JSONObject jsonObject = new JSONObject(
+			patch(
+				authorization, requestJSONObject.toString(),
+				"/o/c/ticketattachments/" + ticketAttachmentId));
+
+		return new TicketAttachment(jsonObject);
+	}
+
+	public TicketAttachment updateTicketAttachmentState(
+			String authorization, long ticketAttachmentId, long state)
+		throws Exception {
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("state", state);
+
+		JSONObject jsonObject = new JSONObject(
+			patch(
+				authorization, requestJSONObject.toString(),
+				"/o/c/ticketattachments/" + ticketAttachmentId));
+
+		return new TicketAttachment(jsonObject);
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		TicketAttachmentService.class);
 
 	@Value("${liferay.customer.gcs.bucket.name}")
 	private String _gcsBucketName;
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
 
 }

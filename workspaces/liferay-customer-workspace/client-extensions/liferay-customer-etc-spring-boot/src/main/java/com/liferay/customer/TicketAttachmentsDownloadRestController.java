@@ -40,7 +40,7 @@ public class TicketAttachmentsDownloadRestController
 		try {
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.fetchTicketAttachment(
-					jwt, ticketAttachmentId);
+					"Bearer " + jwt.getTokenValue(), ticketAttachmentId);
 
 			if (ticketAttachment == null) {
 				return new ResponseEntity<>(

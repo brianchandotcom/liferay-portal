@@ -36,6 +36,18 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 	}
 
 	@Override
+	public String getScoreSizeClassification() {
+		CTScore ctScore = CTScoreLocalServiceUtil.fetchCTScoreByCTCollectionId(
+			getCtCollectionId());
+
+		if (ctScore == null) {
+			ctScore = CTScoreLocalServiceUtil.addCTScore(getCtCollectionId());
+		}
+
+		return ctScore.getSizeClassification();
+	}
+
+	@Override
 	public String getUserName() {
 		User user = UserLocalServiceUtil.fetchUser(getUserId());
 

@@ -9,4 +9,23 @@ package com.liferay.change.tracking.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class CTScoreImpl extends CTScoreBaseImpl {
+
+	@Override
+	public String getSizeClassification() {
+		int score = getScore();
+
+		if (score > _LARGE_THRESHOLD) {
+			return "large";
+		}
+		else if (score > _MEDIUM_THRESHOLD) {
+			return "medium";
+		}
+
+		return "small";
+	}
+
+	private static final int _LARGE_THRESHOLD = 20000;
+
+	private static final int _MEDIUM_THRESHOLD = 10000;
+
 }

@@ -753,7 +753,6 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 		.waitFor();
 
 	await pagesAdminPage.addWidgetPage({
-		addButtonLabel: 'Add Site Template Page',
 		name: templateName,
 	});
 

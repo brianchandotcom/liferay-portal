@@ -96,7 +96,6 @@ test(
 			await productMenuPage.goToPages();
 
 			await pagesAdminPage.createNewPage({
-				addButtonLabel: 'Page',
 				draft: true,
 				name: 'Test Page Name',
 				template: 'Blank',
@@ -254,7 +253,6 @@ test(
 			await productMenuPage.goToPages();
 
 			await pagesAdminPage.createNewPage({
-				addButtonLabel: 'Page',
 				draft: true,
 				name: firstPageName,
 				template: 'Blank',
@@ -267,7 +265,6 @@ test(
 			await productMenuPage.goToPages();
 
 			await pagesAdminPage.createNewPage({
-				addButtonLabel: 'Page',
 				draft: true,
 				name: secondPageName,
 				template: 'Blank',
@@ -280,7 +277,6 @@ test(
 			await productMenuPage.goToPages();
 
 			await pagesAdminPage.createNewPage({
-				addButtonLabel: 'Page',
 				draft: true,
 				name: thirdPageName,
 				template: 'Blank',

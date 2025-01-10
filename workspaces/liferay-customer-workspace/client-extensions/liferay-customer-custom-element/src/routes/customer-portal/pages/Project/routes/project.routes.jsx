@@ -265,14 +265,14 @@ const ProjectRoutes = () => {
 
 					<Route element={<TeamMembers />} path="team-members" />
 
-					{featureFlags.includes('LRSD-6322') &&
-						loggedUserAccount?.isLiferayStaff &&
-						hasSaasSubscription && (
-							<Route
-								element={<ProjectUsage />}
-								path="project-usage"
-							/>
-						)}
+					{((featureFlags.includes('LRSD-6322') && loggedUserAccount?.isLiferayStaff) ||
+						(featureFlags.includes('LRSD-7805') && loggedUserAccount?.isPartner)) &&
+							hasSaasSubscription && (
+								<Route
+									element={<ProjectUsage />}
+									path="project-usage"
+								/>
+					)}
 
 					<Route element={<h3>Page not found</h3>} path="*" />
 				</Route>

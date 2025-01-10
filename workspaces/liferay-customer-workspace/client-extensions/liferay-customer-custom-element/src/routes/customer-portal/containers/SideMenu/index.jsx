@@ -241,20 +241,20 @@ const SideMenu = () => {
 					</MenuItem>
 				</div>
 
-				{featureFlags.includes('LRSD-6322') &&
-					loggedUserAccount?.isLiferayStaff &&
-					hasSaasSubscription && (
-						<div className="d-flex">
-							<MenuItem
-								iconKey="projectUsage"
-								to={getKebabCase(MENU_TYPES.projectUsage)}
-							>
-								{i18n.translate(
-									getKebabCase(MENU_TYPES.projectUsage)
-								)}
-							</MenuItem>
-						</div>
-					)}
+				{((featureFlags.includes('LRSD-6322') && loggedUserAccount?.isLiferayStaff) ||
+					(featureFlags.includes('LRSD-7805') && loggedUserAccount?.isPartner)) &&
+						hasSaasSubscription && (
+							<div className="d-flex">
+								<MenuItem
+									iconKey="projectUsage"
+									to={getKebabCase(MENU_TYPES.projectUsage)}
+								>
+									{i18n.translate(
+										getKebabCase(MENU_TYPES.projectUsage)
+									)}
+								</MenuItem>
+							</div>
+				)}
 			</ul>
 		</div>
 	);

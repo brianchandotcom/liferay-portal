@@ -55,6 +55,14 @@ export const userAccountsTypePolicy = {
 					);
 				},
 			},
+			isPartner: {
+				read(_, {readField}) {
+					return !!readField('roleBriefs')?.some(
+						(roleBrief) =>
+							readField('name', roleBrief) === 'Partner'
+					);
+				},
+			},
 			isProvisioning: {
 				read(_, {readField}) {
 					return !!readField('roleBriefs')?.some(

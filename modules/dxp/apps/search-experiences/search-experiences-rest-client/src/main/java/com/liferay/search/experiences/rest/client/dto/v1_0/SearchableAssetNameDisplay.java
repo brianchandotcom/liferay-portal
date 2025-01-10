@@ -67,6 +67,27 @@ public class SearchableAssetNameDisplay implements Cloneable, Serializable {
 
 	protected String displayName;
 
+	public Boolean getHasSubtype() {
+		return hasSubtype;
+	}
+
+	public void setHasSubtype(Boolean hasSubtype) {
+		this.hasSubtype = hasSubtype;
+	}
+
+	public void setHasSubtype(
+		UnsafeSupplier<Boolean, Exception> hasSubtypeUnsafeSupplier) {
+
+		try {
+			hasSubtype = hasSubtypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean hasSubtype;
+
 	@Override
 	public SearchableAssetNameDisplay clone()
 		throws CloneNotSupportedException {

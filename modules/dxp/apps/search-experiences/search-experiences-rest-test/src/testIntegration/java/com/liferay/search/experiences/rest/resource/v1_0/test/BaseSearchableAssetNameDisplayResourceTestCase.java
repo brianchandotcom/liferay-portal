@@ -399,6 +399,14 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("hasSubtype", additionalAssertFieldName)) {
+				if (searchableAssetNameDisplay.getHasSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -535,6 +543,17 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 				if (!Objects.deepEquals(
 						searchableAssetNameDisplay1.getDisplayName(),
 						searchableAssetNameDisplay2.getDisplayName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("hasSubtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						searchableAssetNameDisplay1.getHasSubtype(),
+						searchableAssetNameDisplay2.getHasSubtype())) {
 
 					return false;
 				}
@@ -744,6 +763,11 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("hasSubtype")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -795,6 +819,7 @@ public abstract class BaseSearchableAssetNameDisplayResourceTestCase {
 					RandomTestUtil.randomString());
 				displayName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				hasSubtype = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

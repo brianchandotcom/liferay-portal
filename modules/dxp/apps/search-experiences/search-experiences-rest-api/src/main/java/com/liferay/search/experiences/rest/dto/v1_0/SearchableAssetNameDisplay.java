@@ -130,6 +130,47 @@ public class SearchableAssetNameDisplay implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
+	@Schema
+	public Boolean getHasSubtype() {
+		if (_hasSubtypeSupplier != null) {
+			hasSubtype = _hasSubtypeSupplier.get();
+
+			_hasSubtypeSupplier = null;
+		}
+
+		return hasSubtype;
+	}
+
+	public void setHasSubtype(Boolean hasSubtype) {
+		this.hasSubtype = hasSubtype;
+
+		_hasSubtypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setHasSubtype(
+		UnsafeSupplier<Boolean, Exception> hasSubtypeUnsafeSupplier) {
+
+		_hasSubtypeSupplier = () -> {
+			try {
+				return hasSubtypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hasSubtype;
+
+	@JsonIgnore
+	private Supplier<Boolean> _hasSubtypeSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -189,6 +230,18 @@ public class SearchableAssetNameDisplay implements Serializable {
 			sb.append(_escape(displayName));
 
 			sb.append("\"");
+		}
+
+		Boolean hasSubtype = getHasSubtype();
+
+		if (hasSubtype != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hasSubtype\": ");
+
+			sb.append(hasSubtype);
 		}
 
 		sb.append("}");

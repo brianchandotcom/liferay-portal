@@ -33,7 +33,7 @@ copyCSS {
 }
 
 dependencies {
-	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
+	compileInclude group: "com.beust", name: "jcommander", version: "1.82"
 	compileInclude group: "net.coobird", name: "thumbnailator", version: "0.4.8"
 
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"

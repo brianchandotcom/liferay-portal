@@ -1295,7 +1295,7 @@ public class ObjectFieldLocalServiceImpl
 
 	private void _setBusinessTypeAndDBType(
 			String businessType, String dbType, ObjectField objectField,
-			Boolean system)
+			boolean system)
 		throws PortalException {
 
 		ObjectFieldBusinessType objectFieldBusinessType =

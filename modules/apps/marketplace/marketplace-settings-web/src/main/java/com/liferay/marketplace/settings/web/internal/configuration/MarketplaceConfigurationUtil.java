@@ -23,10 +23,6 @@ public class MarketplaceConfigurationUtil {
 			MarketplaceConfiguration.class, companyId);
 	}
 
-	public static String getConfiguration(String key) {
-		return _configuration.get(key);
-	}
-
 	public static MarketplaceConfiguration getMarketplaceConfiguration(
 			long companyId)
 		throws Exception {

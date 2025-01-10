@@ -5,18 +5,21 @@
 
 package com.liferay.marketplace.settings.web.internal.configuration;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /**
  * @author Keven Leone
  */
 public class MarketplaceConfigurationValues {
 
-	public static final String MARKETPLACE_CLIENT_ID =
-		MarketplaceConfigurationUtil.getConfiguration("marketplace.client.id");
+	public static final String MARKETPLACE_CLIENT_ID = PropsUtil.get(
+		PropsKeys.MARKETPLACE_CLIENT_ID);
 
-	public static final String MARKETPLACE_REDIRECT =
-		MarketplaceConfigurationUtil.getConfiguration("marketplace.redirect");
+	public static final String MARKETPLACE_REDIRECT = PropsUtil.get(
+		PropsKeys.MARKETPLACE_REDIRECT);
 
-	public static final String MARKETPLACE_URL =
-		MarketplaceConfigurationUtil.getConfiguration("marketplace.url");
+	public static final String MARKETPLACE_URL = PropsUtil.get(
+		PropsKeys.MARKETPLACE_URL);
 
 }

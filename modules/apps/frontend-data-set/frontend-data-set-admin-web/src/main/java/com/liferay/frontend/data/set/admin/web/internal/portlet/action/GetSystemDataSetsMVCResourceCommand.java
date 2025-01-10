@@ -18,12 +18,17 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,13 +51,6 @@ public class GetSystemDataSetsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ObjectDefinition dataSetObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "DataSet");
-
 		Set<String> systemFDSNames =
 			_systemFDSEntryRegistry.getSystemFDSNames();
 
@@ -62,6 +60,20 @@ public class GetSystemDataSetsMVCResourceCommand
 				JSONUtil.put("items", _jsonFactory.createJSONArray()));
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ObjectDefinition dataSetObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					themeDisplay.getCompanyId(), "DataSet");
+
+			HttpServletRequest httpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(resourceRequest));
+
+			String search = ParamUtil.getString(httpServletRequest, "search");
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
@@ -72,6 +84,12 @@ public class GetSystemDataSetsMVCResourceCommand
 							SystemFDSEntry systemFDSEntry =
 								_systemFDSEntryRegistry.getSystemFDSEntry(
 									systemFDSName);
+
+							if (!StringUtil.matchesIgnoreCase(
+									systemFDSEntry.getTitle(), search)) {
+
+								return null;
+							}
 
 							ObjectEntry objectEntry =
 								_objectEntryLocalService.fetchObjectEntry(
@@ -121,6 +139,9 @@ public class GetSystemDataSetsMVCResourceCommand
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SystemFDSEntryRegistry _systemFDSEntryRegistry;

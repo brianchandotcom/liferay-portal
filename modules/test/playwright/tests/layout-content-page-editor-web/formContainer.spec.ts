@@ -5117,6 +5117,131 @@ test.describe('Multistep', () => {
 			await expect(page.getByText('Heading Example')).toBeVisible();
 		}
 	);
+
+	test(
+		'Step is changed when selecting a fragment in the tree',
+		{tag: ['@LPD-37501']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			// Definition for the Stepper fragment
+
+			const stepperFragment = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-stepper',
+			});
+
+			// Create a form with two steps and the Stepper
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const buttonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [stepperFragment],
+				steps: [[headingDefinition], [buttonDefinition]],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await page
+				.getByText('Select a Page Element', {exact: true})
+				.waitFor();
+
+			await expect(page.locator('.multi-step-item').nth(0)).toHaveClass(
+				/active/,
+				{timeout: 1000}
+			);
+
+			// Go to the tree and select the form step container so the steps appear
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			await page
+				.locator('.page-editor__page-structure__tree-node', {
+					hasText: 'Form Container',
+				})
+				.click();
+
+			await page
+				.locator('.page-editor__page-structure__tree-node', {
+					hasText: 'Form Steps',
+				})
+				.click();
+
+			await expect(async () => {
+
+				// Select the button fragment present in first step
+
+				await page
+					.locator('.page-editor__page-structure__tree-node', {
+						hasText: 'Step 1',
+					})
+					.click({timeout: 1000});
+
+				await page
+					.locator('.page-editor__page-structure__tree-node', {
+						hasText: 'Heading',
+					})
+					.click({timeout: 1000});
+
+				// Select the button fragment present in second step
+
+				await page
+					.locator('.page-editor__page-structure__tree-node', {
+						hasText: 'Step 2',
+					})
+					.click({timeout: 1000});
+
+				await page
+					.locator('.page-editor__page-structure__tree-node', {
+						hasText: 'Button',
+					})
+					.click({timeout: 1000});
+
+				// Check button is visible and stepper is updated
+
+				await expect(
+					page.locator('.page-editor__topper__title', {
+						hasText: 'Button',
+					})
+				).toBeVisible({timeout: 1000});
+
+				await expect(
+					page.locator('.multi-step-item').nth(1)
+				).toHaveClass(/active/, {timeout: 1000});
+			}).toPass();
+		}
+	);
 });
 
 test.describe('Edit mode language changes', () => {

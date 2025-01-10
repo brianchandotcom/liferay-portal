@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSFDSNames;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.io.IOException;
 
@@ -84,7 +84,7 @@ public class AllSectionFragmentRenderer implements FragmentRenderer {
 			headlessDisplayTag.setBulkActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFdsActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFormName("fm");
-			headlessDisplayTag.setId(CMSFDSNames.ALL_SECTION);
+			headlessDisplayTag.setId(CMSSiteInitializerFDSNames.ALL_SECTION);
 			headlessDisplayTag.setItemsPerPage(10);
 			headlessDisplayTag.setSelectedItemsKey("id");
 			headlessDisplayTag.setSelectionType("multiple");

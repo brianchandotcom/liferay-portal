@@ -10,7 +10,7 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSFDSNames;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSFDSNames.ALL_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
 	service = FDSView.class
 )
 public class AllSectionTableFDSView extends BaseTableFDSView {

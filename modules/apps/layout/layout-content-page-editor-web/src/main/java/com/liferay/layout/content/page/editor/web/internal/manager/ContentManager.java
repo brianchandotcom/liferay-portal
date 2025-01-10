@@ -1557,7 +1557,7 @@ public class ContentManager {
 						PRODUCT_NAVIGATION_CONTROL_MENU,
 					PortletRequest.ACTION_PHASE)
 			).setActionName(
-				"/control_menu/add_collection_item"
+				"/layout_content_page_editor/add_collection_item"
 			).setRedirect(
 				currentURL
 			).setParameter(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.type.controller.collection.internal.portlet.action;
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU,
-		"mvc.command.name=/control_menu/add_collection_item"
+		"mvc.command.name=/layout_content_page_editor/add_collection_item"
 	},
 	service = MVCActionCommand.class
 )

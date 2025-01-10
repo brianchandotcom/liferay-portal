@@ -101,8 +101,6 @@ function SelectTypes({
 	searchableTypes = [],
 	selectedTypes = [],
 }) {
-	console.log(selectedTypes); // TODO: Remove this later
-
 	const {locale} = useContext(ThemeContext);
 
 	const [selected, setSelected] = useState(setupSelected(selectedTypes));
@@ -193,24 +191,28 @@ function SelectTypes({
 						.filter(({className}) =>
 							selected.some(({type}) => type === className)
 						)
-						.map(({className, displayName}) => (
+						.map(({className, displayName, hasSubtypes = true}) => (
 							<ClayList.Item flex key={className}>
 								<ClayList.ItemField expand>
 									<ClayList.ItemTitle>
 										{displayName}
 									</ClayList.ItemTitle>
 
-									<SelectSubtypes
-										className={className}
-										onChangeSubtypes={_handleChangeSubtypes(
-											className
-										)}
-										onRemoveSubtype={_handleRemoveSubtype}
-										selectedSubtypes={getSelectedSubtypes(
-											selected,
-											className
-										)}
-									/>
+									{hasSubtypes && (
+										<SelectSubtypes
+											className={className}
+											onChangeSubtypes={_handleChangeSubtypes(
+												className
+											)}
+											onRemoveSubtype={
+												_handleRemoveSubtype
+											}
+											selectedSubtypes={getSelectedSubtypes(
+												selected,
+												className
+											)}
+										/>
+									)}
 								</ClayList.ItemField>
 
 								<ClayList.ItemField>

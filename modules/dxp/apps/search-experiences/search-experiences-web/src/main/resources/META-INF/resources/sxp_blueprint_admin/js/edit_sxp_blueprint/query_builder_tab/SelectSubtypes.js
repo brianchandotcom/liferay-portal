@@ -5,35 +5,30 @@
 
 import ClayButton from '@clayui/button';
 import {Body, Cell, Head, Row, Table} from '@clayui/core';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {addParams, fetch} from 'frontend-js-web';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
 import removeDuplicates from '../../utils/functions/remove_duplicates';
 import sub from '../../utils/language/sub';
-
-function getLabel({classSubtypeLocalizedName, groupLocalizedName}) {
-	return `${classSubtypeLocalizedName} (${groupLocalizedName})`;
-}
-
-function getValue({
-	classSubtypeExternalReferenceCode,
-	classType,
-	groupExternalReferenceCode,
-}) {
-	return `${classType}#${groupExternalReferenceCode}#${classSubtypeExternalReferenceCode}`;
-}
 
 export function SearchableSubtypesModal({
 	className,
@@ -53,13 +48,41 @@ export function SearchableSubtypesModal({
 
 	const {fetchClassSubtypesURL = '', namespace} = useContext(ThemeContext);
 
-	const isSelected = (item) =>
-		selected.some((selectedItem) => selectedItem.value === item.value);
+	const getLabel = ({classSubtypeLocalizedName, groupLocalizedName}) => {
+		return `${classSubtypeLocalizedName} (${groupLocalizedName})`;
+	};
 
-	const isInClassSubtypes = (item) =>
-		subtypes.classSubtypes?.some(
-			(subtypeItem) => subtypeItem.value === item.value
-		);
+	const getValue = ({
+		classSubtypeExternalReferenceCode,
+		classType,
+		groupExternalReferenceCode,
+	}) => {
+		return `${classType}#${groupExternalReferenceCode}#${classSubtypeExternalReferenceCode}`;
+	};
+
+	const isSelected = useCallback(
+		(item) =>
+			selected.some((selectedItem) => selectedItem.value === item.value),
+		[selected]
+	);
+
+	const isInClassSubtypes = useCallback(
+		(item) =>
+			subtypes.classSubtypes?.some(
+				(subtypeItem) => subtypeItem.value === item.value
+			),
+		[subtypes.classSubtypes]
+	);
+
+	const allSubtypesSelected = useMemo(
+		() => subtypes.classSubtypes?.every((item) => isSelected(item)),
+		[subtypes.classSubtypes, isSelected]
+	);
+
+	const indeterminateSelected = useMemo(
+		() => !allSubtypesSelected && subtypes.classSubtypes?.some(isSelected),
+		[allSubtypesSelected, isSelected, subtypes.classSubtypes]
+	);
 
 	const _handleSelect = (item) => () => {
 		if (isSelected(item)) {
@@ -76,7 +99,7 @@ export function SearchableSubtypesModal({
 
 	const _handleSelectAll = () => {
 		setSelected(
-			subtypes.classSubtypes?.every((item) => isSelected(item))
+			allSubtypesSelected
 				? selected.filter((item) => !isInClassSubtypes(item))
 				: removeDuplicates(
 						[
@@ -104,11 +127,8 @@ export function SearchableSubtypesModal({
 					addParams(
 						{
 							[`${namespace}classType`]: className,
-
-							// [`${namespace}groupExternalReferenceCode`]: groupExternalReferenceCode, //TODO: Implement more params
-							// [`${namespace}page`]: page,
-							// [`${namespace}pageSize`]: pageSize,
-
+							[`${namespace}page`]: page,
+							[`${namespace}pageSize`]: pageSize,
 						},
 						fetchClassSubtypesURL
 					)
@@ -187,10 +207,16 @@ export function SearchableSubtypesModal({
 				</ClayModal.Body>
 			) : (
 				<ClayModal.Body>
-					<ManagementToolbar.Container
+					<nav
 						className={getCN(
+							'management-bar navbar navbar-expand-md',
 							{
-								'management-bar-primary': !!selected.length,
+								'management-bar-light': !(
+									allSubtypesSelected && indeterminateSelected
+								),
+								'management-bar-primary navbar-nowrap':
+									allSubtypesSelected ||
+									indeterminateSelected,
 							},
 							'border-light',
 							'border',
@@ -198,46 +224,60 @@ export function SearchableSubtypesModal({
 							'border-bottom-0'
 						)}
 					>
-						<ManagementToolbar.ItemList expand>
-							<ManagementToolbar.Item>
-								<ClayCheckbox
-									checked={subtypes.classSubtypes?.every(
-										(item) => isSelected(item)
-									)}
-									indeterminate={
-										subtypes.classSubtypes?.some((item) =>
-											isSelected(item)
-										) &&
-										!subtypes.classSubtypes?.every((item) =>
-											isSelected(item)
-										)
-									}
-									onChange={_handleSelectAll}
-								/>
-							</ManagementToolbar.Item>
+						<ClayLayout.ContainerFluid size={false}>
+							<ManagementToolbar.ItemList expand>
+								<ManagementToolbar.Item>
+									<ClayCheckbox
+										aria-label={Liferay.Language.get(
+											'select-all'
+										)}
+										checked={allSubtypesSelected}
+										indeterminate={indeterminateSelected}
+										onChange={_handleSelectAll}
+									/>
 
-							<ClayDropDownWithItems
-								items={[]} // TODO: Implement filter
-								trigger={
-									<ClayButton
-										className="nav-link"
-										displayType="unstyled"
-									>
-										<span className="navbar-breakpoint-down-d-none">
-											<span className="navbar-text-truncate">
-												{Liferay.Language.get('filter')}
+									<ManagementToolbar.Item>
+										{!!selected.length && (
+											<span className="c-ml-2 component-text">
+												{subtypes.total
+													? sub(
+															Liferay.Language.get(
+																'x-of-x-selected'
+															),
+															[
+																selected.length,
+																subtypes.total,
+															]
+														)
+													: sub(
+															Liferay.Language.get(
+																'x-selected'
+															),
+															[selected.length]
+														)}
 											</span>
-										</span>
+										)}
 
-										<span className="navbar-breakpoint-d-none">
-											<ClayIcon symbol="filter" />
-										</span>
-									</ClayButton>
-								}
-								triggerIcon="caret-bottom"
-							/>
-						</ManagementToolbar.ItemList>
-					</ManagementToolbar.Container>
+										<ClayButton
+											displayType="link"
+											onClick={_handleSelectAll}
+											size="sm"
+										>
+											<span className="component-text">
+												{allSubtypesSelected
+													? Liferay.Language.get(
+															'deselect-all'
+														)
+													: Liferay.Language.get(
+															'select-all'
+														)}
+											</span>
+										</ClayButton>
+									</ManagementToolbar.Item>
+								</ManagementToolbar.Item>
+							</ManagementToolbar.ItemList>
+						</ClayLayout.ContainerFluid>
+					</nav>
 
 					<Table
 						className="rounded-0 table-bordered"
@@ -380,45 +420,58 @@ function SelectSubtypes({
 
 	return (
 		<>
-			<ClayList.ItemText>
-				<ClayButton
-					aria-label={Liferay.Language.get('select-subtypes')}
-					className="c-mt-2 c-p-0 text-secondary"
-					displayType="link"
-					onClick={_handleOpen}
-					size="sm"
-				>
-					{Liferay.Language.get('select-subtypes')}
-				</ClayButton>
-
-				{open && (
-					<SearchableSubtypesModal
-						className={className}
-						observer={observer}
-						onClose={_handleClose}
-						onDone={_handleModalDone}
-						selectedSubtypes={selectedSubtypes}
-					/>
-				)}
-			</ClayList.ItemText>
-
-			<ClayList.ItemText className="c-mt-2">
-				{selectedSubtypes.map(({label, value}) => (
-					<ClayLabel
-						closeButtonProps={{
-							'aria-label': Liferay.Language.get('close'),
-							'id': `close-${value}`,
-							'onClick': () => onRemoveSubtype(value),
-							'title': Liferay.Language.get('close'),
-						}}
-						displayType="secondary"
-						key={value}
-						large
+			<ClayList.ItemText subtext>
+				<span className="align-items-center display-flex">
+					<ClayButton
+						aria-label={Liferay.Language.get('select-subtypes')}
+						className="c-p-0 text-secondary"
+						displayType="link"
+						onClick={_handleOpen}
+						size="sm"
 					>
-						{label}
-					</ClayLabel>
-				))}
+						{Liferay.Language.get('select-subtypes')}
+					</ClayButton>
+
+					{open && (
+						<SearchableSubtypesModal
+							className={className}
+							observer={observer}
+							onClose={_handleClose}
+							onDone={_handleModalDone}
+							selectedSubtypes={selectedSubtypes}
+						/>
+					)}
+
+					<ClayTooltipProvider>
+						<span
+							className="c-ml-2"
+							title={Liferay.Language.get('select-subtypes-help')}
+						>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					</ClayTooltipProvider>
+				</span>
 			</ClayList.ItemText>
+
+			{!!selectedSubtypes.length && (
+				<ClayList.ItemText className="c-mt-2">
+					{selectedSubtypes.map(({label, value}) => (
+						<ClayLabel
+							closeButtonProps={{
+								'aria-label': Liferay.Language.get('close'),
+								'id': `close-${value}`,
+								'onClick': () => onRemoveSubtype(value),
+								'title': Liferay.Language.get('close'),
+							}}
+							displayType="secondary"
+							key={value}
+							large
+						>
+							{label}
+						</ClayLabel>
+					))}
+				</ClayList.ItemText>
+			)}
 		</>
 	);
 }

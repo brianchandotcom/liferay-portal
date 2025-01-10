@@ -58,7 +58,7 @@ export default function Connect({
 				[`${portletNamespace}codeVerifier`]: code_verifier,
 				[`${portletNamespace}redirect`]: oAuth2.redirect,
 				[`${portletNamespace}serviceURL`]: serviceURL,
-				[`${portletNamespace}settings`]: settings || {},
+				[`${portletNamespace}settings`]: JSON.stringify(settings),
 				[`${portletNamespace}url`]: oAuth2.url,
 			};
 

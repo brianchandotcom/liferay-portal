@@ -237,7 +237,7 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.getFormInstanceId());
 
 		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecords(
-			ddmFormInstance.getFormInstanceId());
+			ddmFormInstance.getFormInstanceId(), false);
 
 		_ddmFormInstanceVersionLocalService.deleteByFormInstanceId(
 			ddmFormInstance.getFormInstanceId());

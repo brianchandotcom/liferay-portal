@@ -201,6 +201,26 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "Salesforce Account Key"
+			},
+			"name": "salesforceAccountKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Salesforce Project Key"
+			},
+			"name": "salesforceProjectKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "SLA Current"
 			},
 			"name": "slaCurrent",

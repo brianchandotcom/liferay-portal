@@ -528,6 +528,8 @@ export const getKoroneikiAccounts = gql`
 					partner
 					region
 					name
+					salesforceAccountKey
+					salesforceProjectKey
 					slaCurrent
 					slaCurrentEndDate
 					slaCurrentStartDate

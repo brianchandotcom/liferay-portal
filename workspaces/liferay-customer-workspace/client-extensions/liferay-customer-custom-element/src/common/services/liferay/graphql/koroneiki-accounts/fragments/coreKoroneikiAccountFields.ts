@@ -30,6 +30,8 @@ export const CORE_KORONEIKI_ACCOUNT_FIELDS = gql`
 		partnershipFutureEndDate
 		partnershipFutureStartDate
 		region
+		salesforceAccountKey
+		salesforceProjectKey
 		slaCurrent
 		slaCurrentEndDate
 		slaCurrentStartDate

@@ -567,23 +567,24 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testDeleteCompany() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		_company1 = CompanyTestUtil.addCompany();
 
 		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
+			_company1.getCompanyId());
 
 		String pid = configuration.getPid();
 
-		_createRepositoriesCache(company);
+		_createRepositoriesCache(_company1);
 
-		_assertCache(company.getCompanyId(), true);
+		_assertCache(_company1.getCompanyId(), true);
 
 		int dbPartitionsCount = _getDBPartitionsCount();
 
-		companyLocalService.deleteCompany(company);
+		companyLocalService.deleteCompany(_company1);
 
 		Assert.assertFalse(
-			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
+			ArrayUtil.contains(
+				_getCompanyIdsBySQL(), _company1.getCompanyId()));
 
 		Assert.assertEquals(dbPartitionsCount - 1, _getDBPartitionsCount());
 
@@ -592,11 +593,12 @@ public class CompanyLocalServiceDBPartitionTest
 		Collection<ServiceReference<Portlet>> serviceReferences =
 			bundleContext.getServiceReferences(
 				Portlet.class,
-				"(com.liferay.portlet.company=" + company.getCompanyId() + ")");
+				"(com.liferay.portlet.company=" + _company1.getCompanyId() +
+					")");
 
 		Assert.assertTrue(serviceReferences.isEmpty());
 
-		_assertCache(company.getCompanyId(), false);
+		_assertCache(_company1.getCompanyId(), false);
 
 		_assertConfiguration(pid, false);
 	}

@@ -27,6 +27,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -48,6 +50,7 @@ import com.liferay.wiki.test.util.WikiTestUtil;
 
 import java.util.Map;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 
 import org.junit.AfterClass;
@@ -57,6 +60,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Tamas Molnar
@@ -87,6 +94,8 @@ public class StagingDataPortletPreferencesTest
 
 	@Test
 	public void testDDLDisplayPortletPreferences() throws Exception {
+		_setupDDLDisplayPortlet();
+
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
 
@@ -308,6 +317,27 @@ public class StagingDataPortletPreferencesTest
 	}
 
 	protected PortletPreferences livePortletPreferences;
+
+	private void _setupDDLDisplayPortlet() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ServiceTracker<Portlet, Portlet> serviceTracker =
+			ServiceTrackerFactory.open(
+				bundle.getBundleContext(),
+				StringBundler.concat(
+					"(javax.portlet.name=", DDLPortletKeys.DYNAMIC_DATA_LISTS,
+					")"),
+				null);
+
+		try {
+			Assert.assertNotNull(
+				DDLPortletKeys.DYNAMIC_DATA_LISTS + " is not available",
+				serviceTracker.waitForService(10000));
+		}
+		finally {
+			serviceTracker.close();
+		}
+	}
 
 	@Inject
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

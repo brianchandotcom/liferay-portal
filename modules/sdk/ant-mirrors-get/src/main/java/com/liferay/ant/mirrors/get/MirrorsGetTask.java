@@ -333,14 +333,14 @@ public class MirrorsGetTask extends Task {
 			mirrorsCacheFile.toString() + ".tmp");
 
 		if (mirrorsCacheFile.exists() && !_force) {
-			if (_isTarGzFileName(_fileName)) {
+			if (_is7zFileName(_fileName)) {
+				_force = !_is7zFile(mirrorsCacheFile);
+			}
+			else if (_isTarGzFileName(_fileName)) {
 				_force = !_isTarGzFile(mirrorsCacheFile);
 			}
 			else if (_isZipFileName(_fileName)) {
 				_force = !_isZipFile(mirrorsCacheFile);
-			}
-			else if (_is7zFileName(_fileName)) {
-				_force = !_is7zFile(mirrorsCacheFile);
 			}
 		}
 

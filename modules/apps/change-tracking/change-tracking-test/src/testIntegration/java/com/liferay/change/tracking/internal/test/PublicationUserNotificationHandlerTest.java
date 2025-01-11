@@ -103,9 +103,10 @@ public class PublicationUserNotificationHandlerTest {
 		_assertUserNotificationFeedEntryBody(
 			ctCollection.getCtCollectionId(),
 			_language.format(
-				locale, "the-publication-x-is-now-a-x",
+				locale, "the-size-of-publication-x-has-changed-from-x-to-x",
 				new Object[] {
-					ctCollection.getName(), _language.get(locale, "medium")
+					ctCollection.getName(), _language.get(locale, "small"),
+					_language.get(locale, "medium")
 				},
 				false),
 			false, user.getUserId());

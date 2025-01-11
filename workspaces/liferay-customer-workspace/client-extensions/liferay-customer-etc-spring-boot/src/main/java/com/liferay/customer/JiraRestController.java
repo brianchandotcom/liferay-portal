@@ -312,6 +312,10 @@ public class JiraRestController extends BaseRestController {
 
 	private JSONArray _getAffectedVersionsJSONArray() throws Exception {
 		try {
+			Set<String> affectedVersions = new TreeSet<>();
+
+			String[] issueFields = {_FIELD_VERSIONS};
+
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("project = '");
@@ -326,13 +330,10 @@ public class JiraRestController extends BaseRestController {
 					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
 			sb.append(" <= now()");
 
-			String[] issueFields = {_FIELD_VERSIONS};
-
-			Set<String> affectedVersions = new TreeSet<>();
+			String jql = sb.toString();
 
 			for (int i = 0; true; i += 100) {
-				JSONObject jsonObject = _search(
-					sb.toString(), 100, issueFields, i);
+				JSONObject jsonObject = _search(jql, 100, issueFields, i);
 
 				JSONArray issuesJSONArray = jsonObject.getJSONArray("issues");
 

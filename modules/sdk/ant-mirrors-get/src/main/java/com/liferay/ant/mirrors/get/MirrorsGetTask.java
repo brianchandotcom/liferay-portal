@@ -589,14 +589,14 @@ public class MirrorsGetTask extends Task {
 
 		Project project = getProject();
 
-		String gcpCredentialsFilePath = project.getProperty(
+		String gcpCredentialsFileName = project.getProperty(
 			"mirrors.gcp.credentials.file[" + gcpBucketName + "]");
 
-		if (gcpCredentialsFilePath == null) {
+		if (gcpCredentialsFileName == null) {
 			return null;
 		}
 
-		File gcpCredentialsFile = new File(gcpCredentialsFilePath);
+		File gcpCredentialsFile = new File(gcpCredentialsFileName);
 
 		if (!gcpCredentialsFile.exists()) {
 			return null;

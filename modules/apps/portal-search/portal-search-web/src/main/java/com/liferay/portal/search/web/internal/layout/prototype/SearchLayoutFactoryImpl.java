@@ -131,8 +131,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			Locale defaultLocale = LocaleUtil.fromLanguageId(
 				_localization.getDefaultLanguageId(layoutPrototype.getName()));
 
-			String name = LanguageResources.getMessage(
-				defaultLocale, "search");
+			String name = LanguageResources.getMessage(defaultLocale, "search");
 
 			if ((name == null) ||
 				name.equals(layoutPrototype.getName(defaultLocale))) {

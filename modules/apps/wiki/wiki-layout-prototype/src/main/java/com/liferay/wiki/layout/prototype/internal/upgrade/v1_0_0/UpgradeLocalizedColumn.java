@@ -20,7 +20,7 @@ public class UpgradeLocalizedColumn extends BaseLocalizedColumnUpgradeProcess {
 
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",
-			"name", _NAME, "layout-prototype-wiki-title", "Name", companyIds);
+			"name", _NAME, "wiki", "Name", companyIds);
 
 		upgradeLocalizedColumn(
 			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER, "LayoutPrototype",

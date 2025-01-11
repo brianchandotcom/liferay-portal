@@ -235,45 +235,45 @@ export function SearchableSubtypesModal({
 										indeterminate={indeterminateSelected}
 										onChange={_handleSelectAll}
 									/>
+								</ManagementToolbar.Item>
 
-									<ManagementToolbar.Item>
-										{!!selected.length && (
-											<span className="c-ml-2 component-text">
-												{subtypes.total
-													? sub(
-															Liferay.Language.get(
-																'x-of-x-selected'
-															),
-															[
-																selected.length,
-																subtypes.total,
-															]
-														)
-													: sub(
-															Liferay.Language.get(
-																'x-selected'
-															),
-															[selected.length]
-														)}
-											</span>
-										)}
+								<ManagementToolbar.Item>
+									{!!selected.length && (
+										<span className="c-ml-2 component-text">
+											{subtypes.total
+												? sub(
+														Liferay.Language.get(
+															'x-of-x-selected'
+														),
+														[
+															selected.length,
+															subtypes.total,
+														]
+													)
+												: sub(
+														Liferay.Language.get(
+															'x-selected'
+														),
+														[selected.length]
+													)}
+										</span>
+									)}
 
-										<ClayButton
-											displayType="link"
-											onClick={_handleSelectAll}
-											size="sm"
-										>
-											<span className="component-text">
-												{allSubtypesSelected
-													? Liferay.Language.get(
-															'deselect-all'
-														)
-													: Liferay.Language.get(
-															'select-all'
-														)}
-											</span>
-										</ClayButton>
-									</ManagementToolbar.Item>
+									<ClayButton
+										displayType="link"
+										onClick={_handleSelectAll}
+										size="sm"
+									>
+										<span className="component-text">
+											{allSubtypesSelected
+												? Liferay.Language.get(
+														'deselect-all'
+													)
+												: Liferay.Language.get(
+														'select-all'
+													)}
+										</span>
+									</ClayButton>
 								</ManagementToolbar.Item>
 							</ManagementToolbar.ItemList>
 						</ClayLayout.ContainerFluid>

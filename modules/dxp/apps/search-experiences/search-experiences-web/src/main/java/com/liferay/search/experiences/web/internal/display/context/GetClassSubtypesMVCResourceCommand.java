@@ -10,7 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,19 +24,23 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Joshua Cords
  */
 @Component(
+	enabled = false,
 	property = {
 		"javax.portlet.name=com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet",
 		"mvc.command.name=/search_experiences/get_class_subtypes"
@@ -63,15 +67,6 @@ public class GetClassSubtypesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
-
 	protected JSONObject getClassSubtypesJSONObject(
 		ResourceRequest resourceRequest) {
 
@@ -82,54 +77,66 @@ public class GetClassSubtypesMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		String classType = ParamUtil.getString(resourceRequest, "classType");
-		String lookupClassType = classType;
-
 
 		if (Validator.isNull(classType)) {
 			return null;
 		}
 
+		String lookupClassType = classType;
+
 		if (lookupClassType.equals(DLFileEntry.class.getName())) {
 			lookupClassType = DLFileEntryMetadata.class.getName();
 		}
 
-		JSONArray classSubtypeJSONArray = JSONFactoryUtil.createJSONArray();
-
 		List<DDMStructure> classStructures =
 			_ddmStructureLocalService.getClassStructures(
 				ParamUtil.getLong(resourceRequest, "companyId"),
-				_portal.getClassNameId(lookupClassType)
-			);
+				_portal.getClassNameId(lookupClassType));
+
+		JSONArray classSubtypeJSONArray = _jsonFactory.createJSONArray();
+
+		int delta = ParamUtil.getInteger(resourceRequest, "delta", 10);
+		int start = ParamUtil.getInteger(resourceRequest, "start", 1);
+
+		int end = start * delta;
+		start = (start - 1) * delta;
 
 		Locale locale = LocaleUtil.fromLanguageId(
-			ParamUtil.getString(
-				resourceRequest, "languageId"));
+			ParamUtil.getString(resourceRequest, "languageId"));
 
-		for (DDMStructure ddmStructure : classStructures) {
+		for (int i = start; (i < classStructures.size()) && (i < end); i++) {
 			try {
-				Group group = _groupLocalService.getGroup(ddmStructure.getGroupId());
+				DDMStructure ddmStructure = classStructures.get(i);
 
-				JSONObject subtypeJSONObject = JSONUtil.put(
-					"classSubtypeExternalReferenceCode",
-					ddmStructure.getExternalReferenceCode()
-				).put(
-					"groupExternalReferenceCode",
-					group.getExternalReferenceCode()
-				).put(
-					"groupLocalizedName", group.getName(locale)
-				).put(
-					"classSubtypeLocalizedName", ddmStructure.getName(locale)
-				).put(
-					"classType", classType
-				);
+				Group group = _groupLocalService.getGroup(
+					ddmStructure.getGroupId());
 
-				classSubtypeJSONArray.put(subtypeJSONObject);
-			} catch (Exception exception) {
+				classSubtypeJSONArray.put(
+					JSONUtil.put(
+						"classSubtypeExternalReferenceCode",
+						ddmStructure.getExternalReferenceCode()
+					).put(
+						"classSubtypeLocalizedName",
+						ddmStructure.getName(locale)
+					).put(
+						"classType", classType
+					).put(
+						"groupExternalReferenceCode",
+						group.getExternalReferenceCode()
+					).put(
+						"groupLocalizedName", group.getName(locale)
+					));
+			}
+			catch (Exception exception) {
 				_log.error(exception);
 			}
 		}
 
-		return JSONUtil.put("classSubtypes", classSubtypeJSONArray);
+		return JSONUtil.put(
+			"classSubtypes", classSubtypeJSONArray
+		).put(
+			"size", classStructures.size()
+		);
 	}
 
 	protected void writeJSONPortletResponse(
@@ -151,5 +158,17 @@ public class GetClassSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetClassSubtypesMVCResourceCommand.class);
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -863,6 +863,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks for potential ClassCastException." />
 		</check>
+		<check name="JavaUnnamedSFCheck">
+			<category name="Bug Prevention" />
+			<description name="" />
+		</check>
 		<check name="JavaUnusedSourceFormatterChecksCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds `*Check` classes that are not configured." />

@@ -128,7 +128,7 @@ public class MirrorsGetTask extends Task {
 
 			for (String propertyName : properties.keySet()) {
 				Matcher bucketHostNamePropertyMatcher =
-					_bucketHostNamePropertyPattern.matcher(propertyName);
+					_gcpBucketHostNamePropertyPattern.matcher(propertyName);
 
 				if (!bucketHostNamePropertyMatcher.matches() ||
 					!Objects.equals(
@@ -145,8 +145,8 @@ public class MirrorsGetTask extends Task {
 
 			if (_hostName == null) {
 				throw new RuntimeException(
-					"Please set 'mirrors.gcp.bucket.hostname[" +
-						_gcpBucketName + "]'.");
+					"The property \"mirrors.gcp.bucket.hostname[" +
+						_gcpBucketName + "]\" is not set");
 			}
 
 			_path = matcher.group("path");
@@ -353,9 +353,9 @@ public class MirrorsGetTask extends Task {
 
 			sb.append("Unable to download from ");
 			sb.append(gsURL);
-			sb.append(" unless 'mirrors.gcp.credentials.file[");
+			sb.append(" because \"mirrors.gcp.credentials.file[");
 			sb.append(_getGCPBucketName());
-			sb.append("]' is set.");
+			sb.append("]\" is not set.");
 
 			System.out.println(sb.toString());
 
@@ -380,8 +380,7 @@ public class MirrorsGetTask extends Task {
 				});
 
 			if (process.exitValue() != 0) {
-				System.out.println(
-					"WARNING: Failed to activated service account.");
+				System.out.println("Unable to activate service account.");
 
 				return;
 			}
@@ -393,12 +392,11 @@ public class MirrorsGetTask extends Task {
 
 			if (process.exitValue() != 0) {
 				System.out.println(
-					"WARNING: Failed to download file from " + gsURL + ".");
+					"Unable to download file from " + gsURL + ".");
 			}
 		}
 		catch (Exception exception) {
-			System.out.println(
-				"WARNING: Failed to run GCP commands to download file.");
+			System.out.println("Unable to run GCP commands to download file.");
 		}
 	}
 
@@ -562,7 +560,7 @@ public class MirrorsGetTask extends Task {
 
 		for (String propertyName : properties.keySet()) {
 			Matcher bucketHostNamePropertyMatcher =
-				_bucketHostNamePropertyPattern.matcher(propertyName);
+				_gcpBucketHostNamePropertyPattern.matcher(propertyName);
 
 			if (!bucketHostNamePropertyMatcher.matches() ||
 				!Objects.equals(_hostName, project.getProperty(propertyName))) {
@@ -1162,7 +1160,7 @@ public class MirrorsGetTask extends Task {
 
 	private static final Pattern _basicAuthenticationURLPattern =
 		Pattern.compile("(https?://)([^:]+):([^@]+)@(.+)");
-	private static final Pattern _bucketHostNamePropertyPattern =
+	private static final Pattern _gcpBucketHostNamePropertyPattern =
 		Pattern.compile(
 			"mirrors.gcp.bucket.hostname\\[(?<bucketName>[^\\]]+)\\]");
 	private static final Pattern _gsURLPattern = Pattern.compile(

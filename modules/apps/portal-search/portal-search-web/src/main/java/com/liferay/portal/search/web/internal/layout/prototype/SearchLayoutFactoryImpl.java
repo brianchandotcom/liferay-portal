@@ -132,7 +132,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 				_localization.getDefaultLanguageId(layoutPrototype.getName()));
 
 			String name = LanguageResources.getMessage(
-				defaultLocale, "layout-prototype-search-title");
+				defaultLocale, "search");
 
 			if ((name == null) ||
 				name.equals(layoutPrototype.getName(defaultLocale))) {
@@ -234,7 +234,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	private Map<Locale, String> _getSearchTitleLocalizationMap() {
-		return _getLocalizationMap("layout-prototype-search-title");
+		return _getLocalizationMap("search");
 	}
 
 	private boolean _hasSearchLayout(Group group) {

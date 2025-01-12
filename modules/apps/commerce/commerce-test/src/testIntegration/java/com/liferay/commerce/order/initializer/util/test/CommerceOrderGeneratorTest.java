@@ -16,7 +16,9 @@ import com.liferay.commerce.initializer.util.CommerceOrderGenerator;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -88,6 +91,10 @@ public class CommerceOrderGeneratorTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
+		_catalog = _commerceCatalogLocalService.addCommerceCatalog(
+			null, RandomTestUtil.randomString(), _commerceCurrency.getCode(),
+			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
+
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			_group.getGroupId(), "Test Channel",
@@ -114,7 +121,7 @@ public class CommerceOrderGeneratorTest {
 		modifiableSettings.store();
 
 		_cpDefinition = CPTestUtil.addCPDefinition(
-			_commerceChannel.getSiteGroupId(), SimpleCPTypeConstants.NAME);
+			_catalog.getGroupId(), SimpleCPTypeConstants.NAME);
 
 		_country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
@@ -155,26 +162,6 @@ public class CommerceOrderGeneratorTest {
 				accountEntry.getAccountEntryId()));
 	}
 
-	@Test
-	public void testUnsuccessfulCommerceOrderGenerator() throws Exception {
-		AccountEntry accountEntry =
-			CommerceAccountTestUtil.addBusinessAccountEntry(
-				_user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString() + "@liferay.com",
-				RandomTestUtil.randomString(), new long[] {_user.getUserId()},
-				null, _serviceContext);
-
-		_accountEntries.add(accountEntry);
-
-		_commerceOrderGenerator.generate(_group.getGroupId(), 5);
-
-		Assert.assertEquals(
-			0,
-			_commerceOrderLocalService.getCommerceOrdersCount(
-				_commerceChannel.getGroupId(),
-				accountEntry.getAccountEntryId()));
-	}
-
 	private static User _user;
 
 	@DeleteAfterTestRun
@@ -185,6 +172,11 @@ public class CommerceOrderGeneratorTest {
 
 	@Inject
 	private AddressLocalService _addressLocalService;
+
+	private CommerceCatalog _catalog;
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;

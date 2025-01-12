@@ -14,6 +14,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -174,6 +175,8 @@ public class CommerceOrderGenerator {
 			accountEntryUserRel.getAccountUserId(),
 			commerceOrder.getCommerceOrderId(),
 			accountEntryUserRel.getAccountEntryId());
+
+		CommerceContextThreadLocal.set(commerceContext);
 
 		ServiceContext serviceContext = _getServiceContext(commerceOrder);
 

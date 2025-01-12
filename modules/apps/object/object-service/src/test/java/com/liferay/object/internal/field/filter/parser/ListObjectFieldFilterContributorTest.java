@@ -22,6 +22,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -203,19 +204,6 @@ public class ListObjectFieldFilterContributorTest {
 			new StatusSystemObjectFieldFilterStrategy(
 				language, LocaleUtil.getDefault(), objectViewFilterColumn));
 
-		try {
-			_listObjectFieldFilterContributor.validate();
-
-			Assert.fail();
-		}
-		catch (ObjectViewFilterColumnException
-					objectViewFilterColumnException) {
-
-			Assert.assertEquals(
-				"JSON array is null for filter type excludes",
-				objectViewFilterColumnException.getMessage());
-		}
-
 		Mockito.when(
 			objectViewFilterColumn.getJSON()
 		).thenReturn(
@@ -228,18 +216,21 @@ public class ListObjectFieldFilterContributorTest {
 			"status"
 		);
 
-		try {
-			_listObjectFieldFilterContributor.validate();
+		AssertUtils.assertFailure(
+			ObjectViewFilterColumnException.class,
+			"JSON array is invalid for filter type excludes",
+			_listObjectFieldFilterContributor::validate);
 
-			Assert.fail();
-		}
-		catch (ObjectViewFilterColumnException
-					objectViewFilterColumnException) {
+		Mockito.when(
+			objectViewFilterColumn.getJSON()
+		).thenReturn(
+			null
+		);
 
-			Assert.assertEquals(
-				"JSON array is invalid for filter type excludes",
-				objectViewFilterColumnException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			ObjectViewFilterColumnException.class,
+			"JSON array is null for filter type excludes",
+			_listObjectFieldFilterContributor::validate);
 
 		Mockito.when(
 			objectViewFilterColumn.getJSON()

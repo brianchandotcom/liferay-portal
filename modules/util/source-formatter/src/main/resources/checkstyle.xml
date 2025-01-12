@@ -191,11 +191,6 @@
 			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation &quot;{0}&quot; must match pattern &quot;{1}&quot;" />
 		</module>
-		<module name="UnnecessaryParenthesesCheck">
-			<property name="category" value="Styling" />
-			<property name="description" value="Checks if unnecessary parentheses are used in a statement or expression." />
-			<property name="documentationLocation" value="coding/unnecessaryparentheses.html" />
-		</module>
 		<module name="WhitespaceAfterCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator." />

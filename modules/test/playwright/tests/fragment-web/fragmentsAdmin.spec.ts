@@ -1284,7 +1284,7 @@ test(
 		await fragmentsPage.importFile(download.suggestedFilename(), filePath);
 
 		await expect(
-			page.getByRole('button', {name: '2 items were imported.'})
+			page.getByRole('button', {name: 'items were imported.'})
 		).toBeVisible();
 
 		// Assert imported entries

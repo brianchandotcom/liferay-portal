@@ -38,8 +38,12 @@ public class CPConfigurationListHierarchyDiscoveryImpl
 				companyId, groupId, accountEntryId, accountGroupIds,
 				commerceChannelId, commerceOrderTypeId);
 
-		if ((cpConfigurationLists != null) && !cpConfigurationLists.isEmpty()) {
-			return cpConfigurationLists.get(0);
+		for (CPConfigurationList cpConfigurationList : cpConfigurationLists) {
+			if (cpConfigurationList.isMaster()) {
+				continue;
+			}
+
+			return cpConfigurationList;
 		}
 
 		return _cpConfigurationListLocalService.getMasterCPConfigurationList(

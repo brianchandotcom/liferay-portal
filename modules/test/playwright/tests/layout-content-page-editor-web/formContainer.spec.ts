@@ -4394,10 +4394,22 @@ test.describe('Multistep', () => {
 				'.page-editor__global-context-iframe'
 			);
 
-			await viewportIframe.locator(`.multi-step-icon`).nth(1).click();
+			await viewportIframe.locator(button).waitFor();
 
-			await expect(viewportIframe.locator(button)).toBeVisible();
-			await expect(viewportIframe.locator(heading)).not.toBeVisible();
+			await expect(async () => {
+				await viewportIframe
+					.locator(`.multi-step-icon`)
+					.nth(0)
+					.click({timeout: 1000});
+
+				await expect(viewportIframe.locator(button)).not.toBeVisible({
+					timeout: 1000,
+				});
+
+				await expect(viewportIframe.locator(heading)).toBeVisible({
+					timeout: 1000,
+				});
+			}).toPass();
 		}
 	);
 

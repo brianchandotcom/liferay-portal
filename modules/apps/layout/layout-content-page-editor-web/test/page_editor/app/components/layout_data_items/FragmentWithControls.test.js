@@ -21,6 +21,12 @@ import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-IN
 import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemTopperUniqueClassName';
 import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
 
+if (typeof Object.prototype.groupBy !== 'function') {
+	Object.prototype.groupBy = function (object) {
+		return object;
+	};
+}
+
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({}))

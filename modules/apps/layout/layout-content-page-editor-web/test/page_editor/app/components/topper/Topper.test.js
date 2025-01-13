@@ -23,6 +23,12 @@ import {
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {DragAndDropContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
 
+if (typeof Object.prototype.groupBy !== 'function') {
+	Object.prototype.groupBy = function (object) {
+		return object;
+	};
+}
+
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext',
 	() => {

@@ -18,6 +18,12 @@ import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-IN
 import deleteItem from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 import pasteItems from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/pasteItems';
 
+if (typeof Object.prototype.groupBy !== 'function') {
+	Object.prototype.groupBy = function (object) {
+		return object;
+	};
+}
+
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ClipboardContext',
 	() => {

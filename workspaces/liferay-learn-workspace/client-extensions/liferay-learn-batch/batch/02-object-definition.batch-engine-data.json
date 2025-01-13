@@ -873,6 +873,19 @@
 			},
 			"modifiable": true,
 			"name": "P2S3ExamResultSynchronization",
+			"objectActions": [
+				{
+					"active": true,
+					"label": {
+						"en_US": "Synchronize"
+					},
+					"name": "synchronize",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-exam-result-synchronization",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					}
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Integer",

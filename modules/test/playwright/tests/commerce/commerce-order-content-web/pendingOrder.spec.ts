@@ -199,6 +199,8 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 }) => {
 	test.setTimeout(180000);
 
+	const {site} = await miniumSetUp(apiHelpers);
+
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'Sales agent can receive email notifications account',
 		type: 'business',
@@ -227,8 +229,6 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		id: `${roles.items[0].id}_${user.id}`,
 		type: 'roleUserAccountAssociation',
 	});
-
-	const {site} = await miniumSetUp(apiHelpers);
 
 	const notificationTemplate =
 		await apiHelpers.notification.postNotificationTemplate({

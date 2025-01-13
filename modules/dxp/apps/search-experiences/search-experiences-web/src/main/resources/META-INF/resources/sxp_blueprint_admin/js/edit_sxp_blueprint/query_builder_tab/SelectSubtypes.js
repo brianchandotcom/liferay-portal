@@ -127,8 +127,8 @@ export function SearchableSubtypesModal({
 					addParams(
 						{
 							[`${namespace}classType`]: className,
-							[`${namespace}page`]: page,
-							[`${namespace}pageSize`]: pageSize,
+							[`${namespace}start`]: page,
+							[`${namespace}delta`]: pageSize,
 						},
 						fetchClassSubtypesURL
 					)
@@ -240,14 +240,14 @@ export function SearchableSubtypesModal({
 								<ManagementToolbar.Item>
 									{!!selected.length && (
 										<span className="c-ml-2 component-text">
-											{subtypes.total
+											{subtypes.size
 												? sub(
 														Liferay.Language.get(
 															'x-of-x-selected'
 														),
 														[
 															selected.length,
-															subtypes.total,
+															subtypes.size,
 														]
 													)
 												: sub(
@@ -365,7 +365,7 @@ export function SearchableSubtypesModal({
 						onActiveChange={_handlePageChange}
 						onDeltaChange={_handlePageSizeChange}
 						totalItems={
-							subtypes.total || subtypes.classSubtypes.length
+							subtypes.size || subtypes.classSubtypes.length
 						}
 					/>
 				</ClayModal.Body>

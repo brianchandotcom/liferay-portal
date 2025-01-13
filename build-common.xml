@@ -1890,6 +1890,8 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 
 	<macrodef name="setup-yarn">
 		<sequential>
+			<lstopwatch action="start" name="setup.yarn" />
+
 			<if>
 				<not>
 					<and>
@@ -1925,6 +1927,8 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 					</if>
 				</then>
 			</if>
+
+			<lstopwatch action="total" name="setup.yarn" />
 		</sequential>
 	</macrodef>
 

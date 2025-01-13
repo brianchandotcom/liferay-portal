@@ -168,6 +168,7 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
@@ -441,6 +442,10 @@ public class DataFactory {
 
 		List<String> models = ModelHintsUtil.getModels();
 
+		models.add(
+			DDMTemplate.class.getName() + StringPool.DASH +
+				JournalArticle.class.getName());
+		models.add(JournalArticleDisplay.class.getName());
 		models.add(Layout.class.getName());
 		models.add(NavItem.class.getName());
 		models.add(PortletDisplayTemplate.class.getName());

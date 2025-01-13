@@ -16,6 +16,15 @@
 		text-decoration: none;
 	}
 
+	img {
+		max-height: 15.125rem;
+		max-width: 100%;
+	}
+
+	img:hover {
+	  cursor: pointer;
+	}
+
 	.close:hover {
 		color: var(--link-hover-color, #0053f0);
 	}

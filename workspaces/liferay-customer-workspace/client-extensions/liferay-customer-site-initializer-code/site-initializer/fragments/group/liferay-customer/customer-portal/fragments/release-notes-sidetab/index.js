@@ -238,3 +238,24 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 		document.getElementById('sidetabFeature').style.right = '-31.875rem';
 	});
 })();
+
+const observer = new MutationObserver((mutations) => {
+	mutations.forEach((mutation) => {
+		if (mutation.type === 'childList') {
+			mutation.addedNodes.forEach((node) => {
+				const imageElements = node.querySelectorAll('img');
+
+				imageElements.forEach((image) => {
+					image.addEventListener('click', (event) => {
+						event.preventDefault();
+						window.open(image.src, '_blank').focus();
+					});
+				});
+			});
+		}
+	});
+});
+
+const sidetabFeature = document.getElementById('articleContent');
+
+observer.observe(sidetabFeature, {childList: true});

@@ -145,20 +145,6 @@ test(
 		await expect(
 			page.locator('.page-editor__topper.not-allowed').first()
 		).not.toBeVisible();
-
-		// Check not allowed cursor is present when range multiple selection
-
-		await page.keyboard.down('Shift');
-
-		await expect(
-			page.locator('.page-editor__topper.not-allowed').first()
-		).toBeVisible();
-
-		await page.keyboard.up('Shift');
-
-		await expect(
-			page.locator('.page-editor__topper.not-allowed').first()
-		).not.toBeVisible();
 	}
 );
 

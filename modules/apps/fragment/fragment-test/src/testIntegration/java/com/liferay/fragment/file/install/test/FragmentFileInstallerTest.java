@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -67,7 +70,20 @@ public class FragmentFileInstallerTest {
 
 	@Test
 	public void testDeployFragmentsToSpecificSite() throws Exception {
-		_fileInstaller.transformURL(_generateZipFile());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.fragment.internal.file.install." +
+					"FragmentFileInstaller",
+				LoggerTestUtil.INFO)) {
+
+			File file = _generateZipFile();
+
+			_fileInstaller.transformURL(file);
+
+			_assertLogEntries(
+				logCapture.getLogEntries(),
+				"Deploying fragments file " + file.getName(),
+				"Fragments file " + file.getName() + " deployed successfully.");
+		}
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.fetchFragmentCollection(
@@ -83,6 +99,19 @@ public class FragmentFileInstallerTest {
 		FragmentEntry fragmentEntry = fragmentEntries.get(0);
 
 		Assert.assertEquals("Card", fragmentEntry.getName());
+	}
+
+	private void _assertLogEntries(
+		List<LogEntry> logEntries, String... messages) {
+
+		Assert.assertEquals(
+			logEntries.toString(), messages.length, logEntries.size());
+
+		for (int i = 0; i < logEntries.size(); i++) {
+			LogEntry logEntry = logEntries.get(i);
+
+			Assert.assertEquals(messages[i], logEntry.getMessage());
+		}
 	}
 
 	private File _generateZipFile() throws Exception {

@@ -42,7 +42,7 @@ const ACTIONS = {
 	}) {
 		if (message !== '') {
 			openConfirmModal({
-				message: Liferay.Language.get(message),
+				message,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
 						send(markAsDefaultLayoutUtilityPageEntryURL);

@@ -81,9 +81,7 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 	}
 
 	@Override
-	public void fireErrors(
-		String fileName, SortedSet<Violation> errors) {
-
+	public void fireErrors(String fileName, SortedSet<Violation> errors) {
 		super.fireErrors(_normalizeFileName(fileName), errors);
 	}
 

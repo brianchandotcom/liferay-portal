@@ -191,14 +191,14 @@ function SelectTypes({
 						.filter(({className}) =>
 							selected.some(({type}) => type === className)
 						)
-						.map(({className, displayName, hasSubtypes = true}) => (
+						.map(({className, displayName, hasSubtype = true}) => (
 							<ClayList.Item flex key={className}>
 								<ClayList.ItemField expand>
 									<ClayList.ItemTitle>
 										{displayName}
 									</ClayList.ItemTitle>
 
-									{hasSubtypes && (
+									{hasSubtype && (
 										<SelectSubtypes
 											className={className}
 											onChangeSubtypes={_handleChangeSubtypes(

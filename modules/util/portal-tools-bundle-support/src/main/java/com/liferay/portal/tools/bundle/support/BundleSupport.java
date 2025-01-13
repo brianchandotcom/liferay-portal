@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.bundle.support;
 
+import com.beust.jcommander.IUsageFormatter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
@@ -80,7 +81,9 @@ public class BundleSupport {
 			jCommander.usage();
 		}
 		else {
-			jCommander.usage(commandName);
+			IUsageFormatter iUsageFormatter = jCommander.getUsageFormatter();
+
+			iUsageFormatter.usage(commandName);
 		}
 	}
 

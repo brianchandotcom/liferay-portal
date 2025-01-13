@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.soy.builder;
 
+import com.beust.jcommander.IUsageFormatter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
@@ -94,7 +95,9 @@ public class SoyBuilder {
 			jCommander.usage();
 		}
 		else {
-			jCommander.usage(commandName);
+			IUsageFormatter iUsageFormatter = jCommander.getUsageFormatter();
+
+			iUsageFormatter.usage(commandName);
 		}
 	}
 

@@ -123,17 +123,15 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		upgradeProcess.upgrade();
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", TestPropsValues.getCompanyId());
-
 		_assertExpectedChanges(
 			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
-			"unpublished", "APPLICATION_STATUS_PICKLIST", objectDefinition,
+			"unpublished", "APPLICATION_STATUS_PICKLIST",
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_API_APPLICATION", TestPropsValues.getCompanyId()),
 			"APPLICATION_STATUS");
 
-		objectDefinition =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_API_ENDPOINT", TestPropsValues.getCompanyId());

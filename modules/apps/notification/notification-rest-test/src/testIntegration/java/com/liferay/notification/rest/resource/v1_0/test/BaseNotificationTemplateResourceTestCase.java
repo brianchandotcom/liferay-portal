@@ -104,10 +104,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		NotificationTemplateResource.Builder builder =
-			NotificationTemplateResource.builder();
-
-		notificationTemplateResource = builder.authentication(
+		notificationTemplateResource = NotificationTemplateResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -100,10 +100,8 @@ public abstract class BaseEmbeddingModelResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		EmbeddingModelResource.Builder builder =
-			EmbeddingModelResource.builder();
-
-		embeddingModelResource = builder.authentication(
+		embeddingModelResource = EmbeddingModelResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

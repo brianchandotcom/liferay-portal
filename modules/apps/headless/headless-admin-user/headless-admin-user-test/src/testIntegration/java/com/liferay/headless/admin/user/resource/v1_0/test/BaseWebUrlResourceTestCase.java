@@ -99,9 +99,8 @@ public abstract class BaseWebUrlResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WebUrlResource.Builder builder = WebUrlResource.builder();
-
-		webUrlResource = builder.authentication(
+		webUrlResource = WebUrlResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

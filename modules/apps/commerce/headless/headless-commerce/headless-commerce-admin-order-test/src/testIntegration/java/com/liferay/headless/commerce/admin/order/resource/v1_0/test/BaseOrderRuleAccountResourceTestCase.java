@@ -103,10 +103,8 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderRuleAccountResource.Builder builder =
-			OrderRuleAccountResource.builder();
-
-		orderRuleAccountResource = builder.authentication(
+		orderRuleAccountResource = OrderRuleAccountResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

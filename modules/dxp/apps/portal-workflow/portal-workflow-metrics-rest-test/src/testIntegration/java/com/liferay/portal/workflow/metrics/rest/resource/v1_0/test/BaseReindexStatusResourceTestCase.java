@@ -98,9 +98,8 @@ public abstract class BaseReindexStatusResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ReindexStatusResource.Builder builder = ReindexStatusResource.builder();
-
-		reindexStatusResource = builder.authentication(
+		reindexStatusResource = ReindexStatusResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

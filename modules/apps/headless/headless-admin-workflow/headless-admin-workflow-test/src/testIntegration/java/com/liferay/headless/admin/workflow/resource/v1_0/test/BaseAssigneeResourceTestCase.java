@@ -100,9 +100,8 @@ public abstract class BaseAssigneeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AssigneeResource.Builder builder = AssigneeResource.builder();
-
-		assigneeResource = builder.authentication(
+		assigneeResource = AssigneeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -103,10 +103,8 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WarehouseOrderTypeResource.Builder builder =
-			WarehouseOrderTypeResource.builder();
-
-		warehouseOrderTypeResource = builder.authentication(
+		warehouseOrderTypeResource = WarehouseOrderTypeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

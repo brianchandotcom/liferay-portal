@@ -103,10 +103,8 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WarehouseAccountGroupResource.Builder builder =
-			WarehouseAccountGroupResource.builder();
-
-		warehouseAccountGroupResource = builder.authentication(
+		warehouseAccountGroupResource = WarehouseAccountGroupResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

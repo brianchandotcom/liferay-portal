@@ -107,10 +107,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		NavigationMenuResource.Builder builder =
-			NavigationMenuResource.builder();
-
-		navigationMenuResource = builder.authentication(
+		navigationMenuResource = NavigationMenuResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

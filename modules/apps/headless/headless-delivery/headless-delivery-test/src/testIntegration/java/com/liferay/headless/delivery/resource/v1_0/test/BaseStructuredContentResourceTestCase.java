@@ -125,10 +125,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		StructuredContentResource.Builder builder =
-			StructuredContentResource.builder();
-
-		structuredContentResource = builder.authentication(
+		structuredContentResource = StructuredContentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

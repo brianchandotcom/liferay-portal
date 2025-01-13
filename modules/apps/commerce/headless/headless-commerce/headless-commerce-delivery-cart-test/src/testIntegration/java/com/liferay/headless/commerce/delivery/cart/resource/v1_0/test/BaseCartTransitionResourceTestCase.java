@@ -98,10 +98,8 @@ public abstract class BaseCartTransitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CartTransitionResource.Builder builder =
-			CartTransitionResource.builder();
-
-		cartTransitionResource = builder.authentication(
+		cartTransitionResource = CartTransitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

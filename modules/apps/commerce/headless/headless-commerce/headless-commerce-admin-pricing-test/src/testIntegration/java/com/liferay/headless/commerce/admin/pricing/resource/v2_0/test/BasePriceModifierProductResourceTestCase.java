@@ -103,10 +103,8 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PriceModifierProductResource.Builder builder =
-			PriceModifierProductResource.builder();
-
-		priceModifierProductResource = builder.authentication(
+		priceModifierProductResource = PriceModifierProductResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

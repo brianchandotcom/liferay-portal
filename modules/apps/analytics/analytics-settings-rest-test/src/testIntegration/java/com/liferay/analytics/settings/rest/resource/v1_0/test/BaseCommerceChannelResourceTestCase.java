@@ -103,10 +103,8 @@ public abstract class BaseCommerceChannelResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CommerceChannelResource.Builder builder =
-			CommerceChannelResource.builder();
-
-		commerceChannelResource = builder.authentication(
+		commerceChannelResource = CommerceChannelResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

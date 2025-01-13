@@ -101,9 +101,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TaxCategoryResource.Builder builder = TaxCategoryResource.builder();
-
-		taxCategoryResource = builder.authentication(
+		taxCategoryResource = TaxCategoryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

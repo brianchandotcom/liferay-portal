@@ -107,9 +107,8 @@ public abstract class BaseMasterPageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MasterPageResource.Builder builder = MasterPageResource.builder();
-
-		masterPageResource = builder.authentication(
+		masterPageResource = MasterPageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

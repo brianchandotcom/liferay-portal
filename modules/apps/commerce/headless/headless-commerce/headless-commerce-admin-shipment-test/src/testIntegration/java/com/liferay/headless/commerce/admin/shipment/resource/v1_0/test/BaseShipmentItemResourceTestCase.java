@@ -102,9 +102,8 @@ public abstract class BaseShipmentItemResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ShipmentItemResource.Builder builder = ShipmentItemResource.builder();
-
-		shipmentItemResource = builder.authentication(
+		shipmentItemResource = ShipmentItemResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,9 +98,8 @@ public abstract class BaseAssetMetricResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AssetMetricResource.Builder builder = AssetMetricResource.builder();
-
-		assetMetricResource = builder.authentication(
+		assetMetricResource = AssetMetricResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

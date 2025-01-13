@@ -119,10 +119,8 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DocumentShortcutResource.Builder builder =
-			DocumentShortcutResource.builder();
-
-		documentShortcutResource = builder.authentication(
+		documentShortcutResource = DocumentShortcutResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

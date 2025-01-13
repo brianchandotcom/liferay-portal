@@ -99,9 +99,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FormDocumentResource.Builder builder = FormDocumentResource.builder();
-
-		formDocumentResource = builder.authentication(
+		formDocumentResource = FormDocumentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

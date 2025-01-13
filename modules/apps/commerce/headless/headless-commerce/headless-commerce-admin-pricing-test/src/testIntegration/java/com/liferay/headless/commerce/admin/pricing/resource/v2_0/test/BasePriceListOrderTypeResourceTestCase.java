@@ -100,10 +100,8 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PriceListOrderTypeResource.Builder builder =
-			PriceListOrderTypeResource.builder();
-
-		priceListOrderTypeResource = builder.authentication(
+		priceListOrderTypeResource = PriceListOrderTypeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

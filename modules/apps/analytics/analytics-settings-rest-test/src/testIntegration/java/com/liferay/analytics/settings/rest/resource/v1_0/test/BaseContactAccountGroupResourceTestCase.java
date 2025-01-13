@@ -103,10 +103,8 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ContactAccountGroupResource.Builder builder =
-			ContactAccountGroupResource.builder();
-
-		contactAccountGroupResource = builder.authentication(
+		contactAccountGroupResource = ContactAccountGroupResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

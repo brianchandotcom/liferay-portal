@@ -103,9 +103,8 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DiscountSkuResource.Builder builder = DiscountSkuResource.builder();
-
-		discountSkuResource = builder.authentication(
+		discountSkuResource = DiscountSkuResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

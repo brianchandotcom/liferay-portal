@@ -102,10 +102,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MessageBoardAttachmentResource.Builder builder =
-			MessageBoardAttachmentResource.builder();
-
-		messageBoardAttachmentResource = builder.authentication(
+		messageBoardAttachmentResource = MessageBoardAttachmentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

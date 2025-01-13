@@ -103,10 +103,8 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderRuleChannelResource.Builder builder =
-			OrderRuleChannelResource.builder();
-
-		orderRuleChannelResource = builder.authentication(
+		orderRuleChannelResource = OrderRuleChannelResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

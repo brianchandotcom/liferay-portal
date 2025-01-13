@@ -99,10 +99,8 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DispatchTriggerResource.Builder builder =
-			DispatchTriggerResource.builder();
-
-		dispatchTriggerResource = builder.authentication(
+		dispatchTriggerResource = DispatchTriggerResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -119,10 +119,8 @@ public abstract class BaseContentElementResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ContentElementResource.Builder builder =
-			ContentElementResource.builder();
-
-		contentElementResource = builder.authentication(
+		contentElementResource = ContentElementResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

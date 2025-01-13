@@ -103,9 +103,8 @@ public abstract class BaseRegionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		RegionResource.Builder builder = RegionResource.builder();
-
-		regionResource = builder.authentication(
+		regionResource = RegionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

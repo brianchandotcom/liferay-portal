@@ -98,10 +98,8 @@ public abstract class BaseHistogramMetricResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		HistogramMetricResource.Builder builder =
-			HistogramMetricResource.builder();
-
-		histogramMetricResource = builder.authentication(
+		histogramMetricResource = HistogramMetricResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

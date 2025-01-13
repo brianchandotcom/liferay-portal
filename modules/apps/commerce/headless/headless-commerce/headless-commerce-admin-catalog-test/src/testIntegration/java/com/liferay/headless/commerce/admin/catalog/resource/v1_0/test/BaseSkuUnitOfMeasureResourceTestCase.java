@@ -101,10 +101,8 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SkuUnitOfMeasureResource.Builder builder =
-			SkuUnitOfMeasureResource.builder();
-
-		skuUnitOfMeasureResource = builder.authentication(
+		skuUnitOfMeasureResource = SkuUnitOfMeasureResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

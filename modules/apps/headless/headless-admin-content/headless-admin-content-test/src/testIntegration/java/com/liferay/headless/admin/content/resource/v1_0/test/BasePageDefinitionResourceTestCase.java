@@ -98,10 +98,8 @@ public abstract class BasePageDefinitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PageDefinitionResource.Builder builder =
-			PageDefinitionResource.builder();
-
-		pageDefinitionResource = builder.authentication(
+		pageDefinitionResource = PageDefinitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

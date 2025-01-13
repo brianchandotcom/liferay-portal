@@ -98,9 +98,8 @@ public abstract class BaseDiagramResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DiagramResource.Builder builder = DiagramResource.builder();
-
-		diagramResource = builder.authentication(
+		diagramResource = DiagramResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

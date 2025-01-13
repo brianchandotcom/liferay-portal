@@ -98,9 +98,8 @@ public abstract class BaseSelectionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SelectionResource.Builder builder = SelectionResource.builder();
-
-		selectionResource = builder.authentication(
+		selectionResource = SelectionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

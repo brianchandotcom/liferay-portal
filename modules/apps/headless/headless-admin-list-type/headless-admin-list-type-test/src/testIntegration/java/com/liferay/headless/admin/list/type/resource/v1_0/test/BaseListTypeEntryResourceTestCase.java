@@ -104,9 +104,8 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ListTypeEntryResource.Builder builder = ListTypeEntryResource.builder();
-
-		listTypeEntryResource = builder.authentication(
+		listTypeEntryResource = ListTypeEntryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -99,9 +99,8 @@ public abstract class BaseFieldSummaryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FieldSummaryResource.Builder builder = FieldSummaryResource.builder();
-
-		fieldSummaryResource = builder.authentication(
+		fieldSummaryResource = FieldSummaryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

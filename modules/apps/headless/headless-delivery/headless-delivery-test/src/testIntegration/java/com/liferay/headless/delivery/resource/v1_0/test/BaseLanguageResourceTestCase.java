@@ -114,9 +114,8 @@ public abstract class BaseLanguageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		LanguageResource.Builder builder = LanguageResource.builder();
-
-		languageResource = builder.authentication(
+		languageResource = LanguageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

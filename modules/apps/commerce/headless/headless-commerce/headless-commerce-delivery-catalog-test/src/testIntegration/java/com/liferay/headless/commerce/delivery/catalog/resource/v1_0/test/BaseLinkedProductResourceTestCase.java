@@ -100,9 +100,8 @@ public abstract class BaseLinkedProductResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		LinkedProductResource.Builder builder = LinkedProductResource.builder();
-
-		linkedProductResource = builder.authentication(
+		linkedProductResource = LinkedProductResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

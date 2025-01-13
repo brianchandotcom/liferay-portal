@@ -104,9 +104,8 @@ public abstract class BaseOrderItemResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderItemResource.Builder builder = OrderItemResource.builder();
-
-		orderItemResource = builder.authentication(
+		orderItemResource = OrderItemResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

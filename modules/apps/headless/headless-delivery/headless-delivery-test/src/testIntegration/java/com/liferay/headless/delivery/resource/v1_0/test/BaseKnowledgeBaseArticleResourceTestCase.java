@@ -110,10 +110,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		KnowledgeBaseArticleResource.Builder builder =
-			KnowledgeBaseArticleResource.builder();
-
-		knowledgeBaseArticleResource = builder.authentication(
+		knowledgeBaseArticleResource = KnowledgeBaseArticleResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

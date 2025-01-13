@@ -103,9 +103,8 @@ public abstract class BaseCTEntryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CTEntryResource.Builder builder = CTEntryResource.builder();
-
-		ctEntryResource = builder.authentication(
+		ctEntryResource = CTEntryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

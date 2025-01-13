@@ -119,10 +119,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DocumentMetadataSetResource.Builder builder =
-			DocumentMetadataSetResource.builder();
-
-		documentMetadataSetResource = builder.authentication(
+		documentMetadataSetResource = DocumentMetadataSetResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

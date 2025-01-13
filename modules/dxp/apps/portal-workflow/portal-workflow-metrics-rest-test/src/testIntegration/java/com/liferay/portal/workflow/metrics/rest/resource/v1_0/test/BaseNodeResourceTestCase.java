@@ -99,9 +99,8 @@ public abstract class BaseNodeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		NodeResource.Builder builder = NodeResource.builder();
-
-		nodeResource = builder.authentication(
+		nodeResource = NodeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

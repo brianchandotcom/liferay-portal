@@ -98,9 +98,8 @@ public abstract class BaseMessageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MessageResource.Builder builder = MessageResource.builder();
-
-		messageResource = builder.authentication(
+		messageResource = MessageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

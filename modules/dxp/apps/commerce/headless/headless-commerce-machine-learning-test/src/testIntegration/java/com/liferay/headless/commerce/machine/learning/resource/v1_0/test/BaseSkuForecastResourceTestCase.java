@@ -101,9 +101,8 @@ public abstract class BaseSkuForecastResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SkuForecastResource.Builder builder = SkuForecastResource.builder();
-
-		skuForecastResource = builder.authentication(
+		skuForecastResource = SkuForecastResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

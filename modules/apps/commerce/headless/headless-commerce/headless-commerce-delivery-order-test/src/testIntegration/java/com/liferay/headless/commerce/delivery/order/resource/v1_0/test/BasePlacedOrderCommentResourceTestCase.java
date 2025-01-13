@@ -100,10 +100,8 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PlacedOrderCommentResource.Builder builder =
-			PlacedOrderCommentResource.builder();
-
-		placedOrderCommentResource = builder.authentication(
+		placedOrderCommentResource = PlacedOrderCommentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

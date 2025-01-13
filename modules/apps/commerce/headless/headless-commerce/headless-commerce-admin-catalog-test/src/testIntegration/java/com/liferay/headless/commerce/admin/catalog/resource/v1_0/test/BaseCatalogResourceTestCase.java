@@ -104,9 +104,8 @@ public abstract class BaseCatalogResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CatalogResource.Builder builder = CatalogResource.builder();
-
-		catalogResource = builder.authentication(
+		catalogResource = CatalogResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,9 +98,8 @@ public abstract class BaseSamlProviderResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SamlProviderResource.Builder builder = SamlProviderResource.builder();
-
-		samlProviderResource = builder.authentication(
+		samlProviderResource = SamlProviderResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

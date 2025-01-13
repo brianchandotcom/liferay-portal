@@ -98,9 +98,8 @@ public abstract class BasePageElementResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PageElementResource.Builder builder = PageElementResource.builder();
-
-		pageElementResource = builder.authentication(
+		pageElementResource = PageElementResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

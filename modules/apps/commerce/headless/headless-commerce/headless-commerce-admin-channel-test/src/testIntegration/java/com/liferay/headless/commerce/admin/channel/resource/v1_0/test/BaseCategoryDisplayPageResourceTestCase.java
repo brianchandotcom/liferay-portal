@@ -104,10 +104,8 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CategoryDisplayPageResource.Builder builder =
-			CategoryDisplayPageResource.builder();
-
-		categoryDisplayPageResource = builder.authentication(
+		categoryDisplayPageResource = CategoryDisplayPageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -101,10 +101,8 @@ public abstract class BaseAccountForecastResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AccountForecastResource.Builder builder =
-			AccountForecastResource.builder();
-
-		accountForecastResource = builder.authentication(
+		accountForecastResource = AccountForecastResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

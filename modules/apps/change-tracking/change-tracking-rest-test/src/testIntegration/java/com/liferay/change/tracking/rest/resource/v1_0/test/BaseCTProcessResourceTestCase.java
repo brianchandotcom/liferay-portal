@@ -104,9 +104,8 @@ public abstract class BaseCTProcessResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CTProcessResource.Builder builder = CTProcessResource.builder();
-
-		ctProcessResource = builder.authentication(
+		ctProcessResource = CTProcessResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

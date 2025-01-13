@@ -98,10 +98,8 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderAccountGroupResource.Builder builder =
-			OrderAccountGroupResource.builder();
-
-		orderAccountGroupResource = builder.authentication(
+		orderAccountGroupResource = OrderAccountGroupResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -97,9 +97,8 @@ public abstract class BaseCompareRunsResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CompareRunsResource.Builder builder = CompareRunsResource.builder();
-
-		compareRunsResource = builder.authentication(
+		compareRunsResource = CompareRunsResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -102,9 +102,8 @@ public abstract class BaseCartItemResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CartItemResource.Builder builder = CartItemResource.builder();
-
-		cartItemResource = builder.authentication(
+		cartItemResource = CartItemResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

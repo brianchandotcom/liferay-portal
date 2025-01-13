@@ -99,9 +99,8 @@ public abstract class BaseGroupResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		GroupResource.Builder builder = GroupResource.builder();
-
-		groupResource = builder.authentication(
+		groupResource = GroupResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

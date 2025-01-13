@@ -100,10 +100,8 @@ public abstract class BaseShippingMethodResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ShippingMethodResource.Builder builder =
-			ShippingMethodResource.builder();
-
-		shippingMethodResource = builder.authentication(
+		shippingMethodResource = ShippingMethodResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

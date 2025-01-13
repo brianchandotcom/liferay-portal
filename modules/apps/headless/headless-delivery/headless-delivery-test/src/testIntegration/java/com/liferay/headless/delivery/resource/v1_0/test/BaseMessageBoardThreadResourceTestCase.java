@@ -110,10 +110,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MessageBoardThreadResource.Builder builder =
-			MessageBoardThreadResource.builder();
-
-		messageBoardThreadResource = builder.authentication(
+		messageBoardThreadResource = MessageBoardThreadResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,9 +98,8 @@ public abstract class BaseCalendarResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CalendarResource.Builder builder = CalendarResource.builder();
-
-		calendarResource = builder.authentication(
+		calendarResource = CalendarResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -100,10 +100,8 @@ public abstract class BaseRelatedProductResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		RelatedProductResource.Builder builder =
-			RelatedProductResource.builder();
-
-		relatedProductResource = builder.authentication(
+		relatedProductResource = RelatedProductResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -103,9 +103,8 @@ public abstract class BaseFormResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FormResource.Builder builder = FormResource.builder();
-
-		formResource = builder.authentication(
+		formResource = FormResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

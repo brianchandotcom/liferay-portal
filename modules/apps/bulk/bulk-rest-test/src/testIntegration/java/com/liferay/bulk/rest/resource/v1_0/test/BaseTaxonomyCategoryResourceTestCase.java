@@ -98,10 +98,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TaxonomyCategoryResource.Builder builder =
-			TaxonomyCategoryResource.builder();
-
-		taxonomyCategoryResource = builder.authentication(
+		taxonomyCategoryResource = TaxonomyCategoryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

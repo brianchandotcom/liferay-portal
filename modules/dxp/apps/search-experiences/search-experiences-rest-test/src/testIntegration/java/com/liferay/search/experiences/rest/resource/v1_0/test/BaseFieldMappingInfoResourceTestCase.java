@@ -99,10 +99,8 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FieldMappingInfoResource.Builder builder =
-			FieldMappingInfoResource.builder();
-
-		fieldMappingInfoResource = builder.authentication(
+		fieldMappingInfoResource = FieldMappingInfoResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

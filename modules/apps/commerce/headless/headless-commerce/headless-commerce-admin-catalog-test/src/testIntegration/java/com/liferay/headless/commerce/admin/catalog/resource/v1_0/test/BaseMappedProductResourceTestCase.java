@@ -102,9 +102,8 @@ public abstract class BaseMappedProductResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MappedProductResource.Builder builder = MappedProductResource.builder();
-
-		mappedProductResource = builder.authentication(
+		mappedProductResource = MappedProductResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

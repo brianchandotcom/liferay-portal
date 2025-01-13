@@ -123,9 +123,8 @@ public abstract class BaseKeywordResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		KeywordResource.Builder builder = KeywordResource.builder();
-
-		keywordResource = builder.authentication(
+		keywordResource = KeywordResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -99,10 +99,8 @@ public abstract class BaseSearchResponseResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SearchResponseResource.Builder builder =
-			SearchResponseResource.builder();
-
-		searchResponseResource = builder.authentication(
+		searchResponseResource = SearchResponseResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

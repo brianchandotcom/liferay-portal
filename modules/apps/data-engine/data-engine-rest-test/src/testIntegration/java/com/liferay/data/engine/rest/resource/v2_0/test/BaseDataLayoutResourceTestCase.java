@@ -103,9 +103,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DataLayoutResource.Builder builder = DataLayoutResource.builder();
-
-		dataLayoutResource = builder.authentication(
+		dataLayoutResource = DataLayoutResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

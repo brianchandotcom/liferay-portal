@@ -101,9 +101,8 @@ public abstract class BaseTierPriceResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TierPriceResource.Builder builder = TierPriceResource.builder();
-
-		tierPriceResource = builder.authentication(
+		tierPriceResource = TierPriceResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

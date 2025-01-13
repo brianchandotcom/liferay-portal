@@ -98,10 +98,8 @@ public abstract class BasePageRuleActionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PageRuleActionResource.Builder builder =
-			PageRuleActionResource.builder();
-
-		pageRuleActionResource = builder.authentication(
+		pageRuleActionResource = PageRuleActionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

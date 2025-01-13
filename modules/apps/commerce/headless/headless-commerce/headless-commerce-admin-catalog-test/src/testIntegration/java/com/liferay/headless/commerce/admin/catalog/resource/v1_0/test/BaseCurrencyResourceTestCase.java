@@ -104,9 +104,8 @@ public abstract class BaseCurrencyResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CurrencyResource.Builder builder = CurrencyResource.builder();
-
-		currencyResource = builder.authentication(
+		currencyResource = CurrencyResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

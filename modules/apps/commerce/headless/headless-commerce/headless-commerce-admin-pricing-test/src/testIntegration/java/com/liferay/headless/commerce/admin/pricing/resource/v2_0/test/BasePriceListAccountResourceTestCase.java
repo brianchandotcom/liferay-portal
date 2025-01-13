@@ -103,10 +103,8 @@ public abstract class BasePriceListAccountResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PriceListAccountResource.Builder builder =
-			PriceListAccountResource.builder();
-
-		priceListAccountResource = builder.authentication(
+		priceListAccountResource = PriceListAccountResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

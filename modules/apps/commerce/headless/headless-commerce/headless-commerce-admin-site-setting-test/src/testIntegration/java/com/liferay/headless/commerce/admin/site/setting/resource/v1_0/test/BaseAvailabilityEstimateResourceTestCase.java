@@ -101,10 +101,8 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AvailabilityEstimateResource.Builder builder =
-			AvailabilityEstimateResource.builder();
-
-		availabilityEstimateResource = builder.authentication(
+		availabilityEstimateResource = AvailabilityEstimateResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

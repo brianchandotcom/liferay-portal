@@ -102,9 +102,8 @@ public abstract class BaseProcessMetricResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProcessMetricResource.Builder builder = ProcessMetricResource.builder();
-
-		processMetricResource = builder.authentication(
+		processMetricResource = ProcessMetricResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

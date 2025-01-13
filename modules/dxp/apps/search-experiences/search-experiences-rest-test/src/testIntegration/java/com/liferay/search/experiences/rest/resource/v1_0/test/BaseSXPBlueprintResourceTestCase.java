@@ -105,9 +105,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SXPBlueprintResource.Builder builder = SXPBlueprintResource.builder();
-
-		sxpBlueprintResource = builder.authentication(
+		sxpBlueprintResource = SXPBlueprintResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

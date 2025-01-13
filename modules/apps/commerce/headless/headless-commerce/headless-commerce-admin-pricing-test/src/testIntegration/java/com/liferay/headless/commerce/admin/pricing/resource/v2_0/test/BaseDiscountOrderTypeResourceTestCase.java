@@ -103,10 +103,8 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DiscountOrderTypeResource.Builder builder =
-			DiscountOrderTypeResource.builder();
-
-		discountOrderTypeResource = builder.authentication(
+		discountOrderTypeResource = DiscountOrderTypeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

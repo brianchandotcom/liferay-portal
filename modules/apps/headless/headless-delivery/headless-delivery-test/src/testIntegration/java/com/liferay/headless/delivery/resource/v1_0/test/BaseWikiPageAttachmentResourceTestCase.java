@@ -102,10 +102,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WikiPageAttachmentResource.Builder builder =
-			WikiPageAttachmentResource.builder();
-
-		wikiPageAttachmentResource = builder.authentication(
+		wikiPageAttachmentResource = WikiPageAttachmentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -99,9 +99,8 @@ public abstract class BaseTicketResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TicketResource.Builder builder = TicketResource.builder();
-
-		ticketResource = builder.authentication(
+		ticketResource = TicketResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

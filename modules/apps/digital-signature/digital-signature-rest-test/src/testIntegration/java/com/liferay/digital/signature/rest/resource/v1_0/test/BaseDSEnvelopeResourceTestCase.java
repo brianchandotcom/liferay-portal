@@ -102,9 +102,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DSEnvelopeResource.Builder builder = DSEnvelopeResource.builder();
-
-		dsEnvelopeResource = builder.authentication(
+		dsEnvelopeResource = DSEnvelopeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

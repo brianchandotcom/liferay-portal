@@ -102,9 +102,8 @@ public abstract class BaseCartCommentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CartCommentResource.Builder builder = CartCommentResource.builder();
-
-		cartCommentResource = builder.authentication(
+		cartCommentResource = CartCommentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

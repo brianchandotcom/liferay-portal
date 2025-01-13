@@ -103,9 +103,8 @@ public abstract class BaseCountryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CountryResource.Builder builder = CountryResource.builder();
-
-		countryResource = builder.authentication(
+		countryResource = CountryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

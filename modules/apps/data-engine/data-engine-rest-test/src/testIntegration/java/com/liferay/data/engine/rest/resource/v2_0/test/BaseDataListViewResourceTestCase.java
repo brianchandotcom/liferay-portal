@@ -103,9 +103,8 @@ public abstract class BaseDataListViewResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DataListViewResource.Builder builder = DataListViewResource.builder();
-
-		dataListViewResource = builder.authentication(
+		dataListViewResource = DataListViewResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

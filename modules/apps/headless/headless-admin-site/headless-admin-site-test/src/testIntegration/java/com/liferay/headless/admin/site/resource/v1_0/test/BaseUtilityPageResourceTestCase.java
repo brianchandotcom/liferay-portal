@@ -107,9 +107,8 @@ public abstract class BaseUtilityPageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		UtilityPageResource.Builder builder = UtilityPageResource.builder();
-
-		utilityPageResource = builder.authentication(
+		utilityPageResource = UtilityPageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

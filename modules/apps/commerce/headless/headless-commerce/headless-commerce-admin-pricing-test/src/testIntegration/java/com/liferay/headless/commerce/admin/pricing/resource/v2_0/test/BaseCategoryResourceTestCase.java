@@ -98,9 +98,8 @@ public abstract class BaseCategoryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CategoryResource.Builder builder = CategoryResource.builder();
-
-		categoryResource = builder.authentication(
+		categoryResource = CategoryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

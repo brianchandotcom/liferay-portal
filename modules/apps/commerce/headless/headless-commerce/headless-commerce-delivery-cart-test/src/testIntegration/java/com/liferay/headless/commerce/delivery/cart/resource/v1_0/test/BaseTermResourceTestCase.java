@@ -98,9 +98,8 @@ public abstract class BaseTermResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TermResource.Builder builder = TermResource.builder();
-
-		termResource = builder.authentication(
+		termResource = TermResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

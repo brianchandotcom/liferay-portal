@@ -110,9 +110,8 @@ public abstract class BasePageTemplateResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PageTemplateResource.Builder builder = PageTemplateResource.builder();
-
-		pageTemplateResource = builder.authentication(
+		pageTemplateResource = PageTemplateResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

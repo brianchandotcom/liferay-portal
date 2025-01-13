@@ -103,9 +103,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ObjectLayoutResource.Builder builder = ObjectLayoutResource.builder();
-
-		objectLayoutResource = builder.authentication(
+		objectLayoutResource = ObjectLayoutResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

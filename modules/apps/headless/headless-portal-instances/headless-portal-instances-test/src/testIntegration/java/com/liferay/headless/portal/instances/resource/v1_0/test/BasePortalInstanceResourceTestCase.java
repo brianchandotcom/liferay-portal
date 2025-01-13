@@ -98,10 +98,8 @@ public abstract class BasePortalInstanceResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PortalInstanceResource.Builder builder =
-			PortalInstanceResource.builder();
-
-		portalInstanceResource = builder.authentication(
+		portalInstanceResource = PortalInstanceResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

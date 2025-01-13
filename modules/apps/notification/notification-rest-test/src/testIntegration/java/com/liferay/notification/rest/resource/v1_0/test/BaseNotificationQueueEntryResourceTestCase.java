@@ -104,10 +104,8 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		NotificationQueueEntryResource.Builder builder =
-			NotificationQueueEntryResource.builder();
-
-		notificationQueueEntryResource = builder.authentication(
+		notificationQueueEntryResource = NotificationQueueEntryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

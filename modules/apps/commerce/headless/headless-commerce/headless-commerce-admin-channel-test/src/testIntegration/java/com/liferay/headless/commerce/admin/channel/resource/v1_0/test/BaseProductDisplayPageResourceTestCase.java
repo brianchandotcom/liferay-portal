@@ -104,10 +104,8 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProductDisplayPageResource.Builder builder =
-			ProductDisplayPageResource.builder();
-
-		productDisplayPageResource = builder.authentication(
+		productDisplayPageResource = ProductDisplayPageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

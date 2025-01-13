@@ -45,29 +45,28 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 			companyId -> {
 				_updateListTypeDefinition(
 					companyId, "APPLICATION_STATUS_PICKLIST",
-					"Application Status", "PUBLISHED", "published",
-					"UNPUBLISHED", "unpublished", "L_API_APPLICATION",
+					"Application Status", "PUBLISHED", "UNPUBLISHED",
+					"published", "unpublished", "L_API_APPLICATION",
 					"APPLICATION_STATUS");
 				_updateListTypeDefinition(
 					companyId, "HTTP_METHOD_PICKLIST", "HTTP Method", "GET",
-					"get", "POST", "post", "L_API_ENDPOINT", "HTTP_METHOD");
+					"POST", "get", "post", "L_API_ENDPOINT", "HTTP_METHOD");
 				_updateListTypeDefinition(
 					companyId, "RETRIEVE_TYPE_PICKLIST", "Retrieve Type",
-					"COLLECTION", "collection", "SINGLE_ELEMENT",
+					"COLLECTION", "SINGLE_ELEMENT", "collection",
 					"singleElement", "L_API_ENDPOINT", "RETRIEVE_TYPE");
 				_updateListTypeDefinition(
-					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "company",
-					"SITE", "site", "L_API_ENDPOINT", "SCOPE");
+					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "SITE",
+					"company", "site", "L_API_ENDPOINT", "SCOPE");
 			});
 	}
 
 	private void _updateListTypeDefinition(
 			Long companyId, String listTypeDefinitionExternalReferenceCode,
 			String listTypeDefinitionName,
-			String listTypeEntry1ExternalReferenceCode,
-			String listTypeEntry1Key,
-			String listTypeEntry2ExternalReferenceCode,
-			String listTypeEntry2Key,
+			String listTypeEntryExternalReferenceCode1,
+			String listTypeEntryExternalReferenceCode2,
+			String listTypeEntryKey1, String listTypeEntryKey2,
 			String objectDefinitionExternalReferenceCode,
 			String objectFieldExternalReferenceCode)
 		throws PortalException {
@@ -106,18 +105,18 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinition.getListTypeDefinitionId(),
-				listTypeEntry1Key);
+				listTypeEntryKey1);
 
 		listTypeEntry.setExternalReferenceCode(
-			listTypeEntry1ExternalReferenceCode);
+			listTypeEntryExternalReferenceCode1);
 
 		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry);
 
 		listTypeEntry = _listTypeEntryLocalService.getListTypeEntry(
-			listTypeDefinition.getListTypeDefinitionId(), listTypeEntry2Key);
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey2);
 
 		listTypeEntry.setExternalReferenceCode(
-			listTypeEntry2ExternalReferenceCode);
+			listTypeEntryExternalReferenceCode2);
 
 		_listTypeEntryLocalService.updateListTypeEntry(listTypeEntry);
 	}

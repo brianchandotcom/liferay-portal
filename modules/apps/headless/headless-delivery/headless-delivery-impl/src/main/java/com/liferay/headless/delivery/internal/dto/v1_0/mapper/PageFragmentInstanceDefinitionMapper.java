@@ -285,11 +285,17 @@ public class PageFragmentInstanceDefinitionMapper {
 							if (valueJSONObject.has("color")) {
 								value = valueJSONObject.getString("color");
 							}
+							else {
+								JSONDeserializer<Map<String, Object>>
+									jsonDeserializer =
+										_jsonFactory.createJSONDeserializer();
+
+								value = jsonDeserializer.deserialize(
+									value.toString());
+							}
 						}
 
-						if (value instanceof JSONArray ||
-							value instanceof JSONObject) {
-
+						if (value instanceof JSONArray) {
 							JSONDeserializer<Map<String, Object>>
 								jsonDeserializer =
 									_jsonFactory.createJSONDeserializer();

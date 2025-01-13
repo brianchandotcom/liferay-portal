@@ -107,7 +107,7 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 
 const ProjectSelectionLayout = () => {
 	const {
-		loading,
+		isLoading,
 		myUserAccount,
 		project: selectedProject,
 		projects,
@@ -141,48 +141,54 @@ const ProjectSelectionLayout = () => {
 				title={selectedAccount?.name}
 			/>
 
-			<div className="border my-7 p-3 py-6 rounded">
-				{loading ? (
+			<div className="border my-7 p-3 pb-3 pt-6 rounded">
+				{isLoading ? (
 					<div className="m-6 p-8">
 						<ClayLoadingIndicator
 							displayType="primary"
 							shape="squares"
-							size="lg"
+							size="md"
 						/>
 					</div>
 				) : (
-					<ProjectSelection
-						noCloudProjectsAvailable={noCloudProjectsAvailable}
-					/>
-				)}
-			</div>
+					<>
+						<ProjectSelection
+							noCloudProjectsAvailable={noCloudProjectsAvailable}
+						/>
 
-			<div className="d-flex justify-content-end mt-4">
-				{!singleAccount && (
-					<ClayButton
-						className="btn-outline-secondary mr-3"
-						onClick={() => navigate('/')}
-					>
-						{i18n.translate('back')}
-					</ClayButton>
-				)}
+						<div className="d-flex justify-content-end mt-4">
+							{!singleAccount && (
+								<ClayButton
+									className="btn-outline-secondary mr-3"
+									onClick={() => navigate('/')}
+								>
+									{i18n.translate('back')}
+								</ClayButton>
+							)}
 
-				<ClayButton
-					disabled={
-						noCloudProjectsAvailable ? false : !selectedProject
-					}
-					onClick={() =>
-						navigate(
-							noCloudProjectsAvailable
-								? '/congratulations'
-								: '/environment-selection'
-						)
-					}
-				>
-					{i18n.translate(
-						noCloudProjectsAvailable ? 'connect-anyway' : 'continue'
-					)}
-				</ClayButton>
+							<ClayButton
+								disabled={
+									noCloudProjectsAvailable
+										? false
+										: !selectedProject
+								}
+								onClick={() =>
+									navigate(
+										noCloudProjectsAvailable
+											? '/congratulations'
+											: '/environment-selection'
+									)
+								}
+							>
+								{i18n.translate(
+									noCloudProjectsAvailable
+										? 'connect-anyway'
+										: 'continue'
+								)}
+							</ClayButton>
+						</div>
+					</>
+				)}
 			</div>
 		</>
 	);

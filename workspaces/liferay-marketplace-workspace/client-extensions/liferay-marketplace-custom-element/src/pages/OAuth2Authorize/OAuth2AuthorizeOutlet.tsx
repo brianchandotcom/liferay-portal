@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {Outlet, useOutletContext} from 'react-router-dom';
 
@@ -16,9 +16,7 @@ import useAccounts from '../ProductPurchase/hooks/useAccounts';
 type Schema = z.infer<typeof zodSchema.installProductSchema>;
 
 const OAuth2AuthorizeOutlet = () => {
-	const [loading, setLoading] = useState(true);
-
-	const resourceResponse = useGetResourceInfo({
+	const {isLoading, resourceRequest} = useGetResourceInfo({
 		selectedProject: undefined,
 		shouldFetch: true,
 	});
@@ -27,8 +25,8 @@ const OAuth2AuthorizeOutlet = () => {
 	const {selectedAccount, setSelectedAccount} = useAccounts();
 
 	const projects = useMemo(
-		() => resourceResponse?.resourceRequest?.userProjects || [],
-		[resourceResponse]
+		() => resourceRequest?.userProjects || [],
+		[resourceRequest]
 	);
 
 	const {setValue, watch} = useForm<Schema>({
@@ -41,13 +39,9 @@ const OAuth2AuthorizeOutlet = () => {
 	const singleAccount = myUserAccount?.accountBriefs?.length === 1;
 
 	useEffect(() => {
-		setLoading(true);
-
 		if (singleProject) {
 			setValue('project', projects[0] as any);
 		}
-
-		setLoading(false);
 	}, [projects, setValue, singleProject]);
 
 	return (
@@ -55,7 +49,7 @@ const OAuth2AuthorizeOutlet = () => {
 			<Outlet
 				context={{
 					environment,
-					loading,
+					isLoading,
 					myUserAccount,
 					project,
 					projects,
@@ -73,7 +67,7 @@ const OAuth2AuthorizeOutlet = () => {
 const useOAuth2OutletContext = () =>
 	useOutletContext<{
 		environment: Schema['environment'];
-		loading: boolean;
+		isLoading: boolean;
 		myUserAccount: UserAccount;
 		project: ConsoleUserProject;
 		projects: ConsoleUserProject[];

@@ -20,10 +20,8 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const POST_MESSAGE_TIMEOUT = 3000;
 
 const Congratulations = () => {
-	const {environment, myUserAccount, project, selectedAccount} =
+	const {environment, myUserAccount, selectedAccount} =
 		useOAuth2OutletContext();
-
-	const cloudProject = `${project.rootProjectId}-${environment.projectId}`;
 
 	useEffect(() => {
 		const {origin} = safeJSONParse(urlSearchParams.get('state'), {
@@ -42,13 +40,15 @@ const Congratulations = () => {
 
 		const payload = {
 			code: urlSearchParams.get('code'),
-			myUserAccount,
-			selectedAccount,
 			serviceURL: dxpOAuth2Client.oAuth2Client.homePageURL,
 			settings: {
-				accountId: selectedAccount?.id,
+				account: {
+					id: selectedAccount?.id,
+					image: selectedAccount?.logoURL,
+					name: selectedAccount?.name,
+				},
 				channelId: Liferay.CommerceContext.commerceChannelId,
-				cloudProject,
+				cloudProject: environment?.projectId,
 				references: {
 					paymentMethodFilter: SearchBuilder.lambda(
 						'categoryNames',
@@ -56,6 +56,11 @@ const Congratulations = () => {
 					),
 				},
 				siteId: Liferay.ThemeDisplay.getScopeGroupId(),
+				userAccount: {
+					id: myUserAccount.id,
+					image: myUserAccount.image,
+					name: myUserAccount.name,
+				},
 			},
 		};
 
@@ -68,7 +73,7 @@ const Congratulations = () => {
 		setTimeout(() => {
 			window?.opener?.postMessage(payload, origin);
 		}, POST_MESSAGE_TIMEOUT);
-	}, [cloudProject, myUserAccount, selectedAccount]);
+	}, [environment?.projectId, myUserAccount, selectedAccount]);
 
 	if (!selectedAccount) {
 		return <Navigate to="/" />;

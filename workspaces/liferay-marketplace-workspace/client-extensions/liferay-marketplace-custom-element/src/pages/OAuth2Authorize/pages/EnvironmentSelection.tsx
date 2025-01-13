@@ -22,7 +22,6 @@ const EnvironmentSelection = () => {
 		project,
 		selectedAccount,
 		setValue,
-
 		singleProject,
 	} = useOAuth2OutletContext();
 
@@ -44,7 +43,7 @@ const EnvironmentSelection = () => {
 				/>
 			</ProductCardRevamp>
 
-			<div className="border my-7 p-3 py-6 rounded">
+			<div className="border my-7 p-3 pb-3 pt-6 rounded">
 				<h1 className="d-flex justify-content-center">
 					{i18n.translate('environment-selection')}
 				</h1>
@@ -61,6 +60,9 @@ const EnvironmentSelection = () => {
 							projectId: string;
 						}>
 					) => setValue('environment', selectedRadio.value);
+
+					const [environmentName = ''] =
+						projectEnvironment.projectId.split('-');
 
 					return (
 						<RadioCard
@@ -85,11 +87,7 @@ const EnvironmentSelection = () => {
 
 									<ClayBadge
 										className="text-uppercase"
-										label={
-											projectEnvironment.projectId.split(
-												'-'
-											)[1]
-										}
+										label={environmentName.toUpperCase()}
 									/>
 								</>
 							}

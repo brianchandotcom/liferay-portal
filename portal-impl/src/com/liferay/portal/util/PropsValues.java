@@ -1298,6 +1298,15 @@ public class PropsValues {
 	public static final String MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL =
 		PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL);
 
+	public static final String MARKETPLACE_CLIENT_ID = PropsUtil.get(
+		PropsKeys.MARKETPLACE_CLIENT_ID);
+
+	public static final String MARKETPLACE_REDIRECT = PropsUtil.get(
+		PropsKeys.MARKETPLACE_REDIRECT);
+
+	public static final String MARKETPLACE_URL = PropsUtil.get(
+		PropsKeys.MARKETPLACE_URL);
+
 	public static final boolean MEMBERSHIP_POLICY_AUTO_VERIFY =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_AUTO_VERIFY));

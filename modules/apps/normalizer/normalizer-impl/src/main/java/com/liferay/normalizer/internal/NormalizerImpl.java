@@ -5,7 +5,8 @@
 
 package com.liferay.normalizer.internal;
 
-import com.liferay.ibm.icu.text.Transliterator;
+import com.ibm.icu.text.Transliterator;
+
 import com.liferay.normalizer.Normalizer;
 import com.liferay.portal.kernel.util.StringUtil;
 

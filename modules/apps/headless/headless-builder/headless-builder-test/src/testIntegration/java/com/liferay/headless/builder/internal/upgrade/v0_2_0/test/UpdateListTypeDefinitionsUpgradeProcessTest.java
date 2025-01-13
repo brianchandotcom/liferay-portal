@@ -18,7 +18,6 @@ import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -42,7 +41,6 @@ import org.junit.Test;
 /**
  * @author Alberto Javier Moreno Lage
  */
-@DataGuard(scope = DataGuard.Scope.NONE)
 @FeatureFlags("LPS-178642")
 public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 

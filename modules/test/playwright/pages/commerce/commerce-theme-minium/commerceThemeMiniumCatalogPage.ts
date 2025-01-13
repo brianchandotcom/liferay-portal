@@ -117,7 +117,7 @@ export class CommerceThemeMiniumCatalogPage {
 		await this.orderByButton.click();
 		const orderByLink = this.page.getByText(orderByText);
 		await orderByLink.click();
-		await this.page.waitForTimeout(1000);
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async search(query: string) {

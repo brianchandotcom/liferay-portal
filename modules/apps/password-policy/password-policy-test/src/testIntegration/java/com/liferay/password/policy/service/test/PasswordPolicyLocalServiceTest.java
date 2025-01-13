@@ -48,7 +48,7 @@ public class PasswordPolicyLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			Assert.assertNotNull(
 				_passwordPolicyLocalService.getDefaultPasswordPolicy(
@@ -65,7 +65,7 @@ public class PasswordPolicyLocalServiceTest {
 	@Test
 	public void testUserPasswordPolicyGettersWithLDAPUser() throws Exception {
 		try (SafeCloseable safeCloseable =
-				_setLDAPAuthConfigurationWithSafeCloseable(false)) {
+				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -86,7 +86,7 @@ public class PasswordPolicyLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -107,7 +107,7 @@ public class PasswordPolicyLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				_setLDAPAuthConfigurationWithSafeCloseable(true)) {
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			User user = UserTestUtil.addUser();
 
@@ -119,7 +119,7 @@ public class PasswordPolicyLocalServiceTest {
 		}
 	}
 
-	private SafeCloseable _setLDAPAuthConfigurationWithSafeCloseable(
+	private SafeCloseable _updateLDAPAuthConfigurationWithSafeCloseable(
 			boolean passwordPolicyEnabled)
 		throws PortalException {
 
@@ -129,16 +129,16 @@ public class PasswordPolicyLocalServiceTest {
 			_ldapAuthConfigurationProvider.getConfigurationProperties(
 				companyId);
 
-		Object existingValue = configurationProperties.put(
+		Object originalPasswordPolicyEnabled = configurationProperties.put(
 			"passwordPolicyEnabled", passwordPolicyEnabled);
 
 		_ldapAuthConfigurationProvider.updateProperties(
 			companyId, configurationProperties);
 
 		return () -> {
-			if (existingValue != null) {
+			if (originalPasswordPolicyEnabled != null) {
 				configurationProperties.put(
-					"passwordPolicyEnabled", existingValue);
+					"passwordPolicyEnabled", originalPasswordPolicyEnabled);
 			}
 			else {
 				configurationProperties.remove("passwordPolicyEnabled");

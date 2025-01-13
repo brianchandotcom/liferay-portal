@@ -221,15 +221,15 @@ public class ForgotPasswordMVCActionCommandTest {
 	private List<Ticket> _processAction(boolean passwordPolicyEnabled)
 		throws Exception {
 
-		Dictionary<String, Object> configurations =
+		Dictionary<String, Object> configurationProperties =
 			_ldapAuthConfigurationProvider.getConfigurationProperties(
 				_user.getCompanyId());
 
-		Object existingValue = configurations.put(
+		Object originalPasswordPolicyEnabled = configurationProperties.put(
 			"passwordPolicyEnabled", passwordPolicyEnabled);
 
 		_ldapAuthConfigurationProvider.updateProperties(
-			_user.getCompanyId(), configurations);
+			_user.getCompanyId(), configurationProperties);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -261,15 +261,16 @@ public class ForgotPasswordMVCActionCommandTest {
 				TicketConstants.TYPE_PASSWORD);
 		}
 		finally {
-			if (existingValue != null) {
-				configurations.put("passwordPolicyEnabled", existingValue);
+			if (originalPasswordPolicyEnabled != null) {
+				configurationProperties.put(
+					"passwordPolicyEnabled", originalPasswordPolicyEnabled);
 			}
 			else {
-				configurations.remove("passwordPolicyEnabled");
+				configurationProperties.remove("passwordPolicyEnabled");
 			}
 
 			_ldapAuthConfigurationProvider.updateProperties(
-				_user.getCompanyId(), configurations);
+				_user.getCompanyId(), configurationProperties);
 		}
 	}
 

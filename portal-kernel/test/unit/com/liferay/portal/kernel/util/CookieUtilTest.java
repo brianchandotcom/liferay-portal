@@ -30,23 +30,14 @@ public class CookieUtilTest {
 	@Test
 	public void testEquals() {
 
-		// Comment
+		// Domain
 
 		Cookie cookie1 = new Cookie("name", null);
 
-		cookie1.setComment("comment");
+		cookie1.setDomain("domain");
 
 		Cookie cookie2 = new Cookie("name2", null);
 
-		cookie2.setComment("comment2");
-
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
-
-		cookie2.setComment("comment");
-
-		// Domain
-
-		cookie1.setDomain("domain");
 		cookie2.setDomain("domain2");
 
 		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
@@ -68,7 +59,6 @@ public class CookieUtilTest {
 
 		cookie2 = new Cookie("name", null);
 
-		cookie2.setComment("comment");
 		cookie2.setDomain("domain");
 		cookie2.setMaxAge(1);
 
@@ -99,15 +89,6 @@ public class CookieUtilTest {
 
 		cookie2.setValue("value");
 
-		// Version
-
-		cookie1.setVersion(1);
-		cookie2.setVersion(2);
-
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
-
-		cookie2.setVersion(1);
-
 		// HTTP only
 
 		cookie1.setHttpOnly(true);
@@ -133,13 +114,11 @@ public class CookieUtilTest {
 
 		Cookie cookie2 = new Cookie("name2", "value");
 
-		cookie2.setComment("comment");
 		cookie2.setDomain("domain");
 		cookie2.setHttpOnly(true);
 		cookie2.setMaxAge(1);
 		cookie2.setPath("path");
 		cookie2.setSecure(true);
-		cookie2.setVersion(1);
 
 		bytes = CookieUtil.serialize(cookie2);
 
@@ -151,17 +130,15 @@ public class CookieUtilTest {
 	public void testToString() {
 		Cookie cookie = new Cookie("name", "value");
 
-		cookie.setComment("comment");
 		cookie.setDomain("domain");
 		cookie.setHttpOnly(true);
 		cookie.setMaxAge(1);
 		cookie.setPath("path");
 		cookie.setSecure(true);
-		cookie.setVersion(1);
 
 		Assert.assertEquals(
-			"{comment=comment, domain=domain, httpOnly=true, maxAge=1, " +
-				"name=name, path=path, secure=true, value=value, version=1}",
+			"{domain=domain, httpOnly=true, maxAge=1, name=name, path=path, " +
+				"secure=true, value=value}",
 			CookieUtil.toString(cookie));
 	}
 

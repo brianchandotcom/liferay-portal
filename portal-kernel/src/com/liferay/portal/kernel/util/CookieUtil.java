@@ -24,7 +24,6 @@ public class CookieUtil {
 	public static Cookie deserialize(byte[] bytes) {
 		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
 
-		String comment = deserializer.readString();
 		String domain = deserializer.readString();
 		boolean httpOnly = deserializer.readBoolean();
 		int maxAge = deserializer.readInt();
@@ -40,10 +39,6 @@ public class CookieUtil {
 
 		Cookie cookie = new Cookie(name, value);
 
-		if (!comment.isEmpty()) {
-			cookie.setComment(comment);
-		}
-
 		if (!domain.isEmpty()) {
 			cookie.setDomain(domain);
 		}
@@ -56,20 +51,17 @@ public class CookieUtil {
 		}
 
 		cookie.setSecure(secure);
-		cookie.setVersion(deserializer.readInt());
 
 		return cookie;
 	}
 
 	public static boolean equals(Cookie cookie1, Cookie cookie2) {
-		if (!Objects.equals(cookie1.getComment(), cookie2.getComment()) ||
-			!Objects.equals(cookie1.getDomain(), cookie2.getDomain()) ||
+		if (!Objects.equals(cookie1.getDomain(), cookie2.getDomain()) ||
 			(cookie1.getMaxAge() != cookie2.getMaxAge()) ||
 			!Objects.equals(cookie1.getName(), cookie2.getName()) ||
 			!Objects.equals(cookie1.getPath(), cookie2.getPath()) ||
 			(cookie1.getSecure() != cookie2.getSecure()) ||
 			!Objects.equals(cookie1.getValue(), cookie2.getValue()) ||
-			(cookie1.getVersion() != cookie2.getVersion()) ||
 			(cookie1.isHttpOnly() != cookie2.isHttpOnly())) {
 
 			return false;
@@ -80,14 +72,6 @@ public class CookieUtil {
 
 	public static byte[] serialize(Cookie cookie) {
 		Serializer serializer = new Serializer();
-
-		String comment = cookie.getComment();
-
-		if (comment == null) {
-			comment = StringPool.BLANK;
-		}
-
-		serializer.writeString(comment);
 
 		String domain = cookie.getDomain();
 
@@ -119,8 +103,6 @@ public class CookieUtil {
 
 		serializer.writeString(value);
 
-		serializer.writeInt(cookie.getVersion());
-
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		return byteBuffer.array();
@@ -128,11 +110,10 @@ public class CookieUtil {
 
 	public static String toString(Cookie cookie) {
 		return StringBundler.concat(
-			"{comment=", cookie.getComment(), ", domain=", cookie.getDomain(),
-			", httpOnly=", cookie.isHttpOnly(), ", maxAge=", cookie.getMaxAge(),
-			", name=", cookie.getName(), ", path=", cookie.getPath(),
-			", secure=", cookie.getSecure(), ", value=", cookie.getValue(),
-			", version=", cookie.getVersion(), "}");
+			"{domain=", cookie.getDomain(), ", httpOnly=", cookie.isHttpOnly(),
+			", maxAge=", cookie.getMaxAge(), ", name=", cookie.getName(),
+			", path=", cookie.getPath(), ", secure=", cookie.getSecure(),
+			", value=", cookie.getValue(), "}");
 	}
 
 }

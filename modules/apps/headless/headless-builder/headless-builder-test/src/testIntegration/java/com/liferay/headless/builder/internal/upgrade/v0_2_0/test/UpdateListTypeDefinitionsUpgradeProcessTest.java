@@ -123,7 +123,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		upgradeProcess.upgrade();
 
-		_assertExpectedChanges(
+		_assertUpgrade(
 			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
 			"unpublished", "APPLICATION_STATUS_PICKLIST",
 			_objectDefinitionLocalService.
@@ -136,21 +136,21 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
 
-		_assertExpectedChanges(
+		_assertUpgrade(
 			"HTTP Method", "GET", "POST", "get", "post", "HTTP_METHOD_PICKLIST",
 			objectDefinition, "HTTP_METHOD");
 
-		_assertExpectedChanges(
+		_assertUpgrade(
 			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
 			"singleElement", "RETRIEVE_TYPE_PICKLIST", objectDefinition,
 			"RETRIEVE_TYPE");
 
-		_assertExpectedChanges(
+		_assertUpgrade(
 			"Scope", "COMPANY", "SITE", "company", "site", "SCOPE_PICKLIST",
 			objectDefinition, "SCOPE");
 	}
 
-	private void _assertExpectedChanges(
+	private void _assertUpgrade(
 			String expectedListTypeDefinitionName,
 			String expectedListTypeEntry1ExternalReferenceCode,
 			String expectedListTypeEntry2ExternalReferenceCode,

@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.exception.LayoutSetJavaScriptException;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
@@ -629,8 +630,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	protected void validateSettings(
-		UnicodeProperties oldSettingsUnicodeProperties,
-		UnicodeProperties newSettingsUnicodeProperties) {
+			UnicodeProperties oldSettingsUnicodeProperties,
+			UnicodeProperties newSettingsUnicodeProperties)
+		throws LayoutSetJavaScriptException {
 
 		boolean enableJavaScript =
 			PropsValues.
@@ -641,6 +643,17 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				"javascript");
 
 			newSettingsUnicodeProperties.setProperty("javascript", javaScript);
+		}
+		else {
+			String javaScript = newSettingsUnicodeProperties.getProperty(
+				"javascript");
+
+			if (Validator.isNotNull(javaScript) &&
+				(javaScript.contains("<script") ||
+				 javaScript.contains("</script>"))) {
+
+				throw new LayoutSetJavaScriptException();
+			}
 		}
 	}
 

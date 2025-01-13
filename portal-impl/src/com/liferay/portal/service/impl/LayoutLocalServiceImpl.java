@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.LayoutJavaScriptException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -3742,6 +3743,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				"javascript");
 
 			typeSettingsUnicodeProperties.setProperty("javascript", javaScript);
+		}
+		else {
+			String javaScript = typeSettingsUnicodeProperties.getProperty(
+				"javascript");
+
+			if (Validator.isNotNull(javaScript) &&
+				(javaScript.contains("<script") ||
+				 javaScript.contains("</script>"))) {
+
+				throw new LayoutJavaScriptException();
+			}
 		}
 	}
 

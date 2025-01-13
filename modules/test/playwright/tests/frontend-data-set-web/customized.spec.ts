@@ -645,3 +645,37 @@ accountSettingsTest(
 		});
 	}
 );
+
+test(
+	'Hide column and assert correct visibility of columns',
+	{tag: '@LPD-45051'},
+	async ({page}) => {
+		const initialBodyCellText = await page.locator('td').nth(1).innerText();
+
+		const rowAction = page.locator('td .component-action').first();
+
+		await test.step('Check that row actions are present', async () => {
+			await expect(rowAction).toBeAttached();
+		});
+
+		await test.step('Hide the first column', async () => {
+			const button = page.getByLabel('Manage Columns Visibility');
+
+			await expect(button).toBeAttached();
+
+			await button.click();
+
+			const menuItem = page.getByRole('menuitem').nth(0);
+
+			await menuItem.click();
+		});
+
+		await test.step('Check that the first column is hidden and the row actions are still present', async () => {
+			await expect(page.locator('td').nth(1)).not.toHaveText(
+				initialBodyCellText
+			);
+
+			await expect(rowAction).toBeAttached();
+		});
+	}
+);

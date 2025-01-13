@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringBundler;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,7 +53,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		try {
 			OffsetDateTime startDate = _getStartDate(jwt);
 
-			while (startDate.isBefore(_currentDateTime)) {
+			while (startDate.isBefore(OffsetDateTime.now(ZoneOffset.UTC))) {
 				examResultAmount += _importExamResults(jwt, startDate);
 
 				startDate = startDate.plusDays(7);
@@ -235,12 +234,6 @@ public class ObjectActionExamResultSynchronizationRestController
 
 	private static final Log _log = LogFactory.getLog(
 		ObjectActionExamResultSynchronizationRestController.class);
-
-	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
-		ZoneOffset.UTC
-	).truncatedTo(
-		ChronoUnit.SECONDS
-	);
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

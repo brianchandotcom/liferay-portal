@@ -501,3 +501,57 @@ test('LPD-45545 Can add and remove organizations in bulk', async ({
 		}
 	}
 });
+
+test('LPD-45897 Can delete accounts in bulk', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', async (dialog) => await dialog.accept());
+
+	for (let i = 1; i < 7; i++) {
+		if (i < 4) {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: `Account ${i}`,
+				type: 'business',
+			});
+
+			apiHelpers.data.push({id: account.id, type: 'account'});
+		}
+		else {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: `Account ${i}`,
+				type: 'person',
+			});
+			apiHelpers.data.push({id: account.id, type: 'account'});
+		}
+	}
+
+	await accountsPage.goto();
+
+	for (const i of [1, 2, 4, 6]) {
+		await (
+			await accountsPage.accountsTableRowCheckBox(`Account ${i}`)
+		).click();
+	}
+
+	await accountsPage.deleteButton.click();
+
+	await waitForAlert(page);
+
+	for (const i of [1, 2, 4, 6]) {
+		await expect(
+			accountsPage.accountsTableCell(`Account ${i}`)
+		).not.toBeVisible();
+	}
+
+	for (const i of [3, 5]) {
+		await expect(
+			accountsPage.accountsTableCell(`Account ${i}`)
+		).toBeVisible();
+	}
+
+	await accountsPage.changeFilter('Inactive');
+
+	await expect(accountsPage.noAccountsMessage).toBeVisible();
+});

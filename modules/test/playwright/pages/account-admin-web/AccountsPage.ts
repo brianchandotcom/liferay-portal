@@ -52,6 +52,7 @@ export class AccountsPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly accountRolesTab: Locator;
 	readonly accountsTable: Locator;
+	readonly accountsTableCell: (organizationName: string) => Locator;
 	readonly accountsTableRow: (
 		colPosition: number,
 		value: string,
@@ -66,6 +67,7 @@ export class AccountsPage {
 	readonly channelDefaultsTab: Locator;
 	readonly clearButton: Locator;
 	readonly deactivateButton: Locator;
+	readonly deleteButton: Locator;
 	readonly detailsTab: Locator;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (option: string) => Locator;
@@ -132,6 +134,12 @@ export class AccountsPage {
 		this.accountsTable = page.locator(
 			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_accountEntriesSearchContainer'
 		);
+		this.accountsTableCell = (accountName: string) => {
+			return this.page.getByRole('cell', {
+				exact: true,
+				name: `${accountName}`,
+			});
+		};
 		this.accountsTableRow = async (
 			colPosition: number,
 			value: string,
@@ -171,6 +179,7 @@ export class AccountsPage {
 		});
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
 		this.deactivateButton = page.getByRole('button', {name: 'Deactivate'});
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.detailsTab = page.getByRole('link', {
 			name: 'Details',
 		});

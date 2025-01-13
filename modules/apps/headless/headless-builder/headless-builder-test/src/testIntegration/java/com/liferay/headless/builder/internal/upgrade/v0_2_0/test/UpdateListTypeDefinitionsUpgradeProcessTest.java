@@ -125,29 +125,21 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		_assertUpgrade(
 			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
-			"unpublished", "APPLICATION_STATUS_PICKLIST",
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", TestPropsValues.getCompanyId()),
+			"unpublished", "APPLICATION_STATUS_PICKLIST", "L_API_APPLICATION",
 			"APPLICATION_STATUS");
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
 
 		_assertUpgrade(
 			"HTTP Method", "GET", "POST", "get", "post", "HTTP_METHOD_PICKLIST",
-			objectDefinition, "HTTP_METHOD");
+			"L_API_ENDPOINT", "HTTP_METHOD");
 
 		_assertUpgrade(
 			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
-			"singleElement", "RETRIEVE_TYPE_PICKLIST", objectDefinition,
+			"singleElement", "RETRIEVE_TYPE_PICKLIST", "L_API_ENDPOINT",
 			"RETRIEVE_TYPE");
 
 		_assertUpgrade(
 			"Scope", "COMPANY", "SITE", "company", "site", "SCOPE_PICKLIST",
-			objectDefinition, "SCOPE");
+			"L_API_ENDPOINT", "SCOPE");
 	}
 
 	private void _assertUpgrade(
@@ -156,9 +148,15 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 			String expectedListTypeEntryExternalReferenceCode2,
 			String listTypeEntryKey1, String listTypeEntryKey2,
 			String listTypeExternalReferenceCode,
-			ObjectDefinition objectDefinition,
+			String objectDefinitionExternalReferenceCode,
 			String objectFieldExternalReferenceCode)
 		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectFieldExternalReferenceCode,

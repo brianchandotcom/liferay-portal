@@ -49,9 +49,9 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
+				collectionName = "Basic Components",
 				composition = "true",
-				fragmentName = "Banner Center");
+				fragmentName = "Heading");
 
 			PageEditor.publish();
 		}
@@ -106,7 +106,7 @@ definition {
 				locator1 = "Home#PAGE_ACTIVE");
 
 			AssertVisible(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",

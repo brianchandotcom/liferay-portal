@@ -30,7 +30,9 @@ import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -164,29 +166,40 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		if (articleResourcePrimKey == 0) {
-			if (Validator.isBlank(getArticleExternalReferenceCode())) {
-				return null;
+		JournalArticle article = null;
+
+		if (articleResourcePrimKey != 0) {
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
+		}
+		else if (!Validator.isBlank(getArticleId())) {
+			JournalArticleResource articleResource =
+				JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+					getArticleGroupId(), getArticleId());
+
+			if (articleResource != null) {
+				articleResourcePrimKey = articleResource.getResourcePrimKey();
 			}
 
-			_article =
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
+		}
+		else if (!Validator.isBlank(getArticleExternalReferenceCode())) {
+			article =
 				JournalArticleLocalServiceUtil.
 					fetchLatestArticleByExternalReferenceCode(
 						getArticleGroupId(), getArticleExternalReferenceCode(),
 						WorkflowConstants.STATUS_ANY, true);
 
-			if ((_article != null) &&
+			if ((article != null) &&
 				Objects.equals(
-					_article.getStatus(), WorkflowConstants.STATUS_IN_TRASH)) {
+					article.getStatus(), WorkflowConstants.STATUS_IN_TRASH)) {
 
-				_article = null;
+				article = null;
 			}
-
-			return _article;
 		}
 
-		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
+		_article = article;
 
 		return _article;
 	}

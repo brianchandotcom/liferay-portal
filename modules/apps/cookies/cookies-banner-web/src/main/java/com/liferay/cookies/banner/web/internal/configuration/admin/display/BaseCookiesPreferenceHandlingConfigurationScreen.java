@@ -10,7 +10,6 @@ import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.banner.web.internal.display.context.CookiesPreferenceHandlingConfigurationDisplayContext;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -54,7 +53,7 @@ public abstract class BaseCookiesPreferenceHandlingConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-10588");
+		return true;
 	}
 
 	@Override

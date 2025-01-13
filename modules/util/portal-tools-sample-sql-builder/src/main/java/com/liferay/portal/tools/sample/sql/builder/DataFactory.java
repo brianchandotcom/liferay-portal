@@ -4681,6 +4681,35 @@ public class DataFactory {
 		return journalArticleModel;
 	}
 
+	public List<PortletPreferenceValueModel>
+		newJournalArticlePortletPreferenceValueModels(
+			PortletPreferencesModel portletPreferencesModel,
+			JournalArticleModel journalArticleModel, GroupModel groupModel) {
+
+		return Arrays.asList(
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "articleExternalReferenceCode", 0,
+				journalArticleModel.getUuid()),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "assetEntryId", 0,
+				String.valueOf(_journalArticleAssetEntryModel.getEntryId())),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "contentMetadataAssetAddonEntryKeys",
+				0, "false"),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "ddmTemplateExternalReferenceCode", 0,
+				StringPool.BLANK),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "enableViewCountIncrement", 0,
+				"false"),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "groupExternalReferenceCode", 0,
+				groupModel.getUuid()),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "userToolAssetAddonEntryKeys", 0,
+				"false"));
+	}
+
 	public JournalArticleResourceModel newJournalArticleResourceModel(
 		long groupId) {
 
@@ -4713,35 +4742,6 @@ public class DataFactory {
 			journalArticleResourceModel.getUuid());
 
 		return journalArticleResourceModel;
-	}
-
-	public List<PortletPreferenceValueModel>
-		newJournalArticleResourcePortletPreferenceValueModels(
-			PortletPreferencesModel portletPreferencesModel,
-			JournalArticleModel journalArticleModel, GroupModel groupModel) {
-
-		return Arrays.asList(
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "articleExternalReferenceCode", 0,
-				journalArticleModel.getUuid()),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "assetEntryId", 0,
-				String.valueOf(_journalArticleAssetEntryModel.getEntryId())),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "contentMetadataAssetAddonEntryKeys",
-				0, "false"),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "ddmTemplateExternalReferenceCode", 0,
-				StringPool.BLANK),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "enableViewCountIncrement", 0,
-				"false"),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "groupExternalReferenceCode", 0,
-				groupModel.getUuid()),
-			newPortletPreferenceValueModel(
-				portletPreferencesModel, "userToolAssetAddonEntryKeys", 0,
-				"false"));
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(

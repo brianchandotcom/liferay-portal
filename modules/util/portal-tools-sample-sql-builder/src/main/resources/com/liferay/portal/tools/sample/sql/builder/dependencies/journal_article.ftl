@@ -41,11 +41,11 @@
 
 			${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
 
-			<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
+			<#assign journalArticlePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
 
-			${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}
+			${dataFactory.toInsertSQL(journalArticlePortletPreferencesModel)}
 
-			<#list dataFactory.newJournalArticleResourcePortletPreferenceValueModels(journalArticleResourcePortletPreferencesModel, journalArticleModel, groupModel) as journalArticleResourcePortletPreferenceValueModel>
+			<#list dataFactory.newJournalArticlePortletPreferenceValueModels(journalArticlePortletPreferencesModel, journalArticleModel, groupModel) as journalArticleResourcePortletPreferenceValueModel>
 				${dataFactory.toInsertSQL(journalArticleResourcePortletPreferenceValueModel)}
 			</#list>
 		</#list>

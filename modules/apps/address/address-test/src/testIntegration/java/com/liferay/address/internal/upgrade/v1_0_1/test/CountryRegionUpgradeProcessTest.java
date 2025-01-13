@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -56,7 +55,7 @@ public class CountryRegionUpgradeProcessTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Country country = _countryLocalService.fetchCountryByA2(
-			PortalInstancePool.getDefaultCompanyId(), "US");
+			TestPropsValues.getCompanyId(), "US");
 
 		_regionsCount = _regionLocalService.getRegionsCount(
 			country.getCountryId());

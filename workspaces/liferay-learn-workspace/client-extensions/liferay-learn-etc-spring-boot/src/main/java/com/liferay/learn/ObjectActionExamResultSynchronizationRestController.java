@@ -34,9 +34,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Nilton Vieira
  */
-@RequestMapping("/object/action/exam/result/sync")
+@RequestMapping("/object/action/exam/result/synchronization")
 @RestController
-public class ObjectActionExamResultSyncRestController
+public class ObjectActionExamResultSynchronizationRestController
 	extends BaseRestController {
 
 	@PostMapping
@@ -44,7 +44,7 @@ public class ObjectActionExamResultSyncRestController
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Exam Result sync started");
+			_log.info("Exam result synchronization started");
 		}
 
 		int examResultAmount = 0;
@@ -74,7 +74,7 @@ public class ObjectActionExamResultSyncRestController
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Exam Result sync finished");
+			_log.info("Exam result synchronization finished");
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
@@ -234,7 +234,7 @@ public class ObjectActionExamResultSyncRestController
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		ObjectActionExamResultSyncRestController.class);
+		ObjectActionExamResultSynchronizationRestController.class);
 
 	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
 		ZoneOffset.UTC

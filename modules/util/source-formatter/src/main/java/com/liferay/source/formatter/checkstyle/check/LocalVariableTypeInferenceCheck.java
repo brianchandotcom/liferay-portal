@@ -16,19 +16,21 @@ public class LocalVariableTypeInferenceCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (!ScopeUtil.isLocalVariableDef(detailAST)) {
+		if ((detailAST.getType() == TokenTypes.VARIABLE_DEF) &&
+			!ScopeUtil.isLocalVariableDef(detailAST)) {
+
 			return;
 		}
 
 		String typeName = getTypeName(detailAST, false);
 
 		if (typeName.equals("var")) {
-			log(detailAST, _MSG_AVOID_VAR);
+			log(detailAST, _MSG_AVOID_VAR, detailAST);
 		}
 	}
 

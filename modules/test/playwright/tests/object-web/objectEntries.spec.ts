@@ -66,6 +66,21 @@ test.describe('Manage object entries through Page Templates', () => {
 	}) => {
 		const objectFields: ObjectField[] = [
 			{
+				DBType: ObjectField.DBTypeEnum.Boolean,
+				businessType: ObjectField.BusinessTypeEnum.Boolean,
+				externalReferenceCode: 'booleanField',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: 'booleanField'},
+				listTypeDefinitionId: 0,
+				localized: true,
+				name: 'booleanField',
+				required: false,
+				system: false,
+				type: ObjectField.TypeEnum.Boolean,
+			},
+			{
 				DBType: ObjectField.DBTypeEnum.String,
 				businessType: ObjectField.BusinessTypeEnum.Text,
 				externalReferenceCode: 'textField',
@@ -105,7 +120,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				portlet: true,
 				scope: 'company',
 				status: {code: 0},
-				titleObjectFieldName: 'textField',
+				titleObjectFieldName: 'booleanField',
 			});
 
 		apiHelpers.data.push({
@@ -159,6 +174,10 @@ test.describe('Manage object entries through Page Templates', () => {
 		for (let i = 0; i <= 15; i++) {
 			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
+					booleanField_i18n: {
+						en_US: false,
+						pt_BR: true,
+					},
 					textField_i18n: {
 						en_US: 'entry_en_US' + i,
 						pt_BR: 'entry_pt_BR' + i,
@@ -167,7 +186,10 @@ test.describe('Manage object entries through Page Templates', () => {
 				applicationName
 			);
 
-			itemValues.push(objectEntry.textField_i18n['pt_BR']);
+			itemValues.push({
+				booleanField: objectEntry.booleanField_i18n['pt_BR'],
+				textField: objectEntry.textField_i18n['pt_BR'],
+			});
 		}
 
 		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
@@ -178,9 +200,36 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		await page.getByPlaceholder('Buscar', {exact: true}).click();
 
+		itemValues.forEach((itemValue, index) => {
+			expect(
+				page
+					.getByRole('menuitem', {
+						exact: true,
+						name: String(itemValue.booleanField),
+					})
+					.nth(index)
+			).toBeVisible();
+		});
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			objectDefinition1.id,
+			{
+				titleObjectFieldName: 'textField',
+			}
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
+
+		await viewObjectEntriesPage.clickAddObjectEntry();
+
+		await page.getByPlaceholder('Buscar', {exact: true}).click();
+
 		itemValues.forEach((itemValue) => {
 			expect(
-				page.getByRole('menuitem', {exact: true, name: itemValue})
+				page.getByRole('menuitem', {
+					exact: true,
+					name: String(itemValue.textField),
+				})
 			).toBeVisible();
 		});
 	});

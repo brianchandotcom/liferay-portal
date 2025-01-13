@@ -1,5 +1,12 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.111.0",
+		"@clayui/button": "3.116.0",
+		"@clayui/form": "3.122.0",
+		"@clayui/loading-indicator": "3.111.0",
+		"@clayui/multi-step-nav": "3.124.0",
+		"frontend-js-web": "*",
+		"pkce-challenge": "3.0.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"
 	},

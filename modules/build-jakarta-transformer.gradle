@@ -37,6 +37,8 @@ buildscript {
 task jarTransformed
 
 jar {
+	enabled = true
+
 	setActions([])
 
 	finalizedBy jarTransformed

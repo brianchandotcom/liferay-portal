@@ -1,0 +1,34 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-178642",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "L_API_PROPERTY_TYPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "FIELD",
+					"key": "field",
+					"name": "Field"
+				},
+				{
+					"externalReferenceCode": "RECORD",
+					"key": "record",
+					"name": "Record"
+				}
+			],
+			"name": "API Property Types",
+			"system": true
+		}
+	]
+}

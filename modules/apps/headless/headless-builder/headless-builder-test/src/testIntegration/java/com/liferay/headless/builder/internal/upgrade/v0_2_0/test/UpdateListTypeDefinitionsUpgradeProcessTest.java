@@ -6,6 +6,8 @@
 package com.liferay.headless.builder.internal.upgrade.v0_2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -15,22 +17,27 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import java.net.URL;
+
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,6 +45,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Alberto Javier Moreno Lage
@@ -88,31 +99,23 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 					listTypeDefinition);
 			}
 		}
+
+		Bundle bundle = _installTestBundle();
+
+		try {
+			CompletableFuture<Void> completableFuture =
+				_batchEngineUnitProcessor.processBatchEngineUnits(
+					_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+			completableFuture.join();
+		}
+		finally {
+			bundle.uninstall();
+		}
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			new String(
-				FileUtil.getBytes(
-					getClass(),
-					"dependencies/00-old-list-type-definition.json")),
-			"headless-batch-engine/v1.0/import-task/com.liferay.headless." +
-				"admin.list.type.dto.v1_0.ListTypeDefinition",
-			Http.Method.POST);
-
-		_waitForImportCompletion(jsonObject);
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			new String(
-				FileUtil.getBytes(
-					getClass(), "dependencies/01-old-object-definition.json")),
-			"headless-batch-engine/v1.0/import-task/com.liferay.object.admin." +
-				"rest.dto.v1_0.ObjectDefinition",
-			Http.Method.POST);
-
-		_waitForImportCompletion(jsonObject);
-
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.headless.builder.internal.upgrade.v0_2_0." +
@@ -195,32 +198,57 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 			listTypeEntry.getExternalReferenceCode());
 	}
 
-	private void _waitForImportCompletion(JSONObject jsonObject)
-		throws Exception {
+	private Bundle _installTestBundle() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			UpdateListTypeDefinitionsUpgradeProcessTest.class);
 
-		while (true) {
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"headless-batch-engine/v1.0/import-task",
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode")),
-				Http.Method.GET);
+		String dirName =
+			"com/liferay/headless/builder/internal/upgrade/v0_2_0/test" +
+				"/dependencies/bundle/";
 
-			String actualExecuteStatus = jsonObject.getString("executeStatus");
+		Enumeration<URL> enumeration = bundle.findEntries(dirName, "*", true);
 
-			if (StringUtil.equals(actualExecuteStatus, "COMPLETED") ||
-				StringUtil.equals(actualExecuteStatus, "FAILED")) {
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-				break;
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				String urlPath = url.getPath();
+
+				if (urlPath.endsWith(StringPool.SLASH)) {
+					continue;
+				}
+
+				String zipPath = urlPath.substring(dirName.length());
+
+				if (zipPath.startsWith(StringPool.SLASH)) {
+					zipPath = zipPath.substring(1);
+				}
+
+				try (InputStream inputStream = url.openStream()) {
+					zipWriter.addEntry(zipPath, inputStream);
+				}
 			}
 		}
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.installBundle(
+			RandomTestUtil.randomString(),
+			new FileInputStream(zipWriter.getFile()));
 	}
 
 	@Inject(
 		filter = "component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+
+	@Inject
+	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
@@ -236,5 +264,8 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 	@Inject
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

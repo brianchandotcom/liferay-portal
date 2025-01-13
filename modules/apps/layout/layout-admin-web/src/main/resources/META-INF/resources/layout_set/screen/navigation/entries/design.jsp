@@ -55,6 +55,8 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= LayoutSetJavaScriptException.class %>" message="script-tags-are-not-supported-inside-custom-javascript" />
+
 		<liferay-frontend:form-navigator
 			formModelBean="<%= selLayoutSet %>"
 			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"

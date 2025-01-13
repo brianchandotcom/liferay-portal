@@ -127,9 +127,27 @@ public class OpenAPIResourceTest {
 						Collections.singletonMap(
 							LocaleUtil.US, listTypeValue))));
 
-		ObjectDefinition relatedObjectDefinition =
+		ObjectDefinition relatedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				"Object2",
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field1", "field1", false),
+					new MultiselectPicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("field2")
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"multiselectPicklistField"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectDefinition relatedObjectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"Object3",
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -148,48 +166,119 @@ public class OpenAPIResourceTest {
 		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
+			relatedObjectDefinition1.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap("relationship1"), "relationship1",
 			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
 		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
+			relatedObjectDefinition1.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap("relationship2"), "relationship2",
 			false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
-		ObjectDefinition inactiveObjectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						"field", "field", false)));
-
 		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			inactiveObjectDefinition.getObjectDefinitionId(), 0,
+			relatedObjectDefinition1.getObjectDefinitionId(),
+			relatedObjectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap("relationship3"), "relationship3",
 			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
 		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			inactiveObjectDefinition.getObjectDefinitionId(), 0,
+			relatedObjectDefinition1.getObjectDefinitionId(),
+			relatedObjectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap("relationship4"), "relationship4",
 			false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
+		ObjectDefinition relatedObjectDefinition3 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"Object4",
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field1", "field1", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectDefinition relatedObjectDefinition4 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"Object5",
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field1", "field1", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectDefinition relatedObjectDefinition5 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"Object6",
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field1", "field1", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectDefinition relatedObjectDefinition6 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"Object7",
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"field1", "field1", false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			relatedObjectDefinition2.getObjectDefinitionId(),
+			relatedObjectDefinition3.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			LocalizedMapUtil.getLocalizedMap("relationship5"), "relationship5",
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			relatedObjectDefinition3.getObjectDefinitionId(),
+			relatedObjectDefinition4.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			LocalizedMapUtil.getLocalizedMap("relationship6"), "relationship6",
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			relatedObjectDefinition4.getObjectDefinitionId(),
+			relatedObjectDefinition5.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			LocalizedMapUtil.getLocalizedMap("relationship7"), "relationship7",
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			relatedObjectDefinition5.getObjectDefinitionId(),
+			relatedObjectDefinition6.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
+			LocalizedMapUtil.getLocalizedMap("relationship8"), "relationship8",
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+			"externalReferenceCode", "externalReferenceCode", false);
+
 		_assertOpenAPI("expected_openapi.json", _objectDefinition);
 		_assertOpenAPI(
-			"expected_openapi_related.json", relatedObjectDefinition);
+			"expected_openapi_related.json", relatedObjectDefinition1);
 		_assertOpenAPI(
 			"expected_openapi_site.json",
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"Object3",
+				"Object8",
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -199,7 +288,7 @@ public class OpenAPIResourceTest {
 
 		ObjectDefinition categorizationDisabledObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				"Object4",
+				"Object9",
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

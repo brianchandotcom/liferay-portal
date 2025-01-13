@@ -761,6 +761,16 @@ public class JournalContentDisplayContext {
 			articleDisplay.getResourcePrimKey());
 	}
 
+	public boolean isArticleVisible() {
+		if (Validator.isNotNull(getArticleExternalReferenceCode()) ||
+			Validator.isNotNull(getArticleId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDefaultTemplate() {
 		String ddmTemplateExternalReferenceCode = ParamUtil.getString(
 			_portletRequest, "ddmTemplateExternalReferenceCode");

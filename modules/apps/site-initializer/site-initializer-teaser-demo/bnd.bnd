@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Clarity Teaser Showcase
+Bundle-SymbolicName: com.liferay.site.initializer.teaserdemo
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Clarity Teaser Showcase
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-teaser-demo

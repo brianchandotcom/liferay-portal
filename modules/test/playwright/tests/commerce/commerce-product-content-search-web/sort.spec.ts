@@ -31,7 +31,7 @@ async function setAndCheckSorting({
 	sortingOption2,
 }) {
 	await applicationsMenuPage.goToSite(siteName);
-	await page.waitForTimeout(2000);
+	await page.waitForLoadState('networkidle');
 
 	await commerceThemeMiniumCatalogPage.optionsButton.click();
 	await commerceThemeMiniumCatalogPage.configurationMenuItem.click();

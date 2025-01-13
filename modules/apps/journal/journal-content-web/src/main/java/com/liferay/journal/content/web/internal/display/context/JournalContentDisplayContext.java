@@ -376,9 +376,7 @@ public class JournalContentDisplayContext {
 		String ddmTemplateKey = ParamUtil.getString(
 			_portletRequest, "ddmTemplateKey");
 
-		if (Validator.isNotNull(ddmTemplateExternalReferenceCode) &&
-			Validator.isNull(ddmTemplateKey)) {
-
+		if (Validator.isNotNull(ddmTemplateExternalReferenceCode)) {
 			DDMTemplate ddmTemplate =
 				_ddmTemplateLocalService.
 					fetchDDMTemplateByExternalReferenceCode(
@@ -772,6 +770,13 @@ public class JournalContentDisplayContext {
 	}
 
 	public boolean isDefaultTemplate() {
+		String ddmTemplateKey = ParamUtil.getString(
+			_portletRequest, "ddmTemplateKey");
+
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			return false;
+		}
+
 		String ddmTemplateExternalReferenceCode = ParamUtil.getString(
 			_portletRequest, "ddmTemplateExternalReferenceCode");
 

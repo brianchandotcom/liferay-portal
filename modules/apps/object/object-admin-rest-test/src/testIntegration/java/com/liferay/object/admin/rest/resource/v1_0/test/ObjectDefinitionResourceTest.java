@@ -24,6 +24,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.problem.Problem;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -68,6 +71,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -140,7 +144,32 @@ public class ObjectDefinitionResourceTest
 	@Override
 	@Test
 	public void testGetObjectDefinitionsPage() throws Exception {
-		super.testGetObjectDefinitionsPage();
+		ObjectDefinitionResource.Builder builder =
+			ReflectionTestUtil.getFieldValue(
+				objectDefinitionResource, "_builder");
+
+		ReflectionTestUtil.setFieldValue(
+			this, "objectDefinitionResource",
+			ProxyUtil.newProxyInstance(
+				ObjectDefinitionResourceTest.class.getClassLoader(),
+				new Class<?>[] {ObjectDefinitionResource.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getObjectDefinitionsPage")) {
+
+						args[3] = Pagination.of(1, 20);
+					}
+
+					return method.invoke(builder.build(), args);
+				}));
+
+		try {
+			super.testGetObjectDefinitionsPage();
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				this, "objectDefinitionResource", builder.build());
+		}
 
 		Page<ObjectDefinition> page =
 			objectDefinitionResource.getObjectDefinitionsPage(

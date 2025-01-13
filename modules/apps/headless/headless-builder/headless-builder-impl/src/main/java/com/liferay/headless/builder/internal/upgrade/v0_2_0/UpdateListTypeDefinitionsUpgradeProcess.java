@@ -62,7 +62,7 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateListTypeDefinition(
-			Long companyId, String listTypeDefinitionExternalReferenceCode,
+			long companyId, String listTypeDefinitionExternalReferenceCode,
 			String listTypeDefinitionName,
 			String listTypeEntryExternalReferenceCode1,
 			String listTypeEntryExternalReferenceCode2,

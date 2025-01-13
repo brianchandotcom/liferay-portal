@@ -129,7 +129,7 @@ public class AssetTagFinderImpl
 			Table<AssetTagTable> tempAssetTagTable = _getAssetTagHavingStep(
 				groupId, classNameId, name
 			).unionAll(
-				_getAssetTagGroupByStep(name)
+				_getAssetTagGroupByStep(groupId, name)
 			).as(
 				AssetTagTable.INSTANCE.getName(), AssetTagTable.INSTANCE
 			);
@@ -196,14 +196,18 @@ public class AssetTagFinderImpl
 		return expressions;
 	}
 
-	private GroupByStep _getAssetTagGroupByStep(String name) {
+	private GroupByStep _getAssetTagGroupByStep(long groupId, String name) {
 		return DSLQueryFactoryUtil.select(
 			_getAssetTagExpressions(true, false)
 		).from(
 			AssetTagTable.INSTANCE
 		).where(
 			() -> {
-				Predicate predicate = AssetTagTable.INSTANCE.assetCount.eq(0);
+				Predicate predicate = AssetTagTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					AssetTagTable.INSTANCE.assetCount.eq(0)
+				);
 
 				if (name == null) {
 					return predicate;

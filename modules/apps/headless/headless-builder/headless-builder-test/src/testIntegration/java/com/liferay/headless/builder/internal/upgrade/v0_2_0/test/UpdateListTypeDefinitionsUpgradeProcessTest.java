@@ -33,6 +33,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,8 +51,8 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testUpgrade() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		// Deletion order is relevant to avoid constraint errors
 
@@ -87,7 +88,10 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 					listTypeDefinition);
 			}
 		}
+	}
 
+	@Test
+	public void testUpgrade() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			new String(
 				FileUtil.getBytes(

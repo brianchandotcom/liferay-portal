@@ -68,11 +68,14 @@ public class ObjectActionExamResultSynchronizationRestController
 			_log.error(exception);
 		}
 		finally {
-			JSONObject jsonObject = new JSONObject(json);
-
 			_updateExamResultSynchronizationEntry(
-				jsonObject.getLong("classPK"), examResultAmount,
-				System.currentTimeMillis() - startTime, jwt, status);
+				new JSONObject(
+					json
+				).getLong(
+					"classPK"
+				),
+				examResultAmount, System.currentTimeMillis() - startTime, jwt,
+				status);
 		}
 
 		if (_log.isInfoEnabled()) {

@@ -5,14 +5,18 @@
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = layoutMode === 'edit';
-const tabItems = fragmentElement.querySelectorAll(
-	`[data-fragment-namespace="${fragmentNamespace}"].nav-link`
+const tabItems = [].slice.call(
+	fragmentElement.querySelectorAll(
+		'[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'
+	)
 );
 
 let tabIndex = 0;
 const tabPanel = fragmentElement.querySelector('.tab-panel');
-const tabPanelItems = fragmentElement.querySelectorAll(
-	`[data-fragment-namespace="${fragmentNamespace}"].tab-panel-item`
+const tabPanelItems = [].slice.call(
+	fragmentElement.querySelectorAll(
+		'[data-fragment-namespace="' + fragmentNamespace + '"].tab-panel-item'
+	)
 );
 
 function activeTab(item) {
@@ -31,7 +35,9 @@ function activeTab(item) {
 
 function activeTabPanel(item) {
 	tabPanelItems.forEach((tabPanelItem) => {
-		tabPanelItem.classList.add('d-none');
+		if (!tabPanelItem.classList.contains('d-none')) {
+			tabPanelItem.classList.add('d-none');
+		}
 	});
 
 	if (item === null) {
@@ -81,8 +87,6 @@ function openTabPanel(event, i) {
 		dropdownButton.getAttribute('aria-expanded')
 	);
 
-	const isCurrentTab = tabItems[i].classList.contains('active');
-
 	if (!isEditable || !editMode) {
 		if (dropdownIsOpen) {
 			handleDropdown(event, currentTarget);
@@ -90,16 +94,10 @@ function openTabPanel(event, i) {
 
 		currentTarget.focus();
 
-		if (isCurrentTab) {
-			activeTab(null);
-			activeTabPanel(null);
-			tabIndex = -1;
-		}
-		else {
-			activeTab(currentTarget);
-			activeTabPanel(tabPanelItems[i]);
-			tabIndex = i;
-		}
+		activeTab(currentTarget, i);
+		activeTabPanel(tabPanelItems[i]);
+
+		tabIndex = i;
 	}
 
 	if (configuration.offClickHidePanel) {

@@ -942,6 +942,58 @@ test.describe('Design configuration', () => {
 			).not.toBeVisible();
 		}
 	);
+
+	test(
+		'Check error message for invalid javascript',
+		{
+			tag: ['@LPD-45835'],
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create page
+
+			const pageName = getRandomString();
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: pageName,
+			});
+
+			// Go to Design configuration
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(pageName, 'Design');
+
+			await pagesAdminPage.clickOnJavaScriptClientExtensionsTab();
+
+			await page
+				.getByPlaceholder('JavaScript')
+				.fill('<script>console.log()</script>');
+
+			// Save configuration
+
+			await pageConfigurationPage.saveButton.click();
+
+			// Assert error message
+
+			await waitForAlert(page, 'Error:Your request failed to complete.', {
+				type: 'danger',
+			});
+
+			await expect(
+				page.getByText(
+					'Error:Scripts tags are not supported inside custom JavaScript.'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('SEO configuration', () => {

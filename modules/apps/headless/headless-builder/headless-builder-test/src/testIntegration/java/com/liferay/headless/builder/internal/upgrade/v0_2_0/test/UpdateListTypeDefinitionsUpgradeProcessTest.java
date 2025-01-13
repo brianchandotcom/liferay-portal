@@ -16,9 +16,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -27,22 +25,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.time.StopWatch;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,18 +52,6 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		_originalStopWatch = ReflectionTestUtil.getAndSetFieldValue(
-			DBUpgrader.class, "_stopWatch", null);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-	}
 
 	@Test
 	public void testUpgrade() throws Exception {
@@ -127,20 +107,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 			"com.liferay.headless.builder.internal.upgrade.v0_2_0." +
 				"UpdateListTypeDefinitionsUpgradeProcess");
 
-		String liferayMode = SystemProperties.get("liferay.mode");
-
-		try {
-			SystemProperties.clear("liferay.mode");
-
-			StartupHelperUtil.setUpgrading(true);
-
-			upgradeProcess.upgrade();
-		}
-		finally {
-			SystemProperties.set("liferay.mode", liferayMode);
-
-			StartupHelperUtil.setUpgrading(false);
-		}
+		upgradeProcess.upgrade();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -238,8 +205,6 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 			}
 		}
 	}
-
-	private static StopWatch _originalStopWatch;
 
 	@Inject(
 		filter = "component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator"

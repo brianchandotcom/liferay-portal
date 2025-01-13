@@ -6,7 +6,9 @@
 package com.liferay.marketplace.settings.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.marketplace.settings.web.internal.constants.MarketplaceSettingsWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -55,6 +57,18 @@ public abstract class BaseMarketplaceConfigurationScreen
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(getJspPath());
+
+			httpServletRequest.setAttribute(
+				MarketplaceSettingsWebKeys.MARKETPLACE_CLIENT_ID,
+				PropsValues.MARKETPLACE_CLIENT_ID);
+
+			httpServletRequest.setAttribute(
+				MarketplaceSettingsWebKeys.MARKETPLACE_REDIRECT,
+				PropsValues.MARKETPLACE_REDIRECT);
+
+			httpServletRequest.setAttribute(
+				MarketplaceSettingsWebKeys.MARKETPLACE_URL,
+				PropsValues.MARKETPLACE_URL);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

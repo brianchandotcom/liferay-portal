@@ -4162,6 +4162,137 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterByRelationshipERCFieldNameInOneToManyRelationship()
+		throws Exception {
+
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		String relationshipERCFieldName = String.format(
+			"r_%s_%s", _objectRelationship1.getName(),
+			_objectDefinition1.getPKObjectFieldName()
+		).replace(
+			"Id", "ERC"
+		);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _objectDefinition2.getRESTContextPath(), Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			itemJSONObject.getString(relationshipERCFieldName),
+			_objectEntry1.getExternalReferenceCode());
+
+		// Comparison operators
+
+		String relationshipERCSubstring =
+			_objectEntry1.getExternalReferenceCode(
+			).substring(
+				0, 3
+			);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s eq '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					_objectEntry1.getExternalReferenceCode())),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s ge '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					_objectEntry1.getExternalReferenceCode())),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s gt '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					relationshipERCSubstring + "0000")),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s le '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					_objectEntry1.getExternalReferenceCode())),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s lt '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					relationshipERCSubstring + "ZZZZ")),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s ne '%s'", _objectRelationship1.getName(),
+					relationshipERCFieldName, RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// List operators
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s in ('%s', '%s')", _objectRelationship1.getName(),
+					relationshipERCFieldName,
+					_objectEntry1.getExternalReferenceCode(),
+					RandomTestUtil.randomInt())),
+			_objectDefinition1);
+
+		// String operators
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			String.format(
+				"contains(%s/%s,'%s')", _objectRelationship1.getName(),
+				relationshipERCFieldName,
+				_objectEntry1.getExternalReferenceCode(
+				).substring(
+					0, 2
+				)),
+			_objectDefinition1);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			String.format(
+				"startswith(%s/%s,'%s')", _objectRelationship1.getName(),
+				relationshipERCFieldName,
+				_objectEntry1.getExternalReferenceCode(
+				).substring(
+					0, 2
+				)),
+			_objectDefinition1);
+	}
+
+	@Test
 	public void testFilterByStringOperatorsObjectEntriesByRelatedObjectEntriesFields()
 		throws Exception {
 

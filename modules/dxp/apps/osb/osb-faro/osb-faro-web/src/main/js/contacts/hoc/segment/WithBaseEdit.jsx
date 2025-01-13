@@ -286,49 +286,51 @@ export default WrappedComponent => {
 									{this.getPageTitleLabel()}
 								</Label>
 
-								<ClayPopover
-									alignPosition='bottom'
-									closeOnClickOutside
-									header={Liferay.Language.get(
-										'deprecated-feature'
-									)}
-									trigger={
-										<ClayButton
-											data-tooltip
-											data-tooltip-align='top'
-											displayType='warning'
-											title={Liferay.Language.get(
-												'open-deprecated-definition'
-											)}
-											translucent
-										>
-											{Liferay.Language.get(
-												'deprecated'
-											).toUpperCase()}
-											<span className='inline-item inline-item-before pl-2'>
-												<ClayIcon symbol='warning-full' />
-											</span>
-										</ClayButton>
-									}
-								>
-									{Liferay.Language.get(
-										'this-feature-is-deprecated'
-									)}
-
-									<ClayLink
-										className='ml-1'
-										decoration='underline'
-										href={
-											URLConstants.MaintenanceModeAndDeprecationDocumentation
+								{type === SegmentTypes.Static && (
+									<ClayPopover
+										alignPosition='bottom'
+										closeOnClickOutside
+										header={Liferay.Language.get(
+											'deprecated-feature'
+										)}
+										trigger={
+											<ClayButton
+												data-tooltip
+												data-tooltip-align='top'
+												displayType='warning'
+												title={Liferay.Language.get(
+													'open-deprecated-definition'
+												)}
+												translucent
+											>
+												{Liferay.Language.get(
+													'deprecated'
+												).toUpperCase()}
+												<span className='inline-item inline-item-before pl-2'>
+													<ClayIcon symbol='warning-full' />
+												</span>
+											</ClayButton>
 										}
-										key='deprecated'
-										target='_blank'
 									>
 										{Liferay.Language.get(
-											'learn-more-about-deprecated-features'
+											'this-feature-is-deprecated'
 										)}
-									</ClayLink>
-								</ClayPopover>
+
+										<ClayLink
+											className='ml-1'
+											decoration='underline'
+											href={
+												URLConstants.MaintenanceModeAndDeprecationDocumentation
+											}
+											key='deprecated'
+											target='_blank'
+										>
+											{Liferay.Language.get(
+												'learn-more-about-deprecated-features'
+											)}
+										</ClayLink>
+									</ClayPopover>
+								)}
 							</BasePage.Header.TitleSection>
 
 							<BasePage.Header.Section>

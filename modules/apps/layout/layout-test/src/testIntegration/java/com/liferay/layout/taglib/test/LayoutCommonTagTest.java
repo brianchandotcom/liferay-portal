@@ -56,17 +56,13 @@ public class LayoutCommonTagTest {
 		String message =
 			"User's input with single quotes and <strong>tags</strong>";
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(message);
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		layoutCommonTag.setPageContext(
-			new MockPageContext(
-				null, mockHttpServletRequest, mockHttpServletResponse));
+		layoutCommonTag.setPageContext(new MockPageContext(
+			null, _getMockHttpServletRequest(message), mockHttpServletResponse));
 
-		layoutCommonTag.doTag(mockHttpServletRequest, mockHttpServletResponse);
+		layoutCommonTag.doEndTag();
 
 		String content = mockHttpServletResponse.getContentAsString();
 

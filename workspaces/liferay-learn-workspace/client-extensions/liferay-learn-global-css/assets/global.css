@@ -193,6 +193,10 @@ pre[class*='language-'] {
 	border-color: var(--warning);
 }
 
+.code-toolbar {
+	max-width: 50vw;
+}
+
 .code-toolbar > .toolbar {
 	z-index: 2 !important;
 }

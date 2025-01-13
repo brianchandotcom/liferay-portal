@@ -12,7 +12,7 @@ import {samplePageTest} from '../../fixtures/samplePageTest';
 
 export const test = mergeTests(
 	featureFlagsTest({
-		'LPS-178052': true,
+		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

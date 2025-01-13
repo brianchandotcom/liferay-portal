@@ -169,7 +169,6 @@ export class JournalEditArticlePage {
 			return;
 		}
 
-		await expect(async () => {
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: this.page.getByRole('menuitem', {
@@ -180,13 +179,16 @@ export class JournalEditArticlePage {
 				}),
 			});
 
-			await expect(this.page.getByLabel('Viewable By')).toBeVisible({
+		await expect(
+			this.page.getByLabel(/Viewable By|Visualisable avec/i)
+		).toBeVisible({
 				timeout: 2000,
 			});
-		}).toPass();
 
 		if (viewableBy) {
-			await this.page.getByLabel('Viewable By').selectOption(viewableBy);
+			await this.page
+				.getByLabel(/Viewable By|Visualisable avec/i)
+				.selectOption(viewableBy);
 		}
 
 		await this.page

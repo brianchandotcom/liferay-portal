@@ -112,13 +112,13 @@ public class ObjectActionExamResultSynchronizationRestController
 		return OffsetDateTime.parse(jsonObject.getString("dateCreated"));
 	}
 
-	private String _getPayload(JSONObject certificateJSONObject) {
+	private String _getPayload(JSONObject responseJSONObject) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"date",
 			OffsetDateTime.parse(
-				certificateJSONObject.getString("date")
+				responseJSONObject.getString("date")
 			).atZoneSameInstant(
 				ZoneOffset.UTC
 			).format(
@@ -126,7 +126,7 @@ public class ObjectActionExamResultSynchronizationRestController
 			)
 		).put(
 			"email",
-			certificateJSONObject.getJSONObject(
+			responseJSONObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -134,12 +134,12 @@ public class ObjectActionExamResultSynchronizationRestController
 				"email"
 			)
 		).put(
-			"examName", certificateJSONObject.getString("examName")
+			"examName", responseJSONObject.getString("examName")
 		).put(
-			"externalReferenceCode", certificateJSONObject.getLong("id")
+			"externalReferenceCode", responseJSONObject.getLong("id")
 		).put(
 			"firstName",
-			certificateJSONObject.getJSONObject(
+			responseJSONObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -148,7 +148,7 @@ public class ObjectActionExamResultSynchronizationRestController
 			)
 		).put(
 			"lastName",
-			certificateJSONObject.getJSONObject(
+			responseJSONObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -156,10 +156,10 @@ public class ObjectActionExamResultSynchronizationRestController
 				"lastName"
 			)
 		).put(
-			"result", certificateJSONObject.getString("passFail")
+			"result", responseJSONObject.getString("passFail")
 		).put(
 			"testName",
-			certificateJSONObject.getJSONObject(
+			responseJSONObject.getJSONObject(
 				"simpleRegistration"
 			).getString(
 				"testName"
@@ -201,17 +201,16 @@ public class ObjectActionExamResultSynchronizationRestController
 		}
 
 		for (int i = 0; i < responseJSONArray.length(); i++) {
-			JSONObject certificateJSONObject = responseJSONArray.getJSONObject(
-				i);
+			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
 
 			put(
 				"Bearer " + jwt.getTokenValue(),
-				_getPayload(certificateJSONObject),
+				_getPayload(responseJSONObject),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 					"/o/c/p2s3examresults/scopes/", _siteGroupId,
 					"/by-external-reference-code/",
-					certificateJSONObject.getLong("id")));
+					responseJSONObject.getLong("id")));
 		}
 
 		return responseJSONArray.length();

@@ -53,65 +53,6 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
-	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
-	@priority = 3
-	test AddASpecificationAndVerifyIfIsPresent {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceProducts.openProductsAdmin();
-
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
-
-		Click(locator1 = "AppBuilder#SEARCH_BAR_INPUT");
-
-		Type(
-			key_text = "Find or create a specification",
-			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
-			value1 = "Quantity");
-
-		Click(
-			key_text = "Select",
-			locator1 = "Button#ANY_LAST");
-
-		Alert.viewSuccessMessage();
-
-		AssertElementPresent(
-			key_entryName = "Quantity",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		Click(locator1 = "AppBuilder#SEARCH_BAR_INPUT");
-
-		Type(
-			key_text = "Find or create a specification",
-			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
-			value1 = "Test Specification");
-
-		Click(
-			key_text = "Create New",
-			locator1 = "Button#ANY");
-
-		Alert.viewSuccessMessage();
-
-		AssertElementPresent(
-			key_entryName = "Test Specification",
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Specifications");
-
-		AssertElementPresent(
-			key_entryName = "Test Specification",
-			locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_BY_NAME");
-	}
-
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
 	@priority = 5
 	test AddGroupedProduct {

@@ -29,6 +29,8 @@ import io.swagger.v3.oas.models.media.Schema;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,12 +71,11 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			Map<String, EntityField> entityFieldsMap = _getEntityFieldsMap(
 				openAPIContext, schema);
 
-			if (MapUtil.isEmpty(entityFieldsMap)) {
-				continue;
-			}
+			List<String> filterableFields =
+				MapUtil.isEmpty(entityFieldsMap) ? Collections.emptyList() :
+					_getFilterableFields(entityFieldsMap);
 
-			schema.addExtension(
-				"x-filterable", _getFilterableFields(entityFieldsMap));
+			schema.addExtension("x-filterable", filterableFields);
 		}
 	}
 
@@ -206,13 +207,29 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		Map<String, EntityField> entityFieldsMap) {
 
 		Queue<Map.Entry<String, EntityField>> entryQueue = new LinkedList<>(
-			entityFieldsMap.entrySet());
+			TransformUtil.transform(
+				entityFieldsMap.entrySet(),
+				entry -> new AbstractMap.SimpleEntry<>(
+					entry.getKey(), entry.getValue())));
 
 		List<String> filterableFields = new ArrayList<>();
+
 		Set<EntityField> visitedEntityFields = new HashSet<>();
+
+		Map<Map.Entry<String, EntityField>, Integer> depthMap = new HashMap<>();
+
+		for (Map.Entry<String, EntityField> entry : entryQueue) {
+			depthMap.put(entry, 0);
+		}
 
 		while (!entryQueue.isEmpty()) {
 			Map.Entry<String, EntityField> entry = entryQueue.poll();
+
+			int currentDepth = depthMap.get(entry);
+
+			if (currentDepth >= 5) {
+				continue;
+			}
 
 			EntityField entityField = entry.getValue();
 
@@ -227,12 +244,19 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				Map<String, EntityField> currentEntityFieldsMap =
 					complexEntityField.getEntityFieldsMap();
 
-				entryQueue.addAll(
-					TransformUtil.transform(
-						currentEntityFieldsMap.entrySet(),
-						childEntry -> new AbstractMap.SimpleEntry<>(
-							entry.getKey() + "/" + childEntry.getKey(),
-							childEntry.getValue())));
+				for (Map.Entry<String, EntityField> childEntry :
+						currentEntityFieldsMap.entrySet()) {
+
+					String newKey = entry.getKey() + "/" + childEntry.getKey();
+
+					entryQueue.add(
+						new AbstractMap.SimpleEntry<>(
+							newKey, childEntry.getValue()));
+					depthMap.put(
+						new AbstractMap.SimpleEntry<>(
+							newKey, childEntry.getValue()),
+						currentDepth + 1);
+				}
 			}
 			else {
 				filterableFields.add(entry.getKey());

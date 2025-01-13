@@ -51,12 +51,15 @@ public class ObjectActionExamResultSynchronizationRestController
 		String status = "Failed";
 
 		try {
-			OffsetDateTime startDate = _getStartDate(jwt);
+			OffsetDateTime offsetDateTime = _getLatestSuccessfulExecutionDate(
+				jwt);
 
-			while (startDate.isBefore(OffsetDateTime.now(ZoneOffset.UTC))) {
-				examResultAmount += _importExamResults(jwt, startDate);
+			while (offsetDateTime.isBefore(
+						OffsetDateTime.now(ZoneOffset.UTC))) {
 
-				startDate = startDate.plusDays(7);
+				examResultAmount += _importExamResults(jwt, offsetDateTime);
+
+				offsetDateTime = offsetDateTime.plusDays(7);
 			}
 
 			status = "Successful";
@@ -82,6 +85,28 @@ public class ObjectActionExamResultSynchronizationRestController
 	@Override
 	protected String getWebClientBaseURL() {
 		return "";
+	}
+
+	private OffsetDateTime _getLatestSuccessfulExecutionDate(Jwt jwt) {
+		JSONObject responseJSONObject = new JSONObject(
+			get(
+				"Bearer " + jwt.getTokenValue(),
+				StringBundler.concat(
+					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+					"/o/c/p2s3examresultsynchronizations/scopes/", _siteGroupId,
+					"?fields=dateCreated",
+					"&filter=synchronizationStatus eq 'Successful'&pageSize=1",
+					"&sort=dateCreated:desc")));
+
+		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+		if (itemsJSONArray.isEmpty()) {
+			return OffsetDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		}
+
+		JSONObject jsonObject = itemsJSONArray.getJSONObject(0);
+
+		return OffsetDateTime.parse(jsonObject.getString("dateCreated"));
 	}
 
 	private String _getPayload(JSONObject certificateJSONObject) {
@@ -139,28 +164,6 @@ public class ObjectActionExamResultSynchronizationRestController
 		);
 
 		return jsonObject.toString();
-	}
-
-	private OffsetDateTime _getStartDate(Jwt jwt) {
-		JSONObject responseJSONObject = new JSONObject(
-			get(
-				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					"/o/c/p2s3examresultsynchronizations/scopes/", _siteGroupId,
-					"?fields=dateCreated",
-					"&filter=synchronizationStatus eq 'Successful'&pageSize=1",
-					"&sort=dateCreated:desc")));
-
-		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-
-		if (itemsJSONArray.isEmpty()) {
-			return OffsetDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
-		}
-
-		JSONObject jsonObject = itemsJSONArray.getJSONObject(0);
-
-		return OffsetDateTime.parse(jsonObject.getString("dateCreated"));
 	}
 
 	private int _importExamResults(Jwt jwt, OffsetDateTime startDate) {

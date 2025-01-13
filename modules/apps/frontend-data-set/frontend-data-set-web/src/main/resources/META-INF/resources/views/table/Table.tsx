@@ -181,6 +181,7 @@ const Head = ({
 };
 
 const Body = ({
+	fields,
 	inlineAddingSettings,
 	itemInlineChanges,
 	items,
@@ -190,8 +191,8 @@ const Body = ({
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
-	visibleFields,
 }: {
+	fields: Array<Field>;
 	inlineAddingSettings?: {
 		apiURL?: string;
 		defaultBodyContent?: Record<string, any>;
@@ -204,7 +205,6 @@ const Body = ({
 	selectedItemsKey: string;
 	selectedItemsValue: any;
 	selectionType?: string;
-	visibleFields: Array<Field>;
 }) => {
 	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
 
@@ -222,7 +222,7 @@ const Body = ({
 				(item) => {
 					const id = item[selectedItemsKey ?? 'id'];
 
-					const columns = [...visibleFields, {fieldName: 'actions'}];
+					const columns = [...fields, {fieldName: 'actions'}];
 
 					return (
 						<ClayTableRow
@@ -841,7 +841,7 @@ const Table = ({
 				visibleColumns={getVisibleFieldsMap(visibleFields, selectable)}
 			>
 				<Head
-					fields={schema.fields as any}
+					fields={schema.fields as Array<Field>}
 					items={items}
 					selectItems={selectItems}
 					selectable={selectable}
@@ -851,6 +851,7 @@ const Table = ({
 				/>
 
 				<Body
+					fields={schema.fields as Array<Field>}
 					inlineAddingSettings={inlineAddingSettings}
 					itemInlineChanges={itemsChanges}
 					items={items}
@@ -860,7 +861,6 @@ const Table = ({
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
-					visibleFields={visibleFields}
 				/>
 			</ClayTable>
 		</TableContextProvider>

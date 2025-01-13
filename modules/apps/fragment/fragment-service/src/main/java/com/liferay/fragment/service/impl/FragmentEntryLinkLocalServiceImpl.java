@@ -23,6 +23,7 @@ import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -58,7 +59,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -270,47 +270,39 @@ public class FragmentEntryLinkLocalServiceImpl
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long plid) {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			getFragmentEntryLinksByPlid(groupId, plid);
+		return TransformUtil.transform(
+			getFragmentEntryLinksByPlid(groupId, plid),
+			fragmentEntryLink -> {
+				fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+					fragmentEntryLink);
 
-		if (ListUtil.isEmpty(fragmentEntryLinks)) {
-			return Collections.emptyList();
-		}
+				if (fragmentEntryLink.isTypePortlet()) {
+					try {
+						JSONObject jsonObject = _jsonFactory.createJSONObject(
+							fragmentEntryLink.getEditableValues());
 
-		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
+						String instanceId = jsonObject.getString("instanceId");
+						String portletId = jsonObject.getString("portletId");
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-				fragmentEntryLink);
+						if (Validator.isNotNull(instanceId)) {
+							portletId = portletId + "_INSTANCE_" + instanceId;
+						}
 
-			deletedFragmentEntryLinks.add(fragmentEntryLink);
-
-			if (fragmentEntryLink.isTypePortlet()) {
-				try {
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						fragmentEntryLink.getEditableValues());
-
-					String instanceId = jsonObject.getString("instanceId");
-					String portletId = jsonObject.getString("portletId");
-
-					if (Validator.isNotNull(instanceId)) {
-						portletId = portletId + "_INSTANCE_" + instanceId;
+						_portletPreferencesLocalService.
+							deletePortletPreferences(
+								PortletKeys.PREFS_OWNER_ID_DEFAULT,
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								fragmentEntryLink.getPlid(), portletId);
 					}
-
-					_portletPreferencesLocalService.deletePortletPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						fragmentEntryLink.getPlid(), portletId);
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException);
+						}
 					}
 				}
-			}
-		}
 
-		return deletedFragmentEntryLinks;
+				return fragmentEntryLink;
+			});
 	}
 
 	/**
@@ -332,24 +324,15 @@ public class FragmentEntryLinkLocalServiceImpl
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long[] segmentsExperienceIds, long plid) {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
+		return TransformUtil.transform(
 			getFragmentEntryLinksBySegmentsExperienceId(
-				groupId, segmentsExperienceIds, plid);
+				groupId, segmentsExperienceIds, plid),
+			fragmentEntryLink -> {
+				fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+					fragmentEntryLink);
 
-		if (ListUtil.isEmpty(fragmentEntryLinks)) {
-			return Collections.emptyList();
-		}
-
-		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-				fragmentEntryLink);
-
-			deletedFragmentEntryLinks.add(fragmentEntryLink);
-		}
-
-		return deletedFragmentEntryLinks;
+				return fragmentEntryLink;
+			});
 	}
 
 	@Override

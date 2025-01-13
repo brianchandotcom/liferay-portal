@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -256,7 +257,8 @@ public class ForgotPasswordMVCActionCommandTest {
 			Assert.assertNotNull(message);
 
 			return _ticketLocalService.getTickets(
-				_user.getCompanyId(), User.class.getName(), _user.getUserId());
+				_user.getCompanyId(), User.class.getName(), _user.getUserId(),
+				TicketConstants.TYPE_PASSWORD);
 		}
 		finally {
 			if (existingValue != null) {

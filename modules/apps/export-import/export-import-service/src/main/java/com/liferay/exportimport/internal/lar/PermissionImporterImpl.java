@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.lar.PermissionImporter;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
@@ -221,15 +222,9 @@ public class PermissionImporterImpl implements PermissionImporter {
 	}
 
 	private List<String> _getActions(Element element) {
-		List<String> actions = new ArrayList<>();
-
-		List<Element> actionKeyElements = element.elements("action-key");
-
-		for (Element actionKeyElement : actionKeyElements) {
-			actions.add(actionKeyElement.getText());
-		}
-
-		return actions;
+		return TransformUtil.transform(
+			element.elements("action-key"),
+			actionKeyElement -> actionKeyElement.getText());
 	}
 
 	private void _importPermissions(

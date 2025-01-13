@@ -14,6 +14,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutJavaScriptException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -329,12 +330,12 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
-		catch (LayoutNameException layoutNameException) {
+		catch (LayoutJavaScriptException | LayoutNameException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(layoutNameException);
+				_log.debug(exception);
 			}
 
-			SessionErrors.add(actionRequest, LayoutNameException.class);
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			hideDefaultSuccessMessage(actionRequest);
 

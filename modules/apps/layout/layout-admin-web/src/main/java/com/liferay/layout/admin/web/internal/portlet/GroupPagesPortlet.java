@@ -37,8 +37,10 @@ import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
+import com.liferay.portal.kernel.exception.LayoutJavaScriptException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
+import com.liferay.portal.kernel.exception.LayoutSetJavaScriptException;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -271,9 +273,11 @@ public class GroupPagesPortlet extends MVCPortlet {
 			throwable instanceof ImageTypeException ||
 			throwable instanceof LayoutFriendlyURLException ||
 			throwable instanceof LayoutFriendlyURLsException ||
+			throwable instanceof LayoutJavaScriptException ||
 			throwable instanceof LayoutNameException ||
 			throwable instanceof LayoutPageTemplateCollectionNameException ||
 			throwable instanceof LayoutParentLayoutIdException ||
+			throwable instanceof LayoutSetJavaScriptException ||
 			throwable instanceof LayoutSetVirtualHostException ||
 			throwable instanceof LayoutTypeException ||
 			throwable instanceof NoSuchGroupException ||

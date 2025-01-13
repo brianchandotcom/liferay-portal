@@ -296,12 +296,15 @@ public class PageFragmentInstanceDefinitionMapper {
 						}
 
 						if (value instanceof JSONArray) {
-							JSONDeserializer<Map<String, Object>>
-								jsonDeserializer =
-									_jsonFactory.createJSONDeserializer();
+							List<String> values = new ArrayList<>();
 
-							value = jsonDeserializer.deserialize(
-								value.toString());
+							JSONArray jsonArray = (JSONArray)value;
+
+							for (int i = 0; i < jsonArray.length(); i++) {
+								values.add(jsonArray.getString(i));
+							}
+
+							value = values.toArray(new String[0]);
 						}
 
 						put(key, value);

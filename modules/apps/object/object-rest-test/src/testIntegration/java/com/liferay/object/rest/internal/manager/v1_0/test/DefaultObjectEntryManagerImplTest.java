@@ -2919,6 +2919,22 @@ public class DefaultObjectEntryManagerImplTest
 				_buildContainsExpressionFilterString("textObjectFieldName", "b")
 			).build(),
 			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry1.getExternalReferenceCode())
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry2.getExternalReferenceCode())
+			).build(),
+			childObjectEntry2);
 
 		// Equals expression
 
@@ -3429,6 +3445,22 @@ public class DefaultObjectEntryManagerImplTest
 				_buildStartsWithExpressionFilterString(
 					"textObjectFieldName", "b")
 			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry1.getExternalReferenceCode())
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry2.getExternalReferenceCode())
+			).build(),
+			childObjectEntry2);
 	}
 
 	@Test

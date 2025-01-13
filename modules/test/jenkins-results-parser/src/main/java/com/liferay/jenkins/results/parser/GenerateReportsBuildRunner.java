@@ -396,10 +396,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					"/testray-data.js"));
 		}
 
-		_updateReport(filePath);
-
-		_updateNodeDataFile(filePath);
-
 		String testrayDataJSFilePath = filePath + "/js/testray-data.js";
 
 		File testrayDataJSFile = new File(testrayDataJSFilePath);
@@ -412,6 +408,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					"/testray-data.js"),
 				filePath + "/js/testray-data.js");
 		}
+
+		_updateReport(filePath);
+
+		_updateNodeDataFile(filePath);
 
 		_archiveReport(filePath);
 	}
@@ -658,6 +658,12 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _mergeHTMLFiles(String reportDirPath) {
+		_mergeHTMLFiles(reportDirPath, true);
+	}
+
+	private void _mergeHTMLFiles(
+		String reportDirPath, boolean deleteFrontendResourceFiles) {
+
 		File reportDir = new File(reportDirPath);
 
 		File reportFile = new File(reportDir, "index.html");
@@ -698,7 +704,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					newReportFileContent = newReportFileContent.replace(
 						line, scriptElementContent);
 
-					javaScriptFile.delete();
+					if (deleteFrontendResourceFiles) {
+						javaScriptFile.delete();
+					}
 
 					continue;
 				}
@@ -727,7 +735,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					newReportFileContent = newReportFileContent.replace(
 						line, styleElementContent);
 
-					cssFile.delete();
+					if (deleteFrontendResourceFiles) {
+						cssFile.delete();
+					}
 				}
 			}
 
@@ -768,6 +778,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _updateReport(String filePath) {
+		_mergeHTMLFiles(filePath, false);
+
 		JenkinsResultsParserUtil.rsync(
 			"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null, filePath);
 	}

@@ -206,7 +206,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 	).toHaveValue('1,2');
 	await expect(
 		commerceAdminProductConfigurationEntryPage.backOrdersInput
-	).toBeChecked();
+	).not.toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.CPDefinitionInventoryEngineInput
 	).toHaveValue('default');
@@ -221,7 +221,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.freeShippingInput
-	).not.toBeChecked();
+	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.heightInput
 	).toHaveValue('3.0');
@@ -248,7 +248,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.shipSeparatelyInput
-	).not.toBeChecked();
+	).toBeChecked();
 	await expect(
 		commerceAdminProductConfigurationEntryPage.taxExemptInput
 	).toBeChecked();

@@ -36,6 +36,8 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang.time.StopWatch;
 
 import org.junit.AfterClass;
@@ -76,61 +78,28 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 
 		// Deletion order is relevant to avoid constraint errors
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_SORT", TestPropsValues.getCompanyId()));
+		for (String externalReferenceCode :
+				Arrays.asList(
+					"L_API_SORT", "L_API_FILTER", "L_API_PROPERTY",
+					"L_API_SCHEMA", "L_API_ENDPOINT", "L_API_APPLICATION")) {
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_FILTER", TestPropsValues.getCompanyId()));
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						externalReferenceCode, TestPropsValues.getCompanyId()));
+		}
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_PROPERTY", TestPropsValues.getCompanyId()));
+		for (String externalReferenceCode :
+				Arrays.asList(
+					"APPLICATION_STATUS_PICKLIST", "HTTP_METHOD_PICKLIST",
+					"L_API_PROPERTY_TYPES", "RETRIEVE_TYPE_PICKLIST",
+					"SCOPE_PICKLIST")) {
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_SCHEMA", TestPropsValues.getCompanyId()));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", TestPropsValues.getCompanyId()));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_API_APPLICATION", TestPropsValues.getCompanyId()));
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"APPLICATION_STATUS_PICKLIST",
-					TestPropsValues.getCompanyId()));
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"HTTP_METHOD_PICKLIST", TestPropsValues.getCompanyId()));
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"L_API_PROPERTY_TYPES", TestPropsValues.getCompanyId()));
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"RETRIEVE_TYPE_PICKLIST", TestPropsValues.getCompanyId()));
-
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
-			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
-					"SCOPE_PICKLIST", TestPropsValues.getCompanyId()));
+			_listTypeDefinitionLocalService.deleteListTypeDefinition(
+				_listTypeDefinitionLocalService.
+					fetchListTypeDefinitionByExternalReferenceCode(
+						externalReferenceCode, TestPropsValues.getCompanyId()));
+		}
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			new String(

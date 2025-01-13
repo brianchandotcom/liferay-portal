@@ -4,7 +4,7 @@ buildService {
 }
 
 dependencies {
-	compileInclude group: "com.ibm.icu", name: "icu4j", version: "65.1"
+	compileInclude group: "com.ibm.icu", name: "icu4j", version: "69.1"
 	compileInclude group: "net.sf.okapi", name: "okapi-core", version: "1.42.0"
 	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-autoxliff", version: "1.42.0"
 	compileInclude group: "net.sf.okapi.filters", name: "okapi-filter-xliff", version: "1.42.0"

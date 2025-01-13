@@ -4,7 +4,7 @@ buildService {
 }
 
 dependencies {
-	compileInclude group: "com.ibm.icu", name: "icu4j", version: "57.1"
+	compileInclude group: "com.ibm.icu", name: "icu4j", version: "69.1"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

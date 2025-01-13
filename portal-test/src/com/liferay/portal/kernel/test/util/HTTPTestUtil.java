@@ -147,7 +147,7 @@ public class HTTPTestUtil {
 
 		private String _newBaseURL = _baseURL;
 		private String _newCredentials = _credentials;
-		private boolean _newModulePath;
+		private boolean _newModulePath = _modulePath;
 
 	}
 

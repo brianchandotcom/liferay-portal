@@ -133,6 +133,11 @@
 					"name": "Fail"
 				},
 				{
+					"externalReferenceCode": "NA",
+					"key": "na",
+					"name": "NA"
+				},
+				{
 					"externalReferenceCode": "PASS",
 					"key": "pass",
 					"name": "Pass"

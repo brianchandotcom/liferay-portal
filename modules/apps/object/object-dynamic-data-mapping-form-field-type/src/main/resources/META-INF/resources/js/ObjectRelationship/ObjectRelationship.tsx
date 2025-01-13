@@ -25,6 +25,7 @@ async function fetchOptions<T>(url: string) {
 	const response = await fetch(url, {
 		headers: {
 			'Accept': 'application/json',
+			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Content-Type': 'application/json',
 		},
 		method: 'GET',

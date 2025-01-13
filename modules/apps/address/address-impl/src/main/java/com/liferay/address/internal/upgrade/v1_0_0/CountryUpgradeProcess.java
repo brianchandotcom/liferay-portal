@@ -6,6 +6,9 @@
 package com.liferay.address.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -67,19 +70,59 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		_forEachCompanyConcurrently(
-			company -> {
-				try {
-					new CompanyUpgradeProcess(
-						company
-					).populateCompanyCountries();
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to populate company " + company.getCompanyId(),
-						exception);
-				}
-			});
+		List<IndexMetadata> indexMetadatas = _dropIndexes();
+
+		try {
+			_forEachCompanyConcurrently(
+				company -> {
+					try {
+						new CompanyUpgradeProcess(
+							company
+						).populateCompanyCountries();
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to populate company " +
+								company.getCompanyId(),
+							exception);
+					}
+				});
+		}
+		finally {
+			_restoreIndexes(indexMetadatas);
+		}
+	}
+
+	private List<IndexMetadata> _dropIndexes() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		List<IndexMetadata> indexMetadatas = new ArrayList<>();
+
+		for (String tableName :
+				new String[] {
+					"CountryLocalization", "Region", "RegionLocalization"
+				}) {
+
+			indexMetadatas.addAll(
+				db.getIndexMetadatas(connection, tableName, null, false));
+		}
+
+		List<IndexMetadata> droppedIndexMetadatas = new ArrayList<>();
+
+		try {
+			for (IndexMetadata indexMetadata : indexMetadatas) {
+				db.runSQL(indexMetadata.getDropSQL());
+
+				droppedIndexMetadatas.add(indexMetadata);
+			}
+		}
+		catch (Exception exception) {
+			_restoreIndexes(droppedIndexMetadatas);
+
+			throw exception;
+		}
+
+		return indexMetadatas;
 	}
 
 	private void _forEachCompanyConcurrently(Consumer<Company> consumer)
@@ -112,6 +155,25 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 				future.get();
 			}
 		}
+	}
+
+	private void _restoreIndexes(List<IndexMetadata> indexMetadatas)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		List<IndexMetadata> addIndexMetadatas = new ArrayList<>();
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			if (!hasIndex(
+					indexMetadata.getTableName(),
+					indexMetadata.getIndexName())) {
+
+				addIndexMetadatas.add(indexMetadata);
+			}
+		}
+
+		db.addIndexes(connection, addIndexMetadatas);
 	}
 
 	private void _updateRegionCounter() throws Exception {

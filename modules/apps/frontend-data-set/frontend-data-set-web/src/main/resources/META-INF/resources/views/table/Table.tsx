@@ -211,6 +211,12 @@ const Body = ({
 	const SelectionComponent =
 		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
 
+	const columns = [
+		...(selectable ? [{fieldName: 'select'}] : []),
+		...fields,
+		{fieldName: 'actions'},
+	];
+
 	return (
 		<ClayTableBody
 			items={inlineAddingSettings ? [...items, defaultAddItem] : items}
@@ -222,16 +228,8 @@ const Body = ({
 				(item) => {
 					const id = item[selectedItemsKey ?? 'id'];
 
-					const columns = [...fields, {fieldName: 'actions'}];
-
 					return (
-						<ClayTableRow
-							items={
-								selectable
-									? [{fieldName: 'select'}, ...columns]
-									: columns
-							}
-						>
+						<ClayTableRow items={columns}>
 							{
 
 								// @ts-ignore

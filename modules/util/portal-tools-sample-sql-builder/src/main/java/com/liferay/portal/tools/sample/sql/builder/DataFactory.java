@@ -1194,7 +1194,7 @@ public class DataFactory {
 
 		String resourceUUID = _journalArticleResourceUUIDs.get(resourcePrimKey);
 
-		return newAssetEntryModel(
+		_journalArticleAssetEntryModel = newAssetEntryModel(
 			journalArticleModel.getGroupId(),
 			journalArticleModel.getCreateDate(),
 			journalArticleModel.getModifiedDate(),
@@ -1202,6 +1202,8 @@ public class DataFactory {
 			_defaultJournalDDMStructureId, journalArticleModel.isIndexable(),
 			true, ContentTypes.TEXT_HTML,
 			journalArticleLocalizationModel.getTitle());
+
+		return _journalArticleAssetEntryModel;
 	}
 
 	public AssetListEntryModel newAssetListEntryModel(long groupId, int index) {
@@ -4716,15 +4718,30 @@ public class DataFactory {
 	public List<PortletPreferenceValueModel>
 		newJournalArticleResourcePortletPreferenceValueModels(
 			PortletPreferencesModel portletPreferencesModel,
-			JournalArticleResourceModel journalArticleResourceModel) {
+			JournalArticleModel journalArticleModel, GroupModel groupModel) {
 
 		return Arrays.asList(
 			newPortletPreferenceValueModel(
-				portletPreferencesModel, "articleId", 0,
-				journalArticleResourceModel.getArticleId()),
+				portletPreferencesModel, "articleExternalReferenceCode", 0,
+				journalArticleModel.getUuid()),
 			newPortletPreferenceValueModel(
-				portletPreferencesModel, "groupId", 0,
-				String.valueOf(journalArticleResourceModel.getGroupId())));
+				portletPreferencesModel, "assetEntryId", 0,
+				String.valueOf(_journalArticleAssetEntryModel.getEntryId())),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "contentMetadataAssetAddonEntryKeys",
+				0, "false"),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "ddmTemplateExternalReferenceCode", 0,
+				StringPool.BLANK),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "enableViewCountIncrement", 0,
+				"false"),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "groupExternalReferenceCode", 0,
+				groupModel.getUuid()),
+			newPortletPreferenceValueModel(
+				portletPreferencesModel, "userToolAssetAddonEntryKeys", 0,
+				"false"));
 	}
 
 	public PortletPreferencesModel newJournalContentPortletPreferencesModel(
@@ -8894,6 +8911,7 @@ public class DataFactory {
 	private long _guestGroupId;
 	private RoleModel _guestRoleModel;
 	private long _guestUserId;
+	private AssetEntryModel _journalArticleAssetEntryModel;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();

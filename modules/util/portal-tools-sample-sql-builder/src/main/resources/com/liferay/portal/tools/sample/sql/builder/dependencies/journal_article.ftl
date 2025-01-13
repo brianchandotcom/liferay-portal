@@ -29,25 +29,25 @@
 				_journalDDMStructureModel = defaultJournalDDMStructureModel
 				_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 			/>
-		</#list>
 
-		<@insertMBDiscussion
-			_classNameId = dataFactory.journalArticleClassNameId
-			_classPK = journalArticleResourceModel.resourcePrimKey
-			_groupId = groupId
-			_maxCommentCount = 0
-			_mbRootMessageId = dataFactory.getCounterNext()
-			_mbThreadId = dataFactory.getCounterNext()
-		/>
+			<@insertMBDiscussion
+				_classNameId = dataFactory.journalArticleClassNameId
+				_classPK = journalArticleResourceModel.resourcePrimKey
+				_groupId = groupId
+				_maxCommentCount = 0
+				_mbRootMessageId = dataFactory.getCounterNext()
+				_mbThreadId = dataFactory.getCounterNext()
+			/>
 
-		${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
+			${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}
 
-		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
+			<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount) />
 
-		${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}
+			${dataFactory.toInsertSQL(journalArticleResourcePortletPreferencesModel)}
 
-		<#list dataFactory.newJournalArticleResourcePortletPreferenceValueModels(journalArticleResourcePortletPreferencesModel, journalArticleResourceModel) as journalArticleResourcePortletPreferenceValueModel>
-			${dataFactory.toInsertSQL(journalArticleResourcePortletPreferenceValueModel)}
+			<#list dataFactory.newJournalArticleResourcePortletPreferenceValueModels(journalArticleResourcePortletPreferencesModel, journalArticleModel, groupModel) as journalArticleResourcePortletPreferenceValueModel>
+				${dataFactory.toInsertSQL(journalArticleResourcePortletPreferenceValueModel)}
+			</#list>
 		</#list>
 	</#list>
 </#list>

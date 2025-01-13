@@ -736,6 +736,14 @@ const Table = ({
 		visibleFieldNames,
 	});
 
+	const [visibleColumns, setVisibleColumns] = useState(() =>
+		getVisibleFieldsMap(
+			schema.fields as Array<Field>,
+			visibleFields,
+			selectable
+		)
+	);
+
 	const columnNames = [];
 
 	if (selectable) {
@@ -841,13 +849,11 @@ const Table = ({
 							visibleFieldNames,
 						})
 					);
+
+					setVisibleColumns(visibleColumns);
 				}}
 				sort={getSorting()}
-				visibleColumns={getVisibleFieldsMap(
-					schema.fields as Array<Field>,
-					visibleFields,
-					selectable
-				)}
+				visibleColumns={visibleColumns}
 			>
 				<Head
 					fields={schema.fields as Array<Field>}

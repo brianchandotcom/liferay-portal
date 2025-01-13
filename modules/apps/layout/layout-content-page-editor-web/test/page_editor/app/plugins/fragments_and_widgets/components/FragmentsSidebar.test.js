@@ -209,6 +209,10 @@ const renderComponent = (widgets = DEFAULT_WIDGETS) => {
 
 describe('FragmentsSidebar', () => {
 	afterEach(() => {
+		jest.useRealTimers();
+	});
+
+	beforeEach(() => {
 		TabsPanel.mockClear();
 		jest.useFakeTimers();
 	});
@@ -231,12 +235,14 @@ describe('FragmentsSidebar', () => {
 		);
 	});
 
-	it('filters fragments and widgets according to a input value', () => {
+	it('filters fragments and widgets according to a input value', async () => {
 		renderComponent();
 		const input = screen.getByLabelText('search-fragments-and-widgets');
 
-		act(() => {
-			userEvent.type(input, 't 1');
+		await act(async () => {
+			await userEvent.type(input, 't 1', {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 
 			jest.runAllTimers();
 		});
@@ -247,12 +253,14 @@ describe('FragmentsSidebar', () => {
 		expect(screen.queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
-	it('filters collections according to a input value', () => {
+	it('filters collections according to a input value', async () => {
 		renderComponent();
 		const input = screen.getByLabelText('search-fragments-and-widgets');
 
-		act(() => {
-			userEvent.type(input, 'Widget Collection 1');
+		await act(async () => {
+			await userEvent.type(input, 'Widget Collection 1', {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 
 			jest.runAllTimers();
 		});
@@ -264,12 +272,14 @@ describe('FragmentsSidebar', () => {
 		expect(screen.queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
-	it('filters widget template according to a input value', () => {
+	it('filters widget template according to a input value', async () => {
 		renderComponent();
 		const input = screen.getByLabelText('search-fragments-and-widgets');
 
-		act(() => {
-			userEvent.type(input, 'Template Portlet 1');
+		await act(async () => {
+			await userEvent.type(input, 'Template Portlet 1', {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 
 			jest.runAllTimers();
 		});
@@ -517,10 +527,12 @@ describe('FragmentsSidebar', () => {
 			).toBeInTheDocument();
 		});
 
-		it('shows the list view when the display style is card', () => {
+		it('shows the list view when the display style is card', async () => {
 			renderComponent();
 
-			userEvent.click(screen.getByTitle('switch-to-card-view'));
+			await userEvent.click(screen.getByTitle('switch-to-card-view'), {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 
 			expect(
 				screen.getByTitle('switch-to-list[noun]-view')

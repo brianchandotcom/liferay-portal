@@ -189,7 +189,7 @@ function SpacingSelectorButton({
 			setTimeout(
 				() =>
 					itemListRef.current
-						.querySelector(
+						?.querySelector(
 							`button[data-value="${
 								value || field?.defaultValue
 							}"]`

@@ -57,10 +57,12 @@ const contents = {
 	],
 };
 
-const selectOption = (option) => {
+const selectOption = async (option) => {
 	const dropdown = screen.getByRole('combobox');
 
-	userEvent.click(dropdown);
+	await userEvent.click(dropdown, {
+		advanceTimers: jest.advanceTimersByTime,
+	});
 
 	const dropdownItems = document.querySelectorAll('.dropdown-item');
 
@@ -94,12 +96,14 @@ describe('PageContent', () => {
 		});
 	});
 
-	it('filters content according to a input value', () => {
+	it('filters content according to a input value', async () => {
 		renderPageContents();
 		const input = screen.getByLabelText('search-content');
 
-		act(() => {
-			userEvent.type(input, 'WC');
+		await act(async () => {
+			await userEvent.type(input, 'WC', {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 
 			jest.runAllTimers();
 		});
@@ -112,10 +116,10 @@ describe('PageContent', () => {
 		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value: Collections', () => {
+	it('filters content according to a type value: Collections', async () => {
 		renderPageContents();
 
-		selectOption(1);
+		await selectOption(1);
 
 		expect(screen.queryByText('Collection1')).toBeInTheDocument();
 		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
@@ -125,10 +129,10 @@ describe('PageContent', () => {
 		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value: Document', () => {
+	it('filters content according to a type value: Document', async () => {
 		renderPageContents();
 
-		selectOption(2);
+		await selectOption(2);
 
 		expect(screen.queryByText('mountain.png')).toBeInTheDocument();
 		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();
@@ -138,10 +142,10 @@ describe('PageContent', () => {
 		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value: Inline Text', () => {
+	it('filters content according to a type value: Inline Text', async () => {
 		renderPageContents();
 
-		selectOption(3);
+		await selectOption(3);
 
 		expect(screen.queryByText('This is a inline text')).toBeInTheDocument();
 		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
@@ -149,10 +153,10 @@ describe('PageContent', () => {
 		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value: Web Content', () => {
+	it('filters content according to a type value: Web Content', async () => {
 		renderPageContents();
 
-		selectOption(4);
+		await selectOption(4);
 
 		expect(screen.queryByText('WC1')).toBeInTheDocument();
 		expect(

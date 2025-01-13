@@ -38,12 +38,12 @@ describe('SidebarPanelHeader', () => {
 		expect(screen.getByText('My Heading')).toBeInTheDocument();
 	});
 
-	it('closes the sidebar when the close button is pressed', () => {
+	it('closes the sidebar when the close button is pressed', async () => {
 		const dispatch = jest.fn();
 
 		renderComponent({dispatch});
 
-		userEvent.click(screen.getByTitle('close'));
+		await userEvent.click(screen.getByTitle('close'));
 
 		expect(dispatch).toBeCalledWith(
 			switchSidebarPanel({

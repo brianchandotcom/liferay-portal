@@ -117,7 +117,7 @@ describe('MappingPanel', () => {
 		const dateFormatSelect = screen.getByLabelText('date-format');
 
 		await act(async () => {
-			userEvent.selectOptions(dateFormatSelect, 'custom');
+			await userEvent.selectOptions(dateFormatSelect, 'custom');
 			fireEvent.change(dateFormatSelect);
 		});
 

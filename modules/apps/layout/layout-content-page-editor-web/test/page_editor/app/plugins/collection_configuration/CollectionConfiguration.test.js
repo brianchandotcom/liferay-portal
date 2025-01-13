@@ -96,7 +96,7 @@ describe('CollectionConfiguration', () => {
 
 		const titleInput = screen.getByLabelText('Title');
 
-		userEvent.type(titleInput, 'This is a test');
+		await userEvent.type(titleInput, 'This is a test');
 
 		await act(async () => {
 			fireEvent.blur(titleInput);
@@ -112,13 +112,13 @@ describe('CollectionConfiguration', () => {
 
 		const titleInput = screen.getByLabelText('Title');
 
-		userEvent.type(titleInput, 'This is a test');
+		await userEvent.type(titleInput, 'This is a test');
 
 		await act(async () => {
 			fireEvent.blur(titleInput);
 		});
 
-		userEvent.click(screen.getByText('clear'));
+		await userEvent.click(screen.getByText('clear'));
 
 		expect(
 			screen.queryByText('there-are-x-results-for-x')

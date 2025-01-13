@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -13,7 +14,10 @@ import Row from '../../../../../src/main/resources/META-INF/resources/page_edito
 import Topper from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
-import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {
+	ControlsProvider,
+	useSelectItem,
+} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {DragAndDropContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
 
@@ -174,7 +178,7 @@ describe('Topper', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	/* describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {
+	describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {
 		const layoutData = {
 			items: {
 				fragment: {
@@ -202,38 +206,38 @@ describe('Topper', () => {
 			layoutData,
 		};
 
-		it('clicks on options dropdown', () => {
+		it('clicks on options dropdown', async () => {
 			renderTopper(params);
 
 			const selectItem = useSelectItem();
 
-			userEvent.click(screen.getByLabelText('options'));
+			await userEvent.click(screen.getByLabelText('options'));
 
 			expect(selectItem).not.toBeCalled();
 		});
 
-		it('clicks in an options action', () => {
+		it('clicks in an options action', async () => {
 			renderTopper(params);
 
 			const selectItem = useSelectItem();
 
-			userEvent.click(screen.getByText('duplicate'));
+			await userEvent.click(screen.getByText('duplicate'));
 
 			expect(selectItem).not.toBeCalled();
 		});
 
-		it('clicks on comments button', () => {
+		it('clicks on comments button', async () => {
 			renderTopper(params);
 
 			const selectItem = useSelectItem();
 
-			userEvent.click(screen.getByLabelText('comments'));
+			await userEvent.click(screen.getByLabelText('comments'));
 
 			expect(selectItem).not.toBeCalled();
 		});
 	});
 
-	describe('Form Step components', () => {
+	/* describe('Form Step components', () => {
 		it('renders step name correctly', () => {
 			const layoutData = {
 				items: {

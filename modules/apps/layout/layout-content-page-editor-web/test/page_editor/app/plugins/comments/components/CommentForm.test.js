@@ -165,14 +165,14 @@ describe('CommentForm', () => {
 		expect(onSubmit).toHaveBeenCalled();
 	});
 
-	it('calls onTextareaChange callback when textare is changed', () => {
+	it('calls onTextareaChange callback when textare is changed', async () => {
 		const onChange = jest.fn();
 
 		const {getByPlaceholderText} = renderForm({
 			onTextareaChange: onChange,
 		});
 
-		userEvent.type(
+		await userEvent.type(
 			getByPlaceholderText('type-your-comment-here'),
 			'This is my comment'
 		);

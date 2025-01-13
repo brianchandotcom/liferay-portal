@@ -25,10 +25,10 @@ jest.mock('frontend-js-web', () => ({
 const renderComponent = () => render(<DiscardDraftButton />);
 
 describe('DiscardDraftButton', () => {
-	it('calls openConfirmModal when the Discard Draft button is pressed', () => {
+	it('calls openConfirmModal when the Discard Draft button is pressed', async () => {
 		renderComponent();
 
-		userEvent.click(screen.getByText('discard-draft'));
+		await userEvent.click(screen.getByText('discard-draft'));
 
 		expect(openConfirmModal).toHaveBeenCalledWith({
 			message:

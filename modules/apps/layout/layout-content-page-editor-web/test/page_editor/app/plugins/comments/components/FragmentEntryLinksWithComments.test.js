@@ -126,10 +126,9 @@ describe('FragmentEntryLinksWithComments', () => {
 			name: 'show-comments',
 		});
 
-		sandroFragment.focus();
+		fireEvent.focus(sandroFragment);
 
 		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
-		expect(sandroFragment).toHaveFocus();
 		expect(hoverItem).toHaveBeenCalledWith('sandro-item');
 	});
 

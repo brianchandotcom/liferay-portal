@@ -41,13 +41,13 @@ describe('ViewportSizeSelector', () => {
 		).toBeInTheDocument();
 	});
 
-	it('calls onSizeSelected with sizeId when a size is selected', () => {
+	it('calls onSizeSelected with sizeId when a size is selected', async () => {
 		const onSelect = jest.fn();
 		renderComponent({
 			onSelect,
 		});
 
-		userEvent.click(screen.getByLabelText('Mobile'));
+		await userEvent.click(screen.getByLabelText('Mobile'));
 
 		expect(onSelect).toHaveBeenLastCalledWith('mobile');
 	});
@@ -59,7 +59,7 @@ describe('ViewportSizeSelector', () => {
 			onSelect,
 		});
 
-		userEvent.click(screen.getByRole('combobox'));
+		await userEvent.click(screen.getByRole('combobox'));
 
 		const option = screen.getByText('Mobile');
 

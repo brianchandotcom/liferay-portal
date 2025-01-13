@@ -36,10 +36,10 @@ const renderComponent = () =>
 	);
 
 describe('VisibilityButton', () => {
-	it('calls updateItemStyle when the visibility button is pressed', () => {
+	it('calls updateItemStyle when the visibility button is pressed', async () => {
 		renderComponent();
 
-		userEvent.click(screen.getByLabelText('show-x'));
+		await userEvent.click(screen.getByLabelText('show-x'));
 
 		expect(updateItemStyle).toBeCalledWith(
 			expect.objectContaining({

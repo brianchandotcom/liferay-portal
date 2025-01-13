@@ -195,10 +195,8 @@ describe('FormGeneralPanel', () => {
 
 		const input = screen.queryByLabelText('embedded-message');
 
-		userEvent.type(input, 'New message', {
-			initialSelectionEnd: 100,
-			initialSelectionStart: 0,
-		});
+		await userEvent.clear(input);
+		await userEvent.type(input, 'New message');
 
 		fireEvent.blur(input);
 
@@ -221,10 +219,8 @@ describe('FormGeneralPanel', () => {
 
 		const input = screen.getByLabelText('external-url');
 
-		userEvent.type(input, 'https://liferay.com', {
-			initialSelectionEnd: 100,
-			initialSelectionStart: 0,
-		});
+		await userEvent.clear(input);
+		await userEvent.type(input, 'https://liferay.com');
 
 		fireEvent.blur(input);
 

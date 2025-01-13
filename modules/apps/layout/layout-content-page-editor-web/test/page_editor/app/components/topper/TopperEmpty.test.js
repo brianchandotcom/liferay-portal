@@ -88,14 +88,14 @@ describe('TopperEmpty', () => {
 		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
-	it('renders paste options', () => {
+	it('renders paste options', async () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
 
 		renderTopperEmpty({
 			itemType: LAYOUT_DATA_ITEM_TYPES.column,
 		});
 
-		userEvent.click(screen.getByLabelText('options'));
+		await userEvent.click(screen.getByLabelText('options'));
 
 		expect(screen.getByText('paste')).toBeInTheDocument();
 

@@ -268,7 +268,8 @@ describe('EditableLinkPanel', () => {
 
 		const hrefInput = getByLabelText('url');
 
-		userEvent.type(hrefInput, 'http://google.com');
+		await userEvent.clear(hrefInput);
+		await userEvent.type(hrefInput, 'http://google.com');
 
 		fireEvent.blur(hrefInput);
 
@@ -294,7 +295,8 @@ describe('EditableLinkPanel', () => {
 
 		const hrefInput = getByLabelText('url');
 
-		userEvent.type(hrefInput, 'http://google.com');
+		await userEvent.clear(hrefInput);
+		await userEvent.type(hrefInput, 'http://google.com');
 
 		fireEvent.blur(hrefInput);
 

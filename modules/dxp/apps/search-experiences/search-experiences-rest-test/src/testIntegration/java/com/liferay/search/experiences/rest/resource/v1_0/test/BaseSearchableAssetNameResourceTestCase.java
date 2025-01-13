@@ -99,10 +99,8 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SearchableAssetNameResource.Builder builder =
-			SearchableAssetNameResource.builder();
-
-		searchableAssetNameResource = builder.authentication(
+		searchableAssetNameResource = SearchableAssetNameResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

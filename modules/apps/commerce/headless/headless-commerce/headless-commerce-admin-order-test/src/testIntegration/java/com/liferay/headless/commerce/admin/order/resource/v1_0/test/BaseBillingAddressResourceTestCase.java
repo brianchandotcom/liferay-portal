@@ -98,10 +98,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		BillingAddressResource.Builder builder =
-			BillingAddressResource.builder();
-
-		billingAddressResource = builder.authentication(
+		billingAddressResource = BillingAddressResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -99,9 +99,8 @@ public abstract class BaseStrategyResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		StrategyResource.Builder builder = StrategyResource.builder();
-
-		strategyResource = builder.authentication(
+		strategyResource = StrategyResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

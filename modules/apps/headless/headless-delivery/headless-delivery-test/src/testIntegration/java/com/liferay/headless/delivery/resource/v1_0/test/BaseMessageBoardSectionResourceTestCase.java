@@ -109,10 +109,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MessageBoardSectionResource.Builder builder =
-			MessageBoardSectionResource.builder();
-
-		messageBoardSectionResource = builder.authentication(
+		messageBoardSectionResource = MessageBoardSectionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

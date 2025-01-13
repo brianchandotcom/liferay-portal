@@ -103,9 +103,8 @@ public abstract class BaseObjectActionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ObjectActionResource.Builder builder = ObjectActionResource.builder();
-
-		objectActionResource = builder.authentication(
+		objectActionResource = ObjectActionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

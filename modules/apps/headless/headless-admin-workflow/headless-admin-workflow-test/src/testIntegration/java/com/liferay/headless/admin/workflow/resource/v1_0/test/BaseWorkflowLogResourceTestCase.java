@@ -101,9 +101,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WorkflowLogResource.Builder builder = WorkflowLogResource.builder();
-
-		workflowLogResource = builder.authentication(
+		workflowLogResource = WorkflowLogResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

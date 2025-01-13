@@ -101,9 +101,8 @@ public abstract class BaseOrderNoteResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderNoteResource.Builder builder = OrderNoteResource.builder();
-
-		orderNoteResource = builder.authentication(
+		orderNoteResource = OrderNoteResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

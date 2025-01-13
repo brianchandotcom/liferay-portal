@@ -105,9 +105,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrganizationResource.Builder builder = OrganizationResource.builder();
-
-		organizationResource = builder.authentication(
+		organizationResource = OrganizationResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

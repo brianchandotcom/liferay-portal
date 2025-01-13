@@ -102,9 +102,8 @@ public abstract class BaseNodeMetricResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		NodeMetricResource.Builder builder = NodeMetricResource.builder();
-
-		nodeMetricResource = builder.authentication(
+		nodeMetricResource = NodeMetricResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

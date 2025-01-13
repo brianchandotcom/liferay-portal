@@ -98,10 +98,8 @@ public abstract class BaseLowStockActionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		LowStockActionResource.Builder builder =
-			LowStockActionResource.builder();
-
-		lowStockActionResource = builder.authentication(
+		lowStockActionResource = LowStockActionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

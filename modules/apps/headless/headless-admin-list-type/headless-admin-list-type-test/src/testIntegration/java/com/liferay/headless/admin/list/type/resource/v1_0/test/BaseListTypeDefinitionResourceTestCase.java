@@ -104,10 +104,8 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ListTypeDefinitionResource.Builder builder =
-			ListTypeDefinitionResource.builder();
-
-		listTypeDefinitionResource = builder.authentication(
+		listTypeDefinitionResource = ListTypeDefinitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

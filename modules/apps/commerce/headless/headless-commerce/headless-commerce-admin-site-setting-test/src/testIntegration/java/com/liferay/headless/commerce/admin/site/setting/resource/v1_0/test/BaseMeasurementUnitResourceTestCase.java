@@ -104,10 +104,8 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MeasurementUnitResource.Builder builder =
-			MeasurementUnitResource.builder();
-
-		measurementUnitResource = builder.authentication(
+		measurementUnitResource = MeasurementUnitResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

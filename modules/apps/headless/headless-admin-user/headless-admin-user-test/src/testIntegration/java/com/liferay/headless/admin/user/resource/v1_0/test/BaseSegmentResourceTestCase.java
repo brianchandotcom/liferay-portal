@@ -101,9 +101,8 @@ public abstract class BaseSegmentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SegmentResource.Builder builder = SegmentResource.builder();
-
-		segmentResource = builder.authentication(
+		segmentResource = SegmentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

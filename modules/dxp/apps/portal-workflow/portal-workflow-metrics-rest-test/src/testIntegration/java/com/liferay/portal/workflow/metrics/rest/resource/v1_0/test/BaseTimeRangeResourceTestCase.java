@@ -99,9 +99,8 @@ public abstract class BaseTimeRangeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TimeRangeResource.Builder builder = TimeRangeResource.builder();
-
-		timeRangeResource = builder.authentication(
+		timeRangeResource = TimeRangeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

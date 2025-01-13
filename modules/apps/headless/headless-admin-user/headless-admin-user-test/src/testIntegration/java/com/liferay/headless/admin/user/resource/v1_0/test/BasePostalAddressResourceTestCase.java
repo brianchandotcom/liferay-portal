@@ -99,9 +99,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PostalAddressResource.Builder builder = PostalAddressResource.builder();
-
-		postalAddressResource = builder.authentication(
+		postalAddressResource = PostalAddressResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

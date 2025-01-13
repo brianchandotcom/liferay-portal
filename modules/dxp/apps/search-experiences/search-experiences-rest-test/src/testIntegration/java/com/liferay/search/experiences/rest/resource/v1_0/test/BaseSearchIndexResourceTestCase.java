@@ -99,9 +99,8 @@ public abstract class BaseSearchIndexResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SearchIndexResource.Builder builder = SearchIndexResource.builder();
-
-		searchIndexResource = builder.authentication(
+		searchIndexResource = SearchIndexResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

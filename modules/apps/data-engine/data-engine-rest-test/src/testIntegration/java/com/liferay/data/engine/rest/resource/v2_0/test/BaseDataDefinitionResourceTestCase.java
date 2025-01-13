@@ -106,10 +106,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DataDefinitionResource.Builder builder =
-			DataDefinitionResource.builder();
-
-		dataDefinitionResource = builder.authentication(
+		dataDefinitionResource = DataDefinitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

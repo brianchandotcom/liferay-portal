@@ -105,9 +105,8 @@ public abstract class BaseSXPElementResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SXPElementResource.Builder builder = SXPElementResource.builder();
-
-		sxpElementResource = builder.authentication(
+		sxpElementResource = SXPElementResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

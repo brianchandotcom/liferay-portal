@@ -99,9 +99,8 @@ public abstract class BasePhoneResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PhoneResource.Builder builder = PhoneResource.builder();
-
-		phoneResource = builder.authentication(
+		phoneResource = PhoneResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

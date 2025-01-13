@@ -98,9 +98,8 @@ public abstract class BasePaymentMethodResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PaymentMethodResource.Builder builder = PaymentMethodResource.builder();
-
-		paymentMethodResource = builder.authentication(
+		paymentMethodResource = PaymentMethodResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

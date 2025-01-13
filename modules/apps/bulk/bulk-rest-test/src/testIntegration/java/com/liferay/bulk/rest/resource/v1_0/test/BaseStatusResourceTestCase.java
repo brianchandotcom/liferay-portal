@@ -98,9 +98,8 @@ public abstract class BaseStatusResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		StatusResource.Builder builder = StatusResource.builder();
-
-		statusResource = builder.authentication(
+		statusResource = StatusResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

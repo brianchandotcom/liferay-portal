@@ -102,9 +102,8 @@ public abstract class BaseSLAResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SLAResource.Builder builder = SLAResource.builder();
-
-		slaResource = builder.authentication(
+		slaResource = SLAResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -104,10 +104,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProductConfigurationResource.Builder builder =
-			ProductConfigurationResource.builder();
-
-		productConfigurationResource = builder.authentication(
+		productConfigurationResource = ProductConfigurationResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

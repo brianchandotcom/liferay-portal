@@ -97,10 +97,8 @@ public abstract class BaseFriendlyUrlHistoryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FriendlyUrlHistoryResource.Builder builder =
-			FriendlyUrlHistoryResource.builder();
-
-		friendlyUrlHistoryResource = builder.authentication(
+		friendlyUrlHistoryResource = FriendlyUrlHistoryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

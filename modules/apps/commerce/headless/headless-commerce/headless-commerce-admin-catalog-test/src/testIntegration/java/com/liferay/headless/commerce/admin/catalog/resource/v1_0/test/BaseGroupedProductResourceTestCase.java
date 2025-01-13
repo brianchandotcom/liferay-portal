@@ -100,10 +100,8 @@ public abstract class BaseGroupedProductResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		GroupedProductResource.Builder builder =
-			GroupedProductResource.builder();
-
-		groupedProductResource = builder.authentication(
+		groupedProductResource = GroupedProductResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

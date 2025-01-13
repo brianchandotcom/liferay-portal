@@ -100,10 +100,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProductOptionValueResource.Builder builder =
-			ProductOptionValueResource.builder();
-
-		productOptionValueResource = builder.authentication(
+		productOptionValueResource = ProductOptionValueResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

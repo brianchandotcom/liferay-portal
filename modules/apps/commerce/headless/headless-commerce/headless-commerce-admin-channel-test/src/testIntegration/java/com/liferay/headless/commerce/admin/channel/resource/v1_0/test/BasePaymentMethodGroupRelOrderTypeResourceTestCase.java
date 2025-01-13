@@ -103,17 +103,16 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PaymentMethodGroupRelOrderTypeResource.Builder builder =
-			PaymentMethodGroupRelOrderTypeResource.builder();
-
-		paymentMethodGroupRelOrderTypeResource = builder.authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		paymentMethodGroupRelOrderTypeResource =
+			PaymentMethodGroupRelOrderTypeResource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
 	}
 
 	@After

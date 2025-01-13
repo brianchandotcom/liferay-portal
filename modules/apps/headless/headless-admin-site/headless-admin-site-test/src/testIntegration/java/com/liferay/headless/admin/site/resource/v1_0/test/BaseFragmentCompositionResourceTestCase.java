@@ -103,10 +103,8 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FragmentCompositionResource.Builder builder =
-			FragmentCompositionResource.builder();
-
-		fragmentCompositionResource = builder.authentication(
+		fragmentCompositionResource = FragmentCompositionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

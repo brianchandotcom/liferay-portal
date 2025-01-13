@@ -98,10 +98,8 @@ public abstract class BaseProcessVersionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProcessVersionResource.Builder builder =
-			ProcessVersionResource.builder();
-
-		processVersionResource = builder.authentication(
+		processVersionResource = ProcessVersionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

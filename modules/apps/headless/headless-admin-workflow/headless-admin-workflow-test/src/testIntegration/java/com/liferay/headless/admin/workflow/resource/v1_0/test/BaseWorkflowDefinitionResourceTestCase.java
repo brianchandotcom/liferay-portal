@@ -103,10 +103,8 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WorkflowDefinitionResource.Builder builder =
-			WorkflowDefinitionResource.builder();
-
-		workflowDefinitionResource = builder.authentication(
+		workflowDefinitionResource = WorkflowDefinitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

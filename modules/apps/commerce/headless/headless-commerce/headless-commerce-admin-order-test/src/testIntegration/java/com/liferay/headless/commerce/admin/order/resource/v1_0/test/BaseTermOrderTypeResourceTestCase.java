@@ -100,9 +100,8 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TermOrderTypeResource.Builder builder = TermOrderTypeResource.builder();
-
-		termOrderTypeResource = builder.authentication(
+		termOrderTypeResource = TermOrderTypeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -103,10 +103,8 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ObjectValidationRuleResource.Builder builder =
-			ObjectValidationRuleResource.builder();
-
-		objectValidationRuleResource = builder.authentication(
+		objectValidationRuleResource = ObjectValidationRuleResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

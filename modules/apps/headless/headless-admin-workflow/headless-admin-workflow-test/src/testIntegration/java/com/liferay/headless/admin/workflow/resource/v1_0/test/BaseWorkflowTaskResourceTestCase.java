@@ -101,9 +101,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WorkflowTaskResource.Builder builder = WorkflowTaskResource.builder();
-
-		workflowTaskResource = builder.authentication(
+		workflowTaskResource = WorkflowTaskResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

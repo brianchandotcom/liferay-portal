@@ -104,10 +104,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DataRecordCollectionResource.Builder builder =
-			DataRecordCollectionResource.builder();
-
-		dataRecordCollectionResource = builder.authentication(
+		dataRecordCollectionResource = DataRecordCollectionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

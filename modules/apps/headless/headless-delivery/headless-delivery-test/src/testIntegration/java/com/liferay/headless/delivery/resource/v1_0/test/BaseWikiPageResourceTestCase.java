@@ -108,9 +108,8 @@ public abstract class BaseWikiPageResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WikiPageResource.Builder builder = WikiPageResource.builder();
-
-		wikiPageResource = builder.authentication(
+		wikiPageResource = WikiPageResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

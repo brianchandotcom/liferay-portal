@@ -102,9 +102,8 @@ public abstract class BaseObjectFolderResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ObjectFolderResource.Builder builder = ObjectFolderResource.builder();
-
-		objectFolderResource = builder.authentication(
+		objectFolderResource = ObjectFolderResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

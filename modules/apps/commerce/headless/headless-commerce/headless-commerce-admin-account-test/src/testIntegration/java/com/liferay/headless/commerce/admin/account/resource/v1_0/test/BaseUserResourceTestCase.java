@@ -98,9 +98,8 @@ public abstract class BaseUserResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		UserResource.Builder builder = UserResource.builder();
-
-		userResource = builder.authentication(
+		userResource = UserResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

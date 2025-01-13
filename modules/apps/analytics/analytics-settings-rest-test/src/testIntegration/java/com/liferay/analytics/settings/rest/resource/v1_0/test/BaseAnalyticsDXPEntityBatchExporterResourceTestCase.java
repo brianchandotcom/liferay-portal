@@ -88,17 +88,16 @@ public abstract class BaseAnalyticsDXPEntityBatchExporterResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AnalyticsDXPEntityBatchExporterResource.Builder builder =
-			AnalyticsDXPEntityBatchExporterResource.builder();
-
-		analyticsDXPEntityBatchExporterResource = builder.authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		analyticsDXPEntityBatchExporterResource =
+			AnalyticsDXPEntityBatchExporterResource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
 	}
 
 	@After

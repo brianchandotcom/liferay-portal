@@ -104,9 +104,8 @@ public abstract class BaseSpecificationResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SpecificationResource.Builder builder = SpecificationResource.builder();
-
-		specificationResource = builder.authentication(
+		specificationResource = SpecificationResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

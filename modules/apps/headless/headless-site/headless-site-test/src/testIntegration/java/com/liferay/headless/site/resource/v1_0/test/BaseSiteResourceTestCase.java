@@ -100,9 +100,8 @@ public abstract class BaseSiteResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SiteResource.Builder builder = SiteResource.builder();
-
-		siteResource = builder.authentication(
+		siteResource = SiteResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

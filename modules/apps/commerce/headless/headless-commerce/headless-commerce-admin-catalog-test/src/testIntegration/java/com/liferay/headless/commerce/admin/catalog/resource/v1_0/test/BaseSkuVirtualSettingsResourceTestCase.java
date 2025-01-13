@@ -98,10 +98,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SkuVirtualSettingsResource.Builder builder =
-			SkuVirtualSettingsResource.builder();
-
-		skuVirtualSettingsResource = builder.authentication(
+		skuVirtualSettingsResource = SkuVirtualSettingsResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,9 +98,8 @@ public abstract class BaseSuggestionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SuggestionResource.Builder builder = SuggestionResource.builder();
-
-		suggestionResource = builder.authentication(
+		suggestionResource = SuggestionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

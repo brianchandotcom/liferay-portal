@@ -98,10 +98,8 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProductVirtualSettingsResource.Builder builder =
-			ProductVirtualSettingsResource.builder();
-
-		productVirtualSettingsResource = builder.authentication(
+		productVirtualSettingsResource = ProductVirtualSettingsResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

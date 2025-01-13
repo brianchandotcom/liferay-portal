@@ -103,10 +103,8 @@ public abstract class BaseChannelAccountResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ChannelAccountResource.Builder builder =
-			ChannelAccountResource.builder();
-
-		channelAccountResource = builder.authentication(
+		channelAccountResource = ChannelAccountResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

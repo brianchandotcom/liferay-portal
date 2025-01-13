@@ -100,10 +100,8 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DiscountAccountGroupResource.Builder builder =
-			DiscountAccountGroupResource.builder();
-
-		discountAccountGroupResource = builder.authentication(
+		discountAccountGroupResource = DiscountAccountGroupResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

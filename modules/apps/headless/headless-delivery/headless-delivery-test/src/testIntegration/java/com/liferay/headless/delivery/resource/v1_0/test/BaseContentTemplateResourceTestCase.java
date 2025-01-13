@@ -119,10 +119,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ContentTemplateResource.Builder builder =
-			ContentTemplateResource.builder();
-
-		contentTemplateResource = builder.authentication(
+		contentTemplateResource = ContentTemplateResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

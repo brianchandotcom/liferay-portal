@@ -100,9 +100,8 @@ public abstract class BaseTransitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TransitionResource.Builder builder = TransitionResource.builder();
-
-		transitionResource = builder.authentication(
+		transitionResource = TransitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,9 +98,8 @@ public abstract class BaseExperimentRunResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ExperimentRunResource.Builder builder = ExperimentRunResource.builder();
-
-		experimentRunResource = builder.authentication(
+		experimentRunResource = ExperimentRunResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

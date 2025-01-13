@@ -102,10 +102,8 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ReplenishmentItemResource.Builder builder =
-			ReplenishmentItemResource.builder();
-
-		replenishmentItemResource = builder.authentication(
+		replenishmentItemResource = ReplenishmentItemResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

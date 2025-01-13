@@ -98,9 +98,8 @@ public abstract class BaseFieldResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		FieldResource.Builder builder = FieldResource.builder();
-
-		fieldResource = builder.authentication(
+		fieldResource = FieldResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

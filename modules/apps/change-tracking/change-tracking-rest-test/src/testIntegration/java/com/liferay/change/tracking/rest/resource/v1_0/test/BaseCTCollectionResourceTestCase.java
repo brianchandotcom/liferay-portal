@@ -103,9 +103,8 @@ public abstract class BaseCTCollectionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CTCollectionResource.Builder builder = CTCollectionResource.builder();
-
-		ctCollectionResource = builder.authentication(
+		ctCollectionResource = CTCollectionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

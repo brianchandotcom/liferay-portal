@@ -104,10 +104,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ObjectDefinitionResource.Builder builder =
-			ObjectDefinitionResource.builder();
-
-		objectDefinitionResource = builder.authentication(
+		objectDefinitionResource = ObjectDefinitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

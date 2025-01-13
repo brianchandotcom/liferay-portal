@@ -98,10 +98,8 @@ public abstract class BaseAssigneeMetricResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AssigneeMetricResource.Builder builder =
-			AssigneeMetricResource.builder();
-
-		assigneeMetricResource = builder.authentication(
+		assigneeMetricResource = AssigneeMetricResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -105,9 +105,8 @@ public abstract class BaseCommentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CommentResource.Builder builder = CommentResource.builder();
-
-		commentResource = builder.authentication(
+		commentResource = CommentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

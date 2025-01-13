@@ -101,9 +101,8 @@ public abstract class BaseSubscriptionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		SubscriptionResource.Builder builder = SubscriptionResource.builder();
-
-		subscriptionResource = builder.authentication(
+		subscriptionResource = SubscriptionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

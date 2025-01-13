@@ -98,10 +98,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TaxonomyVocabularyResource.Builder builder =
-			TaxonomyVocabularyResource.builder();
-
-		taxonomyVocabularyResource = builder.authentication(
+		taxonomyVocabularyResource = TaxonomyVocabularyResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

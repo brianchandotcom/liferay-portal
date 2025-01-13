@@ -98,9 +98,8 @@ public abstract class BaseCaptchaResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CaptchaResource.Builder builder = CaptchaResource.builder();
-
-		captchaResource = builder.authentication(
+		captchaResource = CaptchaResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -104,9 +104,8 @@ public abstract class BaseOptionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OptionResource.Builder builder = OptionResource.builder();
-
-		optionResource = builder.authentication(
+		optionResource = OptionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

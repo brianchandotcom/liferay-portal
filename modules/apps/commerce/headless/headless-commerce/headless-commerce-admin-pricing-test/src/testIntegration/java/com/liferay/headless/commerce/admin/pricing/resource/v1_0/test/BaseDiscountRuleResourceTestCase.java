@@ -101,9 +101,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DiscountRuleResource.Builder builder = DiscountRuleResource.builder();
-
-		discountRuleResource = builder.authentication(
+		discountRuleResource = DiscountRuleResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

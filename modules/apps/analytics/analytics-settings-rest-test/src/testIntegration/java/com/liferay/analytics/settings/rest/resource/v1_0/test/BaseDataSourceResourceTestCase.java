@@ -99,9 +99,8 @@ public abstract class BaseDataSourceResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DataSourceResource.Builder builder = DataSourceResource.builder();
-
-		dataSourceResource = builder.authentication(
+		dataSourceResource = DataSourceResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

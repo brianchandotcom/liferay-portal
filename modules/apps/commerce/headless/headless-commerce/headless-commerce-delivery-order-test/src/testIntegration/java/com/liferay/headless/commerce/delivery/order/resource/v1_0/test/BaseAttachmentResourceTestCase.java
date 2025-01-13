@@ -100,9 +100,8 @@ public abstract class BaseAttachmentResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AttachmentResource.Builder builder = AttachmentResource.builder();
-
-		attachmentResource = builder.authentication(
+		attachmentResource = AttachmentResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

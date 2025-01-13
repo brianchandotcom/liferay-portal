@@ -102,10 +102,8 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		DisplayPageTemplateResource.Builder builder =
-			DisplayPageTemplateResource.builder();
-
-		displayPageTemplateResource = builder.authentication(
+		displayPageTemplateResource = DisplayPageTemplateResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

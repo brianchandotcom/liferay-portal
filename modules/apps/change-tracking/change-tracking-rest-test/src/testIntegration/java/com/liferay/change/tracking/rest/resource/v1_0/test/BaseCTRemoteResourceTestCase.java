@@ -103,9 +103,8 @@ public abstract class BaseCTRemoteResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		CTRemoteResource.Builder builder = CTRemoteResource.builder();
-
-		ctRemoteResource = builder.authentication(
+		ctRemoteResource = CTRemoteResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

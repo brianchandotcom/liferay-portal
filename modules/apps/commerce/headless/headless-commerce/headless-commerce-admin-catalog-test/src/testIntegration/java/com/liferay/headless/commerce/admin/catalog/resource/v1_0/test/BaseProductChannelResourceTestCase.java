@@ -101,10 +101,8 @@ public abstract class BaseProductChannelResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		ProductChannelResource.Builder builder =
-			ProductChannelResource.builder();
-
-		productChannelResource = builder.authentication(
+		productChannelResource = ProductChannelResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

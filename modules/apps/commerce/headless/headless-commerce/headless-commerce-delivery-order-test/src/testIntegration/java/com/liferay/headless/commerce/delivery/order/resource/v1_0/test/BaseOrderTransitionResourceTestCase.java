@@ -98,10 +98,8 @@ public abstract class BaseOrderTransitionResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		OrderTransitionResource.Builder builder =
-			OrderTransitionResource.builder();
-
-		orderTransitionResource = builder.authentication(
+		orderTransitionResource = OrderTransitionResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

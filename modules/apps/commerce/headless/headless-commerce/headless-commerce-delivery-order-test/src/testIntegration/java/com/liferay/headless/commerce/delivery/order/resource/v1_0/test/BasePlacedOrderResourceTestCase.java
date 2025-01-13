@@ -103,9 +103,8 @@ public abstract class BasePlacedOrderResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PlacedOrderResource.Builder builder = PlacedOrderResource.builder();
-
-		placedOrderResource = builder.authentication(
+		placedOrderResource = PlacedOrderResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -101,9 +101,8 @@ public abstract class BaseWishListResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WishListResource.Builder builder = WishListResource.builder();
-
-		wishListResource = builder.authentication(
+		wishListResource = WishListResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

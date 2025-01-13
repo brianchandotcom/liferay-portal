@@ -102,9 +102,8 @@ public abstract class BasePinResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PinResource.Builder builder = PinResource.builder();
-
-		pinResource = builder.authentication(
+		pinResource = PinResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

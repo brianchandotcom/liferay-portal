@@ -103,10 +103,8 @@ public abstract class BaseUserNotificationResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		UserNotificationResource.Builder builder =
-			UserNotificationResource.builder();
-
-		userNotificationResource = builder.authentication(
+		userNotificationResource = UserNotificationResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

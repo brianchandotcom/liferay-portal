@@ -101,9 +101,8 @@ public abstract class BasePriceEntryResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		PriceEntryResource.Builder builder = PriceEntryResource.builder();
-
-		priceEntryResource = builder.authentication(
+		priceEntryResource = PriceEntryResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

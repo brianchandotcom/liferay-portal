@@ -217,10 +217,10 @@ describe('SpacingBox', () => {
 		expect(onChange).toHaveBeenCalledWith('paddingLeft', '10');
 	});
 
-	it('shows token value next to token name in the dropdown', () => {
+	it('shows token value next to token name in the dropdown', async () => {
 		render(<SpacingBoxTest />);
 
-		userEvent.click(screen.getByLabelText('padding-left'));
+		await userEvent.click(screen.getByLabelText('padding-left'));
 
 		expect(screen.getByText('5rem')).toBeInTheDocument();
 	});
@@ -243,7 +243,7 @@ describe('SpacingBox', () => {
 		).toHaveFocus();
 	});
 
-	it('gets the corresponding value if the token value does not exist', () => {
+	it('gets the corresponding value if the token value does not exist', async () => {
 		window.getComputedStyle = () => {
 			return {
 				getPropertyValue: (key) => {
@@ -254,7 +254,7 @@ describe('SpacingBox', () => {
 
 		render(<SpacingBoxTest />);
 
-		userEvent.click(screen.getByLabelText('padding-right'));
+		await userEvent.click(screen.getByLabelText('padding-right'));
 
 		expect(screen.getByText('111px')).toBeInTheDocument();
 	});
@@ -268,37 +268,39 @@ describe('SpacingBox', () => {
 			expect(screen.queryByTitle('select-units')).not.toBeInTheDocument();
 		});
 
-		it('calls onChange when setting a custom value', () => {
+		it('calls onChange when setting a custom value', async () => {
 			const onChange = jest.fn();
 			render(<SpacingBoxTest onChange={onChange} />);
 
 			const button = screen.getByLabelText('margin-top');
 
-			userEvent.click(button);
+			await userEvent.click(button);
 
 			const input = screen.getByLabelText('margin-top', {
 				selector: 'input',
 			});
 
-			userEvent.type(input, '12');
+			await userEvent.clear(input);
+			await userEvent.type(input, '12');
 			fireEvent.blur(input);
 
 			expect(onChange).toHaveBeenCalledWith('marginTop', '12px');
 		});
 
-		it('calls onChange and closes the dropdown when the Enter button is pressed', () => {
+		it('calls onChange and closes the dropdown when the Enter button is pressed', async () => {
 			const onChange = jest.fn();
 			render(<SpacingBoxTest onChange={onChange} />);
 
 			const button = screen.getByLabelText('padding-top');
 
-			userEvent.click(button);
+			await userEvent.click(button);
 
 			const input = screen.getByLabelText('padding-top', {
 				selector: 'input',
 			});
 
-			userEvent.type(input, '20');
+			await userEvent.clear(input);
+			await userEvent.type(input, '20');
 			fireEvent.keyUp(input, {key: 'Enter'});
 
 			expect(onChange).toHaveBeenCalledWith('paddingTop', '20px');
@@ -307,19 +309,19 @@ describe('SpacingBox', () => {
 	});
 
 	describe('Reset button inside SpacingBox', () => {
-		it('does not show reset button if no value is selected', () => {
+		it('does not show reset button if no value is selected', async () => {
 			render(<SpacingBoxTest />);
 
 			const button = screen.getByLabelText('margin-top');
 
-			userEvent.click(button);
+			await userEvent.click(button);
 
 			expect(
 				screen.queryByTitle('reset-to-initial-value')
 			).not.toBeInTheDocument();
 		});
 
-		it('reset value when pressing the button', () => {
+		it('reset value when pressing the button', async () => {
 			const onChange = jest.fn();
 
 			render(
@@ -328,9 +330,9 @@ describe('SpacingBox', () => {
 
 			const button = screen.getByLabelText('margin-top');
 
-			userEvent.click(button);
+			await userEvent.click(button);
 
-			userEvent.click(screen.getByTitle('reset-to-initial-value'));
+			await userEvent.click(screen.getByTitle('reset-to-initial-value'));
 
 			expect(onChange).toHaveBeenCalledWith(
 				'marginTop',
@@ -339,7 +341,7 @@ describe('SpacingBox', () => {
 			);
 		});
 
-		it('renders correct label if we are in Tablet viewport', () => {
+		it('renders correct label if we are in Tablet viewport', async () => {
 			const onChange = jest.fn();
 
 			render(
@@ -351,14 +353,14 @@ describe('SpacingBox', () => {
 				/>
 			);
 
-			userEvent.click(screen.getByLabelText('margin-top'));
+			await userEvent.click(screen.getByLabelText('margin-top'));
 
 			expect(
 				screen.getByTitle('reset-to-desktop-value')
 			).toBeInTheDocument();
 		});
 
-		it('renders correct label if we are in Landscape viewport', () => {
+		it('renders correct label if we are in Landscape viewport', async () => {
 			const onChange = jest.fn();
 
 			render(
@@ -370,14 +372,14 @@ describe('SpacingBox', () => {
 				/>
 			);
 
-			userEvent.click(screen.getByLabelText('margin-top'));
+			await userEvent.click(screen.getByLabelText('margin-top'));
 
 			expect(
 				screen.getByTitle('reset-to-tablet-value')
 			).toBeInTheDocument();
 		});
 
-		it('renders correct label if we are in Portrait viewport', () => {
+		it('renders correct label if we are in Portrait viewport', async () => {
 			const onChange = jest.fn();
 
 			render(
@@ -389,7 +391,7 @@ describe('SpacingBox', () => {
 				/>
 			);
 
-			userEvent.click(screen.getByLabelText('margin-top'));
+			await userEvent.click(screen.getByLabelText('margin-top'));
 
 			expect(
 				screen.getByTitle('reset-to-landscapeMobile-value')

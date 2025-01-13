@@ -260,7 +260,7 @@ describe('FormWithControls', () => {
 		).toBeInTheDocument();
 	});
 
-	it('opens field selection modal with correct type when mapping the form', () => {
+	it('opens field selection modal with correct type when mapping the form', async () => {
 		render(
 			<StoreMother.Component>
 				<FormWithControls
@@ -279,7 +279,7 @@ describe('FormWithControls', () => {
 
 		const select = screen.getByLabelText('content-type');
 
-		userEvent.selectOptions(select, '33333');
+		await userEvent.selectOptions(select, '33333');
 		fireEvent.change(select);
 
 		expect(openInfoFieldSelector).toBeCalledWith(

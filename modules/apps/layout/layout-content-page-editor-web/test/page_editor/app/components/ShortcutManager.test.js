@@ -178,10 +178,6 @@ describe('ShortcutManager', () => {
 		});
 	});
 
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
-
 	it('triggers hide sidebar action when pressing cmd + shift + .', () => {
 		const mockDispatch = jest.fn((a) => {
 			if (typeof a === 'function') {
@@ -254,6 +250,8 @@ describe('ShortcutManager', () => {
 		act(() => {
 			jest.runAllTimers();
 		});
+
+		jest.useRealTimers();
 
 		screen.getByText('keyboard-shortcuts');
 	});

@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -174,8 +175,8 @@ describe('CommonStyles', () => {
 			state: {selectedViewportSize: 'tablet'},
 		});
 
-		getByLabelText('margin-left').click();
-		getByLabelText('set-margin-left-to-1').click();
+		await userEvent.click(getByLabelText('margin-left'));
+		await userEvent.click(getByLabelText('set-margin-left-to-1'));
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {

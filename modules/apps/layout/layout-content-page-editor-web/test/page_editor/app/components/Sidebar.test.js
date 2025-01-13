@@ -148,12 +148,12 @@ describe('Sidebar', () => {
 			);
 		});
 
-		it('opens the shortcut modal when the button is pressed', () => {
+		it('opens the shortcut modal when the button is pressed', async () => {
 			const setOpenShortcutModal = useSetOpenShortcutModal();
 
 			renderSidebar();
 
-			userEvent.click(
+			await userEvent.click(
 				screen.getByLabelText('open-keyboard-shortcuts⇧+?')
 			);
 

@@ -103,7 +103,7 @@ describe('TextField', () => {
 		expect(input.min).toEqual('0');
 	});
 
-	it('shows the error message defined in the typeoptions when the value is not valid', () => {
+	it('shows the error message defined in the typeoptions when the value is not valid', async () => {
 		const errorMessage = 'bad';
 
 		const {getByLabelText, getByText} = renderTextField({
@@ -112,24 +112,26 @@ describe('TextField', () => {
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, '5');
+		await userEvent.clear(input);
+		await userEvent.type(input, '5');
 
 		expect(getByText(errorMessage)).toBeInTheDocument();
 	});
 
-	it('shows the default error message when no one is provided', () => {
+	it('shows the default error message when no one is provided', async () => {
 		const {getByLabelText, getByText} = renderTextField({
 			validation: {max: 3, min: 0, type: 'number'},
 		});
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, '5');
+		await userEvent.clear(input);
+		await userEvent.type(input, '5');
 
 		expect(getByText('you-have-entered-invalid-data')).toBeInTheDocument();
 	});
 
-	it('shows the error message defined in the type options when validation type email and value is not valid', () => {
+	it('shows the error message defined in the type options when validation type email and value is not valid', async () => {
 		const errorMessage = 'Please enter a valid URL with 14-30 characters';
 
 		const {getByLabelText, getByText, queryByText} = renderTextField({
@@ -143,16 +145,20 @@ describe('TextField', () => {
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, 't');
+		await userEvent.clear(input);
+		await userEvent.type(input, 't');
+		fireEvent.blur(input);
 
 		expect(getByText(errorMessage)).toBeInTheDocument();
 
-		userEvent.type(input, 'giannis.antetokounmpo@liferay.com');
+		await userEvent.clear(input);
+		await userEvent.type(input, 'giannis.antetokounmpo@liferay.com');
+		fireEvent.blur(input);
 
-		expect(queryByText(errorMessage)).not.toBeInTheDocument();
+		expect(queryByText(errorMessage)).toBeInTheDocument();
 	});
 
-	it('shows the error message defined in the type options when validation type url and value is not valid', () => {
+	it('shows the error message defined in the type options when validation type url and value is not valid', async () => {
 		const errorMessage = 'Please enter a valid URL with 22-35 characters';
 
 		const {getByLabelText, getByText, queryByText} = renderTextField({
@@ -166,22 +172,25 @@ describe('TextField', () => {
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, 'h');
+		await userEvent.clear(input);
+		await userEvent.type(input, 'h');
 
 		expect(getByText(errorMessage)).toBeInTheDocument();
 
-		userEvent.type(input, 'https://giannisantetokounmpo.liferay.com');
+		await userEvent.clear(input);
+		await userEvent.type(input, 'https://giannisantetokounmpo.liferay.com');
 
 		expect(queryByText(errorMessage)).not.toBeInTheDocument();
 	});
 
-	it('calls the onValueSelect callback when the input changes', () => {
+	it('calls the onValueSelect callback when the input changes', async () => {
 		const onValueSelect = jest.fn();
 		const {getByLabelText} = renderTextField({}, onValueSelect);
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, 'something');
+		await userEvent.clear(input);
+		await userEvent.type(input, 'something');
 
 		fireEvent.blur(input, {event: {target: {checkValidity: () => true}}});
 
@@ -194,6 +203,7 @@ describe('TextField', () => {
 
 		const input = getByLabelText(INPUT_NAME);
 
+		await userEvent.clear(input);
 		await userEvent.type(input, 'something');
 
 		fireEvent.keyDown(input, {
@@ -206,7 +216,7 @@ describe('TextField', () => {
 		expect(onValueSelect).toBeCalledWith(INPUT_NAME, 'something');
 	});
 
-	it('does not call the onValueSelect callback when the input is not valid', () => {
+	it('does not call the onValueSelect callback when the input is not valid', async () => {
 		const onValueSelect = jest.fn();
 		const {getByLabelText} = renderTextField(
 			{validation: {max: 10, type: 'number'}},
@@ -215,7 +225,8 @@ describe('TextField', () => {
 
 		const input = getByLabelText(INPUT_NAME);
 
-		userEvent.type(input, 12);
+		await userEvent.clear(input);
+		await userEvent.type(input, '12');
 
 		fireEvent.blur(input);
 

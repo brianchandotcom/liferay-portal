@@ -128,11 +128,11 @@ const getElementIndicatorText = (element) => {
 describe('Translation', () => {
 	afterEach(cleanup);
 
-	it('renders Translation component', () => {
+	it('renders Translation component', async () => {
 		const {getByRole, getByText} = renderTranslation({state: defaultState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		expect(getByText('language-4')).toBeInTheDocument();
 	});
@@ -141,7 +141,7 @@ describe('Translation', () => {
 		const {getByRole, getByText} = renderTranslation({state: defaultState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		const option = getByText('language-3').parentElement;
 
@@ -153,18 +153,18 @@ describe('Translation', () => {
 		});
 	});
 
-	it('sets label "translated" when there is a translated language', () => {
+	it('sets label "translated" when there is a translated language', async () => {
 		const {getByRole, getByText} = renderTranslation({state: defaultState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		const indicator = getElementIndicatorText(getByText('language-1'));
 
 		expect(indicator).toBe('translated');
 	});
 
-	it('sets label 1/n when there is one language traduction', () => {
+	it('sets label 1/n when there is one language traduction', async () => {
 		const newState = {
 			...defaultState,
 			fragmentEntryLinks: {
@@ -175,14 +175,14 @@ describe('Translation', () => {
 		const {getByRole, getByText} = renderTranslation({state: newState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		const indicator = getElementIndicatorText(getByText('language-1'));
 
 		expect(indicator).toBe('translating 1/2');
 	});
 
-	it('only takes into account elements which do not come from the master page', () => {
+	it('only takes into account elements which do not come from the master page', async () => {
 		const newState = {
 			...defaultState,
 			fragmentEntryLinks: {
@@ -199,7 +199,7 @@ describe('Translation', () => {
 		const {getByRole, getByText} = renderTranslation({state: newState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		const indicator = getElementIndicatorText(getByText('language-1'));
 
@@ -210,7 +210,7 @@ describe('Translation', () => {
 		const {getByRole, getByText} = renderTranslation({state: defaultState});
 
 		const button = getByRole('combobox');
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		const option = getByText('language-3').parentElement;
 

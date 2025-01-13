@@ -444,7 +444,7 @@ describe('MappingSelector', () => {
 
 			const sourceSelect = screen.getByLabelText('source');
 
-			userEvent.selectOptions(sourceSelect, 'relationship');
+			await userEvent.selectOptions(sourceSelect, 'relationship');
 			fireEvent.change(sourceSelect);
 
 			expect(
@@ -459,7 +459,7 @@ describe('MappingSelector', () => {
 
 			const sourceSelect = screen.getByLabelText('source');
 
-			userEvent.selectOptions(sourceSelect, 'relationship');
+			await userEvent.selectOptions(sourceSelect, 'relationship');
 			fireEvent.change(sourceSelect);
 
 			expect(screen.getByLabelText('relationship')).toBeInTheDocument();

@@ -55,7 +55,7 @@ describe('CSSClassSelectorField', () => {
 		).toBeInTheDocument();
 	});
 
-	it('allow editing the custom css in the modal after clicking on expand button', () => {
+	it('allow editing the custom css in the modal after clicking on expand button', async () => {
 		const onValueSelect = jest.fn();
 
 		renderCustomCSSField({onValueSelect});
@@ -76,8 +76,10 @@ describe('CSSClassSelectorField', () => {
 
 		jest.useFakeTimers();
 
-		act(() => {
-			userEvent.click(screen.getByTitle('expand'));
+		await act(async () => {
+			await userEvent.click(screen.getByTitle('expand'), {
+				advanceTimers: jest.advanceTimersByTime,
+			});
 		});
 
 		act(() => {
@@ -98,7 +100,7 @@ describe('CSSClassSelectorField', () => {
 				);
 		});
 
-		userEvent.click(addButton);
+		await userEvent.click(addButton);
 
 		expect(onValueSelect).toBeCalledWith(
 			'customCSS',
@@ -116,7 +118,7 @@ describe('CSSClassSelectorField', () => {
 		).toBeInTheDocument();
 	});
 
-	it('calls onValueSelect when typing something in the textarea', () => {
+	it('calls onValueSelect when typing something in the textarea', async () => {
 		const onValueSelect = jest.fn();
 
 		renderCustomCSSField({onValueSelect});
@@ -130,14 +132,14 @@ describe('CSSClassSelectorField', () => {
 			.${FRAGMENT_CLASS_PLACEHOLDER}:hover { color: red; }
 		`;
 
-		userEvent.type(textarea, css);
+		fireEvent.change(textarea, {target: {value: css}});
 
 		fireEvent.blur(textarea);
 
 		expect(onValueSelect).toBeCalledWith('customCSS', css);
 	});
 
-	it('does not save onValueSelect when typing the same as the default value', () => {
+	it('does not save onValueSelect when typing the same as the default value', async () => {
 		const onValueSelect = jest.fn();
 
 		renderCustomCSSField({onValueSelect});
@@ -146,7 +148,9 @@ describe('CSSClassSelectorField', () => {
 			selector: 'textarea',
 		});
 
-		userEvent.type(textarea, `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`);
+		fireEvent.change(textarea, {
+			target: {value: `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`},
+		});
 
 		fireEvent.blur(textarea);
 

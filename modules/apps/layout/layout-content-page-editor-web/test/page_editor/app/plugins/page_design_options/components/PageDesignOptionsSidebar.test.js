@@ -93,7 +93,7 @@ describe('PageDesignOptionsSidebar', () => {
 		const button = screen.getByLabelText('Pablo Master Layout');
 
 		await act(async () => {
-			userEvent.click(button);
+			await userEvent.click(button);
 		});
 
 		expect(changeMasterLayout).toBeCalledWith(
@@ -101,11 +101,11 @@ describe('PageDesignOptionsSidebar', () => {
 		);
 	});
 
-	it('calls changeStyleBookEntry when a style is selected', () => {
+	it('calls changeStyleBookEntry when a style is selected', async () => {
 		renderComponent();
 		const button = screen.getByLabelText('Pablo Style');
 
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		expect(LayoutService.changeStyleBookEntry).toHaveBeenCalledTimes(1);
 		expect(LayoutService.changeStyleBookEntry).toHaveBeenCalledWith(

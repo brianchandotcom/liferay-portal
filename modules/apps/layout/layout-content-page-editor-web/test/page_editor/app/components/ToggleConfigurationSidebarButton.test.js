@@ -42,12 +42,12 @@ describe('ToggleConfigurationSidebarButton', () => {
 		).toBeInTheDocument();
 	});
 
-	it('opens the sidebar when the button is pressed', () => {
+	it('opens the sidebar when the button is pressed', async () => {
 		renderComponent({sidebar: {itemConfigurationOpen: false}});
 
 		const button = screen.getByLabelText('open-configuration-panel');
 
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		expect(switchSidebarPanel).toBeCalledWith({
 			itemConfigurationOpen: true,

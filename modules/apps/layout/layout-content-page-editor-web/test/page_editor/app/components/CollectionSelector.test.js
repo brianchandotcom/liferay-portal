@@ -34,7 +34,7 @@ describe('CollectionSelector', () => {
 		openItemSelector.mockClear();
 	});
 
-	it('uses custom item selector URL when present in the collection item context', () => {
+	it('uses custom item selector URL when present in the collection item context', async () => {
 		const CUSTOM_COLLECTION_SELECTOR_URL = 'CUSTOM_COLLECTION_SELECTOR_URL';
 		const DEFAULT_ITEM_SELECTOR_URL = 'DEFAULT_ITEM_SELECTOR_URL';
 
@@ -57,7 +57,7 @@ describe('CollectionSelector', () => {
 
 		const button = screen.getByLabelText('select-x');
 
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		expect(openItemSelector).toBeCalledWith(
 			expect.objectContaining({
@@ -66,7 +66,7 @@ describe('CollectionSelector', () => {
 		);
 	});
 
-	it('uses passed item selector URL when not inside a collection item context', () => {
+	it('uses passed item selector URL when not inside a collection item context', async () => {
 		const DEFAULT_ITEM_SELECTOR_URL = 'DEFAULT_ITEM_SELECTOR_URL';
 
 		render(
@@ -81,7 +81,7 @@ describe('CollectionSelector', () => {
 
 		const button = screen.getByLabelText('select-x');
 
-		userEvent.click(button);
+		await userEvent.click(button);
 
 		expect(openItemSelector).toBeCalledWith(
 			expect.objectContaining({

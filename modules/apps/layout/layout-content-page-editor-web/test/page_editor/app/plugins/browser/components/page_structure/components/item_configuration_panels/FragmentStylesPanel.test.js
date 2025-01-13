@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
@@ -14,7 +15,6 @@ import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resou
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import {FragmentStylesPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/FragmentStylesPanel';
 import {StyleBookContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_design_options/hooks/useStyleBook';
-
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
 const fragmentEntryLinkWithStyles = {
@@ -217,8 +217,8 @@ describe('FragmentStylesPanel', () => {
 			selectedViewportSize: VIEWPORT_SIZES.tablet,
 		});
 
-		screen.getByLabelText('margin-top').click();
-		screen.getByLabelText('set-margin-top-to-1').click();
+		await userEvent.click(screen.getByLabelText('margin-top'));
+		await userEvent.click(screen.getByLabelText('set-margin-top-to-1'));
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {

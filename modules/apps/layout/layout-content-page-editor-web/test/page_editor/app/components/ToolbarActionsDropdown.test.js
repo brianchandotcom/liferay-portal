@@ -121,12 +121,12 @@ describe('ToolbarActionsDropdown', () => {
 	});
 
 	describe('Undo option', () => {
-		it('calls onUndo when Undo option is selected', () => {
+		it('calls onUndo when Undo option is selected', async () => {
 			renderComponent();
 
 			const {onUndo} = useUndoRedoActions();
 
-			userEvent.click(screen.getByText('undo'));
+			await userEvent.click(screen.getByText('undo'));
 
 			expect(onUndo).toBeCalled();
 		});
@@ -141,12 +141,12 @@ describe('ToolbarActionsDropdown', () => {
 	});
 
 	describe('Redo option', () => {
-		it('calls onRedo when Redo option is selected', () => {
+		it('calls onRedo when Redo option is selected', async () => {
 			renderComponent();
 
 			const {onRedo} = useUndoRedoActions();
 
-			userEvent.click(screen.getByText('redo'));
+			await userEvent.click(screen.getByText('redo'));
 
 			expect(onRedo).toBeCalled();
 		});
@@ -170,17 +170,17 @@ describe('ToolbarActionsDropdown', () => {
 			).toBeInTheDocument();
 		});
 
-		it('calls onHistoryItemClick when Undo All is selected', () => {
+		it('calls onHistoryItemClick when Undo All is selected', async () => {
 			renderComponent();
 
-			userEvent.click(screen.getByText('undo-all'));
+			await userEvent.click(screen.getByText('undo-all'));
 
 			const {onHistoryItemClick} = useOnHistoryItemClick();
 
 			expect(onHistoryItemClick).toBeCalled();
 		});
 
-		it('calls onHistoryItemClick when a history item is selected', () => {
+		it('calls onHistoryItemClick when a history item is selected', async () => {
 			const {onHistoryItemClick} = useOnHistoryItemClick();
 
 			useHistoryItems.mockImplementation(
@@ -196,7 +196,7 @@ describe('ToolbarActionsDropdown', () => {
 
 			renderComponent();
 
-			userEvent.click(screen.getByText('update-editable-values'));
+			await userEvent.click(screen.getByText('update-editable-values'));
 
 			expect(onHistoryItemClick).toBeCalled();
 		});
@@ -211,12 +211,12 @@ describe('ToolbarActionsDropdown', () => {
 	});
 
 	describe('Show Sidebars option', () => {
-		it('calls useOnToggleSidebars when Show Sidebars option is selected', () => {
+		it('calls useOnToggleSidebars when Show Sidebars option is selected', async () => {
 			renderComponent();
 
 			const onToggleSidebars = useOnToggleSidebars();
 
-			userEvent.click(screen.getByText('show-sidebars'));
+			await userEvent.click(screen.getByText('show-sidebars'));
 
 			expect(onToggleSidebars).toBeCalled();
 		});
@@ -231,12 +231,12 @@ describe('ToolbarActionsDropdown', () => {
 	});
 
 	describe('Discard Draft option', () => {
-		it('calls onDiscardDraft when Discard Draft option is selected', () => {
+		it('calls onDiscardDraft when Discard Draft option is selected', async () => {
 			const ref = React.createRef();
 
 			renderComponent({discardDraftFormRef: ref});
 
-			userEvent.click(screen.getByText('discard-draft'));
+			await userEvent.click(screen.getByText('discard-draft'));
 
 			expect(openConfirmModal).toHaveBeenCalledWith({
 				message:

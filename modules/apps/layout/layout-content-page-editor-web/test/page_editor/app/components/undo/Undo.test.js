@@ -64,22 +64,22 @@ describe('Undo', () => {
 		});
 	});
 
-	it('calls onUndo when the Undo button is pressed', () => {
+	it('calls onUndo when the Undo button is pressed', async () => {
 		renderUndoComponent();
 
 		const {onUndo} = useUndoRedoActions();
 
-		userEvent.click(screen.getByTitle('undo'));
+		await userEvent.click(screen.getByTitle('undo'));
 
 		expect(onUndo).toBeCalled();
 	});
 
-	it('calls onRedo when the Redo button is pressed', () => {
+	it('calls onRedo when the Redo button is pressed', async () => {
 		renderUndoComponent();
 
 		const {onRedo} = useUndoRedoActions();
 
-		userEvent.click(screen.getByTitle('redo'));
+		await userEvent.click(screen.getByTitle('redo'));
 
 		expect(onRedo).toBeCalled();
 	});

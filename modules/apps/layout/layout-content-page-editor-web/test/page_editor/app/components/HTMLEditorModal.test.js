@@ -20,16 +20,16 @@ const renderModal = async ({initialContent = '', onClose, onSave} = {}) => {
 		return textRange;
 	};
 
-	await act(async () => {
-		render(
-			<HTMLEditorModal
-				initialContent={initialContent}
-				onClose={onClose}
-				onSave={onSave}
-			/>
-		);
+	render(
+		<HTMLEditorModal
+			initialContent={initialContent}
+			onClose={onClose}
+			onSave={onSave}
+		/>
+	);
 
-		jest.advanceTimersByTime(1000);
+	await act(async () => {
+		jest.advanceTimersByTime(2000);
 	});
 };
 
@@ -42,22 +42,22 @@ describe('HTMLEditorModal', () => {
 		jest.useFakeTimers();
 	});
 
-	it('modal is rendered', () => {
-		renderModal();
+	it('modal is rendered', async () => {
+		await renderModal();
 
 		expect(screen.getByText('save')).toBeInTheDocument();
 	});
 
-	it('sets initialContent to the editor', () => {
-		renderModal({initialContent: 'Hello Jordi Kappler'});
+	it('sets initialContent to the editor', async () => {
+		await renderModal({initialContent: 'Hello Jordi Kappler'});
 
 		expect(
 			screen.queryAllByText('Hello Jordi Kappler')[0]
 		).toBeInTheDocument();
 	});
 
-	it('defaults to column view type', () => {
-		renderModal();
+	it('defaults to column view type', async () => {
+		await renderModal();
 
 		const editor = document.querySelector(
 			'.page-editor__html-editor-modal__editor-container > div'
@@ -66,8 +66,8 @@ describe('HTMLEditorModal', () => {
 		expect(editor).toHaveClass('w-50');
 	});
 
-	it('changes to row view type when clicking the display horizontally button', () => {
-		renderModal();
+	it('changes to row view type when clicking the display horizontally button', async () => {
+		await renderModal();
 
 		fireEvent.click(screen.getByTitle('display-horizontally'));
 
@@ -78,8 +78,8 @@ describe('HTMLEditorModal', () => {
 		expect(editor).toHaveClass('w-100');
 	});
 
-	it('changes to full-screen view type when clicking the full-screen button', () => {
-		renderModal();
+	it('changes to full-screen view type when clicking the full-screen button', async () => {
+		await renderModal();
 
 		fireEvent.click(screen.getByTitle('full-screen'));
 
@@ -90,10 +90,10 @@ describe('HTMLEditorModal', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('calls close callback when cliking close button', () => {
+	it('calls close callback when cliking close button', async () => {
 		const onClose = jest.fn();
 
-		renderModal({onClose});
+		await renderModal({onClose});
 
 		fireEvent.click(screen.getByText('cancel'));
 

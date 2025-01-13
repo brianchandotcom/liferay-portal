@@ -110,6 +110,11 @@ public class OrderActionsFragmentRenderer implements FragmentRenderer {
 				themeDisplay.getScopeGroupId());
 
 		if (commerceChannel == null) {
+			if (_isEditMode(httpServletRequest)) {
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse);
+			}
+
 			return;
 		}
 

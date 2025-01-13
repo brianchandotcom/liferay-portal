@@ -552,6 +552,11 @@
 			<property name="description" value="Checks that a `java.util.Pattern` variable is declared globally, so that it is initiated only once." />
 			<message key="pattern.local" value="Create a global variable for Pattern &quot;{0}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.LocalVariableTypeInferenceCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of `var` in local variable declaration." />
+			<message key="var.avoid" value="Avoid using &quot;var&quot; to declare variable" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.LogMessageCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Validates messages that are passed to `log.*` calls." />

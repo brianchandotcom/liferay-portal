@@ -152,9 +152,9 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 	private void _assertUpgrade(
 			String expectedListTypeDefinitionName,
-			String expectedListTypeEntry1ExternalReferenceCode,
-			String expectedListTypeEntry2ExternalReferenceCode,
-			String listTypeEntry1Key, String listTypeEntry2Key,
+			String expectedListTypeEntryExternalReferenceCode1,
+			String expectedListTypeEntryExternalReferenceCode2,
+			String listTypeEntryKey1, String listTypeEntryKey2,
 			String listTypeExternalReferenceCode,
 			ObjectDefinition objectDefinition,
 			String objectFieldExternalReferenceCode)
@@ -182,17 +182,17 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinition.getListTypeDefinitionId(),
-				listTypeEntry1Key);
+				listTypeEntryKey1);
 
 		Assert.assertEquals(
-			expectedListTypeEntry1ExternalReferenceCode,
+			expectedListTypeEntryExternalReferenceCode1,
 			listTypeEntry.getExternalReferenceCode());
 
 		listTypeEntry = _listTypeEntryLocalService.getListTypeEntry(
-			listTypeDefinition.getListTypeDefinitionId(), listTypeEntry2Key);
+			listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey2);
 
 		Assert.assertEquals(
-			expectedListTypeEntry2ExternalReferenceCode,
+			expectedListTypeEntryExternalReferenceCode2,
 			listTypeEntry.getExternalReferenceCode());
 	}
 

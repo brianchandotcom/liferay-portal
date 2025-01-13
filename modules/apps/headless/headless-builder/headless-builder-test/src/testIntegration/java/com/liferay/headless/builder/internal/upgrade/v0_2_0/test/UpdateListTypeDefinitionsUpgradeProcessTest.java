@@ -5,7 +5,7 @@
 
 package com.liferay.headless.builder.internal.upgrade.v0_2_0.test;
 
-import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -36,12 +36,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Javier Moreno Lage
  */
 @FeatureFlags("LPS-178642")
-public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
+@RunWith(Arquillian.class)
+public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -58,10 +60,15 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 					"L_API_SORT", "L_API_FILTER", "L_API_PROPERTY",
 					"L_API_SCHEMA", "L_API_ENDPOINT", "L_API_APPLICATION")) {
 
-			_objectDefinitionLocalService.deleteObjectDefinition(
+			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
-						externalReferenceCode, TestPropsValues.getCompanyId()));
+						externalReferenceCode, TestPropsValues.getCompanyId());
+
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
 		}
 
 		for (String externalReferenceCode :
@@ -70,10 +77,15 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest extends BaseTestCase {
 					"L_API_PROPERTY_TYPES", "RETRIEVE_TYPE_PICKLIST",
 					"SCOPE_PICKLIST")) {
 
-			_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			ListTypeDefinition listTypeDefinition =
 				_listTypeDefinitionLocalService.
 					fetchListTypeDefinitionByExternalReferenceCode(
-						externalReferenceCode, TestPropsValues.getCompanyId()));
+						externalReferenceCode, TestPropsValues.getCompanyId());
+
+			if (listTypeDefinition != null) {
+				_listTypeDefinitionLocalService.deleteListTypeDefinition(
+					listTypeDefinition);
+			}
 		}
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(

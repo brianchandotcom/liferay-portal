@@ -13,7 +13,7 @@ const getItem = (key) => {
 	try {
 		let item;
 
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (Liferay?.Util?.LocalStorage) {
 			item = Liferay.Util.LocalStorage.getItem(
 				key,
 				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
@@ -36,7 +36,7 @@ const setItem = (key, value) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (Liferay?.Util?.LocalStorage) {
 			Liferay.Util.LocalStorage.setItem(
 				key,
 				JSON.stringify(value),
@@ -56,7 +56,7 @@ const removeItem = (key) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay?.FeatureFlags?.['LPD-10588']) {
+		if (Liferay?.Util?.LocalStorage) {
 			Liferay.Util.LocalStorage.removeItem(
 				key,
 				Liferay.Util.LocalStorage.TYPES.PERFORMANCE

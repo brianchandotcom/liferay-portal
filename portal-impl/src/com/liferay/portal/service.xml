@@ -3268,12 +3268,14 @@
 		<exception>LayoutBranchName</exception>
 		<exception>LayoutFriendlyURL</exception>
 		<exception>LayoutFriendlyURLs</exception>
+		<exception>LayoutJavaScript</exception>
 		<exception>LayoutName</exception>
 		<exception>LayoutParentLayoutId</exception>
 		<exception>LayoutPermission</exception>
 		<exception>LayoutPrototype</exception>
 		<exception>LayoutRevisionMajor</exception>
 		<exception>LayoutSetBranchName</exception>
+		<exception>LayoutSetJavaScript</exception>
 		<exception>LayoutSetVirtualHost</exception>
 		<exception>LayoutType</exception>
 		<exception>LockedLayout</exception>

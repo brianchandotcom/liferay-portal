@@ -890,6 +890,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
+					"externalReferenceCode": "EXAM_RESULT_AMOUNT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {

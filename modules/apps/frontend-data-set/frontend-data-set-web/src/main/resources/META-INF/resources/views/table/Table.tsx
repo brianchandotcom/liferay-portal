@@ -677,6 +677,7 @@ function CellRenderer({
 }
 
 function getVisibleFieldsMap(
+	fields: Array<Field>,
 	visibleFields: Array<Field>,
 	selectable?: boolean
 ) {
@@ -686,12 +687,18 @@ function getVisibleFieldsMap(
 		visibleFieldsMap.set('select', 0);
 	}
 
-	visibleFields.forEach((field, index) =>
-		visibleFieldsMap.set(
-			String(field.fieldName),
-			selectable ? index + 1 : index
-		)
-	);
+	fields.forEach((field, index) => {
+		if (
+			visibleFields.findIndex(
+				(visibleField) => visibleField.fieldName === field.fieldName
+			) >= 0
+		) {
+			visibleFieldsMap.set(
+				String(field.fieldName),
+				selectable ? index + 1 : index
+			);
+		}
+	});
 
 	return visibleFieldsMap;
 }
@@ -836,7 +843,11 @@ const Table = ({
 					);
 				}}
 				sort={getSorting()}
-				visibleColumns={getVisibleFieldsMap(visibleFields, selectable)}
+				visibleColumns={getVisibleFieldsMap(
+					schema.fields as Array<Field>,
+					visibleFields,
+					selectable
+				)}
 			>
 				<Head
 					fields={schema.fields as Array<Field>}

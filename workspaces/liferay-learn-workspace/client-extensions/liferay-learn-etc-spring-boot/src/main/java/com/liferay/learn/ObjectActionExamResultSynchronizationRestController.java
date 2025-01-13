@@ -70,7 +70,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		finally {
 			JSONObject jsonObject = new JSONObject(json);
 
-			_updateExamResultSyncEntry(
+			_updateExamResultSynchronizationEntry(
 				jsonObject.getLong("classPK"), examResultAmount,
 				System.currentTimeMillis() - startTime, jwt, status);
 		}
@@ -214,7 +214,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		return responseJSONArray.length();
 	}
 
-	private void _updateExamResultSyncEntry(
+	private void _updateExamResultSynchronizationEntry(
 		Long classPK, int examResultAmount, long executionTime, Jwt jwt,
 		String synchronizationStatus) {
 

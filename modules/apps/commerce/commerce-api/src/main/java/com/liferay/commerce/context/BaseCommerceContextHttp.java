@@ -100,12 +100,14 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	public AccountEntry getAccountEntry() throws PortalException {
 		CommerceChannel commerceChannel = _fetchCommerceChannel();
 
-		if (commerceChannel == null) {
+		if ((commerceChannel == null) && (_accountEntry != null)) {
 			return _accountEntry;
 		}
 
-		return _commerceAccountHelper.getCurrentAccountEntry(
+		_accountEntry = _commerceAccountHelper.getCurrentAccountEntry(
 			commerceChannel.getGroupId(), _httpServletRequest);
+
+		return _accountEntry;
 	}
 
 	@Override

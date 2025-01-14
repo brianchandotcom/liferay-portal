@@ -1039,6 +1039,129 @@ public class ObjectEntryLocalServiceTest {
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
+	@FeatureFlags("LPD-32050")
+	@Test
+	public void testAddObjectEntryAfterDeletingLocalizedObjectField()
+		throws Exception {
+
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"name"
+		).build();
+
+		Assert.assertFalse(objectField.isLocalized());
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(objectField));
+
+		ObjectField localizedObjectField1 =
+			ObjectFieldUtil.addCustomObjectField(
+				new IntegerObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).userId(
+					TestPropsValues.getUserId()
+				).build());
+
+		Map<String, Serializable> localizedValues = Collections.singletonMap(
+			localizedObjectField1.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomInt()
+			).put(
+				"pt_BR", RandomTestUtil.randomInt()
+			).build());
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues,
+			_addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(), localizedValues),
+			localizedObjectField1);
+
+		_objectFieldLocalService.deleteObjectField(localizedObjectField1);
+
+		ObjectField localizedObjectField2 =
+			ObjectFieldUtil.addCustomObjectField(
+				new IntegerObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).userId(
+					TestPropsValues.getUserId()
+				).build());
+
+		localizedValues = Collections.singletonMap(
+			localizedObjectField2.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomInt()
+			).put(
+				"pt_BR", RandomTestUtil.randomInt()
+			).build());
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues,
+			_addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(), localizedValues),
+			localizedObjectField2);
+
+		ObjectField localizedObjectField3 =
+			ObjectFieldUtil.addCustomObjectField(
+				new IntegerObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).userId(
+					TestPropsValues.getUserId()
+				).build());
+
+		localizedValues = HashMapBuilder.<String, Serializable>put(
+			localizedObjectField2.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomInt()
+			).put(
+				"pt_BR", RandomTestUtil.randomInt()
+			).build()
+		).put(
+			localizedObjectField3.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomInt()
+			).put(
+				"pt_BR", RandomTestUtil.randomInt()
+			).build()
+		).build();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(), localizedValues);
+
+		_assertObjectEntryLocalizedValues(
+			localizedValues, objectEntry, localizedObjectField2);
+		_assertObjectEntryLocalizedValues(
+			localizedValues, objectEntry, localizedObjectField3);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
 	@Test
 	public void testAddObjectEntryAsDraft() throws Exception {
 		ServiceContext serviceContext =

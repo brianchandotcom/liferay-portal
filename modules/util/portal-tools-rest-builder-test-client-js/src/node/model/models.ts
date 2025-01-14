@@ -7,8 +7,10 @@ export * from './enumTestEntity';
 export * from './facet';
 export * from './facetValue';
 export * from './jSONMapAttributeTestEntity';
+export * from './minimalTestEntity';
 export * from './nestedArrayItemsTestEntity';
 export * from './nestedTestEntity';
+export * from './pageMinimalTestEntity';
 export * from './pageTestEntity';
 export * from './testEntity';
 export * from './testEntityAddress';
@@ -34,8 +36,10 @@ import { EnumTestEntity } from './enumTestEntity';
 import { Facet } from './facet';
 import { FacetValue } from './facetValue';
 import { JSONMapAttributeTestEntity } from './jSONMapAttributeTestEntity';
+import { MinimalTestEntity } from './minimalTestEntity';
 import { NestedArrayItemsTestEntity } from './nestedArrayItemsTestEntity';
 import { NestedTestEntity } from './nestedTestEntity';
+import { PageMinimalTestEntity } from './pageMinimalTestEntity';
 import { PageTestEntity } from './pageTestEntity';
 import { TestEntity } from './testEntity';
 import { TestEntityAddress } from './testEntityAddress';
@@ -66,8 +70,10 @@ let typeMap: {[index: string]: any} = {
     "Facet": Facet,
     "FacetValue": FacetValue,
     "JSONMapAttributeTestEntity": JSONMapAttributeTestEntity,
+    "MinimalTestEntity": MinimalTestEntity,
     "NestedArrayItemsTestEntity": NestedArrayItemsTestEntity,
     "NestedTestEntity": NestedTestEntity,
+    "PageMinimalTestEntity": PageMinimalTestEntity,
     "PageTestEntity": PageTestEntity,
     "TestEntity": TestEntity,
     "TestEntityAddress": TestEntityAddress,

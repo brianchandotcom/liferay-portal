@@ -45,6 +45,16 @@ components:
                     x-json-map: true
             title: JSONMapAttributeTestEntity
             type: object
+        MinimalTestEntity:
+            description:
+                "A minimal test entity with no filterable fields."
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
         NestedArrayItemsTestEntity:
             description:
                 Test Component to test the REST Builder support for nested array items
@@ -166,6 +176,27 @@ info:
     version: "v1.0"
 openapi: "3.0.1"
 paths:
+    /minimal-test-entities:
+        get:
+            description:
+                "Retrieve all MinimalTestEntity items."
+            operationId: getMinimalTestEntitiesPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MinimalTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MinimalTestEntity"
+                                type: array
+                    description:
+                        "A list of MinimalTestEntity items."
+            tags: ["MinimalTestEntity"]
     /reserved-word:
         post:
             operationId: postReservedWord

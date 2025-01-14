@@ -51,8 +51,8 @@ public class ObjectActionExamResultSynchronizationRestController
 		String status = "Failed";
 
 		try {
-			OffsetDateTime offsetDateTime = _getLatestSuccessfulExecutionDate(
-				jwt);
+			OffsetDateTime offsetDateTime =
+				_getLatestSuccessfulExecutionOffsetDateTime(jwt);
 
 			while (offsetDateTime.isBefore(
 						OffsetDateTime.now(ZoneOffset.UTC))) {
@@ -90,7 +90,9 @@ public class ObjectActionExamResultSynchronizationRestController
 		return "";
 	}
 
-	private OffsetDateTime _getLatestSuccessfulExecutionDate(Jwt jwt) {
+	private OffsetDateTime _getLatestSuccessfulExecutionOffsetDateTime(
+		Jwt jwt) {
+
 		JSONObject responseJSONObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),

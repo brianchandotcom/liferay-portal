@@ -147,6 +147,16 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		SearchContext searchContext = new SearchContext();
 
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+			contextUser.getUserId(), 0, commerceAccountId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+			searchContext.setAttribute(
+				CPField.CP_CONFIGURATION_LIST_IDS,
+				commerceContext.getCPConfigurationListIds());
+		}
+
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
@@ -166,16 +176,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			});
 		searchContext.setCompanyId(contextCompany.getCompanyId());
 		searchContext.setKeywords(search);
-
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, commerceAccountId);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
-			searchContext.setAttribute(
-				CPField.CP_CONFIGURATION_LIST_IDS,
-				commerceContext.getCPConfigurationListIds());
-		}
 
 		CPQuery cpQuery = new CPQuery();
 

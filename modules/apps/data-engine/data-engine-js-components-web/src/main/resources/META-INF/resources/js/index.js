@@ -6,6 +6,7 @@
 // Utils
 
 export * as FormSupport from './utils/FormSupport.es';
+export {evaluate, mergeFieldOptions, mergePages} from './utils/evaluation.es';
 
 // Form/Data Engine Core
 

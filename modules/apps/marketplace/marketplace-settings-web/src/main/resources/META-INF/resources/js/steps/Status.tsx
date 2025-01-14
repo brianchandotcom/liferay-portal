@@ -44,7 +44,7 @@ export default function Status({
 				dangerouslySetInnerHTML={{
 					__html: sub(
 						Liferay.Language.get(
-							'congratulations-x-you-have-successfully-connected-x-to-marketplace-instance'
+							'congratulations-x.-you-have-successfully-connected-x-to-the-marketplace'
 						),
 						[
 							`<strong>${myUserAccount?.name}</strong>`,

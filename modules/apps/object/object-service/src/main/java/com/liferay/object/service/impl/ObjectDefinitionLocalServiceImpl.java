@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionClassNameException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
+import com.liferay.object.exception.ObjectDefinitionEnableFriendlyURLCustomizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
@@ -100,6 +101,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -186,19 +188,20 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, long objectFolderId, String className,
-			boolean enableComments, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType,
-			List<ObjectField> objectFields)
+			boolean enableComments, boolean enableFriendlyURLCustomization,
+			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			null, userId, objectFolderId, className, null, enableComments,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-			labelMap, true, name, panelAppOrder, panelCategoryKey, null, null,
-			pluralLabelMap, portlet, scope, storageType, false, null, 0,
+			enableFriendlyURLCustomization, enableIndexSearch,
+			enableLocalization, enableObjectEntryDraft, labelMap, true, name,
+			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
+			portlet, scope, storageType, false, null, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -375,22 +378,23 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			boolean enableIndexSearch, boolean enableLocalization,
-			Map<Locale, String> labelMap, boolean modifiable, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String titleObjectFieldName, int version, int status,
-			List<ObjectField> objectFields)
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableLocalization, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String titleObjectFieldName,
+			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
-			dbTableName, enableComments, enableIndexSearch, enableLocalization,
-			false, labelMap, modifiable, name, panelAppOrder, panelCategoryKey,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
-			portlet, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			true, titleObjectFieldName, version, status, objectFields);
+			dbTableName, enableComments, enableFriendlyURLCustomization,
+			enableIndexSearch, enableLocalization, false, labelMap, modifiable,
+			name, panelAppOrder, panelCategoryKey, pkObjectFieldDBColumnName,
+			pkObjectFieldName, pluralLabelMap, portlet, scope,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
+			titleObjectFieldName, version, status, objectFields);
 	}
 
 	@Override
@@ -1072,12 +1076,12 @@ public class ObjectDefinitionLocalServiceImpl
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, String className, boolean enableCategorization,
-			boolean enableComments, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
-			int status)
+			boolean enableComments, boolean enableFriendlyURLCustomization,
+			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope, int status)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -1130,7 +1134,8 @@ public class ObjectDefinitionLocalServiceImpl
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
 			className, null, enableCategorization, enableComments,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			enableFriendlyURLCustomization, enableIndexSearch,
+			enableLocalization, enableObjectEntryDraft,
 			enableObjectEntryHistory, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
 			status);
@@ -1362,14 +1367,14 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _addObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
-			boolean modifiable, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType, boolean system,
-			String titleObjectFieldName, int version, int status,
-			List<ObjectField> objectFields)
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
+			String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType, boolean system, String titleObjectFieldName,
+			int version, int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -1396,6 +1401,8 @@ public class ObjectDefinitionLocalServiceImpl
 			0, user.getCompanyId(), className, modifiable, system);
 		_validateEnableComments(
 			enableComments, modifiable, storageType, system);
+		_validateEnableFriendlyURLCustomization(
+			enableFriendlyURLCustomization, modifiable, storageType, system);
 		_validateLabel(labelMap);
 		_validateName(0, user.getCompanyId(), modifiable, name, system);
 		_validatePluralLabel(pluralLabelMap);
@@ -1421,6 +1428,12 @@ public class ObjectDefinitionLocalServiceImpl
 			StringUtil.equals(
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setEnableComments(enableComments);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			objectDefinition.setEnableFriendlyURLCustomization(
+				enableFriendlyURLCustomization);
+		}
+
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
 		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
@@ -2122,12 +2135,13 @@ public class ObjectDefinitionLocalServiceImpl
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, String className, String dbTableName,
 			boolean enableCategorization, boolean enableComments,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope, int status)
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			boolean portlet, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope, int status)
 		throws PortalException {
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
@@ -2155,6 +2169,9 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateEnableComments(
 			enableComments, objectDefinition.isModifiable(),
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
+		_validateEnableFriendlyURLCustomization(
+			enableFriendlyURLCustomization, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateEnableObjectEntryHistory(
 			objectDefinition.isEnableObjectEntryHistory() !=
@@ -2198,6 +2215,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			objectDefinition.setEnableFriendlyURLCustomization(
+				enableFriendlyURLCustomization);
+		}
+
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);
 		objectDefinition.setLabelMap(
@@ -2451,6 +2474,32 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableCategorizationException(
 				"Enable comments is only allowed for object definitions with " +
 					"the default storage type");
+		}
+	}
+
+	private void _validateEnableFriendlyURLCustomization(
+			boolean enableFriendlyURLCustomization, boolean modifiable,
+			String storageType, boolean system)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926") ||
+			!enableFriendlyURLCustomization) {
+
+			return;
+		}
+
+		if (_isUnmodifiableSystemObject(modifiable, system)) {
+			throw new ObjectDefinitionEnableFriendlyURLCustomizationException(
+				"Enable friendly URL customization is not allowed for " +
+					"unmodifiable system object definitions");
+		}
+
+		if (!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			throw new ObjectDefinitionEnableFriendlyURLCustomizationException(
+				"Enable friendly URL customization is only allowed for " +
+					"object definitions with the default storage type");
 		}
 	}
 

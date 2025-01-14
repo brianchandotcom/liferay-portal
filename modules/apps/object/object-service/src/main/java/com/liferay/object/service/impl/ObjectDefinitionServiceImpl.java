@@ -42,11 +42,12 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long objectFolderId, String className, boolean enableComments,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String storageType, List<ObjectField> objectFields)
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String storageType,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -59,9 +60,10 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), objectFolderId, className, enableComments,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
-			portlet, scope, storageType, objectFields);
+			enableFriendlyURLCustomization, enableIndexSearch,
+			enableLocalization, enableObjectEntryDraft, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectFields);
 	}
 
 	@Override
@@ -86,11 +88,11 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			boolean enableComments, boolean enableIndexSearch,
-			boolean enableLocalization, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			List<ObjectField> objectFields)
+			boolean enableComments, boolean enableFriendlyURLCustomization,
+			boolean enableIndexSearch, boolean enableLocalization,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -103,10 +105,10 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, null, null,
-			enableComments, enableIndexSearch, enableLocalization, labelMap,
-			true, name, panelAppOrder, panelCategoryKey, null, null,
-			pluralLabelMap, portlet, scope, null, 1,
-			WorkflowConstants.STATUS_DRAFT, objectFields);
+			enableComments, enableFriendlyURLCustomization, enableIndexSearch,
+			enableLocalization, labelMap, true, name, panelAppOrder,
+			panelCategoryKey, null, null, pluralLabelMap, portlet, scope, null,
+			1, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Override
@@ -224,12 +226,12 @@ public class ObjectDefinitionServiceImpl
 			long descriptionObjectFieldId, long objectFolderId,
 			long titleObjectFieldId, boolean accountEntryRestricted,
 			boolean active, String className, boolean enableCategorization,
-			boolean enableComments, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
-			int status)
+			boolean enableComments, boolean enableFriendlyURLCustomization,
+			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope, int status)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
@@ -243,7 +245,8 @@ public class ObjectDefinitionServiceImpl
 			externalReferenceCode, objectDefinitionId,
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
-			className, enableCategorization, enableComments, enableIndexSearch,
+			className, enableCategorization, enableComments,
+			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
 			enableObjectEntryHistory, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope, status);

@@ -5,6 +5,7 @@
 
 import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
+import {flushSync} from 'react-dom';
 
 import CheckboxBase, {ICheckboxBaseProps} from '../Checkbox/CheckboxBase';
 import LocalesDropdown, {
@@ -53,7 +54,9 @@ export default function CheckboxLocalizedObjectField(props: IProps) {
 				[localeId]: value[defaultLocale.localeId],
 			};
 
-			onChange({target: {value: newValue}});
+			flushSync(() => {
+				onChange({target: {value: newValue}});
+			});
 		}
 
 		const currentLocale = getLocale(

@@ -75,6 +75,40 @@ public class OracleDBCTTest {
 	}
 
 	@Test
+	public void testDiscardCTCollectionWithOver1000Entries() throws Exception {
+		JournalFolder journalFolder = null;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			journalFolder = _journalFolderFixture.addFolder(
+				_group.getGroupId(), RandomTestUtil.randomString());
+
+			for (int i = 0; i < _BATCH_SIZE; i++) {
+				_journalFolderFixture.addFolder(
+					_group.getGroupId(), journalFolder.getFolderId(),
+					RandomTestUtil.randomString());
+			}
+		}
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			_journalFolderLocalService.deleteFolder(
+				journalFolder.getFolderId());
+		}
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
+
+		Assert.assertEquals(
+			_BATCH_SIZE,
+			_journalFolderLocalService.getFoldersCount(
+				_group.getGroupId(), journalFolder.getFolderId()));
+	}
+
+	@Test
 	public void testMoveAndDiscardCTEntryWithOver1000Entries()
 		throws Exception {
 

@@ -9,6 +9,7 @@ import com.liferay.frontend.editor.ckeditor.sample.web.internal.constants.CKEdit
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -37,7 +38,13 @@ public class CKEditor5ClassicEditorConfigContributor
 
 		jsonObject.put(
 			"placeholder",
-			"This placeholder is set from EditorConfigContributor.");
+			"This placeholder is set from EditorConfigContributor."
+		).put(
+			"toolbar",
+			JSONUtil.putAll(
+				"bold", "italic", "underline", "|", "undo", "redo", "|",
+				"alignment:left", "alignment:center", "alignment:right")
+		);
 	}
 
 }

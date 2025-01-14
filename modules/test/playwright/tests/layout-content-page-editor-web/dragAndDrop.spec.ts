@@ -613,3 +613,55 @@ test(
 		}).rejects.toThrow();
 	}
 );
+
+test(
+	'Grid topper title is shown when dragging into a column',
+	{tag: '@LPD-45979'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a content page with a grid and go to edit mode
+
+		const firstColumnId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getGridDefinition({
+					columns: [
+						{id: firstColumnId, size: 4},
+						{size: 4},
+						{size: 4},
+					],
+					id: getRandomString(),
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Drag a button into a column and check grid is highlighted
+
+		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
+		// Check we can drag a fragment from the list on top of the Collection
+
+		const heading = page.locator(
+			'.page-editor__fragments-widgets__tab-list-item',
+			{
+				hasText: 'Heading',
+			}
+		);
+
+		await pageEditorPage.dragToFragment({
+			drop: false,
+			position: 'middle',
+			source: heading,
+			targetId: firstColumnId,
+		});
+
+		await expect(
+			page.locator('.page-editor__topper__title', {hasText: 'Grid'})
+		).toBeVisible();
+	}
+);

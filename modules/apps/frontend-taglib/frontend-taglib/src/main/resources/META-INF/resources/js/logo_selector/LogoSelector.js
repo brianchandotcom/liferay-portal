@@ -34,6 +34,7 @@ export default function LogoSelector({
 		Liferay.Util.openModal({
 			id: `${portletNamespace}changeLogo`,
 			iframeBodyCssClass: 'dialog-with-footer',
+			onClose: () => setChangingLogo(false),
 			size: 'full-screen',
 			title: sub(Liferay.Language.get('upload-x'), label),
 			url: selectLogoURL.replace(

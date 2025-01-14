@@ -43,7 +43,7 @@ public class DisconnectMVCResourceCommand extends BaseMVCResourceCommand {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+		if (!permissionChecker.isCompanyAdmin()) {
 			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
 		}
 

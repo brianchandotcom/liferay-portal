@@ -811,7 +811,8 @@ public class CompanyLocalServiceDBPartitionTest
 									"Company ID ", companyId,
 									" is present in the copied database ",
 									"schema in ", tableName, StringPool.PERIOD,
-									columnName));
+									columnName, ". Value present: ",
+									resultSet2.getObject(1)));
 						}
 					}
 				}

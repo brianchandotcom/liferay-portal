@@ -1069,7 +1069,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, true, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
 				enableObjectEntryDraft,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,

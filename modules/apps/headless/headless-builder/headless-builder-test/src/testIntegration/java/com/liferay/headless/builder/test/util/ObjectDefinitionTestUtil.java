@@ -26,7 +26,8 @@ public class ObjectDefinitionTestUtil {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, true, false, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				com.liferay.object.test.util.ObjectDefinitionTestUtil.
 					getRandomName(),

@@ -250,6 +250,8 @@ public class ObjectDefinitionResourceImpl
 							getObjectFolderExternalReferenceCode()),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
+						objectDefinition.getEnableFriendlyURLCustomization()),
+					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
@@ -283,6 +285,8 @@ public class ObjectDefinitionResourceImpl
 							getObjectFolderExternalReferenceCode()),
 					objectDefinition.getClassName(),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableFriendlyURLCustomization()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch(), true),
 					GetterUtil.getBoolean(
@@ -525,6 +529,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableCategorization(), true),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableFriendlyURLCustomization()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch()),
 					GetterUtil.getBoolean(

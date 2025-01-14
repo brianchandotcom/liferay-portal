@@ -306,8 +306,8 @@ public class ObjectEntryEntityModelTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, true, false, false,
-				LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				false, LocalizedMapUtil.getLocalizedMap(objectDefinitionName),
 				objectDefinitionName, null, null,
 				LocalizedMapUtil.getLocalizedMap(objectDefinitionName), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,

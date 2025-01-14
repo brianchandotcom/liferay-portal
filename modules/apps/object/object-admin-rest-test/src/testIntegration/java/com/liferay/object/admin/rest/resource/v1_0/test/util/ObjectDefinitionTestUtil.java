@@ -50,9 +50,10 @@ public class ObjectDefinitionTestUtil {
 				getRandomName();
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), objectFolderId, null, false, true,
-			enableLocalization, false, LocalizedMapUtil.getLocalizedMap(value),
-			value, null, null, LocalizedMapUtil.getLocalizedMap(value), true,
+			TestPropsValues.getUserId(), objectFolderId, null, false, false,
+			true, enableLocalization, false,
+			LocalizedMapUtil.getLocalizedMap(value), value, null, null,
+			LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Collections.emptyList());
@@ -68,8 +69,8 @@ public class ObjectDefinitionTestUtil {
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			"L_" + StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			TestPropsValues.getUserId(), 0, null, null, false, false, false,
-			LocalizedMapUtil.getLocalizedMap(value), true, "Test", null, null,
-			null, null, LocalizedMapUtil.getLocalizedMap(value), true,
+			false, LocalizedMapUtil.getLocalizedMap(value), true, "Test", null,
+			null, null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, 0,
 			Collections.emptyList());
 	}

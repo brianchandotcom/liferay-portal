@@ -73,8 +73,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			userId, objectFolderId, null, false, true, enableLocalization,
-			false,
+			userId, objectFolderId, null, false, false, true,
+			enableLocalization, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -116,11 +116,11 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			null, userId, 0, null, dbTableName, false, true, enableLocalization,
-			labelMap, true, name, null, null, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, false, scope,
-			titleObjectFieldName, version, WorkflowConstants.STATUS_DRAFT,
-			objectFields);
+			null, userId, 0, null, dbTableName, false, false, true,
+			enableLocalization, labelMap, true, name, null, null,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
+			scope, titleObjectFieldName, version,
+			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
@@ -134,7 +134,7 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			externalReferenceCode, userId, 0, className, dbTableName, false,
-			true, false, labelMap, false, name, null, null,
+			false, true, false, labelMap, false, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
 			scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_APPROVED, objectFields);
@@ -185,7 +185,7 @@ public class ObjectDefinitionTestUtil {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				userId, 0, null, false, true, localized, false,
+				userId, 0, null, false, false, true, localized, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

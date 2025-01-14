@@ -154,7 +154,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
+				getObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode,
 					TestPropsValues.getCompanyId());
 

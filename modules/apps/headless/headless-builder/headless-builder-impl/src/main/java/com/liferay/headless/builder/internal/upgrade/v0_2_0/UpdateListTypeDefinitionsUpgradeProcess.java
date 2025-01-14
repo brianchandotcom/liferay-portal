@@ -80,7 +80,7 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectFieldExternalReferenceCode,
 			objectDefinition.getObjectDefinitionId());
 
@@ -93,7 +93,7 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.
-				fetchListTypeDefinitionByExternalReferenceCode(
+				getListTypeDefinitionByExternalReferenceCode(
 					listTypeDefinitionExternalReferenceCode, companyId);
 
 		listTypeDefinition.setName(listTypeDefinitionName);

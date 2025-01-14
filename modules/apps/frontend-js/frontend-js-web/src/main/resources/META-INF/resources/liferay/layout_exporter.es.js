@@ -53,7 +53,7 @@ export function proposeLayout(options) {
 		contents +=
 			'<textarea name="' +
 			namespace +
-			'description" style="height: 100px; width: 284px;"></textarea><br /><br />' +
+			'description"></textarea><br /><br />' +
 			Liferay.Language.get('reviewer') +
 			' <select name="' +
 			namespace +

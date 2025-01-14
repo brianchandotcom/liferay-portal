@@ -15,7 +15,7 @@ AUI.add(
 		const STR_VALUE = 'value';
 
 		const TPL_FRAME =
-			'<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:void(0);" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
+			'<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:void(0);" tabindex="-1" title="empty" width="0"></iframe>';
 
 		const TPL_URL_UPDATE =
 			themeDisplay.getPathMain() +
@@ -101,6 +101,8 @@ AUI.add(
 					const tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
 
 					const frame = A.Node.create(tplFrame);
+
+					frame._node.style.display = 'none';
 
 					instance.get('boundingBox').placeBefore(frame);
 

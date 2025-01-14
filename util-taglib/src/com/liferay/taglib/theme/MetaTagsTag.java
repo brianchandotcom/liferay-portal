@@ -118,7 +118,10 @@ public class MetaTagsTag extends IncludeTag {
 
 		if (Validator.isNull(metaDescription)) {
 			metaDescription = layout.getDescription(defaultLanguageId);
-			metaDescriptionLanguageId = w3cDefaultLanguageId;
+
+			if (Validator.isNotNull(metaDescription)) {
+				metaDescriptionLanguageId = w3cDefaultLanguageId;
+			}
 		}
 
 		ListMergeable<String> pageDescriptionListMergeable =

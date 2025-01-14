@@ -203,7 +203,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testAddUserWithWorkflowForLDAPUserWithLDAPPasswordPolicy()
+	public void testAddLDAPUserWithLDAPPasswordPolicy()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
@@ -230,7 +230,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testAddUserWithWorkflowForLDAPUserWithoutLDAPPasswordPolicy()
+	public void testAddLDAPUserWithoutLDAPPasswordPolicy()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =
@@ -252,7 +252,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testAddUserWithWorkflowForPortalUserWithLDAPPasswordPolicy()
+	public void testAddUserWithLDAPPasswordPolicy()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable1 =

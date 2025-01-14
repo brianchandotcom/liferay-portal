@@ -22,7 +22,7 @@ type StatusProps = {
 
 export default function Status({
 	authorization: {
-		data: {myUserAccount, selectedAccount},
+		data: {settings},
 	},
 	onDisconnect,
 }: StatusProps) {
@@ -47,8 +47,8 @@ export default function Status({
 							'congratulations-x.-you-have-successfully-connected-x-to-the-marketplace'
 						),
 						[
-							`<strong>${myUserAccount?.name}</strong>`,
-							`<strong>${selectedAccount?.name}</strong>`,
+							`<strong>${settings?.userAccount?.name}</strong>`,
+							`<strong>${settings?.account?.name}</strong>`,
 						]
 					),
 				}}

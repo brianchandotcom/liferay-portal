@@ -524,7 +524,7 @@
 	"time-zone": "タイムゾーン",
 	"to": "～",
 	"to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version": "Liferay DXP のローカルインスタンスをライセンス認証するには、Liferay DXP バージョンの開発者キーをダウンロードしてください。",
-	"to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size": "集約キーをダウンロードするには、タイプ、開始日、終了日、インスタンスサイズが同じキーを選択してください",
+	"to-download-an-aggregate-key-select-keys-for-a-valid-liferay-version-with-identical-type-start-date-end-date-and-instance-size-to-learn-more-click-x-here-x": "集約キーをダウンロードするには、タイプ、開始日、終了日、インスタンスサイズが同一の有効なLiferayバージョンのキーを選択します。詳細については、{0}こちら{1}をクリックしてください。",
 	"tokyo-japan": "東京、日本",
 	"total-count-of-anonymous-page-views-on-all-customer-sites": "すべての顧客サイトの匿名ページビューの合計数。",
 	"total-number-of-unique-liferay-dxp-sites-each-comprising-a-set-of-pages-and-their-related-content": "ページとその関連コンテンツで構成されるユニークなLiferay DXP サイトの合計数。",

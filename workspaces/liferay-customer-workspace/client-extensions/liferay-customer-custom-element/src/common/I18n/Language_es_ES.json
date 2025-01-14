@@ -524,7 +524,7 @@
 	"time-zone": "Zona horaria",
 	"to": "a",
 	"to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version": "Para activar una instancia local de Liferay DXP, descarga una licencia de desarrollador para su versión de Liferay DXP.",
-	"to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size": "Para descargar un archivo agregado con los códigos de activación, selecciona los códigos con los mismos valores de tipo, fecha de inicio, fecha de finalización y tamaño de la instancia",
+	"to-download-an-aggregate-key-select-keys-for-a-valid-liferay-version-with-identical-type-start-date-end-date-and-instance-size-to-learn-more-click-x-here-x": "Para descargar un archivo agregado de códigos de activación, selecciona códigos para una Versión de Liferay válida con idénticos Tipo de código, Fecha de inicio, Fecha de vencimiento y Tamaño de instancia. Para saber más, haz click {0}aquí{1}.",
 	"tokyo-japan": "Tokio, Japón",
 	"total-count-of-anonymous-page-views-on-all-customer-sites": "Total de Vistas de Páginas Anónimas en todos los sitios del cliente.",
 	"total-number-of-unique-liferay-dxp-sites-each-comprising-a-set-of-pages-and-their-related-content": "Número total de sitios de Liferay DXP únicos, cada uno compuesto por un conjunto de páginas y su contenido relacionado.",

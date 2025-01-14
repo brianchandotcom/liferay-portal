@@ -33,6 +33,7 @@ const GET_ACTIVATION_KEYS = gql`
 				id
 				ipAddresses
 				licenseEntryType
+				licenseVersion
 				macAddresses
 				maxClusterNodes
 				name

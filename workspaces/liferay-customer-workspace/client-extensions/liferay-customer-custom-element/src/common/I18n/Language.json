@@ -588,7 +588,7 @@
 	"time-zone": "Time Zone",
 	"to": "to",
 	"to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version": "To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version.",
-	"to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size": "To download an aggregate key, select keys with identical Type, Start Date, End Date, and Instance Size",
+	"to-download-an-aggregate-key-select-keys-for-a-valid-liferay-version-with-identical-type-start-date-end-date-and-instance-size-to-learn-more-click-x-here-x": "To download an aggregate key, select keys for a valid Liferay version with identical Type, Start Date, End Date, and Instance Size. To learn more, click {0}here{1}.",
 	"to-update-an-existing-users-email-address-have-the-user-log-in-with-their-current-address-to-access": "To update an existing user's email address, have the user log in with their current address to access",
 	"tokyo-japan": "Tokyo, Japan",
 	"total-count-of-anonymous-page-views-on-all-customer-sites": "Total count of Anonymous Page Views on all customer sites.",

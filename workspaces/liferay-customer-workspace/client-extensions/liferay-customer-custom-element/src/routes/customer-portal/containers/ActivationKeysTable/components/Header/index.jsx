@@ -293,9 +293,14 @@ const ActivationKeysTableHeader = ({
 
 			{!isAbleToDownloadAggregateKeys && (
 				<ClayAlert className="my-2" displayType="info">
-					{i18n.translate(
-						'to-download-an-aggregate-key-select-keys-with-identical-type-start-date-end-date-and-instance-size'
-					)}
+					<div
+						dangerouslySetInnerHTML={{
+							__html: i18n.sub(
+								'to-download-an-aggregate-key-select-keys-for-a-valid-liferay-version-with-identical-type-start-date-end-date-and-instance-size-to-learn-more-click-x-here-x',
+								['<a href="https://help.liferay.com/hc/articles/8835990270989-How-do-I-download-my-Liferay-DXP-Portal-Activation-Keys" target="_blank">', '</a>']
+							)
+						}}
+					/>
 				</ClayAlert>
 			)}
 		</>

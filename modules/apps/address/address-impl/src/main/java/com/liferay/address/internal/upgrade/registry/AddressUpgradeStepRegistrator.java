@@ -28,7 +28,9 @@ public class AddressUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.1", "1.0.0", new CountryUpgradeProcess(_companyLocalService));
+			"0.0.1", "1.0.0",
+			new CountryUpgradeProcess(
+				_companyLocalService, _counterLocalService));
 
 		registry.register(
 			"1.0.0", "1.0.1",

@@ -47,19 +47,6 @@ public class EditSXPBlueprintDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 		).put(
-			"fetchClassSubtypesURL",
-			ResourceURLBuilder.createResourceURL(
-				_renderResponse
-			).setCMD(
-				"getClassSubtypes"
-			).setParameter(
-				"companyId", _themeDisplay.getCompanyId()
-			).setParameter(
-				"languageId", _themeDisplay.getLanguageId()
-			).setResourceID(
-				"/search_experiences/get_class_subtypes"
-			).buildString()
-		).put(
 			"fetchSitesURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse
@@ -67,6 +54,17 @@ public class EditSXPBlueprintDisplayContext {
 				"getSitesJSONObject"
 			).setResourceID(
 				"/sxp_blueprint_admin/get_sites"
+			).buildString()
+		).put(
+			"fetchSubtypeClassesURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setParameter(
+				"companyId", _themeDisplay.getCompanyId()
+			).setParameter(
+				"languageId", _themeDisplay.getLanguageId()
+			).setResourceID(
+				"/search_experiences/get_subtype_classes"
 			).buildString()
 		).put(
 			"isCompanyAdmin",

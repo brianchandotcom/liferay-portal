@@ -1,3 +1,5 @@
+export * from './minimalTestEntityApi';
+import { MinimalTestEntityApi } from './minimalTestEntityApi';
 export * from './testEntityApi';
 import { TestEntityApi } from './testEntityApi';
 export * from './testEntityAddressApi';
@@ -13,4 +15,4 @@ export class HttpError extends Error {
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [TestEntityApi, TestEntityAddressApi];
+export const APIS = [MinimalTestEntityApi, TestEntityApi, TestEntityAddressApi];

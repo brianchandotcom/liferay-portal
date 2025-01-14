@@ -761,11 +761,26 @@ public class JenkinsResultsParserUtil {
 	public static String executeJenkinsScript(
 		String jenkinsMasterName, String script, boolean rawResponse) {
 
-		try {
-			String url = fixURL(
-				getLocalURL("http://" + jenkinsMasterName + "/script"));
+		Matcher matcher = _test1MasterNamePattern.matcher(jenkinsMasterName);
 
-			URL urlObject = new URL(url);
+		try {
+			String url = null;
+
+			if (matcher.matches()) {
+				int masterNumber = Integer.valueOf(matcher.group(1));
+
+				if (masterNumber > 40) {
+					url = combine(
+						"https://", jenkinsMasterName, ".liferay.com/script");
+				}
+			}
+
+			if (url == null) {
+				url = getLocalURL(
+					combine("http://", jenkinsMasterName, "/script"));
+			}
+
+			URL urlObject = new URL(fixURL(url));
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
@@ -7007,6 +7022,8 @@ public class JenkinsResultsParserUtil {
 		}
 	};
 
+	private static final Pattern _test1MasterNamePattern = Pattern.compile(
+		"test-1-(\\d+)");
 	private static final Pattern _testray2URLPattern = Pattern.compile(
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
 			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");

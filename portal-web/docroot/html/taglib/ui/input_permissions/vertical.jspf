@@ -12,7 +12,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 --%>
 
-<div class="vertical-display permissions-table-container table-responsive" id="<%= uniqueNamespace %>inputPermissionsTable">
+<div class="permissions-table-container table-responsive vertical-display" id="<%= uniqueNamespace %>inputPermissionsTable">
 	<table class="table table-list">
 		<thead>
 			<tr>

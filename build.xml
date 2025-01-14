@@ -528,15 +528,6 @@ message.
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<ant dir="support-tomcat" inheritAll="false" target="deploy" />
-
-				<copy
-					todir="${app.server.shielded-container-lib.portal.dir}"
-				>
-					<fileset
-						dir="lib/development"
-						includes="activation.jar,mail.jar"
-					/>
-				</copy>
 			</then>
 		</if>
 

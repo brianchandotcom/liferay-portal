@@ -213,7 +213,7 @@
 	"for-instructions-on-how-to-activate-your-liferay-dxp-or-liferay-portal-instance-please-read-the": "For instructions on how to activate your Liferay DXP or Liferay Portal instance, please read the",
 	"for-instructions-on-how-to-setup-your-liferay-enterprise-search-software-please-read-the": "For instructions on how to setup your Liferay Enterprise Search software, please read the",
 	"for-more-information-about-the-availability-of-your-x-activation-keys-please": " For more information about the availability of your {0} activation keys, please ",
-	"for-the-latest-support-announcements-on-critical-security-vulnerabilities-subscribe-here": "For the latest support announcements on critical security vulnerabilities <a href='https://www.subscribepage.com/liferay'>subscribe here</a>.",
+	"for-the-latest-support-announcements-on-critical-security-vulnerabilities-subscribe-here": "For the latest support announcements on critical security vulnerabilities <a href='{0}'>subscribe here</a>.",
 	"formerly-known-as-lxc-sm": "Formerly known as LXC - SM",
 	"france": "France",
 	"frankfurt-germany": "Frankfurt, Germany",

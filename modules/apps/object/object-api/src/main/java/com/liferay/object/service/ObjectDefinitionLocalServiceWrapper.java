@@ -216,11 +216,6 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public void deployObjectDefinitions() {
-		_objectDefinitionLocalService.deployObjectDefinitions();
-	}
-
-	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _objectDefinitionLocalService.dslQuery(dslQuery);
 	}

@@ -173,8 +173,6 @@ public interface ObjectDefinitionLocalService
 
 	public void deployObjectDefinition(ObjectDefinition objectDefinition);
 
-	public void deployObjectDefinitions();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

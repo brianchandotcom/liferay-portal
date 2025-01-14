@@ -844,14 +844,7 @@ gradle.beforeProject {
 				tasks.named("jar") {
 					Task jarTask ->
 
-					bundle {
-						setClasspath(
-							project.providers.provider {
-								FileCollection jarFiles = files(project.configurations.compileClasspath.findAll { it.name.endsWith(".jar") })
-
-								files(project.configurations.compileClasspath - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, jarTask)
-							})
-					}
+					classpath = tasks.named("compileJava").map { it.classpath }
 				}
 			}
 		}

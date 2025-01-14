@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext = new EditStyleBookEntryDisplayContext(request, renderRequest, renderResponse);
+EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext = (EditStyleBookEntryDisplayContext)request.getAttribute(EditStyleBookEntryDisplayContext.class.getName());
 %>
 
 <div>

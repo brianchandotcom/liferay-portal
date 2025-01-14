@@ -5,6 +5,8 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -30,12 +32,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -46,9 +48,9 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -65,7 +67,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -83,21 +84,22 @@ import javax.servlet.http.HttpServletRequest;
 public class EditStyleBookEntryDisplayContext {
 
 	public EditStyleBookEntryDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		CETManager cetManager,
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_cetManager = cetManager;
+		_fragmentCollectionContributorRegistry =
+			fragmentCollectionContributorRegistry;
+		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_fragmentCollectionContributorRegistry =
-			(FragmentCollectionContributorRegistry)renderRequest.getAttribute(
-				StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
-		_frontendTokenDefinitionRegistry =
-			(FrontendTokenDefinitionRegistry)renderRequest.getAttribute(
-				FrontendTokenDefinitionRegistry.class.getName());
-		_itemSelector = (ItemSelector)renderRequest.getAttribute(
-			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -299,13 +301,9 @@ public class EditStyleBookEntryDisplayContext {
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
 		throws Exception {
 
-		Group group = _themeDisplay.getScopeGroup();
-
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				LayoutSetLocalServiceUtil.fetchLayoutSet(
-					_themeDisplay.getSiteGroupId(),
-					group.isLayoutSetPrototype()));
+				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
 
 		if (frontendTokenDefinition != null) {
 			return frontendTokenDefinition.getJSONObject(
@@ -574,14 +572,26 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getThemeName() {
-		Group group = _themeDisplay.getScopeGroup();
+		Theme theme = ThemeLocalServiceUtil.fetchTheme(
+			_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+		String name = _styleBookEntry.getThemeId();
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			_themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
+		if (theme != null) {
+			name = LanguageUtil.format(
+				_httpServletRequest, "x-theme", theme.getName());
+		}
+		else {
+			CET cet = _cetManager.getCET(
+				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
 
-		Theme theme = layoutSet.getTheme();
+			if (cet != null) {
+				name = LanguageUtil.format(
+					_httpServletRequest, "x-theme-css-client-extension",
+					cet.getName());
+			}
+		}
 
-		return theme.getName();
+		return name;
 	}
 
 	private void _setViewAttributes() {
@@ -597,6 +607,7 @@ public class EditStyleBookEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());
 
+	private final CETManager _cetManager;
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 	private final FrontendTokenDefinitionRegistry

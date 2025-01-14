@@ -7,7 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<div style="display: flex; justify-content: flex-start; overflow: hidden;">
+<aui:style type="text/css">
+	.fragment-video-streaming-display {
+		display: flex;
+		justify-content: flex-start;
+		overflow: hidden;
+	}
+</aui:style>
+
+<div class="fragment-video-streaming-display">
 	<div class="videojs-container">
 		<aui:link href="https://vjs.zencdn.net/8.6.1/video-js.min.css" rel="stylesheet" type="text/css" />
 		<aui:link href="https://unpkg.com/videojs-quality-selector-hls@1.1.1/dist/videojs-quality-selector-hls.css" rel="stylesheet" type="text/css" />

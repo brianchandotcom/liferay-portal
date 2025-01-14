@@ -11,7 +11,7 @@
 DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAccessFromDesktopDisplayContext(request);
 %>
 
-<div id="<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav" style="display: none;">
+<div class="hide" id="<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav">
 	<div class="portlet-document-library">
 		<liferay-ui:message key="<%= dlAccessFromDesktopDisplayContext.getWebDAVHelpMessage() %>" />
 

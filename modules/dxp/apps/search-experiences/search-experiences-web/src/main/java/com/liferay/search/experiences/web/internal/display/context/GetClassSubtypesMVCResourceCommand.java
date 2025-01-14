@@ -95,16 +95,16 @@ public class GetClassSubtypesMVCResourceCommand implements MVCResourceCommand {
 
 		JSONArray classSubtypeJSONArray = _jsonFactory.createJSONArray();
 
-		int delta = ParamUtil.getInteger(resourceRequest, "delta", 10);
-		int start = ParamUtil.getInteger(resourceRequest, "start", 1);
+		int pageSize = ParamUtil.getInteger(resourceRequest, "pageSize", 10);
+		int page = ParamUtil.getInteger(resourceRequest, "page", 1);
 
-		int end = start * delta;
-		start = (start - 1) * delta;
+		int end = page * pageSize;
+		page = (page - 1) * pageSize;
 
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(resourceRequest, "languageId"));
 
-		for (int i = start; (i < classStructures.size()) && (i < end); i++) {
+		for (int i = page; (i < classStructures.size()) && (i < end); i++) {
 			try {
 				DDMStructure ddmStructure = classStructures.get(i);
 
@@ -135,7 +135,7 @@ public class GetClassSubtypesMVCResourceCommand implements MVCResourceCommand {
 		return JSONUtil.put(
 			"classSubtypes", classSubtypeJSONArray
 		).put(
-			"size", classStructures.size()
+			"totalCount", classStructures.size()
 		);
 	}
 

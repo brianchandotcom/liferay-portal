@@ -8,14 +8,22 @@ package com.liferay.address.internal.upgrade.v1_0_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CountryLocalization;
+import com.liferay.portal.kernel.model.CountryLocalizationTable;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionLocalization;
+import com.liferay.portal.kernel.model.RegionLocalizationTable;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -72,7 +80,7 @@ public class CountryUpgradeProcessTest {
 
 		_assertCount(_company.getCompanyId());
 
-		_verifyCounter(_company.getCompanyId());
+		_verifyCounters(_company.getCompanyId());
 	}
 
 	private void _assertCount(long companyId) throws Exception {
@@ -133,25 +141,42 @@ public class CountryUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	private void _verifyCounter(long companyId) {
+	private void _verifyCounter(
+		PersistedModelLocalService persistedModelLocalService,
+		BaseTable<?> table, Column<?, Long> column, String className,
+		long companyId) {
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-			List<Long> results = _regionLocalService.dslQuery(
+			List<Long> results = persistedModelLocalService.dslQuery(
 				DSLQueryFactoryUtil.select(
 					DSLFunctionFactoryUtil.max(
-						RegionTable.INSTANCE.regionId
+						column
 					).as(
 						"MAX_VALUE"
 					)
 				).from(
-					RegionTable.INSTANCE
+					table
 				));
 
 			Assert.assertTrue(
-				results.get(0) <= _counterLocalService.getCurrentId(
-					Region.class.getName()));
+				results.get(0) <= _counterLocalService.getCurrentId(className));
 		}
+	}
+
+	private void _verifyCounters(long companyId) {
+		_verifyCounter(
+			_countryLocalService, CountryLocalizationTable.INSTANCE,
+			CountryLocalizationTable.INSTANCE.countryLocalizationId,
+			CountryLocalization.class.getName(), companyId);
+		_verifyCounter(
+			_regionLocalService, RegionTable.INSTANCE,
+			RegionTable.INSTANCE.regionId, Region.class.getName(), companyId);
+		_verifyCounter(
+			_regionLocalService, RegionLocalizationTable.INSTANCE,
+			RegionLocalizationTable.INSTANCE.regionLocalizationId,
+			RegionLocalization.class.getName(), companyId);
 	}
 
 	private static final String _CLASS_NAME =
@@ -159,6 +184,9 @@ public class CountryUpgradeProcessTest {
 
 	@Inject
 	private static CounterLocalService _counterLocalService;
+
+	@Inject
+	private static CountryLocalService _countryLocalService;
 
 	@Inject
 	private static RegionLocalService _regionLocalService;

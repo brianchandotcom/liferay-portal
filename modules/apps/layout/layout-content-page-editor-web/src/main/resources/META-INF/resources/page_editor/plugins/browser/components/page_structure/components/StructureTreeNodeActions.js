@@ -46,6 +46,7 @@ import isCuttable from '../../../../../app/utils/isCuttable';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import {isMovementValid} from '../../../../../app/utils/isMovementValid';
 import isStepper from '../../../../../app/utils/isStepper';
+import removeFormStep from '../../../../../app/utils/removeFormStep';
 import toMovementItem from '../../../../../app/utils/toMovementItem';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
@@ -347,20 +348,38 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				type: 'divider',
 			});
 
-			items.push({
-				action: () => {
-					dispatch(
-						deleteItem({
-							itemIds: [item.id],
-							selectItems,
-						})
-					);
+			if (layoutDataItem.type === LAYOUT_DATA_ITEM_TYPES.formStep) {
+				items.push({
+					action: () => {
+						removeFormStep({
+							dispatch,
+							item: layoutDataItem,
+							layoutData,
+							selectItem,
+						});
 
-					setText(Liferay.Language.get('item-removed'));
-				},
-				icon: 'trash',
-				label: Liferay.Language.get('delete'),
-			});
+						setText(Liferay.Language.get('item-removed'));
+					},
+					icon: 'trash',
+					label: Liferay.Language.get('remove-step'),
+				});
+			}
+			else {
+				items.push({
+					action: () => {
+						dispatch(
+							deleteItem({
+								itemIds: [item.id],
+								selectItems,
+							})
+						);
+
+						setText(Liferay.Language.get('item-removed'));
+					},
+					icon: 'trash',
+					label: Liferay.Language.get('delete'),
+				});
+			}
 		}
 
 		return items;

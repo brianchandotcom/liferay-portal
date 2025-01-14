@@ -7,6 +7,7 @@ import getRandomString from '../../../utils/getRandomString';
 
 type Props = {
 	columns?: Array<{
+		id?: string;
 		pageElements?: PageElement[];
 		size: number;
 	}>;
@@ -21,7 +22,11 @@ export default function getGridDefinition({
 
 	for (const column of columns) {
 		pageElements.push(
-			getColumnDefinition(column.size, column.pageElements)
+			getColumnDefinition({
+				id: column.id,
+				pageElements: column.pageElements,
+				size: column.size,
+			})
 		);
 	}
 
@@ -36,15 +41,20 @@ export default function getGridDefinition({
 	};
 }
 
-function getColumnDefinition(
-	size: number,
-	pageElements?: PageElement[]
-): PageElement {
+function getColumnDefinition({
+	id = getRandomString(),
+	pageElements = [],
+	size,
+}: {
+	id?: string;
+	pageElements?: PageElement[];
+	size: number;
+}): PageElement {
 	return {
 		definition: {
 			size,
 		},
-		id: getRandomString(),
+		id,
 		pageElements,
 		type: 'Column',
 	};

@@ -250,11 +250,11 @@ public class ForgotPasswordMVCActionCommandTest {
 				mockLiferayPortletActionRequest,
 				new MockLiferayPortletActionResponse());
 
-			Object message = SessionMessages.get(
-				_portal.getHttpServletRequest(mockLiferayPortletActionRequest),
-				"forgotPasswordSent");
-
-			Assert.assertNotNull(message);
+			Assert.assertNotNull(
+				SessionMessages.get(
+					_portal.getHttpServletRequest(
+						mockLiferayPortletActionRequest),
+					"forgotPasswordSent"));
 
 			return _ticketLocalService.getTickets(
 				_user.getCompanyId(), User.class.getName(), _user.getUserId(),

@@ -25,9 +25,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Keven Leone
  */
-public class MarketplaceHttpUtil {
+public class MarketplaceUtil {
 
-	public static JSONObject exchangeToken(
+	public static JSONObject connect(
 			long companyId, String code, String codeVerifier,
 			String refreshToken, String serviceURL, String settings)
 		throws Exception {

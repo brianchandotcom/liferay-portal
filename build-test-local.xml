@@ -348,8 +348,8 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			<replacetoken><![CDATA[{test.batch.names[portal-release-acceptance]}]]></replacetoken>
 			<replacevalue><![CDATA[\
 		functional-tomcat-mysql57-jdk21_zulu,\
-        modules-integration-mysql57-jdk21_zulu,\
-        playwright-js-tomcat90-mysql57-jdk21_zulu]]></replacevalue>
+		modules-integration-mysql57-jdk21_zulu,\
+		playwright-js-tomcat90-mysql57-jdk21_zulu]]></replacevalue>
 		</replace>
 
 		<replaceregexp

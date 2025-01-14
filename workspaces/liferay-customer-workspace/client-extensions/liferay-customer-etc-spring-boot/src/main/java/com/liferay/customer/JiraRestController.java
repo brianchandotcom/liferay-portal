@@ -397,8 +397,7 @@ public class JiraRestController extends BaseRestController {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get Jira issue with key " + issueKey,
-					exception);
+					"Unable to get Jira issue with key " + issueKey, exception);
 			}
 		}
 

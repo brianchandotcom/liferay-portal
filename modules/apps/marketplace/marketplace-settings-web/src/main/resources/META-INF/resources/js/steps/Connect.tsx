@@ -130,7 +130,7 @@ export default function Connect({
 			<div className="mb-4">
 				{sub(
 					Liferay.Language.get(
-						'click-x-to-learn-how-to-connect-liferay-dxp-to-marketplace'
+						'click-x-to-learn-how-to-connect-to-the-liferay-marketplace'
 					),
 					(
 						<a

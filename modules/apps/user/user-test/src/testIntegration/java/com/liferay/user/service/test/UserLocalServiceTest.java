@@ -169,6 +169,51 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testAddLDAPUserWithLDAPPasswordPolicy() throws Exception {
+		try (SafeCloseable safeCloseable1 =
+				_updateDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> {
+						passwordPolicy.setChangeRequired(true);
+						passwordPolicy.setCheckSyntax(true);
+					});
+			SafeCloseable safeCloseable2 =
+				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
+
+			User user = _createUser(true, "abc");
+
+			Assert.assertEquals(
+				"User was created with incorrect LDAP Server Id", 1,
+				user.getLdapServerId());
+			Assert.assertFalse(
+				"During creation, LDAP user had portal password policy applied",
+				user.isPasswordReset());
+			Assert.assertNull(
+				"LDAP user is not bypassing portal password policy",
+				user.getPasswordPolicy());
+		}
+	}
+
+	@Test
+	public void testAddLDAPUserWithoutLDAPPasswordPolicy() throws Exception {
+		try (SafeCloseable safeCloseable1 =
+				_updateDefaultPasswordPolicyWithSafeCloseable(
+					passwordPolicy -> {
+						passwordPolicy.setChangeRequired(true);
+						passwordPolicy.setCheckSyntax(true);
+					});
+			SafeCloseable safeCloseable2 =
+				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
+
+			AssertUtils.assertFailure(
+				UserPasswordException.class,
+				"Password for user 0 must be at least 6 characters",
+				() -> _createUser(true, "abc"));
+
+			_assertUserHasPasswordPolicy(true, _createUser(true, "Liferay123"));
+		}
+	}
+
+	@Test
 	public void testAddUserWithEmptyPassword() throws Exception {
 		User user = _userLocalService.addUser(
 			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
@@ -203,58 +248,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testAddLDAPUserWithLDAPPasswordPolicy()
-		throws Exception {
-
-		try (SafeCloseable safeCloseable1 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> {
-						passwordPolicy.setChangeRequired(true);
-						passwordPolicy.setCheckSyntax(true);
-					});
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
-
-			User user = _createUser(true, "abc");
-
-			Assert.assertEquals(
-				"User was created with incorrect LDAP Server Id", 1,
-				user.getLdapServerId());
-			Assert.assertFalse(
-				"During creation, LDAP user had portal password policy applied",
-				user.isPasswordReset());
-			Assert.assertNull(
-				"LDAP user is not bypassing portal password policy",
-				user.getPasswordPolicy());
-		}
-	}
-
-	@Test
-	public void testAddLDAPUserWithoutLDAPPasswordPolicy()
-		throws Exception {
-
-		try (SafeCloseable safeCloseable1 =
-				_updateDefaultPasswordPolicyWithSafeCloseable(
-					passwordPolicy -> {
-						passwordPolicy.setChangeRequired(true);
-						passwordPolicy.setCheckSyntax(true);
-					});
-			SafeCloseable safeCloseable2 =
-				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
-
-			AssertUtils.assertFailure(
-				UserPasswordException.class,
-				"Password for user 0 must be at least 6 characters",
-				() -> _createUser(true, "abc"));
-
-			_assertUserHasPasswordPolicy(true, _createUser(true, "Liferay123"));
-		}
-	}
-
-	@Test
-	public void testAddUserWithLDAPPasswordPolicy()
-		throws Exception {
-
+	public void testAddUserWithLDAPPasswordPolicy() throws Exception {
 		try (SafeCloseable safeCloseable1 =
 				_updateDefaultPasswordPolicyWithSafeCloseable(
 					passwordPolicy -> {

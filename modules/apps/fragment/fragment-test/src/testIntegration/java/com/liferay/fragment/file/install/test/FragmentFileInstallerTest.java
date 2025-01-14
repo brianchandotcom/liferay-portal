@@ -81,8 +81,8 @@ public class FragmentFileInstallerTest {
 
 			_assertLogEntries(
 				logCapture.getLogEntries(),
-				"Deploying fragments file " + file.getName(),
-				"Fragments file " + file.getName() + " deployed successfully.");
+				"Deploying " + file.getName(),
+				"Deployed " + file.getName() + " successfully");
 		}
 
 		FragmentCollection fragmentCollection =

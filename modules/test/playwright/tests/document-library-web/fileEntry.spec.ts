@@ -359,6 +359,60 @@ test(
 );
 
 test(
+	'Only one success message on scheduling file from widget page',
+	{tag: ['@LPD-45614', '@LPD-45658']},
+	async ({
+			   apiHelpers,
+			   documentLibraryEditFilePage,
+			   documentLibraryPage,
+			   page,
+			   site,
+		   }) => {
+
+		const portletId = getRandomString();
+		const widgetDefinition = getWidgetDefinition({
+			id: portletId,
+			widgetName: 'com_liferay_document_library_web_portlet_DLPortlet',
+		});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web/${site.name}${layout.friendlyUrlPath}`);
+
+		await documentLibraryPage.goToCreateNewFile();
+
+		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
+		const title = getRandomString();
+
+		await documentLibraryEditFilePage.publishNewFileWithScheduleDate(
+			scheduleDate,
+			title
+		);
+
+		await expect(page.getByRole('link', {name: title})).toBeVisible();
+
+		const toastAlertContainer = page.locator('[id="ToastAlertContainer"]');
+
+		await expect(toastAlertContainer).toBeVisible();
+
+		await expect(toastAlertContainer).not.toContainText(`<strong>`);
+		await expect(toastAlertContainer).toContainText(`Success:${title}`);
+
+		await expect(toastAlertContainer).toContainText(
+			new Intl.DateTimeFormat('en-US', {
+				day: 'numeric',
+				month: 'numeric',
+				year: '2-digit',
+			}).format(new Date(scheduleDate))
+		);
+
+	}
+);
+
+test(
 	'Search in DL portlet does not show results in card view',
 	{tag: ['@LPD-31694', '@LPD-202909']},
 	async ({

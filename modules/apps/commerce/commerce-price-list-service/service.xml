@@ -132,9 +132,6 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CommerceCurrencyCode" return-type="Collection">
-			<finder-column name="commerceCurrencyCode" />
-		</finder>
 		<finder name="ParentCommercePriceListId" return-type="CommercePriceList">
 			<finder-column name="parentCommercePriceListId" />
 		</finder>
@@ -145,6 +142,10 @@
 		<finder name="G_CatalogBasePriceList" return-type="CommercePriceList">
 			<finder-column name="groupId" />
 			<finder-column name="catalogBasePriceList" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="commerceCurrencyCode" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="displayDate" />

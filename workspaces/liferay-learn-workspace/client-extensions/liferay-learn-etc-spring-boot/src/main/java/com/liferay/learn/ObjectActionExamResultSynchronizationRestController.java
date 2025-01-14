@@ -168,12 +168,12 @@ public class ObjectActionExamResultSynchronizationRestController
 		return jsonObject.toString();
 	}
 
-	private int _importExamResults(Jwt jwt, OffsetDateTime startDate) {
+	private int _importExamResults(Jwt jwt, OffsetDateTime offsetDateTime) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"endDate",
-			startDate.plusDays(
+			offsetDateTime.plusDays(
 				7
 			).format(
 				DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
@@ -186,7 +186,8 @@ public class ObjectActionExamResultSynchronizationRestController
 			"securityToken", _webassessorSecurityToken
 		).put(
 			"startDate",
-			startDate.format(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss"))
+			offsetDateTime.format(
+				DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss"))
 		);
 
 		JSONArray responseJSONArray = new JSONArray(

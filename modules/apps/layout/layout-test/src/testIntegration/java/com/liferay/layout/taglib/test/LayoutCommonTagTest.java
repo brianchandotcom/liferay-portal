@@ -65,12 +65,12 @@ public class LayoutCommonTagTest {
 
 	@Test
 	@TestInfo("LPD-45658")
-	public void testHtmlRenderingInSessionMessages() throws Exception {
+	public void testDoEndTag() throws Exception {
 		LayoutCommonTag layoutCommonTag = new LayoutCommonTag();
 
 		layoutCommonTag.setDisplaySessionMessages(true);
 
-		String message =
+		String value =
 			"User's input with single quotes and <strong>tags</strong>";
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -78,17 +78,17 @@ public class LayoutCommonTagTest {
 
 		layoutCommonTag.setPageContext(
 			_getPageContext(
-				_getMockHttpServletRequest(message), mockHttpServletResponse));
+				_getMockHttpServletRequest(value), mockHttpServletResponse));
 
 		layoutCommonTag.doEndTag();
 
 		String content = mockHttpServletResponse.getContentAsString();
 
 		Assert.assertTrue(
-			content, content.contains(HtmlUtil.escapeJS(message)));
+			content, content.contains(HtmlUtil.escapeJS(value)));
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest(String message)
+	private MockHttpServletRequest _getMockHttpServletRequest(String value)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -109,7 +109,7 @@ public class LayoutCommonTagTest {
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		SessionMessages.add(
-			mockHttpServletRequest, "test_requestProcessedWarning", message);
+			mockHttpServletRequest, "test_requestProcessedWarning", value);
 
 		return mockHttpServletRequest;
 	}
@@ -121,7 +121,7 @@ public class LayoutCommonTagTest {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		final JspWriter jspWriter = new MockJspWriter(printWriter);
+		JspWriter jspWriter = new MockJspWriter(printWriter);
 
 		httpServletRequest.setAttribute(
 			WebKeys.OUTPUT_DATA,

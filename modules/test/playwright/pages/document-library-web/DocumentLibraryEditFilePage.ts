@@ -188,13 +188,16 @@ export class DocumentLibraryEditFilePage {
 		await this.publishButton.click();
 	}
 
-	async publishNewFileWithScheduleDate(
+	async goToPublishNewFileWithScheduleDate(
 		scheduleDate: string,
 		title: string,
 		siteUrl?: Site['friendlyUrlPath']
 	) {
 		await this.goto(siteUrl);
+		await this.publishNewFileWithScheduleDate(scheduleDate, title);
+	}
 
+	async publishNewFileWithScheduleDate(scheduleDate: string, title: string) {
 		await this.titleSelector.fill(title);
 
 		const isClosed =

@@ -99,6 +99,7 @@
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column name="enableCategorization" type="boolean" />
 		<column name="enableComments" type="boolean" />
+		<column name="enableFriendlyURLCustomization" type="boolean" />
 		<column name="enableIndexSearch" type="boolean" />
 		<column name="enableLocalization" type="boolean" />
 		<column name="enableObjectEntryDraft" type="boolean" />
@@ -1066,6 +1067,7 @@
 		<exception>ObjectDefinitionClassName</exception>
 		<exception>ObjectDefinitionEnableCategorization</exception>
 		<exception>ObjectDefinitionEnableComments</exception>
+		<exception>ObjectDefinitionEnableFriendlyURLCustomization</exception>
 		<exception>ObjectDefinitionEnableLocalization</exception>
 		<exception>ObjectDefinitionEnableObjectEntryHistory</exception>
 		<exception>ObjectDefinitionExternalReferenceCode</exception>

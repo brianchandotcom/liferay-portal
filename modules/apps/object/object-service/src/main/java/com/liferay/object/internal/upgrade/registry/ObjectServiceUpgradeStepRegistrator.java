@@ -505,6 +505,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"update ObjectField set dbType = 'Integer' where " +
 					"dbColumnName = 'status'"));
+
+		registry.register(
+			"10.2.0", "10.3.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectDefinition", "enableFriendlyURLCustomization BOOLEAN"));
 	}
 
 	@Reference

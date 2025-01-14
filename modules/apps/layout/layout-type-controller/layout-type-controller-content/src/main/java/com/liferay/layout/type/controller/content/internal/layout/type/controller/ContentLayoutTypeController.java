@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -151,11 +152,13 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			}
 		}
 
-		long segmentsExperienceId = ParamUtil.getLong(
-			httpServletRequest, "segmentsExperienceId", -1);
+		String segmentsExperienceId = ParamUtil.getString(
+			httpServletRequest, "segmentsExperienceId");
 
-		if (Validator.isNull(redirect) && (segmentsExperienceId != -1) &&
-			!_isValidSegmentsExperienceId(layout, segmentsExperienceId)) {
+		if (Validator.isNull(redirect) &&
+			Validator.isNotNull(segmentsExperienceId) &&
+			!_isValidSegmentsExperienceId(
+				layout, GetterUtil.getLong(segmentsExperienceId, -1))) {
 
 			redirect = HttpComponentsUtil.removeParameter(
 				themeDisplay.getURLCurrent(), "segmentsExperienceId");
@@ -392,6 +395,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	private boolean _isValidSegmentsExperienceId(
 		Layout layout, long segmentsExperienceId) {
+
+		if (segmentsExperienceId == -1) {
+			return false;
+		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

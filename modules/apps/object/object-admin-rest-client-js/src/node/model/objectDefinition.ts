@@ -30,6 +30,7 @@ export class ObjectDefinition {
     'defaultLanguageId'?: string;
     'enableCategorization'?: boolean;
     'enableComments'?: boolean;
+    'enableFriendlyURLCustomization'?: boolean;
     'enableIndexSearch'?: boolean;
     'enableLocalization'?: boolean;
     'enableObjectEntryDraft'?: boolean;
@@ -110,6 +111,11 @@ export class ObjectDefinition {
         {
             "name": "enableComments",
             "baseName": "enableComments",
+            "type": "boolean"
+        },
+        {
+            "name": "enableFriendlyURLCustomization",
+            "baseName": "enableFriendlyURLCustomization",
             "type": "boolean"
         },
         {

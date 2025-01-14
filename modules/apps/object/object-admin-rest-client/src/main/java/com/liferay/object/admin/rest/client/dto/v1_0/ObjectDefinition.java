@@ -244,6 +244,31 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean enableComments;
 
+	public Boolean getEnableFriendlyURLCustomization() {
+		return enableFriendlyURLCustomization;
+	}
+
+	public void setEnableFriendlyURLCustomization(
+		Boolean enableFriendlyURLCustomization) {
+
+		this.enableFriendlyURLCustomization = enableFriendlyURLCustomization;
+	}
+
+	public void setEnableFriendlyURLCustomization(
+		UnsafeSupplier<Boolean, Exception>
+			enableFriendlyURLCustomizationUnsafeSupplier) {
+
+		try {
+			enableFriendlyURLCustomization =
+				enableFriendlyURLCustomizationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean enableFriendlyURLCustomization;
+
 	public Boolean getEnableIndexSearch() {
 		return enableIndexSearch;
 	}

@@ -474,6 +474,51 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableCommentsSupplier;
 
 	@Schema
+	public Boolean getEnableFriendlyURLCustomization() {
+		if (_enableFriendlyURLCustomizationSupplier != null) {
+			enableFriendlyURLCustomization =
+				_enableFriendlyURLCustomizationSupplier.get();
+
+			_enableFriendlyURLCustomizationSupplier = null;
+		}
+
+		return enableFriendlyURLCustomization;
+	}
+
+	public void setEnableFriendlyURLCustomization(
+		Boolean enableFriendlyURLCustomization) {
+
+		this.enableFriendlyURLCustomization = enableFriendlyURLCustomization;
+
+		_enableFriendlyURLCustomizationSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableFriendlyURLCustomization(
+		UnsafeSupplier<Boolean, Exception>
+			enableFriendlyURLCustomizationUnsafeSupplier) {
+
+		_enableFriendlyURLCustomizationSupplier = () -> {
+			try {
+				return enableFriendlyURLCustomizationUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableFriendlyURLCustomization;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableFriendlyURLCustomizationSupplier;
+
+	@Schema
 	public Boolean getEnableIndexSearch() {
 		if (_enableIndexSearchSupplier != null) {
 			enableIndexSearch = _enableIndexSearchSupplier.get();
@@ -1815,6 +1860,19 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableComments\": ");
 
 			sb.append(enableComments);
+		}
+
+		Boolean enableFriendlyURLCustomization =
+			getEnableFriendlyURLCustomization();
+
+		if (enableFriendlyURLCustomization != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableFriendlyURLCustomization\": ");
+
+			sb.append(enableFriendlyURLCustomization);
 		}
 
 		Boolean enableIndexSearch = getEnableIndexSearch();

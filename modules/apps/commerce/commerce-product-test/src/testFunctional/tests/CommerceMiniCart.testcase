@@ -2022,21 +2022,21 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Descending");
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
 		FrontStore.addInitializerProductToCart(
-			productName = "Premium Brake Fluid",
+			productName = "Brake Pads",
 			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
-			value1 = "100.00");
+			value1 = "21.00");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
-			value1 = "90.00");
+			value1 = "18.90");
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the promo price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"

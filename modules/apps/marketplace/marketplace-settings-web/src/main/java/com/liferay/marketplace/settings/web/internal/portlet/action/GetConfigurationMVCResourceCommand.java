@@ -8,6 +8,7 @@ package com.liferay.marketplace.settings.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -47,16 +48,16 @@ public class GetConfigurationMVCResourceCommand extends BaseMVCResourceCommand {
 			PrefsPropsUtil.getString(
 				themeDisplay.getCompanyId(), "marketplaceAccessToken"));
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-		).put(
+		JSONObject jsonObject = JSONUtil.put(
 			"authorized", authorized
-		);
+		).put(
+			"data",
+			() -> {
+				if (!authorized) {
+					return null;
+				}
 
-		if (authorized) {
-			jsonObject.put(
-				"data",
-				_jsonFactory.createJSONObject(
-				).put(
+				return JSONUtil.put(
 					"serviceURL",
 					PrefsPropsUtil.getString(
 						themeDisplay.getCompanyId(), "marketplaceServiceURL")
@@ -67,8 +68,9 @@ public class GetConfigurationMVCResourceCommand extends BaseMVCResourceCommand {
 							themeDisplay.getCompanyId(), "marketplaceSettings"))
 				).put(
 					"url", PrefsPropsUtil.getString(PropsKeys.MARKETPLACE_URL)
-				));
-		}
+				);
+			}
+		);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

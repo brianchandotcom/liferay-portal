@@ -7,8 +7,8 @@ package com.liferay.marketplace.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.marketplace.settings.web.internal.util.MarketplaceUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -20,7 +20,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Keven Leone
@@ -68,15 +67,11 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_jsonFactory.createJSONObject(
-			).put(
+			JSONUtil.put(
 				"accessToken", accessToken
 			).put(
 				"accessTokenExpirationTime", accessTokenExpirationTime
 			));
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

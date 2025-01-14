@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -633,17 +634,6 @@ public class ResourceActionsImpl implements ResourceActions {
 					modelResourceElement.element("composite-model-name"));
 			}
 
-			List<ResourceAction> resourceActions =
-				resourceActionLocalService.getResourceActions(modelName);
-
-			for (ResourceAction resourceAction : resourceActions) {
-				resourceActionLocalService.deleteResourceAction(resourceAction);
-			}
-
-			synchronized (_resourceActionsBags) {
-				_resourceActionsBags.remove(modelName);
-			}
-
 			Element portletRefElement = modelResourceElement.element(
 				"portlet-ref");
 
@@ -659,6 +649,13 @@ public class ResourceActionsImpl implements ResourceActions {
 					_portletRootModelResources.remove(portletName);
 				}
 
+				Set<String> portletResourceNames = _resourceReferences.get(
+					modelName);
+
+				if (portletResourceNames != null) {
+					portletResourceNames.remove(portletName);
+				}
+
 				Set<String> modelResourceNames = _resourceReferences.get(
 					portletName);
 
@@ -671,6 +668,20 @@ public class ResourceActionsImpl implements ResourceActions {
 				if (modelResourceNames.isEmpty()) {
 					_resourceReferences.remove(portletName);
 				}
+			}
+
+			if (SetUtil.isNotEmpty(_resourceReferences.get(modelName))) {
+				continue;
+			}
+
+			for (ResourceAction resourceAction :
+					resourceActionLocalService.getResourceActions(modelName)) {
+
+				resourceActionLocalService.deleteResourceAction(resourceAction);
+			}
+
+			synchronized (_resourceActionsBags) {
+				_resourceActionsBags.remove(modelName);
 			}
 
 			_resourceReferences.remove(modelName);

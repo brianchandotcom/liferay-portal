@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentSkipListSet
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import org.gradle.api.attributes.LibraryElements
 import org.gradle.api.execution.TaskExecutionGraph
 import org.gradle.plugins.ide.api.XmlFileContentMerger
 import org.gradle.plugins.ide.eclipse.model.Classpath
@@ -779,11 +780,11 @@ gradle.beforeProject {
 
 		if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
 			pluginManager.withPlugin("com.liferay.jasper.jspc") {
-				tasks.named("compileJSP") {
-					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-						compileJSP.dependsOn "${it.dependencyProject.path}:jar"
-					}
+				configurations.jspC.attributes {
+					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+				}
 
+				tasks.named("compileJSP") {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
@@ -792,10 +793,6 @@ gradle.beforeProject {
 				}
 
 				tasks.named("generateJSPJava") {
-					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-						compileJSP.dependsOn "${it.dependencyProject.path}:jar"
-					}
-
 					doFirst {
 						FileCollection jarFiles = files(jspCClasspath.files.findAll { it.name.endsWith(".jar") })
 
@@ -805,11 +802,19 @@ gradle.beforeProject {
 			}
 
 			pluginManager.withPlugin("java") {
-				tasks.named("compileJava") {
-					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-						compileJava.dependsOn "${it.dependencyProject.path}:jar"
-					}
+				configurations.compileClasspath.attributes {
+					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+				}
 
+				configurations.testCompileClasspath.attributes {
+					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+				}
+
+				configurations.testIntegrationCompileClasspath.attributes {
+					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+				}
+
+				tasks.named("compileJava") {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
@@ -818,10 +823,6 @@ gradle.beforeProject {
 				}
 
 				tasks.named("compileTestIntegrationJava") {
-					configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
-						compileTestIntegrationJava.dependsOn "${it.dependencyProject.path}:jar"
-					}
-
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
@@ -830,10 +831,6 @@ gradle.beforeProject {
 				}
 
 				tasks.named("compileTestJava") {
-					configurations.testImplementation.allDependencies.withType(ProjectDependency) {
-						compileTestJava.dependsOn "${it.dependencyProject.path}:jar"
-					}
-
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 

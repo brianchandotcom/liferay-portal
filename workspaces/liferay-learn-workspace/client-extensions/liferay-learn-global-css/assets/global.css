@@ -193,10 +193,6 @@ pre[class*='language-'] {
 	border-color: var(--warning);
 }
 
-.code-toolbar {
-	max-width: 50vw;
-}
-
 .code-toolbar > .toolbar {
 	z-index: 2 !important;
 }
@@ -1739,4 +1735,10 @@ pre[class*='language-'] {
 	color: var(--color-neutral-10, #282934) !important;
 	font-size: 13px;
 	font-weight: 400;
+}
+
+@media(min-width: 767px) {
+	.code-toolbar {
+		max-width: 50vw;
+	}
 }

@@ -131,8 +131,7 @@ function TopperContent({
 	const dropContainerId = useDropContainerId();
 	const dropTargetPosition = targetPosition || keyboardMovementPosition;
 
-	const isHighlighted =
-		isOverTarget && isItemHighlighted(item, dropContainerId);
+	const isHighlighted = isItemHighlighted(item, dropContainerId);
 
 	const selectable =
 		!multiSelectType ||

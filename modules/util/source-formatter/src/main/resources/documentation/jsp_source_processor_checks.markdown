@@ -74,6 +74,7 @@ JSPXSSVulnerabilitiesCheck | [Security](security_checks.markdown#security-checks
 LiteralStringEqualsCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where `Objects.equals` should be used. |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/localfinalvariablename.html) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local final variable names conform to a specified pattern. |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/checks/naming/localvariablename.html) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that local, non-final variable names conform to a specified pattern. |
+LocalVariableTypeInferenceCheck | [Performance](performance_checks.markdown#performance-checks) | Finds usage of `var` in local variable declaration. |
 LocaleUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `com.liferay.portal.kernel.util.LocaleUtil` should be used (instead of `java.util.Locale`). |
 LogParametersCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the values of parameters passed to `_log.*` calls. |
 [MapBuilderCheck](check/builder_check.markdown#buildercheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible. |

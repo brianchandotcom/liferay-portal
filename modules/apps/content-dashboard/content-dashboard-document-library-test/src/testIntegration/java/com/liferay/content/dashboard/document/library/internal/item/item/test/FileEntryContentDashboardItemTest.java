@@ -28,9 +28,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -312,6 +316,37 @@ public class FileEntryContentDashboardItemTest {
 			versionableContentDashboardItem.
 				getDefaultContentDashboardItemAction(
 					_getMockHttpServletRequest());
+
+		Assert.assertEquals(
+			ContentDashboardItemAction.Type.VIEW,
+			contentDashboardItemAction.getType());
+	}
+
+	@Test
+	public void testGetDefaultContentDashboardItemActionWithFileEntryWithoutPermissions()
+		throws Exception {
+
+		_serviceContext.setAddGroupPermissions(false);
+		_serviceContext.setAddGuestPermissions(false);
+
+		VersionableContentDashboardItem<FileEntry>
+			versionableContentDashboardItem =
+				_getVersionableContentDashboardItem(1);
+
+		User user = UserTestUtil.addUser(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(user);
+
+		_serviceContext.setRequest(_getMockHttpServletRequest(user));
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		ContentDashboardItemAction contentDashboardItemAction =
+			versionableContentDashboardItem.
+				getDefaultContentDashboardItemAction(mockHttpServletRequest);
 
 		Assert.assertEquals(
 			ContentDashboardItemAction.Type.VIEW,
@@ -703,13 +738,20 @@ public class FileEntryContentDashboardItemTest {
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
+		return _getMockHttpServletRequest(TestPropsValues.getUser());
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(User user)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(mockHttpServletRequest);
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			mockHttpServletRequest, user);
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -743,7 +785,8 @@ public class FileEntryContentDashboardItemTest {
 		return null;
 	}
 
-	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
+	private ThemeDisplay _getThemeDisplay(
+			HttpServletRequest httpServletRequest, User user)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -752,11 +795,11 @@ public class FileEntryContentDashboardItemTest {
 			CompanyLocalServiceUtil.fetchCompany(_group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(user);
 
 		return themeDisplay;
 	}
@@ -789,6 +832,9 @@ public class FileEntryContentDashboardItemTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.document.library.internal.item.FileEntryContentDashboardItemFactory"

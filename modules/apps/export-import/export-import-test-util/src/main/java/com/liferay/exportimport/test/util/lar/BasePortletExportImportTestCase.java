@@ -216,6 +216,8 @@ public abstract class BasePortletExportImportTestCase
 
 		portletPreferences.store();
 
+		Thread.sleep(1000);
+
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());

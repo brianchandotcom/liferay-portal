@@ -586,6 +586,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntriesPanelApp(
 					objectDefinition,
 					() -> _portletLocalService.getPortletById(
+						objectDefinition.getCompanyId(),
 						objectDefinition.getPortletId())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"panel.app.order:Integer",

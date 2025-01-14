@@ -629,11 +629,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private void _testForEachCompanyIdOrdering(boolean threadPoolEnabled)
 		throws Exception {
 
-		List<Long> companyIds = new CopyOnWriteArrayList<>();
-
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
 			threadPoolEnabled);
+
+		List<Long> companyIds = new CopyOnWriteArrayList<>();
 
 		DBPartitionUtil.forEachCompanyId(companyIds::add);
 

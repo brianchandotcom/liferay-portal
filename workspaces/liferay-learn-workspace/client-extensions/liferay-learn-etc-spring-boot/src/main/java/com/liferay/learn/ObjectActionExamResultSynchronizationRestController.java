@@ -93,7 +93,7 @@ public class ObjectActionExamResultSynchronizationRestController
 	private OffsetDateTime _getLatestSuccessfulExecutionOffsetDateTime(
 		Jwt jwt) {
 
-		JSONObject responseJSONObject = new JSONObject(
+		JSONObject jsonObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
 				StringBundler.concat(
@@ -102,7 +102,7 @@ public class ObjectActionExamResultSynchronizationRestController
 					"?fields=dateCreated&filter=synchronizationStatus eq ",
 					"'Successful'&pageSize=1&sort=dateCreated:desc")));
 
-		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		if (itemsJSONArray.isEmpty()) {
 			return OffsetDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -113,12 +113,12 @@ public class ObjectActionExamResultSynchronizationRestController
 		return OffsetDateTime.parse(itemJSONObject.getString("dateCreated"));
 	}
 
-	private String _getPayload(JSONObject responseJSONObject) {
+	private String _getPayload(JSONObject jsonObject) {
 		return new JSONObject(
 		).put(
 			"date",
 			OffsetDateTime.parse(
-				responseJSONObject.getString("date")
+				jsonObject.getString("date")
 			).atZoneSameInstant(
 				ZoneOffset.UTC
 			).format(
@@ -126,7 +126,7 @@ public class ObjectActionExamResultSynchronizationRestController
 			)
 		).put(
 			"email",
-			responseJSONObject.getJSONObject(
+			jsonObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -134,12 +134,12 @@ public class ObjectActionExamResultSynchronizationRestController
 				"email"
 			)
 		).put(
-			"examName", responseJSONObject.getString("examName")
+			"examName", jsonObject.getString("examName")
 		).put(
-			"externalReferenceCode", responseJSONObject.getLong("id")
+			"externalReferenceCode", jsonObject.getLong("id")
 		).put(
 			"firstName",
-			responseJSONObject.getJSONObject(
+			jsonObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -148,7 +148,7 @@ public class ObjectActionExamResultSynchronizationRestController
 			)
 		).put(
 			"lastName",
-			responseJSONObject.getJSONObject(
+			jsonObject.getJSONObject(
 				"simpleRegistration"
 			).getJSONObject(
 				"candidate"
@@ -156,10 +156,10 @@ public class ObjectActionExamResultSynchronizationRestController
 				"lastName"
 			)
 		).put(
-			"result", responseJSONObject.getString("passFail")
+			"result", jsonObject.getString("passFail")
 		).put(
 			"testName",
-			responseJSONObject.getJSONObject(
+			jsonObject.getJSONObject(
 				"simpleRegistration"
 			).getString(
 				"testName"
@@ -168,7 +168,7 @@ public class ObjectActionExamResultSynchronizationRestController
 	}
 
 	private int _importExamResults(Jwt jwt, OffsetDateTime offsetDateTime) {
-		JSONArray responseJSONArray = new JSONArray(
+		JSONArray jsonArray = new JSONArray(
 			post(
 				null,
 				new JSONObject(
@@ -193,24 +193,22 @@ public class ObjectActionExamResultSynchronizationRestController
 				"https://webassessor.com/WebAssessorWebServices/jaxrs" +
 					"/wawebservices/processRequest"));
 
-		if (responseJSONArray.get(0) instanceof String) {
+		if (jsonArray.get(0) instanceof String) {
 			return 0;
 		}
 
-		for (int i = 0; i < responseJSONArray.length(); i++) {
-			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			put(
-				"Bearer " + jwt.getTokenValue(),
-				_getPayload(responseJSONObject),
+				"Bearer " + jwt.getTokenValue(), _getPayload(jsonObject),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 					"/o/c/p2s3examresults/scopes/", _siteGroupId,
-					"/by-external-reference-code/",
-					responseJSONObject.getLong("id")));
+					"/by-external-reference-code/", jsonObject.getLong("id")));
 		}
 
-		return responseJSONArray.length();
+		return jsonArray.length();
 	}
 
 	private void _updateExamResultSynchronization(

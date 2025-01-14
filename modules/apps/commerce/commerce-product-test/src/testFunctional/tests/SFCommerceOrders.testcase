@@ -729,6 +729,8 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
 			FrontStore.addInitializerProductToCart(
 				productName = "Bushings",
 				productQuantity = 1);

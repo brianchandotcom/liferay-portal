@@ -25,6 +25,7 @@ import getWidgetDefinition from './utils/getWidgetDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-11131': {enabled: true},
 		'LPD-40533': {enabled: true},
 		'LPD-40534': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -302,9 +303,9 @@ test.describe('Menu Display Widget', () => {
 });
 
 test(
-	'Check that the Sharing and Supported Clients features have the deprecation badge',
+	'Check that the Sharing, Supported Clients and Scope features have the deprecation badge',
 	{
-		tag: ['@LPD-41722', '@LPD-41723'],
+		tag: ['@LPD-41722', '@LPD-41723', '@LPD-45441'],
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 
@@ -355,6 +356,10 @@ test(
 		await expect(
 			navigationItem.filter({hasText: 'Supported Clients'})
 		).toContainText(/Deprecated/);
+
+		await expect(navigationItem.filter({hasText: 'Scope'})).toContainText(
+			/Deprecated/
+		);
 	}
 );
 

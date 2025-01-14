@@ -5,19 +5,13 @@
 
 package com.liferay.marketplace.settings.web.internal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.net.URLEncoder;
-
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -31,31 +25,24 @@ public class MarketplaceUtil {
 			String refreshToken, String serviceURL, String settings)
 		throws Exception {
 
-		Map<String, String> map = HashMapBuilder.put(
-			"client_id", PropsValues.MARKETPLACE_CLIENT_ID
-		).put(
-			"code", code
-		).put(
-			"code_verifier", codeVerifier
-		).put(
-			"grant_type", "authorization_code"
-		).put(
-			"redirect_uri",
-			PropsValues.MARKETPLACE_URL + PropsValues.MARKETPLACE_REDIRECT
-		).build();
-
-		if (refreshToken != null) {
-			map.put("grant_type", "refresh_token");
-			map.put("refresh_token", refreshToken);
-
-			map.remove("code_verifier");
-		}
-
 		Http.Options options = new Http.Options();
 
-		options.setBody(
-			_toFormEncodedString(map),
-			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED, StringPool.UTF8);
+		options.addHeader(
+			"Content-Type", ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
+		options.addPart("client_id", PropsValues.MARKETPLACE_CLIENT_ID);
+		options.addPart("code", code);
+		options.addPart(
+			"redirect_uri",
+			PropsValues.MARKETPLACE_URL + PropsValues.MARKETPLACE_REDIRECT);
+
+		if (refreshToken != null) {
+			options.addPart("grant_type", "refresh_token");
+			options.addPart("refresh_token", refreshToken);
+		}
+		else {
+			options.addPart("code_verifier", codeVerifier);
+			options.addPart("grant_type", "authorization_code");
+		}
 
 		options.setLocation(PropsValues.MARKETPLACE_URL + "/o/oauth2/token");
 		options.setMethod(Http.Method.POST);
@@ -92,28 +79,6 @@ public class MarketplaceUtil {
 		portletPreferences.store();
 
 		return jsonObject;
-	}
-
-	private static String _toFormEncodedString(Map<String, String> map)
-		throws Exception {
-
-		StringBuilder encodedString = new StringBuilder();
-
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			if (encodedString.length() > 0) {
-				encodedString.append("&");
-			}
-
-			encodedString.append(
-				URLEncoder.encode(entry.getKey(), StringPool.UTF8)
-			).append(
-				"="
-			).append(
-				URLEncoder.encode(entry.getValue(), StringPool.UTF8)
-			);
-		}
-
-		return encodedString.toString();
 	}
 
 }

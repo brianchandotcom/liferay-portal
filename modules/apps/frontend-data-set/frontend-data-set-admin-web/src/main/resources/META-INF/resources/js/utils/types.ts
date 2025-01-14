@@ -5,14 +5,6 @@
 
 import {JSXElementConstructor} from 'react';
 
-type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
-
-export enum EFilterType {
-	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
-	DATE_RANGE = 'DATE_RANGE',
-	SELECTION = 'SELECTION',
-}
-
 export enum EFieldFormat {
 	DATE = 'date',
 	DATE_TIME = 'date-time',
@@ -27,6 +19,12 @@ export enum EFieldType {
 	STRING = 'string',
 }
 
+export enum EFilterType {
+	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
+	DATE_RANGE = 'DATE_RANGE',
+	SELECTION = 'SELECTION',
+}
+
 export enum ESelectionFilterSourceType {
 	OBJECT_PICKLIST = 'OBJECT_PICKLIST',
 	API_REST_APPLICATION = 'API_REST_APPLICATION',
@@ -38,11 +36,12 @@ export interface IBaseVisualizationMode<Mode extends string> {
 	thumbnail: string;
 	visualizationModeId: string;
 }
-export interface ICards extends IBaseVisualizationMode<'cards'> {}
-export interface IList extends IBaseVisualizationMode<'list'> {}
-export interface ITable extends IBaseVisualizationMode<'table'> {}
 
-export type TVisualizationMode = ICards | IList | ITable;
+export interface ICards extends IBaseVisualizationMode<'cards'> {}
+
+export interface IClientExtensionFilter extends IFilter {
+	clientExtensionEntryERC: string;
+}
 
 export interface IDataSet {
 	actions: {
@@ -73,16 +72,21 @@ export interface IDataSet {
 	tableSectionsOrder?: string;
 }
 
-export interface ISystemDataSet {
-	additionalAPIURLParameters: string;
-	defaultItemsPerPage: number;
-	description: string;
-	name: string;
-	restApplication: string;
-	restEndpoint: string;
-	restSchema: string;
-	symbol: string;
-	title: string;
+export interface IDataSetTableSection extends IOrderable {
+	contextPath: string;
+	externalReferenceCode: string;
+	fieldName: string;
+	label: string;
+	label_i18n: TLocalizedValue<string>;
+	renderer: string;
+	rendererLabel?: string;
+	sortable: boolean;
+	type: string;
+}
+
+export interface IDateFilter extends IFilter {
+	from: string;
+	to: string;
 }
 
 export interface IField {
@@ -95,18 +99,6 @@ export interface IField {
 	sortable?: boolean;
 	type?: string;
 	visible?: boolean;
-}
-
-export interface IDataSetTableSection extends IOrderable {
-	contextPath: string;
-	externalReferenceCode: string;
-	fieldName: string;
-	label: string;
-	label_i18n: LocalizedValue<string>;
-	renderer: string;
-	rendererLabel?: string;
-	sortable: boolean;
-	type: string;
 }
 
 export interface IFieldTreeItem extends IField {
@@ -125,7 +117,7 @@ export interface IFilter extends IOrderable {
 	itemKey?: string;
 	itemLabel?: string;
 	label: string;
-	label_i18n: LocalizedValue<string>;
+	label_i18n: TLocalizedValue<string>;
 	multiple?: boolean;
 	preselectedValues?: any;
 	restApplication?: string;
@@ -149,26 +141,16 @@ export interface IFilterTypeProps {
 	url: string;
 }
 
-export interface IClientExtensionFilter extends IFilter {
-	clientExtensionEntryERC: string;
-}
+export interface IList extends IBaseVisualizationMode<'list'> {}
 
-export interface IDateFilter extends IFilter {
-	from: string;
-	to: string;
-}
-
-export interface ISelectionFilter extends IFilter {
-	include: boolean;
-	itemKey: string;
-	itemLabel: string;
-	multiple: boolean;
-	preselectedValues: any;
-	restApplication: string;
-	restEndpoint: string;
-	restSchema: string;
-	source: string;
-	sourceType: ESelectionFilterSourceType;
+export interface IListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: {
+		[key: string]: string;
+	};
 }
 
 export interface IOrderable {
@@ -186,12 +168,33 @@ export interface IPickList {
 	};
 }
 
-export interface IListTypeEntry {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
+export interface ISelectionFilter extends IFilter {
+	include: boolean;
+	itemKey: string;
+	itemLabel: string;
+	multiple: boolean;
+	preselectedValues: any;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+	source: string;
+	sourceType: ESelectionFilterSourceType;
 }
+
+export interface ISystemDataSet {
+	additionalAPIURLParameters: string;
+	defaultItemsPerPage: number;
+	description: string;
+	name: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+	symbol: string;
+	title: string;
+}
+
+export interface ITable extends IBaseVisualizationMode<'table'> {}
+
+type TLocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
+export type TVisualizationMode = ICards | IList | ITable;

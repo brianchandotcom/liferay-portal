@@ -16,11 +16,11 @@
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
-				"clientId", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_CLIENT_ID)
+				"clientId", PropsValues.MARKETPLACE_CLIENT_ID
 			).put(
-				"redirect", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_REDIRECT)
+				"redirect", PropsValues.MARKETPLACE_REDIRECT
 			).put(
-				"url", request.getAttribute(MarketplaceSettingsWebKeys.MARKETPLACE_URL)
+				"url", PropsValues.MARKETPLACE_URL
 			).build()
 		%>'
 	/>

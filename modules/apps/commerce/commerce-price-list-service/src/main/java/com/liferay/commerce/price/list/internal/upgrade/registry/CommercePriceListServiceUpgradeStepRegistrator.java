@@ -184,6 +184,8 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.dropColumns(
 				CommercePriceListModelImpl.TABLE_NAME, "commerceCurrencyId"));
 
+		registry.register("3.0.0", "4.0.0", new DummyUpgradeStep());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");
 		}

@@ -44,7 +44,8 @@ public class ModalConfigurationEditModePortletConfigurationIcon
 
 	@Override
 	public int getPortletConfigurationIconGroup() {
-		return PORTLET_CONFIGURATION_ICON_GROUP_CONFIGURATION;
+		return EditModePortletConfigurationIcon.
+			PORTLET_CONFIGURATION_ICON_GROUP_CONFIGURATION;
 	}
 
 	@Override

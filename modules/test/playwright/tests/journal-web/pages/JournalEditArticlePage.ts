@@ -26,6 +26,7 @@ export class JournalEditArticlePage {
 	readonly historyButton: Locator;
 	readonly journalPage: JournalPage;
 	readonly propertiesTab: Locator;
+	readonly publishDropdown: Locator;
 	readonly publishButton: Locator;
 	readonly redoButton: Locator;
 	readonly selectButton: Locator;
@@ -56,6 +57,9 @@ export class JournalEditArticlePage {
 		this.journalPage = new JournalPage(page);
 		this.propertiesTab = page.getByRole('tab', {
 			name: /properties|propriétés/i,
+		});
+		this.publishDropdown = page.getByRole('button', {
+			name: /select and confirm publish settings|sélectionnez et confirmez les/i,
 		});
 		this.publishButton = page.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_publishButton'
@@ -156,9 +160,7 @@ export class JournalEditArticlePage {
 					target: this.page.getByRole('menuitem', {
 						name: /publish|publier/i,
 					}),
-					trigger: this.page.getByRole('button', {
-						name: /select and confirm publish settings|sélectionnez et confirmez les/i,
-					}),
+					trigger: this.publishDropdown,
 				});
 
 				await waitForAlert(this.page, 'was updated successfully', {
@@ -169,26 +171,24 @@ export class JournalEditArticlePage {
 			return;
 		}
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.page.getByRole('menuitem', {
-					name: /publish with permissions|publier avec permissions/i,
-				}),
-				trigger: this.page.getByRole('button', {
-					name: /select and confirm publish settings|sélectionnez et confirmez les/i,
-				}),
-			});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: /publish with permissions|publier avec permissions/i,
+			}),
+			trigger: this.publishDropdown,
+		});
 
-		await expect(
-			this.page.getByLabel(/Viewable By|Visualisable avec/i)
-		).toBeVisible({
-				timeout: 2000,
-			});
+		const viewableBySelect = this.page.getByLabel(
+			/Viewable By|Visualisable avec/i
+		);
+
+		await expect(viewableBySelect).toBeVisible({
+			timeout: 2000,
+		});
 
 		if (viewableBy) {
-			await this.page
-				.getByLabel(/Viewable By|Visualisable avec/i)
-				.selectOption(viewableBy);
+			await viewableBySelect.selectOption(viewableBy);
 		}
 
 		await this.page

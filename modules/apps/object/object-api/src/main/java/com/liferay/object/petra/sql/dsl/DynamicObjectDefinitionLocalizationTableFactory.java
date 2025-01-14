@@ -6,7 +6,11 @@
 package com.liferay.object.petra.sql.dsl;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+
+import java.util.List;
 
 /**
  * @author Feliphe Marinho
@@ -17,14 +21,20 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		if (!objectDefinition.isEnableLocalization()) {
+		List<ObjectField> localizedObjectFields =
+			objectFieldLocalService.getLocalizedObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		if (!objectDefinition.isEnableLocalization() ||
+			(FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-32050") &&
+			 localizedObjectFields.isEmpty())) {
+
 			return null;
 		}
 
 		return new DynamicObjectDefinitionLocalizationTable(
-			objectDefinition,
-			objectFieldLocalService.getLocalizedObjectFields(
-				objectDefinition.getObjectDefinitionId()));
+			objectDefinition, localizedObjectFields);
 	}
 
 }

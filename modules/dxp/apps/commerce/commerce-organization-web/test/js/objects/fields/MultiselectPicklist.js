@@ -127,7 +127,7 @@ describe('MultiselectPicklist object field', () => {
 
 	describe('in "edit" mode', () => {
 		it('displays a ClayMultiSelect with i18n items', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {
 				...BASE_PROPS,
@@ -170,8 +170,8 @@ describe('MultiselectPicklist object field', () => {
 			});
 		});
 
-		it.skip('displays a ClayMultiSelect with i18n items with a preselected value if set', async () => {
-			const onChange = jest.fn();
+		it('displays a ClayMultiSelect with i18n items with a preselected value if set', async () => {
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: KEY_2};
 
@@ -179,17 +179,17 @@ describe('MultiselectPicklist object field', () => {
 
 			await waitFor(() => {
 				expectUpdateAfterAPICall(container);
-			});
 
-			expect(onChange).toHaveBeenCalledWith({
-				hasError: false,
-				name: BASE_PROPS.name,
-				value: KEY_2,
+				expect(onChange).toHaveBeenCalledWith({
+					hasError: false,
+					name: BASE_PROPS.name,
+					value: KEY_2,
+				});
 			});
 		});
 
 		it('allows to select a key by its i18n option value', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
 
@@ -221,7 +221,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('allows to select a key by its i18n option value multiple times', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
 
@@ -259,7 +259,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('allows to remove a previously selected key by its i18n option value', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
 
@@ -303,7 +303,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('allows to remove all the previously selected keys', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
 
@@ -345,7 +345,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('strips away typed-in values if not selectable', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
 
@@ -377,7 +377,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('strips away typed-in values which are already selected', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {...BASE_PROPS, mode: 'edit', onChange, value: KEY_1};
 
@@ -445,7 +445,7 @@ describe('MultiselectPicklist object field', () => {
 		});
 
 		it('highlights the field if empty and set to be required', async () => {
-			const onChange = jest.fn();
+			const onChange = jest.fn().mockName('onChange');
 
 			const props = {
 				...BASE_PROPS,

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -112,6 +113,109 @@ public class MetaTagsTagTest {
 			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
 	}
 
+	@Test
+	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguage()
+		throws Exception {
+
+		String layoutDescription = RandomTestUtil.randomString();
+
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), layoutDescription, null, false);
+	}
+
+	@Test
+	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguageAndPageDescription()
+		throws Exception {
+
+		String layoutDescription = RandomTestUtil.randomString();
+		String pageDescription = RandomTestUtil.randomString();
+
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), layoutDescription, pageDescription,
+			false);
+	}
+
+	@Test
+	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguage()
+		throws Exception {
+
+		String layoutDescription = RandomTestUtil.randomString();
+
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), layoutDescription, null, true);
+	}
+
+	@Test
+	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguageAndPageDescription()
+		throws Exception {
+
+		String layoutDescription = RandomTestUtil.randomString();
+		String pageDescription = RandomTestUtil.randomString();
+
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), layoutDescription, pageDescription,
+			true);
+	}
+
+	@Test
+	public void testMetaTagsTagPageRobotsWithPageDescription()
+		throws Exception {
+
+		String pageDescription = RandomTestUtil.randomString();
+
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), null, pageDescription, false);
+	}
+
+	private void _assertDescriptionMetaTagsTag(
+			String pageRobotsRequestAttribute, String layoutDescription,
+			String pageDescription, boolean defaultLanguage)
+		throws Exception {
+
+		_setUpLanguageUtil();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		String metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN);
+
+		if (defaultLanguage) {
+			metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.US);
+
+			Mockito.when(
+				layout.getDescription(Mockito.anyString())
+			).thenReturn(
+				layoutDescription
+			);
+		}
+		else {
+			Mockito.when(
+				layout.getDescription(Mockito.anyString(), Mockito.anyBoolean())
+			).thenReturn(
+				layoutDescription
+			);
+		}
+
+		_setUpPageContext(
+			layout, pageRobotsRequestAttribute, pageDescription,
+			HttpServletResponse.SC_OK);
+
+		String metaDescription = "";
+
+		if (Validator.isNotNull(layoutDescription) &&
+			Validator.isNotNull(pageDescription)) {
+
+			metaDescription = pageDescription + ". " + layoutDescription;
+		}
+		else if (Validator.isNotNull(layoutDescription)) {
+			metaDescription = layoutDescription;
+		}
+		else if (Validator.isNotNull(pageDescription)) {
+			metaDescription = pageDescription;
+		}
+
+		_assertMetaTagsTag(metaDescription, metaLang, "description");
+	}
+
 	private void _assertMetaTagsTag(
 			String metaContent, String metaLang, String metaName)
 		throws Exception {
@@ -171,7 +275,7 @@ public class MetaTagsTagTest {
 			htmlDescription
 		);
 
-		_setUpPageContext(layout, RandomTestUtil.randomString(), status);
+		_setUpPageContext(layout, RandomTestUtil.randomString(), null, status);
 
 		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.when(
 			() ->
@@ -211,7 +315,8 @@ public class MetaTagsTagTest {
 		);
 
 		_setUpPageContext(
-			layout, pageRobotsRequestAttribute, HttpServletResponse.SC_OK);
+			layout, pageRobotsRequestAttribute, null,
+			HttpServletResponse.SC_OK);
 
 		_assertMetaTagsTag(expectedRobotsMetaTagContent, null, "robots");
 	}
@@ -242,7 +347,9 @@ public class MetaTagsTagTest {
 		languageUtil.setLanguage(language);
 	}
 
-	private void _setUpPageContext(Layout layout, String robots, int status) {
+	private void _setUpPageContext(
+		Layout layout, String robots, String pageDescription, int status) {
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -276,6 +383,20 @@ public class MetaTagsTagTest {
 					public Object getAttribute(String name) {
 						if (WebKeys.PAGE_ROBOTS.equals(name)) {
 							return robots;
+						}
+
+						if (WebKeys.PAGE_DESCRIPTION.equals(name)) {
+							ListMergeable<String> descriptionListMergeable =
+								null;
+
+							if (Validator.isNotNull(pageDescription)) {
+								descriptionListMergeable =
+									new ListMergeable<>();
+
+								descriptionListMergeable.add(pageDescription);
+							}
+
+							return descriptionListMergeable;
 						}
 
 						if (WebKeys.THEME_DISPLAY.equals(name)) {

@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,6 +70,21 @@ public class FrontendTokenDefinitionRegistryImpl
 			layoutSet.getCompanyId(),
 			_getCETExternalReferenceCode(layoutSet.getLayoutSetId()),
 			layoutSet.getThemeId());
+	}
+
+	@Override
+	public FrontendTokenDefinition getFrontendTokenDefinition(
+		long companyId, String themeId) {
+
+		for (FrontendTokenDefinition frontendTokenDefinition :
+				getFrontendTokenDefinitions(companyId)) {
+
+			if (Objects.equals(frontendTokenDefinition.getThemeId(), themeId)) {
+				return frontendTokenDefinition;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

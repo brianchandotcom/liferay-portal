@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -147,6 +149,16 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			if (!hasUpdatePermissions) {
 				throw new NoSuchLayoutException();
 			}
+		}
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (Validator.isNull(redirect) && (segmentsExperienceId != -1) &&
+			!_isValidSegmentsExperienceId(layout, segmentsExperienceId)) {
+
+			redirect = HttpComponentsUtil.removeParameter(
+				themeDisplay.getURLCurrent(), "segmentsExperienceId");
 		}
 
 		String page = getViewPage();
@@ -378,6 +390,23 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		return false;
 	}
 
+	private boolean _isValidSegmentsExperienceId(
+		Layout layout, long segmentsExperienceId) {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if ((segmentsExperience != null) &&
+			((segmentsExperience.getPlid() == layout.getPlid()) ||
+			 (segmentsExperience.getPlid() == layout.getClassPK()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _EDIT_LAYOUT_PAGE =
 		"/layout/edit_layout/content.jsp";
 
@@ -408,6 +437,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"

@@ -1362,7 +1362,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			classname="com.liferay.portal.tools.ConfigurationEnvBuilder"
 			classpathref="project.classpath"
 			dir="${project.dir}"
-			fork="${fork.mode}"
+			fork="true"
 			newenvironment="true"
 		>
 			<arg value="configuration.java.files=${configuration.java.files}" />
@@ -1370,6 +1370,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<arg value="language.properties.file=${project.dir}/${language.properties.file}" />
 			<arg value="properties.output.file=${project.dir}/portal-impl/src/portal-osgi-configuration.properties" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+			<jvmarg line="--add-opens java.base/java.lang.invoke=ALL-UNNAMED" />
 		</java>
 
 		<gradle-execute dir="${workspace.module.dir}" task="formatSource">

@@ -722,7 +722,7 @@
 </tr>
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS_ACCOUNT</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_name}']/../../..//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_name}']/../../..//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -817,12 +817,12 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']/../../following-sibling::div//button</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']/../../following-sibling::div//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS_2</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']//..//..//div[contains(@class,'dropdown')]/a</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']//..//..//div[contains(@class,'dropdown')]/a</td>
 	<td></td>
 </tr>
 <tr>

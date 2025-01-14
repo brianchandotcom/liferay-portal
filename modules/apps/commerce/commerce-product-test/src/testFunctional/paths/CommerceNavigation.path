@@ -37,22 +37,22 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_NAME_EXACT_MATCH</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_NAME_N</td>
-	<td>xpath=(//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
+	<td>xpath=(//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_NAME_WITH_UOM</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//div[contains(@class,'dnd-td') and contains(text(),'${key_uom}')]//..//*[text()='${key_entryName}']</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//div[contains(@class,'dnd-td') and contains(text(),'${key_uom}')]//..//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>

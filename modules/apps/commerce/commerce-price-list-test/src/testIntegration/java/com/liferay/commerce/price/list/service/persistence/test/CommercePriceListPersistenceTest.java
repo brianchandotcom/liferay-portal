@@ -312,15 +312,6 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceCurrencyCode() throws Exception {
-		_persistence.countByCommerceCurrencyCode("");
-
-		_persistence.countByCommerceCurrencyCode("null");
-
-		_persistence.countByCommerceCurrencyCode((String)null);
-	}
-
-	@Test
 	public void testCountByParentCommercePriceListId() throws Exception {
 		_persistence.countByParentCommercePriceListId(
 			RandomTestUtil.nextLong());
@@ -350,6 +341,15 @@ public class CommercePriceListPersistenceTest {
 
 		_persistence.countByG_CatalogBasePriceList(
 			0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C(0L, "null");
+
+		_persistence.countByC_C(0L, (String)null);
 	}
 
 	@Test

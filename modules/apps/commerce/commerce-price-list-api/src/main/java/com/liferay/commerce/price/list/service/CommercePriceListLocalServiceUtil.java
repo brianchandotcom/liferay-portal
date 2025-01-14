@@ -931,10 +931,12 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static void updateCommercePriceListCurrencies(
-			String commerceCurrencyCode)
+			long companyId, String oldCommerceCurrencyCode,
+			String newCommerceCurrencyCode)
 		throws PortalException {
 
-		getService().updateCommercePriceListCurrencies(commerceCurrencyCode);
+		getService().updateCommercePriceListCurrencies(
+			companyId, oldCommerceCurrencyCode, newCommerceCurrencyCode);
 	}
 
 	public static CommercePriceList updateExternalReferenceCode(

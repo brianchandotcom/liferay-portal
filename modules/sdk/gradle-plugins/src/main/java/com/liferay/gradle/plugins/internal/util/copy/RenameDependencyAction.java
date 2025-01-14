@@ -9,6 +9,7 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.jar.Attributes;
@@ -47,8 +48,10 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 			return;
 		}
 
-		try (JarFile jarFile = new JarFile(fileCopyDetails.getFile())) {
-			fileName = _getFileName(jarFile);
+		File file = fileCopyDetails.getFile();
+
+		try (JarFile jarFile = new JarFile(file)) {
+			fileName = _getFileName(jarFile, _getFileName(file));
 
 			fileCopyDetails.setName(fileName);
 		}
@@ -57,7 +60,21 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 		}
 	}
 
-	private String _getFileName(JarFile jarFile) throws IOException {
+	private String _getFileName(File file) {
+		String fileName = file.getName();
+
+		fileName = fileName.substring(0, _getVersionStart(fileName));
+
+		if (fileName.endsWith(".jar")) {
+			fileName = fileName.substring(0, fileName.length() - 4);
+		}
+
+		return fileName;
+	}
+
+	private String _getFileName(JarFile jarFile, String defaultFileName)
+		throws IOException {
+
 		Manifest manifest = jarFile.getManifest();
 
 		if (manifest == null) {
@@ -81,10 +98,7 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 		if (Validator.isNull(fileName) ||
 			(_getVersionStart(fileName) < fileName.length())) {
 
-			throw new GradleException(
-				"Unable to rename " + jarFile.getName() +
-					", as its manifest does not contain a valid '" +
-						Constants.BUNDLE_SYMBOLICNAME + "' header");
+			fileName = defaultFileName;
 		}
 
 		if (_keepVersion) {
@@ -112,7 +126,7 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 			return name.length();
 		}
 
-		return matcher.start();
+		return matcher.start() + 1;
 	}
 
 	private static final Pattern _versionStartPattern = Pattern.compile(

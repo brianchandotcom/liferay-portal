@@ -47,20 +47,29 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 					companyId, "APPLICATION_STATUS_PICKLIST",
 					"Application Status", "PUBLISHED", "UNPUBLISHED",
 					"published", "unpublished", "L_API_APPLICATION_STATUSES",
-					"L_API_APPLICATION", "APPLICATION_STATUS");
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							"L_API_APPLICATION", companyId),
+					"APPLICATION_STATUS");
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							"L_API_ENDPOINT", companyId);
+
 				_updateListTypeDefinition(
 					companyId, "HTTP_METHOD_PICKLIST", "HTTP Method", "GET",
 					"POST", "get", "post", "L_API_ENDPOINT_HTTP_METHODS",
-					"L_API_ENDPOINT", "HTTP_METHOD");
+					objectDefinition, "HTTP_METHOD");
 				_updateListTypeDefinition(
 					companyId, "RETRIEVE_TYPE_PICKLIST", "Retrieve Type",
 					"COLLECTION", "SINGLE_ELEMENT", "collection",
 					"singleElement", "L_API_ENDPOINT_RETRIEVE_TYPES",
-					"L_API_ENDPOINT", "RETRIEVE_TYPE");
+					objectDefinition, "RETRIEVE_TYPE");
 				_updateListTypeDefinition(
 					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "SITE",
 					"company", "site", "L_API_ENDPOINT_SCOPES",
-					"L_API_ENDPOINT", "SCOPE");
+					objectDefinition, "SCOPE");
 			});
 	}
 
@@ -71,14 +80,9 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 			String listTypeEntryExternalReferenceCode2,
 			String listTypeEntryKey1, String listTypeEntryKey2,
 			String newListTypeDefinitionExternalReferenceCode,
-			String objectDefinitionExternalReferenceCode,
+			ObjectDefinition objectDefinition,
 			String objectFieldExternalReferenceCode)
 		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode, companyId);
 
 		if (objectDefinition == null) {
 			return;

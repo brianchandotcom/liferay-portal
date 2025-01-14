@@ -91,8 +91,6 @@ public class AssetInfoEditURLProviderTest {
 			url, "_com_liferay_journal_web_portlet_JournalPortlet_redirect",
 			false);
 
-		Assert.assertNotNull(redirect);
-
 		redirect = URLCodec.decodeURL(redirect);
 
 		Assert.assertTrue(

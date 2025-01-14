@@ -32,6 +32,7 @@ import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
+import mapDDMStructures from '../utils/functions/map_ddm_structures';
 import traverseAndEncodeJSONStrings from '../utils/functions/traverse_and_encode_json_strings';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import renameKeys from '../utils/language/rename_keys';
@@ -85,7 +86,13 @@ function EditSXPBlueprintForm({
 	initialTitleI18n = {},
 	sxpBlueprintId,
 }) {
-	const {isCompanyAdmin, locale, redirectURL} = useContext(ThemeContext);
+	const {
+		fetchDDMStructuresURL = '',
+		isCompanyAdmin,
+		locale,
+		namespace,
+		redirectURL,
+	} = useContext(ThemeContext);
 
 	const formRef = useRef();
 	const sxpElementIdCounterRef = useRef(
@@ -113,6 +120,19 @@ function EditSXPBlueprintForm({
 	const {data: searchableTypes, refetch: refetchSearchableTypes} =
 		useFetchData({
 			resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+		});
+
+	const {data: ddmStructureMap, onChangeData: setDDMStructureMap} =
+		useFetchData({
+			defaultValue: {},
+			getData: (response) => mapDDMStructures(response?.ddmStructures),
+			resource: addParams(fetchDDMStructuresURL, {
+				[`${namespace}cmd`]: 'getDDMStructureInfo',
+				[`${namespace}ddmStructureIdentifiers`]: (
+					initialConfiguration.generalConfiguration
+						?.searchableAssetTypes || []
+				).join(','),
+			}),
 		});
 
 	const {
@@ -843,6 +863,22 @@ function EditSXPBlueprintForm({
 		}
 	};
 
+	/**
+	 * Adds new ddmStructures to the ddmStructure map in order to easily find
+	 * their label. This is called when updating searchableAssetTypes
+	 * selection.
+	 * @param {array} subtypes
+	 */
+	const _handleDDMStructureMapChange = (subtypes) => {
+		const newDDMStructureMap = {};
+
+		subtypes.forEach(({label, value}) => {
+			newDDMStructureMap[value] = label;
+		});
+
+		setDDMStructureMap({...ddmStructureMap, ...newDDMStructureMap});
+	};
+
 	const _handleTabChange = (tab) => {
 		if (
 			tab !== 'query-builder' &&
@@ -989,6 +1025,7 @@ function EditSXPBlueprintForm({
 									...modelPrefilterContributors,
 									...queryPrefilterContributors,
 								]}
+								ddmStructureMap={ddmStructureMap}
 								elementInstances={
 									formik.values.elementInstances
 								}
@@ -1005,6 +1042,9 @@ function EditSXPBlueprintForm({
 								}
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
+								onDDMStructureMapChange={
+									_handleDDMStructureMapChange
+								}
 								onDeleteSXPElement={_handleDeleteSXPElement}
 								onFetchSearchableTypes={refetchSearchableTypes}
 								onFrameworkConfigChange={

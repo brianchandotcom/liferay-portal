@@ -47,6 +47,17 @@ public class EditSXPBlueprintDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 		).put(
+			"fetchDDMStructuresURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setParameter(
+				"companyId", _themeDisplay.getCompanyId()
+			).setParameter(
+				"languageId", _themeDisplay.getLanguageId()
+			).setResourceID(
+				"/search_experiences/get_ddm_structures"
+			).buildString()
+		).put(
 			"fetchSitesURL",
 			ResourceURLBuilder.createResourceURL(
 				_renderResponse

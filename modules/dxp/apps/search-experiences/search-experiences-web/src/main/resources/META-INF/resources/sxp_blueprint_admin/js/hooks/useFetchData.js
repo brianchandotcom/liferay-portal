@@ -36,7 +36,7 @@ function useFetchData({
 		_handleFetch();
 	}, []); //eslint-disable-line
 
-	return {data, refetch: _handleFetch};
+	return {data, onChangeData: setData, refetch: _handleFetch};
 }
 
 export default useFetchData;

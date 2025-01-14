@@ -25,85 +25,91 @@ const getSelectedSubtypes = (selected, className) => {
 
 /**
  * Turns a flat list of types and subtypes into a nested array of the types
- * with its subtypes as children.
+ * with its subtypes as children. This is called when setting up the 'selected'
+ * state and allows for easier manipulation of the data.
  *
- * @param {*} selectedTypes
+ * @param {*} initialSelectedTypes
+ * @param {*} ddmStructureMap
  * @returns {array}
  */
-const setupSelected = (selectedTypes, subtypeMap = {}) => {
+const setupSelected = (initialSelectedTypes, ddmStructureMap = {}) => {
+	const selected = [];
 
-	// TODO: Fetch subtypes map
+	initialSelectedTypes.forEach((item) => {
+		const selectedTypes = item.split('#');
 
-	const arrayOfTypes = [];
-
-	selectedTypes.forEach((item) => {
-		if (!item.includes('#')) {
-			arrayOfTypes.push({subtypes: [], type: item});
+		if (selectedTypes.length < 3) {
+			selected.push({subtypes: [], type: item});
 		}
 		else {
-			const typeClassName = item.split('#')[0];
+			const typeClassName = selectedTypes[0];
 
-			const itemIndex = arrayOfTypes.findIndex(
+			const itemIndex = selected.findIndex(
 				({type}) => type === typeClassName
 			);
 
 			if (itemIndex > -1) {
-				const subtypesArray = arrayOfTypes[itemIndex].subtypes || [];
+				const subtypesArray = selected[itemIndex].subtypes || [];
 
 				subtypesArray.push({
-					label: subtypeMap[item] || item,
+					label: ddmStructureMap[item] || item,
 					value: item,
 				});
 
-				arrayOfTypes[itemIndex] = {
+				selected[itemIndex] = {
 					subtypes: subtypesArray,
 					type: typeClassName,
 				};
 			}
 			else {
-				arrayOfTypes.push({
-					subtypes: [{label: subtypeMap[item] || item, value: item}],
+				selected.push({
+					subtypes: [
+						{label: ddmStructureMap[item] || item, value: item},
+					],
 					type: typeClassName,
 				});
 			}
 		}
 	});
 
-	return arrayOfTypes;
+	return selected;
 };
 
 /**
- * Transforms the selected types and subtypes into a flat array of types.
+ * Transforms the selected types and subtypes into a flat array that
+ * the backend expects for submission.
  *
- * @param {*} selected
- * @returns Array
+ * @param {*} newSelected
+ * @returns {array}
  */
-const transformSelected = (selected) => {
-	const newSelected = [];
+const transformSelected = (newSelected) => {
+	const newSearchableAssetTypes = [];
 
-	selected.forEach((type) => {
-		if (type.subtypes.length) {
-			type.subtypes.forEach(({value}) => {
-				newSelected.push(value);
-			});
+	newSelected.forEach(({subtypes, type}) => {
+		if (subtypes.length) {
+			newSearchableAssetTypes.push(...subtypes.map(({value}) => value));
 		}
 		else {
-			newSelected.push(type.type);
+			newSearchableAssetTypes.push(type);
 		}
 	});
 
-	return newSelected;
+	return newSearchableAssetTypes;
 };
 
 function SelectTypes({
+	onDDMStructureMapChange,
 	onFrameworkConfigChange,
 	onFetchSearchableTypes,
 	searchableTypes = [],
-	selectedTypes = [],
+	initialSelectedTypes = [],
+	ddmStructureMap,
 }) {
 	const {locale} = useContext(ThemeContext);
 
-	const [selected, setSelected] = useState(setupSelected(selectedTypes));
+	const [selected, setSelected] = useState(
+		setupSelected(initialSelectedTypes, ddmStructureMap)
+	);
 
 	const mainSearchableTypesSorted = searchableTypes.sort((a, b) =>
 		a.displayName.localeCompare(b.displayName, locale.replaceAll('_', '-'))
@@ -112,11 +118,7 @@ function SelectTypes({
 	const _handleRemoveType = (className) => {
 		const newSelected = selected.filter(({type}) => type !== className);
 
-		setSelected(newSelected);
-
-		onFrameworkConfigChange({
-			searchableAssetTypes: transformSelected(newSelected),
-		});
+		_handleChangeSelected(newSelected);
 	};
 
 	const _handleRemoveSubtype = (subtype) => {
@@ -144,6 +146,11 @@ function SelectTypes({
 		});
 
 		_handleChangeSelected(newSelected);
+
+		// If any new subtypes are in this array, they should be
+		// added to the ddmStructure map.
+
+		onDDMStructureMapChange(subtypes);
 	};
 
 	const _handleChangeTypes = (types) => {

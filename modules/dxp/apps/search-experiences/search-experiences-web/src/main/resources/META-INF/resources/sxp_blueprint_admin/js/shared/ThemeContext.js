@@ -8,7 +8,7 @@ import React from 'react';
 export default React.createContext({
 	availableLanguages: {},
 	defaultLocale: 'en_US',
-	fetchClassSubtypesURL: '',
+	fetchDDMStructuresURL: '',
 	learnMessages: {},
 	locale: 'en_US',
 	namespace: '',

@@ -38,7 +38,7 @@ export function SearchableSubtypesModal({
 	selectedSubtypes,
 }) {
 	const [selected, setSelected] = useState(selectedSubtypes);
-	const [subtypes, setSubtypes] = useState({classSubtypes: []});
+	const [subtypes, setSubtypes] = useState({ddmStructures: []});
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
@@ -46,18 +46,18 @@ export function SearchableSubtypesModal({
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const {fetchClassSubtypesURL = '', namespace} = useContext(ThemeContext);
+	const {fetchDDMStructuresURL = '', namespace} = useContext(ThemeContext);
 
-	const getLabel = ({classSubtypeLocalizedName, groupLocalizedName}) => {
-		return `${classSubtypeLocalizedName} (${groupLocalizedName})`;
+	const getLabel = ({ddmStructureLocalizedName, groupLocalizedName}) => {
+		return `${ddmStructureLocalizedName} (${groupLocalizedName})`;
 	};
 
 	const getValue = ({
-		classSubtypeExternalReferenceCode,
-		classType,
+		className,
+		ddmStructureExternalReferenceCode,
 		groupExternalReferenceCode,
 	}) => {
-		return `${classType}#${groupExternalReferenceCode}#${classSubtypeExternalReferenceCode}`;
+		return `${className}#${groupExternalReferenceCode}#${ddmStructureExternalReferenceCode}`;
 	};
 
 	const isSelected = useCallback(
@@ -66,22 +66,22 @@ export function SearchableSubtypesModal({
 		[selected]
 	);
 
-	const isInClassSubtypes = useCallback(
+	const isInDDMStructures = useCallback(
 		(item) =>
-			subtypes.classSubtypes?.some(
+			subtypes.ddmStructures?.some(
 				(subtypeItem) => subtypeItem.value === item.value
 			),
-		[subtypes.classSubtypes]
+		[subtypes.ddmStructures]
 	);
 
 	const allSubtypesSelected = useMemo(
-		() => subtypes.classSubtypes?.every((item) => isSelected(item)),
-		[subtypes.classSubtypes, isSelected]
+		() => subtypes.ddmStructures?.every((item) => isSelected(item)),
+		[subtypes.ddmStructures, isSelected]
 	);
 
 	const indeterminateSelected = useMemo(
-		() => !allSubtypesSelected && subtypes.classSubtypes?.some(isSelected),
-		[allSubtypesSelected, isSelected, subtypes.classSubtypes]
+		() => !allSubtypesSelected && subtypes.ddmStructures?.some(isSelected),
+		[allSubtypesSelected, isSelected, subtypes.ddmStructures]
 	);
 
 	const _handleSelect = (item) => () => {
@@ -100,11 +100,11 @@ export function SearchableSubtypesModal({
 	const _handleSelectAll = () => {
 		setSelected(
 			allSubtypesSelected
-				? selected.filter((item) => !isInClassSubtypes(item))
+				? selected.filter((item) => !isInDDMStructures(item))
 				: removeDuplicates(
 						[
 							...selected,
-							...subtypes.classSubtypes.map(({label, value}) => ({
+							...subtypes.ddmStructures.map(({label, value}) => ({
 								label,
 								value,
 							})),
@@ -126,18 +126,19 @@ export function SearchableSubtypesModal({
 				fetch(
 					addParams(
 						{
-							[`${namespace}classType`]: className,
-							[`${namespace}start`]: page,
-							[`${namespace}delta`]: pageSize,
+							[`${namespace}cmd`]: 'getClassDDMStructures',
+							[`${namespace}className`]: className,
+							[`${namespace}page`]: page,
+							[`${namespace}pageSize`]: pageSize,
 						},
-						fetchClassSubtypesURL
+						fetchDDMStructuresURL
 					)
 				)
 					.then((response) => response.json())
 					.then((items) => {
 						setSubtypes({
 							...items,
-							classSubtypes: items.classSubtypes?.map(
+							ddmStructures: items.ddmStructures?.map(
 								(subtype) => ({
 									...subtype,
 									label: getLabel(subtype),
@@ -161,7 +162,7 @@ export function SearchableSubtypesModal({
 				setLoading(false);
 			}
 		},
-		[className, fetchClassSubtypesURL, namespace]
+		[className, fetchDDMStructuresURL, namespace]
 	);
 
 	const _handlePageChange = (newPage) => {
@@ -172,8 +173,9 @@ export function SearchableSubtypesModal({
 
 	const _handlePageSizeChange = (newPageSize) => {
 		setPageSize(newPageSize);
+		setPage(1);
 
-		_handleFetchSubtypes(page, newPageSize);
+		_handleFetchSubtypes(1, newPageSize);
 	};
 
 	useEffect(() => {
@@ -240,14 +242,14 @@ export function SearchableSubtypesModal({
 								<ManagementToolbar.Item>
 									{!!selected.length && (
 										<span className="c-ml-2 component-text">
-											{subtypes.size
+											{subtypes.totalCount
 												? sub(
 														Liferay.Language.get(
 															'x-of-x-selected'
 														),
 														[
 															selected.length,
-															subtypes.size,
+															subtypes.totalCount,
 														]
 													)
 												: sub(
@@ -312,7 +314,7 @@ export function SearchableSubtypesModal({
 						</Head>
 
 						<Body>
-							{subtypes.classSubtypes.map((item) => {
+							{subtypes.ddmStructures.map((item) => {
 								return (
 									<Row
 										key={item.value}
@@ -326,7 +328,7 @@ export function SearchableSubtypesModal({
 															'select-x'
 														),
 														[
-															item.classSubtypeLocalizedName,
+															item.ddmStructureLocalizedName,
 														]
 													)}
 													checked={isSelected(item)}
@@ -337,7 +339,7 @@ export function SearchableSubtypesModal({
 
 												<span className="c-ml-2 table-list-title">
 													{
-														item.classSubtypeLocalizedName
+														item.ddmStructureLocalizedName
 													}
 												</span>
 											</div>
@@ -365,7 +367,7 @@ export function SearchableSubtypesModal({
 						onActiveChange={_handlePageChange}
 						onDeltaChange={_handlePageSizeChange}
 						totalItems={
-							subtypes.size || subtypes.classSubtypes.length
+							subtypes.totalCount || subtypes.ddmStructures.length
 						}
 					/>
 				</ClayModal.Body>

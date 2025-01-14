@@ -34,12 +34,14 @@ function QueryBuilderTab({
 	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
+	onDDMStructureMapChange,
 	onDeleteSXPElement,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes = [],
 	setFieldTouched,
 	setFieldValue,
+	ddmStructureMap,
 	openSidebar,
 	setOpenSidebar,
 	touched = [],
@@ -167,6 +169,7 @@ function QueryBuilderTab({
 									clauseContributorsList={
 										clauseContributorsList
 									}
+									ddmStructureMap={ddmStructureMap}
 									frameworkConfig={frameworkConfig}
 									onApplyIndexerClausesChange={
 										onApplyIndexerClausesChange
@@ -180,6 +183,9 @@ function QueryBuilderTab({
 									onChangeQueryContributorsHelpVisibility={_handleChangeSidebarVisibility(
 										SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP
 									)}
+									onDDMStructureMapChange={
+										onDDMStructureMapChange
+									}
 									onFetchSearchableTypes={
 										onFetchSearchableTypes
 									}
@@ -200,6 +206,7 @@ function QueryBuilderTab({
 QueryBuilderTab.propTypes = {
 	applyIndexerClauses: PropTypes.bool,
 	clauseContributorsList: PropTypes.arrayOf(PropTypes.string),
+	ddmStructureMap: PropTypes.object,
 	elementInstances: PropTypes.arrayOf(PropTypes.object),
 	entityJSON: PropTypes.object,
 	errors: PropTypes.arrayOf(PropTypes.object),
@@ -210,6 +217,7 @@ QueryBuilderTab.propTypes = {
 	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,
 	onChange: PropTypes.func,
+	onDDMStructureMapChange: PropTypes.func,
 	onDeleteSXPElement: PropTypes.func,
 	onFetchSearchableTypes: PropTypes.func,
 	onFrameworkConfigChange: PropTypes.func,

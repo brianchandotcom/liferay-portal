@@ -120,6 +120,11 @@ public class CPConfigurationEntryLocalServiceImpl
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
+		jsonSerializer.exclude(
+			"CPConfigurationEntryId", "CPConfigurationListId", "companyId",
+			"ctCollectionId", "externalReferenceCode", "mvccVersion", "userId",
+			"userName", "uuid");
+
 		_cpConfigurationEntrySettingLocalService.addCPConfigurationEntrySetting(
 			user.getUserId(), groupId,
 			cpConfigurationEntry.getCPConfigurationEntryId(),

@@ -140,6 +140,24 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertEquals(
 			cpConfigurationEntry1.getCPConfigurationEntryId(),
 			cpConfigurationEntry2.getCPConfigurationEntryId());
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		for (String excludedField :
+				new String[] {
+					"CPConfigurationEntryId", "CPConfigurationListId",
+					"companyId", "ctCollectionId", "externalReferenceCode",
+					"mvccVersion", "userId", "userName", "uuid"
+				}) {
+
+			Assert.assertTrue(
+				!StringUtil.contains(
+					cpConfigurationEntrySetting.getValue(), excludedField));
+		}
 	}
 
 	@Test

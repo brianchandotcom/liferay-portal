@@ -52,12 +52,6 @@ public class CPConfigurationEntryModelDocumentContributor
 						cpConfigurationEntry);
 			}
 
-			document.addText(
-				Field.CLASS_NAME_ID,
-				String.valueOf(cpConfigurationEntry.getClassNameId()));
-			document.addKeyword(
-				Field.CLASS_PK,
-				cpConfigurationEntry.getCPConfigurationEntryId());
 			document.addKeyword(
 				CPField.CP_CONFIGURATION_LIST_ID,
 				cpConfigurationEntry.getCPConfigurationListId());
@@ -74,12 +68,8 @@ public class CPConfigurationEntryModelDocumentContributor
 			}
 
 			document.addKeyword(
-				Field.ENTRY_CLASS_PK, cpConfigurationEntry.getClassPK());
-			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cpConfigurationEntry.getExternalReferenceCode());
-			document.addKeyword(
-				Field.HIDDEN, !cpConfigurationEntry.isVisible());
 			document.addNumber(
 				CPField.MAXIMUM_ORDER_QUANTITY,
 				cpConfigurationEntry.getMaxOrderQuantity());
@@ -93,6 +83,16 @@ public class CPConfigurationEntryModelDocumentContributor
 				CPField.PURCHASABLE, cpConfigurationEntry.isPurchasable());
 			document.addKeyword(
 				CPField.SHIPPABLE, cpConfigurationEntry.isShippable());
+			document.addText(
+				Field.CLASS_NAME_ID,
+				String.valueOf(cpConfigurationEntry.getClassNameId()));
+			document.addKeyword(
+				Field.CLASS_PK,
+				cpConfigurationEntry.getCPConfigurationEntryId());
+			document.addKeyword(
+				Field.ENTRY_CLASS_PK, cpConfigurationEntry.getClassPK());
+			document.addKeyword(
+				Field.HIDDEN, !cpConfigurationEntry.isVisible());
 
 			CPDefinition cpDefinition = null;
 
@@ -115,17 +115,20 @@ public class CPConfigurationEntryModelDocumentContributor
 
 			if (cpDefinition != null) {
 				document.addKeyword(
-					Field.ASSET_CATEGORY_IDS,
-					_assetCategoryLocalService.getCategoryIds(
-						CPDefinition.class.getName(),
-						cpDefinition.getCPDefinitionId()));
-				document.addKeyword(
 					CPField.ASSET_CATEGORY_NAMES,
 					TransformUtil.unsafeTransform(
 						_assetCategoryLocalService.getCategoryNames(
 							CPDefinition.class.getName(),
 							cpConfigurationEntry.getClassPK()),
 						String::toLowerCase, String.class));
+				document.addKeyword(
+					CPField.PRODUCT_TYPE_NAME,
+					cpDefinition.getProductTypeName());
+				document.addKeyword(
+					Field.ASSET_CATEGORY_IDS,
+					_assetCategoryLocalService.getCategoryIds(
+						CPDefinition.class.getName(),
+						cpDefinition.getCPDefinitionId()));
 				document.addKeyword(
 					Field.NAME,
 					cpDefinition.getName(
@@ -142,10 +145,6 @@ public class CPConfigurationEntryModelDocumentContributor
 						_localization.getLocalizedName(Field.NAME, languageId),
 						cpDefinition.getName(languageId));
 				}
-
-				document.addKeyword(
-					CPField.PRODUCT_TYPE_NAME,
-					cpDefinition.getProductTypeName());
 			}
 
 			if (_log.isDebugEnabled()) {

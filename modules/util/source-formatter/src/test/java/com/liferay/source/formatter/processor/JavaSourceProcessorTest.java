@@ -499,9 +499,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"LocalVariableTypeInferences.testjava"
 			).addExpectedMessage(
-				"Avoid using \"var\" to declare variable", 18
+				"Avoid using \"var\" to declare variable", 17
 			).addExpectedMessage(
-				"Avoid using \"var\" to declare variable", 26
+				"Avoid using \"var\" to declare variable", 25
 			));
 	}
 

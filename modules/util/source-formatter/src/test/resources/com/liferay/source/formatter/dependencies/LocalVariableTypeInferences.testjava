@@ -6,7 +6,6 @@
 package com.liferay.source.formatter.dependencies;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ public class LocalVariableTypeInferences {
 		return myMap.size();
 	}
 
-	protected Comparator<Map.Entry<String, Double>> _comparator =
+	protected Comparator<Map.Entry<String, Double>> comparator =
 		(var entry1, var entry2) -> Double.compare(
 			entry2.getValue(), entry1.getValue());
 

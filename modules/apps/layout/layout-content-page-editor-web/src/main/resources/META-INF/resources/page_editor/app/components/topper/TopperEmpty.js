@@ -56,7 +56,11 @@ export default function ({activable = true, children, ...props}) {
 		return children;
 	}
 
-	if (Liferay.FeatureFlags['LPD-18221'] && activable) {
+	if (
+		(Liferay.FeatureFlags['LPD-18221'] ||
+			Liferay.FeatureFlags['LPD-31772']) &&
+		activable
+	) {
 		return (
 			<ActivableTopperEmptyWrapper {...props}>
 				{children}
@@ -375,7 +379,7 @@ const TopperEmptyLabel = ({
 									{Liferay.Language.get('paste')}
 								</ClayDropDown.Item>
 
-								{...options.map((option, index) => (
+								{options.map((option, index) => (
 									<ClayDropDown.Item
 										disabled={option.disabled}
 										key={index}

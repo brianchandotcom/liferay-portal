@@ -9,11 +9,18 @@ import React from 'react';
 import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {config} from '../../config';
+import {useSelectItem} from '../../contexts/ControlsContext';
 import {useActiveStep} from '../../contexts/FormStepContext';
 import {useItemLocalConfig} from '../../contexts/LocalConfigContext';
-import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../contexts/StoreContext';
+import canBeRemoved from '../../utils/canBeRemoved';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import isItemEmpty from '../../utils/isItemEmpty';
+import removeFormStep from '../../utils/removeFormStep';
 import TopperEmpty from '../topper/TopperEmpty';
 import getParentHeight from './getParentHeight';
 
@@ -49,6 +56,10 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const layoutData = useSelector((state) => state.layoutData);
 
+	const dispatch = useDispatch();
+
+	const selectItem = useSelectItem();
+
 	return (
 		<TopperEmpty
 			className={classNames(
@@ -57,6 +68,23 @@ const FormStepWithControls = React.forwardRef(({children, item}, ref) => {
 			)}
 			item={item}
 			itemElement={itemElement}
+			options={
+				canBeRemoved(item, layoutData)
+					? [
+							{
+								label: Liferay.Language.get('remove-step'),
+								onClick: () =>
+									removeFormStep({
+										dispatch,
+										item,
+										layoutData,
+										selectItem,
+									}),
+								symbol: 'times-circle',
+							},
+						]
+					: []
+			}
 		>
 			<FormStep
 				className={classNames('page-editor__form-step', {

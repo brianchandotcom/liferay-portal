@@ -190,3 +190,36 @@ test('LPD-47743 Assert Publication Score is visible', async ({
 
 	await expect(page.getByText('Publication Size:')).toBeVisible();
 });
+
+test('LPD-45769 Assert Publication Score description is visible', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	for (let i = 0; i < 5; i++) {
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+	}
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	const publicationSize = page.getByText('Publication Size:');
+	await expect(publicationSize).toBeVisible();
+
+	await publicationSize.hover();
+
+	const publicationSizeDescription = page.getByText(
+		'The size classification considers both the number of changes and the database size. Please allocate time for the publishing process accordingly.'
+	);
+	await expect(publicationSizeDescription).toBeVisible();
+});

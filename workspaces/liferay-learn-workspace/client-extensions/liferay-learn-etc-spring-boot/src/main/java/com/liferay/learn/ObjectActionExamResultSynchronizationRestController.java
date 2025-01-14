@@ -108,9 +108,9 @@ public class ObjectActionExamResultSynchronizationRestController
 			return OffsetDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		}
 
-		JSONObject jsonObject = itemsJSONArray.getJSONObject(0);
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
 
-		return OffsetDateTime.parse(jsonObject.getString("dateCreated"));
+		return OffsetDateTime.parse(itemJSONObject.getString("dateCreated"));
 	}
 
 	private String _getPayload(JSONObject responseJSONObject) {

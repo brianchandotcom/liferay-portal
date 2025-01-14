@@ -3735,16 +3735,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			PropsValues.
 				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT;
 
-		if (!enableJavaScript) {
-			UnicodeProperties layoutTypeSettingsUnicodeProperties =
-				layout.getTypeSettingsProperties();
-
-			String javaScript = layoutTypeSettingsUnicodeProperties.getProperty(
-				"javascript");
-
-			typeSettingsUnicodeProperties.setProperty("javascript", javaScript);
-		}
-		else {
+		if (enableJavaScript) {
 			String javaScript = typeSettingsUnicodeProperties.getProperty(
 				"javascript");
 
@@ -3754,6 +3745,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 				throw new LayoutJavaScriptException();
 			}
+		}
+		else {
+			UnicodeProperties layoutTypeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			String javaScript = layoutTypeSettingsUnicodeProperties.getProperty(
+				"javascript");
+
+			typeSettingsUnicodeProperties.setProperty("javascript", javaScript);
 		}
 	}
 

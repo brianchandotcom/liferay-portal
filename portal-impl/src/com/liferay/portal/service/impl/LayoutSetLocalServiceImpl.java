@@ -638,13 +638,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			PropsValues.
 				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT;
 
-		if (!enableJavaScript) {
-			String javaScript = oldSettingsUnicodeProperties.getProperty(
-				"javascript");
-
-			newSettingsUnicodeProperties.setProperty("javascript", javaScript);
-		}
-		else {
+		if (enableJavaScript) {
 			String javaScript = newSettingsUnicodeProperties.getProperty(
 				"javascript");
 
@@ -654,6 +648,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 				throw new LayoutSetJavaScriptException();
 			}
+		}
+		else {
+			String javaScript = oldSettingsUnicodeProperties.getProperty(
+				"javascript");
+
+			newSettingsUnicodeProperties.setProperty("javascript", javaScript);
 		}
 	}
 

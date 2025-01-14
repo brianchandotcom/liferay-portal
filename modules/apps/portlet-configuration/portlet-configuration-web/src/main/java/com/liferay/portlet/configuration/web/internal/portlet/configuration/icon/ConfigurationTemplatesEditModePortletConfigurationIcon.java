@@ -44,12 +44,6 @@ public class ConfigurationTemplatesEditModePortletConfigurationIcon
 	}
 
 	@Override
-	public int getPortletConfigurationIconGroup() {
-		return EditModePortletConfigurationIcon.
-			PORTLET_CONFIGURATION_ICON_GROUP_CONFIGURATION;
-	}
-
-	@Override
 	public String getTitle(HttpServletRequest httpServletRequest) {
 		return _language.get(httpServletRequest, "configuration-templates");
 	}

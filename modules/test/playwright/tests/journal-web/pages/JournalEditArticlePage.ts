@@ -154,19 +154,15 @@ export class JournalEditArticlePage {
 		viewableBy?: 'Site Members' | 'Owner'
 	) {
 		if (existingArticle) {
-			await expect(async () => {
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: this.page.getByRole('menuitem', {
-						name: /publish|publier/i,
-					}),
-					trigger: this.publishDropdown,
-				});
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {
+					name: /publish|publier/i,
+				}),
+				trigger: this.publishDropdown,
+			});
 
-				await waitForAlert(this.page, 'was updated successfully', {
-					timeout: 2000,
-				});
-			}).toPass();
+			await this.page.locator('.alert-success').waitFor({timeout: 2000});
 
 			return;
 		}

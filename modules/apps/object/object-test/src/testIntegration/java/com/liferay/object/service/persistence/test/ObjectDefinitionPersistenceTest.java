@@ -160,6 +160,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableFriendlyURLCustomization(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setEnableIndexSearch(
 			RandomTestUtil.randomBoolean());
 
@@ -265,6 +268,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableComments(),
 			newObjectDefinition.isEnableComments());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableFriendlyURLCustomization(),
+			newObjectDefinition.isEnableFriendlyURLCustomization());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableIndexSearch(),
 			newObjectDefinition.isEnableIndexSearch());
@@ -512,13 +518,13 @@ public class ObjectDefinitionPersistenceTest {
 			"rootObjectDefinitionId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "className", true,
 			"dbTableName", true, "enableCategorization", true, "enableComments",
-			true, "enableIndexSearch", true, "enableLocalization", true,
-			"enableObjectEntryDraft", true, "enableObjectEntryHistory", true,
-			"label", true, "modifiable", true, "name", true, "panelAppOrder",
-			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
-			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
-			"scope", true, "storageType", true, "system", true, "version", true,
-			"status", true);
+			true, "enableFriendlyURLCustomization", true, "enableIndexSearch",
+			true, "enableLocalization", true, "enableObjectEntryDraft", true,
+			"enableObjectEntryHistory", true, "label", true, "modifiable", true,
+			"name", true, "panelAppOrder", true, "panelCategoryKey", true,
+			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
+			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
+			true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -870,6 +876,9 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableComments(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableFriendlyURLCustomization(
+			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableIndexSearch(RandomTestUtil.randomBoolean());
 

@@ -57,6 +57,9 @@ public class ObjectDefinitionWrapper
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
+		attributes.put(
+			"enableFriendlyURLCustomization",
+			isEnableFriendlyURLCustomization());
 		attributes.put("enableIndexSearch", isEnableIndexSearch());
 		attributes.put("enableLocalization", isEnableLocalization());
 		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
@@ -208,6 +211,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableComments != null) {
 			setEnableComments(enableComments);
+		}
+
+		Boolean enableFriendlyURLCustomization = (Boolean)attributes.get(
+			"enableFriendlyURLCustomization");
+
+		if (enableFriendlyURLCustomization != null) {
+			setEnableFriendlyURLCustomization(enableFriendlyURLCustomization);
 		}
 
 		Boolean enableIndexSearch = (Boolean)attributes.get(
@@ -447,6 +457,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableComments() {
 		return model.getEnableComments();
+	}
+
+	/**
+	 * Returns the enable friendly url customization of this object definition.
+	 *
+	 * @return the enable friendly url customization of this object definition
+	 */
+	@Override
+	public boolean getEnableFriendlyURLCustomization() {
+		return model.getEnableFriendlyURLCustomization();
 	}
 
 	/**
@@ -987,6 +1007,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable friendly url customization.
+	 *
+	 * @return <code>true</code> if this object definition is enable friendly url customization; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableFriendlyURLCustomization() {
+		return model.isEnableFriendlyURLCustomization();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable index search.
 	 *
 	 * @return <code>true</code> if this object definition is enable index search; <code>false</code> otherwise
@@ -1207,6 +1237,18 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableComments(boolean enableComments) {
 		model.setEnableComments(enableComments);
+	}
+
+	/**
+	 * Sets whether this object definition is enable friendly url customization.
+	 *
+	 * @param enableFriendlyURLCustomization the enable friendly url customization of this object definition
+	 */
+	@Override
+	public void setEnableFriendlyURLCustomization(
+		boolean enableFriendlyURLCustomization) {
+
+		model.setEnableFriendlyURLCustomization(enableFriendlyURLCustomization);
 	}
 
 	/**

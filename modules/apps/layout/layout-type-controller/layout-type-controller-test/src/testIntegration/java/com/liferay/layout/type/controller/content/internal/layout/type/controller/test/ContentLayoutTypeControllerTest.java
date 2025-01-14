@@ -95,7 +95,11 @@ public class ContentLayoutTypeControllerTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addTypePortletLayout(_group);
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_CONTENT);
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -111,8 +115,7 @@ public class ContentLayoutTypeControllerTest {
 		throws Exception {
 
 		_includeDraftLayoutContent(
-			ActionKeys.PREVIEW_DRAFT,
-			LayoutTestUtil.addTypeContentLayout(_group), Constants.EDIT);
+			ActionKeys.PREVIEW_DRAFT, _layout, Constants.EDIT);
 	}
 
 	@Test
@@ -120,19 +123,14 @@ public class ContentLayoutTypeControllerTest {
 	public void testContentLayoutTypeControllerDraftEditWithViewPermission()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				layout.getType());
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
 
 		Assert.assertFalse(
-			layoutTypeController.includeLayoutContent(
-				_getHttpServletRequest(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
 					Constants.EDIT, _getUser(ActionKeys.VIEW)),
-				new MockHttpServletResponse(), layout));
+				new MockHttpServletResponse(), _layout));
 	}
 
 	@Test
@@ -141,9 +139,7 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
-				ActionKeys.PREVIEW_DRAFT,
-				LayoutTestUtil.addTypeContentLayout(_group),
-				Constants.PREVIEW));
+				ActionKeys.PREVIEW_DRAFT, _layout, Constants.PREVIEW));
 	}
 
 	@Test
@@ -152,17 +148,14 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
-				ActionKeys.UPDATE, LayoutTestUtil.addTypeContentLayout(_group),
-				Constants.PREVIEW));
+				ActionKeys.UPDATE, _layout, Constants.PREVIEW));
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testContentLayoutTypeControllerDraftPreviewWithViewPermission()
 		throws Exception {
 
-		_includeDraftLayoutContent(
-			ActionKeys.VIEW, LayoutTestUtil.addTypeContentLayout(_group),
-			Constants.PREVIEW);
+		_includeDraftLayoutContent(ActionKeys.VIEW, _layout, Constants.PREVIEW);
 	}
 
 	@Test
@@ -171,15 +164,12 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
-				ActionKeys.PREVIEW_DRAFT,
-				LayoutTestUtil.addTypeContentLayout(_group), Constants.VIEW));
+				ActionKeys.PREVIEW_DRAFT, _layout, Constants.VIEW));
 	}
 
 	@Test
 	public void testContentLayoutTypeControllerMainContentDiv()
 		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
@@ -188,20 +178,21 @@ public class ContentLayoutTypeControllerTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout.fetchDraftLayout(),
+			fragmentEntry.getJs(), _layout.fetchDraftLayout(),
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
 			0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				_layout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
+		_layout = _layoutLocalService.getLayout(_layout.getPlid());
 
 		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				_layout.getPlid()));
 
 		Assert.assertFalse(html.contains("main-content"));
 
@@ -215,14 +206,14 @@ public class ContentLayoutTypeControllerTest {
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		layout = _layoutLocalService.updateMasterLayoutPlid(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layoutPageTemplateEntry.getPlid());
+		_layout = _layoutLocalService.updateMasterLayoutPlid(
+			_layout.getGroupId(), _layout.isPrivateLayout(),
+			_layout.getLayoutId(), layoutPageTemplateEntry.getPlid());
 
 		html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				_layout.getPlid()));
 
 		Assert.assertTrue(
 			html.startsWith(
@@ -245,9 +236,9 @@ public class ContentLayoutTypeControllerTest {
 			masterLayout.fetchDraftLayout(), masterLayout);
 
 		html = ContentLayoutTestUtil.getRenderLayoutHTML(
-			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				_layout.getPlid()));
 
 		Assert.assertTrue(html.contains("main-content"));
 		Assert.assertFalse(
@@ -260,12 +251,8 @@ public class ContentLayoutTypeControllerTest {
 	public void testContentLayoutTypeControllerNoPublishedLayoutGuestUser()
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
-
-		layoutTypeController.includeLayoutContent(
-			_getHttpServletRequest(
+		_layoutTypeController.includeLayoutContent(
+			_getMockHttpServletRequest(
 				null, _userLocalService.getGuestUser(_group.getCompanyId())),
 			new MockHttpServletResponse(),
 			LayoutTestUtil.addTypeContentLayout(_group));
@@ -275,15 +262,10 @@ public class ContentLayoutTypeControllerTest {
 	public void testContentLayoutTypeControllerNoPublishedLayoutPermissionUser()
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
-
 		Assert.assertFalse(
-			layoutTypeController.includeLayoutContent(
-				_getHttpServletRequest(null, TestPropsValues.getUser()),
-				new MockHttpServletResponse(),
-				LayoutTestUtil.addTypeContentLayout(_group)));
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -318,13 +300,7 @@ public class ContentLayoutTypeControllerTest {
 	public void testContentLayoutTypeControllerPublishedLayoutGuestUser()
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = _layout.fetchDraftLayout();
 
 		Assert.assertNotNull(draftLayout);
 
@@ -334,24 +310,18 @@ public class ContentLayoutTypeControllerTest {
 			ServiceContextThreadLocal.getServiceContext());
 
 		Assert.assertFalse(
-			layoutTypeController.includeLayoutContent(
-				_getHttpServletRequest(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(
 					null,
 					_userLocalService.getGuestUser(_group.getCompanyId())),
-				new MockHttpServletResponse(), layout));
+				new MockHttpServletResponse(), _layout));
 	}
 
 	@Test
 	public void testContentLayoutTypeControllerPublishedLayoutPermissionUser()
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = _layout.fetchDraftLayout();
 
 		Assert.assertNotNull(draftLayout);
 
@@ -361,9 +331,9 @@ public class ContentLayoutTypeControllerTest {
 			ServiceContextThreadLocal.getServiceContext());
 
 		Assert.assertFalse(
-			layoutTypeController.includeLayoutContent(
-				_getHttpServletRequest(null, TestPropsValues.getUser()),
-				new MockHttpServletResponse(), layout));
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -398,9 +368,7 @@ public class ContentLayoutTypeControllerTest {
 	public void testContentLayoutTypeControllerWithLockedLayout()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = _layout.fetchDraftLayout();
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
 
@@ -408,21 +376,18 @@ public class ContentLayoutTypeControllerTest {
 
 		_lockLayout(draftLayout, TestPropsValues.getUser());
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_CONTENT);
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			Constants.EDIT, UserTestUtil.addGroupAdminUser(_group));
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				Constants.EDIT, UserTestUtil.addGroupAdminUser(_group));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		layoutTypeController.includeLayoutContent(
-			httpServletRequest, mockHttpServletResponse, draftLayout);
+		_layoutTypeController.includeLayoutContent(
+			mockHttpServletRequest, mockHttpServletResponse, draftLayout);
 
 		Assert.assertEquals(
-			_layoutLockManager.getLockedLayoutURL(httpServletRequest),
+			_layoutLockManager.getLockedLayoutURL(mockHttpServletRequest),
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 
@@ -462,7 +427,7 @@ public class ContentLayoutTypeControllerTest {
 		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
 
-	private HttpServletRequest _getHttpServletRequest(
+	private MockHttpServletRequest _getMockHttpServletRequest(
 			String layoutMode, User user)
 		throws Exception {
 
@@ -497,7 +462,7 @@ public class ContentLayoutTypeControllerTest {
 		themeDisplay.setCompany(company);
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
-		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
+		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
 		themeDisplay.setLocale(
@@ -536,12 +501,8 @@ public class ContentLayoutTypeControllerTest {
 			String actionId, Layout layout, String layoutMode)
 		throws Exception {
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				layout.getType());
-
-		return layoutTypeController.includeLayoutContent(
-			_getHttpServletRequest(layoutMode, _getUser(actionId)),
+		return _layoutTypeController.includeLayoutContent(
+			_getMockHttpServletRequest(layoutMode, _getUser(actionId)),
 			new MockHttpServletResponse(), layout.fetchDraftLayout());
 	}
 
@@ -568,6 +529,8 @@ public class ContentLayoutTypeControllerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private Layout _layout;
+
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
@@ -593,6 +556,8 @@ public class ContentLayoutTypeControllerTest {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	private LayoutTypeController _layoutTypeController;
 
 	@Inject
 	private LayoutUtilityPageEntryLocalService

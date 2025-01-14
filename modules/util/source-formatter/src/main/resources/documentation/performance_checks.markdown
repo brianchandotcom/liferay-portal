@@ -20,6 +20,7 @@ JavaSessionCheck | .java | Finds unnecessary calls to `Session.flush()` (calls t
 [JavaStringBundlerConcatCheck](check/java_string_bundler_concat_check.markdown#javastringbundlerconcatcheck) | .java | Finds calls to `StringBundler.concat` with less than 3 parameters. |
 JavaStringBundlerInitialCapacityCheck | .java | Checks the initial capacity of new instances of `StringBundler`. |
 LocalPatternCheck | .java | Checks that a `java.util.Pattern` variable is declared globally, so that it is initiated only once. |
+LocalVariableTypeInferenceCheck | .java | Finds usage of `var` in local variable declaration. |
 [MapIterationCheck](check/map_iteration_check.markdown#mapiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no unnecessary map iterations. |
 ParsePrimitiveTypeCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Verifies that `GetterUtil.parse*` is used to parse primitive types, when possible. |
 [PoshiPauseUsageCheck](check/poshi_pause_usage_check.markdown#poshipauseusagecheck) | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds missing comment with JIRA project when using `Pause`. |

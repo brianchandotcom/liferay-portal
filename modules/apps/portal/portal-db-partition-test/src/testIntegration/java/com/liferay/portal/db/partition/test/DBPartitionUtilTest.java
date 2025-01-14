@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -405,6 +406,23 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testForEachCompanyIdOrdering() throws Exception {
+		boolean originalThreadPoolEnabled = ReflectionTestUtil.getFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED");
+
+		try {
+			_testForEachCompanyIdOrdering(false);
+			_testForEachCompanyIdOrdering(true);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_PARTITION_THREAD_POOL_ENABLED",
+				originalThreadPoolEnabled);
+		}
+	}
+
+	@Test
 	public void testRemoveDBPartition() throws Exception {
 		addDBPartitions();
 
@@ -606,6 +624,22 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		_schedulerEngine.schedule(
 			trigger, StringPool.BLANK, _JOB_GROUP_NAME, message,
 			StorageType.PERSISTED);
+	}
+
+	private void _testForEachCompanyIdOrdering(boolean threadPoolEnabled)
+		throws Exception {
+
+		List<Long> companyIds = new CopyOnWriteArrayList<>();
+
+		ReflectionTestUtil.setFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
+			threadPoolEnabled);
+
+		DBPartitionUtil.forEachCompanyId(companyIds::add);
+
+		Assert.assertEquals(
+			companyIds.toString(),
+			(Long)PortalInstancePool.getDefaultCompanyId(), companyIds.get(0));
 	}
 
 	private static final String _JOB_GROUP_NAME = "liferay/test";

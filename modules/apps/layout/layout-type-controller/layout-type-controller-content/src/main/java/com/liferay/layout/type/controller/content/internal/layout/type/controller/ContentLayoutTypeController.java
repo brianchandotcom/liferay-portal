@@ -351,7 +351,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		long segmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId", -1);
 
-		if (segmentsExperienceId != -1) {
+		if (_isValidSegmentsExperienceId(layout, segmentsExperienceId)) {
 			layoutFullURL = HttpComponentsUtil.setParameter(
 				layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
 		}

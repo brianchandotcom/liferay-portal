@@ -29,6 +29,7 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryM
 import com.liferay.layout.util.comparator.LayoutModifiedDateComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
@@ -572,26 +575,37 @@ public class EditStyleBookEntryDisplayContext {
 	}
 
 	private String _getThemeName() {
-		Theme theme = ThemeLocalServiceUtil.fetchTheme(
-			_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
-		String name = _styleBookEntry.getThemeId();
-
-		if (theme != null) {
-			name = LanguageUtil.format(
-				_httpServletRequest, "x-theme", theme.getName());
-		}
-		else {
-			CET cet = _cetManager.getCET(
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			Theme theme = ThemeLocalServiceUtil.fetchTheme(
 				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+			String name = _styleBookEntry.getThemeId();
 
-			if (cet != null) {
+			if (theme != null) {
 				name = LanguageUtil.format(
-					_httpServletRequest, "x-theme-css-client-extension",
-					cet.getName());
+					_httpServletRequest, "x-theme", theme.getName());
 			}
+			else {
+				CET cet = _cetManager.getCET(
+					_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+
+				if (cet != null) {
+					name = LanguageUtil.format(
+						_httpServletRequest, "x-theme-css-client-extension",
+						cet.getName());
+				}
+			}
+
+			return name;
 		}
 
-		return name;
+		Group group = _themeDisplay.getScopeGroup();
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			_themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
+
+		Theme theme = layoutSet.getTheme();
+
+		return theme.getName();
 	}
 
 	private void _setViewAttributes() {

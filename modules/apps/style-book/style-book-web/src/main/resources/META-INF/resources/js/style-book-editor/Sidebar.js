@@ -59,29 +59,64 @@ function UpdateStyle({sidebarRef}) {
 }
 
 function ThemeInformation() {
-	return (
-		<div className="pb-1">
-			<p className="small text-secondary">
-				{!IsValidFrontendTokenDefinition() ? (
-					<ClayAlert className="m-0" displayType="warning">
-						{Liferay.Language.get(
-							'the-current-theme-does-not-support-editing-style-book-values'
-						)}
-					</ClayAlert>
-				) : (
-					<p className="text-dark">
-						<p className="font-weight-bold mb-1">
-							{`${Liferay.Language.get(
-								'frontend-token-definition-provided-by'
-							)}`}
-						</p>
+	if (Liferay?.FeatureFlags?.['LPD-30204']) {
+		return (
+			<div className="pb-1">
+				<p className="small text-secondary">
+					{!IsValidFrontendTokenDefinition() ? (
+						<ClayAlert className="m-0" displayType="warning">
+							{Liferay.Language.get(
+								'the-current-theme-does-not-support-editing-style-book-values'
+							)}
+						</ClayAlert>
+					) : (
+						<p className="text-dark">
+							<p className="font-weight-bold mb-1">
+								{`${Liferay.Language.get(
+									'frontend-token-definition-provided-by'
+								)}`}
+							</p>
 
-						<p>{config.themeName}</p>
-					</p>
-				)}
-			</p>
-		</div>
-	);
+							<p>{config.themeName}</p>
+						</p>
+					)}
+				</p>
+			</div>
+		);
+	}
+	else {
+		return (
+			<div className="pb-1">
+				<p className="small text-secondary">
+					{IsValidFrontendTokenDefinition() ? (
+						config.isPrivateLayoutsEnabled ? (
+							Liferay.Language.get(
+								'this-token-definition-belongs-to-the-theme-set-for-public-pages'
+							)
+						) : (
+							Liferay.Language.get(
+								'this-token-definition-belongs-to-the-theme-set-for-pages'
+							)
+						)
+					) : (
+						<ClayAlert className="m-0" displayType="warning">
+							{Liferay.Language.get(
+								'the-current-theme-does-not-support-editing-style-book-values'
+							)}
+						</ClayAlert>
+					)}
+				</p>
+
+				<p className="mb-0 small">
+					<span className="font-weight-semi-bold">
+						{`${Liferay.Language.get('theme')}: `}
+					</span>
+
+					{config.themeName}
+				</p>
+			</div>
+		);
+	}
 }
 
 function IsValidFrontendTokenDefinition() {

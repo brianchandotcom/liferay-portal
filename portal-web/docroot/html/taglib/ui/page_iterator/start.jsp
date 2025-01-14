@@ -119,7 +119,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</div>
 
 			<aui:script senna="temporary" type="text/javascript">
-				function handleDropdownKeyPress(button, list, options, dropdown) {
+				function <portlet:namespace />handleDropdownKeyPress(button, list, options, dropdown) {
 					function onButtonKeyDown(event) {
 						if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
 							event.preventDefault();
@@ -190,7 +190,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				var list = dropdown.querySelector('.dropdown-menu');
 				var options = list.querySelectorAll('.dropdown-item');
 
-				handleDropdownKeyPress(button, list, options, dropdown);
+				<portlet:namespace />handleDropdownKeyPress(button, list, options, dropdown);
 			</aui:script>
 		</c:if>
 
@@ -533,7 +533,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		var list = pageIterator.querySelector('.pagination .dropdown-menu');
 		var options = list?.querySelectorAll('.pagination .dropdown-item');
 
-		handleDropdownKeyPress(button, list, options, pageIterator);
+		<portlet:namespace />handleDropdownKeyPress(button, list, options, pageIterator);
 	}
 </aui:script>
 

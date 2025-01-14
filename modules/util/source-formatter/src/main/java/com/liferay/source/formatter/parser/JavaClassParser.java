@@ -68,7 +68,7 @@ public class JavaClassParser {
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
 				"\n(public\\s+)?(abstract\\s+)?(final\\s+)?@?",
-				"(class|enum|interface)\\s+", className,
+				"(strictfp\\s+)?(class|enum|interface)\\s+", className,
 				"([<|\\s][^\\{]*)\\{"));
 
 		Matcher matcher = pattern.matcher(content);
@@ -113,8 +113,8 @@ public class JavaClassParser {
 
 		boolean isInterface = false;
 
-		if (matcher.group(4) != null) {
-			String token = matcher.group(4);
+		if (matcher.group(5) != null) {
+			String token = matcher.group(5);
 
 			if (token.equals("enum")) {
 				isEnum = true;
@@ -131,7 +131,7 @@ public class JavaClassParser {
 			isInterface, false);
 
 		return _parseExtendsImplements(
-			javaClass, StringUtil.trim(matcher.group(5)));
+			javaClass, StringUtil.trim(matcher.group(6)));
 	}
 
 	private static String _getAnonymousClassContent(

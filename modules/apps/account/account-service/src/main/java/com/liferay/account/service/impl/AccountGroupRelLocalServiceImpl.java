@@ -249,8 +249,14 @@ public class AccountGroupRelLocalServiceImpl
 		).and(
 			AccountGroupRelTable.INSTANCE.classPK.eq(classPK)
 		).and(
-			AccountGroupRelTable.INSTANCE.accountGroupId.in(
-				ArrayUtil.toArray(accountGroupIds))
+			() -> {
+				if (ArrayUtil.isEmpty(accountGroupIds)) {
+					return null;
+				}
+
+				return AccountGroupRelTable.INSTANCE.accountGroupId.in(
+					ArrayUtil.toArray(accountGroupIds));
+			}
 		);
 
 		if (Validator.isNotNull(keywords)) {

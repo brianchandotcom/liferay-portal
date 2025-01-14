@@ -5,13 +5,26 @@
 
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import {
+	Alignment,
 	Bold,
 	ClassicEditor as BaseClassicEditor,
 	EditorConfig,
 	Essentials,
+	Font,
 	GeneralHtmlSupport,
+	HorizontalLine,
+	Indent,
 	Italic,
+	Link,
+	List,
+	MediaEmbed,
 	Paragraph,
+	RemoveFormat,
+	Strikethrough,
+	Table,
+	TableCaption,
+	TableProperties,
+	TableToolbar,
 	Underline,
 } from 'ckeditor5';
 import React from 'react';
@@ -19,12 +32,25 @@ import React from 'react';
 const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 	const defaultConfig: EditorConfig = {
 		plugins: [
+			Alignment,
 			Bold,
 			Essentials,
+			Font,
 			GeneralHtmlSupport,
+			HorizontalLine,
+			Indent,
 			Italic,
-			Underline,
+			Link,
+			List,
+			MediaEmbed,
 			Paragraph,
+			RemoveFormat,
+			Strikethrough,
+			Table,
+			TableCaption,
+			TableProperties,
+			TableToolbar,
+			Underline,
 		],
 		toolbar: ['undo', 'redo', '|', 'bold', 'italic', 'underline'],
 	};

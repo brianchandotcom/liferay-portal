@@ -976,6 +976,10 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, FileCollection jarFiles, Task task) {
 	FileCollection newJarFiles = task.project.objects.fileCollection()
 
+	def propertiesFile = task.project.rootProject.file "liferay-jakarta-versions.properties"
+
+	def propertiesFileAbsolutePath = propertiesFile.absolutePath
+
 	jarFiles.files.each {
 		File jarFile ->
 
@@ -999,7 +1003,7 @@ private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, F
 		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream())
 		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream())
 
-		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, [jarFile.absolutePath, file.absolutePath] as String[]))
+		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--versions", propertiesFileAbsolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
 
 		if (resultCode == org.eclipse.transformer.Transformer.ResultCode.SUCCESS_RC) {
 			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"

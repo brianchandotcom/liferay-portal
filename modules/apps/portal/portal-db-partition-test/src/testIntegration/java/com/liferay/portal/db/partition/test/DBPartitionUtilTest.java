@@ -100,17 +100,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testAccessDefaultCompanyByCompanyThreadLocal()
 		throws SQLException {
 
-		long currentCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(portal.getDefaultCompanyId());
-
-		try (Connection connection = DataAccess.getConnection();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					portal.getDefaultCompanyId());
+			Connection connection = DataAccess.getConnection();
 			Statement statement = connection.createStatement()) {
 
 			statement.execute("select 1 from CompanyInfo");
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(currentCompanyId);
 		}
 	}
 

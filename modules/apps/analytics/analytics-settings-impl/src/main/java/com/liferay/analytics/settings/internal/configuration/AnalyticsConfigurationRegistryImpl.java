@@ -12,6 +12,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -939,16 +940,11 @@ public class AnalyticsConfigurationRegistryImpl
 
 			_unmapPid(pid);
 
-			long companyThreadLocalCompanyId =
-				CompanyThreadLocal.getCompanyId();
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
 
-			CompanyThreadLocal.setCompanyId(companyId);
-
-			try {
 				_disable(companyId);
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 			}
 		}
 
@@ -962,19 +958,16 @@ public class AnalyticsConfigurationRegistryImpl
 		public void updated(String pid, Dictionary<String, ?> dictionary) {
 			_unmapPid(pid);
 
-			long companyThreadLocalCompanyId =
-				CompanyThreadLocal.getCompanyId();
-
 			long companyId = GetterUtil.getLong(
 				dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 			CompanyThreadLocal.setCompanyId(companyId);
 
-			try {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
+
 				_updated(companyId, pid, dictionary);
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 			}
 		}
 

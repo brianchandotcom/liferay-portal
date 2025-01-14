@@ -5,6 +5,7 @@
 
 package com.liferay.user.associated.data.web.internal.configuration.persistence.listener;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -38,12 +39,10 @@ public class AnonymousUserConfigurationModelListener
 
 		// LPS-142491
 
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+		long companyId = (long)properties.get("companyId");
 
-		try {
-			long companyId = (long)properties.get("companyId");
-
-			CompanyThreadLocal.setCompanyId(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			_companyLocalService.getCompanyById(companyId);
 
@@ -56,9 +55,6 @@ public class AnonymousUserConfigurationModelListener
 			throw new ConfigurationModelListenerException(
 				exception.getMessage(), AnonymousUserConfiguration.class,
 				getClass(), properties);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 		}
 	}
 

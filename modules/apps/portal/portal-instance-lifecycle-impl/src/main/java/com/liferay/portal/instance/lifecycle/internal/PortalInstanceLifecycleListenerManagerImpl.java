@@ -174,17 +174,18 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		_runIfNeeded(
 			company.getCompanyId(), portalInstanceLifecycleListener, true,
 			() -> {
-				Long companyId = CompanyThreadLocal.getCompanyId();
 				Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 				Locale siteDefaultLocale =
 					LocaleThreadLocal.getSiteDefaultLocale();
 
-				try (SafeCloseable safeCloseable =
+				try (SafeCloseable safeCloseable1 =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							company.getCompanyId());
+					SafeCloseable safeCloseable2 =
 						CompanyThreadLocal.
 							setInitializingPortalInstanceWithSafeCloseable(
 								true)) {
 
-					CompanyThreadLocal.setCompanyId(company.getCompanyId());
 					LocaleThreadLocal.setDefaultLocale(company.getLocale());
 					LocaleThreadLocal.setSiteDefaultLocale(null);
 
@@ -199,7 +200,6 @@ public class PortalInstanceLifecycleListenerManagerImpl
 					}
 				}
 				finally {
-					CompanyThreadLocal.setCompanyId(companyId);
 					LocaleThreadLocal.setDefaultLocale(defaultLocale);
 					LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 				}

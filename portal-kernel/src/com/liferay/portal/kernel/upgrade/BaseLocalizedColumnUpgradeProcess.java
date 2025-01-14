@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -68,19 +69,14 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 			long companyId, ResourceBundleLoader resourceBundleLoader)
 		throws SQLException {
 
-		Long originalCompanyId = CompanyThreadLocal.getCompanyId();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-		CompanyThreadLocal.setCompanyId(companyId);
-
-		try {
 			return LocalizationUtil.updateLocalization(
 				ResourceBundleUtil.getLocalizationMap(
 					resourceBundleLoader, localizationMapKey),
 				"", localizationXMLKey,
 				UpgradeProcessUtil.getDefaultLanguageId(companyId));
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(originalCompanyId);
 		}
 	}
 

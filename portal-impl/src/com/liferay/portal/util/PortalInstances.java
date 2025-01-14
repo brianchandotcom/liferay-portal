@@ -251,12 +251,11 @@ public class PortalInstances {
 				"Begin initializing company with web ID " + company.getWebId());
 		}
 
-		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
-
 		String currentThreadPrincipalName = PrincipalThreadLocal.getName();
 
-		try {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
 
 			if (!skipCheck) {
 				try {
@@ -312,8 +311,6 @@ public class PortalInstances {
 			PortalInstancePool.add(company);
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
-
 			PrincipalThreadLocal.setName(currentThreadPrincipalName);
 		}
 

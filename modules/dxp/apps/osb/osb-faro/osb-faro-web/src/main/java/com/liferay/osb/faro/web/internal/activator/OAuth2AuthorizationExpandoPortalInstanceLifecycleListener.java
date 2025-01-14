@@ -20,6 +20,7 @@ import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -84,10 +85,9 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addSAPEntries(company.getCompanyId());
 
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				OAuth2Authorization.class.getName());
@@ -104,9 +104,6 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 
 			addExpandoColumn(
 				expandoTable, "groupId", ExpandoColumnConstants.LONG);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
 		}
 	}
 

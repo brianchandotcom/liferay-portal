@@ -8,6 +8,7 @@ package com.liferay.portal.security.permission.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -522,12 +523,11 @@ public class PermissionCheckerTest {
 			_group.getCompanyId(), _group.getGroupId(), 0, _MODEL_RESOURCE_NAME,
 			resourceId, false, false, false);
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		_company = CompanyTestUtil.addCompany();
 
-		try {
-			_company = CompanyTestUtil.addCompany();
-
-			CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
 			_user = UserTestUtil.addCompanyAdminUser(_company);
 
@@ -564,8 +564,6 @@ public class PermissionCheckerTest {
 			}
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
-
 			_resourceLocalService.deleteResource(
 				_group.getCompanyId(), _MODEL_RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL, resourceId);

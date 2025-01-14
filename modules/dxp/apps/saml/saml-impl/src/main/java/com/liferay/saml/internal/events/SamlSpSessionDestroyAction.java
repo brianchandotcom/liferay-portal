@@ -5,6 +5,7 @@
 
 package com.liferay.saml.internal.events;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
@@ -55,15 +56,11 @@ public class SamlSpSessionDestroyAction extends SessionAction {
 			return;
 		}
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					userCompanyId)) {
 
-		CompanyThreadLocal.setCompanyId(userCompanyId);
-
-		try {
 			_run(httpSession);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
 		}
 	}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.address.internal.upgrade.v1_0_0;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -19,7 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CountryConstants;
+import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -42,6 +45,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 /**
@@ -49,23 +53,29 @@ import java.util.function.Consumer;
  */
 public class CountryUpgradeProcess extends UpgradeProcess {
 
-	public CountryUpgradeProcess(CompanyLocalService companyLocalService) {
+	public CountryUpgradeProcess(
+		CompanyLocalService companyLocalService,
+		CounterLocalService counterLocalService) {
+
 		Class<?> clazz = getClass();
 
 		_classLoader = clazz.getClassLoader();
 
 		_companyLocalService = companyLocalService;
+		_counterLocalService = counterLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateRegionCounter();
+		_updateCounters();
 
 		if (DBPartition.isPartitionEnabled()) {
 			new CompanyUpgradeProcess(
 				_companyLocalService.getCompany(
 					CompanyThreadLocal.getCompanyId())
 			).populateCompanyCountries();
+
+			_updateCounters();
 
 			return;
 		}
@@ -87,6 +97,8 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 							exception);
 					}
 				});
+
+			_updateCounters();
 		}
 		finally {
 			_restoreIndexes(indexMetadatas);
@@ -176,15 +188,38 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		db.addIndexes(connection, addIndexMetadatas);
 	}
 
-	private void _updateRegionCounter() throws Exception {
+	private void _updateCounter(
+			String tableName, String columnName, String className)
+		throws Exception {
+
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				"select max(regionId) from Region")) {
+				StringBundler.concat(
+					"select max(", columnName, ") from ", tableName))) {
 
 			if (resultSet.next()) {
-				increment(Region.class.getName(), (int)resultSet.getLong(1));
+				increment(className, (int)resultSet.getLong(1));
 			}
 		}
+	}
+
+	private void _updateCounters() throws Exception {
+		_updateCounter(
+			"CountryLocalization", "countryLocalizationId",
+			CountryLocalization.class.getName());
+		_updateCounter("Region", "regionId", Region.class.getName());
+		_updateCounter(
+			"RegionLocalization", "regionLocalizationId",
+			RegionLocalization.class.getName());
+
+		_countryLocalizationCounter = new AtomicLong(
+			_counterLocalService.getCurrentId(
+				CountryLocalization.class.getName()));
+		_regionCounter = new AtomicLong(
+			_counterLocalService.getCurrentId(Region.class.getName()));
+		_regionLocalizationCounter = new AtomicLong(
+			_counterLocalService.getCurrentId(
+				RegionLocalization.class.getName()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -192,6 +227,10 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	private final ClassLoader _classLoader;
 	private final CompanyLocalService _companyLocalService;
+	private final CounterLocalService _counterLocalService;
+	private AtomicLong _countryLocalizationCounter;
+	private AtomicLong _regionCounter;
+	private AtomicLong _regionLocalizationCounter;
 
 	private class CompanyUpgradeProcess {
 
@@ -331,7 +370,8 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 			for (Locale locale : _companyAvailableLocales) {
 				_countryLocalizationPreparedStatement.setLong(1, 0L);
-				_countryLocalizationPreparedStatement.setLong(2, increment());
+				_countryLocalizationPreparedStatement.setLong(
+					2, _countryLocalizationCounter.incrementAndGet());
 				_countryLocalizationPreparedStatement.setLong(
 					3, _company.getCompanyId());
 				_countryLocalizationPreparedStatement.setLong(4, countryId);
@@ -352,7 +392,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		private void _addRegion(long countryId, JSONObject regionJSONObject)
 			throws Exception {
 
-			long regionId = increment(Region.class.getName());
+			long regionId = _regionCounter.incrementAndGet();
 			String regionName = regionJSONObject.getString("name");
 
 			_regionPreparedStatement.setLong(1, 0L);
@@ -397,7 +437,8 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 			for (Map.Entry<String, String> entryMap : titleMap.entrySet()) {
 				_regionLocalizationPreparedStatement.setLong(1, 0L);
-				_regionLocalizationPreparedStatement.setLong(2, increment());
+				_regionLocalizationPreparedStatement.setLong(
+					2, _regionLocalizationCounter.incrementAndGet());
 				_regionLocalizationPreparedStatement.setLong(
 					3, _company.getCompanyId());
 				_regionLocalizationPreparedStatement.setLong(4, regionId);

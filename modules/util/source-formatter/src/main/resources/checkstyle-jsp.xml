@@ -299,6 +299,11 @@
 			<message key="objects.equals.use.1" value="Use &quot;Objects.equals&quot; instead of calling &quot;equals&quot; on a literal String" />
 			<message key="objects.equals.use.2" value="Either use &quot;{0}&quot; or use &quot;Objects.equals&quot; if &quot;{1}&quot; can have a &quot;null&quot; value, instead of calling &quot;equals&quot; on a literal String" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.LocalVariableTypeInferenceCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of `var` in local variable declaration." />
+			<message key="var.avoid" value="Avoid using &quot;var&quot; to declare variable" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MapBuilderCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible." />

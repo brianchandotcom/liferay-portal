@@ -10,7 +10,7 @@
 <%
 String src = HtmlUtil.escapeAttribute((String)request.getAttribute("liferay-ui:search-container-column-icon:src"));
 boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search-container-column-icon:toggleRowChecker"));
-String uuid = String.valueOf(UUID.randomUUID());
+String uuid = StringUtil.randomId();
 %>
 
 <c:if test="<%= Validator.isNotNull(src) %>">

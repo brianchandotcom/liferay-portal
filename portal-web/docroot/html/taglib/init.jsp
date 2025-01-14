@@ -14,8 +14,6 @@ page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %><%@
 page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
 
-<%@ page import="java.util.UUID" %>
-
 <portlet:defineObjects />
 
 <%

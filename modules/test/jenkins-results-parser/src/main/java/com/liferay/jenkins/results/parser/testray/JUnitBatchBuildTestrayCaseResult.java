@@ -91,18 +91,18 @@ public class JUnitBatchBuildTestrayCaseResult
 			return "Failed prior to running test";
 		}
 
-		if (_isTestClassResultsSkipped()) {
-			return "Failed prior to running test";
-		}
-
-		if (!_isTestClassResultsFailing()) {
+		if (!_isTestClassResultsFailing() && !_isTestClassResultsSkipped()) {
 			return null;
 		}
 
 		Map<String, String> errorMessages = new HashMap<>();
 
+		List<String> skippedTests = new ArrayList<>();
+
 		for (TestResult testResult : getTestResults()) {
-			if ((testResult == null) || !testResult.isFailing()) {
+			if ((testResult == null) ||
+				(!testResult.isFailing() && !testResult.isSkipped())) {
+
 				continue;
 			}
 
@@ -129,21 +129,38 @@ public class JUnitBatchBuildTestrayCaseResult
 
 			String testName = testResult.getTestName();
 
+			if (testResult.isSkipped()) {
+				skippedTests.add(testName);
+			}
+
 			errorMessages.put(
 				testName,
 				JenkinsResultsParserUtil.combine(testName, ": ", errorMessage));
 		}
 
+		StringBuilder sb = new StringBuilder();
+
+		if (!skippedTests.isEmpty()) {
+			sb.append(skippedTests.size());
+			sb.append(" Skipped tests: ");
+			sb.append(JenkinsResultsParserUtil.join(", ", skippedTests));
+		}
+
 		if (errorMessages.size() > 1) {
-			return JenkinsResultsParserUtil.combine(
-				String.valueOf(errorMessages.size()), " Failed tests: ",
-				JenkinsResultsParserUtil.join(
-					", ", new ArrayList<>(errorMessages.keySet())));
+			sb.append(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(errorMessages.size()), " Failed tests: ",
+					JenkinsResultsParserUtil.join(
+						", ", new ArrayList<>(errorMessages.keySet()))));
 		}
 		else if (errorMessages.size() == 1) {
 			List<String> values = new ArrayList<>(errorMessages.values());
 
-			return values.get(0);
+			sb.append(values.get(0));
+		}
+
+		if (sb.length() != 0) {
+			return sb.toString();
 		}
 
 		return "Failed for unknown reason";

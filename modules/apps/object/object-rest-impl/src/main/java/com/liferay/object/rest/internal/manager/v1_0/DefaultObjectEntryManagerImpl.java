@@ -1370,13 +1370,17 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		if (objectField.isLocalized()) {
-			Map<String, Serializable> localizedValues =
-				(Map<String, Serializable>)objectEntry.getPropertyValue(
-					objectField.getI18nObjectFieldName());
+			Object propertyValue = objectEntry.getPropertyValue(
+				objectField.getI18nObjectFieldName());
 
-			if (localizedValues == null) {
+			if ((propertyValue == null) ||
+				!(propertyValue instanceof Map<?, ?>)) {
+
 				return;
 			}
+
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)propertyValue;
 
 			for (Map.Entry<String, Serializable> entry :
 					localizedValues.entrySet()) {

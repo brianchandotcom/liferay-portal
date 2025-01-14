@@ -1251,15 +1251,17 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public void updateCommercePriceListCurrencies(String commerceCurrencyCode)
+	public void updateCommercePriceListCurrencies(
+			long companyId, String oldCommerceCurrencyCode,
+			String newCommerceCurrencyCode)
 		throws PortalException {
 
 		List<CommercePriceList> commercePriceLists =
-			commercePriceListPersistence.findByCommerceCurrencyCode(
-				commerceCurrencyCode);
+			commercePriceListPersistence.findByC_C(
+				companyId, oldCommerceCurrencyCode);
 
 		for (CommercePriceList commercePriceList : commercePriceLists) {
-			commercePriceList.setCommerceCurrencyCode(null);
+			commercePriceList.setCommerceCurrencyCode(newCommerceCurrencyCode);
 
 			commercePriceList = commercePriceListPersistence.update(
 				commercePriceList);

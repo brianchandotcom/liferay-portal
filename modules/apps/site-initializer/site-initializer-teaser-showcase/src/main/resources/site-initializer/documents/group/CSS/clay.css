@@ -14,7 +14,7 @@
  *
  * SPDX-License-Identifier: LicenseRef-MIT-Bootstrap
  */
-@import url("https://fonts.googleapis.com/css?family=Poppins");
+
 body {
   --brand-color-1: var(--color-brand-primary);
   --brand-color-2: var(--color-neutral-6);
@@ -464,7 +464,7 @@ mark.clay-dark,
   font-size: var(--blockquote-small-font-size, 0.875rem);
 }
 .blockquote-footer::before {
-  content: "— ";
+  content: "— ";
 }
 
 b {
@@ -8399,10 +8399,8 @@ div.form-control-sm {
   display: flex;
   flex-wrap: wrap;
   height: auto;
-  padding-bottom: calc(( 			var(--form-input-height) - (2 * var(--form-input-border-width)) - map-get( 					$form-control-label-size, 					height 				) - (map-get($form-control-label-size, margin-bottom)) - (map-get($form-control-label-size, margin-top)) 		) / 2);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-top: calc(( 			var(--form-input-height) - (2 * var(--form-input-border-width)) - map-get( 					$form-control-label-size, 					height 				) - (map-get($form-control-label-size, margin-bottom)) - (map-get($form-control-label-size, margin-top)) 		) / 2);
 }
 .form-control-tag-group .autofit-row {
   align-items: center;
@@ -35216,12 +35214,12 @@ a.text-dark:hover, a.text-dark:focus {
   text-decoration: underline !important;
 }
 .c-prefers-link-underline .btn-monospaced[href]:not(.disabled):not([role=button]):not([role=tab])::after, .c-prefers-link-underline .nav-btn-monospaced[href]:not(.disabled):not([role=button]):not([role=tab])::after, .c-prefers-link-underline .nav-link-monospaced[href]:not(.disabled):not([role=button]):not([role=tab])::after {
-  content: "   ";
+  content: "   ";
   position: absolute;
   text-decoration: underline !important;
 }
 .c-prefers-link-underline .multi-step-item.active .multi-step-icon[href]:not([role=button])::after, .c-prefers-link-underline .multi-step-item.complete .multi-step-icon[href]:not([role=button])::after, .c-prefers-link-underline .multi-step-item.error .multi-step-icon[href]:not([role=button])::after, .c-prefers-link-underline .dropdown .multi-step-icon[href]:not([role=button])::after {
-  content: "   ";
+  content: "   ";
   position: absolute;
   text-decoration: underline !important;
 }

@@ -814,14 +814,21 @@ public class UserLocalServiceTest {
 
 		String password = "password";
 
-		user = _userLocalService.updatePassword(
-			user.getUserId(), password, password, false, true);
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WITHHMACSHA1/160/1300000")) {
 
-		Assert.assertTrue(
-			user.getPassword(
-			).startsWith(
-				"{PBKDF2WITHHMACSHA1}"
-			));
+			user = _userLocalService.updatePassword(
+				user.getUserId(), password, password, false, true);
+
+			Assert.assertTrue(
+				user.getPassword(
+				).startsWith(
+					"{PBKDF2WITHHMACSHA1}"
+				));
+		}
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(

@@ -176,7 +176,10 @@ const SecurityVulnerabilitiesList = () => {
 
 							<SVPanel text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center" />
 
-							<SVPanel text="for-the-latest-support-announcements-on-critical-security-vulnerabilities-subscribe-here" />
+							<SVPanel
+								link="https://www.subscribepage.com/liferay"
+								text="for-the-latest-support-announcements-on-critical-security-vulnerabilities-subscribe-here"
+							/>
 						</div>
 
 						<div className="col-12 col-md-9">

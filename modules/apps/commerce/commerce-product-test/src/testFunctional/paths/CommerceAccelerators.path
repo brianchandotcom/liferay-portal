@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_ORDER_NAME</td>
-	<td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
+	<td>xpath=(//td[contains(text(),'${accountName}')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_MANAGEMENT_ADDRESS_TYPE</td>
-	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_addressType}')]</td>
+	<td>//td[contains(text(),'${key_addressType}')]</td>
 	<td></td>
 </tr>
 <tr>

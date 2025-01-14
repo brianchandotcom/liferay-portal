@@ -77,17 +77,17 @@
 </tr>
 <tr>
 	<td>DND_TD_WITH_TEXT</td>
-	<td>//div[@class='dnd-td cell-${cell_name}' and contains(.,'${key_text}')]</td>
+	<td>//td[@class='cell-${cell_name}' and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DND_TR_WITH_TEXT</td>
-	<td>//div[contains(@class,'dnd-tr')]/div[contains(text(),'${text}')]</td>
+	<td>//tr/div[contains(text(),'${text}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DND_TR_BUTTON</td>
-	<td>//div[contains(@class,'dnd-tr')]//button[contains(.,'${value}')]</td>
+	<td>//tr//button[contains(.,'${value}')]</td>
 	<td></td>
 </tr>
 <tr>

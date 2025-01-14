@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>OBJECTS_TABLE</td>
-	<td>//div[(@class='dnd-tbody') and contains(., '${value}') and contains(., 'Approved')]</td>
+	<td>//tbody[contains(., '${value}') and contains(., 'Approved')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -362,7 +362,7 @@
 </tr>
 <tr>
 	<td>DND_TABLE_ELEMENT</td>
-	<td>//div[contains(@class, 'dnd-td')]//*[text()='${key_status}']</td>
+	<td>//td//*[text()='${key_status}']</td>
 	<td></td>
 </tr>
 <tr>

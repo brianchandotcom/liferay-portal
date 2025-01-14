@@ -398,8 +398,8 @@ definition {
 		task ("When the admin creates 1 quantity of the shipment in a supplier order with 'Simple Product' and edits the tracking URL for the shipment") {
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//div[contains(@class,'dnd-td')][2]");
-			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//div[contains(@class,'dnd-td')][2]");
+			var customerOrderId = selenium.getText("//td[contains(string(), '$ 64.00')]//..//td[2]");
+			var supplierOrderId = selenium.getText("//td[contains(string(), '$ 25.00')]//..//td[2]");
 
 			echo("customerOrderId:${customerOrderId}");
 
@@ -530,7 +530,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var supplierOrderId = selenium.getText("//div[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//div[contains(@class,'dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//td[contains(string(), '$ 25.00')]//..//td[1]");
 		}
 
 		task ("And the admin navigates into a supplier order") {
@@ -1554,9 +1554,9 @@ definition {
 
 			CommerceSKUs.generateAllSkuCombinations();
 
-			WaitForElementPresent(locator1 = "//div[@class='dnd-tbody']//div[(@class='dnd-tr')]//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
+			WaitForElementPresent(locator1 = "//tbody//tr//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
 
-			var skuCombinationName = selenium.getText("//div[@class='dnd-tbody']//div[(@class='dnd-tr')]//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
+			var skuCombinationName = selenium.getText("//tbody//tr//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
 
 			CommerceNavigator.gotoEntry(entryName = ${skuCombinationName});
 
@@ -2389,8 +2389,8 @@ definition {
 		task ("And the admin goes inside a supplier order (e.g. the one containing the product from the Master catalog)") {
 			CommerceOrders.openOrdersAdmin();
 
-			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//*[contains(@class,'dnd-td')][2]");
-			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//*[contains(@class,'dnd-td')][2]");
+			var supplierOrderId = selenium.getText("//td[contains(string(), '$ 25.00')]//..//td[2]");
+			var customerOrderId = selenium.getText("//td[contains(string(), '$ 64.00')]//..//td[2]");
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
 		}
@@ -3433,9 +3433,9 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 64.00')]//..//*[contains(@class,'dnd-td')][2]");
-			var supplierOrderId1 = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 24.00')]//..//*[contains(@class,'dnd-td')][2]");
-			var supplierOrderId2 = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 25.00')]//..//*[contains(@class,'dnd-td')][2]");
+			var customerOrderId = selenium.getText("//td[contains(string(), '$ 64.00')]//..//td[2]");
+			var supplierOrderId1 = selenium.getText("//td[contains(string(), '$ 24.00')]//..//td[2]");
+			var supplierOrderId2 = selenium.getText("//td[contains(string(), '$ 25.00')]//..//td[2]");
 		}
 
 		task ("When the admin navigates to Commerce -> Inventory -> SKU (e.g. the one relating to the product from the Minium catalog) -> On Order tab") {

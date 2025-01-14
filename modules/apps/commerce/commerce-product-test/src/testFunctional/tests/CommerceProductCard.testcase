@@ -1885,7 +1885,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			var basePrice = TestUtils.getElementTextContent(element = "//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-td')][3]");
+			var basePrice = TestUtils.getElementTextContent(element = "//tr//td[3]");
 		}
 
 		task ("When the buyer logs in and views the product card") {
@@ -1941,7 +1941,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			var promoPrice = TestUtils.getElementTextContent(element = "//div[contains(@class,'dnd-td') and contains(.,'MIN93018')]/following-sibling::div[3]");
+			var promoPrice = TestUtils.getElementTextContent(element = "//td[contains(.,'MIN93018')]/following-sibling::div[3]");
 
 			CommerceProducts.openProductsAdmin();
 
@@ -1949,7 +1949,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			var basePrice = TestUtils.getElementTextContent(element = "//div[contains(@class,'dnd-tr')]//div[contains(@class,'dnd-td')][3]");
+			var basePrice = TestUtils.getElementTextContent(element = "//tr//td[3]");
 		}
 
 		task ("When the buyer logs in and views the product card") {

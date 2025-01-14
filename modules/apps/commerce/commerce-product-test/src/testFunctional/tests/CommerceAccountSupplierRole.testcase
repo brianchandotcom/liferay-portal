@@ -146,8 +146,8 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			var customerOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 44.00')]//..//*[contains(@class,'dnd-td')][1]");
-			var supplierOrderId = selenium.getText("//*[contains(@class,'dnd-td') and contains(string(), '$ 5.00')]//..//*[contains(@class,'dnd-td')][1]");
+			var customerOrderId = selenium.getText("//td[contains(string(), '$ 44.00')]//..//td[1]");
+			var supplierOrderId = selenium.getText("//td[contains(string(), '$ 5.00')]//..//td[1]");
 		}
 
 		task ("When the supplier user edits the quantity of 'Simple Product' in the supplier order") {

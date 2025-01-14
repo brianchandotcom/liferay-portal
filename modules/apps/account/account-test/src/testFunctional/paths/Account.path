@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_MANAGEMENT</td>
-	<td>//div[contains(@class, 'dnd-tbody')]</td>
+	<td>tbody</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,12 +121,12 @@
 
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS</td>
-	<td>//div[contains(@id,'${key_termType}')]//div[contains(@class,'dnd-tr')]["${key_row}"]//div[contains(.,'${key_entryDetails}')]</td>
+	<td>//div[contains(@id,'${key_termType}')]//tr["${key_row}"]//div[contains(.,'${key_entryDetails}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN</td>
-	<td>//div[contains(@id,'${key_termType}')]//div[contains(@class,'dnd-tr')]//div[contains(.,'${key_entryDetails}')]/..//button</td>
+	<td>//div[contains(@id,'${key_termType}')]//tr//div[contains(.,'${key_entryDetails}')]/..//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,17 +219,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_SETTINGS_TABLE_ITEM</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_entryDetail}')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_entryDetail}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_SETTINGS_TABLE_ACTION_BUTTON</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_currentDefault}')]//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_currentDefault}')]//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_SETTING_ACTIVE_STATUS</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_currentDefault}')]//following-sibling::div[contains(.,'${key_activeStatus}')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_currentDefault}')]//following-sibling::div[contains(.,'${key_activeStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

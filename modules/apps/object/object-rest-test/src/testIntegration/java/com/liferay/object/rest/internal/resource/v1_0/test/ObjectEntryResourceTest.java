@@ -9281,6 +9281,24 @@ public class ObjectEntryResourceTest {
 			fileEntry3.getExternalReferenceCode(),
 			fileEntryJSONObject.getString("externalReferenceCode"));
 
+		// Invalid format
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The value is invalid for object field \"" +
+					"localizedAttachment_i18n\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"localizedAttachment_i18n", RandomTestUtil.randomLong()
+				).toString(),
+				endpoint, Http.Method.PUT
+			).toString(),
+			JSONCompareMode.STRICT);
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 

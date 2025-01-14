@@ -43,6 +43,7 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
@@ -909,7 +910,26 @@ public class ObjectFieldLocalServiceImpl
 				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			if (localized) {
-				dbTableName = objectDefinition.getLocalizationDBTableName();
+				DynamicObjectDefinitionLocalizationTable
+					dynamicObjectDefinitionLocalizationTable =
+						DynamicObjectDefinitionLocalizationTableFactory.create(
+							objectDefinition, this);
+
+				dbTableName =
+					dynamicObjectDefinitionLocalizationTable.getTableName();
+
+				List<ObjectField> objectFields =
+					dynamicObjectDefinitionLocalizationTable.getObjectFields();
+
+				if (objectFields.size() == 1) {
+					runSQL("DROP_TABLE_IF_EXISTS(" + dbTableName + ")");
+
+					runSQL(
+						dynamicObjectDefinitionLocalizationTable.
+							getCreateTableSQL());
+
+					return objectField;
+				}
 			}
 
 			_addObjectFieldColumn(dbTableName, objectField);

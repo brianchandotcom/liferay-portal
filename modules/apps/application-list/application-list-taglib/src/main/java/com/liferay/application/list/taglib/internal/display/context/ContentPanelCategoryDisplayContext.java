@@ -101,6 +101,7 @@ public class ContentPanelCategoryDisplayContext {
 
 			dropdownItems.add(
 				dropdownItem -> {
+					dropdownItem.setDeprecated(true);
 					dropdownItem.setHref(layoutItemPortletURL);
 					dropdownItem.setLabel(
 						LanguageUtil.get(

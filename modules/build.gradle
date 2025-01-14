@@ -785,9 +785,9 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
 					}
 				}
 
@@ -797,9 +797,9 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(configurations.jspC.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(jspCClasspath.files.findAll { it.name.endsWith(".jar") })
 
-						jspCClasspath = files(configurations.jspC.files - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
+						jspCClasspath = files(jspCClasspath - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
 					}
 				}
 			}
@@ -811,9 +811,9 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(configurations.compileOnly.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.compileOnly.files - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
+						classpath = files(classpath.files - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
 					}
 				}
 
@@ -823,9 +823,9 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(configurations.testIntegrationImplementation.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.testIntegrationImplementation - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
 					}
 				}
 
@@ -835,9 +835,9 @@ gradle.beforeProject {
 					}
 
 					doFirst {
-						FileCollection jarFiles = files(configurations.testImplementation.files.findAll { it.name.endsWith(".jar") })
+						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(configurations.testImplementation - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jarFiles, it)
 					}
 				}
 

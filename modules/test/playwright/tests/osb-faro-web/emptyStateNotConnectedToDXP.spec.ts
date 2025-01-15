@@ -10,14 +10,20 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {clickOnActionButton} from './utils/ab-test';
-import {createChannel} from './utils/channel';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
+import { faroConfig } from './faro.config';
+import { clickOnLink } from './utils/actions';
+import {switchChannel} from './utils/channel';
 import {
 	ACPage,
+	navigateTo,
+	navigateToACPageViaURL,
 	navigateToACSettingsViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
+import {addBreakdownByIndividualAttribute} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -29,30 +35,16 @@ export const test = mergeTests(
 	loginTest()
 );
 
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
-
-let channel;
 let project;
 
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
+const randomString = getRandomString();
 
-	channel = result.channel;
-	project = result.project;
+test.beforeEach(async ({apiHelpers}) => {
+	project = await apiHelpers.jsonWebServicesOSBFaro.createProject('My Project ' + randomString)
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
+	await apiHelpers.jsonWebServicesOSBFaro.deleteProject(project.groupId);
 });
 
 test(
@@ -63,10 +55,6 @@ test(
 	},
 
 	async ({page}) => {
-		await test.step('Go to Analytics Cloud', async () => {
-			await navigateToACWorkspace({page});
-		});
-
 		await test.step('Go to Data Sources, check the empty page status message', async () => {
 			await navigateToACSettingsViaURL({
 				acPage: ACPage.dataSourcePage,
@@ -85,7 +73,8 @@ test(
 				page.getByText('Access our documentation to learn more.')
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -115,7 +104,8 @@ test(
 				page.getByText('Access our documentation to learn more.')
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -155,24 +145,45 @@ test(
 				projectID: project.groupId,
 			});
 
-			clickOnActionButton({name: 'canonicalUrl', page});
+			//await clickOnLink({baseUrl:faroConfig.environment.baseUrl, name: 'canonicalUrl', page});
+
+			const tableBodyElement = await page.locator('table tbody');
+
+			await expect(
+				tableBodyElement
+			).toBeVisible();
+
+			const elements = await tableBodyElement.locator('td .table-title a').all();
+
+			const href = await elements[0].getAttribute('href');
+
+			await page.goto(`${faroConfig.environment.baseUrl}${href}`);
 
 			await expect(
 				page.getByText(
-					'No Sample Data Found,You can come back later and check if there is any data received from your events.,Learn more about event tracking.'
+					'No Sample Data Found'
+				)
+			).toBeVisible();
+			await expect(
+				page.getByText(
+					'You can come back later and check if there is any data received from your events.Learn more about event tracking'
 				)
 			).toBeVisible();
 			await expect(
 				page.getByText('Learn more about event tracking.')
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Learn more about event tracking.',
 				page,
 			});
 
 			await expect(page).toHaveTitle('Definitions - Liferay Learn');
-			await expect(page.getByText('Event Attributes')).toBeVisible();
+			
+			const header = await page.locator('h2#event-attributes');
+
+			await expect(header.getByText('Event Attributes')).toBeVisible();
 		});
 
 		await test.step('Go to Definitions, then go to Events, select the Custom Events tab and check the empty page status message then check the if the hyperlink is taking the user to the documentation', async () => {
@@ -192,7 +203,8 @@ test(
 				page.getByText('Learn how to add custom events on your site.')
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Learn how to add custom events on your site.',
 				page,
 			});
@@ -219,7 +231,8 @@ test(
 				)
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Access our documentation to learn how to manage custom events.',
 				page,
 			});
@@ -262,7 +275,8 @@ test(
 				page.getByText('Access our documentation to learn more.')
 			).toBeVisible();
 
-			await clickOnActionButton({
+			await clickOnLink({
+				baseUrl:faroConfig.environment.baseUrl, 
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -270,9 +284,11 @@ test(
 			await expect(page).toHaveTitle(
 				'Data Control and Privacy - Liferay Learn'
 			);
+
+			const element = await page.locator('a#data-control-and-privacy');
+
 			await expect(
-				page
-					.locator('a#data-control-and-privacy')
+				element
 					.getByText('Data Control and Privacy')
 			).toBeVisible();
 		});

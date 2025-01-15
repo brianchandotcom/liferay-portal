@@ -63,7 +63,7 @@ public class SamlLoginActionTest {
 	public void testPageTitleIsSameWhenRedirectMessageIsDisabled()
 		throws Exception {
 
-		SamlLoginAction samlLoginAction = _setupSamlLoginAction();
+		SamlLoginAction samlLoginAction = _mockSamlLoginAction();
 
 		String companyName = RandomTestUtil.randomString();
 		String htmlTitle = RandomTestUtil.randomString();
@@ -168,7 +168,7 @@ public class SamlLoginActionTest {
 		return mockHttpServletRequest;
 	}
 
-	private Portal _setupPortal() throws Exception {
+	private Portal _mockPortal() throws Exception {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
@@ -180,12 +180,12 @@ public class SamlLoginActionTest {
 		return portal;
 	}
 
-	private SamlLoginAction _setupSamlLoginAction() throws Exception {
+	private SamlLoginAction _mockSamlLoginAction() throws Exception {
 		SamlLoginAction samlLoginAction = new SamlLoginAction();
 
 		ReflectionTestUtil.setFieldValue(
 			samlLoginAction, "_samlProviderConfigurationHelper",
-			_setupSamlProviderConfigurationHelper());
+			_mockSamlProviderConfigurationHelper());
 
 		Props props = Mockito.mock(Props.class);
 
@@ -198,11 +198,11 @@ public class SamlLoginActionTest {
 		ReflectionTestUtil.setFieldValue(samlLoginAction, "_props", props);
 
 		ReflectionTestUtil.setFieldValue(
-			samlLoginAction, "_portal", _setupPortal());
+			samlLoginAction, "_portal", _mockPortal());
 
 		ReflectionTestUtil.setFieldValue(
 			samlLoginAction, "_samlSpIdpConnectionLocalService",
-			_setupSamlSpIdpConnectionLocalService());
+			_mockSamlSpIdpConnectionLocalService());
 
 		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
 
@@ -223,7 +223,7 @@ public class SamlLoginActionTest {
 	}
 
 	private SamlProviderConfigurationHelper
-		_setupSamlProviderConfigurationHelper() {
+		_mockSamlProviderConfigurationHelper() {
 
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper =
 			Mockito.mock(SamlProviderConfigurationHelper.class);
@@ -244,7 +244,7 @@ public class SamlLoginActionTest {
 	}
 
 	private SamlSpIdpConnectionLocalService
-		_setupSamlSpIdpConnectionLocalService() {
+		_mockSamlSpIdpConnectionLocalService() {
 
 		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
 			Mockito.mock(SamlSpIdpConnectionLocalService.class);

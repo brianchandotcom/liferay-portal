@@ -116,6 +116,7 @@ export class JSONWebServicesOSBFaroApiHelper {
 				method: 'DELETE',
 			}
 		).then((response) => {
-			return response.json();});
+			return response.json();
+		});
 	}
 }

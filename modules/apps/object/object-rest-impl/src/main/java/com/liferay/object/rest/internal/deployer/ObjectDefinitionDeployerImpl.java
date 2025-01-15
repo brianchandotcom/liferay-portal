@@ -430,8 +430,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 							},
 							HashMapDictionaryBuilder.<String, Object>put(
-								"api.version", "v1.0"
-							).put(
 								"batch.engine.entity.class.name",
 								ObjectEntry.class.getName() + "#" +
 									objectDefinition.getName()
@@ -455,12 +453,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"batch.planner.import.enabled", "true"
 							).put(
 								"companyId", objectDefinition.getCompanyId()
-							).put(
-								"entity.class.name",
-								_getEntityClassName(objectDefinition)
-							).put(
-								"osgi.jaxrs.application.select",
-								"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
 							).build()),
 						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,

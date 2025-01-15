@@ -77,7 +77,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		_bundleContext = bundleContext;
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, null, "(batch.engine.task.item.delegate=true)",
+			bundleContext, null, "(osgi.jaxrs.resource=true)",
 			(serviceReference, emitter) -> {
 				try {
 					if (!(_bundleContext.getService(serviceReference) instanceof
@@ -86,13 +86,29 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 						return;
 					}
 
+					String apiVersion = (String)serviceReference.getProperty(
+						"api.version");
+					String entityClassName =
+						(String)serviceReference.getProperty(
+							"entity.class.name");
+					Object companyIdObject = serviceReference.getProperty(
+						"companyId");
+
+					if (companyIdObject instanceof List) {
+						for (Object object : (List<?>)companyIdObject) {
+							emitter.emit(
+								_encodeKey(
+									entityClassName, GetterUtil.getLong(object),
+									apiVersion));
+						}
+
+						return;
+					}
+
 					emitter.emit(
 						_encodeKey(
-							(String)serviceReference.getProperty(
-								"entity.class.name"),
-							(Long)serviceReference.getProperty("companyId"),
-							(String)serviceReference.getProperty(
-								"api.version")));
+							entityClassName,
+							GetterUtil.getLong(companyIdObject), apiVersion));
 				}
 				finally {
 					bundleContext.ungetService(serviceReference);

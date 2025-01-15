@@ -1362,6 +1362,18 @@ components:
                     description:
                         The user who created the user group.
                     readOnly: true
+                dateCreated:
+                    description:
+                        The user group's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The user group's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
                 description:
                     type: string
                 externalReferenceCode:
@@ -1433,7 +1445,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.71'."
+        'com.liferay.headless.admin.user.client', and version '4.0.73'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

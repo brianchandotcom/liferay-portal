@@ -178,6 +178,13 @@ public class ObjectEntryWrapper
 	}
 
 	@Override
+	public String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.buildTreePath();
+	}
+
+	@Override
 	public ObjectEntry cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
 	}

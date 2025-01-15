@@ -28,6 +28,37 @@ public class ObjectEntryFolderServiceWrapper
 		_objectEntryFolderService = objectEntryFolderService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder addObjectEntryFolder(
+			String externalReferenceCode, long groupId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.addObjectEntryFolder(
+			externalReferenceCode, groupId, labelMap, name,
+			parentObjectEntryFolderId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder deleteObjectEntryFolder(
+			long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.deleteObjectEntryFolder(
+			objectEntryFolderId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder getObjectEntryFolder(
+			long objectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.getObjectEntryFolder(
+			objectEntryFolderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -36,6 +67,17 @@ public class ObjectEntryFolderServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectEntryFolderService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder updateObjectEntryFolder(
+			long objectEntryFolderId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.updateObjectEntryFolder(
+			objectEntryFolderId, labelMap, name, parentObjectEntryFolderId);
 	}
 
 	@Override

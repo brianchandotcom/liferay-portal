@@ -77,7 +77,7 @@ create table ObjectEntry (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	objectEntryFolderId LONG,
-	treePath VARCHAR(75) null,
+	treePath STRING null,
 	rootObjectEntryId LONG,
 	lastPublishDate DATE null,
 	status INTEGER,
@@ -100,7 +100,7 @@ create table ObjectEntryFolder (
 	label STRING null,
 	name VARCHAR(75) null,
 	parentObjectEntryFolderId LONG,
-	treePath VARCHAR(75) null
+	treePath STRING null
 );
 
 create table ObjectField (

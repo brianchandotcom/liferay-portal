@@ -49,6 +49,10 @@ public interface ObjectEntry
 
 		};
 
+	@Override
+	public String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getModelClassName();
 
 	public long getNonzeroGroupId()

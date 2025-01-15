@@ -179,7 +179,7 @@ public class UserLocalServiceTest {
 			SafeCloseable safeCloseable2 =
 				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
-			User user = _createUser(true, "abc");
+			User user = _addUser(true, "abc");
 
 			Assert.assertFalse(user.isPasswordReset());
 			Assert.assertEquals(1, user.getLdapServerId());
@@ -201,9 +201,9 @@ public class UserLocalServiceTest {
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
 				"Password for user 0 must be at least 6 characters",
-				() -> _createUser(true, "abc"));
+				() -> _addUser(true, "abc"));
 
-			_assertUserHasPasswordPolicy(true, _createUser(true, "Liferay123"));
+			_assertUserHasPasswordPolicy(true, _addUser(true, "Liferay123"));
 		}
 	}
 
@@ -255,10 +255,10 @@ public class UserLocalServiceTest {
 			AssertUtils.assertFailure(
 				UserPasswordException.class,
 				"Password for user 0 must be at least 6 characters",
-				() -> _createUser(false, "abc"));
+				() -> _addUser(false, "abc"));
 
 			_assertUserHasPasswordPolicy(
-				false, _createUser(false, "Liferay123"));
+				false, _addUser(false, "Liferay123"));
 		}
 	}
 
@@ -399,7 +399,7 @@ public class UserLocalServiceTest {
 			SafeCloseable safeCloseable2 =
 				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
-			User user = _createUser(true, "Liferay123");
+			User user = _addUser(true, "Liferay123");
 
 			_userLocalService.checkPasswordExpired(user);
 
@@ -421,7 +421,7 @@ public class UserLocalServiceTest {
 			SafeCloseable safeCloseable2 =
 				_updateLDAPAuthConfigurationWithSafeCloseable(false)) {
 
-			User user = _createUser(true, "Liferay123");
+			User user = _addUser(true, "Liferay123");
 
 			_userLocalService.checkPasswordExpired(user);
 
@@ -1479,7 +1479,7 @@ public class UserLocalServiceTest {
 		Assert.assertNotNull(user.getPasswordPolicy());
 	}
 
-	private User _createUser(boolean ldapUser, String password)
+	private User _addUser(boolean ldapUser, String password)
 		throws Exception {
 
 		ServiceContext serviceContext =

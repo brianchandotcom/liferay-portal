@@ -558,7 +558,7 @@ public class UIItemsBuilder {
 			).setActionName(
 				"/document_library/subscribe_file_entry"
 			).setRedirect(
-				_getRedirect()
+				_getCurrentURL()
 			).setParameter(
 				"fileEntryId", _fileEntry.getFileEntryId()
 			).buildString()
@@ -583,7 +583,7 @@ public class UIItemsBuilder {
 				).setActionName(
 					"/document_library/unsubscribe_file_entry"
 				).setRedirect(
-					_getRedirect()
+					_getCurrentURL()
 				).setParameter(
 					"fileEntryId", _fileEntry.getFileEntryId()
 				).buildString()

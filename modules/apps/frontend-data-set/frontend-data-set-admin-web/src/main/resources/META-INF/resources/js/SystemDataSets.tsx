@@ -10,7 +10,7 @@ import '../css/DataSets.scss';
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 
 import {
 	API_URL,
@@ -127,10 +127,12 @@ const SelectSystemDataSetModalContent = ({
 };
 
 const SystemDataSets = ({
+	editDataSetURL,
 	importSystemDataSetURL,
 	namespace,
 	systemDataSets,
 }: {
+	editDataSetURL: string;
 	importSystemDataSetURL: string;
 	namespace: string;
 	systemDataSets: Array<ISystemDataSet>;
@@ -145,6 +147,18 @@ const SystemDataSets = ({
 			.join(',');
 
 		return `${API_URL.DATA_SETS}?filter=externalReferenceCode in (${systemDataSetNames})`;
+	};
+
+	const getEditURL = (itemData: IDataSet) => {
+		const url = new URL(editDataSetURL);
+
+		url.searchParams.set(
+			`${namespace}dataSetERC`,
+			itemData.externalReferenceCode
+		);
+		url.searchParams.set(`${namespace}dataSetLabel`, itemData.label);
+
+		return url;
 	};
 
 	const onDeleteClick = ({
@@ -223,6 +237,8 @@ const SystemDataSets = ({
 			schema: {
 				fields: [
 					{
+						actionId: 'edit',
+						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
 						sortable: true,
@@ -273,6 +289,17 @@ const SystemDataSets = ({
 				}}
 				id="CustomizedSystemDataSets"
 				itemsActions={[
+					{
+						data: {
+							id: 'edit',
+							permissionKey: 'update',
+						},
+						icon: 'pencil',
+						label: Liferay.Language.get('edit'),
+						onClick: ({itemData}: {itemData: IDataSet}) => {
+							navigate(getEditURL(itemData));
+						},
+					},
 					{
 						data: {
 							permissionKey: 'delete',

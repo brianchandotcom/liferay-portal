@@ -553,10 +553,6 @@ const CustomDataSets = ({
 		return url;
 	};
 
-	const onEditClick = ({itemData}: {itemData: IDataSet}) => {
-		navigate(getEditURL(itemData));
-	};
-
 	const onDeleteClick = ({
 		itemData,
 		loadData,
@@ -689,7 +685,9 @@ const CustomDataSets = ({
 						},
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
-						onClick: onEditClick,
+						onClick: ({itemData}: {itemData: IDataSet}) => {
+							navigate(getEditURL(itemData));
+						},
 					},
 					{
 						data: {

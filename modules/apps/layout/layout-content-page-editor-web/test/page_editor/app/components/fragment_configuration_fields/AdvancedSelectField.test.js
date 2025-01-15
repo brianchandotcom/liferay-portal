@@ -11,6 +11,11 @@ import React from 'react';
 import {AdvancedSelectField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment_configuration_fields/AdvancedSelectField';
 import StoreMother from '../../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
+jest.mock('@liferay/layout-js-components-web', () => ({
+	...jest.requireActual('@liferay/layout-js-components-web'),
+	isValidStyleValue: jest.fn(() => true),
+}));
+
 const FIELD = {
 	cssProperty: 'font-size',
 	defaultValue: '',
@@ -189,8 +194,7 @@ describe('AdvancedSelectField', () => {
 		});
 		const input = screen.getByLabelText('font-size');
 
-		await userEvent.clear(input);
-		await userEvent.type(input, 'initial');
+		fireEvent.change(input, {target: {value: 'initial'}});
 		fireEvent.blur(input);
 
 		expect(onValueSelect).toBeCalledWith(FIELD.name, 'initial');
@@ -207,7 +211,7 @@ describe('AdvancedSelectField', () => {
 
 		await userEvent.clear(input);
 		await userEvent.type(input, 'initial');
-		fireEvent.keyDown(input, {key: 'Enter'});
+		await userEvent.type(input, '{Enter}');
 
 		expect(onValueSelect).toBeCalledWith(FIELD.name, 'initial');
 		expect(input).toHaveValue('initial');

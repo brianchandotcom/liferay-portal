@@ -1290,11 +1290,11 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			join = CustomSQLUtil.get(
 				JOIN_BY_NO_ACCOUNT_ENTRIES_AND_NO_ORGANIZATIONS);
 		}
-		else if (key.equals("noOrganizations")) {
-			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
-		}
 		else if (key.equals("noLDAPUsers")) {
 			join = "WHERE User_.ldapServerId = -1";
+		}
+		else if (key.equals("noOrganizations")) {
+			join = CustomSQLUtil.get(JOIN_BY_NO_ORGANIZATIONS);
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);

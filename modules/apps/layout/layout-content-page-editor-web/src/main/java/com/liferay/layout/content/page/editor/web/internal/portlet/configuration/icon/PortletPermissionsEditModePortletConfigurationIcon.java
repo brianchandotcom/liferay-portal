@@ -37,8 +37,7 @@ public class PortletPermissionsEditModePortletConfigurationIcon
 
 	@Override
 	public int getPortletConfigurationIconGroup() {
-		return EditModePortletConfigurationIcon.
-			PORTLET_CONFIGURATION_ICON_GROUP_CONFIGURATION;
+		return PORTLET_CONFIGURATION_ICON_GROUP_CONFIGURATION;
 	}
 
 	@Override

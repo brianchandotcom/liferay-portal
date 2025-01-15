@@ -69,10 +69,9 @@ public class MetaTagsTagTest {
 	public void testMetaTagsTagInternalServerErrorResponseStatus()
 		throws Exception {
 
-		String htmlDescription = RandomTestUtil.randomString();
-
 		_assertMetaTagsTagResponseStatus(
-			htmlDescription, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			RandomTestUtil.randomString(),
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}
 
 	@Test
@@ -93,10 +92,8 @@ public class MetaTagsTagTest {
 
 	@Test
 	public void testMetaTagsTagNotFoundResponseStatus() throws Exception {
-		String htmlDescription = RandomTestUtil.randomString();
-
 		_assertMetaTagsTagResponseStatus(
-			htmlDescription, HttpServletResponse.SC_NOT_FOUND);
+			RandomTestUtil.randomString(), HttpServletResponse.SC_NOT_FOUND);
 	}
 
 	@Test
@@ -117,54 +114,45 @@ public class MetaTagsTagTest {
 	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguage()
 		throws Exception {
 
-		String layoutDescription = RandomTestUtil.randomString();
-
 		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), layoutDescription, null, false);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			false);
 	}
 
 	@Test
 	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguageAndPageDescription()
 		throws Exception {
 
-		String layoutDescription = RandomTestUtil.randomString();
-		String pageDescription = RandomTestUtil.randomString();
-
 		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), layoutDescription, pageDescription,
-			false);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false);
 	}
 
 	@Test
 	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguage()
 		throws Exception {
 
-		String layoutDescription = RandomTestUtil.randomString();
-
 		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), layoutDescription, null, true);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			true);
 	}
 
 	@Test
 	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguageAndPageDescription()
 		throws Exception {
 
-		String layoutDescription = RandomTestUtil.randomString();
-		String pageDescription = RandomTestUtil.randomString();
-
 		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), layoutDescription, pageDescription,
-			true);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), true);
 	}
 
 	@Test
 	public void testMetaTagsTagPageRobotsWithPageDescription()
 		throws Exception {
 
-		String pageDescription = RandomTestUtil.randomString();
-
 		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), null, pageDescription, false);
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			false);
 	}
 
 	private void _assertDescriptionMetaTagsTag(

@@ -11,12 +11,12 @@ export class SystemDataSetsPage {
 	private readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createButton: Locator;
 	readonly creationModal: {
-		readonly cancel: Locator;
+		readonly cancelButton: Locator;
 		readonly container: Locator;
 		readonly createButton: Locator;
 		readonly header: Locator;
 		readonly listItems: Locator;
-		readonly search: Locator;
+		readonly searchInput: Locator;
 	};
 	readonly page: Page;
 	readonly pageContainer: Locator;
@@ -38,7 +38,7 @@ export class SystemDataSetsPage {
 		);
 
 		this.creationModal = {
-			cancel: creationModalContainer.getByRole('button', {
+			cancelButton: creationModalContainer.getByRole('button', {
 				name: 'Cancel',
 			}),
 			container: creationModalContainer,
@@ -47,7 +47,7 @@ export class SystemDataSetsPage {
 			}),
 			header: creationModalContainer.locator('.modal-header'),
 			listItems: creationModalContainer.getByRole('listitem'),
-			search: creationModalContainer.getByPlaceholder('Search'),
+			searchInput: creationModalContainer.getByPlaceholder('Search'),
 		};
 		this.page = page;
 		this.pageContainer = systemDataSetsPageContainer;

@@ -26,7 +26,7 @@ export const test = mergeTests(
 
 test(
 	'Import a system data set to customize',
-	{tag: '@LPD-37531'},
+	{tag: ['@LPD-37531', '@LPD-40949']},
 	async ({actionsPage, page, systemDataSetsPage}) => {
 		await test.step('Navigate to system data sets page', async () => {
 			await systemDataSetsPage.goto();
@@ -50,19 +50,23 @@ test(
 				)
 			).toBeVisible();
 
-			await expect(creationModal.search).toBeVisible();
+			await expect(creationModal.searchInput).toBeVisible();
 
 			await expect(classicSampleListItem).toBeVisible();
 			await expect(customizedSampleListItem).toBeVisible();
 		});
 
 		await test.step('Search system data set items', async () => {
-			await creationModal.search.fill('Classic');
+			await creationModal.searchInput.fill('Classic');
+
+			await creationModal.searchInput.press('Enter');
 
 			await expect(classicSampleListItem).toBeVisible();
 			await expect(customizedSampleListItem).toBeHidden();
 
-			await creationModal.search.fill('aaa');
+			await creationModal.searchInput.fill('aaa');
+
+			await creationModal.searchInput.press('Enter');
 
 			await expect(classicSampleListItem).toBeHidden();
 			await expect(customizedSampleListItem).toBeHidden();
@@ -71,7 +75,9 @@ test(
 				creationModal.container.getByText('No Results Found')
 			).toBeVisible();
 
-			await creationModal.search.fill('');
+			await creationModal.searchInput.fill('');
+
+			await creationModal.searchInput.press('Enter');
 
 			await expect(classicSampleListItem).toBeVisible();
 			await expect(customizedSampleListItem).toBeVisible();
@@ -93,6 +99,15 @@ test(
 
 		await test.step('Check system data set is imported', async () => {
 			await expect(customizedSampleRow).toBeVisible();
+		});
+
+		await test.step('Check the creation modal labels the data set as created and is disabled', async () => {
+			await systemDataSetsPage.createButton.click();
+
+			await expect(customizedSampleListItem).toContainText('Created');
+			await expect(customizedSampleListItem).toHaveClass(/disabled/);
+
+			await creationModal.cancelButton.click();
 		});
 
 		await test.step('Check item actions are imported', async () => {
@@ -156,11 +171,11 @@ test(
 			await expect(form.headlessActionKeyInput).toHaveValue('update');
 
 			await form.cancelButton.click();
+
+			await page.getByTitle('Back').click();
 		});
 
 		await test.step('Delete system data set', async () => {
-			await page.getByTitle('Back').click();
-
 			await customizedSampleRow.locator('.dropdown-toggle').click();
 
 			await systemDataSetsPage.page
@@ -175,6 +190,15 @@ test(
 			await waitForAlert(systemDataSetsPage.page);
 
 			await expect(customizedSampleRow).toBeHidden();
+		});
+
+		await test.step('Check the creation modal that the data set is enabled', async () => {
+			await systemDataSetsPage.createButton.click();
+
+			await expect(classicSampleListItem).not.toContainText('Created');
+			await expect(classicSampleListItem).not.toHaveClass(/disabled/);
+
+			await creationModal.cancelButton.click();
 		});
 	}
 );

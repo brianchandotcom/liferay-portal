@@ -1081,35 +1081,21 @@ definition {
 	macro viewLanguageOrderInWebContent(localizationName4 = null, localizationName1 = null, localizationName2 = null, localizationName3 = null) {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		Depot.viewLanguageSelectionOrder(
-			localizationName1 = ${localizationName1},
-			localizationName2 = ${localizationName2},
-			localizationName3 = ${localizationName3},
-			localizationName4 = ${localizationName4});
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_TRANSLATED_1",
+			value1 = ${localizationName1});
 
-		Panel.expandPanel(panel = "Basic Information");
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_TRANSLATED_2",
+			value1 = ${localizationName2});
 
-		Click(
-			key_portletName = "JournalPortlet_description",
-			locator1 = "Button#LANGUAGE_DROPDOWN");
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_TRANSLATED_3",
+			value1 = ${localizationName3});
 
-		Depot.viewLanguageSelectionOrder(
-			localizationName1 = ${localizationName1},
-			localizationName2 = ${localizationName2},
-			localizationName3 = ${localizationName3},
-			localizationName4 = ${localizationName4});
-
-		Panel.expandPanel(panel = "Friendly URL");
-
-		Click(
-			key_portletName = "JournalPortlet_friendlyURLMenu",
-			locator1 = "Button#LANGUAGE_DROPDOWN");
-
-		Depot.viewLanguageSelectionOrder(
-			localizationName1 = ${localizationName1},
-			localizationName2 = ${localizationName2},
-			localizationName3 = ${localizationName3},
-			localizationName4 = ${localizationName4});
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_TRANSLATED_4",
+			value1 = ${localizationName4});
 	}
 
 	@summary = "Default summary"

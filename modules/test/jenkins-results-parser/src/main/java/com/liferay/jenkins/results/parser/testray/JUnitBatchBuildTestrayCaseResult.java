@@ -132,10 +132,12 @@ public class JUnitBatchBuildTestrayCaseResult
 			if (testResult.isSkipped()) {
 				skippedTests.add(testName);
 			}
-
-			errorMessages.put(
-				testName,
-				JenkinsResultsParserUtil.combine(testName, ": ", errorMessage));
+			else {
+				errorMessages.put(
+					testName,
+					JenkinsResultsParserUtil.combine(
+						testName, ": ", errorMessage));
+			}
 		}
 
 		StringBuilder sb = new StringBuilder();

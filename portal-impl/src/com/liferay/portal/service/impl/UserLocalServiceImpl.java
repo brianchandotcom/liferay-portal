@@ -5243,7 +5243,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user = userPersistence.findByPrimaryKey(userId);
 
 		if (!silentUpdate) {
-			validatePassword(user.getCompanyId(), userId, password1, password2);
+			validatePassword(userId, password1, password2);
 
 			trackPassword(user);
 		}
@@ -7091,25 +7091,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #validatePassword(long, String, String)}
-	 */
-	@Deprecated
-	protected void validate(
-			long companyId, long userId, boolean autoPassword, String password1,
-			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, String openId, String firstName,
-			String middleName, String lastName, long[] organizationIds,
-			Locale locale)
-		throws PortalException {
-
-		validate(
-			companyId, userId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, -1, openId, firstName,
-			middleName, lastName, organizationIds, locale);
-	}
-
 	protected void validate(
 			long userId, String screenName, String emailAddress, String openId,
 			String firstName, String middleName, String lastName, String smsSn,
@@ -7286,18 +7267,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if ((user != null) && (user.getUserId() != userId)) {
 			throw new DuplicateOpenIdException("{userId=" + userId + "}");
 		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #validatePassword(long, String, String)}
-	 */
-	@Deprecated
-	protected void validatePassword(
-			long companyId, long userId, String password1, String password2)
-		throws PortalException {
-
-		validatePassword(userId, password1, password2);
 	}
 
 	protected void validatePassword(

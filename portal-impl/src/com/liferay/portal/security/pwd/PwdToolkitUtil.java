@@ -22,19 +22,6 @@ public class PwdToolkitUtil {
 		return toolkit.generate(passwordPolicy);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #validate(long, String, String, PasswordPolicy)}
-	 */
-	@Deprecated
-	public static void validate(
-			long companyId, long userId, String password1, String password2,
-			PasswordPolicy passwordPolicy)
-		throws PortalException {
-
-		validate(userId, password1, password2, passwordPolicy);
-	}
-
 	public static void validate(
 			long userId, String password1, String password2,
 			PasswordPolicy passwordPolicy)

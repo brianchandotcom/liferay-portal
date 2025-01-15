@@ -27,6 +27,7 @@ import {config as commerceAccountWebConfig} from './tests/commerce/commerce-acco
 import {config as commerceCartContentWebConfig} from './tests/commerce/commerce-cart-content-web/config';
 import {config as commerceChannelWebConfig} from './tests/commerce/commerce-channel-web/config';
 import {config as commerceCheckoutWebConfig} from './tests/commerce/commerce-checkout-web/config';
+import {config as commerceCurrencyWebConfig} from './tests/commerce/commerce-currency-web/config';
 import {config as commerceDiscountContentWebConfig} from './tests/commerce/commerce-discount-content-web/config';
 import {config as commerceOrderContentWebConfig} from './tests/commerce/commerce-order-content-web/config';
 import {config as commerceOrderWebConfig} from './tests/commerce/commerce-order-web/config';
@@ -147,6 +148,7 @@ export default defineConfig({
 		commerceCartContentWebConfig,
 		commerceChannelWebConfig,
 		commerceCheckoutWebConfig,
+		commerceCurrencyWebConfig,
 		commerceDiscountContentWebConfig,
 		commerceOrderWebConfig,
 		commerceOrderContentWebConfig,

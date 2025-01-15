@@ -42,6 +42,10 @@ type TCategory = {
 	vocabulary?: string;
 };
 
+type TCurrency = {
+	active?: boolean;
+};
+
 export type TDiagram = {
 	attachmentBase64: TAttachmentBase64;
 };
@@ -290,6 +294,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getCurrenciesPage(search: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/currencies?search=${search}`
+		);
+	}
+
 	async getOptionCategory(optionCategoryId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/optionCategories/${optionCategoryId}`
@@ -361,6 +371,15 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async getSpecifications() {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/specifications`
+		);
+	}
+
+	async patchCurrency(currencyId: string, currency?: TCurrency) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/currencies/${currencyId}`,
+			{
+				...(currency || {}),
+			}
 		);
 	}
 

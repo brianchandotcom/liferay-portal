@@ -13,6 +13,8 @@ import {CommerceAdminChannelDetailsCountriesPage} from '../pages/commerce/commer
 import {CommerceAdminChannelDetailsPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelDetailsPage';
 import {CommerceAdminChannelsPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelsPage';
 import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
+import {CommerceAdminCurrenciesPage} from '../pages/commerce/commerce-currency-web/commerceAdminCurrenciesPage';
+import {CommerceAdminCurrencyDetailsPage} from '../pages/commerce/commerce-currency-web/commerceAdminCurrencyDetailsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerce-order-content-web/commerceLayoutsPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/placedOrdersPage';
@@ -58,6 +60,8 @@ const commercePagesTest = test.extend<{
 	commerceAdminChannelDetailsCountriesPage: CommerceAdminChannelDetailsCountriesPage;
 	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage;
 	commerceAdminChannelsPage: CommerceAdminChannelsPage;
+	commerceAdminCurrenciesPage: CommerceAdminCurrenciesPage;
+	commerceAdminCurrencyDetailsPage: CommerceAdminCurrencyDetailsPage;
 	commerceAdminDiscountDetailsPage: CommerceAdminDiscountDetailsPage;
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
@@ -115,6 +119,12 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminChannelsPage: async ({page}, use) => {
 		await use(new CommerceAdminChannelsPage(page));
+	},
+	commerceAdminCurrenciesPage: async ({page}, use) => {
+		await use(new CommerceAdminCurrenciesPage(page));
+	},
+	commerceAdminCurrencyDetailsPage: async ({page}, use) => {
+		await use(new CommerceAdminCurrencyDetailsPage(page));
 	},
 	commerceAdminDiscountDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminDiscountDetailsPage(page));

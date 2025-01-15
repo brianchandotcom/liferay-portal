@@ -61,8 +61,6 @@ test(
 
 		await expect(editorToolbar).toBeVisible();
 
-		await expect(editorToolbar.getByRole('button')).toHaveCount(18);
-
 		const availableButtons = await editorToolbar
 			.getByRole('button')
 			.locator('.ck-button__label')

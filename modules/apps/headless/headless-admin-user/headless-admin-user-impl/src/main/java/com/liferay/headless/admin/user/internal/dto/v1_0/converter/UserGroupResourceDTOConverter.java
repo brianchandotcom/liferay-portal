@@ -61,6 +61,8 @@ public class UserGroupResourceDTOConverter
 		return new com.liferay.headless.admin.user.dto.v1_0.UserGroup() {
 			{
 				setActions(dtoConverterContext::getActions);
+				setDateCreated(userGroup::getCreateDate);
+				setDateModified(userGroup::getModifiedDate);
 				setDescription(userGroup::getDescription);
 				setExternalReferenceCode(userGroup::getExternalReferenceCode);
 				setId(userGroup::getUserGroupId);

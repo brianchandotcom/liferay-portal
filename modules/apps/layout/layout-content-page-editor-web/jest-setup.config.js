@@ -25,15 +25,6 @@ if (typeof Array.prototype.flatMap !== 'function') {
 }
 
 // eslint-disable-next-line
-window.document.getSelection = jest.fn();
-window.document.createRange = () => ({
-	getBoundingClientRect: () => 1,
-	getClientRects: () => 1,
-	setEnd: () => {},
-	setStart: () => {},
-});
-
-// eslint-disable-next-line
 jest.mock(
 	'./src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({

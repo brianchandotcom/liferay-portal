@@ -21,10 +21,6 @@ const renderComponent = ({fragmentCollections = []} = {}) => {
 describe('CopyFragmentModal', () => {
 	beforeAll(() => {
 		jest.useFakeTimers();
-
-		// This is due to the usage of jsdom 13 for compatibility reasons
-
-		window.document.getSelection = jest.fn();
 	});
 
 	it('renders fragment collection form with message when no there is no fragment collections', () => {

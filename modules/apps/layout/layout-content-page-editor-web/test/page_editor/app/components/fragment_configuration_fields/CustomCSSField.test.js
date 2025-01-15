@@ -60,17 +60,6 @@ describe('CSSClassSelectorField', () => {
 
 		renderCustomCSSField({onValueSelect});
 
-		// CodeMirror relies on this function to be present in the body
-
-		document.body.createTextRange = () => {
-			const textRange = {
-				getBoundingClientRect: () => 1,
-				getClientRects: () => 1,
-			};
-
-			return textRange;
-		};
-
 		// Clay modal have an animation when are opened
 		// This will make sure that the body is visible before asserting
 

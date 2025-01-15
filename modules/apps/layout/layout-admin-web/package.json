@@ -23,11 +23,6 @@
 		"react-dnd": "11.1.1",
 		"react-dnd-html5-backend": "11.1.1"
 	},
-	"jest": {
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
-		]
-	},
 	"main": "js/index.ts",
 	"name": "layout-admin-web",
 	"scripts": {

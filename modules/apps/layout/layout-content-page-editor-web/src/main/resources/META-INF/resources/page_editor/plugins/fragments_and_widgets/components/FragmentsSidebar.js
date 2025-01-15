@@ -4,6 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {
 	SearchForm,
 	SearchResultsMessage,
@@ -240,40 +241,49 @@ export default function FragmentsSidebar() {
 						onChange={setSearchValue}
 					/>
 
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('reorder-sets')}
-						borderless
-						className="lfr-portal-tooltip ml-2 mt-0"
-						data-tooltip-align="bottom-right"
-						displayType="secondary"
-						onClick={() => setShowReorderModal(true)}
-						size="sm"
-						symbol="order-arrow"
-						title={Liferay.Language.get('reorder-sets')}
-					/>
-
-					<ClayButtonWithIcon
-						aria-label={viewButtonLabel}
-						borderless
-						className="lfr-portal-tooltip ml-2 mt-0"
-						data-tooltip-align="bottom-right"
-						disabled={displayStyleButtonDisabled}
-						displayType="secondary"
-						onClick={() => {
-							setDisplayStyle(
-								displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
-									? FRAGMENTS_DISPLAY_STYLES.CARDS
-									: FRAGMENTS_DISPLAY_STYLES.LIST
-							);
-						}}
-						size="sm"
-						symbol={
-							displayStyleButtonDisabled ||
-							displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
-								? 'cards2'
-								: 'list'
+					<ClayDropDownWithItems
+						items={[
+							{
+								label: Liferay.Language.get('reorder-sets'),
+								onClick: () => {
+									setShowReorderModal(true);
+								},
+								symbolLeft: 'order-arrow',
+							},
+							{
+								disabled: displayStyleButtonDisabled,
+								label: viewButtonLabel,
+								onClick: () => {
+									setDisplayStyle(
+										displayStyle ===
+											FRAGMENTS_DISPLAY_STYLES.LIST
+											? FRAGMENTS_DISPLAY_STYLES.CARDS
+											: FRAGMENTS_DISPLAY_STYLES.LIST
+									);
+								},
+								symbolLeft:
+									displayStyleButtonDisabled ||
+									displayStyle ===
+										FRAGMENTS_DISPLAY_STYLES.LIST
+										? 'cards2'
+										: 'list',
+							},
+						]}
+						renderMenuOnClick
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'components-options'
+								)}
+								className="ml-2"
+								displayType="unstyled"
+								size="sm"
+								symbol="ellipsis-v"
+								title={Liferay.Language.get(
+									'components-options'
+								)}
+							/>
 						}
-						title={viewButtonLabel}
 					/>
 				</div>
 

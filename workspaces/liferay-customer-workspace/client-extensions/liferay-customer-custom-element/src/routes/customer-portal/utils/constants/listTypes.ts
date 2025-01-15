@@ -6,5 +6,7 @@
 export const LIST_TYPES = {
 	developerKeyportalVersion: 'Developer Key Portal Version',
 	dxpMajorVersion: 'DXP Major Version',
+	dxpMinorVersion: 'DXP Minor Version',
 	lxcPrimaryRegion: 'LXC Primary Region',
+	portalMajorVersion: 'Portal Major Version',
 };

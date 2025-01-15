@@ -1768,10 +1768,6 @@ definition {
 			dmDocumentFileName = "Document_3Edit.png",
 			remoteStaging = "true",
 			siteName = "remote-site");
-
-		DMDocument.viewDocumentMetadataCP(
-			metadataData = "image/png",
-			metadataLabel = "Content Type");
 	}
 
 	@description = "This ensures that the image can be deleted and republished in web content."

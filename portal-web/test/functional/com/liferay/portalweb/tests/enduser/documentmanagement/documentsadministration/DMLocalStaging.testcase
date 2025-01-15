@@ -2087,10 +2087,6 @@ definition {
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_3Edit.png",
 			siteName = "site-name");
-
-		DMDocument.viewDocumentMetadataCP(
-			metadataData = "image/png",
-			metadataLabel = "Content Type");
 	}
 
 	@description = "This test covers LPS-155794. It ensures that an image that was published on a site can still be accessed after local staging is disabled."

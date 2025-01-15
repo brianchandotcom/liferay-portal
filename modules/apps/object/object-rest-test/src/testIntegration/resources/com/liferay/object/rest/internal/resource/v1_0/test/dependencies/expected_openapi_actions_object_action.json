@@ -30,6 +30,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditEvent"
 				}
@@ -49,6 +51,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditFieldChange"
 				}
@@ -115,6 +119,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Creator"
 				}
@@ -131,7 +137,9 @@
 						"type": "array"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"FacetValue": {
 				"properties": {
@@ -143,7 +151,9 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"FileEntry": {
 				"properties": {
@@ -181,6 +191,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "FileEntry"
 				}
@@ -201,6 +213,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Folder"
 				}
@@ -221,6 +235,8 @@
 				},
 				"readOnly": true,
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Link"
 				}
@@ -512,7 +528,9 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"PagePermission": {
 				"properties": {
@@ -622,7 +640,9 @@
 						"type": "integer"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"Permission": {
 				"properties": {
@@ -637,6 +657,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Permission"
 				}
@@ -660,6 +682,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Scope"
 				}
@@ -686,6 +710,8 @@
 					"code"
 				],
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Status"
 				}
@@ -725,6 +751,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "TaxonomyCategoryBrief"
 				}
@@ -750,6 +778,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "UserGroupBrief"
 				}

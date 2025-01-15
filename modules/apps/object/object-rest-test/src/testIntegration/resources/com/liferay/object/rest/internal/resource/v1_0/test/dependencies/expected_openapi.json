@@ -30,6 +30,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditEvent"
 				}
@@ -49,6 +51,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditFieldChange"
 				}
@@ -115,6 +119,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Creator"
 				}
@@ -131,7 +137,9 @@
 						"type": "array"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"FacetValue": {
 				"properties": {
@@ -143,7 +151,9 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"FileEntry": {
 				"properties": {
@@ -181,6 +191,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "FileEntry"
 				}
@@ -201,6 +213,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Folder"
 				}
@@ -221,6 +235,8 @@
 				},
 				"readOnly": true,
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Link"
 				}
@@ -247,6 +263,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "ListEntry"
 				}
@@ -436,59 +454,106 @@
 					"relationship2/relationship2/status",
 					"relationship2/relationship2/taxonomyCategoryIds",
 					"relationship2/relationship2/userId",
+					"relationship2/relationship3/creator",
+					"relationship2/relationship3/creatorId",
+					"relationship2/relationship3/dateCreated",
+					"relationship2/relationship3/dateModified",
+					"relationship2/relationship3/externalReferenceCode",
+					"relationship2/relationship3/field1",
+					"relationship2/relationship3/id",
+					"relationship2/relationship3/keywords",
+					"relationship2/relationship3/multiselectPicklistField",
+					"relationship2/relationship3/object2Id",
+					"relationship2/relationship3/r_relationship4_c_object2ERC",
+					"relationship2/relationship3/r_relationship4_c_object2Id",
+					"relationship2/relationship3/relationship3/creator",
+					"relationship2/relationship3/relationship3/creatorId",
+					"relationship2/relationship3/relationship3/dateCreated",
+					"relationship2/relationship3/relationship3/dateModified",
+					"relationship2/relationship3/relationship3/externalReferenceCode",
+					"relationship2/relationship3/relationship3/field1",
+					"relationship2/relationship3/relationship3/id",
+					"relationship2/relationship3/relationship3/keywords",
+					"relationship2/relationship3/relationship3/multiselectPicklistField",
+					"relationship2/relationship3/relationship3/object1Id",
+					"relationship2/relationship3/relationship3/r_relationship2_c_object1ERC",
+					"relationship2/relationship3/relationship3/r_relationship2_c_object1Id",
+					"relationship2/relationship3/relationship3/status",
+					"relationship2/relationship3/relationship3/taxonomyCategoryIds",
+					"relationship2/relationship3/relationship3/userId",
+					"relationship2/relationship3/relationship4/creator",
+					"relationship2/relationship3/relationship4/creatorId",
+					"relationship2/relationship3/relationship4/dateCreated",
+					"relationship2/relationship3/relationship4/dateModified",
+					"relationship2/relationship3/relationship4/externalReferenceCode",
+					"relationship2/relationship3/relationship4/field1",
+					"relationship2/relationship3/relationship4/id",
+					"relationship2/relationship3/relationship4/keywords",
+					"relationship2/relationship3/relationship4/multiselectPicklistField",
+					"relationship2/relationship3/relationship4/object1Id",
+					"relationship2/relationship3/relationship4/r_relationship2_c_object1ERC",
+					"relationship2/relationship3/relationship4/r_relationship2_c_object1Id",
+					"relationship2/relationship3/relationship4/status",
+					"relationship2/relationship3/relationship4/taxonomyCategoryIds",
+					"relationship2/relationship3/relationship4/userId",
+					"relationship2/relationship3/relationship5/creator",
+					"relationship2/relationship3/relationship5/creatorId",
+					"relationship2/relationship3/relationship5/dateCreated",
+					"relationship2/relationship3/relationship5/dateModified",
+					"relationship2/relationship3/relationship5/externalReferenceCode",
+					"relationship2/relationship3/relationship5/field1",
+					"relationship2/relationship3/relationship5/id",
+					"relationship2/relationship3/relationship5/keywords",
+					"relationship2/relationship3/relationship5/relationship5/creator",
+					"relationship2/relationship3/relationship5/relationship5/creatorId",
+					"relationship2/relationship3/relationship5/relationship5/dateCreated",
+					"relationship2/relationship3/relationship5/relationship5/dateModified",
+					"relationship2/relationship3/relationship5/relationship5/externalReferenceCode",
+					"relationship2/relationship3/relationship5/relationship5/field1",
+					"relationship2/relationship3/relationship5/relationship5/id",
+					"relationship2/relationship3/relationship5/relationship5/keywords",
+					"relationship2/relationship3/relationship5/relationship5/multiselectPicklistField",
+					"relationship2/relationship3/relationship5/relationship5/object2Id",
+					"relationship2/relationship3/relationship5/relationship5/r_relationship4_c_object2ERC",
+					"relationship2/relationship3/relationship5/relationship5/r_relationship4_c_object2Id",
+					"relationship2/relationship3/relationship5/relationship5/status",
+					"relationship2/relationship3/relationship5/relationship5/taxonomyCategoryIds",
+					"relationship2/relationship3/relationship5/relationship5/userId",
+					"relationship2/relationship3/relationship5/relationship6/creator",
+					"relationship2/relationship3/relationship5/relationship6/creatorId",
+					"relationship2/relationship3/relationship5/relationship6/dateCreated",
+					"relationship2/relationship3/relationship5/relationship6/dateModified",
+					"relationship2/relationship3/relationship5/relationship6/externalReferenceCode",
+					"relationship2/relationship3/relationship5/relationship6/field1",
+					"relationship2/relationship3/relationship5/relationship6/id",
+					"relationship2/relationship3/relationship5/relationship6/keywords",
+					"relationship2/relationship3/relationship5/relationship6/status",
+					"relationship2/relationship3/relationship5/relationship6/taxonomyCategoryIds",
+					"relationship2/relationship3/relationship5/relationship6/userId",
+					"relationship2/relationship3/relationship5/status",
+					"relationship2/relationship3/relationship5/taxonomyCategoryIds",
+					"relationship2/relationship3/relationship5/userId",
+					"relationship2/relationship3/status",
+					"relationship2/relationship3/taxonomyCategoryIds",
+					"relationship2/relationship3/userId",
+					"relationship2/relationship4/creator",
+					"relationship2/relationship4/creatorId",
+					"relationship2/relationship4/dateCreated",
+					"relationship2/relationship4/dateModified",
+					"relationship2/relationship4/externalReferenceCode",
+					"relationship2/relationship4/field1",
+					"relationship2/relationship4/id",
+					"relationship2/relationship4/keywords",
+					"relationship2/relationship4/multiselectPicklistField",
+					"relationship2/relationship4/object2Id",
+					"relationship2/relationship4/r_relationship4_c_object2ERC",
+					"relationship2/relationship4/r_relationship4_c_object2Id",
+					"relationship2/relationship4/status",
+					"relationship2/relationship4/taxonomyCategoryIds",
+					"relationship2/relationship4/userId",
 					"relationship2/status",
 					"relationship2/taxonomyCategoryIds",
 					"relationship2/userId",
-					"relationship3/creator",
-					"relationship3/creatorId",
-					"relationship3/dateCreated",
-					"relationship3/dateModified",
-					"relationship3/externalReferenceCode",
-					"relationship3/field",
-					"relationship3/id",
-					"relationship3/keywords",
-					"relationship3/object1Id",
-					"relationship3/r_relationship4_c_object1ERC",
-					"relationship3/r_relationship4_c_object1Id",
-					"relationship3/relationship3/creator",
-					"relationship3/relationship3/creatorId",
-					"relationship3/relationship3/dateCreated",
-					"relationship3/relationship3/dateModified",
-					"relationship3/relationship3/externalReferenceCode",
-					"relationship3/relationship3/field2",
-					"relationship3/relationship3/id",
-					"relationship3/relationship3/keywords",
-					"relationship3/relationship3/status",
-					"relationship3/relationship3/taxonomyCategoryIds",
-					"relationship3/relationship3/userId",
-					"relationship3/relationship4/creator",
-					"relationship3/relationship4/creatorId",
-					"relationship3/relationship4/dateCreated",
-					"relationship3/relationship4/dateModified",
-					"relationship3/relationship4/externalReferenceCode",
-					"relationship3/relationship4/field2",
-					"relationship3/relationship4/id",
-					"relationship3/relationship4/keywords",
-					"relationship3/relationship4/status",
-					"relationship3/relationship4/taxonomyCategoryIds",
-					"relationship3/relationship4/userId",
-					"relationship3/status",
-					"relationship3/taxonomyCategoryIds",
-					"relationship3/userId",
-					"relationship4/creator",
-					"relationship4/creatorId",
-					"relationship4/dateCreated",
-					"relationship4/dateModified",
-					"relationship4/externalReferenceCode",
-					"relationship4/field",
-					"relationship4/id",
-					"relationship4/keywords",
-					"relationship4/object1Id",
-					"relationship4/r_relationship4_c_object1ERC",
-					"relationship4/r_relationship4_c_object1Id",
-					"relationship4/status",
-					"relationship4/taxonomyCategoryIds",
-					"relationship4/userId",
 					"status",
 					"taxonomyCategoryIds",
 					"userId"
@@ -600,6 +665,20 @@
 						"type": "string",
 						"x-parent-map": "properties"
 					},
+					"relationship3": {
+						"description": "Information about the relationship relationship3 can be embedded with \"nestedFields\".",
+						"items": {
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"relationship4": {
+						"description": "Information about the relationship relationship4 can be embedded with \"nestedFields\".",
+						"items": {
+							"type": "object"
+						},
+						"type": "array"
+					},
 					"scopeKey": {
 						"readOnly": true,
 						"type": "string"
@@ -703,59 +782,128 @@
 					"relationship2/relationship2/status",
 					"relationship2/relationship2/taxonomyCategoryIds",
 					"relationship2/relationship2/userId",
-					"relationship2/relationship3/creator",
-					"relationship2/relationship3/creatorId",
-					"relationship2/relationship3/dateCreated",
-					"relationship2/relationship3/dateModified",
-					"relationship2/relationship3/externalReferenceCode",
-					"relationship2/relationship3/field",
-					"relationship2/relationship3/id",
-					"relationship2/relationship3/keywords",
-					"relationship2/relationship3/object1Id",
-					"relationship2/relationship3/r_relationship4_c_object1ERC",
-					"relationship2/relationship3/r_relationship4_c_object1Id",
-					"relationship2/relationship3/relationship3/creator",
-					"relationship2/relationship3/relationship3/creatorId",
-					"relationship2/relationship3/relationship3/dateCreated",
-					"relationship2/relationship3/relationship3/dateModified",
-					"relationship2/relationship3/relationship3/externalReferenceCode",
-					"relationship2/relationship3/relationship3/field2",
-					"relationship2/relationship3/relationship3/id",
-					"relationship2/relationship3/relationship3/keywords",
-					"relationship2/relationship3/relationship3/status",
-					"relationship2/relationship3/relationship3/taxonomyCategoryIds",
-					"relationship2/relationship3/relationship3/userId",
-					"relationship2/relationship3/relationship4/creator",
-					"relationship2/relationship3/relationship4/creatorId",
-					"relationship2/relationship3/relationship4/dateCreated",
-					"relationship2/relationship3/relationship4/dateModified",
-					"relationship2/relationship3/relationship4/externalReferenceCode",
-					"relationship2/relationship3/relationship4/field2",
-					"relationship2/relationship3/relationship4/id",
-					"relationship2/relationship3/relationship4/keywords",
-					"relationship2/relationship3/relationship4/status",
-					"relationship2/relationship3/relationship4/taxonomyCategoryIds",
-					"relationship2/relationship3/relationship4/userId",
-					"relationship2/relationship3/status",
-					"relationship2/relationship3/taxonomyCategoryIds",
-					"relationship2/relationship3/userId",
-					"relationship2/relationship4/creator",
-					"relationship2/relationship4/creatorId",
-					"relationship2/relationship4/dateCreated",
-					"relationship2/relationship4/dateModified",
-					"relationship2/relationship4/externalReferenceCode",
-					"relationship2/relationship4/field",
-					"relationship2/relationship4/id",
-					"relationship2/relationship4/keywords",
-					"relationship2/relationship4/object1Id",
-					"relationship2/relationship4/r_relationship4_c_object1ERC",
-					"relationship2/relationship4/r_relationship4_c_object1Id",
-					"relationship2/relationship4/status",
-					"relationship2/relationship4/taxonomyCategoryIds",
-					"relationship2/relationship4/userId",
 					"relationship2/status",
 					"relationship2/taxonomyCategoryIds",
 					"relationship2/userId",
+					"relationship3/creator",
+					"relationship3/creatorId",
+					"relationship3/dateCreated",
+					"relationship3/dateModified",
+					"relationship3/externalReferenceCode",
+					"relationship3/field1",
+					"relationship3/id",
+					"relationship3/keywords",
+					"relationship3/multiselectPicklistField",
+					"relationship3/object2Id",
+					"relationship3/r_relationship4_c_object2ERC",
+					"relationship3/r_relationship4_c_object2Id",
+					"relationship3/relationship3/creator",
+					"relationship3/relationship3/creatorId",
+					"relationship3/relationship3/dateCreated",
+					"relationship3/relationship3/dateModified",
+					"relationship3/relationship3/externalReferenceCode",
+					"relationship3/relationship3/field1",
+					"relationship3/relationship3/id",
+					"relationship3/relationship3/keywords",
+					"relationship3/relationship3/multiselectPicklistField",
+					"relationship3/relationship3/object1Id",
+					"relationship3/relationship3/r_relationship2_c_object1ERC",
+					"relationship3/relationship3/r_relationship2_c_object1Id",
+					"relationship3/relationship3/status",
+					"relationship3/relationship3/taxonomyCategoryIds",
+					"relationship3/relationship3/userId",
+					"relationship3/relationship4/creator",
+					"relationship3/relationship4/creatorId",
+					"relationship3/relationship4/dateCreated",
+					"relationship3/relationship4/dateModified",
+					"relationship3/relationship4/externalReferenceCode",
+					"relationship3/relationship4/field1",
+					"relationship3/relationship4/id",
+					"relationship3/relationship4/keywords",
+					"relationship3/relationship4/multiselectPicklistField",
+					"relationship3/relationship4/object1Id",
+					"relationship3/relationship4/r_relationship2_c_object1ERC",
+					"relationship3/relationship4/r_relationship2_c_object1Id",
+					"relationship3/relationship4/status",
+					"relationship3/relationship4/taxonomyCategoryIds",
+					"relationship3/relationship4/userId",
+					"relationship3/relationship5/creator",
+					"relationship3/relationship5/creatorId",
+					"relationship3/relationship5/dateCreated",
+					"relationship3/relationship5/dateModified",
+					"relationship3/relationship5/externalReferenceCode",
+					"relationship3/relationship5/field1",
+					"relationship3/relationship5/id",
+					"relationship3/relationship5/keywords",
+					"relationship3/relationship5/relationship5/creator",
+					"relationship3/relationship5/relationship5/creatorId",
+					"relationship3/relationship5/relationship5/dateCreated",
+					"relationship3/relationship5/relationship5/dateModified",
+					"relationship3/relationship5/relationship5/externalReferenceCode",
+					"relationship3/relationship5/relationship5/field1",
+					"relationship3/relationship5/relationship5/id",
+					"relationship3/relationship5/relationship5/keywords",
+					"relationship3/relationship5/relationship5/multiselectPicklistField",
+					"relationship3/relationship5/relationship5/object2Id",
+					"relationship3/relationship5/relationship5/r_relationship4_c_object2ERC",
+					"relationship3/relationship5/relationship5/r_relationship4_c_object2Id",
+					"relationship3/relationship5/relationship5/status",
+					"relationship3/relationship5/relationship5/taxonomyCategoryIds",
+					"relationship3/relationship5/relationship5/userId",
+					"relationship3/relationship5/relationship6/creator",
+					"relationship3/relationship5/relationship6/creatorId",
+					"relationship3/relationship5/relationship6/dateCreated",
+					"relationship3/relationship5/relationship6/dateModified",
+					"relationship3/relationship5/relationship6/externalReferenceCode",
+					"relationship3/relationship5/relationship6/field1",
+					"relationship3/relationship5/relationship6/id",
+					"relationship3/relationship5/relationship6/keywords",
+					"relationship3/relationship5/relationship6/relationship6/creator",
+					"relationship3/relationship5/relationship6/relationship6/creatorId",
+					"relationship3/relationship5/relationship6/relationship6/dateCreated",
+					"relationship3/relationship5/relationship6/relationship6/dateModified",
+					"relationship3/relationship5/relationship6/relationship6/externalReferenceCode",
+					"relationship3/relationship5/relationship6/relationship6/field1",
+					"relationship3/relationship5/relationship6/relationship6/id",
+					"relationship3/relationship5/relationship6/relationship6/keywords",
+					"relationship3/relationship5/relationship6/relationship6/status",
+					"relationship3/relationship5/relationship6/relationship6/taxonomyCategoryIds",
+					"relationship3/relationship5/relationship6/relationship6/userId",
+					"relationship3/relationship5/relationship6/relationship7/creator",
+					"relationship3/relationship5/relationship6/relationship7/creatorId",
+					"relationship3/relationship5/relationship6/relationship7/dateCreated",
+					"relationship3/relationship5/relationship6/relationship7/dateModified",
+					"relationship3/relationship5/relationship6/relationship7/externalReferenceCode",
+					"relationship3/relationship5/relationship6/relationship7/field1",
+					"relationship3/relationship5/relationship6/relationship7/id",
+					"relationship3/relationship5/relationship6/relationship7/keywords",
+					"relationship3/relationship5/relationship6/relationship7/status",
+					"relationship3/relationship5/relationship6/relationship7/taxonomyCategoryIds",
+					"relationship3/relationship5/relationship6/relationship7/userId",
+					"relationship3/relationship5/relationship6/status",
+					"relationship3/relationship5/relationship6/taxonomyCategoryIds",
+					"relationship3/relationship5/relationship6/userId",
+					"relationship3/relationship5/status",
+					"relationship3/relationship5/taxonomyCategoryIds",
+					"relationship3/relationship5/userId",
+					"relationship3/status",
+					"relationship3/taxonomyCategoryIds",
+					"relationship3/userId",
+					"relationship4/creator",
+					"relationship4/creatorId",
+					"relationship4/dateCreated",
+					"relationship4/dateModified",
+					"relationship4/externalReferenceCode",
+					"relationship4/field1",
+					"relationship4/id",
+					"relationship4/keywords",
+					"relationship4/multiselectPicklistField",
+					"relationship4/object2Id",
+					"relationship4/r_relationship4_c_object2ERC",
+					"relationship4/r_relationship4_c_object2Id",
+					"relationship4/status",
+					"relationship4/taxonomyCategoryIds",
+					"relationship4/userId",
 					"status",
 					"taxonomyCategoryIds",
 					"userId"
@@ -809,7 +957,9 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"PageObject2": {
 				"properties": {
@@ -856,7 +1006,9 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"PagePermission": {
 				"properties": {
@@ -898,7 +1050,9 @@
 						"type": "integer"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"Permission": {
 				"properties": {
@@ -913,6 +1067,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Permission"
 				}
@@ -936,6 +1092,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Scope"
 				}
@@ -962,6 +1120,8 @@
 					"code"
 				],
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Status"
 				}
@@ -1001,6 +1161,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "TaxonomyCategoryBrief"
 				}
@@ -1026,6 +1188,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "UserGroupBrief"
 				}

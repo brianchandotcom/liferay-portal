@@ -139,7 +139,7 @@
 					"label": {
 						"en_US": "HTTP Method"
 					},
-					"listTypeDefinitionExternalReferenceCode": "HTTP_METHOD_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_API_ENDPOINT_HTTP_METHODS",
 					"name": "httpMethod",
 					"required": true,
 					"state": false,
@@ -216,7 +216,7 @@
 					"label": {
 						"en_US": "Retrieve Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_API_ENDPOINT_RETRIEVE_TYPES",
 					"name": "retrieveType",
 					"required": true,
 					"state": false,
@@ -233,7 +233,7 @@
 					"label": {
 						"en_US": "Scope"
 					},
-					"listTypeDefinitionExternalReferenceCode": "SCOPE_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_API_ENDPOINT_SCOPES",
 					"name": "scope",
 					"required": true,
 					"state": false,
@@ -544,7 +544,7 @@
 					"label": {
 						"en_US": "Application Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "APPLICATION_STATUS_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_API_APPLICATION_STATUSES",
 					"name": "applicationStatus",
 					"required": true,
 					"state": false,

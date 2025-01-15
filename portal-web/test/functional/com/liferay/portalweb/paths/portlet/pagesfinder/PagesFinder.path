@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ADD_NEW_PAGE</td>
+	<td>//div[contains(@class,'taglib-empty-result-message')]//a[@class='btn btn-secondary' and contains(text(),'Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHILD_PAGE_NAME</td>
 	<td>//li[contains(@class,'treeview-item') and div[normalize-space()='${key_parentPageName}']]//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')]//a[normalize-space()='${key_childPageName}']</td>
 	<td></td>

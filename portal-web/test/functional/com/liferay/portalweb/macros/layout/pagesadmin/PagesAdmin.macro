@@ -372,7 +372,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+			Click(locator1 = "PagesFinder#ADD_NEW_PAGE");
 		}
 		else {
 			AssertClick(
@@ -380,7 +380,7 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
 				value1 = "Pages");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+			Button.click(button = "New");
 		}
 
 		PagesAdmin._addPage(
@@ -441,7 +441,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+			Click(locator1 = "PagesFinder#ADD_NEW_PAGE");
 		}
 		else {
 			AssertClick(
@@ -449,7 +449,7 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
 				value1 = "Pages");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+			Button.click(button = "New");
 		}
 
 		if (isSet(sitePageType)) {

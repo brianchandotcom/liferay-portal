@@ -375,13 +375,13 @@ definition {
 				portlet = "System Settings");
 		}
 
-		task ("Enable OpenSSO Configuration") {
+		task ("Enable Accessibility Menu Configuration") {
 			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "OpenSSO",
-				configurationScope = "System Scope");
+				configurationCategory = "Accessibility",
+				configurationName = "Accessibility Menu",
+				configurationScope = "Site Scope");
 
-			FormFields.enableCheckbox(fieldName = "Enabled");
+			FormFields.enableCheckbox(fieldName = "Enable Accessibility Menu");
 
 			SystemSettings.saveConfiguration();
 		}
@@ -390,13 +390,13 @@ definition {
 			PortalSettings.openInstanceSettingsAdmin();
 		}
 
-		task ("Disable OpenSSO Configuration") {
+		task ("Disable Accessibility Menu Configuration") {
 			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "OpenSSO",
-				configurationScope = "Virtual Instance Scope");
+				configurationCategory = "Accessibility",
+				configurationName = "Accessibility Menu",
+				configurationScope = "Site Scope");
 
-			FormFields.disableCheckbox(fieldName = "enabled");
+			FormFields.disableCheckbox(fieldName = "Enable Accessibility Menu");
 
 			SystemSettings.saveConfiguration();
 		}
@@ -408,11 +408,11 @@ definition {
 				portlet = "System Settings");
 
 			SystemSettings.gotoConfiguration(
-				configurationCategory = "SSO",
-				configurationName = "OpenSSO",
-				configurationScope = "System Scope");
+				configurationCategory = "Accessibility",
+				configurationName = "Accessibility Menu",
+				configurationScope = "Site Scope");
 
-			FormFields.viewCheckboxChecked(fieldName = "Enabled");
+			FormFields.viewCheckboxChecked(fieldName = "Enable Accessibility Menu");
 		}
 	}
 

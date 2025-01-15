@@ -312,17 +312,15 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
 			_getUtilityPage(
+				Boolean.FALSE,
+				layoutUtilityPageEntry.getExternalReferenceCode()));
+		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
+			_getUtilityPage(
 				Boolean.TRUE,
 				layoutUtilityPageEntry.getExternalReferenceCode()));
-
 		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
 			_getUtilityPage(
 				null, layoutUtilityPageEntry.getExternalReferenceCode()));
-
-		_testPutSiteSiteByExternalReferenceCodeUtilityPage(
-			_getUtilityPage(
-				Boolean.FALSE,
-				layoutUtilityPageEntry.getExternalReferenceCode()));
 	}
 
 	@Ignore

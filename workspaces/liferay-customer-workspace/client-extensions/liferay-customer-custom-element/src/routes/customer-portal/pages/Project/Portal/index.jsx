@@ -47,7 +47,7 @@ const Portal = ({hasComplimentaryKey}) => {
 						'select-the-liferay-portal-version-for-which-you-want-to-download-a-developer-key'
 					)}
 					dxpVersion={project.dxpVersion}
-					listType={LIST_TYPES.portalVersion}
+					listType={LIST_TYPES.developerKeyPortalVersion}
 					oAuthToken={oAuthToken}
 					productName="Portal"
 					projectName={project.name}

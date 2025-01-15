@@ -171,7 +171,7 @@ const Pages = () => {
 						dxpCloudPageHandle();
 					}}
 					leftButton={i18n.translate('skip-for-now')}
-					listType={LIST_TYPES.dxpVersion}
+					listType={LIST_TYPES.dxpMajorVersion}
 					project={project}
 					subscriptionGroupId={
 						subscriptionDXPCloud?.accountSubscriptionGroupId

@@ -41,7 +41,7 @@ const DXP = ({hasComplimentaryKey}) => {
 						'select-the-liferay-dxp-version-for-your-developer-key-to-download'
 					)}
 					dxpVersion={project.dxpVersion}
-					listType={LIST_TYPES.dxpVersion}
+					listType={LIST_TYPES.dxpMajorVersion}
 					oAuthToken={oAuthToken}
 					productName="DXP"
 					projectName={project.name}

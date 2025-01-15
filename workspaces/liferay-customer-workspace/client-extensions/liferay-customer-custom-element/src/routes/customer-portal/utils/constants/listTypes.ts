@@ -4,7 +4,7 @@
  */
 
 export const LIST_TYPES = {
-	dxpVersion: 'DXP Version',
+	developerKeyportalVersion: 'Developer Key Portal Version',
+	dxpMajorVersion: 'DXP Major Version',
 	lxcPrimaryRegion: 'LXC Primary Region',
-	portalVersion: 'Portal Version',
 };

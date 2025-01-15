@@ -71,7 +71,7 @@ const SetupDXPCloudModal = ({
 					dxpVersion={project.dxpVersion}
 					handlePage={onClose}
 					leftButton={i18n.translate('cancel')}
-					listType={LIST_TYPES.dxpVersion}
+					listType={LIST_TYPES.dxpMajorVersion}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
 					subscriptionGroupId={subscriptionGroupId}
@@ -251,7 +251,7 @@ const ActivationStatusDXPCloud = ({
 				<SetupDXPCloudModal
 					{...setupModalProps}
 					dxpVersion={project.dxpVersion}
-					listType={LIST_TYPES.dxpVersion}
+					listType={LIST_TYPES.dxpMajorVersion}
 					onClose={onCloseSetupModal}
 					project={project}
 					subscriptionGroupId={

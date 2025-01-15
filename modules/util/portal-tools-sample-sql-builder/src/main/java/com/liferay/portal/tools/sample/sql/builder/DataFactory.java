@@ -1244,7 +1244,7 @@ public class DataFactory {
 	public AssetListEntrySegmentsEntryRelModel
 		newAssetListEntrySegmentsEntryRelModel(
 			AssetListEntryModel assetListEntryModel,
-			DDMStructureModel ddmStructureModel, int currentIndex) {
+			DDMStructureModel ddmStructureModel, int index) {
 
 		AssetListEntrySegmentsEntryRelModel
 			assetListEntrySegmentsEntryRelModel =
@@ -1308,7 +1308,7 @@ public class DataFactory {
 			Boolean.FALSE.toString()
 		).build();
 
-		if (currentIndex == 1) {
+		if (index == 1) {
 			map.put("queryAndOperator0", Boolean.TRUE.toString());
 			map.put("queryContains0", Boolean.TRUE.toString());
 			map.put("queryName0", "assetTags");
@@ -1316,7 +1316,7 @@ public class DataFactory {
 		else {
 			String assetPublisherQueryName = "assetCategories";
 
-			if ((currentIndex % 2) == 0) {
+			if ((index % 2) == 0) {
 				assetPublisherQueryName = "assetTags";
 			}
 

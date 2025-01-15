@@ -14,7 +14,7 @@
 	"items": [
 		{
 			"defaultLanguageId": "en_US",
-			"externalReferenceCode": "APPLICATION_STATUS_PICKLIST",
+			"externalReferenceCode": "L_API_APPLICATION_STATUSES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "PUBLISHED",
@@ -32,7 +32,7 @@
 		},
 		{
 			"defaultLanguageId": "en_US",
-			"externalReferenceCode": "HTTP_METHOD_PICKLIST",
+			"externalReferenceCode": "L_API_ENDPOINT_HTTP_METHODS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "GET",
@@ -46,6 +46,42 @@
 				}
 			],
 			"name": "HTTP Method",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "L_API_ENDPOINT_RETRIEVE_TYPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "COLLECTION",
+					"key": "collection",
+					"name": "collection"
+				},
+				{
+					"externalReferenceCode": "SINGLE_ELEMENT",
+					"key": "singleElement",
+					"name": "singleElement"
+				}
+			],
+			"name": "Retrieve Type",
+			"system": true
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "L_API_ENDPOINT_SCOPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "COMPANY",
+					"key": "company",
+					"name": "company"
+				},
+				{
+					"externalReferenceCode": "SITE",
+					"key": "site",
+					"name": "site"
+				}
+			],
+			"name": "Scope",
 			"system": true
 		},
 		{
@@ -64,42 +100,6 @@
 				}
 			],
 			"name": "API Property Types",
-			"system": true
-		},
-		{
-			"defaultLanguageId": "en_US",
-			"externalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "COLLECTION",
-					"key": "collection",
-					"name": "collection"
-				},
-				{
-					"externalReferenceCode": "SINGLE_ELEMENT",
-					"key": "singleElement",
-					"name": "singleElement"
-				}
-			],
-			"name": "Retrieve Type",
-			"system": true
-		},
-		{
-			"defaultLanguageId": "en_US",
-			"externalReferenceCode": "SCOPE_PICKLIST",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "COMPANY",
-					"key": "company",
-					"name": "company"
-				},
-				{
-					"externalReferenceCode": "SITE",
-					"key": "site",
-					"name": "site"
-				}
-			],
-			"name": "Scope",
 			"system": true
 		}
 	]

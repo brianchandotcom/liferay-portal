@@ -861,23 +861,25 @@ public class DBPartitionUtil {
 				}
 
 				for (long companyId : companyIds) {
-					if (companyId != _defaultCompanyId) {
-						Future<Void> future = executorService.submit(
-							() -> {
-								try (SafeCloseable safeCloseable =
-										CompanyThreadLocal.lock(companyId)) {
-
-									unsafeConsumer.accept(companyId);
-								}
-								catch (Exception exception) {
-									throwableCollector.collect(exception);
-								}
-
-								return null;
-							});
-
-						futures.add(future);
+					if (companyId == _defaultCompanyId) {
+						continue;
 					}
+
+					Future<Void> future = executorService.submit(
+						() -> {
+							try (SafeCloseable safeCloseable =
+									CompanyThreadLocal.lock(companyId)) {
+
+								unsafeConsumer.accept(companyId);
+							}
+							catch (Exception exception) {
+								throwableCollector.collect(exception);
+							}
+
+							return null;
+						});
+
+					futures.add(future);
 				}
 			}
 		}

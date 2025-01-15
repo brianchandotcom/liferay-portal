@@ -51,7 +51,7 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 		File file = fileCopyDetails.getFile();
 
 		try (JarFile jarFile = new JarFile(file)) {
-			fileName = _getFileName(jarFile, _getFileName(file));
+			fileName = _getFileName(_getFileName(file), jarFile);
 
 			fileCopyDetails.setName(fileName);
 		}
@@ -72,7 +72,7 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 		return fileName;
 	}
 
-	private String _getFileName(JarFile jarFile, String defaultFileName)
+	private String _getFileName(String defaultFileName, JarFile jarFile)
 		throws IOException {
 
 		Manifest manifest = jarFile.getManifest();

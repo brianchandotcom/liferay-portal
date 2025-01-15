@@ -149,10 +149,15 @@ test('Add an auto assertion tag via blogs widget', async ({
 	await expect(page.getByText('first second third')).toBeVisible();
 
 	await test.step('Tag can be removed', async () => {
-		await page
-			.getByRole('link', {name: 'Edit Entry'})
-			.evaluate((element: HTMLElement) => element.click());
 
+		// We need to hover in portlet and click in the dropdown to navigate to edit
+
+		await page.locator('.portlet[id$="_BlogsPortlet"]').hover();
+		await page
+			.locator('.visible-interaction > .dropdown-action', {
+				has: page.getByRole('link', {name: 'Edit Entry'}),
+			})
+			.click();
 		await page.getByRole('button', {name: 'Categorization'}).waitFor();
 
 		await expect(async () => {

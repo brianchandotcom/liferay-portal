@@ -88,9 +88,9 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 					emitter.emit(
 						_encodeKey(
-							(Long)serviceReference.getProperty("companyId"),
 							(String)serviceReference.getProperty(
 								"entity.class.name"),
+							(Long)serviceReference.getProperty("companyId"),
 							(String)serviceReference.getProperty(
 								"api.version")));
 				}
@@ -106,7 +106,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	}
 
 	private String _encodeKey(
-		Long companyId, String className, String version) {
+		String className, Long companyId, String version) {
 
 		String key = StringBundler.concat(
 			className, StringPool.POUND, GetterUtil.getString(version, "v1.0"));
@@ -181,13 +181,13 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	private EntityModelResource _getEntityModelResource(
 		long companyId, String className, String version) {
 
-		String companyIdKey = _encodeKey(companyId, className, version);
+		String companyIdKey = _encodeKey(className, companyId, version);
 
 		if (_serviceTrackerMap.containsKey(companyIdKey)) {
 			return _serviceTrackerMap.getService(companyIdKey);
 		}
 
-		String key = _encodeKey(null, className, version);
+		String key = _encodeKey(className, null, version);
 
 		if (_serviceTrackerMap.containsKey(key)) {
 			return _serviceTrackerMap.getService(key);

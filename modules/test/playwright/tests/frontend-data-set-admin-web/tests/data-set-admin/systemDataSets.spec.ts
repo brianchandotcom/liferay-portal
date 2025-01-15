@@ -9,14 +9,17 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {actionsPageTest} from './fixtures/actionsPageTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
 
 export const test = mergeTests(
+	actionsPageTest,
 	dataSetManagerApiHelpersTest,
 	systemDataSetsPageTest,
 	featureFlagsTest({
 		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
+		'LPS-193005': {enabled: true},
 	}),
 	loginTest()
 );
@@ -24,7 +27,7 @@ export const test = mergeTests(
 test(
 	'Import a system data set to customize',
 	{tag: '@LPD-37531'},
-	async ({systemDataSetsPage}) => {
+	async ({actionsPage, page, systemDataSetsPage}) => {
 		await test.step('Navigate to system data sets page', async () => {
 			await systemDataSetsPage.goto();
 		});
@@ -75,24 +78,94 @@ test(
 		});
 
 		await test.step('Select a system data set', async () => {
-			await classicSampleListItem.click();
+			await customizedSampleListItem.click();
 
-			await expect(classicSampleListItem).toHaveClass(/selected/);
+			await expect(customizedSampleListItem).toHaveClass(/selected/);
 
 			await creationModal.createButton.click();
 
 			await waitForAlert(systemDataSetsPage.page);
 		});
 
+		const customizedSampleRow = systemDataSetsPage.pageContainer
+			.locator('.fds tr')
+			.filter({hasText: 'Customized Sample'});
+
 		await test.step('Check system data set is imported', async () => {
-			await expect(
-				systemDataSetsPage.pageContainer.getByText('Classic Sample')
-			).toBeVisible();
+			await expect(customizedSampleRow).toBeVisible();
+		});
+
+		await test.step('Check item actions are imported', async () => {
+			await actionsPage.open({dataSetLabel: 'Customized Sample'});
+
+			const itemActionRow = actionsPage.itemActionsTable
+				.locator('tr')
+				.filter({hasText: 'Nav Links'})
+				.first();
+
+			await itemActionRow.locator('.dropdown-toggle').click();
+
+			await actionsPage.page
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'Edit'})
+				.click();
+
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue('Nav Links');
+			await expect(form.iconInput).toHaveValue('home');
+			await expect(form.typeSelect).toHaveValue('link');
+			await expect(form.urlInput).toHaveValue('#');
+			await expect(form.headlessActionKeyInput).toHaveValue('view');
+			await expect(form.confirmationMessageInput).toHaveValue(
+				'Are you sure?'
+			);
+			await expect(form.confirmationMessageTypeSelect).toHaveValue(
+				'danger'
+			);
+
+			await form.cancelButton.click();
+		});
+
+		await test.step('Check creation actions are imported', async () => {
+			await actionsPage.selectTab({
+				container: actionsPage.actionsTabs,
+				label: 'Creation Actions',
+			});
+
+			const creationActionRow = actionsPage.creationActionsTable
+				.locator('tr')
+				.filter({hasText: 'Open Form'})
+				.first();
+
+			await creationActionRow.locator('.dropdown-toggle').click();
+
+			await actionsPage.page
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'Edit'})
+				.click();
+
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue('Open Form');
+			await expect(form.iconInput).toHaveValue('bolt');
+			await expect(form.typeSelect).toHaveValue('modal');
+			await expect(form.variantSelect).toHaveValue('full-screen');
+			await expect(form.titleInput).toHaveValue('My Products');
+			await expect(form.urlInput).toHaveValue('#');
+			await expect(form.headlessActionKeyInput).toHaveValue('update');
+
+			await form.cancelButton.click();
 		});
 
 		await test.step('Delete system data set', async () => {
+			await page.getByTitle('Back').click();
+
+			await customizedSampleRow.locator('.dropdown-toggle').click();
+
 			await systemDataSetsPage.page
-				.getByRole('button', {name: 'Delete'})
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'Delete'})
 				.click();
 
 			const deleteModal = systemDataSetsPage.page.getByRole('dialog');
@@ -101,9 +174,7 @@ test(
 
 			await waitForAlert(systemDataSetsPage.page);
 
-			await expect(
-				systemDataSetsPage.pageContainer.getByText('Classic Sample')
-			).toBeHidden();
+			await expect(customizedSampleRow).toBeHidden();
 		});
 	}
 );

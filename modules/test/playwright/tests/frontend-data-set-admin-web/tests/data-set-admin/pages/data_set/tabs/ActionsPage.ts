@@ -44,7 +44,7 @@ export class ActionsPage {
 	readonly noActionsWereCreatedMessage: Locator;
 	readonly page: Page;
 	readonly statusMessagesTabs: Locator;
-	private readonly actionsTabs: Locator;
+	readonly actionsTabs: Locator;
 
 	constructor(page: Page) {
 		this.actionForm = {
@@ -268,6 +268,14 @@ export class ActionsPage {
 
 			await this.actionForm.variantSelect.selectOption(variant);
 		}
+	}
+
+	async open({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.open({
+			dataSetLabel,
+		});
+
+		await this.dataSetPage.selectTab('Actions');
 	}
 
 	async selectTab({container, label}: {container: Locator; label: string}) {

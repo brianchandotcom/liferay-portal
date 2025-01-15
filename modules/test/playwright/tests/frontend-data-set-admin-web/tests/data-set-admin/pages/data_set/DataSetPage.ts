@@ -23,7 +23,11 @@ export class DataSetPage {
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
 		await this.customDataSetsPage.goto();
 
-		await this.customDataSetsPage.openDataSet(dataSetLabel);
+		await this.open({dataSetLabel});
+	}
+
+	async open({dataSetLabel}: {dataSetLabel: string}) {
+		await this.page.getByRole('link', {name: dataSetLabel}).first().click();
 
 		await Promise.all([
 			expect(this.pageContainer).toBeInViewport(),

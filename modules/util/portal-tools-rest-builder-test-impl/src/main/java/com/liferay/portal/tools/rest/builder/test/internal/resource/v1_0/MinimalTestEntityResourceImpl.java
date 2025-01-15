@@ -5,7 +5,16 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MinimalTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MinimalTestEntityResource;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -19,4 +28,18 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class MinimalTestEntityResourceImpl
 	extends BaseMinimalTestEntityResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return Collections::emptyMap;
+	}
+
+	@Override
+	public Page<MinimalTestEntity> getMinimalTestEntitiesPage() {
+		return Page.of(_minimalTestEntities);
+	}
+
+	private static final List<MinimalTestEntity> _minimalTestEntities =
+		new ArrayList<>();
+
 }

@@ -108,6 +108,16 @@ components:
                     type: string
                 externalReferenceCode:
                     type: string
+                friendlyUrlPath:
+                    description:
+                        A relative URL to the page's rendered content.
+                    type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized relative URLs to the page's rendered content.
+                    type: object
                 id:
                     format: int64
                     type: integer

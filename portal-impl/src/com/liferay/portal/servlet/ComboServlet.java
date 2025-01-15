@@ -488,10 +488,6 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent =
 							matcher.group(1) + "../o/" + matcher.group(3);
 					}
-					else {
-						stringFileContent = MinifierUtil.minifyJavaScript(
-							resourcePath, stringFileContent);
-					}
 
 					stringFileContent =
 						FrontendSourceMapUtil.stripJSSourceMapping(

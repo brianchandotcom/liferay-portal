@@ -44,24 +44,15 @@ describe('', () => {
 	beforeEach(() => {
 		cleanup();
 
+		window.document.createRange = () => ({
+			cloneRange: (range) => range,
+			getBoundingClientRect: () => 1,
+			getClientRects: () => 1,
+			setEnd: () => {},
+			setStart: () => {},
+		});
+
 		if (global.document) {
-			global.document.body.createTextRange = () => ({
-				commonAncestorContainer: {
-					nodeName: 'BODY',
-					ownerDocument: document,
-				},
-				getBoundingClientRect: () => {},
-				getClientRects: () => ({length: 0}),
-				setEnd: () => {},
-				setStart: () => {},
-			});
-
-			global.document.getSelection = () => {
-				return {
-					removeAllRanges: () => {},
-				};
-			};
-
 			const saveButton = global.document.createElement('button');
 			saveButton.classList.add('save-button');
 

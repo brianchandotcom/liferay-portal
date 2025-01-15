@@ -20,6 +20,14 @@ const renderModal = async ({initialContent = '', onClose, onSave} = {}) => {
 		return textRange;
 	};
 
+	window.document.createRange = () => ({
+		cloneRange: (range) => range,
+		getBoundingClientRect: () => 1,
+		getClientRects: () => 1,
+		setEnd: () => {},
+		setStart: () => {},
+	});
+
 	render(
 		<HTMLEditorModal
 			initialContent={initialContent}

@@ -1,5 +1,18 @@
 <#assign pageTitle = layout.getName(locale) />
 
+<#if currentURL?has_content>
+<#assign url = currentURL firstSegment = url?split('/')[3]?split('\\?')[0] />
+
+<#if firstSegment !="v">
+	<#assign searchTerm = "Capability" />
+	<#else>
+	  <#assign taxonomyCategoryId = url?split("/v/")[1]?split("?")[0]
+		capabilityName=restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId}").name
+		searchTerm=capabilityName
+			/>
+</#if>
+</#if>
+
 <@liferay_aui.fieldset cssClass="search-bar">
 	<@liferay_aui.input
 		cssClass="search-bar-empty-search-input"
@@ -14,8 +27,8 @@
 			class="form-control input-group-inset input-group-inset-after search-bar-keywords-input"
 			data-qa-id="searchInput"
 			id="${namespace + stringUtil.randomId()}"
-			name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
-			placeholder="Search ${pageTitle}"
+	  name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
+	  placeholder="Search ${searchTerm}"
 			title="${languageUtil.get(locale, "Search")}"
 			type="text"
 			value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}"

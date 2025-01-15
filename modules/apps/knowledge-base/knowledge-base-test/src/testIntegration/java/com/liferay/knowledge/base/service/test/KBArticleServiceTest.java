@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -36,7 +35,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -63,21 +61,10 @@ public class KBArticleServiceTest {
 		_kbFolderClassNameId = ClassNameLocalServiceUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		_originalName = PrincipalThreadLocal.getName();
-
-		_user = TestPropsValues.getUser();
-
-		PrincipalThreadLocal.setName(_user.getUserId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, _user.getUserId());
+			_group, TestPropsValues.getUserId());
 
 		_testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
-	}
-
-	@After
-	public void tearDown() {
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@FeatureFlags("LPD-11003")
@@ -95,7 +82,8 @@ public class KBArticleServiceTest {
 					otherUser.getUserId(), kbArticle.getResourcePrimKey()));
 			Assert.assertFalse(
 				_kbArticleLocalService.hasKBArticleLock(
-					_user.getUserId(), kbArticle.getResourcePrimKey()));
+					TestPropsValues.getUserId(),
+					kbArticle.getResourcePrimKey()));
 
 			_kbArticleService.forceLockKBArticle(
 				_group.getGroupId(), kbArticle.getResourcePrimKey());
@@ -105,7 +93,8 @@ public class KBArticleServiceTest {
 					otherUser.getUserId(), kbArticle.getResourcePrimKey()));
 			Assert.assertTrue(
 				_kbArticleLocalService.hasKBArticleLock(
-					_user.getUserId(), kbArticle.getResourcePrimKey()));
+					TestPropsValues.getUserId(),
+					kbArticle.getResourcePrimKey()));
 		}
 		finally {
 			_kbArticleService.deleteKBArticle(kbArticle.getResourcePrimKey());
@@ -165,9 +154,7 @@ public class KBArticleServiceTest {
 	private KBArticleService _kbArticleService;
 
 	private long _kbFolderClassNameId;
-	private String _originalName;
 	private ServiceContext _serviceContext;
 	private String _testPortletId;
-	private User _user;
 
 }

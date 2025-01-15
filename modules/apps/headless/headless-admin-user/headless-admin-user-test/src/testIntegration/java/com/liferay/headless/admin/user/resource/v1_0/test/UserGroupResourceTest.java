@@ -8,15 +8,22 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.text.DateFormat;
+
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -76,6 +83,14 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		users = _userLocalService.getUserGroupUsers(userGroup.getId());
 
 		Assert.assertFalse(users.contains(user));
+	}
+
+	@Override
+	@Test
+	public void testGetUserGroupsPage() throws Exception {
+		super.testGetUserGroupsPage();
+
+		_testGetUserGroupsPageWithFilters();
 	}
 
 	@Override
@@ -275,6 +290,59 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	private UserGroup _postUserGroup(UserGroup userGroup) throws Exception {
 		return userGroupResource.postUserGroup(userGroup);
+	}
+
+	private void _testGetUserGroupsPageWithFilters() throws Exception {
+		Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		Date date = userGroup1.getDateCreated();
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		page = userGroupResource.getUserGroupsPage(
+			null, "dateCreated lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount, page.getTotalCount());
+
+		page = userGroupResource.getUserGroupsPage(
+			null, "dateCreated ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		userGroup1.setDescription(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		userGroup1 = userGroupResource.patchUserGroup(
+			userGroup1.getId(), userGroup1);
+
+		date = userGroup1.getDateModified();
+
+		page = userGroupResource.getUserGroupsPage(
+			null, "dateModified ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		assertContains(userGroup1, (List<UserGroup>)page.getItems());
+
+		page = userGroupResource.getUserGroupsPage(
+			null, "dateModified lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		assertContains(userGroup2, (List<UserGroup>)page.getItems());
 	}
 
 	@Inject

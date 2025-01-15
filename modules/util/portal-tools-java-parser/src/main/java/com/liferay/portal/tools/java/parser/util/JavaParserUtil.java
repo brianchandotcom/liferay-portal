@@ -1888,7 +1888,9 @@ public class JavaParserUtil {
 				return modifiers;
 			}
 
-			if (childDetailAST.getType() != TokenTypes.ANNOTATION) {
+			if ((childDetailAST.getType() != TokenTypes.ANNOTATION) &&
+				(childDetailAST.getType() != TokenTypes.STRICTFP)) {
+
 				modifiers.add(new JavaSimpleValue(childDetailAST.getText()));
 			}
 

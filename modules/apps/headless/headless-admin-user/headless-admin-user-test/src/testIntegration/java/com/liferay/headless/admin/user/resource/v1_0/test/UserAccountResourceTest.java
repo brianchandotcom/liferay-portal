@@ -108,6 +108,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -118,6 +119,8 @@ import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.mail.MailMessage;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -1118,6 +1121,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testPostUserAccount() throws Exception {
 		super.testPostUserAccount();
 
+		_testPostUserAccountBatch();
 		_testPostUserAccountWithApprovalWorkflow();
 		_testPostUserAccountWithGender();
 		_testPostUserAccountWithImageExternalReferenceCode();
@@ -2438,6 +2442,37 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
+	private void _testPostUserAccountBatch() throws Exception {
+		UserAccount randomUserAccount = _randomUserAccount(
+			userAccount -> userAccount.setPassword(StringPool.BLANK));
+
+		_waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"items",
+					JSONUtil.put(
+						_jsonFactory.createJSONObject(
+							randomUserAccount.toString()))
+				).toString(),
+				"headless-admin-user/v1.0/user-accounts/batch",
+				Http.Method.POST));
+
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+		String body = mailMessage.getBody();
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			body,
+			body.contains(
+				StringBundler.concat(
+					company.getPortalURL(0), Portal.PATH_MAIN,
+					"/portal/update_password")));
+	}
+
 	private void _testPostUserAccountWithApprovalWorkflow() throws Exception {
 		UserAccount postUserAccount = userAccountResource.postUserAccount(
 			randomUserAccount());
@@ -2665,6 +2700,33 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	private long[] _toUserIds(List<User> users) {
 		return ListUtil.toLongArray(users, User.USER_ID_ACCESSOR);
+	}
+
+	private JSONObject _waitForFinish(
+			String expectedExecuteStatus, boolean importTask,
+			JSONObject jsonObject)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			"headless-batch-engine/v1.0/",
+			importTask ? "import-task" : "export-task",
+			"/by-external-reference-code/");
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null, endpoint + jsonObject.getString("externalReferenceCode"),
+				Http.Method.GET);
+
+			String executeStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals(expectedExecuteStatus, executeStatus);
+
+				return jsonObject;
+			}
+		}
 	}
 
 	private AccountEntry _accountEntry;

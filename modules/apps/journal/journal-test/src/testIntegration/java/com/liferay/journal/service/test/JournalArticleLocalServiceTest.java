@@ -1272,7 +1272,7 @@ public class JournalArticleLocalServiceTest {
 		article1 = JournalTestUtil.updateArticle(article1);
 		article1 = JournalTestUtil.updateArticle(article1);
 
-		JournalArticle article2 = JournalTestUtil.updateArticle(article1);
+		JournalArticle articleToExpire = JournalTestUtil.updateArticle(article1);
 
 		article1 = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article1.getArticleId());
@@ -1280,18 +1280,18 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(1.3, article1.getVersion(), 0);
 
 		JournalTestUtil.expireArticle(
-			_group.getGroupId(), article2, article2.getVersion());
+			_group.getGroupId(), articleToExpire, articleToExpire.getVersion());
 
 		article1 = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article1.getArticleId());
 
 		Assert.assertEquals(1.2, article1.getVersion(), 0);
 
-		article2.setDisplayDate(
+		articleToExpire.setDisplayDate(
 			new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
-		article2.setStatus(WorkflowConstants.STATUS_APPROVED);
+		articleToExpire.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		JournalTestUtil.updateArticle(article2);
+		JournalTestUtil.updateArticle(articleToExpire);
 
 		article1 = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article1.getArticleId());

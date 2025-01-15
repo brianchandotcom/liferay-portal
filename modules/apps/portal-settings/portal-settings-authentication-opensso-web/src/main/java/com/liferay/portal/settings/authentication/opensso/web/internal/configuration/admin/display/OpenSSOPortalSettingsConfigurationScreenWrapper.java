@@ -30,6 +30,11 @@ public class OpenSSOPortalSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
+	public boolean isDeprecated() {
+		return true;
+	}
+
+	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _portalSettingsConfigurationScreenFactory.create(
 			new OpenSSOPortalSettingsConfigurationScreenContributor());
@@ -96,6 +101,11 @@ public class OpenSSOPortalSettingsConfigurationScreenWrapper
 			RenderRequest renderRequest, RenderResponse renderResponse) {
 
 			return renderResponse.getNamespace() + "testOpenSSOSettings();";
+		}
+
+		@Override
+		public boolean isDeprecated() {
+			return true;
 		}
 
 		@Override

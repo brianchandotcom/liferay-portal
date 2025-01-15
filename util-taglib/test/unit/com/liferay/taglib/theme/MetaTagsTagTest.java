@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListMergeable;
@@ -88,18 +89,17 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-45944")
 	public void testMetaTagsTagDescription() throws Exception {
 		_testDescriptionMetaTagsTag(
 			false, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		_testDescriptionMetaTagsTag(
-			true, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_testDescriptionMetaTagsTag(false, RandomTestUtil.randomString(), null);
-		_testDescriptionMetaTagsTag(
-			false, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+		_testDescriptionMetaTagsTag(false, null, RandomTestUtil.randomString());
 		_testDescriptionMetaTagsTag(
 			true, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		_testDescriptionMetaTagsTag(true, RandomTestUtil.randomString(), null);
+		_testDescriptionMetaTagsTag(true, null, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -259,7 +259,7 @@ public class MetaTagsTagTest {
 		String localizedDescription = null;
 		String metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN);
 
-		if (defaultLanguage) {
+		if (defaultLanguage && Validator.isNotNull(layoutDescription)) {
 			defaultDescription = layoutDescription;
 			metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.US);
 		}

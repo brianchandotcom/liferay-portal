@@ -1,0 +1,74 @@
+[
+	{
+		"key": "2024q43",
+		"name": "2024.q4.3",
+		"name_i18n": {
+			"en-US": "2024.q4.3"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2024q313",
+		"name": "2024.q3.13",
+		"name_i18n": {
+			"en-US": "2024.q3.13"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2024q212",
+		"name": "2024.q2.12",
+		"name_i18n": {
+			"en-US": "2024.q2.12"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2024q112",
+		"name": "2024.q1.12",
+		"name_i18n": {
+			"en-US": "2024.q1.12"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2023q49",
+		"name": "2023.q4.9",
+		"name_i18n": {
+			"en-US": "2023.q4.9"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2023q39",
+		"name": "2023.q3.9",
+		"name_i18n": {
+			"en-US": "2023.q3.9"
+		},
+		"type": "string"
+	},
+	{
+		"key": "7413u112",
+		"name": "7.4.13.u112",
+		"name_i18n": {
+			"en-US": "7.4.13.u112"
+		},
+		"type": "string"
+	},
+	{
+		"key": "7310u36",
+		"name": "7.3.10.u36",
+		"name_i18n": {
+			"en-US": "7.3.10.u36"
+		},
+		"type": "string"
+	},
+	{
+		"key": "72108",
+		"name": "7.2.10.8",
+		"name_i18n": {
+			"en-US": "7.2.10.8"
+		},
+		"type": "string"
+	}
+]

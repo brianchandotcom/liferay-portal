@@ -32,6 +32,14 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 			<liferay-ui:message key="<%= portalSettingsConfigurationScreenContributor.getName(locale) %>" />
 		</clay:content-col>
 
+		<c:if test="<%= portalSettingsConfigurationScreenContributor.isDeprecated() %>">
+			<clay:content-col>
+				<liferay-frontend:feature-indicator
+					type="deprecated"
+				/>
+			</clay:content-col>
+		</c:if>
+
 		<c:if test="<%= Validator.isNotNull(portalSettingsConfigurationScreenContributor.getDeleteMVCActionCommandName()) || Validator.isNotNull(portalSettingsConfigurationScreenContributor.getTestButtonOnClick(renderRequest, renderResponse)) %>">
 			<clay:content-col
 				containerElement="span"

@@ -384,8 +384,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			insertPartitionRequiredData();
 
-			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
-
 			_testForEachCompanyId(false);
 			_testForEachCompanyId(true);
 		}

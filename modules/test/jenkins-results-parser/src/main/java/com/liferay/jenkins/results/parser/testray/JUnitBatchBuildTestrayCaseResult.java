@@ -145,22 +145,28 @@ public class JUnitBatchBuildTestrayCaseResult
 			sb.append(" Skipped ");
 			sb.append(
 				JenkinsResultsParserUtil.getNounForm(
-					skippedTests.size(), "test: ", "test: "));
-			sb.append(JenkinsResultsParserUtil.join(", ", skippedTests));
+					skippedTests.size(), "tests", "test"));
+			sb.append("\n    ");
+			sb.append(JenkinsResultsParserUtil.join("\n    ", skippedTests));
 		}
 
 		if (!errorMessages.isEmpty()) {
+			if (!sb.isEmpty()) {
+				sb.append("\n\n");
+			}
+
 			sb.append(errorMessages.size());
 			sb.append(" Failed ");
 			sb.append(
 				JenkinsResultsParserUtil.getNounForm(
-					errorMessages.size(), "test: ", "test: "));
+					errorMessages.size(), "tests", "test"));
+			sb.append("\n    ");
 			sb.append(
 				JenkinsResultsParserUtil.join(
-					", ", new ArrayList<>(errorMessages.keySet())));
+					"\n     ", new ArrayList<>(errorMessages.keySet())));
 		}
 
-		if (sb.length() != 0) {
+		if (!sb.isEmpty()) {
 			return sb.toString();
 		}
 

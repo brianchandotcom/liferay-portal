@@ -90,7 +90,8 @@ public class UpdatePasswordActionTest {
 
 		Assert.assertNotNull(user.getLastLoginDate());
 
-		// Update password returns alert message when the ticket is no longer valid
+		// Update password returns alert message when the ticket is no
+		// longer valid
 
 		URL url = new URL(
 			StringBundler.concat(

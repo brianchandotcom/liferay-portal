@@ -65,6 +65,7 @@
 												"expandedLevels": "auto",
 												"rootMenuItemLevel": "0",
 												"rootMenuItemType": "absolute",
+												"siteNavigationMenuExternalReferenceCode": "SITENAVIGATIONMENU1",
 												"siteNavigationMenuName": "Main Navigation",
 												"siteNavigationMenuType": "-1"
 											},
@@ -347,6 +348,7 @@
 												"expandedLevels": "auto",
 												"rootMenuItemLevel": "0",
 												"rootMenuItemType": "absolute",
+												"siteNavigationMenuExternalReferenceCode": "SITENAVIGATIONMENU1",
 												"siteNavigationMenuName": "Main Navigation",
 												"siteNavigationMenuType": "-1"
 											},

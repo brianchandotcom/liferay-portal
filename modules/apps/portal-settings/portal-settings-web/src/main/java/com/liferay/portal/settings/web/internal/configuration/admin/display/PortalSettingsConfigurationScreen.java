@@ -60,6 +60,11 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
+	public boolean isDeprecated() {
+		return _portalSettingsConfigurationScreenContributor.isDeprecated();
+	}
+
+	@Override
 	public boolean isVisible() {
 		return _portalSettingsConfigurationScreenContributor.isVisible();
 	}

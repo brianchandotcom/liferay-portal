@@ -47,6 +47,10 @@ public interface PortalSettingsConfigurationScreenContributor {
 		return null;
 	}
 
+	public default boolean isDeprecated() {
+		return false;
+	}
+
 	public default boolean isVisible() {
 		return true;
 	}

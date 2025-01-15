@@ -338,6 +338,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _isScope(Scope.COMPANY);
 	}
 
+	public boolean isDeprecated() {
+		return GetterUtil.getBoolean(_extensionAttributes.get("deprecated"));
+	}
+
 	public boolean isFactory() {
 		return _factory;
 	}

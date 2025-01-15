@@ -110,6 +110,11 @@ public class ConfigurationModelConfigurationEntry
 		return Objects.hash(_configurationModel);
 	}
 
+	@Override
+	public boolean isDeprecated() {
+		return _configurationModel.isDeprecated();
+	}
+
 	private final ConfigurationModel _configurationModel;
 	private final Locale _locale;
 

@@ -24,4 +24,6 @@ public interface ConfigurationEntry {
 
 	public String getScope();
 
+	public boolean isDeprecated();
+
 }

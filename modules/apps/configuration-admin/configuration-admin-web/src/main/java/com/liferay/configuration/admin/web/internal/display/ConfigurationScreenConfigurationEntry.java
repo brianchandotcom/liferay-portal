@@ -93,6 +93,11 @@ public class ConfigurationScreenConfigurationEntry
 		return hash;
 	}
 
+	@Override
+	public boolean isDeprecated() {
+		return _configurationScreen.isDeprecated();
+	}
+
 	private final ConfigurationScreen _configurationScreen;
 	private final Locale _locale;
 

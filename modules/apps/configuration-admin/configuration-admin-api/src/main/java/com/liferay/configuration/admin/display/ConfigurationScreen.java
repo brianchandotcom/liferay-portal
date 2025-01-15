@@ -25,6 +25,10 @@ public interface ConfigurationScreen {
 
 	public String getScope();
 
+	public default boolean isDeprecated() {
+		return false;
+	}
+
 	public default boolean isVisible() {
 		return true;
 	}

@@ -76,7 +76,6 @@ public class FaroProjectAdminDisplay {
 
 			_pageViewsUsage = document.get("pageViewsUsage");
 
-			/*  need to make changes here */
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -279,8 +278,6 @@ public class FaroProjectAdminDisplay {
 
 		return null;
 	}
-
-//	some changes might be needed here, check how it returns
 
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1306,6 +1306,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setPasswordReset(passwordReset);
+
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setLdapServerId(ldapServerId);

@@ -478,6 +478,10 @@ public class FragmentEntryLinkManager {
 			jsonObject.put(
 				clazz.getSimpleName(),
 				JSONUtil.put(
+					"group",
+					editModePortletConfigurationIcon.
+						getPortletConfigurationIconGroup()
+				).put(
 					"icon", editModePortletConfigurationIcon.getIcon()
 				).put(
 					"title",

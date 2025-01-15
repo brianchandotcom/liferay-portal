@@ -55,7 +55,13 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		attrs.put("aggregate", "true");
 		attrs.put("bundle.symbolic.name", analyzer.getBsn());
-		attrs.put("module.only", "true");
+
+		if (header.equals(
+				ResourceBundleLoaderAnalyzerPlugin.
+					LIFERAY_LANGUAGE_RESOURCES)) {
+
+			attrs.put("module.only", "true");
+		}
 
 		StringBuilder resourceBundleAggregate = new StringBuilder();
 

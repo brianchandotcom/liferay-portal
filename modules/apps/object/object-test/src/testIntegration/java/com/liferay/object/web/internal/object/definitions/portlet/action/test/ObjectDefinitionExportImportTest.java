@@ -148,6 +148,66 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
 
+		// Account Restricted Object Definition
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String name = ObjectDefinitionTestUtil.getRandomName();
+
+		JSONObject accountRestrictedObjectDefinitionJSONObject =
+			jsonFactory.createJSONObject(
+				defaultObjectDefinitionJSON
+			).put(
+				"accountEntryRestricted", true
+			).put(
+				"accountEntryRestrictedObjectFieldName",
+				"r_testAccountRelationship_accountEntryId"
+			).put(
+				"active", true
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"name", name
+			).put(
+				"status",
+				jsonFactory.createJSONObject(
+				).put(
+					"code", 0
+				).put(
+					"label", "approved"
+				).put(
+					"label_i18n", "Approved"
+				)
+			);
+
+		accountRestrictedObjectDefinitionJSONObject.put(
+			"objectFields",
+			JSONUtil.concat(
+				accountRestrictedObjectDefinitionJSONObject.getJSONArray(
+					"objectFields"),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"businessType", "Relationship"
+					).put(
+						"name", "r_testAccountRelationship_accountEntryId"
+					).put(
+						"objectDefinitionExternalReferenceCode1", "L_ACCOUNT"
+					).put(
+						"objectRelationshipExternalReferenceCode",
+						"OBJECTRELATIONSHIPERC"
+					))));
+
+		testExportImportJSON(
+			accountRestrictedObjectDefinitionJSONObject.toString(),
+			accountRestrictedObjectDefinitionJSONObject.toString(),
+			externalReferenceCode, name);
+
+		ObjectDefinition testAccountRestrictedObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertTrue(
+			testAccountRestrictedObjectDefinition.getAccountEntryRestricted());
+
 		// Custom object definition
 
 		testExportImport(
@@ -176,8 +236,8 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 		// Published object definition
 
-		String externalReferenceCode = RandomTestUtil.randomString();
-		String name = ObjectDefinitionTestUtil.getRandomName();
+		externalReferenceCode = RandomTestUtil.randomString();
+		name = ObjectDefinitionTestUtil.getRandomName();
 
 		String publishedObjectDefinitionJSON = jsonFactory.createJSONObject(
 			defaultObjectDefinitionJSON

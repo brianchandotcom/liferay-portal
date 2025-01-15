@@ -250,8 +250,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		return getJavaScriptContent(
-			StringUtil.merge(fileNames, "+"), sb.toString());
+		return sb.toString();
 	}
 
 	@Override
@@ -266,12 +265,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		_tempDir = new File(tempDir, _TEMP_DIR);
 
 		_tempDir.mkdirs();
-	}
-
-	protected static String getJavaScriptContent(
-		String resourceName, String content) {
-
-		return MinifierUtil.minifyJavaScript(resourceName, content);
 	}
 
 	protected Object getBundleContent(
@@ -469,9 +462,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					_log.info("Minifying JavaScript " + resourcePath);
 				}
 
-				content = getJavaScriptContent(
-					httpServletRequest, httpServletResponse, resourcePath,
-					resourceURL);
+				content = _readResource(
+					httpServletRequest, httpServletResponse, resourcePath);
 
 				httpServletResponse.setContentType(
 					ContentTypes.TEXT_JAVASCRIPT);
@@ -498,9 +490,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 						httpServletRequest, httpServletResponse, resourcePath,
 						content);
 				}
-				else if (minifierType.equals("js")) {
-					content = getJavaScriptContent(resourcePath, content);
-				}
 
 				FileUtil.write(
 					cacheContentTypeFile,
@@ -524,7 +513,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				HttpHeaders.CACHE_CONTROL, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
 			String finalContent = content;
-			String finalResourcePath = resourcePath;
 
 			NoticeableFuture<String> noticeableFuture =
 				_noticeableFutures.computeIfAbsent(
@@ -546,9 +534,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 										finalContent);
 								}
 								else {
-									minifiedContent =
-										MinifierUtil.minifyJavaScript(
-											finalResourcePath, finalContent);
+									minifiedContent = finalContent;
 								}
 
 								minifiedContent = StringBundler.concat(
@@ -673,18 +659,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 			return content;
 		}
-	}
-
-	protected String getJavaScriptContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String resourcePath,
-			URL resourceURL)
-		throws Exception {
-
-		String content = _readResource(
-			httpServletRequest, httpServletResponse, resourcePath);
-
-		return getJavaScriptContent(resourceURL.toString(), content);
 	}
 
 	@Override

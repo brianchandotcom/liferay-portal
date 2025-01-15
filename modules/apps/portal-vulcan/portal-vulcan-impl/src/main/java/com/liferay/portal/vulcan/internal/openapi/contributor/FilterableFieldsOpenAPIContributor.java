@@ -29,7 +29,6 @@ import io.swagger.v3.oas.models.media.Schema;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -68,14 +67,8 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		for (Schema schema : schemas.values()) {
-			Map<String, EntityField> entityFieldsMap = _getEntityFieldsMap(
-				openAPIContext, schema);
-
-			List<String> filterableFields =
-				MapUtil.isEmpty(entityFieldsMap) ? Collections.emptyList() :
-					_getFilterableFields(entityFieldsMap);
-
-			schema.addExtension("x-filterable", filterableFields);
+			schema.addExtension(
+				"x-filterable", _getFilterableFields(openAPIContext, schema));
 		}
 	}
 
@@ -204,7 +197,15 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 	}
 
 	private List<String> _getFilterableFields(
-		Map<String, EntityField> entityFieldsMap) {
+			OpenAPIContext openAPIContext, Schema schema)
+		throws Exception {
+
+		Map<String, EntityField> entityFieldsMap = _getEntityFieldsMap(
+			openAPIContext, schema);
+
+		if (MapUtil.isEmpty(entityFieldsMap)) {
+			return new ArrayList<>();
+		}
 
 		Queue<Map.Entry<String, EntityField>> entryQueue = new LinkedList<>(
 			TransformUtil.transform(

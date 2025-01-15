@@ -94,7 +94,22 @@ public class StagingDataPortletPreferencesTest
 
 	@Test
 	public void testDDLDisplayPortletPreferences() throws Exception {
-		_setupDDLDisplayPortlet();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ServiceTracker<Portlet, Portlet> serviceTracker =
+			ServiceTrackerFactory.open(
+				bundle.getBundleContext(),
+				StringBundler.concat(
+					"(javax.portlet.name=", DDLPortletKeys.DYNAMIC_DATA_LISTS,
+					")"),
+				null);
+
+		try {
+			Assert.assertNotNull(serviceTracker.waitForService(10000));
+		}
+		finally {
+			serviceTracker.close();
+		}
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
@@ -317,27 +332,6 @@ public class StagingDataPortletPreferencesTest
 	}
 
 	protected PortletPreferences livePortletPreferences;
-
-	private void _setupDDLDisplayPortlet() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		ServiceTracker<Portlet, Portlet> serviceTracker =
-			ServiceTrackerFactory.open(
-				bundle.getBundleContext(),
-				StringBundler.concat(
-					"(javax.portlet.name=", DDLPortletKeys.DYNAMIC_DATA_LISTS,
-					")"),
-				null);
-
-		try {
-			Assert.assertNotNull(
-				DDLPortletKeys.DYNAMIC_DATA_LISTS + " is not available",
-				serviceTracker.waitForService(10000));
-		}
-		finally {
-			serviceTracker.close();
-		}
-	}
 
 	@Inject
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

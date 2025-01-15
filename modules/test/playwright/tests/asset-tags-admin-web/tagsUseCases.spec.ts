@@ -168,7 +168,12 @@ test('Add an auto assertion tag via blogs widget', async ({
 			trigger: page.getByRole('button', {name: 'Publish'}),
 		});
 
-		await page.locator('.alert-success', {hasText: 'Success:Your request completed successfully.'}).first().waitFor()
+		await page
+			.locator('.alert-success', {
+				hasText: 'Success:Your request completed successfully.',
+			})
+			.first()
+			.waitFor();
 
 		await expect(page.getByText('first third')).toBeVisible({
 			timeout: 5000,

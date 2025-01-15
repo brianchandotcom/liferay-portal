@@ -104,10 +104,9 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 				getListTypeDefinitionByExternalReferenceCode(
 					listTypeDefinitionExternalReferenceCode, companyId);
 
-		listTypeDefinition.setName(listTypeDefinitionName);
-
 		listTypeDefinition.setExternalReferenceCode(
 			newListTypeDefinitionExternalReferenceCode);
+		listTypeDefinition.setName(listTypeDefinitionName);
 
 		listTypeDefinition =
 			_listTypeDefinitionLocalService.updateListTypeDefinition(

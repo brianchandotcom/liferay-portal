@@ -23,6 +23,7 @@ import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
+import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectDefinition;
@@ -53,6 +54,7 @@ import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1749,6 +1752,22 @@ public class ObjectRelationshipLocalServiceImpl
 			long newRootObjectDefinitionId)
 		throws PortalException {
 
+		try {
+			ObjectDefinitionResourcePermissionUtil.
+				populateRootDescendantNodeModelResources(
+					_objectActionPersistence, _objectDefinitionPersistence,
+					_resourceActions, objectDefinition1,
+					newRootObjectDefinitionId);
+
+			ObjectDefinitionResourcePermissionUtil.
+				removeRootDescendantNodeModelResources(
+					_objectDefinitionPersistence, _resourceActions,
+					objectDefinition1, oldRootObjectDefinitionId);
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
+		}
+
 		if (newRootObjectDefinitionId == 0) {
 			return;
 		}
@@ -2350,6 +2369,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

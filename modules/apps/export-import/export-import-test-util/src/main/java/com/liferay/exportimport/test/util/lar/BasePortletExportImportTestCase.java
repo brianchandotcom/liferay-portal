@@ -216,7 +216,24 @@ public abstract class BasePortletExportImportTestCase
 
 		portletPreferences.store();
 
-		Thread.sleep(1000);
+		int delay = 1;
+
+		for (int i = 0; i < 1000; i++) {
+			PortletPreferences reloadedportletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					layout, getPortletId());
+
+			if (Objects.equals(
+					String.valueOf(lastPublishDate.getTime()),
+					reloadedportletPreferences.getValue(
+						"last-publish-date", null))) {
+
+				break;
+			}
+
+			Thread.sleep(delay);
+			delay = Math.min(100, delay * 2);
+		}
 
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(

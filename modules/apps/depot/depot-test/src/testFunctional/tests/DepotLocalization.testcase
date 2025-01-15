@@ -102,8 +102,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		Click(
 			key_fieldName = "Description",
@@ -112,8 +112,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -124,8 +124,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		DMDocumentType.gotoTab(tabName = "Details");
 
@@ -134,8 +134,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -148,8 +148,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		Click.clickNoMouseOver(locator1 = "Form#SIDEBAR_PROPERTIES_TAB");
 
@@ -158,8 +158,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 	}
 
 	@description = "This ensures that the web content language can be set in a depot."
@@ -229,8 +229,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		Click(
 			key_fieldName = "Description",
@@ -239,8 +239,8 @@ definition {
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -253,10 +253,10 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		Depot.viewLanguageOrderInWebContent(
-			localizationName1 = "en-US",
-			localizationName2 = "es-ES",
-			localizationName3 = "ja-JP",
-			localizationName4 = "fr-FR");
+			localizationName1 = "es-ES",
+			localizationName2 = "en-US",
+			localizationName3 = "fr-FR",
+			localizationName4 = "ja-JP");
 	}
 
 }

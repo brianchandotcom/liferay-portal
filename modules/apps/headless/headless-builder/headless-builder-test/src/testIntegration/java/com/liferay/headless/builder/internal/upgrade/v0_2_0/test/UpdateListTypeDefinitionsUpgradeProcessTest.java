@@ -85,9 +85,9 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		for (String externalReferenceCode :
 				Arrays.asList(
-					"APPLICATION_STATUS_PICKLIST", "HTTP_METHOD_PICKLIST",
-					"L_API_PROPERTY_TYPES", "RETRIEVE_TYPE_PICKLIST",
-					"SCOPE_PICKLIST")) {
+					"L_API_APPLICATION_STATUSES", "L_API_ENDPOINT_HTTP_METHODS",
+					"L_API_ENDPOINT_RETRIEVE_TYPES", "L_API_ENDPOINT_SCOPES",
+					"L_API_PROPERTY_TYPES")) {
 
 			ListTypeDefinition listTypeDefinition =
 				_listTypeDefinitionLocalService.
@@ -125,21 +125,21 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		_assertUpgrade(
 			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
-			"unpublished", "APPLICATION_STATUS_PICKLIST", "L_API_APPLICATION",
+			"unpublished", "L_API_APPLICATION_STATUSES", "L_API_APPLICATION",
 			"APPLICATION_STATUS");
 
 		_assertUpgrade(
-			"HTTP Method", "GET", "POST", "get", "post", "HTTP_METHOD_PICKLIST",
-			"L_API_ENDPOINT", "HTTP_METHOD");
+			"HTTP Method", "GET", "POST", "get", "post",
+			"L_API_ENDPOINT_HTTP_METHODS", "L_API_ENDPOINT", "HTTP_METHOD");
 
 		_assertUpgrade(
 			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
-			"singleElement", "RETRIEVE_TYPE_PICKLIST", "L_API_ENDPOINT",
+			"singleElement", "L_API_ENDPOINT_RETRIEVE_TYPES", "L_API_ENDPOINT",
 			"RETRIEVE_TYPE");
 
 		_assertUpgrade(
-			"Scope", "COMPANY", "SITE", "company", "site", "SCOPE_PICKLIST",
-			"L_API_ENDPOINT", "SCOPE");
+			"Scope", "COMPANY", "SITE", "company", "site",
+			"L_API_ENDPOINT_SCOPES", "L_API_ENDPOINT", "SCOPE");
 	}
 
 	private void _assertUpgrade(

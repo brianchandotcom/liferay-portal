@@ -21,6 +21,9 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -121,6 +124,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2496,6 +2500,136 @@ public class ObjectEntryLocalServiceTest {
 
 	}
 
+	@FeatureFlags("LPD-21926")
+	@Test
+	public void testAddOrUpdateObjectEntryWithFriendlyURL() throws Exception {
+
+		// Scope by company
+
+		ObjectDefinition companyObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, Collections.emptyList());
+
+		ObjectEntry companyObjectEntry1 = _addObjectEntry(
+			0, companyObjectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		_assertURLTitleMap(
+			HashMapBuilder.put(
+				"en_US", companyObjectEntry1.getExternalReferenceCode()
+			).build(),
+			companyObjectDefinition, companyObjectEntry1);
+
+		companyObjectEntry1 = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), companyObjectEntry1.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "Test URL"
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_assertURLTitleMap(
+			HashMapBuilder.put(
+				"en_US", "test-url"
+			).build(),
+			companyObjectDefinition, companyObjectEntry1);
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				companyObjectDefinition.getObjectDefinitionId()
+			).build());
+
+		_objectDefinitionLocalService.updateTitleObjectFieldId(
+			companyObjectDefinition.getObjectDefinitionId(),
+			objectField.getObjectFieldId());
+
+		ObjectEntry companyObjectEntry2 = _addObjectEntry(
+			0, companyObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getI18nObjectFieldName(),
+				HashMapBuilder.put(
+					"en_US", "Test URL"
+				).put(
+					"pt_BR", "Test URL"
+				).build()
+			).put(
+				"able", RandomTestUtil.randomString()
+			).build());
+
+		_assertURLTitleMap(
+			HashMapBuilder.put(
+				"en_US", "test-url-1"
+			).put(
+				"pt_BR", "test-url-1"
+			).build(),
+			companyObjectDefinition, companyObjectEntry2);
+
+		_assertFriendlyURLEntriesSize(
+			2, companyObjectDefinition, companyObjectEntry1);
+		_assertFriendlyURLEntriesSize(
+			1, companyObjectDefinition, companyObjectEntry2);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			companyObjectDefinition);
+
+		// Scope by site
+
+		ObjectDefinition siteObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		siteObjectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		siteObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				siteObjectDefinition);
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		ObjectEntry siteObjectEntry1 = _addObjectEntry(
+			group1.getGroupId(), siteObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "Test URL"
+			).build());
+
+		_assertURLTitleMap(
+			HashMapBuilder.put(
+				"en_US", "test-url"
+			).build(),
+			siteObjectDefinition, siteObjectEntry1);
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		ObjectEntry siteObjectEntry2 = _addObjectEntry(
+			group2.getGroupId(), siteObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "Test URL"
+			).build());
+
+		_assertURLTitleMap(
+			HashMapBuilder.put(
+				"en_US", "test-url"
+			).build(),
+			siteObjectDefinition, siteObjectEntry2);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			siteObjectDefinition);
+
+		_assertFriendlyURLEntriesSize(
+			0, siteObjectDefinition, siteObjectEntry1);
+		_assertFriendlyURLEntriesSize(
+			0, siteObjectDefinition, siteObjectEntry2);
+	}
+
 	@Test
 	public void testAddOrUpdateObjectEntryWithObjectDefinitionTree()
 		throws Exception {
@@ -4497,6 +4631,38 @@ public class ObjectEntryLocalServiceTest {
 			objectValidationRuleResults.get(0));
 	}
 
+	private void _assertFriendlyURLEntriesSize(
+			int expectedSize, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			objectDefinition.getClassName());
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				objectEntry.getNonzeroGroupId(), classNameId,
+				objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			friendlyURLEntries.toString(), expectedSize,
+			friendlyURLEntries.size());
+
+		if (expectedSize == 0) {
+			return;
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				objectEntry.getNonzeroGroupId(), classNameId,
+				objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			friendlyURLEntries.toString(), 0, friendlyURLEntries.size());
+	}
+
 	private void _assertKeywords(String keywords, int count) throws Exception {
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			_objectEntryLocalService.searchObjectEntries(
@@ -4562,6 +4728,31 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedObjectFieldName,
 			objectValidationRuleResult.getObjectFieldName());
+	}
+
+	private void _assertURLTitleMap(
+			Map<String, String> expectedURLTitleMap,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, String> actualURLTitleMap = new HashMap<>();
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					friendlyURLEntry.getFriendlyURLEntryId())) {
+
+			actualURLTitleMap.put(
+				friendlyURLEntryLocalization.getLanguageId(),
+				friendlyURLEntryLocalization.getUrlTitle());
+		}
+
+		AssertUtils.assertEquals(expectedURLTitleMap, actualURLTitleMap);
 	}
 
 	private void _clearValidatedObjectEntryIds() {
@@ -5334,6 +5525,9 @@ public class ObjectEntryLocalServiceTest {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CounterLocalService _counterLocalService;
 
 	@Inject
@@ -5350,6 +5544,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private Encryptor _encryptor;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _irrelevantObjectDefinition;

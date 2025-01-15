@@ -76,7 +76,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,7 +91,7 @@ public class EditStyleBookEntryDisplayContext {
 			fragmentCollectionContributorRegistry,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderResponse renderResponse) {
 
 		_cetManager = cetManager;
 		_fragmentCollectionContributorRegistry =
@@ -100,7 +99,6 @@ public class EditStyleBookEntryDisplayContext {
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
-		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -629,7 +627,6 @@ public class EditStyleBookEntryDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private Long _previewItemsGroupId;
-	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private StyleBookEntry _styleBookEntry;
 	private Long _styleBookEntryId;

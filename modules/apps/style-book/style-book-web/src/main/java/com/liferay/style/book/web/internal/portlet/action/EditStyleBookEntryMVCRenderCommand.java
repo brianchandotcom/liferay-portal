@@ -11,9 +11,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.provider.GroupURLProvider;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
-import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 import com.liferay.style.book.web.internal.display.context.EditStyleBookEntryDisplayContext;
 
 import javax.portlet.RenderRequest;
@@ -38,25 +36,12 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		renderRequest.setAttribute(
-			StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-			_fragmentCollectionContributorRegistry);
-		renderRequest.setAttribute(
-			StyleBookWebKeys.ITEM_SELECTOR, _itemSelector);
-
-		renderRequest.setAttribute(
-			FrontendTokenDefinitionRegistry.class.getName(),
-			_frontendTokenDefinitionRegistry);
-		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
-		renderRequest.setAttribute(
-			GroupURLProvider.class.getName(), _groupURLProvider);
-
 		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
 			new EditStyleBookEntryDisplayContext(
 				_cetManager, _fragmentCollectionContributorRegistry,
 				_frontendTokenDefinitionRegistry,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
-				renderRequest, renderResponse);
+				renderResponse);
 
 		renderRequest.setAttribute(
 			EditStyleBookEntryDisplayContext.class.getName(),
@@ -74,9 +59,6 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
-
-	@Reference
-	private GroupURLProvider _groupURLProvider;
 
 	@Reference
 	private ItemSelector _itemSelector;

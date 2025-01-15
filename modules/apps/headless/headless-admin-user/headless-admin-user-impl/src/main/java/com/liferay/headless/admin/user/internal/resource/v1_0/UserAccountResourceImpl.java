@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -1008,6 +1010,16 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale()));
 
+		if (Validator.isNull(serviceContext.getPathMain()) ||
+			Validator.isNull(serviceContext.getPortalURL())) {
+
+			Company company = _companyService.getCompanyById(
+				contextCompany.getCompanyId());
+
+			serviceContext.setPathMain(Portal.PATH_MAIN);
+			serviceContext.setPortalURL(company.getPortalURL(0));
+		}
+
 		if (contextUser.isGuestUser()) {
 			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
 				CaptchaUtil.check(contextHttpServletRequest);
@@ -1881,6 +1893,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Reference
 	private CaptchaSettings _captchaSettings;
+
+	@Reference
+	private CompanyService _companyService;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

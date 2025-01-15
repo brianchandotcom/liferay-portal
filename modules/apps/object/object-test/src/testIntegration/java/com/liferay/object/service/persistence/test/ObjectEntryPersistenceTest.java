@@ -135,6 +135,10 @@ public class ObjectEntryPersistenceTest {
 
 		newObjectEntry.setObjectDefinitionId(RandomTestUtil.nextLong());
 
+		newObjectEntry.setObjectEntryFolderId(RandomTestUtil.nextLong());
+
+		newObjectEntry.setTreePath(RandomTestUtil.randomString());
+
 		newObjectEntry.setRootObjectEntryId(RandomTestUtil.nextLong());
 
 		newObjectEntry.setLastPublishDate(RandomTestUtil.nextDate());
@@ -180,6 +184,11 @@ public class ObjectEntryPersistenceTest {
 		Assert.assertEquals(
 			existingObjectEntry.getObjectDefinitionId(),
 			newObjectEntry.getObjectDefinitionId());
+		Assert.assertEquals(
+			existingObjectEntry.getObjectEntryFolderId(),
+			newObjectEntry.getObjectEntryFolderId());
+		Assert.assertEquals(
+			existingObjectEntry.getTreePath(), newObjectEntry.getTreePath());
 		Assert.assertEquals(
 			existingObjectEntry.getRootObjectEntryId(),
 			newObjectEntry.getRootObjectEntryId());
@@ -324,9 +333,10 @@ public class ObjectEntryPersistenceTest {
 			"externalReferenceCode", true, "objectEntryId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "rootObjectEntryId", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "objectEntryFolderId", true, "treePath", true,
+			"rootObjectEntryId", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -659,6 +669,10 @@ public class ObjectEntryPersistenceTest {
 		objectEntry.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectEntry.setObjectDefinitionId(RandomTestUtil.nextLong());
+
+		objectEntry.setObjectEntryFolderId(RandomTestUtil.nextLong());
+
+		objectEntry.setTreePath(RandomTestUtil.randomString());
 
 		objectEntry.setRootObjectEntryId(RandomTestUtil.nextLong());
 

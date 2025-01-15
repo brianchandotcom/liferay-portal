@@ -33,9 +33,9 @@ public class DefaultUtilityPageExceptionMapper
 	@Override
 	protected Problem getProblem(
 		DefaultLayoutUtilityPageEntryException
-			layoutUtilityPageEntryDefaultTemplateException) {
+			defaultLayoutUtilityPageEntryException) {
 
-		return new Problem(layoutUtilityPageEntryDefaultTemplateException);
+		return new Problem(defaultLayoutUtilityPageEntryException);
 	}
 
 }

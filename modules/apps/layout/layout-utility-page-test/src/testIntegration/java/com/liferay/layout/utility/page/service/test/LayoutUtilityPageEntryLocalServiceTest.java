@@ -210,10 +210,10 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (DefaultLayoutUtilityPageEntryException
-					layoutUtilityPageEntryDefaultTemplateException) {
+					defaultLayoutUtilityPageEntryException) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(layoutUtilityPageEntryDefaultTemplateException);
+				_log.debug(defaultLayoutUtilityPageEntryException);
 			}
 		}
 

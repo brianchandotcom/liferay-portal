@@ -427,7 +427,7 @@ public class ExpandoColumnLocalServiceImpl
 			_systemEventLocalService.addSystemEvent(
 				stagedExpandoColumn.getCompanyId(),
 				stagedModelType.getClassName(),
-				stagedExpandoColumn.getPrimaryKey(), StringPool.BLANK, null,
+				stagedExpandoColumn.getPrimaryKey(), StringPool.BLANK, StringPool.BLANK, null,
 				SystemEventConstants.TYPE_DELETE,
 				extraDataJSONObject.toString());
 		}

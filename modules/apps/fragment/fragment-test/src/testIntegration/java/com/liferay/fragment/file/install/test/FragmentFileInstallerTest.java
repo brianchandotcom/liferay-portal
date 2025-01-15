@@ -80,8 +80,7 @@ public class FragmentFileInstallerTest {
 			_fileInstaller.transformURL(file);
 
 			_assertLogEntries(
-				logCapture.getLogEntries(),
-				"Deploying " + file.getName(),
+				logCapture.getLogEntries(), "Deploying " + file.getName(),
 				"Deployed " + file.getName() + " successfully");
 		}
 

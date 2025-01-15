@@ -37,8 +37,9 @@ test('LPD-41420 Verify configuration list eligibility management is available', 
 
 	const productConfigurationList =
 		await apiHelpers.headlessCommerceAdminCatalog.postProductConfigurationList(
-			catalog.id,
-			getRandomString()
+			{
+				catalogId: catalog.id,
+			}
 		);
 
 	const accountGroup = await apiHelpers.headlessAdminUser.postAccountGroup({
@@ -121,8 +122,9 @@ test('LPD-41420 Verify configuration list eligibility management save button cle
 
 	const productConfigurationList =
 		await apiHelpers.headlessCommerceAdminCatalog.postProductConfigurationList(
-			catalog.id,
-			getRandomString()
+			{
+				catalogId: catalog.id,
+			}
 		);
 
 	const accountGroup = await apiHelpers.headlessAdminUser.postAccountGroup({

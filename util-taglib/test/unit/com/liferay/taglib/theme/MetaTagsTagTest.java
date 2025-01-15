@@ -66,93 +66,48 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagInternalServerErrorResponseStatus()
-		throws Exception {
-
-		_assertMetaTagsTagResponseStatus(
-			RandomTestUtil.randomString(),
-			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	}
-
-	@Test
-	public void testMetaTagsTagLayoutRobots() throws Exception {
-		String layoutRobots = RandomTestUtil.randomString();
-
-		_assertRobotsMetaTagsTag(layoutRobots, layoutRobots, null, null);
-	}
-
-	@Test
-	public void testMetaTagsTagLocalizedLayoutRobots() throws Exception {
-		String localizedLayoutRobots = RandomTestUtil.randomString();
-
-		_assertRobotsMetaTagsTag(
-			localizedLayoutRobots, RandomTestUtil.randomString(),
-			localizedLayoutRobots, null);
-	}
-
-	@Test
-	public void testMetaTagsTagNotFoundResponseStatus() throws Exception {
-		_assertMetaTagsTagResponseStatus(
-			RandomTestUtil.randomString(), HttpServletResponse.SC_NOT_FOUND);
-	}
-
-	@Test
-	public void testMetaTagsTagPageNoRobots() throws Exception {
-		_assertRobotsMetaTagsTag(null, null, null, null);
-	}
-
-	@Test
-	public void testMetaTagsTagPageRobotsRequestAttribute() throws Exception {
-		String pageRobotsRequestAttribute = "noindex, nofollow";
-
-		_assertRobotsMetaTagsTag(
-			pageRobotsRequestAttribute, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
-	}
-
-	@Test
-	public void testMetaTagsTagLayoutDescriptionInCurrentLanguage()
-		throws Exception {
-
-		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			false);
-	}
-
-	@Test
-	public void testMetaTagsTagLayoutDescriptionInCurrentLanguageAndPageDescription()
-		throws Exception {
-
+	public void testMetaTagsTagDescription() throws Exception {
 		_assertDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false);
-	}
-
-	@Test
-	public void testMetaTagsTagLayoutDescriptionInDefaultLanguage()
-		throws Exception {
-
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), true);
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			false);
+		_assertDescriptionMetaTagsTag(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			false);
 		_assertDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			true);
 	}
 
 	@Test
-	public void testMetaTagsTagLayoutDescriptionInDefaultLanguageAndPageDescription()
-		throws Exception {
-
-		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), true);
+	public void testMetaTagsTagResponseStatus() throws Exception {
+		_assertMetaTagsTagResponseStatus(
+			RandomTestUtil.randomString(),
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		_assertMetaTagsTagResponseStatus(
+			RandomTestUtil.randomString(), HttpServletResponse.SC_NOT_FOUND);
 	}
 
 	@Test
-	public void testMetaTagsTagPageDescription()
-		throws Exception {
+	public void testMetaTagsTagRobots() throws Exception {
+		String robots = RandomTestUtil.randomString();
 
-		_assertDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			false);
+		_assertRobotsMetaTagsTag(robots, robots, null, null);
+		_assertRobotsMetaTagsTag(
+			robots, RandomTestUtil.randomString(), robots, null);
+
+		_assertRobotsMetaTagsTag(null, null, null, null);
+
+		String pageRobotsRequestAttribute = "noindex, nofollow";
+
+		_assertRobotsMetaTagsTag(
+			pageRobotsRequestAttribute, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
 	}
 
 	private void _assertDescriptionMetaTagsTag(

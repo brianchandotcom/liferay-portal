@@ -103,6 +103,19 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
+	public void testMetaTagsTagKeywords() throws Exception {
+		_testKeywordsMetaTagsTag(
+			false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		_testKeywordsMetaTagsTag(false, RandomTestUtil.randomString(), null);
+		_testKeywordsMetaTagsTag(false, null, RandomTestUtil.randomString());
+		_testKeywordsMetaTagsTag(
+			true, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		_testKeywordsMetaTagsTag(true, RandomTestUtil.randomString(), null);
+		_testKeywordsMetaTagsTag(true, null, RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testMetaTagsTagResponseStatus() throws Exception {
 		_testMetaTagsTagResponseStatus(
 			RandomTestUtil.randomString(),
@@ -126,6 +139,18 @@ public class MetaTagsTagTest {
 		_testRobotsMetaTagsTag(
 			pageRobotsRequestAttribute, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
+	}
+
+	private ListMergeable<String> _getListMergeable(String value) {
+		ListMergeable<String> listMergeable = null;
+
+		if (Validator.isNotNull(value)) {
+			listMergeable = new ListMergeable<>();
+
+			listMergeable.add(value);
+		}
+
+		return listMergeable;
 	}
 
 	private void _setUpLanguageUtil() {
@@ -155,7 +180,8 @@ public class MetaTagsTagTest {
 	}
 
 	private void _setUpPageContext(
-		String robots, String pageDescription, int status) {
+		String robots, String pageDescription, String pageKeywords,
+		int status) {
 
 		_unsyncStringWriter = new UnsyncStringWriter();
 
@@ -174,22 +200,16 @@ public class MetaTagsTagTest {
 
 					@Override
 					public Object getAttribute(String name) {
-						if (WebKeys.PAGE_ROBOTS.equals(name)) {
-							return robots;
+						if (WebKeys.PAGE_DESCRIPTION.equals(name)) {
+							return _getListMergeable(pageDescription);
 						}
 
-						if (WebKeys.PAGE_DESCRIPTION.equals(name)) {
-							ListMergeable<String> descriptionListMergeable =
-								null;
+						if (WebKeys.PAGE_KEYWORDS.equals(name)) {
+							return _getListMergeable(pageKeywords);
+						}
 
-							if (Validator.isNotNull(pageDescription)) {
-								descriptionListMergeable =
-									new ListMergeable<>();
-
-								descriptionListMergeable.add(pageDescription);
-							}
-
-							return descriptionListMergeable;
+						if (WebKeys.PAGE_ROBOTS.equals(name)) {
+							return robots;
 						}
 
 						if (WebKeys.THEME_DISPLAY.equals(name)) {
@@ -279,9 +299,10 @@ public class MetaTagsTagTest {
 			localizedDescription
 		);
 
-		_setUpPageContext(null, pageDescription, HttpServletResponse.SC_OK);
+		_setUpPageContext(
+			null, pageDescription, null, HttpServletResponse.SC_OK);
 
-		String metaDescription = "";
+		String metaDescription = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutDescription) &&
 			Validator.isNotNull(pageDescription)) {
@@ -296,6 +317,53 @@ public class MetaTagsTagTest {
 		}
 
 		_testMetaTagsTag(metaDescription, metaLang, "description");
+	}
+
+	private void _testKeywordsMetaTagsTag(
+			boolean defaultLanguage, String layoutKeywords, String pageKeywords)
+		throws Exception {
+
+		String defaultKeywords = null;
+		String localizedKeywords = null;
+		String metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN);
+
+		if (defaultLanguage && Validator.isNotNull(layoutKeywords)) {
+			defaultKeywords = layoutKeywords;
+			metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.US);
+		}
+		else {
+			localizedKeywords = layoutKeywords;
+		}
+
+		Mockito.when(
+			_layout.getKeywords(Mockito.anyString())
+		).thenReturn(
+			defaultKeywords
+		);
+
+		Mockito.when(
+			_layout.getKeywords(Mockito.anyString(), Mockito.anyBoolean())
+		).thenReturn(
+			localizedKeywords
+		);
+
+		_setUpPageContext(null, null, pageKeywords, HttpServletResponse.SC_OK);
+
+		String metaKeywords = StringPool.BLANK;
+
+		if (Validator.isNotNull(layoutKeywords) &&
+			Validator.isNotNull(pageKeywords)) {
+
+			metaKeywords = pageKeywords + ", " + layoutKeywords;
+		}
+		else if (Validator.isNotNull(layoutKeywords)) {
+			metaKeywords = layoutKeywords;
+		}
+		else if (Validator.isNotNull(pageKeywords)) {
+			metaKeywords = pageKeywords;
+		}
+
+		_testMetaTagsTag(metaKeywords, metaLang, "keywords");
 	}
 
 	private void _testMetaTagsTag(
@@ -353,7 +421,7 @@ public class MetaTagsTagTest {
 			htmlDescription
 		);
 
-		_setUpPageContext(RandomTestUtil.randomString(), null, status);
+		_setUpPageContext(RandomTestUtil.randomString(), null, null, status);
 
 		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.when(
 			() ->
@@ -389,7 +457,7 @@ public class MetaTagsTagTest {
 		);
 
 		_setUpPageContext(
-			pageRobotsRequestAttribute, null, HttpServletResponse.SC_OK);
+			pageRobotsRequestAttribute, null, null, HttpServletResponse.SC_OK);
 
 		_testMetaTagsTag(expectedRobotsMetaTagContent, null, "robots");
 	}

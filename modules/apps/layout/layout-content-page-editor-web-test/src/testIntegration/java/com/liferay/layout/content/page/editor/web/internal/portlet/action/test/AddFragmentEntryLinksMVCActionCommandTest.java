@@ -29,6 +29,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -58,8 +60,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -121,8 +125,100 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			RandomTestUtil.randomString(), numberOfFragmentEntryLinks);
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAddFragmentEntryLinksInput() throws Exception {
+		FragmentComposition fragmentComposition = _addFragmentComposition(
+			FragmentConstants.TYPE_INPUT, SetUtil.fromArray("text"),
+			"<div></div>", 1);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				fragmentComposition.getFragmentCompositionKey());
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getUserId()));
+
+		UserTestUtil.setUser(_user);
+
+		_layoutLockManager.getLock(mockLiferayPortletActionRequest);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddFragmentEntryLinks",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+	}
+
+	@Test
+	public void testAddFragmentEntryLinksLocalizationSelect() throws Exception {
+		FragmentComposition fragmentComposition = _addFragmentComposition(
+			FragmentConstants.TYPE_INPUT,
+			SetUtil.fromArray("localizationSelect"),
+			"<div>localizationSelect</div>", 1);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				fragmentComposition.getFragmentCompositionKey());
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		List<FragmentEntryLink> originalFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		JSONObject jsonObject = null;
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, _user.getUserId()));
+
+			UserTestUtil.setUser(_user);
+
+			_layoutLockManager.getLock(mockLiferayPortletActionRequest);
+
+			jsonObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_processAddFragmentEntryLinks",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
+
+		List<FragmentEntryLink> actualFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		Assert.assertEquals(
+			actualFragmentEntryLinks.toString(),
+			originalFragmentEntryLinks.size() + 1,
+			actualFragmentEntryLinks.size());
+
+		JSONObject fragmentEntryLinksJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLinks");
+
+		Assert.assertEquals(
+			fragmentEntryLinksJSONObject.toString(), 1,
+			fragmentEntryLinksJSONObject.length());
+
+		_assertFragmentEntryLinksContent(
+			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
+			mockLiferayPortletActionResponse);
+
+		_assertLayoutData(jsonObject);
+	}
+
 	private FragmentComposition _addFragmentComposition(
-			String html, int numberOfFragmentEntryLinks)
+			int fragmentEntryType, Set<String> fieldTypes, String html,
+			int numberOfFragmentEntryLinks)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -140,8 +236,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				StringPool.BLANK, html, StringPool.BLANK, false,
-				StringPool.BLANK, null, 0, false,
-				FragmentConstants.TYPE_COMPONENT, null,
+				StringPool.BLANK, null, 0, false, fragmentEntryType,
+				JSONUtil.toString(JSONUtil.put("fieldTypes", fieldTypes)),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -191,6 +287,15 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), layoutStructureItemJSON, 0,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private FragmentComposition _addFragmentComposition(
+			String html, int numberOfFragmentEntryLinks)
+		throws Exception {
+
+		return _addFragmentComposition(
+			FragmentConstants.TYPE_COMPONENT, Collections.emptySet(), html,
+			numberOfFragmentEntryLinks);
 	}
 
 	private void _assertFragmentEntryLinksContent(

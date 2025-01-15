@@ -1482,14 +1482,14 @@ public class UserLocalServiceTest {
 	private User _createUser(boolean ldapUser, String password)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
 		long ldapServerId = -1;
 
 		if (ldapUser) {
 			ldapServerId = 1;
 		}
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
 
 		serviceContext.setAttribute("ldapServerId", ldapServerId);
 

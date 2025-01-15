@@ -95,12 +95,30 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
+		<field name="objectEntryFolderId" type="long" />
+		<field name="treePath" type="String" />
 		<field name="rootObjectEntryId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.object.model.ObjectEntryFolder">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="objectEntryFolderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="label" type="String" />
+		<field name="name" type="String" />
+		<field name="parentObjectEntryFolderId" type="long" />
+		<field name="treePath" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectField">
 		<field name="mvccVersion" type="long" />

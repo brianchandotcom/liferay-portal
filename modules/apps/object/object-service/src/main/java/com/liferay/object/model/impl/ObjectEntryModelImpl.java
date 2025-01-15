@@ -71,6 +71,7 @@ public class ObjectEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"objectDefinitionId", Types.BIGINT},
+		{"objectEntryFolderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
 		{"rootObjectEntryId", Types.BIGINT},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
@@ -92,6 +93,8 @@ public class ObjectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("objectEntryFolderId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("rootObjectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
@@ -101,7 +104,7 @@ public class ObjectEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(1000) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,rootObjectEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(1000) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryFolderId LONG,treePath VARCHAR(75) null,rootObjectEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntry";
 
@@ -300,6 +303,9 @@ public class ObjectEntryModelImpl
 			attributeGetterFunctions.put(
 				"objectDefinitionId", ObjectEntry::getObjectDefinitionId);
 			attributeGetterFunctions.put(
+				"objectEntryFolderId", ObjectEntry::getObjectEntryFolderId);
+			attributeGetterFunctions.put("treePath", ObjectEntry::getTreePath);
+			attributeGetterFunctions.put(
 				"rootObjectEntryId", ObjectEntry::getRootObjectEntryId);
 			attributeGetterFunctions.put(
 				"lastPublishDate", ObjectEntry::getLastPublishDate);
@@ -360,6 +366,13 @@ public class ObjectEntryModelImpl
 				"objectDefinitionId",
 				(BiConsumer<ObjectEntry, Long>)
 					ObjectEntry::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"objectEntryFolderId",
+				(BiConsumer<ObjectEntry, Long>)
+					ObjectEntry::setObjectEntryFolderId);
+			attributeSetterBiConsumers.put(
+				"treePath",
+				(BiConsumer<ObjectEntry, String>)ObjectEntry::setTreePath);
 			attributeSetterBiConsumers.put(
 				"rootObjectEntryId",
 				(BiConsumer<ObjectEntry, Long>)
@@ -656,6 +669,41 @@ public class ObjectEntryModelImpl
 
 	@JSON
 	@Override
+	public long getObjectEntryFolderId() {
+		return _objectEntryFolderId;
+	}
+
+	@Override
+	public void setObjectEntryFolderId(long objectEntryFolderId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_objectEntryFolderId = objectEntryFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return "";
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_treePath = treePath;
+	}
+
+	@JSON
+	@Override
 	public long getRootObjectEntryId() {
 		return _rootObjectEntryId;
 	}
@@ -928,6 +976,8 @@ public class ObjectEntryModelImpl
 		objectEntryImpl.setCreateDate(getCreateDate());
 		objectEntryImpl.setModifiedDate(getModifiedDate());
 		objectEntryImpl.setObjectDefinitionId(getObjectDefinitionId());
+		objectEntryImpl.setObjectEntryFolderId(getObjectEntryFolderId());
+		objectEntryImpl.setTreePath(getTreePath());
 		objectEntryImpl.setRootObjectEntryId(getRootObjectEntryId());
 		objectEntryImpl.setLastPublishDate(getLastPublishDate());
 		objectEntryImpl.setStatus(getStatus());
@@ -964,6 +1014,10 @@ public class ObjectEntryModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		objectEntryImpl.setObjectDefinitionId(
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectEntryImpl.setObjectEntryFolderId(
+			this.<Long>getColumnOriginalValue("objectEntryFolderId"));
+		objectEntryImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
 		objectEntryImpl.setRootObjectEntryId(
 			this.<Long>getColumnOriginalValue("rootObjectEntryId"));
 		objectEntryImpl.setLastPublishDate(
@@ -1118,6 +1172,16 @@ public class ObjectEntryModelImpl
 
 		objectEntryCacheModel.objectDefinitionId = getObjectDefinitionId();
 
+		objectEntryCacheModel.objectEntryFolderId = getObjectEntryFolderId();
+
+		objectEntryCacheModel.treePath = getTreePath();
+
+		String treePath = objectEntryCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			objectEntryCacheModel.treePath = null;
+		}
+
 		objectEntryCacheModel.rootObjectEntryId = getRootObjectEntryId();
 
 		Date lastPublishDate = getLastPublishDate();
@@ -1223,6 +1287,8 @@ public class ObjectEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _objectDefinitionId;
+	private long _objectEntryFolderId;
+	private String _treePath;
 	private long _rootObjectEntryId;
 	private Date _lastPublishDate;
 	private int _status;
@@ -1272,6 +1338,8 @@ public class ObjectEntryModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
+		_columnOriginalValues.put("objectEntryFolderId", _objectEntryFolderId);
+		_columnOriginalValues.put("treePath", _treePath);
 		_columnOriginalValues.put("rootObjectEntryId", _rootObjectEntryId);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
@@ -1323,17 +1391,21 @@ public class ObjectEntryModelImpl
 
 		columnBitmasks.put("objectDefinitionId", 1024L);
 
-		columnBitmasks.put("rootObjectEntryId", 2048L);
+		columnBitmasks.put("objectEntryFolderId", 2048L);
 
-		columnBitmasks.put("lastPublishDate", 4096L);
+		columnBitmasks.put("treePath", 4096L);
 
-		columnBitmasks.put("status", 8192L);
+		columnBitmasks.put("rootObjectEntryId", 8192L);
 
-		columnBitmasks.put("statusByUserId", 16384L);
+		columnBitmasks.put("lastPublishDate", 16384L);
 
-		columnBitmasks.put("statusByUserName", 32768L);
+		columnBitmasks.put("status", 32768L);
 
-		columnBitmasks.put("statusDate", 65536L);
+		columnBitmasks.put("statusByUserId", 65536L);
+
+		columnBitmasks.put("statusByUserName", 131072L);
+
+		columnBitmasks.put("statusDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

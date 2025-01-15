@@ -38,4 +38,13 @@ public abstract class ObjectEntryBaseImpl
 		}
 	}
 
+	@Override
+	public void updateTreePath(String treePath) {
+		ObjectEntry objectEntry = this;
+
+		objectEntry.setTreePath(treePath);
+
+		ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry);
+	}
+
 }

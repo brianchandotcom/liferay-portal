@@ -49,6 +49,12 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 		createColumn(
 			"objectDefinitionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryTable, Long> objectEntryFolderId =
+		createColumn(
+			"objectEntryFolderId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryTable, String> treePath = createColumn(
+		"treePath", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Long> rootObjectEntryId =
 		createColumn(
 			"rootObjectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

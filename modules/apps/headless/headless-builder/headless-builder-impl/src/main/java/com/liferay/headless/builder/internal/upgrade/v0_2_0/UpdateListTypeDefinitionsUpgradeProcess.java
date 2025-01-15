@@ -46,18 +46,21 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 				_updateListTypeDefinition(
 					companyId, "APPLICATION_STATUS_PICKLIST",
 					"Application Status", "PUBLISHED", "UNPUBLISHED",
-					"published", "unpublished", "L_API_APPLICATION",
-					"APPLICATION_STATUS");
+					"published", "unpublished", "L_API_APPLICATION_STATUSES",
+					"L_API_APPLICATION", "APPLICATION_STATUS");
 				_updateListTypeDefinition(
 					companyId, "HTTP_METHOD_PICKLIST", "HTTP Method", "GET",
-					"POST", "get", "post", "L_API_ENDPOINT", "HTTP_METHOD");
+					"POST", "get", "post", "L_API_ENDPOINT_HTTP_METHODS",
+					"L_API_ENDPOINT", "HTTP_METHOD");
 				_updateListTypeDefinition(
 					companyId, "RETRIEVE_TYPE_PICKLIST", "Retrieve Type",
 					"COLLECTION", "SINGLE_ELEMENT", "collection",
-					"singleElement", "L_API_ENDPOINT", "RETRIEVE_TYPE");
+					"singleElement", "L_API_ENDPOINT_RETRIEVE_TYPES",
+					"L_API_ENDPOINT", "RETRIEVE_TYPE");
 				_updateListTypeDefinition(
 					companyId, "SCOPE_PICKLIST", "Scope", "COMPANY", "SITE",
-					"company", "site", "L_API_ENDPOINT", "SCOPE");
+					"company", "site", "L_API_ENDPOINT_SCOPES",
+					"L_API_ENDPOINT", "SCOPE");
 			});
 	}
 
@@ -67,6 +70,7 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 			String listTypeEntryExternalReferenceCode1,
 			String listTypeEntryExternalReferenceCode2,
 			String listTypeEntryKey1, String listTypeEntryKey2,
+			String newListTypeDefinitionExternalReferenceCode,
 			String objectDefinitionExternalReferenceCode,
 			String objectFieldExternalReferenceCode)
 		throws PortalException {
@@ -97,6 +101,9 @@ public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 					listTypeDefinitionExternalReferenceCode, companyId);
 
 		listTypeDefinition.setName(listTypeDefinitionName);
+
+		listTypeDefinition.setExternalReferenceCode(
+			newListTypeDefinitionExternalReferenceCode);
 
 		listTypeDefinition =
 			_listTypeDefinitionLocalService.updateListTypeDefinition(

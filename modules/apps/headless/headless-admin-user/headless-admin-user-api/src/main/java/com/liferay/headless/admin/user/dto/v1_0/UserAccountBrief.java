@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -28,8 +28,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,45 +35,46 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("UserGroup")
+@GraphQLName(
+	description = "Represents a user's basic information, to be embedded in other resources like UserGroup.",
+	value = "UserAccountBrief"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "UserGroup")
-public class UserGroup implements Serializable {
+@XmlRootElement(name = "UserAccountBrief")
+public class UserAccountBrief implements Serializable {
 
-	public static UserGroup toDTO(String json) {
-		return ObjectMapperUtil.readValue(UserGroup.class, json);
+	public static UserAccountBrief toDTO(String json) {
+		return ObjectMapperUtil.readValue(UserAccountBrief.class, json);
 	}
 
-	public static UserGroup unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(UserGroup.class, json);
+	public static UserAccountBrief unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(UserAccountBrief.class, json);
 	}
 
-	@Schema
-	@Valid
-	public Map<String, Map<String, String>> getActions() {
-		if (_actionsSupplier != null) {
-			actions = _actionsSupplier.get();
+	@Schema(description = "The user's alias or screen name.")
+	public String getAlternateName() {
+		if (_alternateNameSupplier != null) {
+			alternateName = _alternateNameSupplier.get();
 
-			_actionsSupplier = null;
+			_alternateNameSupplier = null;
 		}
 
-		return actions;
+		return alternateName;
 	}
 
-	public void setActions(Map<String, Map<String, String>> actions) {
-		this.actions = actions;
+	public void setAlternateName(String alternateName) {
+		this.alternateName = alternateName;
 
-		_actionsSupplier = null;
+		_alternateNameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setActions(
-		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
-			actionsUnsafeSupplier) {
+	public void setAlternateName(
+		UnsafeSupplier<String, Exception> alternateNameUnsafeSupplier) {
 
-		_actionsSupplier = () -> {
+		_alternateNameSupplier = () -> {
 			try {
-				return actionsUnsafeSupplier.get();
+				return alternateNameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -86,97 +85,55 @@ public class UserGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Map<String, Map<String, String>> actions;
-
-	@JsonIgnore
-	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
-
-	@Schema(description = "The user who created the user group.")
-	@Valid
-	public Creator getCreator() {
-		if (_creatorSupplier != null) {
-			creator = _creatorSupplier.get();
-
-			_creatorSupplier = null;
-		}
-
-		return creator;
-	}
-
-	public void setCreator(Creator creator) {
-		this.creator = creator;
-
-		_creatorSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCreator(
-		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
-
-		_creatorSupplier = () -> {
-			try {
-				return creatorUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The user who created the user group.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Creator creator;
-
-	@JsonIgnore
-	private Supplier<Creator> _creatorSupplier;
-
-	@Schema
-	public String getDescription() {
-		if (_descriptionSupplier != null) {
-			description = _descriptionSupplier.get();
-
-			_descriptionSupplier = null;
-		}
-
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-
-		_descriptionSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
-
-		_descriptionSupplier = () -> {
-			try {
-				return descriptionUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
+	@GraphQLField(description = "The user's alias or screen name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected String alternateName;
 
 	@JsonIgnore
-	private Supplier<String> _descriptionSupplier;
+	private Supplier<String> _alternateNameSupplier;
 
-	@Schema
+	@Schema(description = "The user's main email address.")
+	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's main email address.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String emailAddress;
+
+	@JsonIgnore
+	private Supplier<String> _emailAddressSupplier;
+
+	@Schema(description = "The optional external key of this user account.")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -210,14 +167,16 @@ public class UserGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The optional external key of this user account."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@Schema(description = "The user's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -249,14 +208,14 @@ public class UserGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GraphQLField(description = "The user's ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@Schema(description = "The user's full name.")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -288,98 +247,12 @@ public class UserGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(description = "The user's full name.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
-
-	@Schema(description = "The list of users associated with this user group.")
-	@Valid
-	public UserAccountBrief[] getUserAccountBriefs() {
-		if (_userAccountBriefsSupplier != null) {
-			userAccountBriefs = _userAccountBriefsSupplier.get();
-
-			_userAccountBriefsSupplier = null;
-		}
-
-		return userAccountBriefs;
-	}
-
-	public void setUserAccountBriefs(UserAccountBrief[] userAccountBriefs) {
-		this.userAccountBriefs = userAccountBriefs;
-
-		_userAccountBriefsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setUserAccountBriefs(
-		UnsafeSupplier<UserAccountBrief[], Exception>
-			userAccountBriefsUnsafeSupplier) {
-
-		_userAccountBriefsSupplier = () -> {
-			try {
-				return userAccountBriefsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The list of users associated with this user group."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected UserAccountBrief[] userAccountBriefs;
-
-	@JsonIgnore
-	private Supplier<UserAccountBrief[]> _userAccountBriefsSupplier;
-
-	@Schema
-	public Integer getUsersCount() {
-		if (_usersCountSupplier != null) {
-			usersCount = _usersCountSupplier.get();
-
-			_usersCountSupplier = null;
-		}
-
-		return usersCount;
-	}
-
-	public void setUsersCount(Integer usersCount) {
-		this.usersCount = usersCount;
-
-		_usersCountSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setUsersCount(
-		UnsafeSupplier<Integer, Exception> usersCountUnsafeSupplier) {
-
-		_usersCountSupplier = () -> {
-			try {
-				return usersCountUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer usersCount;
-
-	@JsonIgnore
-	private Supplier<Integer> _usersCountSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -387,13 +260,13 @@ public class UserGroup implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof UserGroup)) {
+		if (!(object instanceof UserAccountBrief)) {
 			return false;
 		}
 
-		UserGroup userGroup = (UserGroup)object;
+		UserAccountBrief userAccountBrief = (UserAccountBrief)object;
 
-		return Objects.equals(toString(), userGroup.toString());
+		return Objects.equals(toString(), userAccountBrief.toString());
 	}
 
 	@Override
@@ -408,42 +281,34 @@ public class UserGroup implements Serializable {
 
 		sb.append("{");
 
-		Map<String, Map<String, String>> actions = getActions();
+		String alternateName = getAlternateName();
 
-		if (actions != null) {
+		if (alternateName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"actions\": ");
-
-			sb.append(_toJSON(actions));
-		}
-
-		Creator creator = getCreator();
-
-		if (creator != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creator\": ");
-
-			sb.append(String.valueOf(creator));
-		}
-
-		String description = getDescription();
-
-		if (description != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"description\": ");
+			sb.append("\"alternateName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(description));
+			sb.append(_escape(alternateName));
+
+			sb.append("\"");
+		}
+
+		String emailAddress = getEmailAddress();
+
+		if (emailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(emailAddress));
 
 			sb.append("\"");
 		}
@@ -492,40 +357,6 @@ public class UserGroup implements Serializable {
 			sb.append("\"");
 		}
 
-		UserAccountBrief[] userAccountBriefs = getUserAccountBriefs();
-
-		if (userAccountBriefs != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userAccountBriefs\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < userAccountBriefs.length; i++) {
-				sb.append(String.valueOf(userAccountBriefs[i]));
-
-				if ((i + 1) < userAccountBriefs.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		Integer usersCount = getUsersCount();
-
-		if (usersCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"usersCount\": ");
-
-			sb.append(usersCount);
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -533,7 +364,7 @@ public class UserGroup implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserGroup",
+		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserAccountBrief",
 		name = "x-class-name"
 	)
 	public String xClassName;

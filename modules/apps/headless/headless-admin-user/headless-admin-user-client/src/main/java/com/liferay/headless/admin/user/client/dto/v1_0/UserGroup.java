@@ -48,6 +48,27 @@ public class UserGroup implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
+
 	public String getDescription() {
 		return description;
 	}
@@ -127,6 +148,28 @@ public class UserGroup implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public UserAccountBrief[] getUserAccountBriefs() {
+		return userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(UserAccountBrief[] userAccountBriefs) {
+		this.userAccountBriefs = userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(
+		UnsafeSupplier<UserAccountBrief[], Exception>
+			userAccountBriefsUnsafeSupplier) {
+
+		try {
+			userAccountBriefs = userAccountBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected UserAccountBrief[] userAccountBriefs;
 
 	public Integer getUsersCount() {
 		return usersCount;

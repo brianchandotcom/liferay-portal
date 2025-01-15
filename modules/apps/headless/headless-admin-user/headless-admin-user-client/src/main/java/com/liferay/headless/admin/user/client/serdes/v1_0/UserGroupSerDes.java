@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
@@ -52,6 +53,16 @@ public class UserGroupSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(userGroup.getActions()));
+		}
+
+		if (userGroup.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(userGroup.getCreator()));
 		}
 
 		if (userGroup.getDescription() != null) {
@@ -106,6 +117,26 @@ public class UserGroupSerDes {
 			sb.append("\"");
 		}
 
+		if (userGroup.getUserAccountBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userGroup.getUserAccountBriefs().length; i++) {
+				sb.append(String.valueOf(userGroup.getUserAccountBriefs()[i]));
+
+				if ((i + 1) < userGroup.getUserAccountBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (userGroup.getUsersCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -141,6 +172,13 @@ public class UserGroupSerDes {
 			map.put("actions", String.valueOf(userGroup.getActions()));
 		}
 
+		if (userGroup.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(userGroup.getCreator()));
+		}
+
 		if (userGroup.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -171,6 +209,15 @@ public class UserGroupSerDes {
 			map.put("name", String.valueOf(userGroup.getName()));
 		}
 
+		if (userGroup.getUserAccountBriefs() == null) {
+			map.put("userAccountBriefs", null);
+		}
+		else {
+			map.put(
+				"userAccountBriefs",
+				String.valueOf(userGroup.getUserAccountBriefs()));
+		}
+
 		if (userGroup.getUsersCount() == null) {
 			map.put("usersCount", null);
 		}
@@ -198,6 +245,9 @@ public class UserGroupSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -210,6 +260,9 @@ public class UserGroupSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "usersCount")) {
@@ -228,6 +281,12 @@ public class UserGroupSerDes {
 				if (jsonParserFieldValue != null) {
 					userGroup.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					userGroup.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -251,6 +310,23 @@ public class UserGroupSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					userGroup.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserAccountBrief[] userAccountBriefsArray =
+						new UserAccountBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userAccountBriefsArray.length; i++) {
+						userAccountBriefsArray[i] =
+							UserAccountBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					userGroup.setUserAccountBriefs(userAccountBriefsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "usersCount")) {

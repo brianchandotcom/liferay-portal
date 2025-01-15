@@ -86,7 +86,7 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		List<Ticket> tickets = _processAction(false);
 
-		Assert.assertEquals(1, tickets.size());
+		Assert.assertEquals(tickets.toString(), 1, tickets.size());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class ForgotPasswordMVCActionCommandTest {
 
 		List<Ticket> tickets = _processAction(true);
 
-		Assert.assertEquals(1, tickets.size());
+		Assert.assertEquals(tickets.toString(), 1, tickets.size());
 	}
 
 	@Test

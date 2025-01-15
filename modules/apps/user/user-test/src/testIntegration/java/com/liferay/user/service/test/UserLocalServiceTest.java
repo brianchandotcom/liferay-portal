@@ -257,8 +257,7 @@ public class UserLocalServiceTest {
 				"Password for user 0 must be at least 6 characters",
 				() -> _addUser(false, "abc"));
 
-			_assertUserHasPasswordPolicy(
-				false, _addUser(false, "Liferay123"));
+			_assertUserHasPasswordPolicy(false, _addUser(false, "Liferay123"));
 		}
 	}
 
@@ -1421,6 +1420,31 @@ public class UserLocalServiceTest {
 		_testVerifyEmailAddress(true);
 	}
 
+	private User _addUser(boolean ldapUser, String password) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		long ldapServerId = -1;
+
+		if (ldapUser) {
+			ldapServerId = 1;
+		}
+
+		serviceContext.setAttribute("ldapServerId", ldapServerId);
+
+		return UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password,
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com",
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()}, serviceContext);
+	}
+
 	private long[] _addUsers(int numberOfUsers) throws Exception {
 		long[] userIds = new long[numberOfUsers];
 
@@ -1477,33 +1501,6 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(ldapUser ? 1 : -1, user.getLdapServerId());
 		Assert.assertTrue(user.isPasswordReset());
 		Assert.assertNotNull(user.getPasswordPolicy());
-	}
-
-	private User _addUser(boolean ldapUser, String password)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		long ldapServerId = -1;
-
-		if (ldapUser) {
-			ldapServerId = 1;
-		}
-
-		serviceContext.setAttribute("ldapServerId", ldapServerId);
-
-		return UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			password,
-			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
-				"@liferay.com",
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			new long[] {TestPropsValues.getGroupId()}, serviceContext);
 	}
 
 	private void _testVerifyEmailAddress(boolean expired) throws Exception {

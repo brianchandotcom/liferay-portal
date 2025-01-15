@@ -360,9 +360,21 @@ public class ObjectDefinitionResourceImpl
 						objectField.getBusinessTypeAsString(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-					_addObjectRelationship(
-						objectDefinition.getDefaultLanguageId(), objectField,
-						serviceBuilderObjectDefinition);
+					com.liferay.object.model.ObjectRelationship
+						objectRelationship = _addObjectRelationship(
+							objectDefinition.getDefaultLanguageId(),
+							objectField, serviceBuilderObjectDefinition);
+
+					if ((objectDefinition.getAccountEntryRestricted() ==
+							true) &&
+						StringUtil.equals(
+							objectDefinition.
+								getAccountEntryRestrictedObjectFieldName(),
+							objectField.getName())) {
+
+						_objectDefinitionLocalService.
+							enableAccountEntryRestricted(objectRelationship);
+					}
 				}
 			}
 		}
@@ -1027,7 +1039,7 @@ public class ObjectDefinitionResourceImpl
 		}
 	}
 
-	private void _addObjectRelationship(
+	private com.liferay.object.model.ObjectRelationship _addObjectRelationship(
 			String defaultLanguageId, ObjectField objectField,
 			com.liferay.object.model.ObjectDefinition
 				serviceBuilderObjectDefinition2)
@@ -1041,7 +1053,7 @@ public class ObjectDefinitionResourceImpl
 				objectDefinitionExternalReferenceCode1,
 				serviceBuilderObjectDefinition2.getExternalReferenceCode())) {
 
-			return;
+			return null;
 		}
 
 		com.liferay.object.model.ObjectDefinition
@@ -1067,10 +1079,10 @@ public class ObjectDefinitionResourceImpl
 					serviceBuilderObjectDefinition1.getObjectDefinitionId());
 
 		if (objectRelationship != null) {
-			return;
+			return objectRelationship;
 		}
 
-		_objectRelationshipLocalService.addObjectRelationship(
+		return _objectRelationshipLocalService.addObjectRelationship(
 			objectField.getObjectRelationshipExternalReferenceCode(),
 			contextUser.getUserId(),
 			serviceBuilderObjectDefinition1.getObjectDefinitionId(),

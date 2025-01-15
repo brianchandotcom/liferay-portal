@@ -90,20 +90,16 @@ public class MetaTagsTagTest {
 	@Test
 	public void testMetaTagsTagDescription() throws Exception {
 		_testDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false);
+			false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 		_testDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), true);
+			true, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		_testDescriptionMetaTagsTag(false, RandomTestUtil.randomString(), null);
 		_testDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			false);
+			false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 		_testDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			false);
-		_testDescriptionMetaTagsTag(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			true);
+			true, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -255,8 +251,8 @@ public class MetaTagsTagTest {
 	}
 
 	private void _testDescriptionMetaTagsTag(
-			String pageRobotsRequestAttribute, String layoutDescription,
-			String pageDescription, boolean defaultLanguage)
+			boolean defaultLanguage, String layoutDescription,
+			String pageDescription)
 		throws Exception {
 
 		String defaultDescription = null;
@@ -283,9 +279,7 @@ public class MetaTagsTagTest {
 			localizedDescription
 		);
 
-		_setUpPageContext(
-			pageRobotsRequestAttribute, pageDescription,
-			HttpServletResponse.SC_OK);
+		_setUpPageContext(null, pageDescription, HttpServletResponse.SC_OK);
 
 		String metaDescription = "";
 

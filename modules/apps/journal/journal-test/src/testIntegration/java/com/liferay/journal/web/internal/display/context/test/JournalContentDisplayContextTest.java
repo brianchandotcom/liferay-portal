@@ -63,10 +63,10 @@ public class JournalContentDisplayContextTest {
 
 	@Test
 	public void testGetArticle() throws Exception {
-		_testGetArticleWithoutParameters();
 		_testGetArticleWithArticleId();
 		_testGetArticleWithArticleResourcePrimKey();
 		_testGetArticleWithExternalReferenceCode();
+		_testGetArticleWithoutParameters();
 	}
 
 	private JournalArticle _getArticle(RenderRequest renderRequest)

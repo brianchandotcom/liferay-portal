@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -86,43 +88,35 @@ public class UtilityLayoutTypeControllerTest {
 				LayoutConstants.TYPE_UTILITY);
 	}
 
-	@Test(expected = PrincipalException.class)
-	public void testUtilityLayoutTypeControllerUtilityPageDraftPreviewWithPreviewDraftPermission()
-		throws Exception {
-
-		_includeDraftLayoutContent(
-			ActionKeys.PREVIEW_DRAFT, _addTypeUtilityPageEntryLayout(),
-			Constants.PREVIEW);
-	}
-
 	@Test
-	public void testUtilityLayoutTypeControllerUtilityPageDraftPreviewWithUpdatePermission()
+	public void testUtilityLayoutTypeControllerDraftPreviewPermission()
 		throws Exception {
+
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.PREVIEW_DRAFT, Constants.PREVIEW);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 
 		Assert.assertFalse(
-			_includeDraftLayoutContent(
-				ActionKeys.UPDATE, _addTypeUtilityPageEntryLayout(),
-				Constants.PREVIEW));
-	}
+			_includeDraftLayoutContent(ActionKeys.UPDATE, Constants.PREVIEW));
 
-	@Test(expected = PrincipalException.class)
-	public void testUtilityLayoutTypeControllerUtilityPageDraftPreviewWithViewPermission()
-		throws Exception {
+		try {
+			_includeDraftLayoutContent(ActionKeys.VIEW, Constants.PREVIEW);
 
-		_includeDraftLayoutContent(
-			ActionKeys.VIEW, _addTypeUtilityPageEntryLayout(),
-			Constants.PREVIEW);
-	}
-
-	private Layout _addTypeUtilityPageEntryLayout() throws Exception {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
-				ServiceContextThreadLocal.getServiceContext());
-
-		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -203,6 +197,9 @@ public class UtilityLayoutTypeControllerTest {
 			_getMockHttpServletRequest(layoutMode, _getUser(actionId)),
 			new MockHttpServletResponse(), _layout.fetchDraftLayout());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UtilityLayoutTypeControllerTest.class);
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

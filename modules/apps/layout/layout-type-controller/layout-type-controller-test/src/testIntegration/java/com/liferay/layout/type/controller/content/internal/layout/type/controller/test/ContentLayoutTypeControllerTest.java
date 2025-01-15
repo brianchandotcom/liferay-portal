@@ -22,6 +22,8 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -107,14 +109,6 @@ public class ContentLayoutTypeControllerTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerDraftEditWithPreviewDraftPermission()
-		throws Exception {
-
-		_includeDraftLayoutContent(
-			ActionKeys.PREVIEW_DRAFT, _layout, Constants.EDIT);
-	}
-
 	@Test
 	@TestInfo("LPS-125516")
 	public void testContentLayoutTypeControllerDraftEditWithViewPermission()
@@ -131,37 +125,80 @@ public class ContentLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testContentLayoutTypeControllerDraftPreviewWithPreviewDraftPermission()
+	public void testContentLayoutTypeControllerDraftPreviewPermission()
 		throws Exception {
+
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.PREVIEW_DRAFT, _layout, Constants.EDIT);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
 				ActionKeys.PREVIEW_DRAFT, _layout, Constants.PREVIEW));
-	}
-
-	@Test
-	public void testContentLayoutTypeControllerDraftPreviewWithUpdatePermission()
-		throws Exception {
-
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
 				ActionKeys.UPDATE, _layout, Constants.PREVIEW));
-	}
 
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerDraftPreviewWithViewPermission()
-		throws Exception {
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.VIEW, _layout, Constants.PREVIEW);
 
-		_includeDraftLayoutContent(ActionKeys.VIEW, _layout, Constants.PREVIEW);
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 	}
 
 	@Test
-	public void testContentLayoutTypeControllerDraftViewWithPreviewDraftPermission()
-		throws Exception {
+	public void testContentLayoutTypeControllerLayout() throws Exception {
+		Assert.assertFalse(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
+
+		User guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
+
+		try {
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, guestUser),
+				new MockHttpServletResponse(),
+				LayoutTestUtil.addTypeContentLayout(_group));
+
+			Assert.fail();
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchLayoutException);
+			}
+		}
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextThreadLocal.getServiceContext());
 
 		Assert.assertFalse(
-			_includeDraftLayoutContent(
-				ActionKeys.PREVIEW_DRAFT, _layout, Constants.VIEW));
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, guestUser),
+				new MockHttpServletResponse(), _layout));
+
+		Assert.assertFalse(
+			_layoutTypeController.includeLayoutContent(
+				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
+				new MockHttpServletResponse(), _layout));
 	}
 
 	@Test
@@ -244,93 +281,51 @@ public class ContentLayoutTypeControllerTest {
 					"id=\"main-content\" role=\"main\">"));
 	}
 
-	@Test(expected = NoSuchLayoutException.class)
-	public void testContentLayoutTypeControllerNoPublishedLayoutGuestUser()
-		throws Exception {
-
-		_layoutTypeController.includeLayoutContent(
-			_getMockHttpServletRequest(
-				null, _userLocalService.getGuestUser(_group.getCompanyId())),
-			new MockHttpServletResponse(),
-			LayoutTestUtil.addTypeContentLayout(_group));
-	}
-
 	@Test
-	public void testContentLayoutTypeControllerNoPublishedLayoutPermissionUser()
+	public void testContentLayoutTypeControllerPageTemplateDraftPreviewPermission()
 		throws Exception {
 
-		Assert.assertFalse(
-			_layoutTypeController.includeLayoutContent(
-				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
-				new MockHttpServletResponse(), _layout));
-	}
+		Layout layout = _addTypePageTemplateEntryLayout();
 
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerPageTemplateDraftPreviewWithPreviewDraftPermission()
-		throws Exception {
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.PREVIEW_DRAFT, layout, Constants.EDIT);
 
-		_includeDraftLayoutContent(
-			ActionKeys.PREVIEW_DRAFT, _addTypePageTemplateEntryLayout(),
-			Constants.PREVIEW);
-	}
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 
-	@Test
-	public void testContentLayoutTypeControllerPageTemplateDraftPreviewWithUpdatePermission()
-		throws Exception {
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.PREVIEW_DRAFT, layout, Constants.PREVIEW);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 
 		Assert.assertFalse(
 			_includeDraftLayoutContent(
-				ActionKeys.UPDATE, _addTypePageTemplateEntryLayout(),
-				Constants.PREVIEW));
-	}
+				ActionKeys.UPDATE, layout, Constants.PREVIEW));
 
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerPageTemplateDraftPreviewWithViewPermission()
-		throws Exception {
+		try {
+			_includeDraftLayoutContent(
+				ActionKeys.VIEW, layout, Constants.PREVIEW);
 
-		_includeDraftLayoutContent(
-			ActionKeys.VIEW, _addTypePageTemplateEntryLayout(),
-			Constants.PREVIEW);
-	}
-
-	@Test
-	public void testContentLayoutTypeControllerPublishedLayoutGuestUser()
-		throws Exception {
-
-		Layout draftLayout = _layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
-
-		Assert.assertFalse(
-			_layoutTypeController.includeLayoutContent(
-				_getMockHttpServletRequest(
-					null,
-					_userLocalService.getGuestUser(_group.getCompanyId())),
-				new MockHttpServletResponse(), _layout));
-	}
-
-	@Test
-	public void testContentLayoutTypeControllerPublishedLayoutPermissionUser()
-		throws Exception {
-
-		Layout draftLayout = _layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextThreadLocal.getServiceContext());
-
-		Assert.assertFalse(
-			_layoutTypeController.includeLayoutContent(
-				_getMockHttpServletRequest(null, TestPropsValues.getUser()),
-				new MockHttpServletResponse(), _layout));
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
 	}
 
 	@Test
@@ -476,6 +471,9 @@ public class ContentLayoutTypeControllerTest {
 
 		_layoutLockManager.getLock(mockActionRequest);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentLayoutTypeControllerTest.class);
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

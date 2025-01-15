@@ -8,7 +8,7 @@ package com.liferay.portal.inactive.request.handler.internal.constants;
 /**
  * @author Luis Ortiz
  */
-public class WebKeys {
+public class PortalInactiveRequestHandlerWebKeys {
 
 	public static final String PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE =
 		"PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE";

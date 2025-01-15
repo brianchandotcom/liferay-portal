@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.text.DecimalFormat;
-
 import java.util.Date;
 
 /**
@@ -278,13 +276,6 @@ public class FaroProjectAdminDisplay {
 
 		return null;
 	}
-
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FaroProjectAdminDisplay.class);
-
-	private static final DecimalFormat _decimalFormat = new DecimalFormat(
-		"#.##");
 
 	private String _corpProjectName;
 	private String _corpProjectUuid;

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -70,54 +70,63 @@ public class ObjectEntryValuesUtil {
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 	}
 
-	public static String getValueString(
-		ObjectField objectField, Map<String, Serializable> values) {
+	public static Object getValue(
+		String languageId, ObjectField objectField,
+		Map<String, Object> values) {
+
+		if (objectField == null) {
+			return null;
+		}
+
+		if (StringUtil.equals(objectField.getName(), "creator")) {
+			return values.get("userName");
+		}
+		else if (StringUtil.equals(objectField.getName(), "id")) {
+			return values.get("objectEntryId");
+		}
 
 		Object value = values.get(objectField.getName());
 
-		if (StringUtil.equals(
-				objectField.getBusinessType(),
+		if ((languageId != null) && objectField.isLocalized()) {
+			Map<String, Object> localizedValues =
+				(Map<String, Object>)values.get(
+					objectField.getI18nObjectFieldName());
+
+			value = localizedValues.get(languageId);
+		}
+
+		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			return _getFileName(GetterUtil.getLong(value));
+			try {
+				DLFileEntry dlFileEntry =
+					DLFileEntryLocalServiceUtil.getDLFileEntry(
+						GetterUtil.getLong(value));
+
+				return dlFileEntry.getFileName();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				return StringPool.BLANK;
+			}
 		}
-		else if (StringUtil.equals(
-					objectField.getBusinessType(),
+		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			return HtmlParserUtil.extractText(GetterUtil.getString(value));
 		}
 
-		if (Validator.isNull(value)) {
-			String objectFieldName = objectField.getName();
-
-			if (objectFieldName.equals("creator")) {
-				objectFieldName = "userName";
-			}
-			else if (objectFieldName.equals("id")) {
-				objectFieldName = "objectEntryId";
-			}
-
-			value = values.get(objectFieldName);
-		}
-
-		return String.valueOf(value);
+		return value;
 	}
 
-	private static String _getFileName(long dlFileEntryId) {
-		try {
-			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.getDLFileEntry(dlFileEntryId);
+	public static String getValueString(
+		ObjectField objectField, Map<String, Serializable> values) {
 
-			return dlFileEntry.getFileName();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
+		return String.valueOf(
+			getValue(null, objectField, new HashMap<>(values)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -73,6 +73,8 @@ public class ConfigurationCategoryMenuDisplay {
 				verticalNavItem -> {
 					String name = curConfigurationEntry.getName();
 
+					verticalNavItem.put(
+						"deprecated", curConfigurationEntry.isDeprecated());
 					verticalNavItem.setActive(
 						configurationEntry.equals(curConfigurationEntry));
 					verticalNavItem.setHref(

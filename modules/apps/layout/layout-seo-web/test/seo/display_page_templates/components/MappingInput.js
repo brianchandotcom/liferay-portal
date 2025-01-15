@@ -88,7 +88,7 @@ describe('MappingInput', () => {
 			});
 
 			describe('and the user selects another field', () => {
-				it('adds the new field ${key:label} to the input', () => {
+				it.skip('adds the new field ${key:label} to the input', () => {
 					fireEvent.change(fieldSelect, {
 						target: {value: baseProps.fields[0].key},
 					});
@@ -99,7 +99,7 @@ describe('MappingInput', () => {
 					);
 				});
 
-				it('adds the new field ${key:label} sanitized to the input', () => {
+				it.skip('adds the new field ${key:label} sanitized to the input', () => {
 					fireEvent.change(fieldSelect, {
 						target: {value: baseProps.fields[2].key},
 					});

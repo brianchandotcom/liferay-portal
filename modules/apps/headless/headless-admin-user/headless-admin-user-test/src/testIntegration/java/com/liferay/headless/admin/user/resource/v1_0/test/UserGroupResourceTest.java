@@ -6,15 +6,20 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +81,14 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		users = _userLocalService.getUserGroupUsers(userGroup.getId());
 
 		Assert.assertFalse(users.contains(user));
+	}
+
+	@Override
+	@Test
+	public void testGetUserGroup() throws Exception {
+		super.testGetUserGroup();
+
+		_testGetUserGroupWithNestedFields();
 	}
 
 	@Override
@@ -275,6 +288,53 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	private UserGroup _postUserGroup(UserGroup userGroup) throws Exception {
 		return userGroupResource.postUserGroup(userGroup);
+	}
+
+	private void _testGetUserGroupWithNestedFields() throws Exception {
+		UserGroup postUserGroup = testGetUserGroup_addUserGroup();
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+		User user3 = UserTestUtil.addUser();
+
+		userGroupResource.postUserGroupUsers(
+			postUserGroup.getId(),
+			new Long[] {user1.getUserId(), user2.getUserId()});
+
+		UserGroupResource userGroupResource = UserGroupResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator,userAccountBriefs"
+		).build();
+
+		UserGroup getUserGroup = userGroupResource.getUserGroup(
+			postUserGroup.getId());
+
+		Assert.assertNotNull(getUserGroup.getCreator());
+
+		Creator creator = getUserGroup.getCreator();
+
+		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
+
+		Assert.assertNotNull(getUserGroup.getUserAccountBriefs());
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getUserGroup.getUserAccountBriefs(),
+				userAccountBrief ->
+					userAccountBrief.getId() == user1.getUserId()));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getUserGroup.getUserAccountBriefs(),
+				userAccountBrief ->
+					userAccountBrief.getId() == user2.getUserId()));
+		Assert.assertFalse(
+			ArrayUtil.exists(
+				getUserGroup.getUserAccountBriefs(),
+				userAccountBrief ->
+					userAccountBrief.getId() == user3.getUserId()));
 	}
 
 	@Inject

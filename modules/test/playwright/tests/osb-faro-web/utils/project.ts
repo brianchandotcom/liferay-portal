@@ -6,8 +6,7 @@
 import {Page, expect} from '@playwright/test';
 
 import getRandomString from '../../../utils/getRandomString';
-import { faroConfig } from '../faro.config';
-
+import {faroConfig} from '../faro.config';
 
 export async function acceptsCookiesBanner(page: Page) {
 	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});
@@ -17,11 +16,7 @@ export async function acceptsCookiesBanner(page: Page) {
 	}
 }
 
-export async function createProject({
-	page,
-}: {
-	page: Page;
-}) {
+export async function createProject({page}: {page: Page}) {
 	await page.goto(faroConfig.environment.baseUrl);
 
 	await page.getByRole('link', {name: 'Start Free Trial'}).click();
@@ -43,8 +38,6 @@ export async function createProject({
 	expect(page.getByText('Welcome to Analytics Cloud')).toBeVisible();
 
 	expect(
-		page.getByText(
-			'Just a few more steps to set up your workspace.'
-		)
+		page.getByText('Just a few more steps to set up your workspace.')
 	).toBeVisible();
 }

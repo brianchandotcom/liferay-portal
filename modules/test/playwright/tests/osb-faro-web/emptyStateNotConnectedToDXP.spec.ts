@@ -10,20 +10,10 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
-import { faroConfig } from './faro.config';
-import { clickOnLink } from './utils/actions';
-import {switchChannel} from './utils/channel';
-import {
-	ACPage,
-	navigateTo,
-	navigateToACPageViaURL,
-	navigateToACSettingsViaURL,
-	navigateToACWorkspace,
-} from './utils/navigation';
-import {addBreakdownByIndividualAttribute} from './utils/utils';
+import {faroConfig} from './faro.config';
+import {clickOnLink} from './utils/actions';
+import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -40,7 +30,9 @@ let project;
 const randomString = getRandomString();
 
 test.beforeEach(async ({apiHelpers}) => {
-	project = await apiHelpers.jsonWebServicesOSBFaro.createProject('My Project ' + randomString)
+	project = await apiHelpers.jsonWebServicesOSBFaro.createProject(
+		'My Project ' + randomString
+	);
 });
 
 test.afterEach(async ({apiHelpers}) => {
@@ -74,7 +66,7 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -105,7 +97,7 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -145,25 +137,19 @@ test(
 				projectID: project.groupId,
 			});
 
-			//await clickOnLink({baseUrl:faroConfig.environment.baseUrl, name: 'canonicalUrl', page});
-
 			const tableBodyElement = await page.locator('table tbody');
 
-			await expect(
-				tableBodyElement
-			).toBeVisible();
+			await expect(tableBodyElement).toBeVisible();
 
-			const elements = await tableBodyElement.locator('td .table-title a').all();
+			const elements = await tableBodyElement
+				.locator('td .table-title a')
+				.all();
 
 			const href = await elements[0].getAttribute('href');
 
 			await page.goto(`${faroConfig.environment.baseUrl}${href}`);
 
-			await expect(
-				page.getByText(
-					'No Sample Data Found'
-				)
-			).toBeVisible();
+			await expect(page.getByText('No Sample Data Found')).toBeVisible();
 			await expect(
 				page.getByText(
 					'You can come back later and check if there is any data received from your events.Learn more about event tracking'
@@ -174,13 +160,13 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Learn more about event tracking.',
 				page,
 			});
 
 			await expect(page).toHaveTitle('Definitions - Liferay Learn');
-			
+
 			const header = await page.locator('h2#event-attributes');
 
 			await expect(header.getByText('Event Attributes')).toBeVisible();
@@ -204,7 +190,7 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Learn how to add custom events on your site.',
 				page,
 			});
@@ -232,7 +218,7 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Access our documentation to learn how to manage custom events.',
 				page,
 			});
@@ -276,7 +262,7 @@ test(
 			).toBeVisible();
 
 			await clickOnLink({
-				baseUrl:faroConfig.environment.baseUrl, 
+				baseUrl: faroConfig.environment.baseUrl,
 				name: 'Access our documentation to learn more.',
 				page,
 			});
@@ -288,8 +274,7 @@ test(
 			const element = await page.locator('a#data-control-and-privacy');
 
 			await expect(
-				element
-					.getByText('Data Control and Privacy')
+				element.getByText('Data Control and Privacy')
 			).toBeVisible();
 		});
 	}

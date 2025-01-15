@@ -1261,31 +1261,31 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testFetchDisplayArticle() throws Exception {
-		JournalArticle article1 = JournalTestUtil.addArticle(
+		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0);
 
-		article1 = _journalArticleLocalService.fetchDisplayArticle(
-			_group.getGroupId(), article1.getArticleId());
+		article = _journalArticleLocalService.fetchDisplayArticle(
+			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1, article1.getVersion(), 0);
+		Assert.assertEquals(1, article.getVersion(), 0);
 
-		article1 = JournalTestUtil.updateArticle(article1);
-		article1 = JournalTestUtil.updateArticle(article1);
+		article = JournalTestUtil.updateArticle(article);
+		article = JournalTestUtil.updateArticle(article);
 
-		JournalArticle articleToExpire = JournalTestUtil.updateArticle(article1);
+		JournalArticle articleToExpire = JournalTestUtil.updateArticle(article);
 
-		article1 = _journalArticleLocalService.fetchDisplayArticle(
-			_group.getGroupId(), article1.getArticleId());
+		article = _journalArticleLocalService.fetchDisplayArticle(
+			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.3, article1.getVersion(), 0);
+		Assert.assertEquals(1.3, article.getVersion(), 0);
 
 		JournalTestUtil.expireArticle(
 			_group.getGroupId(), articleToExpire, articleToExpire.getVersion());
 
-		article1 = _journalArticleLocalService.fetchDisplayArticle(
-			_group.getGroupId(), article1.getArticleId());
+		article = _journalArticleLocalService.fetchDisplayArticle(
+			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.2, article1.getVersion(), 0);
+		Assert.assertEquals(1.2, article.getVersion(), 0);
 
 		articleToExpire.setDisplayDate(
 			new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
@@ -1293,10 +1293,10 @@ public class JournalArticleLocalServiceTest {
 
 		JournalTestUtil.updateArticle(articleToExpire);
 
-		article1 = _journalArticleLocalService.fetchDisplayArticle(
-			_group.getGroupId(), article1.getArticleId());
+		article = _journalArticleLocalService.fetchDisplayArticle(
+			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.2, article1.getVersion(), 0);
+		Assert.assertEquals(1.2, article.getVersion(), 0);
 	}
 
 	@Test

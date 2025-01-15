@@ -24,7 +24,6 @@
 			<#list navItems as navItem>
 				<#assign
 					displayIcon = navItem.getDisplayIcon()
-
 					showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren()
 				/>
 

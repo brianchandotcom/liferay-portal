@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
@@ -18,6 +19,7 @@ import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntry
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.lang.SafeCloseable;
@@ -36,6 +38,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -113,11 +118,59 @@ public class AddFragmentEntryLinksMVCActionCommand
 				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
 					"deleted";
 		}
+		else if (exception instanceof UnsupportedOperationException) {
+			errorMessage = exception.getMessage();
+		}
 
 		return JSONUtil.put(
 			"error",
 			_language.get(
 				_portal.getHttpServletRequest(actionRequest), errorMessage));
+	}
+
+	private boolean _existTypeInputFragmentEntryLink(
+		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			Set<String> fragmentEntryLinkFieldTypes =
+				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
+					fragmentEntryLink.getFragmentEntryLinkId(), locale);
+
+			if (Objects.equals(
+					fragmentEntryLink.getType(),
+					FragmentConstants.TYPE_INPUT) &&
+				!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _hasFormStyledLayoutStructureItemParent(
+		String parentItemId, LayoutStructure layoutStructure) {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		if ((layoutStructureItem == null) ||
+			Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+
+			return false;
+		}
+
+		if (Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_FORM)) {
+
+			return true;
+		}
+
+		return _hasFormStyledLayoutStructureItemParent(
+			layoutStructureItem.getParentItemId(), layoutStructure);
 	}
 
 	private JSONObject _processAddFragmentEntryLinks(
@@ -164,6 +217,18 @@ public class AddFragmentEntryLinksMVCActionCommand
 					themeDisplay.getLayout(), layoutStructure, parentItemId,
 					fragmentComposition.getData(), position, false,
 					segmentsExperienceId);
+
+			if (!_hasFormStyledLayoutStructureItemParent(
+					parentItemId, layoutStructure) &&
+				_existTypeInputFragmentEntryLink(
+					fragmentEntryLinks, themeDisplay.getLocale())) {
+
+				throw new UnsupportedOperationException(
+					_language.get(
+						themeDisplay.getLocale(),
+						"form-components-can-only-be-placed-inside-a-mapped-" +
+							"form-container"));
+			}
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				for (FragmentEntryLinkListener fragmentEntryLinkListener :

@@ -415,19 +415,11 @@ test(
 );
 
 test(
-	'Update the cover image position correctly after a drag',
+	'Updates the cover image position correctly after a drag',
 	{
 		tag: '@LPD-45514',
 	},
 	async ({apiHelpers, blogsEditBlogEntryPage, page, site}) => {
-		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
-
-		await blogsEditBlogEntryPage.editBlogEntry({
-			content: getRandomString(),
-			publish: false,
-			title: getRandomString(),
-		});
-
 		const coverImageTitle = 'image1.jpeg';
 
 		await apiHelpers.headlessDelivery.postDocument(
@@ -439,19 +431,28 @@ test(
 				title: coverImageTitle,
 			}
 		);
+
+		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+		await blogsEditBlogEntryPage.editBlogEntry({
+			content: getRandomString(),
+			publish: false,
+			title: getRandomString(),
+		});
+
 		await blogsEditBlogEntryPage.selectCoverImage(coverImageTitle);
 
 		// Simulate mouse movement to drag the image
 
-		const coverImage = await page.getByRole('img', {name: 'Current Image'});
+		const coverImageWrapper = await page.locator('.image-wrapper');
 
-		const coverImageSize = await coverImage.boundingBox();
+		const coverImageSize = await coverImageWrapper.boundingBox();
 
-		await coverImage.hover();
+		await coverImageWrapper.hover();
 		await page.mouse.down();
 		await page.mouse.move(
 			coverImageSize.x + coverImageSize.width / 2,
-			coverImageSize.y + coverImageSize.height / 2 - 25,
+			coverImageSize.y + coverImageSize.height / 2 - 30,
 		);
 		await page.mouse.up();
 

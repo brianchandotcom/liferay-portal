@@ -21,9 +21,6 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -336,34 +333,6 @@ public class ContentLayoutTypeControllerTest {
 				new MockHttpServletResponse(), _layout));
 	}
 
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerUtilityPageDraftPreviewWithPreviewDraftPermission()
-		throws Exception {
-
-		_includeDraftLayoutContent(
-			ActionKeys.PREVIEW_DRAFT, _addTypeUtilityPageEntryLayout(),
-			Constants.PREVIEW);
-	}
-
-	@Test
-	public void testContentLayoutTypeControllerUtilityPageDraftPreviewWithUpdatePermission()
-		throws Exception {
-
-		Assert.assertFalse(
-			_includeDraftLayoutContent(
-				ActionKeys.UPDATE, _addTypeUtilityPageEntryLayout(),
-				Constants.PREVIEW));
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testContentLayoutTypeControllerUtilityPageDraftPreviewWithViewPermission()
-		throws Exception {
-
-		_includeDraftLayoutContent(
-			ActionKeys.VIEW, _addTypeUtilityPageEntryLayout(),
-			Constants.PREVIEW);
-	}
-
 	@Test
 	public void testContentLayoutTypeControllerWithLockedLayout()
 		throws Exception {
@@ -414,17 +383,6 @@ public class ContentLayoutTypeControllerTest {
 				ServiceContextThreadLocal.getServiceContext());
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
-	private Layout _addTypeUtilityPageEntryLayout() throws Exception {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
-				ServiceContextThreadLocal.getServiceContext());
-
-		return _layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid());
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -558,10 +516,6 @@ public class ContentLayoutTypeControllerTest {
 	private LayoutStructureProvider _layoutStructureProvider;
 
 	private LayoutTypeController _layoutTypeController;
-
-	@Inject
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

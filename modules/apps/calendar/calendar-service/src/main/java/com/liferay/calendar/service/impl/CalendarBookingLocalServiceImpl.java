@@ -1200,7 +1200,7 @@ public class CalendarBookingLocalServiceImpl
 				userId, calendarBooking.getGroupId(),
 				CalendarBooking.class.getName(),
 				calendarBooking.getCalendarBookingId(),
-				calendarBooking.getUuid(), null,
+				calendarBooking.getUuid(), StringPool.BLANK, null,
 				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 

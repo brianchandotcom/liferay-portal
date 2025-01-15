@@ -54,6 +54,31 @@ export class JSONWebServicesOSBFaroApiHelper {
 		).then((response) => response.json());
 	}
 
+	async createProject(name: string): Promise<Project> {
+		const formdata = new FormData();
+
+		formdata.append('emailAddressDomains', '[]');
+		formdata.append('incidentReportEmailAddresses', '["test@liferay.com"]');
+		formdata.append('name', name);
+		formdata.append('serverLocation', 'us-west1-ac4-c1');
+
+		const header = new Headers();
+
+		header.append(
+			'Authorization',
+			this.apiHelpers.getAuthorizationHeader()
+		);
+
+		return fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/main/project/trial`,
+			{
+				body: formdata,
+				headers: header,
+				method: 'POST',
+			}
+		).then((response) => response.json());
+	}
+
 	async deleteChannel(ids: string, groupId: string): Promise<Response> {
 		const formdata = new FormData();
 
@@ -74,5 +99,23 @@ export class JSONWebServicesOSBFaroApiHelper {
 				method: 'DELETE',
 			}
 		).then((response) => response);
+	}
+
+	async deleteProject(groupId: number): Promise<Project> {
+		const header = new Headers();
+
+		header.append(
+			'Authorization',
+			this.apiHelpers.getAuthorizationHeader()
+		);
+
+		return fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/main/project/${groupId}`,
+			{
+				headers: header,
+				method: 'DELETE',
+			}
+		).then((response) => {
+			return response.json();});
 	}
 }

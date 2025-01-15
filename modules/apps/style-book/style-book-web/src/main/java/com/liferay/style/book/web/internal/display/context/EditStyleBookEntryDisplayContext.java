@@ -302,9 +302,22 @@ public class EditStyleBookEntryDisplayContext {
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
 		throws Exception {
 
-		FrontendTokenDefinition frontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+		FrontendTokenDefinition frontendTokenDefinition;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
+		}
+		else {
+			Group group = _themeDisplay.getScopeGroup();
+
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					LayoutSetLocalServiceUtil.fetchLayoutSet(
+						_themeDisplay.getSiteGroupId(),
+						group.isLayoutSetPrototype()));
+		}
 
 		if (frontendTokenDefinition != null) {
 			return frontendTokenDefinition.getJSONObject(

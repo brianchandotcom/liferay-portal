@@ -5,18 +5,16 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-
 export async function checkEmptyStateOnACSide(page: Page) {
 	await expect(page.getByText('There are no tests found.')).toBeVisible();
 }
 
 export async function clickOnLink({
 	baseUrl,
-    name,
+	name,
 	page,
 }: {
-    baseUrl: string;
+	baseUrl: string;
 	name: string;
 	page: Page;
 }) {
@@ -26,9 +24,5 @@ export async function clickOnLink({
 
 	const href = await reviewTagA.getAttribute('href');
 
-	console.log('href', href);
-
-	await page.goto(
-		href.replace('http://localhost:8080', baseUrl)
-	);
+	await page.goto(href.replace('http://localhost:8080', baseUrl));
 }

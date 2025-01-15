@@ -11,13 +11,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
@@ -43,40 +40,6 @@ public class MinifierUtil {
 		}
 
 		return content;
-	}
-
-	public static String minifyJavaScript(String resourceName, String content) {
-		if (PropsValues.MINIFIER_ENABLED && MinifierThreadLocal.isEnabled()) {
-			return _minifyJavaScript(resourceName, content);
-		}
-
-		return content;
-	}
-
-	private static String _getServletContextPath(String resourceName) {
-		String pathModule = Portal.PATH_MODULE;
-
-		int i = resourceName.indexOf(StringPool.SLASH, pathModule.length() + 1);
-
-		if (i == -1) {
-			return StringPool.BLANK;
-		}
-
-		return resourceName.substring(0, i);
-	}
-
-	private static boolean _isLiferayResource(String resourceName) {
-		if (resourceName.startsWith(Portal.PATH_MODULE + "/admin-theme/") ||
-			resourceName.startsWith(Portal.PATH_MODULE + "/classic-theme/") ||
-			resourceName.startsWith(
-				Portal.PATH_MODULE + "/js/resolved-module/") ||
-			_liferayServletContextsMap.containsKey(
-				_getServletContextPath(resourceName))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static String _minifyCss(String content) {
@@ -126,50 +89,11 @@ public class MinifierUtil {
 		}
 	}
 
-	private static String _minifyJavaScript(
-		String resourceName, String content) {
-
-		JavaScriptMinifier javaScriptMinifier =
-			_javaScriptMinifierSnapshot.get();
-
-		if ((javaScriptMinifier == null) || _isLiferayResource(resourceName)) {
-			return content;
-		}
-
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		try {
-			return javaScriptMinifier.compress(resourceName, content);
-		}
-		finally {
-			if (_log.isDebugEnabled()) {
-				int length = 0;
-
-				if (content != null) {
-					byte[] bytes = content.getBytes();
-
-					length = bytes.length;
-				}
-
-				_log.debug(
-					StringBundler.concat(
-						"Minification for ", length,
-						" bytes of JavaScript in resource ", resourceName,
-						" took ", stopWatch.getTime(), " ms"));
-			}
-		}
-	}
-
 	private MinifierUtil() {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
-	private static final Snapshot<JavaScriptMinifier>
-		_javaScriptMinifierSnapshot = new Snapshot<>(
-			MinifierUtil.class, JavaScriptMinifier.class);
 	private static final ServiceTrackerMap<String, ServletContext>
 		_liferayServletContextsMap;
 

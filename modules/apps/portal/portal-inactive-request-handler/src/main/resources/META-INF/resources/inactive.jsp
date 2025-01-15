@@ -21,5 +21,5 @@
 </aui:style>
 
 <div class="inactive-message">
-	<liferay-ui:message key="<%= (String)request.getAttribute(WebKeys.PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE) %>" />
+	<liferay-ui:message key="<%= (String)request.getAttribute(PortalInactiveRequestHandlerWebKeys.PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE) %>" />
 </div>

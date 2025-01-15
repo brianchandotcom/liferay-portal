@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,15 +75,19 @@ public class FrontendTokenDefinitionRegistryImpl
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		long companyId, String themeId) {
 
-		for (FrontendTokenDefinition frontendTokenDefinition :
-				getFrontendTokenDefinitions(companyId)) {
+		FrontendTokenDefinition frontendTokenDefinition =
+			_frontendTokenDefinitions.get(themeId);
 
-			if (Objects.equals(frontendTokenDefinition.getThemeId(), themeId)) {
-				return frontendTokenDefinition;
+		if (frontendTokenDefinition == null) {
+			Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
+				_frontendTokenDefinitionsMap.get(companyId);
+
+			if (frontendTokenDefinitions != null) {
+				frontendTokenDefinition = frontendTokenDefinitions.get(themeId);
 			}
 		}
 
-		return null;
+		return frontendTokenDefinition;
 	}
 
 	@Override

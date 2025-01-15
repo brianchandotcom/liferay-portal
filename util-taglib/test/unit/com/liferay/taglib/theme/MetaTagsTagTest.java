@@ -111,7 +111,7 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguage()
+	public void testMetaTagsTagLayoutDescriptionInCurrentLanguage()
 		throws Exception {
 
 		_assertDescriptionMetaTagsTag(
@@ -120,7 +120,7 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInCurrentLanguageAndPageDescription()
+	public void testMetaTagsTagLayoutDescriptionInCurrentLanguageAndPageDescription()
 		throws Exception {
 
 		_assertDescriptionMetaTagsTag(
@@ -129,7 +129,7 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguage()
+	public void testMetaTagsTagLayoutDescriptionInDefaultLanguage()
 		throws Exception {
 
 		_assertDescriptionMetaTagsTag(
@@ -138,7 +138,7 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagPageRobotsWithLayoutDescriptionInDefaultLanguageAndPageDescription()
+	public void testMetaTagsTagLayoutDescriptionInDefaultLanguageAndPageDescription()
 		throws Exception {
 
 		_assertDescriptionMetaTagsTag(
@@ -147,7 +147,7 @@ public class MetaTagsTagTest {
 	}
 
 	@Test
-	public void testMetaTagsTagPageRobotsWithPageDescription()
+	public void testMetaTagsTagPageDescription()
 		throws Exception {
 
 		_assertDescriptionMetaTagsTag(

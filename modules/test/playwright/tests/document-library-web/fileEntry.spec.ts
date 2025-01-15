@@ -359,16 +359,17 @@ test(
 );
 
 test(
-	'Only one success message on scheduling file from widget page',
-	{tag: ['@LPD-45614', '@LPD-45658']},
+	'Only one well formatted success message on scheduling file from widget page',
+	{
+		tag: ['@LPD-45614', '@LPD-45658'],
+	},
 	async ({
-			   apiHelpers,
-			   documentLibraryEditFilePage,
-			   documentLibraryPage,
-			   page,
-			   site,
-		   }) => {
-
+		apiHelpers,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
 		const portletId = getRandomString();
 		const widgetDefinition = getWidgetDefinition({
 			id: portletId,
@@ -396,8 +397,6 @@ test(
 
 		const toastAlertContainer = page.locator('[id="ToastAlertContainer"]');
 
-		await expect(toastAlertContainer).toBeVisible();
-
 		await expect(toastAlertContainer).not.toContainText(`<strong>`);
 		await expect(toastAlertContainer).toContainText(`Success:${title}`);
 
@@ -409,6 +408,27 @@ test(
 			}).format(new Date(scheduleDate))
 		);
 
+		let firstAlertAppear = false;
+		let moreAlertsAppear = false;
+
+		await expect(async () => {
+			const toastAlertContainers = await page
+				.locator('.alert-success', {
+					hasText: `Success:${title}`,
+				})
+				.all();
+
+			if (toastAlertContainers.length >= 1) {
+				firstAlertAppear = true;
+			}
+
+			if (toastAlertContainers.length > 1) {
+				moreAlertsAppear = true;
+			}
+
+			expect(firstAlertAppear).toBe(true);
+			expect(moreAlertsAppear).toBe(false);
+		}).toPass();
 	}
 );
 

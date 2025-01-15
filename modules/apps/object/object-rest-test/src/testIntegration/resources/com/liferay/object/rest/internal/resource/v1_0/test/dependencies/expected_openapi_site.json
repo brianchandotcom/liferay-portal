@@ -30,6 +30,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditEvent"
 				}
@@ -49,6 +51,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "AuditFieldChange"
 				}
@@ -115,6 +119,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Creator"
 				}
@@ -131,7 +137,9 @@
 						"type": "array"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"FacetValue": {
 				"properties": {
@@ -143,9 +151,11 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
-			"Object3": {
+			"Object8": {
 				"properties": {
 					"actions": {
 						"additionalProperties": {
@@ -249,7 +259,7 @@
 						"type": "string"
 					},
 					"x-schema-name": {
-						"default": "Object3",
+						"default": "Object8",
 						"readOnly": true,
 						"type": "string"
 					}
@@ -272,7 +282,7 @@
 					"name": "ObjectEntry"
 				}
 			},
-			"PageObject3": {
+			"PageObject8": {
 				"properties": {
 					"actions": {
 						"additionalProperties": {
@@ -291,7 +301,7 @@
 					},
 					"items": {
 						"items": {
-							"$ref": "#/components/schemas/Object3"
+							"$ref": "#/components/schemas/Object8"
 						},
 						"type": "array"
 					},
@@ -312,12 +322,14 @@
 						"type": "integer"
 					},
 					"x-schema-name": {
-						"default": "PageObject3",
+						"default": "PageObject8",
 						"readOnly": true,
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"PagePermission": {
 				"properties": {
@@ -359,7 +371,9 @@
 						"type": "integer"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"x-filterable": [
+				]
 			},
 			"Permission": {
 				"properties": {
@@ -374,6 +388,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Permission"
 				}
@@ -400,6 +416,8 @@
 					"code"
 				],
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "Status"
 				}
@@ -439,6 +457,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "TaxonomyCategoryBrief"
 				}
@@ -464,6 +484,8 @@
 					}
 				},
 				"type": "object",
+				"x-filterable": [
+				],
 				"xml": {
 					"name": "UserGroupBrief"
 				}
@@ -590,12 +612,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PageObject3"
+									"$ref": "#/components/schemas/PageObject8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/PageObject3"
+									"$ref": "#/components/schemas/PageObject8"
 								}
 							}
 						},
@@ -603,7 +625,7 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"post": {
@@ -622,12 +644,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						}
 					}
@@ -637,12 +659,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -650,7 +672,7 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			}
 		},
@@ -687,7 +709,7 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"get": {
@@ -736,12 +758,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -749,7 +771,7 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"patch": {
@@ -776,12 +798,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						}
 					}
@@ -791,12 +813,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -804,7 +826,7 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"put": {
@@ -831,12 +853,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						}
 					}
@@ -846,12 +868,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -859,17 +881,17 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			}
 		},
-		"/{object3Id}": {
+		"/{object8Id}": {
 			"delete": {
-				"operationId": "deleteObject3",
+				"operationId": "deleteObject8",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -888,15 +910,15 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"get": {
-				"operationId": "getObject3",
+				"operationId": "getObject8",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -929,12 +951,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -942,15 +964,15 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"patch": {
-				"operationId": "patchObject3",
+				"operationId": "patchObject8",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -961,12 +983,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						}
 					}
@@ -976,12 +998,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -989,15 +1011,15 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"put": {
-				"operationId": "putObject3",
+				"operationId": "putObject8",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -1008,12 +1030,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Object3"
+								"$ref": "#/components/schemas/Object8"
 							}
 						}
 					}
@@ -1023,12 +1045,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Object3"
+									"$ref": "#/components/schemas/Object8"
 								}
 							}
 						},
@@ -1036,17 +1058,17 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			}
 		},
-		"/{object3Id}/permissions": {
+		"/{object8Id}/permissions": {
 			"get": {
-				"operationId": "getObject3PermissionsPage",
+				"operationId": "getObject8PermissionsPage",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -1099,15 +1121,15 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			},
 			"put": {
-				"operationId": "putObject3PermissionsPage",
+				"operationId": "putObject8PermissionsPage",
 				"parameters": [
 					{
 						"in": "path",
-						"name": "object3Id",
+						"name": "object8Id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -1152,14 +1174,14 @@
 					}
 				},
 				"tags": [
-					"Object3"
+					"Object8"
 				]
 			}
 		}
 	},
 	"servers": [
 		{
-			"url": "http://localhost:8080/o/c/object3s/"
+			"url": "http://localhost:8080/o/c/object8s/"
 		}
 	]
 }

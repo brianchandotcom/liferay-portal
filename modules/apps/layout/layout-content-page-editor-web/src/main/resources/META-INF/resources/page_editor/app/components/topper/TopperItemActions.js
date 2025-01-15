@@ -14,7 +14,6 @@ import React, {useMemo, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {PORTLET_DEFAULT_ACTIONS} from '../../config/constants/portletDefaultActions';
 import {useClipboard, useSetClipboard} from '../../contexts/ClipboardContext';
 import {
 	useSelectItem,
@@ -114,6 +113,7 @@ export default function TopperItemActions({disabled, item}) {
 						});
 					}
 				},
+				group: 0,
 				icon: 'hidden',
 				label: Liferay.Language.get('hide-fragment'),
 			});
@@ -122,12 +122,11 @@ export default function TopperItemActions({disabled, item}) {
 		if (canBeSaved(item, layoutData)) {
 			items.push({
 				action: () => setOpenSaveModal(true),
+				group: 0,
 				icon: 'disk',
 				label: Liferay.Language.get('save-composition'),
 			});
 		}
-
-		addDivider(items);
 
 		if (isCuttable(item.itemId, fragmentEntryLinks, layoutData)) {
 			items.push({
@@ -140,6 +139,7 @@ export default function TopperItemActions({disabled, item}) {
 						})
 					);
 				},
+				group: 1,
 				icon: 'cut',
 				isBetaFeature: true,
 				label: Liferay.Language.get('cut'),
@@ -155,6 +155,7 @@ export default function TopperItemActions({disabled, item}) {
 			) {
 				items.push({
 					action: () => setClipboard([item.itemId]),
+					group: 1,
 					icon: 'copy',
 					isBetaFeature: true,
 					label: Liferay.Language.get('copy'),
@@ -171,17 +172,10 @@ export default function TopperItemActions({disabled, item}) {
 							selectItems,
 						})
 					),
+				group: 1,
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
-		}
-
-		if (portletId) {
-			addPortletAction(
-				items,
-				portletActions[PORTLET_DEFAULT_ACTIONS.exportImport],
-				portletId
-			);
 		}
 
 		if (
@@ -215,47 +209,14 @@ export default function TopperItemActions({disabled, item}) {
 					}
 				},
 				disabled: !clipboard?.length,
+				group: 1,
 				icon: 'paste',
 				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
 		}
 
-		addDivider(items);
-
-		if (portletId) {
-			addPortletAction(
-				items,
-				portletActions[PORTLET_DEFAULT_ACTIONS.configuration],
-				portletId
-			);
-
-			addPortletAction(
-				items,
-				portletActions[PORTLET_DEFAULT_ACTIONS.configurationTemplates],
-				portletId
-			);
-
-			addPortletAction(
-				items,
-				portletActions[PORTLET_DEFAULT_ACTIONS.permissions],
-				portletId
-			);
-
-			const customActions = getPortletCustomActions(fragmentEntryLink);
-
-			if (customActions.length) {
-				addDivider(items);
-
-				for (const action of customActions) {
-					addPortletAction(items, action, portletId);
-				}
-			}
-		}
-
 		if (canBeRemoved(item, layoutData)) {
-			addDivider(items);
-
 			items.push({
 				action: () =>
 					dispatch(
@@ -264,12 +225,22 @@ export default function TopperItemActions({disabled, item}) {
 							selectItems,
 						})
 					),
+				group: 3,
 				icon: 'trash',
 				label: Liferay.Language.get('delete'),
 			});
 		}
 
-		return items;
+		if (portletId) {
+			for (const widgetAction of [
+				...Object.values(portletActions),
+				...getPortletCustomActions(fragmentEntryLink),
+			]) {
+				addPortletAction(items, widgetAction, portletId);
+			}
+		}
+
+		return sortItems(items);
 	}, [
 		clipboard,
 		dispatch,
@@ -353,18 +324,6 @@ export default function TopperItemActions({disabled, item}) {
 	);
 }
 
-function addDivider(items) {
-	const lastItem = items.at(-1);
-
-	if (!items.length || lastItem.type === 'divider') {
-		return;
-	}
-
-	items.push({
-		type: 'divider',
-	});
-}
-
 function addPortletAction(items, action, portletId) {
 	if (!action) {
 		return;
@@ -378,9 +337,35 @@ function addPortletAction(items, action, portletId) {
 				url: action.url,
 			});
 		},
+		group: action.group,
 		icon: action.icon,
 		label: action.title,
 	});
+}
+
+function sortItems(items) {
+
+	// Sort items by label
+
+	items.sort((a, b) => a.label.localeCompare(b.label));
+
+	// Group items by group
+
+	const groups = Object.groupBy(items, ({group}) => group);
+
+	// Add dividers
+
+	const nextItems = Object.values(groups).reduce((acc, items, index) => {
+		if (index > 0) {
+			acc.push({
+				type: 'divider',
+			});
+		}
+
+		return acc.concat(items);
+	}, []);
+
+	return nextItems;
 }
 
 TopperItemActions.propTypes = {

@@ -142,7 +142,10 @@ public class JUnitBatchBuildTestrayCaseResult
 
 		if (!skippedTests.isEmpty()) {
 			sb.append(skippedTests.size());
-			sb.append(" Skipped tests: ");
+			sb.append(" Skipped ");
+			sb.append(
+				JenkinsResultsParserUtil.getNounForm(
+					skippedTests.size(), "test: ", "test: "));
 			sb.append(JenkinsResultsParserUtil.join(", ", skippedTests));
 		}
 

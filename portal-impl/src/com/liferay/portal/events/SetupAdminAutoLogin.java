@@ -5,30 +5,29 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.model.TicketConstants;
-import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * @author Alvaro Saugar
@@ -74,15 +73,12 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			Validator.isNull(user.getLastFailedLoginDate()) &&
 			Validator.isNull(user.getLockoutDate())) {
 
-
-
 			Date expirationDate = new Date(System.currentTimeMillis() + 20000);
 
 			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),
 				TicketConstants.TYPE_PASSWORD, null, expirationDate,
 				new ServiceContext());
-
 
 			StringBuffer sb = new StringBuffer();
 
@@ -102,6 +98,7 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 
 			httpServletRequest.setAttribute(
 				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, sb.toString());
+
 			addRedirect(httpServletRequest);
 
 			String[] credentials = new String[3];

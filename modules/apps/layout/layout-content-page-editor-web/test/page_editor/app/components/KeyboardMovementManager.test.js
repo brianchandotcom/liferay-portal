@@ -61,26 +61,48 @@ const renderComponent = ({dispatch = () => {}} = {}) =>
 		<StoreMother.Component
 			dispatch={dispatch}
 			getState={() => ({
-				fragmentEntryLinks: [],
+				fragmentEntryLinks: {
+					['item-1-fragment-entry-link']: {
+						fragmentEntryLinkId: 'item-1-fragment-entry-link',
+						fragmentEntryType: 'component',
+					},
+					['item-2-fragment-entry-link']: {
+						fragmentEntryLinkId: 'item-2-fragment-entry-link',
+						fragmentEntryType: 'component',
+					},
+					['item-3-fragment-entry-link']: {
+						fragmentEntryLinkId: 'item-3-fragment-entry-link',
+						fragmentEntryType: 'component',
+					},
+				},
 				layoutData: {
 					items: {
 						['item-1']: {
 							children: [],
-							config: {},
+							config: {
+								fragmentEntryLinkId:
+									'item-1-fragment-entry-link',
+							},
 							itemId: 'item-1',
 							parentId: 'root-id',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,
 						},
 						['item-2']: {
 							children: [],
-							config: {},
+							config: {
+								fragmentEntryLinkId:
+									'item-2-fragment-entry-link',
+							},
 							itemId: 'item-2',
 							parentId: 'root-id',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,
 						},
 						['item-3']: {
 							children: [],
-							config: {},
+							config: {
+								fragmentEntryLinkId:
+									'item-3-fragment-entry-link',
+							},
 							itemId: 'item-3',
 							parentId: 'root-id',
 							type: LAYOUT_DATA_ITEM_TYPES.fragment,

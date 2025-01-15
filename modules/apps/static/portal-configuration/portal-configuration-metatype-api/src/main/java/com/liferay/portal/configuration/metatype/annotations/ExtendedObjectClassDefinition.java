@@ -33,6 +33,8 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String category() default "";
 
+	public boolean deprecated() default false;
+
 	public String[] descriptionArguments() default {};
 
 	public String factoryInstanceLabelAttribute() default "";

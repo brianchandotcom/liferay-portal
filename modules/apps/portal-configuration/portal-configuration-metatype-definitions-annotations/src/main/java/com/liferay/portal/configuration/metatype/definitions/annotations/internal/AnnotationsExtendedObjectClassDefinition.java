@@ -188,6 +188,9 @@ public class AnnotationsExtendedObjectClassDefinition
 		Map<String, String> attributes = HashMapBuilder.put(
 			"category", extendedObjectClassDefinition.category()
 		).put(
+			"deprecated",
+			Boolean.toString(extendedObjectClassDefinition.deprecated())
+		).put(
 			"description-arguments",
 			StringUtil.merge(
 				extendedObjectClassDefinition.descriptionArguments())

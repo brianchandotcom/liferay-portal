@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectEntryFolder. This utility wraps
@@ -51,6 +52,18 @@ public class ObjectEntryFolderLocalServiceUtil {
 		ObjectEntryFolder objectEntryFolder) {
 
 		return getService().addObjectEntryFolder(objectEntryFolder);
+	}
+
+	public static ObjectEntryFolder addObjectEntryFolder(
+			String externalReferenceCode, long userId, long groupId,
+			Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addObjectEntryFolder(
+			externalReferenceCode, userId, groupId, labelMap, name,
+			parentObjectEntryFolderId, serviceContext);
 	}
 
 	/**
@@ -349,6 +362,17 @@ public class ObjectEntryFolderLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static ObjectEntryFolder updateObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId)
+		throws PortalException {
+
+		return getService().updateObjectEntryFolder(
+			userId, objectEntryFolderId, labelMap, name,
+			parentObjectEntryFolderId);
 	}
 
 	/**

@@ -74,6 +74,8 @@ public class UserGroupResourceDTOConverter
 							_portal,
 							_userLocalService.fetchUser(
 								userGroup.getUserId()))));
+				setDateCreated(userGroup::getCreateDate);
+				setDateModified(userGroup::getModifiedDate);
 				setDescription(userGroup::getDescription);
 				setExternalReferenceCode(userGroup::getExternalReferenceCode);
 				setId(userGroup::getUserGroupId);

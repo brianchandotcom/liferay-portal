@@ -1424,13 +1424,7 @@ public class UserLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		long ldapServerId = -1;
-
-		if (ldapUser) {
-			ldapServerId = 1;
-		}
-
-		serviceContext.setAttribute("ldapServerId", ldapServerId);
+		serviceContext.setAttribute("ldapServerId", ldapUser ? 1 : -1);
 
 		return UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

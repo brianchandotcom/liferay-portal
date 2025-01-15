@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -17,17 +16,16 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookActionKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
+import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -223,31 +221,13 @@ public class StyleBookManagementToolbarDisplayContext
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					_themeDisplay.getCompanyId())) {
 
-			String name = frontendTokenDefinition.getThemeId();
-
-			Theme theme = ThemeLocalServiceUtil.fetchTheme(
-				_themeDisplay.getCompanyId(),
-				frontendTokenDefinition.getThemeId());
-
-			if (theme != null) {
-				name = LanguageUtil.format(
-					httpServletRequest, "x-theme", theme.getName());
-			}
-			else {
-				CET cet = _cetManager.getCET(
-					_themeDisplay.getCompanyId(),
-					frontendTokenDefinition.getThemeId());
-
-				if (cet != null) {
-					name = LanguageUtil.format(
-						httpServletRequest, "x-theme-css-client-extension",
-						cet.getName());
-				}
-			}
-
 			frontendTokenDefinitionProviders.add(
 				HashMapBuilder.<String, Object>put(
-					"name", name
+					"name",
+					StyleBookUtil.getThemeName(
+						_cetManager, _themeDisplay.getCompanyId(),
+						httpServletRequest,
+						frontendTokenDefinition.getThemeId())
 				).put(
 					"themeId", frontendTokenDefinition.getThemeId()
 				).build());

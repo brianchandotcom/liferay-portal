@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -53,7 +51,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -70,6 +67,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -587,26 +585,9 @@ public class EditStyleBookEntryDisplayContext {
 
 	private String _getThemeName() {
 		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
-			Theme theme = ThemeLocalServiceUtil.fetchTheme(
-				_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
-			String name = _styleBookEntry.getThemeId();
-
-			if (theme != null) {
-				name = LanguageUtil.format(
-					_httpServletRequest, "x-theme", theme.getName());
-			}
-			else {
-				CET cet = _cetManager.getCET(
-					_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
-
-				if (cet != null) {
-					name = LanguageUtil.format(
-						_httpServletRequest, "x-theme-css-client-extension",
-						cet.getName());
-				}
-			}
-
-			return name;
+			return StyleBookUtil.getThemeName(
+				_cetManager, _styleBookEntry.getCompanyId(),
+				_httpServletRequest, _styleBookEntry.getThemeId());
 		}
 
 		Group group = _themeDisplay.getScopeGroup();

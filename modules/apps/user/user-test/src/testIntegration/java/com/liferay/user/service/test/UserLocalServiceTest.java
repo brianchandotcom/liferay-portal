@@ -181,12 +181,12 @@ public class UserLocalServiceTest {
 
 			User user = _createUser(true, "abc");
 
-			Assert.assertEquals(
-				"User was created with incorrect LDAP Server Id", 1,
-				user.getLdapServerId());
 			Assert.assertFalse(
 				"During creation, LDAP user had portal password policy applied",
 				user.isPasswordReset());
+			Assert.assertEquals(
+				"User was created with incorrect LDAP Server Id", 1,
+				user.getLdapServerId());
 			Assert.assertNull(
 				"LDAP user is not bypassing portal password policy",
 				user.getPasswordPolicy());

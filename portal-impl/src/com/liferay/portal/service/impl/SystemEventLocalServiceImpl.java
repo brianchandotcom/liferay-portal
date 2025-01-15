@@ -40,7 +40,7 @@ public class SystemEventLocalServiceImpl
 	@Override
 	public SystemEvent addSystemEvent(
 			long userId, long groupId, String className, long classPK,
-			String classUuid, String referrerClassName, int type,
+			String classUuid, String externalReferenceCode, String referrerClassName, int type,
 			String extraData)
 		throws PortalException {
 
@@ -64,18 +64,18 @@ public class SystemEventLocalServiceImpl
 		}
 
 		return addSystemEvent(
-			userId, companyId, groupId, className, classPK, classUuid,
+			userId, companyId, groupId, className, classPK, classUuid, externalReferenceCode,
 			referrerClassName, type, extraData, userName);
 	}
 
 	@Override
 	public SystemEvent addSystemEvent(
-			long companyId, String className, long classPK, String classUuid,
+			long companyId, String className, long classPK, String classUuid, String externalReferenceCode,
 			String referrerClassName, int type, String extraData)
 		throws PortalException {
 
 		return addSystemEvent(
-			0, companyId, 0, className, classPK, classUuid, referrerClassName,
+			0, companyId, 0, className, classPK, classUuid, externalReferenceCode, referrerClassName,
 			type, extraData, StringPool.BLANK);
 	}
 
@@ -160,7 +160,7 @@ public class SystemEventLocalServiceImpl
 
 	protected SystemEvent addSystemEvent(
 			long userId, long companyId, long groupId, String className,
-			long classPK, String classUuid, String referrerClassName, int type,
+			long classPK, String classUuid, String externalReferenceCode, String referrerClassName, int type,
 			String extraData, String userName)
 		throws PortalException {
 
@@ -221,6 +221,7 @@ public class SystemEventLocalServiceImpl
 		systemEvent.setClassPK(classPK);
 		systemEvent.setClassUuid(classUuid);
 		systemEvent.setReferrerClassName(referrerClassName);
+		systemEvent.setExternalReferenceCode(externalReferenceCode);
 
 		long parentSystemEventId = 0;
 

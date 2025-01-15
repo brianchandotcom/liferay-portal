@@ -40,8 +40,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
@@ -376,49 +374,29 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testForEachCompanyId() throws Exception {
+		boolean originalDatabasePartitionThreadPoolEnabled =
+			ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_PARTITION_THREAD_POOL_ENABLED");
+
 		try {
 			addDBPartitions();
 
 			insertPartitionRequiredData();
 
-			Set<Long> companyIds = new ConcurrentSkipListSet<>();
-
 			CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					Assert.assertEquals(
-						companyId, CompanyThreadLocal.getCompanyId());
-
-					Assert.assertTrue(CompanyThreadLocal.isLocked());
-
-					companyIds.add(companyId);
-				});
-
-			Assert.assertEquals(
-				companyIds.toString(), _getDefaultSchemaCount("Company"),
-				companyIds.size());
-		}
-		finally {
-			deletePartitionRequiredData();
-			removeDBPartitions();
-		}
-	}
-
-	@Test
-	public void testForEachCompanyIdOrdering() throws Exception {
-		boolean originalThreadPoolEnabled = ReflectionTestUtil.getFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED");
-
-		try {
-			_testForEachCompanyIdOrdering(false);
-			_testForEachCompanyIdOrdering(true);
+			_testForEachCompanyId(false);
+			_testForEachCompanyId(true);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				DBPartitionUtil.class,
 				"_DATABASE_PARTITION_THREAD_POOL_ENABLED",
-				originalThreadPoolEnabled);
+				originalDatabasePartitionThreadPoolEnabled);
+
+			deletePartitionRequiredData();
+			removeDBPartitions();
 		}
 	}
 
@@ -626,16 +604,29 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			StorageType.PERSISTED);
 	}
 
-	private void _testForEachCompanyIdOrdering(boolean threadPoolEnabled)
+	private void _testForEachCompanyId(
+			boolean databasePartitionThreadPoolEnabled)
 		throws Exception {
 
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_THREAD_POOL_ENABLED",
-			threadPoolEnabled);
+			databasePartitionThreadPoolEnabled);
 
 		List<Long> companyIds = new CopyOnWriteArrayList<>();
 
-		DBPartitionUtil.forEachCompanyId(companyIds::add);
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				Assert.assertEquals(
+					companyId, CompanyThreadLocal.getCompanyId());
+
+				Assert.assertTrue(CompanyThreadLocal.isLocked());
+
+				companyIds.add(companyId);
+			});
+
+		Assert.assertEquals(
+			companyIds.toString(), _getDefaultSchemaCount("Company"),
+			companyIds.size());
 
 		Assert.assertEquals(
 			companyIds.toString(),

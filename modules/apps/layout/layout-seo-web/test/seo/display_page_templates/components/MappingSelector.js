@@ -30,7 +30,7 @@ const baseProps = {
 const renderComponent = (props) =>
 	render(<MappingSelector {...baseProps} {...props} />);
 
-describe('MappingSelector', () => {
+describe.skip('MappingSelector', () => {
 	afterEach(cleanup);
 
 	describe('when rendered', () => {

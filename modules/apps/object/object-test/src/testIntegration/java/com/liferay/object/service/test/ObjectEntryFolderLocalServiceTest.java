@@ -74,11 +74,11 @@ public class ObjectEntryFolderLocalServiceTest {
 		_addObjectEntryFolder(
 			externalReferenceCode, _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 		_addObjectEntryFolder(
 			externalReferenceCode, _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 	}
 
 	@Test(expected = ObjectEntryFolderNameException.MustNotBeDuplicate.class)
@@ -87,10 +87,10 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		_addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 		_addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 	}
 
 	@Test
@@ -99,7 +99,8 @@ public class ObjectEntryFolderLocalServiceTest {
 			_objectEntryFolderLocalService.addObjectEntryFolder(
 				StringUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), null, StringUtil.randomString(),
-				ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER,
+				ObjectEntryFolderConstants.
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID,
 				ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertEquals(
@@ -113,7 +114,7 @@ public class ObjectEntryFolderLocalServiceTest {
 	public void testAddObjectEntryFolderWithNullName() throws Exception {
 		_addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(), null,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 	}
 
 	@Test(expected = ObjectEntryFolderScopeException.class)
@@ -123,7 +124,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		_addObjectEntryFolder(
 			StringUtil.randomString(), TestPropsValues.getGroupId(),
@@ -136,7 +137,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
@@ -177,12 +178,12 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		_addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		_objectEntryFolderLocalService.updateObjectEntryFolder(
 			TestPropsValues.getUserId(),
@@ -196,7 +197,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		Assert.assertNotEquals(
 			objectEntryFolder1.getName(),
@@ -207,7 +208,8 @@ public class ObjectEntryFolderLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectEntryFolder1.getObjectEntryFolderId(), null,
 				objectEntryFolder1.getName(),
-				ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+				ObjectEntryFolderConstants.
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(
@@ -221,7 +223,7 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		_objectEntryFolderLocalService.updateObjectEntryFolder(
 			TestPropsValues.getUserId(),
@@ -237,12 +239,12 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
 			StringUtil.randomString(), TestPropsValues.getGroupId(),
 			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER);
+			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
 		_objectEntryFolderLocalService.updateObjectEntryFolder(
 			TestPropsValues.getUserId(),

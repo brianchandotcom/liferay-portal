@@ -10,6 +10,6 @@ package com.liferay.object.constants;
  */
 public class ObjectEntryFolderConstants {
 
-	public static final long DEFAULT_PARENT_OBJECT_ENTRY_FOLDER = 0;
+	public static final long DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID = 0;
 
 }

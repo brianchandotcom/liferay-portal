@@ -39,7 +39,8 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	@Override
 	public String buildTreePath() throws PortalException {
 		if (getObjectEntryFolderId() ==
-				ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER) {
+				ObjectEntryFolderConstants.
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID) {
 
 			return StringPool.SLASH;
 		}

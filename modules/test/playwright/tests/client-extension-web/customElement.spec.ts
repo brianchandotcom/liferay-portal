@@ -220,7 +220,9 @@ test.describe('Client Extension admin', () => {
 				.click();
 
 			await page
-				.getByRole('menuitem', {name: /Not translated into Portuguese/})
+				.getByRole('menuitem', {
+					name: /Not translated into Portuguese \(Brazil\)/,
+				})
 				.click();
 
 			await clientExtensionsPage.fillNewCustomElementFormModal({

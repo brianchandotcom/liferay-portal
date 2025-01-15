@@ -28,11 +28,58 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected static String getHeader(Analyzer analyzer) {
+		String portalVersion = _getPortalVersion(analyzer);
+
+		if ((portalVersion != null) &&
+			(portalVersion.equals("7.3.x") || portalVersion.equals("7.2.x") ||
+			 portalVersion.equals("7.1.x") || portalVersion.equals("7.0.x"))) {
+
+			return LIFERAY_RESOURCE_BUNDLE;
+		}
+
 		return LIFERAY_LANGUAGE_RESOURCES;
 	}
 
 	protected static final String LIFERAY_LANGUAGE_RESOURCES =
 		"liferay.language.resources";
+
+	protected static final String LIFERAY_RESOURCE_BUNDLE =
+		"liferay.resource.bundle";
+
+	private static String _getPortalVersion(Analyzer analyzer) {
+		String portalVersion = null;
+
+		for (String propertyName : _PORTAL_VERSION_PROPERTY_NAMES) {
+			portalVersion = analyzer.getProperty(propertyName);
+
+			if (portalVersion != null) {
+				break;
+			}
+		}
+
+		if (portalVersion != null) {
+			portalVersion = portalVersion.trim();
+			portalVersion = portalVersion.toLowerCase();
+
+			int pos = portalVersion.indexOf('-');
+
+			if (pos != -1) {
+				portalVersion = portalVersion.substring(0, pos);
+			}
+
+			if (portalVersion.isEmpty() || portalVersion.equals("latest") ||
+				portalVersion.equals("master")) {
+
+				portalVersion = null;
+			}
+		}
+
+		return portalVersion;
+	}
+
+	private static final String[] _PORTAL_VERSION_PROPERTY_NAMES = {
+		"git.working.branch.name", "portal.version"
+	};
 
 	private final AnalyzerPlugin[] _analyzerPlugins = {
 		new AggregateResourceBundleLoaderAnalyzerPlugin(),

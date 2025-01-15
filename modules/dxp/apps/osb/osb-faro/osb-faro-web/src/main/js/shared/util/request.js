@@ -63,20 +63,11 @@ export function stringifyValues(data) {
 	);
 }
 
-export default request => {
-	const {
-		baseURL = '/o/faro',
-		contentType = 'json',
-		data = {},
-		method,
-		path
-	} = request;
-
-	let requestURL = `${baseURL}/${path}`;
-
-	// Remove undefined values from object authData
-
-	const authData = Object.entries({
+/**
+ * Remove undefined values from object authData
+ */
+function getAuthData(data) {
+	return Object.entries({
 		...stringifyValues(data)
 	})
 		.filter(([, value]) => value !== undefined)
@@ -84,13 +75,29 @@ export default request => {
 			obj[key] = value;
 			return obj;
 		}, {});
+}
+
+export default request => {
+	const {
+		baseURL = '/o/faro',
+		contentType = 'json',
+		data,
+		method,
+		path
+	} = request;
+
+	let requestURL = `${baseURL}/${path}`;
+
+	const authData = data && getAuthData(data);
 
 	const config = {method};
 
-	if (method === 'GET') {
-		requestURL = `${requestURL}?${new URLSearchParams(authData)}`;
-	} else {
-		config.body = getFormData(authData);
+	if (authData) {
+		if (method === 'GET') {
+			requestURL = `${requestURL}?${new URLSearchParams(authData)}`;
+		} else {
+			config.body = getFormData(authData);
+		}
 	}
 
 	return fetch(requestURL, config).then(async response => {

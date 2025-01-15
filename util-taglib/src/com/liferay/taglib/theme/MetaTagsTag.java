@@ -153,7 +153,10 @@ public class MetaTagsTag extends IncludeTag {
 
 		if (Validator.isNull(metaKeywords)) {
 			metaKeywords = layout.getKeywords(defaultLanguageId);
-			metaKeywordsLanguageId = w3cDefaultLanguageId;
+
+			if (Validator.isNotNull(metaKeywords)) {
+				metaKeywordsLanguageId = w3cDefaultLanguageId;
+			}
 		}
 
 		ListMergeable<String> pageKeywordsListMergeable =

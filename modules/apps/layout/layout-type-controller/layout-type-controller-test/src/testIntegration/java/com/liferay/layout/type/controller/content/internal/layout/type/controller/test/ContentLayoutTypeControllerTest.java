@@ -355,6 +355,36 @@ public class ContentLayoutTypeControllerTest {
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 
+	@Test
+	@TestInfo("LPD-46099")
+	public void testContentLayoutTypeControllerWithSegmentsExperienceId()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(null, TestPropsValues.getUser());
+
+		_testIncludeLayoutContent(null, mockHttpServletRequest, null);
+		_testIncludeLayoutContent(
+			null, mockHttpServletRequest,
+			String.valueOf(
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
+		_testIncludeLayoutContent(
+			"http://www.liferay.com", mockHttpServletRequest,
+			String.valueOf(RandomTestUtil.randomLong()));
+		_testIncludeLayoutContent(
+			"http://www.liferay.com", mockHttpServletRequest,
+			RandomTestUtil.randomString());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_testIncludeLayoutContent(
+			"http://www.liferay.com", mockHttpServletRequest,
+			String.valueOf(
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid())));
+	}
+
 	private Layout _addTypePageTemplateEntryLayout() throws Exception {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -470,6 +500,53 @@ public class ContentLayoutTypeControllerTest {
 		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_layoutLockManager.getLock(mockActionRequest);
+	}
+
+	private void _testIncludeLayoutContent(
+			String expectedRedirectURL, Layout layout,
+			MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layoutTypeController.includeLayoutContent(
+			mockHttpServletRequest, mockHttpServletResponse, layout);
+
+		Assert.assertEquals(
+			expectedRedirectURL, mockHttpServletResponse.getRedirectedUrl());
+	}
+
+	private void _testIncludeLayoutContent(
+			String expectedRedirectURL,
+			MockHttpServletRequest mockHttpServletRequest,
+			String segmentsExperienceId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNotNull(segmentsExperienceId)) {
+			mockHttpServletRequest.setParameter(
+				"segmentsExperienceId", segmentsExperienceId);
+			themeDisplay.setURLCurrent(
+				"http://www.liferay.com?segmentsExperienceId=" +
+					segmentsExperienceId);
+		}
+		else {
+			mockHttpServletRequest.removeParameter("segmentsExperienceId");
+			themeDisplay.setURLCurrent("http://www.liferay.com");
+		}
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, themeDisplay.getURLCurrent());
+
+		_testIncludeLayoutContent(
+			expectedRedirectURL, _layout, mockHttpServletRequest);
+		_testIncludeLayoutContent(
+			expectedRedirectURL, _layout.fetchDraftLayout(),
+			mockHttpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

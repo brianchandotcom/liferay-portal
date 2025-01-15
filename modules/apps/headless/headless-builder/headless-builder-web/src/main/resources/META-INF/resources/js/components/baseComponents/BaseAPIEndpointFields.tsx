@@ -89,7 +89,7 @@ export default function BaseAPIEndpointFields({
 
 	useEffect(() => {
 		fetchJSON<FetchedListType>({
-			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/SCOPE_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/L_API_ENDPOINT_SCOPES',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
@@ -107,7 +107,7 @@ export default function BaseAPIEndpointFields({
 		});
 
 		fetchJSON<FetchedListType>({
-			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/RETRIEVE_TYPE_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/L_API_ENDPOINT_RETRIEVE_TYPES',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
@@ -125,7 +125,7 @@ export default function BaseAPIEndpointFields({
 		});
 
 		fetchJSON<FetchedListType>({
-			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/HTTP_METHOD_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/L_API_ENDPOINT_HTTP_METHODS',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({

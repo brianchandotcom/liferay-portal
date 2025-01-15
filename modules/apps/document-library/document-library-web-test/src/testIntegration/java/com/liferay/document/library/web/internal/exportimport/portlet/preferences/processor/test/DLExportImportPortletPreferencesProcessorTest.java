@@ -585,33 +585,96 @@ public class DLExportImportPortletPreferencesProcessorTest {
 		return importPortletDataContext;
 	}
 
-	private Map<String, String> _getPreferencesValues(FileEntry fileEntry) {
+	private Map<String, String> _getPreferencesValues(FileEntry fileEntry)
+		throws Exception {
+
+		String rootFolderExternalReferenceCode = StringPool.BLANK;
+
+		if (fileEntry.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			Folder folder = _dlAppLocalService.getFolder(
+				fileEntry.getFolderId());
+
+			rootFolderExternalReferenceCode = folder.getExternalReferenceCode();
+		}
+
+		Group selectedGroup;
+		String selectedRepositoryExternalReferenceCode = StringPool.BLANK;
+
+		Repository selectedRepository = _repositoryLocalService.fetchRepository(
+			fileEntry.getRepositoryId());
+
+		if (selectedRepository == null) {
+			selectedGroup = _groupLocalService.getGroup(
+				fileEntry.getRepositoryId());
+		}
+		else {
+			selectedGroup = _groupLocalService.getGroup(
+				selectedRepository.getGroupId());
+
+			selectedRepositoryExternalReferenceCode =
+				selectedRepository.getExternalReferenceCode();
+		}
+
 		return _getPreferencesValues(
-			String.valueOf(fileEntry.getFolderId()),
-			String.valueOf(fileEntry.getRepositoryId()));
+			rootFolderExternalReferenceCode,
+			selectedGroup.getExternalReferenceCode(),
+			selectedRepositoryExternalReferenceCode);
 	}
 
-	private Map<String, String> _getPreferencesValues(Folder folder) {
+	private Map<String, String> _getPreferencesValues(Folder folder)
+		throws Exception {
+
+		Group selectedGroup;
+		String selectedRepositoryExternalReferenceCode = StringPool.BLANK;
+
+		Repository selectedRepository = _repositoryLocalService.fetchRepository(
+			folder.getRepositoryId());
+
+		if (selectedRepository == null) {
+			selectedGroup = _groupLocalService.getGroup(
+				folder.getRepositoryId());
+		}
+		else {
+			selectedGroup = _groupLocalService.getGroup(
+				selectedRepository.getGroupId());
+
+			selectedRepositoryExternalReferenceCode =
+				selectedRepository.getExternalReferenceCode();
+		}
+
 		return _getPreferencesValues(
-			String.valueOf(folder.getFolderId()),
-			String.valueOf(folder.getRepositoryId()));
+			folder.getExternalReferenceCode(),
+			selectedGroup.getExternalReferenceCode(),
+			selectedRepositoryExternalReferenceCode);
 	}
 
 	private Map<String, String> _getPreferencesValues(
 		PortletPreferences portletPreferences) {
 
 		return _getPreferencesValues(
-			portletPreferences.getValue("rootFolderId", null),
-			portletPreferences.getValue("selectedRepositoryId", null));
+			portletPreferences.getValue(
+				"rootFolderExternalReferenceCode", null),
+			portletPreferences.getValue(
+				"selectedGroupExternalReferenceCode", null),
+			portletPreferences.getValue(
+				"selectedRepositoryExternalReferenceCode", null));
 	}
 
 	private Map<String, String> _getPreferencesValues(
-		String rootFolderId, String selectedRepositoryId) {
+		String rootFolderExternalReferenceCode,
+		String selectedGroupExternalReferenceCode,
+		String selectedRepositoryExternalReferenceCode) {
 
 		return HashMapBuilder.put(
-			"rootFolderId", rootFolderId
+			"rootFolderExternalReferenceCode", rootFolderExternalReferenceCode
 		).put(
-			"selectedRepositoryId", selectedRepositoryId
+			"selectedGroupExternalReferenceCode",
+			selectedGroupExternalReferenceCode
+		).put(
+			"selectedRepositoryExternalReferenceCode",
+			selectedRepositoryExternalReferenceCode
 		).build();
 	}
 

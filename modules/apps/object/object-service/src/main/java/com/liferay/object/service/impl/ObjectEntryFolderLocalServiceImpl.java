@@ -226,7 +226,8 @@ public class ObjectEntryFolderLocalServiceImpl
 		throws PortalException {
 
 		if (parentObjectEntryFolderId ==
-				ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER) {
+				ObjectEntryFolderConstants.
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID) {
 
 			return;
 		}

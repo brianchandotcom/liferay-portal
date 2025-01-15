@@ -10,28 +10,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAutoAssertionTagViaBlogsPG(tagName = null, entryTitle = null, entryContent = null) {
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addEntryContent(
-			entryContent = ${entryContent},
-			entryTitle = ${entryTitle});
-
-		Blogs.expandPanel(panel = "Categorization");
-
-		Type.sendKeys(
-			locator1 = "AssetCategorization#TAGS_FIELD",
-			value1 = "tag ");
-
-		AssertClick(
-			key_tagName = ${tagName},
-			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-			value1 = ${tagName});
-
-		PortletEntry.publish();
-	}
-
-	@summary = "Default summary"
 	macro addCP(tagName = null) {
 		Tag._addCP(tagName = ${tagName});
 

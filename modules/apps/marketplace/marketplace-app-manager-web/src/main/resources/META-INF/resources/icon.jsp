@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String iconURL = ParamUtil.getString(request, "iconURL");
+String iconURL = HtmlUtil.escape(ParamUtil.getString(request, "iconURL"));
 %>
 
 <clay:sticker

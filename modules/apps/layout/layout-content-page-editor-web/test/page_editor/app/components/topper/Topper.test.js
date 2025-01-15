@@ -10,6 +10,8 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {FormStep} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/FormStep';
+import {FormStepContainer} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/FormStepContainer';
 import Row from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout_data_items/Row';
 import Topper from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/topper/Topper';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
@@ -94,8 +96,7 @@ const renderTopper = ({
 };
 
 describe('Topper', () => {
-
-	/* it('does not render Topper if user has no permissions', () => {
+	it('does not render Topper if user has no permissions', () => {
 		const {baseElement} = renderTopper({hasUpdatePermissions: false});
 
 		expect(baseElement.querySelector('.page-editor__topper')).toBe(null);
@@ -135,7 +136,7 @@ describe('Topper', () => {
 		expect(
 			baseElement.querySelector('[data-name="customName"]')
 		).toBeInTheDocument();
-	});*/
+	});
 
 	it('disables options when multiple items are selected', () => {
 		Liferay.FeatureFlags['LPD-18221'] = true;
@@ -237,7 +238,7 @@ describe('Topper', () => {
 		});
 	});
 
-	/* describe('Form Step components', () => {
+	describe('Form Step components', () => {
 		it('renders step name correctly', () => {
 			const layoutData = {
 				items: {
@@ -297,5 +298,5 @@ describe('Topper', () => {
 
 			expect(screen.queryByText('options')).not.toBeInTheDocument();
 		});
-	});*/
+	});
 });

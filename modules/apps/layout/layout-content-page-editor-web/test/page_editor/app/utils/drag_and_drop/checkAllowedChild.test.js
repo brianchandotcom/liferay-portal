@@ -52,11 +52,11 @@ function getCollectionItem() {
 	};
 }
 
-function getContainer() {
+function getContainer({itemId = IDS.container, children = []} = {}) {
 	return {
-		children: [],
+		children,
 		config: {},
-		itemId: IDS.container,
+		itemId,
 		type: LAYOUT_DATA_ITEM_TYPES.container,
 	};
 }
@@ -218,8 +218,29 @@ describe('checkAllowedChild', () => {
 
 			const container = getContainer();
 
+			const layoutData = {
+				items: {
+					[input.itemId]: input,
+					[IDS.container]: container,
+				},
+			};
+
+			const fragmentEntryLinks = {
+				[input.config.fragmentEntryLinkId]: {
+					fieldTypes: ['text'],
+					fragmentEntryLinkId: input.config.fragmentEntryLinkId,
+					fragmentEntryType: 'input',
+				},
+			};
+
 			expect(
-				checkAllowedChild(input, container, {}, {}, () => []).valid
+				checkAllowedChild(
+					input,
+					container,
+					layoutData,
+					fragmentEntryLinks,
+					() => []
+				).valid
 			).toBe(false);
 		});
 
@@ -233,6 +254,101 @@ describe('checkAllowedChild', () => {
 			expect(checkAllowedChild(input, form, {}, {}, () => []).valid).toBe(
 				true
 			);
+		});
+
+		it('it is not possible to move a container with input fragment outside a form', () => {
+			const container = getContainer();
+
+			const existingInput = getFragment({
+				fragmentEntryLinkId: 'input-fragment-id',
+				itemId: 'input-stepper-id',
+				parentId: IDS.container,
+			});
+
+			const innerContainer = getContainer({
+				children: [existingInput.itemId],
+				itemId: 'inner-container-id',
+			});
+
+			const form = getForm({
+				children: [innerContainer.itemId],
+			});
+
+			const layoutData = {
+				items: {
+					[IDS.form]: form,
+					[existingInput.itemId]: existingInput,
+					[IDS.container]: container,
+					[innerContainer.itemId]: innerContainer,
+				},
+			};
+
+			const fragmentEntryLinks = {
+				[existingInput.config.fragmentEntryLinkId]: {
+					fieldTypes: ['text'],
+					fragmentEntryLinkId:
+						existingInput.config.fragmentEntryLinkId,
+					fragmentEntryType: 'input',
+				},
+			};
+
+			expect(
+				checkAllowedChild(
+					innerContainer,
+					container,
+					layoutData,
+					fragmentEntryLinks,
+					() => []
+				).valid
+			).toBe(false);
+		});
+
+		it('it is possible to move a container with localizationSelectinput fragment outside a form', () => {
+			const container = getContainer();
+
+			const existingInput = getFragment({
+				fieldTypes: ['localizationSelect'],
+				fragmentEntryLinkId: 'input-fragment-id',
+				itemId: 'input-stepper-id',
+				parentId: IDS.container,
+			});
+
+			const innerContainer = getContainer({
+				children: [existingInput.itemId],
+				itemId: 'inner-container-id',
+			});
+
+			const form = getForm({
+				children: [innerContainer.itemId],
+			});
+
+			const layoutData = {
+				items: {
+					[IDS.form]: form,
+					[existingInput.itemId]: existingInput,
+					[IDS.container]: container,
+					[innerContainer.itemId]: innerContainer,
+				},
+			};
+
+			const fragmentEntryLinks = {
+				[existingInput.config.fragmentEntryLinkId]: {
+					fieldTypes: ['localizationSelect'],
+					fragmentEntryLinkId:
+						existingInput.config.fragmentEntryLinkId,
+					fragmentEntryType: 'input',
+				},
+			};
+
+			expect(
+				checkAllowedChild(
+					innerContainer,
+					container,
+					layoutData,
+					fragmentEntryLinks,
+					() => []
+				).valid
+			).toBe(true);
 		});
 	});
 

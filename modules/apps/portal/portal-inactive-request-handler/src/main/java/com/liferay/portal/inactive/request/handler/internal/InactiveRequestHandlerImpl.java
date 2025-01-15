@@ -7,7 +7,7 @@ package com.liferay.portal.inactive.request.handler.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.inactive.request.handler.internal.constants.WebKeys;
+import com.liferay.portal.inactive.request.handler.internal.constants.PortalInactiveRequestHandlerWebKeys;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 
 import java.io.IOException;
@@ -63,7 +63,9 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 				_servletContext.getRequestDispatcher("/inactive.jsp");
 
 			httpServletRequest.setAttribute(
-				WebKeys.PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE, messageKey);
+				PortalInactiveRequestHandlerWebKeys.
+					PORTAL_INACTIVE_REQUEST_HANDLER_MESSAGE,
+				messageKey);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

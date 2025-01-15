@@ -855,6 +855,55 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testOutdatedPasswordAlgorithmRoundsAreUpdatedAfterLogin()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		String password = "password";
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WITHHMACSHA1/160/1300000")) {
+
+			user = _userLocalService.updatePassword(
+				user.getUserId(), password, password, false, true);
+
+			Assert.assertEquals(
+				"PBKDF2WITHHMACSHA1/160/1300000",
+				PasswordEncryptorUtil.getFullEncryptedPasswordAlgorithm(
+					user.getPassword()));
+		}
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					UserLocalServiceImpl.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WITHHMACSHA1/160/2600000");
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					"PBKDF2WITHHMACSHA1/160/2600000")) {
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getDisplayEmailAddress(),
+					password, null, null, null));
+
+			user = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				"PBKDF2WITHHMACSHA1/160/2600000",
+				PasswordEncryptorUtil.getFullEncryptedPasswordAlgorithm(
+					user.getPassword()));
+		}
+	}
+
+	@Test
 	public void testPasswordHistory() throws Exception {
 		User user = UserTestUtil.addUser();
 

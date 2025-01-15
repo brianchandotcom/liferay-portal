@@ -554,6 +554,12 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			objectEntry.getNonzeroGroupId(),
+			_classNameLocalService.getClassNameId(
+				objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId());
+
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());

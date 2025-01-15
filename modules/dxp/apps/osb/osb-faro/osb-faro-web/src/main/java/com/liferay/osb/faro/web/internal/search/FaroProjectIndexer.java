@@ -198,9 +198,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 			_log.error(exception);
 		}
-/* here needs to change, remember to check if it returns a number */
 		document.addNumber(
-				"pageViewsUsage", _getUsage(faroSubscriptionDisplay.getPageViewsCountSinceLastAnniversary(), faroSubscriptionDisplay.getPageViewsCountLimit())
+				"pageViewsUsage", _getUsage(faroSubscriptionDisplay.getPageViewsCountSinceLastAnniversary(), faroSubscriptionDisplay.getPageViewsLimit())
 		);
 		document.addNumber(
 				"individualsUsage", _getUsage(faroSubscriptionDisplay.getIndividualsCountSinceLastAnniversary(), faroSubscriptionDisplay.getIndividualsLimit()));

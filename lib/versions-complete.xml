@@ -6359,7 +6359,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/osgi-service-log.jar</file-name>
-				<version>1.3.0</version>
+				<version>1.4.0</version>
 				<project-name>osgi.core</project-name>
 				<project-url>https://www.osgi.org</project-url>
 				<licenses>

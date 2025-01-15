@@ -30,7 +30,7 @@ public class LocalVariableTypeInferenceCheck extends BaseCheck {
 		String typeName = getTypeName(detailAST, false);
 
 		if (typeName.equals("var")) {
-			log(detailAST, _MSG_AVOID_VAR, detailAST);
+			log(detailAST, _MSG_AVOID_VAR);
 		}
 	}
 

@@ -104,7 +104,7 @@ public class PortalRelease {
 
 		_portalVersion = portalVersion;
 
-		_bundlesBaseURL = _getLocalURL(bundlesBaseURL.toString());
+		_bundlesBaseURL = _getRemoteURL(bundlesBaseURL.toString());
 
 		_initializeURLs();
 	}
@@ -142,7 +142,7 @@ public class PortalRelease {
 			portalVersion = bundlesBaseURLMatcher.group("portalVersion");
 		}
 
-		_bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+		_bundlesBaseURL = _getRemoteURL(bundlesBaseURLString);
 
 		_portalVersion = portalVersion;
 
@@ -167,7 +167,7 @@ public class PortalRelease {
 				0, bundlesBaseURLString.length() - 1);
 		}
 
-		_bundlesBaseURL = _getLocalURL(bundlesBaseURLString);
+		_bundlesBaseURL = _getRemoteURL(bundlesBaseURLString);
 
 		_initializeURLs();
 	}
@@ -522,7 +522,7 @@ public class PortalRelease {
 			return null;
 		}
 
-		return getBundlesBaseLocalURL() + "/" + matcher.group("fileName");
+		return getBundlesBaseURL() + "/" + matcher.group("fileName");
 	}
 
 	private String _getURLStringFromBuildProperties(String basePropertyName) {
@@ -642,7 +642,7 @@ public class PortalRelease {
 
 		try {
 			bundlesBaseURLContent = JenkinsResultsParserUtil.toString(
-				getBundlesBaseLocalURL() + "/", false, 0, 5, 0);
+				getBundlesBaseURL() + "/", false, 0, 5, 0);
 		}
 		catch (IOException ioException) {
 			return;

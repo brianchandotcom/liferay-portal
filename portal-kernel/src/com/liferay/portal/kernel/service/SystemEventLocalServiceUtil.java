@@ -37,23 +37,24 @@ public class SystemEventLocalServiceUtil {
 	 */
 	public static SystemEvent addSystemEvent(
 			long userId, long groupId, String className, long classPK,
-			String classUuid, String referrerClassName, int type,
-			String extraData)
-		throws PortalException {
-
-		return getService().addSystemEvent(
-			userId, groupId, className, classPK, classUuid, referrerClassName,
-			type, extraData);
-	}
-
-	public static SystemEvent addSystemEvent(
-			long companyId, String className, long classPK, String classUuid,
+			String classUuid, String externalReferenceCode,
 			String referrerClassName, int type, String extraData)
 		throws PortalException {
 
 		return getService().addSystemEvent(
-			companyId, className, classPK, classUuid, referrerClassName, type,
-			extraData);
+			userId, groupId, className, classPK, classUuid,
+			externalReferenceCode, referrerClassName, type, extraData);
+	}
+
+	public static SystemEvent addSystemEvent(
+			long companyId, String className, long classPK, String classUuid,
+			String externalReferenceCode, String referrerClassName, int type,
+			String extraData)
+		throws PortalException {
+
+		return getService().addSystemEvent(
+			companyId, className, classPK, classUuid, externalReferenceCode,
+			referrerClassName, type, extraData);
 	}
 
 	/**

@@ -34,16 +34,19 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 			return false;
 		}
 
+		String header = ResourceBundleLoaderAnalyzerPlugin.getHeader(analyzer);
+
 		Set<String> aggregateResourceBundles = parameters.keySet();
 
-		addProvideCapabilities(analyzer, aggregateResourceBundles);
-		addRequireCapabilities(analyzer, aggregateResourceBundles);
+		addProvideCapabilities(analyzer, header, aggregateResourceBundles);
+		addRequireCapabilities(analyzer, header, aggregateResourceBundles);
 
 		return true;
 	}
 
 	protected void addProvideCapabilities(
-		Analyzer analyzer, Set<String> aggregateResourceBundles) {
+		Analyzer analyzer, String header,
+		Set<String> aggregateResourceBundles) {
 
 		Parameters provideCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
@@ -95,9 +98,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		Parameters parameters = new Parameters();
 
-		parameters.add(
-			ResourceBundleLoaderAnalyzerPlugin.LIFERAY_LANGUAGE_RESOURCES,
-			attrs);
+		parameters.add(header, attrs);
 
 		provideCapabilityHeaders.mergeWith(parameters, false);
 
@@ -106,7 +107,8 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 	}
 
 	protected void addRequireCapabilities(
-		Analyzer analyzer, Set<String> aggregateResourceBundles) {
+		Analyzer analyzer, String header,
+		Set<String> aggregateResourceBundles) {
 
 		Parameters requireCapabilityHeaders = new SortedParameters(
 			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
@@ -121,9 +123,7 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 			attrs.put("filter:", filter.toString());
 
-			parameters.add(
-				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_LANGUAGE_RESOURCES,
-				attrs);
+			parameters.add(header, attrs);
 		}
 
 		requireCapabilityHeaders.mergeWith(parameters, false);

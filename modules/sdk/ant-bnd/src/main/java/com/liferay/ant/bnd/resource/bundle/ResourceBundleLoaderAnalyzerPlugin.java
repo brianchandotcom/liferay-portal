@@ -27,6 +27,10 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 		return modified;
 	}
 
+	protected static String getHeader(Analyzer analyzer) {
+		return LIFERAY_LANGUAGE_RESOURCES;
+	}
+
 	protected static final String LIFERAY_LANGUAGE_RESOURCES =
 		"liferay.language.resources";
 

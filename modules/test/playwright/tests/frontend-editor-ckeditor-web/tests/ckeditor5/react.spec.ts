@@ -32,3 +32,42 @@ test.beforeEach(async ({ckeditorSamplePage, site}) => {
 test('Assert editor is rendered', {tag: '@LPD-11235'}, async ({page}) => {
 	expect(page.getByText('Lorem ipsum dolor sit amet')).toBeVisible();
 });
+
+test(
+	'Assert editor is rendered with a custom list of plugins configuration',
+	{tag: '@LPD-11235'},
+	async ({page}) => {
+		const editorToolbar = page.getByLabel('Editor toolbar');
+		const expectedButtons = [
+			'Undo',
+			'Redo',
+			'Bold',
+			'Italic',
+			'Underline',
+			'Strikethrough',
+			'Font Color',
+			'Font Background Color',
+			'Remove Format',
+			'Numbered List',
+			'Bulleted List',
+			'Increase indent',
+			'Decrease indent',
+			'Link',
+			'Insert table',
+			'Insert media',
+			'Horizontal line',
+			'Text alignment',
+		];
+
+		await expect(editorToolbar).toBeVisible();
+
+		await expect(editorToolbar.getByRole('button')).toHaveCount(18);
+
+		const availableButtons = await editorToolbar
+			.getByRole('button')
+			.locator('.ck-button__label')
+			.allInnerTexts();
+
+		expect(availableButtons).toEqual(expectedButtons);
+	}
+);

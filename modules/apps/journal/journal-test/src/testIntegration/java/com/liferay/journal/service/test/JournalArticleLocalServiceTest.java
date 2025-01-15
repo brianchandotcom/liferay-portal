@@ -1267,7 +1267,8 @@ public class JournalArticleLocalServiceTest {
 		article = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1, article.getVersion(), 0);
+		Assert.assertEquals(
+			"Returns the only approved version", 1, article.getVersion(), 0);
 
 		article = JournalTestUtil.updateArticle(article);
 
@@ -1278,7 +1279,9 @@ public class JournalArticleLocalServiceTest {
 		article = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.3, article.getVersion(), 0);
+		Assert.assertEquals(
+			"Returns the latest approved version", 1.3, article.getVersion(),
+			0);
 
 		JournalTestUtil.expireArticle(
 			_group.getGroupId(), articleToExpire, articleToExpire.getVersion());
@@ -1286,7 +1289,10 @@ public class JournalArticleLocalServiceTest {
 		article = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.2, article.getVersion(), 0);
+		Assert.assertEquals(
+			"Returns the latest approved version when an expired newer " +
+				"version exists",
+			1.2, article.getVersion(), 0);
 
 		articleToExpire.setDisplayDate(
 			new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
@@ -1297,7 +1303,8 @@ public class JournalArticleLocalServiceTest {
 		article = _journalArticleLocalService.fetchDisplayArticle(
 			_group.getGroupId(), article.getArticleId());
 
-		Assert.assertEquals(1.2, article.getVersion(), 0);
+		Assert.assertEquals(
+			"Does not return a future article", 1.2, article.getVersion(), 0);
 	}
 
 	@Test

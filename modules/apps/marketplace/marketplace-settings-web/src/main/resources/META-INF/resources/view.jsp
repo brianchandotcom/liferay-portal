@@ -18,6 +18,8 @@
 			).put(
 				"clientId", PropsValues.MARKETPLACE_CLIENT_ID
 			).put(
+				"learnResources", LearnMessageUtil.getReactDataJSONObject("marketplace-settings-web")
+			).put(
 				"redirect", PropsValues.MARKETPLACE_REDIRECT
 			).put(
 				"url", PropsValues.MARKETPLACE_URL

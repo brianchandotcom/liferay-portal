@@ -222,6 +222,94 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 	}
 
 	@Test
+	public void testLegacyAggregateResourceBundlesInstruction()
+		throws Exception {
+
+		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
+			new ResourceBundleLoaderAnalyzerPlugin();
+
+		for (String portalVersion : _PORTAL_VERSIONS) {
+			InputStream inputStream =
+				ResourceBundleLoaderAnalyzerPluginTest.class.
+					getResourceAsStream("dependencies/resources.test1.jar");
+
+			try (Jar jar = new Jar("dot", inputStream);
+				Analyzer analyzer = new Analyzer()) {
+
+				analyzer.setBundleSymbolicName("resources.test");
+				analyzer.setJar(jar);
+				analyzer.setProperty(
+					"-liferay-aggregate-resource-bundles", "resources.lang");
+				analyzer.setProperty("portal.version", portalVersion);
+
+				Assert.assertTrue(
+					resourceBundleLoaderAnalyzerPlugin.analyzeJar(analyzer));
+
+				Parameters requireCapabilityHeaders = new Parameters(
+					analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
+
+				Attrs requireAttrs = requireCapabilityHeaders.get(
+					ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE);
+
+				Assert.assertNotNull(requireAttrs);
+
+				Parameters provideCapabilityHeaders = new Parameters(
+					analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
+
+				Attrs provideAttrs = provideCapabilityHeaders.get(
+					ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE);
+
+				Assert.assertNotNull(provideAttrs);
+
+				Assert.assertTrue(
+					provideAttrs.containsKey("bundle.symbolic.name"));
+				Assert.assertTrue(
+					provideAttrs.containsKey("resource.bundle.base.name"));
+
+				Assert.assertFalse(provideAttrs.containsKey("module.only"));
+			}
+		}
+	}
+
+	@Test
+	public void testLegacyProvideLiferayResourceBundleCapabilityAdded()
+		throws Exception {
+
+		ResourceBundleLoaderAnalyzerPlugin resourceBundleLoaderAnalyzerPlugin =
+			new ResourceBundleLoaderAnalyzerPlugin();
+
+		for (String portalVersion : _PORTAL_VERSIONS) {
+			InputStream inputStream =
+				ResourceBundleLoaderAnalyzerPluginTest.class.
+					getResourceAsStream("dependencies/resources.test1.jar");
+
+			try (Jar jar = new Jar("dot", inputStream);
+				Analyzer analyzer = new Analyzer()) {
+
+				analyzer.setJar(jar);
+				analyzer.setProperty("portal.version", portalVersion);
+
+				Assert.assertTrue(
+					resourceBundleLoaderAnalyzerPlugin.analyzeJar(analyzer));
+
+				Parameters provideCapabilityHeaders = new Parameters(
+					analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
+
+				Attrs attrs = provideCapabilityHeaders.get(
+					ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE);
+
+				Assert.assertNotNull(attrs);
+
+				Assert.assertTrue(attrs.containsKey("bundle.symbolic.name"));
+				Assert.assertTrue(
+					attrs.containsKey("resource.bundle.base.name"));
+
+				Assert.assertFalse(attrs.containsKey("module.only"));
+			}
+		}
+	}
+
+	@Test
 	public void testProvideLiferayResourceBundleCapabilityAdded()
 		throws Exception {
 
@@ -282,5 +370,9 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Assert.assertNull(attrs);
 		}
 	}
+
+	private static final String[] _PORTAL_VERSIONS = {
+		"7.3.x", "7.2.x", "7.1.x", "7.0.x"
+	};
 
 }

@@ -84,8 +84,7 @@ public class LayoutCommonTagTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertTrue(
-			content, content.contains(HtmlUtil.escapeJS(value)));
+		Assert.assertTrue(content, content.contains(HtmlUtil.escapeJS(value)));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(String value)

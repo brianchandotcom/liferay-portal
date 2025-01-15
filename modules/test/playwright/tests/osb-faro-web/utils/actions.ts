@@ -6,18 +6,29 @@
 import {Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
-import { clickOnLink } from './actions';
 
 export async function checkEmptyStateOnACSide(page: Page) {
 	await expect(page.getByText('There are no tests found.')).toBeVisible();
 }
 
-export async function clickOnActionButton({
-	name,
+export async function clickOnLink({
+	baseUrl,
+    name,
 	page,
 }: {
+    baseUrl: string;
 	name: string;
 	page: Page;
 }) {
-	await clickOnLink({baseUrl: liferayConfig.environment.baseUrl, name, page});
+	const reviewTagA = await page.locator(
+		`xpath=//a[contains(text(),"${name}")]`
+	);
+
+	const href = await reviewTagA.getAttribute('href');
+
+	console.log('href', href);
+
+	await page.goto(
+		href.replace('http://localhost:8080', baseUrl)
+	);
 }

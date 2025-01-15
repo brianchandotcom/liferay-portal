@@ -135,7 +135,7 @@ export class BlogsEditBlogEntryPage {
 			.getByRole('link', {name: 'Documents and Media'})
 			.click();
 
-		await itemSelectorDialog.getByText("Sites and Libraries").waitFor();
+		await itemSelectorDialog.getByText('Sites and Libraries').waitFor();
 
 		await itemSelectorDialog.getByText(coverImageTitle).click();
 	}

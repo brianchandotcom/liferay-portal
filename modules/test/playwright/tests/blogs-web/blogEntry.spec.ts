@@ -452,7 +452,7 @@ test(
 		await page.mouse.down();
 		await page.mouse.move(
 			coverImageSize.x + coverImageSize.width / 2,
-			coverImageSize.y + coverImageSize.height / 2 - 30,
+			coverImageSize.y + coverImageSize.height / 2 - 30
 		);
 		await page.mouse.up();
 

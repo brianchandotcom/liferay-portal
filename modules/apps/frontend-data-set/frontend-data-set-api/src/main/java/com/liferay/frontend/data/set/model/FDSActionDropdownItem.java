@@ -34,8 +34,36 @@ public class FDSActionDropdownItem extends DropdownItem {
 		setConfirmationMessage(confirmationMessage);
 	}
 
+	public FDSActionDropdownItem(
+		String confirmationMessage, String confirmationMessageType,
+		String errorMessage, String href, String icon, String id, String label,
+		String method, String modalSize, String permissionKey,
+		String requestBody, String successMessage, String target, String title,
+		String type) {
+
+		this(href, icon, id, label, method, permissionKey, target);
+
+		setConfirmationMessage(confirmationMessage);
+		setConfirmationMessageType(confirmationMessageType);
+		setErrorMessage(errorMessage);
+		setModalSize(modalSize);
+		setRequestBody(requestBody);
+		setRequestBody(requestBody);
+		setSuccessMessage(successMessage);
+		setTitle(title);
+		setType(type);
+	}
+
 	public void setConfirmationMessage(String confirmationMessage) {
 		putData("confirmationMessage", confirmationMessage);
+	}
+
+	public void setConfirmationMessageType(String confirmationMessageType) {
+		putData("confirmationMessageType", confirmationMessageType);
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		putData("errorMessage", errorMessage);
 	}
 
 	public void setId(String id) {
@@ -46,8 +74,28 @@ public class FDSActionDropdownItem extends DropdownItem {
 		putData("method", method);
 	}
 
+	public void setModalSize(String modalSize) {
+		putData("modalSize", modalSize);
+	}
+
 	public void setPermissionKey(String permissionKey) {
 		putData("permissionKey", permissionKey);
+	}
+
+	public void setRequestBody(String requestBody) {
+		putData("requestBody", requestBody);
+	}
+
+	public void setSuccessMessage(String successMessage) {
+		putData("successMessage", successMessage);
+	}
+
+	public void setTitle(String title) {
+		putData("title", title);
+	}
+
+	public void setType(String type) {
+		putData("type", type);
 	}
 
 }

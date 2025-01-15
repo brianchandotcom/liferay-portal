@@ -67,29 +67,29 @@ public class MetaTagsTagTest {
 
 	@Test
 	public void testMetaTagsTagDescription() throws Exception {
-		_assertDescriptionMetaTagsTag(
+		_testDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false);
-		_assertDescriptionMetaTagsTag(
+		_testDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), true);
-		_assertDescriptionMetaTagsTag(
+		_testDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			false);
-		_assertDescriptionMetaTagsTag(
+		_testDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			false);
-		_assertDescriptionMetaTagsTag(
+		_testDescriptionMetaTagsTag(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			true);
 	}
 
 	@Test
 	public void testMetaTagsTagResponseStatus() throws Exception {
-		_assertMetaTagsTagResponseStatus(
+		_testMetaTagsTagResponseStatus(
 			RandomTestUtil.randomString(),
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		_assertMetaTagsTagResponseStatus(
+		_testMetaTagsTagResponseStatus(
 			RandomTestUtil.randomString(), HttpServletResponse.SC_NOT_FOUND);
 	}
 
@@ -97,171 +97,17 @@ public class MetaTagsTagTest {
 	public void testMetaTagsTagRobots() throws Exception {
 		String robots = RandomTestUtil.randomString();
 
-		_assertRobotsMetaTagsTag(robots, robots, null, null);
-		_assertRobotsMetaTagsTag(
+		_testRobotsMetaTagsTag(robots, robots, null, null);
+		_testRobotsMetaTagsTag(
 			robots, RandomTestUtil.randomString(), robots, null);
 
-		_assertRobotsMetaTagsTag(null, null, null, null);
+		_testRobotsMetaTagsTag(null, null, null, null);
 
 		String pageRobotsRequestAttribute = "noindex, nofollow";
 
-		_assertRobotsMetaTagsTag(
+		_testRobotsMetaTagsTag(
 			pageRobotsRequestAttribute, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), pageRobotsRequestAttribute);
-	}
-
-	private void _assertDescriptionMetaTagsTag(
-			String pageRobotsRequestAttribute, String layoutDescription,
-			String pageDescription, boolean defaultLanguage)
-		throws Exception {
-
-		_setUpLanguageUtil();
-
-		Layout layout = Mockito.mock(Layout.class);
-
-		String metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN);
-
-		if (defaultLanguage) {
-			metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.US);
-
-			Mockito.when(
-				layout.getDescription(Mockito.anyString())
-			).thenReturn(
-				layoutDescription
-			);
-		}
-		else {
-			Mockito.when(
-				layout.getDescription(Mockito.anyString(), Mockito.anyBoolean())
-			).thenReturn(
-				layoutDescription
-			);
-		}
-
-		_setUpPageContext(
-			layout, pageRobotsRequestAttribute, pageDescription,
-			HttpServletResponse.SC_OK);
-
-		String metaDescription = "";
-
-		if (Validator.isNotNull(layoutDescription) &&
-			Validator.isNotNull(pageDescription)) {
-
-			metaDescription = pageDescription + ". " + layoutDescription;
-		}
-		else if (Validator.isNotNull(layoutDescription)) {
-			metaDescription = layoutDescription;
-		}
-		else if (Validator.isNotNull(pageDescription)) {
-			metaDescription = pageDescription;
-		}
-
-		_assertMetaTagsTag(metaDescription, metaLang, "description");
-	}
-
-	private void _assertMetaTagsTag(
-			String metaContent, String metaLang, String metaName)
-		throws Exception {
-
-		MetaTagsTag metaTagsTag = new MetaTagsTag();
-
-		metaTagsTag.setPageContext(_pageContext);
-
-		metaTagsTag.doStartTag();
-
-		metaTagsTag.setBodyContent(_pageContext.pushBody());
-
-		metaTagsTag.doEndTag();
-
-		String content = _unsyncStringWriter.toString();
-
-		if (Validator.isNull(metaContent)) {
-			Assert.assertFalse(
-				content,
-				StringUtil.contains(
-					content, " name=\"" + metaName + "\" />",
-					StringPool.BLANK));
-		}
-		else if (Validator.isNotNull(metaLang)) {
-			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content,
-					StringBundler.concat(
-						"<meta content=\"", metaContent, "\" lang=\"", metaLang,
-						"\" name=\"", metaName, "\" />"),
-					StringPool.BLANK));
-		}
-		else {
-			Assert.assertTrue(
-				content,
-				StringUtil.contains(
-					content,
-					StringBundler.concat(
-						"<meta content=\"", metaContent, "\" name=\"", metaName,
-						"\" />"),
-					StringPool.BLANK));
-		}
-	}
-
-	private void _assertMetaTagsTagResponseStatus(
-			String htmlDescription, int status)
-		throws Exception {
-
-		_setUpLanguageUtil();
-
-		Layout layout = Mockito.mock(Layout.class);
-
-		Mockito.when(
-			layout.getDescription(Mockito.anyString(), Mockito.anyBoolean())
-		).thenReturn(
-			htmlDescription
-		);
-
-		_setUpPageContext(layout, RandomTestUtil.randomString(), null, status);
-
-		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.when(
-			() ->
-				LayoutUtilityPageEntryLayoutProviderUtil.
-					getDefaultLayoutUtilityPageEntryLayout(
-						Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			layout
-		);
-
-		_assertMetaTagsTag(
-			htmlDescription, LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-			"description");
-
-		_assertMetaTagsTag(null, null, "robots");
-	}
-
-	private void _assertRobotsMetaTagsTag(
-			String expectedRobotsMetaTagContent, String layoutRobots,
-			String localizedLayoutRobots, String pageRobotsRequestAttribute)
-		throws Exception {
-
-		_setUpLanguageUtil();
-
-		Layout layout = Mockito.mock(Layout.class);
-
-		Mockito.when(
-			layout.getRobots(Mockito.anyString(), Mockito.anyBoolean())
-		).thenReturn(
-			localizedLayoutRobots
-		);
-
-		Mockito.when(
-			layout.getRobots(Mockito.anyString())
-		).thenReturn(
-			layoutRobots
-		);
-
-		_setUpPageContext(
-			layout, pageRobotsRequestAttribute, null,
-			HttpServletResponse.SC_OK);
-
-		_assertMetaTagsTag(expectedRobotsMetaTagContent, null, "robots");
 	}
 
 	private void _setUpLanguageUtil() {
@@ -398,6 +244,160 @@ public class MetaTagsTagTest {
 			}
 
 		};
+	}
+
+	private void _testDescriptionMetaTagsTag(
+			String pageRobotsRequestAttribute, String layoutDescription,
+			String pageDescription, boolean defaultLanguage)
+		throws Exception {
+
+		_setUpLanguageUtil();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		String metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN);
+
+		if (defaultLanguage) {
+			metaLang = LocaleUtil.toW3cLanguageId(LocaleUtil.US);
+
+			Mockito.when(
+				layout.getDescription(Mockito.anyString())
+			).thenReturn(
+				layoutDescription
+			);
+		}
+		else {
+			Mockito.when(
+				layout.getDescription(Mockito.anyString(), Mockito.anyBoolean())
+			).thenReturn(
+				layoutDescription
+			);
+		}
+
+		_setUpPageContext(
+			layout, pageRobotsRequestAttribute, pageDescription,
+			HttpServletResponse.SC_OK);
+
+		String metaDescription = "";
+
+		if (Validator.isNotNull(layoutDescription) &&
+			Validator.isNotNull(pageDescription)) {
+
+			metaDescription = pageDescription + ". " + layoutDescription;
+		}
+		else if (Validator.isNotNull(layoutDescription)) {
+			metaDescription = layoutDescription;
+		}
+		else if (Validator.isNotNull(pageDescription)) {
+			metaDescription = pageDescription;
+		}
+
+		_testMetaTagsTag(metaDescription, metaLang, "description");
+	}
+
+	private void _testMetaTagsTag(
+			String metaContent, String metaLang, String metaName)
+		throws Exception {
+
+		MetaTagsTag metaTagsTag = new MetaTagsTag();
+
+		metaTagsTag.setPageContext(_pageContext);
+
+		metaTagsTag.doStartTag();
+
+		metaTagsTag.setBodyContent(_pageContext.pushBody());
+
+		metaTagsTag.doEndTag();
+
+		String content = _unsyncStringWriter.toString();
+
+		if (Validator.isNull(metaContent)) {
+			Assert.assertFalse(
+				content,
+				StringUtil.contains(
+					content, " name=\"" + metaName + "\" />",
+					StringPool.BLANK));
+		}
+		else if (Validator.isNotNull(metaLang)) {
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content,
+					StringBundler.concat(
+						"<meta content=\"", metaContent, "\" lang=\"", metaLang,
+						"\" name=\"", metaName, "\" />"),
+					StringPool.BLANK));
+		}
+		else {
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content,
+					StringBundler.concat(
+						"<meta content=\"", metaContent, "\" name=\"", metaName,
+						"\" />"),
+					StringPool.BLANK));
+		}
+	}
+
+	private void _testMetaTagsTagResponseStatus(
+			String htmlDescription, int status)
+		throws Exception {
+
+		_setUpLanguageUtil();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		Mockito.when(
+			layout.getDescription(Mockito.anyString(), Mockito.anyBoolean())
+		).thenReturn(
+			htmlDescription
+		);
+
+		_setUpPageContext(layout, RandomTestUtil.randomString(), null, status);
+
+		_layoutUtilityPageEntryLayoutProviderUtilMockedStatic.when(
+			() ->
+				LayoutUtilityPageEntryLayoutProviderUtil.
+					getDefaultLayoutUtilityPageEntryLayout(
+						Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			layout
+		);
+
+		_testMetaTagsTag(
+			htmlDescription, LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
+			"description");
+
+		_testMetaTagsTag(null, null, "robots");
+	}
+
+	private void _testRobotsMetaTagsTag(
+			String expectedRobotsMetaTagContent, String layoutRobots,
+			String localizedLayoutRobots, String pageRobotsRequestAttribute)
+		throws Exception {
+
+		_setUpLanguageUtil();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		Mockito.when(
+			layout.getRobots(Mockito.anyString(), Mockito.anyBoolean())
+		).thenReturn(
+			localizedLayoutRobots
+		);
+
+		Mockito.when(
+			layout.getRobots(Mockito.anyString())
+		).thenReturn(
+			layoutRobots
+		);
+
+		_setUpPageContext(
+			layout, pageRobotsRequestAttribute, null,
+			HttpServletResponse.SC_OK);
+
+		_testMetaTagsTag(expectedRobotsMetaTagContent, null, "robots");
 	}
 
 	private static final MockedStatic<LayoutUtilityPageEntryLayoutProviderUtil>

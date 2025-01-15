@@ -47,6 +47,19 @@ public class ObjectEntryFolderLocalServiceWrapper
 			objectEntryFolder);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder addObjectEntryFolder(
+			String externalReferenceCode, long userId, long groupId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.addObjectEntryFolder(
+			externalReferenceCode, userId, groupId, labelMap, name,
+			parentObjectEntryFolderId, serviceContext);
+	}
+
 	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
@@ -392,6 +405,18 @@ public class ObjectEntryFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder updateObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.updateObjectEntryFolder(
+			userId, objectEntryFolderId, labelMap, name,
+			parentObjectEntryFolderId);
 	}
 
 	/**

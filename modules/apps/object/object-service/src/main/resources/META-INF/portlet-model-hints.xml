@@ -96,10 +96,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="objectEntryFolderId" type="long" />
+		<field name="rootObjectEntryId" type="long" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="rootObjectEntryId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

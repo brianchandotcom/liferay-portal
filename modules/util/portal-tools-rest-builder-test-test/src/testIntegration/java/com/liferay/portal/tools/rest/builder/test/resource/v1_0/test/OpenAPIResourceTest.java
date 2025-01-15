@@ -29,6 +29,9 @@ public class OpenAPIResourceTest {
 				JSONUtil.put(
 					"schemas",
 					JSONUtil.put(
+						"MinimalTestEntity",
+						JSONUtil.put("x-filterable", JSONUtil.putAll())
+					).put(
 						"TestEntity",
 						JSONUtil.put(
 							"x-filterable",
@@ -40,7 +43,8 @@ public class OpenAPIResourceTest {
 								"statusCode")
 						).put(
 							"x-test", true
-						)))
+						)
+					))
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null, "test/v1.0/openapi.json", Http.Method.GET

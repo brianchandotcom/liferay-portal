@@ -1,0 +1,49 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.action;
+
+import com.liferay.frontend.data.set.action.FDSItemActionList;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Marko Cikos
+ */
+@Component(
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	service = FDSItemActionList.class
+)
+public class CustomizedFDSItemActionList implements FDSItemActionList {
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
+
+		return Arrays.asList(
+			new FDSActionDropdownItem(
+				_language.get(httpServletRequest, "are-you-sure"), "danger",
+				null, "#", "home", "navigateHome",
+				_language.get(httpServletRequest, "nav-link"), null, null,
+				"view", null, null, "link", null, "item"));
+	}
+
+	@Reference
+	private Language _language;
+
+}

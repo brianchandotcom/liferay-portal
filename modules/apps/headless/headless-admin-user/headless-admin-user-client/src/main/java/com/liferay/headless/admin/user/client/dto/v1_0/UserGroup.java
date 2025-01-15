@@ -10,6 +10,7 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.UserGroupSerDes;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -68,6 +69,48 @@ public class UserGroup implements Cloneable, Serializable {
 	}
 
 	protected Creator creator;
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateCreated;
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
 
 	public String getDescription() {
 		return description;

@@ -1347,6 +1347,14 @@ public abstract class BaseUserGroupResourceTestCase {
 	protected void assertValid(UserGroup userGroup) throws Exception {
 		boolean valid = true;
 
+		if (userGroup.getDateCreated() == null) {
+			valid = false;
+		}
+
+		if (userGroup.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (userGroup.getId() == null) {
 			valid = false;
 		}
@@ -1551,6 +1559,28 @@ public abstract class BaseUserGroupResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userGroup1.getDateCreated(),
+						userGroup2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userGroup1.getDateModified(),
+						userGroup2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userGroup1.getDescription(),
@@ -1734,6 +1764,68 @@ public abstract class BaseUserGroupResourceTestCase {
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = userGroup.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(userGroup.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = userGroup.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(userGroup.getDateModified()));
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
@@ -1935,6 +2027,8 @@ public abstract class BaseUserGroupResourceTestCase {
 	protected UserGroup randomUserGroup() throws Exception {
 		return new UserGroup() {
 			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(

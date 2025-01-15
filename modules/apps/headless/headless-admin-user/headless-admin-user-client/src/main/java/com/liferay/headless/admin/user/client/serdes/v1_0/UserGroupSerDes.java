@@ -8,6 +8,9 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +47,9 @@ public class UserGroupSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (userGroup.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -52,6 +58,36 @@ public class UserGroupSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(userGroup.getActions()));
+		}
+
+		if (userGroup.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(userGroup.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (userGroup.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(userGroup.getDateModified()));
+
+			sb.append("\"");
 		}
 
 		if (userGroup.getDescription() != null) {
@@ -134,11 +170,32 @@ public class UserGroupSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (userGroup.getActions() == null) {
 			map.put("actions", null);
 		}
 		else {
 			map.put("actions", String.valueOf(userGroup.getActions()));
+		}
+
+		if (userGroup.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(userGroup.getDateCreated()));
+		}
+
+		if (userGroup.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(userGroup.getDateModified()));
 		}
 
 		if (userGroup.getDescription() == null) {
@@ -198,6 +255,12 @@ public class UserGroupSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -228,6 +291,18 @@ public class UserGroupSerDes {
 				if (jsonParserFieldValue != null) {
 					userGroup.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					userGroup.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					userGroup.setDateModified(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

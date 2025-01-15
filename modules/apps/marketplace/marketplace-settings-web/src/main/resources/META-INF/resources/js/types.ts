@@ -24,6 +24,7 @@ export type MyUserAccount = {
 export type MarketplaceSettingsProps = {
 	baseResourceURL: string;
 	clientId: string;
+	learnResources: any;
 	portletNamespace: string;
 	redirect: string;
 	url: string;

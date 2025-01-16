@@ -1,0 +1,20 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "field1",
+					"type": "text",
+					"typeOptions": {
+						"dependency": {
+							"field3": {
+								"type": "equal",
+								"value": "test"
+							}
+						}
+					}
+				}
+			]
+		}
+	]
+}

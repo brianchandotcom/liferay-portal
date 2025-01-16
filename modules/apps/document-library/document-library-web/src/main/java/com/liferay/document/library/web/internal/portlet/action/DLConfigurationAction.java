@@ -76,15 +76,8 @@ public class DLConfigurationAction
 
 		super.postProcess(companyId, portletRequest, portletPreferences);
 
-		try {
-			String[] displayViews = StringUtil.split(
-				portletPreferences.getValue("displayViews", null));
-
-			portletPreferences.setValues("displayViews", displayViews);
-		}
-		catch (ReadOnlyException readOnlyException) {
-			throw new SystemException(readOnlyException);
-		}
+		String[] displayViews = StringUtil.split(
+			portletPreferences.getValue("displayViews", null));
 
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
@@ -93,11 +86,10 @@ public class DLConfigurationAction
 			portletPreferences.getValue("selectedRepositoryId", null));
 
 		try {
+			portletPreferences.setValues("displayViews", displayViews);
+
 			_setPortletPreferences(
 				portletPreferences, rootFolderId, selectedRepositoryId);
-
-			portletPreferences.reset("rootFolderId");
-			portletPreferences.reset("selectedRepositoryId");
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new SystemException(readOnlyException);
@@ -153,6 +145,9 @@ public class DLConfigurationAction
 		portletPreferences.setValue(
 			"selectedRepositoryExternalReferenceCode",
 			selectedRepositoryExternalReferenceCode);
+
+		portletPreferences.reset("rootFolderId");
+		portletPreferences.reset("selectedRepositoryId");
 	}
 
 	private void _validateDisplayStyleViews(ActionRequest actionRequest) {

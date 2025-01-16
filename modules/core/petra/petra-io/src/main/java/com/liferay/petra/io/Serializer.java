@@ -342,7 +342,7 @@ public class Serializer {
 	private BufferQueue _getBufferQueue() {
 		BufferQueue bufferQueue = null;
 
-		Reference<BufferQueue> reference = _bufferQueueThreadLocal.get();
+		Reference<BufferQueue> reference = _bufferQueue.get();
 
 		if (reference != null) {
 			bufferQueue = reference.get();
@@ -351,7 +351,7 @@ public class Serializer {
 		if (bufferQueue == null) {
 			bufferQueue = new BufferQueue();
 
-			_bufferQueueThreadLocal.set(new SoftReference<>(bufferQueue));
+			_bufferQueue.set(new SoftReference<>(bufferQueue));
 		}
 
 		return bufferQueue;
@@ -382,8 +382,8 @@ public class Serializer {
 	 * likely be released by GC.
 	 * </p>
 	 */
-	private static final ThreadLocal<Reference<BufferQueue>>
-		_bufferQueueThreadLocal = new CentralizedThreadLocal<>(false);
+	private static final ThreadLocal<Reference<BufferQueue>> _bufferQueue =
+		new CentralizedThreadLocal<>(false);
 
 	static {
 		int threadLocalBufferCountLimit = Integer.getInteger(

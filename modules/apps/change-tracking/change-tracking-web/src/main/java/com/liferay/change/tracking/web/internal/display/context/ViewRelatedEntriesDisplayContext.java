@@ -35,8 +35,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -109,7 +111,7 @@ public class ViewRelatedEntriesDisplayContext {
 			}
 		}
 
-		List<CTEntry> ctEntries = new ArrayList<>();
+		Set<CTEntry> ctEntries = new HashSet<>();
 
 		for (List<CTEntry> value : relatedCTEntriesMap.values()) {
 			ctEntries.addAll(value);
@@ -166,7 +168,7 @@ public class ViewRelatedEntriesDisplayContext {
 			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
 				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
-				_getPredicate(ctEntries))
+				_getPredicate(new ArrayList<>(ctEntries)))
 		).build();
 	}
 

@@ -7,6 +7,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewRelatedEntriesDisplayContext;
@@ -39,6 +40,7 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 		ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext =
 			new ViewRelatedEntriesDisplayContext(
 				_ctCollectionLocalService, _ctDisplayRendererRegistry,
+				_ctEntryLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse, _userLocalService);
 
@@ -54,6 +56,9 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private Portal _portal;

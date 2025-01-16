@@ -7,7 +7,9 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -15,6 +17,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,14 +50,36 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
 
+		long[] ctEntryIds = new long[0];
+
+		if ((modelClassNameId <= 0) || (modelClassPK <= 0)) {
+			ctEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "ctEntryIds"), 0L);
+		}
+
 		if ((fromCTCollectionId != toCTCollectionId) &&
 			(fromCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) &&
 			(toCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
 			try {
-				_ctCollectionService.moveCTEntry(
-					fromCTCollectionId, toCTCollectionId, modelClassNameId,
-					modelClassPK);
+				if ((modelClassNameId > 0) || (modelClassPK > 0)) {
+					_ctCollectionService.moveCTEntry(
+						fromCTCollectionId, toCTCollectionId, modelClassNameId,
+						modelClassPK);
+				}
+				else {
+					for (long ctEntryId : ctEntryIds) {
+						CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+							ctEntryId);
+
+						if (ctEntry.getCtCollectionId() == fromCTCollectionId) {
+							_ctCollectionService.moveCTEntry(
+								fromCTCollectionId, toCTCollectionId,
+								ctEntry.getModelClassNameId(),
+								ctEntry.getModelClassPK());
+						}
+					}
+				}
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(actionRequest, portalException.getClass());
@@ -67,25 +92,46 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (!SessionErrors.isEmpty(actionRequest)) {
-			redirect = PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(actionResponse)
-			).setMVCRenderCommandName(
-				"/change_tracking/view_move_changes"
-			).setRedirect(
-				PortletURLBuilder.createRenderURL(
+			if ((modelClassNameId > 0) && (modelClassPK > 0)) {
+				redirect = PortletURLBuilder.createRenderURL(
 					_portal.getLiferayPortletResponse(actionResponse)
 				).setMVCRenderCommandName(
-					"/change_tracking/view_changes"
+					"/change_tracking/view_move_changes"
+				).setRedirect(
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(actionResponse)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", fromCTCollectionId
+					).buildString()
 				).setParameter(
 					"ctCollectionId", fromCTCollectionId
-				).buildString()
-			).setParameter(
-				"ctCollectionId", fromCTCollectionId
-			).setParameter(
-				"modelClassNameId", modelClassNameId
-			).setParameter(
-				"modelClassPK", modelClassPK
-			).buildString();
+				).setParameter(
+					"modelClassNameId", modelClassNameId
+				).setParameter(
+					"modelClassPK", modelClassPK
+				).buildString();
+			}
+			else {
+				redirect = PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCRenderCommandName(
+					"/change_tracking/view_move_changes"
+				).setRedirect(
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(actionResponse)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", fromCTCollectionId
+					).buildString()
+				).setParameter(
+					"ctCollectionId", fromCTCollectionId
+				).setParameter(
+					"ctEntryIds", StringUtil.merge(ctEntryIds)
+				).buildString();
+			}
 		}
 
 		actionResponse.sendRedirect(redirect);
@@ -93,6 +139,9 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionService _ctCollectionService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private Portal _portal;

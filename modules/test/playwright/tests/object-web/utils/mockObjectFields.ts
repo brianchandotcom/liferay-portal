@@ -129,12 +129,12 @@ function isLocalizable(businessType: ObjectFieldBusinessTypes) {
 	return localizableBusinessTypes.includes(businessType);
 }
 
-export function createObjectField(
+export function createObjectFields(
 	businessType: keyof ObjectFieldBusinessTypesLabelName,
-	objectFieldBusinessTypeLabelName: LabelNameObject,
+	objectFieldsBusinessTypeLabelName: LabelNameObject[],
 	additionalSettings: Partial<ObjectField> = {},
 	localizeAllLocalizable: boolean = false
-): Partial<ObjectField> {
+): Partial<ObjectField>[] {
 	const baseObjectField: ObjectField = {
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
@@ -147,17 +147,17 @@ export function createObjectField(
 		unique: false,
 	};
 
-	return {
+	return objectFieldsBusinessTypeLabelName.map(({label, name}) => ({
 		DBType: objectFieldbusinessTypeInfo[businessType].DBType,
 		businessType: objectFieldbusinessTypeInfo[businessType].businessType,
 		label: {
-			en_US: objectFieldBusinessTypeLabelName.label,
+			en_US: label,
 		},
-		name: objectFieldBusinessTypeLabelName.name,
+		name: name,
 		type: objectFieldbusinessTypeInfo[businessType].type,
 		...additionalSettings,
 		...baseObjectField,
-	};
+	}));
 }
 
 function getFormatDate(format: 'API' | 'UI'): string {
@@ -244,10 +244,10 @@ export async function mockObjectFields({
 	let objectFieldBusinessTypesLabelName =
 		{} as ObjectFieldBusinessTypesLabelName;
 
-	function setLabelName(businessType: string, {label, name}) {
+	function setLabelName(businessType: string, { label, name }) {
 		objectFieldBusinessTypesLabelName = {
 			...objectFieldBusinessTypesLabelName,
-			[businessType]: {label, name},
+			[businessType]: [...(objectFieldBusinessTypesLabelName[businessType] || []), { label, name }],
 		};
 	}
 
@@ -260,7 +260,8 @@ export async function mockObjectFields({
 
 	let objectEntry = {} as ObjectEntry;
 
-	const objectFields: Partial<ObjectField>[] = [];
+	let objectFields: Partial<ObjectField>[] = [];
+
 	function setObjectFieldsAdditionalSettings(
 		objectFieldBusinessType: ObjectFieldBusinessTypes
 	): Partial<ObjectField> | undefined {
@@ -317,16 +318,14 @@ export async function mockObjectFields({
 	}
 
 	for (const objectFieldBusinessType in objectFieldBusinessTypesLabelName) {
-		objectFields.push(
-			createObjectField(
-				objectFieldBusinessType as ObjectFieldBusinessTypes,
-				objectFieldBusinessTypesLabelName[objectFieldBusinessType],
-				setObjectFieldsAdditionalSettings(
-					objectFieldBusinessType as ObjectFieldBusinessTypes
-				),
-				localizeAllLocalizable
-			)
-		);
+		objectFields= objectFields.concat(createObjectFields(
+			objectFieldBusinessType as ObjectFieldBusinessTypes,
+			objectFieldBusinessTypesLabelName[objectFieldBusinessType],
+			setObjectFieldsAdditionalSettings(
+				objectFieldBusinessType as ObjectFieldBusinessTypes
+			),
+			localizeAllLocalizable
+		));
 
 		if (
 			objectFieldBusinessType !== 'attachment' &&

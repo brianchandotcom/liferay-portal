@@ -39,6 +39,7 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.ClientCredentialsOAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
@@ -60,7 +61,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ContextConfiguration(
 	classes = {
-		LiferayOAuth2AccessTokenManager.class,
+		LiferayWebMvcConfigurer.class, LiferayOAuth2AccessTokenManager.class,
 		LiferayOAuth2ClientConfiguration.class,
 		LiferayOAuth2ResourceServerEnableWebSecurity.class
 	}
@@ -68,6 +69,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource("LiferayOAuth2ClientConfigurationDefaultTest.properties")
+@WebMvcTest
 public class LiferayOAuth2ClientConfigurationDefaultTest {
 
 	@BeforeClass

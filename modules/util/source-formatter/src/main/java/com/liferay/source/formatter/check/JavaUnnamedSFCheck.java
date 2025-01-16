@@ -6,12 +6,21 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -25,8 +34,9 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
+		throws Exception {
 
 		String content = javaTerm.getContent();
 
@@ -51,11 +61,15 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 			String variableName = javaVariable.getName();
 
-			if ((!variableName.contains("Id") &&
-				 !variableName.contains("id")) ||
-				variableName.contains("Company") ||
+			if (variableName.contains("Company") ||
 				variableName.contains("company")) {
 
+				continue;
+			}
+
+			List<String> entityIds = _getEntityIds();
+
+			if (!_containsEntityId(entityIds, variableName)) {
 				continue;
 			}
 
@@ -70,7 +84,9 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 			}
 
 			for (String methodName : _METHOD_NAMES) {
-				_check(fileName, content, javaTerm, methodName, variableName);
+				_check(
+					fileName, content, entityIds, javaTerm, methodName,
+					variableName);
 			}
 		}
 
@@ -83,8 +99,8 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 	}
 
 	private void _check(
-		String fileName, String content, JavaTerm javaTerm, String methodName,
-		String variableName) {
+		String fileName, String content, List<String> entityIds,
+		JavaTerm javaTerm, String methodName, String variableName) {
 
 		int x = -1;
 
@@ -107,7 +123,8 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 			String parameter = getParameterNames.get(0);
 
 			if (parameter.contains("CompanyId") ||
-				parameter.contains("companyId")) {
+				parameter.contains("companyId") ||
+				!_containsEntityId(entityIds, variableName)) {
 
 				continue;
 			}
@@ -118,8 +135,115 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 		}
 	}
 
+	private boolean _containsEntityId(
+		List<String> entityIds, String variableName) {
+
+		for (String entityId : entityIds) {
+			if (StringUtil.containsIgnoreCase(variableName, entityId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private synchronized List<String> _getEntityIds() throws Exception {
+		if (_entityIds != null) {
+			return _entityIds;
+		}
+
+		if (!isPortalSource()) {
+			_entityIds = Collections.emptyList();
+
+			return _entityIds;
+		}
+
+		_entityIds = new ArrayList<>();
+
+		File portalDir = getPortalDir();
+
+		List<String> fileNames = SourceFormatterUtil.scanForFileNames(
+			portalDir.getCanonicalPath(),
+			new String[] {
+				"**/*-service/src/main/resources/META-INF/sql/tables.sql"
+			});
+
+		fileNames.add(portalDir + "/sql/portal-tables.sql");
+
+		for (String fileName : fileNames) {
+			String content = FileUtil.read(new File(fileName));
+
+			Matcher matcher = _createTablePattern.matcher(content);
+
+			while (matcher.find()) {
+				int x = matcher.end();
+
+				while (true) {
+					x = content.indexOf(");", x + 1);
+
+					if (x == -1) {
+						continue;
+					}
+
+					String tableContent = content.substring(
+						matcher.start(), x + 2);
+
+					if (getLevel(tableContent) != 0) {
+						continue;
+					}
+
+					if (!tableContent.contains("\tcompanyId LONG")) {
+						break;
+					}
+
+					List<String> primaryKeys = _getPrimaryKeys(tableContent);
+
+					if (!primaryKeys.isEmpty()) {
+						_entityIds.add(primaryKeys.get(0));
+					}
+
+					break;
+				}
+			}
+		}
+
+		return _entityIds;
+	}
+
+	private List<String> _getPrimaryKeys(String tableContent) {
+		List<String> primaryKeys = new ArrayList<>();
+
+		for (String line : StringUtil.splitLines(tableContent)) {
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (!trimmedLine.contains("primary key")) {
+				continue;
+			}
+
+			if (trimmedLine.startsWith("primary key")) {
+				String keys = trimmedLine.replaceFirst(
+					"primary key \\((.+)\\)", "$1");
+
+				for (String key : StringUtil.split(keys)) {
+					primaryKeys.add(key.trim());
+				}
+			}
+			else if (trimmedLine.matches("(\\w+) .+ primary key,?")) {
+				int x = trimmedLine.indexOf(" ");
+
+				primaryKeys.add(trimmedLine.substring(0, x));
+			}
+		}
+
+		return primaryKeys;
+	}
+
 	private static final String[] _METHOD_NAMES = {
 		"add", "computeIfAbsent", "computeIfPresent", "put"
 	};
+
+	private static final Pattern _createTablePattern = Pattern.compile(
+		"create table (\\w+) \\(");
+	private static List<String> _entityIds;
 
 }

@@ -23,22 +23,29 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 
 <clay:sheet>
 	<clay:content-row
-		containerElement="h2"
+		cssClass="autofit-padded-no-gutters-x"
 	>
 		<clay:content-col
-			containerElement="span"
+			containerElement="h2"
 			expand="<%= true %>"
 		>
-			<liferay-ui:message key="<%= portalSettingsConfigurationScreenContributor.getName(locale) %>" />
-		</clay:content-col>
+			<clay:content-row
+				cssClass="autofit-padded-no-gutters-x"
+			>
+				<clay:content-col>
+					<liferay-ui:message key="<%= portalSettingsConfigurationScreenContributor.getName(locale) %>" />
+				</clay:content-col>
 
-		<c:if test="<%= portalSettingsConfigurationScreenContributor.isDeprecated() %>">
-			<clay:content-col>
-				<liferay-frontend:feature-indicator
-					type="deprecated"
-				/>
-			</clay:content-col>
-		</c:if>
+				<c:if test="<%= portalSettingsConfigurationScreenContributor.isDeprecated() %>">
+					<clay:content-col>
+						<liferay-frontend:feature-indicator
+							interactive="<%= true %>"
+							type="deprecated"
+						/>
+					</clay:content-col>
+				</c:if>
+			</clay:content-row>
+		</clay:content-col>
 
 		<c:if test="<%= Validator.isNotNull(portalSettingsConfigurationScreenContributor.getDeleteMVCActionCommandName()) || Validator.isNotNull(portalSettingsConfigurationScreenContributor.getTestButtonOnClick(renderRequest, renderResponse)) %>">
 			<clay:content-col

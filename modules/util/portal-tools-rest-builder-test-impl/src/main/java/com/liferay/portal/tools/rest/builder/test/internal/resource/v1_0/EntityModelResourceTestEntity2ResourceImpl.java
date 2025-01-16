@@ -5,7 +5,12 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.tools.rest.builder.test.internal.entity.v1_0.EntityModelResourceTestEntity2EntityModel;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.EntityModelResourceTestEntity2Resource;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -19,5 +24,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 	service = EntityModelResourceTestEntity2Resource.class
 )
 public class EntityModelResourceTestEntity2ResourceImpl
-	extends BaseEntityModelResourceTestEntity2ResourceImpl {
+	extends BaseEntityModelResourceTestEntity2ResourceImpl
+	implements EntityModelResource {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap)
+		throws Exception {
+
+		return new EntityModelResourceTestEntity2EntityModel();
+	}
+
 }

@@ -37,20 +37,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName(
 	description = "A EntityModelResource test entity with no filterable fields.",
-	value = "EntityModelResourceTestEntity"
+	value = "EntityModelResourceTestEntity1"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "EntityModelResourceTestEntity")
-public class EntityModelResourceTestEntity implements Serializable {
+@XmlRootElement(name = "EntityModelResourceTestEntity1")
+public class EntityModelResourceTestEntity1 implements Serializable {
 
-	public static EntityModelResourceTestEntity toDTO(String json) {
+	public static EntityModelResourceTestEntity1 toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			EntityModelResourceTestEntity.class, json);
+			EntityModelResourceTestEntity1.class, json);
 	}
 
-	public static EntityModelResourceTestEntity unsafeToDTO(String json) {
+	public static EntityModelResourceTestEntity1 unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			EntityModelResourceTestEntity.class, json);
+			EntityModelResourceTestEntity1.class, json);
 	}
 
 	@Schema
@@ -137,15 +137,15 @@ public class EntityModelResourceTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof EntityModelResourceTestEntity)) {
+		if (!(object instanceof EntityModelResourceTestEntity1)) {
 			return false;
 		}
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity =
-			(EntityModelResourceTestEntity)object;
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity1 =
+			(EntityModelResourceTestEntity1)object;
 
 		return Objects.equals(
-			toString(), entityModelResourceTestEntity.toString());
+			toString(), entityModelResourceTestEntity1.toString());
 	}
 
 	@Override
@@ -195,7 +195,7 @@ public class EntityModelResourceTestEntity implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity1",
 		name = "x-class-name"
 	)
 	public String xClassName;

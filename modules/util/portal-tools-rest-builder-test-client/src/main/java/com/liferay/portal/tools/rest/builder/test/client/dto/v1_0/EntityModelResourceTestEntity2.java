@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntity2SerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class EntityModelResourceTestEntity implements Cloneable, Serializable {
+public class EntityModelResourceTestEntity2 implements Cloneable, Serializable {
 
-	public static EntityModelResourceTestEntity toDTO(String json) {
-		return EntityModelResourceTestEntitySerDes.toDTO(json);
+	public static EntityModelResourceTestEntity2 toDTO(String json) {
+		return EntityModelResourceTestEntity2SerDes.toDTO(json);
 	}
 
 	public Long getId() {
@@ -64,10 +64,10 @@ public class EntityModelResourceTestEntity implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public EntityModelResourceTestEntity clone()
+	public EntityModelResourceTestEntity2 clone()
 		throws CloneNotSupportedException {
 
-		return (EntityModelResourceTestEntity)super.clone();
+		return (EntityModelResourceTestEntity2)super.clone();
 	}
 
 	@Override
@@ -76,15 +76,15 @@ public class EntityModelResourceTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof EntityModelResourceTestEntity)) {
+		if (!(object instanceof EntityModelResourceTestEntity2)) {
 			return false;
 		}
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity =
-			(EntityModelResourceTestEntity)object;
+		EntityModelResourceTestEntity2 entityModelResourceTestEntity2 =
+			(EntityModelResourceTestEntity2)object;
 
 		return Objects.equals(
-			toString(), entityModelResourceTestEntity.toString());
+			toString(), entityModelResourceTestEntity2.toString());
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class EntityModelResourceTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return EntityModelResourceTestEntitySerDes.toJSON(this);
+		return EntityModelResourceTestEntity2SerDes.toJSON(this);
 	}
 
 }

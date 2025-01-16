@@ -15,11 +15,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity2;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +28,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,14 +43,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface EntityModelResourceTestEntityResource {
+public interface EntityModelResourceTestEntity2Resource {
 
-	public Page<EntityModelResourceTestEntity>
-			getEntityModelResourceTestEntitiesPage()
-		throws Exception;
-
-	public Response postEntityModelResourceTestEntitiesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
+	public EntityModelResourceTestEntity2
+			getEntityModelResourceTestEntities2EntityModelResourceTestEntity2(
+				Long entityModelResourceTestEntity2Id)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -96,14 +89,6 @@ public interface EntityModelResourceTestEntityResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
 
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
-
 	public default Filter toFilter(String filterString) {
 		return toFilter(
 			filterString, Collections.<String, List<String>>emptyMap());
@@ -122,7 +107,7 @@ public interface EntityModelResourceTestEntityResource {
 	@ProviderType
 	public interface Builder {
 
-		public EntityModelResourceTestEntityResource build();
+		public EntityModelResourceTestEntity2Resource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

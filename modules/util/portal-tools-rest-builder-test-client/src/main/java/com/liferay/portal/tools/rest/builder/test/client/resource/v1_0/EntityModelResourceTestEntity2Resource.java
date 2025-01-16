@@ -5,11 +5,9 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.resource.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
-import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.problem.Problem;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
 
 import java.net.URL;
 
@@ -27,27 +25,20 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface EntityModelResourceTestEntityResource {
+public interface EntityModelResourceTestEntity2Resource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<EntityModelResourceTestEntity>
-			getEntityModelResourceTestEntitiesPage()
+	public EntityModelResourceTestEntity2
+			getEntityModelResourceTestEntities2EntityModelResourceTestEntity2(
+				Long entityModelResourceTestEntity2Id)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getEntityModelResourceTestEntitiesPageHttpResponse()
-		throws Exception;
-
-	public void postEntityModelResourceTestEntitiesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
-				String callbackURL, String contentType, String fieldNames)
+			getEntityModelResourceTestEntities2EntityModelResourceTestEntity2HttpResponse(
+				Long entityModelResourceTestEntity2Id)
 		throws Exception;
 
 	public static class Builder {
@@ -63,8 +54,8 @@ public interface EntityModelResourceTestEntityResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public EntityModelResourceTestEntityResource build() {
-			return new EntityModelResourceTestEntityResourceImpl(this);
+		public EntityModelResourceTestEntity2Resource build() {
+			return new EntityModelResourceTestEntity2ResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -156,15 +147,17 @@ public interface EntityModelResourceTestEntityResource {
 
 	}
 
-	public static class EntityModelResourceTestEntityResourceImpl
-		implements EntityModelResourceTestEntityResource {
+	public static class EntityModelResourceTestEntity2ResourceImpl
+		implements EntityModelResourceTestEntity2Resource {
 
-		public Page<EntityModelResourceTestEntity>
-				getEntityModelResourceTestEntitiesPage()
+		public EntityModelResourceTestEntity2
+				getEntityModelResourceTestEntities2EntityModelResourceTestEntity2(
+					Long entityModelResourceTestEntity2Id)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getEntityModelResourceTestEntitiesPageHttpResponse();
+				getEntityModelResourceTestEntities2EntityModelResourceTestEntity2HttpResponse(
+					entityModelResourceTestEntity2Id);
 
 			String content = httpResponse.getContent();
 
@@ -214,8 +207,8 @@ public interface EntityModelResourceTestEntityResource {
 			}
 
 			try {
-				return Page.of(
-					content, EntityModelResourceTestEntitySerDes::toDTO);
+				return com.liferay.portal.tools.rest.builder.test.client.serdes.
+					v1_0.EntityModelResourceTestEntity2SerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -227,7 +220,8 @@ public interface EntityModelResourceTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getEntityModelResourceTestEntitiesPageHttpResponse()
+				getEntityModelResourceTestEntities2EntityModelResourceTestEntity2HttpResponse(
+					Long entityModelResourceTestEntity2Id)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -254,116 +248,11 @@ public interface EntityModelResourceTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/entity-model-resource-test-entities");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void postEntityModelResourceTestEntitiesPageExportBatch(
-				String callbackURL, String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
-					callbackURL, contentType, fieldNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
-					String callbackURL, String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body("[]", "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
+						"/o/test/v1.0/entity-model-resource-test-entities2/{entityModelResourceTestEntity2Id}");
 
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/entity-model-resource-test-entities/export-batch");
+				"entityModelResourceTestEntity2Id",
+				entityModelResourceTestEntity2Id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -371,12 +260,12 @@ public interface EntityModelResourceTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		private EntityModelResourceTestEntityResourceImpl(Builder builder) {
+		private EntityModelResourceTestEntity2ResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			EntityModelResourceTestEntityResource.class.getName());
+			EntityModelResourceTestEntity2Resource.class.getName());
 
 		private Builder _builder;
 

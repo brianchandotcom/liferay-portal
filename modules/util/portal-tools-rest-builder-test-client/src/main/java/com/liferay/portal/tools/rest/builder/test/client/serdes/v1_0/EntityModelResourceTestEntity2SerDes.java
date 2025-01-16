@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity2;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,28 +21,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class EntityModelResourceTestEntitySerDes {
+public class EntityModelResourceTestEntity2SerDes {
 
-	public static EntityModelResourceTestEntity toDTO(String json) {
-		EntityModelResourceTestEntityJSONParser
-			entityModelResourceTestEntityJSONParser =
-				new EntityModelResourceTestEntityJSONParser();
+	public static EntityModelResourceTestEntity2 toDTO(String json) {
+		EntityModelResourceTestEntity2JSONParser
+			entityModelResourceTestEntity2JSONParser =
+				new EntityModelResourceTestEntity2JSONParser();
 
-		return entityModelResourceTestEntityJSONParser.parseToDTO(json);
+		return entityModelResourceTestEntity2JSONParser.parseToDTO(json);
 	}
 
-	public static EntityModelResourceTestEntity[] toDTOs(String json) {
-		EntityModelResourceTestEntityJSONParser
-			entityModelResourceTestEntityJSONParser =
-				new EntityModelResourceTestEntityJSONParser();
+	public static EntityModelResourceTestEntity2[] toDTOs(String json) {
+		EntityModelResourceTestEntity2JSONParser
+			entityModelResourceTestEntity2JSONParser =
+				new EntityModelResourceTestEntity2JSONParser();
 
-		return entityModelResourceTestEntityJSONParser.parseToDTOs(json);
+		return entityModelResourceTestEntity2JSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		EntityModelResourceTestEntity entityModelResourceTestEntity) {
+		EntityModelResourceTestEntity2 entityModelResourceTestEntity2) {
 
-		if (entityModelResourceTestEntity == null) {
+		if (entityModelResourceTestEntity2 == null) {
 			return "null";
 		}
 
@@ -50,17 +50,17 @@ public class EntityModelResourceTestEntitySerDes {
 
 		sb.append("{");
 
-		if (entityModelResourceTestEntity.getId() != null) {
+		if (entityModelResourceTestEntity2.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(entityModelResourceTestEntity.getId());
+			sb.append(entityModelResourceTestEntity2.getId());
 		}
 
-		if (entityModelResourceTestEntity.getName() != null) {
+		if (entityModelResourceTestEntity2.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -69,7 +69,7 @@ public class EntityModelResourceTestEntitySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(entityModelResourceTestEntity.getName()));
+			sb.append(_escape(entityModelResourceTestEntity2.getName()));
 
 			sb.append("\"");
 		}
@@ -80,53 +80,53 @@ public class EntityModelResourceTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		EntityModelResourceTestEntityJSONParser
-			entityModelResourceTestEntityJSONParser =
-				new EntityModelResourceTestEntityJSONParser();
+		EntityModelResourceTestEntity2JSONParser
+			entityModelResourceTestEntity2JSONParser =
+				new EntityModelResourceTestEntity2JSONParser();
 
-		return entityModelResourceTestEntityJSONParser.parseToMap(json);
+		return entityModelResourceTestEntity2JSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		EntityModelResourceTestEntity entityModelResourceTestEntity) {
+		EntityModelResourceTestEntity2 entityModelResourceTestEntity2) {
 
-		if (entityModelResourceTestEntity == null) {
+		if (entityModelResourceTestEntity2 == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (entityModelResourceTestEntity.getId() == null) {
+		if (entityModelResourceTestEntity2.getId() == null) {
 			map.put("id", null);
 		}
 		else {
 			map.put(
-				"id", String.valueOf(entityModelResourceTestEntity.getId()));
+				"id", String.valueOf(entityModelResourceTestEntity2.getId()));
 		}
 
-		if (entityModelResourceTestEntity.getName() == null) {
+		if (entityModelResourceTestEntity2.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put(
 				"name",
-				String.valueOf(entityModelResourceTestEntity.getName()));
+				String.valueOf(entityModelResourceTestEntity2.getName()));
 		}
 
 		return map;
 	}
 
-	public static class EntityModelResourceTestEntityJSONParser
-		extends BaseJSONParser<EntityModelResourceTestEntity> {
+	public static class EntityModelResourceTestEntity2JSONParser
+		extends BaseJSONParser<EntityModelResourceTestEntity2> {
 
 		@Override
-		protected EntityModelResourceTestEntity createDTO() {
-			return new EntityModelResourceTestEntity();
+		protected EntityModelResourceTestEntity2 createDTO() {
+			return new EntityModelResourceTestEntity2();
 		}
 
 		@Override
-		protected EntityModelResourceTestEntity[] createDTOArray(int size) {
-			return new EntityModelResourceTestEntity[size];
+		protected EntityModelResourceTestEntity2[] createDTOArray(int size) {
+			return new EntityModelResourceTestEntity2[size];
 		}
 
 		@Override
@@ -143,18 +143,18 @@ public class EntityModelResourceTestEntitySerDes {
 
 		@Override
 		protected void setField(
-			EntityModelResourceTestEntity entityModelResourceTestEntity,
+			EntityModelResourceTestEntity2 entityModelResourceTestEntity2,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					entityModelResourceTestEntity.setId(
+					entityModelResourceTestEntity2.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					entityModelResourceTestEntity.setName(
+					entityModelResourceTestEntity2.setName(
 						(String)jsonParserFieldValue);
 				}
 			}

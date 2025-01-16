@@ -32,11 +32,11 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.EntityModelResourceTestEntityResource;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.EntityModelResourceTestEntity1Resource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntity1SerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
+public abstract class BaseEntityModelResourceTestEntity1ResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,15 +93,15 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_entityModelResourceTestEntityResource.setContextCompany(testCompany);
+		_entityModelResourceTestEntity1Resource.setContextCompany(testCompany);
 
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		EntityModelResourceTestEntityResource.Builder builder =
-			EntityModelResourceTestEntityResource.builder();
+		EntityModelResourceTestEntity1Resource.Builder builder =
+			EntityModelResourceTestEntity1Resource.builder();
 
-		entityModelResourceTestEntityResource = builder.authentication(
+		entityModelResourceTestEntity1Resource = builder.authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
@@ -121,32 +121,32 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity1 =
-			randomEntityModelResourceTestEntity();
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity11 =
+			randomEntityModelResourceTestEntity1();
 
 		String json = objectMapper.writeValueAsString(
-			entityModelResourceTestEntity1);
+			entityModelResourceTestEntity11);
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity2 =
-			EntityModelResourceTestEntitySerDes.toDTO(json);
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity12 =
+			EntityModelResourceTestEntity1SerDes.toDTO(json);
 
 		Assert.assertTrue(
 			equals(
-				entityModelResourceTestEntity1,
-				entityModelResourceTestEntity2));
+				entityModelResourceTestEntity11,
+				entityModelResourceTestEntity12));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity =
-			randomEntityModelResourceTestEntity();
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity1 =
+			randomEntityModelResourceTestEntity1();
 
 		String json1 = objectMapper.writeValueAsString(
-			entityModelResourceTestEntity);
-		String json2 = EntityModelResourceTestEntitySerDes.toJSON(
-			entityModelResourceTestEntity);
+			entityModelResourceTestEntity1);
+		String json2 = EntityModelResourceTestEntity1SerDes.toJSON(
+			entityModelResourceTestEntity1);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -174,57 +174,57 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity =
-			randomEntityModelResourceTestEntity();
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity1 =
+			randomEntityModelResourceTestEntity1();
 
-		entityModelResourceTestEntity.setName(regex);
+		entityModelResourceTestEntity1.setName(regex);
 
-		String json = EntityModelResourceTestEntitySerDes.toJSON(
-			entityModelResourceTestEntity);
+		String json = EntityModelResourceTestEntity1SerDes.toJSON(
+			entityModelResourceTestEntity1);
 
 		Assert.assertFalse(json.contains(regex));
 
-		entityModelResourceTestEntity =
-			EntityModelResourceTestEntitySerDes.toDTO(json);
+		entityModelResourceTestEntity1 =
+			EntityModelResourceTestEntity1SerDes.toDTO(json);
 
-		Assert.assertEquals(regex, entityModelResourceTestEntity.getName());
+		Assert.assertEquals(regex, entityModelResourceTestEntity1.getName());
 	}
 
 	@Test
-	public void testGetEntityModelResourceTestEntitiesPage() throws Exception {
-		Page<EntityModelResourceTestEntity> page =
-			entityModelResourceTestEntityResource.
-				getEntityModelResourceTestEntitiesPage();
+	public void testGetEntityModelResourceTestEntities1Page() throws Exception {
+		Page<EntityModelResourceTestEntity1> page =
+			entityModelResourceTestEntity1Resource.
+				getEntityModelResourceTestEntities1Page();
 
 		long totalCount = page.getTotalCount();
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity1 =
-			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
-				randomEntityModelResourceTestEntity());
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity11 =
+			testGetEntityModelResourceTestEntities1Page_addEntityModelResourceTestEntity1(
+				randomEntityModelResourceTestEntity1());
 
-		EntityModelResourceTestEntity entityModelResourceTestEntity2 =
-			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
-				randomEntityModelResourceTestEntity());
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity12 =
+			testGetEntityModelResourceTestEntities1Page_addEntityModelResourceTestEntity1(
+				randomEntityModelResourceTestEntity1());
 
 		page =
-			entityModelResourceTestEntityResource.
-				getEntityModelResourceTestEntitiesPage();
+			entityModelResourceTestEntity1Resource.
+				getEntityModelResourceTestEntities1Page();
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(
-			entityModelResourceTestEntity1,
-			(List<EntityModelResourceTestEntity>)page.getItems());
+			entityModelResourceTestEntity11,
+			(List<EntityModelResourceTestEntity1>)page.getItems());
 		assertContains(
-			entityModelResourceTestEntity2,
-			(List<EntityModelResourceTestEntity>)page.getItems());
+			entityModelResourceTestEntity12,
+			(List<EntityModelResourceTestEntity1>)page.getItems());
 		assertValid(
 			page,
-			testGetEntityModelResourceTestEntitiesPage_getExpectedActions());
+			testGetEntityModelResourceTestEntities1Page_getExpectedActions());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetEntityModelResourceTestEntitiesPage_getExpectedActions()
+			testGetEntityModelResourceTestEntities1Page_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -232,17 +232,17 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		return expectedActions;
 	}
 
-	protected EntityModelResourceTestEntity
-			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
-				EntityModelResourceTestEntity entityModelResourceTestEntity)
+	protected EntityModelResourceTestEntity1
+			testGetEntityModelResourceTestEntities1Page_addEntityModelResourceTestEntity1(
+				EntityModelResourceTestEntity1 entityModelResourceTestEntity1)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected EntityModelResourceTestEntity
-			testGraphQLEntityModelResourceTestEntity_addEntityModelResourceTestEntity()
+	protected EntityModelResourceTestEntity1
+			testGraphQLEntityModelResourceTestEntity1_addEntityModelResourceTestEntity1()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -250,15 +250,15 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	}
 
 	protected void assertContains(
-		EntityModelResourceTestEntity entityModelResourceTestEntity,
-		List<EntityModelResourceTestEntity> entityModelResourceTestEntities) {
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity1,
+		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s) {
 
 		boolean contains = false;
 
-		for (EntityModelResourceTestEntity item :
-				entityModelResourceTestEntities) {
+		for (EntityModelResourceTestEntity1 item :
+				entityModelResourceTestEntity1s) {
 
-			if (equals(entityModelResourceTestEntity, item)) {
+			if (equals(entityModelResourceTestEntity1, item)) {
 				contains = true;
 
 				break;
@@ -266,8 +266,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			entityModelResourceTestEntities + " does not contain " +
-				entityModelResourceTestEntity,
+			entityModelResourceTestEntity1s + " does not contain " +
+				entityModelResourceTestEntity1,
 			contains);
 	}
 
@@ -280,55 +280,57 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	}
 
 	protected void assertEquals(
-		EntityModelResourceTestEntity entityModelResourceTestEntity1,
-		EntityModelResourceTestEntity entityModelResourceTestEntity2) {
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity11,
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity12) {
 
 		Assert.assertTrue(
-			entityModelResourceTestEntity1 + " does not equal " +
-				entityModelResourceTestEntity2,
+			entityModelResourceTestEntity11 + " does not equal " +
+				entityModelResourceTestEntity12,
 			equals(
-				entityModelResourceTestEntity1,
-				entityModelResourceTestEntity2));
+				entityModelResourceTestEntity11,
+				entityModelResourceTestEntity12));
 	}
 
 	protected void assertEquals(
-		List<EntityModelResourceTestEntity> entityModelResourceTestEntities1,
-		List<EntityModelResourceTestEntity> entityModelResourceTestEntities2) {
+		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s1,
+		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s2) {
 
 		Assert.assertEquals(
-			entityModelResourceTestEntities1.size(),
-			entityModelResourceTestEntities2.size());
+			entityModelResourceTestEntity1s1.size(),
+			entityModelResourceTestEntity1s2.size());
 
-		for (int i = 0; i < entityModelResourceTestEntities1.size(); i++) {
-			EntityModelResourceTestEntity entityModelResourceTestEntity1 =
-				entityModelResourceTestEntities1.get(i);
-			EntityModelResourceTestEntity entityModelResourceTestEntity2 =
-				entityModelResourceTestEntities2.get(i);
+		for (int i = 0; i < entityModelResourceTestEntity1s1.size(); i++) {
+			EntityModelResourceTestEntity1 entityModelResourceTestEntity11 =
+				entityModelResourceTestEntity1s1.get(i);
+			EntityModelResourceTestEntity1 entityModelResourceTestEntity12 =
+				entityModelResourceTestEntity1s2.get(i);
 
 			assertEquals(
-				entityModelResourceTestEntity1, entityModelResourceTestEntity2);
+				entityModelResourceTestEntity11,
+				entityModelResourceTestEntity12);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<EntityModelResourceTestEntity> entityModelResourceTestEntities1,
-		List<EntityModelResourceTestEntity> entityModelResourceTestEntities2) {
+		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s1,
+		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s2) {
 
 		Assert.assertEquals(
-			entityModelResourceTestEntities1.size(),
-			entityModelResourceTestEntities2.size());
+			entityModelResourceTestEntity1s1.size(),
+			entityModelResourceTestEntity1s2.size());
 
-		for (EntityModelResourceTestEntity entityModelResourceTestEntity1 :
-				entityModelResourceTestEntities1) {
+		for (EntityModelResourceTestEntity1 entityModelResourceTestEntity11 :
+				entityModelResourceTestEntity1s1) {
 
 			boolean contains = false;
 
-			for (EntityModelResourceTestEntity entityModelResourceTestEntity2 :
-					entityModelResourceTestEntities2) {
+			for (EntityModelResourceTestEntity1
+					entityModelResourceTestEntity12 :
+						entityModelResourceTestEntity1s2) {
 
 				if (equals(
-						entityModelResourceTestEntity1,
-						entityModelResourceTestEntity2)) {
+						entityModelResourceTestEntity11,
+						entityModelResourceTestEntity12)) {
 
 					contains = true;
 
@@ -337,19 +339,19 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				entityModelResourceTestEntities2 + " does not contain " +
-					entityModelResourceTestEntity1,
+				entityModelResourceTestEntity1s2 + " does not contain " +
+					entityModelResourceTestEntity11,
 				contains);
 		}
 	}
 
 	protected void assertValid(
-			EntityModelResourceTestEntity entityModelResourceTestEntity)
+			EntityModelResourceTestEntity1 entityModelResourceTestEntity1)
 		throws Exception {
 
 		boolean valid = true;
 
-		if (entityModelResourceTestEntity.getId() == null) {
+		if (entityModelResourceTestEntity1.getId() == null) {
 			valid = false;
 		}
 
@@ -357,7 +359,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (entityModelResourceTestEntity.getName() == null) {
+				if (entityModelResourceTestEntity1.getName() == null) {
 					valid = false;
 				}
 
@@ -372,20 +374,20 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<EntityModelResourceTestEntity> page) {
+	protected void assertValid(Page<EntityModelResourceTestEntity1> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<EntityModelResourceTestEntity> page,
+		Page<EntityModelResourceTestEntity1> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<EntityModelResourceTestEntity>
-			entityModelResourceTestEntities = page.getItems();
+		java.util.Collection<EntityModelResourceTestEntity1>
+			entityModelResourceTestEntity1s = page.getItems();
 
-		int size = entityModelResourceTestEntities.size();
+		int size = entityModelResourceTestEntity1s.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -426,7 +428,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						EntityModelResourceTestEntity.class)) {
+						EntityModelResourceTestEntity1.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -475,10 +477,12 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	}
 
 	protected boolean equals(
-		EntityModelResourceTestEntity entityModelResourceTestEntity1,
-		EntityModelResourceTestEntity entityModelResourceTestEntity2) {
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity11,
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity12) {
 
-		if (entityModelResourceTestEntity1 == entityModelResourceTestEntity2) {
+		if (entityModelResourceTestEntity11 ==
+				entityModelResourceTestEntity12) {
+
 			return true;
 		}
 
@@ -487,8 +491,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						entityModelResourceTestEntity1.getId(),
-						entityModelResourceTestEntity2.getId())) {
+						entityModelResourceTestEntity11.getId(),
+						entityModelResourceTestEntity12.getId())) {
 
 					return false;
 				}
@@ -498,8 +502,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						entityModelResourceTestEntity1.getName(),
-						entityModelResourceTestEntity2.getName())) {
+						entityModelResourceTestEntity11.getName(),
+						entityModelResourceTestEntity12.getName())) {
 
 					return false;
 				}
@@ -563,7 +567,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_entityModelResourceTestEntityResource instanceof
+		if (!(_entityModelResourceTestEntity1Resource instanceof
 				EntityModelResource)) {
 
 			throw new UnsupportedOperationException(
@@ -571,7 +575,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_entityModelResourceTestEntityResource;
+			(EntityModelResource)_entityModelResourceTestEntity1Resource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -605,7 +609,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		EntityModelResourceTestEntity entityModelResourceTestEntity) {
+		EntityModelResourceTestEntity1 entityModelResourceTestEntity1) {
 
 		StringBundler sb = new StringBundler();
 
@@ -623,7 +627,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = entityModelResourceTestEntity.getName();
+			Object object = entityModelResourceTestEntity1.getName();
 
 			String value = String.valueOf(object);
 
@@ -710,11 +714,11 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected EntityModelResourceTestEntity
-			randomEntityModelResourceTestEntity()
+	protected EntityModelResourceTestEntity1
+			randomEntityModelResourceTestEntity1()
 		throws Exception {
 
-		return new EntityModelResourceTestEntity() {
+		return new EntityModelResourceTestEntity1() {
 			{
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -722,26 +726,26 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 		};
 	}
 
-	protected EntityModelResourceTestEntity
-			randomIrrelevantEntityModelResourceTestEntity()
+	protected EntityModelResourceTestEntity1
+			randomIrrelevantEntityModelResourceTestEntity1()
 		throws Exception {
 
-		EntityModelResourceTestEntity
-			randomIrrelevantEntityModelResourceTestEntity =
-				randomEntityModelResourceTestEntity();
+		EntityModelResourceTestEntity1
+			randomIrrelevantEntityModelResourceTestEntity1 =
+				randomEntityModelResourceTestEntity1();
 
-		return randomIrrelevantEntityModelResourceTestEntity;
+		return randomIrrelevantEntityModelResourceTestEntity1;
 	}
 
-	protected EntityModelResourceTestEntity
-			randomPatchEntityModelResourceTestEntity()
+	protected EntityModelResourceTestEntity1
+			randomPatchEntityModelResourceTestEntity1()
 		throws Exception {
 
-		return randomEntityModelResourceTestEntity();
+		return randomEntityModelResourceTestEntity1();
 	}
 
-	protected EntityModelResourceTestEntityResource
-		entityModelResourceTestEntityResource;
+	protected EntityModelResourceTestEntity1Resource
+		entityModelResourceTestEntity1Resource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -941,13 +945,13 @@ public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseEntityModelResourceTestEntityResourceTestCase.class);
+			BaseEntityModelResourceTestEntity1ResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
 	private com.liferay.portal.tools.rest.builder.test.resource.v1_0.
-		EntityModelResourceTestEntityResource
-			_entityModelResourceTestEntityResource;
+		EntityModelResourceTestEntity1Resource
+			_entityModelResourceTestEntity1Resource;
 
 }

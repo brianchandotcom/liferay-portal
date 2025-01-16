@@ -27,8 +27,8 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.EntityModelResourceTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity1;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.EntityModelResourceTestEntity1Resource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -54,7 +54,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -63,107 +62,42 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseEntityModelResourceTestEntityResourceImpl
-	implements EntityModelResource, EntityModelResourceTestEntityResource,
+public abstract class BaseEntityModelResourceTestEntity1ResourceImpl
+	implements EntityModelResource, EntityModelResourceTestEntity1Resource,
 			   VulcanBatchEngineTaskItemDelegate
-				   <EntityModelResourceTestEntity> {
+				   <EntityModelResourceTestEntity1> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/entity-model-resource-test-entities'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/entity-model-resource-test-entities1'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieve all EntityModelResourceTestEntity items."
+		description = "Retrieve all EntityModelResourceTestEntity1 items."
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "EntityModelResourceTestEntity"
+				name = "EntityModelResourceTestEntity1"
 			)
 		}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/entity-model-resource-test-entities")
+	@javax.ws.rs.Path("/entity-model-resource-test-entities1")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<EntityModelResourceTestEntity>
-			getEntityModelResourceTestEntitiesPage()
+	public Page<EntityModelResourceTestEntity1>
+			getEntityModelResourceTestEntities1Page()
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/entity-model-resource-test-entities/export-batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "contentType"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fieldNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "EntityModelResourceTestEntity"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/entity-model-resource-test-entities/export-batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postEntityModelResourceTestEntitiesPageExportBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.DefaultValue("JSON")
-			@javax.ws.rs.QueryParam("contentType")
-			String contentType,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("fieldNames")
-			String fieldNames)
-		throws Exception {
-
-		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
-		vulcanBatchEngineExportTaskResource.setGroupLocalService(
-			groupLocalService);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineExportTaskResource.postExportTask(
-				EntityModelResourceTestEntity.class.getName(), callbackURL,
-				contentType, fieldNames)
-		).build();
-	}
-
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<EntityModelResourceTestEntity>
-				entityModelResourceTestEntities,
+			Collection<EntityModelResourceTestEntity1>
+				entityModelResourceTestEntity1s,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -173,8 +107,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	@Override
 	public void delete(
-			Collection<EntityModelResourceTestEntity>
-				entityModelResourceTestEntities,
+			Collection<EntityModelResourceTestEntity1>
+				entityModelResourceTestEntity1s,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -206,7 +140,7 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 	}
 
 	public String getResourceName() {
-		return "EntityModelResourceTestEntity";
+		return "EntityModelResourceTestEntity1";
 	}
 
 	public String getVersion() {
@@ -214,12 +148,13 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<EntityModelResourceTestEntity> read(
+	public Page<EntityModelResourceTestEntity1> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getEntityModelResourceTestEntitiesPage();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -246,8 +181,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	@Override
 	public void update(
-			Collection<EntityModelResourceTestEntity>
-				entityModelResourceTestEntities,
+			Collection<EntityModelResourceTestEntity1>
+				entityModelResourceTestEntity1s,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -261,10 +196,10 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<EntityModelResourceTestEntity>,
+			<Collection<EntityModelResourceTestEntity1>,
 			 UnsafeFunction
-				 <EntityModelResourceTestEntity, EntityModelResourceTestEntity,
-				  Exception>,
+				 <EntityModelResourceTestEntity1,
+				  EntityModelResourceTestEntity1, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -272,8 +207,8 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<EntityModelResourceTestEntity>,
-			 UnsafeConsumer<EntityModelResourceTestEntity, Exception>,
+			<Collection<EntityModelResourceTestEntity1>,
+			 UnsafeConsumer<EntityModelResourceTestEntity1, Exception>,
 			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -534,14 +469,14 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<EntityModelResourceTestEntity>,
+		<Collection<EntityModelResourceTestEntity1>,
 		 UnsafeFunction
-			 <EntityModelResourceTestEntity, EntityModelResourceTestEntity,
+			 <EntityModelResourceTestEntity1, EntityModelResourceTestEntity1,
 			  Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<EntityModelResourceTestEntity>,
-		 UnsafeConsumer<EntityModelResourceTestEntity, Exception>, Exception>
+		<Collection<EntityModelResourceTestEntity1>,
+		 UnsafeConsumer<EntityModelResourceTestEntity1, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -563,6 +498,6 @@ public abstract class BaseEntityModelResourceTestEntityResourceImpl
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseEntityModelResourceTestEntityResourceImpl.class);
+			BaseEntityModelResourceTestEntity1ResourceImpl.class);
 
 }

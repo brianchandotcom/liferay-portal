@@ -170,25 +170,22 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 						"container"),
 				jsonObject.getString("error"));
 		}
-	}
 
-	@Test
-	public void testAddFragmentEntryLinksLocalizationSelect() throws Exception {
-		FragmentComposition fragmentComposition = _addFragmentComposition(
+		fragmentComposition = _addFragmentComposition(
 			FragmentConstants.TYPE_INPUT,
 			SetUtil.fromArray("localizationSelect"),
 			"<div>localizationSelect</div>", 1);
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(
-				fragmentComposition.getFragmentCompositionKey());
-
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
+		mockLiferayPortletActionRequest.setParameter(
+			"fragmentEntryKey",
+			fragmentComposition.getFragmentCompositionKey());
 
 		List<FragmentEntryLink> originalFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), _layout.getPlid());
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_processAddFragmentEntryLinks",

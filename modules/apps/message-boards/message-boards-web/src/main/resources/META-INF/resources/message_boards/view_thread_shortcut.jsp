@@ -31,8 +31,18 @@ if (threadFlag != null) {
 %>
 
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
+	<aui:style type="text/css">
+		.view-thread-shortcut-nowrap {
+			white-space: nowrap;
+		}
+		.view-thread-shortcut-td-subject {
+			padding-left: <%= (depth > 0) ? depth * 10 : 5 %>px;
+			width: 90%;
+		}
+	</aui:style>
+
 	<tr>
-		<td class="table-cell" style="padding-left: <%= (depth > 0) ? depth * 10 : 5 %>px; width: 90%;" valign="middle">
+		<td class="table-cell view-thread-shortcut-td-subject" valign="middle">
 			<c:if test="<%= !message.isRoot() %>">
 				<c:choose>
 					<c:when test="<%= !lastNode %>">
@@ -77,7 +87,7 @@ if (threadFlag != null) {
 				</c:if>
 			</a>
 		</td>
-		<td class="table-cell" style="white-space: nowrap;">
+		<td class="table-cell view-thread-shortcut-nowrap">
 			<a href="<%= rowHREF %>">
 				<c:if test="<%= !readThread %>">
 					<strong>
@@ -97,7 +107,7 @@ if (threadFlag != null) {
 				</c:if>
 			</a>
 		</td>
-		<td class="table-cell" style="white-space: nowrap;">
+		<td class="table-cell view-thread-shortcut-nowrap">
 			<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
 		</td>
 	</tr>

@@ -24,7 +24,7 @@ copyCSS {
 }
 
 dependencies {
-	compileInclude group: "com.beust", name: "jcommander", version: "1.58"
+	compileInclude group: "com.beust", name: "jcommander", version: "1.82"
 
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.service.builder", transitive: false, version: "1.0.135"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"

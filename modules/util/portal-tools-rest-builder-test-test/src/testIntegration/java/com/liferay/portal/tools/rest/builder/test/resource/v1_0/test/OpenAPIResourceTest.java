@@ -29,7 +29,7 @@ public class OpenAPIResourceTest {
 				JSONUtil.put(
 					"schemas",
 					JSONUtil.put(
-						"EntityModelResourceTestEntity",
+						"EntityModelResourceTestEntity1",
 						JSONUtil.put("x-filterable", JSONUtil.putAll())
 					).put(
 						"TestEntity",

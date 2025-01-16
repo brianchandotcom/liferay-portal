@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="answer" index-type="text" instance-id="jPNlmzE8" name="answer" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[We offer a 30-day return policy from the date of delivery. Items must be unused and in the same condition that you received them, including all original packaging.]]></dynamic-content>
+	</dynamic-element>
+</root>

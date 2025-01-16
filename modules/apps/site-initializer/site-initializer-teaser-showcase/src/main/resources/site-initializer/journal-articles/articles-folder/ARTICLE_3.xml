@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="xzXF9j93" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/sunglasses_on_shelves.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="headline" index-type="text" instance-id="uvg3DxFW" name="headline" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>The Latest Eyewear Trends for Fashion Enthusiasts</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="content" index-type="text" instance-id="zLVtTPJA" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Eyewear trends are constantly evolving, and this year is no exception. From oversized frames to colorful lenses, there's a style for everyone. Retro-inspired round glasses are making a comeback, while cat-eye shapes continue to be a favorite among fashionistas. Clear frames and geometric designs are also gaining popularity. Whether you're looking for a vintage vibe or a futuristic look, the latest eyewear trends offer something for every taste. Stay ahead of the fashion curve with these stylish eyewear options!</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

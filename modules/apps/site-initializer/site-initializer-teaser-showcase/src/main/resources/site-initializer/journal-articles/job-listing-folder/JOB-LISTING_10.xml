@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="jah20ukv" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Elevate your vision for the future!</strong> Clarity, a world-renowned manufacturer of innovative eyewear, seeks a passionate Associate Optical Engineer (Level 2) to join our growing team. In this progressive role, you'll leverage your developing expertise to contribute significantly to the design, analysis, and optimization of advanced optical components for our next-generation eyewear solutions. You'll collaborate with industry experts, tackle challenging projects, and gain valuable experience that will propel your career forward.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="x7Pnc79U" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="11:1-18:0">
+	<li data-sourcepos="11:1-11:152">Collaborate with senior engineers on the design and analysis of optical components and systems using industry-standard software (e.g., Zemax, Code V).</li>
+	<li data-sourcepos="12:1-12:146">Independently conduct optical simulations and analyses to evaluate performance metrics (e.g., image quality, light transmission, field of view).</li>
+	<li data-sourcepos="13:1-13:207">Lead problem-solving efforts for assigned optical design challenges, proposing innovative solutions and collaborating with cross-functional teams (e.g., manufacturing, research) to achieve optimal results.</li>
+	<li data-sourcepos="14:1-14:159">Actively participate in the development and testing of optical prototypes, ensuring functionality, manufacturability, and adherence to design specifications.</li>
+	<li data-sourcepos="15:1-15:149">Create and maintain clear and comprehensive technical documentation for assigned projects, including optical designs, test procedures, and results.</li>
+	<li data-sourcepos="16:1-16:148">Stay abreast of advancements in optical technology and materials, actively seeking opportunities to integrate new knowledge into ongoing projects.</li>
+	<li data-sourcepos="17:1-18:0">Contribute to the continuous improvement of optical design processes and methodologies.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="XGD4nxEC" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="21:1-28:0">
+	<li data-sourcepos="21:1-21:83">Bachelor's degree in Optical Engineering, Physics, or a related field (required).</li>
+	<li data-sourcepos="22:1-22:145">2-4 years of experience in applied optics or a related field, with demonstrable experience using optical design software (e.g., Zemax, Code V).</li>
+	<li data-sourcepos="23:1-23:154">Strong understanding of optical design principles and theories (e.g., geometrical optics, physical optics) and their application to real-world problems.</li>
+	<li data-sourcepos="24:1-24:99">Proven ability to analyze data, identify trends, and translate findings into actionable insights.</li>
+	<li data-sourcepos="25:1-25:169">Excellent communication, collaboration, and interpersonal skills, with the ability to work effectively in a team environment and present technical information clearly.</li>
+	<li data-sourcepos="26:1-26:79">A meticulous eye for detail and a commitment to delivering high-quality work.</li>
+	<li data-sourcepos="27:1-28:0">A passion for learning and a desire to continuously develop your skills within the field of optical engineering.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

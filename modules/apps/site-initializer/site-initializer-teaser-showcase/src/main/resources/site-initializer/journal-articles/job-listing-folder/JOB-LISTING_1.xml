@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="0H7Y5sA8" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>See the world of web development in focus!</strong> Clarity, a leading global manufacturer of innovative eyewear, seeks a talented Associate Web Developer to join our growing team. In this exciting role, you'll gain valuable experience working alongside industry professionals, contributing to the development and maintenance of our web properties. You'll help us craft user-friendly and visually appealing web experiences that showcase our brand and connect with our customers.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="fFrKhM2j" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="11:1-19:0">
+	<li data-sourcepos="11:1-11:126">Collaborate with designers and web developers to translate design concepts into functional and visually appealing web pages.</li>
+	<li data-sourcepos="12:1-12:145">Develop and implement well-structured, maintainable, and efficient code using front-end web development technologies (HTML5, CSS3, JavaScript).</li>
+	<li data-sourcepos="13:1-13:131">Contribute to the development and maintenance of reusable UI components for a consistent brand identity across our web platforms.</li>
+	<li data-sourcepos="14:1-14:113">Assist with website optimization for speed and responsiveness across various devices (desktop, mobile, tablet).</li>
+	<li data-sourcepos="15:1-15:121">Conduct thorough testing and debugging to ensure website functionality and identify and resolve basic technical issues.</li>
+	<li data-sourcepos="16:1-16:136">Stay up-to-date on the latest web development trends and technologies, actively seeking opportunities to learn and grow your skillset.</li>
+	<li data-sourcepos="17:1-17:98">Maintain clear and concise code documentation to ensure smooth collaboration and future updates.</li>
+	<li data-sourcepos="18:1-19:0">Assist with content management tasks to keep website content fresh and engaging.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="WScYBNCM" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="22:1-30:0">
+	<li data-sourcepos="22:1-22:96">Bachelor's degree in Computer Science, Information Technology, or a related field (preferred).</li>
+	<li data-sourcepos="23:1-23:90">1-2 years of experience in web development or a strong portfolio showcasing your skills.</li>
+	<li data-sourcepos="24:1-24:68">Solid understanding of HTML5, CSS3, and basic JavaScript concepts.</li>
+	<li data-sourcepos="25:1-25:88">Experience with a front-end web development framework (e.g., React, Angular) (a plus).</li>
+	<li data-sourcepos="26:1-26:86">A strong eye for design and a keen understanding of user experience (UX) principles.</li>
+	<li data-sourcepos="27:1-27:106">Excellent communication and collaboration skills, with the ability to learn from experienced developers.</li>
+	<li data-sourcepos="28:1-28:71">A problem-solving mindset and a willingness to tackle new challenges.</li>
+	<li data-sourcepos="29:1-30:0">A passion for learning and a desire to grow your web development skills.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

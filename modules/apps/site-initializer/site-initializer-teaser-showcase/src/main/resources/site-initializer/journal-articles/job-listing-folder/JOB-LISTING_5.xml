@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="lM0pa0g8" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Help people see the world clearly and stylishly!</strong> Clarity, a leading global manufacturer of innovative eyewear, seeks a passionate Retail Associate to join our dynamic team. In this customer-facing role, you'll play a vital role in creating a welcoming and informative shopping experience for our customers. You'll share your knowledge of eyewear, assist with product selection, and help people find the perfect pair of glasses to express their unique style and enhance their vision.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="pEIbaKC4" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="11:1-20:0">
+	<li data-sourcepos="11:1-11:100">Welcome customers to the store, greet them with a smile, and provide exceptional customer service.</li>
+	<li data-sourcepos="12:1-12:141">Assist customers in browsing the selection of eyewear, offering product knowledge and recommendations based on their needs and preferences.</li>
+	<li data-sourcepos="13:1-13:73">Measure and fit glasses for customers, ensuring proper fit and comfort.</li>
+	<li data-sourcepos="14:1-14:100">Process customer purchases efficiently and accurately, handling cash and credit card transactions.</li>
+	<li data-sourcepos="15:1-15:114">Maintain a clean, organized, and visually appealing store environment, ensuring products are properly displayed.</li>
+	<li data-sourcepos="16:1-16:73">Assist with restocking inventory and keeping the sales floor organized.</li>
+	<li data-sourcepos="17:1-17:66">Stay up-to-date on current eyewear trends and product offerings.</li>
+	<li data-sourcepos="18:1-18:59">Promote special offers and loyalty programs to customers.</li>
+	<li data-sourcepos="19:1-20:0">Uphold company policies and procedures, ensuring a safe and secure shopping environment.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="CwMGdxQt" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="23:1-31:0">
+	<li data-sourcepos="23:1-23:48">High school diploma or equivalent (preferred).</li>
+	<li data-sourcepos="24:1-24:87">A passion for the eyewear industry and a genuine interest in helping people (a plus).</li>
+	<li data-sourcepos="25:1-25:101">Excellent communication and interpersonal skills, with the ability to build rapport with customers.</li>
+	<li data-sourcepos="26:1-26:90">Strong customer service orientation and a commitment to exceeding customer expectations.</li>
+	<li data-sourcepos="27:1-27:76">A positive and enthusiastic attitude with a willingness to learn and grow.</li>
+	<li data-sourcepos="28:1-28:89">Ability to work independently and as part of a team in a fast-paced retail environment.</li>
+	<li data-sourcepos="29:1-29:70">Basic computer literacy and proficiency in cash handling procedures.</li>
+	<li data-sourcepos="30:1-31:0">Strong attention to detail and a commitment to maintaining a clean and organized work environment.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

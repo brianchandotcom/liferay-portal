@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="ZB2zffLd" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>See the future of eyewear through code!</strong> Clarity, a leading global manufacturer of innovative eyewear, seeks a passionate Senior Web Developer to join our dynamic team. In this key role, you'll play a vital role in crafting exceptional user experiences across our web platforms, from our e-commerce store to our brand storytelling website. You'll leverage your web development expertise to build, maintain, and enhance our digital presence, ensuring a seamless and visually appealing experience for our customers.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="tiavBz91" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="11:1-20:0">
+	<li data-sourcepos="11:1-11:146">Collaborate with designers, product managers, and marketing teams to translate concepts into user-friendly and visually stunning web interfaces.</li>
+	<li data-sourcepos="12:1-12:160">Develop and implement clean, maintainable, and efficient code using industry-standard web development technologies (e.g., HTML5, CSS3, JavaScript frameworks).</li>
+	<li data-sourcepos="13:1-13:93">Build reusable UI components and ensure consistent brand identity across all web platforms.</li>
+	<li data-sourcepos="14:1-14:109">Optimize website performance for speed and responsiveness across various devices (desktop, mobile, tablet).</li>
+	<li data-sourcepos="15:1-15:66">Implement best practices for website security and accessibility.</li>
+	<li data-sourcepos="16:1-16:81">Utilize content management systems (CMS) to manage website content efficiently.</li>
+	<li data-sourcepos="17:1-17:115">Conduct thorough testing and debugging to ensure website functionality and identify and resolve technical issues.</li>
+	<li data-sourcepos="18:1-18:137">Stay up-to-date on the latest web development trends and technologies, and continuously seek opportunities to improve our web presence.</li>
+	<li data-sourcepos="19:1-20:0">Document code effectively to ensure clear communication and maintainability.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="1INbnxgx" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="23:1-32:0">
+	<li data-sourcepos="23:1-23:96">Bachelor's degree in Computer Science, Information Technology, or a related field (preferred).</li>
+	<li data-sourcepos="24:1-24:97">Minimum 5+ years of experience as a web developer with a strong portfolio showcasing your work.</li>
+	<li data-sourcepos="25:1-25:114">Proven experience with front-end and back-end web development technologies (HTML5, CSS3, JavaScript frameworks).</li>
+	<li data-sourcepos="26:1-26:60">Experience with content management systems (CMS) (a plus).</li>
+	<li data-sourcepos="27:1-27:91">Excellent understanding of web design principles and user experience (UX) best practices.</li>
+	<li data-sourcepos="28:1-28:109">Strong problem-solving and analytical skills with the ability to identify and resolve technical challenges.</li>
+	<li data-sourcepos="29:1-29:117">Excellent communication and collaboration skills, with the ability to work effectively with cross-functional teams.</li>
+	<li data-sourcepos="30:1-30:78">A passion for building user-friendly and visually appealing web experiences.</li>
+	<li data-sourcepos="31:1-32:0">A commitment to continuous learning and staying current with the latest web development trends.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

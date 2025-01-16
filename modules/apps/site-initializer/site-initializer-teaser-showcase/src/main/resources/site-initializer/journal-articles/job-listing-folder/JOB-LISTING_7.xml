@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="tgYfseqq" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>See the big picture of financial clarity!</strong> Clarity, a leading global manufacturer of innovative eyewear, seeks a visionary and strategic VP of Finance to lead our dynamic finance team. In this pivotal role, you'll be responsible for overseeing all aspects of our financial operations, from financial planning and analysis to risk management and investor relations. You'll be a key member of the leadership team, partnering with executives to drive strategic decision-making, ensure financial stability, and propel Clarity's continued growth.</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="gqjqspRw" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="11:1-20:0">
+	<li data-sourcepos="11:1-11:120">Lead and direct the entire finance team, fostering a culture of excellence, collaboration, and continuous improvement.</li>
+	<li data-sourcepos="12:1-12:125">Develop and implement comprehensive financial strategies and policies aligned with Clarity's long-term business objectives.</li>
+	<li data-sourcepos="13:1-13:111">Oversee the financial planning and analysis process, including forecasting, budgeting, and variance analysis.</li>
+	<li data-sourcepos="14:1-14:119">Manage all aspects of financial reporting, ensuring accuracy, transparency, and compliance with accounting standards.</li>
+	<li data-sourcepos="15:1-15:110">Lead the development and implementation of effective risk management strategies to mitigate financial risks.</li>
+	<li data-sourcepos="16:1-16:109">Build and maintain strong relationships with financial institutions and secure optimal financing solutions.</li>
+	<li data-sourcepos="17:1-17:108">Manage investor relations, providing clear and concise financial information to analysts and shareholders.</li>
+	<li data-sourcepos="18:1-18:171">Collaborate with cross-functional teams (e.g., R&amp;D, sales &amp; marketing, operations) to ensure financial considerations are integrated into all business decisions.</li>
+	<li data-sourcepos="19:1-20:0">Stay up-to-date on industry trends and economic developments, identifying potential opportunities and challenges.
+	<p><button _ngcontent-ng-c19849592="" aria-label="Modify selected text" data-test-id="tunable-modify-selection-button" jslog="198403;track:generic_click,impression;BardVeMetadataKey:[[&quot;r_0b174020257f5787&quot;,&quot;c_e82403b70e939350&quot;,null,&quot;rc_3a725d0e3d9742d1&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]];mutable:true" mat-mini-fab="" mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-uninitialized="" mattooltip="Modify selected text">pen_spark</button></p>
+	</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="R2FUIt0R" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<ul data-sourcepos="23:1-32:0">
+	<li data-sourcepos="23:1-23:92">Master's degree in Business Administration (MBA), Finance, or a related field (preferred).</li>
+	<li data-sourcepos="24:1-24:54">CPA or equivalent professional designation (a plus).</li>
+	<li data-sourcepos="25:1-25:126">Minimum 10-15 years of experience in a senior financial leadership role within a global manufacturing or retail environment.</li>
+	<li data-sourcepos="26:1-26:96">Proven track record of success in developing and implementing strategic financial initiatives.</li>
+	<li data-sourcepos="27:1-27:74">Strong analytical and problem-solving skills with a keen eye for detail.</li>
+	<li data-sourcepos="28:1-28:116">Excellent communication, presentation, and interpersonal skills, with the ability to influence and inspire a team.</li>
+	<li data-sourcepos="29:1-29:120">Demonstrated leadership qualities and the ability to build strong relationships across all levels of the organization.</li>
+	<li data-sourcepos="30:1-30:108">In-depth knowledge of financial accounting principles, tax regulations, and financial reporting standards.</li>
+	<li data-sourcepos="31:1-32:0">A strategic mindset with a focus on long-term business growth and profitability.</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

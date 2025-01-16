@@ -1,0 +1,10 @@
+{
+	"assetCategoryERCs": [
+		"IT_CATEGORY",
+		"REMOTE_CATEGORY",
+		"NORTH_CATEGORY"
+	],
+	"ddmStructureKey": "Job Listing",
+	"folder": "job-listing-folder",
+	"name": "Associate Web Developer"
+}

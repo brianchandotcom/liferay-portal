@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="0hhPY3BG" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/revolutionizing_industry.jpg$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="headline" index-type="text" instance-id="YqUNKFk5" name="headline" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<table>
+	<tbody>
+		<tr>
+			<td align="left">Summer 2024 Collaboration</td>
+		</tr>
+		<tr>
+		</tr>
+	</tbody>
+</table>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="content" index-type="text" instance-id="qcgFj2vf" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Eyewear enthusiasts rejoice! Fan favorites Clarity and Warby Parker have joined forces for a collaborative collection.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

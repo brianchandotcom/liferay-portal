@@ -1,0 +1,10 @@
+{
+	"assetCategoryERCs": [
+		"IT_CATEGORY",
+		"COLUMBIA_CATEGORY",
+		"LATIN_CATEGORY"
+	],
+	"ddmStructureKey": "Job Listing",
+	"folder": "job-listing-folder",
+	"name": "Network Engineer"
+}

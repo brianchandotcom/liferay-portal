@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="jPNlmzE8" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/sunglasses_on_shelves.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="headline" index-type="text" instance-id="2Med3MAb" name="headline" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>The Latest Eyewear Trends: Fashionable Frames and Stylish Shades</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="content" index-type="text" instance-id="NV8AwCbo" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Eyewear trends are constantly evolving, and this season is all about embracing bold, stylish frames and statement-making shades. From oversized retro-inspired glasses to sleek and modern aviators, there's a wide range of eyewear styles to choose from. Whether you're looking for a fashion-forward statement piece or a classic frame with a modern twist, the latest trends have something for everyone. With new color palettes and innovative designs, eyewear is becoming a key accessory in defining personal style.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -62,7 +62,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		Map<String, Schema> schemas = openAPI.getComponents(
 		).getSchemas();
 
-		if (schemas.isEmpty()) {
+		if (MapUtil.isEmpty(schemas)) {
 			return;
 		}
 

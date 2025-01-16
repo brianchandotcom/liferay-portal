@@ -1040,7 +1040,24 @@ public class CompanyLocalServiceDBPartitionTest
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
-			RepositoryDefiner.class, _getRepositoryDefiner(),
+			RepositoryDefiner.class,
+			(RepositoryDefiner)ProxyUtil.newProxyInstance(
+				RepositoryDefiner.class.getClassLoader(),
+				new Class<?>[] {RepositoryDefiner.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(method.getName(), "getClassName")) {
+						return CompanyLocalServiceDBPartitionTest.class.
+							getName();
+					}
+
+					if (Objects.equals(
+							method.getName(), "isExternalRepository")) {
+
+						return false;
+					}
+
+					return null;
+				}),
 			MapUtil.singletonDictionary(
 				"companyId", String.valueOf(company.getCompanyId())));
 
@@ -1116,23 +1133,6 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		return objectNames;
-	}
-
-	private RepositoryDefiner _getRepositoryDefiner() {
-		return (RepositoryDefiner)ProxyUtil.newProxyInstance(
-			RepositoryDefiner.class.getClassLoader(),
-			new Class<?>[] {RepositoryDefiner.class},
-			(proxy, method, args) -> {
-				if (Objects.equals(method.getName(), "getClassName")) {
-					return CompanyLocalServiceDBPartitionTest.class.getName();
-				}
-
-				if (Objects.equals(method.getName(), "isExternalRepository")) {
-					return false;
-				}
-
-				return null;
-			});
 	}
 
 	private int _getRulesCount(String partitionName) throws SQLException {

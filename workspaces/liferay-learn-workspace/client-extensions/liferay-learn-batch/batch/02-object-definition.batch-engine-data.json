@@ -830,6 +830,24 @@
 					"unique": false
 				},
 				{
+					"DBType": "Double",
+					"businessType": "Decimal",
+					"externalReferenceCode": "SCORE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Score"
+					},
+					"localized": false,
+					"name": "score",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "Double",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TEST_NAME",

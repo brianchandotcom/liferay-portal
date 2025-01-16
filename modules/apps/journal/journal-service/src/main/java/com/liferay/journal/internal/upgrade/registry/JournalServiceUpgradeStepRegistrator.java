@@ -313,9 +313,9 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"3.5.1", "4.0.0",
 			new JournalArticleDDMFieldsUpgradeProcess(
-				_classNameLocalService, _ddmFieldLocalService,
-				_ddmStructureLocalService, _fieldsToDDMFormValuesConverter,
-				_journalConverter, _portal));
+				_classNameLocalService, _companyLocalService,
+				_ddmFieldLocalService, _ddmStructureLocalService,
+				_fieldsToDDMFormValuesConverter, _journalConverter, _portal));
 
 		registry.register(
 			"4.0.0", "4.1.0",

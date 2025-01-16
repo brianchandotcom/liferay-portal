@@ -6,7 +6,8 @@
 package com.liferay.commerce.internal.upgrade.v5_9_0;
 
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -18,39 +19,41 @@ import java.sql.Statement;
 public class CommerceAccountUserRelUpgradeProcess extends UpgradeProcess {
 
 	public CommerceAccountUserRelUpgradeProcess(
-		AccountEntryUserRelLocalService accountEntryUserRelLocalService) {
+		AccountEntryUserRelLocalService accountEntryUserRelLocalService,
+		CompanyLocalService companyLocalService) {
 
 		_accountEntryUserRelLocalService = accountEntryUserRelLocalService;
+		_companyLocalService = companyLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long oldCompanyId = CompanyThreadLocal.getCompanyId();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				String selectCommerceAccountUserRel = StringBundler.concat(
+					"select * from CommerceAccountUserRel where companyId = ",
+					companyId, " order by commerceAccountId asc, ",
+					"commerceAccountUserId asc");
 
-		String selectCommerceAccountUserRel =
-			"select * from CommerceAccountUserRel order by commerceAccountId " +
-				"asc, commerceAccountUserId asc";
+				try (Statement selectStatement = connection.createStatement()) {
+					ResultSet resultSet = selectStatement.executeQuery(
+						selectCommerceAccountUserRel);
 
-		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet resultSet = selectStatement.executeQuery(
-				selectCommerceAccountUserRel);
+					while (resultSet.next()) {
+						long accountEntryId = resultSet.getLong(
+							"commerceAccountId");
+						long accountUserId = resultSet.getLong(
+							"commerceAccountUserId");
 
-			while (resultSet.next()) {
-				long accountEntryId = resultSet.getLong("commerceAccountId");
-				long accountUserId = resultSet.getLong("commerceAccountUserId");
-
-				CompanyThreadLocal.setCompanyId(resultSet.getLong("companyId"));
-
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					accountEntryId, accountUserId);
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(oldCompanyId);
-		}
+						_accountEntryUserRelLocalService.addAccountEntryUserRel(
+							accountEntryId, accountUserId);
+					}
+				}
+			});
 	}
 
 	private final AccountEntryUserRelLocalService
 		_accountEntryUserRelLocalService;
+	private final CompanyLocalService _companyLocalService;
 
 }

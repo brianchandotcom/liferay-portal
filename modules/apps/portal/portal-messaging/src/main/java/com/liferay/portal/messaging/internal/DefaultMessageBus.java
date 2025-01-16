@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
@@ -32,6 +32,7 @@ import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -75,25 +76,26 @@ public class DefaultMessageBus implements MessageBus {
 		message.setDestinationName(destinationName);
 
 		if (message.get("companyId") == null) {
-			Long[] companyIds = (Long[])message.get("companyIds");
+			Long[] companyIdsObj = (Long[])message.get("companyIds");
 
-			if (companyIds != null) {
-				long originalCompanyId = CompanyThreadLocal.getCompanyId();
+			if (companyIdsObj != null) {
+				long[] companyIds = new long[companyIdsObj.length];
 
-				try {
-					for (Long id : companyIds) {
-						CompanyThreadLocal.setCompanyId(id);
-
-						message.put("companyId", id);
-
-						destination.send(message.clone());
-					}
-				}
-				finally {
-					CompanyThreadLocal.setCompanyId(originalCompanyId);
+				for (int i = 0; i < companyIdsObj.length; i++) {
+					companyIds[i] = companyIdsObj[i];
 				}
 
-				return;
+				if (companyIds != null) {
+					_companyLocalService.forEachCompanyId(
+						companyId -> {
+							message.put("companyId", companyId);
+
+							destination.send(message.clone());
+						},
+						companyIds);
+
+					return;
+				}
 			}
 		}
 
@@ -188,6 +190,9 @@ public class DefaultMessageBus implements MessageBus {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private final Map<String, DestinationWorkerConfiguration>
 		_destinationWorkerConfigurations = new ConcurrentHashMap<>();

@@ -12,10 +12,11 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -47,12 +48,14 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 
 	public JournalArticleDDMFieldsUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
+		CompanyLocalService companyLocalService,
 		DDMFieldLocalService ddmFieldLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
 		JournalConverter journalConverter, Portal portal) {
 
 		_classNameLocalService = classNameLocalService;
+		_companyLocalService = companyLocalService;
 		_ddmFieldLocalService = ddmFieldLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
@@ -62,41 +65,42 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long originalCompanyId = CompanyThreadLocal.getCompanyId();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				long classNameId = _classNameLocalService.getClassNameId(
+					JournalArticle.class);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class);
+				try (PreparedStatement preparedStatement1 =
+						connection.prepareStatement(
+							StringBundler.concat(
+								"select id_, groupId, content, ",
+								"DDMStructureKey from JournalArticle where ",
+								"companyId = ", companyId, " and ",
+								"ctCollectionId = 0"));
+					ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select id_, groupId, companyId, content, DDMStructureKey " +
-					"from JournalArticle where ctCollectionId = 0");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					while (resultSet.next()) {
+						DDMStructure ddmStructure =
+							_ddmStructureLocalService.getStructure(
+								_portal.getSiteGroupId(
+									resultSet.getLong("groupId")),
+								classNameId,
+								resultSet.getString("DDMStructureKey"), true);
 
-			while (resultSet.next()) {
-				CompanyThreadLocal.setCompanyId(resultSet.getLong("companyId"));
+						DDMFormValues ddmFormValues =
+							_fieldsToDDMFormValuesConverter.convert(
+								ddmStructure,
+								_journalConverter.getDDMFields(
+									ddmStructure,
+									_convertFieldNames(
+										resultSet.getString("content"))));
 
-				DDMStructure ddmStructure =
-					_ddmStructureLocalService.getStructure(
-						_portal.getSiteGroupId(resultSet.getLong("groupId")),
-						classNameId, resultSet.getString("DDMStructureKey"),
-						true);
-
-				DDMFormValues ddmFormValues =
-					_fieldsToDDMFormValuesConverter.convert(
-						ddmStructure,
-						_journalConverter.getDDMFields(
-							ddmStructure,
-							_convertFieldNames(
-								resultSet.getString("content"))));
-
-				_ddmFieldLocalService.updateDDMFormValues(
-					ddmStructure.getStructureId(), resultSet.getLong("id_"),
-					ddmFormValues);
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(originalCompanyId);
-		}
+						_ddmFieldLocalService.updateDDMFormValues(
+							ddmStructure.getStructureId(),
+							resultSet.getLong("id_"), ddmFormValues);
+					}
+				}
+			});
 	}
 
 	@Override
@@ -150,6 +154,7 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final ClassNameLocalService _classNameLocalService;
+	private final CompanyLocalService _companyLocalService;
 	private final DDMFieldLocalService _ddmFieldLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final FieldsToDDMFormValuesConverter

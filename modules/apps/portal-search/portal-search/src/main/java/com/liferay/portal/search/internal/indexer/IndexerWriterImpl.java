@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -174,14 +174,14 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+		long[] longIds = new long[ids.length];
 
-		try {
-			for (String id : ids) {
-				long companyId = GetterUtil.getLong(id);
+		for (int i = 0; i < ids.length; i++) {
+			longIds[i] = GetterUtil.getLong(ids[i]);
+		}
 
-				CompanyThreadLocal.setCompanyId(companyId);
-
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
 				for (long ctCollectionId : _getCTCollectionIds(companyId)) {
 					try (SafeCloseable safeCloseable1 =
 							CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
@@ -219,11 +219,8 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 						}
 					}
 				}
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
-		}
+			},
+			longIds);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
@@ -34,7 +35,8 @@ const test = mergeTests(
 	loginTest(),
 	masterPagesPagesTest,
 	pageEditorPagesTest,
-	pageManagementSiteTest
+	pageManagementSiteTest,
+	productMenuPageTest
 );
 
 test(
@@ -448,5 +450,74 @@ test(
 				)
 				.first()
 		).toBeVisible();
+	}
+);
+
+test(
+	'Check that the scope dropdown in Product Menu have the deprecation badge and that the page is set as scope',
+	{
+		tag: ['@LPD-46225'],
+	},
+	async ({apiHelpers, page, pageEditorPage, productMenuPage, site}) => {
+
+		// Create a page with a Web Content Display Widget
+
+		const widgetId = getRandomString();
+
+		const widgetDefinition = getWidgetDefinition({
+			id: widgetId,
+			widgetName:
+				'com_liferay_journal_content_web_portlet_JournalContentPortlet',
+		});
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: layoutTitle,
+		});
+
+		// Access to the widget configuration
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+		// Create a new scope and publish the page
+
+		const configurationIFrame = page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+
+		await configurationIFrame.getByRole('link', {name: 'Scope'}).click();
+
+		await configurationIFrame
+			.getByLabel('Scope', {exact: true})
+			.selectOption(layoutTitle + ' (Create New)');
+
+		await configurationIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await page.getByLabel('close', {exact: true}).click();
+
+		await pageEditorPage.publishPage();
+
+		// Check the label in the dropdown at the Product Menu
+
+		await productMenuPage.openProductMenuButton.click();
+
+		await productMenuPage.contentAndDataButton.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: layoutTitle + ' deprecated',
+			}),
+			trigger: page.getByLabel('Choose Scope'),
+		});
+
+		// Check that the page is set as scope
+
+		await expect(page.getByText(layoutTitle + ' (Scope)')).toBeVisible();
 	}
 );

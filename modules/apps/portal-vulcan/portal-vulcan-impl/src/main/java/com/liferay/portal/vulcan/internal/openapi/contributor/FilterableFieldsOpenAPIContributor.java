@@ -239,29 +239,29 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 			EntityField entityField = entry.getValue();
 
-			if (entityField instanceof ComplexEntityField) {
-				ComplexEntityField complexEntityField =
-					(ComplexEntityField)entityField;
-
-				if (!visitedEntityFields.add(complexEntityField)) {
-					continue;
-				}
-
-				Map<String, EntityField> currentEntityFieldsMap =
-					complexEntityField.getEntityFieldsMap();
-
-				for (Map.Entry<String, EntityField> childEntry :
-						currentEntityFieldsMap.entrySet()) {
-
-					String newKey = entry.getKey() + "/" + childEntry.getKey();
-
-					entryQueue.add(
-						new AbstractMap.SimpleEntry<>(
-							newKey, childEntry.getValue()));
-				}
-			}
-			else {
+			if (!(entityField instanceof ComplexEntityField)) {
 				filterableFields.add(fieldName);
+
+				continue;
+			}
+
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityField;
+
+			if (!visitedEntityFields.add(complexEntityField)) {
+				continue;
+			}
+
+			Map<String, EntityField> currentEntityFieldsMap =
+				complexEntityField.getEntityFieldsMap();
+
+			for (Map.Entry<String, EntityField> childEntry :
+					currentEntityFieldsMap.entrySet()) {
+
+				entryQueue.add(
+					new AbstractMap.SimpleEntry<>(
+						entry.getKey() + "/" + childEntry.getKey(),
+						childEntry.getValue()));
 			}
 		}
 

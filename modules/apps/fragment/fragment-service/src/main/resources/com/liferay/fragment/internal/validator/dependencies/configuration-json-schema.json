@@ -3,6 +3,30 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"dependency": {
+			"additionalProperties": {
+				"additionalProperties": false,
+				"properties": {
+					"type": {
+						"enum": [
+							"equal",
+							"not-equal"
+						],
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"type",
+					"value"
+				],
+				"type": "object"
+			},
+			"title": "The Dependency Schema",
+			"type": "object"
+		},
 		"field": {
 			"additionalProperties": false,
 			"allOf": [
@@ -164,6 +188,11 @@
 					"type": "string"
 				},
 				"typeOptions": {
+					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						}
+					},
 					"title": "The TypeOptions Schema",
 					"type": "object"
 				}
@@ -193,6 +222,9 @@
 				"typeOptions": {
 					"additionalProperties": false,
 					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
 						"displayType": {
 							"enum": [
 								"checkbox",
@@ -212,6 +244,9 @@
 				"typeOptions": {
 					"additionalProperties": false,
 					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
 						"itemSubtype": {
 							"title": "The ItemSubtype Schema",
 							"type": "string"
@@ -309,6 +344,9 @@
 							"title": "The ClassName Schema",
 							"type": "string"
 						},
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
 						"enableSelectTemplate": {
 							"title": "The EnableSelectTemplate Schema",
 							"type": "boolean"
@@ -335,6 +373,11 @@
 			"properties": {
 				"typeOptions": {
 					"additionalProperties": false,
+					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						}
+					},
 					"title": "The Typeoptions Schema",
 					"type": "object"
 				}
@@ -345,6 +388,9 @@
 				"typeOptions": {
 					"additionalProperties": false,
 					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
 						"validValues": {
 							"items": {
 								"additionalProperties": false,
@@ -421,6 +467,9 @@
 				"typeOptions": {
 					"additionalProperties": false,
 					"properties": {
+						"dependency": {
+							"$ref": "#/definitions/dependency"
+						},
 						"placeholder": {
 							"title": "The Placeholder Schema",
 							"type": "string"

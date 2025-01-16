@@ -24,8 +24,12 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -49,6 +53,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.io.Serializable;
@@ -63,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.PortletPreferences;
 
@@ -216,25 +222,6 @@ public abstract class BasePortletExportImportTestCase
 
 		portletPreferences.store();
 
-		int delay = 1;
-
-		for (int i = 0; i < 1000; i++) {
-			PortletPreferences reloadedportletPreferences =
-				PortletPreferencesFactoryUtil.getStrictPortletSetup(
-					layout, getPortletId());
-
-			if (Objects.equals(
-					String.valueOf(lastPublishDate.getTime()),
-					reloadedportletPreferences.getValue(
-						"last-publish-date", null))) {
-
-				break;
-			}
-
-			Thread.sleep(delay);
-			delay = Math.min(100, delay * 2);
-		}
-
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());
@@ -242,7 +229,19 @@ public abstract class BasePortletExportImportTestCase
 		Date oldLastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletPreferences);
 
-		publishPortlet(getPortletId());
+		BackgroundTask publishPortletBackgroundTask =
+			_backgroundTaskLocalService.getBackgroundTask(
+				publishPortlet(getPortletId()));
+
+		ExportImportTestUtil.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					BackgroundTaskConstants.STATUS_SUCCESSFUL,
+					publishPortletBackgroundTask.getStatus());
+
+				return null;
+			});
 
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -647,7 +646,7 @@ public abstract class BasePortletExportImportTestCase
 		return false;
 	}
 
-	protected void publishPortlet(String portletId) throws Exception {
+	protected long publishPortlet(String portletId) throws Exception {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildFullPublishParameterMap();
@@ -671,7 +670,7 @@ public abstract class BasePortletExportImportTestCase
 						TYPE_PUBLISH_PORTLET_LOCAL,
 					settingsMap);
 
-		StagingUtil.publishPortlet(
+		return StagingUtil.publishPortlet(
 			TestPropsValues.getUserId(), exportImportConfiguration);
 	}
 
@@ -869,5 +868,8 @@ public abstract class BasePortletExportImportTestCase
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortletExportImportTestCase.class);
+
+	@Inject
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }

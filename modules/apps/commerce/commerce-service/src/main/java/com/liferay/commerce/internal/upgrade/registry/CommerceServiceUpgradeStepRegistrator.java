@@ -341,12 +341,13 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register(
 			"5.0.2", "5.0.3",
 			new CommerceAccountOrganizationRelUpgradeProcess(
-				_accountEntryOrganizationRelLocalService));
+				_accountEntryOrganizationRelLocalService,
+				_companyLocalService));
 
 		registry.register(
 			"5.0.3", "5.9.0",
 			new CommerceAccountUserRelUpgradeProcess(
-				_accountEntryUserRelLocalService));
+				_accountEntryUserRelLocalService, _companyLocalService));
 
 		registry.register(
 			"5.9.0", "5.9.1",

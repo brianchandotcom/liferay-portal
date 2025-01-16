@@ -1053,20 +1053,19 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsOmniadminWithCompanyAdmin() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		_company = CompanyTestUtil.addCompany();
 
-		CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
-		_user = UserTestUtil.addCompanyAdminUser(_company);
+			_user = UserTestUtil.addCompanyAdminUser(_company);
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(_user);
 
-		Assert.assertFalse(permissionChecker.isOmniadmin());
-
-		CompanyThreadLocal.setCompanyId(companyId);
+			Assert.assertFalse(permissionChecker.isOmniadmin());
+		}
 	}
 
 	@Test

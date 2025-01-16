@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -88,26 +88,26 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@Test
 	public void testCompanies() throws Exception {
-		Long companyId = CompanyThreadLocal.getCompanyId();
+		long[] companyIds = new long[_COMPANIES_COUNT];
 
 		for (int i = 0; i < _COMPANIES_COUNT; i++) {
-			long newCompanyId = createCompany();
-
-			CompanyThreadLocal.setCompanyId(newCompanyId);
-
-			Group group = updateTrashEntriesMaxAge(
-				createGroup(newCompanyId), _MAX_AGE);
-
-			createTrashEntries(group);
+			companyIds[i] = createCompany();
 		}
+
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				Group group = updateTrashEntriesMaxAge(
+					createGroup(companyId), _MAX_AGE);
+
+				createTrashEntries(group);
+			},
+			companyIds);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
 		Assert.assertEquals(
 			_COMPANIES_COUNT * _NOT_EXPIRED_TRASH_ENTRIES_COUNT,
 			TrashEntryLocalServiceUtil.getTrashEntriesCount());
-
-		CompanyThreadLocal.setCompanyId(companyId);
 	}
 
 	@Test

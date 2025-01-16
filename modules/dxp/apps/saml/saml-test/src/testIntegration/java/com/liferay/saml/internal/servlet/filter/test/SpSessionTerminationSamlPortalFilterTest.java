@@ -81,39 +81,37 @@ public class SpSessionTerminationSamlPortalFilterTest {
 			boolean enabled, long companyId)
 		throws Exception {
 
-		long originalCompanyId = CompanyThreadLocal.getCompanyId();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-		CompanyThreadLocal.setCompanyId(companyId);
+			SamlProviderConfigurationHelper samlProviderConfigurationHelper =
+				SamlProviderConfigurationHelperUtil.
+					getSamlProviderConfigurationHelper();
 
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper =
-			SamlProviderConfigurationHelperUtil.
-				getSamlProviderConfigurationHelper();
+			boolean originalEnabled =
+				samlProviderConfigurationHelper.isEnabled();
 
-		boolean originalEnabled = samlProviderConfigurationHelper.isEnabled();
+			samlProviderConfigurationHelper.updateProperties(
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"saml.enabled", String.valueOf(enabled)
+				).build());
 
-		samlProviderConfigurationHelper.updateProperties(
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"saml.enabled", String.valueOf(enabled)
-			).build());
-
-		return () -> {
-			try {
-				samlProviderConfigurationHelper.updateProperties(
-					UnicodePropertiesBuilder.create(
-						true
-					).put(
-						"saml.enabled", String.valueOf(originalEnabled)
-					).build());
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(originalCompanyId);
-			}
-		};
+			return () -> {
+				try {
+					samlProviderConfigurationHelper.updateProperties(
+						UnicodePropertiesBuilder.create(
+							true
+						).put(
+							"saml.enabled", String.valueOf(originalEnabled)
+						).build());
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			};
+		}
 	}
 
 	@Inject

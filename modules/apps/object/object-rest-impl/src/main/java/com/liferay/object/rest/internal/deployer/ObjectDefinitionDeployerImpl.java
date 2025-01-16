@@ -188,10 +188,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl(
-		ObjectDefinition objectDefinition) {
+		ObjectDefinition objectDefinition, String restContextPath) {
 
 		return new ObjectEntryResourceImpl(
 			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
+			_objectDefinitionsMap.get(restContextPath),
 			_objectDefinitionLocalService, _objectEntryLocalService,
 			_objectEntryManagerRegistry, _objectFieldLocalService,
 			_objectRelationshipService, _objectScopeProviderRegistry,
@@ -417,7 +418,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 										serviceRegistration) {
 
 									return _createObjectEntryResourceImpl(
-										objectDefinition);
+										objectDefinition, restContextPath);
 								}
 
 								@Override
@@ -505,7 +506,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							ServiceRegistration<ObjectEntryResource>
 								serviceRegistration) {
 
-							return _createObjectEntryResourceImpl(null);
+							return _createObjectEntryResourceImpl(
+								null, restContextPath);
 						}
 
 						@Override
@@ -591,7 +593,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							_defaultPermissionCheckerFactory,
 							_expressionConvert, _filterParserProvider,
 							_groupLocalService, objectDefinition,
-							() -> _createObjectEntryResourceImpl(null),
+							() -> _createObjectEntryResourceImpl(
+								null, restContextPath),
 							_resourceActionLocalService,
 							_resourcePermissionLocalService, _roleLocalService,
 							_sortParserProvider, _userLocalService),

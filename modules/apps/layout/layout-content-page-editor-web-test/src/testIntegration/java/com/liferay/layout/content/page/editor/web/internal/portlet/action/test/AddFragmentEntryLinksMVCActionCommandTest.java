@@ -154,11 +154,11 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
+		catch (Exception exception) {
 			JSONObject jsonObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "processException",
 				new Class<?>[] {ActionRequest.class, Exception.class},
-				mockLiferayPortletActionRequest, unsupportedOperationException);
+				mockLiferayPortletActionRequest, exception);
 
 			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
 

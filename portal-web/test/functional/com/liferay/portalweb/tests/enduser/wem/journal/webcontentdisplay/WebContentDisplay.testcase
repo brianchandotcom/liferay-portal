@@ -691,7 +691,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
+				layoutName = "Test Content Page Name",
 				type = "content");
 		}
 
@@ -704,7 +704,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("Add a Web Content Display to page") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
+				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addWidget(portletName = "Web Content Display");

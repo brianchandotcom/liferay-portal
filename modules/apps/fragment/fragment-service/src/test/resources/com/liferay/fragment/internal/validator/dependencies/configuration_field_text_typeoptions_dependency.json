@@ -1,0 +1,51 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "field1",
+					"type": "text",
+					"typeOptions": {
+						"dependency": {
+							"field2": {
+								"type": "equal",
+								"value": "option1"
+							},
+							"field3": {
+								"type": "equal",
+								"value": "value1"
+							},
+							"field4": {
+								"type": "not-equal",
+								"value": "false"
+							}
+						}
+					}
+				},
+				{
+					"defaultValue": "option1",
+					"name": "field2",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "option1"
+							},
+							{
+								"value": "option2"
+							}
+						]
+					}
+				},
+				{
+					"name": "field3",
+					"type": "text"
+				},
+				{
+					"name": "field4",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

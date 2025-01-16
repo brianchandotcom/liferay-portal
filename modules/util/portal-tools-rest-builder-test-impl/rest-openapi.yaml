@@ -18,6 +18,16 @@ components:
             allOf:
                 - $ref: "#/components/schemas/TestEntity"
             type: object
+        EntityModelResourceTestEntity:
+            description:
+                "A EntityModelResource test entity with no filterable fields."
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
         EnumTestEntity:
             properties:
                 testEnum:
@@ -44,16 +54,6 @@ components:
                     type: object
                     x-json-map: true
             title: JSONMapAttributeTestEntity
-            type: object
-        MinimalTestEntity:
-            description:
-                "A minimal test entity with no filterable fields."
-            properties:
-                id:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
             type: object
         NestedArrayItemsTestEntity:
             description:
@@ -176,27 +176,27 @@ info:
     version: "v1.0"
 openapi: "3.0.1"
 paths:
-    /minimal-test-entities:
+    /entity-model-resource-test-entities:
         get:
             description:
-                "Retrieve all MinimalTestEntity items."
-            operationId: getMinimalTestEntitiesPage
+                "Retrieve all EntityModelResourceTestEntity items."
+            operationId: getEntityModelResourceTestEntitiesPage
             responses:
                 200:
                     content:
                         "application/json":
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/MinimalTestEntity"
+                                    $ref: "#/components/schemas/EntityModelResourceTestEntity"
                                 type: array
                         "application/xml":
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/MinimalTestEntity"
+                                    $ref: "#/components/schemas/EntityModelResourceTestEntity"
                                 type: array
                     description:
-                        "A list of MinimalTestEntity items."
-            tags: ["MinimalTestEntity"]
+                        "OK"
+            tags: ["EntityModelResourceTestEntity"]
     /reserved-word:
         post:
             operationId: postReservedWord

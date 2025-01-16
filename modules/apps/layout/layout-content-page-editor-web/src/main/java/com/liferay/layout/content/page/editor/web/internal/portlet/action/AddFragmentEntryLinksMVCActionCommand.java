@@ -14,6 +14,7 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.exception.FormContainerParentItemRequiredException;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -87,7 +88,18 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (exception.getCause() instanceof NoninstanceablePortletException) {
+		if (exception instanceof FormContainerParentItemRequiredException) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
+				"form-components-can-only-be-placed-inside-a-mapped-form-" +
+					"container");
+		}
+		else if (exception.getCause() instanceof
+					NoninstanceablePortletException) {
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -117,9 +129,6 @@ public class AddFragmentEntryLinksMVCActionCommand
 			errorMessage =
 				"the-fragment-can-no-longer-be-added-because-it-has-been-" +
 					"deleted";
-		}
-		else if (exception instanceof UnsupportedOperationException) {
-			errorMessage = exception.getMessage();
 		}
 
 		return JSONUtil.put(
@@ -223,11 +232,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 				_existTypeInputFragmentEntryLink(
 					fragmentEntryLinks, themeDisplay.getLocale())) {
 
-				throw new UnsupportedOperationException(
-					_language.get(
-						themeDisplay.getLocale(),
-						"form-components-can-only-be-placed-inside-a-mapped-" +
-							"form-container"));
+				throw new FormContainerParentItemRequiredException();
 			}
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {

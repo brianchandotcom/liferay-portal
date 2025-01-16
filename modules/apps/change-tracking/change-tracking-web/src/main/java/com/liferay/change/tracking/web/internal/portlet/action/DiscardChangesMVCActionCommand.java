@@ -6,10 +6,13 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -42,8 +45,24 @@ public class DiscardChangesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
 
-		_ctCollectionService.discardCTEntry(
-			ctCollectionId, modelClassNameId, modelClassPK);
+		if ((modelClassNameId <= 0) || (modelClassPK <= 0)) {
+			long[] ctEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "ctEntryIds"), 0L);
+
+			for (long ctEntryId : ctEntryIds) {
+				CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+				if (ctEntry != null) {
+					_ctCollectionService.discardCTEntry(
+						ctCollectionId, ctEntry.getModelClassNameId(),
+						ctEntry.getModelClassPK());
+				}
+			}
+		}
+		else {
+			_ctCollectionService.discardCTEntry(
+				ctCollectionId, modelClassNameId, modelClassPK);
+		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -54,5 +73,8 @@ public class DiscardChangesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionService _ctCollectionService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 }

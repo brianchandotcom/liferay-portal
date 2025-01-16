@@ -251,6 +251,23 @@ public class ViewChangesDisplayContext {
 					"move-changes", null));
 		}
 
+		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			bulkActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_discard"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString(),
+					"trash", "view-discard", "delete",
+					_language.get(_httpServletRequest, "discard"),
+					"view-discard", null));
+		}
+
 		return bulkActionDropdownItems;
 	}
 

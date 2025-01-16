@@ -221,15 +221,15 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return new ArrayList<>();
 		}
 
-		Queue<Map.Entry<String, EntityField>> entryQueue = new LinkedList<>(
+		Queue<Map.Entry<String, EntityField>> queue = new LinkedList<>(
 			entityFieldsMap.entrySet());
 
 		List<String> filterableFields = new ArrayList<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 
-		while (!entryQueue.isEmpty()) {
-			Map.Entry<String, EntityField> entry = entryQueue.poll();
+		while (!queue.isEmpty()) {
+			Map.Entry<String, EntityField> entry = queue.poll();
 
 			String fieldName = entry.getKey();
 
@@ -258,7 +258,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			for (Map.Entry<String, EntityField> childEntry :
 					currentEntityFieldsMap.entrySet()) {
 
-				entryQueue.add(
+				queue.add(
 					new AbstractMap.SimpleEntry<>(
 						entry.getKey() + "/" + childEntry.getKey(),
 						childEntry.getValue()));

@@ -1,0 +1,65 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task jarManifest
+task jarPatched(type: Zip)
+task patch(type: PatchTask)
+
+copyPatchOriginalLibClasses {
+	doLast {
+		File file = file("classes/META-INF/MANIFEST.MF")
+
+		if (file.exists()) {
+			file.text = file.text.replace("org.jboss.weld.module.web.el;version=\"[3.1,4)\"", "org.jboss.weld.module.web.el")
+		}
+	}
+}
+
+dependencies {
+	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extension.el.jsp", version: "1.1.5"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true)
+	}
+}
+
+jarPatched {
+	archiveFileName = jar.archiveFileName
+	destinationDirectory = jar.destinationDirectory
+	duplicatesStrategy = "exclude"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(
+			configurations.compileOnly.find {
+				it.name.startsWith "org.apache.aries.cdi.extension.el.jsp-"
+			})
+	}
+
+	mustRunAfter compileJava
+	mustRunAfter generatePomFileForMavenPublication
+	mustRunAfter processResources
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "org.apache.aries.cdi.extension.el.jsp"
+}

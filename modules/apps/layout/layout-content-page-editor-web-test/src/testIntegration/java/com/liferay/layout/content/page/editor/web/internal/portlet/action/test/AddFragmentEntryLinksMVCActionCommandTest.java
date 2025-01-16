@@ -75,6 +75,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -106,6 +107,15 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		_layout = layout.fetchDraftLayout();
 
 		_user = UserTestUtil.addCompanyAdminUser(_company);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -131,25 +141,12 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			FragmentConstants.TYPE_INPUT, SetUtil.fromArray("text"),
 			"<div></div>", 1);
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(
-				fragmentComposition.getFragmentCompositionKey());
-
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
-
-		UserTestUtil.setUser(_user);
-
-		_layoutLockManager.getLock(mockLiferayPortletActionRequest);
-
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_processAddFragmentEntryLinks",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+			_getMockLiferayPortletActionRequest(
+				fragmentComposition.getFragmentCompositionKey()),
+			new MockLiferayPortletActionResponse());
 	}
 
 	@Test
@@ -170,28 +167,10 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), _layout.getPlid());
 
-		JSONObject jsonObject = null;
-
-		try {
-			ServiceContextThreadLocal.pushServiceContext(
-				ServiceContextTestUtil.getServiceContext(
-					_group, _user.getUserId()));
-
-			UserTestUtil.setUser(_user);
-
-			_layoutLockManager.getLock(mockLiferayPortletActionRequest);
-
-			jsonObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_processAddFragmentEntryLinks",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
-				mockLiferayPortletActionResponse);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddFragmentEntryLinks",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -222,8 +201,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+			ServiceContextThreadLocal.getServiceContext();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(

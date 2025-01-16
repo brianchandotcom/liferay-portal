@@ -14,7 +14,13 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 <div class="asset-summary">
 	<c:if test="<%= entry.isSmallImage() %>">
-		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= entry.getSmallImageURL(themeDisplay) %>);"></div>
+		<aui:style type="text/css">
+			.blogs-abstract-background-image {
+				background-image: url(<%= entry.getSmallImageURL(themeDisplay) %>);
+			}
+		</aui:style>
+
+		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover blogs-abstract-background-image cover-image mb-4"></div>
 	</c:if>
 
 	<%

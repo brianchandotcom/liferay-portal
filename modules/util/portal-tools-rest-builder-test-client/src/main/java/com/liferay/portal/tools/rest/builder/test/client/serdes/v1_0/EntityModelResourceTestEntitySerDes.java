@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MinimalTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MinimalTestEntitySerDes {
+public class EntityModelResourceTestEntitySerDes {
 
-	public static MinimalTestEntity toDTO(String json) {
-		MinimalTestEntityJSONParser minimalTestEntityJSONParser =
-			new MinimalTestEntityJSONParser();
+	public static EntityModelResourceTestEntity toDTO(String json) {
+		EntityModelResourceTestEntityJSONParser
+			entityModelResourceTestEntityJSONParser =
+				new EntityModelResourceTestEntityJSONParser();
 
-		return minimalTestEntityJSONParser.parseToDTO(json);
+		return entityModelResourceTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static MinimalTestEntity[] toDTOs(String json) {
-		MinimalTestEntityJSONParser minimalTestEntityJSONParser =
-			new MinimalTestEntityJSONParser();
+	public static EntityModelResourceTestEntity[] toDTOs(String json) {
+		EntityModelResourceTestEntityJSONParser
+			entityModelResourceTestEntityJSONParser =
+				new EntityModelResourceTestEntityJSONParser();
 
-		return minimalTestEntityJSONParser.parseToDTOs(json);
+		return entityModelResourceTestEntityJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(MinimalTestEntity minimalTestEntity) {
-		if (minimalTestEntity == null) {
+	public static String toJSON(
+		EntityModelResourceTestEntity entityModelResourceTestEntity) {
+
+		if (entityModelResourceTestEntity == null) {
 			return "null";
 		}
 
@@ -46,17 +50,17 @@ public class MinimalTestEntitySerDes {
 
 		sb.append("{");
 
-		if (minimalTestEntity.getId() != null) {
+		if (entityModelResourceTestEntity.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(minimalTestEntity.getId());
+			sb.append(entityModelResourceTestEntity.getId());
 		}
 
-		if (minimalTestEntity.getName() != null) {
+		if (entityModelResourceTestEntity.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -65,7 +69,7 @@ public class MinimalTestEntitySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(minimalTestEntity.getName()));
+			sb.append(_escape(entityModelResourceTestEntity.getName()));
 
 			sb.append("\"");
 		}
@@ -76,49 +80,53 @@ public class MinimalTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MinimalTestEntityJSONParser minimalTestEntityJSONParser =
-			new MinimalTestEntityJSONParser();
+		EntityModelResourceTestEntityJSONParser
+			entityModelResourceTestEntityJSONParser =
+				new EntityModelResourceTestEntityJSONParser();
 
-		return minimalTestEntityJSONParser.parseToMap(json);
+		return entityModelResourceTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		MinimalTestEntity minimalTestEntity) {
+		EntityModelResourceTestEntity entityModelResourceTestEntity) {
 
-		if (minimalTestEntity == null) {
+		if (entityModelResourceTestEntity == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (minimalTestEntity.getId() == null) {
+		if (entityModelResourceTestEntity.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(minimalTestEntity.getId()));
+			map.put(
+				"id", String.valueOf(entityModelResourceTestEntity.getId()));
 		}
 
-		if (minimalTestEntity.getName() == null) {
+		if (entityModelResourceTestEntity.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(minimalTestEntity.getName()));
+			map.put(
+				"name",
+				String.valueOf(entityModelResourceTestEntity.getName()));
 		}
 
 		return map;
 	}
 
-	public static class MinimalTestEntityJSONParser
-		extends BaseJSONParser<MinimalTestEntity> {
+	public static class EntityModelResourceTestEntityJSONParser
+		extends BaseJSONParser<EntityModelResourceTestEntity> {
 
 		@Override
-		protected MinimalTestEntity createDTO() {
-			return new MinimalTestEntity();
+		protected EntityModelResourceTestEntity createDTO() {
+			return new EntityModelResourceTestEntity();
 		}
 
 		@Override
-		protected MinimalTestEntity[] createDTOArray(int size) {
-			return new MinimalTestEntity[size];
+		protected EntityModelResourceTestEntity[] createDTOArray(int size) {
+			return new EntityModelResourceTestEntity[size];
 		}
 
 		@Override
@@ -135,18 +143,19 @@ public class MinimalTestEntitySerDes {
 
 		@Override
 		protected void setField(
-			MinimalTestEntity minimalTestEntity, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			EntityModelResourceTestEntity entityModelResourceTestEntity,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					minimalTestEntity.setId(
+					entityModelResourceTestEntity.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					minimalTestEntity.setName((String)jsonParserFieldValue);
+					entityModelResourceTestEntity.setName(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

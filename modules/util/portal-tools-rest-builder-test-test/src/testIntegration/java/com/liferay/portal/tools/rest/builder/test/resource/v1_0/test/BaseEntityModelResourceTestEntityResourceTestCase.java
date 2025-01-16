@@ -32,11 +32,11 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MinimalTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.MinimalTestEntityResource;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MinimalTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.EntityModelResourceTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseMinimalTestEntityResourceTestCase {
+public abstract class BaseEntityModelResourceTestEntityResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,15 +93,15 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_minimalTestEntityResource.setContextCompany(testCompany);
+		_entityModelResourceTestEntityResource.setContextCompany(testCompany);
 
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		MinimalTestEntityResource.Builder builder =
-			MinimalTestEntityResource.builder();
+		EntityModelResourceTestEntityResource.Builder builder =
+			EntityModelResourceTestEntityResource.builder();
 
-		minimalTestEntityResource = builder.authentication(
+		entityModelResourceTestEntityResource = builder.authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
@@ -121,24 +121,32 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		MinimalTestEntity minimalTestEntity1 = randomMinimalTestEntity();
+		EntityModelResourceTestEntity entityModelResourceTestEntity1 =
+			randomEntityModelResourceTestEntity();
 
-		String json = objectMapper.writeValueAsString(minimalTestEntity1);
+		String json = objectMapper.writeValueAsString(
+			entityModelResourceTestEntity1);
 
-		MinimalTestEntity minimalTestEntity2 = MinimalTestEntitySerDes.toDTO(
-			json);
+		EntityModelResourceTestEntity entityModelResourceTestEntity2 =
+			EntityModelResourceTestEntitySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(minimalTestEntity1, minimalTestEntity2));
+		Assert.assertTrue(
+			equals(
+				entityModelResourceTestEntity1,
+				entityModelResourceTestEntity2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		MinimalTestEntity minimalTestEntity = randomMinimalTestEntity();
+		EntityModelResourceTestEntity entityModelResourceTestEntity =
+			randomEntityModelResourceTestEntity();
 
-		String json1 = objectMapper.writeValueAsString(minimalTestEntity);
-		String json2 = MinimalTestEntitySerDes.toJSON(minimalTestEntity);
+		String json1 = objectMapper.writeValueAsString(
+			entityModelResourceTestEntity);
+		String json2 = EntityModelResourceTestEntitySerDes.toJSON(
+			entityModelResourceTestEntity);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -166,47 +174,57 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		MinimalTestEntity minimalTestEntity = randomMinimalTestEntity();
+		EntityModelResourceTestEntity entityModelResourceTestEntity =
+			randomEntityModelResourceTestEntity();
 
-		minimalTestEntity.setName(regex);
+		entityModelResourceTestEntity.setName(regex);
 
-		String json = MinimalTestEntitySerDes.toJSON(minimalTestEntity);
+		String json = EntityModelResourceTestEntitySerDes.toJSON(
+			entityModelResourceTestEntity);
 
 		Assert.assertFalse(json.contains(regex));
 
-		minimalTestEntity = MinimalTestEntitySerDes.toDTO(json);
+		entityModelResourceTestEntity =
+			EntityModelResourceTestEntitySerDes.toDTO(json);
 
-		Assert.assertEquals(regex, minimalTestEntity.getName());
+		Assert.assertEquals(regex, entityModelResourceTestEntity.getName());
 	}
 
 	@Test
-	public void testGetMinimalTestEntitiesPage() throws Exception {
-		Page<MinimalTestEntity> page =
-			minimalTestEntityResource.getMinimalTestEntitiesPage();
+	public void testGetEntityModelResourceTestEntitiesPage() throws Exception {
+		Page<EntityModelResourceTestEntity> page =
+			entityModelResourceTestEntityResource.
+				getEntityModelResourceTestEntitiesPage();
 
 		long totalCount = page.getTotalCount();
 
-		MinimalTestEntity minimalTestEntity1 =
-			testGetMinimalTestEntitiesPage_addMinimalTestEntity(
-				randomMinimalTestEntity());
+		EntityModelResourceTestEntity entityModelResourceTestEntity1 =
+			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
+				randomEntityModelResourceTestEntity());
 
-		MinimalTestEntity minimalTestEntity2 =
-			testGetMinimalTestEntitiesPage_addMinimalTestEntity(
-				randomMinimalTestEntity());
+		EntityModelResourceTestEntity entityModelResourceTestEntity2 =
+			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
+				randomEntityModelResourceTestEntity());
 
-		page = minimalTestEntityResource.getMinimalTestEntitiesPage();
+		page =
+			entityModelResourceTestEntityResource.
+				getEntityModelResourceTestEntitiesPage();
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(
-			minimalTestEntity1, (List<MinimalTestEntity>)page.getItems());
+			entityModelResourceTestEntity1,
+			(List<EntityModelResourceTestEntity>)page.getItems());
 		assertContains(
-			minimalTestEntity2, (List<MinimalTestEntity>)page.getItems());
-		assertValid(page, testGetMinimalTestEntitiesPage_getExpectedActions());
+			entityModelResourceTestEntity2,
+			(List<EntityModelResourceTestEntity>)page.getItems());
+		assertValid(
+			page,
+			testGetEntityModelResourceTestEntitiesPage_getExpectedActions());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetMinimalTestEntitiesPage_getExpectedActions()
+			testGetEntityModelResourceTestEntitiesPage_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -214,17 +232,17 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		return expectedActions;
 	}
 
-	protected MinimalTestEntity
-			testGetMinimalTestEntitiesPage_addMinimalTestEntity(
-				MinimalTestEntity minimalTestEntity)
+	protected EntityModelResourceTestEntity
+			testGetEntityModelResourceTestEntitiesPage_addEntityModelResourceTestEntity(
+				EntityModelResourceTestEntity entityModelResourceTestEntity)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected MinimalTestEntity
-			testGraphQLMinimalTestEntity_addMinimalTestEntity()
+	protected EntityModelResourceTestEntity
+			testGraphQLEntityModelResourceTestEntity_addEntityModelResourceTestEntity()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -232,13 +250,15 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	}
 
 	protected void assertContains(
-		MinimalTestEntity minimalTestEntity,
-		List<MinimalTestEntity> minimalTestEntities) {
+		EntityModelResourceTestEntity entityModelResourceTestEntity,
+		List<EntityModelResourceTestEntity> entityModelResourceTestEntities) {
 
 		boolean contains = false;
 
-		for (MinimalTestEntity item : minimalTestEntities) {
-			if (equals(minimalTestEntity, item)) {
+		for (EntityModelResourceTestEntity item :
+				entityModelResourceTestEntities) {
+
+			if (equals(entityModelResourceTestEntity, item)) {
 				contains = true;
 
 				break;
@@ -246,7 +266,8 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			minimalTestEntities + " does not contain " + minimalTestEntity,
+			entityModelResourceTestEntities + " does not contain " +
+				entityModelResourceTestEntity,
 			contains);
 	}
 
@@ -259,41 +280,56 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	}
 
 	protected void assertEquals(
-		MinimalTestEntity minimalTestEntity1,
-		MinimalTestEntity minimalTestEntity2) {
+		EntityModelResourceTestEntity entityModelResourceTestEntity1,
+		EntityModelResourceTestEntity entityModelResourceTestEntity2) {
 
 		Assert.assertTrue(
-			minimalTestEntity1 + " does not equal " + minimalTestEntity2,
-			equals(minimalTestEntity1, minimalTestEntity2));
+			entityModelResourceTestEntity1 + " does not equal " +
+				entityModelResourceTestEntity2,
+			equals(
+				entityModelResourceTestEntity1,
+				entityModelResourceTestEntity2));
 	}
 
 	protected void assertEquals(
-		List<MinimalTestEntity> minimalTestEntities1,
-		List<MinimalTestEntity> minimalTestEntities2) {
+		List<EntityModelResourceTestEntity> entityModelResourceTestEntities1,
+		List<EntityModelResourceTestEntity> entityModelResourceTestEntities2) {
 
 		Assert.assertEquals(
-			minimalTestEntities1.size(), minimalTestEntities2.size());
+			entityModelResourceTestEntities1.size(),
+			entityModelResourceTestEntities2.size());
 
-		for (int i = 0; i < minimalTestEntities1.size(); i++) {
-			MinimalTestEntity minimalTestEntity1 = minimalTestEntities1.get(i);
-			MinimalTestEntity minimalTestEntity2 = minimalTestEntities2.get(i);
+		for (int i = 0; i < entityModelResourceTestEntities1.size(); i++) {
+			EntityModelResourceTestEntity entityModelResourceTestEntity1 =
+				entityModelResourceTestEntities1.get(i);
+			EntityModelResourceTestEntity entityModelResourceTestEntity2 =
+				entityModelResourceTestEntities2.get(i);
 
-			assertEquals(minimalTestEntity1, minimalTestEntity2);
+			assertEquals(
+				entityModelResourceTestEntity1, entityModelResourceTestEntity2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<MinimalTestEntity> minimalTestEntities1,
-		List<MinimalTestEntity> minimalTestEntities2) {
+		List<EntityModelResourceTestEntity> entityModelResourceTestEntities1,
+		List<EntityModelResourceTestEntity> entityModelResourceTestEntities2) {
 
 		Assert.assertEquals(
-			minimalTestEntities1.size(), minimalTestEntities2.size());
+			entityModelResourceTestEntities1.size(),
+			entityModelResourceTestEntities2.size());
 
-		for (MinimalTestEntity minimalTestEntity1 : minimalTestEntities1) {
+		for (EntityModelResourceTestEntity entityModelResourceTestEntity1 :
+				entityModelResourceTestEntities1) {
+
 			boolean contains = false;
 
-			for (MinimalTestEntity minimalTestEntity2 : minimalTestEntities2) {
-				if (equals(minimalTestEntity1, minimalTestEntity2)) {
+			for (EntityModelResourceTestEntity entityModelResourceTestEntity2 :
+					entityModelResourceTestEntities2) {
+
+				if (equals(
+						entityModelResourceTestEntity1,
+						entityModelResourceTestEntity2)) {
+
 					contains = true;
 
 					break;
@@ -301,18 +337,19 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				minimalTestEntities2 + " does not contain " +
-					minimalTestEntity1,
+				entityModelResourceTestEntities2 + " does not contain " +
+					entityModelResourceTestEntity1,
 				contains);
 		}
 	}
 
-	protected void assertValid(MinimalTestEntity minimalTestEntity)
+	protected void assertValid(
+			EntityModelResourceTestEntity entityModelResourceTestEntity)
 		throws Exception {
 
 		boolean valid = true;
 
-		if (minimalTestEntity.getId() == null) {
+		if (entityModelResourceTestEntity.getId() == null) {
 			valid = false;
 		}
 
@@ -320,7 +357,7 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (minimalTestEntity.getName() == null) {
+				if (entityModelResourceTestEntity.getName() == null) {
 					valid = false;
 				}
 
@@ -335,20 +372,20 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MinimalTestEntity> page) {
+	protected void assertValid(Page<EntityModelResourceTestEntity> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<MinimalTestEntity> page,
+		Page<EntityModelResourceTestEntity> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<MinimalTestEntity> minimalTestEntities =
-			page.getItems();
+		java.util.Collection<EntityModelResourceTestEntity>
+			entityModelResourceTestEntities = page.getItems();
 
-		int size = minimalTestEntities.size();
+		int size = entityModelResourceTestEntities.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -389,7 +426,7 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						MinimalTestEntity.class)) {
+						EntityModelResourceTestEntity.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -438,10 +475,10 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	}
 
 	protected boolean equals(
-		MinimalTestEntity minimalTestEntity1,
-		MinimalTestEntity minimalTestEntity2) {
+		EntityModelResourceTestEntity entityModelResourceTestEntity1,
+		EntityModelResourceTestEntity entityModelResourceTestEntity2) {
 
-		if (minimalTestEntity1 == minimalTestEntity2) {
+		if (entityModelResourceTestEntity1 == entityModelResourceTestEntity2) {
 			return true;
 		}
 
@@ -450,8 +487,8 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						minimalTestEntity1.getId(),
-						minimalTestEntity2.getId())) {
+						entityModelResourceTestEntity1.getId(),
+						entityModelResourceTestEntity2.getId())) {
 
 					return false;
 				}
@@ -461,8 +498,8 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						minimalTestEntity1.getName(),
-						minimalTestEntity2.getName())) {
+						entityModelResourceTestEntity1.getName(),
+						entityModelResourceTestEntity2.getName())) {
 
 					return false;
 				}
@@ -526,13 +563,15 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_minimalTestEntityResource instanceof EntityModelResource)) {
+		if (!(_entityModelResourceTestEntityResource instanceof
+				EntityModelResource)) {
+
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_minimalTestEntityResource;
+			(EntityModelResource)_entityModelResourceTestEntityResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -566,7 +605,7 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		MinimalTestEntity minimalTestEntity) {
+		EntityModelResourceTestEntity entityModelResourceTestEntity) {
 
 		StringBundler sb = new StringBundler();
 
@@ -584,7 +623,7 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = minimalTestEntity.getName();
+			Object object = entityModelResourceTestEntity.getName();
 
 			String value = String.valueOf(object);
 
@@ -671,8 +710,11 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected MinimalTestEntity randomMinimalTestEntity() throws Exception {
-		return new MinimalTestEntity() {
+	protected EntityModelResourceTestEntity
+			randomEntityModelResourceTestEntity()
+		throws Exception {
+
+		return new EntityModelResourceTestEntity() {
 			{
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -680,22 +722,26 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 		};
 	}
 
-	protected MinimalTestEntity randomIrrelevantMinimalTestEntity()
+	protected EntityModelResourceTestEntity
+			randomIrrelevantEntityModelResourceTestEntity()
 		throws Exception {
 
-		MinimalTestEntity randomIrrelevantMinimalTestEntity =
-			randomMinimalTestEntity();
+		EntityModelResourceTestEntity
+			randomIrrelevantEntityModelResourceTestEntity =
+				randomEntityModelResourceTestEntity();
 
-		return randomIrrelevantMinimalTestEntity;
+		return randomIrrelevantEntityModelResourceTestEntity;
 	}
 
-	protected MinimalTestEntity randomPatchMinimalTestEntity()
+	protected EntityModelResourceTestEntity
+			randomPatchEntityModelResourceTestEntity()
 		throws Exception {
 
-		return randomMinimalTestEntity();
+		return randomEntityModelResourceTestEntity();
 	}
 
-	protected MinimalTestEntityResource minimalTestEntityResource;
+	protected EntityModelResourceTestEntityResource
+		entityModelResourceTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -894,12 +940,14 @@ public abstract class BaseMinimalTestEntityResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseMinimalTestEntityResourceTestCase.class);
+		LogFactoryUtil.getLog(
+			BaseEntityModelResourceTestEntityResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
 	private com.liferay.portal.tools.rest.builder.test.resource.v1_0.
-		MinimalTestEntityResource _minimalTestEntityResource;
+		EntityModelResourceTestEntityResource
+			_entityModelResourceTestEntityResource;
 
 }

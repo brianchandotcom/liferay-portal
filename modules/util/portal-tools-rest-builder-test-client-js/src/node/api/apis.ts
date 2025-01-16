@@ -1,5 +1,5 @@
-export * from './minimalTestEntityApi';
-import { MinimalTestEntityApi } from './minimalTestEntityApi';
+export * from './entityModelResourceTestEntityApi';
+import { EntityModelResourceTestEntityApi } from './entityModelResourceTestEntityApi';
 export * from './testEntityApi';
 import { TestEntityApi } from './testEntityApi';
 export * from './testEntityAddressApi';
@@ -15,4 +15,4 @@ export class HttpError extends Error {
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [MinimalTestEntityApi, TestEntityApi, TestEntityAddressApi];
+export const APIS = [EntityModelResourceTestEntityApi, TestEntityApi, TestEntityAddressApi];

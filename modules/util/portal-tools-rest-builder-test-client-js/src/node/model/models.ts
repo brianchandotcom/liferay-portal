@@ -3,14 +3,14 @@ import localVarRequest from 'request';
 export * from './childTestEntity1';
 export * from './childTestEntity2';
 export * from './childTestEntity3';
+export * from './entityModelResourceTestEntity';
 export * from './enumTestEntity';
 export * from './facet';
 export * from './facetValue';
 export * from './jSONMapAttributeTestEntity';
-export * from './minimalTestEntity';
 export * from './nestedArrayItemsTestEntity';
 export * from './nestedTestEntity';
-export * from './pageMinimalTestEntity';
+export * from './pageEntityModelResourceTestEntity';
 export * from './pageTestEntity';
 export * from './testEntity';
 export * from './testEntityAddress';
@@ -32,14 +32,14 @@ export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 import { ChildTestEntity1 } from './childTestEntity1';
 import { ChildTestEntity2 } from './childTestEntity2';
 import { ChildTestEntity3 } from './childTestEntity3';
+import { EntityModelResourceTestEntity } from './entityModelResourceTestEntity';
 import { EnumTestEntity } from './enumTestEntity';
 import { Facet } from './facet';
 import { FacetValue } from './facetValue';
 import { JSONMapAttributeTestEntity } from './jSONMapAttributeTestEntity';
-import { MinimalTestEntity } from './minimalTestEntity';
 import { NestedArrayItemsTestEntity } from './nestedArrayItemsTestEntity';
 import { NestedTestEntity } from './nestedTestEntity';
-import { PageMinimalTestEntity } from './pageMinimalTestEntity';
+import { PageEntityModelResourceTestEntity } from './pageEntityModelResourceTestEntity';
 import { PageTestEntity } from './pageTestEntity';
 import { TestEntity } from './testEntity';
 import { TestEntityAddress } from './testEntityAddress';
@@ -66,14 +66,14 @@ let typeMap: {[index: string]: any} = {
     "ChildTestEntity1": ChildTestEntity1,
     "ChildTestEntity2": ChildTestEntity2,
     "ChildTestEntity3": ChildTestEntity3,
+    "EntityModelResourceTestEntity": EntityModelResourceTestEntity,
     "EnumTestEntity": EnumTestEntity,
     "Facet": Facet,
     "FacetValue": FacetValue,
     "JSONMapAttributeTestEntity": JSONMapAttributeTestEntity,
-    "MinimalTestEntity": MinimalTestEntity,
     "NestedArrayItemsTestEntity": NestedArrayItemsTestEntity,
     "NestedTestEntity": NestedTestEntity,
-    "PageMinimalTestEntity": PageMinimalTestEntity,
+    "PageEntityModelResourceTestEntity": PageEntityModelResourceTestEntity,
     "PageTestEntity": PageTestEntity,
     "TestEntity": TestEntity,
     "TestEntityAddress": TestEntityAddress,

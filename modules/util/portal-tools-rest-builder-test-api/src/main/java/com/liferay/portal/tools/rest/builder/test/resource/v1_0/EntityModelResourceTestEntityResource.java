@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MinimalTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
@@ -47,12 +47,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface MinimalTestEntityResource {
+public interface EntityModelResourceTestEntityResource {
 
-	public Page<MinimalTestEntity> getMinimalTestEntitiesPage()
+	public Page<EntityModelResourceTestEntity>
+			getEntityModelResourceTestEntitiesPage()
 		throws Exception;
 
-	public Response postMinimalTestEntitiesPageExportBatch(
+	public Response postEntityModelResourceTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
@@ -121,7 +122,7 @@ public interface MinimalTestEntityResource {
 	@ProviderType
 	public interface Builder {
 
-		public MinimalTestEntityResource build();
+		public EntityModelResourceTestEntityResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

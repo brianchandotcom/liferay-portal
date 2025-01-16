@@ -36,19 +36,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "A minimal test entity with no filterable fields.",
-	value = "MinimalTestEntity"
+	description = "A EntityModelResource test entity with no filterable fields.",
+	value = "EntityModelResourceTestEntity"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "MinimalTestEntity")
-public class MinimalTestEntity implements Serializable {
+@XmlRootElement(name = "EntityModelResourceTestEntity")
+public class EntityModelResourceTestEntity implements Serializable {
 
-	public static MinimalTestEntity toDTO(String json) {
-		return ObjectMapperUtil.readValue(MinimalTestEntity.class, json);
+	public static EntityModelResourceTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			EntityModelResourceTestEntity.class, json);
 	}
 
-	public static MinimalTestEntity unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(MinimalTestEntity.class, json);
+	public static EntityModelResourceTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			EntityModelResourceTestEntity.class, json);
 	}
 
 	@Schema
@@ -135,13 +137,15 @@ public class MinimalTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof MinimalTestEntity)) {
+		if (!(object instanceof EntityModelResourceTestEntity)) {
 			return false;
 		}
 
-		MinimalTestEntity minimalTestEntity = (MinimalTestEntity)object;
+		EntityModelResourceTestEntity entityModelResourceTestEntity =
+			(EntityModelResourceTestEntity)object;
 
-		return Objects.equals(toString(), minimalTestEntity.toString());
+		return Objects.equals(
+			toString(), entityModelResourceTestEntity.toString());
 	}
 
 	@Override
@@ -191,7 +195,7 @@ public class MinimalTestEntity implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.MinimalTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

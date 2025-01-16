@@ -11,13 +11,13 @@
  */
 
 import { RequestFile } from './models';
+import { EntityModelResourceTestEntity } from './entityModelResourceTestEntity';
 import { Facet } from './facet';
-import { MinimalTestEntity } from './minimalTestEntity';
 
-export class PageMinimalTestEntity {
+export class PageEntityModelResourceTestEntity {
     'actions'?: { [key: string]: { [key: string]: string; }; };
     'facets'?: Array<Facet>;
-    'items'?: Array<MinimalTestEntity>;
+    'items'?: Array<EntityModelResourceTestEntity>;
     'lastPage'?: number;
     'page'?: number;
     'pageSize'?: number;
@@ -39,7 +39,7 @@ export class PageMinimalTestEntity {
         {
             "name": "items",
             "baseName": "items",
-            "type": "Array<MinimalTestEntity>"
+            "type": "Array<EntityModelResourceTestEntity>"
         },
         {
             "name": "lastPage",
@@ -63,7 +63,7 @@ export class PageMinimalTestEntity {
         }    ];
 
     static getAttributeTypeMap() {
-        return PageMinimalTestEntity.attributeTypeMap;
+        return PageEntityModelResourceTestEntity.attributeTypeMap;
     }
 }
 

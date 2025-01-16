@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MinimalTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MinimalTestEntity implements Cloneable, Serializable {
+public class EntityModelResourceTestEntity implements Cloneable, Serializable {
 
-	public static MinimalTestEntity toDTO(String json) {
-		return MinimalTestEntitySerDes.toDTO(json);
+	public static EntityModelResourceTestEntity toDTO(String json) {
+		return EntityModelResourceTestEntitySerDes.toDTO(json);
 	}
 
 	public Long getId() {
@@ -64,8 +64,10 @@ public class MinimalTestEntity implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public MinimalTestEntity clone() throws CloneNotSupportedException {
-		return (MinimalTestEntity)super.clone();
+	public EntityModelResourceTestEntity clone()
+		throws CloneNotSupportedException {
+
+		return (EntityModelResourceTestEntity)super.clone();
 	}
 
 	@Override
@@ -74,13 +76,15 @@ public class MinimalTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof MinimalTestEntity)) {
+		if (!(object instanceof EntityModelResourceTestEntity)) {
 			return false;
 		}
 
-		MinimalTestEntity minimalTestEntity = (MinimalTestEntity)object;
+		EntityModelResourceTestEntity entityModelResourceTestEntity =
+			(EntityModelResourceTestEntity)object;
 
-		return Objects.equals(toString(), minimalTestEntity.toString());
+		return Objects.equals(
+			toString(), entityModelResourceTestEntity.toString());
 	}
 
 	@Override
@@ -91,7 +95,7 @@ public class MinimalTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return MinimalTestEntitySerDes.toJSON(this);
+		return EntityModelResourceTestEntitySerDes.toJSON(this);
 	}
 
 }

@@ -25,7 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MinimalTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.EntityModelResourceTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -55,38 +55,40 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/v1.0/MinimalTestEntity",
-	service = MinimalTestEntityResource.Factory.class
+	property = "resource.locator.key=/test/v1.0/EntityModelResourceTestEntity",
+	service = EntityModelResourceTestEntityResource.Factory.class
 )
 @Generated("")
-public class MinimalTestEntityResourceFactoryImpl
-	implements MinimalTestEntityResource.Factory {
+public class EntityModelResourceTestEntityResourceFactoryImpl
+	implements EntityModelResourceTestEntityResource.Factory {
 
 	@Override
-	public MinimalTestEntityResource.Builder create() {
-		return new MinimalTestEntityResource.Builder() {
+	public EntityModelResourceTestEntityResource.Builder create() {
+		return new EntityModelResourceTestEntityResource.Builder() {
 
 			@Override
-			public MinimalTestEntityResource build() {
+			public EntityModelResourceTestEntityResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, MinimalTestEntityResource>
-					minimalTestEntityResourceProxyProviderFunction =
-						ResourceProxyProviderFunctionHolder.
-							_minimalTestEntityResourceProxyProviderFunction;
+				Function
+					<InvocationHandler, EntityModelResourceTestEntityResource>
+						entityModelResourceTestEntityResourceProxyProviderFunction =
+							ResourceProxyProviderFunctionHolder.
+								_entityModelResourceTestEntityResourceProxyProviderFunction;
 
-				return minimalTestEntityResourceProxyProviderFunction.apply(
-					(proxy, method, arguments) -> _invoke(
-						method, arguments, _checkPermissions,
-						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _uriInfo, _user));
+				return entityModelResourceTestEntityResourceProxyProviderFunction.
+					apply(
+						(proxy, method, arguments) -> _invoke(
+							method, arguments, _checkPermissions,
+							_httpServletRequest, _httpServletResponse,
+							_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder checkPermissions(
-				boolean checkPermissions) {
+			public EntityModelResourceTestEntityResource.Builder
+				checkPermissions(boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
 
@@ -94,8 +96,8 @@ public class MinimalTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder httpServletRequest(
-				HttpServletRequest httpServletRequest) {
+			public EntityModelResourceTestEntityResource.Builder
+				httpServletRequest(HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
 
@@ -103,8 +105,8 @@ public class MinimalTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder httpServletResponse(
-				HttpServletResponse httpServletResponse) {
+			public EntityModelResourceTestEntityResource.Builder
+				httpServletResponse(HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
 
@@ -112,8 +114,8 @@ public class MinimalTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder preferredLocale(
-				Locale preferredLocale) {
+			public EntityModelResourceTestEntityResource.Builder
+				preferredLocale(Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
 
@@ -121,14 +123,18 @@ public class MinimalTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder uriInfo(UriInfo uriInfo) {
+			public EntityModelResourceTestEntityResource.Builder uriInfo(
+				UriInfo uriInfo) {
+
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public MinimalTestEntityResource.Builder user(User user) {
+			public EntityModelResourceTestEntityResource.Builder user(
+				User user) {
+
 				_user = user;
 
 				return this;
@@ -144,16 +150,17 @@ public class MinimalTestEntityResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, MinimalTestEntityResource>
-		_getProxyProviderFunction() {
+	private static Function
+		<InvocationHandler, EntityModelResourceTestEntityResource>
+			_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			MinimalTestEntityResource.class.getClassLoader(),
-			MinimalTestEntityResource.class);
+			EntityModelResourceTestEntityResource.class.getClassLoader(),
+			EntityModelResourceTestEntityResource.class);
 
 		try {
-			Constructor<MinimalTestEntityResource> constructor =
-				(Constructor<MinimalTestEntityResource>)
+			Constructor<EntityModelResourceTestEntityResource> constructor =
+				(Constructor<EntityModelResourceTestEntityResource>)
 					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -195,41 +202,48 @@ public class MinimalTestEntityResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		MinimalTestEntityResource minimalTestEntityResource =
-			_componentServiceObjects.getService();
+		EntityModelResourceTestEntityResource
+			entityModelResourceTestEntityResource =
+				_componentServiceObjects.getService();
 
-		minimalTestEntityResource.setContextAcceptLanguage(
+		entityModelResourceTestEntityResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		minimalTestEntityResource.setContextCompany(company);
+		entityModelResourceTestEntityResource.setContextCompany(company);
 
-		minimalTestEntityResource.setContextHttpServletRequest(
+		entityModelResourceTestEntityResource.setContextHttpServletRequest(
 			httpServletRequest);
-		minimalTestEntityResource.setContextHttpServletResponse(
+		entityModelResourceTestEntityResource.setContextHttpServletResponse(
 			httpServletResponse);
-		minimalTestEntityResource.setContextUriInfo(uriInfo);
-		minimalTestEntityResource.setContextUser(user);
-		minimalTestEntityResource.setExpressionConvert(_expressionConvert);
-		minimalTestEntityResource.setFilterParserProvider(
+		entityModelResourceTestEntityResource.setContextUriInfo(uriInfo);
+		entityModelResourceTestEntityResource.setContextUser(user);
+		entityModelResourceTestEntityResource.setExpressionConvert(
+			_expressionConvert);
+		entityModelResourceTestEntityResource.setFilterParserProvider(
 			_filterParserProvider);
-		minimalTestEntityResource.setGroupLocalService(_groupLocalService);
-		minimalTestEntityResource.setResourceActionLocalService(
+		entityModelResourceTestEntityResource.setGroupLocalService(
+			_groupLocalService);
+		entityModelResourceTestEntityResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		minimalTestEntityResource.setResourcePermissionLocalService(
+		entityModelResourceTestEntityResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		minimalTestEntityResource.setRoleLocalService(_roleLocalService);
-		minimalTestEntityResource.setSortParserProvider(_sortParserProvider);
+		entityModelResourceTestEntityResource.setRoleLocalService(
+			_roleLocalService);
+		entityModelResourceTestEntityResource.setSortParserProvider(
+			_sortParserProvider);
 
 		try {
-			return method.invoke(minimalTestEntityResource, arguments);
+			return method.invoke(
+				entityModelResourceTestEntityResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(minimalTestEntityResource);
+			_componentServiceObjects.ungetService(
+				entityModelResourceTestEntityResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -241,7 +255,7 @@ public class MinimalTestEntityResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MinimalTestEntityResource>
+	private ComponentServiceObjects<EntityModelResourceTestEntityResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -276,8 +290,8 @@ public class MinimalTestEntityResourceFactoryImpl
 	private static class ResourceProxyProviderFunctionHolder {
 
 		private static final Function
-			<InvocationHandler, MinimalTestEntityResource>
-				_minimalTestEntityResourceProxyProviderFunction =
+			<InvocationHandler, EntityModelResourceTestEntityResource>
+				_entityModelResourceTestEntityResourceProxyProviderFunction =
 					_getProxyProviderFunction();
 
 	}

@@ -15,6 +15,6 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class MinimalTestEntityResourceTest
-	extends BaseMinimalTestEntityResourceTestCase {
+public class EntityModelResourceTestEntityResourceTest
+	extends BaseEntityModelResourceTestEntityResourceTestCase {
 }

@@ -5,11 +5,11 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.resource.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MinimalTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.EntityModelResourceTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.problem.Problem;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MinimalTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.EntityModelResourceTestEntitySerDes;
 
 import java.net.URL;
 
@@ -27,24 +27,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface MinimalTestEntityResource {
+public interface EntityModelResourceTestEntityResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<MinimalTestEntity> getMinimalTestEntitiesPage()
+	public Page<EntityModelResourceTestEntity>
+			getEntityModelResourceTestEntitiesPage()
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getMinimalTestEntitiesPageHttpResponse()
+	public HttpInvoker.HttpResponse
+			getEntityModelResourceTestEntitiesPageHttpResponse()
 		throws Exception;
 
-	public void postMinimalTestEntitiesPageExportBatch(
+	public void postEntityModelResourceTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMinimalTestEntitiesPageExportBatchHttpResponse(
+			postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
 				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
@@ -61,8 +63,8 @@ public interface MinimalTestEntityResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public MinimalTestEntityResource build() {
-			return new MinimalTestEntityResourceImpl(this);
+		public EntityModelResourceTestEntityResource build() {
+			return new EntityModelResourceTestEntityResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -154,14 +156,15 @@ public interface MinimalTestEntityResource {
 
 	}
 
-	public static class MinimalTestEntityResourceImpl
-		implements MinimalTestEntityResource {
+	public static class EntityModelResourceTestEntityResourceImpl
+		implements EntityModelResourceTestEntityResource {
 
-		public Page<MinimalTestEntity> getMinimalTestEntitiesPage()
+		public Page<EntityModelResourceTestEntity>
+				getEntityModelResourceTestEntitiesPage()
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getMinimalTestEntitiesPageHttpResponse();
+				getEntityModelResourceTestEntitiesPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -211,7 +214,8 @@ public interface MinimalTestEntityResource {
 			}
 
 			try {
-				return Page.of(content, MinimalTestEntitySerDes::toDTO);
+				return Page.of(
+					content, EntityModelResourceTestEntitySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -222,7 +226,8 @@ public interface MinimalTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getMinimalTestEntitiesPageHttpResponse()
+		public HttpInvoker.HttpResponse
+				getEntityModelResourceTestEntitiesPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -249,7 +254,7 @@ public interface MinimalTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/minimal-test-entities");
+						"/o/test/v1.0/entity-model-resource-test-entities");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -257,12 +262,12 @@ public interface MinimalTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postMinimalTestEntitiesPageExportBatch(
+		public void postEntityModelResourceTestEntitiesPageExportBatch(
 				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMinimalTestEntitiesPageExportBatchHttpResponse(
+				postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
 					callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -314,7 +319,7 @@ public interface MinimalTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMinimalTestEntitiesPageExportBatchHttpResponse(
+				postEntityModelResourceTestEntitiesPageExportBatchHttpResponse(
 					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
@@ -358,7 +363,7 @@ public interface MinimalTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/minimal-test-entities/export-batch");
+						"/o/test/v1.0/entity-model-resource-test-entities/export-batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -366,12 +371,12 @@ public interface MinimalTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		private MinimalTestEntityResourceImpl(Builder builder) {
+		private EntityModelResourceTestEntityResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			MinimalTestEntityResource.class.getName());
+			EntityModelResourceTestEntityResource.class.getName());
 
 		private Builder _builder;
 

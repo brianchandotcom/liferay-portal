@@ -9,7 +9,19 @@ export type Authorization = {
 	authorized: boolean;
 	data: null | {
 		serviceURL: string;
-		settings: any;
+		settings: {
+			account: {
+				id: string;
+				name: string;
+			};
+			channelId: string;
+			references: any;
+			siteId: string;
+			userAccount: {
+				id: string;
+				name: string;
+			};
+		};
 		url: string;
 	};
 	loading: boolean;

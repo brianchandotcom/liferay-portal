@@ -86,7 +86,7 @@ export class WebContentDisplayPage {
 			this.selectWebContentFrame.locator('[data-qa-id="row"]');
 	}
 
-	async addWebContentWithDisplay(webContentName: string) {
+	async addSpecificWebContentWithDisplay(webContentName: string) {
 		await this.webContentDisplay.waitFor({state: 'visible'});
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
@@ -108,10 +108,32 @@ export class WebContentDisplayPage {
 		await this.selectWebContentInConfigurationFrame.getByText(webContentName).hover();
 		await this.selectWebContentInConfigurationFrame.getByText(webContentName).click();
 
-		await this.configurationFrame.getByRole('button', {
-			name: 'Save',
-		}).click();
+		await this.saveConfigurationFrameOptions();
+	}
 
+	async addWebContentWithDisplay() {
+		await this.webContentDisplay.waitFor({state: 'visible'});
+		await this.webContentDisplayContent.hover();
+		await this.webContentDisplayOptionsContent.click();
+		
+		await this.saveConfigurationFrameOptions();
+
+		await this.configurationOption.click();
+		await this.page
+			.getByText('Success:The application was added to the page.')
+			.waitFor({state: 'hidden'});
+		await this.selectWebContentButton.waitFor({state: 'visible'});
+		await this.selectWebContentButton.click();
+		await this.webContentToSelect.waitFor({state: 'visible'});
+		await this.webContentToSelect.hover();
+		await this.webContentToSelect.click();
+		if (!this.saveButton.isVisible) {
+			await this.webContentToSelect.click();
+		}
+		if (!this.saveButton.isVisible) {
+			await this.webContentToSelect.click();
+		}
+		await this.saveButton.click();
 		await this.uiElementsPage.closeClickable.click();
 
 		await this.page
@@ -146,5 +168,18 @@ export class WebContentDisplayPage {
 			await this.webContentToSelect.getByLabel(webContentName).click();
 		}
 		await this.saveButton.click();
+	}
+
+	async saveConfigurationFrameOptions() {
+		await this.configurationFrame.getByRole('button', {
+			name: 'Save',
+		}).click();
+
+		await this.uiElementsPage.closeClickable.click();
+
+		await this.page
+			.locator('header')
+			.filter({hasText: 'Web Content Display'})
+			.waitFor({state: 'visible'});
 	}
 }

@@ -16,8 +16,7 @@ import java.io.Serializable;
 class AsyncBrokerThreadLocal {
 
 	public static AsyncBroker<Long, Serializable> getAsyncBroker() {
-		AsyncBroker<Long, Serializable> asyncBroker =
-			_asyncBrokerThreadLocal.get();
+		AsyncBroker<Long, Serializable> asyncBroker = _asyncBroker.get();
 
 		if (asyncBroker == null) {
 			throw new IllegalStateException("Async broker is not set");
@@ -27,16 +26,16 @@ class AsyncBrokerThreadLocal {
 	}
 
 	public static void removeAsyncBroker() {
-		_asyncBrokerThreadLocal.remove();
+		_asyncBroker.remove();
 	}
 
 	public static void setAsyncBroker(
 		AsyncBroker<Long, Serializable> asyncBroker) {
 
-		_asyncBrokerThreadLocal.set(asyncBroker);
+		_asyncBroker.set(asyncBroker);
 	}
 
 	private static final ThreadLocal<AsyncBroker<Long, Serializable>>
-		_asyncBrokerThreadLocal = new CentralizedThreadLocal<>(false);
+		_asyncBroker = new CentralizedThreadLocal<>(false);
 
 }

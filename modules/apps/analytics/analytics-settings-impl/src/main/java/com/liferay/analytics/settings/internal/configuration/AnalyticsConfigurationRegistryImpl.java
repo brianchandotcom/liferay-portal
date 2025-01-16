@@ -961,8 +961,6 @@ public class AnalyticsConfigurationRegistryImpl
 			long companyId = GetterUtil.getLong(
 				dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
-			CompanyThreadLocal.setCompanyId(companyId);
-
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						companyId)) {

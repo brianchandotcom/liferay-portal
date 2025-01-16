@@ -137,7 +137,12 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Page Templates");
 
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
+
+			AssertTextEquals(
+				key_status = "Draft",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+				value1 = "Draft");
 		}
 
 		task ("Preview the draft web content") {

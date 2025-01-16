@@ -1120,6 +1120,36 @@ public class KBArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchKBArticleByUrlTitle() throws Exception {
+		KBFolder kbFolder = _kbFolderLocalService.addKBFolder(
+			null, _user.getUserId(), _group.getGroupId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			_serviceContext);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			kbFolder.getKbFolderId(), "Article with versions",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, new Date(), null, null, null,
+			_serviceContext);
+
+		Assert.assertEquals(1, kbArticle.getVersion());
+
+		kbArticle.setVersion(2);
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(kbArticle);
+
+		Assert.assertEquals(2, kbArticle.getVersion());
+
+		kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			kbArticle.getGroupId(), kbFolder.getUrlTitle(),
+			kbArticle.getUrlTitle());
+
+		Assert.assertEquals(2, kbArticle.getVersion());
+	}
+
+	@Test
 	public void testFetchPersistedModelByResourcePrimKey() throws Exception {
 		KBArticle kBArticle = _addKbArticle();
 

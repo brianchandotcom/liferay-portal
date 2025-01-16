@@ -3426,6 +3426,20 @@
 		"to": "HtmlUtil_IW.getInstance"
 	},
 	{
+		"classNames": [
+			"ListTypeLocalService",
+			"ListTypeLocalServiceUtil",
+			"ListTypeService",
+			"ListTypeServiceUtil"
+		],
+		"from": "getListType(String paramName, String paramName)",
+		"issueKey": "LPD-41220",
+		"newImports": [
+			"com.liferay.portal.kernel.security.auth.CompanyThreadLocal"
+		],
+		"to": "getListType(CompanyThreadLocal.getCompanyId(), param#0#, param#1#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

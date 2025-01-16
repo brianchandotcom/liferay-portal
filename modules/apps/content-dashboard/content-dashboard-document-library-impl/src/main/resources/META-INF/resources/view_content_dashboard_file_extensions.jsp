@@ -12,7 +12,14 @@ ContentDashboardFileExtensionItemSelectorViewDisplayContext contentDashboardFile
 %>
 
 <section class="h-100">
-	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader" style="top: 50%; transform: translateY(-50%);"></span>
+	<aui:style type="text/css">
+		.view-content-dashboard-file-extensions {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	</aui:style>
+
+	<span aria-hidden="true" class="loading-animation mt-0 tree-filter-loader view-content-dashboard-file-extensions"></span>
 
 	<react:component
 		module="{SelectFileExtensionWrapper} from content-dashboard-document-library-impl"

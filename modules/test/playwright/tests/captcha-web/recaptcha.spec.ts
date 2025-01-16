@@ -1,23 +1,28 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, test} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
+import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
+import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
-import {CaptchaConfigPage} from '../../pages/captcha-web/CaptchaConfigPage';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {performLogout} from '../../utils/performLogin';
 import {reCaptchaConfig} from './config';
 
-test('LPD-32888 Check reCaptcha has a label for textarea', async ({page}) => {
-	await performLogin(page, 'test');
-	const captchaConfigPage = new CaptchaConfigPage(page);
+export const test = mergeTests(loginTest(), captchaConfigPageTest);
+
+test('LPD-32888 Check reCaptcha has a label for textarea', async ({
+	captchaConfigPage,
+	page,
+}) => {
 	await captchaConfigPage.goTo();
 	await captchaConfigPage.enableReCaptcha(
 		reCaptchaConfig.publicKey,
 		reCaptchaConfig.privateKey
 	);
+	await captchaConfigPage.saveConfiguration();
 
 	await performLogout(page);
 	await page.goto(liferayConfig.environment.baseUrl);

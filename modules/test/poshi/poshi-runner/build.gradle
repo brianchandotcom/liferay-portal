@@ -35,8 +35,6 @@ dependencies {
 	api group: "org.seleniumhq.selenium", name: "selenium-java", version: "4.7.2"
 	api group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 	api group: "xml-apis", name: "xml-apis", version: "1.4.01"
-
-	compileOnly project(":test:data-guard-connector")
 }
 
 task release(type: ReplaceRegexTask)

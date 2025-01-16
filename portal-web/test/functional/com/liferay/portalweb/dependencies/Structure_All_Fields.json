@@ -178,6 +178,11 @@
 							"label": "Option 1",
 							"reference": "Value1",
 							"value": "Option23365180"
+						},
+						{
+							"label": "Option 3",
+							"reference": "Value1",
+							"value": "Option93365180"
 						}
 					]
 				},

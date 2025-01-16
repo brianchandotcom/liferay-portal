@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import { Page } from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
-import {WebContentDisplayPage} from '../../../pages/journal-content-web/WebContentDisplayPage';
-import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {WidgetPagePage} from '../../../pages/layout-admin-web/WidgetPagePage';
-import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
+import { ApiHelpers } from '../../../helpers/ApiHelpers';
+import { LayoutSetPrototype } from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
+import { WebContentDisplayPage } from '../../../pages/journal-content-web/WebContentDisplayPage';
+import { PagesAdminPage } from '../../../pages/layout-admin-web/PagesAdminPage';
+import { WidgetPagePage } from '../../../pages/layout-admin-web/WidgetPagePage';
+import { ProductMenuPage } from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import { UIElementsPage } from '../../../pages/uielements/UIElementsPage';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 export default async function createSiteTemplateWithWebContentOnWidgetPage({
@@ -54,7 +54,7 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 		content: text,
 		ddmStructureId: basicWebContentStructureId,
 		groupId: siteId,
-		titleMap: {en_US: webContentName},
+		titleMap: { en_US: webContentName },
 	});
 
 	await productMenuPage.checkIfAdecuateProductMenu(templateName);
@@ -65,14 +65,14 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 		addButtonLabel: 'Add Site Template Page',
 		name: templateName,
 	});
-	
+
 	await page.goto(
 		`group/template-${layoutSetPrototype.layoutSetPrototypeId}/${templateName}`
 	);
 
 	await widgetPagePage.addButton.click();
 	await webContentDisplayPage.addWebContentWithWidget(webContentName);
-	await uiElementsPage.setupUpdatedAlert.waitFor({state: 'hidden'});
+	await uiElementsPage.setupUpdatedAlert.waitFor({ state: 'hidden' });
 	await uiElementsPage.closeClickable.click();
 	await uiElementsPage.closeClickable.waitFor({
 		state: 'hidden',

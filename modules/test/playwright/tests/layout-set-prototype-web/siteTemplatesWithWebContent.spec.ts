@@ -385,7 +385,6 @@ testWithPrivatePages(
 	async ({
 		apiHelpers,
 		applicationsMenuPage,
-		journalPage,
 		layoutSetPrototypePage,
 		page,
 		pageEditorPage,
@@ -411,7 +410,6 @@ testWithPrivatePages(
 		await createSiteTemplateWithWebContentOnHomePage({
 			apiHelpers,
 			applicationsMenuPage,
-			journalPage,
 			layoutSetPrototype: layoutSetPrototype1,
 			layoutSetPrototypePage,
 			page,
@@ -437,7 +435,6 @@ testWithPrivatePages(
 		await createSiteTemplateWithWebContentOnHomePage({
 			apiHelpers,
 			applicationsMenuPage,
-			journalPage,
 			layoutSetPrototype: layoutSetPrototype2,
 			layoutSetPrototypePage,
 			page,

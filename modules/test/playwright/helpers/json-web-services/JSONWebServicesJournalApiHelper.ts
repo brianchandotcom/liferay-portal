@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {liferayConfig} from '../../liferay.config';
+import { liferayConfig } from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {ApiHelpers} from '../ApiHelpers';
+import { ApiHelpers } from '../ApiHelpers';
 
 type TFolder = {
 	description?: string;
@@ -78,12 +78,12 @@ export class JSONWebServicesJournalApiHelper {
 			content: getRandomString(),
 			ddmStructureId: 0,
 			ddmTemplateKey: 'BASIC-WEB-CONTENT',
-			descriptionMap: {en_US: getRandomString()},
+			descriptionMap: { en_US: getRandomString() },
 			externalReferenceCode: getRandomString(),
 			folderId: 0,
 			groupId: 0,
 			serviceContext: {},
-			titleMap: {en_US: getRandomString()},
+			titleMap: { en_US: getRandomString() },
 			...(webContent || {}),
 		};
 
@@ -98,7 +98,7 @@ export class JSONWebServicesJournalApiHelper {
 			'descriptionMap',
 			JSON.stringify(webContent.descriptionMap)
 		);
-		
+
 		urlSearchParams.append('content', `<root>
 				<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
 				<dynamic-content><![CDATA[<p>${webContent.content}</p>]]></dynamic-content>

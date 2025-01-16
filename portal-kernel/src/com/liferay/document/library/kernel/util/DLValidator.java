@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -40,6 +41,9 @@ public interface DLValidator {
 
 	public void validateFileExtension(String fileName)
 		throws FileExtensionException;
+
+	public void validateFileMimeType(long companyId, String mimeType)
+		throws PortalException;
 
 	public void validateFileName(String fileName) throws FileNameException;
 

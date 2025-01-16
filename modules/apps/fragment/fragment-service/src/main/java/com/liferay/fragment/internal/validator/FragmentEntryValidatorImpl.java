@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -72,6 +75,9 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
 					"fields");
 
+				Map<String, JSONObject> fields = new HashMap<>(
+					fieldsJSONArray.length());
+
 				for (int fieldIndex = 0; fieldIndex < fieldsJSONArray.length();
 					 fieldIndex++) {
 
@@ -85,10 +91,20 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 							"Field names must be unique");
 					}
 
+					fieldNames.add(fieldName);
+
+					fields.put(fieldName, fieldJSONObject);
+				}
+
+				for (Map.Entry<String, JSONObject> entry : fields.entrySet()) {
+					JSONObject fieldJSONObject = entry.getValue();
+
 					JSONObject typeOptionsJSONObject =
 						fieldJSONObject.getJSONObject("typeOptions");
 
 					if (typeOptionsJSONObject != null) {
+						String fieldName = entry.getKey();
+
 						String defaultValue = fieldJSONObject.getString(
 							"defaultValue");
 
@@ -116,9 +132,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 										fieldName);
 							}
 						}
-					}
 
-					fieldNames.add(fieldName);
+						_checkDependencyField(
+							fieldName, fields, typeOptionsJSONObject);
+					}
 				}
 			}
 		}
@@ -191,6 +208,41 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 	}
 
+	private void _checkDependencyField(
+			String fieldName, Map<String, JSONObject> fields,
+			JSONObject typeOptionsJSONObject)
+		throws FragmentEntryConfigurationException {
+
+		JSONObject dependencyJSONObject = typeOptionsJSONObject.getJSONObject(
+			"dependency");
+
+		if (dependencyJSONObject == null) {
+			return;
+		}
+
+		for (String key : dependencyJSONObject.keySet()) {
+			if (key.equals(fieldName)) {
+				throw new FragmentEntryConfigurationException(
+					"Dependency field cannot reference itself");
+			}
+
+			if (!fields.containsKey(key)) {
+				throw new FragmentEntryConfigurationException(
+					"Dependency field cannot depend on field " + key +
+						" that does not exist");
+			}
+
+			JSONObject dependencyFieldJSONObject = fields.get(key);
+
+			if (!_allowedDependencyTypes.contains(
+					dependencyFieldJSONObject.getString("type"))) {
+
+				throw new FragmentEntryConfigurationException(
+					"Dependency field should be checkbox, text or select");
+			}
+		}
+	}
+
 	private boolean _checkValidationRules(
 		String value, JSONObject validationJSONObject) {
 
@@ -246,6 +298,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			System.lineSeparator(), message);
 	}
 
+	private static final Set<String> _allowedDependencyTypes =
+		SetUtil.fromArray("checkbox", "select", "text");
 	private static final JSONValidator _configurationJSONValidator =
 		new JSONValidator(
 			FragmentEntryValidatorImpl.class.getResource(

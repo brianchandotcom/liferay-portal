@@ -1411,7 +1411,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		if (${saveAsDraft} == "true") {
+		if (isSet(saveAsDraft) && (${saveAsDraft} == "true")) {
 			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(

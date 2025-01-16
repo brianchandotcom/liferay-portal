@@ -202,6 +202,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 						JSImportMapsRegistration jsImportMapsRegistration) {
 
 						jsImportMapsRegistration.unregister();
+
+						_bundleContext.ungetService(serviceReference);
 					}
 
 				};

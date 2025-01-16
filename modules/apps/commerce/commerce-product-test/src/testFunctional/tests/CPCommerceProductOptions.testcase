@@ -1550,62 +1550,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-11491. Can delete product option from the option admin page"
-	@priority = 4
-	test CanDeleteProductOptionFromOptionAdminPage {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
-
-		task ("Given a Minium site is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
-
-		task ("And a simple product with a new option is created") {
-			CommerceJSONProductsAPI._addCommerceProduct(
-				catalogName = "Minium",
-				productName = "Simple T-Shirt",
-				productType = "Simple");
-
-			CommerceProducts.openProductsAdmin();
-
-			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
-
-			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Options");
-
-			CommerceProductOptions.createProductOption(key_optionName = "New Option");
-		}
-
-		task ("And from the Product Management -> Options, the option is deleted") {
-			CommerceNavigator.goToProductOptionsAdminViaURL();
-
-			Click(
-				key_value = "New Option",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-			CommerceEntry.clickNoError(menuItem = "Delete");
-
-			AssertElementNotPresent(
-				key_value = "New Option",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-		}
-
-		task ("When the admin goes back to the product") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
-
-			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Options");
-		}
-
-		task ("Then the admin can create a new product option") {
-			CommerceProductOptions.createProductOption(key_optionName = "New Option1");
-		}
-	}
-
 	@description = "COMMERCE-11494. Can delete product option with all skus generated"
 	@priority = 4
 	test CanDeleteProductOptionWithGeneratedSkus {

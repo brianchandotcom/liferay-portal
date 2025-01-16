@@ -7,7 +7,6 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {format, getYear, isBefore, isEqual, parseISO} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 
 import {IDateFilter, IField, IFilter} from '../../../utils/types';
@@ -26,6 +25,15 @@ interface IBodyProps {
 	onCancel: Function;
 	onSave: Function;
 }
+
+const intl = new Intl.DateTimeFormat(
+	Liferay.ThemeDisplay.getBCP47LanguageId(),
+	{
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	}
+);
 
 function Body({
 	fieldNames: usedFieldNames,
@@ -53,12 +61,12 @@ function Body({
 	);
 	const [from, setFrom] = useState<string>(
 		filter && (filter as IDateFilter)?.from
-			? format(parseISO((filter as IDateFilter)?.from), 'yyyy-MM-dd')
+			? intl.format(new Date((filter as IDateFilter)?.from))
 			: ''
 	);
 	const [to, setTo] = useState<string>(
 		filter && (filter as IDateFilter)?.to
-			? format(parseISO((filter as IDateFilter)?.to), 'yyyy-MM-dd')
+			? intl.format(new Date((filter as IDateFilter)?.to))
 			: ''
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
@@ -74,7 +82,8 @@ function Body({
 		const dateFrom = new Date(from);
 
 		if (to && from) {
-			isValid = isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
+			isValid =
+				dateFrom < dateTo || dateFrom.getTime() === dateTo.getTime();
 		}
 
 		setIsValidDateRange(isValid);
@@ -125,7 +134,7 @@ function Body({
 
 		if (to && from) {
 			const isValidRange =
-				isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
+				dateFrom < dateTo || dateFrom.getTime() === dateTo.getTime();
 
 			setIsValidDateRange(isValidRange);
 
@@ -208,8 +217,8 @@ function Body({
 								placeholder="YYYY-MM-DD"
 								value={from}
 								years={{
-									end: getYear(new Date()) + 25,
-									start: getYear(new Date()) - 50,
+									end: new Date().getFullYear() + 25,
+									start: new Date().getFullYear() - 50,
 								}}
 							/>
 
@@ -240,8 +249,8 @@ function Body({
 								placeholder="YYYY-MM-DD"
 								value={to}
 								years={{
-									end: getYear(new Date()) + 25,
-									start: getYear(new Date()) - 50,
+									end: new Date().getFullYear() + 25,
+									start: new Date().getFullYear() - 50,
 								}}
 							/>
 						</div>

@@ -9243,15 +9243,16 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
-		DLFileEntry existingFile = _addDLFileEntry(
+		DLFileEntry existingDLFileEntry = _addDLFileEntry(
 			StringPool.BLANK, existingFolder.getFolderId());
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry3 = _toFileEntry(
-			content -> null, StringPool.BLANK, existingFile.getFileName(), null,
+			content -> null, StringPool.BLANK,
+			existingDLFileEntry.getFileName(), null,
 			TestPropsValues.getGroupId());
 
 		fileEntry3.setExternalReferenceCode(
-			existingFile.getExternalReferenceCode());
+			existingDLFileEntry.getExternalReferenceCode());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -14615,17 +14616,18 @@ public class ObjectEntryResourceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
-		DLFileEntry existingFile = _addDLFileEntry(
+		DLFileEntry existingDLFileEntry = _addDLFileEntry(
 			fileContent, existingFolder.getFolderId());
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, fileContent, existingFile.getFileName(), null,
-			TestPropsValues.getGroupId());
+			Base64::encode, fileContent, existingDLFileEntry.getFileName(),
+			null, TestPropsValues.getGroupId());
 
 		testFileEntry.setExternalReferenceCode(
-			existingFile.getExternalReferenceCode());
+			existingDLFileEntry.getExternalReferenceCode());
 
-		String externalReferenceCode1 = existingFile.getExternalReferenceCode();
+		String externalReferenceCode1 =
+			existingDLFileEntry.getExternalReferenceCode();
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -14644,17 +14646,18 @@ public class ObjectEntryResourceTest {
 
 		fileContent = RandomTestUtil.randomString();
 
-		existingFile = _addDLFileEntry(
+		existingDLFileEntry = _addDLFileEntry(
 			fileContent, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		testFileEntry = _toFileEntry(
-			Base64::encode, fileContent, existingFile.getFileName(), null,
-			TestPropsValues.getGroupId());
+			Base64::encode, fileContent, existingDLFileEntry.getFileName(),
+			null, TestPropsValues.getGroupId());
 
 		testFileEntry.setExternalReferenceCode(
-			existingFile.getExternalReferenceCode());
+			existingDLFileEntry.getExternalReferenceCode());
 
-		String externalReferenceCode2 = existingFile.getExternalReferenceCode();
+		String externalReferenceCode2 =
+			existingDLFileEntry.getExternalReferenceCode();
 
 		_testPostCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(

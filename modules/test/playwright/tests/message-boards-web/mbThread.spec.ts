@@ -44,3 +44,27 @@ test(
 		await expect(messageBoardsEditThreadPage.bodyTextBox).toBeVisible();
 	}
 );
+
+test(
+	'BBcode not parsed as HTML',
+	{
+		tag: '@LPD-45630',
+	},
+	async ({messageBoardsEditThreadPage, page, site}) => {
+		await messageBoardsEditThreadPage.publishNewBasicThread(
+			'MB subject',
+			`
+- [b]BBcode list item strong / bold[/b]
+
+- Another BBCode list item
+(Lorem ipsum dolor sit amet consectetur adipisicing elit)
+
+- Lorem ipsum dolor sit amet consectetur adipisicing   40  elit
+   (consectetur adipisicing elit) ab 01/2022
+`,
+			site.friendlyUrlPath
+		);
+
+		expect(page.getByText('&nbsp;')).toBeHidden();
+	}
+);

@@ -96,7 +96,7 @@ public class ATag extends BaseATag implements BodyTag {
 		}
 
 		jspWriter.write(
-			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
 				_charArrayWriter.toString(), getRequest(), false));
 
 		return EVAL_PAGE;

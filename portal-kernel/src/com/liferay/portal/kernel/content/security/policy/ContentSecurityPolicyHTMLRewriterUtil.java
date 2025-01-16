@@ -22,7 +22,7 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 		return _snapshot.get();
 	}
 
-	public static String rewriteInlineEventHandlers(
+	public static String rewriteInlineAttributes(
 		String html, HttpServletRequest httpServletRequest, boolean recursive) {
 
 		ContentSecurityPolicyHTMLRewriter contentSecurityPolicyHTMLRewriter =
@@ -34,7 +34,7 @@ public class ContentSecurityPolicyHTMLRewriterUtil {
 			return html;
 		}
 
-		return contentSecurityPolicyHTMLRewriter.rewriteInlineEventHandlers(
+		return contentSecurityPolicyHTMLRewriter.rewriteInlineAttributes(
 			html, httpServletRequest, recursive);
 	}
 

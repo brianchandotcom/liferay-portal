@@ -29,7 +29,7 @@ public class CSPTag extends BaseBodyTagSupport implements BodyTag {
 
 			jspWriter.write(
 				ContentSecurityPolicyHTMLRewriterUtil.
-					rewriteInlineEventHandlers(
+					rewriteInlineAttributes(
 						bodyContent.getString(), getRequest(), _recursive));
 
 			return super.doEndTag();

@@ -157,7 +157,7 @@ public class AlertTag extends BaseContainerTag {
 
 			jspWriter.write(
 				ContentSecurityPolicyHTMLRewriterUtil.
-					rewriteInlineEventHandlers(
+					rewriteInlineAttributes(
 						sb.toString(), getRequest(), false));
 		}
 

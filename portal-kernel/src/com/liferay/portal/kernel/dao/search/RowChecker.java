@@ -194,7 +194,7 @@ public class RowChecker {
 
 		return StringBundler.concat(
 			"<label>",
-			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
 				StringBundler.concat(
 					"<input name=\"", name, "\" title=\"",
 					LanguageUtil.get(
@@ -321,7 +321,7 @@ public class RowChecker {
 
 		sb.append(">");
 
-		return ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+		return ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
 			sb.toString(), httpServletRequest, false);
 	}
 

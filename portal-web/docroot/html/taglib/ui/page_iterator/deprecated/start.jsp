@@ -147,7 +147,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		}
 		%>
 
-		<%= ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(content, request, false) %>
+		<%= ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(content, request, false) %>
 	</div>
 </c:if>
 

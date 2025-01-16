@@ -35,7 +35,7 @@ public class ButtonSearchEntry extends TextSearchEntry {
 		throws Exception {
 
 		writer.write(
-			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+			ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
 				StringBundler.concat(
 					"<input type=\"button\" value=\"", getName(),
 					"\" onClick=\"", getHref(), "\">"),

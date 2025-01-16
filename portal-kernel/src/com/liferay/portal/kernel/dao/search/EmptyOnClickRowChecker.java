@@ -93,7 +93,7 @@ public class EmptyOnClickRowChecker extends RowChecker {
 
 		sb.append(">");
 
-		return ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineEventHandlers(
+		return ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
 			sb.toString(), httpServletRequest, false);
 	}
 

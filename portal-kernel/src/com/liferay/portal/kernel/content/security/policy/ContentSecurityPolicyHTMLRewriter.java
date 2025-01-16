@@ -14,7 +14,8 @@ public interface ContentSecurityPolicyHTMLRewriter {
 
 	/**
 	 * Transform a fragment of HTML extracting all inline event handlers (e.g.:
-	 * onclick, onfocus, etc.) to a &lt;script> node so that restrictive
+	 * onclick, onfocus, etc.) to a &lt;script> node and inline styles (e.g.:
+	 * style="color: red;...") to a &lt;style> node so that restrictive
 	 * content security policies like <code>script-src-attr 'none';</code> do
 	 * not prevent their execution.
 	 * @param html the HTML to transform
@@ -23,7 +24,7 @@ public interface ContentSecurityPolicyHTMLRewriter {
 	 * @return the transformed HTML
 	 * @review
 	 */
-	public String rewriteInlineEventHandlers(
+	public String rewriteInlineAttributes(
 		String html, HttpServletRequest httpServletRequest, boolean recursive);
 
 }

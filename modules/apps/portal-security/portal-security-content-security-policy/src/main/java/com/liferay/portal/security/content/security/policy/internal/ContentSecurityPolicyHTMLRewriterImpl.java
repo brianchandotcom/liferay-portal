@@ -33,7 +33,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 	implements ContentSecurityPolicyHTMLRewriter {
 
 	@Override
-	public String rewriteInlineEventHandlers(
+	public String rewriteInlineAttributes(
 		String html, HttpServletRequest httpServletRequest, boolean recursive) {
 
 		String nonce = _contentSecurityPolicyNonceProvider.getNonce(

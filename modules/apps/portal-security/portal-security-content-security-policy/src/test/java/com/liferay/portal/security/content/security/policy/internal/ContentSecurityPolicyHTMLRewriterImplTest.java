@@ -167,7 +167,7 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 			"_contentSecurityPolicyNonceProvider",
 			contentSecurityPolicyNonceProvider);
 
-		return contentSecurityPolicyHTMLRewriterImpl.rewriteInlineEventHandlers(
+		return contentSecurityPolicyHTMLRewriterImpl.rewriteInlineAttributes(
 			html, null, recursive);
 	}
 

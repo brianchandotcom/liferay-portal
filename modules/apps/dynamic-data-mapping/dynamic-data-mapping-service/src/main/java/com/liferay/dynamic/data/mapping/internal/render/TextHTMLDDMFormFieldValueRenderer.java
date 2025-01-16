@@ -36,7 +36,7 @@ public class TextHTMLDDMFormFieldValueRenderer
 				Value value = ddmFormFieldValue.getValue();
 
 				return ContentSecurityPolicyHTMLRewriterUtil.
-					rewriteInlineEventHandlers(
+					rewriteInlineAttributes(
 						StringUtil.replace(
 							_HTML,
 							new String[] {

@@ -59,6 +59,7 @@ export class CommerceLayoutsPage {
 	readonly orderItemCardButton: Locator;
 	readonly page: Page;
 	readonly pageEditorCollectionItem: Locator;
+	readonly pageEditorElement: (selector: string) => Locator;
 	readonly pageEditorText: (text: RegExp | string) => Locator;
 	readonly pagesMenuItem: Locator;
 	readonly pageTemplatesMenuItem: Locator;
@@ -221,8 +222,10 @@ export class CommerceLayoutsPage {
 			.getByRole('button', {name: 'Select Order Items'});
 		this.page = page;
 		this.pageEditorCollectionItem = page
-			.locator('.page-editor__collection-item__border')
+			.locator('.page-editor__collection-item')
 			.first();
+		this.pageEditorElement = (selector: string) =>
+			page.locator('#page-editor').locator(selector);
 		this.pageEditorText = (text: RegExp | string) =>
 			page.locator('#page-editor').getByText(text);
 		this.pagesMenuItem = page

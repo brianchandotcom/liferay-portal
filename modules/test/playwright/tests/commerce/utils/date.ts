@@ -70,16 +70,22 @@ export function getDateCustomFormat(
 	return date?.toLocaleDateString(locale, format);
 }
 
-export function getUTCHourAndDateFormat(date: string, locale: string) {
-	return new Date(date).toLocaleDateString(locale, {
-		day: 'numeric',
-		hour: 'numeric',
-		hour12: true,
-		minute: '2-digit',
-		month: 'numeric',
-		timeZone: 'UTC',
-		year: '2-digit',
-	});
+export function checkSameDate(dateFromApi: string, date2: string) {
+	const firstDate = new Date(dateFromApi);
+	const secondDate = new Date(date2);
+
+	if (
+		firstDate.getUTCDate() === secondDate.getDate() &&
+		firstDate.getUTCMonth() === secondDate.getMonth() &&
+		firstDate.getUTCFullYear() === secondDate.getFullYear() &&
+		firstDate.getUTCHours() === secondDate.getHours() &&
+		firstDate.getUTCMinutes() === secondDate.getMinutes()
+	) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 export function getDateFormatted(value: Date, locale: string) {

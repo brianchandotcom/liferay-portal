@@ -8,17 +8,24 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {getUTCHourAndDateFormat} from '../utils/date';
+import {waitForAlert} from '../../../utils/waitForAlert';
+import {checkSameDate} from '../utils/date';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-20379': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
-	loginTest()
+	loginTest(),
+	pageEditorPagesTest
 );
 
 test('LPD-30855 Can map order item detailed information', async ({
@@ -26,162 +33,154 @@ test('LPD-30855 Can map order item detailed information', async ({
 	applicationsMenuPage,
 	commerceAdminChannelsPage,
 	commerceLayoutsPage,
-	instanceSettingsPage,
 	page,
+	pageEditorPage,
 }) => {
-	try {
-		await instanceSettingsPage.goToInstanceSetting('Feature Flags', 'Beta');
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
 
-		if (
-			!(await page
-				.getByLabel('Commerce Classic Site Initializer')
-				.isChecked())
-		) {
-			await page.getByLabel('Commerce Classic Site Initializer').click();
-		}
+	apiHelpers.data.push({id: site.id, type: 'site'});
 
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
+		phoneNumber: '12345',
+		regionISOCode: 'LA',
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product1'},
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
 		});
 
-		apiHelpers.data.push({id: site.id, type: 'site'});
+	const sku = productSkus[0];
 
-		const channel =
-			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: getRandomString(),
-				siteGroupId: site.id,
-			});
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
 
-		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-			channel.name,
-			'B2B'
-		);
+	await applicationsMenuPage.goToSite(site.name);
 
-		const account = await apiHelpers.headlessAdminUser.postAccount({
-			name: getRandomString(),
-			type: 'person',
-		});
+	await commerceLayoutsPage.goToDisplayPageTemplates();
+	await commerceLayoutsPage.createDisplayPageTemplate(
+		'Test Commerce Order Display Page Template',
+		'Order',
+		site.name
+	);
 
-		apiHelpers.data.push({id: account.id, type: 'account'});
+	await pageEditorPage.addFragment('Content Display', 'Collection Display');
 
-		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-			account.id,
-			['test@liferay.com']
-		);
+	await pageEditorPage.selectFragment(
+		await pageEditorPage.getFragmentId('Collection Display')
+	);
 
-		await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
-			phoneNumber: '12345',
-			regionISOCode: 'LA',
-		});
+	await page.getByText('No Collection Selected Yet').click();
 
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+	await commerceLayoutsPage.selectCollectionButton.click();
+	await commerceLayoutsPage.selectRelatedItemsCollectionProviders.click();
+	await commerceLayoutsPage.orderItemCardButton.click();
 
-		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				name: {en_US: 'Product1'},
-			});
+	await pageEditorPage.waitForChangesSaved();
 
-		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-			.getProduct(product.productId)
-			.then((product) => {
-				return product.skus;
-			});
+	await pageEditorPage.addFragment(
+		'Basic Components',
+		'Heading',
+		page.locator('.page-editor__collection-item.empty').last()
+	);
 
-		const sku = productSkus[0];
+	await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
+		cart.id.toString()
+	);
 
-		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-			{
-				accountId: account.id,
-				cartItems: [
-					{
-						quantity: 1,
-						skuId: sku.id,
-					},
-				],
-			},
-			channel.id
-		);
+	const headingId = await pageEditorPage.getFragmentId('Heading');
 
-		await applicationsMenuPage.goToSite(site.name);
+	await pageEditorPage.selectEditable(headingId, 'element-text');
 
-		await commerceLayoutsPage.goToDisplayPageTemplates();
-		await commerceLayoutsPage.createDisplayPageTemplate(
-			'Test Commerce Order Display Page Template',
-			'Order',
-			site.name
-		);
-		await commerceLayoutsPage.addFragment('Collection Display');
+	await commerceLayoutsPage.labelField.selectOption('Order ID');
+	await expect(
+		commerceLayoutsPage.pageEditorText(cart.id.toString())
+	).toBeVisible();
+	await commerceLayoutsPage.labelField.selectOption('Author Name');
+	await expect(commerceLayoutsPage.pageEditorText(cart.author)).toBeVisible();
+	await commerceLayoutsPage.labelField.selectOption('Create Date');
 
-		await page.getByText('No Collection Selected Yet').click();
+	const createDateFromApi = cart.createDate;
 
-		await commerceLayoutsPage.selectCollectionButton.click();
-		await commerceLayoutsPage.selectRelatedItemsCollectionProviders.click();
-		await commerceLayoutsPage.orderItemCardButton.click();
-		await commerceLayoutsPage.addFragmentToCollectionDisplay('Heading');
-		await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
-			cart.id.toString()
-		);
+	const modifiedDateFromApi = cart.modifiedDate;
 
-		const locale = await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getBCP47LanguageId();
-		});
+	await commerceLayoutsPage.labelField.waitFor();
 
-		await page.getByText('Heading Example').dblclick();
+	const pageEditorCreateDate = await commerceLayoutsPage
+		.pageEditorElement('h1')
+		.innerText();
 
-		await commerceLayoutsPage.labelField.selectOption('Order ID');
+	await expect(checkSameDate(createDateFromApi, pageEditorCreateDate)).toBe(
+		true
+	);
 
-		await expect(
-			commerceLayoutsPage.pageEditorText(cart.id.toString())
-		).toBeVisible();
+	await commerceLayoutsPage.labelField.selectOption('Modified Date');
+	await commerceLayoutsPage.labelField.waitFor();
 
-		await commerceLayoutsPage.labelField.selectOption('Author Name');
+	const pageEditorModifiedDate = await commerceLayoutsPage
+		.pageEditorElement('h1')
+		.innerText();
 
-		await expect(
-			commerceLayoutsPage.pageEditorText(cart.author)
-		).toBeVisible();
+	await expect(
+		checkSameDate(modifiedDateFromApi, pageEditorModifiedDate)
+	).toBe(true);
 
-		await commerceLayoutsPage.labelField.selectOption('Create Date');
+	await commerceLayoutsPage.labelField.selectOption('Order Item ID');
 
-		await expect(
-			commerceLayoutsPage.pageEditorText(
-				getUTCHourAndDateFormat(cart.createDate, locale)
-			)
-		).toBeVisible();
+	await expect(
+		commerceLayoutsPage.pageEditorText(cart.cartItems[0].id.toString())
+	).toBeVisible();
+	await commerceLayoutsPage.publishButton.click();
+	await commerceLayoutsPage
+		.displayPageTemplateCheckBox('Select Test Commerce Order')
+		.check();
+	await commerceLayoutsPage.deletePageButton.click();
+	await commerceLayoutsPage.deleteEntriesButton.click();
 
-		await commerceLayoutsPage.labelField.selectOption('Modified Date');
-
-		await expect(
-			commerceLayoutsPage.pageEditorText(
-				getUTCHourAndDateFormat(cart.modifiedDate, locale)
-			)
-		).toBeVisible();
-
-		await commerceLayoutsPage.labelField.selectOption('Order Item ID');
-
-		await expect(
-			commerceLayoutsPage.pageEditorText(cart.cartItems[0].id.toString())
-		).toBeVisible();
-
-		await commerceLayoutsPage.publishButton.click();
-		await commerceLayoutsPage
-			.displayPageTemplateCheckBox('Select Test Commerce Order')
-			.check();
-		await commerceLayoutsPage.deletePageButton.click();
-		await commerceLayoutsPage.deleteEntriesButton.click();
-
-		await page.getByText('Success:You successfully').click();
-	}
-	finally {
-		await instanceSettingsPage.goToInstanceSetting('Feature Flags', 'Beta');
-
-		if (
-			await page
-				.getByLabel('Commerce Classic Site Initializer')
-				.isChecked()
-		) {
-			await page.getByLabel('Commerce Classic Site Initializer').click();
-		}
-	}
+	await waitForAlert(
+		page,
+		'You successfully deleted 1 display page templates and 0 folders.'
+	);
 });

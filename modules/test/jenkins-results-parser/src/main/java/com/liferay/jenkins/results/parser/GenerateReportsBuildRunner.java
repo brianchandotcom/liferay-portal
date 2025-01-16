@@ -131,9 +131,16 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			null, _ARCHIVE_BASE_DIR_PATH + "/reports/" + _CURRENT_DATE_STRING,
 			null, filePath);
 
-		CloudStorageSyncUtil.syncGCPFiles(
-			_ARCHIVE_BASE_DIR_PATH + "/reports",
-			CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/reports");
+		try {
+			CloudStorageSyncUtil.syncGCPFiles(
+				_ARCHIVE_BASE_DIR_PATH + "/reports",
+				CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA +
+					"/reports");
+		}
+		catch (IOException ioException) {
+			System.out.println("Unable to archive report: " + filePath);
+			ioException.printStackTrace();
+		}
 	}
 
 	private void _copyArchivedBuildData(
@@ -463,9 +470,15 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			return;
 		}
 
-		CloudStorageSyncUtil.syncGCPFiles(
-			CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/reports",
-			_ARCHIVE_BASE_DIR_PATH + "/reports");
+		try {
+			CloudStorageSyncUtil.syncGCPFiles(
+				CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA +
+					"/reports",
+				_ARCHIVE_BASE_DIR_PATH + "/reports");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		StringBuilder sb = new StringBuilder();
 

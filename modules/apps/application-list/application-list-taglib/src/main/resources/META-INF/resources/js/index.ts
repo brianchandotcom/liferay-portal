@@ -4,3 +4,4 @@
  */
 
 export {default as PanelKeyboardHandler} from './PanelKeyboardHandler';
+export {default as ScopeDropdown} from './ScopeDropdown';

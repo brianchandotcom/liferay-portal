@@ -71,7 +71,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 
 						<div class="collapse <%= active ? "show" : StringPool.BLANK %>" id="<%= id %>">
 							<div class="list-group-item">
-								<c:if test="<%= childPanelCategory.isAllowScopeLayouts() %>">
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11131") && childPanelCategory.isAllowScopeLayouts() %>'>
 
 									<%
 									Group curSite = themeDisplay.getSiteGroup();
@@ -109,14 +109,16 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 												%>
 
 												<clay:content-col>
-													<clay:dropdown-menu
-														borderless="<%= true %>"
-														cssClass="text-light"
-														displayType="secondary"
-														dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
-														icon="cog"
-														monospaced="<%= true %>"
-													/>
+													<div>
+														<react:component
+															module="{ScopeDropdown} from application-list-taglib"
+															props='<%=
+																HashMapBuilder.<String, Object>put(
+																	"items", contentPanelCategoryDisplayContext.getScopesDropdownItemList()
+																).build()
+															%>'
+														/>
+													</div>
 												</clay:content-col>
 											</clay:content-row>
 										</div>

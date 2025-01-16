@@ -57,8 +57,9 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		if (!consoleText.contains(_TOKEN_COMPILATION_FAILED) ||
-			!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
+		if (!consoleText.contains(_TOKEN_COMPILATION_FAILED) &&
+			!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG) &&
+			!consoleText.contains(_TOKEN_EXECUTION_FAILED_FOR_TASK)) {
 
 			return null;
 		}
@@ -81,6 +82,9 @@ public class ModulesCompilationFailureMessageGenerator
 
 	private static final String _TOKEN_COULD_NOT_RESOLVE_CONFIG =
 		"Could not resolve all files for configuration";
+
+	private static final String _TOKEN_EXECUTION_FAILED_FOR_TASK =
+		"Execution failed for task";
 
 	private static final String _TOKEN_MERGE_TEST_RESULTS =
 		"merge-test-results:";

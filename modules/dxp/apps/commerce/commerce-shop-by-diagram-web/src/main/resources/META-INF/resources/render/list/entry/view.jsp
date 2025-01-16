@@ -56,7 +56,7 @@ String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 				</p>
 
 				<div class="add-to-cart d-flex my-2">
-					<a class="btn btn-block btn-secondary" href="<%= url %>" role="button" style="margin-top: 0.35rem;">
+					<a class="btn btn-block btn-secondary mt-2" href="<%= url %>" role="button">
 						<liferay-ui:message key="view" />
 					</a>
 				</div>

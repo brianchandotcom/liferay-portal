@@ -184,6 +184,7 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 							positionConfig.isInset,
 					}
 				)}
+				onClick={(event) => event.stopPropagation()}
 				onMouseOver={(event) => event.stopPropagation()}
 				style={{
 					...((isDragging || !visible) && {opacity: 0}),

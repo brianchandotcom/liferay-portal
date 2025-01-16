@@ -190,6 +190,7 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -206,7 +207,7 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 		List<DropdownItem> dropdownGroupItems = _getDropdownGroupItems(
 			_getDropdownItems(), 1);
 
-		return dropdownGroupItems.get(2);
+		return dropdownGroupItems.get(3);
 	}
 
 	private Company _company;

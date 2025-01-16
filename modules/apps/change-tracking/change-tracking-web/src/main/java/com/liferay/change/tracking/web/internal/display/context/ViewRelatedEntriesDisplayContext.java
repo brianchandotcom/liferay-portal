@@ -9,6 +9,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -24,13 +25,16 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,20 +52,32 @@ public class ViewRelatedEntriesDisplayContext {
 	public ViewRelatedEntriesDisplayContext(
 		CTCollectionLocalService ctCollectionLocalService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
+		CTEntryLocalService ctEntryLocalService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, UserLocalService userLocalService) {
 
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
+		_ctEntryLocalService = ctEntryLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
 
 		_ctCollectionId = ParamUtil.getLong(renderRequest, "ctCollectionId");
+
 		_modelClassNameId = ParamUtil.getLong(
 			renderRequest, "modelClassNameId");
 		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
+
+		if ((_modelClassNameId <= 0) || (_modelClassPK <= 0)) {
+			_ctEntryIds = StringUtil.split(
+				ParamUtil.getString(httpServletRequest, "id"), 0L);
+		}
+		else {
+			_ctEntryIds = new long[0];
+		}
+
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -71,9 +87,27 @@ public class ViewRelatedEntriesDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
-		Map<Long, List<CTEntry>> relatedCTEntriesMap =
-			_ctCollectionLocalService.getRelatedCTEntriesMap(
-				_ctCollectionId, _modelClassNameId, _modelClassPK);
+		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
+
+		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
+			relatedCTEntriesMap.putAll(
+				_ctCollectionLocalService.getRelatedCTEntriesMap(
+					_ctCollectionId, _modelClassNameId, _modelClassPK));
+		}
+		else {
+			for (long ctEntryId : _ctEntryIds) {
+				CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+				Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
+					_ctCollectionLocalService.getRelatedCTEntriesMap(
+						_ctCollectionId, ctEntry.getModelClassNameId(),
+						ctEntry.getModelClassPK());
+
+				currentRelatedCTEntriesMap.forEach(
+					(key, value) -> relatedCTEntriesMap.merge(
+						key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
+			}
+		}
 
 		List<CTEntry> ctEntries = new ArrayList<>();
 
@@ -194,6 +228,22 @@ public class ViewRelatedEntriesDisplayContext {
 	}
 
 	public String getSubmitMoveURL() {
+		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
+			return PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/move_changes"
+			).setRedirect(
+				getRedirectURL()
+			).setParameter(
+				"ctCollectionId", _ctCollectionId
+			).setParameter(
+				"modelClassNameId", _modelClassNameId
+			).setParameter(
+				"modelClassPK", _modelClassPK
+			).buildString();
+		}
+
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
@@ -203,9 +253,7 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"modelClassNameId", _modelClassNameId
-		).setParameter(
-			"modelClassPK", _modelClassPK
+			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).buildString();
 	}
 
@@ -231,6 +279,8 @@ public class ViewRelatedEntriesDisplayContext {
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+	private final long[] _ctEntryIds;
+	private final CTEntryLocalService _ctEntryLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final long _modelClassNameId;
 	private final long _modelClassPK;

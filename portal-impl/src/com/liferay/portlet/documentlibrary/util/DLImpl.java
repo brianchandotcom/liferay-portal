@@ -696,7 +696,7 @@ public class DLImpl implements DL {
 		int i = 1;
 
 		while (_existsFileEntryByTitle(groupId, folderId, uniqueFileTitle)) {
-			uniqueFileTitle = FileUtil.appendParentheticalSuffix(
+			uniqueFileTitle = StringUtil.appendParentheticalSuffix(
 				title, String.valueOf(i));
 
 			i++;

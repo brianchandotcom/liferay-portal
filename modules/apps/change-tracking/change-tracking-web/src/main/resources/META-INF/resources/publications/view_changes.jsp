@@ -44,12 +44,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 			navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
 		/>
 
-		<frontend-data-set:headless-display
-			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
-			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
-			fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
-			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
-			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
-		/>
+		<aui:form action="<%= viewChangesDisplayContext.getBackURL() %>" method="post" name="fm">
+			<frontend-data-set:headless-display
+				apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
+				bulkActionDropdownItems="<%= viewChangesDisplayContext.getBulkActionDropdownItems() %>"
+				fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
+				fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
+				fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
+				formName="fm"
+				id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
+				selectedItemsKey="id"
+				selectionType="multiple"
+			/>
+		</aui:form>
 	</clay:container-fluid>
 </div>

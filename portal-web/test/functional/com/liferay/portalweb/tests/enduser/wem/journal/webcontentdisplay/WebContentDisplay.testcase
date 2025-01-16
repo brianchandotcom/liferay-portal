@@ -715,7 +715,9 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		}
 
 		task ("Edit the displayed web content via Contents panel") {
-			Refresh();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			WebContent.editViaContentPanel(
 				webContentContentEdit = "WC WebContent Content Edit",

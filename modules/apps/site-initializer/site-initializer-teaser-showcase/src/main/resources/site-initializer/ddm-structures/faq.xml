@@ -1,0 +1,50 @@
+	<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>FAQ</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "Answer",
+							"indexType": "text",
+							"label": {
+								"en_US": "Answer"
+							},
+							"localizable": true,
+							"name": "answer",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

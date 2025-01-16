@@ -80,6 +80,7 @@ export interface Config {
 	>;
 
 	contentPagePersonalizationLearnURL: string;
+	copyItemsURL: string;
 	createLayoutPageTemplateEntryURL: string;
 
 	defaultEditorConfigurations: Record<
@@ -95,11 +96,11 @@ export interface Config {
 	defaultSegmentsExperienceId: string;
 	defaultStyleBookEntryImagePreviewURL: string;
 	defaultStyleBookEntryName: string;
+	deleteFormStepURL: string;
 	deleteFragmentEntryLinkCommentURL: string;
 	deleteRuleURL: string;
 	deleteSegmentsExperienceURL: string;
 	discardDraftURL: string;
-	copyItemsURL: string;
 	duplicateItemURL: string;
 	duplicateSegmentsExperienceURL: string;
 	editFragmentEntryLinkCommentURL: string;

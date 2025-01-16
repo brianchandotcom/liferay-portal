@@ -9,7 +9,10 @@ import serviceFetch from './serviceFetch';
 
 import type {FormLayoutDataItem} from '../../types/layout_data/FormLayoutDataItem';
 import type {LayoutData} from '../../types/layout_data/LayoutData';
-import type {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+import type {
+	FragmentEntryLink,
+	FragmentEntryLinkMap,
+} from '../actions/addFragmentEntryLinks';
 
 export interface FormField {
 	key: string;
@@ -63,6 +66,35 @@ export default {
 					groupId: groupId || null,
 				},
 			}
+		);
+	},
+
+	removeFormStep({
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId,
+		stepperFragmentEntryLinkId,
+	}: {
+		itemId: string;
+		onNetworkStatus: OnNetworkStatus;
+		segmentsExperienceId: string;
+		stepperFragmentEntryLinkId?: string;
+	}) {
+		return draftServiceFetch<{
+			fragmentEntryLinks: FragmentEntryLinkMap;
+			layoutData: LayoutData;
+			movedItemIds: {itemId: string; parentId: string}[];
+			removedItemIds: string[];
+		}>(
+			config.deleteFormStepURL,
+			{
+				body: {
+					itemId,
+					segmentsExperienceId,
+					stepperFragmentEntryLinkId,
+				},
+			},
+			onNetworkStatus
 		);
 	},
 

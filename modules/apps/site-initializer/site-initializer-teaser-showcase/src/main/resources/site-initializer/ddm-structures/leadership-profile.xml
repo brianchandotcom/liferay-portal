@@ -1,0 +1,153 @@
+	<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Leadership Profile</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "image",
+							"indexType": "text",
+							"label": {
+								"en_US": "Image"
+							},
+							"localizable": true,
+							"name": "image",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"requiredDescription": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[\"vertical\"]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "name",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Name"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "name",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": "[\"vertical\"]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "title",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Title"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "title",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "bio",
+							"indexType": "text",
+							"label": {
+								"en_US": "Bio"
+							},
+							"localizable": true,
+							"name": "bio",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

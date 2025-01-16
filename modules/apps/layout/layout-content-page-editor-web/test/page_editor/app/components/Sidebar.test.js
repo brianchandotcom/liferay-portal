@@ -154,7 +154,7 @@ describe('Sidebar', () => {
 			renderSidebar();
 
 			await userEvent.click(
-				screen.getByLabelText('open-keyboard-shortcuts⇧+?')
+				screen.getByLabelText('open-keyboard-shortcuts', {exact: false})
 			);
 
 			expect(setOpenShortcutModal).toBeCalledWith(true);

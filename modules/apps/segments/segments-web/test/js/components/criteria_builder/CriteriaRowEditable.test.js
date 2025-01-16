@@ -9,7 +9,7 @@ import React from 'react';
 import CriteriaRowEditable from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRowEditable';
 
 import '@testing-library/jest-dom/extend-expect';
-import {format, parse} from 'date-fns';
+import {dateUtils} from 'frontend-js-web';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -99,15 +99,23 @@ describe('CriteriaRowEditable', () => {
 			getByText(equalsOperator.label.toLowerCase())
 		).toBeInTheDocument();
 
-		const dateValue = parse(
-			dateCriterion.value,
-			'yyyy-MM-dd',
-			new Date()
-		).toISOString();
+		const dateValue = dateUtils
+			.parse(dateCriterion.value, 'yyyy-MM-dd')
+			.toISOString();
 
-		expect(getByTestId('date-input').value).toBe(
-			format(new Date(dateValue), 'yyyy/MM/dd')
-		);
+		const intl = new Intl.DateTimeFormat('en-US', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		});
+
+		const parts = intl.formatToParts(new Date(dateValue));
+
+		const year = parts.find((part) => part.type === 'year').value;
+		const month = parts.find((part) => part.type === 'month').value;
+		const day = parts.find((part) => part.type === 'day').value;
+
+		expect(getByTestId('date-input').value).toBe(`${year}/${month}/${day}`);
 	});
 
 	it('renders entity criterion', () => {

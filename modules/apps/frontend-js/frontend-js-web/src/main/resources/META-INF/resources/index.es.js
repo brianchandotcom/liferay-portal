@@ -4,6 +4,7 @@
  */
 
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
+
 export {default as DynamicInlineScroll} from './liferay/DynamicInlineScroll.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 export {
@@ -95,3 +96,4 @@ export {default as zIndex} from './liferay/zIndex';
 export {default as loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
 export {default as loadEditorClientExtensions} from './utils/client_extensions/loadEditorClientExtensions';
 export {loadModule} from './utils/client_extensions/loadModule';
+export {default as dateUtils} from './utils/dateUtils';

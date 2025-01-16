@@ -3,11 +3,37 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	hoursToMilliseconds,
-	intervalToDuration,
-	minutesToMilliseconds,
-} from 'date-fns';
+function intervalToDuration(start, end) {
+	const intervalMiliseconds = end - start;
+	const duration = {};
+
+	const seconds = Math.floor(intervalMiliseconds / 1000);
+	duration.seconds = seconds % 60;
+
+	const minutes = Math.floor(seconds / 60);
+	duration.minutes = minutes % 60;
+
+	const hours = Math.floor(minutes / 60);
+	duration.hours = hours % 24;
+
+	const days = Math.floor(hours / 24);
+	duration.days = days % 30;
+
+	const months = Math.floor(days / 30);
+	duration.months = months % 12;
+
+	duration.years = Math.floor(months / 12);
+
+	return duration;
+}
+
+function hoursToMilliseconds(hours) {
+	return hours * 60 * 60 * 1000;
+}
+
+function minutesToMilliseconds(minutes) {
+	return minutes * 60 * 1000;
+}
 
 export function durationAsMilliseconds(days = 0, fullHours) {
 	const [hours = 0, minutes = 0] = fullHours.split(':');
@@ -57,10 +83,10 @@ export function formatHours(hours, minutes) {
 }
 
 export function getDurationValues(durationValue) {
-	const fullDuration = intervalToDuration({
-		end: new Date(durationValue),
-		start: new Date(0),
-	});
+	const fullDuration = intervalToDuration(
+		new Date(0),
+		new Date(durationValue)
+	);
 
 	return {
 		days: fullDuration.days || null,
@@ -77,10 +103,10 @@ export function remainingTimeFormat(
 ) {
 	const remainingTimePositive = onTime ? remainingTime : remainingTime * -1;
 
-	const {days, hours, minutes, seconds} = intervalToDuration({
-		end: new Date(0, 0, 0, 0, 0, 0, remainingTimePositive),
-		start: new Date(0, 0, 0, 0, 0, 0, 0),
-	});
+	const {days, hours, minutes, seconds} = intervalToDuration(
+		new Date(0, 0, 0, 0, 0, 0, 0),
+		new Date(0, 0, 0, 0, 0, 0, remainingTimePositive)
+	);
 
 	let durationText = '';
 

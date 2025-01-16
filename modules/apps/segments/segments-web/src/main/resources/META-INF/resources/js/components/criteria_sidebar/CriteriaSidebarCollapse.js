@@ -5,7 +5,6 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayPanel from '@clayui/panel';
-import {parse} from 'date-fns';
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 
@@ -33,13 +32,7 @@ function getDefaultValue(property) {
 		defaultValue = jsDatetoYYYYMMDD(new Date());
 	}
 	else if (type === PROPERTY_TYPES.DATE_TIME) {
-		const simpleDate = jsDatetoYYYYMMDD(new Date());
-
-		defaultValue = parse(
-			simpleDate,
-			'yyyy-MM-dd',
-			new Date()
-		).toISOString();
+		defaultValue = new Date().toISOString();
 	}
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';

@@ -3426,6 +3426,29 @@
 		"to": "HtmlUtil_IW.getInstance"
 	},
 	{
+		"from": "CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE",
+		"issueKey": "LPD-40553",
+		"newImports": [
+			"com.liferay.commerce.constants.CommercePaymentMethodConstants"
+		],
+		"to": "CommercePaymentMethodConstants.TYPE_OFFLINE"
+	},
+	{
+		"from": "CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT",
+		"issueKey": "LPD-40553",
+		"newImports": [
+			"com.liferay.commerce.constants.CommercePaymentMethodConstants"
+		],
+		"to": "CommercePaymentMethodConstants.TYPE_ONLINE_REDIRECT"
+	},
+	{
+		"from": "CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD",
+		"issueKey": "LPD-40553",
+		"newImports": [
+			"com.liferay.commerce.constants.CommercePaymentMethodConstants"
+		],
+		"to": "CommercePaymentMethodConstants.TYPE_ONLINE_STANDARD"
+	},
 		"classNames": [
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil",

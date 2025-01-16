@@ -1136,9 +1136,11 @@ public class KBArticleLocalServiceTest {
 
 		Assert.assertEquals(1, kbArticle.getVersion());
 
-		kbArticle.setVersion(2);
-
-		kbArticle = _kbArticleLocalService.updateKBArticle(kbArticle);
+		kbArticle = _kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		Assert.assertEquals(2, kbArticle.getVersion());
 

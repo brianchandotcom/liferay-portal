@@ -3427,6 +3427,17 @@
 	},
 	{
 		"classNames": [
+			"LayoutLocalService",
+			"LayoutLocalServiceUtil",
+			"LayoutService",
+			"LayoutServiceUtil"
+		],
+		"from": "addLayout(long paramName, long paramName, boolean paramName, long paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-41026",
+		"to": "addLayout(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#)"
+	},
+	{
+		"classNames": [
 			"ListTypeLocalService",
 			"ListTypeLocalServiceUtil",
 			"ListTypeService",

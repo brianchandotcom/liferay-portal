@@ -2028,6 +2028,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro submitForWorkflow() {
+		Button.clickSubmitForWorkflow();
+
+		Click(locator1 = "WCEditWebContent#SUBMIT_FOR_WORKFLOW");
+
+		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
+	}
+
+	@summary = "Default summary"
 	macro submitForWorkflowWithPermission(viewableBy = null) {
 		Button.clickSubmitForWorkflow();
 

@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_FOR_WORKFLOW</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Submit for Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMIT_FOR_WORKFLOW_IN_MODAL</td>
 	<td>//div[contains(@class,'modal-content')]//button[contains(text(),'Submit for Workflow')]</td>
 	<td></td>

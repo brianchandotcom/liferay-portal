@@ -109,6 +109,7 @@ import java.io.Serializable;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -229,20 +230,28 @@ public class ViewChangesDisplayContext {
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/change_tracking/view_move_changes"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString(),
-				"move-folder", "move-changes", "post",
-				_language.get(_httpServletRequest, "move-changes"),
-				"move-changes", null));
+		List<DropdownItem> bulkActionDropdownItems = new ArrayList<>();
+
+		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			(_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED)) {
+
+			bulkActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_move_changes"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString(),
+					"move-folder", "move-changes", "post",
+					_language.get(_httpServletRequest, "move-changes"),
+					"move-changes", null));
+		}
+
+		return bulkActionDropdownItems;
 	}
 
 	public long getCtCollectionId() {

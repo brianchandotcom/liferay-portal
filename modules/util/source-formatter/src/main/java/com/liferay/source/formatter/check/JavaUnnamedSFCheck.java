@@ -37,7 +37,7 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 		JavaClass javaClass = (JavaClass)javaTerm;
 
 		if (!javaClass.hasAnnotation("Component") && !javaClass.isStatic() &&
-			!isUpgradeProcess(absolutePath, content)) {
+			!isUpgradeProcess(absolutePath, fileContent)) {
 
 			return content;
 		}

@@ -73,7 +73,7 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			Validator.isNull(user.getLastFailedLoginDate()) &&
 			Validator.isNull(user.getLockoutDate())) {
 
-			Date expirationDate = new Date(System.currentTimeMillis() + 20000);
+			Date expirationDate = new Date(System.currentTimeMillis() + 600000);
 
 			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),

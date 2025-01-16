@@ -44,6 +44,33 @@
 			<finder-column name="layoutId" />
 		</finder>
 	</entity>
+	<entity local-service="false" name="LayoutSEOEntryCustomMetaTag" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="layoutSEOEntryCustomMetaTagId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="layoutSEOEntryId" type="long" />
+		<column name="property" type="String" />
+		<column localized="true" name="content" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_L" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutSEOEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="LayoutSEOSite" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

@@ -5,7 +5,6 @@
 
 import {useControlledState} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
-import {openModal} from 'frontend-js-web';
 import React, {useCallback} from 'react';
 
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
@@ -18,6 +17,7 @@ import {
 } from '../../../../../../app/contexts/LocalConfigContext';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getStepperChild} from '../../../../../../app/utils/getStepperChild';
+import {openConfirmModal} from '../../../../../../app/utils/openConfirmModal';
 
 const FORM_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('simple'), value: 'simple'},
@@ -75,16 +75,24 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 						);
 
 						if (stepper) {
-							openWarningModal({
+							openConfirmModal({
+								buttonLabel: Liferay.Language.get('continue'),
 								onCancel: () => {
 									setFormType('multistep');
 								},
-								onContinue: () => {
+								onConfirm: () => {
 									onValueSelect({
 										formType: 'simple',
 										numberOfSteps: 1,
 									});
 								},
+								status: 'info',
+								text: Liferay.Language.get(
+									'this-action-will-delete-the-stepper-fragment-of-the-form-container'
+								),
+								title: Liferay.Language.get(
+									'convert-to-simple-form'
+								),
 							});
 						}
 						else {
@@ -137,35 +145,4 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 			) : null}
 		</>
 	);
-}
-
-function openWarningModal({onCancel, onContinue}) {
-	openModal({
-		bodyHTML: Liferay.Language.get(
-			'this-action-will-delete-the-stepper-fragment-of-the-form-container'
-		),
-
-		buttons: [
-			{
-				autoFocus: true,
-				displayType: 'secondary',
-				label: Liferay.Language.get('cancel'),
-				onClick: ({processClose}) => {
-					processClose();
-					onCancel();
-				},
-				type: 'cancel',
-			},
-			{
-				displayType: 'info',
-				label: Liferay.Language.get('continue'),
-				onClick: ({processClose}) => {
-					processClose();
-					onContinue();
-				},
-			},
-		],
-		status: 'info',
-		title: Liferay.Language.get('convert-to-simple-form'),
-	});
 }

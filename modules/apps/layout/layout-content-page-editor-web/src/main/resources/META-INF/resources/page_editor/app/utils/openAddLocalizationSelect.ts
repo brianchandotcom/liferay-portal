@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {Dispatch} from '../contexts/StoreContext';
 import {addFragment} from '../js-index';
+import {openConfirmModal} from './openConfirmModal';
 
 type Props = {
 	dispatch: Dispatch;
@@ -20,41 +21,22 @@ export function openAddLocalizationSelect({dispatch, formId}: Props) {
 		Liferay.Language.get('localization-select')
 	);
 
-	openModal({
-		bodyHTML: Liferay.Language.get(
+	openConfirmModal({
+		buttonLabel: title,
+		onConfirm: () =>
+			dispatch(
+				addFragment({
+					fieldTypes: ['localizationSelect'],
+					fragmentEntryKey: 'localization-select',
+					itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
+					parentItemId: formId,
+					type: 'input',
+				})
+			),
+		status: 'info',
+		text: Liferay.Language.get(
 			'at-least-one-localizable-form-field-has-been-added-to-the-page'
 		),
-
-		buttons: [
-			{
-				autoFocus: true,
-				displayType: 'secondary',
-				label: Liferay.Language.get('cancel'),
-				onClick: ({processClose} = {processClose: () => {}}) => {
-					processClose();
-				},
-				type: 'cancel',
-			},
-			{
-				displayType: 'info',
-				label: title,
-				onClick: ({processClose} = {processClose: () => {}}) => {
-					processClose();
-
-					dispatch(
-						addFragment({
-							fieldTypes: ['localizationSelect'],
-							fragmentEntryKey: 'localization-select',
-							itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
-							parentItemId: formId,
-							type: 'input',
-						})
-					);
-				},
-			},
-		],
-		center: true,
-		status: 'info',
 		title,
 	});
 }

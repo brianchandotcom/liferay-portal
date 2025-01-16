@@ -1766,6 +1766,35 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testAddObjectEntryWithRelationshipObjectField()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		_user = _addUser();
+
+		_addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
+			_objectDefinition2, _user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have VIEW permission for ",
+				_objectDefinition1.getClassName(), StringPool.SPACE,
+				objectEntry.getId()),
+			() -> _addObjectEntry(
+				_objectDefinition2,
+				HashMapBuilder.<String, Object>put(
+					_objectRelationshipFieldName, objectEntry.getId()
+				).build()));
+	}
+
+	@Test
 	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
 		ObjectDefinition objectDefinition = _createObjectDefinition(
 			Collections.singletonList(
@@ -4084,7 +4113,7 @@ public class DefaultObjectEntryManagerImplTest
 							parentObjectEntry2.getExternalReferenceCode()
 						).put(
 							_objectRelationshipFieldName,
-							RandomTestUtil.randomLong()
+							parentObjectEntry2.getId()
 						).build();
 					}
 				}),

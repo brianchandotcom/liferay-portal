@@ -683,20 +683,20 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		long commerceOrderTypeId = 0;
-
-		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
-
-		if (commerceOrder != null) {
-			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
-		}
-
 		long commerceAccountId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		if (accountEntry != null) {
 			commerceAccountId = accountEntry.getAccountEntryId();
+		}
+
+		long commerceOrderTypeId = 0;
+
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		if (commerceOrder != null) {
+			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
 		}
 
 		CPInstance firstAvailableReplacementCPInstance =

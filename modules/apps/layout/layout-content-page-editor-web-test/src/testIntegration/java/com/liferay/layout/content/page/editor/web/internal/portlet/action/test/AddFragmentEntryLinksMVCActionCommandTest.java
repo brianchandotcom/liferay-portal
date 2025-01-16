@@ -107,8 +107,6 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 		_layout = layout.fetchDraftLayout();
 
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
@@ -144,7 +142,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
-				fragmentComposition.getFragmentCompositionKey());
+				fragmentComposition.getFragmentCompositionKey(),
+				TestPropsValues.getUser());
 
 		try {
 			ReflectionTestUtil.invoke(
@@ -370,7 +369,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String fragmentEntryKey)
+			String fragmentEntryKey, User user)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -406,8 +405,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			(ThemeDisplay)mockLiferayPortletActionRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		themeDisplay.setRealUser(_user);
-		themeDisplay.setUser(_user);
+		themeDisplay.setRealUser(user);
+		themeDisplay.setUser(user);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			mockLiferayPortletActionRequest);
@@ -438,9 +437,11 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		FragmentComposition fragmentComposition = _addFragmentComposition(
 			html, numberOfFragmentEntryLinks);
 
+		User user = UserTestUtil.addCompanyAdminUser(_company);
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
-				fragmentComposition.getFragmentCompositionKey());
+				fragmentComposition.getFragmentCompositionKey(), user);
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
@@ -452,9 +453,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		try {
 			ServiceContextThreadLocal.pushServiceContext(
 				ServiceContextTestUtil.getServiceContext(
-					_group, _user.getUserId()));
+					_group, user.getUserId()));
 
-			UserTestUtil.setUser(_user);
+			UserTestUtil.setUser(user);
 
 			_layoutLockManager.getLock(mockLiferayPortletActionRequest);
 
@@ -524,8 +525,5 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

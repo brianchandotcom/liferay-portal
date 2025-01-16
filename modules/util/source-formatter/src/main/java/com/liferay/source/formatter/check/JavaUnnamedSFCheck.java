@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -61,8 +62,8 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 			String variableName = javaVariable.getName();
 
-			if (variableName.contains("Company") ||
-				variableName.contains("company")) {
+			if (StringUtil.containsIgnoreCase(
+					variableName, "companyId", StringPool.BLANK)) {
 
 				continue;
 			}
@@ -139,7 +140,9 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 		List<String> entityIds, String variableName) {
 
 		for (String entityId : entityIds) {
-			if (StringUtil.containsIgnoreCase(variableName, entityId)) {
+			if (StringUtil.containsIgnoreCase(
+					variableName, entityId, StringPool.BLANK)) {
+
 				return true;
 			}
 		}

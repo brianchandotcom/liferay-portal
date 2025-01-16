@@ -58,7 +58,9 @@ export default function VerticalNav({
 					})}
 
 					{item.deprecated ? (
-						<FeatureIndicator type="deprecated" />
+						<span className="inline-item inline-item-after">
+							<FeatureIndicator type="deprecated" />
+						</span>
 					) : null}
 				</ClayVerticalNav.Item>
 			)}

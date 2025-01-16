@@ -319,12 +319,13 @@ public class VerticalNavTag extends BaseContainerTag {
 			}
 
 			if (GetterUtil.getBoolean(verticalNavItem.get("deprecated"))) {
-				jspWriter.write("<span class=\"badge badge-warning");
-				jspWriter.write(" text-uppercase badge-translucent\">");
-				jspWriter.write("<span class=\"badge-item ");
-				jspWriter.write("badge-item-expand\">");
+				jspWriter.write("<span class=\"inline-item");
+				jspWriter.write(" inline-item-after\"><span class=\"badge");
+				jspWriter.write(" badge-warning text-uppercase");
+				jspWriter.write(" badge-translucent\"><span class=\"");
+				jspWriter.write("badge-item badge-item-expand\">");
 				jspWriter.write(LanguageUtil.get(getRequest(), "deprecated"));
-				jspWriter.write("</span></span>");
+				jspWriter.write("</span></span></span>");
 			}
 
 			if (items != null) {

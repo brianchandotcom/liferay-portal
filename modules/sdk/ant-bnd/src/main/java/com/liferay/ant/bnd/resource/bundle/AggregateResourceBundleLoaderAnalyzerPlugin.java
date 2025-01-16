@@ -35,7 +35,6 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 		}
 
 		String header = ResourceBundleLoaderAnalyzerPlugin.getHeader(analyzer);
-
 		Set<String> aggregateResourceBundles = parameters.keySet();
 
 		addProvideCapabilities(analyzer, header, aggregateResourceBundles);

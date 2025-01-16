@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -28,13 +29,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ContextConfiguration(
 	classes = {
-		LiferayOAuth2ClientConfiguration.class,
+		LiferayWebMvcConfigurer.class, LiferayOAuth2ClientConfiguration.class,
 		LiferayOAuth2ClientConfigurationExtra.class
 	}
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource("LiferayOAuth2ClientConfigurationExtraTest.properties")
+@WebMvcTest
 public class LiferayOAuth2ClientConfigurationExtraTest {
 
 	@Test

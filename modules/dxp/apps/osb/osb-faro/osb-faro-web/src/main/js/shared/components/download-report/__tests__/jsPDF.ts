@@ -229,6 +229,16 @@ describe('JSPDFExtension', () => {
 			weight: Weight.Bold
 		});
 
+		jsPDFExtension.addFloatText({
+			color: 'black',
+			posX: PosX.Left,
+			posY: 10,
+			size: Size.Small,
+			url: '/workspace/34074/730958655458976297/sites',
+			value: 'test',
+			weight: Weight.Bold
+		});
+
 		// Mock the save function to prevent downloading the PDF
 		jsPDFExtension.doc.save = jest.fn();
 
@@ -238,5 +248,11 @@ describe('JSPDFExtension', () => {
 		expect(jsPDFExtension.doc.save).toHaveBeenCalledTimes(1);
 
 		expect(jsPDFExtension.doc.output('datauristring')).toBeString();
+
+		expect(jsPDFExtension.floatTextList).toHaveLength(1);
+
+		expect(jsPDFExtension.floatTextList[0].url).toBe(
+			'/workspace/34074/730958655458976297/sites'
+		);
 	});
 });

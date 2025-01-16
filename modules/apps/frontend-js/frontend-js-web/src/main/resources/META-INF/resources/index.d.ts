@@ -909,3 +909,8 @@ export function isReducedMotion(): boolean;
 export {default as loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
 export {default as loadEditorClientExtensions} from './utils/client_extensions/loadEditorClientExtensions';
 export {loadModule} from './utils/client_extensions/loadModule';
+
+/**
+ * Utils
+ */
+export {default as dateUtils} from './utils/dateUtils';

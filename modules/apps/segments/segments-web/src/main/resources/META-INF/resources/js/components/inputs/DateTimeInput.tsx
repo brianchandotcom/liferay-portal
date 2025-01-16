@@ -4,7 +4,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import {format, isValid, parse} from 'date-fns';
+import {dateUtils} from 'frontend-js-web';
 import {default as React, useEffect, useRef, useState} from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants';
@@ -136,29 +136,29 @@ function toDisplayDate(internalOrIsoDate: string, previousDate?: string) {
 
 	const resetDate = previousDate ? new Date(previousDate) : new Date();
 
-	if (!isValid(dateObject)) {
-		dateObject = parse(internalOrIsoDate, INTERNAL_DATE_FORMAT, resetDate);
+	if (!dateUtils.isValid(dateObject)) {
+		dateObject = dateUtils.parse(internalOrIsoDate, INTERNAL_DATE_FORMAT);
 	}
 
-	if (!isValid(dateObject)) {
+	if (!dateUtils.isValid(dateObject)) {
 		dateObject = resetDate;
 	}
 
-	return format(dateObject, DISPLAY_DATE_FORMAT);
+	return dateUtils.format(dateObject, 'yyyy/MM/dd');
 }
 
 function toInternalDate(displayOrIsoDate: string) {
 	let dateObject = new Date(displayOrIsoDate);
 
-	if (!isValid(dateObject)) {
-		dateObject = parse(displayOrIsoDate, DISPLAY_DATE_FORMAT, new Date());
+	if (!dateUtils.isValid(dateObject)) {
+		dateObject = dateUtils.parse(displayOrIsoDate, DISPLAY_DATE_FORMAT);
 	}
 
-	if (!isValid(dateObject)) {
+	if (!dateUtils.isValid(dateObject)) {
 		dateObject = new Date();
 	}
 
-	return format(dateObject, INTERNAL_DATE_FORMAT);
+	return dateUtils.format(dateObject, 'yyyy-MM-dd');
 }
 
 function toInternalDateTime(displayOrIsoDate: string) {

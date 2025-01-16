@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format, isValid, parseISO} from 'date-fns';
+import {dateUtils} from 'frontend-js-web';
 
 import {Criteria} from '../../types/Criteria';
 import {
@@ -180,9 +180,18 @@ export function dateToInternationalHuman(
  * based on a JS Date object
  */
 export function jsDatetoYYYYMMDD(dateJsObject: string | Date) {
-	if (!isValid(dateJsObject)) {
-		dateJsObject = parseISO(dateJsObject as string);
+	if (!dateUtils.isValid(dateJsObject)) {
+		dateJsObject = new Date(dateJsObject as string);
 	}
 
-	return format(dateJsObject as Date, 'yyyy-MM-dd');
+	const intl = new Intl.DateTimeFormat(
+		Liferay.ThemeDisplay.getBCP47LanguageId(),
+		{
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		}
+	);
+
+	return intl.format(dateJsObject as Date);
 }

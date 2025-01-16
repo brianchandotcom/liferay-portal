@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format} from 'date-fns';
 import {delegate, openConfirmModal, unescapeHTML} from 'frontend-js-web';
 
 const TPL_TAG_FORM =
@@ -275,7 +274,16 @@ export function reportParameters({namespace, parameters}) {
 		parameterDate.setMonth(parameterDateMonth.value);
 		parameterDate.setYear(parameterDateYear.value);
 
-		return format(parameterDate, 'yyyy-MM-dd');
+		const intl = new Intl.DateTimeFormat(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			{
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric',
+			}
+		);
+
+		return intl.format(parameterDate);
 	}
 
 	function sendErrorMessage(message) {

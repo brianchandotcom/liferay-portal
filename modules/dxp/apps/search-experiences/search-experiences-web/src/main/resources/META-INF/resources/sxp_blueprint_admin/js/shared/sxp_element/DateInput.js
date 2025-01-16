@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {format, fromUnixTime, getUnixTime, parse} from 'date-fns';
+import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
 function DateInput({disabled, name, setFieldTouched, setFieldValue, value}) {
@@ -26,13 +26,20 @@ function DateInput({disabled, name, setFieldTouched, setFieldValue, value}) {
 				onValueChange={(value) => {
 					setFieldValue(
 						name,
-						getUnixTime(parse(value, 'MM/dd/yyyy', new Date()))
+						Math.floor(
+							dateUtils.parse(value, 'MM/dd/yyyy').getTime() /
+								1000
+						)
 					);
 				}}
 				placeholder="MM/DD/YYYY"
 				readOnly
 				sizing="sm"
-				value={value ? format(fromUnixTime(value), 'MM/dd/yyyy') : ''}
+				value={
+					value
+						? dateUtils.format(new Date(value * 1000), 'MM/dd/yyyy')
+						: ''
+				}
 				years={{
 					end: 2024,
 					start: 1997,

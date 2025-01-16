@@ -22,7 +22,6 @@
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/portal-workflow-instance-tracker-web": "*",
 		"classnames": "2.3.1",
-		"date-fns": "2.29.3",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"history": "4.9.0",

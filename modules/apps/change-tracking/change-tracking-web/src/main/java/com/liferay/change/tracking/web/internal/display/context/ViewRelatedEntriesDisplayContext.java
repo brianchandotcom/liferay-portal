@@ -214,6 +214,22 @@ public class ViewRelatedEntriesDisplayContext {
 	}
 
 	public String getSubmitDiscardURL() {
+		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
+			return PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/discard_changes"
+			).setRedirect(
+				getRedirectURL()
+			).setParameter(
+				"ctCollectionId", _ctCollectionId
+			).setParameter(
+				"modelClassNameId", _modelClassNameId
+			).setParameter(
+				"modelClassPK", _modelClassPK
+			).buildString();
+		}
+
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
@@ -223,9 +239,7 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"modelClassNameId", _modelClassNameId
-		).setParameter(
-			"modelClassPK", _modelClassPK
+			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).buildString();
 	}
 

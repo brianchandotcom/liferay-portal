@@ -12,7 +12,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
@@ -31,8 +30,6 @@ import createSiteTemplateWithContentPageAndAssetPublisher from './utils/createSi
 import createSiteTemplateWithWebContentOnContentPage from './utils/createSiteTemplateWithWebContentOnContentPage';
 import createSiteTemplateWithWebContentOnHomePage from './utils/createSiteTemplateWithWebContentOnHomePage';
 import createSiteTemplateWithWebContentOnWidgetPage from './utils/createSiteTemplateWithWebContentOnWidgetPage';
-import deleteSiteAndLayoutSetPrototypes from './utils/deleteSiteAndLayoutSetPrototypes';
-import getLayoutTemplateByName from './utils/getLayoutTemplateByName';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -40,7 +37,6 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	journalPagesTest,
 	isolatedSiteTest,
-	pageManagementSiteTest,
 	layoutSetPrototypePageTest,
 	productMenuPageTest,
 	uiElementsPageTest,

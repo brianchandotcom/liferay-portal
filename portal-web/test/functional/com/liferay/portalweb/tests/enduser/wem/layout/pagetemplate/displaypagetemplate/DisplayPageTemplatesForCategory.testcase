@@ -668,15 +668,45 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Add a Banner Center fragment to display Page Template") {
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		task ("Add fragments to display Page Template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.editLayoutGrid(
+				columnCount = 3,
+				panel = "General");
+
+			PageEditor.addElementToColumn(
+				columnNumber = 1,
+				navTab = "",
+				portletName = "Message Boards");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = 1,
+				fragmentName = "Heading",
+				navTab = "Fragments");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = 2,
+				fragmentName = "Button",
+				navTab = "Fragments");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = 3,
+				fragmentName = "Image",
+				navTab = "Fragments");
 		}
 
 		task ("Mapping the Name field to title editable field") {
@@ -694,13 +724,13 @@ definition {
 		}
 
 		task ("Mapping the Main Image field to background image editable field") {
-			PageEditor.editLayoutContainer(
-				backgroundImage = "Mapping",
-				fieldName = "Main Image",
-				panel = "Styles");
-
-			PageEditor.publish();
+			PageEditorMapping.mapEditableTextToField(
+				field = "Main Image",
+				fragmentName = "Image",
+				id = "image-square");
 		}
+
+		PageEditor.publish();
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -752,7 +782,10 @@ definition {
 				id = "link",
 				text = "${baseURL}/web/test-site-name/v/${categoryId}");
 
-			ContentPages.viewFragmentBackgroundImage(image = "/images/");
+			ContentPages.viewFragmentImage(
+				fragmentName = "image",
+				id = "image-square",
+				image = "/images/");
 		}
 	}
 

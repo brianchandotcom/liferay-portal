@@ -8,24 +8,16 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import Container from '../components/Container';
-import {AccountBrief, Authorization, MyUserAccount} from '../types';
+import {Authorization} from '../types';
 
 type StatusProps = {
-	authorization: Authorization & {
-		data: Authorization['data'] & {
-			myUserAccount: MyUserAccount;
-			selectedAccount: AccountBrief;
-		};
-	};
+	authorization: Authorization;
 	onDisconnect: () => void;
 };
 
-export default function Status({
-	authorization: {
-		data: {settings},
-	},
-	onDisconnect,
-}: StatusProps) {
+export default function Status({authorization, onDisconnect}: StatusProps) {
+	const settings = authorization.data?.settings;
+
 	return (
 		<Container
 			footer={

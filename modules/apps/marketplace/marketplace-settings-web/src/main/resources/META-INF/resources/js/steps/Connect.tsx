@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
-import {createResourceURL, fetch, objectToFormData, sub} from 'frontend-js-web';
+import {createResourceURL, fetch, objectToFormData} from 'frontend-js-web';
 import pkceChallenge from 'pkce-challenge';
 import React from 'react';
 
@@ -54,9 +54,10 @@ export default function Connect({
 		) as Window;
 
 		const handleMessage = async (event: MessageEvent) => {
-			const {code, serviceURL, settings} = event.data;
+			const {data = {}, origin} = event;
+			const {code, serviceURL, settings} = data;
 
-			if (event.data.origin !== oAuth2.url || !event.data.code) {
+			if (oAuth2.url !== origin || !code) {
 				return;
 			}
 
@@ -79,7 +80,7 @@ export default function Connect({
 
 			setAuthorization((prevAuthorization) => ({
 				...prevAuthorization,
-				data: event.data,
+				data,
 			}));
 
 			popup.close();
@@ -135,23 +136,14 @@ export default function Connect({
 			}
 			title={Liferay.Language.get('connect-marketplace')}
 		>
-			<h5>{Liferay.Language.get('do-you-need-help')}</h5>
+			<h5 className="my-2">{Liferay.Language.get('do-you-need-help')}</h5>
 
-			<div className="mb-4">
-				{sub(
-					Liferay.Language.get(
-						'click-x-to-learn-how-to-connect-to-liferay-marketplace'
-					),
-					(
-						<LearnResourcesContext.Provider value={learnResources}>
-							<LearnMessage
-								resource="marketplace-settings-web"
-								resourceKey="connecting-liferay-dxp-to-marketplace"
-							/>
-						</LearnResourcesContext.Provider>
-					) as any
-				)}
-			</div>
+			<LearnResourcesContext.Provider value={learnResources}>
+				<LearnMessage
+					resource="marketplace-settings-web"
+					resourceKey="connecting-liferay-dxp-to-marketplace"
+				/>
+			</LearnResourcesContext.Provider>
 		</Container>
 	);
 }

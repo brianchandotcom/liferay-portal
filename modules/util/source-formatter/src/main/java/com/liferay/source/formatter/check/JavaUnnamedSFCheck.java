@@ -63,7 +63,9 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 				javaVariable.getContent(), childJavaTerm, fileContent, fileName,
 				variableName, true, false);
 
-			if (!variableTypeName.startsWith("Map<Long")) {
+			if (!variableTypeName.startsWith("Map<Long") &&
+				!variableTypeName.startsWith("Set<Long>")) {
+
 				continue;
 			}
 
@@ -117,7 +119,7 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 	}
 
 	private static final String[] _METHOD_NAMES = {
-		"computeIfAbsent", "computeIfPresent", "put"
+		"add", "computeIfAbsent", "computeIfPresent", "put"
 	};
 
 }

@@ -1482,7 +1482,7 @@ definition {
 			webContentUpload = ${webContentUpload},
 			webContentWebContent = ${webContentWebContent});
 
-		if (${saveAsDraft} == "true") {
+		if (isSet(saveAsDraft) && (${saveAsDraft} == "true")) {
 			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(

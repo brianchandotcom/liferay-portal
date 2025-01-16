@@ -187,32 +187,14 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_processAddFragmentEntryLinks",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
-
-		List<FragmentEntryLink> actualFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
-
-		Assert.assertEquals(
-			actualFragmentEntryLinks.toString(),
-			originalFragmentEntryLinks.size() + 1,
-			actualFragmentEntryLinks.size());
-
-		JSONObject fragmentEntryLinksJSONObject = jsonObject.getJSONObject(
-			"fragmentEntryLinks");
-
-		Assert.assertEquals(
-			fragmentEntryLinksJSONObject.toString(), 1,
-			fragmentEntryLinksJSONObject.length());
-
-		_assertFragmentEntryLinksContent(
-			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
-			mockLiferayPortletActionResponse);
-
-		_assertLayoutData(jsonObject);
+		_assertJSONObject(
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_processAddFragmentEntryLinks",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse),
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse,
+			1, originalFragmentEntryLinks);
 	}
 
 	private FragmentComposition _addFragmentComposition(
@@ -336,6 +318,37 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		}
 	}
 
+	private void _assertJSONObject(
+			JSONObject jsonObject,
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest,
+			MockLiferayPortletActionResponse mockLiferayPortletActionResponse,
+			int numberOfFragmentEntryLinks,
+			List<FragmentEntryLink> originalFragmentEntryLinks)
+		throws Exception {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(),
+			originalFragmentEntryLinks.size() + numberOfFragmentEntryLinks,
+			fragmentEntryLinks.size());
+
+		JSONObject fragmentEntryLinksJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLinks");
+
+		Assert.assertEquals(
+			fragmentEntryLinksJSONObject.toString(), numberOfFragmentEntryLinks,
+			fragmentEntryLinksJSONObject.length());
+
+		_assertFragmentEntryLinksContent(
+			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
+			mockLiferayPortletActionResponse);
+
+		_assertLayoutData(jsonObject);
+	}
+
 	private void _assertLayoutData(JSONObject jsonObject) {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -436,8 +449,6 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), _layout.getPlid());
 
-		JSONObject jsonObject = null;
-
 		try {
 			ServiceContextThreadLocal.pushServiceContext(
 				ServiceContextTestUtil.getServiceContext(
@@ -447,39 +458,21 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 			_layoutLockManager.getLock(mockLiferayPortletActionRequest);
 
-			jsonObject = ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_processAddFragmentEntryLinks",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_assertJSONObject(
+				ReflectionTestUtil.invoke(
+					_mvcActionCommand, "_processAddFragmentEntryLinks",
+					new Class<?>[] {ActionRequest.class, ActionResponse.class},
+					mockLiferayPortletActionRequest,
+					mockLiferayPortletActionResponse),
 				mockLiferayPortletActionRequest,
-				mockLiferayPortletActionResponse);
+				mockLiferayPortletActionResponse, numberOfFragmentEntryLinks,
+				originalFragmentEntryLinks);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 
 			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
-
-		List<FragmentEntryLink> actualFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
-
-		Assert.assertEquals(
-			actualFragmentEntryLinks.toString(),
-			originalFragmentEntryLinks.size() + numberOfFragmentEntryLinks,
-			actualFragmentEntryLinks.size());
-
-		JSONObject fragmentEntryLinksJSONObject = jsonObject.getJSONObject(
-			"fragmentEntryLinks");
-
-		Assert.assertEquals(
-			fragmentEntryLinksJSONObject.toString(), numberOfFragmentEntryLinks,
-			fragmentEntryLinksJSONObject.length());
-
-		_assertFragmentEntryLinksContent(
-			fragmentEntryLinksJSONObject, mockLiferayPortletActionRequest,
-			mockLiferayPortletActionResponse);
-
-		_assertLayoutData(jsonObject);
 	}
 
 	private Company _company;

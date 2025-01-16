@@ -683,7 +683,7 @@ public class DLImpl implements DL {
 			}
 
 			uniqueFileTitle = FileUtil.appendParentheticalSuffix(
-				FileUtil.stripExtension(fileName), String.valueOf(i));
+				fileName, String.valueOf(i));
 		}
 
 		return getTitleWithExtension(uniqueFileTitle, extension);

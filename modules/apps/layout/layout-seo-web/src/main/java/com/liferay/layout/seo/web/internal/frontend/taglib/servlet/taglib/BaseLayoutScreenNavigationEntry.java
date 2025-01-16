@@ -24,15 +24,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
@@ -56,7 +53,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), getEntryKey());
+		return LanguageUtil.get(locale, getEntryKey());
 	}
 
 	@Override
@@ -151,13 +148,5 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.seo.web)")
 	protected ServletContext servletContext;
-
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, portal.getResourceBundle(locale));
-	}
 
 }

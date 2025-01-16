@@ -7418,9 +7418,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						/>
 					</delete>
 
-					<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
-
 					<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+					<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 
 					<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 					<get-java-jdk-opts type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
@@ -8083,9 +8082,8 @@ ${docker.start.error}</fail>
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
-			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
-
 			<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 
 			<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
@@ -16700,9 +16698,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="start-app-server-tomcat-simple">
-		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
-
 		<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 
 		<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
@@ -16901,9 +16898,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 
 		<prepare-database-upgrade-properties />
 
-		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
-
 		<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 
 		<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 

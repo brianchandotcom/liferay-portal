@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Máté Thurzó
@@ -126,6 +128,28 @@ public class ExportImportTestUtil {
 
 		return getImportPortletDataContext(
 			companyId, groupId, new HashMap<String, String[]>());
+	}
+
+	public static <T> T retryAssert(
+			long timeout, TimeUnit timeoutTimeUnit, long pause,
+			TimeUnit pauseTimeUnit, Callable<T> callable)
+		throws Exception {
+
+		long deadline =
+			System.currentTimeMillis() + timeoutTimeUnit.toMillis(timeout);
+
+		while (true) {
+			try {
+				return callable.call();
+			}
+			catch (AssertionError ae) {
+				if (System.currentTimeMillis() > deadline) {
+					throw ae;
+				}
+			}
+
+			Thread.sleep(pauseTimeUnit.toMillis(pause));
+		}
 	}
 
 }

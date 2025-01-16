@@ -44,6 +44,9 @@ public class ObjectFieldBusinessTypeTest {
 
 	@Test
 	public void testGetLocalizedValues() throws Exception {
+
+		// Empty map value
+
 		String i18nObjectFieldName = "x" + RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -54,8 +57,6 @@ public class ObjectFieldBusinessTypeTest {
 
 		TestObjectFieldBusinessType testObjectFieldBusinessType =
 			new TestObjectFieldBusinessType();
-
-		// Empty map value
 
 		Assert.assertEquals(
 			new HashMap<>(),
@@ -102,6 +103,9 @@ public class ObjectFieldBusinessTypeTest {
 
 	@Test
 	public void testGetValue() throws Exception {
+
+		// Localized false
+
 		String fieldName = "x" + RandomTestUtil.randomString();
 		String i18nObjectFieldName = "x" + RandomTestUtil.randomString();
 
@@ -124,8 +128,6 @@ public class ObjectFieldBusinessTypeTest {
 		String fieldValue2 = "x" + RandomTestUtil.randomString();
 		String fieldValue3 = "x" + RandomTestUtil.randomString();
 
-		// Localized false
-
 		Mockito.when(
 			_objectField.isLocalized()
 		).thenReturn(
@@ -145,22 +147,6 @@ public class ObjectFieldBusinessTypeTest {
 					).put(
 						"es_ES", fieldValue3
 					).build()
-				).build()));
-
-		// Localized true and null value
-
-		Mockito.when(
-			_objectField.isLocalized()
-		).thenReturn(
-			true
-		);
-
-		Assert.assertEquals(
-			fieldValue1,
-			testObjectFieldBusinessType.getValue(
-				_objectField, RandomTestUtil.randomLong(),
-				HashMapBuilder.<String, Object>put(
-					fieldName, fieldValue1
 				).build()));
 
 		// Localized true and invalid value
@@ -193,6 +179,22 @@ public class ObjectFieldBusinessTypeTest {
 					i18nObjectFieldName + "\"",
 				objectEntryValuesException.getMessage());
 		}
+
+		// Localized true and null value
+
+		Mockito.when(
+			_objectField.isLocalized()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			fieldValue1,
+			testObjectFieldBusinessType.getValue(
+				_objectField, RandomTestUtil.randomLong(),
+				HashMapBuilder.<String, Object>put(
+					fieldName, fieldValue1
+				).build()));
 
 		// Localized true and valid value
 

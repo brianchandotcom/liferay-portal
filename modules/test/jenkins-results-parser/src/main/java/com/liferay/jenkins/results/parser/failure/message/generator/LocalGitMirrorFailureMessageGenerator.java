@@ -17,6 +17,12 @@ public class LocalGitMirrorFailureMessageGenerator
 
 	@Override
 	public String getMessage(String consoleText) {
+		if (!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
+			!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
+
+			return null;
+		}
+
 		return "Unable to synchronize with local Git mirror.";
 	}
 

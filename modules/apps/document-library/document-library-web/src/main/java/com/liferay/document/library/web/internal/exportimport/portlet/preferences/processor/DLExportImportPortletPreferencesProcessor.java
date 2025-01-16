@@ -172,7 +172,7 @@ public class DLExportImportPortletPreferencesProcessor
 			}
 		}
 
-		// Root folder ID is not set, we need to export everything
+		// Root folder ERC is not set, we need to export everything
 
 		try {
 			portletDataContext.addPortletPermissions(DLConstants.RESOURCE_NAME);
@@ -367,9 +367,6 @@ public class DLExportImportPortletPreferencesProcessor
 				try {
 					Element folderElement = folderElements.get(0);
 
-					long rootFolderId = _getFolderId(
-						folderElement, portletDataContext);
-
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, folderElement);
 
@@ -378,6 +375,9 @@ public class DLExportImportPortletPreferencesProcessor
 							portletDataContext.getNewPrimaryKeysMap(
 								Folder.class +
 									".folderIdsAndRepositoryEntryIds");
+
+					long rootFolderId = _getFolderId(
+						folderElement, portletDataContext);
 
 					long importedRootFolderId = MapUtil.getLong(
 						folderIds, rootFolderId, rootFolderId);

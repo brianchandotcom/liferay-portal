@@ -5,20 +5,20 @@
 
 package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.CharArrayWriter;
-import java.io.IOException;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Iván Zaera Avellón
@@ -36,11 +36,9 @@ public class JSImportMapsCacheTest {
 	}
 
 	@Test
-	public void testWriteImportMapsForAllCompanies()
-		throws IOException, JSONException {
-
-		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject(
-			"{\"react\":\"https://unpkg.com/react@19.0.0/index.js\"}");
+	public void testWriteImportMapsForAllCompanies() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"react", "https://unpkg.com/react@19.0.0/index.js");
 
 		JSImportMapsRegistration jsImportMapsRegistration1 =
 			_jsImportMapsCache.register(
@@ -50,33 +48,48 @@ public class JSImportMapsCacheTest {
 			_jsImportMapsCache.register(
 				JSImportMapsCache.COMPANY_ID_ALL, jsonObject, "a-scope");
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {",
-				"\"a-scope\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}}}"),
-			_getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put("react", "https://unpkg.com/react@19.0.0/index.js")
+			).put(
+				"scopes",
+				JSONUtil.put(
+					"a-scope",
+					JSONUtil.put(
+						"react", "https://unpkg.com/react@19.0.0/index.js"))
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 
 		jsImportMapsRegistration1.unregister();
 
-		Assert.assertEquals(
-			"{\"imports\": {}, \"scopes\": {\"a-scope\": {\"react\":" +
-				"\"https://unpkg.com/react@19.0.0/index.js\"}}}",
-			_getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports", JSONFactoryUtil.createJSONObject()
+			).put(
+				"scopes",
+				JSONUtil.put(
+					"a-scope",
+					JSONUtil.put(
+						"react", "https://unpkg.com/react@19.0.0/index.js"))
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 
 		jsImportMapsRegistration2.unregister();
 
-		Assert.assertEquals(
-			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports", JSONFactoryUtil.createJSONObject()
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 	}
 
 	@Test
-	public void testWriteImportMapsForOneCompany()
-		throws IOException, JSONException {
-
-		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject(
-			"{\"react\":\"https://unpkg.com/react@19.0.0/index.js\"}");
+	public void testWriteImportMapsForOneCompany() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"react", "https://unpkg.com/react@19.0.0/index.js");
 
 		JSImportMapsRegistration jsImportMapsRegistration1 =
 			_jsImportMapsCache.register(1, jsonObject, null);
@@ -84,95 +97,139 @@ public class JSImportMapsCacheTest {
 		JSImportMapsRegistration jsImportMapsRegistration2 =
 			_jsImportMapsCache.register(1, jsonObject, "a-scope");
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {",
-				"\"a-scope\": {\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}}}"),
-			_getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put("react", "https://unpkg.com/react@19.0.0/index.js")
+			).put(
+				"scopes",
+				JSONUtil.put(
+					"a-scope",
+					JSONUtil.put(
+						"react", "https://unpkg.com/react@19.0.0/index.js"))
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 
 		jsImportMapsRegistration1.unregister();
 
-		Assert.assertEquals(
-			"{\"imports\": {}, \"scopes\": {\"a-scope\": {\"react\":" +
-				"\"https://unpkg.com/react@19.0.0/index.js\"}}}",
-			_getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports", JSONFactoryUtil.createJSONObject()
+			).put(
+				"scopes",
+				JSONUtil.put(
+					"a-scope",
+					JSONUtil.put(
+						"react", "https://unpkg.com/react@19.0.0/index.js"))
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 
 		jsImportMapsRegistration2.unregister();
 
-		Assert.assertEquals(
-			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports", JSONFactoryUtil.createJSONObject()
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 	}
 
 	@Test
-	public void testWriteImportMapsMixed() throws IOException, JSONException {
-		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject(
-			"{\"jquery\":\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"}");
+	public void testWriteImportMapsMixed() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"jquery", "https://unpkg.com/jquery@3.7.1/dist/jquery.js");
 
 		JSImportMapsRegistration companyAllJSImportMapsRegistration =
 			_jsImportMapsCache.register(
 				JSImportMapsCache.COMPANY_ID_ALL, jsonObject, null);
 
-		jsonObject = _jsonFactoryImpl.createJSONObject(
-			"{\"react\":\"https://unpkg.com/react@19.0.0/index.js\"}");
+		jsonObject = JSONUtil.put(
+			"react", "https://unpkg.com/react@19.0.0/index.js");
 
 		_jsImportMapsCache.register(1, jsonObject, null);
 
-		jsonObject = _jsonFactoryImpl.createJSONObject(
-			"{\"lodash\":\"https://unpkg.com/lodash@4.17.21/lodash.js\"}");
+		jsonObject = JSONUtil.put(
+			"lodash", "https://unpkg.com/lodash@4.17.21/lodash.js");
 
 		JSImportMapsRegistration company2JSImportMapsRegistration =
 			_jsImportMapsCache.register(2, jsonObject, null);
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": ",
-				"{}}"),
-			_getImportMaps(1));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put(
+					"jquery", "https://unpkg.com/jquery@3.7.1/dist/jquery.js"
+				).put(
+					"react", "https://unpkg.com/react@19.0.0/index.js"
+				)
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"lodash\":",
-				"\"https://unpkg.com/lodash@4.17.21/lodash.js\"}, \"scopes\": ",
-				"{}}"),
-			_getImportMaps(2));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put(
+					"jquery", "https://unpkg.com/jquery@3.7.1/dist/jquery.js"
+				).put(
+					"lodash", "https://unpkg.com/lodash@4.17.21/lodash.js"
+				)
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(2), JSONCompareMode.LENIENT);
 
 		company2JSImportMapsRegistration.unregister();
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\",\"react\":",
-				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": ",
-				"{}}"),
-			_getImportMaps(1));
-		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"imports\": {\"jquery\":",
-				"\"https://unpkg.com/jquery@3.7.1/dist/jquery.js\"}, ",
-				"\"scopes\": {}}"),
-			_getImportMaps(2));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put(
+					"jquery", "https://unpkg.com/jquery@3.7.1/dist/jquery.js"
+				).put(
+					"react", "https://unpkg.com/react@19.0.0/index.js"
+				)
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put(
+					"jquery", "https://unpkg.com/jquery@3.7.1/dist/jquery.js")
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(2), JSONCompareMode.LENIENT);
 
 		companyAllJSImportMapsRegistration.unregister();
 
-		Assert.assertEquals(
-			"{\"imports\": {\"react\":" +
-				"\"https://unpkg.com/react@19.0.0/index.js\"}, \"scopes\": {}}",
-			_getImportMaps(1));
-		Assert.assertEquals(
-			"{\"imports\": {}, \"scopes\": {}}", _getImportMaps(2));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports",
+				JSONUtil.put("react", "https://unpkg.com/react@19.0.0/index.js")
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(1), JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"imports", JSONFactoryUtil.createJSONObject()
+			).put(
+				"scopes", JSONFactoryUtil.createJSONObject()
+			).toString(),
+			_getImportMaps(2), JSONCompareMode.LENIENT);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testWriteImportMapsThrowsForCompanyIdAll() throws IOException {
+	public void testWriteImportMapsThrowsForCompanyIdAll() throws Exception {
 		_getImportMaps(JSImportMapsCache.COMPANY_ID_ALL);
 	}
 
-	private String _getImportMaps(long companyId) throws IOException {
+	private String _getImportMaps(long companyId) throws Exception {
 		CharArrayWriter charArrayWriter = new CharArrayWriter();
 
 		_jsImportMapsCache.writeImportMaps(companyId, charArrayWriter);
@@ -181,6 +238,5 @@ public class JSImportMapsCacheTest {
 	}
 
 	private JSImportMapsCache _jsImportMapsCache;
-	private final JSONFactoryImpl _jsonFactoryImpl = new JSONFactoryImpl();
 
 }

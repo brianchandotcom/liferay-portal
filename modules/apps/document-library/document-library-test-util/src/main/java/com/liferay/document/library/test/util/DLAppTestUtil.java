@@ -40,17 +40,17 @@ public abstract class DLAppTestUtil {
 	public static FileEntry addFileEntry(Folder folder) throws Exception {
 		return addFileEntry(
 			TestPropsValues.getUserId(), folder.getGroupId(),
-			folder.getFolderId(), folder.getRepositoryId());
+			folder.getRepositoryId(), folder.getFolderId());
 	}
 
 	public static FileEntry addFileEntry(long groupId) throws Exception {
 		return addFileEntry(
-			TestPropsValues.getUserId(), groupId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, groupId);
+			TestPropsValues.getUserId(), groupId, groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public static FileEntry addFileEntry(
-			long userId, long groupId, long folderId, long repositoryId)
+			long userId, long groupId, long repositoryId, long folderId)
 		throws Exception {
 
 		return DLAppLocalServiceUtil.addFileEntry(
@@ -66,8 +66,8 @@ public abstract class DLAppTestUtil {
 
 		return addFileEntry(
 			TestPropsValues.getUserId(), repository.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			repository.getRepositoryId());
+			repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public static FileEntry addFileEntryWithWorkflow(

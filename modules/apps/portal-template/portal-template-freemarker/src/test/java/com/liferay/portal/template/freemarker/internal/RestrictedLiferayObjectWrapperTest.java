@@ -280,6 +280,37 @@ public class RestrictedLiferayObjectWrapperTest
 		}
 	}
 
+	@Test
+	public void testRestrictedMethodToString() throws Exception {
+		RestrictedLiferayObjectWrapper restrictedLiferayObjectWrapper =
+			new RestrictedLiferayObjectWrapper(
+				null, null,
+				new String[] {
+					TestLiferayMethodObject.class.getName() + "#toString"
+				});
+
+		TemplateModel templateModel = restrictedLiferayObjectWrapper.wrap(
+			new TestLiferayMethodObject("test"));
+
+		Assert.assertThat(
+			templateModel,
+			CoreMatchers.instanceOf(LiferayFreeMarkerStringModel.class));
+
+		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel =
+			(LiferayFreeMarkerStringModel)templateModel;
+
+		_testRestrictedMethodToString(liferayFreeMarkerStringModel);
+
+		SimpleMethodModel simpleMethodModel =
+			(SimpleMethodModel)liferayFreeMarkerStringModel.get("generate");
+
+		TemplateModel resultTemplateModel =
+			(TemplateModel)simpleMethodModel.exec(
+				Collections.singletonList(new SimpleScalar("generate")));
+
+		Assert.assertEquals("test-generate", resultTemplateModel.toString());
+	}
+
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testWrapWithCompanyRestrictForFalse() throws Exception {
@@ -536,6 +567,29 @@ public class RestrictedLiferayObjectWrapperTest
 					"Denied access to method or field ", key, " of ",
 					TestLiferayMethodObject.class),
 				templateModelException.getMessage());
+		}
+	}
+
+	private void _testRestrictedMethodToString(
+		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel) {
+
+		try {
+			liferayFreeMarkerStringModel.getAsString();
+
+			Assert.fail("Should throw RuntimeException for toString");
+		}
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
+			Assert.assertTrue(
+				"Expected TemplateModelException but got " +
+					throwable.getClass(),
+				throwable instanceof TemplateModelException);
+
+			Assert.assertEquals(
+				"Denied access to method or field toString of " +
+					TestLiferayMethodObject.class,
+				runtimeException.getMessage());
 		}
 	}
 

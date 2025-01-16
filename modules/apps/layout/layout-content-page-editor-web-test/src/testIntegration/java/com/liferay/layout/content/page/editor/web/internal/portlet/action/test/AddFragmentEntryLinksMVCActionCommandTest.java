@@ -30,6 +30,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -135,18 +136,40 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 			RandomTestUtil.randomString(), numberOfFragmentEntryLinks);
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testAddFragmentEntryLinksInput() throws Exception {
 		FragmentComposition fragmentComposition = _addFragmentComposition(
 			FragmentConstants.TYPE_INPUT, SetUtil.fromArray("text"),
 			"<div></div>", 1);
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_processAddFragmentEntryLinks",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
-				fragmentComposition.getFragmentCompositionKey()),
-			new MockLiferayPortletActionResponse());
+				fragmentComposition.getFragmentCompositionKey());
+
+		try {
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_processAddFragmentEntryLinks",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "processException",
+				new Class<?>[] {ActionRequest.class, Exception.class},
+				mockLiferayPortletActionRequest, unsupportedOperationException);
+
+			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
+
+			Assert.assertEquals(
+				_language.get(
+					_portal.getSiteDefaultLocale(_group),
+					"form-components-can-only-be-placed-inside-a-mapped-form-" +
+						"container"),
+				jsonObject.getString("error"));
+		}
 	}
 
 	@Test
@@ -484,6 +507,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 

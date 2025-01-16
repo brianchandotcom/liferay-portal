@@ -6,8 +6,10 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.internal.configuration.helper.DLSizeLimitConfigurationHelper;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
@@ -19,6 +21,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -182,6 +186,38 @@ public final class DLValidatorImpl implements DLValidator {
 		if (!validFileExtension) {
 			throw new FileExtensionException.InvalidExtension(
 				"Invalid file extension for " + fileName);
+		}
+	}
+
+	@Override
+	public void validateFileMimeType(long companyId, String mimeType)
+		throws PortalException {
+
+		if (CompanyThreadLocal.isInitializingPortalInstance()) {
+			return;
+		}
+
+		boolean validFileMimeType = false;
+
+		DLFileEntryMimeTypeConfiguration dlFileEntryMimeTypeConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				DLFileEntryMimeTypeConfiguration.class, companyId);
+
+		for (String fileMimeType :
+				dlFileEntryMimeTypeConfiguration.fileMimeTypes()) {
+
+			if (StringPool.STAR.equals(fileMimeType) ||
+				StringUtil.equalsIgnoreCase(mimeType, fileMimeType)) {
+
+				validFileMimeType = true;
+
+				break;
+			}
+		}
+
+		if (!validFileMimeType) {
+			throw new FileMimeTypeException(
+				"Invalid file mime type " + mimeType);
 		}
 	}
 
@@ -400,6 +436,9 @@ public final class DLValidatorImpl implements DLValidator {
 			title, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR,
 			StringPool.UNDERLINE);
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private volatile DLConfiguration _dlConfiguration;
 

@@ -7,7 +7,6 @@ package com.liferay.portal.vulcan.internal.openapi.contributor;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -29,7 +28,6 @@ import io.swagger.v3.oas.models.media.Schema;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -224,27 +222,18 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		Queue<Map.Entry<String, EntityField>> entryQueue = new LinkedList<>(
-			TransformUtil.transform(
-				entityFieldsMap.entrySet(),
-				entry -> new AbstractMap.SimpleEntry<>(
-					entry.getKey(), entry.getValue())));
+			entityFieldsMap.entrySet());
 
 		List<String> filterableFields = new ArrayList<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 
-		Map<Map.Entry<String, EntityField>, Integer> depthMap = new HashMap<>();
-
-		for (Map.Entry<String, EntityField> entry : entryQueue) {
-			depthMap.put(entry, 0);
-		}
-
 		while (!entryQueue.isEmpty()) {
 			Map.Entry<String, EntityField> entry = entryQueue.poll();
 
-			int currentDepth = depthMap.get(entry);
+			String fieldName = entry.getKey();
 
-			if (currentDepth >= 5) {
+			if (StringUtil.count(fieldName, '/') >= 5) {
 				continue;
 			}
 
@@ -269,14 +258,10 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 					entryQueue.add(
 						new AbstractMap.SimpleEntry<>(
 							newKey, childEntry.getValue()));
-					depthMap.put(
-						new AbstractMap.SimpleEntry<>(
-							newKey, childEntry.getValue()),
-						currentDepth + 1);
 				}
 			}
 			else {
-				filterableFields.add(entry.getKey());
+				filterableFields.add(fieldName);
 			}
 		}
 

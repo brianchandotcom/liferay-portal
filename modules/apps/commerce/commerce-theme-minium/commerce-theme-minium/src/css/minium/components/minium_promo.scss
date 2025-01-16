@@ -1,0 +1,55 @@
+.minium .banner-content-preview {
+	display: flex;
+
+	.banner-content-section {
+		background-position: 50%;
+		background-size: cover;
+		height: 100%;
+		padding: 5% 56px 56px;
+		width: 100%;
+
+		.minium-cta-button {
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			border-radius: 8px;
+			box-sizing: border-box;
+			color: #fff;
+			cursor: pointer;
+			font-size: 10px;
+			letter-spacing: 1px;
+			line-height: 10px;
+			text-transform: uppercase;
+
+			&:hover {
+				background-color: #4886ff;
+				border: 1px solid #4886ff;
+				transform: none;
+			}
+
+			.minium-button-text {
+				color: #fff;
+				font-weight: 900;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+			}
+		}
+
+		.minium-cta-link button {
+			cursor: pointer;
+		}
+
+		.minium-h1 {
+			color: #fff;
+			font-size: 48px;
+			font-style: normal;
+			font-weight: 300;
+			line-height: 1;
+			margin-bottom: 25px;
+			text-transform: capitalize;
+		}
+
+		.minium-sub-heading {
+			color: #abadb3;
+			padding: 12px 0;
+		}
+	}
+}

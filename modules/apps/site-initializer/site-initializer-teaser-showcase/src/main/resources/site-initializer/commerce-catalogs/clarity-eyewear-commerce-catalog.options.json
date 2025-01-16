@@ -1,0 +1,25 @@
+[
+	{
+		"externalReferenceCode": "PREMIUM_BOX_OPTION",
+		"facetable": true,
+		"fieldType": "select",
+		"key": "premium-box-option",
+		"name": "premium-box-option",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "YES_VALUE",
+				"key": "yes",
+				"name": "Yes",
+				"priority": 1
+			},
+			{
+				"externalReferenceCode": "NO_VALUE",
+				"key": "no",
+				"name": "No",
+				"priority": 0
+			}
+		]
+	}
+]

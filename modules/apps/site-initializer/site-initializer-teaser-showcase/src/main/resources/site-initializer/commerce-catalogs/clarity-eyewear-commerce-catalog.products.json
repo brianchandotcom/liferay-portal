@@ -1,0 +1,790 @@
+[
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 0,
+		"description": "Introducing our must-have accessory for sunny days – our classic\n  aviator sunglasses! 🕶️\nWhether you're lounging on the beach, driving with the top down, or\n  just enjoying a leisurely walk, these sunglasses are the perfect blend\n  of style and functionality. The timeless aviator design never goes out\n  of fashion, making them a versatile choice for any outfit or occasion.\nCrafted with high-quality materials, these sunglasses offer not only\n  a sleek look but also durability to withstand your fun-filled outdoor\n  adventures. The UV-protective lenses ensure your eyes stay safe from\n  the sun's harmful rays, so you can focus on soaking up the sunshine.\nWith a comfortable fit and lightweight feel, you'll forget you're\n  even wearing them – until you catch a glimpse of your stylish self,\n  that is! So why not elevate your sunny day look with our classic\n  aviator sunglasses? Trust us, you won't want to leave home without\n  them! 😎",
+		"externalReferenceCode": "CLASSIC_AVIATOR_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"classic_aviator_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Classic Aviator Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "CLASSIC_AVIATOR_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "",
+		"externalReferenceCode": "AQUACOMFORT_PLUS_DAILIES",
+		"height": 0,
+		"images": [
+			"aquacomfort_plus_dailies.png"
+		],
+		"minStockQuantity": 5,
+		"name": "AquaComfort Plus Dailies",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "AQUACOMFORT_PLUS_DAILIES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "",
+		"externalReferenceCode": "SINGLE_VISION_LENSES",
+		"height": 0,
+		"images": [
+			"single_vision_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Single Vision Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "SINGLE_VISION_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 101,
+		"description": "Family Prescription Sunglasses",
+		"externalReferenceCode": "FAMILY_PRESCRIPTION_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"family_prescription_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Family Prescription Sunglasses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "FAMILY_PRESCRIPTION_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 101,
+		"description": "Kids Prescription Sunglasses",
+		"externalReferenceCode": "KIDS_PRESCRIPTION_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"kids_prescription_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Kids Prescription Sunglasses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "KIDS_PRESCRIPTION_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 101,
+		"description": "Kids Prescription Eyeglasses",
+		"externalReferenceCode": "KIDS_PRESCRIPTION_EYEGLASSES",
+		"height": 0,
+		"images": [
+			"KIDS_PRESCRIPTION_EYEGLASSES.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Kids Prescription Eyeglasses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "KIDS_PRESCRIPTION_EYEGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 101,
+		"description": "Family Prescription Eyeglasses",
+		"externalReferenceCode": "FAMILY_PRESCRIPTION_EYEGLASSES",
+		"height": 0,
+		"images": [
+			"kids_prescription_eyeglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Family Prescription Eyeglasses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "FAMILY_PRESCRIPTION_EYEGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 101,
+		"description": "Soft Contacts",
+		"externalReferenceCode": "SOFT_CONTACTS",
+		"height": 0,
+		"images": [
+			"soft_contacts.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Soft Contacts",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "SOFT_CONTACTS",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 101,
+		"description": "Hard Contacts",
+		"externalReferenceCode": "HARD_CONTACTS",
+		"height": 0,
+		"images": [
+			"hard_contacts.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Hard Contacts",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "HARD_CONTACTS",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 101,
+		"description": "Tinted Lenses",
+		"externalReferenceCode": "TINTED_LENSES",
+		"height": 0,
+		"images": [
+			"tinted_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Tinted Lenses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "TINTED_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 101,
+		"description": "Polarized Lenses",
+		"externalReferenceCode": "POLARIZED_LENSES",
+		"height": 0,
+		"images": [
+			"polarized_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Polarized Lenses",
+		"price": 101,
+		"promoPrice": 202,
+		"sku": "POLARIZED_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+		],
+		"cost": 0,
+		"description": "Sports Sunglasses",
+		"externalReferenceCode": "SPORTS_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"sports_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Sports Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "SPORTS_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 0,
+		"description": "Retro Round Sunglasses",
+		"externalReferenceCode": "RETRO_ROUND_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"retro_round_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Retro Round Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "RETRO_ROUND_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 0,
+		"description": "Cat Eye Sunglasses",
+		"externalReferenceCode": "CAT_EYE_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"cat_eye_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Cat Eye Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "CAT_EYE_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+		],
+		"cost": 0,
+		"description": "Oversized Square Sunglasses",
+		"externalReferenceCode": "OVERSIZED_SQUARE_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"oversized_square_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Oversized Square Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "OVERSIZED_SQUARE_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Sunglasses"
+		],
+		"cost": 0,
+		"description": "Round Metal Sunglasses",
+		"externalReferenceCode": "ROUND_METAL_SUNGLASSES",
+		"height": 0,
+		"images": [
+			"round_metal_sunglasses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Round Metal Sunglasses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "ROUND_METAL_SUNGLASSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "ClearVision 1-Day Contact Lenses",
+		"externalReferenceCode": "CLEARVISION_1-DAY_CONTACT_LENSES",
+		"height": 0,
+		"images": [
+			"clearvision_1_day_contact_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "ClearVision 1-Day Contact Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "CLEARVISION_1-DAY_CONTACT_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Biofinity Monthly Contact Lenses",
+		"externalReferenceCode": "BIOFINITY_MONTHLY_CONTACT_LENSES",
+		"height": 0,
+		"images": [
+			"biofinity_monthly_contact_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Biofinity Monthly Contact Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "BIOFINITY_MONTHLY_CONTACT_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Air Optix Aqua Monthly Lenses",
+		"externalReferenceCode": "AIR_OPTIX_AQUA_MONTHLY_LENSES",
+		"height": 0,
+		"images": [
+			"air_optix_aqua_monthly_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Air Optix Aqua Monthly Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "AIR_OPTIX_AQUA_MONTHLY_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Air Optix Colors",
+		"externalReferenceCode": "AIR_OPTIX_COLORS",
+		"height": 0,
+		"images": [
+			"air_optix_colors.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Air Optix Colors",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "AIR_OPTIX_COLORS",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Bifocal Lenses",
+		"externalReferenceCode": "BIFOCAL_LENSES",
+		"height": 0,
+		"images": [
+			"bifocal_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Bifocal Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "BIFOCAL_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Progressive Lenses",
+		"externalReferenceCode": "PROGRESSIVE_LENSES",
+		"height": 0,
+		"images": [
+			"progressive_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Progressive Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "PROGRESSIVE_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Clear Lenses",
+		"externalReferenceCode": "CLEAR_LENSES",
+		"height": 0,
+		"images": [
+			"clear_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Clear Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "CLEAR_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Blue Light Blocking Lenses",
+		"externalReferenceCode": "BLUE_LIGHT_BLOCKING_LENSES",
+		"height": 0,
+		"images": [
+			"blue_light_blocking_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Blue Light Blocking Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "BLUE_LIGHT_BLOCKING_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "FreshLook ColorBlends",
+		"externalReferenceCode": "FRESHLOOK_COLORBLENDS",
+		"height": 0,
+		"images": [
+			"freshlook_colorblends.png"
+		],
+		"minStockQuantity": 5,
+		"name": "FreshLook ColorBlends",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "FRESHLOOK_COLORBLENDS",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Biofinity Toric Lenses",
+		"externalReferenceCode": "BIOFINITY_TORIC_LENSES",
+		"height": 0,
+		"images": [
+			"biofinity_toric_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Biofinity Toric Lenses",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "BIOFINITY_TORIC_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Sophisticated Rectangle",
+		"externalReferenceCode": "SOPHISTICATED_RECTANGLE",
+		"height": 0,
+		"images": [
+			"sophisticated_rectangle.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Sophisticated Rectangle",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "SOPHISTICATED_RECTANGLE",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Trendy Oversized",
+		"externalReferenceCode": "TRENDY_OVERSIZED",
+		"height": 0,
+		"images": [
+			"trendy_oversized.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Trendy Oversized",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "TRENDY_OVERSIZED",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Elegant Cat Eye",
+		"externalReferenceCode": "ELEGANT_CAT_EYE",
+		"height": 0,
+		"images": [
+			"elegant_cat_eye.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Elegant Cat Eye",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "ELEGANT_CAT_EYE",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Modern Rectangle",
+		"externalReferenceCode": "MODERN_RECTANGLE",
+		"height": 0,
+		"images": [
+			"modern_rectangle.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Modern Rectangle",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "MODERN_RECTANGLE",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Vintage Round",
+		"externalReferenceCode": "VINTAGE_ROUND",
+		"height": 0,
+		"images": [
+			"vintage_round.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Vintage Round",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "VINTAGE_ROUND",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Eyeglasses"
+		],
+		"cost": 0,
+		"description": "Classic Aviator",
+		"externalReferenceCode": "CLASSIC_AVIATOR",
+		"height": 0,
+		"images": [
+			"classic_aviator.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Classic Aviator",
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "CLASSIC_AVIATOR",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Multifocal Lenses",
+		"externalReferenceCode": "MULTIFOCAL_LENSES",
+		"height": 0,
+		"images": [
+			"multifocal_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Multifocal Lenses",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "MULTIFOCAL_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Toric Lenses",
+		"externalReferenceCode": "TORIC_LENSES",
+		"height": 0,
+		"images": [
+			"toric_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Toric Lenses",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "TORIC_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Monthly Disposable Lenses",
+		"externalReferenceCode": "MONTHLY_DISPOSABLE_LENSES",
+		"height": 0,
+		"images": [
+			"monthly_disposable_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Monthly Disposable Lenses",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "MONTHLY_DISPOSABLE_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Daily Disposable Lenses",
+		"externalReferenceCode": "DAILY_DISPOSABLE_LENSES",
+		"height": 0,
+		"images": [
+			"daily_disposable_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Daily Disposable Lenses",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "DAILY_DISPOSABLE_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Lenses"
+		],
+		"cost": 0,
+		"description": "Photochromic Lenses",
+		"externalReferenceCode": "PHOTOCHROMIC_LENSES",
+		"height": 0,
+		"images": [
+			"photochromic_lenses.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Photochromic Lenses",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "PHOTOCHROMIC_LENSES",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	},
+	{
+		"categories": [
+			"Contacts"
+		],
+		"cost": 0,
+		"description": "Acuvue Oasys for Astigmatism",
+		"externalReferenceCode": "ACUVUE_OASYS_FOR_ASTIGMATISM",
+		"height": 0,
+		"images": [
+			"acuvue_oasys_for_astigmatism.png"
+		],
+		"minStockQuantity": 5,
+		"name": "Acuvue Oasys for Astigmatism",
+		"options": [
+			{
+				"key": "premium-box-option"
+			}
+		],
+		"price": 0,
+		"promoPrice": 0,
+		"sku": "ACUVUE_OASYS_FOR_ASTIGMATISM",
+		"warehouse1": 60,
+		"weight": 0,
+		"width": 0
+	}
+]

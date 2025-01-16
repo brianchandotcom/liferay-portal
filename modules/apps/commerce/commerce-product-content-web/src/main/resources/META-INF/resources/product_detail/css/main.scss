@@ -7,6 +7,12 @@
 			height: 32px;
 			width: 32px;
 		}
+
+		.tab-pane-collapse.tab-pane-replacements {
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
 	}
 
 	.table tbody tr {

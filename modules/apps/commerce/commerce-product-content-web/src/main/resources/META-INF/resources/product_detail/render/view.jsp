@@ -272,7 +272,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 
 <div class="tab-content">
 	<c:if test="<%= hasDescription %>">
-		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navDescriptionId %>" role="tabpanel">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane tab-pane-description" id="<%= navDescriptionId %>" role="tabpanel">
 			<div class="p-4">
 				<%= description %>
 			</div>
@@ -280,7 +280,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 	</c:if>
 
 	<c:if test="<%= hasCPDefinitionSpecificationOptionValues %>">
-		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navSpecificationsId %>" role="tabpanel">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane tab-pane-specifications" id="<%= navSpecificationsId %>" role="tabpanel">
 			<dl class="specification-list">
 
 				<%
@@ -344,7 +344,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 	</c:if>
 
 	<c:if test="<%= hasCPMedia %>">
-		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navCPMediaId %>" role="tabpanel">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane tab-pane-media" id="<%= navCPMediaId %>" role="tabpanel">
 			<ul class="list-group">
 
 				<%
@@ -387,7 +387,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 	</c:if>
 
 	<c:if test="<%= directReplacement %>">
-		<div aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navReplacementsId %>" role="tabpanel" style="display: block; height: 0px; visibility: hidden;">
+		<div aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane tab-pane-collapse tab-pane-replacements" id="<%= navReplacementsId %>" role="tabpanel">
 			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(

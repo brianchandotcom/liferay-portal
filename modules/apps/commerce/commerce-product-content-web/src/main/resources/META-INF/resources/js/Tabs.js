@@ -34,9 +34,7 @@ export default function ({
 				tabElt.classList.remove('active', 'show');
 			}
 			if (!firstRender && currentTabId === navReplacementsId) {
-				tabElt.style.display = null;
-				tabElt.style.visibility = null;
-				tabElt.style.height = null;
+				tabElt.classList.remove('tab-pane-collapse');
 			}
 		}
 	};

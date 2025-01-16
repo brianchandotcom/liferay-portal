@@ -16,6 +16,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/Pagina
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 import {SVWaves} from '~/common/icons/sv_waves';
+import {Liferay} from '~/common/services/liferay';
 import {getFormattedDate} from '~/routes/customer-portal/utils/getFormattedDate';
 
 import {IRow} from '../../components/SVTable/SVTable';
@@ -135,6 +136,24 @@ const SecurityVulnerabilitiesList = () => {
 		}
 	}, [jiraSearch]);
 
+	const _getSecurityAdvisoriesLink = () => {
+		const userLanguage = Liferay.ThemeDisplay.getLanguageId();
+
+		if (userLanguage === 'es_ES') {
+			return 'https://help.liferay.com/hc/es/articles/360018875952-Security-Advisories';
+		}
+
+		if (userLanguage === 'ja_JP') {
+			return 'https://help.liferay.com/hc/ja/articles/360018875952-Security-Advisories';
+		}
+
+		if (userLanguage === 'pt_BR') {
+			return 'https://help.liferay.com/hc/pt/articles/360018875952-Security-Advisories';
+		}
+
+		return 'https://help.liferay.com/hc/en-us/articles/360018875952-Security-Advisories';
+	};
+
 	return (
 		<>
 			<div className="sv-list">
@@ -174,7 +193,10 @@ const SecurityVulnerabilitiesList = () => {
 								sortOptions={SORT_OPTIONS}
 							/>
 
-							<SVPanel text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center" />
+							<SVPanel
+								link={_getSecurityAdvisoriesLink()}
+								text="for-information-on-previously-addressed-cves-fixed-in-dxp-2024-q1-1-or-earlier-please-visit-our-help-center"
+							/>
 
 							<SVPanel
 								link="https://www.subscribepage.com/liferay"

@@ -5,10 +5,9 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,7 +37,7 @@ import org.mockito.Mockito;
  * @author Gabriel Ibson
  */
 public class LocalizableTextDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 
 	@ClassRule
 	@Rule
@@ -115,13 +114,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 	private Map<String, Object> _getParameters() {
 		_ddmFormField.setDDMForm(getDDMForm());
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		return _localizableTextDDMFormFieldTemplateContextContributor.
-			getParameters(_ddmFormField, ddmFormFieldRenderingContext);
+			getParameters(_ddmFormField, createDDMFormFieldRenderingContext());
 	}
 
 	private void _mockLanguageGet() {

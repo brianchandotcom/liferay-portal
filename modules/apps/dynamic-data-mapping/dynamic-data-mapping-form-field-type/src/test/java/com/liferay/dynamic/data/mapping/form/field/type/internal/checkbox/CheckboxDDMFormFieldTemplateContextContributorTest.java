@@ -5,10 +5,10 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -39,7 +39,7 @@ import org.mockito.Mockito;
  * @author Marcellus Tavares
  */
 public class CheckboxDDMFormFieldTemplateContextContributorTest
-	extends BaseDDMFormFieldTypeSettingsTestCase {
+	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 
 	@ClassRule
 	@Rule
@@ -47,10 +47,11 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
-		_ddmFormField.setDDMForm(getDDMForm());
-
 		setUpLanguageUtil();
+
+		_ddmFormField.setDDMForm(getDDMForm());
 
 		PortletURLFactoryUtil portletURLFactoryUtil =
 			new PortletURLFactoryUtil();

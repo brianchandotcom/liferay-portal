@@ -137,7 +137,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	@Test
 	public void testAddFragmentEntryLinksInput() throws Exception {
 		FragmentComposition fragmentComposition = _addFragmentComposition(
-			FragmentConstants.TYPE_INPUT, SetUtil.fromArray("text"),
+			SetUtil.fromArray("text"), FragmentConstants.TYPE_INPUT,
 			"<div></div>", 1);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -171,8 +171,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		}
 
 		fragmentComposition = _addFragmentComposition(
-			FragmentConstants.TYPE_INPUT,
-			SetUtil.fromArray("localizationSelect"),
+			SetUtil.fromArray("localizationSelect"), FragmentConstants.TYPE_INPUT,
 			"<div>localizationSelect</div>", 1);
 
 		mockLiferayPortletActionRequest.setParameter(
@@ -197,7 +196,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 	}
 
 	private FragmentComposition _addFragmentComposition(
-			int fragmentEntryType, Set<String> fieldTypes, String html,
+			Set<String> fieldTypes, int fragmentEntryType, String html,
 			int numberOfFragmentEntryLinks)
 		throws Exception {
 
@@ -273,7 +272,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		throws Exception {
 
 		return _addFragmentComposition(
-			FragmentConstants.TYPE_COMPONENT, Collections.emptySet(), html,
+			Collections.emptySet(), FragmentConstants.TYPE_COMPONENT, html,
 			numberOfFragmentEntryLinks);
 	}
 

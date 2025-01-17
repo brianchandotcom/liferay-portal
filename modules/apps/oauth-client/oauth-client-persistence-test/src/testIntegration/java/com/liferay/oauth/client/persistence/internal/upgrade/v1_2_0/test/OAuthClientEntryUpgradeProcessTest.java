@@ -98,13 +98,15 @@ public class OAuthClientEntryUpgradeProcessTest {
 			oAuthClientEntry1 =
 				_oAuthClientEntryLocalService.getOAuthClientEntry(
 					oAuthClientEntry1.getOAuthClientEntryId());
-			oAuthClientEntry2 =
-				_oAuthClientEntryLocalService.getOAuthClientEntry(
-					oAuthClientEntry2.getOAuthClientEntryId());
 
 			Assert.assertEquals(
 				discoveryEndpointCacheInMillis,
 				oAuthClientEntry1.getMetadataCacheTime());
+
+			oAuthClientEntry2 =
+				_oAuthClientEntryLocalService.getOAuthClientEntry(
+					oAuthClientEntry2.getOAuthClientEntryId());
+
 			Assert.assertEquals(
 				OAuthClientEntryConstants.DEFAULT_METADATA_CACHE_TIME,
 				oAuthClientEntry2.getMetadataCacheTime());

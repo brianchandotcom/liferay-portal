@@ -28,11 +28,7 @@ public interface LayoutSEODynamicRenderingConfiguration {
 	)
 	public boolean enabled();
 
-	@Meta.AD(
-		deflt = "",
-		name = "service-url",
-		required = false
-	)
+	@Meta.AD(deflt = "", name = "service-url", required = false)
 	public String serviceURL();
 
 	@Meta.AD(

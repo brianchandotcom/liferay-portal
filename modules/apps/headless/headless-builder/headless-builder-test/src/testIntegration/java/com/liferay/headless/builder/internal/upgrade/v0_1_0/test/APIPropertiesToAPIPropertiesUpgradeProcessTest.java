@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
  * @author Alejandro Tardín
  */
 @FeatureFlags("LPS-178642")
-public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcessTest
+public class APIPropertiesToAPIPropertiesUpgradeProcessTest
 	extends BaseTestCase {
 
 	@ClassRule
@@ -82,7 +82,7 @@ public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcessTest
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.headless.builder.internal.upgrade.v0_1_0." +
-				"DeleteAPIPropertiesToAPIPropertiesUpgradeProcess");
+				"APIPropertiesToAPIPropertiesUpgradeProcess");
 
 		String liferayMode = SystemProperties.get("liferay.mode");
 

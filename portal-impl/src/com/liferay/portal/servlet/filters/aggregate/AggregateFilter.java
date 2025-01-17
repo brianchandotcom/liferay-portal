@@ -527,14 +527,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 						return noticeableExecutorService.submit(
 							() -> {
-								String minifiedContent = null;
+								String minifiedContent = finalContent;
 
 								if (minifierType.equals("css")) {
 									minifiedContent = MinifierUtil.minifyCss(
 										finalContent);
-								}
-								else {
-									minifiedContent = finalContent;
 								}
 
 								minifiedContent = StringBundler.concat(

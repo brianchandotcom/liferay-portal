@@ -290,9 +290,6 @@ public class StripFilter extends BasePortalFilter {
 				}
 			}
 		}
-		else {
-			minifiedContent = content;
-		}
 
 		if (Validator.isNotNull(minifiedContent)) {
 			writer.write(minifiedContent);

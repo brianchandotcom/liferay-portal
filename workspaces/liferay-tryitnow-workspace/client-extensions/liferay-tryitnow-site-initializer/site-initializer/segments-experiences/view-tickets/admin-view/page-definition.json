@@ -565,7 +565,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"
+											"className": "[$OBJECT_DEFINITION_CLASS_NAME:J3Y7Ticket$]"
 										},
 										"collectionType": "CollectionProvider"
 									},

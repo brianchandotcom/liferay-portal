@@ -10,7 +10,6 @@ import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 
 export class LayoutSetPrototypePage {
 	readonly addLink: Locator;
-	readonly addTemplatePageButton: Locator;
 	readonly homePageLink: Locator;
 	readonly nameBox: Locator;
 	readonly page: Page;
@@ -20,9 +19,6 @@ export class LayoutSetPrototypePage {
 		this.page = page;
 
 		this.addLink = page.getByRole('link', {name: 'Add'});
-		this.addTemplatePageButton = page.getByRole('menuitem', {
-			name: 'Add Site Template Page',
-		});
 		this.homePageLink = page.getByLabel('Home', {exact: true});
 		this.nameBox = page.getByPlaceholder('Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});

@@ -8,7 +8,6 @@ package com.liferay.taglib.ui;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.defaultpermissions.configuration.manager.PortalDefaultPermissionsConfigurationManagerUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -76,26 +75,23 @@ public class InputPermissionsTag extends IncludeTag {
 			ResourceActionsUtil.getModelResourceActions(modelName));
 
 		if (showAllRoles) {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-21265")) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				Map<String, String[]> defaultPermissions =
-					PortalDefaultPermissionsConfigurationManagerUtil.
-						getDefaultPermissions(
-							themeDisplay.getCompanyId(),
-							themeDisplay.getSiteGroupId(), modelName);
+			Map<String, String[]> defaultPermissions =
+				PortalDefaultPermissionsConfigurationManagerUtil.
+					getDefaultPermissions(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getSiteGroupId(), modelName);
 
-				if (defaultPermissions == null) {
-					defaultPermissions = Collections.emptyMap();
-				}
-
-				httpServletRequest.setAttribute(
-					"liferay-ui:input-permissions:defaultPermissions",
-					defaultPermissions);
+			if (defaultPermissions == null) {
+				defaultPermissions = Collections.emptyMap();
 			}
 
+			httpServletRequest.setAttribute(
+				"liferay-ui:input-permissions:defaultPermissions",
+				defaultPermissions);
 			httpServletRequest.setAttribute(
 				"liferay-ui:input-permissions:supportedRoles",
 				_getSupportedRoles(httpServletRequest, modelName));

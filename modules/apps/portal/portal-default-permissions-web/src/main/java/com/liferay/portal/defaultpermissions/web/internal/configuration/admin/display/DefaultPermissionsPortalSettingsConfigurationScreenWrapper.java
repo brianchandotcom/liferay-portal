@@ -9,7 +9,6 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.defaultpermissions.web.internal.display.context.CompanyViewPortalDefaultPermissionsConfigurationDisplayContext;
 import com.liferay.portal.kernel.defaultpermissions.resource.PortalDefaultPermissionsModelResourceRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -85,15 +84,6 @@ public class DefaultPermissionsPortalSettingsConfigurationScreenWrapper
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
-		}
-
-		@Override
-		public boolean isVisible() {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-21265")) {
-				return true;
-			}
-
-			return false;
 		}
 
 		@Override

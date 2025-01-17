@@ -15,7 +15,6 @@ import {waitForAlert} from '../../utils/waitForAlert';
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-21265': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),

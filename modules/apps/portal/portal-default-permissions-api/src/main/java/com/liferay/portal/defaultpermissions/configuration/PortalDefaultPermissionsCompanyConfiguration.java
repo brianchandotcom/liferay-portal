@@ -13,9 +13,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Stefano Motta
  */
 @ExtendedObjectClassDefinition(
-	category = "default-permissions", featureFlagKey = "LPD-21265",
-	generateUI = false, scope = ExtendedObjectClassDefinition.Scope.COMPANY,
-	strictScope = true
+	category = "default-permissions", generateUI = false,
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY, strictScope = true
 )
 @Meta.OCD(
 	id = "com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsCompanyConfiguration",

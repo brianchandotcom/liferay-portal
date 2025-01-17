@@ -17,7 +17,7 @@
 	</@>
 
 	<#if validator.isNotNull(Title)>
-		<h3 style="font-weight: normal">${Title.getData()}</h3>
+		<h3 class="font-weight-normal">${Title.getData()}</h3>
 	</#if>
 
 	<#if validator.isNotNull(Description)>

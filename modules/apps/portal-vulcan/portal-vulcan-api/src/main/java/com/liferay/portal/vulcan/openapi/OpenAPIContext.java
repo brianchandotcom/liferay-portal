@@ -16,10 +16,6 @@ public class OpenAPIContext {
 		return _baseURL;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
 	public String getPath() {
 		return _path;
 	}
@@ -36,10 +32,6 @@ public class OpenAPIContext {
 		_baseURL = baseURL;
 	}
 
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public void setPath(String path) {
 		_path = path;
 	}
@@ -53,7 +45,6 @@ public class OpenAPIContext {
 	}
 
 	private String _baseURL;
-	private long _companyId;
 	private String _path;
 	private UriInfo _uriInfo;
 	private String _version;

@@ -250,21 +250,7 @@ export function ObjectRelationshipFormBase({
 			setObjectDefinitions(objectDefinitions);
 		};
 
-		if (readonly) {
-			setObjectDefinitions([
-				{
-					externalReferenceCode:
-						values.objectDefinitionExternalReferenceCode2 as string,
-					id: values.objectDefinitionId2 as number,
-					label: values.label as LocalizedValue<string>,
-					name: values.objectDefinitionName2 as string,
-					system: false,
-				},
-			]);
-		}
-		else {
-			fetchObjectDefinitions();
-		}
+		fetchObjectDefinitions();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode1, readonly]);

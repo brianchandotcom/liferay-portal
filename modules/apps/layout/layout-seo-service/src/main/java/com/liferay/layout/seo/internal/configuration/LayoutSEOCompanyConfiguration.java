@@ -44,7 +44,7 @@ public interface LayoutSEOCompanyConfiguration {
 	@Meta.AD(
 		deflt = "true",
 		description = "layout-seo-configuration-enable-open-graph-description",
-		name = "layout-seo-configuration-enable-open-graph", required = false
+		name = "enable-open-graph", required = false
 	)
 	public boolean enableOpenGraph();
 

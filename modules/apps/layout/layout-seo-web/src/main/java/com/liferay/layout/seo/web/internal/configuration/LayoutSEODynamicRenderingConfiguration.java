@@ -30,7 +30,7 @@ public interface LayoutSEODynamicRenderingConfiguration {
 
 	@Meta.AD(
 		deflt = "",
-		name = "layout-seo-dynamic-rendering-configuration-service-url",
+		name = "service-url",
 		required = false
 	)
 	public String serviceURL();

@@ -1468,6 +1468,7 @@ public class CTCollectionLocalServiceImpl
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
 		sb.append(" and ");
+		sb.append("(");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
@@ -1490,6 +1491,7 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 
 		Connection connection = _currentConnection.getConnection(
 			ctPersistence.getDataSource());
@@ -1530,6 +1532,7 @@ public class CTCollectionLocalServiceImpl
 		sb.append(" where ctCollectionId = ");
 		sb.append(fromCTCollectionId);
 		sb.append(" and ");
+		sb.append("(");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
@@ -1552,6 +1555,7 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 
 		Connection connection = _currentConnection.getConnection(
 			ctPersistence.getDataSource());

@@ -236,6 +236,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(" where ctCollectionId = ");
 			sb.append(tempCTCollectionId);
 			sb.append(" and ");
+			sb.append("(");
 			sb.append(primaryKeyName);
 			sb.append(" in (");
 
@@ -261,6 +262,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			}
 
 			sb.setStringAt(")", sb.index() - 1);
+			sb.append(")");
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString())) {

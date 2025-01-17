@@ -11,6 +11,8 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.persistence.CounterFinder;
 import com.liferay.counter.model.CounterRegister;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -120,6 +122,11 @@ public class CompanyLocalServiceDBPartitionTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			CompanyLocalServiceDBPartitionTest.class);
+
+		_bundleContext = bundle.getBundleContext();
 
 		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 
@@ -416,6 +423,8 @@ public class CompanyLocalServiceDBPartitionTest
 			TestPropsValues.getCompanyId());
 
 		String name = RandomTestUtil.randomString();
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 		String virtualHostname = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 		String webId = RandomTestUtil.randomString();
@@ -435,6 +444,16 @@ public class CompanyLocalServiceDBPartitionTest
 			_assertCompanyConfiguration(copiedCompanyId, configuration);
 
 			_addCopyDBPartitionCompanyCache(copiedCompanyId);
+
+			Collection<ServiceReference<Portlet>> serviceReferences =
+				_bundleContext.getServiceReferences(
+					Portlet.class,
+					StringBundler.concat(
+						"(&(com.liferay.portlet.company=",
+						copiedCompany.getCompanyId(), ")(javax.portlet.name=",
+						objectDefinition.getPortletId(), "))"));
+
+			Assert.assertFalse(serviceReferences.isEmpty());
 
 			companyLocalService.deleteCompany(copiedCompany);
 
@@ -657,12 +676,8 @@ public class CompanyLocalServiceDBPartitionTest
 			_checkStandaloneDBPartitionTables(
 				company.getCompanyId(), "Company", "VirtualHost");
 
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
 			Collection<ServiceReference<Portlet>> serviceReferences =
-				bundleContext.getServiceReferences(
+				_bundleContext.getServiceReferences(
 					Portlet.class,
 					"(com.liferay.portlet.company=" + company.getCompanyId() +
 						")");
@@ -1175,6 +1190,7 @@ public class CompanyLocalServiceDBPartitionTest
 	private static final String _CLASS_NAME_2 =
 		CompanyLocalServiceDBPartitionTest.class.getName() + 2;
 
+	private static BundleContext _bundleContext;
 	private static ClassName _className1;
 	private static ClassName _className2;
 

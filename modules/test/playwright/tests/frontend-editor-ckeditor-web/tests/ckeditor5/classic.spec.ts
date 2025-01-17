@@ -50,6 +50,8 @@ test(
 		const editorToolbar = page.getByLabel('Editor toolbar');
 		const expectedButtons = ['Undo', 'Redo', 'Bold', 'Italic', 'Underline'];
 
+		await editorToolbar.waitFor({state: 'attached'});
+
 		await expect(editorToolbar).toBeVisible();
 
 		const availableButtons = await editorToolbar

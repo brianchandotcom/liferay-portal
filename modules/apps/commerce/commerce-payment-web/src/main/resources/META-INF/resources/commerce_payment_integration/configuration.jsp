@@ -26,7 +26,7 @@ FunctionCommercePaymentIntegrationConfigurationDisplayContext functionCommercePa
 	</c:if>
 
 	<commerce-ui:panel>
-		<aui:input autoSize="<%= true %>" id="payment-integration-type-settings" label="type-settings" name="settings--paymentIntegrationTypeSettings--" style="min-height: 600px;" type="textarea" value="<%= functionCommercePaymentIntegrationConfigurationDisplayContext.getPaymentIntegrationUnicodeProperties() %>" />
+		<aui:input autoSize="<%= true %>" id="payment-integration-type-settings" label="type-settings" name="settings--paymentIntegrationTypeSettings--" type="textarea" value="<%= functionCommercePaymentIntegrationConfigurationDisplayContext.getPaymentIntegrationUnicodeProperties() %>" />
 	</commerce-ui:panel>
 
 	<aui:button-row>

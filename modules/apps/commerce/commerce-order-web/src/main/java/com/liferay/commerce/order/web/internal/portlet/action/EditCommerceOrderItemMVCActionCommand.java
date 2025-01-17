@@ -212,21 +212,21 @@ public class EditCommerceOrderItemMVCActionCommand
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
 					commerceOrderItemId, decimalQuantity,
 					_commercePriceFormatter.parse(
-						actionRequest, CommerceOrderItem.class.getName(),
+						actionRequest, false, CommerceOrderItem.class.getName(),
 						"price"));
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemPrices(
 					commerceOrderItemId,
 					_commercePriceFormatter.parse(
-						actionRequest, CommerceOrderItem.class.getName(),
+						actionRequest, false, CommerceOrderItem.class.getName(),
 						"discountAmount"),
 					commerceOrderItem.getDiscountPercentageLevel1(),
 					commerceOrderItem.getDiscountPercentageLevel2(),
 					commerceOrderItem.getDiscountPercentageLevel3(),
 					commerceOrderItem.getDiscountPercentageLevel4(),
 					_commercePriceFormatter.parse(
-						actionRequest, CommerceOrderItem.class.getName(),
+						actionRequest, false, CommerceOrderItem.class.getName(),
 						"finalPrice"),
 					commerceOrderItem.getPromoPrice(),
 					commerceOrderItem.getUnitPrice());

@@ -168,7 +168,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		BigDecimal[] discountLevels = _getDiscountLevels(
 			level,
 			_commercePriceFormatter.parse(
-				actionRequest, CommerceDiscount.class.getName(), "amount"));
+				actionRequest, false, CommerceDiscount.class.getName(),
+				"amount"));
 
 		int limitationTimes = ParamUtil.getInteger(
 			actionRequest, "limitationTimes");
@@ -200,7 +201,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			commerceDiscountId, title, target, useCouponCode, couponCode,
 			usePercentage,
 			_commercePriceFormatter.parse(
-				actionRequest, CommerceDiscount.class.getName(),
+				actionRequest, false, CommerceDiscount.class.getName(),
 				"maximumDiscountAmount"),
 			level, discountLevels[0], discountLevels[1], discountLevels[2],
 			discountLevels[3],

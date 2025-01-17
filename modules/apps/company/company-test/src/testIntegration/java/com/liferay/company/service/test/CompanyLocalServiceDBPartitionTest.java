@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,6 +62,7 @@ import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
+import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -76,6 +79,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.Portlet;
@@ -804,6 +808,8 @@ public class CompanyLocalServiceDBPartitionTest
 				(Map<Long, Map<Long, Repository>>)
 					ReflectionTestUtil.getFieldValue(
 						repositoryClassDefinition, "_repositoriesMap")));
+
+		Assert.assertEquals(cached, _hasResourceActionsCached(companyId));
 	}
 
 	private void _assertCompanyConfiguration(
@@ -879,6 +885,8 @@ public class CompanyLocalServiceDBPartitionTest
 				_counter,
 				_counterLocalService.increment(
 					CompanyLocalServiceDBPartitionTest.class.getName()));
+
+			Assert.assertTrue(_hasResourceActionsCached(companyId));
 		}
 	}
 
@@ -1162,6 +1170,26 @@ public class CompanyLocalServiceDBPartitionTest
 		return viewNames.size();
 	}
 
+	private boolean _hasResourceActionsCached(long companyId) {
+		AopInvocationHandler aopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				_resourceActionLocalService, AopInvocationHandler.class);
+
+		Map<String, ResourceAction> resourceActions =
+			ReflectionTestUtil.getFieldValue(
+				(ResourceActionLocalServiceImpl)
+					aopInvocationHandler.getTarget(),
+				"_resourceActions");
+
+		for (String key : resourceActions.keySet()) {
+			if (key.endsWith(StringPool.AT + companyId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final String _CLASS_NAME_1 =
 		CompanyLocalServiceDBPartitionTest.class.getName() + 1;
 
@@ -1211,6 +1239,9 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Inject
 	private RepositoryLocalService _repositoryLocalService;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	private ServiceRegistration<RepositoryDefiner> _serviceRegistration;
 

@@ -90,8 +90,8 @@ public class OAuthClientEntryUpgradeProcessTest {
 					0, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 					StringPool.BLANK);
 
-			_setUpgradePreCondition(oAuthClientEntry1);
-			_setUpgradePreCondition(oAuthClientEntry2);
+			_updateMetadataCacheTime(oAuthClientEntry1);
+			_updateMetadataCacheTime(oAuthClientEntry2);
 
 			_runUpgrade();
 
@@ -123,13 +123,13 @@ public class OAuthClientEntryUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	private void _setUpgradePreCondition(OAuthClientEntry oAuthClientEntry)
+	private void _updateMetadataCacheTime(OAuthClientEntry oAuthClientEntry)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"update OAuthClientEntry set metadataCacheTime = null where " +
-					"where oAuthClientEntryId = ?");
+					"oAuthClientEntryId = ?");
 
 			preparedStatement.setLong(
 				1, oAuthClientEntry.getOAuthClientEntryId());

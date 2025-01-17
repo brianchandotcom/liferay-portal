@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Alberto Javier Moreno Lage
  */
-public class UpdateListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
+public class ListTypeDefinitionsUpgradeProcess extends UpgradeProcess {
 
-	public UpdateListTypeDefinitionsUpgradeProcess(
+	public ListTypeDefinitionsUpgradeProcess(
 		CompanyLocalService companyLocalService,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,

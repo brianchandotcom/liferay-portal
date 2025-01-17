@@ -55,7 +55,7 @@ import org.osgi.framework.FrameworkUtil;
  */
 @FeatureFlags("LPS-178642")
 @RunWith(Arquillian.class)
-public class UpdateListTypeDefinitionsUpgradeProcessTest {
+public class ListTypeDefinitionsUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -119,7 +119,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.headless.builder.internal.upgrade.v0_2_0." +
-				"UpdateListTypeDefinitionsUpgradeProcess");
+				"ListTypeDefinitionsUpgradeProcess");
 
 		upgradeProcess.upgrade();
 
@@ -196,7 +196,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 	private Bundle _installTestBundle() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			UpdateListTypeDefinitionsUpgradeProcessTest.class);
+			ListTypeDefinitionsUpgradeProcessTest.class);
 
 		String dirName =
 			"com/liferay/headless/builder/internal/upgrade/v0_2_0/test" +

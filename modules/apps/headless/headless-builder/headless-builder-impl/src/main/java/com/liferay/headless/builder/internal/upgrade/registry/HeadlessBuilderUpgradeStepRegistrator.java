@@ -5,8 +5,8 @@
 
 package com.liferay.headless.builder.internal.upgrade.registry;
 
-import com.liferay.headless.builder.internal.upgrade.v0_1_0.DeleteAPIPropertiesToAPIPropertiesUpgradeProcess;
-import com.liferay.headless.builder.internal.upgrade.v0_2_0.UpdateListTypeDefinitionsUpgradeProcess;
+import com.liferay.headless.builder.internal.upgrade.v0_1_0.APIPropertiesToAPIPropertiesUpgradeProcess;
+import com.liferay.headless.builder.internal.upgrade.v0_2_0.ListTypeDefinitionsUpgradeProcess;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -32,13 +32,13 @@ public class HeadlessBuilderUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "0.1.0",
-			new DeleteAPIPropertiesToAPIPropertiesUpgradeProcess(
+			new APIPropertiesToAPIPropertiesUpgradeProcess(
 				_companyLocalService, _objectDefinitionLocalService,
 				_objectRelationshipLocalService));
 
 		registry.register(
 			"0.1.0", "0.2.0",
-			new UpdateListTypeDefinitionsUpgradeProcess(
+			new ListTypeDefinitionsUpgradeProcess(
 				_companyLocalService, _listTypeDefinitionLocalService,
 				_listTypeEntryLocalService, _objectDefinitionLocalService,
 				_objectFieldLocalService, _objectStateFlowLocalService));

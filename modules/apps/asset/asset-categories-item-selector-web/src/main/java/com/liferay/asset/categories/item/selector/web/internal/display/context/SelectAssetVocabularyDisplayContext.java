@@ -9,18 +9,24 @@ import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCa
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntryListBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -56,8 +62,8 @@ public class SelectAssetVocabularyDisplayContext {
 		return _assetCategoryTreeNodeId;
 	}
 
-	public SearchContainer<AssetVocabulary>
-		getAssetVocabularySearchContainer() {
+	public SearchContainer<AssetVocabulary> getAssetVocabularySearchContainer()
+		throws PortalException {
 
 		SearchContainer<AssetVocabulary> searchContainer =
 			new SearchContainer<>(
@@ -103,12 +109,24 @@ public class SelectAssetVocabularyDisplayContext {
 		).build();
 	}
 
-	private List<AssetVocabulary> _getAssetVocabularies() {
+	private List<AssetVocabulary> _getAssetVocabularies()
+		throws PortalException {
+
+		List<DepotEntry> depotEntries =
+			DepotEntryServiceUtil.getCurrentAndGroupConnectedDepotEntries(
+				_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		List<Long> groupIds = new ArrayList<>();
+
+		groupIds.add(_themeDisplay.getCompanyGroupId());
+
+		for (DepotEntry depotEntry : depotEntries) {
+			groupIds.add(depotEntry.getGroupId());
+		}
+
 		return AssetVocabularyServiceUtil.getGroupVocabularies(
-			new long[] {
-				_themeDisplay.getCompanyGroupId(),
-				_themeDisplay.getScopeGroupId()
-			},
+			ArrayUtil.toLongArray(groupIds),
 			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 	}
 

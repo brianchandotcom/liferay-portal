@@ -7,7 +7,7 @@ import ClayPanel from '@clayui/panel';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../../../app/components/fragment_configuration_fields/index';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
@@ -125,6 +125,14 @@ function FieldSetContent({
 	onValueSelect,
 	values,
 }) {
+	const fieldsByName = useMemo(() => {
+		return fields.reduce((acc, field) => {
+			acc[field.name] = field;
+
+			return acc;
+		}, {});
+	}, [fields]);
+
 	return (
 		<div className="page-editor__sidebar__fieldset">
 			{description && <p className="text-secondary">{description}</p>}
@@ -134,7 +142,34 @@ function FieldSetContent({
 					(field) =>
 						!field.typeOptions?.dependency ||
 						Object.entries(field.typeOptions.dependency).every(
-							([key, value]) => values[key] === value
+							([key, {type, value}]) => {
+								let dependencyValue = String(values[key]);
+
+								if (!dependencyValue) {
+									const dependencyField = fieldsByName[key];
+
+									if (!dependencyField) {
+										return true;
+									}
+
+									if (
+										dependencyField.type === 'checkbox' &&
+										!dependencyField.defaultValue
+									) {
+										dependencyValue = 'false';
+									}
+									else {
+										dependencyValue =
+											fieldsByName[key]?.defaultValue;
+									}
+								}
+
+								if (type === 'equal') {
+									return dependencyValue === value;
+								}
+
+								return dependencyValue !== value;
+							}
 						)
 				)
 				.map((field, index) => {

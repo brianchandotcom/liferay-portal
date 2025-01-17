@@ -704,15 +704,19 @@
 <!--FRAGMENTS_AND_WIDGETS_PANEL-->
 
 <tr>
+	<td>COMPONENTS_OPTIONS_BUTTON</td>
+	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'dropdown-toggle')][*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'tooltip')][*[name()='svg'][contains(@class,'icon-${key_switchTo}')]]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(@class,'dropdown-item')]//span[contains(@class,'dropdown-item-indicator-start')][*[name()='svg'][contains(@class,'icon-${key_switchTo}')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_REORDER_SETS_BUTTON</td>
-	<td>//div[contains(@class,'fragments-widgets-panel')]//button[contains(@class,'tooltip')][*[name()='svg'][contains(@class,'icon-order-arrow')]]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(@class,'dropdown-item')]//span[contains(@class,'dropdown-item-indicator-start')][*[name()='svg'][contains(@class,'icon-order-arrow')]]</td>
 	<td></td>
-</tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT</td>
 	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']//div[@draggable='true']</td>

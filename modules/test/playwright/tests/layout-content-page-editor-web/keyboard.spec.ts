@@ -273,7 +273,7 @@ test('Checks that a fragment is selected when it is added and the panel does not
 
 	await pageEditorPage.selectFragment(headingId);
 
-	await expect(page.getByLabel('Fragments and Widgets Panel')).toBeVisible();
+	await expect(page.getByLabel('Components Panel')).toBeVisible();
 });
 
 test(

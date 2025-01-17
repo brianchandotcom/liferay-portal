@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -220,7 +220,7 @@ describe('FragmentsSidebar', () => {
 	it('has a sidebar panel title', () => {
 		renderComponent();
 
-		expect(screen.getByText('fragments-and-widgets')).toBeInTheDocument();
+		expect(screen.getByText('components')).toBeInTheDocument();
 	});
 
 	it('normalizes fragments and widgets format', () => {
@@ -519,23 +519,34 @@ describe('FragmentsSidebar', () => {
 	});
 
 	describe('Button to switch the display style', () => {
+		const clickOnComponentsOptions = () => {
+			const componentsOptions = screen.getByTitle('components-options');
+
+			expect(componentsOptions).toBeInTheDocument();
+
+			fireEvent.click(componentsOptions);
+		};
 		it('shows the card view when the display style is list', () => {
 			renderComponent();
 
-			expect(
-				screen.getByTitle('switch-to-card-view')
-			).toBeInTheDocument();
+			clickOnComponentsOptions();
+
+			expect(screen.getByText('switch-to-card-view')).toBeInTheDocument();
 		});
 
 		it('shows the list view when the display style is card', async () => {
 			renderComponent();
 
-			await userEvent.click(screen.getByTitle('switch-to-card-view'), {
+			clickOnComponentsOptions();
+
+			await userEvent.click(screen.getByText('switch-to-card-view'), {
 				advanceTimers: jest.advanceTimersByTime,
 			});
 
+			clickOnComponentsOptions();
+
 			expect(
-				screen.getByTitle('switch-to-list[noun]-view')
+				screen.getByText('switch-to-list[noun]-view')
 			).toBeInTheDocument();
 		});
 	});

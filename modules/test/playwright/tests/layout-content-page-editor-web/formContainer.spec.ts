@@ -5439,7 +5439,7 @@ test.describe('Edit mode form errors', () => {
 
 			// Assert form fragments can only be dropped inside a mapped form container
 
-			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+			await pageEditorPage.goToSidebarTab('Components');
 
 			const header = page.getByRole('menuitem', {
 				exact: true,

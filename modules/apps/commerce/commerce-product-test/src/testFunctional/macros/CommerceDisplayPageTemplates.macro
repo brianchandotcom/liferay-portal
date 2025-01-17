@@ -4,7 +4,7 @@ definition {
 	macro addFragment(fragmentName = null, index = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";

@@ -67,7 +67,7 @@ definition {
 			var position = 1;
 		}
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -79,6 +79,8 @@ definition {
 		else {
 			var switchTo = "list";
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -229,7 +231,7 @@ definition {
 				var indexItem = 1;
 			}
 
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+			PageEditor.gotoTab(tabName = "Components");
 
 			if (!(isSet(displayStyle))) {
 				var displayStyle = "list";
@@ -241,6 +243,8 @@ definition {
 			else {
 				var switchTo = "list";
 			}
+
+			Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 			if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 				Click(
@@ -313,7 +317,7 @@ definition {
 			}
 		}
 		else {
-			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+			PageEditor.gotoTab(tabName = "Components");
 
 			if (!(isSet(index))) {
 				var index = 1;
@@ -451,7 +455,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addElementToDropdownPanel(navTab = null, fragmentName = null, collectionName = null, portletName = null) {
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -467,6 +471,8 @@ definition {
 		else {
 			var switchTo = "list";
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -544,7 +550,7 @@ definition {
 			key_position = ${position},
 			locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -560,6 +566,8 @@ definition {
 		else {
 			var switchTo = "list";
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -693,7 +701,7 @@ definition {
 	macro addFragment(targetFragmentName = null, fragmentName = null, scope = null, dropTarget = null, position = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -709,6 +717,8 @@ definition {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -840,7 +850,7 @@ definition {
 	macro addFragmentToCollectionDisplay(targetFragmentName = null, fragmentName = null, entryTitle = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -852,6 +862,8 @@ definition {
 		else {
 			var switchTo = "list";
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -924,7 +936,7 @@ definition {
 			var height = "Short";
 		}
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		PageEditor.expandFragmentCollection(collectionName = ${collectionName});
 
@@ -965,7 +977,7 @@ definition {
 	macro addFragmentViaKeyboard(fragmentName = null, upCount = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		if (!(isSet(displayStyle))) {
 			var displayStyle = "list";
@@ -981,6 +993,8 @@ definition {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
+
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
 
 		if (IsElementNotPresent(key_switchTo = ${switchTo}, locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
 			Click(
@@ -1132,7 +1146,7 @@ definition {
 	macro addWidget(targetFragmentName = null, dropTarget = null, position = null, portletName = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -1201,7 +1215,7 @@ definition {
 	macro addWidgetViaKeyboard(widgetName = null, upCount = null, categoryName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -4401,7 +4415,7 @@ definition {
 
 	@summary = "Default summary"
 	macro expandFragmentCollection(collectionName = null) {
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		Navigator.gotoNavTab(navTab = "Fragments");
 
@@ -4423,7 +4437,7 @@ definition {
 
 	@summary = "Default summary"
 	macro expandWidgetCategory(categoryName = null) {
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -5057,6 +5071,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 
 	@summary = "Default summary"
 	macro reorderSets(navTab = null, setName = null, action = null) {
+		Click(locator1 = "PageEditor#COMPONENTS_OPTIONS_BUTTON");
+
 		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_REORDER_SETS_BUTTON");
 
 		Modal.gotoNavTab(navTab = ${navTab});

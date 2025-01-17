@@ -176,7 +176,7 @@ export class CommerceLayoutsPage {
 		this.firstFragment = page.locator('#page-editor div').nth(2);
 		this.fragmentsAndWidgetsTab = page.getByRole('tab', {
 			exact: true,
-			name: 'Fragments and Widgets',
+			name: 'Components',
 		});
 		this.fragmentMenuItem = (itemName: string) =>
 			page.getByRole('menuitem', {

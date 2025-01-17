@@ -522,7 +522,7 @@ test(
 
 		// Make sure the sidebars have loaded
 
-		await page.getByLabel('Fragments and Widgets', {exact: true}).waitFor();
+		await page.getByLabel('Components', {exact: true}).waitFor();
 
 		// Open the Product Menu
 

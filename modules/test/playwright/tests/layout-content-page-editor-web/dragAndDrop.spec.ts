@@ -575,9 +575,9 @@ test(
 
 		await page.getByText('Select a Page Element', {exact: true}).waitFor();
 
-		// Go to Fragments and Widgets sidebar panel
+		// Go to Components sidebar panel
 
-		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+		await pageEditorPage.goToSidebarTab('Components');
 
 		// Check we can drag a fragment from the list on top of the Collection
 
@@ -642,7 +642,7 @@ test(
 
 		// Drag a button into a column and check grid is highlighted
 
-		await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+		await pageEditorPage.goToSidebarTab('Components');
 
 		// Check we can drag a fragment from the list on top of the Collection
 

@@ -754,9 +754,7 @@ test.describe('Allowed fragments Configuration', () => {
 
 			await pageEditorPage.goto(layout1, site.friendlyUrlPath);
 
-			await page
-				.getByRole('tabpanel', {name: 'Fragments and Widgets'})
-				.waitFor();
+			await page.getByRole('tabpanel', {name: 'Components'}).waitFor();
 
 			expect(page.getByText(basicFragmentEntryName)).toBeVisible();
 
@@ -773,9 +771,7 @@ test.describe('Allowed fragments Configuration', () => {
 
 			await pageEditorPage.goto(layout2, site.friendlyUrlPath);
 
-			await page
-				.getByRole('tabpanel', {name: 'Fragments and Widgets'})
-				.waitFor();
+			await page.getByRole('tabpanel', {name: 'Components'}).waitFor();
 
 			expect(page.getByText(basicFragmentEntryName)).not.toBeVisible();
 		}

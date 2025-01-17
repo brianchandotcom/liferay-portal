@@ -156,9 +156,8 @@ public class AlertTag extends BaseContainerTag {
 			sb.append("</button>");
 
 			jspWriter.write(
-				ContentSecurityPolicyHTMLRewriterUtil.
-					rewriteInlineAttributes(
-						sb.toString(), getRequest(), false));
+				ContentSecurityPolicyHTMLRewriterUtil.rewriteInlineAttributes(
+					sb.toString(), getRequest(), false));
 		}
 
 		if (Validator.isNotNull(_variant) && _variant.equals("stripe")) {

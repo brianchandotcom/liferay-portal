@@ -170,7 +170,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		sb.append(id);
 		sb.append("{");
 		sb.append(elementStyles);
-		sb.append("};");
+		sb.append("}");
 
 		element.removeAttr("style");
 

@@ -55,7 +55,7 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"update OAuthClientEntry set metadataCachingTime = ? " +
+						"update OAuthClientEntry set metadataCacheTime = ? " +
 							"where clientId = ?")) {
 
 				preparedStatement.setLong(1, discoveryEndPointCacheInMillis);
@@ -68,9 +68,9 @@ public class OAuthClientEntryUpgradeProcess extends UpgradeProcess {
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select oAuthClientEntryId from OAuthClientEntry where " +
-					"metadataCachingTime is null");
+					"metadataCacheTime is null");
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update OAuthClientEntry set metadataCachingTime = 360000 " +
+				"update OAuthClientEntry set metadataCacheTime = 360000 " +
 					"where oAuthClientEntryId = ?")) {
 
 			while (resultSet.next()) {

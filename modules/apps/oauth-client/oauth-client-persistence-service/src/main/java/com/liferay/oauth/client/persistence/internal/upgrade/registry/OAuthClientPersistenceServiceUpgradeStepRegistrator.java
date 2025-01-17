@@ -29,7 +29,7 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "1.2.0",
 			UpgradeProcessFactory.addColumns(
-				"OAuthClientEntry", "metadataCachingTime LONG"),
+				"OAuthClientEntry", "metadataCacheTime LONG"),
 			new com.liferay.oauth.client.persistence.internal.upgrade.v1_2_0.
 				OAuthClientEntryUpgradeProcess(_configurationAdmin));
 	}

@@ -106,7 +106,7 @@ public class OAuthClientEntryUpgradeProcessTest {
 				discoveryEndpointCacheInMillis,
 				oAuthClientEntry1.getMetadataCachingTime());
 			Assert.assertEquals(
-				OAuthClientEntryConstants.METADATA_CACHE_IN_MILLIS_DEFAULT,
+				OAuthClientEntryConstants.DEFAULT_METADATA_CACHE_TIME,
 				oAuthClientEntry2.getMetadataCachingTime());
 		}
 		finally {

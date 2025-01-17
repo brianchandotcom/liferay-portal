@@ -9,19 +9,23 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -45,7 +49,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  */
 public class ResourceActionLocalServiceImpl
-	extends ResourceActionLocalServiceBaseImpl {
+	extends ResourceActionLocalServiceBaseImpl implements CacheRegistryItem {
 
 	@Override
 	public ResourceAction addResourceAction(
@@ -337,6 +341,11 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	@Override
+	public String getRegistryName() {
+		return ResourceActionLocalServiceImpl.class.getName();
+	}
+
+	@Override
 	public ResourceAction getResourceAction(String name, String actionId)
 		throws PortalException {
 
@@ -367,6 +376,25 @@ public class ResourceActionLocalServiceImpl
 	@Override
 	public int getResourceActionsCount(String name) {
 		return resourceActionPersistence.countByName(name);
+	}
+
+	@Override
+	public void invalidate() {
+		if (!DBPartition.isPartitionEnabled() ||
+			(CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+			_resourceActions.clear();
+
+			return;
+		}
+
+		for (String key : _resourceActions.keySet()) {
+			if (key.endsWith(
+					StringPool.AT + CompanyThreadLocal.getCompanyId())) {
+
+				_resourceActions.remove(key);
+			}
+		}
 	}
 
 	protected String encodeKey(String name, String actionId) {

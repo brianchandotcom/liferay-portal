@@ -5,7 +5,7 @@
 		</p>
 
 		<#if sharingEntryURL?has_content>
-			<a href="${sharingEntryURL}" style="background-color: #145ffb; color: white; border-radius: 4px; box-sizing: border-box; display: inline-block; font-size: 16px; height: 40px; line-height: 24px; margin-top: 24px; padding: 7px 15px; text-decoration: none;">${actionTitle}</a>
+			<a href="${sharingEntryURL}" style="background-color: #145ffb; border-radius: 4px; box-sizing: border-box; color: white; display: inline-block; font-size: 16px; height: 40px; line-height: 24px; margin-top: 24px; padding: 7px 15px; text-decoration: none;">${actionTitle}</a>
 		</#if>
 	</div>
 </div>

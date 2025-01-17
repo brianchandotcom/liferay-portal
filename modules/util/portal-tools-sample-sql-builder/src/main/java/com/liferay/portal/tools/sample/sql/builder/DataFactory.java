@@ -8300,7 +8300,7 @@ public class DataFactory {
 		return objectStateTransitionModel;
 	}
 
-	protected PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
+	public PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
 		PortalPreferencesModel portalPreferencesModel =
 			new PortalPreferencesModelImpl();
 

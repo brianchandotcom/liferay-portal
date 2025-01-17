@@ -1,10 +1,10 @@
 <#assign count = 0 />
 
-<div class="container-fluid container-fluid-max-xl" style="text-align:center">
-	<div class="row" style="padding:15px">
+<div class="container-fluid container-fluid-max-xl text-center">
+	<div class="p-3 row">
 		<#if entries?has_content>
 			<#list entries as curCommerceAddress>
-				<div class="col-md-4" style="text-align:left">
+				<div class="col-md-4 text-left">
 					<#assign
 						editURL = commerceAddressDisplayContext.getEditCommerceAddressURL(curCommerceAddress.getCommerceAddressId())
 
@@ -17,17 +17,17 @@
 						commerceCountry = curCommerceAddress.getCommerceCountry()
 					/>
 
-					<h2 style="color:#000"><strong>${htmlUtil.escape(curCommerceAddress.getName())}</strong></h2>
+					<h2><strong>${htmlUtil.escape(curCommerceAddress.getName())}</strong></h2>
 
-					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getStreet1())}</h3>
+					<h3>${htmlUtil.escape(curCommerceAddress.getStreet1())}</h3>
 
-					<h3 style="color:#000">${htmlUtil.escape(curCommerceAddress.getZip())}, ${htmlUtil.escape(curCommerceAddress.getCity())}</h3>
+					<h3>${htmlUtil.escape(curCommerceAddress.getZip())}, ${htmlUtil.escape(curCommerceAddress.getCity())}</h3>
 
-					<#if commerceCountry??>
-						<h3 style="color:#000">${htmlUtil.escape(commerceCountry.getName(themeDisplay.getLanguageId()))}</h3>
+					<#if country??>
+						<h3>${htmlUtil.escape(country.getName(themeDisplay.getLanguageId()))}</h3>
 					</#if>
 
-					<div class="row" style="padding-top:30px">
+					<div class="pt-4 row">
 						<@liferay_aui.button
 							cssClass="btn-lg"
 							href="${editURL}"
@@ -49,7 +49,7 @@
 				<#if count gte 3>
 					</div>
 
-					<div class="row" style="padding:15px">
+					<div class="p-3 row">
 
 					<#assign count = 0 />
 				</#if>
@@ -57,7 +57,7 @@
 		</#if>
 	</div>
 
-	<div class="row" style="padding:50px 0 15px 0">
+	<div class="p-0 pb-1 pt-5 row">
 		<#assign addButtonValue = languageUtil.get(request, "add-address") />
 
 		<@liferay_aui.button

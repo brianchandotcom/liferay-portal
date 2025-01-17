@@ -6114,12 +6114,6 @@ public class DataFactory {
 		return new ObjectValuePair<>(key, value);
 	}
 
-	public List<PortalPreferencesModel> newPortalPreferencesModels() {
-		return ListUtil.fromArray(
-			newPortalPreferencesModel(_companyId),
-			newPortalPreferencesModel(0));
-	}
-
 	public PortletPreferencesModel newPortletPreferencesModel(
 		long ownerId, int ownerType, long plid, String portletId) {
 

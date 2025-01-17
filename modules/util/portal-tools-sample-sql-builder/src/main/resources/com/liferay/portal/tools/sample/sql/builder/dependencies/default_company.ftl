@@ -8,9 +8,8 @@ ${dataFactory.toInsertSQL(defaultCompanyModel)}
 
 ${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
 
-<#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>
-	${dataFactory.toInsertSQL(portalPreferencesModel)}
-</#list>
+${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(defaultCompanyModel.companyId))}
+${dataFactory.toInsertSQL(dataFactory.newPortalPreferencesModel(0))}
 
 <#include "roles.ftl">
 

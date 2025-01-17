@@ -15,6 +15,7 @@ import com.liferay.document.library.web.internal.display.context.helper.DLReques
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.trash.TrashHelper;
@@ -45,8 +46,8 @@ public class DLAdminDisplayContextProvider {
 
 		return new DLAdminDisplayContext(
 			_getAssetAutoTaggerConfiguration(dlRequestHelper),
-			_dlFileOrderConfigurationProvider, httpServletRequest,
-			dlRequestHelper.getLiferayPortletRequest(),
+			_configurationProvider, _dlFileOrderConfigurationProvider,
+			httpServletRequest, dlRequestHelper.getLiferayPortletRequest(),
 			dlRequestHelper.getLiferayPortletResponse(), _trashHelper,
 			_versioningStrategy);
 	}
@@ -88,6 +89,9 @@ public class DLAdminDisplayContextProvider {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLFileOrderConfigurationProvider _dlFileOrderConfigurationProvider;

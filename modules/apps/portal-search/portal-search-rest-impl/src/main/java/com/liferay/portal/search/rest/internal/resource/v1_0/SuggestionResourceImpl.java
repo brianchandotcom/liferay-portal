@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -231,6 +232,12 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setPlid(layout.getPlid());
+
+		String portalURL = _portal.getPortalURL(contextHttpServletRequest);
+
+		themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
+		themeDisplay.setPortalURL(portalURL);
+
 		themeDisplay.setRequest(contextHttpServletRequest);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSiteGroupId(layout.getGroupId());

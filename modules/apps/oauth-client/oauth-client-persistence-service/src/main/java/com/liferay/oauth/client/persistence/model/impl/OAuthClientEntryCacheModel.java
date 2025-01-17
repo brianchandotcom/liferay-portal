@@ -93,8 +93,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(clientId);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
-		sb.append(", metadataCachingTime=");
-		sb.append(metadataCachingTime);
+		sb.append(", metadataCacheTime=");
+		sb.append(metadataCacheTime);
 		sb.append(", oidcUserInfoMapperJSON=");
 		sb.append(oidcUserInfoMapperJSON);
 		sb.append(", tokenRequestParametersJSON=");
@@ -164,7 +164,7 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setInfoJSON(infoJSON);
 		}
 
-		oAuthClientEntryImpl.setMetadataCachingTime(metadataCachingTime);
+		oAuthClientEntryImpl.setMetadataCacheTime(metadataCacheTime);
 
 		if (oidcUserInfoMapperJSON == null) {
 			oAuthClientEntryImpl.setOIDCUserInfoMapperJSON("");
@@ -206,7 +206,7 @@ public class OAuthClientEntryCacheModel
 		clientId = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
 
-		metadataCachingTime = objectInput.readLong();
+		metadataCacheTime = objectInput.readLong();
 		oidcUserInfoMapperJSON = objectInput.readUTF();
 		tokenRequestParametersJSON = objectInput.readUTF();
 	}
@@ -259,7 +259,7 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeObject(infoJSON);
 		}
 
-		objectOutput.writeLong(metadataCachingTime);
+		objectOutput.writeLong(metadataCacheTime);
 
 		if (oidcUserInfoMapperJSON == null) {
 			objectOutput.writeUTF("");
@@ -287,7 +287,7 @@ public class OAuthClientEntryCacheModel
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String infoJSON;
-	public long metadataCachingTime;
+	public long metadataCacheTime;
 	public String oidcUserInfoMapperJSON;
 	public String tokenRequestParametersJSON;
 

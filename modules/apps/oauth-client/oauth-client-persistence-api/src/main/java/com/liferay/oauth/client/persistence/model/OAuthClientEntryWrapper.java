@@ -45,7 +45,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
-		attributes.put("metadataCachingTime", getMetadataCachingTime());
+		attributes.put("metadataCacheTime", getMetadataCacheTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
@@ -123,10 +123,10 @@ public class OAuthClientEntryWrapper
 			setInfoJSON(infoJSON);
 		}
 
-		Long metadataCachingTime = (Long)attributes.get("metadataCachingTime");
+		Long metadataCacheTime = (Long)attributes.get("metadataCacheTime");
 
-		if (metadataCachingTime != null) {
-			setMetadataCachingTime(metadataCachingTime);
+		if (metadataCacheTime != null) {
+			setMetadataCacheTime(metadataCacheTime);
 		}
 
 		String oidcUserInfoMapperJSON = (String)attributes.get(
@@ -215,13 +215,13 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Returns the metadata caching time of this o auth client entry.
+	 * Returns the metadata cache time of this o auth client entry.
 	 *
-	 * @return the metadata caching time of this o auth client entry
+	 * @return the metadata cache time of this o auth client entry
 	 */
 	@Override
-	public long getMetadataCachingTime() {
-		return model.getMetadataCachingTime();
+	public long getMetadataCacheTime() {
+		return model.getMetadataCacheTime();
 	}
 
 	/**
@@ -380,13 +380,13 @@ public class OAuthClientEntryWrapper
 	}
 
 	/**
-	 * Sets the metadata caching time of this o auth client entry.
+	 * Sets the metadata cache time of this o auth client entry.
 	 *
-	 * @param metadataCachingTime the metadata caching time of this o auth client entry
+	 * @param metadataCacheTime the metadata cache time of this o auth client entry
 	 */
 	@Override
-	public void setMetadataCachingTime(long metadataCachingTime) {
-		model.setMetadataCachingTime(metadataCachingTime);
+	public void setMetadataCacheTime(long metadataCacheTime) {
+		model.setMetadataCacheTime(metadataCacheTime);
 	}
 
 	/**

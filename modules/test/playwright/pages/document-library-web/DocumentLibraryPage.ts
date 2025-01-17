@@ -223,6 +223,19 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async goToFolderAction(action: string, entryTitle: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: this.page
+				.locator(`.card-body:has-text('${entryTitle}')`)
+				.getByLabel('More actions'),
+		});
+	}
+
 	async assertFileEntryAction(action: string, entryTitle: string) {
 		await clickAndExpectToBeVisible({
 			target: this.page.getByRole('menuitem', {

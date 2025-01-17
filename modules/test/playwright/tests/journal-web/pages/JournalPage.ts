@@ -91,6 +91,14 @@ export class JournalPage {
 		await this.page.locator('.article-content-content').waitFor();
 	}
 
+	async goToCreateFolder() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Folder'}),
+			trigger: this.newButton,
+		});
+	}
+
 	async goToJournalArticleAction(action: string, title: string) {
 		await this.page.getByLabel(`Actions for ${title}`).waitFor();
 
@@ -101,6 +109,31 @@ export class JournalPage {
 				name: action,
 			}),
 			trigger: this.page.getByLabel(`Actions for ${title}`, {
+				exact: true,
+			}),
+		});
+	}
+
+	async goToJournalFolderAction(action: string, title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'cards'}),
+			trigger: this.page.getByLabel('Select View, Currently Selected: '),
+		});
+
+		const folder = this.page.locator(
+			`[data-qa-id="row"][data-title="${title}"]`
+		);
+
+		await folder.waitFor();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: folder.getByLabel('More actions', {
 				exact: true,
 			}),
 		});

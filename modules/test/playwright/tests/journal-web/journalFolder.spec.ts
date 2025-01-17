@@ -6,62 +6,27 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {openFieldset} from '../../utils/openFieldset';
-import {PORTLET_URLS} from '../../utils/portletUrls';
+import {journalPagesTest} from './fixtures/journalPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
-	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-42452': {enabled: true},
 	}),
 	loginTest(),
-	isolatedSiteTest
+	isolatedSiteTest,
+	journalPagesTest
 );
 
 test(
-	'Can create DM folder in French language',
-	{tag: '@LPD-27271'},
-	async ({page, site}) => {
-		const folderTitle = 'DM Folder FR';
-
-		await page.goto(
-			`/fr/group${site.friendlyUrlPath}${PORTLET_URLS.documentLibrary}`
-		);
-		await page.getByRole('button', {name: 'Nouveau'}).click();
-
-		await page
-			.getByRole('menuitem', {
-				name: 'Répertoire',
-			})
-			.click();
-
-		await page.getByRole('textbox').first().fill(folderTitle);
-		await page.getByRole('button', {name: 'Enregistrer'}).click();
-
-		await expect(page.getByRole('link', {name: folderTitle})).toBeVisible();
-
-		// change back to english language
-
-		await page.goto('/en');
-	}
-);
-
-test(
-	'Test Advance Update permission for DM folder',
+	'Test Advance Update permission for Journal folder',
 	{tag: '@LPD-46006'},
-	async ({
-		apiHelpers,
-		documentLibraryEditFolderPage,
-		documentLibraryPage,
-		page,
-		site,
-	}) => {
+	async ({apiHelpers, journalEditFolderPage, journalPage, page, site}) => {
 		const testUser = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		const role =
@@ -73,12 +38,11 @@ test(
 			testUser.id
 		);
 
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await documentLibraryPage.goToCreateNewFolder();
+		await journalPage.goto(site.friendlyUrlPath);
+		await journalPage.goToCreateFolder();
 
 		const title = getRandomString();
-
-		await documentLibraryEditFolderPage.fillTitle(title);
+		await journalEditFolderPage.title.fill(title);
 
 		await openFieldset(page, 'Permissions');
 
@@ -96,7 +60,7 @@ test(
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
-		await documentLibraryPage.goToEditFolder(title);
+		await journalEditFolderPage.editFolder(title);
 
 		await page.waitForURL(/edit_folder/);
 
@@ -104,13 +68,11 @@ test(
 
 		await page.goto(doAsUserIdURL);
 
-		await expect(documentLibraryEditFolderPage.title).toBeDisabled();
-		await expect(
-			page.getByRole('button', {name: 'Document Type Restrictions'})
-		).toBeVisible();
+		await expect(journalEditFolderPage.title).toBeDisabled();
+		await expect(journalEditFolderPage.structureRestricions).toBeVisible();
 
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await documentLibraryPage.goToFolderAction('Permissions', title);
+		await journalPage.goto(site.friendlyUrlPath);
+		await journalEditFolderPage.gotToPermission(title);
 
 		const permissionIframe = page.frameLocator(
 			'iframe[title="Permissions"]'
@@ -128,9 +90,7 @@ test(
 
 		await page.goto(doAsUserIdURL);
 
-		await expect(documentLibraryEditFolderPage.title).toBeEnabled();
-		await expect(
-			page.getByRole('button', {name: 'Document Type Restrictions'})
-		).toBeHidden();
+		await expect(journalEditFolderPage.title).toBeEnabled();
+		await expect(journalEditFolderPage.structureRestricions).toBeHidden();
 	}
 );

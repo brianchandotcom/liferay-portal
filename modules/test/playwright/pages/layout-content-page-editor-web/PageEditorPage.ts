@@ -1204,6 +1204,12 @@ export class PageEditorPage {
 		await waitForAlert(this.page, successMessage);
 	}
 
+	async redoAction() {
+		await this.redoButton.click();
+
+		await this.waitForChangesSaved();
+	}
+
 	async removeFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 
@@ -1574,6 +1580,12 @@ export class PageEditorPage {
 				`.page-editor__layout-viewport--size-${VIEWPORTS_CLASSNAMES[viewport]}`
 			)
 			.waitFor();
+	}
+
+	async undoAction() {
+		await this.undoButton.click();
+
+		await this.waitForChangesSaved();
 	}
 
 	async waitForChangesSaved() {

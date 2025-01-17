@@ -8,6 +8,7 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -87,6 +88,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.PortletPreferences;
 
@@ -243,10 +245,10 @@ public class LayoutSetPrototypePropagationTest
 			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Thread.sleep(2000);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
+		ExportImportTestUtil.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> Assert.assertEquals(
+				_initialPrototypeLayoutsCount + 1, getGroupLayoutCount()));
 	}
 
 	@Test

@@ -15,7 +15,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymsDisplayContext" %>
 
@@ -64,7 +63,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 				>
 					<clay:link
 						href="<%= synonymSetDisplayContext.getEditRenderURL() %>"
-						label="<%= HtmlUtil.escape(synonymSetDisplayContext.getDisplayedSynonymSet()) %>"
+						label="<%= synonymSetDisplayContext.getDisplayedSynonymSet() %>"
 						translated="<%= false %>"
 					/>
 				</liferay-ui:search-container-column-text>

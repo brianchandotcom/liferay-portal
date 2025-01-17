@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.operation;
+package com.liferay.portal.instances.internal.operation;
 
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
@@ -24,11 +24,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class BaseVirtualInstanceOperation {
+public abstract class BasePortalInstanceOperation {
 
 	public abstract String getOperationCompletedMessage(long companyId);
 
-	public void onVirtualInstance(
+	public void onPortalInstance(
 		Callable<Company> callable, Map<String, Object> properties) {
 
 		try {
@@ -51,7 +51,7 @@ public abstract class BaseVirtualInstanceOperation {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to perform operation on virtual instance", exception);
+				"Unable to perform operation on portal instance", exception);
 		}
 		finally {
 			_deleteConfiguration((String)properties.get("service.pid"));
@@ -74,6 +74,6 @@ public abstract class BaseVirtualInstanceOperation {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseVirtualInstanceOperation.class);
+		BasePortalInstanceOperation.class);
 
 }

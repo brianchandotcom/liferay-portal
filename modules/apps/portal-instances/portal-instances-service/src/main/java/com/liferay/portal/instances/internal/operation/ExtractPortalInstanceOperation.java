@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.operation;
+package com.liferay.portal.instances.internal.operation;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration;
+import com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -22,37 +22,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mariano Álvaro Sáiz
  */
 @Component(
-	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration",
+	configurationPid = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
 	service = {}
 )
-public class DBPartitionExtractVirtualInstanceOperation
-	extends BaseVirtualInstanceOperation {
+public class ExtractPortalInstanceOperation
+	extends BasePortalInstanceOperation {
 
 	@Override
 	public String getOperationCompletedMessage(long companyId) {
-		return "Virtual instance with company ID " + companyId +
+		return "Portal instance with company ID " + companyId +
 			" extracted successfully";
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		onVirtualInstance(
+		onPortalInstance(
 			() -> {
-				DBPartitionExtractVirtualInstanceConfiguration
-					dBPartitionExtractVirtualInstanceConfiguration =
+				ExtractPortalInstanceConfiguration
+					extractPortalInstanceConfiguration =
 						ConfigurableUtil.createConfigurable(
-							DBPartitionExtractVirtualInstanceConfiguration.
-								class,
+							ExtractPortalInstanceConfiguration.class,
 							properties);
 
 				long companyId =
-					dBPartitionExtractVirtualInstanceConfiguration.
-						partitionCompanyId();
+					extractPortalInstanceConfiguration.companyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					_log.error(
-						"Virtual instance with company ID " + companyId +
+						"Portal instance with company ID " + companyId +
 							" does not exist");
 
 					return null;
@@ -65,7 +63,7 @@ public class DBPartitionExtractVirtualInstanceOperation
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DBPartitionExtractVirtualInstanceOperation.class);
+		ExtractPortalInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

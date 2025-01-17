@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.configuration;
+package com.liferay.portal.instances.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -14,11 +14,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration"
+	id = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",
+	localization = "content/Language",
+	name = "portal-instances-extraction-configuration-name"
 )
-public interface DBPartitionExtractVirtualInstanceConfiguration {
+public interface ExtractPortalInstanceConfiguration {
 
 	@Meta.AD(type = Meta.Type.Long)
-	public long partitionCompanyId();
+	public long companyId();
 
 }

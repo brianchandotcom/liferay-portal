@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.operation;
+package com.liferay.portal.instances.internal.operation;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration;
+import com.liferay.portal.instances.internal.configuration.InsertPortalInstanceConfiguration;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,48 +28,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mariano Álvaro Sáiz
  */
 @Component(
-	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration",
+	configurationPid = "com.liferay.portal.instances.internal.configuration.InsertPortalInstanceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
 	service = {}
 )
-public class DBPartitionInsertVirtualInstanceOperation
-	extends BaseVirtualInstanceOperation {
+public class InsertPortalInstanceOperation extends BasePortalInstanceOperation {
 
 	@Override
 	public String getOperationCompletedMessage(long companyId) {
-		return "Virtual instance with company ID " + companyId +
+		return "Portal instance with company ID " + companyId +
 			" imported successfully";
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		onVirtualInstance(
+		onPortalInstance(
 			() -> {
-				DBPartitionInsertVirtualInstanceConfiguration
-					dBPartitionInsertVirtualInstanceConfiguration =
+				InsertPortalInstanceConfiguration
+					insertPortalInstanceConfiguration =
 						ConfigurableUtil.createConfigurable(
-							DBPartitionInsertVirtualInstanceConfiguration.class,
+							InsertPortalInstanceConfiguration.class,
 							properties);
 
 				long companyId =
-					dBPartitionInsertVirtualInstanceConfiguration.
-						partitionCompanyId();
+					insertPortalInstanceConfiguration.insertCompanyId();
 
 				if (_hasCompany(companyId)) {
 					_log.error(
 						StringBundler.concat(
-							"Virtual instance with company ID ", companyId,
+							"Portal instance with company ID ", companyId,
 							" already exists"));
 
 					return null;
 				}
 
 				return _companyLocalService.addDBPartitionCompany(
-					companyId,
-					dBPartitionInsertVirtualInstanceConfiguration.newName(),
-					dBPartitionInsertVirtualInstanceConfiguration.
-						newVirtualHostname(),
-					dBPartitionInsertVirtualInstanceConfiguration.newWebId());
+					companyId, insertPortalInstanceConfiguration.newName(),
+					insertPortalInstanceConfiguration.newVirtualHostname(),
+					insertPortalInstanceConfiguration.newWebId());
 			},
 			properties);
 	}
@@ -88,7 +84,7 @@ public class DBPartitionInsertVirtualInstanceOperation
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DBPartitionInsertVirtualInstanceOperation.class);
+		InsertPortalInstanceOperation.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

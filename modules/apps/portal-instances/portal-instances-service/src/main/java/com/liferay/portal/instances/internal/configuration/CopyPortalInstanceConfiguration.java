@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.internal.configuration;
+package com.liferay.portal.instances.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -16,20 +16,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "upgrades", featureFlagKey = "LPD-10959"
 )
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionCopyVirtualInstanceConfiguration",
+	id = "com.liferay.portal.instances.internal.configuration.CopyPortalInstanceConfiguration",
 	localization = "content/Language",
-	name = "db-partition-copy-virtual-instance-configuration-name"
+	name = "portal-instances-copy-configuration-name"
 )
-public interface DBPartitionCopyVirtualInstanceConfiguration {
+public interface CopyPortalInstanceConfiguration {
 
-	@Meta.AD(name = "source-partition-company-id", type = Meta.Type.Long)
-	public long sourcePartitionCompanyId();
+	@Meta.AD(name = "source-company-id", type = Meta.Type.Long)
+	public long sourceCompanyId();
 
 	@Meta.AD(
-		name = "destination-partition-company-id", required = false,
-		type = Meta.Type.Long
+		name = "destination-company-id", required = false, type = Meta.Type.Long
 	)
-	public long destinationPartitionCompanyId();
+	public long destinationCompanyId();
 
 	@Meta.AD(name = "name")
 	public String name();

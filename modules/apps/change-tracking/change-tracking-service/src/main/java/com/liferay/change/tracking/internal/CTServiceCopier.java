@@ -92,7 +92,7 @@ public class CTServiceCopier<T extends CTModel<T>> {
 		sb.append(ctPersistence.getTableName());
 		sb.append(" t1 where t1.ctCollectionId = ");
 		sb.append(_sourceCTCollectionId);
-		sb.append(" and t1.");
+		sb.append(" and (t1.");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
@@ -118,6 +118,7 @@ public class CTServiceCopier<T extends CTModel<T>> {
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 
 		CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
 

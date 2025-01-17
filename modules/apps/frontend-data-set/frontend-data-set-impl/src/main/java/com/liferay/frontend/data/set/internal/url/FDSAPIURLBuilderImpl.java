@@ -61,9 +61,8 @@ public class FDSAPIURLBuilderImpl implements FDSAPIURLBuilder {
 
 	@Override
 	public String build() {
-		int size = 3 + (_queryStringItems.size() * 2);
-
-		StringBundler sb = new StringBundler(size);
+		StringBundler sb = new StringBundler(
+			3 + (_queryStringItems.size() * 2));
 
 		sb.append("/o");
 

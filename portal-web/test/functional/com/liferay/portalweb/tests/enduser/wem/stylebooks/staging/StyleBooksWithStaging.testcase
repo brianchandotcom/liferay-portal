@@ -17,10 +17,6 @@ definition {
 			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
-		task ("Enable featured content fragment set") {
-			FragmentsAdmin.enableFeaturedContent();
-		}
-
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
@@ -91,9 +87,13 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Change to the new style book via Look and Feel") {
@@ -283,9 +283,13 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -596,9 +600,13 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 
 			PageEditor.publish();
 		}
@@ -692,9 +700,13 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Change to the new style book") {

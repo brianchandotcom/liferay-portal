@@ -471,10 +471,6 @@ definition {
 
 		var baseURL = PropsUtil.get("portal.url");
 
-		task ("Enable featured content fragment set") {
-			FragmentsAdmin.enableFeaturedContent();
-		}
-
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",

@@ -52,25 +52,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableFeaturedContent() {
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Feature Flags",
-			configurationName = "Deprecation",
-			configurationScope = "System Scope");
-
-		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Featured Content Fragment Set", toggle_state = "Disabled")) {
-			Check.checkToggleSwitch(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Featured Content Fragment Set",
-				toggle_state = "Disabled");
-		}
-
-		Navigator.openURL();
-	}
-
-	@summary = "Default summary"
 	macro importCollectionFromDependenciesFolder(collectionZipFile = null, importOption = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 

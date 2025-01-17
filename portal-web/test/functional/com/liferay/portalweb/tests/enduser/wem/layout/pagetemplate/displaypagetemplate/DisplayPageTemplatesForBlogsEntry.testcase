@@ -35,26 +35,17 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Enable the Reading Time") {
-			BlogsConfiguration.enableReadingTime();
-		}
-
-		task ("Enable featured content fragment set") {
-			FragmentsAdmin.enableFeaturedContent();
-		}
-
-		task ("Add a Banner Center fragment to display page template") {
+		task ("Go to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				composition = "true",
-				fragmentName = "Banner Center");
 		}
 
 		task ("Map the Reading Time (Simple) to title editable field") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
 			PageEditorMapping.mapEditableTextToField(
 				field = "Reading Time (Simple)",
 				fragmentName = "Heading",
@@ -62,6 +53,11 @@ definition {
 		}
 
 		task ("Map the Reading Time (Descriptive) to subtitle editable field") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
+
 			PageEditorMapping.mapEditableTextToField(
 				field = "Reading Time (Descriptive)",
 				fragmentName = "Paragraph",

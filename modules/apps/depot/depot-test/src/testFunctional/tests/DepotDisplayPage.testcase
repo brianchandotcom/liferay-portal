@@ -14,10 +14,6 @@ definition {
 			AssetPublisherPortlet.enableDynamicAndManualSelection();
 		}
 
-		task ("Enable featured content fragment set") {
-			FragmentsAdmin.enableFeaturedContent();
-		}
-
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDepot.addDepot(
@@ -671,9 +667,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -683,6 +678,11 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph",
+			targetFragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Paragraph",
@@ -760,9 +760,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -772,6 +771,11 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph",
+			targetFragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Paragraph",
@@ -857,9 +861,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -869,6 +872,11 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph",
+			targetFragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Paragraph",
@@ -949,9 +957,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -962,9 +969,10 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
 
-		PageEditorMapping.gotoEditableFieldMapping(
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
 			fragmentName = "Paragraph",
-			id = "element-text");
+			targetFragmentName = "Heading");
 
 		Select(
 			key_fieldLabel = "Field",
@@ -1041,9 +1049,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -1053,6 +1060,11 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph",
+			targetFragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Paragraph",
@@ -1138,9 +1150,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			composition = "true",
-			fragmentName = "Banner Center");
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Heading",
@@ -1150,6 +1161,11 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Title");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph",
+			targetFragmentName = "Heading");
 
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Paragraph",

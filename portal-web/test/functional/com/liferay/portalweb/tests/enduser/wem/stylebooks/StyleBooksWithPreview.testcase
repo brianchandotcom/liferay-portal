@@ -32,10 +32,6 @@ definition {
 	@description = "This is a test for LPS-116078 and LPS-143302. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
 	@priority = 4
 	test CanNavigateToPreviewPageViaPagePreviewInfoBarButNotAllowInteractWithPreviewPage {
-		task ("Enable featured content fragment set") {
-			FragmentsAdmin.enableFeaturedContent();
-		}
-
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

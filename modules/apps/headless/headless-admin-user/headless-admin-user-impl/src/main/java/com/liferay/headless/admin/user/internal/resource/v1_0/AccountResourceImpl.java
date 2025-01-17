@@ -290,21 +290,11 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		long companyId = 0;
-
-		if (contextCompany != null) {
-			companyId = contextCompany.getCompanyId();
-		}
-		else {
-			companyId = GetterUtil.getLong(
-				multivaluedMap.getFirst("companyId"));
-		}
-
 		return new AccountEntityModel(
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(AccountEntry.class.getName()), companyId,
-				_expandoBridgeIndexer, _expandoColumnLocalService,
-				_expandoTableLocalService));
+				_portal.getClassNameId(AccountEntry.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@NestedField(

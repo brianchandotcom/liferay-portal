@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -199,21 +198,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		long companyId = 0;
-
-		if (contextCompany != null) {
-			companyId = contextCompany.getCompanyId();
-		}
-		else {
-			companyId = GetterUtil.getLong(
-				multivaluedMap.getFirst("companyId"));
-		}
-
 		return new ProductEntityModel(
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(CPDefinition.class.getName()), companyId,
-				_expandoBridgeIndexer, _expandoColumnLocalService,
-				_expandoTableLocalService));
+				_portal.getClassNameId(CPDefinition.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	private BooleanClause<Query> _getBooleanClause(

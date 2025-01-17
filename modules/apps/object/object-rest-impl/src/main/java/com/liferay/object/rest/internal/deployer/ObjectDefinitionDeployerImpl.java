@@ -188,11 +188,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl(
-		ObjectDefinition objectDefinition, String restContextPath) {
+		ObjectDefinition objectDefinition) {
 
 		return new ObjectEntryResourceImpl(
 			_dtoConverterRegistry, _entityModelProvider, objectDefinition,
-			_objectDefinitionsMap.get(restContextPath),
 			_objectDefinitionLocalService, _objectEntryLocalService,
 			_objectEntryManagerRegistry, _objectFieldLocalService,
 			_objectRelationshipService, _objectScopeProviderRegistry,
@@ -320,6 +319,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
+	private String _getEntityClassName(ObjectDefinition objectDefinition) {
+		return ObjectEntry.class.getName() + "#" +
+			StringUtil.toLowerCase(objectDefinition.getShortName());
+	}
+
 	private void _initCustomObjectDefinition(
 		ObjectDefinition objectDefinition) {
 
@@ -342,7 +346,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			).put(
 				"liferay.objects", true
 			).put(
-				"osgi.jaxrs.application.base", restContextPath
+				"osgi.jaxrs.application.base",
+				objectDefinition.getRESTContextPath()
 			).put(
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
@@ -398,7 +403,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"openapi.resource.key",
 								objectDefinition.getName()
 							).put(
-								"openapi.resource.path", restContextPath
+								"openapi.resource.path",
+								objectDefinition.getRESTContextPath()
 							).build()),
 						_bundleContext.registerService(
 							ObjectEntryResource.class,
@@ -411,7 +417,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 										serviceRegistration) {
 
 									return _createObjectEntryResourceImpl(
-										objectDefinition, restContextPath);
+										objectDefinition);
 								}
 
 								@Override
@@ -424,6 +430,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 							},
 							HashMapDictionaryBuilder.<String, Object>put(
+								"api.version", "v1.0"
+							).put(
 								"batch.engine.entity.class.name",
 								ObjectEntry.class.getName() + "#" +
 									objectDefinition.getName()
@@ -447,6 +455,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"batch.planner.import.enabled", "true"
 							).put(
 								"companyId", objectDefinition.getCompanyId()
+							).put(
+								"entity.class.name",
+								_getEntityClassName(objectDefinition)
+							).put(
+								"osgi.jaxrs.application.select",
+								"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
 							).build()),
 						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,
@@ -471,13 +485,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		).put(
 			"companyId", companyIds
 		).put(
-			"entity.class.name",
-			() -> {
-				String lowerCaseShortName = StringUtil.toLowerCase(
-					objectDefinition.getShortName());
-
-				return ObjectEntry.class.getName() + "#" + lowerCaseShortName;
-			}
+			"entity.class.name", _getEntityClassName(objectDefinition)
 		).put(
 			"osgi.jaxrs.application.select",
 			"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -505,8 +513,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							ServiceRegistration<ObjectEntryResource>
 								serviceRegistration) {
 
-							return _createObjectEntryResourceImpl(
-								null, restContextPath);
+							return _createObjectEntryResourceImpl(null);
 						}
 
 						@Override
@@ -578,14 +585,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"api.version", "v1.0"
 						).put(
 							"entity.class.name",
-							() -> {
-								String lowerCaseShortName =
-									StringUtil.toLowerCase(
-										objectDefinition.getShortName());
-
-								return ObjectEntry.class.getName() + "#" +
-									lowerCaseShortName;
-							}
+							_getEntityClassName(objectDefinition)
 						).put(
 							"osgi.jaxrs.application.select",
 							"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -599,14 +599,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							_defaultPermissionCheckerFactory,
 							_expressionConvert, _filterParserProvider,
 							_groupLocalService, objectDefinition,
-							() -> _createObjectEntryResourceImpl(
-								null, restContextPath),
+							() -> _createObjectEntryResourceImpl(null),
 							_resourceActionLocalService,
 							_resourcePermissionLocalService, _roleLocalService,
 							_sortParserProvider, _userLocalService),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"resource.locator.key",
-							restContextPath + "/" +
+							objectDefinition.getRESTContextPath() + "/" +
 								objectDefinition.getShortName()
 						).build())),
 				_registerExceptionMappers(osgiJaxRsName)));

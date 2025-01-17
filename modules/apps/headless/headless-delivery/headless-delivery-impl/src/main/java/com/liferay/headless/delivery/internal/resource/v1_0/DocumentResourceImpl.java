@@ -286,21 +286,11 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		long companyId = 0;
-
-		if (contextCompany != null) {
-			companyId = contextCompany.getCompanyId();
-		}
-		else {
-			companyId = GetterUtil.getLong(
-				multivaluedMap.getFirst("companyId"));
-		}
-
 		return new DocumentEntityModel(
 			EntityFieldsUtil.getEntityFields(
-				_portal.getClassNameId(DLFileEntry.class.getName()), companyId,
-				_expandoBridgeIndexer, _expandoColumnLocalService,
-				_expandoTableLocalService));
+				_portal.getClassNameId(DLFileEntry.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override

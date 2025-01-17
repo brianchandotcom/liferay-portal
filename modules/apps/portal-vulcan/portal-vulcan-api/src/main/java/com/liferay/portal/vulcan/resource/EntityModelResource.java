@@ -5,6 +5,7 @@
 
 package com.liferay.portal.vulcan.resource;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.odata.entity.EntityModel;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -16,5 +17,7 @@ public interface EntityModelResource {
 
 	public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap)
 		throws Exception;
+
+	public void setContextCompany(Company contextCompany);
 
 }

@@ -195,7 +195,7 @@ definition {
 			var position = 1;
 		}
 
-		AssertVisible(
+		AssertElementPresent(
 			image = ${image},
 			index = ${position},
 			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");

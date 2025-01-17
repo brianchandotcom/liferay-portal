@@ -366,7 +366,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_BACKGROUND_IMAGE</td>
-	<td>xpath=(//div[contains(@style,'background-image')])[${index}][contains(@style,'${image}')]</td>
+	<td>xpath=(//div[contains(@style,'background-image')])[${index}][contains(@style,'${image}')] | //div/style[contains(text(),'${image}')]</td>
 	<td></td>
 </tr>
 

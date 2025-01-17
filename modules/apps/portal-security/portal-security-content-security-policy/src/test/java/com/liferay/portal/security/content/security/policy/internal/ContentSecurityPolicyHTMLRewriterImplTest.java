@@ -58,13 +58,13 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 				"\"display: none;\">Yo!</div>",
 			"TEST_NONCE", false);
 
-		System.out.println(html);
+
 		Assert.assertTrue(
 			_matches(html, ".*document\\.getElementById\\('TEST_ID'\\).*"));
 		Assert.assertTrue(
 			_matches(
 				html,
-				".*<style nonce=\"TEST_NONCE\">#TEST_ID\\{display: none;}" *
+				".*<style nonce=\"TEST_NONCE\">#TEST_ID\\{display: none;}" +
 					"</style>.*"));
 		Assert.assertTrue(_matches(html, ".*<div id=\"TEST_ID\">.*</div>.*"));
 	}

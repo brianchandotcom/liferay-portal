@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -36,6 +37,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,6 +121,7 @@ public class DLAdminDisplayContext {
 
 	public DLAdminDisplayContext(
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
+		ConfigurationProvider configurationProvider,
 		DLFileOrderConfigurationProvider dlFileOrderConfigurationProvider,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
@@ -126,6 +129,7 @@ public class DLAdminDisplayContext {
 		VersioningStrategy versioningStrategy) {
 
 		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
+		_configurationProvider = configurationProvider;
 		_dlFileOrderConfigurationProvider = dlFileOrderConfigurationProvider;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -212,6 +216,44 @@ public class DLAdminDisplayContext {
 
 	public long getFolderId() {
 		return _folderId;
+	}
+
+	public String getMimeTypeMessageKey() throws PortalException {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		if (StringUtil.equals(
+				portletDisplay.getPortletName(),
+				DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+
+			return "media-files-must-be-one-of-the-following-formats-x";
+		}
+
+		return "please-enter-a-file-with-a-valid-mime-type-x";
+	}
+
+	public String getMimeTypes() throws PortalException {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		if (StringUtil.equals(
+				portletDisplay.getPortletName(),
+				DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+
+			DLPortletInstanceSettings dlPortletInstanceSettings =
+				_dlRequestHelper.getDLPortletInstanceSettings();
+
+			return StringUtil.merge(
+				dlPortletInstanceSettings.getMimeTypes(),
+				StringPool.COMMA_AND_SPACE);
+		}
+
+		DLFileEntryMimeTypeConfiguration dlFileEntryMimeTypeConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				DLFileEntryMimeTypeConfiguration.class,
+				_themeDisplay.getCompanyId());
+
+		return StringUtil.merge(
+			dlFileEntryMimeTypeConfiguration.fileMimeTypes(),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	public List<Folder> getMountFolders() throws PortalException {
@@ -1323,6 +1365,7 @@ public class DLAdminDisplayContext {
 	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 	private long[] _assetCategoryIds;
 	private String[] _assetTagIds;
+	private final ConfigurationProvider _configurationProvider;
 	private boolean _defaultFolderView;
 	private String _displayStyle;
 	private final DLFileOrderConfigurationProvider

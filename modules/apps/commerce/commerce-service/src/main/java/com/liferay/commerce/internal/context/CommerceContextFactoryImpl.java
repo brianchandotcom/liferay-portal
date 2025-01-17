@@ -13,7 +13,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -41,7 +41,7 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderHttpHelper, _configurationProvider,
-			_cpConfigurationListLocalService, _portal);
+			_cpConfigurationListDiscovery, _portal);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderService, _configurationProvider,
-			_cpConfigurationListLocalService);
+			_cpConfigurationListDiscovery);
 	}
 
 	@Reference
@@ -91,7 +91,7 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+	private CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 
 	@Reference
 	private Portal _portal;

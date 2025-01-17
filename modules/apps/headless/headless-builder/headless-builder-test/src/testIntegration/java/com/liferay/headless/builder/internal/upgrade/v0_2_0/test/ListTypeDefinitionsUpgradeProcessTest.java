@@ -100,7 +100,7 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 			}
 		}
 
-		Bundle bundle = _installTestBundle();
+		Bundle bundle = _installBundle();
 
 		try {
 			CompletableFuture<Void> completableFuture =
@@ -191,7 +191,7 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 			listTypeEntry.getExternalReferenceCode());
 	}
 
-	private Bundle _installTestBundle() throws Exception {
+	private Bundle _installBundle() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			ListTypeDefinitionsUpgradeProcessTest.class);
 

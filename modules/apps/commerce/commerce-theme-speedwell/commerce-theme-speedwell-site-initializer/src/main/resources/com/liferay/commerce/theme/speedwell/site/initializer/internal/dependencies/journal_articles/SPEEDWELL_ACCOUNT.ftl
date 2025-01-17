@@ -53,7 +53,7 @@
 		</div>
 	</a>
 
-	<a class="account-dashboard__pill" href="${base_friendly_url}/my-payment-methods" style="visibility: hidden; order: 6;">
+	<a class="account-dashboard__pill account-dashboard-payment-methods" href="${base_friendly_url}/my-payment-methods">
 		<div class="pill__icon">
 			<svg fill="none" height="60" viewBox="0 0 60 65" width="65" xmlns="http://www.w3.org/2000/svg">
 				<path

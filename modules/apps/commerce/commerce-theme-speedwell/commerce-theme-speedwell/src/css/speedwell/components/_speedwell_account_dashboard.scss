@@ -9,6 +9,11 @@
 		text-decoration: none;
 	}
 
+	&-payment-methods {
+		order: 6;
+		visibility: hidden;
+	}
+
 	&__title {
 		flex-grow: 1;
 		font-size: 1.5em;

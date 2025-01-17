@@ -62,7 +62,6 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.addWidgetPage({
-		addButtonLabel: 'Add Site Template Page',
 		name: templateName,
 	});
 

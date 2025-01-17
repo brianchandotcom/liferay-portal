@@ -154,10 +154,6 @@ testWithPrivatePages(
 
 		await productMenuPage.goToPages();
 		await pagesAdminPage.newButton.click();
-		await layoutSetPrototypePage.addTemplatePageButton.waitFor({
-			state: 'visible',
-		});
-		await layoutSetPrototypePage.addTemplatePageButton.click();
 		await pagesAdminPage.addPage({
 			name: secondPageNameOnSiteTemplate,
 		});

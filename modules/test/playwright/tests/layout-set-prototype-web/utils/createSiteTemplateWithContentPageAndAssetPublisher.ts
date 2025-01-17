@@ -53,10 +53,6 @@ export default async function createSiteTemplateWithContentPageAndAssetPublisher
 	await productMenuPage.goToPages();
 
 	await pagesAdminPage.newButton.click();
-	await layoutSetPrototypePage.addTemplatePageButton.waitFor({
-		state: 'visible',
-	});
-	await layoutSetPrototypePage.addTemplatePageButton.click();
 	await pagesAdminPage.addPage({
 		name: templateName,
 	});

@@ -1384,6 +1384,10 @@ components:
                     type: integer
                 name:
                     type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 userAccountBriefs:
                     description:
                         The list of users associated with this user group.

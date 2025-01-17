@@ -1715,7 +1715,10 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectDefinitionEnableLocalizationException();
 		}
 
-		if (required) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-32050") &&
+			required) {
+
 			throw new ObjectFieldLocalizedException(
 				"Localized object fields must not be required");
 		}

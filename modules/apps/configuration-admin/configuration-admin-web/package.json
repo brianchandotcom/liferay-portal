@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"main": "js/index.ts",
+	"name": "@liferay/configuration-admin-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "5.0.92"
+}

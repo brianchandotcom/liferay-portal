@@ -6114,6 +6114,27 @@ public class DataFactory {
 		return new ObjectValuePair<>(key, value);
 	}
 
+	public PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
+		PortalPreferencesModel portalPreferencesModel =
+			new PortalPreferencesModelImpl();
+
+		// PK fields
+
+		portalPreferencesModel.setPortalPreferencesId(_counter.get());
+
+		// Audit fields
+
+		portalPreferencesModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		portalPreferencesModel.setOwnerId(ownerId);
+		portalPreferencesModel.setOwnerType(
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		return portalPreferencesModel;
+	}
+
 	public PortletPreferencesModel newPortletPreferencesModel(
 		long ownerId, int ownerType, long plid, String portletId) {
 
@@ -8292,27 +8313,6 @@ public class DataFactory {
 		objectStateTransitionModel.setTargetObjectStateId(targetObjectStateId);
 
 		return objectStateTransitionModel;
-	}
-
-	public PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
-		PortalPreferencesModel portalPreferencesModel =
-			new PortalPreferencesModelImpl();
-
-		// PK fields
-
-		portalPreferencesModel.setPortalPreferencesId(_counter.get());
-
-		// Audit fields
-
-		portalPreferencesModel.setCompanyId(_companyId);
-
-		// Other fields
-
-		portalPreferencesModel.setOwnerId(ownerId);
-		portalPreferencesModel.setOwnerType(
-			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		return portalPreferencesModel;
 	}
 
 	protected ReleaseModelImpl newReleaseModel(

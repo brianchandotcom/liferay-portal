@@ -1,4 +1,4 @@
-@component-name = "portal-site-management"
+@component-name = "portal-solutions"
 definition {
 
 	var baseURL = PropsUtil.get("portal.url");

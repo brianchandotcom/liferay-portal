@@ -227,7 +227,8 @@ public class RestrictedLiferayObjectWrapperTest
 			new RestrictedLiferayObjectWrapper(
 				null, null,
 				new String[] {
-					TestLiferayMethodObject.class.getName() + "#getName"
+					TestLiferayMethodObject.class.getName() + "#getName",
+					TestLiferayMethodObject.class.getName() + "#toString"
 				});
 
 		TemplateModel templateModel = restrictedLiferayObjectWrapper.wrap(
@@ -244,6 +245,7 @@ public class RestrictedLiferayObjectWrapperTest
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "Name");
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getName");
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getname");
+		_testRestrictedMethodToString(liferayFreeMarkerStringModel);
 
 		SimpleMethodModel simpleMethodModel =
 			(SimpleMethodModel)liferayFreeMarkerStringModel.get("generate");
@@ -278,37 +280,6 @@ public class RestrictedLiferayObjectWrapperTest
 					"\"className#methodName\""),
 				logEntry.getMessage());
 		}
-	}
-
-	@Test
-	public void testRestrictedMethodToString() throws Exception {
-		RestrictedLiferayObjectWrapper restrictedLiferayObjectWrapper =
-			new RestrictedLiferayObjectWrapper(
-				null, null,
-				new String[] {
-					TestLiferayMethodObject.class.getName() + "#toString"
-				});
-
-		TemplateModel templateModel = restrictedLiferayObjectWrapper.wrap(
-			new TestLiferayMethodObject("test"));
-
-		Assert.assertThat(
-			templateModel,
-			CoreMatchers.instanceOf(LiferayFreeMarkerStringModel.class));
-
-		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel =
-			(LiferayFreeMarkerStringModel)templateModel;
-
-		_testRestrictedMethodToString(liferayFreeMarkerStringModel);
-
-		SimpleMethodModel simpleMethodModel =
-			(SimpleMethodModel)liferayFreeMarkerStringModel.get("generate");
-
-		TemplateModel resultTemplateModel =
-			(TemplateModel)simpleMethodModel.exec(
-				Collections.singletonList(new SimpleScalar("generate")));
-
-		Assert.assertEquals("test-generate", resultTemplateModel.toString());
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)

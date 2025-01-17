@@ -167,6 +167,7 @@ public class CTRowUtil {
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
 		sb.append(" and ");
+		sb.append("(");
 		sb.append(primaryColumnName);
 		sb.append(" in (");
 
@@ -190,6 +191,7 @@ public class CTRowUtil {
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 
 		return sb.toString();
 	}

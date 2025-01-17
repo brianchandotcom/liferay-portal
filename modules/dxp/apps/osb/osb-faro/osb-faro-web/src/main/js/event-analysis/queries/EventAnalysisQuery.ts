@@ -114,6 +114,7 @@ export const EventAnalysisQuery = gql`
 				}
 				eventDefinition {
 					description
+					displayName
 					hidden
 					id
 					name

@@ -138,21 +138,21 @@ public class ElasticsearchSearchEngineAdapterImpl
 			List<BulkableDocumentRequest<?>> bulkableDocumentRequests =
 				bulkDocumentRequest.getBulkableDocumentRequests();
 
-			if (bulkableDocumentRequests.size() >= _HIBERNATE_JDBC_BATCH_SIZE) {
-				try {
-					S documentResponse = documentRequest.accept(
-						_documentRequestExecutor);
-
-					bulkableDocumentRequests.clear();
-
-					return documentResponse;
-				}
-				catch (RuntimeException runtimeException) {
-					throw _getRuntimeException(runtimeException);
-				}
+			if (bulkableDocumentRequests.size() < _HIBERNATE_JDBC_BATCH_SIZE) {
+				return null;
 			}
 
-			return null;
+			try {
+				S documentResponse = documentRequest.accept(
+					_documentRequestExecutor);
+
+				bulkableDocumentRequests.clear();
+
+				return documentResponse;
+			}
+			catch (RuntimeException runtimeException) {
+				throw _getRuntimeException(runtimeException);
+			}
 		}
 
 		try {

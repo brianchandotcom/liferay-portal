@@ -166,12 +166,12 @@ public class HighlightTranslatorTest {
 	protected HighlightBuilder.BoundaryScannerType getBoundaryScannerType(
 		String boundaryScannerType) {
 
-		if (boundaryScannerType != null) {
-			return HighlightBuilder.BoundaryScannerType.fromString(
-				boundaryScannerType);
+		if (boundaryScannerType == null) {
+			return null;
 		}
 
-		return null;
+		return HighlightBuilder.BoundaryScannerType.fromString(
+			boundaryScannerType);
 	}
 
 	protected HighlightBuilder.Order getOrder(String order) {

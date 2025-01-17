@@ -72,14 +72,14 @@ public class ElasticsearchAggregationResultsTranslator {
 		PipelineAggregation pipelineAggregation =
 			_pipelineAggregationLookup.lookup(name);
 
-		if (pipelineAggregation != null) {
-			return pipelineAggregation.accept(
-				_pipelineAggregationResultTranslatorFactory.
-					createPipelineAggregationResultTranslator(
-						elasticsearchAggregation));
+		if (pipelineAggregation == null) {
+			return null;
 		}
 
-		return null;
+		return pipelineAggregation.accept(
+			_pipelineAggregationResultTranslatorFactory.
+				createPipelineAggregationResultTranslator(
+					elasticsearchAggregation));
 	}
 
 	private final AggregationLookup _aggregationLookup;

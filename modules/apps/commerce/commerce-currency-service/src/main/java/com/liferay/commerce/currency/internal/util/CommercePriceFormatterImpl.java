@@ -117,7 +117,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
 	public BigDecimal parse(
-			ActionRequest actionRequest, String className, String param)
+			ActionRequest actionRequest, boolean allowNegativeValue,
+			String className, String param)
 		throws Exception {
 
 		String price = ParamUtil.getString(
@@ -135,25 +136,29 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			WebKeys.THEME_DISPLAY);
 
 		return new BigDecimal(
-			parse(className, price, themeDisplay.getLocale()));
+			parse(
+				allowNegativeValue, className, price,
+				themeDisplay.getLocale()));
 	}
 
 	@Override
-	public String parse(String className, String price, Locale locale)
+	public String parse(
+			boolean allowNegativeValue, String className, String price,
+			Locale locale)
 		throws Exception {
 
 		if (Validator.isNull(price)) {
 			price = BigDecimal.ZERO.toString();
 		}
 
-		_validatePrice(className, price);
+		_validatePrice(allowNegativeValue, className, price);
 
 		DecimalFormatSymbols decimalFormatSymbols =
 			DecimalFormatSymbols.getInstance(locale);
 
 		if (Objects.equals(
 				decimalFormatSymbols.getDecimalSeparator(), CharPool.PERIOD) &&
-			_hasCommaDecimalPattern(price)) {
+			_hasCommaDecimalPattern(allowNegativeValue, price)) {
 
 			price = StringUtil.replace(
 				price, CharPool.PERIOD, StringPool.BLANK);
@@ -166,7 +171,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 				  Objects.equals(
 					  decimalFormatSymbols.getDecimalSeparator(),
 					  CharPool.ARABIC_DECIMAL_SEPARATOR)) &&
-				 _hasPeriodDecimalPattern(price)) {
+				 _hasPeriodDecimalPattern(allowNegativeValue, price)) {
 
 			price = StringUtil.replace(price, CharPool.COMMA, StringPool.BLANK);
 
@@ -227,23 +232,43 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		return decimalFormat;
 	}
 
-	private boolean _hasCommaDecimalPattern(String price) {
-		Matcher matcher = _commaDecimalPattern.matcher(price);
+	private boolean _hasCommaDecimalPattern(
+		boolean allowNegativeValue, String price) {
+
+		Matcher matcher = null;
+
+		if (allowNegativeValue) {
+			matcher = _negativeCommaDecimalPattern.matcher(price);
+		}
+		else {
+			matcher = _commaDecimalPattern.matcher(price);
+		}
 
 		return matcher.find();
 	}
 
-	private boolean _hasPeriodDecimalPattern(String price) {
-		Matcher matcher = _periodDecimalPattern.matcher(price);
+	private boolean _hasPeriodDecimalPattern(
+		boolean allowNegativeValue, String price) {
+
+		Matcher matcher = null;
+
+		if (allowNegativeValue) {
+			matcher = _negativePeriodDecimalPattern.matcher(price);
+		}
+		else {
+			matcher = _periodDecimalPattern.matcher(price);
+		}
 
 		return matcher.find();
 	}
 
-	private void _validatePrice(String className, String price)
+	private void _validatePrice(
+			boolean allowNegativeValue, String className, String price)
 		throws Exception {
 
-		if (Validator.isNull(className) || _hasCommaDecimalPattern(price) ||
-			_hasPeriodDecimalPattern(price)) {
+		if (Validator.isNull(className) ||
+			_hasCommaDecimalPattern(allowNegativeValue, price) ||
+			_hasPeriodDecimalPattern(allowNegativeValue, price)) {
 
 			return;
 		}
@@ -305,6 +330,12 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	private static final Pattern _commaDecimalPattern = Pattern.compile(
 		"^\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?$|^\\d+(?:,\\d+)?$");
+	private static final Pattern _negativeCommaDecimalPattern = Pattern.compile(
+		"^-?\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?$|^-?\\d+(?:,\\d+)?$");
+	private static final Pattern _negativePeriodDecimalPattern =
+		Pattern.compile(
+			"((^-?\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?$)|(^-?\\d{1,2}(?:,\\d{2})*" +
+				"(?:,\\d{3})(?:\\.\\d+)?$))|^-?\\d+(?:\\.\\d+)?$");
 	private static final Pattern _periodDecimalPattern = Pattern.compile(
 		"((^\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?$)|(^\\d{1,2}(?:,\\d{2})*" +
 			"(?:,\\d{3})(?:\\.\\d+)?$))|^\\d+(?:\\.\\d+)?$");

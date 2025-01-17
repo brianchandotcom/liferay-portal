@@ -31,10 +31,13 @@ public interface CommercePriceFormatter {
 		CommerceCurrency commerceCurrency, BigDecimal price, Locale locale);
 
 	public BigDecimal parse(
-			ActionRequest actionRequest, String className, String param)
+			ActionRequest actionRequest, boolean allowNegativeValue,
+			String className, String param)
 		throws Exception;
 
-	public String parse(String className, String price, Locale locale)
+	public String parse(
+			boolean allowNegativeValue, String className, String price,
+			Locale locale)
 		throws Exception;
 
 }

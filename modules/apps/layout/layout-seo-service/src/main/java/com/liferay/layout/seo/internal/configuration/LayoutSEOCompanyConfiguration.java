@@ -28,7 +28,7 @@ public interface LayoutSEOCompanyConfiguration {
 	@Meta.AD(
 		deflt = "default-language-url",
 		description = "layout-seo-configuration-canonical-url-description",
-		name = "layout-seo-configuration-canonical-url",
+		name = "canonical-url",
 		optionLabels = {
 			"layout-seo-configuration-page-default-language-url",
 			"layout-seo-configuration-page-localized-url"

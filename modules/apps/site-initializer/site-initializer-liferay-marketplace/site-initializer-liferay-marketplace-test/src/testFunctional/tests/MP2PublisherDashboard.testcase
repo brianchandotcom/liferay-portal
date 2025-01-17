@@ -1,4 +1,4 @@
-@component-name = "portal-site-management"
+@component-name = "portal-solutions"
 definition {
 
 	property osgi.modules.includes = "site-initializer-liferay-marketplace";

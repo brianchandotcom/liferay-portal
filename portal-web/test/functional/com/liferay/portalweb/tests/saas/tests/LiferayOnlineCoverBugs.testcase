@@ -1,4 +1,4 @@
-@component-name = "portal-site-management"
+@component-name = "portal-solutions"
 definition {
 
 	property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";

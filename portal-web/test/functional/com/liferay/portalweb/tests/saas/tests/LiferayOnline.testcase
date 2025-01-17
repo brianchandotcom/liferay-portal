@@ -1,4 +1,4 @@
-@component-name = "portal-site-management"
+@component-name = "portal-solutions"
 definition {
 
 	property database.types = "mysql, postgresql";

@@ -23,7 +23,7 @@
 	</c:if>
 
 	<commerce-ui:panel>
-		<aui:input autoSize="<%= true %>" id="shipping-method-type-settings" label="type-settings" name="settings--shippingMethodTypeSettings--" style="min-height: 600px;" type="textarea" value="<%= (UnicodeProperties)request.getAttribute(FunctionCommerceShippingEngineWebKeys.SHIPPING_METHOD_TYPE_SETTINGS) %>" />
+		<aui:input autoSize="<%= true %>" id="shipping-method-type-settings" label="type-settings" name="settings--shippingMethodTypeSettings--" type="textarea" value="<%= (UnicodeProperties)request.getAttribute(FunctionCommerceShippingEngineWebKeys.SHIPPING_METHOD_TYPE_SETTINGS) %>" />
 	</commerce-ui:panel>
 
 	<commerce-ui:panel

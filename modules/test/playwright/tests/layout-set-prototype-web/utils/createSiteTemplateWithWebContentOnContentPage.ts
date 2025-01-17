@@ -12,8 +12,8 @@ import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
-import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
 
 export default async function createSiteTemplateWithWebContentOnContentPage({
 	apiHelpers,
@@ -74,6 +74,8 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addSpecificWebContentWithDisplay(webContentName);
+	await webContentDisplayPage.addSpecificWebContentWithDisplay(
+		webContentName
+	);
 	await uiElementsPage.publishButton.click();
 }

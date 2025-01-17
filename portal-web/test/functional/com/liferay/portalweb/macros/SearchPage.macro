@@ -47,7 +47,7 @@ definition {
 	macro addWidgetsOnContentPageViaUI(searchPortletList = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		PageEditor.gotoTab(tabName = "Components");
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 

@@ -98,7 +98,7 @@ export class PageEditorPage {
 	}
 
 	async addFragment(setName: string, name: string, dropTarget?: Locator) {
-		await this.goToSidebarTab('Fragments and Widgets');
+		await this.goToSidebarTab('Components');
 
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Fragments'})
@@ -198,7 +198,7 @@ export class PageEditorPage {
 	}
 
 	async addWidget(category: string, name: string, dropTarget?: Locator) {
-		await this.goToSidebarTab('Fragments and Widgets');
+		await this.goToSidebarTab('Components');
 
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Widgets'})

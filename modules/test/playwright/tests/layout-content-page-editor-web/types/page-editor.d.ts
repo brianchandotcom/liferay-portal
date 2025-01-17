@@ -27,7 +27,7 @@ type ConfigurationTab =
 type SidebarTab =
 	| 'Browser'
 	| 'Comments'
-	| 'Fragments and Widgets'
+	| 'Components'
 	| 'Page Content'
 	| 'Page Design Options'
 	| 'Page Rules'

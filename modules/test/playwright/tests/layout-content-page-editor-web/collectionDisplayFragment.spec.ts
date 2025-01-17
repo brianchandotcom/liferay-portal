@@ -512,10 +512,10 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 	// Close sidebar
 
 	await clickAndExpectToBeHidden({
-		target: page.locator('header', {hasText: 'Fragments and Widgets'}),
+		target: page.locator('header', {hasText: 'Components'}),
 		trigger: page.getByRole('tab', {
 			exact: true,
-			name: 'Fragments and Widgets',
+			name: 'Components',
 		}),
 	});
 

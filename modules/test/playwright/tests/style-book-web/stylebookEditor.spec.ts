@@ -103,7 +103,7 @@ test(
 		});
 
 		await test.step('Add a Banner Center to page', async () => {
-			await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+			await pageEditorPage.goToSidebarTab('Components');
 
 			await pageEditorPage.addFragment(
 				'Featured Content Deprecated',

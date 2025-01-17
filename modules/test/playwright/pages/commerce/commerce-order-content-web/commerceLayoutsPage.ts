@@ -197,9 +197,9 @@ export class CommerceLayoutsPage {
 		);
 		this.infoBoxFieldSelect = page.getByLabel('Field', {exact: true});
 		this.infoBoxLabelInput = page.getByLabel('Label', {exact: true});
-		this.infoBoxShippingMethodAlert = page.getByText('are no available');
-		this.infoBoxShippingMethodSelect = page.getByLabel('Choose Courier');
 		this.infoBoxReadOnlyToggle = page.getByLabel('Read Only');
+		this.infoBoxShippingMethodAlert = page.getByText('are no available');
+		this.infoBoxShippingMethodSelect = page.getByLabel('Choose Carrier');
 		this.infoBoxValue = (name: string) => page.getByText(name);
 		this.inputTextArea = page.getByRole('textbox');
 		this.inputTextbox = (name: string) =>
@@ -467,6 +467,12 @@ export class CommerceLayoutsPage {
 		}
 
 		if (
+			(await this.closeProductMenuButton.isVisible()) &&
+			(await this.pageTemplatesMenuItem.isVisible())
+		) {
+			return;
+		}
+		else if (
 			(await this.closeProductMenuButton.isVisible()) &&
 			(await this.pageTemplatesMenuItem.isHidden())
 		) {

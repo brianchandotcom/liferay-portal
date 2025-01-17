@@ -23,6 +23,7 @@ export class CommerceAdminChannelsPage {
 	readonly healthCheckAction: (actionName: string) => Locator;
 	readonly headerActions: Locator;
 	readonly headerActionsSaveButton: Locator;
+	readonly ordersTabToggle: (toggleName: string) => Locator;
 	readonly page: Page;
 	readonly sellerOrderAcceptanceWorkflow: Locator;
 	readonly shippingMethodActiveField: Locator;
@@ -80,6 +81,7 @@ export class CommerceAdminChannelsPage {
 				.locator('.item-actions .btn');
 		this.headerActions = page.locator('.header-actions');
 		this.headerActionsSaveButton = this.headerActions.getByText('Save');
+		this.ordersTabToggle = (toggleName) => page.getByLabel(toggleName);
 		this.page = page;
 		this.sellerOrderAcceptanceWorkflow = page.getByLabel(
 			'Seller Order Acceptance Workflow'

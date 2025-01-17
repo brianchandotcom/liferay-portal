@@ -271,10 +271,16 @@ export class CommerceAdminChannelDetailsPage {
 	}
 
 	async activateChannelConfiguration(name: string, tableName: string) {
+		const isActiveCheckbox = await this.isActive(tableName);
+
 		await (await this.generalCommerceAdminChannelTableLink(name)).click();
 
+		if (!(await isActiveCheckbox.isChecked())) {
+			await isActiveCheckbox.check();
+		}
 		await (await this.isActive(tableName)).check();
 		await (await this.frameSaveButton(false, tableName)).click();
+		await waitForAlert(this.page.frameLocator('iframe').nth(1));
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 

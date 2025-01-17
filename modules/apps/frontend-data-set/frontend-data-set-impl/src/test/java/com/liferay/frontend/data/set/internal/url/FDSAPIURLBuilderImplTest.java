@@ -90,12 +90,12 @@ public class FDSAPIURLBuilderImplTest {
 	@Test
 	public void testURLNotAffectedByRegisteredResolvers() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration1 =
-			_registerResolver(
+			_registerService(
 				"/app2", "schema", new String[] {"{foo}"},
 				new String[] {"bar"});
 
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration2 =
-			_registerResolver(
+			_registerService(
 				"/app", "schema2", new String[] {"{foo}"},
 				new String[] {"bar"});
 
@@ -193,7 +193,7 @@ public class FDSAPIURLBuilderImplTest {
 	@Test
 	public void testURLWithDefaultAndResolverInterpolations() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerResolver(
+			_registerService(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -211,7 +211,7 @@ public class FDSAPIURLBuilderImplTest {
 		throws Exception {
 
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerResolver(
+			_registerService(
 				"/app", "schema", new String[] {"{foo}", "{userId}"},
 				new String[] {"bar", "54321"});
 
@@ -237,7 +237,7 @@ public class FDSAPIURLBuilderImplTest {
 	@Test
 	public void testURLWithParametersAndInterpolations() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerResolver(
+			_registerService(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -258,7 +258,7 @@ public class FDSAPIURLBuilderImplTest {
 	@Test
 	public void testURLWithResolverForNoTokens() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerResolver(
+			_registerService(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -273,7 +273,7 @@ public class FDSAPIURLBuilderImplTest {
 	@Test
 	public void testURLWithResolverForSeveralTokens() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerResolver(
+			_registerService(
 				"/app", "schema", new String[] {"{foo}", "{userId}"},
 				new String[] {"bar", "54321"});
 
@@ -287,7 +287,7 @@ public class FDSAPIURLBuilderImplTest {
 		serviceRegistration.unregister();
 	}
 
-	private ServiceRegistration<FDSAPIURLResolver> _registerResolver(
+	private ServiceRegistration<FDSAPIURLResolver> _registerService(
 		String restApplication, String restSchema, String[] tokens,
 		String[] values) {
 

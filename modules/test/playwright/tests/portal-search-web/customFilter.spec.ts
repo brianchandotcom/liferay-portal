@@ -82,10 +82,13 @@ test.describe('Custom filter configuration works as expected on content pages', 
 		});
 
 		await test.step('Configure custom filter in default experience to return only results that contains Portuguese in the title_en_US field', async () => {
-			const widgetId =
+			const customFilterFragmentId =
 				await pageEditorPage.getFragmentId('Custom Filter');
 
-			await pageEditorPage.clickFragmentOption(widgetId, 'Configuration');
+			await pageEditorPage.clickFragmentOption(
+				customFilterFragmentId,
+				'Configuration'
+			);
 
 			await searchPage.modalIFrame
 				.getByLabel('Filter Field Set the name of')
@@ -103,10 +106,13 @@ test.describe('Custom filter configuration works as expected on content pages', 
 		});
 
 		await test.step('Configure custom filter in new experience to return only results that contains English in the title_en_US field', async () => {
-			const widgetId =
+			const customFilterFragmentId =
 				await pageEditorPage.getFragmentId('Custom Filter');
 
-			await pageEditorPage.clickFragmentOption(widgetId, 'Configuration');
+			await pageEditorPage.clickFragmentOption(
+				customFilterFragmentId,
+				'Configuration'
+			);
 
 			await searchPage.modalIFrame
 				.getByLabel('Filter Field Set the name of')

@@ -27,7 +27,7 @@
 	<clay:sheet
 		size="fluid"
 	>
-		<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
+		<iframe allowTransparency="true" class="border-0 w-100" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up"></iframe>
 	</clay:sheet>
 </clay:container-fluid>
 

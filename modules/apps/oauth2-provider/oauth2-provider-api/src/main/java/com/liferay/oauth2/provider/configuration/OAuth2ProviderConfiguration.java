@@ -26,32 +26,28 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OAuth2ProviderConfiguration {
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-authorization-code-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.authorization.code.grant",
 		name = "oauth2-allow-authorization-code-grant", required = false
 	)
 	public boolean allowAuthorizationCodeGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-authorization-code-pkce-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.authorization.code.pkce.grant",
 		name = "oauth2-allow-authorization-code-pkce-grant", required = false
 	)
 	public boolean allowAuthorizationCodePKCEGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-jwt-bearer-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.jwt.bearer.grant",
 		name = "oauth2-allow-jwt-bearer-grant", required = false
 	)
 	public boolean allowJWTBearerGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-resource-owner-password-credentials-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.resource.owner.password.credentials.grant",
 		name = "oauth2-allow-resource-owner-password-credentials-grant",
 		required = false
@@ -59,16 +55,14 @@ public interface OAuth2ProviderConfiguration {
 	public boolean allowResourceOwnerPasswordCredentialsGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-client-credentials-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.client.credentials.grant",
 		name = "oauth2-allow-client-credentials-grant", required = false
 	)
 	public boolean allowClientCredentialsGrant();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "oauth2-allow-refresh-token-grant-description",
+		deflt = "true", description = "oauth2-allow-grant-description",
 		id = "oauth2.allow.refresh.token.grant",
 		name = "oauth2-allow-refresh-token-grant", required = false
 	)

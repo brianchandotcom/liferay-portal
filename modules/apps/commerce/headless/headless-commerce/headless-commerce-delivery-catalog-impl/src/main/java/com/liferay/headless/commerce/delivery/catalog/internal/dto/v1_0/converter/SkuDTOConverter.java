@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.math.BigDecimal;
@@ -669,11 +668,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						}
 
 						return _productConfigurationDTOConverter.toDTO(
-							new DefaultDTOConverterContext(
-								_dtoConverterRegistry,
+							new ProductConfigurationDTOConverterContext(
+								commerceContext,
 								replacementCPDefinition.getCPDefinitionId(),
-								skuDTOConverterContext.getLocale(), null,
-								null));
+								skuDTOConverterContext.getLocale()));
 					});
 				setSku(replacementCPInstance::getSku);
 				setSkuExternalReferenceCode(

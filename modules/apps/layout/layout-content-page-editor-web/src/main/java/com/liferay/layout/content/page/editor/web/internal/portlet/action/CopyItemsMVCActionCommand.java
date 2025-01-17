@@ -10,6 +10,8 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.ContentManager;
+import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
+import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,6 +84,11 @@ public class CopyItemsMVCActionCommand
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> {
+				_formItemManager.checkFormContainerParentItemRequired(
+					_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
+						ListUtil.fromArray(finalItemIds), layoutStructure),
+					layoutStructure, themeDisplay.getLocale(), parentItemId);
+
 				List<LayoutStructureItem> copiedLayoutStructureItems =
 					layoutStructure.copyLayoutStructureItems(
 						Arrays.asList(finalItemIds), parentItemId);
@@ -177,7 +185,13 @@ public class CopyItemsMVCActionCommand
 	private ContentManager _contentManager;
 
 	@Reference
+	private FormItemManager _formItemManager;
+
+	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 }

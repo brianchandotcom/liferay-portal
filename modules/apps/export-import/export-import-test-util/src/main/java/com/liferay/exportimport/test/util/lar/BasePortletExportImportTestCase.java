@@ -229,13 +229,15 @@ public abstract class BasePortletExportImportTestCase
 		Date oldLastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletPreferences);
 
-		BackgroundTask publishPortletBackgroundTask =
-			_backgroundTaskLocalService.getBackgroundTask(
-				publishPortlet(getPortletId()));
+		long backgroundTaskId = publishPortlet(getPortletId());
 
 		ExportImportTestUtil.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
+				BackgroundTask publishPortletBackgroundTask =
+					_backgroundTaskLocalService.getBackgroundTask(
+						backgroundTaskId);
+
 				Assert.assertEquals(
 					BackgroundTaskConstants.STATUS_SUCCESSFUL,
 					publishPortletBackgroundTask.getStatus());

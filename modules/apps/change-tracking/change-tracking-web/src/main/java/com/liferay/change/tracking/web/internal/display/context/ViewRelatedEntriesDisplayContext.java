@@ -214,22 +214,6 @@ public class ViewRelatedEntriesDisplayContext {
 	}
 
 	public String getSubmitDiscardURL() {
-		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
-			return PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/change_tracking/discard_changes"
-			).setRedirect(
-				getRedirectURL()
-			).setParameter(
-				"ctCollectionId", _ctCollectionId
-			).setParameter(
-				"modelClassNameId", _modelClassNameId
-			).setParameter(
-				"modelClassPK", _modelClassPK
-			).buildString();
-		}
-
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
@@ -239,27 +223,36 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"ctEntryIds", StringUtil.merge(_ctEntryIds)
+			"ctEntryIds",
+			() -> {
+				if ((_modelClassNameId <= 0) && (_modelClassPK <= 0)) {
+					return StringUtil.merge(_ctEntryIds);
+				}
+
+				return null;
+			}
+		).setParameter(
+			"modelClassNameId",
+			() -> {
+				if (_modelClassNameId > 0) {
+					return _modelClassNameId;
+				}
+
+				return null;
+			}
+		).setParameter(
+			"modelClassPK",
+			() -> {
+				if (_modelClassPK > 0) {
+					return _modelClassPK;
+				}
+
+				return null;
+			}
 		).buildString();
 	}
 
 	public String getSubmitMoveURL() {
-		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
-			return PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/change_tracking/move_changes"
-			).setRedirect(
-				getRedirectURL()
-			).setParameter(
-				"ctCollectionId", _ctCollectionId
-			).setParameter(
-				"modelClassNameId", _modelClassNameId
-			).setParameter(
-				"modelClassPK", _modelClassPK
-			).buildString();
-		}
-
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
@@ -269,7 +262,32 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"ctEntryIds", StringUtil.merge(_ctEntryIds)
+			"ctEntryIds",
+			() -> {
+				if ((_modelClassNameId <= 0) && (_modelClassPK <= 0)) {
+					return StringUtil.merge(_ctEntryIds);
+				}
+
+				return null;
+			}
+		).setParameter(
+			"modelClassNameId",
+			() -> {
+				if (_modelClassNameId > 0) {
+					return _modelClassNameId;
+				}
+
+				return null;
+			}
+		).setParameter(
+			"modelClassPK",
+			() -> {
+				if (_modelClassPK > 0) {
+					return _modelClassPK;
+				}
+
+				return null;
+			}
 		).buildString();
 	}
 

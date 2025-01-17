@@ -39,10 +39,6 @@ public class CPConfigurationListHierarchyDiscoveryImpl
 				commerceChannelId, commerceOrderTypeId);
 
 		for (CPConfigurationList cpConfigurationList : cpConfigurationLists) {
-			if (cpConfigurationList.isMaster()) {
-				continue;
-			}
-
 			return cpConfigurationList;
 		}
 

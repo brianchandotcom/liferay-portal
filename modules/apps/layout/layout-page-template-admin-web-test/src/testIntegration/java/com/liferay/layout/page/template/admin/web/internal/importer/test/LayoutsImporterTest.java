@@ -158,58 +158,65 @@ public class LayoutsImporterTest {
 	public void testExportImportLayoutPageTemplateEntryWithCollectionAppliedFiltersFragmentRenderer()
 		throws Exception {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				null, TestPropsValues.getUserId(), _group1.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC,
-				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry();
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
+		try {
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext1);
 
-		Layout draftLayout = layout.fetchDraftLayout();
+			layoutPageTemplateEntry = _addLayoutPageTemplateEntry();
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
 
-		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
-			JSONUtil.put(
-				"classNameId", _portal.getClassNameId(AssetListEntry.class)
-			).put(
-				"classPK", assetListEntry.getAssetListEntryId()
-			).put(
-				"itemType", AssetEntry.class.getName()
-			).put(
-				"type", InfoListItemSelectorReturnType.class.getName()
-			),
-			draftLayout, _layoutStructureProvider, null, null, 0,
-			defaultSegmentsExperienceId);
+			Layout draftLayout = layout.fetchDraftLayout();
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0, 0,
-				defaultSegmentsExperienceId, draftLayout.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				"com.liferay.fragment.renderer.collection.filter.internal." +
-					"CollectionAppliedFiltersFragmentRenderer",
+			long defaultSegmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid());
+
+			String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("targetCollections", new String[] {itemId})
-				).toString(),
-				StringPool.BLANK, 0, null, FragmentConstants.TYPE_COMPONENT,
-				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+					"classNameId", _portal.getClassNameId(AssetListEntry.class)
+				).put(
+					"classPK", assetListEntry.getAssetListEntryId()
+				).put(
+					"itemType", AssetEntry.class.getName()
+				).put(
+					"type", InfoListItemSelectorReturnType.class.getName()
+				),
+				draftLayout, _layoutStructureProvider, null, null, 0,
+				defaultSegmentsExperienceId);
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, null, 0,
-			defaultSegmentsExperienceId);
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
+					0, defaultSegmentsExperienceId, draftLayout.getPlid(),
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					"com.liferay.fragment.renderer.collection.filter." +
+						"internal.CollectionAppliedFiltersFragmentRenderer",
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put("targetCollections", new String[] {itemId})
+					).toString(),
+					StringPool.BLANK, 0, null, FragmentConstants.TYPE_COMPONENT,
+					_serviceContext1);
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				fragmentEntryLink, draftLayout, null, 0,
+				defaultSegmentsExperienceId);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},

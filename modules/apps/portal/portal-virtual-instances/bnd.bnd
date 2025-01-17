@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Virtual Instances
+Bundle-SymbolicName: com.liferay.portal.virtual.instances
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

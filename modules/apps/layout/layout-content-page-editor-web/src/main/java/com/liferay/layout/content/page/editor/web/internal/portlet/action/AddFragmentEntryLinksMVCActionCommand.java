@@ -5,7 +5,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
@@ -16,11 +15,11 @@ import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.exception.FormContainerParentItemRequiredException;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
+import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.lang.SafeCloseable;
@@ -39,9 +38,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -137,51 +133,6 @@ public class AddFragmentEntryLinksMVCActionCommand
 				_portal.getHttpServletRequest(actionRequest), errorMessage));
 	}
 
-	private boolean _existTypeInputFragmentEntryLink(
-		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			Set<String> fragmentEntryLinkFieldTypes =
-				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
-					fragmentEntryLink.getFragmentEntryLinkId(), locale);
-
-			if (Objects.equals(
-					fragmentEntryLink.getType(),
-					FragmentConstants.TYPE_INPUT) &&
-				!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasFormStyledLayoutStructureItemParent(
-		String parentItemId, LayoutStructure layoutStructure) {
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(parentItemId);
-
-		if ((layoutStructureItem == null) ||
-			Objects.equals(
-				layoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_ROOT)) {
-
-			return false;
-		}
-
-		if (Objects.equals(
-				layoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_FORM)) {
-
-			return true;
-		}
-
-		return _hasFormStyledLayoutStructureItemParent(
-			layoutStructureItem.getParentItemId(), layoutStructure);
-	}
-
 	private JSONObject _processAddFragmentEntryLinks(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -227,13 +178,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 					fragmentComposition.getData(), position, false,
 					segmentsExperienceId);
 
-			if (!_hasFormStyledLayoutStructureItemParent(
-					parentItemId, layoutStructure) &&
-				_existTypeInputFragmentEntryLink(
-					fragmentEntryLinks, themeDisplay.getLocale())) {
-
-				throw new FormContainerParentItemRequiredException();
-			}
+			_formItemManager.checkFormContainerParentItemRequired(
+				fragmentEntryLinks, layoutStructure, themeDisplay.getLocale(),
+				parentItemId);
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				for (FragmentEntryLinkListener fragmentEntryLinkListener :
@@ -280,6 +227,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 			);
 		}
 	}
+
+	@Reference
+	private FormItemManager _formItemManager;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

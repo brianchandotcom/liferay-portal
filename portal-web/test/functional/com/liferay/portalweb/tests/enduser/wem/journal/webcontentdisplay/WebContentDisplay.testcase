@@ -89,6 +89,10 @@ definition {
 	@description = "Add a web content and associate a page scope in Web Content Display widget."
 	@priority = 3
 	test AddWebContentUnderPageScope {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
@@ -941,6 +945,10 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "User can select a web content that belongs to Global site in Web Content Display widget."
 	@priority = 3
 	test SelectWebContentFromGlobalScope {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Add a web content in Global site") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

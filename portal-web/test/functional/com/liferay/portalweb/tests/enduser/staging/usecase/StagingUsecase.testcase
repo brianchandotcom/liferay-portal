@@ -1731,6 +1731,10 @@ definition {
 	@description = "This is a use case for LPS-82028."
 	@priority = 3
 	test SingleAssetPublishLayoutScopedContent {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Given: User add a Blog portlet to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = 1,

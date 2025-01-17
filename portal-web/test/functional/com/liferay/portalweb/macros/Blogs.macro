@@ -726,6 +726,10 @@ definition {
 
 	@summary = "Default summary"
 	macro tearDownConfigurationScopePG(pageName = null) {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		Navigator.gotoPage(pageName = ${pageName});
 
 		BlogsNavigator.gotoConfigurationSetupPG();

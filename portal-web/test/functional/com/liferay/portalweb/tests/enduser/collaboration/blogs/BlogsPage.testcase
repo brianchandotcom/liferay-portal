@@ -302,6 +302,10 @@ definition {
 	@priority = 4
 	@refactordone
 	test CannotViewBlogEntryScopedToAnotherPage {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Set up a blog widget on another page scoped to that page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -595,6 +599,10 @@ definition {
 	test CanViewEntriesOnMultiplePagesWithDifferentScopes {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -672,6 +672,10 @@ definition {
 
 	@priority = 3
 	test SearchBlogsScopedToPage {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

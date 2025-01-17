@@ -835,6 +835,10 @@ definition {
 	@description = "This is a test for LPS-159046. The page creator should see the tags on Asset Publisher filter selector under scoped page."
 	@priority = 3
 	test FilterAssetsFromPageScopeByTag {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Given a page creator has an Asset Publisher and Blogs widget with scoped page") {
 			task ("Add a Blogs widget to page") {
 				JSONLayout.addWidgetToPublicLayout(

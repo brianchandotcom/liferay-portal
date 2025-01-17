@@ -366,6 +366,10 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test CanViewArticlesWithDifferentSiteScopes {
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

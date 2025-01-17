@@ -44,6 +44,10 @@ definition {
 		property test.run.type = "single";
 		property testray.component.names = "Training";
 
+		task ("Enable Scope Configuration") {
+			Portlet.enableScopeConfiguration();
+		}
+
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();
 		}

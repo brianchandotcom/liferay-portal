@@ -128,7 +128,7 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update OAuthClientEntry set metadataCacheTime = null " +
+				"update OAuthClientEntry set metadataCacheTime = null where " +
 					"where oAuthClientEntryId = ?");
 
 			preparedStatement.setLong(

@@ -86,20 +86,20 @@ public abstract class BaseSearchResultUtilTestCase {
 
 			@Override
 			public ClassName getClassName(long classNameId) {
-				if (classNameId ==
+				if (classNameId !=
 						SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID) {
 
-					return new ClassNameWrapper(null) {
-
-						@Override
-						public String getClassName() {
-							return SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME;
-						}
-
-					};
+					return null;
 				}
 
-				return null;
+				return new ClassNameWrapper(null) {
+
+					@Override
+					public String getClassName() {
+						return SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME;
+					}
+
+				};
 			}
 
 		};

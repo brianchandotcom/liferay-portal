@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class OAuthClientEntryConstants {
 
-	public static final long METADATA_CACHE_IN_MILLIS_DEFAULT = 360000;
+	public static final long DEFAULT_METADATA_CACHE_TIME = 360000;
 
 	public static final String OIDC_USER_INFO_MAPPER_JSON = JSONUtil.put(
 		"address",

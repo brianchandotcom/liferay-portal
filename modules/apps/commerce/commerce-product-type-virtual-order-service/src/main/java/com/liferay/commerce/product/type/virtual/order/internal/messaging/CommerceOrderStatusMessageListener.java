@@ -133,30 +133,29 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 					commerceChannel.getCommerceChannelId(),
 					commerceOrder.getCommerceOrderTypeId());
 
-			cpConfigurationListId = cpConfigurationList.getCPConfigurationListId();
+			cpConfigurationListId =
+				cpConfigurationList.getCPConfigurationListId();
 
 			CPConfigurationEntry cpConfigurationEntry =
 				_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
 					_classNameLocalService.getClassNameId(CPDefinition.class),
-					cpInstance.getCPDefinitionId(),
-					cpConfigurationListId);
+					cpInstance.getCPDefinitionId(), cpConfigurationListId);
 
 			cpDefinitionInventoryEngine =
-				_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
-					cpConfigurationEntry.getCPDefinitionInventoryEngine());
-		} else {
-
-			cpDefinitionInventoryEngine =
-				_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
-					cpDefinitionInventory);
+				_cpDefinitionInventoryEngineRegistry.
+					getCPDefinitionInventoryEngine(
+						cpConfigurationEntry.getCPDefinitionInventoryEngine());
 		}
-
+		else {
+			cpDefinitionInventoryEngine =
+				_cpDefinitionInventoryEngineRegistry.
+					getCPDefinitionInventoryEngine(cpDefinitionInventory);
+		}
 
 		if (BigDecimalUtil.lte(
 				stockQuantity,
 				cpDefinitionInventoryEngine.getMinStockQuantity(
-					cpConfigurationListId,
-					cpInstance))) {
+					cpConfigurationListId, cpInstance))) {
 
 			commerceLowStockActivity.execute(cpInstance);
 		}
@@ -167,12 +166,6 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
-	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
-
-	@Reference
-	private CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
@@ -186,6 +179,12 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 	@Reference
 	private CommerceVirtualOrderItemLocalService
 		_commerceVirtualOrderItemLocalService;
+
+	@Reference
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 
 	@Reference
 	private CPDefinitionInventoryEngineRegistry

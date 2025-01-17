@@ -151,7 +151,8 @@ public class CommercePriceFormatterTest {
 
 		Assert.assertNotEquals(
 			expectedParsedPrice,
-			_commercePriceFormatter.parse(null, "1,234,0", LocaleUtil.ITALY));
+			_commercePriceFormatter.parse(
+				false, null, "1,234,0", LocaleUtil.ITALY));
 	}
 
 	private void _assertPrice(
@@ -160,7 +161,7 @@ public class CommercePriceFormatterTest {
 
 		Assert.assertEquals(
 			expectedPrice,
-			_commercePriceFormatter.parse(null, actualPrice, locale));
+			_commercePriceFormatter.parse(false, null, actualPrice, locale));
 	}
 
 	private static final String _SYMBOLS = "€$¥£R$₹";

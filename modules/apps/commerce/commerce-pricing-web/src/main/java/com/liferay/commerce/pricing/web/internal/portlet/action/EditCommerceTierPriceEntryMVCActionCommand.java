@@ -216,23 +216,24 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 				commercePriceEntryId);
 
 		BigDecimal price = _commercePriceFormatter.parse(
-			actionRequest, CommerceTierPriceEntry.class.getName(), "price");
+			actionRequest, false, CommerceTierPriceEntry.class.getName(),
+			"price");
 		BigDecimal minQuantity = _commerceOrderItemQuantityFormatter.parse(
 			actionRequest, CommerceTierPriceEntry.class.getName(),
 			"minQuantity");
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 		BigDecimal discountLevel1 = _commercePriceFormatter.parse(
-			actionRequest, CommerceTierPriceEntry.class.getName(),
+			actionRequest, false, CommerceTierPriceEntry.class.getName(),
 			"discountLevel1");
 		BigDecimal discountLevel2 = _commercePriceFormatter.parse(
-			actionRequest, CommerceTierPriceEntry.class.getName(),
+			actionRequest, false, CommerceTierPriceEntry.class.getName(),
 			"discountLevel2");
 		BigDecimal discountLevel3 = _commercePriceFormatter.parse(
-			actionRequest, CommerceTierPriceEntry.class.getName(),
+			actionRequest, false, CommerceTierPriceEntry.class.getName(),
 			"discountLevel3");
 		BigDecimal discountLevel4 = _commercePriceFormatter.parse(
-			actionRequest, CommerceTierPriceEntry.class.getName(),
+			actionRequest, false, CommerceTierPriceEntry.class.getName(),
 			"discountLevel4");
 
 		Date date = new Date();

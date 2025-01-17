@@ -177,16 +177,16 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 		BigDecimal discountLevel1 = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(),
+			actionRequest, false, CommercePriceEntry.class.getName(),
 			"discountLevel1");
 		BigDecimal discountLevel2 = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(),
+			actionRequest, false, CommercePriceEntry.class.getName(),
 			"discountLevel2");
 		BigDecimal discountLevel3 = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(),
+			actionRequest, false, CommercePriceEntry.class.getName(),
 			"discountLevel3");
 		BigDecimal discountLevel4 = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(),
+			actionRequest, false, CommercePriceEntry.class.getName(),
 			"discountLevel4");
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -226,7 +226,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			actionRequest, "neverExpire");
 
 		BigDecimal price = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(), "price");
+			actionRequest, false, CommercePriceEntry.class.getName(), "price");
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");
 

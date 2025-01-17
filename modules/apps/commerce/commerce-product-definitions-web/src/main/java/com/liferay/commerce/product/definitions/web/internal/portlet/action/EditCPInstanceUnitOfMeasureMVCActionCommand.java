@@ -167,7 +167,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		BigDecimal rate = _commercePriceFormatter.parse(
-			actionRequest, CPInstanceUnitOfMeasure.class.getName(), "rate");
+			actionRequest, false, CPInstanceUnitOfMeasure.class.getName(),
+			"rate");
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		if (cpInstanceUnitOfMeasureId > 0) {
@@ -217,7 +218,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 			cpInstanceId);
 
 		BigDecimal basePrice = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(), "basePrice");
+			actionRequest, false, CommercePriceEntry.class.getName(),
+			"basePrice");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
@@ -229,7 +231,8 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		}
 
 		BigDecimal promoPrice = _commercePriceFormatter.parse(
-			actionRequest, CommercePriceEntry.class.getName(), "promoPrice");
+			actionRequest, false, CommercePriceEntry.class.getName(),
+			"promoPrice");
 
 		if (promoPrice != null) {
 			_updateCommercePriceEntry(

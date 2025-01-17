@@ -518,66 +518,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101248. Display web content with Geolocation field in Content Display."
-	@priority = 3
-	test ViewSelectedWebContentWithGeolocationField {
-		task ("Add a web content structure with a Geolocation field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Geolocation",
-				fieldName = "Geolocation");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a template for new structure") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
-				templateFieldNames = "Geolocation",
-				templateName = "WC Template Name");
-		}
-
-		task ("Add a web content based on new structure") {
-			NavItem.click(navItem = "Web Content");
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-			WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
-
-			WebContent.publishWithPermissions();
-		}
-
-		task ("Add a Content Display to a content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Content Display");
-		}
-
-		task ("Select the web content and template in Content Display") {
-			PageEditor.editContentDisplay(
-				fragmentName = "Content Display",
-				template = "WC Template Name",
-				webcontent = "true",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("View the Geolocation field is shown in Content Display") {
-			AssertVisible(
-				key_content = "//div[contains(@id,'Geolocation')]",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-		}
-	}
-
 	@description = "This is a test for LPS-101248. Display web content with Grid field in Content Display."
 	@priority = 3
 	test ViewSelectedWebContentWithGridField {

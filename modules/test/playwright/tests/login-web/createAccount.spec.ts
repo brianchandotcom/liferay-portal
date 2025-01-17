@@ -6,54 +6,148 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
+import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {performLogout} from '../../utils/performLogin';
+import performLogin, {performLogout} from '../../utils/performLogin';
 
-export const test = mergeTests(loginTest(), captchaConfigPageTest);
+export const test = mergeTests(
+	captchaConfigPageTest,
+	instanceSettingsPagesTest,
+	loginTest()
+);
 
-test.describe('Duplicate account creation', () => {
-	test('Using already existing email address does not throw failure alert', async ({
-		captchaConfigPage,
-		page,
-	}) => {
+test.beforeEach(
+	'Disable create account CAPTCHA',
+	async ({captchaConfigPage, page}) => {
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
+			await performLogin(page, 'test');
+		}
+
 		await captchaConfigPage.goTo();
 
 		await captchaConfigPage.disableCreateAccountCaptcha();
+	}
+);
 
-		await captchaConfigPage.saveConfiguration();
-
-		await performLogout(page);
-
+test.afterEach(
+	'Reset CAPTCHA configuration',
+	async ({captchaConfigPage, page}) => {
 		await page.goto(liferayConfig.environment.baseUrl);
 
-		await page.getByRole('button', {name: 'Sign In'}).click();
+		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
+			await performLogin(page, 'test');
+		}
 
-		await page.getByText('Create Account').click();
+		await captchaConfigPage.goTo();
 
-		await page.getByLabel('Screen Name').fill(getRandomString());
+		await captchaConfigPage.resetCaptchaConfiguration();
 
-		await page.getByLabel('Email Address').fill('test@liferay.com');
+		await page.goto(liferayConfig.environment.baseUrl);
+	}
+);
 
-		await page.getByLabel('First Name').fill(getRandomString());
+test('LPD-44960 Create account using duplicate email address', async ({
+	page,
+}) => {
+	await performLogout(page);
 
-		await page.getByLabel('Last Name').fill(getRandomString());
+	await page.goto(liferayConfig.environment.baseUrl);
 
-		const password = getRandomString();
+	await page.getByRole('button', {name: 'Sign In'}).click();
 
-		await page
-			.getByLabel('Password Required', {exact: true})
-			.fill(password);
+	await page.getByText('Create Account').click();
 
-		await page.getByLabel('Reenter Password Required').fill(password);
+	await page.getByLabel('Screen Name').fill(getRandomString());
 
-		await page.getByRole('button', {name: 'Save'}).click();
+	await page.getByLabel('Email Address').fill('test@liferay.com');
 
-		await page.waitForTimeout(1000);
+	await page.getByLabel('First Name').fill(getRandomString());
 
-		await expect(
-			page.getByText('Error:Your request failed to complete.')
-		).toBeHidden({timeout: 500});
-	});
+	await page.getByLabel('Last Name').fill(getRandomString());
+
+	const password = getRandomString();
+
+	await page.getByLabel('Password Required', {exact: true}).fill(password);
+
+	await page.getByLabel('Reenter Password Required').fill(password);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(
+		page.getByText(
+			'Thank you for creating an account. Use your password to log in.'
+		)
+	).toBeVisible();
+
+	await expect(
+		page.getByText('Error:Your request failed to complete.')
+	).toBeHidden();
+});
+
+test('LPD-44960 Create account using duplicate email address with email address verification', async ({
+	instanceSettingsPage,
+	page,
+}) => {
+	await instanceSettingsPage.goToInstanceSetting(
+		'User Authentication',
+		'General'
+	);
+
+	const strangersVerify = page.getByText(
+		'Require strangers to verify their email address?'
+	);
+	await strangersVerify.check();
+	await expect(strangersVerify).toBeChecked();
+
+	await instanceSettingsPage.saveAndWaitForAlert();
+
+	await performLogout(page);
+
+	await page.goto(liferayConfig.environment.baseUrl);
+
+	await page.getByRole('button', {name: 'Sign In'}).click();
+
+	await page.getByText('Create Account').click();
+
+	await page.getByLabel('Screen Name').fill(getRandomString());
+
+	await page.getByLabel('Email Address').fill('test@liferay.com');
+
+	await page.getByLabel('First Name').fill(getRandomString());
+
+	await page.getByLabel('Last Name').fill(getRandomString());
+
+	const password = getRandomString();
+
+	await page.getByLabel('Password Required', {exact: true}).fill(password);
+
+	await page.getByLabel('Reenter Password Required').fill(password);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(
+		page.getByText(
+			'Thank you for creating an account. Your email verification code was sent to test@liferay.com. Use your password to log in.'
+		)
+	).toBeVisible();
+
+	await expect(
+		page.getByText('Error:Your request failed to complete.')
+	).toBeHidden();
+
+	await performLogin(page, 'test');
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'User Authentication',
+		'General'
+	);
+
+	await strangersVerify.uncheck();
+	await expect(strangersVerify).not.toBeChecked();
+
+	await instanceSettingsPage.saveAndWaitForAlert();
 });

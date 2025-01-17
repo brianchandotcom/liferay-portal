@@ -1,4 +1,4 @@
-<@liferay_aui["style"] type="text/css">
+<style ${nonceAttribute} type="text/css">
 	.sharing-notification-sharing-entry-added-1 {
 		background-color: #f7f8f9;
 		color: #6b6c7e;
@@ -35,7 +35,7 @@
 		padding: 7px 15px;
 		text-decoration: none;
 	}
-</@>
+</style>
 
 <div class="sharing-notification-sharing-entry-added-1">
 	<div class="sharing-notification-sharing-entry-added-2">

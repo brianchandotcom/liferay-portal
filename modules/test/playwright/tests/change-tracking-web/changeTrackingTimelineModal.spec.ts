@@ -130,7 +130,7 @@ test('LPD-22759 Allow users to view the entire history of an entity in a popup m
 	for (let i = 0; i < ctCollections.length; i++) {
 		if (i !== ctCollections.length - 1) {
 			await expect(
-				entityHistoryModalLocator.getByText(ctCollections[i].name)
+				entityHistoryModalLocator.getByText(ctCollections[i].body.name)
 			).toBeVisible();
 		}
 	}

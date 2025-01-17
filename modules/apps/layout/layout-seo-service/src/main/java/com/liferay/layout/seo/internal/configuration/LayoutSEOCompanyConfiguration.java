@@ -16,7 +16,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	description = "layout-seo-configuration-description",
+	description = "seo-configuration",
 	id = "com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration",
 	localization = "content/Language", name = "layout-seo-configuration-name"
 )

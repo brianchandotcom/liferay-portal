@@ -22,41 +22,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-195988. This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 250."
-	@priority = 4
-	test AccountNameCannotExceed250Characters {
-		task ("When a user types an account name with more than 250 characters") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoAdd();
-
-			Type.sendKeys(
-				locator1 = "TextInput#NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
-		}
-
-		task ("Then only the first 250 characters are typed in. No more than 250 characters can be added") {
-			AssertTextEquals(
-				locator1 = "TextInput#NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i");
-
-			AssertTextNotEquals(
-				locator1 = "TextInput#NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
-
-			Button.clickSave();
-
-			Account.openAccountsAdmin();
-
-			AssertTextEquals(
-				key_rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i");
-
-			LexiconEntry.viewNoEntry(rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
-		}
-	}
-
 	@description = "This test assigns an account role to a regular user via Account Admin and asserts that it displays in Users Admin edit user page."
 	@priority = 4
 	test AccountRoleDisplaysInUsersAdmin {
@@ -110,66 +75,6 @@ definition {
 				assigneeName = "Account Name",
 				roleName = "Account Administrator");
 		}
-	}
-
-	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
-	@priority = 4
-	test AccountsDisplayWhenChangingPagination {
-		for (var accountNum : list "1,2,3,4,5,6") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name ${accountNum}",
-				accountEntryType = "Business");
-		}
-
-		Account.openAccountsAdmin();
-
-		Pagination.changePagination(itemsPerPage = 4);
-
-		for (var accountNum : list "1,2,3,4") {
-			LexiconEntry.viewEntryName(rowEntry = "Accounts Name ${accountNum}");
-		}
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		for (var accountNum : list "5,6") {
-			LexiconEntry.viewEntryName(rowEntry = "Accounts Name ${accountNum}");
-		}
-
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-	}
-
-	@description = "Duplicate External Reference Codes should not be allowed for multiple accounts in the same company. If a duplicate ERC is submitted, the form will not be saved and an error message will inform the user that the ERC belongs to another account."
-	@priority = 4
-	test AccountWithDuplicateExternalReferenceCodeIsNotSaved {
-		Account.openAccountsAdmin();
-
-		Account.addBusinessAccount(
-			accountName = "Business Account Name",
-			externalReferenceCode = "AAA-0100");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "Another Account");
-
-		PortletEntry.inputText(
-			fieldLabel = "External Reference Code",
-			text = "AAA-0100");
-
-		Button.clickSave();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_1",
-			value1 = "The given external reference code belongs to another account.");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.viewEntryName(rowEntry = "Business Account Name");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Another Account");
 	}
 
 	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
@@ -455,39 +360,6 @@ definition {
 		}
 	}
 
-	@description = "This tests activating an inactive account"
-	@priority = 4
-	test CanActivateAnInactiveAccount {
-		task ("Given a business account that is Inactive") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name for Test",
-				accountEntryStatus = "Inactive",
-				accountEntryType = "Business");
-		}
-
-		task ("When a user activates it") {
-			Account.openAccountsAdmin();
-
-			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Activate",
-				rowEntry = "Accounts Name for Test");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Then the account is in Active status and can be viewed in the Active filter") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
-
-			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-
-			LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
-		}
-	}
-
 	@description = "This test adds a new user via the Users tab of an Account"
 	@priority = 4
 	test CanAddAccountUserViaAssignUser {
@@ -514,28 +386,6 @@ definition {
 			rowEntry = "Assign Account User");
 
 		Account.viewAssignee(assigneeName = "userfn");
-	}
-
-	@description = "This is a use case for LPS-157661. It asserts that account avatar can be added in creation."
-	@priority = 4
-	test CanAddAccountWithAvatar {
-		Account.openAccountsAdmin();
-
-		Account.addBusinessAccount(
-			accountLogo = "marketplace_icon.png",
-			accountName = "Business Account Name");
-
-		AssertVisible(
-			key_imageName = "account_entry_logo",
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
-
-		Account.openAccountsAdmin();
-
-		Account.gotoEdit(accountName = "Business Account Name");
-
-		AssertVisible(
-			key_imageName = "account_entry_logo",
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
 	}
 
 	@description = "This test adds and removes a user assignee to an Owned or account specific role."
@@ -593,25 +443,6 @@ definition {
 			value1 = "There are no users associated with this role.");
 	}
 
-	@description = "This test adds a Person Account by changing the type in the dropdown upon creation."
-	@priority = 4
-	test CanAddAPersonAccount {
-		Account.openAccountsAdmin();
-
-		Account.addPersonAccount(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account");
-
-		Account.openAccountsAdmin();
-
-		Search.searchCP(searchTerm = "Person Account");
-
-		Account.viewAccountDetails(
-			accountDescription = "This is a Person Account.",
-			accountName = "Person Account",
-			accountType = "Person");
-	}
-
 	@description = "This test adds a category to an account"
 	@priority = 4
 	test CanAddCategoryToAnAccount {
@@ -638,52 +469,6 @@ definition {
 		AssetCategorization.viewCategory(categoryName = "Category Name 1");
 
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
-	}
-
-	@description = "This test asserts that multiple accounts can be added with the same domain"
-	@priority = 4
-	test CanAddMultipleAccountsWithSameDomain {
-		task ("Enable account email domains") {
-			AccountConfiguration.enableAccountEmailDomain();
-		}
-
-		task ("Add multiple accounts with the same domain") {
-			Account.openAccountsAdmin();
-
-			for (var accountNum : list "1,2,3") {
-				Account.addAccountWithDomain(
-					accountName = "Account Name ${accountNum}",
-					domainNames = "liferay.com");
-
-				Account.openAccountsAdmin();
-
-				LexiconEntry.viewEntryName(rowEntry = "Account Name ${accountNum}");
-			}
-		}
-	}
-
-	@description = "This test asserts that users can add more than one domain to a business account."
-	@priority = 4
-	test CanAddMultipleDomainsToAccount {
-		property portal.acceptance = "true";
-
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Account.openAccountsAdmin();
-
-		Account.addAccountWithDomain(
-			accountName = "Account with Multi Domains",
-			domainNames = "liferay.com,google.com,si-na.com,9teen.com");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account with Multi Domains");
-
-		for (var domainName : list "liferay.com,google.com,si-na.com,9teen.com") {
-			AssertElementPresent(
-				key_domainName = ${domainName},
-				locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
-		}
 	}
 
 	@description = "This test adds a new shipping address and billing address via Set Default Address. It asserts that these addresses are set by default after adding."
@@ -1305,40 +1090,6 @@ definition {
 		}
 	}
 
-	@description = "This test deactivates an active account and asserts account displays in correct filter."
-	@priority = 4
-	test CanDeactivateAccount {
-		property portal.acceptance = "true";
-
-		for (var accountNumber : list "1,2,3") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name ${accountNumber} for Test",
-				accountEntryType = "Business");
-		}
-
-		Account.openAccountsAdmin();
-
-		Account.deactivateAccount(accountName = "Accounts Name 1 for Test");
-
-		Account.viewInactiveAccount(accountName = "Accounts Name 1 for Test");
-
-		Account.openAccountsAdmin();
-
-		Account.deactivateAccount(
-			accountName = "Accounts Name 2 for Test",
-			deactivateType = "Hide Icon");
-
-		Account.viewInactiveAccount(accountName = "Accounts Name 2 for Test");
-
-		Account.openAccountsAdmin();
-
-		Account.deactivateAccount(
-			accountName = "Accounts Name 3 for Test",
-			deactivateType = "Management Toolbar");
-
-		Account.viewInactiveAccount(accountName = "Accounts Name 3 for Test");
-	}
-
 	@description = "This test asserts that group scope permissions can be defined in the Accounts Admin Portlet."
 	@priority = 4
 	test CanDefineGroupScopePermissionsInAccountsAdmin {
@@ -1866,52 +1617,6 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
-	@description = "This is a use case for LPS-139477. This test asserts accounts are filtered by All Accounts by default. Changing filter to Business, Guest and Person shows accurate results."
-	@priority = 4
-	test CanFilterAccountsByType {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Business Account",
-			accountEntryType = "Business");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Guest Account",
-			accountEntryType = "Guest");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.viewEntryName(rowEntry = "Business Account");
-
-		LexiconEntry.viewEntryName(rowEntry = "Person Account");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Business");
-
-		LexiconEntry.viewEntryName(rowEntry = "Business Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Guest Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Person Account");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Guest");
-
-		LexiconEntry.viewEntryName(rowEntry = "Guest Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Person Account");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Person");
-
-		LexiconEntry.viewEntryName(rowEntry = "Person Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Business Account");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Guest Account");
-	}
-
 	@description = "This test asserts that users are correctly filtered by First Name, Last Name, and Email Address in the Assign Users Modal"
 	@priority = 4
 	test CanFilterAndOrderUsersInAssignUsersModal {
@@ -2409,61 +2114,6 @@ definition {
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
-	}
-
-	@description = "This test removes domain set to an account."
-	@priority = 4
-	test CanRemoveDomainFromAccount {
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Account.openAccountsAdmin();
-
-		Account.addAccountWithDomain(
-			accountName = "Remove Account Domain",
-			domainNames = "liferay.com,google.com");
-
-		Account.openAccountsAdmin();
-
-		Account.removeDomain(
-			accountName = "Remove Account Domain",
-			domainName = "google.com");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Remove Account Domain");
-
-		AssertElementPresent(
-			key_domainName = "liferay.com",
-			locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
-
-		AssertElementNotPresent(
-			key_domainName = "google.com",
-			locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
-	}
-
-	@description = "This test removes a blocked domain in Instance Settings."
-	@priority = 4
-	test CanRemoveDomainFromBlacklist {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
-
-		for (var settingValue : list "yahoo.com,blocked.com,google.com") {
-			SystemSettings.viewTextareaPartialText(
-				settingName = "Blocked Email Domains",
-				settingValue = ${settingValue});
-		}
-
-		SystemSettings.editTextAreaSetting(
-			settingName = "Blocked Email Domains",
-			settingValue = "blocked.com");
-
-		SystemSettings.saveConfiguration();
-
-		SystemSettings.viewTextareaValue(
-			fieldName = "blockedEmailDomains",
-			fieldValue = "blocked.com");
 	}
 
 	@description = "This is a use case for LPS-189434. The Admin is able to remove entries inside the form when inviting users to an account."
@@ -4301,22 +3951,6 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
-	}
-
-	@description = "This test asserts that domain validation is not present in Person Accounts."
-	@priority = 4
-	test ValidDomainSectionDoesNotDisplayInPersonAccounts {
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Account.openAccountsAdmin();
-
-		Account.addPersonAccount(accountName = "Person Account");
-
-		Account.openAccountsAdmin();
-
-		Account.gotoEdit(accountName = "Person Account");
-
-		AssertElementNotPresent(locator1 = "Account#VALID_DOMAINS_HEADING");
 	}
 
 }

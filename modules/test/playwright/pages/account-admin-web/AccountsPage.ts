@@ -38,6 +38,7 @@ export const searchTableRowByValue = async function (
 
 export class AccountsPage {
 	readonly accountGroupsTab: Locator;
+	readonly accountNameLink: (accountName: string) => Locator;
 	readonly accountOrganizationsCheckbox: (
 		organizationName: string
 	) => Promise<Locator>;
@@ -58,6 +59,7 @@ export class AccountsPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly accountsTableRowActions: (accountName: string) => Promise<Locator>;
 	readonly accountsTableRowCheckBox: (
 		accountName: string
 	) => Promise<Locator>;
@@ -91,6 +93,9 @@ export class AccountsPage {
 	readonly removeAccountOrganizationButton: Locator;
 
 	constructor(page: Page) {
+		this.accountNameLink = (accountName) => {
+			return this.page.getByRole('link', {name: accountName});
+		};
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
 		});
@@ -152,6 +157,15 @@ export class AccountsPage {
 				strictEqual
 			);
 		};
+		this.accountsTableRowActions = async (name: string) => {
+			const accountsTableRow = await this.accountsTableRow(1, name, true);
+
+			if (accountsTableRow && accountsTableRow.column) {
+				return accountsTableRow.row.getByRole('button');
+			}
+
+			throw new Error(`Cannot locate account row with name ${name}`);
+		};
 		this.accountsTableRowCheckBox = async (name: string) => {
 			const accountsTableRow = await this.accountsTableRow(1, name, true);
 
@@ -172,13 +186,17 @@ export class AccountsPage {
 
 			throw new Error(`Cannot locate account row with name ${name}`);
 		};
-		this.activateButton = page.getByRole('button', {name: 'Activate'});
+		this.activateButton = page
+			.getByRole('button', {name: 'Activate'})
+			.or(page.getByRole('link', {name: 'Activate'}));
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.channelDefaultsTab = page.getByRole('link', {
 			name: 'Channel Defaults',
 		});
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
-		this.deactivateButton = page.getByRole('button', {name: 'Deactivate'});
+		this.deactivateButton = page
+			.getByRole('button', {name: 'Deactivate'})
+			.or(page.getByRole('link', {name: 'Deactivate'}));
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.detailsTab = page.getByRole('link', {
 			name: 'Details',

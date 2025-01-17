@@ -21,6 +21,7 @@ import {EditAccountEmailAddressPage} from '../pages/account-admin-web/EditAccoun
 import {EditAccountPage} from '../pages/account-admin-web/EditAccountPage';
 import {EditAccountPhonePage} from '../pages/account-admin-web/EditAccountPhonePage';
 import {EditAccountWebsitePage} from '../pages/account-admin-web/EditAccountWebsitePage';
+import {EmailDomainsInstanceSettingsPage} from '../pages/account-admin-web/EmailDomainsInstanceSettingsPage';
 
 const accountsPagesTest = test.extend<{
 	accountAccountGroupsPage: AccountAccountGroupsPage;
@@ -39,6 +40,7 @@ const accountsPagesTest = test.extend<{
 	editAccountPage: EditAccountPage;
 	editAccountPhonePage: EditAccountPhonePage;
 	editAccountWebsitePage: EditAccountWebsitePage;
+	emailDomainsInstanceSettingsPage: EmailDomainsInstanceSettingsPage;
 }>({
 	accountAccountGroupsPage: async ({page}, use) => {
 		await use(new AccountAccountGroupsPage(page));
@@ -87,6 +89,9 @@ const accountsPagesTest = test.extend<{
 	},
 	editAccountWebsitePage: async ({page}, use) => {
 		await use(new EditAccountWebsitePage(page));
+	},
+	emailDomainsInstanceSettingsPage: async ({page}, use) => {
+		await use(new EmailDomainsInstanceSettingsPage(page));
 	},
 });
 

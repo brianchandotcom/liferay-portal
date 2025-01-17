@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -13,6 +14,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {nextPage, setItemsPerPage} from '../../utils/pagination';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -363,6 +365,47 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	).toBeVisible();
 });
 
+test('LPD-44526 Can activate and deactivate an account', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.activateButton.click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Active').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+});
+
 test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 	accountsPage,
 	apiHelpers,
@@ -554,4 +597,370 @@ test('LPD-45897 Can delete accounts in bulk', async ({
 	await accountsPage.changeFilter('Inactive');
 
 	await expect(accountsPage.noAccountsMessage).toBeVisible();
+});
+
+test('LPS-195988 An account name should be limited to 250 characters', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	const name =
+		'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet';
+
+	await accountsPage.goto();
+
+	await accountsPage.newButton.click();
+
+	await editAccountPage.createAccount(apiHelpers, {name});
+	await editAccountPage.backButton.click();
+
+	await expect(accountsPage.accountNameLink(name)).toHaveCount(0);
+	await expect(
+		accountsPage.accountNameLink(name.substring(0, 250))
+	).toBeVisible();
+
+	await (
+		await accountsPage.accountsTableRowLink(name.substring(0, 250))
+	).click();
+
+	await expect(editAccountPage.accountNameInput).toHaveValue(
+		name.substring(0, 250)
+	);
+});
+
+test('LPS-195988 The account external reference code should be unique', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		externalReferenceCode: getRandomString(),
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await accountsPage.newButton.click();
+
+	await editAccountPage.accountNameInput.fill(getRandomString());
+	await editAccountPage.externalReferenceCodeInput.fill(
+		account.externalReferenceCode
+	);
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(
+		page,
+		'The given external reference code belongs to another account',
+		{type: 'danger'}
+	);
+});
+
+test('LPS-195988 Can create different type of accounts', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	await accountsPage.goto();
+
+	const accounts = [
+		{name: getRandomString(), type: 'business'},
+		{name: getRandomString(), type: 'guest'},
+		{name: getRandomString(), type: 'person'},
+		{name: getRandomString(), type: 'supplier'},
+	];
+
+	for (const {name, type} of accounts) {
+		await accountsPage.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {name, type});
+		await editAccountPage.backButton.click();
+
+		await expect(
+			await accountsPage.accountsTableRowLink(name)
+		).toBeVisible();
+
+		await (await accountsPage.accountsTableRowLink(name)).click();
+
+		await expect(editAccountPage.accountNameInput).toBeVisible();
+		await expect(editAccountPage.typeInput).toHaveValue(
+			new RegExp(type, 'i')
+		);
+
+		await editAccountPage.backButton.click();
+	}
+
+	for (const account of accounts) {
+		await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+	}
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Business').click();
+
+	for (const account of accounts) {
+		if (account.type === 'business') {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toHaveCount(0);
+		}
+	}
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Guest').click();
+
+	for (const account of accounts) {
+		if (account.type === 'guest') {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toHaveCount(0);
+		}
+	}
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Person').click();
+
+	for (const account of accounts) {
+		if (account.type === 'person') {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toHaveCount(0);
+		}
+	}
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Supplier').click();
+
+	for (const account of accounts) {
+		if (account.type === 'supplier') {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(account.name)
+			).toHaveCount(0);
+		}
+	}
+});
+
+test('LPS-195988 Multiple accounts can be added with the same domain', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	emailDomainsInstanceSettingsPage,
+}) => {
+	const accounts = [
+		{
+			domains: ['liferay.com'],
+			name: getRandomString(),
+			type: 'business',
+		},
+		{
+			domains: ['liferay.com'],
+			name: getRandomString(),
+			type: 'business',
+		},
+	];
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		for (const {domains, name, type} of accounts) {
+			await accountsPage.newButton.click();
+
+			await editAccountPage.createAccount(apiHelpers, {
+				domains,
+				name,
+				type,
+			});
+
+			for (const domain of domains) {
+				await expect(editAccountPage.domainCell(domain)).toBeVisible();
+			}
+
+			await editAccountPage.backButton.click();
+
+			await (await accountsPage.accountsTableRowLink(name)).click();
+
+			for (const domain of domains) {
+				await expect(editAccountPage.domainCell(domain)).toBeVisible();
+			}
+
+			await editAccountPage.backButton.click();
+		}
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPS-195988 A business account can have more than one domain', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	emailDomainsInstanceSettingsPage,
+}) => {
+	const account = {
+		domains: ['liferay.com', 'google.com', 'si-na.com', '9teen.com'],
+		name: getRandomString(),
+		type: 'business',
+	};
+
+	const {domains, name, type} = account;
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {domains, name, type});
+
+		for (const domain of domains) {
+			await expect(editAccountPage.domainCell(domain)).toBeVisible();
+		}
+
+		await editAccountPage.backButton.click();
+
+		await (await accountsPage.accountsTableRowLink(name)).click();
+
+		await editAccountPage.domainRemoveButton(domains[0]).click();
+
+		for (const [index, domain] of domains.entries()) {
+			if (index === 0) {
+				await expect(editAccountPage.domainCell(domain)).toHaveCount(0);
+			}
+			else {
+				await expect(editAccountPage.domainCell(domain)).toBeVisible();
+			}
+		}
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPS-195988 Domain validation is not present in Person Accounts', async ({
+	accountsPage,
+	editAccountPage,
+	emailDomainsInstanceSettingsPage,
+}) => {
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.newButton.click();
+
+		await expect(editAccountPage.validDomainsHeading).toBeVisible();
+
+		await editAccountPage.typeInput.selectOption('person');
+
+		await expect(editAccountPage.validDomainsHeading).toHaveCount(0);
+
+		await editAccountPage.typeInput.selectOption('business');
+
+		await expect(editAccountPage.validDomainsHeading).toBeVisible();
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPS-101893 Account list should be paginated', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	for (let i = 1; i < 6; i++) {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: `Account ${i}`,
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+	}
+
+	await accountsPage.goto();
+
+	await setItemsPerPage(page, 4);
+
+	for (let i = 1; i < 6; i++) {
+		if (i < 5) {
+			await expect(
+				accountsPage.accountNameLink(`Account ${i}`)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(`Account ${i}`)
+			).toHaveCount(0);
+		}
+	}
+
+	await nextPage(page);
+
+	for (let i = 1; i < 6; i++) {
+		if (i < 5) {
+			await expect(
+				accountsPage.accountNameLink(`Account ${i}`)
+			).toHaveCount(0);
+		}
+		else {
+			await expect(
+				accountsPage.accountNameLink(`Account ${i}`)
+			).toBeVisible();
+		}
+	}
+});
+
+test('LPS-157661 An account avatar can be added in creation', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	const name = getRandomString();
+
+	await accountsPage.goto();
+
+	await accountsPage.newButton.click();
+
+	await editAccountPage.createAccount(apiHelpers, {
+		avatar: path.join(__dirname, '/dependencies/liferay.png'),
+		name,
+	});
+	await editAccountPage.backButton.click();
+
+	await (await accountsPage.accountsTableRowLink(name)).click();
+
+	await expect(editAccountPage.imageInput).toHaveValue('Custom Image');
 });

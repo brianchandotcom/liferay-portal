@@ -127,16 +127,13 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 			"Application Status", "PUBLISHED", "UNPUBLISHED", "published",
 			"unpublished", "L_API_APPLICATION_STATUSES", "L_API_APPLICATION",
 			"APPLICATION_STATUS");
-
 		_assertUpgrade(
 			"HTTP Method", "GET", "POST", "get", "post",
 			"L_API_ENDPOINT_HTTP_METHODS", "L_API_ENDPOINT", "HTTP_METHOD");
-
 		_assertUpgrade(
 			"Retrieve Type", "COLLECTION", "SINGLE_ELEMENT", "collection",
 			"singleElement", "L_API_ENDPOINT_RETRIEVE_TYPES", "L_API_ENDPOINT",
 			"RETRIEVE_TYPE");
-
 		_assertUpgrade(
 			"Scope", "COMPANY", "SITE", "company", "site",
 			"L_API_ENDPOINT_SCOPES", "L_API_ENDPOINT", "SCOPE");

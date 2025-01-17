@@ -12,8 +12,8 @@ import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/Page
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
-import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
 
 export default async function createSiteTemplateWithWebContentOnHomePage({
 	apiHelpers,
@@ -44,7 +44,7 @@ export default async function createSiteTemplateWithWebContentOnHomePage({
 	await page.goto(
 		'group/template-' + layoutSetPrototype.layoutSetPrototypeId
 	);
-	
+
 	const siteId = await page.evaluate(() => {
 		return String(Liferay.ThemeDisplay.getSiteGroupId());
 	});
@@ -65,6 +65,8 @@ export default async function createSiteTemplateWithWebContentOnHomePage({
 	await productMenuPage.goToPages();
 	await layoutSetPrototypePage.homePageLink.click();
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addSpecificWebContentWithDisplay(webContentName);
+	await webContentDisplayPage.addSpecificWebContentWithDisplay(
+		webContentName
+	);
 	await uiElementsPage.publishButton.click();
 }

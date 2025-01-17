@@ -31,10 +31,15 @@ export class WebContentDisplayPage {
 
 	constructor(page: Page) {
 		this.app = page.getByTestId('app-loaded');
-		this.configurationFrame = page.frameLocator('iframe[title="Configuration"]');
-		this.configurationFrameSelectButton = this.configurationFrame.getByRole('button', {
-			name: 'Select',
-		});
+		this.configurationFrame = page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+		this.configurationFrameSelectButton = this.configurationFrame.getByRole(
+			'button',
+			{
+				name: 'Select',
+			}
+		);
 		this.configurationOption = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Configuration',
@@ -51,7 +56,10 @@ export class WebContentDisplayPage {
 		this.selectWebContentButton = page
 			.frameLocator('iframe[title*="Web Content Display"]')
 			.getByRole('button', {name: 'Select'});
-		this.selectWebContentInConfigurationFrame = this.configurationFrame.frameLocator('iframe[title="Select Web Content"]'); 
+		this.selectWebContentInConfigurationFrame =
+			this.configurationFrame.frameLocator(
+				'iframe[title="Select Web Content"]'
+			);
 		this.selectWebContentFrame = page
 			.frameLocator('iframe[title*="Web Content Display"]')
 			.frameLocator('iframe[title="Select Web Content"]');
@@ -91,22 +99,29 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
 
-		await this.page.locator('#wrapper')
-		.getByRole('button', {name: 'Options'})
-		.click();
-	
+		await this.page
+			.locator('#wrapper')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
 		await this.configurationOption.click();
-		
+
 		await this.page
 			.getByText('Success:The application was added to the page.')
 			.waitFor({state: 'hidden'});
 
 		await this.configurationFrameSelectButton.waitFor({state: 'visible'});
-		await  this.configurationFrameSelectButton.click();
+		await this.configurationFrameSelectButton.click();
 
-		await this.selectWebContentInConfigurationFrame.getByText(webContentName).waitFor({state: 'visible'});
-		await this.selectWebContentInConfigurationFrame.getByText(webContentName).hover();
-		await this.selectWebContentInConfigurationFrame.getByText(webContentName).click();
+		await this.selectWebContentInConfigurationFrame
+			.getByText(webContentName)
+			.waitFor({state: 'visible'});
+		await this.selectWebContentInConfigurationFrame
+			.getByText(webContentName)
+			.hover();
+		await this.selectWebContentInConfigurationFrame
+			.getByText(webContentName)
+			.click();
 
 		await this.saveConfigurationFrameOptions();
 	}
@@ -115,7 +130,7 @@ export class WebContentDisplayPage {
 		await this.webContentDisplay.waitFor({state: 'visible'});
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayOptionsContent.click();
-		
+
 		await this.saveConfigurationFrameOptions();
 
 		await this.configurationOption.click();
@@ -171,9 +186,11 @@ export class WebContentDisplayPage {
 	}
 
 	async saveConfigurationFrameOptions() {
-		await this.configurationFrame.getByRole('button', {
-			name: 'Save',
-		}).click();
+		await this.configurationFrame
+			.getByRole('button', {
+				name: 'Save',
+			})
+			.click();
 
 		await this.uiElementsPage.closeClickable.click();
 

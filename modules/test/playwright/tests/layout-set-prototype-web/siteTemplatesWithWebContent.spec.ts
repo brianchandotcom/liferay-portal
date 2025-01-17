@@ -423,9 +423,9 @@ testWithPrivatePages(
 		});
 
 		const layoutSetPrototype2: LayoutSetPrototype =
-		await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-			contentTemplateName2
-		);
+			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+				contentTemplateName2
+			);
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype2.layoutSetPrototypeId,
@@ -452,7 +452,7 @@ testWithPrivatePages(
 			templateKey: layoutSetPrototype1.layoutSetPrototypeId,
 			templateType: 'site-template',
 		});
-		
+
 		apiHelpers.data.push({
 			id: site.id,
 			type: 'site',

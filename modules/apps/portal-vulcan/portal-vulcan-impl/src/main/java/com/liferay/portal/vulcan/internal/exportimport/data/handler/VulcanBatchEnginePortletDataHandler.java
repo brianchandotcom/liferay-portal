@@ -12,11 +12,13 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -138,14 +140,13 @@ public class VulcanBatchEnginePortletDataHandler
 			return portletPreferences;
 		}
 
-		_batchEngineImportTaskExecutor.execute(
+		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
 				null, _className, _getBytes(_fileName, inputStream), "JSON",
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyMap(),
-				BatchEngineImportTaskConstants.
-					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(),
 				HashMapBuilder.<String, Serializable>put(
 					"batchRestrictFields",
@@ -162,7 +163,25 @@ public class VulcanBatchEnginePortletDataHandler
 				).put(
 					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
 				).build(),
-				_taskItemDelegateName));
+				_taskItemDelegateName);
+
+		_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
+
+		batchEngineImportTask =
+			_batchEngineImportTaskService.getBatchEngineImportTask(
+				batchEngineImportTask.getBatchEngineImportTaskId());
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineImportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus ==
+				BatchEngineTaskExecuteStatus.FAILED) {
+
+			throw new PortletDataException(
+				"Unable to import batch data: " +
+					batchEngineImportTask.getErrorMessage());
+		}
 
 		return portletPreferences;
 	}

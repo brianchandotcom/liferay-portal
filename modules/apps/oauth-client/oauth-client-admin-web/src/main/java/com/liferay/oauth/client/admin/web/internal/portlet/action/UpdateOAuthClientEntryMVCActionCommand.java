@@ -48,7 +48,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 			String authServerWellKnownURI = ParamUtil.getString(
 				actionRequest, "authServerWellKnownURI");
 			String infoJSON = ParamUtil.getString(actionRequest, "infoJSON");
-			Long metadataCachingTime = ParamUtil.getLong(
+			long metadataCachingTime = ParamUtil.getLong(
 				actionRequest, "metadataCachingTime");
 			String oidcUserInfoMapperJSON = ParamUtil.getString(
 				actionRequest, "OIDCUserInfoMapperJSON");

@@ -343,6 +343,10 @@ public class CommerceCatalogLocalServiceUtil {
 		return getService().getCommerceCatalogs(start, end);
 	}
 
+	public static List<CommerceCatalog> getCommerceCatalogs(long companyId) {
+		return getService().getCommerceCatalogs(companyId);
+	}
+
 	public static List<CommerceCatalog> getCommerceCatalogs(
 		long companyId, boolean system) {
 

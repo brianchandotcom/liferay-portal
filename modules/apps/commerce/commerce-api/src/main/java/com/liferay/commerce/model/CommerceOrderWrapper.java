@@ -907,13 +907,6 @@ public class CommerceOrderWrapper
 		return model.getCouponCode();
 	}
 
-	@Override
-	public long getCPConfigurationListId(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCPConfigurationListId(groupId);
-	}
-
 	/**
 	 * Returns the create date of this commerce order.
 	 *

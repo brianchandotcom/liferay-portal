@@ -78,15 +78,26 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 				javaVariable.getContent(), childJavaTerm, fileContent, fileName,
 				variableName, true, false);
 
-			if (!variableTypeName.startsWith("Map<Long") &&
-				!variableTypeName.startsWith("Set<Long>")) {
+			if (!variableTypeName.equals("Set<Long>") &&
+				!variableTypeName.startsWith("Map<Long")) {
 
 				continue;
 			}
 
-			for (String methodName : _METHOD_NAMES) {
+			if (variableTypeName.equals("Set<Long>")) {
 				_check(
-					fileName, content, entityIds, javaTerm, methodName,
+					fileName, content, entityIds, javaTerm, "add",
+					variableName);
+			}
+			else if (variableTypeName.startsWith("Map<Long")) {
+				_check(
+					fileName, content, entityIds, javaTerm, "computeIfAbsent",
+					variableName);
+				_check(
+					fileName, content, entityIds, javaTerm, "computeIfPresent",
+					variableName);
+				_check(
+					fileName, content, entityIds, javaTerm, "put",
 					variableName);
 			}
 		}
@@ -116,10 +127,6 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 			List<String> getParameterNames = JavaSourceUtil.getParameterNames(
 				JavaSourceUtil.getMethodCall(content, x));
-
-			if (getParameterNames.size() != 2) {
-				continue;
-			}
 
 			String parameter = getParameterNames.get(0);
 
@@ -240,10 +247,6 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 		return primaryKeys;
 	}
-
-	private static final String[] _METHOD_NAMES = {
-		"add", "computeIfAbsent", "computeIfPresent", "put"
-	};
 
 	private static final Pattern _createTablePattern = Pattern.compile(
 		"create table (\\w+) \\(");

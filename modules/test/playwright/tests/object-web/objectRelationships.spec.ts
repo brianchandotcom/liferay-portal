@@ -15,6 +15,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {ObjectRelationshipFormPage} from '../../pages/object-web/object-relationship/ObjectRelationshipFormPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
@@ -28,6 +29,86 @@ test.beforeEach(({page}) => {
 });
 
 test.describe('Manage object relationships through Model Builder', () => {
+	test('assert that relationship Many records of field shows correct definition label', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		page,
+	}) => {
+		const objectFolder =
+			await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+		apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode:
+					objectFolder.externalReferenceCode,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipData: Partial<ObjectRelationship> = {
+			label: {
+				en_US: 'objectRelationshipLabel' + getRandomInt(),
+			},
+			name: 'objectRelationshipName' + Math.floor(Math.random() * 99),
+			objectDefinitionExternalReferenceCode1:
+				objectDefinition1.externalReferenceCode,
+			objectDefinitionExternalReferenceCode2:
+				objectDefinition2.externalReferenceCode,
+			objectDefinitionId1: objectDefinition1.id,
+			objectDefinitionId2: objectDefinition2.id,
+			objectDefinitionName2: objectDefinition2.name,
+			type: ObjectRelationship.TypeEnum.OneToMany,
+		};
+
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition1.externalReferenceCode,
+				objectRelationshipData
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await modelBuilderDiagramPage.goto({
+			objectFolderName: objectFolder.name,
+		});
+
+		await modelBuilderDiagramPage.clickObjectRelationshipEdge(
+			objectRelationship.label['en_US']
+		);
+
+		const objectRelationshipFormPage = new ObjectRelationshipFormPage(
+			page,
+			'.form-group'
+		);
+
+		await expect(objectRelationshipFormPage.manyRecordsOfInput).toHaveText(
+			objectDefinition2.label['en_US']
+		);
+	});
+
 	test('can create multiple object relationships between the same objects', async ({
 		addNewObjectRelationshipModalPage,
 		apiHelpers,

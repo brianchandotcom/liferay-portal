@@ -20,6 +20,7 @@ import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.internal.catalog.CPSkuImpl;
 import com.liferay.commerce.product.internal.util.comparator.CPDefinitionOptionRelComparator;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -944,14 +945,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				commerceChannelGroupId);
 
-		List<CPConfigurationList> cpConfigurationLists =
-			_cpConfigurationListLocalService.getCPConfigurationLists(
+		CPConfigurationList cpConfigurationList =
+			_cpConfigurationListDiscovery.getCPConfigurationList(
 				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				accountEntryId,
-				_accountGroupLocalService.getAccountGroupIds(accountEntryId),
-				commerceChannel.getCommerceChannelId(), commerceOrderTypeId);
-
-		CPConfigurationList cpConfigurationList = cpConfigurationLists.get(0);
+				accountEntryId, commerceChannel.getCommerceChannelId(),
+				commerceOrderTypeId);
 
 		return cpConfigurationList.getCPConfigurationListId();
 	}
@@ -1031,6 +1029,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private CPCollectionProviderHelper _cpCollectionProviderHelper;
+
+	@Reference
+	private CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 
 	@Reference
 	private CPConfigurationListLocalService _cpConfigurationListLocalService;

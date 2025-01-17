@@ -116,7 +116,7 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
-		oAuthClientEntry.setMetadataCachingTime(metadataCacheTime);
+		oAuthClientEntry.setMetadataCacheTime(metadataCacheTime);
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);

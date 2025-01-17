@@ -12,7 +12,7 @@ public class OAuthClientEntryImpl extends OAuthClientEntryBaseImpl {
 
 	@Override
 	public int getMetadataCacheInSeconds() {
-		return (int)(getMetadataCachingTime() / 1000);
+		return (int)(getMetadataCacheTime() / 1000);
 	}
 
 }

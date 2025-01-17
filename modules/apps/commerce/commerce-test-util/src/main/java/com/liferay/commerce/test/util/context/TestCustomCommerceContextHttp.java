@@ -11,7 +11,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -38,7 +38,7 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderHttpHelper commerceOrderHttpHelper,
 		ConfigurationProvider configurationProvider,
-		CPConfigurationListLocalService cpConfigurationListLocalService,
+		CPConfigurationListDiscovery cpConfigurationListDiscovery,
 		Portal portal) {
 
 		super(
@@ -47,7 +47,7 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceOrderHttpHelper, configurationProvider,
-			cpConfigurationListLocalService, portal);
+			cpConfigurationListDiscovery, portal);
 
 		_httpServletRequest = httpServletRequest;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;

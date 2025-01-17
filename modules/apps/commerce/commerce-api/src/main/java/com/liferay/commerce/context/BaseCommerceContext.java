@@ -17,11 +17,11 @@ import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityCom
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
-import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -60,7 +60,7 @@ public class BaseCommerceContext implements CommerceContext {
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderService commerceOrderService,
 		ConfigurationProvider configurationProvider,
-		CPConfigurationListLocalService cpConfigurationListLocalService) {
+		CPConfigurationListDiscovery cpConfigurationListDiscovery) {
 
 		_companyId = companyId;
 		_commerceChannelGroupId = commerceChannelGroupId;
@@ -74,7 +74,7 @@ public class BaseCommerceContext implements CommerceContext {
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderService = commerceOrderService;
-		_cpConfigurationListLocalService = cpConfigurationListLocalService;
+		_cpConfigurationListDiscovery = cpConfigurationListDiscovery;
 
 		try {
 			if (getCommerceChannelGroupId() > 0) {
@@ -304,17 +304,15 @@ public class BaseCommerceContext implements CommerceContext {
 		for (long groupId :
 				TransformUtil.transformToLongArray(
 					_commerceCatalogLocalService.getCommerceCatalogs(
-						_companyId, false),
+						_companyId),
 					CommerceCatalog::getGroupId)) {
 
-			List<CPConfigurationList> cpConfigurationLists =
-				_cpConfigurationListLocalService.getCPConfigurationLists(
+			_cpConfigurationListMap.put(
+				groupId,
+				_cpConfigurationListDiscovery.getCPConfigurationList(
 					_companyId, groupId,
 					CommerceUtil.getCommerceAccountId(this),
-					getCommerceAccountGroupIds(), getCommerceChannelId(),
-					orderTypeId);
-
-			_cpConfigurationListMap.put(groupId, cpConfigurationLists.get(0));
+					getCommerceChannelId(), orderTypeId));
 		}
 
 		return _cpConfigurationListMap;
@@ -341,8 +339,7 @@ public class BaseCommerceContext implements CommerceContext {
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderService _commerceOrderService;
 	private final long _companyId;
-	private final CPConfigurationListLocalService
-		_cpConfigurationListLocalService;
+	private final CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 	private Map<Long, CPConfigurationList> _cpConfigurationListMap;
 	private final long _orderId;
 

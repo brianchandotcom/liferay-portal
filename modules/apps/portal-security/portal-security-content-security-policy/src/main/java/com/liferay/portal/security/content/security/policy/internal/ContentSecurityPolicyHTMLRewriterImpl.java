@@ -154,29 +154,27 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		String elementStyles = element.attr("style");
 
-		if (Validator.isBlank(elementStyles)) {
-			return;
+		if (!Validator.isBlank(elementStyles)) {
+			String id = element.attr("id");
+
+			if (Validator.isBlank(id)) {
+				id = StringUtil.randomId(8);
+
+				element.attr("id", id);
+			}
+
+			sb.append("#");
+			sb.append(id);
+			sb.append("{");
+			sb.append(elementStyles);
+			sb.append("}");
+
+			element.removeAttr("style");	
 		}
-
-		String id = element.attr("id");
-
-		if (Validator.isBlank(id)) {
-			id = StringUtil.randomId(8);
-
-			element.attr("id", id);
-		}
-
-		sb.append("#");
-		sb.append(id);
-		sb.append("{");
-		sb.append(elementStyles);
-		sb.append("}");
-
-		element.removeAttr("style");
 
 		if (recursive) {
 			for (Element childElement : element.children()) {
-				_extractInlineHandlers(childElement, true, sb);
+				_extractInlineStyles(childElement, recursive, sb);
 			}
 		}
 	}

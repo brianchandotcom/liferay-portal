@@ -112,29 +112,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScopetoGlobalPG() {
-		Portlet.gotoPortletOptions(
-			portletName = "Documents and Media",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Navigator.gotoNavItem(navItem = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "Global");
-
-		AssertSelectedLabel(
-			locator1 = "Select#SCOPE",
-			value1 = "Global");
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
 	macro viewDefaultConfigurationDisplaySettingsPG(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},

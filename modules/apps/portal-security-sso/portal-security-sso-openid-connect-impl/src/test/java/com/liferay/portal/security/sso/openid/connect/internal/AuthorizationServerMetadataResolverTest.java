@@ -7,12 +7,11 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.portal.cache.test.util.TestPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
-
-import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -31,13 +30,9 @@ public class AuthorizationServerMetadataResolverTest {
 
 	@Test
 	public void testResolveOIDCProviderMetadata() throws Exception {
-		Field field =
-			AuthorizationServerMetadataResolver.class.getDeclaredField(
-				"_oidcProviderMetadataPortalCache");
-
-		field.setAccessible(true);
-
-		field.set(_authorizationServerMetadataResolver, _portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_authorizationServerMetadataResolver,
+			"_oidcProviderMetadataPortalCache", _portalCache);
 
 		String authServerWellKnownURI =
 			"https://accounts.google.com/.well-known/openid-configuration";

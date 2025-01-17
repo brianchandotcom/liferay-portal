@@ -105,7 +105,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 						<li role="presentation">
 							<liferay-ui:csp>
-								<a aria-selected="<%= (delta == curDelta) ? "true" : "false" %>" class="dropdown-item <%= (delta == curDelta) ? "active" : "" %>" href="<%= HtmlUtil.escapeHREF(curDeltaURL) %>" id= "="<%= randomNamespace + String.valueOf(curDelta) %>" name="<%= String.valueOf(curDelta) %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>" role="option">
+								<a aria-selected="<%= (delta == curDelta) ? "true" : "false" %>" class="dropdown-item <%= (delta == curDelta) ? "active" : "" %>" href="<%= HtmlUtil.escapeHREF(curDeltaURL) %>" id="<%= randomNamespace + String.valueOf(curDelta) %>" name="<%= String.valueOf(curDelta) %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>" role="option">
 									<%= String.valueOf(curDelta) %><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="entries-per-page" /></span>
 								</a>
 							</liferay-ui:csp>

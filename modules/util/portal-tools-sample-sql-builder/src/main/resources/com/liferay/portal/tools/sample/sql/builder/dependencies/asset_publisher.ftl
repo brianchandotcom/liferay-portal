@@ -17,9 +17,9 @@
 
 <#list pageCounts as pageCount>
 	<#assign
-		assetListEntryModel = dataFactory.newAssetListEntryModel(groupId, pageCount)
 		portletId = dataFactory.getPortletId("com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_")
 
+		assetListEntryModel = dataFactory.newAssetListEntryModel(groupId, pageCount)
 		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)
 	/>
 

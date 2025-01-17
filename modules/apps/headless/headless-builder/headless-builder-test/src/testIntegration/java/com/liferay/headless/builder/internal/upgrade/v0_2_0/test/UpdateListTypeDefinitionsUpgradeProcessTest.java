@@ -200,7 +200,7 @@ public class UpdateListTypeDefinitionsUpgradeProcessTest {
 
 		String dirName =
 			"com/liferay/headless/builder/internal/upgrade/v0_2_0/test" +
-				"/dependencies/bundle/";
+				"/dependencies/batch/";
 
 		Enumeration<URL> enumeration = bundle.findEntries(dirName, "*", true);
 

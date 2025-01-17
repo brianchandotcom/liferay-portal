@@ -78,12 +78,6 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 				javaVariable.getContent(), childJavaTerm, fileContent, fileName,
 				variableName, true, false);
 
-			if (!variableTypeName.equals("Set<Long>") &&
-				!variableTypeName.startsWith("Map<Long")) {
-
-				continue;
-			}
-
 			if (variableTypeName.equals("Set<Long>")) {
 				_check(
 					fileName, content, entityIds, javaTerm, "add",

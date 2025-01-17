@@ -16,7 +16,6 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 
 export default async function createSiteTemplateWithWebContentOnWidgetPage({
 	apiHelpers,
-	layoutSetPrototype,
 	page,
 	pagesAdminPage,
 	productMenuPage,
@@ -28,7 +27,6 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 	widgetPagePage,
 }: {
 	apiHelpers: ApiHelpers;
-	layoutSetPrototype: LayoutSetPrototype;
 	page: Page;
 	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
@@ -38,7 +36,12 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 	webContentDisplayPage: WebContentDisplayPage;
 	webContentName: string;
 	widgetPagePage: WidgetPagePage;
-}): Promise<void> {
+}): Promise<LayoutSetPrototype> {
+	const layoutSetPrototype: LayoutSetPrototype =
+		await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+			webContentName
+		);
+
 	await page.goto(
 		'group/template-' + layoutSetPrototype.layoutSetPrototypeId
 	);
@@ -76,4 +79,6 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 	await uiElementsPage.closeClickable.waitFor({
 		state: 'hidden',
 	});
+
+	return layoutSetPrototype;
 }

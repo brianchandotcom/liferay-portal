@@ -291,6 +291,11 @@ public class CommerceCatalogLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceCatalog> getCommerceCatalogs(long companyId) {
+		return commerceCatalogPersistence.findByCompanyId(companyId);
+	}
+
+	@Override
 	public List<CommerceCatalog> getCommerceCatalogs(
 		long companyId, boolean system) {
 

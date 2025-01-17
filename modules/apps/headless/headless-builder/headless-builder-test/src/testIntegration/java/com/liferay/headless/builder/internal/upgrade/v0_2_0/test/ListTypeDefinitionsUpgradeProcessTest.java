@@ -207,20 +207,20 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				String urlPath = url.getPath();
+				String urlString = url.getPath();
 
-				if (urlPath.endsWith(StringPool.SLASH)) {
+				if (urlString.endsWith(StringPool.SLASH)) {
 					continue;
 				}
 
-				String zipPath = urlPath.substring(dirName.length());
+				String name = urlString.substring(dirName.length());
 
-				if (zipPath.startsWith(StringPool.SLASH)) {
-					zipPath = zipPath.substring(1);
+				if (name.startsWith(StringPool.SLASH)) {
+					name = name.substring(1);
 				}
 
 				try (InputStream inputStream = url.openStream()) {
-					zipWriter.addEntry(zipPath, inputStream);
+					zipWriter.addEntry(name, inputStream);
 				}
 			}
 		}

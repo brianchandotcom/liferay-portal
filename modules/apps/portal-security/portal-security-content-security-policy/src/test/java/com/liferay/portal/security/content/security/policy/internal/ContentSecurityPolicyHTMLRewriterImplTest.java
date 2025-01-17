@@ -58,7 +58,6 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 				"\"display: none;\">Yo!</div>",
 			"TEST_NONCE", false);
 
-
 		Assert.assertTrue(
 			_matches(html, ".*document\\.getElementById\\('TEST_ID'\\).*"));
 		Assert.assertTrue(

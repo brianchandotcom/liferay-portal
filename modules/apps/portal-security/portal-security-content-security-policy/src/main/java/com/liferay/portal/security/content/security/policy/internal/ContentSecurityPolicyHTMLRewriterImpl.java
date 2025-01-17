@@ -169,7 +169,7 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			sb.append(elementStyles);
 			sb.append("}");
 
-			element.removeAttr("style");	
+			element.removeAttr("style");
 		}
 
 		if (recursive) {

@@ -120,18 +120,18 @@ public class FDSAPIURLBuilderImpl implements FDSAPIURLBuilder {
 			_fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
 				_restApplication, _restSchema);
 
-		if (fdsAPIURLResolver != null) {
-			try {
-				return fdsAPIURLResolver.resolve(apiURL, _httpServletRequest);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-
-				return apiURL;
-			}
+		if (fdsAPIURLResolver == null) {
+			return apiURL;
 		}
 
-		return apiURL;
+		try {
+			return fdsAPIURLResolver.resolve(apiURL, _httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return apiURL;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1591,8 +1591,8 @@ definition {
 			AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
 
 			AssertElementPresent(
-				key_relation = "Relationship",
-				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
+				key_valueName = "relationship",
+				locator1 = "ObjectRelationships#VIEW_VALUE_DISABLED");
 
 			AssertElementPresent(
 				key_valueName = "Custom Object 163655",

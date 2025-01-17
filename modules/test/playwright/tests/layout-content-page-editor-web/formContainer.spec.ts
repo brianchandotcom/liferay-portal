@@ -5451,6 +5451,196 @@ test.describe('Multistep', () => {
 			}).toPass();
 		}
 	);
+
+	test(
+		'Step can be removed and restored via undo',
+		{tag: ['@LPD-37578']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Get the id of Lemon object from the site initializer
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			// Definition for the Stepper fragment
+
+			const stepperFragment = getFragmentDefinition({
+				fragmentConfig: {
+					numberOfSteps: 3,
+				},
+				id: getRandomString(),
+				key: 'INPUTS-stepper',
+			});
+
+			// Create a form with three steps and the Stepper
+
+			const headingId = getRandomString();
+
+			const headingDefinition = getFragmentDefinition({
+				id: headingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const buttonId = getRandomString();
+
+			const buttonDefinition = getFragmentDefinition({
+				id: buttonId,
+				key: 'BASIC_COMPONENT-button',
+			});
+
+			const paragraphId = getRandomString();
+
+			const paragraphDefinition = getFragmentDefinition({
+				id: paragraphId,
+				key: 'BASIC_COMPONENT-paragraph',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [stepperFragment],
+				steps: [
+					[headingDefinition],
+					[buttonDefinition],
+					[paragraphDefinition],
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await page
+				.getByText('Select a Page Element', {exact: true})
+				.waitFor();
+
+			await expect(page.locator('.multi-step-item').nth(0)).toHaveClass(
+				/active/,
+				{timeout: 1000}
+			);
+
+			// Check the first step can't be removed
+
+			await pageEditorPage.selectFragment(headingId);
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.page-editor__topper__title', {
+					hasText: 'Step 1',
+				}),
+				trigger: page.locator('.breadcrumb-link', {hasText: 'Step 1'}),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {name: 'Paste'}),
+				timeout: 500,
+				trigger: page
+					.locator('.page-editor__topper__item')
+					.getByLabel('Options'),
+			});
+
+			await expect(
+				page.getByRole('menuitem', {name: 'Remove Step'})
+			).not.toBeVisible();
+
+			// Select third step and remove it
+
+			const heading = page.locator(
+				'.lfr-layout-structure-item-basic-component-heading'
+			);
+
+			const button = page.locator(
+				'.lfr-layout-structure-item-basic-component-button'
+			);
+
+			const paragraph = page.locator(
+				'.lfr-layout-structure-item-basic-component-paragraph'
+			);
+
+			const stepButtons = await page.locator('.multi-step-icon').all();
+			await stepButtons[2].click();
+
+			await expect(heading).not.toBeVisible();
+			await expect(button).not.toBeVisible();
+			await expect(paragraph).toBeVisible();
+
+			await pageEditorPage.selectFragment(paragraphId);
+
+			await clickAndExpectToBeVisible({
+				target: page.locator('.page-editor__topper__title', {
+					hasText: 'Step 3',
+				}),
+				trigger: page.locator('.breadcrumb-link', {hasText: 'Step 3'}),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Remove Step'}),
+				timeout: 500,
+				trigger: page
+					.locator('.page-editor__topper__item')
+					.getByLabel('Options'),
+			});
+
+			// Check the step 2 is now active
+
+			await expect(page.locator('.multi-step-item').nth(1)).toHaveClass(
+				/active/,
+				{timeout: 1000}
+			);
+
+			await expect(button).toBeVisible();
+			await expect(heading).not.toBeVisible();
+			await expect(paragraph).not.toBeVisible();
+
+			// Check undo/redo works
+
+			await pageEditorPage.undoAction();
+
+			await expect(stepButtons[2]).toBeVisible();
+
+			await pageEditorPage.redoAction();
+
+			await expect(stepButtons[2]).not.toBeVisible();
+
+			// Remove the step 2 and check the form is converted to simple
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Remove Step'}),
+				timeout: 500,
+				trigger: page
+					.locator('.page-editor__topper__item')
+					.getByLabel('Options'),
+			});
+
+			await page.getByText('Remove & Convert').waitFor();
+
+			await page.getByText('Remove & Convert').click();
+
+			// Check the stepper is removed as the form is converted to simple
+
+			await expect(stepButtons[0]).not.toBeVisible();
+
+			await expect(heading).toBeVisible();
+			await expect(button).not.toBeVisible();
+			await expect(paragraph).not.toBeVisible();
+		}
+	);
 });
 
 test.describe('Edit mode language changes', () => {

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -232,40 +233,43 @@ public class ViewChangesDisplayContext {
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		List<DropdownItem> bulkActionDropdownItems = new ArrayList<>();
 
-		if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-			(_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED)) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-20183")) {
+			if ((_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+				(_ctCollection.getStatus() ==
+					WorkflowConstants.STATUS_EXPIRED)) {
 
-			bulkActionDropdownItems.add(
-				new FDSActionDropdownItem(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/change_tracking/view_move_changes"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"ctCollectionId", _ctCollection.getCtCollectionId()
-					).buildString(),
-					"move-folder", "move-changes", "post",
-					_language.get(_httpServletRequest, "move-changes"),
-					"move-changes", null));
-		}
+				bulkActionDropdownItems.add(
+					new FDSActionDropdownItem(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCRenderCommandName(
+							"/change_tracking/view_move_changes"
+						).setRedirect(
+							_themeDisplay.getURLCurrent()
+						).setParameter(
+							"ctCollectionId", _ctCollection.getCtCollectionId()
+						).buildString(),
+						"move-folder", "move-changes", "post",
+						_language.get(_httpServletRequest, "move-changes"),
+						"move-changes", null));
+			}
 
-		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			bulkActionDropdownItems.add(
-				new FDSActionDropdownItem(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/change_tracking/view_discard"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"ctCollectionId", _ctCollection.getCtCollectionId()
-					).buildString(),
-					"trash", "view-discard", "delete",
-					_language.get(_httpServletRequest, "discard"),
-					"view-discard", null));
+			if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+				bulkActionDropdownItems.add(
+					new FDSActionDropdownItem(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCRenderCommandName(
+							"/change_tracking/view_discard"
+						).setRedirect(
+							_themeDisplay.getURLCurrent()
+						).setParameter(
+							"ctCollectionId", _ctCollection.getCtCollectionId()
+						).buildString(),
+						"trash", "view-discard", "delete",
+						_language.get(_httpServletRequest, "discard"),
+						"view-discard", null));
+			}
 		}
 
 		return bulkActionDropdownItems;

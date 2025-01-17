@@ -9,15 +9,17 @@ import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {featureFlagPagesTest} from '../feature-flag-web/fixtures/featureFlagPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	changeTrackingPagesTest,
-	featureFlagPagesTest
+	featureFlagsTest({
+		'LPD-20183': {enabled: true},
+	})
 );
 
 let file;

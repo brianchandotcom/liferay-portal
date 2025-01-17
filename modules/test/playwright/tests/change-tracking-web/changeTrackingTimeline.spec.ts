@@ -10,6 +10,7 @@ import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
@@ -115,7 +116,6 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 });
 
 test('LPD-25853 Review Change is added in the timeline dropdown actions', async ({
-	apiHelpers,
 	ctCollection,
 	documentLibraryPage,
 	page,
@@ -125,21 +125,27 @@ test('LPD-25853 Review Change is added in the timeline dropdown actions', async 
 
 	await documentLibraryPage.goToEditFileEntry(title2);
 
+	await expect(page.getByText('Upload documents no larger')).toBeVisible();
+
 	const timelineButton = page.getByLabel('timeline-button');
-	await timelineButton.waitFor();
 	await timelineButton.click();
 
-	const timelineActionsButton = page.locator('.publication-timeline button');
-	await timelineActionsButton.waitFor();
-	await timelineActionsButton.click();
+	const timelineActionsButton = page.getByLabel('timeline-actions');
 
-	const reviewButton = (await apiHelpers.featureFlag.isFeatureFlagEnabled(
-		'LPD-20556'
-	))
-		? page.getByRole('button', {name: 'Review Change'})
-		: page.getByRole('button', {name: 'Review Changes'});
-	await reviewButton.waitFor();
-	await expect(reviewButton).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: timelineActionsButton,
+		trigger: timelineButton,
+	});
+
+	const reviewButton = page.getByRole('button', {name: 'Review Change'});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: reviewButton,
+		trigger: timelineActionsButton,
+	});
+
 	await reviewButton.click();
 
 	await page
@@ -165,17 +171,27 @@ test('LPD-25853 Discard Change is added in the timeline dropdown actions', async
 
 	await documentLibraryPage.goToEditFileEntry(title2);
 
+	await expect(page.getByText('Upload documents no larger')).toBeVisible();
+
 	const timelineButton = page.getByLabel('timeline-button');
-	await timelineButton.waitFor();
 	await timelineButton.click();
 
-	const timelineActionsButton = page.locator('.publication-timeline button');
-	await timelineActionsButton.waitFor();
-	await timelineActionsButton.click();
+	const timelineActionsButton = page.getByLabel('timeline-actions');
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: timelineActionsButton,
+		trigger: timelineButton,
+	});
 
 	const discardButton = page.getByRole('button', {name: 'Discard'});
-	await discardButton.waitFor();
-	await expect(discardButton).toBeVisible();
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: discardButton,
+		trigger: timelineActionsButton,
+	});
+
 	await discardButton.click();
 
 	await page.getByText('Discard Changes').waitFor();
@@ -192,17 +208,27 @@ test('LPD-25853 Move Change is added in the timeline dropdown actions', async ({
 
 	await documentLibraryPage.goToEditFileEntry(title2);
 
+	await expect(page.getByText('Upload documents no larger')).toBeVisible();
+
 	const timelineButton = page.getByLabel('timeline-button');
-	await timelineButton.waitFor();
 	await timelineButton.click();
 
-	const timelineActionsButton = page.locator('.publication-timeline button');
-	await timelineActionsButton.waitFor();
-	await timelineActionsButton.click();
+	const timelineActionsButton = page.getByLabel('timeline-actions');
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: timelineActionsButton,
+		trigger: timelineButton,
+	});
 
 	const moveButton = page.getByRole('button', {name: 'Move'});
-	await moveButton.waitFor();
-	await expect(moveButton).toBeVisible();
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: moveButton,
+		trigger: timelineActionsButton,
+	});
+
 	await moveButton.click();
 
 	await page.getByText('Move Changes').waitFor();

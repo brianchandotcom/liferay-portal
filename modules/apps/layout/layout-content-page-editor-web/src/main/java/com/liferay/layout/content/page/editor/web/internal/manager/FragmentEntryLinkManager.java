@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -82,6 +83,37 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentEntryLinkManager.class)
 public class FragmentEntryLinkManager {
+
+	public List<FragmentEntryLink> getChildrenFragmentEntryLinks(
+			List<String> itemIds, LayoutStructure layoutStructure)
+		throws PortalException {
+
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
+		for (String itemId : itemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(itemId);
+
+			if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+				fragmentEntryLinks.add(
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId()));
+			}
+
+			fragmentEntryLinks.addAll(
+				getChildrenFragmentEntryLinks(
+					layoutStructureItem.getChildrenItemIds(), layoutStructure));
+		}
+
+		return fragmentEntryLinks;
+	}
 
 	public FragmentEntry getFragmentEntry(
 		long groupId, String fragmentEntryKey, Locale locale) {

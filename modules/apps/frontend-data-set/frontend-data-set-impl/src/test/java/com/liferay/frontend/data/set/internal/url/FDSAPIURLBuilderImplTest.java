@@ -102,7 +102,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/{foo}/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{foo}/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).build());
 
 		serviceRegistration1.unregister();
@@ -115,7 +115,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/endpoint", "schema"
 			).build());
 	}
 
@@ -124,7 +124,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
 			).addParameter(
@@ -140,7 +140,7 @@ public class FDSAPIURLBuilderImplTest {
 			"/o/app/endpoint?param1=value1&param2=value2&param3=value3&" +
 				"param4=value4&param5=value5",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
 			).addQueryString(
@@ -157,7 +157,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addQueryString(
 				"param1=value1&param2=value2"
 			).build());
@@ -168,7 +168,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app/v1.0", "/v1.0/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app/v1.0", "/v1.0/endpoint", "schema"
 			).build());
 	}
 
@@ -177,7 +177,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app/v1.0", "/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app/v1.0", "/endpoint", "schema"
 			).build());
 	}
 
@@ -186,7 +186,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/v1.0/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/v1.0/endpoint", "schema"
 			).build());
 	}
 
@@ -199,8 +199,8 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/12345/bar/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{siteId}/{foo}/endpoint", "schema",
-				_httpServletRequest
+				_httpServletRequest, "/app", "/{siteId}/{foo}/endpoint",
+				"schema"
 			).build());
 
 		serviceRegistration.unregister();
@@ -218,8 +218,8 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/12345/bar/54321/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{siteId}/{foo}/{userId}/endpoint", "schema",
-				_httpServletRequest
+				_httpServletRequest, "/app",
+				"/{siteId}/{foo}/{userId}/endpoint", "schema"
 			).build());
 
 		serviceRegistration.unregister();
@@ -230,7 +230,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/67890/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{userId}/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/{userId}/endpoint", "schema"
 			).build());
 	}
 
@@ -243,7 +243,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/bar/endpoint?siteId=12345&foo=bar&bar=67890",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{foo}/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).addParameter(
 				"siteId", "{siteId}"
 			).addParameter(
@@ -264,7 +264,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/{xyz}/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{xyz}/endpoint", "schema", _httpServletRequest
+				_httpServletRequest, "/app", "/{xyz}/endpoint", "schema"
 			).build());
 
 		serviceRegistration.unregister();
@@ -280,8 +280,8 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/bar/54321/endpoint",
 			_fdsAPIURLBuilderFactoryImpl.create(
-				"/app", "/{foo}/{userId}/endpoint", "schema",
-				_httpServletRequest
+				_httpServletRequest, "/app", "/{foo}/{userId}/endpoint",
+				"schema"
 			).build());
 
 		serviceRegistration.unregister();

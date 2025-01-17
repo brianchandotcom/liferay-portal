@@ -22,12 +22,12 @@ public class FDSAPIURLBuilderFactoryImpl implements FDSAPIURLBuilderFactory {
 
 	@Override
 	public FDSAPIURLBuilder create(
-		String restApplication, String restEndpoint, String restSchema,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String restApplication,
+		String restEndpoint, String restSchema) {
 
 		return new FDSAPIURLBuilderImpl(
-			restApplication, restEndpoint, restSchema,
-			_fdsAPIURLResolverRegistry, httpServletRequest);
+			_fdsAPIURLResolverRegistry, httpServletRequest, restApplication,
+			restEndpoint, restSchema);
 	}
 
 	@Reference

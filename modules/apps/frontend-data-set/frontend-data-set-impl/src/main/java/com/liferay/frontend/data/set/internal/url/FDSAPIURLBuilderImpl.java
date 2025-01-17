@@ -30,15 +30,15 @@ import javax.servlet.http.HttpServletRequest;
 public class FDSAPIURLBuilderImpl implements FDSAPIURLBuilder {
 
 	public FDSAPIURLBuilderImpl(
-		String restApplication, String restEndpoint, String restSchema,
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String restApplication,
+		String restEndpoint, String restSchema) {
 
+		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
+		_httpServletRequest = httpServletRequest;
 		_restApplication = restApplication;
 		_restEndpoint = restEndpoint;
 		_restSchema = restSchema;
-		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
-		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override

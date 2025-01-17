@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface FDSAPIURLBuilderFactory {
 
 	public FDSAPIURLBuilder create(
-		String restApplication, String restEndpoint, String restSchema,
-		HttpServletRequest httpServletRequest);
+		HttpServletRequest httpServletRequest, String restApplication,
+		String restEndpoint, String restSchema);
 
 }

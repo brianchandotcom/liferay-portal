@@ -696,7 +696,7 @@ public class PredicateExpressionVisitorImpl
 
 		try {
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				_objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(),
 				entityFieldFilterableName);
 
 			ObjectFieldBusinessType objectFieldBusinessType =

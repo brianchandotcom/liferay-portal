@@ -7,6 +7,7 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -120,6 +123,16 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
+	private static long _getCompanyId(long groupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return CompanyThreadLocal.getCompanyId();
+		}
+
+		return group.getCompanyId();
+	}
+
 	private final PortalCapabilityLocator _portalCapabilityLocator;
 	private RepositoryFactory _repositoryFactory;
 
@@ -165,6 +178,12 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 						DLValidatorUtil.validateSourceFileExtension(
 							fileContentReference.getExtension(),
 							fileContentReference.getSourceFileName());
+					}
+
+					if (fileContentReference.getSize() != 0) {
+						DLValidatorUtil.validateFileMimeType(
+							_getCompanyId(fileContentReference.getGroupId()),
+							fileContentReference.getMimeType());
 					}
 				}
 

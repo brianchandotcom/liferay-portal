@@ -18,13 +18,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -34,10 +31,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -51,7 +46,6 @@ import java.util.Objects;
 
 import javax.sql.DataSource;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -83,17 +77,7 @@ public class UpgradePartitionedConfigurationTableTest
 
 		_companyId = PortalInstancePool.getDefaultCompanyId();
 
-		_resourceActions = ReflectionTestUtil.getFieldValue(
-			ResourceActionLocalServiceImpl.class, "_resourceActions");
-
-		_regenerateResourceActions();
-
 		_dataSource = InfrastructureUtil.getDataSource();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_regenerateResourceActions();
 	}
 
 	@Test
@@ -285,13 +269,6 @@ public class UpgradePartitionedConfigurationTableTest
 		}
 	}
 
-	private static void _regenerateResourceActions() throws Exception {
-		_resourceActions.clear();
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _resourceActionLocalService.checkResourceActions());
-	}
-
 	private String _convertDictionaryValue(Object value) {
 		if (value instanceof Long) {
 			return StringBundler.concat("L\"", value, StringPool.QUOTE);
@@ -306,11 +283,6 @@ public class UpgradePartitionedConfigurationTableTest
 
 	private static long _companyId;
 	private static DataSource _dataSource;
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	private static Map<String, ResourceAction> _resourceActions;
 
 	private class ConfigurationEntry {
 

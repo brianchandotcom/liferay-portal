@@ -317,10 +317,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		try {
 			DBPartitionUtil.forEachCompanyId(
-				companyId ->
-					_resourceActionLocalService.checkResourceActions());
-
-			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
 					ResourceAction resourceAction =
 						_resourceActionLocalService.fetchResourceAction(
@@ -338,10 +334,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 			EntityCacheUtil.clearCache(ResourceActionImpl.class);
 
 			resourceActions.clear();
-
-			DBPartitionUtil.forEachCompanyId(
-				companyId ->
-					_resourceActionLocalService.checkResourceActions());
 		}
 	}
 

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -105,9 +104,6 @@ public abstract class BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				defaultCurrentConnection);
 		}
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
 	protected static void createControlTable(String tableName)
@@ -496,8 +492,5 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	private static Set<String> _controlTableNames;
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
 
 }

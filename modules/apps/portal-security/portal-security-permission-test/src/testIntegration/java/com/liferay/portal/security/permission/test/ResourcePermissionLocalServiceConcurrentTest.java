@@ -87,8 +87,6 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 		_resourceAction = _resourceActionLocalService.addResourceAction(
 			_name, _actionId, RandomTestUtil.randomLong());
 
-		_resourceActionLocalService.checkResourceActions();
-
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				_resourcePermissionLocalService, AopInvocationHandler.class);

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -62,7 +60,6 @@ import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
-import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -79,7 +76,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.Portlet;
@@ -87,7 +83,6 @@ import javax.portlet.Portlet;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -129,16 +124,6 @@ public class CompanyLocalServiceDBPartitionTest
 		_bundleContext = bundle.getBundleContext();
 
 		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
-
-		_resourceActions = ReflectionTestUtil.getFieldValue(
-			ResourceActionLocalServiceImpl.class, "_resourceActions");
-
-		_regenerateResourceActions();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_regenerateResourceActions();
 	}
 
 	@After
@@ -751,13 +736,6 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	private static void _regenerateResourceActions() throws Exception {
-		_resourceActions.clear();
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _resourceActionLocalService.checkResourceActions());
-	}
-
 	private void _addCopyDBPartitionCompanyCache(long companyId) {
 		_className1 = _classNameLocalService.addClassName(_CLASS_NAME_1);
 		_className2 = _classNameLocalService.addClassName(_CLASS_NAME_2);
@@ -1203,11 +1181,6 @@ public class CompanyLocalServiceDBPartitionTest
 	private static CounterLocalService _counterLocalService;
 
 	private static long _defaultCompanyId;
-
-	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
-
-	private static Map<String, ResourceAction> _resourceActions;
 
 	@Inject
 	private static VirtualHostLocalService _virtualHostLocalService;

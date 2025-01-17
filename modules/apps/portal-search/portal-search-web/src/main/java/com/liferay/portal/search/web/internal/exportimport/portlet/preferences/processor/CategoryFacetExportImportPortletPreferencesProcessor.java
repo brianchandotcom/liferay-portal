@@ -174,19 +174,21 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			}
 		}
 
-		if (className.equals(AssetVocabulary.class.getName())) {
-			String erc = oldValues[0];
-
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.
-					fetchAssetVocabularyByExternalReferenceCode(erc, groupId);
-
-			if (assetVocabulary != null) {
-				return assetVocabulary.getVocabularyId();
-			}
+		if (!className.equals(AssetVocabulary.class.getName())) {
+			return null;
 		}
 
-		return null;
+		String erc = oldValues[0];
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(erc, groupId);
+
+		if (assetVocabulary == null) {
+			return null;
+		}
+
+		return assetVocabulary.getVocabularyId();
 	}
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")

@@ -193,51 +193,41 @@ testWithPrivatePages(
 		const siteName: string = getRandomString();
 
 		const layoutSetPrototype1: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				widgetTemplateName1
-			);
+			await createSiteTemplateWithWebContentOnWidgetPage({
+				apiHelpers,
+				page,
+				pagesAdminPage,
+				productMenuPage,
+				templateName: widgetTemplateName1,
+				text: webContentText1,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName1,
+				widgetPagePage,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype1.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
 		});
 
-		await createSiteTemplateWithWebContentOnWidgetPage({
-			apiHelpers,
-			layoutSetPrototype: layoutSetPrototype1,
-			page,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: widgetTemplateName1,
-			text: webContentText1,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName1,
-			widgetPagePage,
-		});
-
 		const layoutSetPrototype2: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				widgetTemplateName2
-			);
+			await createSiteTemplateWithWebContentOnWidgetPage({
+				apiHelpers,
+				page,
+				pagesAdminPage,
+				productMenuPage,
+				templateName: widgetTemplateName2,
+				text: webContentText2,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName2,
+				widgetPagePage,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype2.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
-		});
-
-		await createSiteTemplateWithWebContentOnWidgetPage({
-			apiHelpers,
-			layoutSetPrototype: layoutSetPrototype2,
-			page,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: widgetTemplateName2,
-			text: webContentText2,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName2,
-			widgetPagePage,
 		});
 
 		await applicationsMenuPage.goToSites();
@@ -292,53 +282,41 @@ testWithPrivatePages(
 		const siteName: string = getRandomString();
 
 		const layoutSetPrototype1: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				contentTemplateName1
-			);
+			await createSiteTemplateWithWebContentOnContentPage({
+				apiHelpers,
+				page,
+				pageEditorPage,
+				pagesAdminPage,
+				productMenuPage,
+				templateName: contentTemplateName1,
+				text: `${webContentText1} `,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName1,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype1.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
 		});
 
-		await createSiteTemplateWithWebContentOnContentPage({
-			apiHelpers,
-			layoutSetPrototype: layoutSetPrototype1,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: contentTemplateName1,
-			text: `${webContentText1} `,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName1,
-		});
-
 		const layoutSetPrototype2: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				contentTemplateName2
-			);
+			await createSiteTemplateWithWebContentOnContentPage({
+				apiHelpers,
+				page,
+				pageEditorPage,
+				pagesAdminPage,
+				productMenuPage,
+				templateName: contentTemplateName2,
+				text: webContentText2,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName2,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype2.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
-		});
-
-		await createSiteTemplateWithWebContentOnContentPage({
-			apiHelpers,
-			layoutSetPrototype: layoutSetPrototype2,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			pagesAdminPage,
-			productMenuPage,
-			templateName: contentTemplateName2,
-			text: webContentText2,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName2,
 		});
 
 		const site = await apiHelpers.headlessSite.createSite({
@@ -394,53 +372,43 @@ testWithPrivatePages(
 		const siteName: string = getRandomString();
 
 		const layoutSetPrototype1: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				contentTemplateName1
-			);
+			await createSiteTemplateWithWebContentOnHomePage({
+				apiHelpers,
+				applicationsMenuPage,
+				layoutSetPrototypePage,
+				page,
+				pageEditorPage,
+				productMenuPage,
+				templateName: contentTemplateName1,
+				text: `${webContentText1} `,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName1,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype1.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
 		});
 
-		await createSiteTemplateWithWebContentOnHomePage({
-			apiHelpers,
-			applicationsMenuPage,
-			layoutSetPrototype: layoutSetPrototype1,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			productMenuPage,
-			templateName: contentTemplateName1,
-			text: `${webContentText1} `,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName1,
-		});
-
 		const layoutSetPrototype2: LayoutSetPrototype =
-			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-				contentTemplateName2
-			);
+			await createSiteTemplateWithWebContentOnHomePage({
+				apiHelpers,
+				applicationsMenuPage,
+				layoutSetPrototypePage,
+				page,
+				pageEditorPage,
+				productMenuPage,
+				templateName: contentTemplateName2,
+				text: `${webContentText2} `,
+				uiElementsPage,
+				webContentDisplayPage,
+				webContentName: webContentName2,
+			});
 
 		apiHelpers.data.push({
 			id: layoutSetPrototype2.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
-		});
-
-		await createSiteTemplateWithWebContentOnHomePage({
-			apiHelpers,
-			applicationsMenuPage,
-			layoutSetPrototype: layoutSetPrototype2,
-			layoutSetPrototypePage,
-			page,
-			pageEditorPage,
-			productMenuPage,
-			templateName: contentTemplateName2,
-			text: `${webContentText2} `,
-			uiElementsPage,
-			webContentDisplayPage,
-			webContentName: webContentName2,
 		});
 
 		const site = await apiHelpers.headlessSite.createSite({

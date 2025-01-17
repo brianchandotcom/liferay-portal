@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
+import com.liferay.layout.content.page.editor.web.internal.exception.FormContainerParentItemRequiredException;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
@@ -96,7 +97,16 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (exception instanceof FragmentCompositionDescriptionException) {
+		if (exception instanceof FormContainerParentItemRequiredException) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"form-components-can-only-be-placed-inside-a-mapped-form-" +
+					"container");
+		}
+		else if (exception instanceof FragmentCompositionDescriptionException) {
 			errorMessage =
 				"please-enter-a-valid-fragment-composition-description";
 		}

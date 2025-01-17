@@ -39,16 +39,13 @@ public class AuthorizationServerMetadataResolverTest {
 		int metadataCacheInSeconds = 90;
 		long oAuthClientEntryId = RandomTestUtil.randomLong();
 
-		OIDCProviderMetadata oidcProviderMetadata1 =
+		Assert.assertEquals(
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				authServerWellKnownURI, metadataCacheInSeconds,
-				oAuthClientEntryId);
-		OIDCProviderMetadata oidcProviderMetadata2 =
+				oAuthClientEntryId),
 			_authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
 				authServerWellKnownURI, metadataCacheInSeconds,
-				oAuthClientEntryId);
-
-		Assert.assertTrue(oidcProviderMetadata1 == oidcProviderMetadata2);
+				oAuthClientEntryId));
 	}
 
 	private final AuthorizationServerMetadataResolver

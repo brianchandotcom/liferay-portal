@@ -7,6 +7,7 @@ package com.liferay.exportimport.test.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -130,9 +130,9 @@ public class ExportImportTestUtil {
 			companyId, groupId, new HashMap<String, String[]>());
 	}
 
-	public static <T> T retryAssert(
+	public static void retryAssert(
 			long timeout, TimeUnit timeoutTimeUnit, long pause,
-			TimeUnit pauseTimeUnit, Callable<T> callable)
+			TimeUnit pauseTimeUnit, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		long deadline =
@@ -140,7 +140,9 @@ public class ExportImportTestUtil {
 
 		while (true) {
 			try {
-				return callable.call();
+				unsafeRunnable.run();
+
+				return;
 			}
 			catch (AssertionError ae) {
 				if (System.currentTimeMillis() > deadline) {

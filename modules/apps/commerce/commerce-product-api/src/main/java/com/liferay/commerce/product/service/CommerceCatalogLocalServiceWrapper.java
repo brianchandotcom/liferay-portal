@@ -386,6 +386,11 @@ public class CommerceCatalogLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceCatalog> getCommerceCatalogs(long companyId) {
+		return _commerceCatalogLocalService.getCommerceCatalogs(companyId);
+	}
+
+	@Override
 	public java.util.List<CommerceCatalog> getCommerceCatalogs(
 		long companyId, boolean system) {
 

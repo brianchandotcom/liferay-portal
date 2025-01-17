@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v6_2_0.util;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
@@ -14,6 +15,7 @@ import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -138,6 +140,30 @@ public final class DLValidatorImpl implements DLValidator {
 
 		if (!validFileExtension) {
 			throw new FileExtensionException.InvalidExtension(fileName);
+		}
+	}
+
+	@Override
+	public void validateFileMimeType(long companyId, String mimeType)
+		throws PortalException {
+
+		boolean validFileMimeType = false;
+
+		String[] fileMimeTypes = {"*"};
+
+		for (String fileMimeType : fileMimeTypes) {
+			if (StringPool.STAR.equals(fileMimeType) ||
+				StringUtil.equalsIgnoreCase(mimeType, fileMimeType)) {
+
+				validFileMimeType = true;
+
+				break;
+			}
+		}
+
+		if (!validFileMimeType) {
+			throw new FileMimeTypeException(
+				"Invalid file mime type for " + mimeType);
 		}
 	}
 

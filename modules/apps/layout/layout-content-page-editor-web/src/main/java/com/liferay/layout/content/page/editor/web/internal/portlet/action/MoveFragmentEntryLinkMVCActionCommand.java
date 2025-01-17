@@ -6,6 +6,8 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
+import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -15,11 +17,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -91,11 +95,24 @@ public class MoveFragmentEntryLinkMVCActionCommand
 			themeDisplay.getPlid(),
 			layoutStructure -> {
 				for (int i = 0; i < finalItemIds.length; i++) {
+					_formItemManager.checkFormContainerParentItemRequired(
+						_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
+							Collections.singletonList(finalItemIds[i]),
+							layoutStructure),
+						layoutStructure, themeDisplay.getLocale(),
+						finalParentItemIds[i]);
+
 					layoutStructure.moveLayoutStructureItem(
 						finalItemIds[i], finalParentItemIds[i],
 						finalPositions[i]);
 				}
 			});
 	}
+
+	@Reference
+	private FormItemManager _formItemManager;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 }

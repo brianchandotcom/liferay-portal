@@ -10,6 +10,7 @@ import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.layout.content.page.editor.web.internal.exception.FormContainerParentItemRequiredException;
 import com.liferay.layout.content.page.editor.web.internal.exception.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -179,7 +181,13 @@ public abstract class BaseDuplicateItemMVCActionCommand
 
 		String errorMessage = StringPool.BLANK;
 
-		if (exception instanceof NoninstanceablePortletException) {
+		if (exception instanceof FormContainerParentItemRequiredException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"form-components-can-only-be-placed-inside-a-mapped-form-" +
+					"container");
+		}
+		else if (exception instanceof NoninstanceablePortletException) {
 			errorMessage = _getNoninstanceablePortletErrorMessage(
 				actionRequest, (NoninstanceablePortletException)exception,
 				themeDisplay);

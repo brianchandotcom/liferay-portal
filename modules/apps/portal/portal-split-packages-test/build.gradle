@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationImplementation group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	testIntegrationImplementation group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

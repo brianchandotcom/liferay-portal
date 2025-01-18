@@ -341,27 +341,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
-			return;
-		}
-
-		try {
-			Layout layout = _layoutLocalService.getFriendlyURLLayout(
-				themeDisplay.getScopeGroupId(), false,
-				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
-
-			String redirect = _portal.getLayoutURL(layout, themeDisplay);
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (NoSuchLayoutException noSuchLayoutException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchLayoutException);
-			}
-		}
+		_verifyStrangersURL(actionRequest, actionResponse, themeDisplay);
 	}
 
 	protected CaptchaConfiguration getCaptchaConfiguration()
@@ -583,6 +563,34 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		sendRedirect(
 			actionRequest, actionResponse, themeDisplay, user, password1);
+	}
+
+	private void _verifyStrangersURL(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			return;
+		}
+
+		try {
+			Layout layout = _layoutLocalService.getFriendlyURLLayout(
+				themeDisplay.getScopeGroupId(), false,
+				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
+
+			String redirect = _portal.getLayoutURL(layout, themeDisplay);
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchLayoutException);
+			}
+		}
 	}
 
 	private ActionRequest _wrapActionRequest(ActionRequest actionRequest)

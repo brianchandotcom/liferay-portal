@@ -7,14 +7,20 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Preston Crary
@@ -83,7 +89,11 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		upgradeTable(tableName, columnName, names, wildcardMode, false);
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				getClass(), tableName)) {
+
+			_executeUpdate(tableName, columnName, names, wildcardMode);
+		}
 	}
 
 	protected void upgradeTable(
@@ -94,11 +104,59 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				getClass(), tableName)) {
 
-			if (preventDuplicates) {
-				_executeDelete(tableName, columnName, names, wildcardMode);
+			// MySQL and MariaDB don't allow to specify same table in FROM
+			// clause and subselect
+
+			if ((DBManagerUtil.getDBType() == DBType.MYSQL) ||
+				(DBManagerUtil.getDBType() == DBType.MARIADB)) {
+
+				String[][] switchedNames = ArrayUtil.clone(names);
+
+				for (String[] name : switchedNames) {
+					String temp = name[0];
+					name[0] = name[1];
+					name[1] = temp;
+				}
+
+				_executeUpdate(
+					tableName, columnName, switchedNames, wildcardMode, true);
+
+				_executeDelete(
+					tableName, columnName, switchedNames, wildcardMode);
+
+				_executeUpdate(tableName, columnName, names, wildcardMode);
+
+				return;
 			}
 
-			_executeUpdate(tableName, columnName, names, wildcardMode);
+			DB db = DBManagerUtil.getDB();
+
+			List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
+				connection, tableName, null, true);
+
+			IndexMetadata indexMetadata = indexMetadatas.get(0);
+
+			runSQL(indexMetadata.getDropSQL());
+
+			try {
+				_executeUpdate(tableName, columnName, names, wildcardMode);
+
+				String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
+					connection, tableName);
+
+				runSQL(
+					StringBundler.concat(
+						"delete from ", tableName, " where ",
+						primaryKeyColumnNames[0], " not in (select MIN(",
+						primaryKeyColumnNames[0], ") from ", tableName,
+						" group by ",
+						StringUtil.merge(indexMetadata.getColumnNames()),
+						StringPool.CLOSE_PARENTHESIS));
+			}
+			finally {
+				addIndexes(
+					connection, Collections.singletonList(indexMetadata));
+			}
 		}
 	}
 
@@ -111,7 +169,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"delete from ", tableName,
-					_getWhereClause(columnName, name[1], wildcardMode),
+					_getWhereClause(columnName, name[0], wildcardMode),
 					_getNotLikeClause(
 						columnName, (String)ArrayUtil.getValue(name, 2),
 						wildcardMode)));
@@ -123,8 +181,22 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
+		_executeUpdate(tableName, columnName, names, wildcardMode, false);
+	}
+
+	private void _executeUpdate(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode, boolean ignoreDuplicates)
+		throws Exception {
+
+		String updateClause = "update ";
+
+		if (ignoreDuplicates) {
+			updateClause = "update ignore ";
+		}
+
 		String tableSQL = StringBundler.concat(
-			"update ", tableName, " set ", columnName, " = replace(",
+			updateClause, tableName, " set ", columnName, " = replace(",
 			_transformColumnName(columnName), ", '");
 
 		StringBundler sb2 = new StringBundler(6);

@@ -245,7 +245,11 @@ public class RestrictedLiferayObjectWrapperTest
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "Name");
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getName");
 		_testRestrictedMethodNames(liferayFreeMarkerStringModel, "getname");
-		_testRestrictedMethodToString(liferayFreeMarkerStringModel);
+
+		Assert.assertEquals(
+			"Denied access to toString of class " +
+				TestLiferayMethodObject.class,
+			liferayFreeMarkerStringModel.getAsString());
 
 		SimpleMethodModel simpleMethodModel =
 			(SimpleMethodModel)liferayFreeMarkerStringModel.get("generate");
@@ -538,29 +542,6 @@ public class RestrictedLiferayObjectWrapperTest
 					"Denied access to method or field ", key, " of ",
 					TestLiferayMethodObject.class),
 				templateModelException.getMessage());
-		}
-	}
-
-	private void _testRestrictedMethodToString(
-		LiferayFreeMarkerStringModel liferayFreeMarkerStringModel) {
-
-		try {
-			liferayFreeMarkerStringModel.getAsString();
-
-			Assert.fail("Should throw RuntimeException for toString");
-		}
-		catch (RuntimeException runtimeException) {
-			Throwable throwable = runtimeException.getCause();
-
-			Assert.assertTrue(
-				"Expected TemplateModelException but got " +
-					throwable.getClass(),
-				throwable instanceof TemplateModelException);
-
-			Assert.assertEquals(
-				"Denied access to method or field toString of " +
-					TestLiferayMethodObject.class,
-				runtimeException.getMessage());
 		}
 	}
 

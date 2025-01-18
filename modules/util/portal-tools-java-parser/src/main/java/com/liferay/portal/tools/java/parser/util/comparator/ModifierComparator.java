@@ -66,7 +66,19 @@ public class ModifierComparator implements Comparator<JavaSimpleValue> {
 			return 11;
 		}
 
-		return 12;
+		if (name.equals("strictfp")) {
+			return 12;
+		}
+
+		if (name.equals("sealed")) {
+			return 13;
+		}
+
+		if (name.equals("non-sealed")) {
+			return 14;
+		}
+
+		return 15;
 	}
 
 }

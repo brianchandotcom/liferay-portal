@@ -51,35 +51,22 @@ public class LiferayFreeMarkerStringModel extends StringModel {
 
 	@Override
 	public String getAsString() {
-		try {
-			if (_restrictedMethodNames == null) {
-				throw new TemplateModelException(
-					"Denied access to method or field toString of " +
-						object.getClass());
-			}
-
-			for (String restrictedMethodName : _restrictedMethodNames) {
-				if (restrictedMethodName.endsWith(
-						StringUtil.toLowerCase("toString"))) {
-
-					throw new TemplateModelException(
-						"Denied access to method or field toString of " +
-							object.getClass());
-				}
-			}
-
-			return super.getAsString();
+		if ((_restrictedMethodNames == null) || _deniedAccessToString) {
+			return "Denied access to toString of class " + object.getClass();
 		}
-		catch (TemplateModelException templateModelException) {
-			throw new RuntimeException(
-				templateModelException.getMessage(), templateModelException);
-		}
+
+		return object.toString();
+	}
+
+	public void setDeniedAccessToString(boolean deniedAccessToString) {
+		_deniedAccessToString = deniedAccessToString;
 	}
 
 	public void setRestrictedMethodNames(Set<String> restrictedMethodNames) {
 		_restrictedMethodNames = restrictedMethodNames;
 	}
 
+	private boolean _deniedAccessToString;
 	private Set<String> _restrictedMethodNames;
 
 }

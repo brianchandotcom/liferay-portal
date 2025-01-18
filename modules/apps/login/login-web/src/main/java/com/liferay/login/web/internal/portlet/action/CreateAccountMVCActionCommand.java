@@ -285,6 +285,11 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(
 					actionRequest, actionResponse, themeDisplay, user,
 					user.getPasswordUnencrypted());
+
+				_verifyStrangersURL(
+					actionRequest, actionResponse, themeDisplay);
+
+				return;
 			}
 			else if (exception instanceof
 						UserScreenNameException.MustNotBeDuplicate) {

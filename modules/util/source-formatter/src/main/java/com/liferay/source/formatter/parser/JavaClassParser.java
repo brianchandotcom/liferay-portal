@@ -53,7 +53,7 @@ public class JavaClassParser {
 						anonymousClassContent,
 						SourceUtil.getLineNumber(content, matcher.start()),
 						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
-						false, false, true));
+						false, false, false, false, false, true));
 			}
 		}
 
@@ -111,6 +111,28 @@ public class JavaClassParser {
 			isFinal = true;
 		}
 
+		boolean isStrictfp = false;
+
+		if (matcher.group(4) != null) {
+			isStrictfp = true;
+		}
+
+		boolean isNonsealed = false;
+		boolean isSealed = false;
+
+		String s = matcher.group(5);
+
+		if (s != null) {
+			s = s.trim();
+
+			if (s.equals("sealed")) {
+				isSealed = true;
+			}
+			else {
+				isNonsealed = true;
+			}
+		}
+
 		boolean isInterface = false;
 
 		if (matcher.group(7) != null) {
@@ -128,7 +150,7 @@ public class JavaClassParser {
 			className, JavaSourceUtil.getPackageName(content),
 			JavaSourceUtil.getImportNames(content), classContent, lineNumber,
 			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, isFinal, false, isEnum,
-			isInterface, false);
+			isInterface, isNonsealed, isSealed, isStrictfp, false);
 
 		return _parseExtendsImplements(
 			javaClass, StringUtil.trim(matcher.group(8)));
@@ -300,7 +322,8 @@ public class JavaClassParser {
 			JavaClass javaClass = _parseJavaClass(
 				_getClassName(startLine), packageName, importNames,
 				javaTermContent, lineNumber, accessModifier, isAbstract,
-				isFinal, isStatic, isEnum, isInterface, false);
+				isFinal, isStatic, isEnum, isInterface, false, false, false,
+				false);
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
@@ -464,13 +487,14 @@ public class JavaClassParser {
 			String className, String packageName, List<String> importNames,
 			String classContent, int classLineNumber, String accessModifier,
 			boolean isAbstract, boolean isFinal, boolean isStatic,
-			boolean isEnum, boolean isInterface, boolean anonymous)
+			boolean isEnum, boolean isInterface, boolean isNonsealed,
+			boolean isSealed, boolean isStrictfp, boolean anonymous)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
 			className, packageName, importNames, classContent, accessModifier,
 			classLineNumber, isAbstract, isFinal, isStatic, isInterface,
-			anonymous);
+			isNonsealed, isSealed, isStrictfp, anonymous);
 
 		int lineNumber = 0;
 

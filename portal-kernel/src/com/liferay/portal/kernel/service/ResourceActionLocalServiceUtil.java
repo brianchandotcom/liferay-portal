@@ -263,6 +263,10 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static String getRegistryName() {
+		return getService().getRegistryName();
+	}
+
 	/**
 	 * Returns the resource action with the primary key.
 	 *
@@ -312,6 +316,10 @@ public class ResourceActionLocalServiceUtil {
 
 	public static int getResourceActionsCount(String name) {
 		return getService().getResourceActionsCount(name);
+	}
+
+	public static void invalidate() {
+		getService().invalidate();
 	}
 
 	/**

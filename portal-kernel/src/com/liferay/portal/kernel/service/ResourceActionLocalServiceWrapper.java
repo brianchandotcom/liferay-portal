@@ -300,6 +300,11 @@ public class ResourceActionLocalServiceWrapper
 		return _resourceActionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public String getRegistryName() {
+		return _resourceActionLocalService.getRegistryName();
+	}
+
 	/**
 	 * Returns the resource action with the primary key.
 	 *
@@ -361,6 +366,11 @@ public class ResourceActionLocalServiceWrapper
 	@Override
 	public int getResourceActionsCount(String name) {
 		return _resourceActionLocalService.getResourceActionsCount(name);
+	}
+
+	@Override
+	public void invalidate() {
+		_resourceActionLocalService.invalidate();
 	}
 
 	/**

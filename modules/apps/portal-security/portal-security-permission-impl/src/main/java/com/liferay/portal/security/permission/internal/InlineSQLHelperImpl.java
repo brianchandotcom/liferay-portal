@@ -440,12 +440,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionWherePredicate =
 					permissionWherePredicate = permissionWherePredicate.or(
 						() -> {
-							if (contributorPermissionWherePredicate != null) {
-								return contributorPermissionWherePredicate.
-									withParentheses();
+							if (contributorPermissionWherePredicate == null) {
+								return null;
 							}
 
-							return null;
+							return contributorPermissionWherePredicate.
+								withParentheses();
 						});
 			}
 		}

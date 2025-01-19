@@ -275,22 +275,22 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 				LDAPUtil.getBaseDNSafeLdapName(ldapServerConfiguration),
 				authSearchSafeLdapFilterTemplate, searchControls);
 
-			if (enumeration.hasMoreElements()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter returned at least one result");
-				}
-
-				Binding binding = enumeration.nextElement();
-
-				Attributes attributes = _safePortalLDAP.getUserAttributes(
-					ldapServerId, companyId, safeLdapContext,
-					SafeLdapNameFactory.from(binding));
-
-				return importUser(
-					ldapServerId, companyId, safeLdapContext, attributes, null);
+			if (!enumeration.hasMoreElements()) {
+				return null;
 			}
 
-			return null;
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search filter returned at least one result");
+			}
+
+			Binding binding = enumeration.nextElement();
+
+			Attributes attributes = _safePortalLDAP.getUserAttributes(
+				ldapServerId, companyId, safeLdapContext,
+				SafeLdapNameFactory.from(binding));
+
+			return importUser(
+				ldapServerId, companyId, safeLdapContext, attributes, null);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -1472,22 +1472,22 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 				LDAPUtil.getBaseDNSafeLdapName(ldapServerConfiguration),
 				safeLdapFilter, searchControls);
 
-			if (enumeration.hasMoreElements()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter returned at least one result");
-				}
-
-				Binding binding = enumeration.nextElement();
-
-				Attributes attributes = _safePortalLDAP.getUserAttributes(
-					ldapServerId, companyId, safeLdapContext,
-					SafeLdapNameFactory.from(binding));
-
-				return importUser(
-					ldapServerId, companyId, safeLdapContext, attributes, null);
+			if (!enumeration.hasMoreElements()) {
+				return null;
 			}
 
-			return null;
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search filter returned at least one result");
+			}
+
+			Binding binding = enumeration.nextElement();
+
+			Attributes attributes = _safePortalLDAP.getUserAttributes(
+				ldapServerId, companyId, safeLdapContext,
+				SafeLdapNameFactory.from(binding));
+
+			return importUser(
+				ldapServerId, companyId, safeLdapContext, attributes, null);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

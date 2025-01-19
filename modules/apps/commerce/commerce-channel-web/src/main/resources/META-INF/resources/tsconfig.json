@@ -1,5 +1,5 @@
 {
-	"@generated": "3810a025d8e0fa402b399ec938d89c936e5f3d53",
+	"@generated": "cb8bf052d58b1419491f5fa8961758514a1d77ae",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,6 +12,9 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/marketplace-web": [
+				"../../../../../../../marketplace/marketplace-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"commerce-frontend-js": [
 				"../../../../../../commerce-frontend-js/src/main/resources/META-INF/resources/index.js"
 			],
@@ -35,6 +38,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../marketplace/marketplace-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../commerce-frontend-js/src/main/resources/META-INF/resources/tsconfig.json"
 		},

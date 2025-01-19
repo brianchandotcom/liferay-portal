@@ -7,7 +7,6 @@ definition {
 	property setup.wizard.enabled = "true";
 	property test.prepare.bundle.properties = "false";
 	property test.run.environment = "EE";
-	property testray.component.names = "Training";
 	property testray.main.component.name = "Setup Wizard";
 
 	@priority = 4

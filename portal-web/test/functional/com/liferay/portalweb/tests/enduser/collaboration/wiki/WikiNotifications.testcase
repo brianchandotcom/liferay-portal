@@ -6,7 +6,6 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property testray.component.names = "Notifications";
 	property testray.main.component.name = "Wiki";
 
 	var pageName = "Wiki Test Page";

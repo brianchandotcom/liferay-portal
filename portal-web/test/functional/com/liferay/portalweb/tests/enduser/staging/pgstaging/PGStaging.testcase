@@ -179,8 +179,6 @@ definition {
 
 	@priority = 3
 	test AddDMDocumentWCArticleStagingLocalLive {
-		property testray.component.names = "Training";
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",
@@ -312,7 +310,6 @@ definition {
 	@priority = 3
 	test AssertNoEditLink {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -575,7 +572,6 @@ definition {
 	@priority = 3
 	test PublishPrivatePage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();

@@ -496,7 +496,6 @@ definition {
 	@priority = 4
 	test OrganizationRoleCanBeDeleted {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		Role.openRolesAdmin();
 

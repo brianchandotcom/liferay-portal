@@ -220,7 +220,6 @@ definition {
 	@priority = 5
 	test AddWithStructure {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Add a web content structure with a single line Text field and a multiple lines Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -479,7 +478,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Enable the FFMPEG Audio Converter in System Settings") {
 			DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
@@ -550,7 +548,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@priority = 5
 	test DisplayWebContentImage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -595,7 +592,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	test DisplayWebContentVideo {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.upstream = "quarantine";
-		property testray.component.names = "Web Content Administration";
 
 		task ("Add an external video shortcut") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -870,7 +866,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@priority = 5
 	test SelectWebContent {
 		property portal.acceptance = "true";
-		property testray.component.names = "Web Content Display,Training";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1333,8 +1328,6 @@ ${runtimeInstance}
 	@description = "View content is not shown in Web Content Display for guest without permission."
 	@priority = 4
 	test ViewArticleWithGuestViewPermission {
-		property testray.component.names = "Permissions";
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -1659,8 +1652,6 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@description = "View pagination in related assets within a web content."
 	@priority = 3
 	test ViewRelatedAssetsAfterChangePagination {
-		property testray.component.names = "Related Assets,Web Content Administration";
-
 		task ("Add six web contents") {
 			for (var i : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(

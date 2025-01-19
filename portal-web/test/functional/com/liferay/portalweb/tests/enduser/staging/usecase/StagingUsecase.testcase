@@ -812,7 +812,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Page Administration,Training,Web Content Administration";
 
 		task ("Given: User import home page from LAR file on staging site") {
 			LAR.importSiteCP(
@@ -1211,7 +1210,6 @@ definition {
 	@priority = 4
 	test PublishPortlet {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("When: User add a new WC on the staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -2236,7 +2234,6 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training";
 
 		task ("Given: User add a new file to the staging site") {
 			JSONDocument.addFileWithUploadedFile(

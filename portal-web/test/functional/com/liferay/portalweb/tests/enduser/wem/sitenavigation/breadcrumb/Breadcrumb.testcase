@@ -32,8 +32,6 @@ definition {
 	@description = "Add a widget template via Breadcrumb widget."
 	@priority = 4
 	test AddADTViaBreadcrumb {
-		property testray.component.names = "Breadcrumb,Content and Appliation Templates";
-
 		task ("Add a Breadcrumb widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",

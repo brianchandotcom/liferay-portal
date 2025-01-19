@@ -7,7 +7,6 @@ definition {
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Blogs";
 	property testray.main.component.name = "Blogs";
 
 	setUp {

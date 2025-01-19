@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Users and Organizations,Staging";
 	property testray.main.component.name = "Staging";
 
 	setUp {
@@ -37,7 +36,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training";
 
 		task ("Given: An administrator of staging organization is added") {
 			JSONOrganization.addOrganization(organizationName = "Staging Organization Name");

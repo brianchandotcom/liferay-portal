@@ -7,7 +7,6 @@ definition {
 	property osgi.modules.includes = "wiki";
 	property portal.release = "false";
 	property portal.upstream = "true";
-	property testray.component.names = "Wiki";
 	property testray.main.component.name = "Publications";
 
 	setUp {

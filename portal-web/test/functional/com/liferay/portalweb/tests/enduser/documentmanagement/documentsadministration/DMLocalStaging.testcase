@@ -312,7 +312,6 @@ definition {
 	@refactordone
 	test CanOnlyCommentOnLiveSite {
 		property portal.acceptance = "true";
-		property testray.component.names = "Comment";
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,

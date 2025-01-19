@@ -3,7 +3,6 @@ definition {
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Client Extensions";
 	property testray.main.component.name = "Client Extensions";
 
 	setUp {
@@ -117,7 +116,6 @@ definition {
 	@refactordone
 	test CanBeDeleted {
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		var remoteAppName = "My New Remote App To Delete";
 
@@ -517,7 +515,6 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		task ("Create Vanilla Counter as a Custom Element") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -560,7 +557,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Client Extensions,Frontend Data Set";
 
 		task ("Given a non-root portal context") {
 			var portalURL = JSONCompany.getPortalURL();
@@ -896,8 +892,6 @@ definition {
 	@description = "LPS-159013. ES module custom element portlets render incorrect script node when dragged in the UI"
 	@priority = 4
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
-		property testray.component.names = "Client Extensions";
-
 		task ("Given a custom element with "Use ES Modules" option created") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
@@ -1100,7 +1094,6 @@ definition {
 	@priority = 5
 	test IFrameCanBeCreated {
 		property portal.acceptance = "true";
-		property testray.component.names = "Frontend Data Set,Remote Apps";
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 

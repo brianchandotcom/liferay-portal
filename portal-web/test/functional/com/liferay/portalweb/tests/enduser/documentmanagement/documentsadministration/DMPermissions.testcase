@@ -474,7 +474,6 @@ definition {
 	@refactordone
 	test CannotDeleteDMFolderAsRegularRoleWithoutPermission {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -833,7 +832,6 @@ definition {
 	@refactordone
 	test CannotViewFolderAsOrganizationMemberWithoutPermissions {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1021,7 +1019,6 @@ definition {
 	@refactordone
 	test CannotViewMultipleDocumentsAsSiteMember {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1494,8 +1491,6 @@ definition {
 	@description = "This is a test for LPS-136836. It checks that a guest cannot update comments in a file without permissions."
 	@priority = 3
 	test GuestCannotUpdateComments {
-		property testray.component.names = "Comment";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -2154,8 +2149,6 @@ definition {
 	@description = "This is a test for LPS-136849. It checks that a site member cannot update comments without permissions."
 	@priority = 3
 	test SiteMemberCannotUpdateComments {
-		property testray.component.names = "Comment";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

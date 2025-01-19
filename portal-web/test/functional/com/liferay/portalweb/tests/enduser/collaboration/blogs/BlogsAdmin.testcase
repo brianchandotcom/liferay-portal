@@ -33,7 +33,6 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property testray.component.names = "WYSIWYG";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

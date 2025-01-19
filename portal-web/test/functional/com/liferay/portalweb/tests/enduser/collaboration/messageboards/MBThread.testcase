@@ -93,8 +93,6 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddLinkToDocument {
-		property testray.component.names = "WYSIWYG";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -118,8 +116,6 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddLinkToPage {
-		property testray.component.names = "WYSIWYG";
-
 		MessageboardsThread.addCP(
 			displayText = "Link to Page",
 			displayTextWithLink = "true",

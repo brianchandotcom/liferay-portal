@@ -40,9 +40,6 @@ definition {
 	@priority = "4"
 	@simple-annotation
 	test AddBlogsEntries {
-		property testray.component.names = "Blogs";
-		property testray.main.component.name = "Blogs";
-
 		task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 Content'") {
 			Navigator.openURL();
 

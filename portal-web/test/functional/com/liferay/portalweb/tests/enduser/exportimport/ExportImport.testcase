@@ -534,7 +534,6 @@ definition {
 	test ExportImportJournalArticleWithLinkToPage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Web Content Administration";
 
 		task ("Given: User adds a new site and 3 page to it") {
 			HeadlessSite.addSite(siteName = "Site A");
@@ -676,7 +675,6 @@ definition {
 	test ExportImportLayoutCircularReference {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Page Administration,Web Content Administration";
 
 		task ("Given: User adds a new site and a page to it") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -972,7 +970,6 @@ definition {
 	@priority = 3
 	test ExportImportPrivatePage {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();
@@ -1337,7 +1334,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training";
 
 		task ("Given: User exports default site") {
 			LAR.exportSiteCP(siteScopeName = "Guest");
@@ -1457,7 +1453,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training";
 
 		task ("Given: User adds a new file and a blog entry") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

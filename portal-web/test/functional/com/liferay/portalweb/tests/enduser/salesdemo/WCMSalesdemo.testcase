@@ -15,7 +15,6 @@ definition {
 	@priority = 4
 	test SalesDemo {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Web Content Administration,Web Content Display";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 

@@ -11,7 +11,6 @@ definition {
 	property test.run.environment = "EE";
 	property test.run.type = "single";
 	property test.smtp.server.enabled = "true";
-	property testray.component.names = "Multi Factor Authentication";
 	property testray.main.component.name = "Upgrades Security";
 
 	setUp {

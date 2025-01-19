@@ -194,8 +194,6 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanRemoveSmallImage {
-		property testray.component.names = "WYSIWYG";
-
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");

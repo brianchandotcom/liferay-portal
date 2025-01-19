@@ -182,7 +182,6 @@ definition {
 	@refactordone
 	test CanAddCommentToDocument {
 		property portal.acceptance = "true";
-		property testray.component.names = "Comment";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -2503,8 +2502,6 @@ definition {
 	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
 	@priority = 4
 	test CannotUploadFileThatCausesOutOfMemoryErrors {
-		property testray.component.names = "Security";
-
 		task ("Add new document") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",

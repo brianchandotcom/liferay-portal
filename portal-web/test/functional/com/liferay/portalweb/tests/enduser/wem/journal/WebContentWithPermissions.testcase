@@ -18,7 +18,6 @@ definition {
 	test AddAndViewStructureAndTemplateWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property testray.component.names = "Permissions,Roles,Training,Web Content Administration";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -281,7 +280,6 @@ definition {
 	test AddWebContentRemoveGuestViewPermission {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Permissions,Web Content Administration";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -454,7 +452,6 @@ definition {
 	@priority = 4
 	test EditWebContentAsUserWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Permissions,Roles,Users and Organizations,Web Content Administration";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

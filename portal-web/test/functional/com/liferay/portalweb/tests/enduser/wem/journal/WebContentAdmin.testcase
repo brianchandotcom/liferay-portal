@@ -18,7 +18,6 @@ definition {
 	@priority = 5
 	test AddFolder {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -30,8 +29,6 @@ definition {
 	@description = "Test that the UI for adding a WC works."
 	@priority = 4
 	test AddWebContent {
-		property testray.component.names = "Web Content Administration";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -54,8 +51,6 @@ definition {
 	@description = "Test that the UI for saving a WC as a draft works."
 	@priority = 4
 	test AddWebContentDraft {
-		property testray.component.names = "Web Content Administration";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -81,8 +76,6 @@ definition {
 	@description = "Test that the UI for adding multiple WC works."
 	@priority = 3
 	test AddWebContentMultiple {
-		property testray.component.names = "Web Content Administration";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -664,8 +657,6 @@ definition {
 	@description = "Test that the UI for editing WC localization works."
 	@priority = 4
 	test EditWCAddLocalization {
-		property testray.component.names = "Localization,Web Content Administration";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
@@ -1804,8 +1795,6 @@ definition {
 	@description = "This is a test for LPS-153323 and LPS-155805. View kebab icon of web content visible and retainable."
 	@priority = 4
 	test ViewKebabIconOfWebContentVisible {
-		property testray.component.names = "Web Content Administration";
-
 		task ("Add a published web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

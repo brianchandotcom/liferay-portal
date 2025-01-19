@@ -6,7 +6,6 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Notification";
 	property testray.main.component.name = "Notifications";
 
 	setUp {

@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Web Content Administration";
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
@@ -39,8 +38,6 @@ definition {
 	@description = "Add a localized web content via Web Content Display widget."
 	@priority = 4
 	test AddLocalizedWebContent {
-		property testray.component.names = "Localization,Web Content Administration";
-
 		task ("Given a site designer has a page where a Web Content Display widget displays a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -479,8 +476,6 @@ definition {
 	@description = "View available locales in Web Content Display with translation tools."
 	@priority = 4
 	test ViewAvailableTranslations {
-		property testray.component.names = "Localization,Web Content Administration";
-
 		task ("Given a site designer has a page where a Web Content Display widget displays a web content with Translations tool") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -553,8 +548,6 @@ definition {
 	@description = "This is a use case for LPS-119020. Can add web content when the portal change the default language."
 	@priority = 4
 	test ViewChangedDefaultPortalLanguageViaWebContent {
-		property testray.component.names = "Localization,Web Content Administration";
-
 		task ("Given a site designer has web contents with and without translation") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 1",

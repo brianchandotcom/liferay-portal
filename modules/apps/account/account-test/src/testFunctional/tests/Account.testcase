@@ -217,8 +217,6 @@ definition {
 	@description = "This test adds an address to account and asserts this address is not shared across accounts"
 	@priority = 4
 	test AddressesAreAccountSpecific {
-		property testray.component.names = "Address";
-
 		for (var accountNumber : list "1,2") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account ${accountNumber}",
@@ -256,7 +254,6 @@ definition {
 	@priority = 4
 	test AddressesFilterCorrectlyDefaultAddress {
 		property portal.acceptance = "true";
-		property testray.component.names = "Address";
 
 		task ("Add account") {
 			JSONAccountEntry.addAccountEntry(
@@ -692,8 +689,6 @@ definition {
 	@description = "This test adds a new shipping address and billing address via Set Default Address. It asserts that these addresses are set by default after adding."
 	@priority = 4
 	test CanAddNewAddressViaSetDefaultAddress {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
 			accountEntryType = "Business");
@@ -1005,7 +1000,6 @@ definition {
 	@priority = 4
 	test CanChangeAddressType {
 		property portal.acceptance = "true";
-		property testray.component.names = "Address";
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Change Account Address Type",
@@ -1077,8 +1071,6 @@ definition {
 	@description = "This test adds more than 4 addresses to an account and asserts correct pagination in the address list."
 	@priority = 4
 	test CanChangePaginationInAddressesList {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
 			accountEntryType = "Business");
@@ -1515,8 +1507,6 @@ definition {
 	@description = "This test asserts address deletes successfully."
 	@priority = 4
 	test CanDeleteAddress {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Delete Address",
 			accountEntryType = "Business");
@@ -1565,8 +1555,6 @@ definition {
 	@description = "This test deletes multiple addresses via management toolbar"
 	@priority = 4
 	test CanDeleteAddressesInBulk {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
 			accountEntryType = "Business");
@@ -1696,8 +1684,6 @@ definition {
 	@description = "This test asserts that address fields are able to be added and edited."
 	@priority = 4
 	test CanEditAddressFields {
-		property testray.component.names = "Address";
-
 		task ("Add an inital account entry with city, country, postal code, region, and street.") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "CanEditAddressFields",
@@ -2117,8 +2103,6 @@ definition {
 	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."
 	@priority = 4
 	test CannotAddBillingAddressAsDefaultShipping {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account 1",
 			accountEntryType = "Business");
@@ -2165,8 +2149,6 @@ definition {
 	@description = "This asserts that filter in setting default billing will not change to shipping and that shipping addresses do not display as options."
 	@priority = 4
 	test CannotAddShippingAddressAsDefaultBilling {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account 1",
 			accountEntryType = "Business");
@@ -2357,8 +2339,6 @@ definition {
 	@description = "This test adds an address, sets it as default, and removes it as default"
 	@priority = 4
 	test CanRemoveAddressAsDefault {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Remove Address",
 			accountEntryType = "Business");
@@ -2791,8 +2771,6 @@ definition {
 	@description = "This test searches for an address in the addresses tab of an account."
 	@priority = 4
 	test CanSearchForAddressInAddressesTab {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Search Address",
 			accountEntryType = "Business");
@@ -3119,8 +3097,6 @@ definition {
 	@description = "This test sets default shipping and default billing addresses for an account."
 	@priority = 4
 	test CanSetDefaultAddresses {
-		property testray.component.names = "Address";
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with Default Address",
 			accountEntryType = "Business");
@@ -3457,8 +3433,6 @@ definition {
 	@description = "This test asserts that a user can filter addresses by billing type"
 	@priority = 4
 	test FilterAddressesByBillingType {
-		property testray.component.names = "Address";
-
 		task ("Add an account") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Accounts Name",
@@ -3507,8 +3481,6 @@ definition {
 	@description = "This test asserts that a user can filter addresses by shipping type"
 	@priority = 4
 	test FilterAddressesByShippingType {
-		property testray.component.names = "Address";
-
 		task ("Add an account") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Accounts Name",

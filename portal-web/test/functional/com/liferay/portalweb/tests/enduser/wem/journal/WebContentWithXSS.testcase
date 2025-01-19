@@ -65,8 +65,6 @@ definition {
 	@priority = 4
 	@uitest
 	test AddWebContentTitleEscapeCharacter {
-		property testray.component.names = "Web Content Administration,XSS";
-
 		task ("Add a web content with escape characters") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -100,8 +98,6 @@ definition {
 	@description = "Delete a web content with escape characters in web content admin."
 	@priority = 3
 	test DeleteWebContentTitleEscapeCharacter {
-		property testray.component.names = "Web Content Administration,XSS";
-
 		task ("Add a web content with escape characters") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

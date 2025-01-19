@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Web Content Administration";
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
@@ -40,7 +39,6 @@ definition {
 	@priority = 5
 	test AddLocalizedWebContentViaSourceEditor {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Given a site designer has a page with a Web Content Display and Language Selector widgets") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -138,7 +136,6 @@ definition {
 	@priority = 5
 	test AddWebContentWithSpanishTranslation {
 		property portal.acceptance = "true";
-		property testray.component.names = "Localization,Web Content Administration,WYSIWYG";
 
 		task ("Given the site designer has a page where a Web Content Display widget displays a translated web content") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -203,8 +200,6 @@ definition {
 	@description = "Validate translations in web content admin."
 	@priority = 4
 	test WebContentAdministrationLocalization {
-		property testray.component.names = "Localization,Web Content Administration";
-
 		task ("Given the site designer has a page where a Web Content Display widget displays a web content based on translated structure and template") {
 			task ("Add a Web Content Display and Language Selector widget to page") {
 				JSONLayout.addWidgetToPublicLayout(

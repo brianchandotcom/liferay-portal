@@ -199,7 +199,6 @@ definition {
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
 		property osgi.module.configurations = "exportDraftLayout=\"true\"";
-		property testray.component.names = "Training";
 
 		task ("Given: User add a new site template") {
 			SiteTemplates.addCP(

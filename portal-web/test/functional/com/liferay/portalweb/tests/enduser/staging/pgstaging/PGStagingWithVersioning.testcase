@@ -70,7 +70,6 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.names = "Training";
 
 		task ("Given: I add the page variation") {
 			Staging.addPageVariationPG(pageVariationName = "Page Variation Name");

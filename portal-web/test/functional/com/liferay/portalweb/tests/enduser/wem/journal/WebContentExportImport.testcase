@@ -18,7 +18,6 @@ definition {
 	@priority = 5
 	test AddCreatedStructureForImportedTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		HeadlessSite.addSite(siteName = "Site Name 2");
 
@@ -517,8 +516,6 @@ definition {
 
 	@priority = 4
 	test ExportLARWithNestedWebContent {
-		property testray.component.names = "Web Content Administration";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -633,7 +630,6 @@ definition {
 	@priority = 5
 	test ImportAndUseGlobalStructureAndTemplate {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		HeadlessSite.addSite(siteName = "Site Name 2");
 
@@ -731,8 +727,6 @@ definition {
 
 	@priority = 4
 	test ImportLAR {
-		property testray.component.names = "Web Content Administration";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -801,8 +795,6 @@ definition {
 
 	@priority = 4
 	test ImportLARLinkToPageValidation {
-		property testray.component.names = "Web Content Administration";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
@@ -858,8 +850,6 @@ definition {
 	@description = "This is a use case for LPS-88893."
 	@priority = 3
 	test ImportLARWithTheSameTitle {
-		property testray.component.names = "Training";
-
 		HeadlessSite.addSite(siteName = "Site Name 1");
 
 		JSONWebcontent.addWebContent(

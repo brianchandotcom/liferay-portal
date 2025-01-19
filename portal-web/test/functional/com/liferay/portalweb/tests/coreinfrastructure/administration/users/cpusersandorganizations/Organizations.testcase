@@ -31,8 +31,6 @@ definition {
 	@description = "This test adds five suborganizations to an organization"
 	@priority = 4
 	test AddMultipleSuborganizations {
-		property testray.component.names = "Training";
-
 		JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 		var count = 1;
@@ -69,8 +67,6 @@ definition {
 
 	@priority = 4
 	test AddOrganization {
-		property testray.component.names = "Training";
-
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		Organization.openOrganizationsAdmin();
@@ -215,8 +211,6 @@ definition {
 
 	@priority = 4
 	test AddOrganizationSitePrivatePage {
-		property testray.component.names = "Training";
-
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();
 		}
@@ -281,7 +275,6 @@ definition {
 	@priority = 4
 	test AddSuborganization {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -319,7 +312,6 @@ definition {
 		property liferay.training.dependency.jars = "01-liferay-fundamentals/modules/02-manage-user-accounts/exercise-src/com.liferay.training.contentloader.jar";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -399,8 +391,6 @@ definition {
 	@description = "Assign multiple members to an organization and searches for them under assignees"
 	@priority = 4
 	test AssignMultipleUsersToOrganization {
-		property testray.component.names = "Training";
-
 		var count = 1;
 
 		while (${count} != 6) {
@@ -844,7 +834,6 @@ definition {
 	@priority = 4
 	test EditOrganizationSite {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training";
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 

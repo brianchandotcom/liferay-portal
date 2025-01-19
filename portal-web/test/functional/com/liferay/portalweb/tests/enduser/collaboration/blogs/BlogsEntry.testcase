@@ -107,8 +107,6 @@ definition {
 	@priority = 5
 	@refactorneeded
 	test AddBlogWithFormatting {
-		property testray.component.names = "Training,WYSIWYG";
-
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsNavigator.gotoSelectFile();
@@ -386,8 +384,6 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddWithEmbeddedVideo {
-		property testray.component.names = "WYSIWYG";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
@@ -1346,8 +1342,6 @@ definition {
 		task ("Enable dynamic and manual selection") {
 			AssetPublisherPortlet.enableDynamicAndManualSelection();
 		}
-
-		property testray.component.names = "Security";
 
 		var entryAbstractDescription = '''<script>alert(123)</script>''';
 

@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Web Content Administration";
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
@@ -1270,7 +1269,6 @@ definition {
 	@priority = 5
 	test EditWebContentTitleWithEmptyFields {
 		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Add a web content structure with custom fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

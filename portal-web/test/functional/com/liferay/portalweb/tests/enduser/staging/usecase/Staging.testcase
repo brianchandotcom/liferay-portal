@@ -908,7 +908,6 @@ definition {
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.name = "Data Engine";
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1539,7 +1538,6 @@ definition {
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
-		property testray.component.name = "Data Engine";
 
 		HeadlessSite.addSite(
 			parentSiteName = "Site Name",

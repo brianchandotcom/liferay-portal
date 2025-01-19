@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {format} from 'date-fns';
 import React, {ReactNode, useMemo, useState} from 'react';
 
 import {MarketplaceView, useMarketplaceContext} from '../MarketplaceContext';
@@ -62,10 +61,11 @@ export function MarketplaceStorefront({
 			},
 			{
 				title: Liferay.Language.get('published-date'),
-				value: format(
-					new Date(marketplaceProduct.createDate),
-					'MMM dd, yyyy'
-				),
+				value: new Intl.DateTimeFormat('en-US', {
+					day: '2-digit',
+					month: 'short',
+					year: 'numeric',
+				}).format(new Date(marketplaceProduct.createDate)),
 			},
 			{
 				title: Liferay.Language.get('supported-offerings'),

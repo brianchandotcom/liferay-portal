@@ -13,7 +13,6 @@
 		"@clayui/pagination": "3.124.0",
 		"@clayui/pagination-bar": "3.124.0",
 		"classnames": "2.3.1",
-		"date-fns": "^2.29.3",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

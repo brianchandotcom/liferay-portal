@@ -1,4 +1,4 @@
-@component-name = "portal-clustering"
+@component-name = "portal-core-infra"
 definition {
 
 	property cluster.enabled = "true";

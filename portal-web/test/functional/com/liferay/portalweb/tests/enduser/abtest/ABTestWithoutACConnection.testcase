@@ -1,4 +1,4 @@
-@component-name = "portal-ab-test"
+@component-name = "portal-analytics-cloud"
 definition {
 
 	property analytics.cloud.release = "true";

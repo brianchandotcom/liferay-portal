@@ -111,7 +111,7 @@ writeReleases {
 
 		List<String> lines = []
 
-		(configurations.compileClasspath + configurations.compileInclude).each {
+		configurations.compileInclude.each {
 			JarFile jarFile = new JarFile(it)
 
 			Attributes mainAttributes = jarFile.manifest.mainAttributes

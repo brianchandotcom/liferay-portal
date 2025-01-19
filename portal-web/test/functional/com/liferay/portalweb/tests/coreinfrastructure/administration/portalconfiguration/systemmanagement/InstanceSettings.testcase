@@ -44,7 +44,6 @@ definition {
 	test AssertEmailVerificationIsRequiredByDefault {
 		property custom.properties = "company.security.strangers.verify=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
-		property testray.main.component.name = "Users and Organizations";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -120,8 +119,6 @@ definition {
 	@description = "This test asserts that a user can add additional mail host name."
 	@priority = 3
 	test CanAddAdditionalMailHostName {
-		property testray.main.component.name = "Notifications";
-
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
 			configurationName = "Mail Host Names",
@@ -236,7 +233,6 @@ definition {
 	@priority = 3
 	test CanChangeTheTermsOfUseNotRequired {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.main.component.name = "Users and Organizations";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
@@ -418,8 +414,6 @@ definition {
 	@description = "This test asserts that a user can delete site logo via portal setting."
 	@priority = 3
 	test CanDeleteSiteLogoViaAppearance {
-		property testray.main.component.name = "Sites Administration";
-
 		Page.viewDefaultLogoPG();
 
 		PortalSettings.gotoConfiguration(
@@ -470,7 +464,6 @@ definition {
 	test CanDisabledAccountCreatedNotification {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
-		property testray.main.component.name = "Notifications";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -504,8 +497,6 @@ definition {
 	@description = "This test asserts that a user can disable site admin to use their own logo."
 	@priority = 3
 	test CanDisableSiteAdminToUseTheirOwnLogo {
-		property testray.main.component.name = "Sites Administration";
-
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "Appearance",
@@ -617,7 +608,6 @@ definition {
 	@priority = 3
 	test CanSpecifyTheTermsofUseWebContent {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.main.component.name = "Users and Organizations";
 
 		HeadlessSite.addSite(siteName = "Terms of Use Site");
 
@@ -896,8 +886,6 @@ definition {
 
 	@priority = 4
 	test EditDefaultUserAssociationsSites {
-		property testray.main.component.name = "Users and Organizations";
-
 		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
@@ -1264,8 +1252,6 @@ definition {
 
 	@priority = 3
 	test ViewEmailNotificationsAccountCreatedNotification {
-		property testray.main.component.name = "Notifications";
-
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
@@ -1273,8 +1259,6 @@ definition {
 
 	@priority = 3
 	test ViewEmailNotificationsSender {
-		property testray.main.component.name = "Notifications";
-
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsSenderCP();

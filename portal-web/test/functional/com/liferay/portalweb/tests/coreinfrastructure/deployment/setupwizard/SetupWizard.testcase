@@ -13,7 +13,6 @@ definition {
 		property custom.properties = "passwords.default.policy.change.required=true${line.separator}setup.wizard.enabled=false";
 		property database.types = "mysql";
 		property test.prepare.bundle.properties = "true";
-		property testray.main.component.name = "Users and Organizations";
 
 		task ("When an admin logs in with Setup Wizard disabled") {
 			Navigator.openURL();

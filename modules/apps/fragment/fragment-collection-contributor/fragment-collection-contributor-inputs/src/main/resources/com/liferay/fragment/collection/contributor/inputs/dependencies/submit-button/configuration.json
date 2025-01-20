@@ -29,6 +29,12 @@
 					"name": "submittedEntryStatus",
 					"type": "select",
 					"typeOptions": {
+						"dependency": {
+							"type": {
+								"type": "equal",
+								"value": "submit"
+							}
+						},
 						"validValues": [
 							{
 								"label": "approved",

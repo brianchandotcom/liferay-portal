@@ -81,7 +81,7 @@ definition {
 				type = "content");
 		}
 
-		task ("Add a Banner Center fragment to page") {
+		task ("Add a heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
@@ -155,7 +155,7 @@ definition {
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -225,7 +225,7 @@ definition {
 				value1 = "rgba(11, 95, 255, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -335,7 +335,7 @@ definition {
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -391,7 +391,7 @@ definition {
 				value1 = "rgba(11, 95, 255, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -594,7 +594,7 @@ definition {
 				type = "content");
 		}
 
-		task ("Add a Banner Center to page") {
+		task ("Add a Heading to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
@@ -632,7 +632,7 @@ definition {
 				value1 = "rgba(255, 0, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -694,7 +694,7 @@ definition {
 				type = "content");
 		}
 
-		task ("Add a Banner Center to page") {
+		task ("Add a Basic Components to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
@@ -754,7 +754,7 @@ definition {
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -784,7 +784,7 @@ definition {
 				value1 = "rgba(0, 255, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",
@@ -847,7 +847,7 @@ definition {
 				value1 = "rgba(255, 0, 0, 1)");
 
 			AssertCssValue(
-				key_content = "Banner Title Example",
+				key_content = "Heading Example",
 				key_element = "h1",
 				key_id = "element-text",
 				key_type = "text",

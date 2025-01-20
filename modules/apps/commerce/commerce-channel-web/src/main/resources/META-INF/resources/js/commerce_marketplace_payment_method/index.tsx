@@ -31,12 +31,6 @@ function MarketplaceViews() {
 		view,
 	} = useMarketplaceContext();
 
-	const onClickPurchase = (product: Product) => {
-		setProduct(product);
-
-		setView(MarketplaceView.PURCHASE);
-	};
-
 	async function onClickInstall() {
 		setState(States.IN_PROGRESS);
 
@@ -57,11 +51,21 @@ function MarketplaceViews() {
 	return (
 		<>
 			{view === MarketplaceView.PRODUCTS && (
-				<Marketplace.Products onClickProduct={onClickPurchase}>
+				<Marketplace.Products
+					onClickProduct={(product) => {
+						setProduct(product);
+
+						setView(MarketplaceView.STOREFRONT);
+					}}
+				>
 					{(product) => (
 						<ClayButton
 							className="w-100"
-							onClick={() => onClickPurchase(product)}
+							onClick={() => {
+								setProduct(product);
+
+								setView(MarketplaceView.PURCHASE);
+							}}
 						>
 							{Liferay.Language.get('install')}
 						</ClayButton>

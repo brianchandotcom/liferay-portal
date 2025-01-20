@@ -124,18 +124,19 @@ export function MarketplaceContextProvider({
 		setLoading(true);
 
 		const urlSearchParams = new URLSearchParams({
-			accountId: '-1',
-			filter: getProductFilter(
+			'accountId': '-1',
+			'attachments.accountId': '-1',
+			'filter': getProductFilter(
 				marketplaceRest.settings.references,
 				settings
 			),
-			images: 'accountId=-1',
-			nestedFields: 'productSpecifications,skus,categories,images',
-			page: String(productSearchParams.page),
-			pageSize: String(productSearchParams.pageSize),
-			search: productSearchParams.search,
-			skus: 'accountId=-1',
-			sort: `name:${productSearchParams.sort}`,
+			'images.accountId': '-1',
+			'nestedFields': 'productSpecifications,skus,categories,images',
+			'page': String(productSearchParams.page),
+			'pageSize': String(productSearchParams.pageSize),
+			'search': productSearchParams.search,
+			'skus.accountId': '-1',
+			'sort': `name:${productSearchParams.sort}`,
 		});
 
 		marketplaceRest

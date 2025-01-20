@@ -33,6 +33,9 @@ export class MarketplaceRest {
 		const response = await this.fetchMarketplaceService(
 			`/dxp/provisioning/${cart.id}`,
 			{
+				body: JSON.stringify({
+					projectId: this.settings.cloudProject,
+				}),
 				method: 'POST',
 			}
 		);

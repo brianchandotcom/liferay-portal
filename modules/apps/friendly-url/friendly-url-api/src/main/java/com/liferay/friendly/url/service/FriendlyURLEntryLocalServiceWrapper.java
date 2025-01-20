@@ -117,6 +117,12 @@ public class FriendlyURLEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public void deleteFriendlyURLEntries(long companyId, long classNameId) {
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntries(
+			companyId, classNameId);
+	}
+
 	/**
 	 * Deletes the friendly url entry from the database. Also notifies the appropriate model listeners.
 	 *

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -35,6 +36,7 @@ import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	applicationsMenuPageTest,
 	collectionsPagesTest,
 	featureFlagsTest({
@@ -645,7 +647,26 @@ test.describe('Fragments Panel', () => {
 			title: getRandomString(),
 		});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user1 = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: company.companyId,
+					resourceName: 'com.liferay.portal.kernel.model.Layout',
+					scope: 1,
+				},
+			],
+		});
+
+		apiHelpers.data.push({id: user1.id, type: 'userAccount'});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath, user1.id);
 
 		// Open the "Fragments and Widgets" and get the first set of fragments
 
@@ -709,7 +730,7 @@ test.describe('Fragments Panel', () => {
 
 		// Refresh the page and check that order is maintained
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath, user1.id);
 
 		await expect(fragmentSets.nth(2)).toContainText(firstFragmentSet);
 
@@ -724,7 +745,7 @@ test.describe('Fragments Panel', () => {
 			title: getRandomString(),
 		});
 
-		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath, user1.id);
 
 		await widgetPagePage.openAddPanel();
 
@@ -736,12 +757,7 @@ test.describe('Fragments Panel', () => {
 
 		// Check that a new user with update permissions cannot see the changes
 
-		const company =
-			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-				'liferay.com'
-			);
-
-		const user = await createUserWithPermissions({
+		const user2 = await createUserWithPermissions({
 			apiHelpers,
 			rolePermissions: [
 				{
@@ -753,9 +769,9 @@ test.describe('Fragments Panel', () => {
 			],
 		});
 
-		await performUserSwitch(page, user.alternateName);
+		apiHelpers.data.push({id: user2.id, type: 'userAccount'});
 
-		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath, user2.id);
 
 		await widgetPagePage.openAddPanel();
 

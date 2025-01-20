@@ -6,6 +6,7 @@
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import {
 	Alignment,
+	BlockQuote,
 	Bold,
 	ClassicEditor as BaseClassicEditor,
 	EditorConfig,
@@ -20,6 +21,7 @@ import {
 	MediaEmbed,
 	Paragraph,
 	RemoveFormat,
+	SourceEditing,
 	Strikethrough,
 	Table,
 	TableCaption,
@@ -33,6 +35,7 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 	const defaultConfig: EditorConfig = {
 		plugins: [
 			Alignment,
+			BlockQuote,
 			Bold,
 			Essentials,
 			Font,
@@ -45,6 +48,7 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 			MediaEmbed,
 			Paragraph,
 			RemoveFormat,
+			SourceEditing,
 			Strikethrough,
 			Table,
 			TableCaption,

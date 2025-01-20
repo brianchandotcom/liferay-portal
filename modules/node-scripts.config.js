@@ -196,6 +196,7 @@ module.exports = {
 		'axe-core': ['*', 'default'],
 		'ckeditor5': [
 			'Alignment',
+			'BlockQuote',
 			'Bold',
 			'ClassicEditor',
 			'EditorConfig',
@@ -211,6 +212,7 @@ module.exports = {
 			'MediaEmbed',
 			'Paragraph',
 			'RemoveFormat',
+			'SourceEditing',
 			'Strikethrough',
 			'Table',
 			'TableCaption',

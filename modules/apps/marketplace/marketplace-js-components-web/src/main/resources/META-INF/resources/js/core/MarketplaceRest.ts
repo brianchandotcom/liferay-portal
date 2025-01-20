@@ -30,14 +30,12 @@ export class MarketplaceRest {
 	) {}
 
 	public async consoleProvisioningOrder(cart: Cart) {
-		const response = await this.fetchMarketplaceService(
-			`/dxp/provisioning/${cart.id}`,
-			{
-				method: 'POST',
-			}
-		);
-
-		return response.json();
+		return this.fetchMarketplaceService(`/dxp/provisioning/${cart.id}`, {
+			body: JSON.stringify({
+				projectId: this.settings.cloudProject,
+			}),
+			method: 'POST',
+		});
 	}
 
 	public async createCart(product: Product) {

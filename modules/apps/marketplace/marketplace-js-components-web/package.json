@@ -1,0 +1,29 @@
+{
+	"dependencies": {
+		"@clayui/alert": "3.111.0",
+		"@clayui/button": "3.116.0",
+		"@clayui/card": "3.124.0",
+		"@clayui/drop-down": "3.124.0",
+		"@clayui/empty-state": "3.116.0",
+		"@clayui/form": "3.122.0",
+		"@clayui/icon": "3.111.0",
+		"@clayui/loading-indicator": "3.111.0",
+		"@clayui/management-toolbar": "3.111.0",
+		"@clayui/modal": "3.122.0",
+		"@clayui/pagination": "3.124.0",
+		"@clayui/pagination-bar": "3.124.0",
+		"classnames": "2.3.1",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"main": "js/index.ts",
+	"name": "@liferay/marketplace-js-components-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
+		"test": "node-scripts test"
+	},
+	"version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Marketplace JS Components Web
+Bundle-SymbolicName: com.liferay.marketplace.js.components.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /marketplace-js-components-web
+-dsannotations-options: inherit

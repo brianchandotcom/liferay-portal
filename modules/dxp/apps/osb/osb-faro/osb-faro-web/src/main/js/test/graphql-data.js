@@ -1433,6 +1433,7 @@ export function mockEventAnalysisReq() {
 						eventDefinition: {
 							__typename: 'EventDefinition',
 							description: null,
+							displayName: 'assetClicked',
 							hidden: false,
 							id: '1',
 							name: 'assetClicked',

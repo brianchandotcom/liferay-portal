@@ -74,8 +74,8 @@ public class DefaultCommerceOrderValidatorImpl
 					locale, "this-order-has-already-been-checked-out", null));
 		}
 
-		CPDefinitionInventoryEngine cpDefinitionInventoryEngine = null;
 		long cpConfigurationListId = 0;
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
 			CommerceChannel commerceChannel =
@@ -182,8 +182,8 @@ public class DefaultCommerceOrderValidatorImpl
 		}
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-		CPDefinitionInventoryEngine cpDefinitionInventoryEngine = null;
 		long cpConfigurationListId = 0;
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
 			CommerceChannel commerceChannel =

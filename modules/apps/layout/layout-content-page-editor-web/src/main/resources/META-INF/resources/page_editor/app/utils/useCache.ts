@@ -6,6 +6,7 @@
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback, useEffect, useState} from 'react';
+import {flushSync} from 'react-dom';
 
 import {
 	CACHE_STATUS,
@@ -60,7 +61,9 @@ export default function useCache<T>({
 						});
 					}
 
-					triggerRender();
+					flushSync(() => {
+						triggerRender();
+					});
 				})
 				.catch(() => deleteCacheItem(cacheKey));
 		}

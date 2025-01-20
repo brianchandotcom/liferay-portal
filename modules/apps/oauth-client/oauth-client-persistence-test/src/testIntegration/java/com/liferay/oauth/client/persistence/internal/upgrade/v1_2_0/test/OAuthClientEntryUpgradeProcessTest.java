@@ -52,7 +52,8 @@ public class OAuthClientEntryUpgradeProcessTest {
 			"com.liferay.portal.security.sso.openid.connect.internal." +
 				"configuration.OpenIdConnectProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
-				"discoveryEndPoint", _AUTH_SERVER_WELL_KNOWN_URI
+				"discoveryEndPoint",
+				"https://accounts.google.com/.well-known/openid-configuration"
 			).put(
 				"discoveryEndpointCacheInMillis", discoveryEndpointCacheInMillis
 			).put(
@@ -68,12 +69,15 @@ public class OAuthClientEntryUpgradeProcessTest {
 		try {
 			OAuthClientEntry oAuthClientEntry1 =
 				_oAuthClientEntryLocalService.getOAuthClientEntry(
-					TestPropsValues.getCompanyId(), _AUTH_SERVER_WELL_KNOWN_URI,
+					TestPropsValues.getCompanyId(),
+					"https://accounts.google.com/.well-known" +
+						"/openid-configuration",
 					openIdConnectClientId);
 			OAuthClientEntry oAuthClientEntry2 =
 				_oAuthClientEntryLocalService.addOAuthClientEntry(
 					TestPropsValues.getUserId(), StringPool.BLANK,
-					_AUTH_SERVER_WELL_KNOWN_URI,
+					"https://accounts.google.com/.well-known" +
+						"/openid-configuration",
 					JSONUtil.put(
 						"client_id", RandomTestUtil.randomString()
 					).put(
@@ -141,9 +145,6 @@ public class OAuthClientEntryUpgradeProcessTest {
 
 		OAuthClientEntryUtil.clearCache();
 	}
-
-	private static final String _AUTH_SERVER_WELL_KNOWN_URI =
-		"https://accounts.google.com/.well-known/openid-configuration";
 
 	@Inject
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

@@ -37,10 +37,11 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	}
 
 	@Override
-	public CaptchaConfiguration getCaptchaConfiguration() throws ConfigurationException {
+	public CaptchaConfiguration getCaptchaConfiguration()
+		throws ConfigurationException {
+
 		return ConfigurationProviderUtil.getCompanyConfiguration(
-				CaptchaConfiguration.class,
-				CompanyThreadLocal.getCompanyId());
+			CaptchaConfiguration.class, CompanyThreadLocal.getCompanyId());
 	}
 
 	@Activate

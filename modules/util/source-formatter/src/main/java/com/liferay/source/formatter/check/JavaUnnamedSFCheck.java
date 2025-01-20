@@ -193,7 +193,7 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 						break;
 					}
 
-					List<String> primaryKeys = _getPrimaryKeys(tableContent);
+					List<String> primaryKeys = getPrimaryKeys(tableContent);
 
 					if (!primaryKeys.isEmpty()) {
 						_entityIds.add(primaryKeys.get(0));
@@ -205,34 +205,6 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 		}
 
 		return _entityIds;
-	}
-
-	private List<String> _getPrimaryKeys(String tableContent) {
-		List<String> primaryKeys = new ArrayList<>();
-
-		for (String line : StringUtil.splitLines(tableContent)) {
-			String trimmedLine = StringUtil.trimLeading(line);
-
-			if (!trimmedLine.contains("primary key")) {
-				continue;
-			}
-
-			if (trimmedLine.startsWith("primary key")) {
-				String keys = trimmedLine.replaceFirst(
-					"primary key \\((.+)\\)", "$1");
-
-				for (String key : StringUtil.split(keys)) {
-					primaryKeys.add(key.trim());
-				}
-			}
-			else if (trimmedLine.matches("(\\w+) .+ primary key,?")) {
-				int x = trimmedLine.indexOf(" ");
-
-				primaryKeys.add(trimmedLine.substring(0, x));
-			}
-		}
-
-		return primaryKeys;
 	}
 
 	private static final Pattern _createTablePattern = Pattern.compile(

@@ -40,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -588,6 +589,34 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return null;
+	}
+
+	protected List<String> getPrimaryKeys(String tableContent) {
+		List<String> primaryKeys = new ArrayList<>();
+
+		for (String line : StringUtil.splitLines(tableContent)) {
+			String trimmedLine = StringUtil.trimLeading(line);
+
+			if (!trimmedLine.contains("primary key")) {
+				continue;
+			}
+
+			if (trimmedLine.startsWith("primary key")) {
+				String keys = trimmedLine.replaceFirst(
+					"primary key \\((.+)\\)", "$1");
+
+				for (String key : StringUtil.split(keys)) {
+					primaryKeys.add(key.trim());
+				}
+			}
+			else if (trimmedLine.matches("(\\w+) .+ primary key,?")) {
+				int x = trimmedLine.indexOf(" ");
+
+				primaryKeys.add(trimmedLine.substring(0, x));
+			}
+		}
+
+		return primaryKeys;
 	}
 
 	protected String getProjectName() {

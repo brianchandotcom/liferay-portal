@@ -43,6 +43,5 @@ patch {
 	}
 
 	fileNames "com/sun/xml/bind/v2/model/nav/ReflectionNavigator.java"
-
 	originalLibModuleName = "jaxb-runtime"
 }

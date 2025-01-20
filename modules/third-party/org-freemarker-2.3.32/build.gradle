@@ -32,6 +32,5 @@ patch {
 	fileNames "**/freemarker/log/_Log4jLoggerFactory.java"
 	fileNames "**/freemarker/log/_Log4jOverSLF4JTester.java"
 	fileNames "**/freemarker/log/Logger.java"
-
 	originalLibModuleName = "freemarker"
 }

@@ -27,6 +27,5 @@ patch {
 	fileNames "**/freemarker/core/TextBlock.java"
 	fileNames "**/freemarker/ext/jsp/JspWriterAdapter.java"
 	fileNames "**/freemarker/ext/jsp/TagTransformModel.java"
-
 	originalLibModuleName = "freemarker"
 }

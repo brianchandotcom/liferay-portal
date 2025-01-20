@@ -36,6 +36,5 @@ patch {
 	}
 
 	fileNames "org/apache/commons/configuration/PropertiesConfiguration.java"
-
 	originalLibModuleName = "commons-configuration"
 }

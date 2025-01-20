@@ -26,6 +26,5 @@ patch {
 	fileNames "org/apache/velocity/runtime/log/SimpleLog4JLogSystem.java"
 	fileNames "org/apache/velocity/runtime/parser/node/ASTText.java"
 	fileNames "org/apache/velocity/util/introspection/SecureIntrospectorImpl.java"
-
 	originalLibModuleName = "velocity"
 }

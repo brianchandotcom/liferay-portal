@@ -20,6 +20,5 @@ patch {
 	}
 
 	fileNames "org/apache/aries/component/dsl/OSGi.java"
-
 	originalLibModuleName = "org.apache.aries.component-dsl.component-dsl"
 }

@@ -22,7 +22,6 @@ patch {
 
 	fileNames "**/name/pachler/nio/file/impl/BSDPathWatchService.java"
 	fileNames "**/name/pachler/nio/file/impl/LinuxPathWatchService.java"
-
 	originalLibModuleName = "jpathwatch"
 	originalLibSrcDirName = "jpathwatch-java/src"
 }

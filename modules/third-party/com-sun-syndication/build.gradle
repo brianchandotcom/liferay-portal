@@ -24,6 +24,5 @@ patch {
 	fileNames "com/sun/syndication/io/WireFeedOutput.java"
 	fileNames "com/sun/syndication/io/impl/PluginManager.java"
 	fileNames "com/sun/syndication/io/impl/PropertiesLoader.java"
-
 	originalLibModuleName = "rome"
 }

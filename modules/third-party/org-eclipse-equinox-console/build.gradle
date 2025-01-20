@@ -21,6 +21,5 @@ patch {
 	}
 
 	fileNames "org/eclipse/equinox/console/commands/DisconnectCommand.java"
-
 	originalLibModuleName = "org.eclipse.equinox.console"
 }

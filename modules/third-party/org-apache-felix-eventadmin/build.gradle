@@ -20,6 +20,5 @@ patch {
 	}
 
 	fileNames "org/apache/felix/eventadmin/impl/MetaTypeProviderImpl.java"
-
 	originalLibModuleName = "org.apache.felix.eventadmin"
 }

@@ -22,7 +22,6 @@ patch {
 	fileNames "aQute/bnd/classfile/ConstantPool.java"
 	fileNames "aQute/bnd/osgi/Analyzer.java"
 	fileNames "aQute/bnd/osgi/Jar.java"
-
 	originalLibModuleName = "biz.aQute.bndlib"
 	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/com/liferay/"
 }

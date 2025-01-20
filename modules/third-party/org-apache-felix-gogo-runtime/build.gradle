@@ -24,6 +24,5 @@ patch {
 	}
 
 	fileNames "org/apache/felix/gogo/runtime/threadio/ThreadIOImpl.java"
-
 	originalLibModuleName = "org.apache.felix.gogo.runtime"
 }

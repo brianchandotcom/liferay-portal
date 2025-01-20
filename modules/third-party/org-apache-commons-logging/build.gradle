@@ -39,6 +39,5 @@ patch {
 
 	fileNames "org/apache/commons/logging/LogSource.java"
 	fileNames "org/apache/commons/logging/impl/Log4JLogger.java"
-
 	originalLibModuleName = "commons-logging"
 }

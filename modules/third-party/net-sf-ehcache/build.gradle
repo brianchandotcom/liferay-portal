@@ -28,9 +28,7 @@ jarPatched {
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
-
 	exclude "rest-management-private-classpath/**"
-
 	from sourceSets.main.output
 
 	from {
@@ -55,6 +53,5 @@ patch {
 	}
 
 	fileNames "net/sf/ehcache/CacheManager.java"
-
 	originalLibModuleName = "ehcache"
 }

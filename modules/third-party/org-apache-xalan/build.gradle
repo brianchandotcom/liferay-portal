@@ -32,6 +32,5 @@ patch {
 
 	fileNames "org/apache/bcel/classfile/ConstantPool.java"
 	fileNames "org/apache/bcel/generic/ConstantPoolGen.java"
-
 	originalLibModuleName = "xalan"
 }

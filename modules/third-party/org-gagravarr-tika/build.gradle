@@ -37,6 +37,5 @@ patch {
 	}
 
 	fileNames "org/gagravarr/tika/OggAudioParser.java"
-
 	originalLibModuleName = "vorbis-java-tika"
 }

@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "org/apache/cxf/jaxrs/json/basic/JsonMapObjectReaderWriter.java"
-
 	originalLibModuleName = "cxf-rt-rs-json-basic"
 }

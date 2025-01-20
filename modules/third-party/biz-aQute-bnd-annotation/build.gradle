@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "aQute/bnd/annotation/metatype/Configurable.java"
-
 	originalLibModuleName = "biz.aQute.bnd.annotation"
 }

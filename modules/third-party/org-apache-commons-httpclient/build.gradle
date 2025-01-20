@@ -21,6 +21,5 @@ patch {
 	}
 
 	fileNames "org/apache/commons/httpclient/protocol/SSLProtocolSocketFactory.java"
-
 	originalLibModuleName = "commons-httpclient"
 }

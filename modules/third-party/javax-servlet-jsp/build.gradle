@@ -32,6 +32,5 @@ patch {
 	fileNames "**/org/apache/jasper/runtime/JspWriterImpl.java"
 	fileNames "**/org/apache/jasper/runtime/PageContextImpl.java"
 	fileNames "**/org/apache/jasper/runtime/TldScanner.java"
-
 	originalLibModuleName = "javax.servlet.jsp"
 }

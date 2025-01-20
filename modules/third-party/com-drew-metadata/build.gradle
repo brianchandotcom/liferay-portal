@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "com/drew/imaging/png/PngMetadataReader.java"
-
 	originalLibModuleName = "metadata-extractor"
 }

@@ -31,7 +31,6 @@ jarPatched {
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
-
 	from sourceSets.main.output
 
 	from {
@@ -69,7 +68,6 @@ patch {
 	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java"
-
 	originalLibModuleName = "org.eclipse.equinox.http.servlet"
 	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/com/liferay/"
 }

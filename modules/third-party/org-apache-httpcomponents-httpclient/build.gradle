@@ -22,6 +22,5 @@ patch {
 
 	fileNames "org/apache/http/conn/ssl/AbstractVerifier.java"
 	fileNames "org/apache/http/conn/ssl/SSLSocketFactory.java"
-
 	originalLibModuleName = "httpclient"
 }

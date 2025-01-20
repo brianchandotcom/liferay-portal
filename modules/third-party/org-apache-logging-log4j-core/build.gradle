@@ -22,9 +22,7 @@ jarPatched {
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
-
 	exclude "META-INF/versions/9/org/apache/logging/log4j/core/util/SystemClock.class"
-
 	from sourceSets.main.output
 
 	from {

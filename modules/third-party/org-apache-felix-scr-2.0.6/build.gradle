@@ -22,6 +22,5 @@ patch {
 	fileNames "org/apache/felix/scr/impl/BundleComponentActivator.java"
 	fileNames "org/apache/felix/scr/impl/manager/DependencyManager.java"
 	fileNames "org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java"
-
 	originalLibModuleName = "org.apache.felix.scr"
 }

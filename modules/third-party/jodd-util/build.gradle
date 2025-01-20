@@ -20,6 +20,5 @@ patch {
 	fileNames "jodd/introspector/Fields.java"
 	fileNames "jodd/introspector/Methods.java"
 	fileNames "jodd/util/BCrypt.java"
-
 	originalLibModuleName = "jodd-util"
 }

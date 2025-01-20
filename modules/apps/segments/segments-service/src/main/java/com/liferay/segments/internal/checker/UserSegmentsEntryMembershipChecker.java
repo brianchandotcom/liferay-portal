@@ -102,15 +102,13 @@ public class UserSegmentsEntryMembershipChecker {
 			String filterString, Map<String, Object> userAttributes)
 		throws Exception {
 
-		String parsedFilterString = _processOperations(
+		String parsedFilterString = _processContainsOperations(
 			filterString, userAttributes);
 
-		parsedFilterString = _processContainsOperations(
-			parsedFilterString, userAttributes);
-
 		parsedFilterString = _processLogicalOperations(parsedFilterString);
-
 		parsedFilterString = _processNotOperations(parsedFilterString);
+		parsedFilterString = _processOperations(
+			parsedFilterString, userAttributes);
 
 		return String.format(
 			"def evaluate() { return %s }", parsedFilterString);

@@ -99,8 +99,6 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			httpServletRequest.setAttribute(
 				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, sb.toString());
 
-			addRedirect(httpServletRequest);
-
 			String[] credentials = new String[3];
 
 			credentials[0] = String.valueOf(user.getUserId());

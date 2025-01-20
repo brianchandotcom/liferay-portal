@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "org/opensaml/messaging/context/MessageContext.java"
-
 	originalLibModuleName = "opensaml-messaging-api"
 }

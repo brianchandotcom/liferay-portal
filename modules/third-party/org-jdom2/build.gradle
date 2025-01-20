@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "org/jdom2/input/SAXBuilder.java"
-
 	originalLibModuleName = "jdom2"
 }

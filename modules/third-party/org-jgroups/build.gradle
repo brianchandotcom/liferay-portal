@@ -18,6 +18,5 @@ patch {
 	}
 
 	fileNames "org/jgroups/client/StompConnection.java"
-
 	originalLibModuleName = "jgroups"
 }

@@ -21,6 +21,5 @@ patch {
 	}
 
 	fileNames "org/mvel2/compiler/AbstractParser.java"
-
 	originalLibModuleName = "org.mvel2"
 }

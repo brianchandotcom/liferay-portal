@@ -148,6 +148,18 @@ public class VulcanBatchEnginePortletDataHandler
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
 				BatchEngineTaskOperation.CREATE.name(),
 				HashMapBuilder.<String, Serializable>put(
+					"batchRestrictFields",
+					() -> {
+						if (!MapUtil.getBoolean(
+								portletDataContext.getParameterMap(),
+								PortletDataHandlerKeys.PERMISSIONS)) {
+
+							return "permissions";
+						}
+
+						return null;
+					}
+				).put(
 					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
 				).build(),
 				_taskItemDelegateName));

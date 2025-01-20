@@ -3,16 +3,14 @@
 <#if currentURL?has_content>
 
 	<#assign 
-		url = currentURL 
-
-		firstSegment = url?split('/')[3]?split('\\?')[0] 
+		firstUrlSegment = currentURL?split('/')[3]?split('\\?')[0] 
 	/>
 
-	<#if firstSegment !="v">
+	<#if firstUrlSegment !="v">
 		<#assign searchTerm = "Capability" />
 	<#else>
 			<#assign 
-				taxonomyCategoryId = url?split("/v/")[1]?split("?")[0]
+				taxonomyCategoryId = currentURL?split("/v/")[1]?split("?")[0]
 
 				capabilityName=restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId}").name
 

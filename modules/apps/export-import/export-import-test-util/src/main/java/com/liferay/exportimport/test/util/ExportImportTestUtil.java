@@ -144,9 +144,9 @@ public class ExportImportTestUtil {
 
 				return;
 			}
-			catch (AssertionError ae) {
+			catch (AssertionError assertionError) {
 				if (System.currentTimeMillis() > deadline) {
-					throw ae;
+					throw assertionError;
 				}
 			}
 

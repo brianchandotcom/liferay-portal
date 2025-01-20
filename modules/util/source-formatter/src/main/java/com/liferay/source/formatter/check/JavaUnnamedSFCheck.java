@@ -18,7 +18,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -153,12 +152,6 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 	private synchronized List<String> _getEntityIds() throws Exception {
 		if (_entityIds != null) {
-			return _entityIds;
-		}
-
-		if (!isPortalSource()) {
-			_entityIds = Collections.emptyList();
-
 			return _entityIds;
 		}
 

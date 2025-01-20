@@ -337,6 +337,12 @@ public final class DLValidatorImpl implements DLValidator {
 			DLConfiguration.class, properties);
 	}
 
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
 	protected void setDLConfiguration(DLConfiguration dlConfiguration) {
 		_dlConfiguration = dlConfiguration;
 	}

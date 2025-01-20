@@ -116,7 +116,7 @@ public class SystemEventCheckTest {
 		return SystemEventLocalServiceUtil.addSystemEvent(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			Group.class.getName(), RandomTestUtil.nextLong(),
-			PortalUUIDUtil.generate(), StringPool.BLANK,
+			PortalUUIDUtil.generate(), StringPool.BLANK, StringPool.BLANK,
 			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 	}
 

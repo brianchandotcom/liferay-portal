@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -473,7 +472,7 @@ public class LayoutLocalServiceStagingAdvice {
 					_systemEventLocalService.addSystemEvent(
 						0, layout.getGroupId(), Layout.class.getName(),
 						layout.getPlid(), layout.getUuid(),
-						StringPool.BLANK, null,
+						null, null,
 						SystemEventConstants.TYPE_DELETE,
 						systemEventHierarchyEntry.getExtraData());
 				}

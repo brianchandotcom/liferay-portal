@@ -5,15 +5,18 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -106,6 +109,13 @@ public class UserGroupResourceDTOConverter
 
 							return permissions.toArray(new Permission[0]);
 						}));
+				setRoleBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"roleBriefs",
+						fieldName -> TransformUtil.transformToArray(
+							_roleService.getGroupRoles(userGroup.getGroupId()),
+							groupRole -> _toRoleBrief(groupRole),
+							RoleBrief.class)));
 				setUserAccountBriefs(
 					() -> NestedFieldsSupplier.supply(
 						"userAccountBriefs",
@@ -118,6 +128,16 @@ public class UserGroupResourceDTOConverter
 					() -> _userLocalService.getUserGroupUsersCount(
 						userGroup.getUserGroupId(),
 						WorkflowConstants.STATUS_APPROVED));
+			}
+		};
+	}
+
+	private RoleBrief _toRoleBrief(Role role) {
+		return new RoleBrief() {
+			{
+				setExternalReferenceCode(role::getExternalReferenceCode);
+				setId(role::getRoleId);
+				setName(role::getName);
 			}
 		};
 	}
@@ -142,6 +162,9 @@ public class UserGroupResourceDTOConverter
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private UserGroupService _userGroupService;

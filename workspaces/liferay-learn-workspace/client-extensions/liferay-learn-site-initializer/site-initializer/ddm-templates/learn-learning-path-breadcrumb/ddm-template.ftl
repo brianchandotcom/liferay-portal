@@ -1,9 +1,8 @@
 <script type="module">
 	document.addEventListener("DOMContentLoaded", function() {
 		const title = document.querySelector(".title");
-		var h1Text = document.getElementsByTagName('title')[0].textContent;
 		
-		title.innerHTML = h1Text;
+		title.innerHTML = document.getElementsByTagName('title')[0].textContent;
 	});
 </script>
 

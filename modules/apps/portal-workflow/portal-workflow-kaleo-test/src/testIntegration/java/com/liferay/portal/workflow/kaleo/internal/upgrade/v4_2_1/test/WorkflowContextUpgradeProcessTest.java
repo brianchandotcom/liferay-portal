@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -74,20 +75,22 @@ public class WorkflowContextUpgradeProcessTest {
 		JSONObject mapJSONObject = workflowContextJSONObject.getJSONObject(
 			"map");
 
-		JSONObject serviceContextJSONObject = mapJSONObject.getJSONObject(
-			"serviceContext");
+		mapJSONObject.put(
+			"serviceContext",
+			() -> {
+				JSONObject serviceContextJSONObject =
+					mapJSONObject.getJSONObject("serviceContext");
 
-		serviceContextJSONObject.put(
-			"javaClass",
-			"com.liferay.headless.common.spi.service.context." +
-				"ServiceContextUtil$1");
+				JSONObject serializableJSONObject =
+					serviceContextJSONObject.getJSONObject("serializable");
 
-		JSONObject serializableJSONObject =
-			serviceContextJSONObject.getJSONObject("serializable");
+				serializableJSONObject.put(
+					"javaClass",
+					"com.liferay.headless.common.spi.service.context." +
+						"ServiceContextUtil$1");
 
-		serviceContextJSONObject.remove("serializable");
-
-		serviceContextJSONObject.put("serviceContext", serializableJSONObject);
+				return serializableJSONObject;
+			});
 
 		kaleoInstance.setWorkflowContext(workflowContextJSONObject.toString());
 
@@ -97,6 +100,14 @@ public class WorkflowContextUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
+		JSONObject serviceContextJSONObject = _getServiceContextJSONObject();
+
+		Assert.assertEquals(
+			"com.liferay.headless.common.spi.service.context." +
+				"ServiceContextUtil$1",
+			serviceContextJSONObject.get("javaClass"));
+		Assert.assertFalse(serviceContextJSONObject.has("serializable"));
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
@@ -108,15 +119,26 @@ public class WorkflowContextUpgradeProcessTest {
 			_multiVMPool.clear();
 		}
 
+		serviceContextJSONObject = _getServiceContextJSONObject();
+
+		Assert.assertEquals(
+			ServiceContext.class.getName(),
+			serviceContextJSONObject.get("javaClass"));
+		Assert.assertTrue(serviceContextJSONObject.has("serializable"));
+	}
+
+	private JSONObject _getServiceContextJSONObject() throws Exception {
 		KaleoInstance kaleoInstance =
 			_kaleoInstanceLocalService.fetchKaleoInstance(
 				_kaleoInstance.getKaleoInstanceId());
 
-		String workflowContext = kaleoInstance.getWorkflowContext();
+		JSONObject workflowContextJSONObject = JSONFactoryUtil.createJSONObject(
+			kaleoInstance.getWorkflowContext());
 
-		Assert.assertTrue(
-			workflowContext.contains(
-				"com.liferay.portal.kernel.service.ServiceContext"));
+		JSONObject mapJSONObject = workflowContextJSONObject.getJSONObject(
+			"map");
+
+		return mapJSONObject.getJSONObject("serviceContext");
 	}
 
 	private static final String _CLASS_NAME =
@@ -131,6 +153,7 @@ public class WorkflowContextUpgradeProcessTest {
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
+	@DeleteAfterTestRun
 	private KaleoInstance _kaleoInstance;
 
 	@Inject

@@ -110,7 +110,9 @@ describe('Event Analysis Edit', () => {
 	});
 
 	it('should render event analysis with data', async () => {
-		const {container, getAllByText, getByText} = render(<WrappedComponent />);
+		const {container, getAllByText, getByText} = render(
+			<WrappedComponent />
+		);
 
 		jest.runAllTimers();
 
@@ -138,7 +140,7 @@ describe('Event Analysis Edit', () => {
 			container.querySelector('.compare-to-previous-checkbox input')
 				.checked
 		).toBeTruthy();
-		expect(getAllByText('displayName-0')).toBeTruthy(); 
+		expect(getAllByText('displayName-0')).toBeTruthy();
 	});
 
 	it('should check if search autocomplete is working properly', async () => {

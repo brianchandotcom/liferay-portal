@@ -1,7 +1,7 @@
 {
 	"className": "com.liferay.template.model.TemplateEntry",
-	"ddmTemplateKey": "LEARNING_PATH_VIDEO_WEBINAR_TEXT",
+	"ddmTemplateKey": "LEARN_LEARNING_PATH_BREADCRUMB",
 	"infoItemClassName": "com.liferay.portal.kernel.repository.model.FileEntry",
-	"name": "Learning Path Video Webinar Text",
+	"name": "Learn Learning Path Breadcrumb",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"
 }

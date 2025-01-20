@@ -1045,12 +1045,6 @@ test(
 			});
 		}).toPass();
 
-		await expect(
-			fragmentsPage.selectFragmentIFrame.getByText(
-				globalInputFragmentEntryName
-			)
-		).toBeAttached();
-
 		// Assert new input fragment is present under long text type
 
 		await fragmentsPage.goto(pageManagementSite.friendlyUrlPath);

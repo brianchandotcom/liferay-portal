@@ -16,13 +16,21 @@ import {
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {AsyncArray} from './utils/AsyncArray';
 import {createObjectField, mockObjectFields} from './utils/mockObjectFields';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-32050': {enabled: true},
+	}),
+	loginTest(),
+	objectPagesTest
+);
 
 const createdEntities = {
 	listTypeDefinitionIds: [],
@@ -865,6 +873,26 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				)
 			).toBeVisible();
 		}
+	});
+
+	test('cannot create localized object fields in unmodifiable system object definition', async ({
+		objectFieldsPage,
+	}) => {
+		await objectFieldsPage.goto('Account');
+
+		await objectFieldsPage.addObjectFieldButton.waitFor();
+
+		await objectFieldsPage.addObjectFieldButton.click();
+
+		await objectFieldsPage.objectFieldOptionsDropdown.click();
+
+		await objectFieldsPage.page
+			.getByRole('option', {exact: true, name: 'Text'})
+			.click();
+
+		expect(
+			objectFieldsPage.page.getByText('Enable Entry Translation')
+		).toBeDisabled();
 	});
 
 	test('cannot delete an objectField that belongs to a unique composite key validation through Objects Admin UI', async ({

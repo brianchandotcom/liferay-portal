@@ -20,6 +20,8 @@ public interface ServletResponseConstants {
 
 	public static final int SC_FILE_EXTENSION_EXCEPTION = 491;
 
+	public static final int SC_FILE_MIME_TYPE_EXCEPTION = 496;
+
 	public static final int SC_FILE_NAME_EXCEPTION = 492;
 
 	public static final int SC_FILE_SIZE_EXCEPTION = 493;

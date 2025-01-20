@@ -21,6 +21,8 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 ).build();
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <liferay-ui:error embed="<%= false %>" exception="<%= AccountEntryStatusException.class %>" message="please-select-a-valid-supplier" />
 <liferay-ui:error embed="<%= false %>" exception="<%= AccountEntryTypeException.class %>" message="please-select-a-valid-supplier" />
 <liferay-ui:error embed="<%= false %>" exception="<%= DuplicateCommerceChannelAccountEntryIdException.class %>" message="a-supplier-account-can-be-linked-only-to-one-channel" />
@@ -251,28 +253,29 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "payment-methods") %>'
 >
-	<frontend-data-set:classic-display
-		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
-		id="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
-		itemsPerPage="<%= 10 %>"
-		selectedItemsKey="key"
-		showManagementBar="<%= false %>"
-	/>
-</commerce-ui:panel>
+	<div>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35941") %>'>
+			<div>
+				<react:component
+					module="{CommerceChannelAddPaymentMethod} from commerce-channel-web"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"baseResourceURL", baseResourceURL
+						).build()
+					%>'
+				/>
+			</div>
+		</c:if>
 
-<commerce-ui:panel
-	bodyClasses="p-0"
-	title='<%= LanguageUtil.get(request, "shipping-methods") %>'
->
-	<frontend-data-set:classic-display
-		contextParams="<%= contextParams %>"
-		dataProviderKey="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
-		id="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
-		itemsPerPage="<%= 10 %>"
-		selectedItemsKey="key"
-		showManagementBar="<%= false %>"
-	/>
+		<frontend-data-set:classic-display
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
+			id="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
+			itemsPerPage="<%= 10 %>"
+			selectedItemsKey="key"
+			showManagementBar="<%= false %>"
+		/>
+	</div>
 </commerce-ui:panel>
 
 <commerce-ui:panel

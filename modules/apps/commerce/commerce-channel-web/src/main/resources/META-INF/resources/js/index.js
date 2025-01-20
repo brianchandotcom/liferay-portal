@@ -8,4 +8,5 @@ export {default as CommerceChannelSite} from './CommerceChannelSite';
 export {default as accountEntries} from './accountEntries';
 export {default as addCommerceChannel} from './addCommerceChannel';
 export {default as commerceChannelCountry} from './commerce_channel/commerceChannelCountry';
+export {default as CommerceChannelAddPaymentMethod} from './commerce_marketplace_payment_method';
 export {default as qualifiers} from './qualifiers';

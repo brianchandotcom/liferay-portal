@@ -85,6 +85,7 @@ module.exports = {
 		'@liferay/map-common': [],
 		'@liferay/map-google-maps': [],
 		'@liferay/map-openstreetmap': [],
+		'@liferay/marketplace-js-components-web': [],
 		'@liferay/object-js-components-web': [],
 		'@liferay/portal-workflow-instance-tracker-web': [],
 		'@liferay/template-web': [],

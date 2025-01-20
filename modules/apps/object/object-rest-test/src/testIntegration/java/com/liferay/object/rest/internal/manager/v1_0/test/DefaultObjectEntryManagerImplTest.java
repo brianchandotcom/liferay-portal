@@ -1860,6 +1860,65 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@FeatureFlags("LPD-21926")
+	@Test
+	public void testAddOrUpdateObjectEntryWithFriendlyURL() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setFriendlyUrlPath(RandomTestUtil.randomString());
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			objectEntry.getFriendlyUrlPath());
+
+		objectDefinition.setEnableFriendlyURLCustomization(true);
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setFriendlyUrlPath("Test URL");
+				}
+			});
+
+		Assert.assertEquals("test-url", objectEntry.getFriendlyUrlPath());
+
+		objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setFriendlyUrlPath_i18n(
+						HashMapBuilder.put(
+							"en_US", "Test URL"
+						).put(
+							"pt_BR", ""
+						).build());
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.put(
+				"en_US", "test-url-1"
+			).put(
+				"pt_BR", objectEntry.getExternalReferenceCode()
+			).build(),
+			objectEntry.getFriendlyUrlPath_i18n());
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
 	@Test
 	public void testAddOrUpdateObjectEntryWithPicklistObjectField()
 		throws Exception {

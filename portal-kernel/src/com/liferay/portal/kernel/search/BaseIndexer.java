@@ -12,6 +12,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -441,19 +442,18 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void reindex(String[] ids) throws SearchException {
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+		if (IndexWriterHelperUtil.isIndexReadOnly() ||
+			IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
+			!isIndexerEnabled()) {
 
-		try {
-			if (IndexWriterHelperUtil.isIndexReadOnly() ||
-				IndexWriterHelperUtil.isIndexReadOnly(getClassName()) ||
-				!isIndexerEnabled()) {
+			return;
+		}
 
-				return;
-			}
+		long companyId = (ids.length > 0) ? GetterUtil.getLong(ids[0]) :
+			CompanyThreadLocal.getCompanyId();
 
-			if (ids.length > 0) {
-				CompanyThreadLocal.setCompanyId(GetterUtil.getLong(ids[0]));
-			}
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			doReindex(ids);
 		}
@@ -462,9 +462,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 		catch (Exception exception) {
 			throw new SearchException(exception);
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 		}
 	}
 

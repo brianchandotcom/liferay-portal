@@ -6,18 +6,22 @@
 package com.liferay.upload.web.internal;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.exception.DLStorageQuotaExceededException;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -59,6 +63,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 			portalException instanceof DLStorageQuotaExceededException ||
 			portalException instanceof DuplicateFileEntryException ||
 			portalException instanceof FileExtensionException ||
+			portalException instanceof FileMimeTypeException ||
 			portalException instanceof FileNameException ||
 			portalException instanceof FileSizeException ||
 			portalException instanceof UploadRequestSizeException) {
@@ -95,6 +100,12 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 					"please-enter-a-file-with-a-valid-extension-x",
 					_getAllowedFileExtensions());
 				status = ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
+			}
+			else if (portalException instanceof FileMimeTypeException) {
+				message = themeDisplay.translate(
+					"please-enter-a-file-with-a-valid-mime-type-x",
+					_getAllowedMimeTypes(themeDisplay));
+				status = ServletResponseConstants.SC_FILE_MIME_TYPE_EXCEPTION;
 			}
 			else if (portalException instanceof FileNameException) {
 				message = themeDisplay.translate(
@@ -156,6 +167,22 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 		return StringUtil.merge(
 			allowedFileExtensions, StringPool.COMMA_AND_SPACE);
 	}
+
+	private String _getAllowedMimeTypes(ThemeDisplay themeDisplay)
+		throws ConfigurationException {
+
+		DLFileEntryMimeTypeConfiguration dlFileEntryMimeTypeConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				DLFileEntryMimeTypeConfiguration.class,
+				themeDisplay.getCompanyId());
+
+		return StringUtil.merge(
+			dlFileEntryMimeTypeConfiguration.fileMimeTypes(),
+			StringPool.COMMA_AND_SPACE);
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private volatile DLConfiguration _dlConfiguration;
 

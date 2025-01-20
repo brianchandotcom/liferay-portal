@@ -11,7 +11,6 @@ export class WidgetPagePage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
-	readonly addPanelBody: Locator;
 	readonly contentTab: Locator;
 	readonly toggleControlsButton: Locator;
 	readonly widgetsTab: Locator;

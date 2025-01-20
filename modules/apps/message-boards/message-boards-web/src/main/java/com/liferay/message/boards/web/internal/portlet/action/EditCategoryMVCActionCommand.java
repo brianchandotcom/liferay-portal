@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.service.TrashEntryService;
@@ -104,12 +105,14 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CaptchaConfiguration getCaptchaConfiguration()
+	protected CaptchaConfiguration getCaptchaConfiguration(
+			ActionRequest actionRequest)
 		throws CaptchaConfigurationException {
 
 		try {
-			return _configurationProvider.getSystemConfiguration(
-				CaptchaConfiguration.class);
+			return _configurationProvider.getCompanyConfiguration(
+				CaptchaConfiguration.class,
+				_portal.getCompanyId(actionRequest));
 		}
 		catch (Exception exception) {
 			throw new CaptchaConfigurationException(exception);
@@ -234,8 +237,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			MBCategory.class.getName(), actionRequest);
 
 		if (categoryId <= 0) {
-			CaptchaConfiguration captchaConfiguration =
-				getCaptchaConfiguration();
+			CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration(
+				actionRequest);
 
 			if (captchaConfiguration.messageBoardsEditMessageCaptchaEnabled()) {
 				CaptchaUtil.check(actionRequest);
@@ -272,6 +275,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

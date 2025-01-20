@@ -1,0 +1,23 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "url",
+					"localizable": true,
+					"name": "url",
+					"type": "url"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Use text for logo",
+					"label": "Text Logo",
+					"name": "textLogo",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

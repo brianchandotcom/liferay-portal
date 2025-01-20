@@ -1,0 +1,49 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "left",
+					"label": "Dropdown Alignment",
+					"name": "alignDropdown",
+					"description": "Align dropdown menu left or right",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "left",
+								"label": "Left"
+							},
+							{
+								"value": "center",
+								"label": "Center"
+							},
+							{
+								"value": "right",
+								"label": "Right"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Hide label text on small screens",
+					"label": "Hide label on Mobile",
+					"name": "hideLabel",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Add additional items to the menu",
+					"label": "Addition Items",
+					"name": "additionalItems",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

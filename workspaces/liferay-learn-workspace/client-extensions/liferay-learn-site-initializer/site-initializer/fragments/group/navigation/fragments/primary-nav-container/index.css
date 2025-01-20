@@ -1,0 +1,177 @@
+.lfr-layout-structure-item-primary-nav-container {
+	background: var(--primary-nav-background-color);
+
+	@media (min-width: 992px) {
+		border-bottom: 1px solid rgba(255, 255, 255, 0);
+
+		&:has(.mega-menu-dropdown input:checked) {
+			border-color: hsl(
+				from var(--nav-item-text-color-default) h s l / 0.3
+			);
+		}
+	}
+}
+
+.primary-nav-container {
+	align-items: center;
+	background: var(--primary-nav-background-color);
+	display: flex;
+	margin: auto;
+	max-width: var(--primary-nav-max-width, 1600px);
+	position: relative;
+
+	.nav-items-container {
+		background: var(--primary-nav-background-color, #FFFFFF);
+		display: flex;
+		justify-content: flex-end;
+		width: 100%;
+
+		.nav-items-container-items > div,
+		.nav-items-container-items .page-editor__root:has(.mega-menu-dropdown) {
+			align-items: center;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: flex-end;
+			width: 100%;
+		}
+
+		.nav-items-menu-button {
+			align-items: center;
+			background: var(--color-action-primary-inverted, #FFFFFF);
+			border: 1px solid var(--color-action-primary-default, #0B5FFF);
+			border-radius: var(--border-radius);
+			display: none;
+			gap: 0.5rem;
+			height: 2.5rem;
+			justify-content: center;
+			margin: 0;
+			min-width: 7.5rem;
+			outline: rgba(99, 153, 255, 0) solid 2px;
+			outline-offset: 2px;
+			padding: 0.5rem 1rem;
+			transition: var(--transition-base);
+			width: fit-content;
+
+			.menu-button-text {
+				color: var(--color-action-primary-default, #0B5FFF);
+				font-size: var(--text-link-md-font-size);
+				font-weight: var(--font-weight-semi-bold);
+				line-height: var(--text-link-md-line-height);
+				text-align: center;
+				transition: var(--transition-base);
+			}
+
+			.menu-button-text-close {
+				display: none;
+			}
+
+			.nav-items-menu-button-icon {
+				display: flex;
+				flex-direction: column;
+				gap: 0.25rem;
+
+				.nav-items-menu-button-icon-line {
+					background: var(--color-action-primary-default, #0B5FFF);
+					border-radius: var(--border-radius-circle);
+					height: 0.125rem;
+					transition: var(--transition-base);
+					width: 17px;
+				}
+			}
+		}
+
+		.nav-items-menu-button-input {
+			display: none;
+			opacity: 0;
+			position: absolute;
+			z-index: -1;
+		}
+
+		.nav-items-menu-button:hover,
+		input:focus ~ .nav-items-menu-button,
+		input:focus-visible ~ .nav-items-menu-button {
+			border-color: var(--color-action-primary-hover, #0053F0);
+			outline-color: var(--color-brand-primary-lighten-2);
+
+			.menu-button-text {
+				color: var(--color-action-primary-hover, #0053f0);
+			}
+		}
+
+		.nav-items-menu-button-input:checked ~ .nav-items-menu-button {
+			#nav-items-menu-button-icon-line-1 {
+				transform: translate(0px, 6px) rotate(45deg) scaleX(1.3);
+				transform-origin: center;
+			}
+
+			#nav-items-menu-button-icon-line-2 {
+				transform: scaleX(0%);
+			}
+
+			#nav-items-menu-button-icon-line-3 {
+				transform: translate(0px, -6px) rotate(-45deg) scaleX(1.3);
+				transform-origin: center;
+			}
+		}
+
+		@media (max-width: 992.98px) {
+			input#nav-items-menu-button {
+				display: unset;
+			}
+
+			.nav-items-menu-button {
+				display: flex !important;
+			}
+
+			.nav-items-container-items {
+				background: var(--color-neutral-0);
+				bottom: 0;
+				flex-direction: column;
+				height: calc(100vh - 101px);
+				height: calc(100dvh - 101px);
+				left: 50%;
+				opacity: 0;
+				overflow: scroll;
+				position: absolute;
+				transform: translate(-50%, 0%);
+				transition:
+					visibility 0s linear 0.2s,
+					opacity 0.2s linear,
+					transform 0.2s ease-in-out;
+				visibility: hidden;
+				width: 100vw;
+				z-index: -1;
+
+				> div {
+					flex-direction: column;
+				}
+			}
+
+			input:checked {
+				~ .nav-items-container-items {
+					transform: translate(-50%, 100%);
+					transition:
+						visibility 0s linear 0s,
+						opacity 0.1s linear,
+						transform 0.3s ease-in-out;
+					opacity: 1;
+					visibility: visible;
+				}
+
+				~ .nav-items-menu-button {
+					.menu-button-text-close {
+						display: block;
+					}
+
+					.menu-button-text-open {
+						display: none;
+					}
+				}
+			}
+
+			body:has(.nav-items-container input:checked) {
+				overflow: hidden;
+			}
+		}
+	}
+}

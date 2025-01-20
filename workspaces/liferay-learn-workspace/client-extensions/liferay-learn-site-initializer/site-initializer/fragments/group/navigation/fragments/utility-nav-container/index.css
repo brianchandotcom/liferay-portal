@@ -1,0 +1,29 @@
+.utility-nav-container {
+	background: var(--utility-nav-background-color);
+	position: relative;
+
+	> div,
+	> lfr-drop-zone > div > div > div {
+		align-items: center;
+		background: var(--utility-nav-background-color, #FFFFFF);
+		border-bottom: 1px solid;
+		display: flex;
+		margin: 0 auto;
+		max-width: var(--utility-nav-max-width, 1600px);
+		width: 100%;
+		
+		@supports not (border-color: hsl(from #000000 h s l / 0.3)) {
+			border-color: rgba(153, 154, 163, 0.5);
+		}
+		
+		@supports (border-color: hsl(from #000000 h s l / 0.3)) {
+			border-color: hsl(
+				from var(--utility-nav-item-text-color-default) h s l / 0.3
+			);
+		}
+	}
+}
+
+.lfr-layout-structure-item-utility-nav-container {
+	background: var(--utility-nav-background-color, #FFFFFF);
+}

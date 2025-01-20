@@ -151,8 +151,14 @@ export class WidgetPagePage {
 		await this.page.mouse.up();
 	}
 
-	async goto(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`/web${siteUrl || '/guest'}${layout.friendlyURL}`);
+	async goto(
+		layout: Layout,
+		siteUrl?: Site['friendlyUrlPath'],
+		doAsUserId?: string
+	) {
+		await this.page.goto(
+			`/web${siteUrl || '/guest'}${layout.friendlyURL}${doAsUserId ? '?doAsUserId=' + doAsUserId : ''}`
+		);
 	}
 
 	async openAddPanel() {

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
+import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
@@ -173,6 +174,26 @@ public class UserGroupSerDes {
 			sb.append("]");
 		}
 
+		if (userGroup.getRoleBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userGroup.getRoleBriefs().length; i++) {
+				sb.append(String.valueOf(userGroup.getRoleBriefs()[i]));
+
+				if ((i + 1) < userGroup.getRoleBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (userGroup.getUserAccountBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -293,6 +314,13 @@ public class UserGroupSerDes {
 			map.put("permissions", String.valueOf(userGroup.getPermissions()));
 		}
 
+		if (userGroup.getRoleBriefs() == null) {
+			map.put("roleBriefs", null);
+		}
+		else {
+			map.put("roleBriefs", String.valueOf(userGroup.getRoleBriefs()));
+		}
+
 		if (userGroup.getUserAccountBriefs() == null) {
 			map.put("userAccountBriefs", null);
 		}
@@ -353,6 +381,9 @@ public class UserGroupSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {
@@ -435,6 +466,22 @@ public class UserGroupSerDes {
 					}
 
 					userGroup.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					RoleBrief[] roleBriefsArray =
+						new RoleBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < roleBriefsArray.length; i++) {
+						roleBriefsArray[i] = RoleBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					userGroup.setRoleBriefs(roleBriefsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {

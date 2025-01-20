@@ -1182,6 +1182,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				exception instanceof DLStorageQuotaExceededException ||
 				exception instanceof DuplicateFileEntryException ||
 				exception instanceof FileExtensionException ||
+				exception instanceof FileMimeTypeException ||
 				exception instanceof FileNameException ||
 				exception instanceof FileSizeException ||
 				exception instanceof UploadRequestSizeException) {

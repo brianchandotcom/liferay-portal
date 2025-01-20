@@ -179,6 +179,16 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFriendlyURLEntries(long companyId, long classNameId) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		_deleteFriendlyURLEntries(actionableDynamicQuery, classNameId);
+	}
+
+	@Override
 	public FriendlyURLEntry deleteFriendlyURLEntry(
 		FriendlyURLEntry friendlyURLEntry) {
 
@@ -303,46 +313,9 @@ public class FriendlyURLEntryLocalServiceImpl
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property property = PropertyFactoryUtil.forName("classNameId");
-
-				dynamicQuery.add(property.eq(classNameId));
-			});
 		actionableDynamicQuery.setGroupId(groupId);
-		actionableDynamicQuery.setPerformActionMethod(
-			(FriendlyURLEntry friendlyURLEntry) -> {
-				friendlyURLEntryLocalizationPersistence.
-					removeByFriendlyURLEntryId(
-						friendlyURLEntry.getFriendlyURLEntryId());
 
-				friendlyURLEntryPersistence.remove(friendlyURLEntry);
-
-				FriendlyURLEntryMapping friendlyURLEntryMapping =
-					_friendlyURLEntryMappingPersistence.fetchByC_C(
-						classNameId, friendlyURLEntry.getClassPK());
-
-				if ((friendlyURLEntryMapping != null) &&
-					(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
-						friendlyURLEntry.getFriendlyURLEntryId())) {
-
-					_friendlyURLEntryMappingPersistence.remove(
-						friendlyURLEntryMapping);
-				}
-
-				// Asset
-
-				_deleteAssetEntry(
-					FriendlyURLEntry.class.getName(),
-					friendlyURLEntry.getFriendlyURLEntryId());
-			});
-
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+		_deleteFriendlyURLEntries(actionableDynamicQuery, classNameId);
 	}
 
 	@Override
@@ -696,6 +669,50 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 		catch (PortalException portalException) {
 			ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private void _deleteFriendlyURLEntries(
+		ActionableDynamicQuery actionableDynamicQuery, long classNameId) {
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("classNameId");
+
+				dynamicQuery.add(property.eq(classNameId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(FriendlyURLEntry friendlyURLEntry) -> {
+				friendlyURLEntryLocalizationPersistence.
+					removeByFriendlyURLEntryId(
+						friendlyURLEntry.getFriendlyURLEntryId());
+
+				friendlyURLEntryPersistence.remove(friendlyURLEntry);
+
+				FriendlyURLEntryMapping friendlyURLEntryMapping =
+					_friendlyURLEntryMappingPersistence.fetchByC_C(
+						classNameId, friendlyURLEntry.getClassPK());
+
+				if ((friendlyURLEntryMapping != null) &&
+					(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
+						friendlyURLEntry.getFriendlyURLEntryId())) {
+
+					_friendlyURLEntryMappingPersistence.remove(
+						friendlyURLEntryMapping);
+				}
+
+				// Asset
+
+				_deleteAssetEntry(
+					FriendlyURLEntry.class.getName(),
+					friendlyURLEntry.getFriendlyURLEntryId());
+			});
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

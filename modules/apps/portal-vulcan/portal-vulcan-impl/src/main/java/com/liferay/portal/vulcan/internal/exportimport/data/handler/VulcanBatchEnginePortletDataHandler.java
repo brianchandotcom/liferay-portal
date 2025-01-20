@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
@@ -26,12 +27,15 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -94,12 +98,20 @@ public class VulcanBatchEnginePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		Map<String, Serializable> parameters = new HashMap<>();
+
+		if (MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.PERMISSIONS)) {
+
+			parameters.put("batchNestedFields", "permissions");
+		}
+
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskService.addBatchEngineExportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), null,
 				_className, "JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Collections.emptyList(), Collections.emptyMap(),
-				_taskItemDelegateName);
+				Collections.emptyList(), parameters, _taskItemDelegateName);
 
 		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
 

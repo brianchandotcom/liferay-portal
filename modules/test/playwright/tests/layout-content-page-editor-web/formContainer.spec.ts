@@ -6271,3 +6271,62 @@ test(
 		});
 	}
 );
+
+test(
+	'Submitted entry status configuration is only visible if the form button is submit',
+	{tag: '@LPD-37217'},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+		const objectDefinitionApiClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {className: objectDefinitionClassName} = (
+			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				getObjectERC('Lemon')
+			)
+		).body;
+
+		const formId = getRandomString();
+
+		const submitFragmentId = getRandomString();
+
+		const submitFragmentDefinition = getFragmentDefinition({
+			id: submitFragmentId,
+			key: 'INPUTS-submit-button',
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+			objectDefinitionClassName,
+			pageElements: [submitFragmentDefinition],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(submitFragmentId);
+
+		await expect(page.getByLabel('Type', {exact: true})).toHaveValue(
+			'submit'
+		);
+
+		await expect(
+			page.getByLabel('Submitted Entry Status', {exact: true})
+		).toBeVisible();
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Type',
+			fragmentId: submitFragmentId,
+			tab: 'General',
+			value: 'Next',
+		});
+
+		await expect(
+			page.getByLabel('Submitted Entry Status')
+		).not.toBeVisible();
+	}
+);

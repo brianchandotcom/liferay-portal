@@ -17,9 +17,8 @@ dependencies {
 }
 
 jar {
-	setActions([])
-
 	dependsOn jarOverwrite
+	setActions([])
 }
 
 jarOverwrite {

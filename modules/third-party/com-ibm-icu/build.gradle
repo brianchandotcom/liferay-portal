@@ -9,8 +9,6 @@ dependencies {
 }
 
 jar {
-	setActions([])
-
 	doLast {
 		Set<File> jarFiles = configurations.compileClasspath.files {
 			it.name == "icu4j"
@@ -23,4 +21,6 @@ jar {
 			zipfileset src: jarFiles.find()
 		}
 	}
+
+	setActions([])
 }

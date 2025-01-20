@@ -37,9 +37,8 @@ downloadSrc {
 }
 
 jar {
-	setActions([])
-
 	dependsOn jarMvn
+	setActions([])
 }
 
 jarMvn {

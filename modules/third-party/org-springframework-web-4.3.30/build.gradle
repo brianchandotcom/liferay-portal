@@ -14,10 +14,9 @@ dependencies {
 }
 
 jar {
-	setActions([])
-
 	dependsOn jarPatched
 	finalizedBy jarManifest
+	setActions([])
 }
 
 jarManifest {

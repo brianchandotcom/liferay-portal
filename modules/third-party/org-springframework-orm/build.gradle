@@ -30,9 +30,8 @@ deployJar {
 }
 
 jar {
-	setActions([])
-
 	dependsOn jarPatched
+	setActions([])
 }
 
 jarManifest {

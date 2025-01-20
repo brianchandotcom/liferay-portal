@@ -52,11 +52,13 @@ test(
 			'Bulleted List',
 			'Increase indent',
 			'Decrease indent',
+			'Block quote',
 			'Link',
 			'Insert table',
 			'Insert media',
 			'Horizontal line',
 			'Text alignment',
+			'Source',
 		];
 
 		await expect(editorToolbar).toBeVisible();

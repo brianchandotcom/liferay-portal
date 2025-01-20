@@ -58,7 +58,9 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 	}
 
 	@Override
-	public String getFullAlgorithmConfiguration(String encryptedPassword) {
+	public String getEncryptionAlgorithmConfiguration(
+		String encryptedPassword) {
+
 		String rounds = String.valueOf(_ROUNDS);
 
 		Matcher matcher = _encryptedPasswordPattern.matcher(encryptedPassword);

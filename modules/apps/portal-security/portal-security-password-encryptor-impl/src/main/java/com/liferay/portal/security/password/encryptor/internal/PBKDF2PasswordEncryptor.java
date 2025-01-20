@@ -94,7 +94,9 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 	}
 
 	@Override
-	public String getFullAlgorithmConfiguration(String encryptedPassword) {
+	public String getEncryptionAlgorithmConfiguration(
+		String encryptedPassword) {
+
 		PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
 			new PBKDF2EncryptionConfiguration();
 

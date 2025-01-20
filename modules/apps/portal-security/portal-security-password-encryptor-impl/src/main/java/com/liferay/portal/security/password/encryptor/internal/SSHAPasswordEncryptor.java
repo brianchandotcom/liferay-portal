@@ -69,7 +69,9 @@ public class SSHAPasswordEncryptor implements PasswordEncryptor {
 	}
 
 	@Override
-	public String getFullAlgorithmConfiguration(String encryptedPassword) {
+	public String getEncryptionAlgorithmConfiguration(
+		String encryptedPassword) {
+
 		return encryptedPassword.substring(
 			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
 	}

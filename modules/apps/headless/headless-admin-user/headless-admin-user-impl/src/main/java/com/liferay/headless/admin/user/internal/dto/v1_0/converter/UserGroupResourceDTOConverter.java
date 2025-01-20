@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,6 +22,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
+
+import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,6 +86,26 @@ public class UserGroupResourceDTOConverter
 				setExternalReferenceCode(userGroup::getExternalReferenceCode);
 				setId(userGroup::getUserGroupId);
 				setName(userGroup::getName);
+				setPermissions(
+					() -> NestedFieldsSupplier.supply(
+						"permissions",
+						nestedFieldNames -> {
+							_permissionService.checkPermission(
+								userGroup.getGroupId(),
+								UserGroup.class.getName(),
+								userGroup.getUserGroupId());
+
+							Collection<Permission> permissions =
+								PermissionUtil.getPermissions(
+									userGroup.getCompanyId(),
+									_resourceActionLocalService.
+										getResourceActions(
+											UserGroup.class.getName()),
+									userGroup.getUserGroupId(),
+									UserGroup.class.getName(), null);
+
+							return permissions.toArray(new Permission[0]);
+						}));
 				setUserAccountBriefs(
 					() -> NestedFieldsSupplier.supply(
 						"userAccountBriefs",
@@ -109,7 +135,13 @@ public class UserGroupResourceDTOConverter
 	}
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private UserGroupService _userGroupService;

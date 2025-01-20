@@ -110,7 +110,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 						</th>
 					</tr>
 					<tr>
-						<td style="border: 1px solid gray;">
+						<td class="border">
 							<table class="license-table">
 								<tr>
 									<th>
@@ -172,7 +172,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 								</tr>
 							</table>
 						</td>
-						<td style="border: 1px solid gray;">
+						<td class="border">
 							<table class="license-table">
 								<tr>
 									<th>
@@ -226,19 +226,19 @@ dateFormatDateTime.setTimeZone(timeZone);
 												<td>
 													<c:choose>
 														<c:when test="<%= licenseState == 1 %>">
-															<span style="color: red;"><liferay-ui:message key="absent" /></span>
+															<span class="text-red"><liferay-ui:message key="absent" /></span>
 														</c:when>
 														<c:when test="<%= licenseState == 2 %>">
-															<span style="color: red;"><liferay-ui:message key="expired" /></span>
+															<span class="text-red"><liferay-ui:message key="expired" /></span>
 														</c:when>
 														<c:when test="<%= licenseState == 3 %>">
 															<liferay-ui:message key="active" />
 														</c:when>
 														<c:when test="<%= licenseState == 4 %>">
-															<span style="color: red;"><liferay-ui:message key="inactive" /></span>
+															<span class="text-red"><liferay-ui:message key="inactive" /></span>
 														</c:when>
 														<c:when test="<%= (licenseState == 5) || (licenseState == 6) %>">
-															<span style="color: red;"><liferay-ui:message key="invalid" /></span>
+															<span class="text-red"><liferay-ui:message key="invalid" /></span>
 														</c:when>
 													</c:choose>
 												</td>
@@ -342,14 +342,14 @@ dateFormatDateTime.setTimeZone(timeZone);
 						</c:if>
 
 						<tr>
-							<td style="border: 1px solid gray; vertical-align: middle;">
+							<td class="align-middle border">
 								<liferay-ui:input-checkbox
 									disabled="<%= true %>"
 									id='<%= "node_" + clusterNode.getClusterNodeId() + "_register" %>'
 									param='<%= clusterNode.getClusterNodeId() + "_register" %>'
 								/>
 							</td>
-							<td style="border: 1px solid gray;">
+							<td class="border">
 								<table class="license-table">
 									<tr>
 										<th>
@@ -380,12 +380,12 @@ dateFormatDateTime.setTimeZone(timeZone);
 								</table>
 
 								<div id="node_<%= clusterNode.getClusterNodeId() %>_serverInfo">
-									<div style="text-align: center;">
+									<div class="text-center">
 										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />" src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
 									</div>
 								</div>
 							</td>
-							<td style="border: 1px solid gray;">
+							<td class="border">
 								<table class="license-table" id="node_<%= clusterNode.getClusterNodeId() %>_licenseTable">
 									<tr>
 										<th>
@@ -419,7 +419,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 								</table>
 
 								<div id="node_<%= clusterNode.getClusterNodeId() %>_licenseProperties">
-									<div style="text-align: center;">
+									<div class="text-center">
 										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />" src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
 									</div>
 								</div>
@@ -432,7 +432,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 				</table>
 
-				<div id="portHelp" style="display: none;">
+				<div class="d-none" id="portHelp">
 					<liferay-ui:message key="ports-are-not-initialized-until-the-server-has-processed-a-request" />
 				</div>
 
@@ -581,19 +581,19 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 					function getLicenseState(licenseState) {
 						if (licenseState == 2) {
-							return '<span style="color: red;"><liferay-ui:message key="expired" /></span>';
+							return '<span class="text-red"><liferay-ui:message key="expired" /></span>';
 						}
 						else if (licenseState == 3) {
 							return 'Active';
 						}
 						else if (licenseState == 4) {
-							return '<span style="color: red;"><liferay-ui:message key="inactive" /></span>';
+							return '<span class="text-red"><liferay-ui:message key="inactive" /></span>';
 						}
 						else if ((licenseState == 5) || (licenseState == 6)) {
-							return '<span style="color: red;"><liferay-ui:message key="invalid" /></span>';
+							return '<span class="text-red"><liferay-ui:message key="invalid" /></span>';
 						}
 
-						return '<span style="color: red;"><liferay-ui:message key="absent" /></span>';
+						return '<span class="text-red"><liferay-ui:message key="absent" /></span>';
 					}
 
 					function validateForm() {
@@ -674,7 +674,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 						</liferay-ui:csp>
 					</td>
 				</tr>
-				<tr id="maxServers" style="display: none;">
+				<tr class="d-none" id="maxServers">
 					<td>
 						<liferay-ui:message key="maximum-servers" />
 					</td>

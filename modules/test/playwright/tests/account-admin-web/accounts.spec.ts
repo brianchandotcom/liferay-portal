@@ -13,6 +13,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../utils/pagination';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
@@ -545,6 +546,75 @@ test('LPD-45545 Can add and remove organizations in bulk', async ({
 	}
 });
 
+test('LPD-45897 Can delete an account', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.deleteButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+});
+
+test('LPD-45897 Can delete an inactive account', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(1);
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.deleteButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+});
+
 test('LPD-45897 Can delete accounts in bulk', async ({
 	accountsPage,
 	apiHelpers,
@@ -963,4 +1033,539 @@ test('LPS-157661 An account avatar can be added in creation', async ({
 	await (await accountsPage.accountsTableRowLink(name)).click();
 
 	await expect(editAccountPage.imageInput).toHaveValue('Custom Image');
+});
+
+test('LPS-195988 An account can be updated', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.accountNameInput).toHaveValue(account.name);
+	await expect(editAccountPage.descriptionInput).toHaveValue(
+		account.description
+	);
+	await expect(editAccountPage.externalReferenceCodeInput).toHaveValue(
+		account.externalReferenceCode
+	);
+
+	const updatedAccount = {
+		description: getRandomString(),
+		externalReferenceCode: getRandomString(),
+		name: getRandomString(),
+	};
+
+	await editAccountPage.accountNameInput.fill(updatedAccount.name);
+	await editAccountPage.descriptionInput.fill(updatedAccount.description);
+	await editAccountPage.externalReferenceCodeInput.fill(
+		updatedAccount.externalReferenceCode
+	);
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await editAccountPage.backButton.click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+
+	await accountsPage.accountNameLink(updatedAccount.name).click();
+
+	await expect(editAccountPage.accountNameInput).toHaveValue(
+		updatedAccount.name
+	);
+	await expect(editAccountPage.descriptionInput).toHaveValue(
+		updatedAccount.description
+	);
+	await expect(editAccountPage.externalReferenceCodeInput).toHaveValue(
+		updatedAccount.externalReferenceCode
+	);
+});
+
+test('LPS-101221 An inactive account can be updated', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.accountNameInput).toHaveValue(account.name);
+	await expect(editAccountPage.descriptionInput).toHaveValue(
+		account.description
+	);
+	await expect(editAccountPage.externalReferenceCodeInput).toHaveValue(
+		account.externalReferenceCode
+	);
+
+	const updatedAccount = {
+		description: getRandomString(),
+		externalReferenceCode: getRandomString(),
+		name: getRandomString(),
+	};
+
+	await editAccountPage.accountNameInput.fill(updatedAccount.name);
+	await editAccountPage.descriptionInput.fill(updatedAccount.description);
+	await editAccountPage.externalReferenceCodeInput.fill(
+		updatedAccount.externalReferenceCode
+	);
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await editAccountPage.backButton.click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(
+		accountsPage.accountNameLink(updatedAccount.name)
+	).toBeVisible();
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Active').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountNameLink(updatedAccount.name)).toHaveCount(
+		0
+	);
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(
+		accountsPage.accountNameLink(updatedAccount.name)
+	).toBeVisible();
+});
+
+test('LPS-101221 Can search an account', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account1 = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	const account2 = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account2.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTableRowActions(account1.name)).click();
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	await accountsPage.searchInput.fill(account1.name);
+	await accountsPage.searchButton.click();
+	await expect(accountsPage.searchInput).toBeEditable();
+
+	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+
+	await accountsPage.searchInput.fill(account2.name);
+	await accountsPage.searchButton.click();
+	await expect(accountsPage.searchInput).toBeEditable();
+
+	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountNameLink(account2.name)).toBeVisible();
+
+	await accountsPage.filterButton.click();
+	await accountsPage.filterMenuItem('Inactive').click();
+
+	await accountsPage.searchInput.fill(account1.name);
+	await accountsPage.searchButton.click();
+	await expect(accountsPage.searchInput).toBeEditable();
+
+	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+
+	await accountsPage.searchInput.fill(account1.name);
+	await accountsPage.searchButton.click();
+	await expect(accountsPage.searchInput).toBeEditable();
+
+	await expect(accountsPage.accountNameLink(account1.name)).toBeVisible();
+	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+});
+
+test('LPS-101221 Can add an address to an account', async ({
+	accountAddressesPage,
+	accountsPage,
+	apiHelpers,
+	editAccountAddressPage,
+	editAccountPage,
+}) => {
+	const account1 = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	const account2 = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account2.id, type: 'account'});
+
+	let address = {
+		city: getRandomString(),
+		country: 'United States',
+		countryId: '0',
+		name: getRandomString(),
+		postalCode: String(getRandomInt()),
+		region: 'Alabama',
+		regionId: '0',
+		street1: getRandomString(),
+	};
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account1.name).click();
+	await editAccountPage.addressesTab.click();
+	await accountAddressesPage.addAddressButton.click();
+
+	address = {
+		...address,
+		...(await editAccountAddressPage.addAddress(address)),
+	};
+
+	await expect(
+		accountAddressesPage.addressNameLink(address.name)
+	).toBeVisible();
+
+	await accountAddressesPage.addressNameLink(address.name).click();
+
+	await expect(editAccountAddressPage.cityInput).toHaveValue(address.city);
+	await expect(editAccountAddressPage.countryInput).toHaveValue(
+		address.countryId
+	);
+	await expect(editAccountAddressPage.nameInput).toHaveValue(address.name);
+	await expect(editAccountAddressPage.postalCodeInput).toHaveValue(
+		address.postalCode
+	);
+	await expect(editAccountAddressPage.regionInput).toHaveValue(
+		address.regionId
+	);
+	await expect(editAccountAddressPage.street1Input).toHaveValue(
+		address.street1
+	);
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account2.name).click();
+	await editAccountPage.addressesTab.click();
+
+	await expect(
+		accountAddressesPage.addressNameLink(address.name)
+	).toHaveCount(0);
+});
+
+test('LPS-101221 Can paginate the addresses of an account', async ({
+	accountAddressesPage,
+	accountsPage,
+	apiHelpers,
+	editAccountAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const addresses = [
+		{
+			name: `1_${getRandomString()}`,
+		},
+		{
+			name: `2_${getRandomString()}`,
+		},
+		{
+			name: `3_${getRandomString()}`,
+		},
+		{
+			name: `4_${getRandomString()}`,
+		},
+		{
+			name: `5_${getRandomString()}`,
+		},
+	];
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+	await editAccountPage.addressesTab.click();
+
+	for (const address of addresses) {
+		await accountAddressesPage.addAddressButton.click();
+
+		await editAccountAddressPage.addAddress(address);
+	}
+
+	await setItemsPerPage(page, 4);
+
+	for (const [index, address] of addresses.entries()) {
+		if (index < 4) {
+			await expect(
+				accountAddressesPage.addressNameLink(address.name)
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				accountAddressesPage.addressNameLink(address.name)
+			).toHaveCount(0);
+		}
+	}
+
+	await nextPage(page);
+
+	for (const [index, address] of addresses.entries()) {
+		if (index < 4) {
+			await expect(
+				accountAddressesPage.addressNameLink(address.name)
+			).toHaveCount(0);
+		}
+		else {
+			await expect(
+				accountAddressesPage.addressNameLink(address.name)
+			).toBeVisible();
+		}
+	}
+});
+
+test('LPS-101221 Can update the address type of an account', async ({
+	accountAddressesPage,
+	accountsPage,
+	apiHelpers,
+	editAccountAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	let address = {
+		city: getRandomString(),
+		country: 'United States',
+		countryId: '0',
+		name: getRandomString(),
+		postalCode: String(getRandomInt()),
+		region: 'Alabama',
+		regionId: '0',
+		street1: getRandomString(),
+		type: 'Billing',
+		typeId: '0',
+	};
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+	await editAccountPage.addressesTab.click();
+	await accountAddressesPage.addAddressButton.click();
+
+	address = {
+		...address,
+		...(await editAccountAddressPage.addAddress(address)),
+	};
+
+	await expect(
+		accountAddressesPage.addressNameLink(address.name)
+	).toBeVisible();
+
+	await accountAddressesPage.addressNameLink(address.name).click();
+
+	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
+
+	await editAccountAddressPage.typeInput.selectOption({label: 'Shipping'});
+
+	address.typeId = await editAccountAddressPage.typeInput.inputValue();
+
+	await editAccountAddressPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await accountAddressesPage.addressNameLink(address.name).click();
+
+	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
+
+	await editAccountAddressPage.typeInput.selectOption({
+		label: 'Billing and Shipping',
+	});
+
+	address.typeId = await editAccountAddressPage.typeInput.inputValue();
+
+	await editAccountAddressPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await accountAddressesPage.addressNameLink(address.name).click();
+
+	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
+});
+
+test('LPS-101221 Can delete an address of an account', async ({
+	accountAddressesPage,
+	accountsPage,
+	apiHelpers,
+	editAccountAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const address = {
+		name: getRandomString(),
+	};
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+	await editAccountPage.addressesTab.click();
+	await accountAddressesPage.addAddressButton.click();
+
+	await editAccountAddressPage.addAddress(address);
+
+	await expect(
+		accountAddressesPage.addressNameLink(address.name)
+	).toBeVisible();
+
+	await (
+		await accountAddressesPage.addressesTableRowActions(address.name)
+	).click();
+	await accountAddressesPage.deleteButton.click();
+
+	await waitForAlert(page);
+});
+
+test('LPS-101221 Can delete addresses of an account in bulk', async ({
+	accountAddressesPage,
+	accountsPage,
+	apiHelpers,
+	editAccountAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	page.on('dialog', (dialog) => {
+		dialog.accept().catch(() => {});
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		description: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const addresses = [
+		{
+			name: getRandomString(),
+		},
+		{
+			name: getRandomString(),
+		},
+		{
+			name: getRandomString(),
+		},
+	];
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+	await editAccountPage.addressesTab.click();
+
+	for (const address of addresses) {
+		await accountAddressesPage.addAddressButton.click();
+
+		await editAccountAddressPage.addAddress(address);
+	}
+
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[0].name)
+	).toBeVisible();
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[1].name)
+	).toBeVisible();
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[2].name)
+	).toBeVisible();
+
+	await (
+		await accountAddressesPage.addressesTableRowCheckBox(addresses[0].name)
+	).check();
+	await (
+		await accountAddressesPage.addressesTableRowCheckBox(addresses[1].name)
+	).check();
+
+	await accountAddressesPage.deleteButton.click();
+
+	await waitForAlert(page);
+
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[0].name)
+	).toHaveCount(0);
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[1].name)
+	).toHaveCount(0);
+	await expect(
+		accountAddressesPage.addressNameLink(addresses[2].name)
+	).toBeVisible();
 });

@@ -6,6 +6,7 @@
 import {test} from '@playwright/test';
 
 import {AccountAccountGroupsPage} from '../pages/account-admin-web/AccountAccountGroupsPage';
+import {AccountAddressesPage} from '../pages/account-admin-web/AccountAddressesPage';
 import {AccountContactAddressPage} from '../pages/account-admin-web/AccountContactAddressPage';
 import {AccountEntriesManagementPortletPage} from '../pages/account-admin-web/AccountEntriesManagementPortletPage';
 import {AccountManagementWidgetPage} from '../pages/account-admin-web/AccountManagementWidgetPage';
@@ -13,6 +14,7 @@ import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrgani
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
+import {EditAccountAddressPage} from '../pages/account-admin-web/EditAccountAddressPage';
 import {EditAccountChannelDefaultsPage} from '../pages/account-admin-web/EditAccountChannelDefaultsPage';
 import {EditAccountContactAddressPage} from '../pages/account-admin-web/EditAccountContactAddressPage';
 import {EditAccountContactInformationPage} from '../pages/account-admin-web/EditAccountContactInformationPage';
@@ -25,6 +27,7 @@ import {EmailDomainsInstanceSettingsPage} from '../pages/account-admin-web/Email
 
 const accountsPagesTest = test.extend<{
 	accountAccountGroupsPage: AccountAccountGroupsPage;
+	accountAddressesPage: AccountAddressesPage;
 	accountContactAddressPage: AccountContactAddressPage;
 	accountEntriesManagementPortletPage: AccountEntriesManagementPortletPage;
 	accountManagementWidgetPage: AccountManagementWidgetPage;
@@ -32,6 +35,7 @@ const accountsPagesTest = test.extend<{
 	accountRolesPage: AccountRolesPage;
 	accountUsersPage: AccountUsersPage;
 	accountsPage: AccountsPage;
+	editAccountAddressPage: EditAccountAddressPage;
 	editAccountChannelDefaultsPage: EditAccountChannelDefaultsPage;
 	editAccountContactAddressPage: EditAccountContactAddressPage;
 	editAccountContactInformationPage: EditAccountContactInformationPage;
@@ -44,6 +48,9 @@ const accountsPagesTest = test.extend<{
 }>({
 	accountAccountGroupsPage: async ({page}, use) => {
 		await use(new AccountAccountGroupsPage(page));
+	},
+	accountAddressesPage: async ({page}, use) => {
+		await use(new AccountAddressesPage(page));
 	},
 	accountContactAddressPage: async ({page}, use) => {
 		await use(new AccountContactAddressPage(page));
@@ -65,6 +72,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountsPage: async ({page}, use) => {
 		await use(new AccountsPage(page));
+	},
+	editAccountAddressPage: async ({page}, use) => {
+		await use(new EditAccountAddressPage(page));
 	},
 	editAccountChannelDefaultsPage: async ({page}, use) => {
 		await use(new EditAccountChannelDefaultsPage(page));

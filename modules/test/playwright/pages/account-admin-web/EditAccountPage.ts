@@ -14,10 +14,12 @@ export class EditAccountPage {
 	readonly accountNameInput: Locator;
 	readonly addDomainLink: Locator;
 	readonly addDomainFrame: FrameLocator;
+	readonly addressesTab: Locator;
 	readonly backButton: Locator;
 	readonly changeImageButton: Locator;
 	readonly channelDefaultsLink: Locator;
 	readonly contactLink: Locator;
+	readonly descriptionInput: Locator;
 	readonly domainCell: (value: string) => Locator;
 	readonly domainRemoveButton: (value: string) => Locator;
 	readonly externalReferenceCodeInput: Locator;
@@ -40,6 +42,9 @@ export class EditAccountPage {
 			'[id="_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_addDomains"]'
 		);
 		this.addDomainFrame = page.frameLocator('iframe[title="Add Domain"]');
+		this.addressesTab = page.getByRole('link', {
+			name: 'Addresses',
+		});
 		this.backButton = page.getByRole('link', {exact: true, name: 'Back'});
 		this.changeImageButton = page.getByLabel('Change Image');
 		this.channelDefaultsLink = page.getByRole('link', {
@@ -47,6 +52,7 @@ export class EditAccountPage {
 			name: 'Channel Defaults',
 		});
 		this.contactLink = page.getByRole('link', {name: 'Contact'});
+		this.descriptionInput = page.getByLabel('Description');
 		this.domainCell = (value) => {
 			return page.getByRole('cell', {name: value});
 		};
@@ -84,12 +90,22 @@ export class EditAccountPage {
 		apiHelpers: DataApiHelpers,
 		{
 			avatar = '',
+			description = '',
 			domains = [],
+			externalReferenceCode = '',
 			name = getRandomString(),
 			type = 'business',
-		}: {avatar?: string; domains?: string[]; name?: string; type?: string}
+		}: {
+			avatar?: string;
+			description?: string;
+			domains?: string[];
+			externalReferenceCode?: string;
+			name?: string;
+			type?: string;
+		}
 	) {
 		await this.accountNameInput.fill(name);
+		await this.descriptionInput.fill(description);
 		await this.typeInput.selectOption(type);
 
 		if (avatar) {
@@ -108,6 +124,10 @@ export class EditAccountPage {
 			await this.addDomainLink.click();
 			await this.frameDomainInput.fill(domains.join());
 			await this.frameSaveButton.click();
+		}
+
+		if (externalReferenceCode) {
+			await this.externalReferenceCodeInput.fill(externalReferenceCode);
 		}
 
 		await this.saveButton.click();

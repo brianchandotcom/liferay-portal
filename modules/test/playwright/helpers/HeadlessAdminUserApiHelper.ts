@@ -7,6 +7,7 @@ import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TAccount = {
+	description?: string;
 	externalReferenceCode?: string;
 	id?: number;
 	name?: string;

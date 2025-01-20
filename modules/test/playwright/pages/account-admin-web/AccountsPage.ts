@@ -91,6 +91,8 @@ export class AccountsPage {
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly removeAccountOrganizationButton: Locator;
+	readonly searchInput: Locator;
+	readonly searchButton: Locator;
 
 	constructor(page: Page) {
 		this.accountNameLink = (accountName) => {
@@ -197,7 +199,9 @@ export class AccountsPage {
 		this.deactivateButton = page
 			.getByRole('button', {name: 'Deactivate'})
 			.or(page.getByRole('link', {name: 'Deactivate'}));
-		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.deleteButton = page
+			.getByRole('button', {name: 'Delete'})
+			.or(page.getByRole('link', {name: 'Delete'}));
 		this.detailsTab = page.getByRole('link', {
 			name: 'Details',
 		});
@@ -262,6 +266,8 @@ export class AccountsPage {
 		this.removeAccountOrganizationButton = page.getByRole('button', {
 			name: 'Remove',
 		});
+		this.searchInput = page.getByPlaceholder('Search for', {exact: true});
+		this.searchButton = page.getByLabel('Search for', {exact: true});
 	}
 
 	async changeFilter(option: string) {

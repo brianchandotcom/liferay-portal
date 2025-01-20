@@ -102,6 +102,7 @@ import {config as scimConfiguraitonWebConfig} from './tests/scim-configuration-w
 import {config as searchExperiencesWebConfig} from './tests/search-experiences-web/config';
 import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/config';
 import {config as segmentsWebConfig} from './tests/segments-web/config';
+import {config as setAdminPassword} from './tests/set-admin-password/config';
 import {
 	pageManagementSiteSetup,
 	pageManagementSiteTeardown,
@@ -229,6 +230,7 @@ export default defineConfig({
 		searchExperiencesWebConfig,
 		segmentExperimentWebConfig,
 		segmentsWebConfig,
+		setAdminPassword,
 		siteAdminWebConfig,
 		siteNavigationAdminWebConfig,
 		siteNavigationBreadcrumbWebConfig,

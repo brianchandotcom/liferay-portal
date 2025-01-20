@@ -125,7 +125,7 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 
 			if (parameter.contains("CompanyId") ||
 				parameter.contains("companyId") ||
-				!_containsEntityId(entityIds, variableName)) {
+				!_containsEntityId(entityIds, parameter)) {
 
 				continue;
 			}
@@ -136,12 +136,10 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private boolean _containsEntityId(
-		List<String> entityIds, String variableName) {
-
+	private boolean _containsEntityId(List<String> entityIds, String name) {
 		for (String entityId : entityIds) {
 			if (StringUtil.containsIgnoreCase(
-					variableName, entityId, StringPool.BLANK)) {
+					name, entityId, StringPool.BLANK)) {
 
 				return true;
 			}

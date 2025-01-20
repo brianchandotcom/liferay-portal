@@ -59,28 +59,29 @@ public class WorkflowContextUpgradeProcess extends UpgradeProcess {
 				JSONObject mapJSONObject =
 					workflowContextJSONObject.getJSONObject("map");
 
-				JSONObject newServiceContextJSONObject = JSONUtil.put(
-					"javaClass", ServiceContext.class.getName()
-				).put(
-					"serializable",
-					() -> {
-						JSONObject serviceContextJSONObject =
-							mapJSONObject.getJSONObject("serviceContext");
-
-						serviceContextJSONObject.remove("javaClass");
-
-						return serviceContextJSONObject;
-					}
-				);
-
 				mapJSONObject.put(
-					"serviceContext", newServiceContextJSONObject);
+					"serviceContext",
+					JSONUtil.put(
+						"javaClass", ServiceContext.class.getName()
+					).put(
+						"serializable",
+						() -> {
+							JSONObject serviceContextJSONObject =
+								mapJSONObject.getJSONObject("serviceContext");
+
+							serviceContextJSONObject.remove("javaClass");
+
+							return serviceContextJSONObject;
+						}
+					));
 
 				preparedStatement2.setString(
 					1, workflowContextJSONObject.toString());
+
 				preparedStatement2.setLong(
 					2, resultSet.getLong("ctCollectionId"));
 				preparedStatement2.setLong(3, resultSet.getLong(columnName));
+
 				preparedStatement2.addBatch();
 			}
 

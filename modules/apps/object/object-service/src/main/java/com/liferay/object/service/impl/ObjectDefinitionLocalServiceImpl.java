@@ -10,6 +10,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -522,6 +523,12 @@ public class ObjectDefinitionLocalServiceImpl
 					_assetEntryLocalService.deleteEntries(
 						objectDefinition.getCompanyId(),
 						objectDefinition.getClassName());
+
+					_friendlyURLEntryLocalService.
+						deleteCompanyFriendlyURLEntries(
+							objectDefinition.getCompanyId(),
+							_classNameLocalService.getClassNameId(
+								objectDefinition.getClassName()));
 
 					_deleteFromTable(objectDefinition.getDBTableName());
 
@@ -2784,6 +2791,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private FragmentEntryLinkCache _fragmentEntryLinkCache;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

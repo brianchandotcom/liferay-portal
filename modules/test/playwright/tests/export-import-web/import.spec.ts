@@ -28,6 +28,7 @@ import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {depotsPagesTest} from '../../tests/depot-web/fixtures/depotsPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
+import {readFileFromZip} from '../../utils/zip';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 
@@ -442,4 +443,115 @@ test('cannot export site scoped custom object entries at instance level', async 
 	await page.getByTestId('creationMenuNewButton').nth(1).click();
 
 	await expect(page.getByLabel('Tests 1 Items')).toBeHidden();
+});
+
+test('can export custom object entries at instance level with or without permissions based on selection', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	exportImportPage,
+	page,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	// 1. Test with Export Permissions selected
+
+	await applicationsMenuPage.goToExport();
+
+	await page.getByTestId('creationMenuNewButton').nth(1).click();
+
+	await page.getByLabel('Tests 1 Items').click();
+
+	const exportNameWithPermissions =
+		'CustomObject-WithPermissions-' + getRandomString();
+
+	await exportImportPage.title.fill(exportNameWithPermissions);
+
+	await page.getByLabel('Export Permissions').click();
+
+	await exportImportPage.exportButton.click();
+
+	const exportFilePathWithPermissions =
+		await exportImportPage.downloadExportProcess(exportNameWithPermissions);
+
+	const jsonFileName = 'C_Test.json';
+	const jsonContentWithPermissions = await readFileFromZip(
+		jsonFileName,
+		exportFilePathWithPermissions
+	);
+
+	const jsonDataWithPermissions = JSON.parse(jsonContentWithPermissions);
+	jsonDataWithPermissions.forEach((entry) => {
+		expect(entry).toHaveProperty('permissions');
+	});
+
+	// 2. Test without Export Permissions selected
+
+	await applicationsMenuPage.goToExport();
+
+	await page.getByTestId('creationMenuNewButton').nth(1).click();
+
+	await page.getByLabel('Tests 1 Items').click();
+
+	const exportNameWithoutPermissions =
+		'CustomObject-WithoutPermissions-' + getRandomString();
+
+	await exportImportPage.title.fill(exportNameWithoutPermissions);
+
+	await exportImportPage.exportButton.click();
+
+	const exportFilePathWithoutPermissions =
+		await exportImportPage.downloadExportProcess(
+			exportNameWithoutPermissions
+		);
+
+	const jsonContentWithoutPermissions = await readFileFromZip(
+		jsonFileName,
+		exportFilePathWithoutPermissions
+	);
+
+	const jsonDataWithoutPermissions = JSON.parse(
+		jsonContentWithoutPermissions
+	);
+	jsonDataWithoutPermissions.forEach((entry) => {
+		expect(entry).not.toHaveProperty('permissions');
+	});
 });

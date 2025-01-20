@@ -1,7 +1,13 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.116.0",
+		"@clayui/icon": "3.111.0",
+		"@clayui/loading-indicator": "3.111.0",
+		"@liferay/marketplace-js-components-web": "*",
 		"commerce-frontend-js": "*",
-		"frontend-js-web": "*"
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
 	},
 	"main": "js/index.js",
 	"name": "@liferay/commerce-channel-web",

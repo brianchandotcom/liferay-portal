@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionGroupIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -18,10 +19,12 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -56,6 +59,12 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		throws PortalException {
 
 		// Layout page template collection
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (group.isCompany() || group.isDepot()) {
+			throw new LayoutPageTemplateCollectionGroupIdException();
+		}
 
 		User user = _userLocalService.getUser(userId);
 
@@ -518,6 +527,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

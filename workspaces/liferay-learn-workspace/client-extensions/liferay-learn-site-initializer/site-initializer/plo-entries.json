@@ -24,9 +24,33 @@
 		}
 	},
 	{
+		"key": "lorem-ipsum",
+		"value": {
+			"en-US": " conec nulla condimentum tempor, id. Mattis eget donec donec cras."
+		}
+	},
+	{
 		"key": "minutes",
 		"value": {
 			"en-US": "Minutes"
+		}
+	},
+	{
+		"key": "nav-item",
+		"value": {
+			"en-US": "Nav Item"
+		}
+	},
+	{
+		"key": "nav-item-description",
+		"value": {
+			"en-US": "Nav Item Description."
+		}
+	},
+	{
+		"key": "nav-item-header",
+		"value": {
+			"en-US": "Nav Item Header"
 		}
 	},
 	{
@@ -71,6 +95,12 @@
 		"key": "recipes",
 		"value": {
 			"en-US": "Recipes"
+		}
+	},
+	{
+		"key": "site-title",
+		"value": {
+			"en-US": "Site Title"
 		}
 	},
 	{

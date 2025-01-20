@@ -1,0 +1,57 @@
+[#assign
+	alignDropdown = configuration.alignDropdown 
+	hideLabel = configuration.hideLabel
+/]
+
+<div class="utility-nav-dropdown">
+	<input id="${fragmentEntryLinkNamespace}" type="checkbox"/>
+	<label
+		class="utility-nav-dropdown-toggle"
+		for="${fragmentEntryLinkNamespace}"
+	>
+		<lfr-editable class="utility-nav-dropdown-html" id="html" type="html">
+			<svg
+				fill="none"
+				height="16"
+				viewBox="0 0 16 16"
+				width="16"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path d="M4 12L10 10L12 4L6 6L4 12Z" fill="currentColor" />
+				<path
+					clip-rule="evenodd"
+					d="M8 0C10.1377 0 12.1465 0.831238 13.6562 2.34375C15.1689 3.85315 16 5.86249 16 8C16 10.1375 15.1689 12.1437 13.6562 13.6562C12.1465 15.1688 10.1377 16 8 16C5.8623 16 3.85645 15.1688 2.34375 13.6562C0.831055 12.1469 0 10.1375 0 8C0 5.86249 0.831055 3.85315 2.34375 2.34375C3.85352 0.831238 5.8623 0 8 0ZM2 8C2 11.3094 4.69043 14 8 14C11.3096 14 14 11.3094 14 8C14 4.69061 11.3096 2 8 2C4.69043 2 2 4.69061 2 8Z"
+					fill="currentColor"
+					fill-rule="evenodd"
+				/>
+			</svg>
+		</lfr-editable>
+		<span
+			class="utility-nav-dropdown-title ${configuration.hideLabel?then('hide-label-mobile', '')}"
+			data-lfr-editable-id="title"
+			data-lfr-editable-type="text"
+		>
+			${languageUtil.get(locale, 'nav-item', 'Nav Item')}
+		</span>
+		<svg
+			class="utility-nav-dropdown-caret"
+			fill="none"
+			height="16"
+			viewBox="0 0 16 16"
+			width="16"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M4.17044 6.53604L7.58894 10.1013C7.81544 10.3362 8.18456 10.3362 8.41106 10.1013L11.8296 6.53604C12.1945 6.15434 11.9344 5.5 11.4185 5.5H4.5815C4.06557 5.50419 3.80552 6.15434 4.17044 6.53604V6.53604Z"
+				fill="currentColor"
+			/>
+		</svg>
+	</label>
+	<div
+		class="align-dropdown-${configuration.alignDropdown} utility-nav-dropdown-content"
+	>
+		<lfr-drop-zone
+			data-lfr-drop-zone-id="utility-nav-dropdown-dropzone"
+		></lfr-drop-zone>
+	</div>
+</div>

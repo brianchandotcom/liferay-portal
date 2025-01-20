@@ -1,0 +1,37 @@
+.utility-nav-icon {
+	align-items: center;
+	border-radius: calc(var(--border-radius) / 2);
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	outline: rgba(99, 153, 255, 0) solid 2px;
+	outline-offset: 2px;
+	padding: 12px;
+	transition: all var(--transition-base);
+
+	.utility-nav-icon-html {
+		color: var(--color-neutral-10);
+		height: 16px;
+		opacity: 0.6;
+		transition: all var(--transition-base);
+		width: 16px;
+
+		svg {
+			height: 16px;
+			vertical-align: top;
+			width: 16px;
+		}
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		background: var(--color-action-primary-hover-lighten);
+		outline: var(--color-brand-primary-lighten-2) solid 2px;
+
+		.utility-nav-icon-html {
+			color: var(--color-action-primary-hover);
+			opacity: 1;
+		}
+	}
+}

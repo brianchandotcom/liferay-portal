@@ -1,0 +1,70 @@
+.dropdown-menu-item {
+	align-items: center;
+	background: var(--color-neutral-0);
+	border-radius: calc(var(--border-radius) / 2);
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: 0.75rem;
+	justify-content: flex-start;
+	margin: 0.25rem 0;
+	padding: 0.75rem;
+	outline: rgba(99, 153, 255, 0) solid 2px;
+	outline-offset: 2px;
+	transition: all var(--transition-base);
+	width: 100%;
+}
+
+.dropdown-menu-item .dropdown-menu-item-html {
+	color: var(--color-neutral-10);
+	display: flex;
+	height: 1.5rem;
+	opacity: 0.5;
+	transition: all var(--transition-base);
+	width: 1.5rem;
+}
+
+.dropdown-menu-item .dropdown-menu-item-html svg {
+	vertical-align: top;
+}
+
+.dropdown-menu-item .dropdown-menu-item-title {
+	color: var(--color-neutral-10);
+	flex-grow: 1;
+	font-size: var(--text-link-md-font-size);
+	font-weight: var(--font-weight-semi-bold, 600);
+	line-height: var(--text-link-md-line-height);
+	margin: 0;
+	transition: all var(--transition-base);
+}
+
+.dropdown-menu-item .dropdown-menu-item-external-icon {
+	opacity: 0;
+	transition: all var(--transition-base);
+}
+
+.dropdown-menu-item:hover,
+.dropdown-menu-item:focus,
+.dropdown-menu-item:focus-visible {
+	background: var(--color-action-primary-hover-lighten);
+	outline: var(--color-brand-primary-lighten-2) solid 2px;
+}
+
+.dropdown-menu-item:hover .dropdown-menu-item-html,
+.dropdown-menu-item:focus .dropdown-menu-item-html,
+.dropdown-menu-item:focus-visible .dropdown-menu-item-html,
+.dropdown-menu-item:hover .dropdown-menu-item-title,
+.dropdown-menu-item:focus .dropdown-menu-item-title,
+.dropdown-menu-item:focus-visible .dropdown-menu-item-title {
+	color: var(--color-action-primary-hover);
+}
+
+.dropdown-menu-item:hover .dropdown-menu-item-html,
+.dropdown-menu-item:focus .dropdown-menu-item-html,
+.dropdown-menu-item:focus-visible .dropdown-menu-item-html,
+.dropdown-menu-item:hover .dropdown-menu-item-external-icon,
+.dropdown-menu-item:focus .dropdown-menu-item-external-icon,
+.dropdown-menu-item:focus-visible .dropdown-menu-item-external-icon {
+	opacity: 1;
+}

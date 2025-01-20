@@ -1,0 +1,35 @@
+.lfr-layout-structure-item-navigation-container {
+	left: 0;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: 99;
+}
+
+.navigation-container {
+	animation: shadow-on-scroll;
+	animation-range: 0% 100%;
+	animation-timeline: scroll();
+	width: 100%;
+}
+
+@keyframes shadow-on-scroll {
+	0% {
+		box-shadow: var(--elevation-tight-3) rgba(0, 0, 0, 0);
+	}
+
+	1% {
+		box-shadow: var(--elevation-tight-3) rgba(0, 0, 0, 0.15);
+	}
+
+	100% {
+		box-shadow: var(--elevation-tight-3) rgba(0, 0, 0, 0.15);
+	}
+}
+
+@media (max-width: 600px) {
+	.control-menu-level-1-nav {
+		align-items: flex-start !important;
+		flex-direction: column;
+	}
+}

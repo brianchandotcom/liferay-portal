@@ -1,0 +1,33 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "none",
+					"description": "Set max width for content",
+					"label": "Max Width",
+					"localizable": false,
+					"name": "maxWidth",
+					"type": "text"
+				},
+				{
+					"defaultValue": "var(--color-neutral-0)",
+					"description": "Set the background color of the primary nav",
+					"label": "Background Color",
+					"name": "bgColor",
+					"type": "colorPicker"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Invert the color of nav links and dropdowns",
+					"label": "Invert Links",
+					"name": "inverted",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

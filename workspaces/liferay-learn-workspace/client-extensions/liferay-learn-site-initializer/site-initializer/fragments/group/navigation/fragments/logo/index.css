@@ -1,0 +1,41 @@
+.navigation-logo {
+	align-items: center;
+	background: rgba(237, 243, 254, 0);
+	border-radius: calc(var(--border-radius) / 2);
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: 0.75rem;
+	height: 3.25rem;
+	justify-content: flex-start;
+	outline: rgba(99, 153, 255, 0) solid 2px;
+	outline-offset: 2px;
+	transition: all var(--transition-base);
+	width: max-content;
+
+	svg {
+		color: var(--nav-item-text-color-default, #282934);
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		background: var(--nav-item-text-color-background, #EDF3FE);
+		outline: var(--color-brand-primary-lighten-2) solid 2px;
+	}
+
+	#waffle {
+		color: var(--logo-waffle-color, #0B5FFF);
+	}
+
+	.navigation-logo-site-title {
+		color: var(--nav-item-text-color-default, #282934);
+		font-size: 30px;
+		font-weight: var(--font-weight-semi-bold, 600);
+
+		@media (max-width: 767.98px) {
+			font-size: 1.75rem;
+		}
+	}
+}

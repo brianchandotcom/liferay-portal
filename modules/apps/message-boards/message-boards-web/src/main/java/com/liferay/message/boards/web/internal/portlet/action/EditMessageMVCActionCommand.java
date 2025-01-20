@@ -244,12 +244,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CaptchaConfiguration getCaptchaConfiguration()
+	protected CaptchaConfiguration getCaptchaConfiguration(
+			ActionRequest actionRequest)
 		throws CaptchaConfigurationException {
 
 		try {
-			return _configurationProvider.getSystemConfiguration(
-				CaptchaConfiguration.class);
+			return _configurationProvider.getCompanyConfiguration(
+				CaptchaConfiguration.class,
+				_portal.getCompanyId(actionRequest));
 		}
 		catch (Exception exception) {
 			throw new CaptchaConfigurationException(exception);
@@ -520,7 +522,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			if (messageId <= 0) {
 				CaptchaConfiguration captchaConfiguration =
-					getCaptchaConfiguration();
+					getCaptchaConfiguration(actionRequest);
 
 				if (captchaConfiguration.
 						messageBoardsEditMessageCaptchaEnabled()) {

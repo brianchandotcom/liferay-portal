@@ -36,6 +36,13 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 				}
 
 				break;
+			case STATUS_CODE.SC_FILE_MIME_TYPE_EXCEPTION: {
+				if (error.message) {
+					message = error.message;
+				}
+
+				break;
+			}
 			case STATUS_CODE.SC_FILE_NAME_EXCEPTION:
 				message = Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-name'

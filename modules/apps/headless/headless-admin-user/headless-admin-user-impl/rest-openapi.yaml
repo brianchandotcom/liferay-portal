@@ -1388,6 +1388,13 @@ components:
                     items:
                         type: permission
                     type: array
+                roleBriefs:
+                    description:
+                        The list of roles associated with this user group.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
                 userAccountBriefs:
                     description:
                         The list of users associated with this user group.

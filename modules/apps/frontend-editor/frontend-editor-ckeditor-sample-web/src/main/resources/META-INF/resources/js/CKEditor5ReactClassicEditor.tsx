@@ -5,8 +5,8 @@
 
 import {EditorConfig} from 'ckeditor5';
 import {
-	CKEditor5ClassicEditor as ClassicEditor,
 	CKEditor5AdvancedPreset,
+	CKEditor5ClassicEditor as ClassicEditor,
 } from 'frontend-editor-ckeditor-web';
 import React from 'react';
 

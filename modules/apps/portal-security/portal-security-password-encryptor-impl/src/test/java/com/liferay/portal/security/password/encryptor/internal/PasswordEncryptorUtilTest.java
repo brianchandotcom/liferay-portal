@@ -345,7 +345,9 @@ public class PasswordEncryptorUtilTest {
 		}
 
 		@Override
-		public String getFullAlgorithmConfiguration(String encryptedPassword) {
+		public String getEncryptionAlgorithmConfiguration(
+			String encryptedPassword) {
+
 			return null;
 		}
 

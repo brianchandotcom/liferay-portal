@@ -116,6 +116,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		long classPK = getClassPK(classedModel);
 
+		String externalReferenceCode = getExternalReferenceCode(classedModel);
+
 		SystemEventHierarchyEntry systemEventHierarchyEntry =
 			SystemEventHierarchyEntryThreadLocal.peek();
 
@@ -125,7 +127,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			if (group != null) {
 				SystemEventLocalServiceUtil.addSystemEvent(
 					0, groupId, systemEventHierarchyEntry.getClassName(),
-					classPK, systemEventHierarchyEntry.getUuid(),
+					classPK, systemEventHierarchyEntry.getUuid(), externalReferenceCode,
 					referrerClassName, systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
@@ -133,20 +135,20 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 				SystemEventLocalServiceUtil.addSystemEvent(
 					getCompanyId(classedModel),
 					systemEventHierarchyEntry.getClassName(), classPK,
-					systemEventHierarchyEntry.getUuid(), referrerClassName,
+					systemEventHierarchyEntry.getUuid(), externalReferenceCode, referrerClassName,
 					systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
 		}
 		else if (group != null) {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				0, groupId, className, classPK, getUuid(classedModel),
+				0, groupId, className, classPK, getUuid(classedModel), externalReferenceCode,
 				referrerClassName, systemEvent.type(), StringPool.BLANK);
 		}
 		else {
 			SystemEventLocalServiceUtil.addSystemEvent(
 				getCompanyId(classedModel), className, classPK,
-				getUuid(classedModel), referrerClassName, systemEvent.type(),
+				getUuid(classedModel), externalReferenceCode, referrerClassName, systemEvent.type(),
 				StringPool.BLANK);
 		}
 	}
@@ -254,6 +256,30 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		try {
 			getUuidMethod = modelClass.getMethod("getUuid", new Class<?>[0]);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			_noUUIDClassNames.add(className);
+
+			return StringPool.BLANK;
+		}
+
+		return (String)getUuidMethod.invoke(classedModel, new Object[0]);
+	}
+
+	protected String getExternalReferenceCode(ClassedModel classedModel) throws Exception {
+
+		Class<?> modelClass = classedModel.getClass();
+
+		String className = modelClass.getName();
+
+		Method getUuidMethod = null;
+
+		try {
+			getUuidMethod = modelClass.getMethod("getExternalReferenceCode", new Class<?>[0]);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

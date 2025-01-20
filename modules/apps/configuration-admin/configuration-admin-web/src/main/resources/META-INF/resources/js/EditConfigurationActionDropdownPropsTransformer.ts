@@ -5,10 +5,10 @@
 
 import {openModal} from 'frontend-js-web';
 
-export default function propsTransformer({items, ...props}) {
+export default function propsTransformer({items, ...props}: {items: any}) {
 	return {
 		...props,
-		items: items.map((item) => {
+		items: items.map((item: any) => {
 			const newItem = {
 				...item,
 				onClick() {
@@ -19,6 +19,9 @@ export default function propsTransformer({items, ...props}) {
 						// @ts-ignore
 
 						submitForm(
+
+							// @ts-ignore
+
 							document.hrefFm,
 							item.data?.deleteConfigActionURL
 						);

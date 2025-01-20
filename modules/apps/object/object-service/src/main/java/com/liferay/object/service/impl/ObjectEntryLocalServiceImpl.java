@@ -574,6 +574,12 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId());
 
+			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				objectEntry.getNonzeroGroupId(),
+				_classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				objectEntry.getObjectEntryId());
+
 			_deleteFromTable(
 				objectDefinition.getDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),

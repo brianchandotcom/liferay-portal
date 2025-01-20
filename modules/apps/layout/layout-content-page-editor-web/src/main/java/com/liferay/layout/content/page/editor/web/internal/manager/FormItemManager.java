@@ -566,15 +566,18 @@ public class FormItemManager {
 		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (!Objects.equals(
+					fragmentEntryLink.getType(),
+					FragmentConstants.TYPE_INPUT)) {
+
+				continue;
+			}
+
 			Set<String> fragmentEntryLinkFieldTypes =
 				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
 					fragmentEntryLink.getFragmentEntryLinkId(), locale);
 
-			if (Objects.equals(
-					fragmentEntryLink.getType(),
-					FragmentConstants.TYPE_INPUT) &&
-				!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
-
+			if (!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
 				return true;
 			}
 		}

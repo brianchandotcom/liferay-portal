@@ -11,10 +11,10 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,15 +43,9 @@ public class FDSViewRegistryImpl implements FDSViewRegistry {
 			return Collections.emptyList();
 		}
 
-		List<FDSView> fdsViews = new ArrayList<>();
-
-		for (ServiceWrapper<FDSView> fdsViewServiceWrapper :
-				fdsViewServiceWrappers) {
-
-			fdsViews.add(fdsViewServiceWrapper.getService());
-		}
-
-		return fdsViews;
+		return TransformUtil.transform(
+			fdsViewServiceWrappers,
+			fdsViewServiceWrapper -> fdsViewServiceWrapper.getService());
 	}
 
 	@Activate

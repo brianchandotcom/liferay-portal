@@ -36,7 +36,7 @@ public class ClassicSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getRESTApplication() {
-		return "c/fdssamples";
+		return "/c/fdssamples";
 	}
 
 	@Override

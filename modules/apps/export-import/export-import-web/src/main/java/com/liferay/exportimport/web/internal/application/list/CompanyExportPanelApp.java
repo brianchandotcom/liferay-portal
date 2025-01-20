@@ -41,7 +41,7 @@ public class CompanyExportPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ExportImportPortletKeys.EXPORT;
+		return ExportImportPortletKeys.COMPANY_EXPORT;
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class CompanyExportPanelApp extends BasePanelApp {
 	private Portal _portal;
 
 	@Reference(
-		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT + ")"
+		target = "(javax.portlet.name=" + ExportImportPortletKeys.COMPANY_EXPORT + ")"
 	)
 	private Portlet _portlet;
 

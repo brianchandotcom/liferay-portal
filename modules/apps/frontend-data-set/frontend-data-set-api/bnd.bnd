@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.frontend.data.set.model,\
 	com.liferay.frontend.data.set.provider,\
 	com.liferay.frontend.data.set.provider.search,\
+	com.liferay.frontend.data.set.serializer,\
 	com.liferay.frontend.data.set.sort,\
 	com.liferay.frontend.data.set.url,\
 	com.liferay.frontend.data.set.view,\

@@ -12,7 +12,8 @@
 		.r_externalMedia_c_learningPathStep
 		.r_learningPathSteps_c_learningPathId
 		
-		learningPathName=restClient.get("/c/learningpaths/${learningPathId}?fields=name").name />
+		learningPathName=restClient.get("/c/learningpaths/${learningPathId}?fields=name").name
+	/>
 
 	<div class="breadcrumb breadcrumb-lp">
 		<a class="breadcrumb-home" href="/education-lms/index">

@@ -5,7 +5,7 @@
 
 import {EditorConfig} from 'ckeditor5';
 
-const CKEditor5DefaultPreset: EditorConfig = {
+const CKEditor5AdvancedPreset: EditorConfig = {
 	alignment: {
 		options: ['left', 'center', 'right'],
 	},
@@ -52,4 +52,4 @@ const CKEditor5DefaultPreset: EditorConfig = {
 	],
 };
 
-export default CKEditor5DefaultPreset;
+export default CKEditor5AdvancedPreset;

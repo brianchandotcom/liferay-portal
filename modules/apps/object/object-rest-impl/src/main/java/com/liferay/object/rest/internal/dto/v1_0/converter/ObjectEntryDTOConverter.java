@@ -209,6 +209,10 @@ public class ObjectEntryDTOConverter
 				setDateCreated(objectEntry::getCreateDate);
 				setDateModified(objectEntry::getModifiedDate);
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
+				setFriendlyUrlPath(
+					() -> objectEntry.getURLTitle(
+						dtoConverterContext.getLocale()));
+				setFriendlyUrlPath_i18n(objectEntry::getURLTitleMap);
 				setId(objectEntry::getObjectEntryId);
 				setKeywords(
 					() -> {

@@ -240,7 +240,7 @@ public class OracleDBCTTest {
 			WorkflowConstants.STATUS_APPROVED, _ctCollection3.getStatus());
 	}
 
-	private static final int _BATCH_SIZE = 1;
+	private static final int _BATCH_SIZE = 1001;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

@@ -40,6 +40,11 @@ public class OAuth10aAPIImpl extends DefaultApi10a {
 		return _requestTokenEndpoint;
 	}
 
+	@Override
+	protected String getAuthorizationBaseUrl() {
+		return null;
+	}
+
 	private final String _accessTokenEndpoint;
 	private final String _authorizationURL;
 	private final String _requestTokenEndpoint;

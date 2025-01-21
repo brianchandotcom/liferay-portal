@@ -24,7 +24,7 @@ public class OAuth10aUtil {
 			String requestURL)
 		throws Exception {
 
-		ServiceBuilder serviceBuilder = new ServiceBuilder();
+		ServiceBuilder serviceBuilder = new ServiceBuilder(apiKey);
 
 		serviceBuilder.apiKey(apiKey);
 		serviceBuilder.apiSecret(apiSecret);
@@ -36,12 +36,11 @@ public class OAuth10aUtil {
 		OAuth1AccessToken oAuth1AccessToken = new OAuth1AccessToken(
 			accessTokenString, accessTokenSecret);
 
-		OAuthRequest oAuthRequest = new OAuthRequest(
-			Verb.GET, requestURL, oAuthService);
+		OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, requestURL);
 
 		oAuthService.signRequest(oAuth1AccessToken, oAuthRequest);
 
-		Response response = oAuthRequest.send();
+		Response response = oAuthService.execute(oAuthRequest);
 
 		if (!response.isSuccessful()) {
 			throw new Exception("Response is not successful");

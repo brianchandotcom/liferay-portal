@@ -8,8 +8,11 @@ package com.liferay.commerce.wish.list.internal.upgrade.registry;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.wish.list.internal.upgrade.v1_1_0.CommerceWishListItemUpgradeProcess;
+import com.liferay.commerce.wish.list.internal.upgrade.v1_2_1.CommerceWishListUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -47,6 +50,11 @@ public class CommerceWishListItemServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"1.2.0", "1.2.1",
+			new CommerceWishListUpgradeProcess(
+				_resourceActionLocalService, _resourcePermissionLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce wish list upgrade step registrator finished");
 		}
@@ -60,5 +68,11 @@ public class CommerceWishListItemServiceUpgradeStepRegistrator
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

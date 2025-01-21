@@ -409,7 +409,7 @@ public class AssetTagLocalServiceTest {
 			List<AssetTag> assetTags = _assetTagLocalService.getTags(
 				group1.getGroupId(), classNameId, null);
 
-			Assert.assertEquals(1, assetTags.size());
+			Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
 		}
 		finally {
 			GroupTestUtil.deleteGroup(group1);

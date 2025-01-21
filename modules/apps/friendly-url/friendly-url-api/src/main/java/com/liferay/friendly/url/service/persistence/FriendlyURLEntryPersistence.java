@@ -382,6 +382,316 @@ public interface FriendlyURLEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId);
+
+	/**
+	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry findByG_C_First(
+			long groupId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry fetchByG_C_First(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry findByG_C_Last(
+			long groupId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry fetchByG_C_Last(
+		long groupId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param friendlyURLEntryId the primary key of the current friendly url entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	 */
+	public FriendlyURLEntry[] findByG_C_PrevAndNext(
+			long friendlyURLEntryId, long groupId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Removes all the friendly url entries where groupId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 */
+	public void removeByG_C(long groupId, long classNameId);
+
+	/**
+	 * Returns the number of friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching friendly url entries
+	 */
+	public int countByG_C(long groupId, long classNameId);
+
+	/**
+	 * Returns all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId);
+
+	/**
+	 * Returns a range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public java.util.List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry findByC_C_First(
+			long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Returns the first friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry fetchByC_C_First(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry findByC_C_Last(
+			long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Returns the last friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	 */
+	public FriendlyURLEntry fetchByC_C_Last(
+		long companyId, long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param friendlyURLEntryId the primary key of the current friendly url entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next friendly url entry
+	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
+	 */
+	public FriendlyURLEntry[] findByC_C_PrevAndNext(
+			long friendlyURLEntryId, long companyId, long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
+		throws NoSuchFriendlyURLEntryException;
+
+	/**
+	 * Removes all the friendly url entries where companyId = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 */
+	public void removeByC_C(long companyId, long classNameId);
+
+	/**
+	 * Returns the number of friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the number of matching friendly url entries
+	 */
+	public int countByC_C(long companyId, long classNameId);
+
+	/**
 	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID

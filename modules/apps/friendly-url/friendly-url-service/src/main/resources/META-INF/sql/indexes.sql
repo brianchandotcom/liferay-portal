@@ -1,3 +1,4 @@
+create index IX_56567C8E on FriendlyURLEntry (classNameId, companyId);
 create index IX_F3DC928B on FriendlyURLEntry (groupId, classNameId, classPK);
 create unique index IX_D51F1A48 on FriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 

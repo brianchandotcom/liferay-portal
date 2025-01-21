@@ -115,6 +115,9 @@ public interface FriendlyURLEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteCompanyFriendlyURLEntries(
+		long companyId, long classNameId);
+
 	/**
 	 * Deletes the friendly url entry from the database. Also notifies the appropriate model listeners.
 	 *

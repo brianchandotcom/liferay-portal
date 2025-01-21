@@ -403,6 +403,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
 
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getUserGroup.getPermissions(),
+				permission ->
+					Objects.equals(permission.getRoleName(), role.getName()) &&
+					(permission.getActionIds().length == 1) &&
+					Objects.equals(permission.getActionIds()[0], "DELETE")));
 		Assert.assertNotNull(getUserGroup.getUserAccountBriefs());
 		Assert.assertTrue(
 			ArrayUtil.exists(
@@ -419,13 +426,6 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 				getUserGroup.getUserAccountBriefs(),
 				userAccountBrief ->
 					userAccountBrief.getId() == user3.getUserId()));
-		Assert.assertTrue(
-			ArrayUtil.exists(
-				getUserGroup.getPermissions(),
-				permission ->
-					Objects.equals(permission.getRoleName(), role.getName()) &&
-					(permission.getActionIds().length == 1) &&
-					Objects.equals(permission.getActionIds()[0], "DELETE")));
 	}
 
 	@Inject

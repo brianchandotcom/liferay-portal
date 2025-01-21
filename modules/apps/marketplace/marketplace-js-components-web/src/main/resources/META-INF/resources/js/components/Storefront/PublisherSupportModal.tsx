@@ -58,7 +58,7 @@ const PublisherSupportModal = ({
 				{SUPPORT_EMAIL_ADDRESS && (
 					<PublisherSupportInfoCard
 						symbol="envelope-closed"
-						title={Liferay.Language.get('support-email')}
+						title={Liferay.Language.get('support-email-address')}
 						value={
 							<a
 								className="modal-link"

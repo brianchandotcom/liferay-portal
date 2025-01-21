@@ -42,48 +42,51 @@ public class LayoutSEOEntryLocalServiceImpl
 	@Override
 	public LayoutSEOEntry copyLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout,
-			long sourceLayoutId, boolean canonicalURLEnabled,
-			Map<Locale, String> canonicalURLMap,
-			boolean openGraphDescriptionEnabled,
-			Map<Locale, String> openGraphDescriptionMap,
-			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-			Map<Locale, String> openGraphTitleMap,
+			long targetLayoutId, LayoutSEOEntry sourceLayoutSEOEntry,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
-			groupId, privateLayout, sourceLayoutId);
+		LayoutSEOEntry targetLayoutSEOEntry =
+			layoutSEOEntryPersistence.fetchByG_P_L(
+				groupId, privateLayout, targetLayoutId);
 
-		if (layoutSEOEntry == null) {
-			layoutSEOEntry = _addLayoutSEOEntry(
-				userId, groupId, privateLayout, sourceLayoutId,
-				canonicalURLEnabled, canonicalURLMap, new ArrayList<>(),
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+		if (targetLayoutSEOEntry == null) {
+			targetLayoutSEOEntry = _addLayoutSEOEntry(
+				userId, groupId, privateLayout, targetLayoutId,
+				sourceLayoutSEOEntry.isCanonicalURLEnabled(),
+				sourceLayoutSEOEntry.getCanonicalURLMap(), new ArrayList<>(),
+				sourceLayoutSEOEntry.isOpenGraphDescriptionEnabled(),
+				sourceLayoutSEOEntry.getOpenGraphDescriptionMap(),
+				sourceLayoutSEOEntry.getOpenGraphImageAltMap(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryId(),
+				sourceLayoutSEOEntry.isOpenGraphTitleEnabled(),
+				sourceLayoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
 		else {
-			layoutSEOEntry = updateLayoutSEOEntry(
-				userId, groupId, privateLayout, sourceLayoutId,
-				canonicalURLEnabled, canonicalURLMap,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			targetLayoutSEOEntry = updateLayoutSEOEntry(
+				userId, groupId, privateLayout, targetLayoutId,
+				sourceLayoutSEOEntry.isCanonicalURLEnabled(),
+				sourceLayoutSEOEntry.getCanonicalURLMap(),
+				sourceLayoutSEOEntry.isOpenGraphDescriptionEnabled(),
+				sourceLayoutSEOEntry.getOpenGraphDescriptionMap(),
+				sourceLayoutSEOEntry.getOpenGraphImageAltMap(),
+				sourceLayoutSEOEntry.getOpenGraphImageFileEntryId(),
+				sourceLayoutSEOEntry.isOpenGraphTitleEnabled(),
+				sourceLayoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
 		}
 
 		_addLayoutSEOEntryCustomMetaTag(
-			layoutSEOEntry.getCompanyId(), groupId,
-			layoutSEOEntry.getLayoutSEOEntryId(),
+			targetLayoutSEOEntry.getCompanyId(), groupId,
+			targetLayoutSEOEntry.getLayoutSEOEntryId(),
 			TransformUtil.transform(
 				_layoutSEOEntryCustomMetaTagPersistence.findByG_L(
-					groupId, layoutSEOEntry.getLayoutSEOEntryId()),
+					groupId, sourceLayoutSEOEntry.getLayoutSEOEntryId()),
 				layoutSEOEntryCustomMetaTag ->
 					new LayoutSEOEntryCustomMetaTagProperty(
 						layoutSEOEntryCustomMetaTag.getProperty(),
 						layoutSEOEntryCustomMetaTag.getContentMap())));
 
-		return layoutSEOEntry;
+		return targetLayoutSEOEntry;
 	}
 
 	@Override

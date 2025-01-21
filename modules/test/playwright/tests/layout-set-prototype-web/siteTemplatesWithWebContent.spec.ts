@@ -61,8 +61,6 @@ const testWithPrivatePages = mergeTests(
 	})
 );
 
-const webContentName1: string = getRandomString();
-const webContentName2: string = getRandomString();
 const webContentText1: string = getRandomString();
 const webContentText2: string = getRandomString();
 
@@ -81,13 +79,6 @@ testWithPrivatePages(
 		sitesPage,
 		uiElementsPage,
 	}) => {
-		const siteTemplateName: string = getRandomString();
-		const siteName1: string = getRandomString();
-		const siteName2: string = getRandomString();
-		const webContentName: string = getRandomString();
-		const text: string = getRandomString();
-		const secondPageNameOnSiteTemplate = getRandomString();
-
 		await applicationsMenuPage.goToGlobalSite();
 		await productMenuPage.checkIfAdecuateProductMenu('Global');
 		await productMenuPage.openProductMenuIfClosed();
@@ -96,13 +87,12 @@ testWithPrivatePages(
 			await getBasicWebContentStructureId(apiHelpers);
 
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
-
-		const webContent =
+ 		const webContent =
 			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				content: text,
+				content: getRandomString(),
 				ddmStructureId: basicWebContentStructureId,
 				groupId: globalSiteId,
-				titleMap: {en_US: webContentName},
+				titleMap: {en_US: getRandomString()},
 			});
 
 		apiHelpers.data.push({
@@ -110,6 +100,7 @@ testWithPrivatePages(
 			type: 'webContent',
 		});
 
+		const siteTemplateName: string = getRandomString();
 		const layoutSetPrototype =
 			await createSiteTemplateWithContentPageAndAssetPublisher({
 				apiHelpers,
@@ -127,9 +118,10 @@ testWithPrivatePages(
 		});
 
 		await applicationsMenuPage.goToSites();
+
 		const site1Id = await sitesPage.createSiteFromTemplate(
 			siteTemplateName,
-			siteName1
+			getRandomString()
 		);
 
 		apiHelpers.data.push({id: site1Id, type: 'site'});
@@ -137,7 +129,7 @@ testWithPrivatePages(
 		await applicationsMenuPage.goToSites();
 		const site2Id = await sitesPage.createSiteFromTemplate(
 			siteTemplateName,
-			siteName2
+			getRandomString()
 		);
 
 		apiHelpers.data.push({id: site2Id, type: 'site'});
@@ -152,6 +144,8 @@ testWithPrivatePages(
 
 		await productMenuPage.goToPages();
 		await pagesAdminPage.newButton.click();
+		
+		const secondPageNameOnSiteTemplate = getRandomString();
 		await pagesAdminPage.addPage({
 			name: secondPageNameOnSiteTemplate,
 		});
@@ -186,21 +180,17 @@ testWithPrivatePages(
 		webContentDisplayPage,
 		widgetPagePage,
 	}) => {
-		const widgetTemplateName1: string = getRandomString();
-		const widgetTemplateName2: string = getRandomString();
-		const siteName: string = getRandomString();
-
 		const layoutSetPrototype1: LayoutSetPrototype =
 			await createSiteTemplateWithWebContentOnWidgetPage({
 				apiHelpers,
 				page,
 				pagesAdminPage,
 				productMenuPage,
-				templateName: widgetTemplateName1,
+				templateName: getRandomString(),
 				text: webContentText1,
 				uiElementsPage,
 				webContentDisplayPage,
-				webContentName: webContentName1,
+				webContentName: getRandomString(),
 				widgetPagePage,
 			});
 
@@ -209,6 +199,8 @@ testWithPrivatePages(
 			type: 'layoutSetPrototype',
 		});
 
+		const webContentName2: string = getRandomString();
+		const widgetTemplateName2: string = getRandomString();
 		const layoutSetPrototype2: LayoutSetPrototype =
 			await createSiteTemplateWithWebContentOnWidgetPage({
 				apiHelpers,
@@ -230,6 +222,7 @@ testWithPrivatePages(
 
 		await applicationsMenuPage.goToSites();
 
+		const siteName: string = getRandomString();
 		const site = await apiHelpers.headlessSite.createSite({
 			name: siteName,
 			templateKey: layoutSetPrototype1.layoutSetPrototypeId,
@@ -276,9 +269,6 @@ testWithPrivatePages(
 		webContentDisplayPage,
 	}) => {
 		const contentTemplateName1: string = getRandomString();
-		const contentTemplateName2: string = getRandomString();
-		const siteName: string = getRandomString();
-
 		const layoutSetPrototype1: LayoutSetPrototype =
 			await createSiteTemplateWithWebContentOnContentPage({
 				apiHelpers,
@@ -290,7 +280,7 @@ testWithPrivatePages(
 				text: `${webContentText1} `,
 				uiElementsPage,
 				webContentDisplayPage,
-				webContentName: webContentName1,
+				webContentName: getRandomString(),
 			});
 
 		apiHelpers.data.push({
@@ -298,6 +288,7 @@ testWithPrivatePages(
 			type: 'layoutSetPrototype',
 		});
 
+		const contentTemplateName2: string = getRandomString();
 		const layoutSetPrototype2: LayoutSetPrototype =
 			await createSiteTemplateWithWebContentOnContentPage({
 				apiHelpers,
@@ -309,7 +300,7 @@ testWithPrivatePages(
 				text: webContentText2,
 				uiElementsPage,
 				webContentDisplayPage,
-				webContentName: webContentName2,
+				webContentName: getRandomString(),
 			});
 
 		apiHelpers.data.push({
@@ -317,6 +308,7 @@ testWithPrivatePages(
 			type: 'layoutSetPrototype',
 		});
 
+		const siteName: string = getRandomString();
 		const site = await apiHelpers.headlessSite.createSite({
 			name: siteName,
 			templateKey: layoutSetPrototype1.layoutSetPrototypeId,
@@ -381,7 +373,7 @@ testWithPrivatePages(
 				text: `${webContentText1} `,
 				uiElementsPage,
 				webContentDisplayPage,
-				webContentName: webContentName1,
+				webContentName: getRandomString(),
 			});
 
 		apiHelpers.data.push({
@@ -401,7 +393,7 @@ testWithPrivatePages(
 				text: `${webContentText2} `,
 				uiElementsPage,
 				webContentDisplayPage,
-				webContentName: webContentName2,
+				webContentName: getRandomString(),
 			});
 
 		apiHelpers.data.push({

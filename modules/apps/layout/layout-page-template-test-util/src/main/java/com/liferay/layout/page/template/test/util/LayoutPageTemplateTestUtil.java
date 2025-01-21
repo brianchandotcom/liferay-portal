@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Objects;
+
 /**
  * @author Kyle Miho
  */
@@ -51,6 +53,35 @@ public class LayoutPageTemplateTestUtil {
 			layoutPageTemplateCollectionId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC,
 			WorkflowConstants.STATUS_DRAFT);
+	}
+
+	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, int type, int status)
+		throws PortalException {
+
+		long layoutPageTemplateCollectionId =
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		if (Objects.equals(LayoutPageTemplateEntryTypeConstants.BASIC, type) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, type)) {
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				addLayoutPageTemplateCollection(groupId);
+
+			layoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
+
+		return LayoutPageTemplateEntryLocalServiceUtil.
+			addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), groupId,
+				layoutPageTemplateCollectionId, RandomTestUtil.randomString(),
+				type, 0, status,
+				ServiceContextTestUtil.getServiceContext(
+					groupId, TestPropsValues.getUserId()));
 	}
 
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(

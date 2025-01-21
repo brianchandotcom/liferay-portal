@@ -619,6 +619,16 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	@GET
+	@Path("/{groupId}/usage/reset/preview")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public FaroSubscriptionDisplay previewResetProjectUsageDisplays(
+			@PathParam("groupId") Long groupId)
+		throws Exception {
+
+		return _resetProjectUsageDisplays(groupId);
+	}
+
 	@DELETE
 	@Path("/{groupId}/usage/reset")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
@@ -628,32 +638,9 @@ public class ProjectController extends BaseFaroController {
 		FaroProject faroProject =
 			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId);
 
-		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
-			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
-
-		faroSubscriptionDisplay.setIndividualsCounts(null);
-		faroSubscriptionDisplay.setPageViewsCounts(null);
-
-		faroProject.setSubscription(
-			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
-
-		Date date = new Date();
-
-		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(endDate);
-
-		calendar.set(Calendar.DATE, 1);
-
-		faroSubscriptionDisplay.setUsageCounts(
-			cerebroEngineClient, contactsEngineClient, endDate, faroProject,
-			calendar.getTime());
-
 		_faroProjectLocalService.updateSubscription(
 			faroProject.getFaroProjectId(),
-			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+			JSONUtil.writeValueAsString(_resetProjectUsageDisplays(groupId)));
 	}
 
 	@Path("/{groupId}/send-created-workspace-email")
@@ -1205,6 +1192,38 @@ public class ProjectController extends BaseFaroController {
 		if (workspace.isReady()) {
 			_initializeFaroProject(faroProject);
 		}
+	}
+
+	private FaroSubscriptionDisplay _resetProjectUsageDisplays(long groupId)
+		throws Exception {
+
+		FaroProject faroProject =
+			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId);
+
+		FaroSubscriptionDisplay faroSubscriptionDisplay = JSONUtil.readValue(
+			faroProject.getSubscription(), FaroSubscriptionDisplay.class);
+
+		faroSubscriptionDisplay.setIndividualsCounts(null);
+		faroSubscriptionDisplay.setPageViewsCounts(null);
+
+		faroProject.setSubscription(
+			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+
+		Date date = new Date();
+
+		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(endDate);
+
+		calendar.set(Calendar.DATE, 1);
+
+		faroSubscriptionDisplay.setUsageCounts(
+			cerebroEngineClient, contactsEngineClient, endDate, faroProject,
+			calendar.getTime());
+
+		return faroSubscriptionDisplay;
 	}
 
 	private void _sendTimeZoneNotification(long groupId) {

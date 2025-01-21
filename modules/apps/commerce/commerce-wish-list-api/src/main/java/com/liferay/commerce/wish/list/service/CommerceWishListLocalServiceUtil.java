@@ -125,15 +125,11 @@ public class CommerceWishListLocalServiceUtil {
 		getService().deleteCommerceWishLists(userId, date);
 	}
 
-	public static void deleteCommerceWishListsByGroupId(long groupId)
-		throws PortalException {
-
+	public static void deleteCommerceWishListsByGroupId(long groupId) {
 		getService().deleteCommerceWishListsByGroupId(groupId);
 	}
 
-	public static void deleteCommerceWishListsByUserId(long userId)
-		throws PortalException {
-
+	public static void deleteCommerceWishListsByUserId(long userId) {
 		getService().deleteCommerceWishListsByUserId(userId);
 	}
 
@@ -261,8 +257,7 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static CommerceWishList forceDeleteCommerceWishList(
-			CommerceWishList commerceWishList)
-		throws PortalException {
+		CommerceWishList commerceWishList) {
 
 		return getService().forceDeleteCommerceWishList(commerceWishList);
 	}

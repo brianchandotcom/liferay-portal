@@ -164,9 +164,6 @@
 		<finder name="Mx" return-type="Company">
 			<finder-column name="mx" />
 		</finder>
-		<finder name="LogoId" return-type="Company">
-			<finder-column name="logoId" />
-		</finder>
 	</entity>
 	<entity local-service="true" name="CompanyInfo" remote-service="false">
 

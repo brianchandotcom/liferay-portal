@@ -182,6 +182,10 @@ test(
 
 		const topValue = await getTopValue();
 
+		// Hover over the Card before scrolling
+
+		await page.locator('[data-name="Card"]').hover();
+
 		await page.mouse.wheel(0, 50);
 
 		const nextTopValue = await getTopValue();

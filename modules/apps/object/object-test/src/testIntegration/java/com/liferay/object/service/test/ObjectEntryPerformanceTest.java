@@ -78,18 +78,7 @@ public class ObjectEntryPerformanceTest {
 
 		Files.deleteIfExists(_logFilePath);
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "Performance",
-					"performance")));
-
-		_objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
+		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
 
 		_addObjectEntriesByObjectEntryManager(
 			GetterUtil.getInteger(
@@ -146,6 +135,23 @@ public class ObjectEntryPerformanceTest {
 
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 		}
+	}
+
+	private void _publishCustomObjectDefinitionByObjectDefinitionLocalService()
+		throws Exception {
+
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			false,
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "Performance",
+					"performance")));
+
+		_objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId());
 	}
 
 	private static Path _logFilePath;

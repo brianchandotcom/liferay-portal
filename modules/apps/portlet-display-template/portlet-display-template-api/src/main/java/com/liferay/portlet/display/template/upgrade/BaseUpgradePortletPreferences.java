@@ -31,20 +31,20 @@ public abstract class BaseUpgradePortletPreferences
 	protected String getGroupExternalReferenceCode(long companyId, long groupId)
 		throws Exception {
 
-		Map<Long, String> companyMap = _groupIdMap.computeIfAbsent(
+		Map<Long, String> companyIdGroupIdMap = _groupIdMap.computeIfAbsent(
 			companyId, curCompanyId -> new ConcurrentHashMap<>());
 
-		return companyMap.computeIfAbsent(
+		return companyIdGroupIdMap.computeIfAbsent(
 			groupId, curGroupId -> _getGroupExternalReferenceCode(curGroupId));
 	}
 
 	protected long getGroupId(long companyId, String groupKey)
 		throws Exception {
 
-		Map<String, Long> companyMap = _groupKeyMap.computeIfAbsent(
+		Map<String, Long> companyIdGroupKeyMap = _groupKeyMap.computeIfAbsent(
 			companyId, curCompanyId -> new ConcurrentHashMap<>());
 
-		return companyMap.computeIfAbsent(
+		return companyIdGroupKeyMap.computeIfAbsent(
 			groupKey,
 			curGroupKey -> {
 				Object[] group = _getGroup(companyId, curGroupKey);
@@ -60,14 +60,14 @@ public abstract class BaseUpgradePortletPreferences
 					return 0L;
 				}
 
-				Map<Long, String> companyGroupIdMap =
+				Map<Long, String> companyIdGroupIdMap =
 					_groupIdMap.computeIfAbsent(
 						companyId, curCompanyId -> new ConcurrentHashMap<>());
 
 				String externalReferenceCode = (String)group[0];
 				long groupId = (long)group[1];
 
-				companyGroupIdMap.computeIfAbsent(
+				companyIdGroupIdMap.computeIfAbsent(
 					groupId, curGroupId -> externalReferenceCode);
 
 				return groupId;

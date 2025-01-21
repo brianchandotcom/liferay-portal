@@ -92,7 +92,6 @@ export class JournalPage {
 	}
 
 	async goToJournalArticleAction(action: string, title: string) {
-		await this.changeView('list');
 		await this.page.getByLabel(`Actions for ${title}`).waitFor();
 
 		await clickAndExpectToBeVisible({

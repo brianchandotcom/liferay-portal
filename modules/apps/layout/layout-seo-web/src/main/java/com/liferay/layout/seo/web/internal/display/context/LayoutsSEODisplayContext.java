@@ -11,11 +11,6 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
@@ -53,7 +48,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -90,7 +84,6 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
-		DDMStorageEngineManager ddmStorageEngineManager,
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector, LayoutLocalService layoutLocalService,
@@ -101,7 +94,6 @@ public class LayoutsSEODisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
@@ -143,40 +135,6 @@ public class LayoutsSEODisplayContext {
 		_backURL = backURL;
 
 		return _backURL;
-	}
-
-	public DDMFormValues getDDMFormValues() throws StorageException {
-		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
-
-		if ((selLayoutSEOEntry == null) ||
-			(selLayoutSEOEntry.getDDMStorageId() == 0)) {
-
-			return null;
-		}
-
-		try {
-			return _ddmStorageEngineManager.getDDMFormValues(
-				selLayoutSEOEntry.getDDMStorageId());
-		}
-		catch (PortalException portalException) {
-			throw new StorageException(portalException);
-		}
-	}
-
-	public long getDDMStructurePrimaryKey() throws PortalException {
-		if (_ddmStructure != null) {
-			return _ddmStructure.getPrimaryKey();
-		}
-
-		Company company = _themeDisplay.getCompany();
-
-		_ddmStructure = DDMStructureServiceUtil.getStructure(
-			company.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(
-				LayoutSEOEntry.class.getName()),
-			"custom-meta-tags");
-
-		return _ddmStructure.getPrimaryKey();
 	}
 
 	public String getDefaultCanonicalURL() throws PortalException {
@@ -817,8 +775,6 @@ public class LayoutsSEODisplayContext {
 		LayoutsSEODisplayContext.class);
 
 	private String _backURL;
-	private final DDMStorageEngineManager _ddmStorageEngineManager;
-	private DDMStructure _ddmStructure;
 	private final DLAppService _dlAppService;
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

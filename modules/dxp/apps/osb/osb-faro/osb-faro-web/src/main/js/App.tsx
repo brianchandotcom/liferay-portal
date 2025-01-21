@@ -26,7 +26,9 @@ import {
 	useLocation
 } from 'react-router-dom';
 import {OnboardingContext} from 'shared/context/onboarding';
-import {Provider} from 'react-redux';
+import {Pendo} from 'shared/util/pendo';
+import {Project} from 'shared/util/records';
+import {Provider, useSelector} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {saveState} from 'shared/store/local-storage';
 import {setBackURL} from 'shared/actions/settings';
@@ -80,7 +82,11 @@ const RoutesContainer = ({children}) => {
 
 	const groupId = matchingPath?.params.groupId ?? '0';
 
-	const {loading} = useFetchCurrentUser(groupId);
+	const project: Project = useSelector<any, any>(state =>
+		state.getIn(['projects', groupId, 'data'])
+	);
+
+	const {data: currentUser, loading} = useFetchCurrentUser(groupId);
 
 	useEffect(() => {
 		const {
@@ -91,6 +97,14 @@ const RoutesContainer = ({children}) => {
 			store.dispatch(setBackURL(`${pathname}${search}`));
 		}
 	}, [location]);
+
+	useEffect(() => {
+		if (currentUser?.id && project?.corpProjectName) {
+			const pendo = new Pendo({currentUser, project});
+
+			pendo.initialize();
+		}
+	}, [currentUser?.id, project?.corpProjectName]);
 
 	if (loading) {
 		return <Loading />;

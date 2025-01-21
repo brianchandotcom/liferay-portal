@@ -143,6 +143,11 @@ const config = {
 		new webpack.DefinePlugin({
 			FARO_ENV: JSON.stringify(process.env.FARO_ENVIRONMENT_NAME || '')
 		}),
+		new webpack.DefinePlugin({
+			FARO_PENDO_API_KEY: JSON.stringify(
+				process.env.FARO_PENDO_API_KEY || ''
+			)
+		}),
 		new webpack.IgnorePlugin({
 			contextRegExp: /moment$/,
 			resourceRegExp: /^\.\/locale$/

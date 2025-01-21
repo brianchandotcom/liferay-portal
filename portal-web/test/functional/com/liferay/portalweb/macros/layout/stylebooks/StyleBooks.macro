@@ -153,7 +153,7 @@ definition {
 	macro selectStyleBook(styleBookName = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconCard.clickCardTitle(card = ${styleBookName});
+		LexiconCard.clickCard(card = ${styleBookName});
 
 		SelectFrameTop();
 	}

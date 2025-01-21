@@ -75,7 +75,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
 					"fields");
 
-				Map<String, JSONObject> fields = new HashMap<>(
+				Map<String, JSONObject> fieldJSONObjects = new HashMap<>(
 					fieldsJSONArray.length());
 
 				for (int fieldIndex = 0; fieldIndex < fieldsJSONArray.length();
@@ -93,10 +93,10 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 					fieldNames.add(fieldName);
 
-					fields.put(fieldName, fieldJSONObject);
+					fieldJSONObjects.put(fieldName, fieldJSONObject);
 				}
 
-				for (Map.Entry<String, JSONObject> entry : fields.entrySet()) {
+				for (Map.Entry<String, JSONObject> entry : fieldJSONObjects.entrySet()) {
 					JSONObject fieldJSONObject = entry.getValue();
 
 					JSONObject typeOptionsJSONObject =
@@ -134,7 +134,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 						}
 
 						_checkDependencyField(
-							fieldName, fields, typeOptionsJSONObject);
+							fieldName, fieldJSONObjects, typeOptionsJSONObject);
 					}
 				}
 			}
@@ -209,7 +209,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 	}
 
 	private void _checkDependencyField(
-			String fieldName, Map<String, JSONObject> fields,
+			String fieldName, Map<String, JSONObject> fieldJSONObjects,
 			JSONObject typeOptionsJSONObject)
 		throws FragmentEntryConfigurationException {
 
@@ -226,13 +226,13 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 					"Dependency field cannot reference itself");
 			}
 
-			if (!fields.containsKey(key)) {
+			if (!fieldJSONObjects.containsKey(key)) {
 				throw new FragmentEntryConfigurationException(
 					"Dependency field cannot depend on field " + key +
 						" that does not exist");
 			}
 
-			JSONObject dependencyFieldJSONObject = fields.get(key);
+			JSONObject dependencyFieldJSONObject = fieldJSONObjects.get(key);
 
 			if (!_allowedDependencyTypes.contains(
 					dependencyFieldJSONObject.getString("type"))) {

@@ -86,20 +86,10 @@ const getVisibleFields = ({
 
 const Head = ({
 	fields,
-	items,
-	selectItems,
 	selectable,
-	selectedItemsKey,
-	selectedItemsValue,
-	selectionType,
 }: {
 	fields: Array<Field>;
-	items: Array<any>;
-	selectItems: Function;
 	selectable?: boolean;
-	selectedItemsKey: string;
-	selectedItemsValue: any;
-	selectionType?: string;
 }) => {
 	return (
 		<ClayTableHead
@@ -111,55 +101,14 @@ const Head = ({
 
 				(field) => {
 					if (field.fieldName === 'select') {
-						if (!!items.length && selectionType !== 'multiple') {
-							return (
-								<ClayTableCell
-									key="select"
-									scope="col"
-									width="51px"
-								>
-									{null}
-								</ClayTableCell>
-							);
-						}
-
-						const title =
-							items.length !== selectedItemsValue.length
-								? Liferay.Language.get('select-items')
-								: Liferay.Language.get('clear-selection');
-
 						return (
 							<ClayTableCell
-								className="cell-select-item"
 								key="select"
 								scope="col"
-								textValue={title}
+								textValue={Liferay.Language.get('select-items')}
 								width="51px"
 							>
-								<ClayCheckbox
-									checked={!!selectedItemsValue.length}
-									indeterminate={
-										!!selectedItemsValue.length &&
-										items.length !==
-											selectedItemsValue.length
-									}
-									name="table-head-selector"
-									onChange={() => {
-										if (
-											selectedItemsValue.length ===
-											items.length
-										) {
-											return selectItems([]);
-										}
-
-										return selectItems(
-											items.map(
-												(item) => item[selectedItemsKey]
-											)
-										);
-									}}
-									title={title}
-								/>
+								{null}
 							</ClayTableCell>
 						);
 					}
@@ -857,12 +806,7 @@ const Table = ({
 			>
 				<Head
 					fields={schema.fields as Array<Field>}
-					items={items}
-					selectItems={selectItems}
 					selectable={selectable}
-					selectedItemsKey={selectedItemsKey}
-					selectedItemsValue={selectedItemsValue}
-					selectionType={selectionType}
 				/>
 
 				<Body

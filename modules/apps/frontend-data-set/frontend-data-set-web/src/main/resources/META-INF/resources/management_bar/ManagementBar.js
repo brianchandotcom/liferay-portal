@@ -14,7 +14,8 @@ function ManagementBar({
 	bulkActions,
 	creationMenu,
 	fluid,
-	selectAllItems,
+	items,
+	selectItems,
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
@@ -22,13 +23,23 @@ function ManagementBar({
 	showSearch,
 	total,
 }) {
+	function handleCheckboxClick() {
+		if (selectedItemsValue.length === items.length) {
+			return selectItems([]);
+		}
+
+		return selectItems(items.map((item) => item[selectedItemsKey]));
+	}
+
 	return (
 		<>
 			{selectionType === 'multiple' && (
 				<BulkActions
 					bulkActions={bulkActions}
 					fluid={fluid}
-					selectAllItems={selectAllItems}
+					handleCheckboxClick={handleCheckboxClick}
+					items={items}
+					selectItems={selectItems}
 					selectedItems={selectedItems}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
@@ -37,7 +48,12 @@ function ManagementBar({
 			)}
 
 			{(!selectedItemsValue.length || selectionType === 'single') && (
-				<NavBar creationMenu={creationMenu} showSearch={showSearch} />
+				<NavBar
+					creationMenu={creationMenu}
+					handleCheckboxClick={handleCheckboxClick}
+					items={items}
+					showSearch={showSearch}
+				/>
 			)}
 
 			<ActiveFiltersBar disabled={!!selectedItemsValue.length} />
@@ -60,6 +76,8 @@ ManagementBar.propTypes = {
 		secondaryItems: PropTypes.array,
 	}),
 	fluid: PropTypes.bool,
+	items: PropTypes.array.isRequired,
+	selectItems: PropTypes.func.isRequired,
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
 	selectedItemsValue: PropTypes.array,

@@ -143,7 +143,7 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-46069")
-	public void testAddFragmentEntryLinksInput() throws Exception {
+	public void testAddInputFragmentEntryLinks() throws Exception {
 		FragmentComposition fragmentComposition = _addFragmentComposition(
 			SetUtil.fromArray("text"), FragmentConstants.TYPE_INPUT,
 			"<div></div>", 1);

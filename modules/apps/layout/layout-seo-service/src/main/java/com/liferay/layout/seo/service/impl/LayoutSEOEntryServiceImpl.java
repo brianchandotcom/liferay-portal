@@ -32,32 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 	@Override
-	public LayoutSEOEntry copyLayoutSEOEntry(
-			long userId, long groupId, boolean privateLayout,
-			long sourceLayoutId, boolean canonicalURLEnabled,
-			Map<Locale, String> canonicalURLMap, long copyDDMStorageId,
-			boolean openGraphDescriptionEnabled,
-			Map<Locale, String> openGraphDescriptionMap,
-			Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-			Map<Locale, String> openGraphTitleMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutPermissionUtil.checkLayoutUpdatePermission(
-			getPermissionChecker(),
-			_layoutLocalService.getLayout(
-				groupId, privateLayout, sourceLayoutId));
-
-		return layoutSEOEntryLocalService.copyLayoutSEOEntry(
-			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
-			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
-	}
-
-	@Override
 	public LayoutSEOEntry updateCustomMetaTags(
 			long groupId, boolean privateLayout, long layoutId,
 			ServiceContext serviceContext)

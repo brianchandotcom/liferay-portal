@@ -59,7 +59,7 @@ function OrderButton({disabled = false}) {
 						onClick={() => {
 							closeCart();
 
-							storeImmediateCheckout();
+							storeImmediateCheckout(true);
 
 							setGuestSignInVisible(true);
 						}}

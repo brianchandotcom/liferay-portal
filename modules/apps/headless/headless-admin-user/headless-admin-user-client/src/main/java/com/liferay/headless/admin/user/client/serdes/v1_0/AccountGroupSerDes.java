@@ -9,6 +9,9 @@ import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +50,9 @@ public class AccountGroupSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (accountGroup.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -75,6 +81,36 @@ public class AccountGroupSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (accountGroup.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(accountGroup.getDateCreated()));
+
+			sb.append("\"");
+		}
+
+		if (accountGroup.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(accountGroup.getDateModified()));
+
+			sb.append("\"");
 		}
 
 		if (accountGroup.getDescription() != null) {
@@ -148,6 +184,9 @@ public class AccountGroupSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (accountGroup.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -161,6 +200,24 @@ public class AccountGroupSerDes {
 		else {
 			map.put(
 				"customFields", String.valueOf(accountGroup.getCustomFields()));
+		}
+
+		if (accountGroup.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(accountGroup.getDateCreated()));
+		}
+
+		if (accountGroup.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(accountGroup.getDateModified()));
 		}
 
 		if (accountGroup.getDescription() == null) {
@@ -218,6 +275,12 @@ public class AccountGroupSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				return false;
 			}
@@ -261,6 +324,18 @@ public class AccountGroupSerDes {
 					}
 
 					accountGroup.setCustomFields(customFieldsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					accountGroup.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					accountGroup.setDateModified(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

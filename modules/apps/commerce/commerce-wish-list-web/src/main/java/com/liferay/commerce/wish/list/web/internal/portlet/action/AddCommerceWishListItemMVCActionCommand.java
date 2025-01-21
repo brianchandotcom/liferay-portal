@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -86,13 +86,14 @@ public class AddCommerceWishListItemMVCActionCommand
 				_commerceWishListHttpHelper.getCurrentCommerceWishList(
 					httpServletRequest, httpServletResponse);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceWishListItem.class.getName(), actionRequest);
-
 			if (commerceWishList == null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				commerceWishList = _commerceWishListService.addCommerceWishList(
-					_language.get(serviceContext.getLocale(), "default"), true,
-					serviceContext);
+					themeDisplay.getScopeGroupId(),
+					_language.get(themeDisplay.getLocale(), "default"), true);
 			}
 
 			CommerceWishListItem commerceWishListItem =
@@ -100,8 +101,8 @@ public class AddCommerceWishListItemMVCActionCommand
 					CommerceUtil.getCommerceAccountId(
 						(CommerceContext)httpServletRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT)),
-					commerceWishList.getCommerceWishListId(), cpDefinitionId,
-					cpInstanceUuid, formFieldValues, serviceContext);
+					commerceWishList.getCommerceWishListId(), cpInstanceUuid,
+					cpDefinitionId, formFieldValues);
 
 			jsonObject.put(
 				"commerceWishListItemId",

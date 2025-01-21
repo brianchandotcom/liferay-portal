@@ -64,7 +64,7 @@ export function MarketplacePurchase({
 			>
 				<span className="mx-1">
 					{Liferay.Language.get(
-						'sorry-was-not-possible-to-install-your-app-you-can-try-again-if-the-problem-persist-contact-via'
+						'there-was-an-unknown-error'
 					)}
 				</span>
 

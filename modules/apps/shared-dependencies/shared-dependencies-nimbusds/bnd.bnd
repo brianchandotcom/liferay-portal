@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Shared Dependencies Nimbusds
+Bundle-SymbolicName: com.liferay.shared.dependencies.nimbusds
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.crypto.tink.*,\
+	\
+	net.minidev.json.*
+-exportcontents: com.nimbusds.*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

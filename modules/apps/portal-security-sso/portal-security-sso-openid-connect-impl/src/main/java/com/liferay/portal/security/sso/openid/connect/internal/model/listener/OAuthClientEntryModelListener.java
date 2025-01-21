@@ -25,12 +25,14 @@ import org.osgi.service.component.annotations.Component;
 public class OAuthClientEntryModelListener
 	extends BaseModelListener<OAuthClientEntry> {
 
+	@Override
 	public void onAfterRemove(OAuthClientEntry oAuthClientEntry)
 		throws ModelListenerException {
 
 		_oidcProviderMetadataPortalCache.remove(oAuthClientEntry.getClientId());
 	}
 
+	@Override
 	public void onAfterUpdate(
 			OAuthClientEntry originalOAuthClientEntry,
 			OAuthClientEntry oAuthClientEntry)

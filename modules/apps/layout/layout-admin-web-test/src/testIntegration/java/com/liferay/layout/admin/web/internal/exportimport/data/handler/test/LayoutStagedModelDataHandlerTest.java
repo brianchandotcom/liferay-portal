@@ -61,6 +61,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -133,6 +135,7 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 import com.liferay.template.test.util.TemplateTestUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -1555,6 +1558,44 @@ public class LayoutStagedModelDataHandlerTest
 			layout.fetchDraftLayout());
 	}
 
+	private void _assertCustomMetaTags(LayoutSEOEntry layoutSEOEntry) {
+		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
+			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+				layoutSEOEntry.getGroupId(),
+				layoutSEOEntry.getLayoutSEOEntryId());
+
+		Assert.assertFalse(layoutSEOEntryCustomMetaTags.isEmpty());
+		Assert.assertEquals(
+			layoutSEOEntryCustomMetaTags.toString(), 2,
+			layoutSEOEntryCustomMetaTags.size());
+
+		LayoutSEOEntryCustomMetaTag firstLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(0);
+
+		Assert.assertEquals(
+			"property1", firstLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content1",
+			firstLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"contenido1",
+			firstLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
+
+		LayoutSEOEntryCustomMetaTag secondLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(1);
+
+		Assert.assertEquals(
+			"property2", secondLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content2",
+			secondLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"contenido2",
+			secondLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
+	}
+
 	private void _assertExportImportContentReference(
 			long classPK, String fieldName, String infoItemClassName,
 			String infoItemFormVariationKey,
@@ -1672,6 +1713,7 @@ public class LayoutStagedModelDataHandlerTest
 				uuid, groupId);
 
 		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
+		_assertCustomMetaTags(layoutSEOEntry);
 	}
 
 	private void _assertMapEquals(
@@ -2041,7 +2083,29 @@ public class LayoutStagedModelDataHandlerTest
 				ServiceContextTestUtil.getServiceContext(
 					layout.getGroupId(), TestPropsValues.getUserId()));
 
+		_layoutSEOEntryLocalService.updateCustomMetaTags(
+			TestPropsValues.getUserId(), layout.getGroupId(), false,
+			layout.getLayoutId(),
+			Arrays.asList(
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property1",
+					HashMapBuilder.put(
+						LocaleUtil.getSiteDefault(), "content1"
+					).put(
+						LocaleUtil.SPAIN, "contenido1"
+					).build()),
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property2",
+					HashMapBuilder.put(
+						LocaleUtil.getSiteDefault(), "content2"
+					).put(
+						LocaleUtil.SPAIN, "contenido2"
+					).build())),
+			ServiceContextTestUtil.getServiceContext(
+				layout.getGroupId(), TestPropsValues.getUserId()));
+
 		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
+		_assertCustomMetaTags(layoutSEOEntry);
 
 		return layoutSEOEntry;
 	}

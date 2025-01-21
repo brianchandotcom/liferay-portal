@@ -291,7 +291,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 		double usage = 100.0 * count / limit;
 
-		return (long)(usage * 100) / 100.0;
+		return long(usage * 100) / 100.0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

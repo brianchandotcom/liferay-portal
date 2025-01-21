@@ -111,7 +111,7 @@ const CommerceChannelAddPaymentMethod = () => (
 	>
 		<Marketplace.Modal
 			noConnectionMessage={Liferay.Language.get(
-				'you-are-trying-to-add-a-new-payment-method-through-the-marketplace-but-the-connection-has-not-been-established-yet-please-go-to-instance-settings-to-enable-the-connection-into-dxp'
+				'you-are-trying-to-add-a-new-payment-method-through-the-marketplace,-but-the-connection-has-not-been-established-yet'
 			)}
 			trigger={
 				<ClayButton size="sm">

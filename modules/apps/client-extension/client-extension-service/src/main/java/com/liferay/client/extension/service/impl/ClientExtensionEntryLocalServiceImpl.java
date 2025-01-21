@@ -6,7 +6,6 @@
 package com.liferay.client.extension.service.impl;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryNameException;
-import com.liferay.client.extension.internal.configuration.ClientExtensionConfiguration;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
@@ -16,7 +15,6 @@ import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -74,16 +72,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.client.extension.internal.configuration.ClientExtensionConfiguration",
 	property = "model.class.name=com.liferay.client.extension.model.ClientExtensionEntry",
 	service = AopService.class
 )
@@ -396,8 +391,7 @@ public class ClientExtensionEntryLocalServiceImpl
 			_synchronousInvokeOnCluster(
 				ClusterInvokeAcceptor.class, this,
 				_undeployClientExtensionEntryMethod,
-				new Object[] {clientExtensionEntry},
-				_clientExtensionConfiguration.clusterTimeout(),
+				new Object[] {clientExtensionEntry}, _CLUSTER_TIMEOUT,
 				TimeUnit.MILLISECONDS);
 		}
 		catch (Throwable throwable) {
@@ -465,18 +459,6 @@ public class ClientExtensionEntryLocalServiceImpl
 		}
 
 		return clientExtensionEntry;
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_clientExtensionConfiguration = ConfigurableUtil.createConfigurable(
-			ClientExtensionConfiguration.class, properties);
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_clientExtensionConfiguration = ConfigurableUtil.createConfigurable(
-			ClientExtensionConfiguration.class, properties);
 	}
 
 	private void _addResources(ClientExtensionEntry clientExtensionEntry)
@@ -654,6 +636,8 @@ public class ClientExtensionEntryLocalServiceImpl
 			oldTypeSettingsUnicodeProperties, type);
 	}
 
+	private static final long _CLUSTER_TIMEOUT = 10000;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClientExtensionEntryLocalServiceImpl.class);
 
@@ -679,8 +663,6 @@ public class ClientExtensionEntryLocalServiceImpl
 
 	@Reference
 	private CETFactory _cetFactory;
-
-	private volatile ClientExtensionConfiguration _clientExtensionConfiguration;
 
 	@Reference
 	private ClientExtensionEntryRelLocalService

@@ -11,12 +11,18 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>MANAGE_COMMERCE_WISH_LISTS</action-key>
+				<action-key>ADD_COMMERCE_WISH_LIST</action-key>
+				<action-key>VIEW_COMMERCE_WISH_LISTS</action-key>
 			</supports>
-			<site-member-defaults />
-			<guest-defaults />
+			<site-member-defaults>
+				<action-key>ADD_COMMERCE_WISH_LIST</action-key>
+				<action-key>VIEW_COMMERCE_WISH_LISTS</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>ADD_COMMERCE_WISH_LIST</action-key>
+			</guest-defaults>
 			<guest-unsupported>
-				<action-key>MANAGE_COMMERCE_WISH_LISTS</action-key>
+				<action-key>VIEW_COMMERCE_WISH_LISTS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

@@ -19,14 +19,14 @@ String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:erro
 	<div class="g-recaptcha" data-sitekey="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaPublicKey()) %>"></div>
 
 	<noscript>
-		<div class="rec-h-525 rec-w-302 recaptcha-taglib">
-			<div class="position-relative rec-h-525 rec-w-302 recaptcha-taglib">
-				<div class="position-absolute rec-h-525 rec-w-302 recaptcha-taglib">
-					<iframe class="rec-b-s-n rec-h-525 rec-w-302 recaptcha-taglib" frameborder="0" scrolling="no" src="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaNoScriptURL()) %><%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaPublicKey()) %>"></iframe>
+		<div class="recaptcha-container">
+			<div class="recaptcha-inner">
+				<div class="recaptcha-no-script">
+					<iframe class="recaptcha-no-script-iframe" frameborder="0" scrolling="no" src="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaNoScriptURL()) %><%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaPublicKey()) %>"></iframe>
 				</div>
 
-				<div class="rec-wrap recaptcha-taglib">
-					<textarea aria-labelledby="<portlet:namespace />g-recaptcha-response-error" class="g-recaptcha-response rec-ta recaptcha-taglib" id="g-recaptcha-response" name="g-recaptcha-response"></textarea>
+				<div class="recaptcha-wrapper">
+					<textarea aria-labelledby="<portlet:namespace />g-recaptcha-response-error" class="g-recaptcha-response recaptcha-textarea" id="g-recaptcha-response" name="g-recaptcha-response"></textarea>
 				</div>
 			</div>
 		</div>

@@ -239,8 +239,6 @@ definition {
 			key_pageName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
-		DropdownMenuItem.click(menuItem = "Add Page");
-
 		PagesAdmin._addPage(
 			assertCheckboxMissing = ${assertCheckboxMissing},
 			navigationMenus = ${navigationMenus},
@@ -264,8 +262,6 @@ definition {
 		Click(
 			key_pageName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
-
-		DropdownMenuItem.click(menuItem = "Add Page");
 
 		LexiconCard.clickCard(card = "Widget Page");
 

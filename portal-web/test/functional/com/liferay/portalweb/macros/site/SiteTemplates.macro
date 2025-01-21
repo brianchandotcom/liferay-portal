@@ -27,8 +27,6 @@ definition {
 			key_pageName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
-		DropdownMenuItem.click(menuItem = "Add Page");
-
 		if (!(isSet(sitePageType))) {
 			var sitePageType = "Widget Page";
 		}

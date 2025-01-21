@@ -19,6 +19,7 @@ module.exports = {
 		analytics: true,
 		FARO_DEV_MODE: true,
 		FARO_ENV: true,
+		FARO_PENDO_API_KEY: true,
 		IncrementalDOM: true,
 		Liferay: true,
 		pendo: true

@@ -91,18 +91,20 @@ public class ObjectEntryPerformanceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		_addObjectEntries(
+		_addObjectEntriesByObjectEntryManager(
 			GetterUtil.getInteger(
 				properties.getProperty("object.entries.count")));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_deleteObjectEntries();
+		_deleteObjectEntriesByObjectEntryLocalService();
 	}
 
 	@Test
-	public void testGetObjectEntries() throws Exception {
+	public void testGetObjectEntriesByObjectEntryLocalService()
+		throws Exception {
+
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
@@ -110,7 +112,9 @@ public class ObjectEntryPerformanceTest {
 		}
 	}
 
-	private void _addObjectEntries(Integer numberOfEntries) throws Exception {
+	private void _addObjectEntriesByObjectEntryManager(Integer numberOfEntries)
+		throws Exception {
+
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
@@ -134,7 +138,9 @@ public class ObjectEntryPerformanceTest {
 		}
 	}
 
-	private void _deleteObjectEntries() throws Exception {
+	private void _deleteObjectEntriesByObjectEntryLocalService()
+		throws Exception {
+
 		for (com.liferay.object.model.ObjectEntry objectEntry :
 				_objectEntries) {
 

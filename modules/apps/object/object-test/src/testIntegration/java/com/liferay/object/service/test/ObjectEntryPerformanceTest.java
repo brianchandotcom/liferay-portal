@@ -96,8 +96,8 @@ public class ObjectEntryPerformanceTest {
 
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
-				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				0, _customObjectDefinition.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class ObjectEntryPerformanceTest {
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
+				_customObjectDefinition.getStorageType());
 
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
@@ -115,7 +115,7 @@ public class ObjectEntryPerformanceTest {
 
 		for (int counter = 0; counter < numberOfEntries; counter++) {
 			objectEntryManager.addObjectEntry(
-				dtoConverterContext, _objectDefinition,
+				dtoConverterContext, _customObjectDefinition,
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
@@ -140,27 +140,28 @@ public class ObjectEntryPerformanceTest {
 	private void _publishCustomObjectDefinitionByObjectDefinitionLocalService()
 		throws Exception {
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "Performance",
-					"performance")));
+		_customObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "Performance",
+						"performance")));
 
-		_objectDefinition =
+		_customObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
+				_customObjectDefinition.getObjectDefinitionId());
 	}
 
 	private static Path _logFilePath;
 
+	@DeleteAfterTestRun
+	private ObjectDefinition _customObjectDefinition;
+
 	@Inject
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

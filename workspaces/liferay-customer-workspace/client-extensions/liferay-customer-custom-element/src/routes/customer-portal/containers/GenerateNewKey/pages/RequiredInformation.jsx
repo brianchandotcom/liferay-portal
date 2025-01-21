@@ -168,7 +168,7 @@ const RequiredInformation = ({
 			sizing: `Sizing ${
 				selectedKeyData?.selectedSubscription?.instanceSize || 1
 			}`,
-			startDate: selectedKeyData?.selectedSubscription.startDate,
+			startDate: selectedKeyData?.selectedSubscription?.startDate || new Date(),
 		}),
 		[
 			accountKey,

@@ -68,10 +68,7 @@ public class GroupItemSelectorProviderImplTest {
 
 			Assert.assertTrue(groups.contains(company.getGroup()));
 		}
-	}
 
-	@Test
-	public void testGetGroupsShouldNotReturnInactiveGroups() throws Exception {
 		List<Group> groups = _groupItemSelectorProvider.getGroups(
 			_group.getCompanyId(), _group.getGroupId(), null, 0, 20);
 

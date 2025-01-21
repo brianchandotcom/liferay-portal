@@ -18,6 +18,8 @@ import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalServ
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -140,6 +142,28 @@ public class CPConfigurationEntryLocalServiceTest {
 		Assert.assertEquals(
 			cpConfigurationEntry1.getCPConfigurationEntryId(),
 			cpConfigurationEntry2.getCPConfigurationEntryId());
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry1.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			cpConfigurationEntrySetting.getValue());
+
+		Assert.assertFalse(
+			"CPConfigurationEntryId", jsonObject.has("CPConfigurationEntryId"));
+		Assert.assertFalse(
+			"CPConfigurationListId", jsonObject.has("CPConfigurationListId"));
+		Assert.assertFalse("companyId", jsonObject.has("companyId"));
+		Assert.assertFalse("ctCollectionId", jsonObject.has("ctCollectionId"));
+		Assert.assertFalse(
+			"externalReferenceCode", jsonObject.has("externalReferenceCode"));
+		Assert.assertFalse("mvccVersion", jsonObject.has("mvccVersion"));
+		Assert.assertFalse("userId", jsonObject.has("userId"));
+		Assert.assertFalse("userName", jsonObject.has("userName"));
+		Assert.assertFalse("uuid", jsonObject.has("uuid"));
 	}
 
 	@Test
@@ -425,6 +449,9 @@ public class CPConfigurationEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private Portal _portal;

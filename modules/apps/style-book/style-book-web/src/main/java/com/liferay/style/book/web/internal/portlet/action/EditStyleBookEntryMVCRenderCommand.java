@@ -36,16 +36,13 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
+		renderRequest.setAttribute(
+			EditStyleBookEntryDisplayContext.class.getName(),
 			new EditStyleBookEntryDisplayContext(
 				_cetManager, _fragmentCollectionContributorRegistry,
 				_frontendTokenDefinitionRegistry,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
-				renderResponse);
-
-		renderRequest.setAttribute(
-			EditStyleBookEntryDisplayContext.class.getName(),
-			editStyleBookEntryDisplayContext);
+				renderResponse));
 
 		return "/edit_style_book_entry.jsp";
 	}

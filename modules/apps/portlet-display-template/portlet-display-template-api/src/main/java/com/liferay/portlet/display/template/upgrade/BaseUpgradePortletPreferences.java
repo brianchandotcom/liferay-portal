@@ -28,10 +28,13 @@ import javax.portlet.PortletPreferences;
 public abstract class BaseUpgradePortletPreferences
 	extends BasePortletPreferencesUpgradeProcess {
 
-	protected String getGroupExternalReferenceCode(long groupId)
+	protected String getGroupExternalReferenceCode(long companyId, long groupId)
 		throws Exception {
 
-		return _groupIdMap.computeIfAbsent(
+		Map<Long, String> companyMap = _groupIdMap.computeIfAbsent(
+			companyId, curCompanyId -> new ConcurrentHashMap<>());
+
+		return companyMap.computeIfAbsent(
 			groupId, curGroupId -> _getGroupExternalReferenceCode(curGroupId));
 	}
 
@@ -57,10 +60,14 @@ public abstract class BaseUpgradePortletPreferences
 					return 0L;
 				}
 
+				Map<Long, String> companyGroupIdMap =
+					_groupIdMap.computeIfAbsent(
+						companyId, curCompanyId -> new ConcurrentHashMap<>());
+
 				String externalReferenceCode = (String)group[0];
 				long groupId = (long)group[1];
 
-				_groupIdMap.computeIfAbsent(
+				companyGroupIdMap.computeIfAbsent(
 					groupId, curGroupId -> externalReferenceCode);
 
 				return groupId;
@@ -70,7 +77,8 @@ public abstract class BaseUpgradePortletPreferences
 	@Override
 	protected abstract String[] getPortletIds();
 
-	protected String getScopeExternalReferenceCode(long plid, long scopeGroupId)
+	protected String getScopeExternalReferenceCode(
+			long companyId, long plid, long scopeGroupId)
 		throws Exception {
 
 		long layoutGroupId = _getLayoutGroupId(plid);
@@ -79,7 +87,7 @@ public abstract class BaseUpgradePortletPreferences
 			return StringPool.BLANK;
 		}
 
-		return getGroupExternalReferenceCode(scopeGroupId);
+		return getGroupExternalReferenceCode(companyId, scopeGroupId);
 	}
 
 	protected String getScopeExternalReferenceCode(
@@ -93,7 +101,7 @@ public abstract class BaseUpgradePortletPreferences
 			return StringPool.BLANK;
 		}
 
-		return getGroupExternalReferenceCode(scopeGroupId);
+		return getGroupExternalReferenceCode(companyId, scopeGroupId);
 	}
 
 	protected abstract void upgradePreferences(
@@ -126,7 +134,7 @@ public abstract class BaseUpgradePortletPreferences
 
 			if (displayStyleGroupId > 0) {
 				groupExternalReferenceCode = getScopeExternalReferenceCode(
-					plid, displayStyleGroupId);
+					companyId, plid, displayStyleGroupId);
 			}
 		}
 
@@ -220,7 +228,8 @@ public abstract class BaseUpgradePortletPreferences
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradePortletPreferences.class);
 
-	private final Map<Long, String> _groupIdMap = new ConcurrentHashMap<>();
+	private final Map<Long, Map<Long, String>> _groupIdMap =
+		new ConcurrentHashMap<>();
 	private final Map<Long, Map<String, Long>> _groupKeyMap =
 		new ConcurrentHashMap<>();
 	private final Map<Long, Long> _plidMap = new ConcurrentHashMap<>();

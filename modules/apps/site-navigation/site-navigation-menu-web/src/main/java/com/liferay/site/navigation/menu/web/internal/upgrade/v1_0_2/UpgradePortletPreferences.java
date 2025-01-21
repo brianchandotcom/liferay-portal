@@ -63,7 +63,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			siteNavigationMenu.getExternalReferenceCode());
 
 		String scopeExternalReferenceCode = getScopeExternalReferenceCode(
-			plid, siteNavigationMenu.getGroupId());
+			companyId, plid, siteNavigationMenu.getGroupId());
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			portletPreferences.setValue(

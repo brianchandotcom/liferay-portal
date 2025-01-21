@@ -87,7 +87,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			assetListEntry.getExternalReferenceCode());
 
 		String scopeExternalReferenceCode = getScopeExternalReferenceCode(
-			plid, assetListEntry.getGroupId());
+			companyId, plid, assetListEntry.getGroupId());
 
 		if (Validator.isNotNull(scopeExternalReferenceCode)) {
 			portletPreferences.setValue(

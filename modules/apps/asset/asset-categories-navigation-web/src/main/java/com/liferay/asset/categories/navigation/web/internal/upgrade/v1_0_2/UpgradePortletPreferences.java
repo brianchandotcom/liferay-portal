@@ -51,7 +51,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		if (displayStyleGroupId > 0) {
 			String groupExternalReferenceCode = getGroupExternalReferenceCode(
-				displayStyleGroupId);
+				companyId, displayStyleGroupId);
 
 			if (Validator.isNotNull(groupExternalReferenceCode)) {
 				portletPreferences.reset("displayStyleGroupId");
@@ -91,7 +91,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				groupAssetVocabularyExternalReferenceCodesMap.entrySet()) {
 
 			String scopeExternalReferenceCode = getScopeExternalReferenceCode(
-				plid, entries.getKey());
+				companyId, plid, entries.getKey());
 
 			if (Validator.isNull(scopeExternalReferenceCode)) {
 				portletPreferences.setValues(

@@ -49,34 +49,27 @@ public class CommerceWishListItemLocalServiceWrapper
 			commerceWishListItem);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishListItem
 			addCommerceWishListItem(
-				long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-				String json,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long userId, long commerceWishListId, String cpInstanceUuid,
+				long cProductId, String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListItemLocalService.addCommerceWishListItem(
-			commerceWishListId, cpDefinitionId, cpInstanceId, json,
-			serviceContext);
+			userId, commerceWishListId, cpInstanceUuid, cProductId, json);
 	}
 
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishListItem
-			addCommerceWishListItem(
-				long commerceWishListId, long cProductId, String cpInstanceUuid,
-				String json,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			addOrUpdateCommerceWishListItem(
+				long userId, long commerceWishListId, String cpInstanceUuid,
+				long cProductId, String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListItemLocalService.addCommerceWishListItem(
-			commerceWishListId, cProductId, cpInstanceUuid, json,
-			serviceContext);
+		return _commerceWishListItemLocalService.
+			addOrUpdateCommerceWishListItem(
+				userId, commerceWishListId, cpInstanceUuid, cProductId, json);
 	}
 
 	/**
@@ -298,6 +291,15 @@ public class CommerceWishListItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+		fetchCommerceWishListItem(
+			long commerceWishListId, String cpInstanceUuid, long cProductId) {
+
+		return _commerceWishListItemLocalService.fetchCommerceWishListItem(
+			commerceWishListId, cpInstanceUuid, cProductId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -446,6 +448,17 @@ public class CommerceWishListItemLocalServiceWrapper
 
 		return _commerceWishListItemLocalService.updateCommerceWishListItem(
 			commerceWishListItem);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem
+			updateCommerceWishListItem(
+				long commerceWishListId, String cpInstanceUuid, long cProductId,
+				String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListItemLocalService.updateCommerceWishListItem(
+			commerceWishListId, cpInstanceUuid, cProductId, json);
 	}
 
 	@Override

@@ -138,7 +138,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		ListUtil.distinct(sortedDependencies, new GradleDependencyComparator());
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			(sortedDependencies.size() * 4) + 1);
 
 		for (String dependency : sortedDependencies) {
 			sb.append("\n");

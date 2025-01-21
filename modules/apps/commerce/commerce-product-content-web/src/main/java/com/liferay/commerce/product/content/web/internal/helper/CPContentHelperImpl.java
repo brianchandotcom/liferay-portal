@@ -741,7 +741,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		CommerceWishList commerceWishList =
 			_commerceWishListService.getDefaultCommerceWishList(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+				themeDisplay.getScopeGroupId());
 
 		if (commerceWishList != null) {
 			long commerceWishListId = commerceWishList.getCommerceWishListId();

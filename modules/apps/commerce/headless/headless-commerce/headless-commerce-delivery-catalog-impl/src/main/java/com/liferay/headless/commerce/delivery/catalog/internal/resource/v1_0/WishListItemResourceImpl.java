@@ -20,7 +20,6 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
@@ -138,12 +137,10 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 		}
 
 		CommerceWishListItem commerceWishListItem =
-			_commerceWishListItemService.addCommerceWishListItem(
+			_commerceWishListItemService.addOrUpdateCommerceWishListItem(
 				_getCommerceAccountId(accountId, commerceChannel), wishListId,
-				wishListItem.getProductId(), cpInstanceUuid,
-				wishListItem.toString(),
-				_serviceContextHelper.getServiceContext(
-					commerceChannel.getSiteGroupId()));
+				cpInstanceUuid, wishListItem.getProductId(),
+				wishListItem.toString());
 
 		return _toWishListItem(
 			commerceWishListItem,
@@ -224,9 +221,6 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.WishListItemDTOConverter)"

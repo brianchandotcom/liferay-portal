@@ -30,14 +30,13 @@ export default async function createSiteTemplateWithContentPageAndAssetPublisher
 	templateName: string;
 	uiElementsPage: UIElementsPage;
 }): Promise<LayoutSetPrototype> {
-	
 	const layoutSetPrototype = await createSiteTemplate({
-					apiHelpers,
-					page,
-					productMenuPage,
-					templateName,
-				  });
-	
+		apiHelpers,
+		page,
+		productMenuPage,
+		templateName,
+	});
+
 	await productMenuPage.goToPages();
 
 	await pagesAdminPage.newButton.click();

@@ -39,22 +39,19 @@ export default async function createSiteTemplateWithWebContentOnHomePage({
 	webContentDisplayPage: WebContentDisplayPage;
 	webContentName: string;
 }): Promise<LayoutSetPrototype> {
-	
 	const layoutSetPrototype = await createSiteTemplate({
-			apiHelpers,
-			page,
-			productMenuPage,
-			templateName,
-			text,
-			webContentName,
-		  });
-	
+		apiHelpers,
+		page,
+		productMenuPage,
+		templateName,
+		text,
+		webContentName,
+	});
+
 	await productMenuPage.goToPages();
 	await layoutSetPrototypePage.homePageLink.click();
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addWebContentWithDisplay(
-		webContentName
-	);
+	await webContentDisplayPage.addWebContentWithDisplay(webContentName);
 	await uiElementsPage.publishButton.click();
 
 	return layoutSetPrototype;

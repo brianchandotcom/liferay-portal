@@ -14,7 +14,6 @@ import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-we
 import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
 import createSiteTemplate from './createSiteTemplate';
 
-
 export default async function createSiteTemplateWithWebContentOnContentPage({
 	apiHelpers,
 	page,
@@ -39,13 +38,13 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	webContentName: string;
 }): Promise<LayoutSetPrototype> {
 	const layoutSetPrototype = await createSiteTemplate({
-				apiHelpers,
-				page,
-				productMenuPage,
-				templateName,
-				text,
-				webContentName,
-			  });
+		apiHelpers,
+		page,
+		productMenuPage,
+		templateName,
+		text,
+		webContentName,
+	});
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.newButton.click();
@@ -54,9 +53,7 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addWebContentWithDisplay(
-		webContentName
-	);
+	await webContentDisplayPage.addWebContentWithDisplay(webContentName);
 	await uiElementsPage.publishButton.click();
 
 	return layoutSetPrototype;

@@ -54,9 +54,16 @@ const changeTrackingPages = test.extend<{
 
 				// Delete ctCollection
 
-				await apiHelpers.headlessChangeTracking.deleteCTCollection(
-					ctCollection.body.id
-				);
+				if (ctCollection && ctCollection.body) {
+					try {
+						await apiHelpers.headlessChangeTracking.deleteCTCollection(
+							ctCollection.body.id
+						);
+					}
+					catch (error) {
+						console.error('Error deleting CT Collection:', error);
+					}
+				}
 			}
 		},
 		{auto: true},

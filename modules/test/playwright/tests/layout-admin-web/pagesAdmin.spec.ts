@@ -413,23 +413,9 @@ test.describe('Keyboard movement and navigation', () => {
 				trigger: page.getByTitle('Go to Pages'),
 			});
 
-			// Check Add child page dropdown works well
-
-			await getItem('Page 1-1')
-				.getByLabel('Add Child Page')
-				.press('Enter');
-
-			await expect(
-				page.getByRole('menuitem', {name: 'Add Page'})
-			).toBeVisible();
-
-			await page.keyboard.press('Escape');
-
-			await expect(
-				getItem('Page 1-1').getByLabel('Add Child Page')
-			).toBeFocused();
-
 			// Check item actions dropdown works well
+
+			await getItem('Page 1-1').getByLabel('Add Child Page').focus();
 
 			await page.keyboard.press('Tab');
 

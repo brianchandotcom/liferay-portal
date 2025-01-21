@@ -314,13 +314,10 @@ export class PagesAdminPage {
 		// If parent is specified, create child page
 
 		else {
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.page.getByRole('menuitem', {name: 'Add Page'}),
-				trigger: this.page
-					.locator('li', {has: this.page.getByText(parent)})
-					.getByTitle('Add Child Page'),
-			});
+			this.page
+				.locator('li', {has: this.page.getByText(parent)})
+				.getByTitle('Add Child Page')
+				.click();
 		}
 
 		// Select template and fill name

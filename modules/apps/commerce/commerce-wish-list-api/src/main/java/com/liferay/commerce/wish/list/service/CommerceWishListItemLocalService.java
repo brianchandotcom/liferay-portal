@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -68,18 +67,14 @@ public interface CommerceWishListItemLocalService
 	public CommerceWishListItem addCommerceWishListItem(
 		CommerceWishListItem commerceWishListItem);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
 	public CommerceWishListItem addCommerceWishListItem(
-			long commerceWishListId, long cpDefinitionId, long cpInstanceId,
-			String json, ServiceContext serviceContext)
+			long userId, long commerceWishListId, String cpInstanceUuid,
+			long cProductId, String json)
 		throws PortalException;
 
-	public CommerceWishListItem addCommerceWishListItem(
-			long commerceWishListId, long cProductId, String cpInstanceUuid,
-			String json, ServiceContext serviceContext)
+	public CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long userId, long commerceWishListId, String cpInstanceUuid,
+			long cProductId, String json)
 		throws PortalException;
 
 	/**
@@ -227,6 +222,10 @@ public interface CommerceWishListItemLocalService
 		long commerceWishListItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWishListItem fetchCommerceWishListItem(
+		long commerceWishListId, String cpInstanceUuid, long cProductId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -316,5 +315,10 @@ public interface CommerceWishListItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceWishListItem updateCommerceWishListItem(
 		CommerceWishListItem commerceWishListItem);
+
+	public CommerceWishListItem updateCommerceWishListItem(
+			long commerceWishListId, String cpInstanceUuid, long cProductId,
+			String json)
+		throws PortalException;
 
 }

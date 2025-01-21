@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -45,8 +44,13 @@ public interface CommerceWishListItemService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.wish.list.service.impl.CommerceWishListItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce wish list item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceWishListItemServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceWishListItem addCommerceWishListItem(
-			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json, ServiceContext serviceContext)
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
+		throws PortalException;
+
+	public CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
 		throws PortalException;
 
 	public void deleteCommerceWishListItem(long commerceWishListItemId)
@@ -91,5 +95,10 @@ public interface CommerceWishListItemService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public CommerceWishListItem updateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
+		throws PortalException;
 
 }

@@ -32,14 +32,23 @@ public class CommerceWishListItemServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.wish.list.service.impl.CommerceWishListItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceWishListItem addCommerceWishListItem(
-			long commerceAccountId, long commerceWishListId, long cProductId,
-			String cpInstanceUuid, String json,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
 		throws PortalException {
 
 		return getService().addCommerceWishListItem(
-			commerceAccountId, commerceWishListId, cProductId, cpInstanceUuid,
-			json, serviceContext);
+			commerceAccountId, commerceWishListId, cpInstanceUuid, cProductId,
+			json);
+	}
+
+	public static CommerceWishListItem addOrUpdateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cpInstanceUuid, cProductId,
+			json);
 	}
 
 	public static void deleteCommerceWishListItem(long commerceWishListItemId)
@@ -107,6 +116,16 @@ public class CommerceWishListItemServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static CommerceWishListItem updateCommerceWishListItem(
+			long commerceAccountId, long commerceWishListId,
+			String cpInstanceUuid, long cProductId, String json)
+		throws PortalException {
+
+		return getService().updateCommerceWishListItem(
+			commerceAccountId, commerceWishListId, cpInstanceUuid, cProductId,
+			json);
 	}
 
 	public static CommerceWishListItemService getService() {

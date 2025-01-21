@@ -31,12 +31,11 @@ public class CommerceWishListServiceWrapper
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
 			addCommerceWishList(
-				String name, boolean defaultWishList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long groupId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListService.addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, name, defaultWishList);
 	}
 
 	@Override
@@ -49,14 +48,14 @@ public class CommerceWishListServiceWrapper
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
 			fetchCommerceWishList(
-				long groupId, long userId, boolean defaultWishList,
+				long groupId, boolean defaultWishList,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.commerce.wish.list.model.CommerceWishList>
 						orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListService.fetchCommerceWishList(
-			groupId, userId, defaultWishList, orderByComparator);
+			groupId, defaultWishList, orderByComparator);
 	}
 
 	@Override
@@ -81,19 +80,6 @@ public class CommerceWishListServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.wish.list.model.CommerceWishList>
-			getCommerceWishLists(
-				long groupId, long userId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.wish.list.model.CommerceWishList>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceWishListService.getCommerceWishLists(
-			groupId, userId, start, end, orderByComparator);
-	}
-
-	@Override
 	public int getCommerceWishListsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -101,20 +87,11 @@ public class CommerceWishListServiceWrapper
 	}
 
 	@Override
-	public int getCommerceWishListsCount(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceWishListService.getCommerceWishListsCount(
-			groupId, userId);
-	}
-
-	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
-			getDefaultCommerceWishList(long groupId, long userId)
+			getDefaultCommerceWishList(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commerceWishListService.getDefaultCommerceWishList(
-			groupId, userId);
+		return _commerceWishListService.getDefaultCommerceWishList(groupId);
 	}
 
 	/**

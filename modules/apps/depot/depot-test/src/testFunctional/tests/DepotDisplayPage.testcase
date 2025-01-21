@@ -361,7 +361,7 @@ definition {
 			webContentText = "Asset Library Text",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContentNavigator.openToEditWCInSite(
 			groupName = "Test Site Name",
@@ -372,7 +372,7 @@ definition {
 
 		WebContent.addFeaturedImageFromURL(imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 

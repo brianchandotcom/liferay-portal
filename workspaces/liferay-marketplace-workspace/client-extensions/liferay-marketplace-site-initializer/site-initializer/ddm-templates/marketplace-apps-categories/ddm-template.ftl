@@ -1,6 +1,6 @@
-<style>
+<style ${nonceAttribute}>
 	.app-container {
-		font-size: MEDIUM;
+		font-size: medium;
 	}
 
 	.app-category {

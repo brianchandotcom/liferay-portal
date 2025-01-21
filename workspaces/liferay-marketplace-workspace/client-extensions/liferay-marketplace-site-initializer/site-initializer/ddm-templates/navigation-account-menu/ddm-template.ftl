@@ -6,7 +6,7 @@
 	</#list>
 </#function>
 
-<style>
+<style ${nonceAttribute}>
 	.account-menu-item-text {
 		color: var(--color-neutral-10);
 	}

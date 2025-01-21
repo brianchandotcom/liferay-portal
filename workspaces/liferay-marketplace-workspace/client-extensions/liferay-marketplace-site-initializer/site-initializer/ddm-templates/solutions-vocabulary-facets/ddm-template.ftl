@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.vocab-facet {
 		border-radius: 10px;
 	}

@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.price-model-facet {
 		border-radius: 10px;
 	}

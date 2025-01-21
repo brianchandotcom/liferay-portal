@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.company-description-container {
 		width: 846px;
 	}

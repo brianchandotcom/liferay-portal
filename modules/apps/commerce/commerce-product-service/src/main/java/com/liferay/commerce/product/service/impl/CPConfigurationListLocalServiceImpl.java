@@ -434,6 +434,8 @@ public class CPConfigurationListLocalServiceImpl
 		).and(
 			CPConfigurationListTable.INSTANCE.groupId.eq(groupId)
 		).and(
+			CPConfigurationListTable.INSTANCE.master.eq(false)
+		).and(
 			() -> {
 				if (accountEntryId != null) {
 					return accountEntryCPConfigurationListRel.classPK.eq(

@@ -104,11 +104,6 @@ function main {
 }
 
 function prepare_import {
-	export JAVA_HOME=/usr/lib/jvm/zulu-11-amd64
-	export PATH=${JAVA_HOME}/bin:${PATH}
-
-	java -version
-
 	if [ -z "${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}" ]
 	then
 		export LIFERAY_LEARN_ROOT_DIR=${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}

@@ -10062,18 +10062,18 @@ junit.jvm.override.version=21</echo>
 			<test-action>
 				<local name="workspace.names" />
 
+				<propertycopy from="workspaces.names[workspaces-compile-jdk${batch.jdk.version}][${env.CI_TEST_SUITE}]" name="workspace.names" silent="true" />
+				
 				<if>
 					<not>
-						<isset property="batch.jdk.version" />
+						<isset property="workspace.names" />
 					</not>
 					<then>
-						<var name="batch.jdk.version" value="8" />
+						<propertycopy from="workspaces.names[workspaces-compile][${env.CI_TEST_SUITE}]" name="workspace.names" override="true" silent="true" />
 					</then>
 				</if>
 
-				<propertycopy from="workspaces.names[workspaces-compile-jdk${batch.jdk.version}][${env.CI_TEST_SUITE}]" name="workspace.names" silent="true" />
-
-				<property name="workspace.names" value="${workspaces.names[workspaces-compile-jdk${batch.jdk.version}]}" />
+				<property name="workspace.names" value="${workspaces.names[workspaces-compile]}" />
 
 				<for list="${workspace.names}" param="workspace.name">
 					<sequential>

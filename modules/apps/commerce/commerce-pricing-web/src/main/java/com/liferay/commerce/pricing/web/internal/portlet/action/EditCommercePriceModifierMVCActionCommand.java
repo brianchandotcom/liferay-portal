@@ -125,8 +125,6 @@ public class EditCommercePriceModifierMVCActionCommand
 			long commercePriceModifierId, ActionRequest actionRequest)
 		throws Exception {
 
-		boolean allowNegativeValue = true;
-
 		String title = ParamUtil.getString(actionRequest, "title");
 		String target = ParamUtil.getString(actionRequest, "target");
 		long commercePriceListId = ParamUtil.getLong(
@@ -135,14 +133,10 @@ public class EditCommercePriceModifierMVCActionCommand
 		String modifierType = ParamUtil.getString(
 			actionRequest, "modifierType");
 
-		if (modifierType.equals(
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE)) {
-
-			allowNegativeValue = false;
-		}
-
 		BigDecimal modifierAmount = _commercePriceFormatter.parse(
-			actionRequest, allowNegativeValue,
+			actionRequest,
+			!modifierType.equals(
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE),
 			CommercePriceModifier.class.getName(), "modifierAmount");
 
 		double priority = ParamUtil.getDouble(actionRequest, "priority");

@@ -461,23 +461,10 @@ public class LayoutLocalServiceWrapper
 			return;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
 		_layoutSEOEntryLocalService.copyLayoutSEOEntry(
 			userId, targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), layoutSEOEntry.isCanonicalURLEnabled(),
-			layoutSEOEntry.getCanonicalURLMap(),
-			layoutSEOEntry.getDDMStorageId(),
-			layoutSEOEntry.isOpenGraphDescriptionEnabled(),
-			layoutSEOEntry.getOpenGraphDescriptionMap(),
-			layoutSEOEntry.getOpenGraphImageAltMap(),
-			layoutSEOEntry.getOpenGraphImageFileEntryId(),
-			layoutSEOEntry.isOpenGraphTitleEnabled(),
-			layoutSEOEntry.getOpenGraphTitleMap(), serviceContext);
+			targetLayout.getLayoutId(), layoutSEOEntry,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _copyPortletPermissions(

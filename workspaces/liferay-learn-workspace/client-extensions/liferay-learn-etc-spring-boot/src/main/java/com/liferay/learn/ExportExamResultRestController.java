@@ -106,10 +106,10 @@ public class ExportExamResultRestController extends BaseRestController {
 							"/o/c/p2s3examresults/scopes/", _siteGroupId,
 							"?pageSize=500&page=", i, filterString)));
 
-				JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+				JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-				for (int j = 0; j < itemsJSONArray.length(); j++) {
-					JSONObject itemJSONObject = itemsJSONArray.getJSONObject(j);
+				for (int j = 0; j < jsonArray.length(); j++) {
+					JSONObject itemJSONObject = jsonArray.getJSONObject(j);
 
 					csvPrinter.printRecord(
 						itemJSONObject.getString("firstName"),

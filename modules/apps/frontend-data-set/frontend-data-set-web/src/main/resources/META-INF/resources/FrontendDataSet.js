@@ -564,9 +564,8 @@ const FrontendDataSet = ({
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
 				fluid={style === 'fluid'}
-				selectAllItems={() =>
-					selectItems(items.map((item) => item[selectedItemsKey]))
-				}
+				items={items}
+				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}

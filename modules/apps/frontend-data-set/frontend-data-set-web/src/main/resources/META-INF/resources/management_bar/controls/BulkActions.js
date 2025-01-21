@@ -15,6 +15,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
+import SelectionCheckbox from './SelectionCheckbox';
 
 function getQueryString(key, values = []) {
 	return `?${key}=${values.join(',')}`;
@@ -32,7 +33,9 @@ function getRichPayload(payload, key, values = []) {
 function BulkActions({
 	bulkActions,
 	fluid,
-	selectAllItems,
+	handleCheckboxClick,
+	items,
+	selectItems,
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
@@ -213,7 +216,7 @@ function BulkActions({
 
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
-			{({formId, formName, loadData, namespace, sidePanelId}) => (
+			{({formId, formName, loadData, namespace, selectable, sidePanelId}) => (
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
 					<div
 						className={classNames(
@@ -222,6 +225,18 @@ function BulkActions({
 						)}
 					>
 						<ul className="navbar-nav">
+							{!!total && selectable && (
+								<li className="nav-item">
+									<SelectionCheckbox
+										handleCheckboxClick={
+											handleCheckboxClick
+										}
+										items={items}
+										selectedItemsValue={selectedItemsValue}
+									/>
+								</li>
+							)}
+
 							<li className="nav-item">
 								<span className="text-truncate">
 									{selectedItemsValue.length === total
@@ -246,7 +261,11 @@ function BulkActions({
 									href="#"
 									onClick={(event) => {
 										event.preventDefault();
-										selectAllItems();
+										selectItems(
+											items.map(
+												(item) => item[selectedItemsKey]
+											)
+										);
 									}}
 								>
 									{Liferay.Language.get('select-all')}
@@ -308,9 +327,11 @@ BulkActions.propTypes = {
 			target: PropTypes.oneOf(['sidePanel', 'modal']),
 		})
 	),
+	handleCheckboxClick: PropTypes.func.isRequired,
+	items: PropTypes.array.isRequired,
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
-	total: PropTypes.number.isRequired,
+	total: PropTypes.number,
 };
 
 export default BulkActions;

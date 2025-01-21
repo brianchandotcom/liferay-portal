@@ -37,33 +37,59 @@ LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)re
 					<liferay-ui:message key="custom-meta-tags-description" />
 				</p>
 
-				<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
+				<%
+				LayoutSEOEntry layoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
 
-				<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
+				List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags = new ArrayList<>();
 
-					<%
-					DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
+				if (layoutSEOEntry != null) {
+					layoutSEOEntryCustomMetaTags = LayoutSEOEntryLocalServiceUtil.getLayoutSEOEntryCustomMetaTags(layoutSEOEntry.getGroupId(), layoutSEOEntry.getLayoutSEOEntryId());
+				}
 
-					String fieldLabelValue = rv.getFieldLabelValue(themeDisplay.getLocale());
+				int[] propertiesIndexes = {0};
+				%>
 
-					if (Validator.isNull(fieldLabelValue)) {
-						fieldLabelValue = rv.getFieldName();
-					}
-					%>
+				<div id="<portlet:namespace />properties">
+					<c:choose>
+						<c:when test="<%= ListUtil.isEmpty(layoutSEOEntryCustomMetaTags) %>">
+							<aui:model-context model="<%= LayoutSEOEntryCustomMetaTag.class %>" />
 
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(fieldLabelValue) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+							<div class="field-row lfr-form-row lfr-form-row-inline">
+								<div class="row-fields">
+									<aui:input fieldParam="property0" id="property0" name="property" />
 
-				<liferay-ddm:html
-					classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-					classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
-					ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
-					defaultEditLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
-					defaultLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
-					fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
-					groupId="<%= layoutsSEODisplayContext.getGroupId() %>"
-					requestedLocale="<%= locale %>"
-				/>
+									<aui:input fieldParam="content0" id="content0" name="content" />
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+
+							<%
+							int i = 0;
+
+							for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag : layoutSEOEntryCustomMetaTags) {
+							%>
+
+								<aui:model-context bean="<%= layoutSEOEntryCustomMetaTag %>" model="<%= LayoutSEOEntryCustomMetaTag.class %>" />
+
+								<div class="lfr-form-row lfr-form-row-inline">
+									<div class="row-fields">
+										<aui:input fieldParam='<%= "property" + i %>' id='<%= "property" + i %>' name="property" />
+
+										<aui:input fieldParam='<%= "content" + i %>' id='<%= "content" + i %>' name="content" />
+									</div>
+								</div>
+
+							<%
+								i++;
+							}
+							%>
+
+						</c:otherwise>
+					</c:choose>
+
+					<aui:input name="propertiesIndexes" type="hidden" value="<%= StringUtil.merge(propertiesIndexes, StringPool.COMMA) %>" />
+				</div>
 			</clay:sheet-section>
 		</clay:sheet>
 	</liferay-frontend:edit-form-body>
@@ -74,3 +100,13 @@ LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)re
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />properties',
+		fieldIndexes: '<portlet:namespace />propertiesIndexes',
+		namespace: '<portlet:namespace />',
+		sortable: true,
+		sortableHandle: '.field-row',
+	}).render();
+</aui:script>

@@ -4,7 +4,7 @@
 	layoutSetCanonicalURL = portal.getCanonicalURL(layoutSetDisplayURL, themeDisplay, layout)
 />
 
-<style>
+<style ${nonceAttribute}>
 	.has-control-menu .marketplace-navbar-wrapper {
 		top: unset;
 	}
@@ -67,6 +67,10 @@
 		opacity: 1;
 	}
 
+	.marketplace-navbar.menu-open .mobile-buttons svg mask {
+		mask-type: alpha;
+	}
+
 	@media (max-width: 587px) {
 		.marketplace-navbar-wrapper {
 			top: 0;
@@ -125,7 +129,7 @@
 		<div class="d-block d-sm-none mobile-buttons pl-5 pl-sm-0">
 			<div class="button-menu">
 				<svg fill="none" height="20" id="menuButton" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-					<mask height="10" id="mask0_11640_205635" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="16" x="2" y="5">
+					<mask height="10" id="mask0_11640_205635" maskUnits="userSpaceOnUse" width="16" x="2" y="5">
 						<path clip-rule="evenodd" d="M3.33333 6.66667C2.875 6.66667 2.5 6.29167 2.5 5.83333C2.5 5.375 2.875 5 3.33333 5H16.6667C17.125 5 17.5 5.375 17.5 5.83333C17.5 6.29167 17.125 6.66667 16.6667 6.66667H3.33333ZM3.33333 10.8333H16.6667C17.125 10.8333 17.5 10.4583 17.5 10C17.5 9.54167 17.125 9.16667 16.6667 9.16667H3.33333C2.875 9.16667 2.5 9.54167 2.5 10C2.5 10.4583 2.875 10.8333 3.33333 10.8333ZM3.33333 15H16.6667C17.125 15 17.5 14.625 17.5 14.1667C17.5 13.7083 17.125 13.3333 16.6667 13.3333H3.33333C2.875 13.3333 2.5 13.7083 2.5 14.1667C2.5 14.625 2.875 15 3.33333 15Z" fill="black" fill-rule="evenodd" />
 					</mask>
 
@@ -137,7 +141,7 @@
 
 			<div class="button-close">
 				<svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
-					<mask height="12" id="mask0_11677_168769" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="12" x="4" y="4">
+					<mask height="12" id="mask0_11677_168769" maskUnits="userSpaceOnUse" width="12" x="4" y="4">
 						<path d="M15.25 4.75833C15.0943 4.60228 14.8829 4.51459 14.6625 4.51459C14.442 4.51459 14.2307 4.60228 14.075 4.75833L9.99998 8.82499L5.92498 4.74999C5.76928 4.59395 5.55791 4.50626 5.33748 4.50626C5.11704 4.50626 4.90567 4.59395 4.74998 4.74999C4.42498 5.07499 4.42498 5.59999 4.74998 5.92499L8.82498 9.99999L4.74998 14.075C4.42498 14.4 4.42498 14.925 4.74998 15.25C5.07498 15.575 5.59998 15.575 5.92498 15.25L9.99998 11.175L14.075 15.25C14.4 15.575 14.925 15.575 15.25 15.25C15.575 14.925 15.575 14.4 15.25 14.075L11.175 9.99999L15.25 5.92499C15.5666 5.60833 15.5666 5.07499 15.25 4.75833Z" fill="black" />
 					</mask>
 

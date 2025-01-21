@@ -53,7 +53,7 @@
 	</div>
 </div>
 
-<style>
+<style ${nonceAttribute}>
 	.language-selector-container .dropdown-menu-content.dropdown-menu {
 		max-height: fit-content;
 		min-width: 288px;

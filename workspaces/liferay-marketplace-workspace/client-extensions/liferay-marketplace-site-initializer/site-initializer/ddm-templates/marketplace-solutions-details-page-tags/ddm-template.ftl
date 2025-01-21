@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.solution-tag-container {
 		font-size: 1rem;
 		gap: 8px;

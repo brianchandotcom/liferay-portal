@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.copy-text {
 		color: #272833;
 		cursor: pointer;
@@ -7,6 +7,10 @@
 
 	.help-and-support-link-icon {
 		color: rgb(133, 140, 148);
+	}
+
+	svg.link-arrow mask {
+		mask-type: alpha;
 	}
 </style>
 
@@ -17,8 +21,8 @@
 
 	Copy &amp; Share
 
-	<svg class="link-arrow" fill="none" height="16" style="margin-left: auto;" width="16" xmlns="http://www.w3.org/2000/svg">
-		<mask height="8" id="arrow" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="6" x="5" y="4">
+	<svg class="link-arrow ml-auto" fill="none" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+		<mask height="8" id="arrow" maskUnits="userSpaceOnUse" width="6" x="5" y="4">
 			<path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"></path>
 		</mask>
 
@@ -28,7 +32,7 @@
 	</svg>
 </a>
 
-<script>
+<script ${nonceAttribute}>
 	function copyToClipboard(text) {
 		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
 			navigator.clipboard.writeText(text)

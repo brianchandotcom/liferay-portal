@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.carousel-inner {
 		border-radius: 10px;
 		height: 353px;

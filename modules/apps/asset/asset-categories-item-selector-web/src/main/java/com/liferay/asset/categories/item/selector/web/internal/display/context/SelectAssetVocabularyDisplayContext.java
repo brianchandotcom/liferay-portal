@@ -112,14 +112,14 @@ public class SelectAssetVocabularyDisplayContext {
 	private List<AssetVocabulary> _getAssetVocabularies()
 		throws PortalException {
 
+		List<Long> groupIds = new ArrayList<>();
+
+		groupIds.add(_themeDisplay.getCompanyGroupId());
+
 		List<DepotEntry> depotEntries =
 			DepotEntryServiceUtil.getCurrentAndGroupConnectedDepotEntries(
 				_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
-
-		List<Long> groupIds = new ArrayList<>();
-
-		groupIds.add(_themeDisplay.getCompanyGroupId());
 
 		for (DepotEntry depotEntry : depotEntries) {
 			groupIds.add(depotEntry.getGroupId());

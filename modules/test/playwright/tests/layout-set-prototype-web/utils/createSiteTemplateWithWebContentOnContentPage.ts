@@ -70,7 +70,7 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	});
 
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addSpecificWebContentWithDisplay(
+	await webContentDisplayPage.addWebContentWithDisplay(
 		webContentName
 	);
 	await uiElementsPage.publishButton.click();

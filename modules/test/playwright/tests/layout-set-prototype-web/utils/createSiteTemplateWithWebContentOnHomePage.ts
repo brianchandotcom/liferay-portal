@@ -68,7 +68,7 @@ export default async function createSiteTemplateWithWebContentOnHomePage({
 	await productMenuPage.goToPages();
 	await layoutSetPrototypePage.homePageLink.click();
 	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
-	await webContentDisplayPage.addSpecificWebContentWithDisplay(
+	await webContentDisplayPage.addWebContentWithDisplay(
 		webContentName
 	);
 	await uiElementsPage.publishButton.click();

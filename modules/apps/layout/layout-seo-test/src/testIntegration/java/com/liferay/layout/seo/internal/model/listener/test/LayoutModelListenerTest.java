@@ -7,6 +7,7 @@ package com.liferay.layout.seo.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -19,9 +20,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -61,11 +65,31 @@ public class LayoutModelListenerTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
+		_layoutSEOEntryLocalService.updateCustomMetaTags(
+			TestPropsValues.getUserId(), layout.getGroupId(), false,
+			layout.getLayoutId(),
+			Arrays.asList(
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property1",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content1")),
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property2",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content2"))),
+			ServiceContextTestUtil.getServiceContext(
+				layout.getGroupId(), TestPropsValues.getUserId()));
+
 		_layoutLocalService.deleteLayout(layout);
 
 		Assert.assertNull(
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layoutSEOEntry.getLayoutSEOEntryId()));
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+					layoutSEOEntry.getGroupId(),
+					layoutSEOEntry.getLayoutSEOEntryId())));
 	}
 
 	@DeleteAfterTestRun

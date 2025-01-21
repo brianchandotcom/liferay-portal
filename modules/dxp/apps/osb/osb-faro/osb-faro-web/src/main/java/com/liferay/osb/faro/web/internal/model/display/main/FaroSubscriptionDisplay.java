@@ -192,16 +192,20 @@ public class FaroSubscriptionDisplay {
 		_syncedIndividualsCount =
 			contactsEngineClient.getSyncedIndividualsCount(faroProject);
 
+		Date date = new Date();
+
+		date = new Date(date.getTime() / Time.DAY * Time.DAY);
+
 		_individualsCountSinceLastAnniversary =
-			contactsEngineClient.getIndividualsCreatedSinceCount(
-				faroProject, _lastAnniversaryDate);
+			contactsEngineClient.getIndividualsCreatedBetweenCount(
+				faroProject, date, _lastAnniversaryDate);
 
 		_individualsStatus = getStatus(
 			_individualsCountSinceLastAnniversary, _individualsLimit);
 
 		_pageViewsCountSinceLastAnniversary = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
-				faroProject, _lastAnniversaryDate, new Date()));
+				faroProject, _lastAnniversaryDate, date));
 
 		_pageViewsStatus = getStatus(
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);

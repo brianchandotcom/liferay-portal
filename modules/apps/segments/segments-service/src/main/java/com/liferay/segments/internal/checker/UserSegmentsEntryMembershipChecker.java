@@ -6,6 +6,8 @@
 package com.liferay.segments.internal.checker;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,7 +94,7 @@ public class UserSegmentsEntryMembershipChecker {
 		String dateValueString = _getDateValueString(value);
 
 		if (dateValueString != null) {
-			return String.format("'%s'", dateValueString);
+			return StringUtil.quote(dateValueString, StringPool.QUOTE);
 		}
 
 		return value;
@@ -110,8 +112,8 @@ public class UserSegmentsEntryMembershipChecker {
 		parsedFilterString = _processOperations(
 			parsedFilterString, userAttributes);
 
-		return String.format(
-			"def evaluate() { return %s }", parsedFilterString);
+		return StringBundler.concat(
+			"def evaluate() { return", parsedFilterString, "}");
 	}
 
 	private static String _processContainsOperations(
@@ -135,9 +137,10 @@ public class UserSegmentsEntryMembershipChecker {
 
 			matcher.appendReplacement(
 				sb,
-				String.format(
-					"%d < '%s'.indexOf(%s)", _NOT_FOUND_INDEX,
-					_toString(object), value));
+				StringBundler.concat(
+					_NOT_FOUND_INDEX, " < ",
+					StringUtil.quote(_toString(object), StringPool.QUOTE),
+					".indexOf(", value, ")"));
 		}
 
 		matcher.appendTail(sb);
@@ -155,7 +158,8 @@ public class UserSegmentsEntryMembershipChecker {
 
 			matcher.appendReplacement(
 				sb,
-				String.format(" %s ", _operators.get(StringUtil.trim(group))));
+				StringUtil.quote(
+					_operators.get(StringUtil.trim(group)), StringPool.SPACE));
 		}
 
 		matcher.appendTail(sb);
@@ -210,13 +214,14 @@ public class UserSegmentsEntryMembershipChecker {
 			if (clazz.isArray()) {
 				matcher.appendReplacement(
 					sb,
-					String.format(
-						"(%s in [%s])", value,
+					StringBundler.concat(
+						"(", value, " in [",
 						StringUtil.merge(
 							TransformUtil.unsafeTransform(
 								_toArray(object),
 								item -> StringUtil.quote(String.valueOf(item)),
-								String.class))));
+								String.class)),
+						"])"));
 			}
 			else {
 				String objectString = _toString(object);
@@ -227,8 +232,10 @@ public class UserSegmentsEntryMembershipChecker {
 				else {
 					matcher.appendReplacement(
 						sb,
-						String.format(
-							"'%s' %s %s", objectString, operator, value));
+						StringBundler.concat(
+							StringUtil.quote(objectString, StringPool.QUOTE),
+							StringPool.SPACE, operator, StringPool.SPACE,
+							value));
 				}
 			}
 		}

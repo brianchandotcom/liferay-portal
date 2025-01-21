@@ -8,7 +8,7 @@ import {expect, test} from '@playwright/test';
 import {liferayConfig} from '../../liferay.config';
 
 
-test('LPD-test', async ({
+test('LPD-4254 Checking what is the first page load if the property is blank', async ({
 	page,
 }) => {
 	await page.goto(liferayConfig.environment.baseUrl);

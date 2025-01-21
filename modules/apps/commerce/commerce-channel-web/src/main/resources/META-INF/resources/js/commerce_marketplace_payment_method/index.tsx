@@ -31,6 +31,9 @@ function MarketplaceViews() {
 		view,
 	} = useMarketplaceContext();
 
+	const cloudProject = marketplaceConfiguration.data?.settings
+		?.cloudProject as string;
+
 	async function onClickInstall() {
 		setState(States.IN_PROGRESS);
 
@@ -87,15 +90,10 @@ function MarketplaceViews() {
 			)}
 
 			{view === MarketplaceView.PURCHASE && (
-				<Marketplace.Purchase
-					rightTitle={
-						marketplaceConfiguration.data?.settings
-							?.cloudProject as string
-					}
-				>
+				<Marketplace.Purchase rightTitle={cloudProject}>
 					<MarketplacePurchase
 						onClickInstall={onClickInstall}
-						state={state}
+						state={cloudProject ? state : States.NO_PROJECT}
 					/>
 				</Marketplace.Purchase>
 			)}

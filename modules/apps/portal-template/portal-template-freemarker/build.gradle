@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "org.freemarker", version: "2.3.33.LIFERAY-PATCHED-2"
-
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -21,7 +20,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }
 

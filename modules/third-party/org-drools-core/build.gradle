@@ -16,7 +16,6 @@ dependencies {
 	api group: "org.antlr", name: "antlr-runtime", version: "3.3"
 	api group: "org.drools", name: "knowledge-api", version: "5.4.0.Final"
 	api group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
-
 	compileOnly group: "org.drools", name: "drools-core", version: "5.4.0.Final"
 }
 

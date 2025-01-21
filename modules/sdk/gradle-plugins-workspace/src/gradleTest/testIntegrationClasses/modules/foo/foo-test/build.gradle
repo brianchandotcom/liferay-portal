@@ -7,7 +7,6 @@ dependencies {
 	testIntegrationImplementation group: "org.slf4j", name: "log4j-over-slf4j", version: "1.7.25"
 	testIntegrationImplementation project(":modules:foo:foo-api")
 	testIntegrationImplementation project(":modules:foo:foo-service")
-
 	testModules group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge.connector"
 	testModules group: "com.liferay.portal", name: "com.liferay.portal.test", version: "latest.release"
 	testModules group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "latest.release"

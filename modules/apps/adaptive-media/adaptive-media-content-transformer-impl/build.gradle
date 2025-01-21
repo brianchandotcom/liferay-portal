@@ -7,6 +7,5 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":core:petra:petra-lang")
 }

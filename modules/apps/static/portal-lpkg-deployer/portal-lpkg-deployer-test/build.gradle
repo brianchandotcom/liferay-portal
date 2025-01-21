@@ -8,7 +8,6 @@ dependencies {
 	testImplementation project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 	testImplementation project(":core:petra:petra-lang")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

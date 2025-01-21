@@ -25,7 +25,6 @@ dependencies {
 	compileInclude group: "org.codehaus.jackson", name: "jackson-core-asl", version: "1.9.11"
 	compileInclude group: "org.rauschig", name: "jarchivelib", version: "0.7.1"
 	compileInclude group: "org.threeten", name: "threetenbp", version: "1.5.0"
-
 	compileOnly group: "com.google.api", name: "gax", version: "1.62.0"
 	compileOnly group: "com.google.cloud", name: "google-cloud-storage", version: "2.4.0"
 	compileOnly group: "com.google.cloud.functions", name: "functions-framework-api", version: "1.0.1"

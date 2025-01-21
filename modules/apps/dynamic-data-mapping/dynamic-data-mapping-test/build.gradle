@@ -35,7 +35,6 @@ dependencies {
 	testImplementation project(":core:petra:petra-reflect")
 	testImplementation project(":core:petra:petra-sql-dsl-api")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"

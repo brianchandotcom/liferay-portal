@@ -6,6 +6,5 @@ dependencies {
 	testIntegrationImplementation project(":apps:blogs:blogs-api")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-
 	testIntegrationRuntimeOnly project(":apps:asset:asset-test-util")
 }

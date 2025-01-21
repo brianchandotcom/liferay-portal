@@ -8,7 +8,6 @@ dependencies {
 	testImplementation project(":apps:cookies:cookies-impl")
 	testImplementation project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -44,7 +44,6 @@ copyPortalCommonCSSJar {
 dependencies {
 	api group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.24"
 	api group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
-
 	compileInclude group: "com.beust", name: "jcommander", version: "1.82"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.function", version: "default"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "5.0.0"
@@ -52,16 +51,12 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.rtl.css", version: "1.0.5"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.dart", version: "1.0.2"
-
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
 	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.8.1"
 	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.8.1"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.8.1"
-
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.css.common", version: "3.0.1"
-
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
-
 	testImplementation group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
 	testImplementation group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 }

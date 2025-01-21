@@ -2,7 +2,6 @@ dependencies {
 	compileInclude group: "org.json.wso2", name: "json", version: "3.0.0.wso2v1"
 	compileInclude group: "org.wso2.charon", name: "org.wso2.charon3.core", version: "4.0.7"
 	compileInclude group: "org.wso2.charon", name: "org.wso2.charon3.utils", version: "4.0.7"
-
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

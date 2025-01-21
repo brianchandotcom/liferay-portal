@@ -16,7 +16,6 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.0"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"

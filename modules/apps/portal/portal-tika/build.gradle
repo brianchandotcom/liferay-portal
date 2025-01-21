@@ -17,7 +17,6 @@ dependencies {
 	compileInclude group: "org.ccil.cowan.tagsoup", name: "tagsoup", version: "1.2.1"
 	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
 	compileInclude group: "org.tallison", name: "jmatio", version: "1.5"
-
 	compileOnly group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

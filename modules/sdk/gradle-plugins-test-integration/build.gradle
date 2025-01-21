@@ -14,6 +14,5 @@ tasks.eclipse {
 dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.49"
 	api group: "org.zeroturnaround", name: "zt-exec", version: "1.9"
-
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }

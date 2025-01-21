@@ -1,6 +1,5 @@
 dependencies {
 	compileOnly project(":core:petra:petra-memory")
-
 	testImplementation project(":core:petra:petra-reflect")
 	testImplementation project(":core:petra:petra-test-util")
 }

@@ -18,7 +18,6 @@ createJar {
 
 dependencies {
 	api group: "com.liferay", name: "org.outerj.daisy.daisydiff", version: "1.2"
-
 	compileOnly group: "net.sourceforge.htmlunit", name: "neko-htmlunit", transitive: false, version: "2.66.0"
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.12.1"
 }

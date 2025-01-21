@@ -11,7 +11,6 @@ dependencies {
 	compileInclude group: "javax.cache", name: "cache-api", version: "1.1.1"
 	compileInclude group: "org.jparsec", name: "jparsec", version: "3.1"
 	compileInclude group: "org.mnode.ical4j", name: "ical4j", version: "3.2.2"
-
 	compileOnly group: "com.liferay", name: "com.google.ical", version: "20110304"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

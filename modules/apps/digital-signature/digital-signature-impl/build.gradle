@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "net.oauth.core", name: "oauth", version: "20100527"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:digital-signature:digital-signature-api")

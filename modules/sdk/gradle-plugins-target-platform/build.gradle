@@ -15,7 +15,6 @@ dependencies {
 	api group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "6.4.0"
 	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.49"
 	api group: "org.json", name: "json", version: "20231013"
-
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), exclude: "lib/plugins/bndlib-*.jar")
 }
 

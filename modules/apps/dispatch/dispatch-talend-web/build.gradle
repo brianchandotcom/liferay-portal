@@ -20,6 +20,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-string")
-
 	testRuntimeOnly ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
 }

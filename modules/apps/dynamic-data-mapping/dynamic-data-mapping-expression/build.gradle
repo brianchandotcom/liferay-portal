@@ -9,12 +9,9 @@ List<String> startParameterTaskNames = gradle.startParameter.taskNames
 
 dependencies {
 	annotationProcessor group: "org.antlr", name: "antlr4-annotations", version: "4.3"
-
 	antlr group: "org.antlr", name: "antlr4", version: "4.3"
-
 	compileInclude group: "org.abego.treelayout", name: "org.abego.treelayout.core", version: "1.0.1"
 	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.3"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.antlr", name: "antlr4", version: "4.3"
@@ -27,7 +24,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":core:petra:petra-lang")
 }
 

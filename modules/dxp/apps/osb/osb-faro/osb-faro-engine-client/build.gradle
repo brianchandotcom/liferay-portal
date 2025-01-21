@@ -13,7 +13,6 @@ dependencies {
 	compileInclude group: "org.springframework", name: "spring-web", version: "5.3.31"
 	compileInclude group: "org.springframework.boot", name: "spring-boot", version: "2.7.18"
 	compileInclude group: "org.springframework.hateoas", name: "spring-hateoas", version: "1.5.6"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"

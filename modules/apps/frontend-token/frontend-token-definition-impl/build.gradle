@@ -17,6 +17,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 }

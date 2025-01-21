@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.9.0"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -37,7 +36,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

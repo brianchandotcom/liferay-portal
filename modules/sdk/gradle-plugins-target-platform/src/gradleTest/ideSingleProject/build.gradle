@@ -5,7 +5,6 @@ task runGradleTest
 
 dependencies {
 	api group: "org.osgi", name: "org.osgi.service.component.annotations"
-
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
 }
 

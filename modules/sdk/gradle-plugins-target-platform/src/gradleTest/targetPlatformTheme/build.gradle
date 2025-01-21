@@ -34,9 +34,7 @@ task runGradleTest
 
 dependencies {
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled"
-
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
-
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 

@@ -15,10 +15,8 @@ configurations {
 
 dependencies {
 	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
-
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -31,7 +29,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }
 

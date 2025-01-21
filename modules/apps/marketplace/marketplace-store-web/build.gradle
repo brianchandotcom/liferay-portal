@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "org.scribe", name: "scribe", version: "1.3.6"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

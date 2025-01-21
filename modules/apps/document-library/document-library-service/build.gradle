@@ -60,7 +60,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 }

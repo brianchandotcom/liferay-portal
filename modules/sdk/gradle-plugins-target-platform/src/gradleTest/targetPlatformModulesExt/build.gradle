@@ -33,7 +33,6 @@ task runGradleTest
 
 dependencies {
 	originalModule group: "com.liferay", name: "com.liferay.login.web"
-
 	targetPlatformBoms group: "com.liferay.portal", name: "release.dxp.bom", version: "2023.q4.6"
 }
 

@@ -31,7 +31,6 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.tukaani", name: "xz", version: "1.9"
-
 	compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
 	compileOnly group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.8.1"
@@ -39,9 +38,7 @@ dependencies {
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.8.1"
 	compileOnly group: "org.apache.maven", name: "maven-settings", transitive: false, version: "3.8.1"
 	compileOnly group: "org.apache.maven.plugin-tools", name: "maven-plugin-annotations", transitive: false, version: "3.5"
-
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
-
 	testImplementation group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.2"
 	testImplementation group: "com.sun.net.httpserver", name: "http", version: "20070405"
 	testImplementation group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"

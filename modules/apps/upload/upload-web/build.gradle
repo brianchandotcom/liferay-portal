@@ -12,7 +12,6 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation project(":core:petra:petra-lang")
 }

@@ -32,7 +32,6 @@ task runGradleTest
 
 dependencies {
 	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.495"
-
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 

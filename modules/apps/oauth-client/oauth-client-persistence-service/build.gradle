@@ -11,7 +11,6 @@ dependencies {
 	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
 	compileInclude group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.activation", name: "activation", version: "1.1.1"

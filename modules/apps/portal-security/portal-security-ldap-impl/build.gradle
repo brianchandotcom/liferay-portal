@@ -9,11 +9,9 @@ List<String> startParameterTaskNames = gradle.startParameter.taskNames
 
 dependencies {
 	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
-
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
 	compileInclude group: "org.antlr", name: "antlr", version: "3.0.1"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"

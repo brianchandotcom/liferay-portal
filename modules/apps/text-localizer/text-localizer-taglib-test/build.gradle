@@ -6,6 +6,5 @@ dependencies {
 	testImplementation project(":apps:text-localizer:text-localizer-taglib")
 	testImplementation project(":core:petra:petra-lang")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

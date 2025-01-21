@@ -4,7 +4,6 @@ buildService {
 
 dependencies {
 	api project(":modules:sample:sample-api")
-
 	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 }
 

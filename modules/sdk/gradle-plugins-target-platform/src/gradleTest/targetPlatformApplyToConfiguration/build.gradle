@@ -9,7 +9,6 @@ configurations {
 
 dependencies {
 	portalKernel group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 

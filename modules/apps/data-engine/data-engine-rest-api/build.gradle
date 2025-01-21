@@ -14,7 +14,6 @@ dependencies {
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

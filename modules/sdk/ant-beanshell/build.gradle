@@ -9,7 +9,6 @@ clean {
 
 dependencies {
 	api group: "org.apache-extras.beanshell", name: "bsh", version: "2.0b6"
-
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
 }
 

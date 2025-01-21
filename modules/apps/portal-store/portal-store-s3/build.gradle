@@ -63,7 +63,6 @@ dependencies {
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-kms", version: "2.9.0"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-s3", version: "2.9.0"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"

@@ -30,7 +30,6 @@ dependencies {
 	compileInclude group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.2.1"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileOnly group: "jakarta.xml.bind", name: "jakarta.xml.bind-api", version: "2.3.2"
@@ -40,6 +39,5 @@ dependencies {
 	compileOnly project(":apps:document-library:document-library-repository-external-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }

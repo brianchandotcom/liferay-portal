@@ -86,7 +86,6 @@ dependencies {
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.third.party", version: "7.2.1"
-
 	targetPlatformDistro group: "com.liferay.portal", name: "release.portal.distro", version: "7.2.1"
 }
 

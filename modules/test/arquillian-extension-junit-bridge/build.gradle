@@ -1,7 +1,6 @@
 dependencies {
 	api group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	api group: "org.osgi", name: "osgi.core", version: "6.0.0"
-
 	compileOnly group: "junit", name: "junit", version: "4.13.1"
 	compileOnly project(":test:arquillian-extension-junit-bridge-connector")
 }

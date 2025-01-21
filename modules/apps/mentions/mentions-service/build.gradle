@@ -12,7 +12,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":core:petra:petra-concurrent")
 	testImplementation project(":core:petra:petra-lang")
 	testImplementation project(":core:petra:petra-memory")

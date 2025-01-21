@@ -9,6 +9,5 @@ dependencies {
 	testIntegrationImplementation project(":apps:journal:journal-api")
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-
 	testIntegrationRuntimeOnly project(":apps:asset:asset-test-util")
 }

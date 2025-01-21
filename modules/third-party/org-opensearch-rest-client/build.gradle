@@ -33,7 +33,6 @@ dependencies {
 	api group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	api group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.15"
 	api group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.15"
-
 	compileOnly group: "org.opensearch.client", name: "opensearch-rest-client", transitive: false, version: "2.7.0"
 }
 

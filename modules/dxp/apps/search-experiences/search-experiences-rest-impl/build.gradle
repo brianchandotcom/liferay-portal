@@ -26,7 +26,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
-
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":dxp:apps:search-experiences:search-experiences-service")
 }

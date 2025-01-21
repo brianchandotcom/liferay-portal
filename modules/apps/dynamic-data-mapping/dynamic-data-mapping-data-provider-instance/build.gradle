@@ -6,7 +6,6 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

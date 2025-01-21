@@ -42,7 +42,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation classifier: "classic", group: "org.joda", name: "joda-convert", version: "2.2.1"
 	testImplementation group: "com.damnhandy", name: "handy-uri-templates", version: "2.1.7"
 	testImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"

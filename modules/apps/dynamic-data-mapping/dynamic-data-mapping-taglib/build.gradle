@@ -7,7 +7,6 @@ buildTaglibs {
 
 dependencies {
 	alloyTaglib project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

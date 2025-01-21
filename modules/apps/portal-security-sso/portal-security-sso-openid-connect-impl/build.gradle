@@ -6,7 +6,6 @@ dependencies {
 	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
 	compileInclude group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
-
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -33,7 +32,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.mock-server", name: "mockserver-client-java", version: "3.10.8"
 	testImplementation group: "org.mock-server", name: "mockserver-netty", version: "3.10.8"
 }

@@ -24,7 +24,7 @@
 			data-qa-id="searchInput"
 			id="${namespace + stringUtil.randomId()}"
 			name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
-			placeholder="Search ${searchTerm}"
+			placeholder="${languageUtil.get(locale, "Search")} ${searchTerm}"
 			title="${languageUtil.get(locale, "Search")}"
 			type="text"
 			value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}">

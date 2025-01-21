@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -36,15 +35,14 @@ public class CommerceWishListServiceImpl
 
 	@Override
 	public CommerceWishList addCommerceWishList(
-			String name, boolean defaultWishList, ServiceContext serviceContext)
+			long groupId, String name, boolean defaultWishList)
 		throws PortalException {
 
-		if (getUserId() != serviceContext.getUserId()) {
-			_checkManagePermission(serviceContext.getScopeGroupId());
-		}
+		_checkPortletResourcePermission(
+			groupId, CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST);
 
 		return commerceWishListLocalService.addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, getUserId(), name, defaultWishList);
 	}
 
 	@Override
@@ -59,13 +57,13 @@ public class CommerceWishListServiceImpl
 
 	@Override
 	public CommerceWishList fetchCommerceWishList(
-			long groupId, long userId, boolean defaultWishList,
+			long groupId, boolean defaultWishList,
 			OrderByComparator<CommerceWishList> orderByComparator)
 		throws PortalException {
 
 		CommerceWishList commerceWishList =
 			commerceWishListLocalService.fetchCommerceWishList(
-				groupId, userId, defaultWishList, orderByComparator);
+				groupId, getUserId(), defaultWishList, orderByComparator);
 
 		if (commerceWishList != null) {
 			_commerceWishListModelResourcePermission.check(
@@ -92,53 +90,29 @@ public class CommerceWishListServiceImpl
 			OrderByComparator<CommerceWishList> orderByComparator)
 		throws PortalException {
 
-		_checkManagePermission(groupId);
+		_checkPortletResourcePermission(
+			groupId, CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
 
 		return commerceWishListLocalService.getCommerceWishLists(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<CommerceWishList> getCommerceWishLists(
-			long groupId, long userId, int start, int end,
-			OrderByComparator<CommerceWishList> orderByComparator)
-		throws PortalException {
-
-		if (getUserId() != userId) {
-			_checkManagePermission(groupId);
-		}
-
-		return commerceWishListLocalService.getCommerceWishLists(
-			groupId, userId, start, end, orderByComparator);
+			groupId, getUserId(), start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCommerceWishListsCount(long groupId) throws PortalException {
-		_checkManagePermission(groupId);
-
-		return commerceWishListLocalService.getCommerceWishListsCount(groupId);
-	}
-
-	@Override
-	public int getCommerceWishListsCount(long groupId, long userId)
-		throws PortalException {
-
-		if (getUserId() != userId) {
-			_checkManagePermission(groupId);
-		}
+		_checkPortletResourcePermission(
+			groupId, CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
 
 		return commerceWishListLocalService.getCommerceWishListsCount(
-			groupId, userId);
+			groupId, getUserId());
 	}
 
 	@Override
-	public CommerceWishList getDefaultCommerceWishList(
-			long groupId, long userId)
+	public CommerceWishList getDefaultCommerceWishList(long groupId)
 		throws PortalException {
 
 		CommerceWishList commerceWishList =
 			commerceWishListLocalService.getDefaultCommerceWishList(
-				groupId, userId, null);
+				groupId, getUserId(), null);
 
 		if (commerceWishList != null) {
 			_commerceWishListModelResourcePermission.check(
@@ -160,14 +134,15 @@ public class CommerceWishListServiceImpl
 			commerceWishListId, name, defaultWishList);
 	}
 
-	private void _checkManagePermission(long groupId) throws PortalException {
+	private void _checkPortletResourcePermission(long groupId, String actionId)
+		throws PortalException {
+
 		PortletResourcePermission portletResourcePermission =
 			_commerceWishListModelResourcePermission.
 				getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceWishListActionKeys.MANAGE_COMMERCE_WISH_LISTS);
+			getPermissionChecker(), groupId, actionId);
 	}
 
 	@Reference(

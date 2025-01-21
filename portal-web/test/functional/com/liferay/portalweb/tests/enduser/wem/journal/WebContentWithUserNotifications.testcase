@@ -180,7 +180,7 @@ definition {
 
 				WebContent.addCP(webContentContent = "Where does it come from?");
 
-				WebContent.submitForWorkflowWithPermission();
+				WebContent.submitForWorkflow();
 			}
 		}
 

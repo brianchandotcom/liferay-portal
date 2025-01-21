@@ -1,10 +1,11 @@
 <#if currentURL?has_content>
-	<#assign firstUrlSegment = currentURL?split('/')[3]?split('\\?')[0] />
+	<#assign searchTerm = "Capability" />
 
-	<#if firstUrlSegment != "v">
-		<#assign searchTerm = "Capability" />
-	<#else>
-		<#assign searchTerm = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${currentURL?split("/v/")[1]?split("?")[0]}").name />
+	<#if currentURL?contains("/v/")>
+		<#assign
+			taxonomyCategoryId = currentURL?split("/v/")[1]?split("?")[0]
+
+			searchTerm = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId}").name />
 	</#if>
 </#if>
 

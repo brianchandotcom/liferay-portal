@@ -1943,13 +1943,11 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		Map<String, String> urlTitleMap = new HashMap<>();
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getTitleObjectFieldId());
-
 		long classNameId = _classNameLocalService.getClassNameId(
 			objectDefinition.getClassName());
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getTitleObjectFieldId());
+		Map<String, String> urlTitleMap = new HashMap<>();
 
 		if ((objectField == null) || !objectField.isLocalized()) {
 			urlTitleMap = HashMapBuilder.put(

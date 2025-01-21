@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
@@ -76,22 +77,16 @@ public class DefaultMessageBus implements MessageBus {
 		message.setDestinationName(destinationName);
 
 		if (message.get("companyId") == null) {
-			Long[] companyIdsObj = (Long[])message.get("companyIds");
+			Long[] companyIds = (Long[])message.get("companyIds");
 
-			if (companyIdsObj != null) {
-				long[] companyIds = new long[companyIdsObj.length];
-
-				for (int i = 0; i < companyIdsObj.length; i++) {
-					companyIds[i] = companyIdsObj[i];
-				}
-
+			if (companyIds != null) {
 				_companyLocalService.forEachCompanyId(
 					companyId -> {
 						message.put("companyId", companyId);
 
 						destination.send(message.clone());
 					},
-					companyIds);
+					ArrayUtil.toArray(companyIds));
 
 				return;
 			}

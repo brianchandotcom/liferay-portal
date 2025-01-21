@@ -42,6 +42,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -754,33 +755,27 @@ public class LayoutsImporterTest {
 	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateEntry()
 		throws Exception {
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateCollection(
+				_group1.getGroupId());
+
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group1.getGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			null, _serviceContext1.getUserId(), _group1.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		Assert.assertFalse(
 			_layoutsImporter.validateFile(
 				_group1.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
 				_getFile(_RESOURCES_PATH_PAGE_TEMPLATES)));
 	}
 
 	@Test
 	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateEntryInADifferentLayoutPageTemplateCollection()
 		throws Exception {
-
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group1.getGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
@@ -790,8 +785,23 @@ public class LayoutsImporterTest {
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.BASIC,
-					ServiceContextTestUtil.getServiceContext(
-						_group1.getGroupId()));
+					_serviceContext1);
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+
+		layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.BASIC,
+					_serviceContext1);
 
 		Assert.assertTrue(
 			_layoutsImporter.validateFile(
@@ -896,8 +906,7 @@ public class LayoutsImporterTest {
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 			"Basic Web Content Display Page Template",
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		Assert.assertFalse(
 			_layoutsImporter.validateFile(

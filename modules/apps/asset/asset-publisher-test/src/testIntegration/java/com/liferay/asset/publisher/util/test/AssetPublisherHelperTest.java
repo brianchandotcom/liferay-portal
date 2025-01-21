@@ -23,6 +23,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -537,12 +538,10 @@ public class AssetPublisherHelperTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, _group1.getGroupId(), 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					_group1.getGroupId(), TestPropsValues.getUserId()));
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_group1.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeLocalService.getLayoutPrototype(

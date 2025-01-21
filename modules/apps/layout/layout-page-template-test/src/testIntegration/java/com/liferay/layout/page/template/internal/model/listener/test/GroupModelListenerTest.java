@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -74,14 +75,8 @@ public class GroupModelListenerTest {
 	public void testDeletingGroupDeletesFragmentEntryLinks() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_addLayoutPageTemplateCollection(group.getGroupId());
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				group.getGroupId());
+			_addLayoutPageTemplateEntry(group.getGroupId());
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			group.getGroupId(), layoutPageTemplateEntry.getPlid());
@@ -121,17 +116,9 @@ public class GroupModelListenerTest {
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 				group.getGroupId());
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_addLayoutPageTemplateCollection(group.getGroupId());
-
-		_addLayoutPageTemplateEntry(
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			group.getGroupId());
-
-		_addLayoutPageTemplateEntry(
-			RandomTestUtil.randomLong(), group.getGroupId());
-
-		_addLayoutPageTemplateEntry(0, group.getGroupId());
+		_addLayoutPageTemplateEntry(group.getGroupId());
+		_addLayoutPageTemplateEntry(group.getGroupId());
+		_addLayoutPageTemplateEntry(group.getGroupId());
 
 		_groupLocalService.deleteGroup(group);
 
@@ -205,19 +192,12 @@ public class GroupModelListenerTest {
 				serviceContext);
 	}
 
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			long layoutPageTemplateCollectionId, long groupId)
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(long groupId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), groupId,
-			layoutPageTemplateCollectionId, RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+		return LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+			groupId, LayoutPageTemplateEntryTypeConstants.BASIC,
+			WorkflowConstants.STATUS_DRAFT);
 	}
 
 	@Inject

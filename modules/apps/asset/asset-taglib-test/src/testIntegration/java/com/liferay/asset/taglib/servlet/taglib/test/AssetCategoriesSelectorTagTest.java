@@ -17,6 +17,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -159,13 +160,10 @@ public class AssetCategoriesSelectorTagTest {
 
 	@Test
 	public void testGetGroupIdsWithLayoutPrototype() throws Exception {
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, true,
-			_layoutPrototype.getLayoutPrototypeId(), 0, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+			_group.getGroupId(),
+			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+			WorkflowConstants.STATUS_APPROVED);
 
 		AssetCategoriesSelectorTag assetCategoriesSelectorTag =
 			new AssetCategoriesSelectorTag();

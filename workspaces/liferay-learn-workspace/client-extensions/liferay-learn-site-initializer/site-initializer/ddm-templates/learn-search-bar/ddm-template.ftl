@@ -34,7 +34,7 @@
 		<div class="input-group-inset-item input-group-inset-item-after">
 			<button
 				class="btn btn-unstyled"
-				aria\-label="${languageUtil.get(locale, 'search')}"
+				aria-label="${languageUtil.get(locale, 'search')}"
 				type="submit"
 			>
 				<svg class="lexicon-icon lexicon-icon-search" role="presentation" viewBox="0 0 512 512">

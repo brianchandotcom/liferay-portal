@@ -127,7 +127,7 @@ export function MarketplacePurchase({
 
 				<span>
 					{Liferay.Language.get(
-						'the-installation-process-is-ongoing-and-may-take-some-time-navigating-to-other-sections-will-not-cancel-the-process'
+						'the-installation-process-is-ongoing-and-may-take-some-time'
 					)}
 				</span>
 			</ProductPurchase.Body>

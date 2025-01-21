@@ -441,8 +441,8 @@ export default {
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay Self-Managed.',
-	'the-installation-process-is-ongoing-and-may-take-some-time-navigating-to-other-sections-will-not-cancel-the-process':
-		'The installation process is ongoing and may take some time....Navigating to other sections will not cancel the process.',
+	'the-installation-process-is-ongoing-and-may-take-some-time':
+		'The installation process is ongoing and may take some time. Navigating to other sections will not cancel the process.',
 	'the-installation-process-is-underway-and-should-be-completed-shortly':
 		'The installation process is underway and should be completed shortly...',
 	'the-liferay-marketplace-gives-you-the-opportunity-to-monetize-your-app-or-solutions-from-a-single-use-case-to-many-while-engaging-with-new-customer-opportunities-and-generating-ongoing-revenue':

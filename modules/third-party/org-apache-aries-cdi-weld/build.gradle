@@ -1,0 +1,66 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task jarManifest
+task jarPatched(type: Zip)
+task patch(type: PatchTask)
+
+copyPatchOriginalLibClasses {
+	doLast {
+		File file = file("classes/META-INF/MANIFEST.MF")
+
+		if (file.exists()) {
+			file.text = file.text.replace(";version=\"[3.1,4)\"", "")
+			file.text = file.text.replace(";v\r\n ersion=\"[3.1,4)\"", "")
+		}
+	}
+}
+
+dependencies {
+	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.weld", version: "1.1.5"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true)
+	}
+}
+
+jarPatched {
+	archiveFileName = jar.archiveFileName
+	destinationDirectory = jar.destinationDirectory
+	duplicatesStrategy = "exclude"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(
+			configurations.compileOnly.find {
+				it.name.startsWith "org.apache.aries.cdi.weld-"
+			})
+	}
+
+	mustRunAfter compileJava
+	mustRunAfter generatePomFileForMavenPublication
+	mustRunAfter processResources
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "org.apache.aries.cdi.weld"
+}

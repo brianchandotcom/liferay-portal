@@ -8,12 +8,21 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classnames from 'classnames';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {INITIAL_VIEWS_MAP, SIGN_IN, setupViewsMap} from './util/guestModal';
+import {
+	INITIAL_VIEWS_MAP,
+	SIGN_IN,
+	setupViewsMap,
+	storeImmediateCheckout,
+} from './util/guestModal';
 
 function GuestModal({isVisible, setIsVisible, signInURL}) {
 	const {observer, onOpenChange} = useModal({
 		defaultOpen: true,
-		onClose: () => setIsVisible(false),
+		onClose: () => {
+			storeImmediateCheckout(false);
+
+			setIsVisible(false);
+		},
 	});
 
 	const [activeView, setActiveView] = useState(SIGN_IN);

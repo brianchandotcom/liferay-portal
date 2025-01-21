@@ -26,16 +26,6 @@ import org.gradle.util.GUtil
 
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
-
-	if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
-		configurations {
-			jakartaTransformer
-		}
-
-		dependencies {
-			jakartaTransformer group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
-		}
-	}
 }
 
 apply plugin: "com.liferay.yarn.defaults.plugin"
@@ -85,6 +75,22 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	}
 
 	bndPrintJarFiles = new ConcurrentSkipListSet<File>()
+}
+
+if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
+	configurations {
+		jakartaTransformer
+	}
+
+	dependencies {
+		jakartaTransformer group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+	}
+
+	repositories {
+		maven {
+			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
 }
 
 if (FileUtil.exists(rootProject, "private/yarn.lock")) {
@@ -789,8 +795,6 @@ gradle.beforeProject {
 		}
 
 		if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
-			Configuration jakartaTransformerConfiguration = project.rootProject.buildscript.configurations.jakartaTransformer
-
 			pluginManager.withPlugin("com.liferay.jasper.jspc") {
 				configurations.jspC.attributes {
 					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
@@ -800,7 +804,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jakartaTransformerConfiguration, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
 					}
 				}
 
@@ -808,7 +812,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(jspCClasspath.files.findAll { it.name.endsWith(".jar") })
 
-						jspCClasspath = files(jspCClasspath - jarFiles) + _transformToJakarta(jakartaOutputDir, jakartaTransformerConfiguration, jarFiles, it)
+						jspCClasspath = files(jspCClasspath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
 					}
 				}
 			}
@@ -830,7 +834,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(classpath.files - jarFiles) + _transformToJakarta(jakartaOutputDir, jakartaTransformerConfiguration, jarFiles, it)
+						classpath = files(classpath.files - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
 					}
 				}
 
@@ -838,7 +842,7 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jakartaTransformerConfiguration, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
 					}
 				}
 
@@ -846,14 +850,14 @@ gradle.beforeProject {
 					doFirst {
 						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
 
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, jakartaTransformerConfiguration, jarFiles, it)
+						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
 					}
 				}
 
 				tasks.named("jar") {
-					Task jarTask ->
-
-					classpath = tasks.named("compileJava").map { it.classpath }
+					classpath = tasks.named("compileJava").map {
+						it.classpath
+					}
 				}
 			}
 		}
@@ -978,13 +982,8 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, Configuration jakartaTransformerConfiguration, FileCollection jarFiles, Task task) {
 	FileCollection newJarFiles = task.project.objects.fileCollection()
 
-	def propertiesFile = task.project.rootProject.file "liferay-jakarta-versions.properties"
-
-	def propertiesFileAbsolutePath = propertiesFile.absolutePath
-
-	URLClassLoader urlClassLoader = new URLClassLoader(
-		jakartaTransformerConfiguration.files.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]),
-		null as java.lang.ClassLoader);
+	File jakartaVersionsPropertiesFile = task.project.rootProject.file("liferay-jakarta-versions.properties")
+	URLClassLoader urlClassLoader = new URLClassLoader(jakartaTransformerConfiguration.files.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]), null as java.lang.ClassLoader)
 
 	jarFiles.files.each {
 		File jarFile ->
@@ -1009,7 +1008,7 @@ private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, C
 		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream())
 		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream())
 
-		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--versions", propertiesFileAbsolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
+		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--versions", jakartaVersionsPropertiesFile.absolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
 
 		if (resultCode.toString() == "Success") {
 			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"

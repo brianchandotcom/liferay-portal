@@ -696,6 +696,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that variables in `Tag` classes get cleaned up properly." />
 		</check>
+		<check name="JavaCompanyScopedIdsCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases where company scoped ids are used, see LPD-45118." />
+		</check>
 		<check name="JavaComponentActivateCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if methods with annotation `@Activate` or `@Deactivate` follow naming conventions." />
@@ -862,10 +866,6 @@
 		<check name="JavaUnsafeCastingCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for potential ClassCastException." />
-		</check>
-		<check name="JavaUnnamedSFCheck">
-			<category name="Bug Prevention" />
-			<description name="" />
 		</check>
 		<check name="JavaUnusedSourceFormatterChecksCheck">
 			<category name="Miscellaneous" />

@@ -2,11 +2,7 @@ Bundle-Name: Liferay Mail Outlook Auth Connector Provider
 Bundle-SymbolicName: com.liferay.mail.outlook.auth.connector.provider
 Bundle-Version: 1.0.16
 Import-Package:\
-	!com.google.crypto.tink.*,\
-	\
 	!com.sun.net.httpserver.*,\
-	\
-	!jakarta.servlet.*,\
 	\
 	!net.shibboleth.utilities.*,\
 	\

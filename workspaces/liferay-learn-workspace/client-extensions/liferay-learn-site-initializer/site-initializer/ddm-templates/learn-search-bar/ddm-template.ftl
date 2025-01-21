@@ -1,5 +1,3 @@
-<#assign pageTitle = layout.getName(locale) />
-
 <#if currentURL?has_content>
 	<#assign firstUrlSegment = currentURL?split('/')[3]?split('\\?')[0] />
 

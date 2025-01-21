@@ -2328,6 +2328,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (Validator.isNull(titleObjectFieldName)) {
 			titleObjectFieldName = "id";
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+				titleObjectFieldName = "externalReferenceCode";
+			}
 		}
 
 		ObjectField objectField = _objectFieldPersistence.findByODI_N(

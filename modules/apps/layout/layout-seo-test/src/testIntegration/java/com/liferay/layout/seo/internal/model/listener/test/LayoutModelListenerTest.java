@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -58,18 +57,15 @@ public class LayoutModelListenerTest {
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 				layout.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getLayoutId(), false,
-				Collections.emptyMap(), _getServiceContext());
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		_layoutLocalService.deleteLayout(layout);
 
 		Assert.assertNull(
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layoutSEOEntry.getLayoutSEOEntryId()));
-	}
-
-	private ServiceContext _getServiceContext() throws Exception {
-		return ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
 	}
 
 	@DeleteAfterTestRun

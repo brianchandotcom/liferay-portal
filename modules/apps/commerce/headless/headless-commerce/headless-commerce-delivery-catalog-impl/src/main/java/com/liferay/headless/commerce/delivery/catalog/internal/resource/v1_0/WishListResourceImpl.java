@@ -11,7 +11,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
@@ -71,13 +70,13 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 		return Page.of(
 			transform(
 				_commerceWishListService.getCommerceWishLists(
-					commerceChannel.getSiteGroupId(), contextUser.getUserId(),
+					commerceChannel.getSiteGroupId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				commerceWishList -> _toWishList(commerceWishList)),
 			pagination,
 			_commerceWishListService.getCommerceWishListsCount(
-				commerceChannel.getSiteGroupId(), contextUser.getUserId()));
+				commerceChannel.getSiteGroupId()));
 	}
 
 	@Override
@@ -138,10 +137,9 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 
 		CommerceWishList commerceWishList =
 			_commerceWishListService.addCommerceWishList(
+				commerceChannel.getSiteGroupId(),
 				GetterUtil.getString(wishList.getName()),
-				GetterUtil.getBoolean(wishList.getDefaultWishList()),
-				_serviceContextHelper.getServiceContext(
-					commerceChannel.getSiteGroupId()));
+				GetterUtil.getBoolean(wishList.getDefaultWishList()));
 
 		_postWishListItems(
 			commerceWishList, accountId, wishList.getWishListItems());
@@ -195,9 +193,6 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.WishListDTOConverter)"

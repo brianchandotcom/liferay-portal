@@ -15,16 +15,12 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.ResourceBundle;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -114,17 +110,14 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _portal.getLocale(actionRequest), getClass());
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		String name = _language.get(resourceBundle, "new-wish-list");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceWishList.class.getName(), actionRequest);
+		String name = _language.get(themeDisplay.getLocale(), "new-wish-list");
 
 		CommerceWishList commerceWishList =
 			_commerceWishListService.addCommerceWishList(
-				name, false, serviceContext);
+				themeDisplay.getScopeGroupId(), name, false);
 
 		actionResponse.setRenderParameter(
 			"commerceWishListId",
@@ -146,11 +139,11 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 				commerceWishListId, name, defaultWishList);
 		}
 		else {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceWishList.class.getName(), actionRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			_commerceWishListService.addCommerceWishList(
-				name, defaultWishList, serviceContext);
+				themeDisplay.getScopeGroupId(), name, defaultWishList);
 		}
 	}
 
@@ -159,8 +152,5 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

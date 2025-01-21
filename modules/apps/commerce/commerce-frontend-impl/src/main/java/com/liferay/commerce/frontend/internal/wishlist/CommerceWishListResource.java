@@ -90,13 +90,12 @@ public class CommerceWishListResource {
 			serviceContext.setScopeGroupId(groupId);
 
 			CommerceWishList commerceWishList =
-				_commerceWishListService.getDefaultCommerceWishList(
-					groupId, userId);
+				_commerceWishListService.getDefaultCommerceWishList(groupId);
 
 			if (commerceWishList == null) {
 				commerceWishList = _commerceWishListService.addCommerceWishList(
-					_language.get(serviceContext.getLocale(), "default"), true,
-					serviceContext);
+					groupId,
+					_language.get(serviceContext.getLocale(), "default"), true);
 			}
 
 			CPCatalogEntry cpCatalogEntry =
@@ -122,8 +121,7 @@ public class CommerceWishListResource {
 			if (commerceWishListItemCount == 0) {
 				_commerceWishListItemService.addCommerceWishListItem(
 					commerceAccountId, commerceWishList.getCommerceWishListId(),
-					cpCatalogEntry.getCProductId(), cpInstanceUuid, options,
-					serviceContext);
+					cpInstanceUuid, cpCatalogEntry.getCProductId(), options);
 
 				wishListItemUpdated.setSuccess(true);
 			}

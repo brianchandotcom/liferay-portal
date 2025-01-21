@@ -55,7 +55,7 @@ public class CommerceWishListFDSDataProvider
 
 		return TransformUtil.transform(
 			_commerceWishListService.getCommerceWishLists(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				themeDisplay.getScopeGroupId(),
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), null),
 			commerceWishList -> new WishList(
@@ -77,7 +77,7 @@ public class CommerceWishListFDSDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		return _commerceWishListService.getCommerceWishListsCount(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+			themeDisplay.getScopeGroupId());
 	}
 
 	@Reference

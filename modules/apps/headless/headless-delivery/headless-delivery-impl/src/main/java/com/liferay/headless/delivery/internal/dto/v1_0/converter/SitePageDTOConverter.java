@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PagePermission;
@@ -277,9 +276,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					});
 				setPageSettings(
 					() -> PageSettingsUtil.getPageSettings(
-						_ddmStorageEngineManager, _dlAppService, _dlURLHelper,
-						dtoConverterContext, _layoutSEOEntryLocalService,
-						layout));
+						_dlAppService, _dlURLHelper, dtoConverterContext,
+						_layoutSEOEntryLocalService, layout));
 				setPageType(
 					() -> {
 						LayoutTypeController layoutTypeController =
@@ -343,9 +341,6 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DDMStorageEngineManager _ddmStorageEngineManager;
 
 	@Reference
 	private DLAppService _dlAppService;

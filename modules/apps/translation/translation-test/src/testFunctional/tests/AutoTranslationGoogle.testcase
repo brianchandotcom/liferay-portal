@@ -317,7 +317,7 @@ definition {
 			webContentNumeric = 10,
 			webContentTitle = "This is the title of the numeric field");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",

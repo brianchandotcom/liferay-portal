@@ -576,7 +576,7 @@ const FrontendDataSet = ({
 				selectionType={selectionType}
 				showSearch={showSearch}
 				sidePanelId={dataSetSupportSidePanelId}
-				total={items?.length ?? 0}
+				total={total}
 			/>
 		</div>
 	) : null;

@@ -60,7 +60,7 @@ const Support = () => {
 			/>
 
 			<Input
-				label={i18n.translate('support-email')}
+				label={i18n.translate('support-email-address')}
 				onChange={(event) =>
 					dispatch({
 						payload: {
@@ -74,7 +74,7 @@ const Support = () => {
 			/>
 
 			<Input
-				label={i18n.translate('support-phone')}
+				label={i18n.translate('support-phone-number')}
 				onChange={(event) =>
 					dispatch({
 						payload: {

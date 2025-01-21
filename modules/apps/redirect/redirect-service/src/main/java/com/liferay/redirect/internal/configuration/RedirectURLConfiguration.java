@@ -36,6 +36,12 @@ public interface RedirectURLConfiguration {
 	public String[] allowedIPs();
 
 	@Meta.AD(
+		deflt = "http|https", description = "allowed-protocols-help",
+		name = "allowed-protocols", required = false
+	)
+	public String[] allowedProtocols();
+
+	@Meta.AD(
 		deflt = "domain", description = "security-mode-help",
 		name = "security-mode", optionLabels = {"Domain", "IP"},
 		optionValues = {"domain", "ip"}, required = false

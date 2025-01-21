@@ -51,6 +51,14 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 	}
 
 	@Override
+	public String[] getAllowedProtocols(long companyId) {
+		RedirectURLConfiguration redirectURLConfiguration =
+			_getCompanyRedirectURLConfiguration(companyId);
+
+		return redirectURLConfiguration.allowedProtocols();
+	}
+
+	@Override
 	public String getSecurityMode(long companyId) {
 		RedirectURLConfiguration redirectURLConfiguration =
 			_getCompanyRedirectURLConfiguration(companyId);

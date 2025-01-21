@@ -14,6 +14,8 @@ public interface RedirectURLSettings {
 
 	public String[] getAllowedIPs(long companyId);
 
+	public String[] getAllowedProtocols(long companyId);
+
 	public String getSecurityMode(long companyId);
 
 }

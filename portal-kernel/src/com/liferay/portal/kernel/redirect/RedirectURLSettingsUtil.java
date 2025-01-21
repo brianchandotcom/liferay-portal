@@ -30,6 +30,14 @@ public class RedirectURLSettingsUtil {
 			new String[] {"127.0.0.1", "SERVER_IP"});
 	}
 
+	public static String[] getAllowedProtocols(long companyId) {
+		RedirectURLSettings redirectURLSettings =
+			_redirectURLSettingsSnapshot.get();
+
+		return GetterUtil.getStringValues(
+			redirectURLSettings.getAllowedProtocols(companyId));
+	}
+
 	public static String getSecurityMode(long companyId) {
 		RedirectURLSettings redirectURLSettings =
 			_redirectURLSettingsSnapshot.get();

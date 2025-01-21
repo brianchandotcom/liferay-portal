@@ -22,7 +22,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -2641,11 +2640,11 @@ public class ObjectEntryLocalServiceTest {
 			0, companyObjectDefinition.getObjectDefinitionId(),
 			Collections.emptyMap());
 
-		_assertURLTitleMap(
+		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				"en_US", companyObjectEntry1.getExternalReferenceCode()
 			).build(),
-			companyObjectDefinition, companyObjectEntry1);
+			companyObjectEntry1.getURLTitleMap());
 
 		companyObjectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), companyObjectEntry1.getObjectEntryId(),
@@ -2656,11 +2655,11 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertURLTitleMap(
+		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				"en_US", "test-url"
 			).build(),
-			companyObjectDefinition, companyObjectEntry1);
+			companyObjectEntry1.getURLTitleMap());
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
@@ -2693,13 +2692,13 @@ public class ObjectEntryLocalServiceTest {
 				"able", RandomTestUtil.randomString()
 			).build());
 
-		_assertURLTitleMap(
+		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				"en_US", "test-url-1"
 			).put(
 				"pt_BR", "test-url-1"
 			).build(),
-			companyObjectDefinition, companyObjectEntry2);
+			companyObjectEntry2.getURLTitleMap());
 
 		_assertFriendlyURLEntriesSize(
 			2, companyObjectDefinition, companyObjectEntry1);
@@ -2728,11 +2727,11 @@ public class ObjectEntryLocalServiceTest {
 				"able", "Test URL"
 			).build());
 
-		_assertURLTitleMap(
+		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				"en_US", "test-url"
 			).build(),
-			siteObjectDefinition, siteObjectEntry1);
+			siteObjectEntry1.getURLTitleMap());
 
 		Group group2 = GroupTestUtil.addGroup();
 
@@ -2742,11 +2741,11 @@ public class ObjectEntryLocalServiceTest {
 				"able", "Test URL"
 			).build());
 
-		_assertURLTitleMap(
+		AssertUtils.assertEquals(
 			HashMapBuilder.put(
 				"en_US", "test-url"
 			).build(),
-			siteObjectDefinition, siteObjectEntry2);
+			siteObjectEntry2.getURLTitleMap());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			siteObjectDefinition);
@@ -4867,31 +4866,6 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedObjectFieldName,
 			objectValidationRuleResult.getObjectFieldName());
-	}
-
-	private void _assertURLTitleMap(
-			Map<String, String> expectedURLTitleMap,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
-		throws Exception {
-
-		Map<String, String> actualURLTitleMap = new HashMap<>();
-
-		FriendlyURLEntry friendlyURLEntry =
-			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				_classNameLocalService.getClassNameId(
-					objectDefinition.getClassName()),
-				objectEntry.getObjectEntryId());
-
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
-					friendlyURLEntry.getFriendlyURLEntryId())) {
-
-			actualURLTitleMap.put(
-				friendlyURLEntryLocalization.getLanguageId(),
-				friendlyURLEntryLocalization.getUrlTitle());
-		}
-
-		AssertUtils.assertEquals(expectedURLTitleMap, actualURLTitleMap);
 	}
 
 	private void _clearValidatedObjectEntryIds() {

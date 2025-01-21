@@ -5,6 +5,8 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -15,15 +17,19 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -112,6 +118,42 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		}
 
 		return String.valueOf(getObjectEntryId());
+	}
+
+	@Override
+	public String getURLTitle(Locale locale) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			return null;
+		}
+
+		FriendlyURLEntry friendlyURLEntry =
+			FriendlyURLEntryLocalServiceUtil.fetchMainFriendlyURLEntry(
+				ClassNameLocalServiceUtil.getClassNameId(getModelClassName()),
+				getObjectEntryId());
+
+		if (friendlyURLEntry == null) {
+			return null;
+		}
+
+		return friendlyURLEntry.getUrlTitle(LocaleUtil.toLanguageId(locale));
+	}
+
+	@Override
+	public Map<String, String> getURLTitleMap() throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			return null;
+		}
+
+		FriendlyURLEntry friendlyURLEntry =
+			FriendlyURLEntryLocalServiceUtil.fetchMainFriendlyURLEntry(
+				ClassNameLocalServiceUtil.getClassNameId(getModelClassName()),
+				getObjectEntryId());
+
+		if (friendlyURLEntry == null) {
+			return null;
+		}
+
+		return friendlyURLEntry.getLanguageIdToUrlTitleMap();
 	}
 
 	@Override

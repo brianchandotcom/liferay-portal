@@ -35,10 +35,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.Closeable;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -74,10 +70,6 @@ public class ObjectEntryPerformanceTest {
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
 
-		_logFilePath = Paths.get(properties.getProperty("log.file"));
-
-		Files.deleteIfExists(_logFilePath);
-
 		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
 
 		_addObjectEntriesByObjectEntryManager(
@@ -94,7 +86,12 @@ public class ObjectEntryPerformanceTest {
 	public void testGetObjectEntriesByObjectEntryLocalService()
 		throws Exception {
 
-		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
+		try (Closeable closeable = new PerformanceTimer(
+				60000,
+				"Get all the Object Entries by ObjectEntryLocalService with " +
+					"CustomObjectDefinitionId:" +
+						_customObjectDefinition.getObjectDefinitionId())) {
+
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _customObjectDefinition.getObjectDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -154,8 +151,6 @@ public class ObjectEntryPerformanceTest {
 				TestPropsValues.getUserId(),
 				_customObjectDefinition.getObjectDefinitionId());
 	}
-
-	private static Path _logFilePath;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _customObjectDefinition;

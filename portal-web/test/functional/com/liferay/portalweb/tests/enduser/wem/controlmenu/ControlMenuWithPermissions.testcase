@@ -77,6 +77,8 @@ definition {
 			Check.checkToggleSwitch(
 				checkboxName = "Show Control Menu by Role",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PortletEntry.save();
 		}
 
 		task ("When the site administrator selects new role to see control menu") {
@@ -155,6 +157,8 @@ definition {
 			Check.checkToggleSwitch(
 				checkboxName = "Show Control Menu by Role",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PortletEntry.save();
 		}
 
 		task ("Then the site administrator cannot remove Administrator and Site Administrator from Roles that can see the control menu") {

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -811,7 +813,10 @@ public class CTCollectionLocalServiceImpl
 							ctPersistence.getTableName(),
 							" where ctCollectionId = ", ctCollectionId,
 							" and status not in (",
-							StringUtil.merge(_STATUSES, StringPool.COMMA),
+							StringUtil.merge(
+								_getStatuses(
+									ctCollectionId, ctPersistence, entry),
+								StringPool.COMMA),
 							")"));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -1299,6 +1304,38 @@ public class CTCollectionLocalServiceImpl
 		return relatedEntriesMap;
 	}
 
+	private int[] _getStatuses(
+		long ctCollectionId, CTPersistence ctPersistence,
+		Map.Entry<Long, CTPersistence<?>> entry) {
+
+		long groupId = 0;
+
+		if (entry instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)entry;
+
+			groupId = groupedModel.getGroupId();
+		}
+
+		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
+			ctCollectionId);
+		String modelClassNameId = ctPersistence.getModelClass(
+		).getName();
+
+		if (!_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				ctCollection.getCompanyId(), groupId, modelClassNameId)) {
+
+			return new int[] {
+				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_DRAFT,
+				WorkflowConstants.STATUS_EXPIRED,
+				WorkflowConstants.STATUS_IN_TRASH,
+				WorkflowConstants.STATUS_SCHEDULED
+			};
+		}
+
+		return _DEFAULT_STATUSES;
+	}
+
 	private void _moveCTEntries(
 		long companyId, long fromCTCollectionId, long toCTCollectionId,
 		long classNameId, List<CTEntry> ctEntries) {
@@ -1563,7 +1600,7 @@ public class CTCollectionLocalServiceImpl
 
 	private static final int _BATCH_SIZE = 1000;
 
-	private static final int[] _STATUSES = {
+	private static final int[] _DEFAULT_STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
 		WorkflowConstants.STATUS_IN_TRASH, WorkflowConstants.STATUS_SCHEDULED
 	};
@@ -1638,5 +1675,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private UIDFactory _uidFactory;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

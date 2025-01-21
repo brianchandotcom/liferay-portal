@@ -363,7 +363,7 @@ public class FormItemManager {
 			LayoutStructure layoutStructure, Locale locale, String parentItemId)
 		throws PortalException {
 
-		if (_hasFormStyledLayoutStructureItemParent(
+		if (_hasFormStyledParentLayoutStructureItem(
 				parentItemId, layoutStructure)) {
 
 			return;
@@ -672,7 +672,7 @@ public class FormItemManager {
 		return null;
 	}
 
-	private boolean _hasFormStyledLayoutStructureItemParent(
+	private boolean _hasFormStyledParentLayoutStructureItem(
 		String itemId, LayoutStructure layoutStructure) {
 
 		LayoutStructureItem layoutStructureItem =
@@ -693,7 +693,7 @@ public class FormItemManager {
 			return true;
 		}
 
-		return _hasFormStyledLayoutStructureItemParent(
+		return _hasFormStyledParentLayoutStructureItem(
 			layoutStructureItem.getParentItemId(), layoutStructure);
 	}
 

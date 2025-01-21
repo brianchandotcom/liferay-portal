@@ -1,11 +1,16 @@
 [#assign imageCount = configuration.numberOfImages?number - 1]
 
+<style data-lfr-nonce>
+	.f-image-carousel {
+		max-width: ${configuration.image_carouselMaxWidth};
+	}
+</style>
+
 <div
 	class="f-image-carousel
 		f-image-carousel-slide-down
 		glide
 		${configuration.colorScheme}"
-	style="max-width:${configuration.image_carouselMaxWidth};"
 >
 	<div class="glide__track" data-glide-el="track">
 		<ul class="glide__slides ${configuration.imageAspectRatio}">

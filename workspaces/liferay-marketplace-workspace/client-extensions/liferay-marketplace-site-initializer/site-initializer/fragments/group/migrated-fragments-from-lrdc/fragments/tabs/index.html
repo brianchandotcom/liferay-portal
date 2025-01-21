@@ -1,11 +1,11 @@
 <div class="f-tabs ${configuration.fontSize}">
-<nav class="navbar navbar-underline navigation-bar" style="background-color: ${configuration.tabHeadingColor};">
+<nav class="navbar navbar-underline navigation-bar">
 <div class="max-width-full mx-10 px-2 w-100" id="navigationBar-${fragmentEntryLinkNamespace}">
 <ul class="flex-wrap navbar-nav" role="tablist">
 		[#list 0..configuration.numberOfTabs-1 as i]
 <li class="nav-item" role="presentation">
 <div aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" rolZe="tab">
-			<span class="navbar-text-truncate" data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" style="color: ${configuration.tabTextColor}; tabindex="-1">
+			<span class="navbar-text-truncate" data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
 			  Tab ${i+1}
 			</span>
 		  </div>
@@ -24,8 +24,16 @@
 </div>
 </div>
 
-<style>
-.f-tabs.small-tabs .nav-link:hover, .f-tabs.small-tabs .nav-link.active {
-	border-bottom: 3px solid ${configuration.borderUnderlineColor};
-}
+<style data-lfr-nonce>
+	.f-tabs .navigation-bar {
+		background-color: ${configuration.tabHeadingColor};
+	}
+
+	.f-tabs .navigation-bar .nav-link {
+		color: ${configuration.tabTextColor};
+	}
+
+	.f-tabs.small-tabs .nav-link:hover, .f-tabs.small-tabs .nav-link.active {
+		border-bottom: 3px solid ${configuration.borderUnderlineColor};
+	}
 </style>

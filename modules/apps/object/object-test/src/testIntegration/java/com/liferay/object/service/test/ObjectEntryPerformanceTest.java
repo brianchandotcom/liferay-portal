@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -70,21 +69,17 @@ public class ObjectEntryPerformanceTest {
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
 
-		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
-
-		_addObjectEntriesByObjectEntryManager(
-			GetterUtil.getInteger(
-				properties.getProperty("object.entries.count")));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_deleteObjectEntriesByObjectEntryLocalService();
+		_objectEntryCount = GetterUtil.getInteger(
+			properties.getProperty("object.entries.count"));
 	}
 
 	@Test
 	public void testGetObjectEntriesByObjectEntryLocalService()
 		throws Exception {
+
+		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
+
+		_addObjectEntriesByObjectEntryManager(_objectEntryCount);
 
 		try (Closeable closeable = new PerformanceTimer(
 				60000,
@@ -96,6 +91,8 @@ public class ObjectEntryPerformanceTest {
 				0, _customObjectDefinition.getObjectDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
+
+		_deleteObjectEntriesByObjectEntryLocalService();
 	}
 
 	private void _addObjectEntriesByObjectEntryManager(Integer numberOfEntries)
@@ -162,6 +159,7 @@ public class ObjectEntryPerformanceTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private List<com.liferay.object.model.ObjectEntry> _objectEntries;
+	private int _objectEntryCount;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

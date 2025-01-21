@@ -27,8 +27,6 @@ type MarketplacePurchaseProps = {
 	state: States;
 };
 
-const MARKETPLACE_ADMIN_EMAIL = 'marketplace-admin@liferay.com';
-
 export function MarketplacePurchase({
 	onClickInstall,
 	projectId,
@@ -49,7 +47,7 @@ export function MarketplacePurchase({
 			>
 				<span className="mx-1">
 					{Liferay.Language.get(
-						'your-application-has-been-installed-wait-a-few-moments-for-it-to-become-available'
+						'your-application-has-been-installed,-wait-a-few-moments-for-it-to-become-available'
 					)}
 				</span>
 			</ProductPurchase.Body>
@@ -63,14 +61,8 @@ export function MarketplacePurchase({
 				title={Liferay.Language.get('error')}
 			>
 				<span className="mx-1">
-					{Liferay.Language.get(
-						'there-was-an-unknown-error'
-					)}
+					{Liferay.Language.get('there-was-an-unknown-error')}
 				</span>
-
-				<a href={`mailto:${MARKETPLACE_ADMIN_EMAIL}`}>
-					{MARKETPLACE_ADMIN_EMAIL}
-				</a>
 			</ProductPurchase.Body>
 		);
 	}
@@ -83,7 +75,7 @@ export function MarketplacePurchase({
 			>
 				<p className="text-red">
 					{Liferay.Language.get(
-						'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project'
+						'you-currently-do-not-have-access-to-any-cloud-project'
 					)}
 				</p>
 			</ProductPurchase.Body>

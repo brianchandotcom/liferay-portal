@@ -332,38 +332,6 @@ public class AssetTagLocalServiceTest {
 	}
 
 	@Test
-	public void testGetTagsWithDifferentGroups() throws Exception {
-		Group group1 = GroupTestUtil.addGroup();
-		Group group2 = GroupTestUtil.addGroup();
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
-
-		try {
-			_assetTagLocalService.addTag(
-				null, TestPropsValues.getUserId(), group1.getGroupId(), "tag1",
-				_serviceContext);
-
-			_assetTagLocalService.addTag(
-				null, TestPropsValues.getUserId(), group2.getGroupId(), "tag2",
-				_serviceContext);
-
-			_assetTagLocalService.getTags(
-				group1.getGroupId(), classNameId, null);
-
-			Assert.assertEquals(
-				1,
-				_assetTagLocalService.getTags(
-					group1.getGroupId(), classNameId, null
-				).size());
-		}
-		finally {
-			GroupTestUtil.deleteGroup(group1);
-			GroupTestUtil.deleteGroup(group2);
-		}
-	}
-
-	@Test
 	public void testGetTagSizeWithCaseInsensitive() throws Exception {
 		String[] tagNames = {"tag1", "Tag1"};
 
@@ -420,6 +388,38 @@ public class AssetTagLocalServiceTest {
 			JournalArticle.class.getName(), 1, expectedTagNames, "TAG1", 0, 1);
 		_assertGetTags(
 			JournalArticle.class.getName(), 1, expectedTagNames, "Tag1", 0, 1);
+	}
+
+	@Test
+	public void testGetTagsWithDifferentGroups() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class.getName());
+
+		try {
+			_assetTagLocalService.addTag(
+				null, TestPropsValues.getUserId(), group1.getGroupId(), "tag1",
+				_serviceContext);
+
+			_assetTagLocalService.addTag(
+				null, TestPropsValues.getUserId(), group2.getGroupId(), "tag2",
+				_serviceContext);
+
+			_assetTagLocalService.getTags(
+				group1.getGroupId(), classNameId, null);
+
+			Assert.assertEquals(
+				1,
+				_assetTagLocalService.getTags(
+					group1.getGroupId(), classNameId, null
+				).size());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group1);
+			GroupTestUtil.deleteGroup(group2);
+		}
 	}
 
 	@Test

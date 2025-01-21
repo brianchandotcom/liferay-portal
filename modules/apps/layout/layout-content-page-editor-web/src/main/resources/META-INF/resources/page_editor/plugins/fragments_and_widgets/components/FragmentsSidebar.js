@@ -286,6 +286,21 @@ export default function FragmentsSidebar() {
 							/>
 						}
 					/>
+
+					{Liferay.FeatureFlags['LPD-34938'] && (
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								'explore-marketplace'
+							)}
+							borderless
+							className="ml-2"
+							data-tooltip-align="top"
+							displayType="secondary"
+							size="sm"
+							symbol="marketplace"
+							title={Liferay.Language.get('explore-marketplace')}
+						/>
+					)}
 				</div>
 
 				{searchValue ? (

@@ -213,6 +213,18 @@ components:
                     items:
                         $ref: "#/components/schemas/CustomField"
                     type: array
+                dateCreated:
+                    description:
+                        The account group's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The account group's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
                 description:
                     example: AccountGroup Description
                     type: string

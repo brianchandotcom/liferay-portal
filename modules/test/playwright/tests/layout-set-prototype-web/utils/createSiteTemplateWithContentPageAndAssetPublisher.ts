@@ -8,17 +8,14 @@ import {Page} from '@playwright/test';
 import {LayoutSetPrototype} from '../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
+import createSiteTemplate from './createSiteTemplate';
 
 export default async function createSiteTemplateWithContentPageAndAssetPublisher({
 	apiHelpers,
-	applicationsMenuPage,
-	layoutSetPrototypePage,
 	page,
 	pageEditorPage,
 	pagesAdminPage,
@@ -26,8 +23,6 @@ export default async function createSiteTemplateWithContentPageAndAssetPublisher
 	templateName,
 }: {
 	apiHelpers: any;
-	applicationsMenuPage: ApplicationsMenuPage;
-	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
 	pageEditorPage: PageEditorPage;
 	pagesAdminPage: PagesAdminPage;
@@ -35,21 +30,14 @@ export default async function createSiteTemplateWithContentPageAndAssetPublisher
 	templateName: string;
 	uiElementsPage: UIElementsPage;
 }): Promise<LayoutSetPrototype> {
-	const layoutSetPrototype =
-		await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-			templateName
-		);
-
-	await applicationsMenuPage.goToSiteTemplates();
-
-	const siteTemplateUrl =
-		await layoutSetPrototypePage.getSiteTemplateUrl(templateName);
-
-	await page.goto(siteTemplateUrl);
-
-	await productMenuPage.checkIfAdecuateProductMenu(templateName);
-	await productMenuPage.openProductMenuIfClosed();
-
+	
+	const layoutSetPrototype = await createSiteTemplate({
+					apiHelpers,
+					page,
+					productMenuPage,
+					templateName,
+				  });
+	
 	await productMenuPage.goToPages();
 
 	await pagesAdminPage.newButton.click();

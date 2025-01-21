@@ -27,6 +27,30 @@ public class DisplayPageTemplateTestUtil {
 	}
 
 	public static LayoutPageTemplateEntry addDisplayPageTemplate(
+			long groupId, long classNameId, long classTypeId)
+		throws PortalException {
+
+		return addDisplayPageTemplate(
+			groupId, classNameId, classTypeId, false,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public static LayoutPageTemplateEntry addDisplayPageTemplate(
+			long groupId, long classNameId, long classTypeId,
+			boolean defaultTemplate, int status)
+		throws PortalException {
+
+		return LayoutPageTemplateEntryLocalServiceUtil.
+			addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), groupId, 0, classNameId,
+				classTypeId, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+				defaultTemplate, 0, 0, 0, status,
+				ServiceContextTestUtil.getServiceContext(
+					groupId, TestPropsValues.getUserId()));
+	}
+
+	public static LayoutPageTemplateEntry addDisplayPageTemplate(
 			long groupId, String name)
 		throws PortalException {
 

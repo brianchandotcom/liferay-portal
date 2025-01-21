@@ -562,29 +562,6 @@ public class FormItemManager {
 		return fragmentEntryLink;
 	}
 
-	private boolean _hasTypeInputFragmentEntryLink(
-		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if (!Objects.equals(
-					fragmentEntryLink.getType(),
-					FragmentConstants.TYPE_INPUT)) {
-
-				continue;
-			}
-
-			Set<String> fragmentEntryLinkFieldTypes =
-				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
-					fragmentEntryLink.getFragmentEntryLinkId(), locale);
-
-			if (!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private LayoutStructureItem _findFormStepContainerStyledLayoutStructureItem(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure) {
@@ -718,6 +695,29 @@ public class FormItemManager {
 
 		return _hasFormStyledLayoutStructureItemParent(
 			layoutStructureItem.getParentItemId(), layoutStructure);
+	}
+
+	private boolean _hasTypeInputFragmentEntryLink(
+		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (!Objects.equals(
+					fragmentEntryLink.getType(),
+					FragmentConstants.TYPE_INPUT)) {
+
+				continue;
+			}
+
+			Set<String> fragmentEntryLinkFieldTypes =
+				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
+					fragmentEntryLink.getFragmentEntryLinkId(), locale);
+
+			if (!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isAllowedFragmentEntryKey(

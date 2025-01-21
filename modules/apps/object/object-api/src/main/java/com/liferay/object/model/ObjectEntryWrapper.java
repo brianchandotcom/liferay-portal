@@ -347,6 +347,20 @@ public class ObjectEntryWrapper
 		return model.getTitleValue();
 	}
 
+	@Override
+	public String getURLTitle(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getURLTitle(locale);
+	}
+
+	@Override
+	public Map<String, String> getURLTitleMap()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getURLTitleMap();
+	}
+
 	/**
 	 * Returns the user ID of this object entry.
 	 *

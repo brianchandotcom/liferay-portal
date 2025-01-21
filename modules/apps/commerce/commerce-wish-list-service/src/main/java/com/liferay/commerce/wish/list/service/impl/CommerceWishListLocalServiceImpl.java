@@ -7,6 +7,7 @@ package com.liferay.commerce.wish.list.service.impl;
 
 import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
 import com.liferay.commerce.wish.list.exception.GuestWishListMaxAllowedException;
+import com.liferay.commerce.wish.list.exception.RequiredCommerceWishListException;
 import com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,11 +48,10 @@ public class CommerceWishListLocalServiceImpl
 
 	@Override
 	public CommerceWishList addCommerceWishList(
-			String name, boolean defaultWishList, ServiceContext serviceContext)
+			long groupId, long userId, String name, boolean defaultWishList)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		User user = _userLocalService.getUser(userId);
 
 		if (user.isGuestUser()) {
 			_validateGuestWishLists();
@@ -78,13 +77,14 @@ public class CommerceWishListLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceWishList deleteCommerceWishList(
-		CommerceWishList commerceWishList) {
+			CommerceWishList commerceWishList)
+		throws PortalException {
 
-		// Commerce wish list
+		if (commerceWishList.isDefaultWishList()) {
+			throw new RequiredCommerceWishListException();
+		}
 
 		commerceWishListPersistence.remove(commerceWishList);
-
-		// Commerce wish list items
 
 		_commerceWishListItemLocalService.deleteCommerceWishListItems(
 			commerceWishList.getCommerceWishListId());
@@ -114,7 +114,7 @@ public class CommerceWishListLocalServiceImpl
 			commerceWishListPersistence.findByGroupId(groupId);
 
 		for (CommerceWishList commerceWishList : commerceWishLists) {
-			commerceWishListLocalService.deleteCommerceWishList(
+			commerceWishListLocalService.forceDeleteCommerceWishList(
 				commerceWishList);
 		}
 	}
@@ -125,7 +125,7 @@ public class CommerceWishListLocalServiceImpl
 			commerceWishListPersistence.findByUserId(userId);
 
 		for (CommerceWishList commerceWishList : commerceWishLists) {
-			commerceWishListLocalService.deleteCommerceWishList(
+			commerceWishListLocalService.forceDeleteCommerceWishList(
 				commerceWishList);
 		}
 	}
@@ -137,6 +137,19 @@ public class CommerceWishListLocalServiceImpl
 
 		return commerceWishListPersistence.fetchByG_U_D_First(
 			groupId, userId, defaultWishList, orderByComparator);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceWishList forceDeleteCommerceWishList(
+		CommerceWishList commerceWishList) {
+
+		commerceWishListPersistence.remove(commerceWishList);
+
+		_commerceWishListItemLocalService.deleteCommerceWishListItems(
+			commerceWishList.getCommerceWishListId());
+
+		return commerceWishList;
 	}
 
 	@Override
@@ -189,11 +202,6 @@ public class CommerceWishListLocalServiceImpl
 			}
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(user.getUserId());
-
 		if (user.isGuestUser()) {
 			return guestCommerceWishList;
 		}
@@ -217,7 +225,7 @@ public class CommerceWishListLocalServiceImpl
 		if (guestCommerceWishList != null) {
 			_mergeCommerceWishList(
 				guestCommerceWishList.getCommerceWishListId(),
-				commerceWishList.getCommerceWishListId(), serviceContext);
+				commerceWishList.getCommerceWishListId());
 		}
 
 		return commerceWishList;
@@ -249,8 +257,7 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	private void _mergeCommerceWishList(
-			long fromCommerceWishListId, long toCommerceWishListId,
-			ServiceContext serviceContext)
+			long fromCommerceWishListId, long toCommerceWishListId)
 		throws PortalException {
 
 		// Commerce wish list items
@@ -290,10 +297,9 @@ public class CommerceWishListLocalServiceImpl
 
 			if (!found) {
 				_commerceWishListItemLocalService.addCommerceWishListItem(
-					toCommerceWishListId,
-					fromCommerceWishListItem.getCProductId(),
-					fromCommerceWishListItem.getCPInstanceUuid(), json,
-					serviceContext);
+					fromCommerceWishListItem.getUserId(), toCommerceWishListId,
+					fromCommerceWishListItem.getCPInstanceUuid(),
+					fromCommerceWishListItem.getCProductId(), json);
 			}
 		}
 

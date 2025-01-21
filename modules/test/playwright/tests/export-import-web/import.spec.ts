@@ -390,3 +390,172 @@ test('can export and import custom object entries at instance level', async ({
 		})
 	);
 });
+
+test('can import custom object entries at instance level with or without permissions based on selection', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	exportImportPage,
+	page,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	let objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{
+			externalReferenceCode: '',
+			name: 'test',
+			permissions: [
+				{
+					actionIds: ['VIEW'],
+					roleName: 'Guest',
+				},
+			],
+		},
+		'c/tests'
+	);
+
+	// Export with permissions
+
+	await applicationsMenuPage.goToExport();
+
+	await page.getByTestId('creationMenuNewButton').nth(1).click();
+
+	await page.getByLabel('Tests 1 Items').click();
+
+	const exportNameWithPermissions =
+		'CustomObject-WithPermissions-' + getRandomString();
+
+	await exportImportPage.title.fill(exportNameWithPermissions);
+
+	await page.getByLabel('Export Permissions').click();
+
+	await exportImportPage.exportButton.click();
+
+	const exportFilePathWithPermissions =
+		await exportImportPage.downloadExportProcess(exportNameWithPermissions);
+
+	// 1. Test with Import Permissions selected
+
+	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
+
+	expect(
+		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+			'c/tests',
+			objectEntry.externalReferenceCode
+		)
+	).toEqual({status: 'NOT_FOUND'});
+
+	await applicationsMenuPage.goToImport();
+
+	await page.getByRole('link', {name: 'Import'}).click();
+
+	await page
+		.locator('input[type="file"]')
+		.setInputFiles(exportFilePathWithPermissions);
+
+	await page.getByRole('button', {name: 'Continue'}).click();
+
+	await page.getByLabel('Import Permissions').click();
+
+	await page.getByRole('button', {name: 'Import'}).click();
+
+	await expect(
+		exportImportPage.page
+			.getByText(exportNameWithPermissions)
+			.locator('../../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	objectEntry = await apiHelpers.get(
+		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`
+	);
+
+	expect(objectEntry).toEqual(
+		expect.objectContaining({
+			permissions: [
+				{
+					actionIds: ['VIEW'],
+					roleName: 'Guest',
+				},
+			],
+		})
+	);
+
+	// 2. Test without Import Permissions selected
+
+	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
+
+	expect(
+		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+			'c/tests',
+			objectEntry.externalReferenceCode
+		)
+	).toEqual({status: 'NOT_FOUND'});
+
+	await applicationsMenuPage.goToImport();
+
+	await page.getByRole('link', {name: 'Import'}).click();
+
+	await page
+		.locator('input[type="file"]')
+		.setInputFiles(exportFilePathWithPermissions);
+
+	await page.getByRole('button', {name: 'Continue'}).click();
+
+	await page.getByRole('button', {name: 'Import'}).click();
+
+	await expect(
+		exportImportPage.page
+			.getByText(exportNameWithPermissions)
+			.locator('../../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	objectEntry = await apiHelpers.get(
+		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`
+	);
+
+	expect(objectEntry).not.toEqual(
+		expect.objectContaining({
+			permissions: [
+				{
+					actionIds: ['VIEW'],
+					roleName: 'Guest',
+				},
+			],
+		})
+	);
+});

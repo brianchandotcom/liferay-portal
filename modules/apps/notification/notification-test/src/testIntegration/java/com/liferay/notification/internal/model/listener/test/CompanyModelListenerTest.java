@@ -61,13 +61,8 @@ public class CompanyModelListenerTest {
 	@Test
 	public void testOnBeforeDelete() throws Exception {
 		NotificationRecipientSetting notificationRecipientSetting = null;
-
-		NotificationContext notificationContext = null;
-
 		NotificationQueueEntry notificationQueueEntry = null;
-
 		NotificationTemplate notificationTemplate = null;
-
 		NotificationRecipient notificationRecipient = null;
 
 		try (SafeCloseable safeCloseable =
@@ -81,7 +76,7 @@ public class CompanyModelListenerTest {
 			Assert.assertEquals(
 				_companyId, notificationRecipientSetting.getCompanyId());
 
-			notificationContext =
+			NotificationContext notificationContext =
 				NotificationTemplateUtil.createNotificationContext(
 					Collections.singletonList(notificationRecipientSetting),
 					NotificationConstants.TYPE_USER_NOTIFICATION);

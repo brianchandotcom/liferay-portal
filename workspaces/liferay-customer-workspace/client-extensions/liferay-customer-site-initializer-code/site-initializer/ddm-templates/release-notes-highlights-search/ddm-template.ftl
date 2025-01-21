@@ -180,6 +180,11 @@
 			font-weight: 700 !important;
 			line-height: 1.5rem;
 			padding: 0.5rem 1rem 0rem 0.625rem;
+			scroll-margin-top: 200px;
+		}
+
+		.search-results .search-results-entry .search-results-entry-title a {
+			color: var(--color-neutral-10, #282934);
 		}
 
 		.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
@@ -193,13 +198,16 @@
 
 		.search-results .search-results-entry .search-results-entry-title:hover {
 			background: var(--color-action-primary-hover-10, #EDF3FE);
-			cursor: pointer;
 			padding: 0.5rem 1rem 0rem 0.625rem;
 		}
 
 		.search-results .solid {
 			border-top: 0.0625rem solid var(--color-neutral-2, #E2E2E4);
 		}
+	}
+
+	.lfr-layout-structure-item-row {
+		overflow: visible;
 	}
 </style>
 
@@ -213,7 +221,7 @@
 					<div class="align-items-stretch pt-2 search-results-entry">
 						<#assign
 							articleTitle = restArticle.title
-							dashedTitle = restArticle.title?replace(" ", "-")
+							dashedTitle = htmlUtil.escapeURL(articleTitle)
 						/>
 
 						<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled" id="${dashedTitle}">
@@ -229,7 +237,9 @@
 								</#list>
 							</div>
 
-							${articleTitle}
+							<a class="text-decoration-none" href="#${dashedTitle}">
+								${articleTitle}
+							</a>
 
 							<div class="description search-results-entry-content">
 								<#list restArticle.contentFields as fieldData>
@@ -290,46 +300,3 @@
 		</#if>
 	</div>
 </div>
-
-<#noparse>
-	<script>
-		const _addEventListener = (selectors) => {
-			var elements = document.querySelectorAll(selectors);
-
-			elements.forEach((element) => {
-				element.addEventListener("click", (event) => {
-					if(history.pushState) {
-						history.pushState(null, null, `#${element.id}`);
-					}
-					else {
-						location.hash = element.id;
-					}
-
-					window.scrollTo({
-						behavior: "smooth",
-						top: element.getBoundingClientRect().top + window.scrollY - 200,
-					});
-				});
-			});
-		}
-
-		const _doInitialScroll = () => {
-			if (location.hash) {
-				var initialElement = document.getElementById(location.hash.replace("#", ""));
-
-				if (initialElement) {
-					window.scrollTo({
-						behavior: "smooth",
-						top: initialElement.getBoundingClientRect().top + window.scrollY - 200,
-					});
-				}
-			}
-		}
-
-		window.addEventListener('load', function() {
-			_addEventListener("div.search-results-entry-title");
-
-			_doInitialScroll();
-		});
-	</script>
-</#noparse>

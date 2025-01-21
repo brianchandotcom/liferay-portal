@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.catalog-icon {
 		height: 90px;
 		width: 90px;

@@ -1,4 +1,4 @@
-<style>
+<style ${nonceAttribute}>
 	.solution-category-container {
 		font-size: 1rem;
 		line-height: 1.5;

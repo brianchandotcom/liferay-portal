@@ -57,12 +57,7 @@ public class ExportExamResultRestController extends BaseRestController {
 				public void writeTo(OutputStream outputStream)
 					throws IOException {
 
-					try {
-						_write(endDate, jwt, outputStream, startDate);
-					}
-					catch (Exception exception) {
-						throw new RuntimeException(exception);
-					}
+					_write(endDate, jwt, outputStream, startDate);
 				}
 
 			}
@@ -72,7 +67,7 @@ public class ExportExamResultRestController extends BaseRestController {
 	private void _write(
 			String endDate, Jwt jwt, OutputStream outputStream,
 			String startDate)
-		throws Exception {
+		throws IOException {
 
 		try (CSVPrinter csvPrinter = new CSVPrinter(
 				new BufferedWriter(new OutputStreamWriter(outputStream)),

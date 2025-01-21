@@ -124,7 +124,7 @@ public class UpgradePortletPreferencesTest {
 			UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
 				_upgradeStepRegistrator, new Version(1, 1, 0));
 
-			upgradeProcesses[1].upgrade();
+			upgradeProcesses[0].upgrade();
 
 			_entityCache.clearCache();
 			_multiVMPool.clear();

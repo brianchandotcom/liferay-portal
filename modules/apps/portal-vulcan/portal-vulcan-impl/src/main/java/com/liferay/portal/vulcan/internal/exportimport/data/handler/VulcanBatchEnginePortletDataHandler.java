@@ -34,8 +34,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -98,20 +96,25 @@ public class VulcanBatchEnginePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Map<String, Serializable> parameters = new HashMap<>();
-
-		if (MapUtil.getBoolean(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.PERMISSIONS)) {
-
-			parameters.put("batchNestedFields", "permissions");
-		}
-
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskService.addBatchEngineExportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), null,
 				_className, "JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Collections.emptyList(), parameters, _taskItemDelegateName);
+				Collections.emptyList(),
+				HashMapBuilder.<String, Serializable>put(
+					"batchNestedFields",
+					() -> {
+						if (MapUtil.getBoolean(
+								portletDataContext.getParameterMap(),
+								PortletDataHandlerKeys.PERMISSIONS)) {
+
+							return "permissions";
+						}
+
+						return null;
+					}
+				).build(),
+				_taskItemDelegateName);
 
 		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
 

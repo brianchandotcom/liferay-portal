@@ -1165,6 +1165,26 @@ public class ObjectFieldLocalServiceImpl
 				objectDefinition);
 		}
 
+		if (objectDefinition.getTitleObjectFieldId() ==
+				objectField.getObjectFieldId()) {
+
+			ObjectField externalReferenceCodeObjectField =
+				objectFieldPersistence.fetchByODI_N(
+					objectDefinition.getObjectDefinitionId(),
+					"externalReferenceCode");
+
+			if (externalReferenceCodeObjectField != null) {
+				objectDefinition.setTitleObjectFieldId(
+					externalReferenceCodeObjectField.getObjectFieldId());
+			}
+			else {
+				objectDefinition.setTitleObjectFieldId(0);
+			}
+
+			objectDefinition = _objectDefinitionPersistence.update(
+				objectDefinition);
+		}
+
 		_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
 			objectField);
 

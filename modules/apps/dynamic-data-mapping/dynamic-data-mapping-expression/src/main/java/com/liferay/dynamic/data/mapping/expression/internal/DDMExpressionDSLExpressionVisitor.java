@@ -3,29 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal.parser;
+package com.liferay.dynamic.data.mapping.expression.internal;
 
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionBaseVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.AdditionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.BooleanParenthesisContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.DivisionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.EqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.FloatingPointLiteralContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.FunctionCallExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.GreaterThanExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.GreaterThanOrEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LessThanExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LessThanOrEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LogicalConstantContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LogicalVariableContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.MinusExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.MultiplicationExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NotEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NumericParenthesisContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NumericVariableContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.SubtractionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.ToFloatingPointArrayContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.AdditionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.BooleanParenthesisContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.DivisionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.EqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FloatingPointLiteralContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FunctionCallExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanOrEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanOrEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LogicalConstantContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LogicalVariableContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MinusExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MultiplicationExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NotEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericParenthesisContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericVariableContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.ToFloatingPointArrayContext;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal.parser;
+package com.liferay.dynamic.data.mapping.expression.internal;
 
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionBaseVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArrayExpression;

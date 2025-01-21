@@ -105,7 +105,7 @@ export function MarketplacePurchase({
 			>
 				{sub(
 					Liferay.Language.get(
-						'x-project-does-not-meet-the-necessary-resource-requirements-for-this-app-please-contact-sales-support-to-request-additional-resources'
+						'x-project-does-not-meet-the-necessary-resource-requirements-for-this-app'
 					),
 					projectId as string
 				)}

@@ -17,7 +17,9 @@
 			src="https://www.liferay.com/documents/d/guest/placeholder-png?download=true"
 		/>
 	[#elseIf visual="icon"]
-		<lfr-editable class="mega-menu-item-html" type="html" id="html">html</lfr-editable>
+		<lfr-editable class="mega-menu-item-html" type="html" id="html">
+			${languageUtil.get(locale, 'html', 'HTML')}
+		</lfr-editable>
 	[/#if]
 
 	<div class="mega-menu-item-text">
@@ -34,8 +36,7 @@
 			data-lfr-editable-id="description"
 			data-lfr-editable-type="text"
 		>
-			${languageUtil.get(locale, 'nav-item-description', 'Nav Item Description.')}
-			${languageUtil.get(locale, 'lorem-ipsum', ' conec nulla condimentum tempor, id. Mattis eget donec donec cras.')}
+			${languageUtil.get(locale, 'nav-item-description', 'Nav Item Description')}
 		</span>
 	</div>
 

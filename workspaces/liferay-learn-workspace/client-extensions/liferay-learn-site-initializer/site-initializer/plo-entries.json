@@ -24,12 +24,6 @@
 		}
 	},
 	{
-		"key": "lorem-ipsum",
-		"value": {
-			"en-US": " conec nulla condimentum tempor, id. Mattis eget donec donec cras."
-		}
-	},
-	{
 		"key": "minutes",
 		"value": {
 			"en-US": "Minutes"
@@ -44,7 +38,7 @@
 	{
 		"key": "nav-item-description",
 		"value": {
-			"en-US": "Nav Item Description."
+			"en-US": "Nav Item Description"
 		}
 	},
 	{

@@ -10,7 +10,7 @@
 	transition: all var(--transition-base);
 
 	.utility-nav-icon-html {
-		color: var(--color-neutral-10);
+		color: var(--color-neutral-10, #282934);
 		height: 16px;
 		opacity: 0.6;
 		transition: all var(--transition-base);
@@ -27,10 +27,10 @@
 	&:focus,
 	&:focus-visible {
 		background: var(--color-action-primary-hover-lighten);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 
 		.utility-nav-icon-html {
-			color: var(--color-action-primary-hover);
+			color: var(--color-action-primary-hover, #0053F0);
 			opacity: 1;
 		}
 	}

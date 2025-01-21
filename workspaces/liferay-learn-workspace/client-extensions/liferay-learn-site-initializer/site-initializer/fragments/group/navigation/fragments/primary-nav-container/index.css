@@ -1,5 +1,5 @@
 .lfr-layout-structure-item-primary-nav-container {
-	background: var(--primary-nav-background-color);
+	background: var(--primary-nav-background-color, #FFFFFF);
 
 	@media (min-width: 992px) {
 		border-bottom: 1px solid rgba(255, 255, 255, 0);
@@ -14,7 +14,7 @@
 
 .primary-nav-container {
 	align-items: center;
-	background: var(--primary-nav-background-color);
+	background: var(--primary-nav-background-color, #FFFFFF);
 	display: flex;
 	margin: auto;
 	max-width: var(--primary-nav-max-width, 1600px);
@@ -91,7 +91,7 @@
 		input:focus ~ .nav-items-menu-button,
 		input:focus-visible ~ .nav-items-menu-button {
 			border-color: var(--color-action-primary-hover, #0053F0);
-			outline-color: var(--color-brand-primary-lighten-2);
+			outline-color: var(--color-brand-primary-lighten-2, #6399FF);
 
 			.menu-button-text {
 				color: var(--color-action-primary-hover, #0053f0);
@@ -124,7 +124,7 @@
 			}
 
 			.nav-items-container-items {
-				background: var(--color-neutral-0);
+				background: var(--color-neutral-0, #FFFFFF);
 				bottom: 0;
 				flex-direction: column;
 				height: calc(100vh - 101px);

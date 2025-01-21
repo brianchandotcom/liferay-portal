@@ -22,7 +22,7 @@
 	&:focus,
 	&:focus-visible {
 		background: var(--nav-item-text-color-background, #EDF3FE);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 	}
 
 	#waffle {

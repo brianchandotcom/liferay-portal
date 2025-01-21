@@ -13,7 +13,7 @@
 	input:focus ~ .language-selector-dropdown-toggle,
 	input:focus-visible ~ .language-selector-dropdown-toggle {
 		background: var(--utility-nav-item-text-color-background, #EDF3FE);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 		transition: all 0.1s linear;
 
 		.language-selector-dropdown-title,
@@ -131,7 +131,7 @@
 					&:focus-visible {
 						background: var(--color-action-primary-hover-lighten, #EDF3FE);
 						color: var(--color-action-primary-hover, #0053F0);
-						outline: var(--color-brand-primary-lighten-2) solid 2px;
+						outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 					}
 
 					&.selected::before {

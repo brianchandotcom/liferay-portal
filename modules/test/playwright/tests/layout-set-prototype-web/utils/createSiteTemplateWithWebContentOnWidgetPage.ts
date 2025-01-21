@@ -37,7 +37,6 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 	webContentName: string;
 	widgetPagePage: WidgetPagePage;
 }): Promise<LayoutSetPrototype> {
-
 	const layoutSetPrototype = await createSiteTemplate({
 		apiHelpers,
 		page,
@@ -45,7 +44,7 @@ export default async function createSiteTemplateWithWebContentOnWidgetPage({
 		templateName,
 		text,
 		webContentName,
-	  });
+	});
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.addWidgetPage({

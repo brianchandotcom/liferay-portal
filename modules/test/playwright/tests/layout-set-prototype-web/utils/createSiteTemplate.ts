@@ -11,47 +11,47 @@ import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-we
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 export default async function createSiteTemplate({
-  apiHelpers,
-  page,
-  productMenuPage,
-  templateName,
-  text,
-  webContentName,
+	apiHelpers,
+	page,
+	productMenuPage,
+	templateName,
+	text,
+	webContentName,
 }: {
-  apiHelpers: ApiHelpers;
-  page: Page;
-  productMenuPage: ProductMenuPage;
-  templateName: string;
-  text?: string;
-  webContentName?: string;
+	apiHelpers: ApiHelpers;
+	page: Page;
+	productMenuPage: ProductMenuPage;
+	templateName: string;
+	text?: string;
+	webContentName?: string;
 }): Promise<LayoutSetPrototype> {
-  const layoutSetPrototype: LayoutSetPrototype =
-    await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-      templateName
-    );
+	const layoutSetPrototype: LayoutSetPrototype =
+		await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+			templateName
+		);
 
-  await page.goto(
-    'group/template-' + layoutSetPrototype.layoutSetPrototypeId
-  );
+	await page.goto(
+		'group/template-' + layoutSetPrototype.layoutSetPrototypeId
+	);
 
-  const siteId = await page.evaluate(() => {
-    return String(Liferay.ThemeDisplay.getSiteGroupId());
-  });
+	const siteId = await page.evaluate(() => {
+		return String(Liferay.ThemeDisplay.getSiteGroupId());
+	});
 
-  const basicWebContentStructureId =
-    await getBasicWebContentStructureId(apiHelpers);
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
 
-  if (text && webContentName) {
-    await apiHelpers.jsonWebServicesJournal.addWebContent({
-      content: text,
-      ddmStructureId: basicWebContentStructureId,
-      groupId: siteId,
-      titleMap: { en_US: webContentName },
-    });
-  }
+	if (text && webContentName) {
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			content: text,
+			ddmStructureId: basicWebContentStructureId,
+			groupId: siteId,
+			titleMap: {en_US: webContentName},
+		});
+	}
 
-  await productMenuPage.checkIfAdecuateProductMenu(templateName);
-  await productMenuPage.openProductMenuIfClosed();
+	await productMenuPage.checkIfAdecuateProductMenu(templateName);
+	await productMenuPage.openProductMenuIfClosed();
 
-  return layoutSetPrototype;
+	return layoutSetPrototype;
 }

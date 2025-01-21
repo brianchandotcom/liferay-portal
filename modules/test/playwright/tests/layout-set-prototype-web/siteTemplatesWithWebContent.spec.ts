@@ -113,8 +113,6 @@ testWithPrivatePages(
 		const layoutSetPrototype =
 			await createSiteTemplateWithContentPageAndAssetPublisher({
 				apiHelpers,
-				applicationsMenuPage,
-				layoutSetPrototypePage,
 				page,
 				pageEditorPage,
 				pagesAdminPage,

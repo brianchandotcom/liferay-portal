@@ -313,6 +313,98 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
+	@Schema(description = "A relative URL to the page's rendered content.")
+	public String getFriendlyUrlPath() {
+		if (_friendlyUrlPathSupplier != null) {
+			friendlyUrlPath = _friendlyUrlPathSupplier.get();
+
+			_friendlyUrlPathSupplier = null;
+		}
+
+		return friendlyUrlPath;
+	}
+
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
+
+		_friendlyUrlPathSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
+
+		_friendlyUrlPathSupplier = () -> {
+			try {
+				return friendlyUrlPathUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A relative URL to the page's rendered content."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyUrlPath;
+
+	@JsonIgnore
+	private Supplier<String> _friendlyUrlPathSupplier;
+
+	@Schema(
+		description = "The localized relative URLs to the page's rendered content."
+	)
+	@Valid
+	public Map<String, String> getFriendlyUrlPath_i18n() {
+		if (_friendlyUrlPath_i18nSupplier != null) {
+			friendlyUrlPath_i18n = _friendlyUrlPath_i18nSupplier.get();
+
+			_friendlyUrlPath_i18nSupplier = null;
+		}
+
+		return friendlyUrlPath_i18n;
+	}
+
+	public void setFriendlyUrlPath_i18n(
+		Map<String, String> friendlyUrlPath_i18n) {
+
+		this.friendlyUrlPath_i18n = friendlyUrlPath_i18n;
+
+		_friendlyUrlPath_i18nSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			friendlyUrlPath_i18nUnsafeSupplier) {
+
+		_friendlyUrlPath_i18nSupplier = () -> {
+			try {
+				return friendlyUrlPath_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The localized relative URLs to the page's rendered content."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> friendlyUrlPath_i18n;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
+
 	@Schema
 	public Long getId() {
 		if (_idSupplier != null) {
@@ -728,6 +820,12 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "externalReferenceCode")) {
 			return getExternalReferenceCode();
 		}
+		else if (Objects.equals(propertyName, "friendlyUrlPath")) {
+			return getFriendlyUrlPath();
+		}
+		else if (Objects.equals(propertyName, "friendlyUrlPath_i18n")) {
+			return getFriendlyUrlPath_i18n();
+		}
 		else if (Objects.equals(propertyName, "id")) {
 			return getId();
 		}
@@ -906,6 +1004,34 @@ public class ObjectEntry implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		String friendlyUrlPath = getFriendlyUrlPath();
+
+		if (friendlyUrlPath != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyUrlPath));
+
+			sb.append("\"");
+		}
+
+		Map<String, String> friendlyUrlPath_i18n = getFriendlyUrlPath_i18n();
+
+		if (friendlyUrlPath_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath_i18n\": ");
+
+			sb.append(_toJSON(friendlyUrlPath_i18n));
 		}
 
 		Long id = getId();

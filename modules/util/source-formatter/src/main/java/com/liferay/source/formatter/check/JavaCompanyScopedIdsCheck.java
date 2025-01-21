@@ -84,6 +84,9 @@ public class JavaCompanyScopedIdsCheck extends BaseJavaTermCheck {
 			}
 			else if (variableTypeName.startsWith("Map<Long")) {
 				_check(
+					fileName, content, entityIds, javaTerm, "compute",
+					variableName);
+				_check(
 					fileName, content, entityIds, javaTerm, "computeIfAbsent",
 					variableName);
 				_check(
@@ -91,6 +94,9 @@ public class JavaCompanyScopedIdsCheck extends BaseJavaTermCheck {
 					variableName);
 				_check(
 					fileName, content, entityIds, javaTerm, "put",
+					variableName);
+				_check(
+					fileName, content, entityIds, javaTerm, "putIfAbsent",
 					variableName);
 			}
 		}

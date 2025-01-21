@@ -223,13 +223,23 @@ test('LPD-23974 Comments link is added to workflow info display', async ({
 
 	await page.getByRole('button', {name: 'Reply'}).click();
 
-	await page.getByRole('link', {name: 'Back'}).click();
+	await page.waitForLoadState('load');
+
+	const backButton = page.getByRole('link', {name: 'Back'});
+
+	await backButton.click();
+
+	const reviewChangesHeader = page
+		.getByTestId('headerTitle')
+		.getByText('Review Change');
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: page.getByRole('link', {name: 'Back'}),
-		trigger: page.getByTestId('headerTitle').getByText('Review Change'),
+		target: backButton,
+		trigger: reviewChangesHeader,
 	});
+
+	await expect(reviewChangesHeader).toBeVisible();
 
 	await changeTrackingPage.selectTab('Workflow');
 

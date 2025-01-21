@@ -8,7 +8,7 @@ package com.liferay.layout.seo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
-import com.liferay.layout.seo.service.LayoutSEOEntryCustomMetaTagLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -124,11 +126,27 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteLayoutSEOEntry() throws PortalException {
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			_layout.getLayoutId(), false,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				_layout.getLayoutId(), false,
+				Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOEntryLocalService.updateCustomMetaTags(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(),
+			Arrays.asList(
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property1",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content1")),
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property2",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content2"))),
+			ServiceContextTestUtil.getServiceContext(
+				_layout.getGroupId(), TestPropsValues.getUserId()));
 
 		_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
 			_group.getGroupId(), false, _layout.getLayoutId());
@@ -136,6 +154,11 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertNull(
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId()));
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+					layoutSEOEntry.getGroupId(),
+					layoutSEOEntry.getLayoutSEOEntryId())));
 	}
 
 	@Test

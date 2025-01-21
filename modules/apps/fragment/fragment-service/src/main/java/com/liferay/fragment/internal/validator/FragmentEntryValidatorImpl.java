@@ -271,7 +271,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 						typeOptionsJSONObject.getJSONObject("validation"))) {
 
 					throw new FragmentEntryConfigurationException(
-						"Invalid default configuration value for field " +
+						"Invalid default configuration value for field: " +
 							fieldName);
 				}
 
@@ -284,7 +284,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 								"validation"))) {
 
 						throw new FragmentEntryConfigurationException(
-							"Invalid configuration value for field " +
+							"Invalid configuration value for field: " +
 								fieldName);
 					}
 				}

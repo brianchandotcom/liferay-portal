@@ -50,7 +50,7 @@ export const test = mergeTests(
 	serverAdministrationPageTest,
 	sitesPageTest,
 	uiElementsPageTest,
-	webContentDisplayPageTest,
+	webContentDisplayPageTest
 );
 
 const testWithPrivatePages = mergeTests(
@@ -87,7 +87,7 @@ testWithPrivatePages(
 			await getBasicWebContentStructureId(apiHelpers);
 
 		const globalSiteId = await getGlobalSiteId(apiHelpers);
- 		const webContent =
+		const webContent =
 			await apiHelpers.jsonWebServicesJournal.addWebContent({
 				content: getRandomString(),
 				ddmStructureId: basicWebContentStructureId,
@@ -144,7 +144,7 @@ testWithPrivatePages(
 
 		await productMenuPage.goToPages();
 		await pagesAdminPage.newButton.click();
-		
+
 		const secondPageNameOnSiteTemplate = getRandomString();
 		await pagesAdminPage.addPage({
 			name: secondPageNameOnSiteTemplate,

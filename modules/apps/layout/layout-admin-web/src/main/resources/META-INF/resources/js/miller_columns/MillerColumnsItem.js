@@ -4,7 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -120,6 +120,7 @@ const MillerColumnsItem = ({
 }) => {
 	const {
 		active,
+		addChildLayoutURL,
 		bulkActions = [],
 		checked,
 		description,
@@ -147,8 +148,6 @@ const MillerColumnsItem = ({
 	const [openModal, setOpenModal] = useState(false);
 
 	const [dropPosition, setDropPosition] = useState();
-
-	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
 
 	const [itemActionsActive, setItemActionsActive] = useState(false);
 
@@ -226,12 +225,6 @@ const MillerColumnsItem = ({
 				});
 		}
 	}
-
-	const layoutActions = useMemo(() => {
-		return quickActions.filter(
-			(action) => action.layoutAction && action.url
-		);
-	}, [quickActions]);
 
 	const normalizedQuickActions = useMemo(() => {
 		return quickActions.filter(
@@ -381,9 +374,7 @@ const MillerColumnsItem = ({
 			})}
 			containerElement="li"
 			data-actions={bulkActions}
-			onKeyDown={
-				layoutActionsActive || itemActionsActive ? null : onKeyDown
-			}
+			onKeyDown={itemActionsActive ? null : onKeyDown}
 			ref={ref}
 			role="none"
 			verticalAlign="center"
@@ -528,45 +519,21 @@ const MillerColumnsItem = ({
 					)}
 				</ClayLayout.ContentCol>
 
-				{!!layoutActions.length && (
+				{addChildLayoutURL ? (
 					<ClayLayout.ContentCol className="miller-columns-item-actions">
-						<ClayDropDown
-							active={layoutActionsActive}
-							onActiveChange={setLayoutActionsActive}
-							onKeyDown={(event) => event.stopPropagation()}
-							renderMenuOnClick
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'add-child-page'
-									)}
-									borderless
-									displayType="secondary"
-									size="sm"
-									symbol="plus"
-									tabIndex={tabIndex}
-									title={Liferay.Language.get(
-										'add-child-page'
-									)}
-								/>
-							}
+						<ClayLink
+							aria-label={Liferay.Language.get('add-child-page')}
+							borderless
+							button={{monospaced: true}}
+							displayType="secondary"
+							href={addChildLayoutURL}
+							tabIndex={tabIndex}
+							title={Liferay.Language.get('add-child-page')}
 						>
-							<ClayDropDown.ItemList>
-								{layoutActions.map((action) => (
-									<ClayDropDown.Item
-										disabled={!action.url}
-										href={action.url}
-										id={action.id}
-										key={action.id}
-										onClick={action.handler}
-									>
-										{action.label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
+							<ClayIcon symbol="plus" />
+						</ClayLink>
 					</ClayLayout.ContentCol>
-				)}
+				) : null}
 
 				{normalizedQuickActions.map((action) => (
 					<ClayLayout.ContentCol

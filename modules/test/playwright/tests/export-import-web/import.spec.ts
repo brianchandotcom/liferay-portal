@@ -355,6 +355,14 @@ test('can export and import custom object entries at instance level', async ({
 	const exportFilePath =
 		await exportImportPage.downloadExportProcess(exportName);
 
+	const content = await readFileFromZip('C_Test.json', exportFilePath);
+
+	const json = JSON.parse(content);
+
+	json.forEach((entry) => {
+		expect(entry).not.toHaveProperty('permissions');
+	});
+
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 
 	expect(
@@ -445,7 +453,7 @@ test('cannot export site scoped custom object entries at instance level', async 
 	await expect(page.getByLabel('Tests 1 Items')).toBeHidden();
 });
 
-test('can export custom object entries at instance level with or without permissions based on selection', async ({
+test('can export custom object entries at instance level with permissions based on selection', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	exportImportPage,
@@ -492,66 +500,28 @@ test('can export custom object entries at instance level with or without permiss
 		'c/tests'
 	);
 
-	// 1. Test with Export Permissions selected
-
 	await applicationsMenuPage.goToExport();
 
 	await page.getByTestId('creationMenuNewButton').nth(1).click();
 
 	await page.getByLabel('Tests 1 Items').click();
 
-	const exportNameWithPermissions =
-		'CustomObject-WithPermissions-' + getRandomString();
+	const exportName = 'CustomObject-WithPermissions-' + getRandomString();
 
-	await exportImportPage.title.fill(exportNameWithPermissions);
+	await exportImportPage.title.fill(exportName);
 
 	await page.getByLabel('Export Permissions').click();
 
 	await exportImportPage.exportButton.click();
 
-	const exportFilePathWithPermissions =
-		await exportImportPage.downloadExportProcess(exportNameWithPermissions);
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(exportName);
 
-	const jsonFileName = 'C_Test.json';
-	const jsonContentWithPermissions = await readFileFromZip(
-		jsonFileName,
-		exportFilePathWithPermissions
-	);
+	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
-	const jsonDataWithPermissions = JSON.parse(jsonContentWithPermissions);
-	jsonDataWithPermissions.forEach((entry) => {
+	const json = JSON.parse(content);
+
+	json.forEach((entry) => {
 		expect(entry).toHaveProperty('permissions');
-	});
-
-	// 2. Test without Export Permissions selected
-
-	await applicationsMenuPage.goToExport();
-
-	await page.getByTestId('creationMenuNewButton').nth(1).click();
-
-	await page.getByLabel('Tests 1 Items').click();
-
-	const exportNameWithoutPermissions =
-		'CustomObject-WithoutPermissions-' + getRandomString();
-
-	await exportImportPage.title.fill(exportNameWithoutPermissions);
-
-	await exportImportPage.exportButton.click();
-
-	const exportFilePathWithoutPermissions =
-		await exportImportPage.downloadExportProcess(
-			exportNameWithoutPermissions
-		);
-
-	const jsonContentWithoutPermissions = await readFileFromZip(
-		jsonFileName,
-		exportFilePathWithoutPermissions
-	);
-
-	const jsonDataWithoutPermissions = JSON.parse(
-		jsonContentWithoutPermissions
-	);
-	jsonDataWithoutPermissions.forEach((entry) => {
-		expect(entry).not.toHaveProperty('permissions');
 	});
 });

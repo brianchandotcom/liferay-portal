@@ -3191,7 +3191,7 @@
 				},
 				"discoveryEndPointCacheInMillis": {
 					"default": 360000,
-					"description": "Discovery endpoint metadata will be cached on this interval in milliseconds. If 0 is set, the metadata is never refreshed.",
+					"description": "Discovery endpoint metadata will be cached on this interval in milliseconds. If set to 0, Ehcache's default time to live value of 600 seconds will be used.",
 					"title": "Discovery Endpoint Cache in Milliseconds",
 					"type": "number"
 				},
@@ -3414,6 +3414,15 @@
 						"type": "string"
 					},
 					"title": "Allowed IPs",
+					"type": "array"
+				},
+				"allowedProtocols": {
+					"default": "http|https",
+					"description": "Set the protocols which are allowed in redirect URLs. Remove all entries to allow any protocol.",
+					"items": {
+						"type": "string"
+					},
+					"title": "Allowed Protocols",
 					"type": "array"
 				},
 				"pid": {

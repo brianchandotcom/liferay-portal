@@ -1081,18 +1081,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!commons-configuration.jar</file-name>
-				<version>1.8</version>
-				<project-name>Commons Configuration</project-name>
-				<project-url>http://commons.apache.org/configuration/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!hystrix-core.jar</file-name>
 				<version>1.5.18</version>
 				<project-name>hystrix-core</project-name>
@@ -1259,30 +1247,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.frontend.js.minifier.jar!closure-compiler.jar</file-name>
-				<version>v20220601</version>
-				<project-name>Closure Compiler</project-name>
-				<project-url>https://developers.google.com/closure/compiler/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.frontend.js.minifier.jar!yuicompressor.jar</file-name>
-				<version>2.4.7</version>
-				<project-name>yui compressor</project-name>
-				<project-url>http://developer.yahoo.com/yui/compressor/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD License</license-name>
-						<license-url>http://developer.yahoo.com/yui/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.glowroot.plugin.freemarker.jar!glowroot-agent-plugin-api.jar</file-name>
 				<version>0.13.6</version>
 				<project-name>Glowroot Agent Plugin API</project-name>
@@ -1302,18 +1266,6 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.glowroot.proxy.jar!smiley-http-proxy-servlet.jar</file-name>
-				<version>1.12.1</version>
-				<project-name>Smiley's HTTP Proxy Servlet</project-name>
-				<project-url>https://github.com/dsmiley/HTTP-Proxy-Servlet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4267,18 +4219,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.vulcan.impl.jar!reactive-streams.jar</file-name>
-				<version>1.0.2</version>
-				<project-name>reactive-streams</project-name>
-				<project-url>http://www.reactive-streams.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>CC0</license-name>
-						<license-url>http://creativecommons.org/publicdomain/zero/1.0/</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!reflections.jar</file-name>
 				<version>0.9.11</version>
 				<project-name>Reflections</project-name>
@@ -5298,6 +5238,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.reactive.streams.jar!reactive-streams.jar</file-name>
+				<version>1.0.4</version>
+				<project-name>reactive-streams-jvm</project-name>
+				<project-url>http://www.reactive-streams.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>MIT-0</license-name>
+						<license-url>https://spdx.org/licenses/MIT-0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.rome.jar!rome-utils.jar</file-name>
 				<version>1.16.0</version>
 				<project-name>rome-utils</project-name>
@@ -5316,6 +5268,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.smiley.http.proxy.servlet.jar!smiley-http-proxy-servlet.jar</file-name>
+				<version>1.12.1</version>
+				<project-name>Smiley's HTTP Proxy Servlet</project-name>
+				<project-url>https://github.com/dsmiley/HTTP-Proxy-Servlet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

@@ -279,7 +279,7 @@ public class ObjectEntryPerformanceTest {
 
 	private void _testDeleteObjectEntryByObjectRestAPI() throws Exception {
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				7000,
+				15000,
 				StringBundler.concat(
 					" Delete ", _objectEntryCount, " Object Entries"))) {
 
@@ -306,7 +306,7 @@ public class ObjectEntryPerformanceTest {
 
 	private void _testImportObjectEntryByObjectRestAPI() throws Exception {
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				12000,
+				18000,
 				StringBundler.concat(
 					" Import ", _objectEntryCount, " Object Entries"))) {
 

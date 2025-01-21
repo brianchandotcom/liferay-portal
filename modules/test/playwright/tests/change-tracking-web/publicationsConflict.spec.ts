@@ -206,15 +206,13 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await changeTrackingPage.workOnProduction();
 
-	await productMenuPage.openProductMenuIfClosed();
-
 	await journalPage.goto();
 
 	await page.getByLabel(`Actions for ${title}`).click();
 
 	await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-	await page.reload();
+	await productMenuPage.openProductMenuIfClosed();
 
 	await page.getByRole('menuitem', {name: 'Recycle Bin'}).click();
 

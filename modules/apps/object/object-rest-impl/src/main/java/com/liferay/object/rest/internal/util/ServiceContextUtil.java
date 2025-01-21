@@ -8,12 +8,16 @@ package com.liferay.object.rest.internal.util;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
 
 import java.util.Locale;
 
@@ -48,6 +52,15 @@ public class ServiceContextUtil {
 
 		ServiceContext serviceContext = createServiceContext(
 			objectEntry, userId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			serviceContext.setAttribute(
+				"friendlyUrlMap",
+				(Serializable)LocalizedMapUtil.populateI18nMap(
+					LocaleUtil.toLanguageId(locale),
+					objectEntry.getFriendlyUrlPath_i18n(),
+					objectEntry.getFriendlyUrlPath()));
+		}
 
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));

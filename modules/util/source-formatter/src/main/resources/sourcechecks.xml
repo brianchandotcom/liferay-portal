@@ -699,6 +699,7 @@
 		<check name="JavaCompanyScopedIdsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where company scoped ids are used, see LPD-45118." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaComponentActivateCheck">
 			<category name="Naming Conventions" />

@@ -78,24 +78,24 @@ public class JavaCompanyScopedIdsCheck extends BaseJavaTermCheck {
 				variableName, true, false);
 
 			if (variableTypeName.equals("Set<Long>")) {
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "add",
 					variableName);
 			}
 			else if (variableTypeName.startsWith("Map<Long")) {
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "compute",
 					variableName);
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "computeIfAbsent",
 					variableName);
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "computeIfPresent",
 					variableName);
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "put",
 					variableName);
-				_check(
+				_checkCompanyScopedIds(
 					fileName, content, entityIds, javaTerm, "putIfAbsent",
 					variableName);
 			}
@@ -109,7 +109,7 @@ public class JavaCompanyScopedIdsCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private void _check(
+	private void _checkCompanyScopedIds(
 		String fileName, String content, List<String> entityIds,
 		JavaTerm javaTerm, String methodName, String variableName) {
 

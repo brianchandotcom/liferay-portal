@@ -99,33 +99,33 @@ public class ExportExamResultRestController extends BaseRestController {
 			int lastPage = 1;
 
 			for (int i = 1; i <= lastPage; i++) {
-				JSONObject jsonObject = new JSONObject(
+				JSONObject jsonObject1 = new JSONObject(
 					get(
 						"Bearer " + jwt.getTokenValue(),
 						StringBundler.concat(
 							"/o/c/p2s3examresults/scopes/", _siteGroupId,
 							"?pageSize=500&page=", i, filterString)));
 
-				JSONArray jsonArray = jsonObject.getJSONArray("items");
+				JSONArray jsonArray = jsonObject1.getJSONArray("items");
 
 				for (int j = 0; j < jsonArray.length(); j++) {
-					JSONObject itemJSONObject = jsonArray.getJSONObject(j);
+					JSONObject jsonObject2 = jsonArray.getJSONObject(j);
 
 					csvPrinter.printRecord(
-						itemJSONObject.getString("firstName"),
-						itemJSONObject.getString("lastName"),
-						itemJSONObject.getString("email"),
-						itemJSONObject.getString("examName"),
-						itemJSONObject.getString("date"),
-						itemJSONObject.getDouble("score"),
-						itemJSONObject.getJSONObject(
+						jsonObject2.getString("firstName"),
+						jsonObject2.getString("lastName"),
+						jsonObject2.getString("email"),
+						jsonObject2.getString("examName"),
+						jsonObject2.getString("date"),
+						jsonObject2.getDouble("score"),
+						jsonObject2.getJSONObject(
 							"result"
 						).getString(
 							"name"
 						));
 				}
 
-				lastPage = jsonObject.getInt("lastPage");
+				lastPage = jsonObject1.getInt("lastPage");
 			}
 
 			csvPrinter.flush();

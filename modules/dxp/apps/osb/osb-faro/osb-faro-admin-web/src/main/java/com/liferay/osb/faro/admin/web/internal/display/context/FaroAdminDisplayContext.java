@@ -156,7 +156,7 @@ public class FaroAdminDisplayContext {
 		}
 		else if (_isNavigationUsageLimitApproaching()) {
 			searchContext.setAttribute("maxUsage", 100);
-			searchContext.setAttribute("minUsage", 80);
+			searchContext.setAttribute("minUsage", 70);
 		}
 		else if (_isNavigationUsageLimitExceeded()) {
 			searchContext.setAttribute("maxUsage", Integer.MAX_VALUE);

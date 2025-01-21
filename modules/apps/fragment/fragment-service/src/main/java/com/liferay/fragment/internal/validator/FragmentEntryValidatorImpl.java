@@ -236,8 +236,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 						typeOptionsJSONObject.getJSONObject("validation"))) {
 
 					throw new FragmentEntryConfigurationException(
-						"Invalid default configuration value for field: " +
-							fieldName);
+						"Invalid default configuration value for field \"" +
+							fieldName + "\"");
 				}
 
 				if (valuesJSONObject != null) {
@@ -249,8 +249,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 								"validation"))) {
 
 						throw new FragmentEntryConfigurationException(
-							"Invalid configuration value for field: " +
-								fieldName);
+							"Invalid configuration value for field \"" +
+								fieldName + "\"");
 					}
 				}
 
@@ -269,8 +269,8 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 					if (!fieldJSONObjects.containsKey(key)) {
 						throw new FragmentEntryConfigurationException(
-							"Dependency field cannot depend on field " + key +
-								" that does not exist");
+							"Dependency field cannot depend on field \"" + key +
+								"\" that does not exist");
 					}
 
 					JSONObject dependencyFieldJSONObject = fieldJSONObjects.get(
@@ -280,7 +280,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 							dependencyFieldJSONObject.getString("type"))) {
 
 						throw new FragmentEntryConfigurationException(
-							"Dependency field should be checkbox, text or select");
+							"Dependency field should be checkbox, text, or select");
 					}
 				}
 			}

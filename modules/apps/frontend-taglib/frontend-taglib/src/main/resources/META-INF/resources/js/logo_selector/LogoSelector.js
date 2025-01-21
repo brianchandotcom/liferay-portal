@@ -15,7 +15,7 @@ export default function LogoSelector({
 	label,
 	logoName: initialLogoName,
 	logoURL: initialLogoURL,
-	portletNamespace = 'com_liferay_image_uploader_web_portlet_ImageUploaderPortlet_',
+	portletNamespace,
 	selectLogoURL,
 }) {
 	const [changingLogo, setChangingLogo] = useState(false);

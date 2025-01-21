@@ -146,6 +146,9 @@ public class LogoSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:logoURL",
 			_getLogoURL(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-frontend:logo-selector:portletNamespace",
+			_getPortletNamespace(httpServletRequest));
 
 		String randomKey = PortalUtil.generateRandomKey(
 			httpServletRequest, "taglib_ui_logo_selector");
@@ -180,6 +183,12 @@ public class LogoSelectorTag extends IncludeTag {
 		}
 
 		return getCurrentLogoURL();
+	}
+
+	private String _getPortletNamespace(HttpServletRequest httpServletRequest) {
+		return PortalUtil.getLiferayPortletResponse(
+			_getPortletResponse(httpServletRequest)
+		).getNamespace();
 	}
 
 	private PortletResponse _getPortletResponse(

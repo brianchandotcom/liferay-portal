@@ -369,7 +369,7 @@ public class FormItemManager {
 			return;
 		}
 
-		if (_existsTypeInputFragmentEntryLink(fragmentEntryLinks, locale)) {
+		if (_hasTypeInputFragmentEntryLink(fragmentEntryLinks, locale)) {
 			throw new FormContainerParentItemRequiredException();
 		}
 	}
@@ -562,7 +562,7 @@ public class FormItemManager {
 		return fragmentEntryLink;
 	}
 
-	private boolean _existsTypeInputFragmentEntryLink(
+	private boolean _hasTypeInputFragmentEntryLink(
 		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {

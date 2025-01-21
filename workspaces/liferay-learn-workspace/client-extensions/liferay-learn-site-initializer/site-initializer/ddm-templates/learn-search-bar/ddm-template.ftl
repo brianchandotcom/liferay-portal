@@ -1,21 +1,12 @@
 <#assign pageTitle = layout.getName(locale) />
 
 <#if currentURL?has_content>
+	<#assign firstUrlSegment = currentURL?split('/')[3]?split('\\?')[0] />
 
-	<#assign 
-		firstUrlSegment = currentURL?split('/')[3]?split('\\?')[0] 
-	/>
-
-	<#if firstUrlSegment !="v">
+	<#if firstUrlSegment != "v">
 		<#assign searchTerm = "Capability" />
 	<#else>
-			<#assign 
-				taxonomyCategoryId = currentURL?split("/v/")[1]?split("?")[0]
-
-				capabilityName=restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId}").name
-
-				searchTerm=capabilityName 
-			/>
+		<#assign searchTerm = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories/${currentURL?split("/v/")[1]?split("?")[0]}").name />
 	</#if>
 </#if>
 

@@ -11,7 +11,7 @@
 	input:focus ~ .mega-menu-dropdown-toggle,
 	input:focus-visible ~ .mega-menu-dropdown-toggle {
 		background: var(--nav-item-text-color-background, #EDF3FE);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 		transition: all 0.1s linear;
 
 		.mega-menu-dropdown-title,
@@ -140,7 +140,7 @@
 			gap: 40px;
 			grid-template-columns: 1fr 1fr 1fr 1fr;
 			margin: auto;
-			max-width: var(--container-max-xl);
+			max-width: var(--container-max-xl, 1600px);
 
 			@media (max-width: 991.98px) {
 				gap: 0;

@@ -1,5 +1,5 @@
 .utility-nav-container {
-	background: var(--utility-nav-background-color);
+	background: var(--utility-nav-background-color, #FFFFFF);
 	position: relative;
 
 	> div,

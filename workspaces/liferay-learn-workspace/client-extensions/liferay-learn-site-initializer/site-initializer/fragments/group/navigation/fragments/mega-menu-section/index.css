@@ -1,5 +1,5 @@
 .mega-menu-section.mega-menu-section-background {
-	background: var(--color-brand-primary-lighten-5);
+	background: var(--color-brand-primary-lighten-5, #E7EFFF);
 	border-radius: var(--border-radius);
 	margin: -20px;
 	padding: 1.25rem;
@@ -20,7 +20,7 @@
 }
 
 .mega-menu-section .mega-menu-section-title {
-	color: var(--color-neutral-8);
+	color: var(--color-neutral-8, #54555F);
 	font-size: var(--text-paragraph-font-size);
 	font-weight: var(--font-weight-semi-bold, 600);
 	margin-bottom: 0.5rem;
@@ -34,7 +34,7 @@
 
 .mega-menu-section .mega-menu-section-grid > div,
 .mega-menu-section .mega-menu-section-grid .page-editor__root {
-	border-top: 1px solid var(--color-neutral-2);
+	border-top: 1px solid var(--color-neutral-2, #E2E2E4);
 	display: grid;
 	gap: 2.5rem;
 	padding-top: 1rem;
@@ -50,7 +50,7 @@
 
 @media (max-width: 767.98px) {
 	.mega-menu-section .mega-menu-section-grid > div {
-		border-left: 2px solid var(--color-neutral-2);
+		border-left: 2px solid var(--color-neutral-2, #E2E2E4);
 		border-top: none;
 		padding-left: 1rem;
 		padding-top: 0;

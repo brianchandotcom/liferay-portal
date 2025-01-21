@@ -12,7 +12,7 @@
 	input:focus ~ .utility-nav-dropdown-toggle,
 	input:focus-visible ~ .utility-nav-dropdown-toggle {
 		background: var(--utility-nav-item-text-color-background, #EDF3FE);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 		transition: all 0.1s linear;
 
 		.utility-nav-dropdown-html {

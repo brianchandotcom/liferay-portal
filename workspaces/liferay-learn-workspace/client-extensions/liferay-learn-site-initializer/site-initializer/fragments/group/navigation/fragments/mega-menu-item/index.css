@@ -44,7 +44,7 @@
 		justify-content: center;
 
 		.mega-menu-item-title {
-			color: var(--color-neutral-10);
+			color: var(--color-neutral-10, #282934);
 			font-size: var(--h5-font-size);
 			font-weight: var(--font-weight-semi-bold, 600);
 			margin: 0;
@@ -52,7 +52,7 @@
 		}
 
 		.mega-menu-item-description {
-			color: var(--color-neutral-8);
+			color: var(--color-neutral-8, #54555F);
 			font-size: var(--text-paragraph-sm-font-size);
 			font-weight: var(--font-weight-normal, 400);
 			line-height: var(--text-paragraph-sm-line-height);
@@ -70,10 +70,10 @@
 	&:focus,
 	&:focus-visible {
 		background: var(--color-action-primary-hover-lighten);
-		outline: var(--color-brand-primary-lighten-2) solid 2px;
+		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 
 		.mega-menu-item-title {
-			color: var(--color-action-primary-hover);
+			color: var(--color-action-primary-hover, #0053F0);
 		}
 
 		.mega-menu-item-external-icon {
@@ -82,13 +82,13 @@
 	}
 	&.mega-menu-item-has-image {
 		.mega-menu-item-title {
-			color: var(--color-neutral-8);
+			color: var(--color-neutral-8, #54555F);
 			font-size: var(--text-paragraph-sm-font-size);
 			font-weight: var(--font-weight-semi-bold, 600);
 		}
 
 		.mega-menu-item-description {
-			color: var(--color-neutral-10);
+			color: var(--color-neutral-10, #282934);
 			font-size: var(--text-paragraph-base-font-size);
 			font-weight: var(--font-weight-semi-bold, 600);
 			line-height: var(--text-paragraph-base-line-height);
@@ -98,7 +98,7 @@
 		&:focus,
 		&:focus-visible {
 			.mega-menu-item-description {
-				color: var(--color-action-primary-hover);
+				color: var(--color-action-primary-hover, #0053F0);
 			}
 		}
 	}

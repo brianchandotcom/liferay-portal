@@ -60,6 +60,11 @@ public class PlacedOrderEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName("commerceOrderTypeName"),
 				locale -> "commerceOrderTypeName"),
 			new StringEntityField(
+				"orderTypeExternalReferenceCode",
+				locale -> Field.getSortableFieldName(
+					"commerceOrderTypeExternalReferenceCode"),
+				locale -> "commerceOrderTypeExternalReferenceCode"),
+			new StringEntityField(
 				"purchaseOrderNumber",
 				locale -> Field.getSortableFieldName("purchaseOrderNumber"),
 				locale -> "purchaseOrderNumber"));

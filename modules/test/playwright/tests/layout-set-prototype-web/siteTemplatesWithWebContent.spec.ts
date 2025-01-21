@@ -32,25 +32,25 @@ import createSiteTemplateWithWebContentOnHomePage from './utils/createSiteTempla
 import createSiteTemplateWithWebContentOnWidgetPage from './utils/createSiteTemplateWithWebContentOnWidgetPage';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	apiHelpersTest,
+	applicationsMenuPageTest,
 	dataApiHelpersTest,
-	journalPagesTest,
-	isolatedSiteTest,
-	layoutSetPrototypePageTest,
-	productMenuPageTest,
-	uiElementsPageTest,
-	pagesPagesTest,
-	pageViewModePagesTest,
-	webContentDisplayPageTest,
-	pageEditorPagesTest,
-	sitesPageTest,
-	serverAdministrationPageTest,
-	loginTest(),
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 	}),
-	pagesAdminPagesTest
+	isolatedSiteTest,
+	journalPagesTest,
+	layoutSetPrototypePageTest,
+	loginTest(),
+	pageEditorPagesTest,
+	pagesAdminPagesTest,
+	pagesPagesTest,
+	pageViewModePagesTest,
+	productMenuPageTest,
+	serverAdministrationPageTest,
+	sitesPageTest,
+	uiElementsPageTest,
+	webContentDisplayPageTest,
 );
 
 const testWithPrivatePages = mergeTests(

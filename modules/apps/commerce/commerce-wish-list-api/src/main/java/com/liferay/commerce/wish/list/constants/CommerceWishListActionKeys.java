@@ -10,7 +10,10 @@ package com.liferay.commerce.wish.list.constants;
  */
 public class CommerceWishListActionKeys {
 
-	public static final String MANAGE_COMMERCE_WISH_LISTS =
-		"MANAGE_COMMERCE_WISH_LISTS";
+	public static final String ADD_COMMERCE_WISH_LIST =
+		"ADD_COMMERCE_WISH_LIST";
+
+	public static final String VIEW_COMMERCE_WISH_LISTS =
+		"VIEW_COMMERCE_WISH_LISTS";
 
 }

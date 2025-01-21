@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
+public class JavaCompanyScopedIdsCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -131,7 +131,11 @@ public class JavaUnnamedSFCheck extends BaseJavaTermCheck {
 			}
 
 			addMessage(
-				fileName, variableName + "." + methodName,
+				fileName,
+				StringBundler.concat(
+					variableName, ".", methodName, ", ", variableName,
+					" are not unique across companies so it is needed to make ",
+					"the collection company scoped"),
 				javaTerm.getLineNumber(x));
 		}
 	}

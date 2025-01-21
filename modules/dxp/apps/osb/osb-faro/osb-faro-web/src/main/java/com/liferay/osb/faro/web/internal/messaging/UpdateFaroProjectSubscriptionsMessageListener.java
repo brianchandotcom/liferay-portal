@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
@@ -150,9 +152,19 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 				faroProject.setSubscription(
 					JSONUtil.writeValueAsString(faroSubscriptionDisplay));
 
+				Date date = new Date();
+
+				Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+
+				Calendar calendar = Calendar.getInstance();
+
+				calendar.setTime(endDate);
+
+				calendar.add(Calendar.DATE, -1);
+
 				faroSubscriptionDisplay.setUsageCounts(
-					_cerebroEngineClient, _contactsEngineClient, new Date(),
-					faroProject);
+					_cerebroEngineClient, _contactsEngineClient, endDate,
+					faroProject, calendar.getTime());
 
 				_faroProjectLocalService.updateSubscription(
 					faroProject.getFaroProjectId(),

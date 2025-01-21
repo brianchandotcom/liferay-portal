@@ -221,8 +221,8 @@ public class FaroSubscriptionDisplay {
 
 	public void setUsageCounts(
 			CerebroEngineClient cerebroEngineClient,
-			ContactsEngineClient contactsEngineClient, Date date,
-			FaroProject faroProject)
+			ContactsEngineClient contactsEngineClient, Date endDate,
+			FaroProject faroProject, Date startDate)
 		throws Exception {
 
 		if ((faroProject == null) ||
@@ -243,12 +243,6 @@ public class FaroSubscriptionDisplay {
 
 		JSONObject subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
 			faroProject.getSubscription());
-
-		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
-
-		date = _addToDate(date, Calendar.DATE, -1);
-
-		Date startDate = new Date(date.getTime() / Time.DAY * Time.DAY);
 
 		_individualsCounts = _setCounts(
 			contactsEngineClient.getIndividualsCreatedBetweenCount(

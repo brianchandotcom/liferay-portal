@@ -637,8 +637,19 @@ public class ProjectController extends BaseFaroController {
 		faroProject.setSubscription(
 			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
 
+		Date date = new Date();
+
+		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(endDate);
+
+		calendar.set(Calendar.DATE, 1);
+
 		faroSubscriptionDisplay.setUsageCounts(
-			cerebroEngineClient, contactsEngineClient, new Date(), faroProject);
+			cerebroEngineClient, contactsEngineClient, endDate, faroProject,
+			calendar.getTime());
 
 		_faroProjectLocalService.updateSubscription(
 			faroProject.getFaroProjectId(),

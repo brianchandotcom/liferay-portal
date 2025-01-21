@@ -300,7 +300,7 @@ public class EditStyleBookEntryDisplayContext {
 	private JSONObject _getFrontendTokenDefinitionJSONObject()
 		throws Exception {
 
-		FrontendTokenDefinition frontendTokenDefinition;
+		FrontendTokenDefinition frontendTokenDefinition = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
 			frontendTokenDefinition =

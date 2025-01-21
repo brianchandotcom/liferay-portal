@@ -52,12 +52,11 @@ public class CommerceWishListLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
 			addCommerceWishList(
-				String name, boolean defaultWishList,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long groupId, long userId, String name, boolean defaultWishList)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListLocalService.addCommerceWishList(
-			name, defaultWishList, serviceContext);
+			groupId, userId, name, defaultWishList);
 	}
 
 	/**
@@ -95,12 +94,14 @@ public class CommerceWishListLocalServiceWrapper
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
-		deleteCommerceWishList(
-			com.liferay.commerce.wish.list.model.CommerceWishList
-				commerceWishList) {
+			deleteCommerceWishList(
+				com.liferay.commerce.wish.list.model.CommerceWishList
+					commerceWishList)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceWishListLocalService.deleteCommerceWishList(
 			commerceWishList);
@@ -132,12 +133,16 @@ public class CommerceWishListLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceWishListsByGroupId(long groupId) {
+	public void deleteCommerceWishListsByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(groupId);
 	}
 
 	@Override
-	public void deleteCommerceWishListsByUserId(long userId) {
+	public void deleteCommerceWishListsByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_commerceWishListLocalService.deleteCommerceWishListsByUserId(userId);
 	}
 
@@ -289,6 +294,17 @@ public class CommerceWishListLocalServiceWrapper
 
 		return _commerceWishListLocalService.
 			fetchCommerceWishListByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishList
+			forceDeleteCommerceWishList(
+				com.liferay.commerce.wish.list.model.CommerceWishList
+					commerceWishList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceWishListLocalService.forceDeleteCommerceWishList(
+			commerceWishList);
 	}
 
 	@Override

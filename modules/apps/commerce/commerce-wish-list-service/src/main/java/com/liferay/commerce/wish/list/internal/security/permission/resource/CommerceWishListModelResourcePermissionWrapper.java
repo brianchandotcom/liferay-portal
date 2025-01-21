@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.wish.list.internal.security.permission.resource;
 
-import com.liferay.commerce.wish.list.constants.CommerceWishListActionKeys;
 import com.liferay.commerce.wish.list.constants.CommerceWishListConstants;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
@@ -60,6 +59,13 @@ public class CommerceWishListModelResourcePermissionWrapper
 				CommerceWishList commerceWishList, String actionId)
 			throws PortalException {
 
+			if (permissionChecker.isCompanyAdmin(
+					commerceWishList.getCompanyId()) ||
+				permissionChecker.isOmniadmin()) {
+
+				return true;
+			}
+
 			if (actionId.equals(ActionKeys.DELETE) &&
 				!permissionChecker.isSignedIn()) {
 
@@ -70,9 +76,7 @@ public class CommerceWishListModelResourcePermissionWrapper
 				return true;
 			}
 
-			return _portletResourcePermission.contains(
-				permissionChecker, commerceWishList.getGroupId(),
-				CommerceWishListActionKeys.MANAGE_COMMERCE_WISH_LISTS);
+			return false;
 		}
 
 	}

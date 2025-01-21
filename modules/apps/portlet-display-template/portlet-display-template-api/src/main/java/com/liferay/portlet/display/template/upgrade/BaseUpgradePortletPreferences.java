@@ -81,7 +81,7 @@ public abstract class BaseUpgradePortletPreferences
 			long companyId, long plid, long scopeGroupId)
 		throws Exception {
 
-		long layoutGroupId = _getLayoutGroupId(plid);
+		long layoutGroupId = _getLayoutGroupId(companyId, plid);
 
 		if ((layoutGroupId == 0L) || (layoutGroupId == scopeGroupId)) {
 			return StringPool.BLANK;
@@ -94,7 +94,7 @@ public abstract class BaseUpgradePortletPreferences
 			long companyId, long plid, String scopeGroupKey)
 		throws Exception {
 
-		long layoutGroupId = _getLayoutGroupId(plid);
+		long layoutGroupId = _getLayoutGroupId(companyId, plid);
 		long scopeGroupId = getGroupId(companyId, scopeGroupKey);
 
 		if ((layoutGroupId == 0L) || (layoutGroupId == scopeGroupId)) {
@@ -204,8 +204,11 @@ public abstract class BaseUpgradePortletPreferences
 		return StringPool.BLANK;
 	}
 
-	private long _getLayoutGroupId(long plid) {
-		return _plidMap.computeIfAbsent(
+	private long _getLayoutGroupId(long companyId, long plid) {
+		Map<Long, Long> companyIdPlidMap = _plidMap.computeIfAbsent(
+			companyId, curCompanyId -> new ConcurrentHashMap<>());
+
+		return companyIdPlidMap.computeIfAbsent(
 			plid,
 			curPlid -> {
 				try {
@@ -232,6 +235,7 @@ public abstract class BaseUpgradePortletPreferences
 		new ConcurrentHashMap<>();
 	private final Map<Long, Map<String, Long>> _groupKeyMap =
 		new ConcurrentHashMap<>();
-	private final Map<Long, Long> _plidMap = new ConcurrentHashMap<>();
+	private final Map<Long, Map<Long, Long>> _plidMap =
+		new ConcurrentHashMap<>();
 
 }

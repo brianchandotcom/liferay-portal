@@ -1057,7 +1057,7 @@ definition {
 				webContentText = "WC WebContent Text ${i}",
 				webContentTitle = "WC WebContent Title ${i}");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");

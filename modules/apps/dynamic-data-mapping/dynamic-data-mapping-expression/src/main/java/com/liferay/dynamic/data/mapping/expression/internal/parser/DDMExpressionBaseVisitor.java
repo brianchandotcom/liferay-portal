@@ -1,13 +1,12 @@
-// Generated from DDMExpression.g4 by ANTLR 4.3
+// Generated from DDMExpression.g4 by ANTLR 4.13.2
 
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal.parser.generated;
+package com.liferay.dynamic.data.mapping.expression.internal.parser;
 
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -15,10 +14,10 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * which can be extended to create a visitor which only needs to handle a subset
  * of the available methods.
  *
- * @author Brian Wing Shun Chan
- * @param  <T> The return type of the visit operation. Use {@link Void} for
- *         operations with no return type.
+ * @param <T> The return type of the visit operation. Use {@link Void} for
+ * operations with no return type.
  */
+@SuppressWarnings("CheckReturnValue")
 public class DDMExpressionBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements DDMExpressionVisitor<T> {
 	/**
 	 * {@inheritDoc}
@@ -26,341 +25,299 @@ public class DDMExpressionBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToMultOrDiv(@NotNull DDMExpressionParser.ToMultOrDivContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitExpression(DDMExpressionParser.ExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumericLiteral(@NotNull DDMExpressionParser.NumericLiteralContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToLogicalAndExpression(DDMExpressionParser.ToLogicalAndExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNotEqualsExpression(@NotNull DDMExpressionParser.NotEqualsExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitOrExpression(DDMExpressionParser.OrExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToBooleanOperandExpression(@NotNull DDMExpressionParser.ToBooleanOperandExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitAndExpression(DDMExpressionParser.AndExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreaterThanExpression(@NotNull DDMExpressionParser.GreaterThanExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToEqualityExpression(DDMExpressionParser.ToEqualityExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNotExpression(@NotNull DDMExpressionParser.NotExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitNotEqualsExpression(DDMExpressionParser.NotEqualsExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrExpression(@NotNull DDMExpressionParser.OrExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToComparisonExpression(DDMExpressionParser.ToComparisonExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAndExpression(@NotNull DDMExpressionParser.AndExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitEqualsExpression(DDMExpressionParser.EqualsExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitArray(@NotNull DDMExpressionParser.ArrayContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitGreaterThanOrEqualsExpression(DDMExpressionParser.GreaterThanOrEqualsExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToLogicalAndExpression(@NotNull DDMExpressionParser.ToLogicalAndExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitLessThanOrEqualsExpression(DDMExpressionParser.LessThanOrEqualsExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPrimary(@NotNull DDMExpressionParser.PrimaryContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitGreaterThanExpression(DDMExpressionParser.GreaterThanExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionCallExpression(@NotNull DDMExpressionParser.FunctionCallExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToBooleanUnaryExpression(DDMExpressionParser.ToBooleanUnaryExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDivisionExpression(@NotNull DDMExpressionParser.DivisionExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitLessThanExpression(DDMExpressionParser.LessThanExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBooleanParenthesis(@NotNull DDMExpressionParser.BooleanParenthesisContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitNotExpression(DDMExpressionParser.NotExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToBooleanUnaryExpression(@NotNull DDMExpressionParser.ToBooleanUnaryExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToBooleanOperandExpression(DDMExpressionParser.ToBooleanOperandExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionParameters(@NotNull DDMExpressionParser.FunctionParametersContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToLogicalTerm(DDMExpressionParser.ToLogicalTermContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIntegerLiteral(@NotNull DDMExpressionParser.IntegerLiteralContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToAdditionOrSubtractionEpression(DDMExpressionParser.ToAdditionOrSubtractionEpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogicalVariable(@NotNull DDMExpressionParser.LogicalVariableContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitBooleanParenthesis(DDMExpressionParser.BooleanParenthesisContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitAdditionExpression(@NotNull DDMExpressionParser.AdditionExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitLogicalConstant(DDMExpressionParser.LogicalConstantContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExpression(@NotNull DDMExpressionParser.ExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitLogicalVariable(DDMExpressionParser.LogicalVariableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToEqualityExpression(@NotNull DDMExpressionParser.ToEqualityExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitAdditionExpression(DDMExpressionParser.AdditionExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogicalConstant(@NotNull DDMExpressionParser.LogicalConstantContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitSubtractionExpression(DDMExpressionParser.SubtractionExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToAdditionOrSubtractionEpression(@NotNull DDMExpressionParser.ToAdditionOrSubtractionEpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToMultOrDiv(DDMExpressionParser.ToMultOrDivContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToStringArray(@NotNull DDMExpressionParser.ToStringArrayContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToNumericUnaryExpression(DDMExpressionParser.ToNumericUnaryExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToFunctionCallExpression(@NotNull DDMExpressionParser.ToFunctionCallExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitDivisionExpression(DDMExpressionParser.DivisionExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumericVariable(@NotNull DDMExpressionParser.NumericVariableContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitMultiplicationExpression(DDMExpressionParser.MultiplicationExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToFloatingPointArray(@NotNull DDMExpressionParser.ToFloatingPointArrayContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitMinusExpression(DDMExpressionParser.MinusExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSubtractionExpression(@NotNull DDMExpressionParser.SubtractionExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitPrimary(DDMExpressionParser.PrimaryContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToNumericUnaryExpression(@NotNull DDMExpressionParser.ToNumericUnaryExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToNumericTerm(DDMExpressionParser.ToNumericTermContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGreaterThanOrEqualsExpression(@NotNull DDMExpressionParser.GreaterThanOrEqualsExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToFunctionCallExpression(DDMExpressionParser.ToFunctionCallExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToNumericTerm(@NotNull DDMExpressionParser.ToNumericTermContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitNumericParenthesis(DDMExpressionParser.NumericParenthesisContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumericParenthesis(@NotNull DDMExpressionParser.NumericParenthesisContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitNumericLiteral(DDMExpressionParser.NumericLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToLogicalTerm(@NotNull DDMExpressionParser.ToLogicalTermContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitNumericVariable(DDMExpressionParser.NumericVariableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitStringLiteral(@NotNull DDMExpressionParser.StringLiteralContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitFunctionCallExpression(DDMExpressionParser.FunctionCallExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMinusExpression(@NotNull DDMExpressionParser.MinusExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitFunctionParameters(DDMExpressionParser.FunctionParametersContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFloatingPointLiteral(@NotNull DDMExpressionParser.FloatingPointLiteralContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitFunctionParameter(DDMExpressionParser.FunctionParameterContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToComparisonExpression(@NotNull DDMExpressionParser.ToComparisonExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitArray(DDMExpressionParser.ArrayContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLessThanOrEqualsExpression(@NotNull DDMExpressionParser.LessThanOrEqualsExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToFloatingPointArray(DDMExpressionParser.ToFloatingPointArrayContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionParameter(@NotNull DDMExpressionParser.FunctionParameterContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToIntegerArray(DDMExpressionParser.ToIntegerArrayContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMultiplicationExpression(@NotNull DDMExpressionParser.MultiplicationExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitToStringArray(DDMExpressionParser.ToStringArrayContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitToIntegerArray(@NotNull DDMExpressionParser.ToIntegerArrayContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitFloatingPointLiteral(DDMExpressionParser.FloatingPointLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitEqualsExpression(@NotNull DDMExpressionParser.EqualsExpressionContext ctx) { return visitChildren(ctx); }
-
+	@Override public T visitIntegerLiteral(DDMExpressionParser.IntegerLiteralContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLessThanExpression(@NotNull DDMExpressionParser.LessThanExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitStringLiteral(DDMExpressionParser.StringLiteralContext ctx) { return visitChildren(ctx); }
 }

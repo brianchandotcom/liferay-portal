@@ -3,6 +3,7 @@
 	"cpu": 4,
 	"env": {
 		"GRADLE_OPTS": "-Dorg.gradle.daemon=false",
+		"JAVA_VERSION": "zulu21",
 		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx4096m",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_BRANCH": "master",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_DEPLOY_KEY": "@liferay-learn-github-deploy-key",

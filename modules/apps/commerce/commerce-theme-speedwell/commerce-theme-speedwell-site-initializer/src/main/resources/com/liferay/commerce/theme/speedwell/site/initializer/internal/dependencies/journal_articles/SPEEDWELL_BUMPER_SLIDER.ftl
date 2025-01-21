@@ -94,8 +94,8 @@
 
 				const backgroundImageSlideImg = window.document.createElement('div');
 
-				backgroundImageSlideImg.setAttribute('style',
-						'background-image: url(' + dataset[index].backgroundImageUrl + ')');
+				backgroundImageSlideImg.style.backgroundImage =
+					'url(' + dataset[index].backgroundImageUrl + ')';
 				backgroundImageSlide.appendChild(backgroundImageSlideImg);
 
 				captionTextSlide.innerText = dataset[index].captionText;
@@ -125,10 +125,8 @@
 
 					switch (type) {
 						case 'backgroundImage':
-							willBeNextElement.querySelector('div').setAttribute(
-									'style',
-									'background-image: url(' + nextSlideContent.backgroundImageUrl + ')'
-							);
+							willBeNextElement.querySelector('div').style.backgroundImage =
+								'url(' + nextSlideContent.backgroundImageUrl + ')';
 							break;
 						case 'captionText':
 							willBeNextElement.innerText = nextSlideContent.captionText;
@@ -145,9 +143,8 @@
 					}
 				});
 			}
-			var autoSlidingInterval = 1000;
 
-			component.initialize(setupDOM, renderSlide, autoSlidingInterval);
+			component.initialize(setupDOM, renderSlide, 1000);
 		});
 	</script>
 </div>

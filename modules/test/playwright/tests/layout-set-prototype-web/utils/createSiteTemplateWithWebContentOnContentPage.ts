@@ -12,7 +12,8 @@ import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../pages/uielements/UIElementsPage';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import createSiteTemplate from './createSiteTemplate';
+
 
 export default async function createSiteTemplateWithWebContentOnContentPage({
 	apiHelpers,
@@ -37,31 +38,14 @@ export default async function createSiteTemplateWithWebContentOnContentPage({
 	webContentDisplayPage: WebContentDisplayPage;
 	webContentName: string;
 }): Promise<LayoutSetPrototype> {
-	const layoutSetPrototype: LayoutSetPrototype =
-		await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
-			templateName
-		);
-
-	await page.goto(
-		'group/template-' + layoutSetPrototype.layoutSetPrototypeId
-	);
-
-	const siteId = await page.evaluate(() => {
-		return String(Liferay.ThemeDisplay.getSiteGroupId());
-	});
-
-	const basicWebContentStructureId =
-		await getBasicWebContentStructureId(apiHelpers);
-
-	await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: text,
-		ddmStructureId: basicWebContentStructureId,
-		groupId: siteId,
-		titleMap: {en_US: webContentName},
-	});
-
-	await productMenuPage.checkIfAdecuateProductMenu(templateName);
-	await productMenuPage.openProductMenuIfClosed();
+	const layoutSetPrototype = await createSiteTemplate({
+				apiHelpers,
+				page,
+				productMenuPage,
+				templateName,
+				text,
+				webContentName,
+			  });
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.newButton.click();

@@ -274,6 +274,9 @@ public class FaroProjectAdminDisplay {
 		return null;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FaroProjectAdminDisplay.class);
+
 	private String _corpProjectName;
 	private String _corpProjectUuid;
 	private Date _createDate;

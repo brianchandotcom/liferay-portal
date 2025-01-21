@@ -28,11 +28,16 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
+import java.text.DateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -70,6 +75,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		super.testGetAccountGroupsPage();
 
 		_testGetAccountGroupsPageWithCustomFields();
+		_testGetAccountGroupsPageWithFilter();
 	}
 
 	@Ignore
@@ -371,6 +377,59 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		assertEquals(
 			Collections.singletonList(accountGroup),
 			(List<AccountGroup>)page.getItems());
+	}
+
+	private void _testGetAccountGroupsPageWithFilter() throws Exception {
+		Page<AccountGroup> page = accountGroupResource.getAccountGroupsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		AccountGroup accountGroup1 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+		AccountGroup accountGroup2 = testGetAccountGroupsPage_addAccountGroup(
+			randomAccountGroup());
+
+		Date date = accountGroup1.getDateCreated();
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null, "dateCreated lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount, page.getTotalCount());
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null, "dateCreated ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		accountGroup1.setDescription(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		accountGroup1 = accountGroupResource.patchAccountGroup(
+			accountGroup1.getId(), accountGroup1);
+
+		date = accountGroup1.getDateModified();
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null, "dateModified ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(accountGroup1, (List<AccountGroup>)page.getItems());
+
+		page = accountGroupResource.getAccountGroupsPage(
+			null, "dateModified lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		assertContains(accountGroup2, (List<AccountGroup>)page.getItems());
 	}
 
 	private void _testPatchAccountGroupByExternalReferenceCodeWithoutName()

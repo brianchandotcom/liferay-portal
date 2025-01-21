@@ -359,9 +359,8 @@ test('can export and import custom object entries at instance level', async ({
 
 	const json = JSON.parse(content);
 
-	json.forEach((entry) => {
-		expect(entry).not.toHaveProperty('permissions');
-	});
+	expect(json.length).toBe(1);
+	expect(json[0]).not.toHaveProperty('permissions');
 
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 
@@ -521,7 +520,6 @@ test('can export custom object entries at instance level with permissions based 
 
 	const json = JSON.parse(content);
 
-	json.forEach((entry) => {
-		expect(entry).toHaveProperty('permissions');
-	});
+	expect(json.length).toBe(1);
+	expect(json[0]).toHaveProperty('permissions');
 });

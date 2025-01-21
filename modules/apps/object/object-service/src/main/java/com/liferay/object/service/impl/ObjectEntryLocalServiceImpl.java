@@ -1945,43 +1945,67 @@ public class ObjectEntryLocalServiceImpl
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			objectDefinition.getClassName());
+
+		Map<String, String> friendlyUrlMap = new HashMap<>();
+
+		if (objectDefinition.isEnableFriendlyURLCustomization()) {
+			friendlyUrlMap = (Map<String, String>)serviceContext.getAttribute(
+				"friendlyUrlMap");
+		}
+
+		long groupId = objectEntry.getNonzeroGroupId();
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinition.getTitleObjectFieldId());
 		Map<String, String> urlTitleMap = new HashMap<>();
 
-		if ((objectField == null) || !objectField.isLocalized()) {
-			urlTitleMap = HashMapBuilder.put(
-				_language.getLanguageId(LocaleUtil.getSiteDefault()),
+		for (Map.Entry<String, String> entry : friendlyUrlMap.entrySet()) {
+			if (Validator.isNotNull(entry.getValue())) {
+				urlTitleMap.put(
+					entry.getKey(),
+					_friendlyURLEntryLocalService.getUniqueUrlTitle(
+						groupId, classNameId, objectEntry.getObjectEntryId(),
+						entry.getValue(), entry.getKey()));
+
+				continue;
+			}
+
+			urlTitleMap.put(
+				entry.getKey(),
 				_getUrlTitle(
-					classNameId, null, objectEntry, objectField,
+					classNameId, groupId, entry.getKey(), objectEntry,
+					objectField,
 					HashMapBuilder.<String, Object>putAll(
 						values
 					).putAll(
 						objectEntry.getModelAttributes()
-					).build())
-			).build();
+					).build()));
 		}
-		else {
-			Map<String, Object> localizedValues =
-				(Map<String, Object>)values.get(
-					objectField.getI18nObjectFieldName());
 
-			for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-				urlTitleMap.put(
-					entry.getKey(),
-					_getUrlTitle(
-						classNameId, entry.getKey(), objectEntry, objectField,
-						new HashMap<>(values)));
-			}
+		Map<String, Object> localizedValues =
+			(Map<String, Object>)values.getOrDefault(
+				objectField.getI18nObjectFieldName(), new HashMap<>());
 
-			urlTitleMap.putIfAbsent(
-				_language.getLanguageId(LocaleUtil.getSiteDefault()),
-				_getUrlTitle(classNameId, null, objectEntry, null, null));
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+			urlTitleMap.computeIfAbsent(
+				entry.getKey(),
+				key -> _getUrlTitle(
+					classNameId, groupId, entry.getKey(), objectEntry,
+					objectField, new HashMap<>(values)));
 		}
+
+		urlTitleMap.computeIfAbsent(
+			_language.getLanguageId(LocaleUtil.getSiteDefault()),
+			key -> _getUrlTitle(
+				classNameId, groupId, null, objectEntry, objectField,
+				HashMapBuilder.<String, Object>putAll(
+					values
+				).putAll(
+					objectEntry.getModelAttributes()
+				).build()));
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
-			objectEntry.getNonzeroGroupId(), classNameId,
-			objectEntry.getObjectEntryId(), urlTitleMap, serviceContext);
+			groupId, classNameId, objectEntry.getObjectEntryId(), urlTitleMap,
+			serviceContext);
 	}
 
 	private JoinStep _addInnerJoinON(
@@ -3725,9 +3749,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private String _getUrlTitle(
-			long classNameId, String languageId, ObjectEntry objectEntry,
-			ObjectField objectField, Map<String, Object> values)
-		throws PortalException {
+		long classNameId, long groupId, String languageId,
+		ObjectEntry objectEntry, ObjectField objectField,
+		Map<String, Object> values) {
 
 		String urlTitle = GetterUtil.getString(
 			ObjectEntryValuesUtil.getValue(languageId, objectField, values));
@@ -3741,8 +3765,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			objectEntry.getNonzeroGroupId(), classNameId,
-			objectEntry.getObjectEntryId(), urlTitle, languageId);
+			groupId, classNameId, objectEntry.getObjectEntryId(), urlTitle,
+			languageId);
 	}
 
 	/**

@@ -308,6 +308,8 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 	await dlFileEntryLink.waitFor();
 	await dlFileEntryLink.click();
 
+	await expect(page.getByText('No Preview Available')).toBeVisible();
+
 	const timelineButton = page.getByLabel('timeline-button');
 	await timelineButton.waitFor();
 	await timelineButton.click();

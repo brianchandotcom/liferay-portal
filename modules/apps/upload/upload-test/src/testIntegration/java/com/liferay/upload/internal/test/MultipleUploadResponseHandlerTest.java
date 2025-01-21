@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,7 +8,6 @@ package com.liferay.upload.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
-import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,11 +30,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Jorge González
- * @author Roberto Díaz
+ * @author Mikel Lorza
  */
 @RunWith(Arquillian.class)
-public class DefaultUploadResponseHandlerTest {
+public class MultipleUploadResponseHandlerTest {
 
 	@ClassRule
 	@Rule
@@ -53,27 +51,13 @@ public class DefaultUploadResponseHandlerTest {
 							"fileMimeTypes", new String[] {"text/html"}
 						).build())) {
 
-			JSONObject jsonObject = _defaultUploadResponseHandler.onFailure(
+			JSONObject jsonObject = _multipleUploadResponseHandler.onFailure(
 				_getMockPortletRequest(), new FileMimeTypeException());
-
-			JSONObject errorJSONObject = (JSONObject)jsonObject.get("error");
 
 			Assert.assertEquals(
 				"Please enter a file with a valid mime type (text/html).",
-				errorJSONObject.get("message"));
+				jsonObject.getString("message"));
 		}
-	}
-
-	@Test
-	public void testOnFailureWithFileSizeException() throws Exception {
-		JSONObject jsonObject = _defaultUploadResponseHandler.onFailure(
-			_getMockPortletRequest(), new FileSizeException(1024L));
-
-		JSONObject errorJSONObject = (JSONObject)jsonObject.get("error");
-
-		Assert.assertEquals(
-			"Please enter a file with a valid file size no larger than 1 KB.",
-			errorJSONObject.get("message"));
 	}
 
 	private MockPortletRequest _getMockPortletRequest() throws PortalException {
@@ -93,7 +77,7 @@ public class DefaultUploadResponseHandlerTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject(filter = "upload.response.handler.system.default=true")
-	private UploadResponseHandler _defaultUploadResponseHandler;
+	@Inject(filter = "upload.response.handler=multiple")
+	private UploadResponseHandler _multipleUploadResponseHandler;
 
 }

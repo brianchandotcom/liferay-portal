@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaCompanyScopedIdsCheck" files="portal-workflow-kaleo-service/src/main/java/com/liferay/portal/workflow/kaleo/internal/upgrade/v1_0_0/KaleoTaskInstanceTokenUpgradeProcess\.java" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/macros/Workflow\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/macros/WorkflowDocumentsAndMedia\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/tests/WorkflowUsecase\.testcase" />

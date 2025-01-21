@@ -9,5 +9,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="document-library-preview-pdf/bnd\.bnd" />
+		<suppress checks="JavaCompanyScopedIdsCheck" files="document-library-web/src/main/java/com/liferay/document/library/web/internal/exportimport/lifecycle/CascadeFileEntryTypesExportImportLifecycleListener\.java" />
 	</source-check>
 </suppressions>

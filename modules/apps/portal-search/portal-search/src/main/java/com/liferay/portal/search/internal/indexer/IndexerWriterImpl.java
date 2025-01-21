@@ -174,10 +174,10 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		long[] longIds = new long[ids.length];
+		long[] companyIds = new long[ids.length];
 
 		for (int i = 0; i < ids.length; i++) {
-			longIds[i] = GetterUtil.getLong(ids[i]);
+			companyIds[i] = GetterUtil.getLong(ids[i]);
 		}
 
 		CompanyLocalServiceUtil.forEachCompanyId(
@@ -220,7 +220,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 					}
 				}
 			},
-			longIds);
+			companyIds);
 	}
 
 	@Override

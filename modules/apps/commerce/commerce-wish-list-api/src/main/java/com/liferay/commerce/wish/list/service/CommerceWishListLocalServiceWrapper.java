@@ -133,16 +133,12 @@ public class CommerceWishListLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceWishListsByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void deleteCommerceWishListsByGroupId(long groupId) {
 		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(groupId);
 	}
 
 	@Override
-	public void deleteCommerceWishListsByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public void deleteCommerceWishListsByUserId(long userId) {
 		_commerceWishListLocalService.deleteCommerceWishListsByUserId(userId);
 	}
 
@@ -298,10 +294,9 @@ public class CommerceWishListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList
-			forceDeleteCommerceWishList(
-				com.liferay.commerce.wish.list.model.CommerceWishList
-					commerceWishList)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		forceDeleteCommerceWishList(
+			com.liferay.commerce.wish.list.model.CommerceWishList
+				commerceWishList) {
 
 		return _commerceWishListLocalService.forceDeleteCommerceWishList(
 			commerceWishList);

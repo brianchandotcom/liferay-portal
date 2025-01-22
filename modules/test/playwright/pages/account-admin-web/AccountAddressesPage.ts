@@ -20,7 +20,11 @@ export class AccountAddressesPage {
 	readonly addressesTableRowActions: (name: string) => Promise<Locator>;
 	readonly addressesTableRowCheckBox: (name: string) => Promise<Locator>;
 	readonly deleteButton: Locator;
+	readonly filterButton: Locator;
+	readonly filterMenuItem: (option: string) => Locator;
 	readonly page: Page;
+	readonly searchInput: Locator;
+	readonly searchButton: Locator;
 
 	constructor(page: Page) {
 		this.addAddressButton = page.getByRole('link', {name: 'Add Address'});
@@ -77,6 +81,18 @@ export class AccountAddressesPage {
 		this.deleteButton = page
 			.getByRole('button', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
+		this.filterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
+		this.filterMenuItem = (option: string) => {
+			return page.getByRole('menuitem', {
+				exact: true,
+				name: option,
+			});
+		};
 		this.page = page;
+		this.searchInput = page.getByPlaceholder('Search for', {exact: true});
+		this.searchButton = page.getByLabel('Search for', {exact: true});
 	}
 }

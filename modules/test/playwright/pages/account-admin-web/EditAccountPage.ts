@@ -19,7 +19,10 @@ export class EditAccountPage {
 	readonly changeImageButton: Locator;
 	readonly channelDefaultsLink: Locator;
 	readonly contactLink: Locator;
+	readonly defaultBillingAddress: (name: string) => Locator;
+	readonly defaultShippingAddress: (name: string) => Locator;
 	readonly descriptionInput: Locator;
+	readonly detailsTab: Locator;
 	readonly domainCell: (value: string) => Locator;
 	readonly domainRemoveButton: (value: string) => Locator;
 	readonly externalReferenceCodeInput: Locator;
@@ -27,8 +30,12 @@ export class EditAccountPage {
 	readonly frameSaveButton: Locator;
 	readonly imageInput: Locator;
 	readonly page: Page;
+	readonly removeBillingDefaultAddressButton: Locator;
+	readonly removeShippingDefaultAddressButton: Locator;
 	readonly rolesLink: Locator;
 	readonly saveButton: Locator;
+	readonly setBillingDefaultAddressButton: Locator;
+	readonly setShippingDefaultAddressButton: Locator;
 	readonly typeInput: Locator;
 	readonly uploadImageSelectImageButton: Locator;
 	readonly uploadImageDoneButton: Locator;
@@ -53,6 +60,15 @@ export class EditAccountPage {
 		});
 		this.contactLink = page.getByRole('link', {name: 'Contact'});
 		this.descriptionInput = page.getByLabel('Description');
+		this.detailsTab = page.getByRole('link', {
+			name: 'Details',
+		});
+		this.defaultBillingAddress = (name) => {
+			return page.locator('address').first().getByText(name);
+		};
+		this.defaultShippingAddress = (name) => {
+			return page.locator('address').last().getByText(name);
+		};
 		this.domainCell = (value) => {
 			return page.getByRole('cell', {name: value});
 		};
@@ -71,8 +87,26 @@ export class EditAccountPage {
 		});
 		this.imageInput = page.getByLabel('Image', {exact: true});
 		this.page = page;
+		this.removeBillingDefaultAddressButton = page
+			.locator('address')
+			.first()
+			.locator('..')
+			.getByRole('link', {name: 'Remove'});
+		this.removeShippingDefaultAddressButton = page
+			.locator('address')
+			.last()
+			.locator('..')
+			.getByRole('link', {name: 'Remove'});
 		this.rolesLink = page.getByRole('link', {exact: true, name: 'Roles'});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.setBillingDefaultAddressButton = page
+			.getByRole('link', {name: 'Set Default Address'})
+			.or(page.getByRole('link', {name: 'Change'}))
+			.locator('[data-type="billing"]:scope');
+		this.setShippingDefaultAddressButton = page
+			.getByRole('link', {name: 'Set Default Address'})
+			.or(page.getByRole('link', {name: 'Change'}))
+			.locator('[data-type="shipping"]:scope');
 		this.typeInput = page.getByLabel('Type');
 		this.uploadImageSelectImageButton = page
 			.frameLocator('iframe[title="Upload Image"]')

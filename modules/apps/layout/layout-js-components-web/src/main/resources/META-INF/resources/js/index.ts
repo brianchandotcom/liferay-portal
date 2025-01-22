@@ -14,6 +14,7 @@ export {default as ImportOptionsModal} from './components/import/ImportOptionsMo
 export {default as ImportResults} from './components/import/ImportResults';
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {default as openCreationModal} from './components/modals/openCreationModal';
+export {default as openMarketplaceModal} from './components/modals/openMarketplaceModal';
 export {default as PageTemplateModal} from './components/page_template_modal/PageTemplateModal';
 export {default as Resizer} from './components/resizer/Resizer';
 export {default as ScreenReaderAnnouncer} from './components/screen_reader_announcer/ScreenReaderAnnouncer';

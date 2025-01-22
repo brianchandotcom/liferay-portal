@@ -10,21 +10,24 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
+	pageViewModePagesTest,
 	loginTest()
 );
 
 test('LPD-27036 Cart shows decimal quantities', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceCartPage,
-	commerceLayoutsPage,
+
+	widgetPagePage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Cart Site',
@@ -96,14 +99,15 @@ test('LPD-27036 Cart shows decimal quantities', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite('Cart Site');
+	const widgetLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Cart Page');
+	await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
-	await applicationsMenuPage.goToSite('Cart Site');
+	await widgetPagePage.addPortlet('Cart');
 
-	await commerceCartPage.addCartWidget();
 	expect(
 		await commerceCartPage.commerceOrderItemsTableRowQuantityInput(
 			product.name['en_US']

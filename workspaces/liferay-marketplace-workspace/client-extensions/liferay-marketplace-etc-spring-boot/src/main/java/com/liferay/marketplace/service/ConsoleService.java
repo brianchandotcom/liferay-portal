@@ -112,10 +112,6 @@ public class ConsoleService extends BaseService {
 			_consoleProjectPrefix + "-ext" + orderId);
 
 		for (String emailAddress : emailAddresses) {
-			if (Objects.equals(emailAddress, _trialAdminEmailAddress)) {
-				continue;
-			}
-
 			_inviteProject(emailAddress, jsonObject.getString("projectId"));
 		}
 
@@ -158,6 +154,10 @@ public class ConsoleService extends BaseService {
 
 	private void _inviteProject(String emailAddress, String projectId)
 		throws Exception {
+
+		if (Objects.equals(emailAddress, _consoleAuthEmailAddress)) {
+			return;
+		}
 
 		post(
 			getAuthorization(),

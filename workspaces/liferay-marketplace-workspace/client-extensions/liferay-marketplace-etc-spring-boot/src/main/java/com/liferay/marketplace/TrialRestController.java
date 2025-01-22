@@ -54,6 +54,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 /**
  * @author Keven Leone
@@ -206,23 +207,22 @@ public class TrialRestController extends BaseRestController {
 
 		try {
 			_consoleService.setUpProject(
-				_getConsoleInviteEmailAddresses(
+				_toStringArray(
 					trialSettingsJSONObject.optJSONArray(
 						"consoleInviteEmailAddresses")),
 				portalInstance.getVirtualHost(), orderId);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to set up project for order " + orderId + ":",
-				exception);
-
-			_deletePortalInstance(orderId);
 
 			_marketplaceService.updateOrder(
 				HashMapBuilder.put(
-					"trial-error", exception.toString()
+					"trial-end-date",
+					ZonedDateTime.now(
+					).plusDays(
+						7
+					).format(
+						DateTimeFormatter.ISO_INSTANT
+					)
 				).put(
-					"trial-error-date",
+					"trial-start-date",
 					ZonedDateTime.now(
 					).format(
 						DateTimeFormatter.ISO_INSTANT
@@ -230,43 +230,29 @@ public class TrialRestController extends BaseRestController {
 				).put(
 					"trial-virtualhost", portalInstance.getVirtualHost()
 				).build(),
-				orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
+				orderId, MarketplaceConstants.ORDER_STATUS_IN_PROGRESS);
 
-			return;
+			if (sendNotificationEmail) {
+				_postNotificationQueueEntry(
+					modelDTOOrderJSONObject.getString("creatorEmailAddress"),
+					"TRY-IT-NOW-COMPLETED-ORDER",
+					new HashMapBuilder<String, Object>().put(
+						"%EMAIL%",
+						modelDTOOrderJSONObject.getString("creatorEmailAddress")
+					).put(
+						"%NAME%", userAccount.getGivenName()
+					).put(
+						"%URL%", portalInstance.getVirtualHost()
+					).build());
+			}
 		}
-
-		_marketplaceService.updateOrder(
-			HashMapBuilder.put(
-				"trial-end-date",
-				ZonedDateTime.now(
-				).plusDays(
-					7
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				)
-			).put(
-				"trial-start-date",
-				ZonedDateTime.now(
-				).format(
-					DateTimeFormatter.ISO_INSTANT
-				)
-			).put(
-				"trial-virtualhost", portalInstance.getVirtualHost()
-			).build(),
-			orderId, MarketplaceConstants.ORDER_STATUS_IN_PROGRESS);
-
-		if (sendNotificationEmail) {
-			_postNotificationQueueEntry(
-				modelDTOOrderJSONObject.getString("creatorEmailAddress"),
-				"TRY-IT-NOW-COMPLETED-ORDER",
-				new HashMapBuilder<String, Object>().put(
-					"%EMAIL%",
-					modelDTOOrderJSONObject.getString("creatorEmailAddress")
-				).put(
-					"%NAME%", userAccount.getGivenName()
-				).put(
-					"%URL%", portalInstance.getVirtualHost()
-				).build());
+		catch (WebClientResponseException webClientResponseException) {
+			_trialRollback(
+				webClientResponseException.getResponseBodyAsString(), orderId,
+				portalInstance);
+		}
+		catch (Exception exception) {
+			_trialRollback(exception.getMessage(), orderId, portalInstance);
 		}
 	}
 
@@ -318,16 +304,6 @@ public class TrialRestController extends BaseRestController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Portal instance deleted for order " + orderId);
 		}
-	}
-
-	private String[] _getConsoleInviteEmailAddresses(JSONArray jsonArray) {
-		List<String> list = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			list.add(jsonArray.getString(i));
-		}
-
-		return list.toArray(new String[0]);
 	}
 
 	private PortalInstanceResource _getPortalInstanceResource()
@@ -497,6 +473,42 @@ public class TrialRestController extends BaseRestController {
 		}
 
 		return string;
+	}
+
+	private String[] _toStringArray(JSONArray jsonArray) {
+		List<String> list = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			list.add(jsonArray.getString(i));
+		}
+
+		return list.toArray(new String[0]);
+	}
+
+	private void _trialRollback(
+			String errorMessage, long orderId, PortalInstance portalInstance)
+		throws Exception {
+
+		_log.error(
+			StringBundler.concat(
+				"Unable to set up project for order ", orderId, ": \n",
+				errorMessage));
+
+		_deletePortalInstance(orderId);
+
+		_marketplaceService.updateOrder(
+			HashMapBuilder.put(
+				"trial-error", errorMessage
+			).put(
+				"trial-error-date",
+				ZonedDateTime.now(
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				)
+			).put(
+				"trial-virtualhost", portalInstance.getVirtualHost()
+			).build(),
+			orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
 	}
 
 	private static final int _TRIAL_MAX_INSTANCES = GetterUtil.getInteger(

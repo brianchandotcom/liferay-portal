@@ -23,6 +23,10 @@ import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -209,7 +213,23 @@ public class CTCollectionServiceTest {
 
 		Assert.assertEquals(
 			_ctCollection.getCtCollectionId(), ctProcess.getCtCollectionId());
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.getBackgroundTask(
+				ctProcess.getBackgroundTaskId());
+
+		BackgroundTaskDisplay backgroundTaskDisplay =
+			_backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
+				backgroundTask.getBackgroundTaskId());
+
+		Assert.assertEquals(100, backgroundTaskDisplay.getPercentage());
 	}
+
+	@Inject
+	private static BackgroundTaskDisplayFactory _backgroundTaskDisplayFactory;
+
+	@Inject
+	private static BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

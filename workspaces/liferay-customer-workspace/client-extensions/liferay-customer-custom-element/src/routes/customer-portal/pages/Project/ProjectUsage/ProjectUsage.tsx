@@ -121,7 +121,7 @@ const ProjectUsage = () => {
 
 								<ContactBanner
 									description={i18n.translate(
-										'dont-let-resource-limit-your-project'
+										'dont-let-resources-limit-your-project'
 									)}
 									title={i18n.translate(
 										'need-more-project-resources'

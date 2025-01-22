@@ -75,7 +75,7 @@ export function MarketplacePurchase({
 			>
 				<p className="text-red">
 					{Liferay.Language.get(
-						'you-currently-do-not-have-access-to-any-cloud-project'
+						'you-do-not-have-access-to-a-cloud-project'
 					)}
 				</p>
 			</ProductPurchase.Body>

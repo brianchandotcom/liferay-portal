@@ -265,8 +265,8 @@ export default {
 	'liferay-self-hosted': 'Liferay Self-Hosted',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
-	'lorem-ipsum-dolor-sit-amet-consectetur':
-		'Lorem ipsum dolor sit amet consectetur.',
+	'login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project.':
+		'Login as a user that has access to a project or contact your project administrator to add you to a project.',
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
 	'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog':
@@ -462,6 +462,8 @@ export default {
 		'This is the first version of the app to be published',
 	'this-key-is-expired-and-cannot-be-downloaded':
 		'This key is expired and cannot be downloaded.',
+	'this-may-restrict-the-functionality-available-to-you':
+		'This may restrict the functionality available to you.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
 	'this-product-is-no-longer-available':
@@ -538,10 +540,8 @@ export default {
 		'You can view your app in Cloud Console or go back to My Apps.',
 	'you-cannot-upload-more-than-x-files':
 		'You cannot upload more than {0} files.',
-	'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project':
-		'You currently do not have access to any Cloud Projects. Please login as a user that has access to a project or contact your project administrator to add you to a project.',
-	'you-currently-do-not-have-access-to-any-cloud-projects-which-may-restrict-the-functionalities-available-to-you':
-		'You currently do not have access to any Cloud Projects, which may restrict the functionalities available to you.',
+	'you-do-not-have-access-to-cloud-project':
+		'You do not have access to a cloud project.',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

@@ -441,180 +441,6 @@ public class CompanyPersistenceImpl
 	private static final String _FINDER_COLUMN_MX_MX_3 =
 		"(company.mx IS NULL OR company.mx = '')";
 
-	private FinderPath _finderPathFetchByLogoId;
-
-	/**
-	 * Returns the company where logoId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
-	 *
-	 * @param logoId the logo ID
-	 * @return the matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	@Override
-	public Company findByLogoId(long logoId) throws NoSuchCompanyException {
-		Company company = fetchByLogoId(logoId);
-
-		if (company == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("logoId=");
-			sb.append(logoId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCompanyException(sb.toString());
-		}
-
-		return company;
-	}
-
-	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param logoId the logo ID
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	@Override
-	public Company fetchByLogoId(long logoId) {
-		return fetchByLogoId(logoId, true);
-	}
-
-	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param logoId the logo ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	@Override
-	public Company fetchByLogoId(long logoId, boolean useFinderCache) {
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {logoId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByLogoId, finderArgs, this);
-		}
-
-		if (result instanceof Company) {
-			Company company = (Company)result;
-
-			if (logoId != company.getLogoId()) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_COMPANY_WHERE);
-
-			sb.append(_FINDER_COLUMN_LOGOID_LOGOID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(logoId);
-
-				List<Company> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByLogoId, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {logoId};
-							}
-
-							_log.warn(
-								"CompanyPersistenceImpl.fetchByLogoId(long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					Company company = list.get(0);
-
-					result = company;
-
-					cacheResult(company);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Company)result;
-		}
-	}
-
-	/**
-	 * Removes the company where logoId = &#63; from the database.
-	 *
-	 * @param logoId the logo ID
-	 * @return the company that was removed
-	 */
-	@Override
-	public Company removeByLogoId(long logoId) throws NoSuchCompanyException {
-		Company company = findByLogoId(logoId);
-
-		return remove(company);
-	}
-
-	/**
-	 * Returns the number of companies where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @return the number of matching companies
-	 */
-	@Override
-	public int countByLogoId(long logoId) {
-		Company company = fetchByLogoId(logoId);
-
-		if (company == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_LOGOID_LOGOID_2 =
-		"company.logoId = ?";
-
 	public CompanyPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -648,10 +474,6 @@ public class CompanyPersistenceImpl
 
 		FinderCacheUtil.putResult(
 			_finderPathFetchByMx, new Object[] {company.getMx()}, company);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByLogoId, new Object[] {company.getLogoId()},
-			company);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -745,11 +567,6 @@ public class CompanyPersistenceImpl
 		args = new Object[] {companyModelImpl.getMx()};
 
 		FinderCacheUtil.putResult(_finderPathFetchByMx, args, companyModelImpl);
-
-		args = new Object[] {companyModelImpl.getLogoId()};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByLogoId, args, companyModelImpl);
 	}
 
 	/**
@@ -1210,10 +1027,6 @@ public class CompanyPersistenceImpl
 		_finderPathFetchByMx = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByMx",
 			new String[] {String.class.getName()}, new String[] {"mx"}, true);
-
-		_finderPathFetchByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLogoId",
-			new String[] {Long.class.getName()}, new String[] {"logoId"}, true);
 
 		CompanyUtil.setPersistence(this);
 	}

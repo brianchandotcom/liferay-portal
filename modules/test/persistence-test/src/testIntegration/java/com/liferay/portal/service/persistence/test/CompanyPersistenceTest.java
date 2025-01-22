@@ -227,13 +227,6 @@ public class CompanyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLogoId() throws Exception {
-		_persistence.countByLogoId(RandomTestUtil.nextLong());
-
-		_persistence.countByLogoId(0L);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Company newCompany = addCompany();
 
@@ -530,12 +523,6 @@ public class CompanyPersistenceTest {
 			ReflectionTestUtil.invoke(
 				company, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "mx"));
-
-		Assert.assertEquals(
-			Long.valueOf(company.getLogoId()),
-			ReflectionTestUtil.<Long>invoke(
-				company, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "logoId"));
 	}
 
 	protected Company addCompany() throws Exception {

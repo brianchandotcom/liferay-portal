@@ -122,15 +122,6 @@ public interface CompanyService extends BaseService {
 	public Company getCompanyById(long companyId) throws PortalException;
 
 	/**
-	 * Returns the company with the logo.
-	 *
-	 * @param logoId the ID of the company's logo
-	 * @return Returns the company with the logo
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByLogoId(long logoId) throws PortalException;
-
-	/**
 	 * Returns the company with the mail domian.
 	 *
 	 * @param mx the company's mail domain

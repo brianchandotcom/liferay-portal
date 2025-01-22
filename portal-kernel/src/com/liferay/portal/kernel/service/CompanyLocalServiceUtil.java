@@ -403,18 +403,6 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the company with the logo.
-	 *
-	 * @param logoId the ID of the company's logo
-	 * @return the company with the logo
-	 */
-	public static Company getCompanyByLogoId(long logoId)
-		throws PortalException {
-
-		return getService().getCompanyByLogoId(logoId);
-	}
-
-	/**
 	 * Returns the company with the mail domain.
 	 *
 	 * @param mx the company's mail domain

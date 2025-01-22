@@ -223,62 +223,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * Returns the company where logoId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
-	 *
-	 * @param logoId the logo ID
-	 * @return the matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	public static Company findByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().findByLogoId(logoId);
-	}
-
-	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param logoId the logo ID
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public static Company fetchByLogoId(long logoId) {
-		return getPersistence().fetchByLogoId(logoId);
-	}
-
-	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param logoId the logo ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public static Company fetchByLogoId(long logoId, boolean useFinderCache) {
-		return getPersistence().fetchByLogoId(logoId, useFinderCache);
-	}
-
-	/**
-	 * Removes the company where logoId = &#63; from the database.
-	 *
-	 * @param logoId the logo ID
-	 * @return the company that was removed
-	 */
-	public static Company removeByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().removeByLogoId(logoId);
-	}
-
-	/**
-	 * Returns the number of companies where logoId = &#63;.
-	 *
-	 * @param logoId the logo ID
-	 * @return the number of matching companies
-	 */
-	public static int countByLogoId(long logoId) {
-		return getPersistence().countByLogoId(logoId);
-	}
-
-	/**
 	 * Caches the company in the entity cache if it is enabled.
 	 *
 	 * @param company the company

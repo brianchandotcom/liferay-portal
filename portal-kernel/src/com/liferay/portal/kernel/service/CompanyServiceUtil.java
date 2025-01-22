@@ -123,18 +123,6 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	 * Returns the company with the logo.
-	 *
-	 * @param logoId the ID of the company's logo
-	 * @return Returns the company with the logo
-	 */
-	public static Company getCompanyByLogoId(long logoId)
-		throws PortalException {
-
-		return getService().getCompanyByLogoId(logoId);
-	}
-
-	/**
 	 * Returns the company with the mail domian.
 	 *
 	 * @param mx the company's mail domain

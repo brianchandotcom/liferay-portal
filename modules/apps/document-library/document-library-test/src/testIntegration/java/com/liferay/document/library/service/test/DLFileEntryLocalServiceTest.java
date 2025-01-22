@@ -1184,6 +1184,52 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testExpireFileVersionKeepsLatestVersion() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					DLConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"maximumNumberOfVersions", 1
+					).build())) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
+				ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				(byte[])null, null, null, null, serviceContext);
+
+			fileEntry = DLAppLocalServiceUtil.updateFileEntry(
+				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+				"FE2.txt", ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
+				fileEntry.getDescription(), RandomTestUtil.randomString(),
+				DLVersionNumberIncrease.MINOR,
+				TestDataConstants.TEST_BYTE_ARRAY, fileEntry.getDisplayDate(),
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+				serviceContext);
+
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			Assert.assertEquals("1.1", fileEntry.getVersion());
+			Assert.assertEquals(
+				1,
+				fileEntry.getFileVersionsCount(
+					WorkflowConstants.STATUS_APPROVED));
+
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+				WorkflowConstants.STATUS_EXPIRED, serviceContext,
+				new HashMap<>());
+
+			Assert.assertEquals("1.1", dlFileEntry.getVersion());
+		}
+	}
+
+	@Test
 	public void testExtensionValidationWithSystemScopedFileEntryType()
 		throws Exception {
 

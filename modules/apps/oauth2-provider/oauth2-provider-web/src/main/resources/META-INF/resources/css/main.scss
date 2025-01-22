@@ -80,6 +80,10 @@ $addedItemHighlightColor: #e6ffed;
 		display: inline-block;
 	}
 
+	.jwks-textarea {
+		min-height: 100px;
+	}
+
 	.list-group .list-group-title {
 		font-weight: normal;
 	}
@@ -102,12 +106,8 @@ $addedItemHighlightColor: #e6ffed;
 		margin-bottom: 0;
 	}
 
-	.border-bottom-2-black {
+	.sheet .row .col-lg-12 .mb-3 {
 		border-bottom: 2px solid #f0f0f0;
-	}
-
-	.min-height-100 {
-		min-height: 100px;
 	}
 }
 

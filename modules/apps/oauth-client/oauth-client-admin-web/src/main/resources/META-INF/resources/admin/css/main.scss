@@ -1,13 +1,13 @@
-.portlet-oauth2-client-admin {
-	.min-height-200 {
-		min-height: 200px;
+.portlet-oauth-client-admin {
+	.client-info-textarea {
+		min-height: 600px;
 	}
 
-	.min-height-400 {
+	.info-mapper-textarea {
 		min-height: 400px;
 	}
 
-	.min-height-600 {
-		min-height: 600px;
+	.request-parameters-textarea {
+		min-height: 200px;
 	}
 }

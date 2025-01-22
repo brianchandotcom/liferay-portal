@@ -18,11 +18,11 @@ if (liveGroup == null) {
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNotNull(displayStyle) && Validator.isNotNull(displayStyle)) {
-	portalPreferences.setValue(ExportImportPortletKeys.EXPORT, "displayStyle", displayStyle);
-	portalPreferences.setValue(ExportImportPortletKeys.EXPORT, "displayStyle", displayStyle);
+	portalPreferences.setValue(portletDisplay.getPortletName(), "displayStyle", displayStyle);
+	portalPreferences.setValue(portletDisplay.getPortletName(), "displayStyle", displayStyle);
 }
 else {
-	displayStyle = portalPreferences.getValue(ExportImportPortletKeys.EXPORT, "displayStyle", "descriptive");
+	displayStyle = portalPreferences.getValue(portletDisplay.getPortletName(), "displayStyle", "descriptive");
 }
 
 String navigation = ParamUtil.getString(request, "navigation", "all");

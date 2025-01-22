@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskComparatorFactoryUtil;
@@ -14,6 +13,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -42,6 +42,10 @@ public class ExportLayoutsProcessesDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		Portlet portlet = liferayPortletResponse.getPortlet();
+
+		_portletId = portlet.getPortletId();
+
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
@@ -52,8 +56,8 @@ public class ExportLayoutsProcessesDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-display-style", StringPool.BLANK);
+			_httpServletRequest, _portletId, "layouts-processes-display-style",
+			StringPool.BLANK);
 
 		return _displayStyle;
 	}
@@ -84,8 +88,8 @@ public class ExportLayoutsProcessesDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-order-by-col", StringPool.BLANK);
+			_httpServletRequest, _portletId, "layouts-processes-order-by-col",
+			StringPool.BLANK);
 
 		return _orderByCol;
 	}
@@ -96,8 +100,8 @@ public class ExportLayoutsProcessesDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-order-by-type", StringPool.BLANK);
+			_httpServletRequest, _portletId, "layouts-processes-order-by-type",
+			StringPool.BLANK);
 
 		return _orderByType;
 	}
@@ -213,6 +217,7 @@ public class ExportLayoutsProcessesDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
+	private final String _portletId;
 	private final PortletRequest _portletRequest;
 	private PortletURL _portletURL;
 	private SearchContainer<BackgroundTask> _searchContainer;

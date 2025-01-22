@@ -12,7 +12,7 @@ portletDisplay.setShowBackIcon(true);
 
 portletDisplay.setURLBack(
 	PortletURLBuilder.create(
-		PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE)
+		PortalUtil.getControlPanelPortletURL(request, portletDisplay.getPortletName(), PortletRequest.RENDER_PHASE)
 	).setMVCPath(
 		"/export/view_export_layouts.jsp"
 	).buildString());

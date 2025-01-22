@@ -17,7 +17,7 @@ portletDisplay.setShowBackIcon(true);
 
 portletDisplay.setURLBack(
 	PortletURLBuilder.create(
-		PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.IMPORT, PortletRequest.RENDER_PHASE)
+		PortalUtil.getControlPanelPortletURL(request, portletDisplay.getPortletName(), PortletRequest.RENDER_PHASE)
 	).setMVCPath(
 		"/import/view_import_layouts.jsp"
 	).buildString());

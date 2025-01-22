@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -20,21 +21,16 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	pageViewModePagesTest,
+	isolatedSiteTest,
 	loginTest()
 );
 
 test('LPD-27036 Cart shows decimal quantities', async ({
 	apiHelpers,
 	commerceCartPage,
-
+	site,
 	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Cart Site',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Cart Channel',
 		siteGroupId: site.id,
@@ -115,13 +111,10 @@ test('LPD-27036 Cart shows decimal quantities', async ({
 	).toHaveValue('1.22');
 });
 
-test('LPD-29864 Cart updates when order is open', async ({apiHelpers}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Cart Site',
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
+test('LPD-29864 Cart updates when order is open', async ({
+	apiHelpers,
+	site,
+}) => {
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Cart Channel',
 		siteGroupId: site.id,

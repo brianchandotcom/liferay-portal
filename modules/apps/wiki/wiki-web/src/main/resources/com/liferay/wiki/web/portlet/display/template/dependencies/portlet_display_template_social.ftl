@@ -8,7 +8,7 @@
 	<h1 class="header-title">${entry.getTitle()}</h1>
 </div>
 
-<div class="float-right">
+<div style="float: right;">
 	<@getEditIcon />
 
 	<@getPageDetailsIcon />

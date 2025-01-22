@@ -70,6 +70,10 @@ public class PicklistObjectFieldFilterStrategy
 
 		JSONArray jsonArray = getJSONArray();
 
+		if (jsonArray == null) {
+			return selectionFDSFilterItems;
+		}
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ListTypeEntry listTypeEntry =
 				_listTypeEntryLocalService.fetchListTypeEntry(

@@ -88,18 +88,6 @@ export class JSONWebServicesJournalApiHelper {
 		};
 
 		urlSearchParams.append(
-			'externalReferenceCode',
-			webContent.externalReferenceCode
-		);
-		urlSearchParams.append('groupId', String(webContent.groupId));
-		urlSearchParams.append('folderId', String(webContent.folderId));
-		urlSearchParams.append('titleMap', JSON.stringify(webContent.titleMap));
-		urlSearchParams.append(
-			'descriptionMap',
-			JSON.stringify(webContent.descriptionMap)
-		);
-
-		urlSearchParams.append(
 			'content',
 			`<root>
 				<dynamic-element field-reference="content" index-type="text" name="content" type="rich_text">
@@ -109,10 +97,23 @@ export class JSONWebServicesJournalApiHelper {
 		);
 
 		urlSearchParams.append(
+			'descriptionMap',
+			JSON.stringify(webContent.descriptionMap)
+		);
+
+		urlSearchParams.append(
 			'ddmStructureId',
 			String(webContent.ddmStructureId)
 		);
+
 		urlSearchParams.append('ddmTemplateKey', webContent.ddmTemplateKey);
+		urlSearchParams.append(
+			'externalReferenceCode',
+			webContent.externalReferenceCode
+		);
+		urlSearchParams.append('folderId', String(webContent.folderId));
+		urlSearchParams.append('groupId', String(webContent.groupId));
+		urlSearchParams.append('titleMap', JSON.stringify(webContent.titleMap));
 		urlSearchParams.append(
 			'serviceContext',
 			JSON.stringify(webContent.serviceContext)

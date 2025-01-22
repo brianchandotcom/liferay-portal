@@ -397,13 +397,13 @@ export class DataApiHelpers extends ApiHelpers {
 			if (item.type === 'account') {
 				await this.headlessAdminUser.deleteAccount(item.id);
 			}
+			else if (item.type === 'accountGroup') {
+				await this.headlessAdminUser.deleteAccountGroup(item.id);
+			}
 			else if (item.type === 'announcement') {
 				await this.jsonWebServicesAnnouncementsEntryApiHelper.deleteEntry(
 					item.id
 				);
-			}
-			else if (item.type === 'accountGroup') {
-				await this.headlessAdminUser.deleteAccountGroup(item.id);
 			}
 			else if (item.type === 'apiApplication') {
 				await this.apiBuilder.deleteApiApplication(item.id);
@@ -426,13 +426,13 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'document') {
 				await this.headlessDelivery.deleteDocument(item.id);
 			}
-			else if (item.type === 'listTypeDefinition') {
-				await this.listTypeAdmin.deleteListTypeDefinition(item.id);
-			}
 			else if (item.type === 'layoutSetPrototype') {
 				await this.jsonWebServicesLayoutSetPrototype.deleteLayoutSetPrototypes(
 					item.id
 				);
+			}
+			else if (item.type === 'listTypeDefinition') {
+				await this.listTypeAdmin.deleteListTypeDefinition(item.id);
 			}
 			else if (item.type === 'notificationQueueEntry') {
 				await this.notification.deleteNotificationQueueEntry(item.id);
@@ -538,11 +538,11 @@ export class DataApiHelpers extends ApiHelpers {
 					item.id
 				);
 			}
-			else if (item.type === 'sxpElement') {
-				await this.searchExperiences.deleteSXPElement(item.id);
-			}
 			else if (item.type === 'sxpBlueprint') {
 				await this.searchExperiences.deleteSXPBlueprint(item.id);
+			}
+			else if (item.type === 'sxpElement') {
+				await this.searchExperiences.deleteSXPElement(item.id);
 			}
 			else if (item.type === 'taxonomyVocabulary') {
 				await this.headlessAdminTaxonomy.deleteTaxonomyVocabulary(

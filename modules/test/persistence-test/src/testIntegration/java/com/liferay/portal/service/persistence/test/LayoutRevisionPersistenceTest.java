@@ -335,15 +335,6 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByL_H_P() throws Exception {
-		_persistence.countByL_H_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByL_H_P(0L, RandomTestUtil.randomBoolean(), 0L);
-	}
-
-	@Test
 	public void testCountByL_H_P_Collection() throws Exception {
 		_persistence.countByL_H_P_Collection(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -681,22 +672,6 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	private void _assertOriginalValues(LayoutRevision layoutRevision) {
-		Assert.assertEquals(
-			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
-			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "layoutSetBranchId"));
-		Assert.assertEquals(
-			Boolean.valueOf(layoutRevision.getHead()),
-			ReflectionTestUtil.<Boolean>invoke(
-				layoutRevision, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "head"));
-		Assert.assertEquals(
-			Long.valueOf(layoutRevision.getPlid()),
-			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "plid"));
-
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(

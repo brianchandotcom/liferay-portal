@@ -1579,65 +1579,6 @@ public interface LayoutRevisionPersistence
 		long layoutSetBranchId, long parentLayoutRevisionId, long plid);
 
 	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revision
-	 * @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
-	 */
-	public LayoutRevision findByL_H_P(
-			long layoutSetBranchId, boolean head, long plid)
-		throws NoSuchLayoutRevisionException;
-
-	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
-	 */
-	public LayoutRevision fetchByL_H_P(
-		long layoutSetBranchId, boolean head, long plid);
-
-	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
-	 */
-	public LayoutRevision fetchByL_H_P(
-		long layoutSetBranchId, boolean head, long plid,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; from the database.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the layout revision that was removed
-	 */
-	public LayoutRevision removeByL_H_P(
-			long layoutSetBranchId, boolean head, long plid)
-		throws NoSuchLayoutRevisionException;
-
-	/**
-	 * Returns the number of layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the number of matching layout revisions
-	 */
-	public int countByL_H_P(long layoutSetBranchId, boolean head, long plid);
-
-	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
 	 *
 	 * @param layoutSetBranchId the layout set branch ID

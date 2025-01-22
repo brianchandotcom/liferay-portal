@@ -52,7 +52,7 @@ public class UserSegmentsEntryMembershipChecker {
 			String group = matcher.group();
 
 			return _dateTimeFormat.format(
-				DateUtils.parseDate(group, _ALLOWED_DATE_PATTERNS));
+				DateUtils.parseDate(group, _DATE_PATTERNS));
 		}
 
 		return null;
@@ -276,7 +276,7 @@ public class UserSegmentsEntryMembershipChecker {
 		return String.valueOf(object);
 	}
 
-	private static final String[] _ALLOWED_DATE_PATTERNS = {
+	private static final String[] _DATE_PATTERNS = {
 		"yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
 		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 	};

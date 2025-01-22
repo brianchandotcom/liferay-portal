@@ -10,8 +10,10 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,10 +38,23 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
+public class MoveChangesMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			return super.processAction(actionRequest, actionResponse);
+		}
+	}
+
+	@Override
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

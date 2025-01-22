@@ -101,16 +101,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
-test {
-	configurations.compileInclude.allDependencies.withType(ProjectDependency) {
-		test.dependsOn "${it.dependencyProject.path}:jar"
-	}
-
-	doFirst {
-		classpath = files(configurations.compileInclude.files + classpath)
-	}
-}
-
 writeReleases {
 	dependsOn configurations.compileInclude
 

@@ -11,15 +11,13 @@ import com.liferay.headless.admin.content.client.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.content.client.pagination.Page;
 import com.liferay.headless.admin.content.client.pagination.Pagination;
 import com.liferay.headless.admin.content.client.resource.v1_0.DisplayPageTemplateResource;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,7 +65,10 @@ public class DisplayPageTemplateResourceTest
 	@Test
 	public void testGetSiteDisplayPageTemplate() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry(testGroup.getGroupId());
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				testGroup.getGroupId(),
+				_portal.getClassNameId(BlogsEntry.class.getName()), 0, true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertNotNull(
 			displayPageTemplateResource.getSiteDisplayPageTemplate(
@@ -157,7 +158,9 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry(siteId);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				siteId, _portal.getClassNameId(BlogsEntry.class.getName()), 0,
+				true, WorkflowConstants.STATUS_APPROVED);
 
 		displayPageTemplate.setDateCreated(
 			layoutPageTemplateEntry.getCreateDate());
@@ -215,18 +218,6 @@ public class DisplayPageTemplateResourceTest
 			new EntityField(
 				"title", EntityField.Type.STRING, o -> null, o -> null,
 				o -> null));
-	}
-
-	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(Long siteId)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), siteId, 0,
-			_portal.getClassNameId(BlogsEntry.class.getName()), 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 	}
 
 	@Inject

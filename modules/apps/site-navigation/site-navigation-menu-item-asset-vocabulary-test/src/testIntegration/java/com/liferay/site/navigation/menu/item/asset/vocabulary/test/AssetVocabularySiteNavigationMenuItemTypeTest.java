@@ -13,8 +13,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -214,12 +214,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	public void testGetRegularURLAssetCategoryTypeWithDisplayPageTemplate()
 		throws Exception {
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, _group.getCreatorUserId(), _group.getGroupId(), 0,
-			_portal.getClassNameId(AssetCategory.class.getName()), 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			0, _serviceContext);
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(AssetCategory.class.getName()), 0, true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		AssetCategory assetCategory = _addAssetCategory(0);
 
@@ -615,12 +613,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	public void testIsBrowsableAssetCategoryTypeWithDisplayPageTemplate()
 		throws Exception {
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, _group.getCreatorUserId(), _group.getGroupId(), 0,
-			_portal.getClassNameId(AssetCategory.class.getName()), 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			0, _serviceContext);
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(AssetCategory.class.getName()), 0, true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -912,10 +908,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

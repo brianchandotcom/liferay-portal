@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -70,7 +70,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		initExport();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
-			_addLayoutPageTemplateEntry(stagingGroup);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				stagingGroup.getGroupId(),
+				_portal.getClassNameId(FileEntry.class.getName()), 0, false,
+				WorkflowConstants.STATUS_APPROVED);
 
 		layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
@@ -95,7 +98,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		initExport();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
-			_addLayoutPageTemplateEntry(stagingGroup);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				stagingGroup.getGroupId(),
+				_portal.getClassNameId(FileEntry.class.getName()), 0, false,
+				WorkflowConstants.STATUS_APPROVED);
 
 		layoutPageTemplateEntry2 =
 			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
@@ -297,18 +303,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getType(),
 			importLayoutPageTemplateEntry.getType());
-	}
-
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(Group group)
-		throws Exception {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(), 0,
-			_portal.getClassNameId(FileEntry.class.getName()), 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0, 0,
-			0, WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private LayoutPrototype _addLayoutPrototype(

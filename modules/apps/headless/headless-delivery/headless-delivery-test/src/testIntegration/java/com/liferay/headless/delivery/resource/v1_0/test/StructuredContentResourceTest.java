@@ -54,8 +54,8 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -619,14 +619,11 @@ public class StructuredContentResourceTest
 
 		super.testPostStructuredContentFolderStructuredContent();
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			testGroup.getGroupId(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
-			_localizedDDMStructure.getStructureId(),
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+			_localizedDDMStructure.getStructureId(), true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Locale locale = LocaleUtil.getDefault();
 

@@ -18,9 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -78,14 +78,13 @@ public class UpgradeAssetDisplayPageEntryTest {
 			_group.getGroupId());
 
 		_layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_classNameId, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, 0, _serviceContext);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), _classNameId, 0, false,
+				WorkflowConstants.STATUS_APPROVED);
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(), _classNameId, 0, true,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test
@@ -295,10 +294,6 @@ public class UpgradeAssetDisplayPageEntryTest {
 	private Group _group;
 
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

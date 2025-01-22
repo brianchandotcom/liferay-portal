@@ -12,15 +12,13 @@ import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,16 +60,10 @@ public class AssetDisplayPageUtilTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_classNameId, journalArticle.getDDMStructureId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			true);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), _classNameId,
+				journalArticle.getDDMStructureId(), true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
 			defaultLayoutPageTemplateEntry,
@@ -81,12 +73,10 @@ public class AssetDisplayPageUtilTest {
 				journalArticle.getDDMStructureId()));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_classNameId, journalArticle.getDDMStructureId(),
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), _classNameId,
+				journalArticle.getDDMStructureId(), false,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
 			defaultLayoutPageTemplateEntry,
@@ -117,10 +107,6 @@ public class AssetDisplayPageUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -6,14 +6,12 @@
 package com.liferay.journal.internal.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -94,7 +92,11 @@ public class JournalArticleSitemapURLProviderTest {
 			_group.getGroupId(), true);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(true, article);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				article.getDDMStructureId(), true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		_assertRootElement(
 			article,
@@ -113,7 +115,11 @@ public class JournalArticleSitemapURLProviderTest {
 			_group.getGroupId(), true);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(true, article);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				article.getDDMStructureId(), true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -220,21 +226,6 @@ public class JournalArticleSitemapURLProviderTest {
 		_assertVisitLayoutDefaultLayout("noindex");
 	}
 
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			boolean defaultTemplate, JournalArticle article)
-		throws Exception {
-
-		DDMStructure ddmStructure = article.getDDMStructure();
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
-			defaultTemplate, 0, 0, 0, WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
 	private void _assertRootElement(
 			JournalArticle article, Layout layout, Element rootElement,
 			String urlSeparator)
@@ -272,7 +263,11 @@ public class JournalArticleSitemapURLProviderTest {
 			_group.getGroupId(), true);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(true, article);
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				article.getDDMStructureId(), true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		Element rootElement = _getRootElement();
 
@@ -382,10 +377,6 @@ public class JournalArticleSitemapURLProviderTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

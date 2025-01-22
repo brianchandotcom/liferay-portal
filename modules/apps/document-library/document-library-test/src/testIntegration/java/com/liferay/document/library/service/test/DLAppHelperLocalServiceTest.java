@@ -9,8 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -97,12 +96,10 @@ public class DLAppHelperLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			workflowDefinitionContent.getBytes());
 
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(), 0,
-			PortalUtil.getClassNameId(FileEntry.class), 0,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			TestPropsValues.getGroupId(),
+			PortalUtil.getClassNameId(FileEntry.class.getName()), 0, true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		String fileEntryContent = StringUtil.randomString();
 
@@ -170,10 +167,6 @@ public class DLAppHelperLocalServiceTest {
 
 	@Inject
 	private File _file;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

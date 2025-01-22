@@ -43,7 +43,7 @@ String searchContainerId = "exportLayoutProcesses";
 %>
 
 <c:choose>
-	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:when test="<%= !stagingGroupHelper.isCompanyGroup(liveGroup) && !GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<div class="alert alert-info">
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
 		</div>

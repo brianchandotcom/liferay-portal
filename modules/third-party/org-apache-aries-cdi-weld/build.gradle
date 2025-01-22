@@ -11,8 +11,8 @@ copyPatchOriginalLibClasses {
 		File file = file("classes/META-INF/MANIFEST.MF")
 
 		if (file.exists()) {
-			file.text = file.text.replace(";version=\"[3.1,4)\"", "")
 			file.text = file.text.replace(";v\r\n ersion=\"[3.1,4)\"", "")
+			file.text = file.text.replace(";version=\"[3.1,4)\"", "")
 		}
 	}
 }

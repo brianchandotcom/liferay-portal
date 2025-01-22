@@ -399,9 +399,6 @@ public class CopyItemsMVCActionCommandTest {
 				LayoutContentPageEditorWebPortletKeys.
 					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
-		LayoutStructureItem rowStyledLayoutStructureItem =
-			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
-
 		_testErrorMessage(
 			_language.format(
 				_portal.getSiteDefaultLocale(_group),
@@ -409,7 +406,7 @@ public class CopyItemsMVCActionCommandTest {
 					"x-that-can-only-appear-once-on-the-page",
 				"Noninstanciable Test"),
 			new String[] {fragmentStyledLayoutStructureItem.getItemId()},
-			rowStyledLayoutStructureItem.getItemId());
+			_addRowStyledLayoutStructureItem());
 
 		ContentLayoutTestUtil.markItemForDeletionFromLayout(
 			fragmentStyledLayoutStructureItem.getItemId(), _layout,
@@ -481,19 +478,12 @@ public class CopyItemsMVCActionCommandTest {
 						"fragmentEntryLinkId")));
 	}
 
-	private LayoutStructureItem _addLayoutStructureItem(String itemType)
-		throws Exception {
-
+	private String _addRowStyledLayoutStructureItem() throws Exception {
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
-			"{}", itemType, _layout, _layoutStructureProvider,
-			_segmentsExperienceId);
+			"{}", LayoutDataItemTypeConstants.TYPE_ROW, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
-		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				_layout.getPlid(), _segmentsExperienceId);
-
-		return layoutStructure.getLayoutStructureItem(
-			jsonObject.getString("addedItemId"));
+		return jsonObject.getString("addedItemId");
 	}
 
 	private LayoutStructureItem _assertChildrenItems(
@@ -658,15 +648,12 @@ public class CopyItemsMVCActionCommandTest {
 			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
 		throws Exception {
 
-		LayoutStructureItem rowStyledLayoutStructureItem =
-			_addLayoutStructureItem(LayoutDataItemTypeConstants.TYPE_ROW);
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
 				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
-				rowStyledLayoutStructureItem.getItemId()),
+				_addRowStyledLayoutStructureItem()),
 			new MockLiferayPortletActionResponse());
 
 		List<String> copiedItemIds = (List<String>)jsonObject.get(

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="B1jh0PWy" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Leadership/leader_alexis_harper.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="name" index-type="keyword" instance-id="ijKNJtdn" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Alexis Harper]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="title" index-type="keyword" instance-id="AJPMQm6K" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Chief Innovation Officer]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="bio" index-type="text" instance-id="Yfy0Kuju" name="bio" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<p>Introducing Alexis Harper, our visionary Chief Innovation Officer. With an artistic flair and an eye for the extraordinary, Alexis has played a pivotal role in shaping our eyewear collections. Her innovative designs seamlessly blend fashion and functionality, setting new trends in the industry. Alexis' commitment to crafting eyewear that not only enhances vision but also makes a bold style statement has positioned our brand at the forefront of chic and sustainable eyewear. Explore the world of eyewear through Alexis imaginative lens and witness the fusion of elegance and innovation at Clarity.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

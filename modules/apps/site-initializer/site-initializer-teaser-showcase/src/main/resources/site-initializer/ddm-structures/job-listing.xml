@@ -1,0 +1,94 @@
+	<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>M2H9-JOB-LISTING</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "roleOverview",
+							"indexType": "text",
+							"label": {
+								"en_US": "Role Overview"
+							},
+							"localizable": true,
+							"name": "roleOverview",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "keyResposabilities",
+							"indexType": "text",
+							"label": {
+								"en_US": "Key Responsibilities"
+							},
+							"localizable": true,
+							"name": "keyResposabilities",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "qualificationAndSkills",
+							"indexType": "text",
+							"label": {
+								"en_US": "Qualifications and Skills"
+							},
+							"localizable": true,
+							"name": "qualificationAndSkills",
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

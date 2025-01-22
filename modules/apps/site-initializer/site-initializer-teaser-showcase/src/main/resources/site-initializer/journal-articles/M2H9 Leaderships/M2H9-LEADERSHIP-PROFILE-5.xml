@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="yUpmRpEZ" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Leadership/leader_chelsea_lane.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="name" index-type="keyword" instance-id="wEkN5csQ" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Chelsea Lane]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="title" index-type="keyword" instance-id="c47bX02P" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Director of HR]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="bio" index-type="text" instance-id="ZGWPcG1h" name="bio" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<p>Chelsea Lane is the Director of Human Resources at Clarity Vision Solutions, a leading eyewear manufacturer known for its commitment to innovation and quality. With over 15 years of experience in human resources, Chelsea is a seasoned professional dedicated to fostering a positive and productive workplace culture.</p>
+			<p>Chelsea joined Clarity Vision Solutions in 2020 and has been instrumental in developing and implementing HR strategies that support the company's growth and success. Her expertise in talent acquisition, employee engagement, and organizational development has helped build a dynamic and motivated workforce. Under her leadership, the HR team has introduced several initiatives aimed at enhancing employee well-being and professional development.</p>
+			<p>Before her role at Clarity Vision Solutions, Chelsea held key HR positions at various multinational corporations, where she developed a deep understanding of best practices in human resource management. She holds a Bachelor's degree in Human Resources Management from the University of Texas and a Master's degree in Organizational Psychology from Columbia University.</p>
+			<p>Chelsea is known for her strategic mindset, excellent communication skills, and ability to build strong relationships across all levels of the organization. She is passionate about creating an inclusive and supportive work environment where employees can thrive and contribute to the company's mission of delivering exceptional eyewear products to customers worldwide.</p>
+			<p>In her free time, Chelsea enjoys yoga, traveling, and volunteering at local community organizations. She is also an advocate for diversity and inclusion in the workplace and frequently participates in industry conferences and workshops to share her insights and experiences.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

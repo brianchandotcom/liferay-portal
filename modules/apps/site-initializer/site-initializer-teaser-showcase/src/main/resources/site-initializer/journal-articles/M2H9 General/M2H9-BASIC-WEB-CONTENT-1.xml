@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="content" index-type="text" instance-id="8ub016nV" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Founded in 2010, Clarity is one of the largest online eyewear stores around the world. After so many years of development, we have our own professional team, our own complete industrial chain from design, material selection and production of glasses. We always uphold the principle of "high quality, rich styles, reasonable price", commited to providing customers with the best products.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

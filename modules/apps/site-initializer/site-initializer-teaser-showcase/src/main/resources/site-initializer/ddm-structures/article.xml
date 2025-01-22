@@ -1,0 +1,89 @@
+	<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>M2H9-ARTICLE</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "image",
+							"indexType": "text",
+							"label": {
+								"en_US": "Image"
+							},
+							"localizable": true,
+							"name": "image",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"requiredDescription": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "headline",
+							"indexType": "text",
+							"label": {
+								"en_US": "Headline"
+							},
+							"localizable": true,
+							"name": "headline",
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "content",
+							"indexType": "text",
+							"label": {
+								"en_US": "Content"
+							},
+							"localizable": true,
+							"name": "content",
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

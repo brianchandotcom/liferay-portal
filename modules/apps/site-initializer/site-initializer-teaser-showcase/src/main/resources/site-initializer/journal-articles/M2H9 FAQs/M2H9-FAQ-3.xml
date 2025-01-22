@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="answer" index-type="text" instance-id="jPNlmzE8" name="answer" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Yes, we do. We have qualified optometrists who can conduct comprehensive eye exams to determine your prescription and check for any eye health issues.]]></dynamic-content>
+	</dynamic-element>
+</root>

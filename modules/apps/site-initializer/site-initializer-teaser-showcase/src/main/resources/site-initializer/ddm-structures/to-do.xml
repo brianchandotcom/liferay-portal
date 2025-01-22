@@ -1,0 +1,278 @@
+	<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>M2H9-TO-DO</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldReference": "assignedTo",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Assigned to"
+							},
+							"localizable": true,
+							"name": "assignedTo",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "document-library",
+							"fieldNamespace": "ddm",
+							"fieldReference": "attachment",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Attachment"
+							},
+							"localizable": true,
+							"name": "attachment",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": "Upload documents no larger than 3,000k."
+							},
+							"type": "ddm-documentlibrary"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "comments",
+							"indexType": "text",
+							"label": {
+								"en_US": "Comments"
+							},
+							"localizable": true,
+							"name": "comments",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "textarea"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "description",
+							"indexType": "text",
+							"label": {
+								"en_US": "Description"
+							},
+							"localizable": true,
+							"name": "description",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "textarea"
+						},
+						{
+							"dataType": "date",
+							"fieldNamespace": "ddm",
+							"fieldReference": "endDate",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "end date"
+							},
+							"localizable": true,
+							"name": "endDate",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "ddm-date"
+						},
+						{
+							"dataType": "integer",
+							"fieldNamespace": "ddm",
+							"fieldReference": "percentComplete",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "% Complete"
+							},
+							"localizable": true,
+							"name": "percentComplete",
+							"predefinedValue": {
+								"en_US": "0"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "ddm-integer"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "severity",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Severity"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "severity",
+							"options": [
+								{
+									"label": {
+										"en_US": "Critical"
+									},
+									"value": "critical"
+								},
+								{
+									"label": {
+										"en_US": "Major"
+									},
+									"value": "major"
+								},
+								{
+									"label": {
+										"en_US": "Minor"
+									},
+									"value": "minor"
+								},
+								{
+									"label": {
+										"en_US": "Trivial"
+									},
+									"value": "trivial"
+								}
+							],
+							"predefinedValue": {
+								"en_US": "[\"minor\"]"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "select"
+						},
+						{
+							"dataType": "date",
+							"fieldNamespace": "ddm",
+							"fieldReference": "startDate",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Start Date"
+							},
+							"localizable": true,
+							"name": "startDate",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "ddm-date"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "status",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Status"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "status",
+							"options": [
+								{
+									"label": {
+										"en_US": "Open"
+									},
+									"value": "open"
+								},
+								{
+									"label": {
+										"en_US": "Pending"
+									},
+									"value": "pending"
+								},
+								{
+									"label": {
+										"en_US": "Completed"
+									},
+									"value": "completed"
+								}
+							],
+							"predefinedValue": {
+								"en_US": "[\"open\"]"
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "select"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "title",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Title"
+							},
+							"localizable": true,
+							"name": "title",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

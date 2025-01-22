@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="JABHa2VJ" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/sunglasses_on_shelves.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="headline" index-type="text" instance-id="NkhxjhdT" name="headline" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>2024 Eyewear Trends: What's In and What's Out</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="content" index-type="text" instance-id="lqH94N5a" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p>As we step into 2024, eyewear trends are evolving with new styles and designs. Oversized sunglasses are making a comeback, offering both fashion and UV protection. Clear frame glasses continue to be popular for a minimalist look, while bold colored frames are also gaining attention. Blue light blocking glasses are becoming a necessity in the digital age, protecting eyes from screen-induced strain. With sustainable fashion on the rise, eco-friendly eyewear materials like bamboo and recycled plastics are becoming more prevalent.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

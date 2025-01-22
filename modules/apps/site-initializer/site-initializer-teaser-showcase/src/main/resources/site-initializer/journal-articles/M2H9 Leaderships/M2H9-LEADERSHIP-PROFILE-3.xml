@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="HtXvsW5F" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Leadership/leader_allison_fox.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="name" index-type="keyword" instance-id="FleEQtqw" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Allison Fox]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="title" index-type="keyword" instance-id="MRZGrM6b" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[VP Creative Design]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="bio" index-type="text" instance-id="nI58Yefl" name="bio" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<p>Allison Fox is the Vice President of Creative Design at Clarity Vision Solutions, a premier eyewear manufacturer known for its cutting-edge and stylish products. With over 15 years of experience in the design industry, Allison is a creative powerhouse whose visionary approach has significantly shaped the company's product offerings.</p>
+			<p>Allison joined Clarity Vision Solutions in 2017 and has been instrumental in driving the creative direction and innovation of the company's eyewear collections. Her keen sense of style, combined with a deep understanding of market trends, has helped the company develop products that resonate with a diverse customer base. Under her leadership, the design team has introduced several iconic and award-winning collections, establishing Clarity Vision Solutions as a trendsetter in the eyewear industry.</p>
+			<p>Before her role at Clarity Vision Solutions, Allison held senior design positions at several leading fashion and accessory brands. She holds a Bachelor's degree in Fashion Design from the Parsons School of Design and a Master's degree in Product Design from the Royal College of Art.</p>
+			<p>Allison is known for her innovative design concepts, attention to detail, and ability to inspire and lead creative teams. She is passionate about exploring new materials and technologies to push the boundaries of traditional eyewear design, ensuring that Clarity Vision Solutions remains at the forefront of the industry.</p>
+			<p>In her free time, Allison enjoys sketching, traveling, and discovering new art forms. She is also actively involved in design communities and enjoys mentoring young designers, sharing her knowledge and experience to foster the next generation of creative talent.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

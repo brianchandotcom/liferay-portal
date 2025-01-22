@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="YZJVO8jt" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Leadership/leader_nigel_cook.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="name" index-type="keyword" instance-id="PqyDHYMN" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Nigel Cook]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="title" index-type="keyword" instance-id="NTDU1ZCU" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Chief Financial Officer]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="bio" index-type="text" instance-id="H84e63g6" name="bio" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<p>Nigel Cook is the Chief Financial Officer at Clarity Vision Solutions, a leading manufacturer of innovative and stylish eyewear. With over 20 years of experience in the finance industry, Nigel brings a wealth of knowledge and expertise to his role, overseeing the company's financial operations and strategies.</p>
+			<p>Nigel joined Clarity Vision Solutions in 2015 and has been instrumental in driving the company's financial growth and stability. His strategic financial planning and keen insight into market trends have helped Clarity expand its market share and enhance its profitability. Under his leadership, the company has implemented robust financial controls and reporting systems, ensuring transparency and efficiency in all financial activities.</p>
+			<p>Before joining Clarity, Nigel held senior financial positions at several multinational corporations, where he honed his skills in financial management, budgeting, and risk assessment. He holds a Bachelor's degree in Accounting from the University of Manchester and an MBA from London Business School.</p>
+			<p>Nigel is known for his analytical acumen, strong leadership, and commitment to fostering a culture of financial excellence. He is passionate about leveraging financial data to drive business decisions and is dedicated to supporting Clarity's mission of delivering high-quality eyewear products to customers worldwide.</p>
+			<p>In his free time, Nigel enjoys reading, traveling, and exploring new culinary experiences. He is also an avid supporter of various charitable causes and actively participates in community service initiatives.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="roleOverview" index-type="text" instance-id="UPEWIO4T" name="roleOverview" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Shape the future of vision technology!</strong> Clarity, a leading global innovator in the eyewear industry, seeks a visionary and strategic Director of Technology to lead our growing tech team. In this dynamic role, you'll be responsible for driving innovation across all aspects of our technology landscape, from information systems and data analytics to e-commerce platforms and automation solutions. You'll be a champion for technological advancement, ensuring Clarity remains at the forefront of the industry and delivers exceptional experiences for our customers and partners.</p>
+<p><button _ngcontent-ng-c19849592="" aria-label="Modify selected text" data-test-id="tunable-modify-selection-button" jslog="198403;track:generic_click,impression;BardVeMetadataKey:[[&quot;r_29efed76cf1e2c51&quot;,&quot;c_e82403b70e939350&quot;,null,&quot;rc_cc3669c4a7868b4a&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]];mutable:true" mat-mini-fab="" mat-ripple-loader-class-name="mat-mdc-button-ripple" mattooltip="Modify selected text">pen_spark</button></p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="keyResposabilities" index-type="text" instance-id="2iXP5Nf2" name="keyResposabilities" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<ul data-sourcepos="11:1-21:0">
+				<li data-sourcepos="11:1-11:119">Develop and execute a comprehensive technology vision and roadmap aligned with Clarity's overall business objectives.</li>
+				<li data-sourcepos="12:1-12:132">Lead and mentor a talented team of IT professionals, fostering a culture of innovation, collaboration, and continuous improvement.</li>
+				<li data-sourcepos="13:1-13:109">Oversee all aspects of IT infrastructure and operations, ensuring system uptime, security, and scalability.</li>
+				<li data-sourcepos="14:1-14:164">Champion the adoption of emerging technologies (e.g., AI, cloud computing, AR/VR) to enhance product development, customer experience, and operational efficiency.</li>
+				<li data-sourcepos="15:1-15:99">Manage IT budgets and resources effectively, prioritizing investments that drive strategic goals.</li>
+				<li data-sourcepos="16:1-16:157">Partner with cross-functional teams (e.g., marketing, R&amp;D, sales) to understand business needs and translate them into innovative technology solutions.</li>
+				<li data-sourcepos="17:1-17:115">Develop and implement a robust data analytics strategy to gain insights from customer behavior and market trends.</li>
+				<li data-sourcepos="18:1-18:115">Lead the development and execution of a comprehensive IT security strategy to safeguard company data and systems.</li>
+				<li data-sourcepos="19:1-19:109">Stay abreast of the latest technological advancements and identify opportunities for competitive advantage.</li>
+				<li data-sourcepos="20:1-21:0">Represent the IT department at leadership meetings and effectively communicate technology strategies to stakeholders.</li>
+			</ul>]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="qualificationAndSkills" index-type="text" instance-id="I4K3UnHI" name="qualificationAndSkills" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<ul data-sourcepos="24:1-33:0">
+				<li data-sourcepos="24:1-24:94">Master's degree in Computer Science, Information Technology, or a related field (preferred).</li>
+				<li data-sourcepos="25:1-25:88">Minimum 10-15 years of experience in a leadership role within the technology industry.</li>
+				<li data-sourcepos="26:1-26:97">Proven track record of success in developing and implementing strategic technology initiatives.</li>
+				<li data-sourcepos="27:1-27:85">Strong understanding of IT infrastructure, operations, and security best practices.</li>
+				<li data-sourcepos="28:1-28:84">Experience with emerging technologies (e.g., AI, cloud computing, AR/VR) (a plus).</li>
+				<li data-sourcepos="29:1-29:111">Excellent communication, collaboration, and interpersonal skills with the ability to lead and inspire a team.</li>
+				<li data-sourcepos="30:1-30:94">Strong analytical and problem-solving skills with a data-driven approach to decision making.</li>
+				<li data-sourcepos="31:1-31:99">Ability to think strategically and translate business needs into actionable technology solutions.</li>
+				<li data-sourcepos="32:1-33:0">A visionary leader with a passion for innovation and a commitment to continuous improvement.</li>
+			</ul>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

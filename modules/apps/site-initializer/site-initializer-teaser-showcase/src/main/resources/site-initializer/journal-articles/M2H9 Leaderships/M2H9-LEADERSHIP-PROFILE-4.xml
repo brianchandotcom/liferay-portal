@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="image" index-type="text" instance-id="P0qt1ElG" name="image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/Leadership/leader_brandon_oquinn.png$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="name" index-type="keyword" instance-id="gDtpSxA8" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Brandon O'Quinn]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="title" index-type="keyword" instance-id="SLDqrSOV" name="title" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Chief Executive Officer]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="bio" index-type="text" instance-id="tpBZCc7B" name="bio" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[
+			<p>Brandon O'Quinn is the Chief Executive Officer at Clarity Vision Solutions, a leading eyewear manufacturer celebrated for its innovative designs and exceptional quality. With over 20 years of experience in the industry, Brandon is a visionary leader who has played a pivotal role in shaping the company's strategic direction and driving its growth.</p>
+			<p>Brandon joined Clarity Vision Solutions in 2014 and has since transformed the company into a market leader through his strategic vision and dynamic leadership. His focus on innovation, operational excellence, and customer satisfaction has led to significant advancements in product development and market expansion. Under his guidance, Clarity Vision Solutions has achieved remarkable milestones, including several industry awards and a loyal global customer base.</p>
+			<p>Before his tenure at Clarity Vision Solutions, Brandon held executive positions at various top-tier companies in the consumer goods sector, where he developed a deep expertise in corporate strategy, business development, and operational management. He holds a Bachelor's degree in Business Administration from Harvard University and an MBA from Stanford Graduate School of Business.</p>
+			<p>Brandon is known for his strategic acumen, inspirational leadership, and commitment to fostering a culture of innovation and excellence. He is passionate about leveraging cutting-edge technology and design to create products that enhance the lives of customers worldwide.</p>
+			<p>In his free time, Brandon enjoys sailing, reading, and supporting various philanthropic causes. He is also an active participant in industry forums and enjoys mentoring emerging leaders in the business community.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

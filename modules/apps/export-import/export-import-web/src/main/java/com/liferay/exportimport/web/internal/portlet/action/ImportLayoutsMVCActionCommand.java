@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"javax.portlet.name=" + ExportImportPortletKeys.COMPANY_IMPORT,
 		"javax.portlet.name=" + ExportImportPortletKeys.IMPORT,
 		"mvc.command.name=/export_import/import_layouts"
 	},

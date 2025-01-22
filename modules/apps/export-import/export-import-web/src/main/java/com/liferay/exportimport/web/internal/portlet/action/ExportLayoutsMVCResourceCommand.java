@@ -20,6 +20,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
+		"javax.portlet.name=" + ExportImportPortletKeys.COMPANY_EXPORT,
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 		"mvc.command.name=/export_import/export_layouts"
 	},

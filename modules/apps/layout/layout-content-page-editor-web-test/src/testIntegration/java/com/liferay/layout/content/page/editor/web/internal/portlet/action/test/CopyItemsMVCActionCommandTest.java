@@ -304,7 +304,30 @@ public class CopyItemsMVCActionCommandTest {
 			false, classNameId, "0", _layout, _layoutStructureProvider,
 			_segmentsExperienceId);
 
-		_testCopyItems(itemIds, jsonObject.getString("addedItemId"));
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				itemIds, jsonObject.getString("addedItemId")),
+			new MockLiferayPortletActionResponse());
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> curLayoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			curLayoutStructureItems.toString(),
+			layoutStructureItems.size() + itemIds.length,
+			curLayoutStructureItems.size());
 	}
 
 	@Test
@@ -695,34 +718,6 @@ public class CopyItemsMVCActionCommandTest {
 
 		Assert.assertEquals(
 			childrenItemIds.toString(), count, childrenItemIds.size());
-	}
-
-	private void _testCopyItems(String[] itemIds, String parentItemId)
-		throws Exception {
-
-		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				_layout.getPlid(), _segmentsExperienceId);
-
-		List<LayoutStructureItem> layoutStructureItems =
-			layoutStructure.getLayoutStructureItems();
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			_getMockLiferayPortletActionRequest(itemIds, parentItemId),
-			new MockLiferayPortletActionResponse());
-
-		layoutStructure = _layoutStructureProvider.getLayoutStructure(
-			_layout.getPlid(), _segmentsExperienceId);
-
-		List<LayoutStructureItem> curLayoutStructureItems =
-			layoutStructure.getLayoutStructureItems();
-
-		Assert.assertEquals(
-			curLayoutStructureItems.toString(),
-			layoutStructureItems.size() + itemIds.length,
-			curLayoutStructureItems.size());
 	}
 
 	private void _testErrorMessage(

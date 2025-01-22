@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>custom-meta-tags</name>
+		<description>custom-meta-tags</description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"[$LOCALE_DEFAULT$]"
+					],
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "Property"
+							},
+							"localizable": false,
+							"name": "property",
+							"nestedFields": [
+								{
+									"dataType": "string",
+									"fieldNamespace": "ddm",
+									"indexType": "keyword",
+									"label": {
+										"[$LOCALE_DEFAULT$]": "Content"
+									},
+									"localizable": true,
+									"name": "content",
+									"predefinedValue": {
+										"[$LOCALE_DEFAULT$]": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"[$LOCALE_DEFAULT$]": ""
+									},
+									"type": "text"
+								}
+							],
+							"predefinedValue": {
+								"[$LOCALE_DEFAULT$]": ""
+							},
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"[$LOCALE_DEFAULT$]": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"property",
+												"content"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Custom Meta Tags"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

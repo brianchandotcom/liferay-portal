@@ -9,6 +9,20 @@
 
 <%
 Locale userLocale = user.getLocale();
+
+long groupId = layout.getGroupId();
+long layoutId = layout.getLayoutId();
+boolean privateLayout = layout.isPrivateLayout();
+
+if (layout instanceof VirtualLayout) {
+	VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+	Layout sourceLayout = virtualLayout.getSourceLayout();
+
+	groupId = sourceLayout.getGroupId();
+	layoutId = sourceLayout.getLayoutId();
+	privateLayout = sourceLayout.isPrivateLayout();
+}
 %>
 
 <liferay-util:buffer
@@ -22,7 +36,7 @@ Locale userLocale = user.getLocale();
 		<c:if test="<%= LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), user.getLocale()) || (PortalUtil.isGroupControlPanelPath(themeDisplay.getURLCurrent()) && LanguageUtil.isAvailableLocale(userLocale)) %>">
 			<clay:link
 				cssClass="d-block"
-				href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout() + "&layoutId=" + layout.getLayoutId() + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false" %>'
+				href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + groupId + "&privateLayout=" + privateLayout + "&layoutId=" + layoutId + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false" %>'
 				label='<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>'
 			/>
 		</c:if>
@@ -31,7 +45,7 @@ Locale userLocale = user.getLocale();
 	<div dir="<%= LanguageUtil.get(request, "lang.dir") %>">
 		<clay:link
 			cssClass="d-block"
-			href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout() + "&layoutId=" + layout.getLayoutId() + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false" %>'
+			href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + groupId + "&privateLayout=" + privateLayout + "&layoutId=" + layoutId + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false" %>'
 			label='<%= LanguageUtil.format(locale, "set-x-as-your-preferred-language", locale.getDisplayName(locale)) %>'
 		/>
 	</div>

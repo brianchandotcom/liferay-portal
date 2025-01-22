@@ -177,8 +177,20 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			new AssetVocabularySettingsHelper();
+		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyService.fetchVocabulary(vocabularyId);
+
+		AssetVocabularySettingsHelper vocabularySettingsHelper = null;
+
+		if (assetVocabulary != null) {
+			vocabularySettingsHelper = new AssetVocabularySettingsHelper(
+				assetVocabulary.getSettings());
+		}
+		else {
+			vocabularySettingsHelper = new AssetVocabularySettingsHelper();
+		}
 
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, depotRequireds, requireds);

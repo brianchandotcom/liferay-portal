@@ -63,38 +63,49 @@ public class ObjectEntryFolderLocalServiceTest {
 		_objectDefinition = _addGroupCustomObjectDefinition();
 	}
 
-	@Test(
-		expected = DuplicateObjectEntryFolderExternalReferenceCodeException.class
-	)
-	public void testAddObjectEntryFolderWithDuplicateExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.randomString();
-
-		_addObjectEntryFolder(
-			externalReferenceCode, _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-		_addObjectEntryFolder(
-			externalReferenceCode, _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-	}
-
-	@Test(expected = ObjectEntryFolderNameException.MustNotBeDuplicate.class)
-	public void testAddObjectEntryFolderWithDuplicateName() throws Exception {
-		String name = StringUtil.randomString();
-
-		_addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-		_addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-	}
-
 	@Test
-	public void testAddObjectEntryFolderWithNullLabelMap() throws Exception {
+	public void testAddObjectEntryFolder() throws Exception {
+
+		// Duplicate external reference code
+
+		AssertUtils.assertFailure(
+			DuplicateObjectEntryFolderExternalReferenceCodeException.class,
+			"External reference code must be unique",
+			() -> {
+				String externalReferenceCode = StringUtil.randomString();
+
+				_addObjectEntryFolder(
+					externalReferenceCode, _group.getGroupId(),
+					StringUtil.randomString(),
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+				_addObjectEntryFolder(
+					externalReferenceCode, _group.getGroupId(),
+					StringUtil.randomString(),
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+			});
+
+		// Duplicate name
+
+		AssertUtils.assertFailure(
+			ObjectEntryFolderNameException.MustNotBeDuplicate.class,
+			"Name must be unique",
+			() -> {
+				String name = StringUtil.randomString();
+
+				_addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(), name,
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+				_addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(), name,
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+			});
+
+		// Null label map
+
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
 				StringUtil.randomString(), TestPropsValues.getUserId(),
@@ -108,32 +119,39 @@ public class ObjectEntryFolderLocalServiceTest {
 				LocaleUtil.getSiteDefault(), objectEntryFolder.getName()
 			).build(),
 			objectEntryFolder.getLabelMap());
-	}
 
-	@Test(expected = ObjectEntryFolderNameException.MustNotBeNull.class)
-	public void testAddObjectEntryFolderWithNullName() throws Exception {
-		_addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(), null,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-	}
+		// Null name
 
-	@Test(expected = ObjectEntryFolderScopeException.class)
-	public void testAddObjectEntryFolderWithParentInOtherGroup()
-		throws Exception {
+		AssertUtils.assertFailure(
+			ObjectEntryFolderNameException.MustNotBeNull.class,
+			"Name must not be null",
+			() -> _addObjectEntryFolder(
+				StringUtil.randomString(), _group.getGroupId(), null,
+				ObjectEntryFolderConstants.
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID));
 
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+		// Folder scope
 
-		_addObjectEntryFolder(
-			StringUtil.randomString(), TestPropsValues.getGroupId(),
-			StringUtil.randomString(),
-			objectEntryFolder.getObjectEntryFolderId());
+		AssertUtils.assertFailure(
+			ObjectEntryFolderScopeException.class,
+			"Parent and child folders must be in the same group",
+			() -> {
+				ObjectEntryFolder parentObjectEntryFolder =
+					_addObjectEntryFolder(
+						StringUtil.randomString(), _group.getGroupId(),
+						StringUtil.randomString(),
+						ObjectEntryFolderConstants.
+							DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+
+				_addObjectEntryFolder(
+					StringUtil.randomString(), TestPropsValues.getGroupId(),
+					StringUtil.randomString(),
+					parentObjectEntryFolder.getObjectEntryFolderId());
+			});
 	}
 
 	@Test
-	public void testDeleteObjectEntryFolderWithChildren() throws Exception {
+	public void testDeleteObjectEntryFolder() throws Exception {
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
@@ -170,30 +188,37 @@ public class ObjectEntryFolderLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
-	@Test(expected = ObjectEntryFolderNameException.MustNotBeDuplicate.class)
-	public void testUpdateObjectEntryFolderWithDuplicateName()
-		throws Exception {
-
-		String name = StringUtil.randomString();
-
-		_addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(), name,
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
-
-		_objectEntryFolderLocalService.updateObjectEntryFolder(
-			TestPropsValues.getUserId(),
-			objectEntryFolder.getObjectEntryFolderId(),
-			objectEntryFolder.getLabelMap(), name,
-			objectEntryFolder.getParentObjectEntryFolderId());
-	}
-
 	@Test
-	public void testUpdateObjectEntryFolderWithNullLabelMap() throws Exception {
+	public void testUpdateObjectEntryFolder() throws Exception {
+
+		// Duplicate name
+
+		AssertUtils.assertFailure(
+			ObjectEntryFolderNameException.MustNotBeDuplicate.class,
+			"Name must be unique",
+			() -> {
+				String name = StringUtil.randomString();
+
+				_addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(), name,
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+
+				ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(),
+					StringUtil.randomString(),
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+
+				_objectEntryFolderLocalService.updateObjectEntryFolder(
+					TestPropsValues.getUserId(),
+					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getLabelMap(), name,
+					objectEntryFolder.getParentObjectEntryFolderId());
+			});
+
+		// Null label map
+
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
@@ -216,41 +241,52 @@ public class ObjectEntryFolderLocalServiceTest {
 				LocaleUtil.getSiteDefault(), objectEntryFolder2.getName()
 			).build(),
 			objectEntryFolder2.getLabelMap());
-	}
 
-	@Test(expected = ObjectEntryFolderNameException.MustNotBeNull.class)
-	public void testUpdateObjectEntryFolderWithNullName() throws Exception {
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+		// Null name
 
-		_objectEntryFolderLocalService.updateObjectEntryFolder(
-			TestPropsValues.getUserId(),
-			objectEntryFolder.getObjectEntryFolderId(),
-			objectEntryFolder.getLabelMap(), null,
-			objectEntryFolder.getParentObjectEntryFolderId());
-	}
+		AssertUtils.assertFailure(
+			ObjectEntryFolderNameException.MustNotBeNull.class,
+			"Name must not be null",
+			() -> {
+				ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(),
+					StringUtil.randomString(),
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
-	@Test(expected = ObjectEntryFolderScopeException.class)
-	public void testUpdateObjectEntryFolderWithParentInOtherGroup()
-		throws Exception {
+				_objectEntryFolderLocalService.updateObjectEntryFolder(
+					TestPropsValues.getUserId(),
+					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getLabelMap(), null,
+					objectEntryFolder.getParentObjectEntryFolderId());
+			});
 
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+		// Folder scope
 
-		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
-			StringUtil.randomString(), TestPropsValues.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+		AssertUtils.assertFailure(
+			ObjectEntryFolderScopeException.class,
+			"Parent and child folders must be in the same group",
+			() -> {
+				ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+					StringUtil.randomString(), _group.getGroupId(),
+					StringUtil.randomString(),
+					ObjectEntryFolderConstants.
+						DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
 
-		_objectEntryFolderLocalService.updateObjectEntryFolder(
-			TestPropsValues.getUserId(),
-			objectEntryFolder.getObjectEntryFolderId(),
-			objectEntryFolder.getLabelMap(), objectEntryFolder.getName(),
-			parentObjectEntryFolder.getObjectEntryFolderId());
+				ObjectEntryFolder parentObjectEntryFolder =
+					_addObjectEntryFolder(
+						StringUtil.randomString(), TestPropsValues.getGroupId(),
+						StringUtil.randomString(),
+						ObjectEntryFolderConstants.
+							DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+
+				_objectEntryFolderLocalService.updateObjectEntryFolder(
+					TestPropsValues.getUserId(),
+					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getLabelMap(),
+					objectEntryFolder.getName(),
+					parentObjectEntryFolder.getObjectEntryFolderId());
+			});
 	}
 
 	private ObjectDefinition _addGroupCustomObjectDefinition()

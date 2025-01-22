@@ -422,13 +422,12 @@ public class CopyItemsMVCActionCommandTest {
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
-		_testCopyFragmentStyledLayoutStructureItem(
-			2, fragmentStyledLayoutStructureItem);
+		_testCopyPortletFragmentEntryLink(2, fragmentStyledLayoutStructureItem);
 	}
 
 	@Test
 	public void testCopyPortletFragmentEntryLink() throws Exception {
-		_testCopyFragmentStyledLayoutStructureItem(
+		_testCopyPortletFragmentEntryLink(
 			3,
 			_addFragmentStyledLayoutStructureItem(
 				LayoutContentPageEditorWebPortletKeys.
@@ -669,7 +668,7 @@ public class CopyItemsMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private void _testCopyFragmentStyledLayoutStructureItem(
+	private void _testCopyPortletFragmentEntryLink(
 			int count,
 			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
 		throws Exception {
@@ -702,12 +701,18 @@ public class CopyItemsMVCActionCommandTest {
 					layoutStructure.getLayoutStructureItem(
 						copiedItemIds.get(0));
 
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			FragmentConstants.TYPE_PORTLET, fragmentEntryLink.getType());
+
 		_assertCopiedFragmentEntryLink(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				copiedFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId()),
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()));
+			fragmentEntryLink);
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(

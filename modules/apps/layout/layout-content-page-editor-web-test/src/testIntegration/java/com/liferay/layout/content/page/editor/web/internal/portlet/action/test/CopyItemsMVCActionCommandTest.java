@@ -698,7 +698,7 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	private void _testErrorMessage(
-			String expected, String[] itemIds, String parentItemId)
+			String error, String[] itemIds, String parentItemId)
 		throws Exception {
 
 		LayoutStructure layoutStructure =
@@ -727,8 +727,7 @@ public class CopyItemsMVCActionCommandTest {
 				mockLiferayPortletActionRequest, exception);
 
 			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
-
-			Assert.assertEquals(expected, jsonObject.getString("error"));
+			Assert.assertEquals(error, jsonObject.getString("error"));
 		}
 
 		layoutStructure = _layoutStructureProvider.getLayoutStructure(

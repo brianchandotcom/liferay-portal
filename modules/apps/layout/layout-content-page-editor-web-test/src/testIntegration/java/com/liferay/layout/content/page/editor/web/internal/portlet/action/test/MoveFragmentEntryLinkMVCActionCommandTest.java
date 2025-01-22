@@ -242,7 +242,6 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 				mockLiferayPortletActionRequest, exception);
 
 			Assert.assertEquals(jsonObject.toString(), 1, jsonObject.length());
-
 			Assert.assertEquals(
 				_language.get(
 					_portal.getSiteDefaultLocale(_group),

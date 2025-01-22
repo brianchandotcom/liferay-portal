@@ -3049,68 +3049,6 @@ public interface LayoutPersistence
 		long groupId, boolean privateLayout, String friendlyURL);
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the matching layout
-	 * @throws NoSuchLayoutException if a matching layout could not be found
-	 */
-	public Layout findByG_P_SPLU(
-			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid)
-		throws NoSuchLayoutException;
-
-	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	public Layout fetchByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid);
-
-	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	public Layout fetchByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the layout that was removed
-	 */
-	public Layout removeByG_P_SPLU(
-			long groupId, boolean privateLayout,
-			String sourcePrototypeLayoutUuid)
-		throws NoSuchLayoutException;
-
-	/**
-	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @return the number of matching layouts
-	 */
-	public int countByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid);
-
-	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID

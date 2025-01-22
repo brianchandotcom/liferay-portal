@@ -504,18 +504,6 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_SPLU() throws Exception {
-		_persistence.countByG_P_SPLU(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
-
-		_persistence.countByG_P_SPLU(
-			0L, RandomTestUtil.randomBoolean(), "null");
-
-		_persistence.countByG_P_SPLU(
-			0L, RandomTestUtil.randomBoolean(), (String)null);
-	}
-
-	@Test
 	public void testCountByG_P_ST() throws Exception {
 		_persistence.countByG_P_ST(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -977,22 +965,6 @@ public class LayoutPersistenceTest {
 			ReflectionTestUtil.invoke(
 				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"friendlyURL"));
-
-		Assert.assertEquals(
-			Long.valueOf(layout.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"groupId"));
-		Assert.assertEquals(
-			Boolean.valueOf(layout.getPrivateLayout()),
-			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"privateLayout"));
-		Assert.assertEquals(
-			layout.getSourcePrototypeLayoutUuid(),
-			ReflectionTestUtil.invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"sourcePrototypeLayoutUuid"));
 
 		Assert.assertEquals(
 			layout.getExternalReferenceCode(),

@@ -68,11 +68,9 @@ public class ImportSystemDataSetMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		ObjectDefinition dataSetObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "DataSet");
+				themeDisplay.getCompanyId(), "DataSet");
 
 		String fdsName = ParamUtil.getString(resourceRequest, "name");
 
@@ -105,13 +103,13 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		ObjectDefinition dataSetActionObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "DataSetAction");
+				themeDisplay.getCompanyId(), "DataSetAction");
 
 		FDSCreationMenu fdsCreationMenu =
 			_fdsCreationMenuRegistry.getFDSCreationMenu(fdsName);
 
 		if (fdsCreationMenu != null) {
-			_addCreationDataSetActionObjectEntries(
+			_addFDSCreationMenuObjectEntries(
 				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsCreationMenu, _portal.getHttpServletRequest(resourceRequest),
@@ -123,7 +121,7 @@ public class ImportSystemDataSetMVCResourceCommand
 			_fdsItemActionListRegistry.getFDSItemActionList(fdsName);
 
 		if (fdsItemActionList != null) {
-			_addItemDataSetActionObjectEntries(
+			_addFDSItemActionListObjectEntries(
 				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsItemActionList,
@@ -136,7 +134,7 @@ public class ImportSystemDataSetMVCResourceCommand
 			resourceRequest, resourceResponse, objectEntry);
 	}
 
-	private void _addCreationDataSetActionObjectEntries(
+	private void _addFDSCreationMenuObjectEntries(
 			long dataSetId, String defaultLanguageId,
 			FDSCreationMenu fdsCreationMenu,
 			HttpServletRequest httpServletRequest,
@@ -202,7 +200,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
-	private void _addItemDataSetActionObjectEntries(
+	private void _addFDSItemActionListObjectEntries(
 			long dataSetId, String defaultLanguageId,
 			FDSItemActionList fdsItemActionList,
 			HttpServletRequest httpServletRequest,

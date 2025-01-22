@@ -49,6 +49,7 @@ export type Cart = {
 
 type CartItem = {
 	customFields?: {};
+	id: number;
 	price: {
 		currency: string;
 		discount: number;

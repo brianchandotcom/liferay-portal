@@ -32,6 +32,7 @@ export class MarketplaceRest {
 	public async consoleProvisioningOrder(cart: Cart) {
 		return this.fetchMarketplaceService(`/dxp/provisioning/${cart.id}`, {
 			body: JSON.stringify({
+				orderItemId: cart.cartItems[0]?.id,
 				projectId: this.settings.cloudProject,
 			}),
 			method: 'POST',
@@ -66,7 +67,7 @@ export class MarketplaceRest {
 			orderTypeExternalReferenceCode: 'CLOUDAPP',
 		} as Partial<Cart>;
 
-		const cart = await this.fetchMarketplace(
+		let cart = await this.fetchMarketplace(
 			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts`,
 			{
 				body: JSON.stringify(baseCart),
@@ -74,7 +75,7 @@ export class MarketplaceRest {
 			}
 		);
 
-		await this.checkoutCart(cart);
+		cart = await this.checkoutCart(cart);
 
 		return cart;
 	}
@@ -86,6 +87,22 @@ export class MarketplaceRest {
 				method: 'POST',
 			}
 		);
+	}
+
+	private async getBaseFetch(url: string, options?: RequestInit) {
+		const response = await fetch(url, options);
+
+		if (!response.ok) {
+			const error = new MarketplaceRestError(
+				'An error occurred while fetching the data.'
+			);
+
+			error.info = await response.json();
+			error.status = response.status;
+			throw error;
+		}
+
+		return response.json();
 	}
 
 	static getBaseResourceURL() {
@@ -108,36 +125,22 @@ export class MarketplaceRest {
 			headers.Authorization = `Bearer ${accessToken}`;
 		}
 
-		const response = await fetch(`${this.marketplaceURL}${url}`, {
+		return this.getBaseFetch(`${this.marketplaceURL}${url}`, {
 			...options,
 			headers,
 		});
-
-		if (!response.ok) {
-			const error = new MarketplaceRestError(
-				'An error occurred while fetching the data.'
-			);
-
-			error.info = await response.json();
-			error.status = response.status;
-			throw error;
-		}
-
-		return response.json();
 	}
 
 	public async fetchMarketplaceService(url: string, options?: RequestInit) {
 		const {accessToken} = await this.getMarketplaceToken();
 
-		const response = await fetch(`${this.marketplaceServiceURL}${url}`, {
+		return this.getBaseFetch(`${this.marketplaceServiceURL}${url}`, {
 			...options,
 			headers: {
 				'Authorization': `Bearer ${accessToken}`,
 				'Content-Type': 'application/json',
 			},
 		});
-
-		return response.json();
 	}
 
 	public async getMarketplaceToken() {

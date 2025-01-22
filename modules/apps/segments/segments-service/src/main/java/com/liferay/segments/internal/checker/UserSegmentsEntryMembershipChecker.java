@@ -247,20 +247,21 @@ public class UserSegmentsEntryMembershipChecker {
 	}
 
 	private static Object[] _toArray(Object object) {
-		Class<?> clazz = object.getClass(
-		).getComponentType();
+		Class<?> clazz = object.getClass();
 
-		if (clazz.isPrimitive()) {
-			List<Object> list = new ArrayList<>();
+		clazz = clazz.getComponentType();
 
-			for (int i = 0; i < Array.getLength(object); i++) {
-				list.add(Array.get(object, i));
-			}
-
-			return list.toArray();
+		if (!clazz.isPrimitive()) {
+			return (Object[])object;
 		}
 
-		return (Object[])object;
+		List<Object> list = new ArrayList<>();
+
+		for (int i = 0; i < Array.getLength(object); i++) {
+			list.add(Array.get(object, i));
+		}
+
+		return list.toArray();
 	}
 
 	private static String _toString(Object object) {

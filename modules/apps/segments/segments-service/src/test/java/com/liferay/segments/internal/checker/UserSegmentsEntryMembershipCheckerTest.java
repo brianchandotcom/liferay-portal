@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,49 +30,6 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_userAttributes = HashMapBuilder.<String, Object>put(
-			"assetCategoryIds", new long[] {1}
-		).put(
-			"assetTagIds", new long[] {1}
-		).put(
-			"classPK", 1
-		).put(
-			"emailAddress", "test@liferay.com"
-		).put(
-			"firstName", "Test"
-		).put(
-			"groupIds", new long[] {1}
-		).put(
-			"inheritedRoleIds", new long[] {1}
-		).put(
-			"jobTitle", "test"
-		).put(
-			"lastLoginDate", new Date()
-		).put(
-			"lastName", "Test"
-		).put(
-			"loginDate", new Date()
-		).put(
-			"modifiedDate", new Date()
-		).put(
-			"organizationIds", new long[] {1}
-		).put(
-			"roleIds", new long[] {1}
-		).put(
-			"screenName", "test"
-		).put(
-			"teamIds", new long[] {1}
-		).put(
-			"userGroupIds", new long[] {1}
-		).put(
-			"userGroupRoleIds", new long[] {1}
-		).put(
-			"userId", 1
-		).build();
-	}
 
 	@Test
 	public void testIsMemberContains() throws Exception {
@@ -308,6 +264,45 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-	private Map<String, Object> _userAttributes;
+	private final Map<String, Object> _userAttributes =
+		HashMapBuilder.<String, Object>put(
+			"assetCategoryIds", new long[] {1}
+		).put(
+			"assetTagIds", new long[] {1}
+		).put(
+			"classPK", 1
+		).put(
+			"emailAddress", "test@liferay.com"
+		).put(
+			"firstName", "Test"
+		).put(
+			"groupIds", new long[] {1}
+		).put(
+			"inheritedRoleIds", new long[] {1}
+		).put(
+			"jobTitle", "test"
+		).put(
+			"lastLoginDate", new Date()
+		).put(
+			"lastName", "Test"
+		).put(
+			"loginDate", new Date()
+		).put(
+			"modifiedDate", new Date()
+		).put(
+			"organizationIds", new long[] {1}
+		).put(
+			"roleIds", new long[] {1}
+		).put(
+			"screenName", "test"
+		).put(
+			"teamIds", new long[] {1}
+		).put(
+			"userGroupIds", new long[] {1}
+		).put(
+			"userGroupRoleIds", new long[] {1}
+		).put(
+			"userId", 1
+		).build();
 
 }

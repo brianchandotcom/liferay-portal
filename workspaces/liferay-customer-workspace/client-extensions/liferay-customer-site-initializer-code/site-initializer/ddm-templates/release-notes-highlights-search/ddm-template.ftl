@@ -221,10 +221,10 @@
 					<div class="align-items-stretch pt-2 search-results-entry">
 						<#assign
 							articleTitle = restArticle.title
-							dashedTitle = htmlUtil.escapeURL(articleTitle)
+							escapedTitle = htmlUtil.escapeURL(articleTitle)
 						/>
 
-						<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled" id="${dashedTitle}">
+						<div class="font-weight-bold search-results-entry-title text-decoration-none unstyled" id="${escapedTitle}">
 							<div class="product-capabilities">
 								<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
 									<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
@@ -237,7 +237,7 @@
 								</#list>
 							</div>
 
-							<a class="text-decoration-none" href="#${dashedTitle}">
+							<a class="text-decoration-none" href="#${escapedTitle}">
 								${articleTitle}
 							</a>
 

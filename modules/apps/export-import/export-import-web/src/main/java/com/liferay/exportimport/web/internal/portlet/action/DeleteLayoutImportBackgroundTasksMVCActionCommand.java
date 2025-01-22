@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"javax.portlet.name=" + ExportImportPortletKeys.COMPANY_IMPORT,
 		"javax.portlet.name=" + ExportImportPortletKeys.IMPORT,
 		"mvc.command.name=/export_import/delete_layout_import_background_tasks"
 	},

@@ -105,10 +105,8 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 			pbkdf2EncryptionConfiguration.configure(
 				StringPool.BLANK, encryptedPassword.substring(index + 1));
 
-			String algorithm = encryptedPassword.substring(1, index);
-
 			return StringBundler.concat(
-				algorithm, StringPool.FORWARD_SLASH,
+				encryptedPassword.substring(1, index), StringPool.FORWARD_SLASH,
 				pbkdf2EncryptionConfiguration.getKeySize(),
 				StringPool.FORWARD_SLASH,
 				pbkdf2EncryptionConfiguration.getRounds());

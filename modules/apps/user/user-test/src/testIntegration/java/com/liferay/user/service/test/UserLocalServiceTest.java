@@ -1515,8 +1515,6 @@ public class UserLocalServiceTest {
 
 		User user = UserTestUtil.addUser();
 
-		String password = "password";
-
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PasswordEncryptorUtil.class,
@@ -1524,7 +1522,7 @@ public class UserLocalServiceTest {
 					oldPasswordsEncryptionAlgorithm)) {
 
 			user = _userLocalService.updatePassword(
-				user.getUserId(), password, password, false, true);
+				user.getUserId(), "password", "password", false, true);
 
 			Assert.assertEquals(
 				oldPasswordsEncryptionAlgorithm,
@@ -1547,7 +1545,7 @@ public class UserLocalServiceTest {
 				Authenticator.SUCCESS,
 				_userLocalService.authenticateByEmailAddress(
 					user.getCompanyId(), user.getDisplayEmailAddress(),
-					password, null, null, null));
+					"password", null, null, null));
 
 			user = _userLocalService.getUser(user.getUserId());
 

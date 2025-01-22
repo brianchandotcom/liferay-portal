@@ -39,6 +39,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -111,6 +115,7 @@ import java.io.ByteArrayOutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -767,6 +772,76 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	@Test
+	public void testCopyLayoutSEOEntryWithLayoutSEOEntryCustomMetaTags()
+		throws Exception {
+
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			sourceLayout.getUserId(), sourceLayout.getGroupId(),
+			sourceLayout.isPrivateLayout(), sourceLayout.getLayoutId(), false,
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_layoutSEOEntryLocalService.updateCustomMetaTags(
+			TestPropsValues.getUserId(), sourceLayout.getGroupId(), false,
+			sourceLayout.getLayoutId(),
+			Arrays.asList(
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property1",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content1")),
+				new LayoutSEOEntryCustomMetaTagProperty(
+					"property2",
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "content2"))),
+			ServiceContextTestUtil.getServiceContext(
+				sourceLayout.getGroupId(), TestPropsValues.getUserId()));
+
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		_layoutLocalService.copyLayoutContent(sourceLayout, targetLayout);
+
+		LayoutSEOEntry targetLayoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+				targetLayout.getLayoutId());
+
+		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
+			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+				targetLayoutSEOEntry.getGroupId(),
+				targetLayoutSEOEntry.getLayoutSEOEntryId());
+
+		Assert.assertFalse(layoutSEOEntryCustomMetaTags.isEmpty());
+		Assert.assertEquals(
+			layoutSEOEntryCustomMetaTags.toString(), 2,
+			layoutSEOEntryCustomMetaTags.size());
+
+		LayoutSEOEntryCustomMetaTag firstLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(0);
+
+		Assert.assertEquals(
+			"property1", firstLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content1",
+			firstLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+
+		LayoutSEOEntryCustomMetaTag secondLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(1);
+
+		Assert.assertEquals(
+			"property2", secondLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content2",
+			secondLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+	}
+
+	@Test
 	public void testCopyMasterLayoutContentWithOrphanPortletPreferences()
 		throws Exception {
 
@@ -1286,6 +1361,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Inject
 	private LayoutServiceContextHelper _layoutServiceContextHelper;

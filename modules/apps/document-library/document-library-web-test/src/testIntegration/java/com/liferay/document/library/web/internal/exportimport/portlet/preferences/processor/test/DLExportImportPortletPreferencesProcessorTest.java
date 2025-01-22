@@ -423,8 +423,8 @@ public class DLExportImportPortletPreferencesProcessorTest {
 
 			TestReaderWriter testReaderWriter = _getReaderWriter();
 
-			Map<String, String> preferencesValues = _getPortletPreferencesValues(
-				folder);
+			Map<String, String> preferencesValues =
+				_getPortletPreferencesValues(folder);
 
 			_setPortletPreferences(preferencesValues);
 
@@ -610,7 +610,8 @@ public class DLExportImportPortletPreferencesProcessorTest {
 		return importPortletDataContext;
 	}
 
-	private Map<String, String> _getPortletPreferencesValues(FileEntry fileEntry)
+	private Map<String, String> _getPortletPreferencesValues(
+			FileEntry fileEntry)
 		throws Exception {
 
 		Repository repository = _repositoryLocalService.fetchRepository(

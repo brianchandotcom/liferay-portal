@@ -9,7 +9,9 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -17,93 +19,94 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	pageViewModePagesTest,
+	isolatedSiteTest,
 	loginTest()
 );
 
-test('LPD-3360 Checkout with single approval', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	commerceAdminChannelsPage,
-	commerceCartSummaryPage,
-	commerceLayoutsPage,
-	commerceMiniCartPage,
-	page,
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
+test(
+	'heckout with single approval',
+	{tag: '@LPD-3360'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceMiniCartPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `${site.name} Channel`,
+				siteGroupId: site.id,
+			});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: `${site.name} Catalog`,
+			});
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: `${site.name} Channel`,
-		siteGroupId: site.id,
-	});
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+			});
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: `${site.name} Catalog`,
-	});
+		const product1Skus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product1.productId)
+			.then((product) => {
+				return product.skus;
+			});
 
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
-	});
+		const sku1 = product1Skus[0];
 
-	const product1Skus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product1.productId)
-		.then((product) => {
-			return product.skus;
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
 		});
 
-	const sku1 = product1Skus[0];
+		apiHelpers.data.push({id: account.id, type: 'account'});
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
 
-	apiHelpers.data.push({id: account.id, type: 'account'});
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
 
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
+		await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+			'Single Approver (Version 1)',
+			channel.name
+		);
 
-	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-		channel.name,
-		'B2B'
-	);
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						options: '[]',
+						quantity: 1,
+						replacedSkuId: 0,
+						skuId: sku1.id,
+					},
+				],
+			},
+			channel.id
+		);
 
-	await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
-		'Single Approver (Version 1)',
-		channel.name
-	);
+		const widgetLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: 'Commerce Cart Page',
+		});
 
-	await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					options: '[]',
-					quantity: 1,
-					replacedSkuId: 0,
-					skuId: sku1.id,
-				},
-			],
-		},
-		channel.id
-	);
+		await widgetPagePage.goto(widgetLayout, site.friendlyUrlPath);
 
-	await applicationsMenuPage.goToSite(site.name);
+		await widgetPagePage.addPortlet('Cart Summary');
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Commerce Cart Page');
+		await commerceMiniCartPage.submitButton.waitFor({state: 'visible'});
 
-	await page.goto(`/web/${site.name}`);
-
-	await commerceCartSummaryPage.addCartSummaryWidget();
-
-	await commerceMiniCartPage.submitButton.waitFor({state: 'visible'});
-
-	await expect(commerceMiniCartPage.submitButton).toBeVisible();
-});
+		await expect(commerceMiniCartPage.submitButton).toBeVisible();
+	}
+);

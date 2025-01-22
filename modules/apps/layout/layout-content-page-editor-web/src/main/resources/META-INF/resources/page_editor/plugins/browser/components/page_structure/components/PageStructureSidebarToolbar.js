@@ -18,7 +18,6 @@ import {useSetMovementSources} from '../../../../../app/contexts/KeyboardMovemen
 import {
 	useDispatch,
 	useSelector,
-	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import {useGetWidgets} from '../../../../../app/contexts/WidgetsContext';
 import deleteItem from '../../../../../app/thunks/deleteItem';
@@ -34,7 +33,7 @@ import './PageStructureSidebarToolbar.scss';
 export default function PageStructureSidebarToolbar({activeItemIds}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+	const layoutData = useSelector((state) => state.layoutData);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -42,8 +41,6 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 	const setClipboard = useSetClipboard();
 	const setMovementSources = useSetMovementSources();
 	const getWidgets = useGetWidgets();
-
-	const layoutData = layoutDataRef.current;
 
 	const itemsCanBeDeleted = () =>
 		activeItemIds.every((activeItemId) =>

@@ -5,6 +5,8 @@
 
 package com.liferay.site.internal.util;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -130,12 +132,20 @@ public class SitesImpl implements Sites {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		long[] originalAssetCategoryIds = serviceContext.getAssetCategoryIds();
+		String[] originalAssetTagNames = serviceContext.getAssetTagNames();
 		Serializable originalLayoutPrototypeLinkEnabled =
 			serviceContext.getAttribute("layoutPrototypeLinkEnabled");
 		Serializable originalLayoutPrototypeUuid = serviceContext.getAttribute(
 			"layoutPrototypeUuid");
 
 		try {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				Layout.class.getName(), layoutPrototypeLayout.getPlid());
+
+			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+			serviceContext.setAssetTagNames(assetEntry.getTagNames());
+
 			serviceContext.setAttribute(
 				"layoutPrototypeLinkEnabled", linkEnabled);
 			serviceContext.setAttribute(
@@ -157,6 +167,9 @@ public class SitesImpl implements Sites {
 				layoutPrototypeLayout.getMasterLayoutPlid(), serviceContext);
 		}
 		finally {
+			serviceContext.setAssetCategoryIds(originalAssetCategoryIds);
+			serviceContext.setAssetTagNames(originalAssetTagNames);
+
 			if (originalLayoutPrototypeLinkEnabled == null) {
 				serviceContext.removeAttribute("layoutPrototypeLinkEnabled");
 			}
@@ -1360,6 +1373,9 @@ public class SitesImpl implements Sites {
 			"/liferay/layout_set_prototype/";
 
 	private static final Log _log = LogFactoryUtil.getLog(SitesImpl.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

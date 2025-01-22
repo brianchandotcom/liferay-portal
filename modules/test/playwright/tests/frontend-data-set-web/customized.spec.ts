@@ -604,6 +604,44 @@ test(
 	}
 );
 
+test('Select items count label in bulk actions', async ({page}) => {
+	await test.step('Change delta to 60 items', async () => {
+		await page.getByLabel('Items Per Page').click();
+
+		await page.getByRole('option', {name: '60 Items'}).click();
+	});
+
+	await test.step('Select all checkboxes using the select all checkbox', async () => {
+		await page
+			.locator('input[name="table-head-selector"]')
+			.setChecked(true);
+	});
+
+	await test.step('Check the label displays "10 of 75 Items Selected"', async () => {
+		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
+	});
+
+	await test.step('Go to 2nd page', async () => {
+		await page.getByLabel('Go to page, 2').click();
+	});
+
+	await test.step('Select all checkboxes on 2nd page by selecting the checkboxes for each row', async () => {
+		for (let i = 1; i <= 15; i++) {
+			await page
+				.locator(
+					`.dnd-tbody div:nth-child(${i}) > div > .custom-control > label > input[type="checkbox"]`
+				)
+				.setChecked(true);
+		}
+	});
+
+	await test.step('Check the label displays "All Selected (75 of 75 Items)"', async () => {
+		await expect(
+			page.getByText('All Selected (75 of 75 Items)')
+		).toBeVisible();
+	});
+});
+
 accountSettingsTest(
 	'Set time zone from theme display in a datetime renderer',
 	{

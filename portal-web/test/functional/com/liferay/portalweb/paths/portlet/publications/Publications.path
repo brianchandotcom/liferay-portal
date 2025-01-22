@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ELLIPSIS</td>
-	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::td//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ORDER_IN_HISTORY</td>
-	<td>//tbody/div[${resultOrder}]/div/div[1]</td>
+	<td>//tbody/tr[${resultOrder}]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -257,7 +257,7 @@
 </tr>
 <tr>
 	<td>REVIEW_CHANGES_BUTTON</td>
-	<td>//div[contains(@class,'item-actions')]/a[contains(@title,'Review Changes')]</td>
+	<td>//td[contains(@class,'item-actions')]/a[contains(@title,'Review Changes')]</td>
 	<td></td>
 </tr>
 <tr>

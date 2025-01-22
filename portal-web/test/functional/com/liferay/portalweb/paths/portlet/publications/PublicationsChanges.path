@@ -107,27 +107,27 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_SITE</td>
-	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeSite}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::td[contains(.,'${key_changeSite}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_STATUS</td>
-	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeStatus}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::td[contains(.,'${key_changeStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_TITLE</td>
-	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div//a[contains(.,'${key_changeTitle}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::td//a[contains(.,'${key_changeTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_TYPE</td>
-	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::div[contains(.,'${key_changeType}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//following-sibling::td[contains(.,'${key_changeType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_USER</td>
-	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::div[contains(.,'${key_changeUser}')]</td>
+	<td>//td[contains(.,'${key_changeCategory}')]//preceding-sibling::td[contains(.,'${key_changeUser}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,18 +146,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_BUTTON</td>
+	<td>//button[contains(.,'Filter')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_BUTTON</td>
-	<td>//button[contains(.,'${key_name}')]/span</td>
+	<td>//span[contains(.,'${key_name}')]//..//..//button[contains(@title, 'Sortable Column')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SORTED_ASCENDING_ICON</td>
-	<td>//span//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-up')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SORTED_DESCENDING_ICON</td>
-	<td>//span//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
 	<td></td>
 </tr>
 <tr>

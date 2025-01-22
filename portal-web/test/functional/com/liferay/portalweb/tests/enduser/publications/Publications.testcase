@@ -1487,6 +1487,8 @@ definition {
 			changeCategory = "Web Content Article",
 			changesList = "WC Title 1,WC Title 2,WC Title 3");
 
+		Refresh();
+
 		PublicationsChanges.sortChanges(
 			sort = "ascending",
 			sortName = "Title");

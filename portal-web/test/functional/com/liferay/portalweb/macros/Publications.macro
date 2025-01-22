@@ -252,9 +252,7 @@ definition {
 
 	@summary = "Default summary"
 	macro filterPublishedPublication(Exclude = null, statusList = null) {
-		Click(
-			key_name = "Filter",
-			locator1 = "PublicationsChanges#SORT_BUTTON");
+		Click(locator1 = "PublicationsChanges#FILTER_BUTTON");
 
 		Click(locator1 = "Publications#FILTER_STATUS_BUTTON");
 

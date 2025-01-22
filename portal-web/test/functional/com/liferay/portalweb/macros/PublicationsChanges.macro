@@ -121,9 +121,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_TYPE_BUTTON");
 
-		Click(
-			key_name = "Filter",
-			locator1 = "PublicationsChanges#SORT_BUTTON");
+		Click(locator1 = "PublicationsChanges#FILTER_BUTTON");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 

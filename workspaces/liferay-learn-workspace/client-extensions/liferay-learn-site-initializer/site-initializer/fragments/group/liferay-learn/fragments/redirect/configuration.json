@@ -1,15 +1,15 @@
 {
 	"fieldSets": [
 		{
-            "fields": [
-                {
-                    "name": "redirectLocation",
-                    "label": "Redirect Location",
-                    "description": "Target URL for (auto) redirect",
-                    "type": "text",
-                    "dataType": "string"
-                }
-            ]
-        }
+			"fields": [
+				{
+					"dataType": "string",
+					"description": "Target URL for (auto) redirect",
+					"label": "Redirect Location",
+					"name": "redirectLocation",
+					"type": "text"
+				}
+			]
+		}
 	]
 }

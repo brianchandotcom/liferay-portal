@@ -1,17 +1,14 @@
 [#assign
 	background = configuration.background
-	gridColumns = configuration.gridColumns 
-	parentColumnSpan = configuration.parentColumnSpan 
+	gridColumns = configuration.gridColumns
+	parentColumnSpan = configuration.parentColumnSpan
 /]
 
 <div class="mega-menu-section ${fragmentEntryLinkNamespace} ${configuration.background?then('mega-menu-section-background', '')}">
-	<div
-		class="mega-menu-section-title"
-		data-lfr-editable-id="title"
-		data-lfr-editable-type="text"
-	>
+<div class="mega-menu-section-title" data-lfr-editable-id="title" data-lfr-editable-type="text">
 		${languageUtil.get(locale, 'section', 'Section')}
 	</div>
+
 	<div class="grid-columns-${gridColumns} mega-menu-section-grid ${fragmentEntryLinkNamespace}">
 		<lfr-drop-zone data-lfr-drop-zone-id="mega-menu-section-grid"></lfr-drop-zone>
 	</div>
@@ -21,7 +18,7 @@
 	.lfr-layout-structure-item-mega-menu-grid:has(.mega-menu-section.${fragmentEntryLinkNamespace}),
 	.page-editor__topper:has(.mega-menu-section.${fragmentEntryLinkNamespace}) {
 		grid-column: span ${parentColumnSpan};
-		
+
 		@media (max-width: 991.98px) {
 			grid-column: span 1;
 		}

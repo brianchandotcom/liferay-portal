@@ -1,9 +1,9 @@
 {
-  "configurationPath": "configuration.json",
-  "cssPath": "index.css",
-  "htmlPath": "index.html",
-  "icon": "code",
-  "jsPath": "index.js",
-  "name": "Unassigned Top Banner",
-  "type": "component"
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "Unassigned Top Banner",
+	"type": "component"
 }

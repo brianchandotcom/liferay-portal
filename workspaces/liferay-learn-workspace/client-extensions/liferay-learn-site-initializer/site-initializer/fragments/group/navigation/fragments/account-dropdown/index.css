@@ -174,9 +174,9 @@
 		border-radius: calc(var(--border-radius) / 2);
 		cursor: pointer;
 		display: flex;
-		gap: 0.75rem;
 		flex-direction: row;
 		flex-wrap: nowrap;
+		gap: 0.75rem;
 		justify-content: flex-start;
 		margin: 0.25rem 0;
 		outline: rgba(99, 153, 255, 0) solid 2px;

@@ -17,16 +17,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "none",
-								"label": "None"
+								"label": "None",
+								"value": "none"
 							},
 							{
-								"value": "image",
-								"label": "Image"
+								"label": "Image",
+								"value": "image"
 							},
 							{
-								"value": "icon",
-								"label": "Icon"
+								"label": "Icon",
+								"value": "icon"
 							}
 						]
 					}

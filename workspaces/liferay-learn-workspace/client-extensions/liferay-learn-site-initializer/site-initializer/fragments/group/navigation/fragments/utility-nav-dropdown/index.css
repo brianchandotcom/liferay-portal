@@ -68,8 +68,8 @@
 
 		.utility-nav-dropdown-caret {
 			color: var(--utility-nav-item-text-color-default, #54555F);
-			opacity: 30%;
 			height: 1rem;
+			opacity: 30%;
 			transition:
 				opacity 0.1s linear,
 				transform 0.2s ease-in-out;
@@ -119,8 +119,8 @@
 				left: 0.5rem;
 				position: fixed;
 				right: unset;
-				transform: none;
 				top: 2.75rem;
+				transform: none;
 			}
 		}
 	}

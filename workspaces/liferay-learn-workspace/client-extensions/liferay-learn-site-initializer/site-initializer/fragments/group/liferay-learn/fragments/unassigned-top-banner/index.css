@@ -72,8 +72,8 @@
 		width: 100%;
 		
 		a {
-			display: inline-flex;
 			align-items: flex-end;
+			display: inline-flex;
 			
 			&::after {
 				height: 10px;
@@ -83,8 +83,8 @@
 	}
 	
 	.banner-info {
-		text-align: -webkit-center;
 		display: inline;
+		text-align: -webkit-center;
 		width: 70%;
 	}
 	

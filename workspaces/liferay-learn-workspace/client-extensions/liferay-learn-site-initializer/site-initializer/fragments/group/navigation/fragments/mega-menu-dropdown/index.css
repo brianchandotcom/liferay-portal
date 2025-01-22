@@ -220,7 +220,7 @@ body.has-edit-mode-menu
 	~ .mega-menu-dropdown-content {
   left: 0 !important;
 	position: fixed !important;
-	transform: translate(0, 0) !important;
 	top: 276px !important;
+	transform: translate(0, 0) !important;
 	z-index: 1 !important;
 }

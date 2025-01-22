@@ -5,23 +5,23 @@
 				{
 					"dataType": "string",
 					"defaultValue": "left",
+					"description": "Align dropdown menu left or right",
 					"label": "Dropdown Alignment",
 					"name": "alignDropdown",
-					"description": "Align dropdown menu left or right",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "left",
-								"label": "Left"
+								"label": "Left",
+								"value": "left"
 							},
 							{
-								"value": "center",
-								"label": "Center"
+								"label": "Center",
+								"value": "center"
 							},
 							{
-								"value": "right",
-								"label": "Right"
+								"label": "Right",
+								"value": "right"
 							}
 						]
 					}

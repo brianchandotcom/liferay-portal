@@ -5,27 +5,27 @@
 				{
 					"dataType": "string",
 					"defaultValue": "1",
+					"description": "Number of columns in this section",
 					"label": "Grid Columns",
 					"name": "gridColumns",
-					"description": "Number of columns in this section",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "1",
-								"label": "1"
+								"label": "1",
+								"value": "1"
 							},
 							{
-								"value": "2",
-								"label": "2"
+								"label": "2",
+								"value": "2"
 							},
 							{
-								"value": "3",
-								"label": "3"
+								"label": "3",
+								"value": "3"
 							},
 							{
-								"value": "4",
-								"label": "4"
+								"label": "4",
+								"value": "4"
 							}
 						]
 					}
@@ -33,27 +33,27 @@
 				{
 					"dataType": "string",
 					"defaultValue": "1",
+					"description": "Number of parent columns to span",
 					"label": "Parent Column Span",
 					"name": "parentColumnSpan",
-					"description": "Number of parent columns to span",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "1",
-								"label": "1"
+								"label": "1",
+								"value": "1"
 							},
 							{
-								"value": "2",
-								"label": "2"
+								"label": "2",
+								"value": "2"
 							},
 							{
-								"value": "3",
-								"label": "3"
+								"label": "3",
+								"value": "3"
 							},
 							{
-								"value": "4",
-								"label": "4"
+								"label": "4",
+								"value": "4"
 							}
 						]
 					}

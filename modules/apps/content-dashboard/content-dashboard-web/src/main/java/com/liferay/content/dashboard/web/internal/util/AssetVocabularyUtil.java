@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -94,6 +95,9 @@ public class AssetVocabularyUtil {
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();
 
+		assetVocabularySettingsHelper.setRegisteredClassNameIds(
+			ArrayUtil.toLongArray(classNameIdsCollection));
+
 		if (classNameIdsCollection != null) {
 			long[] classNameIds = new long[classNameIdsCollection.size()];
 			long[] classTypePKs = new long[classNameIdsCollection.size()];
@@ -129,12 +133,23 @@ public class AssetVocabularyUtil {
 			Collection<Long> classNameIdsCollection) {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
-			new AssetVocabularySettingsHelper();
+			new AssetVocabularySettingsHelper(assetVocabulary.getSettings());
+
+		Set<Long> filteredClassNameIds = new LinkedHashSet<>(
+			classNameIdsCollection);
+
+		Set<Long> registeredClassNameIds = SetUtil.fromArray(
+			assetVocabularySettingsHelper.getRegisteredClassNameIds());
+
+		filteredClassNameIds.removeAll(registeredClassNameIds);
+
+		assetVocabularySettingsHelper.setRegisteredClassNameIds(
+			ArrayUtil.toLongArray(filteredClassNameIds));
 
 		Set<Long> classNameIds = SetUtil.fromArray(
 			assetVocabulary.getSelectedClassNameIds());
 
-		classNameIds.addAll(classNameIdsCollection);
+		classNameIds.addAll(filteredClassNameIds);
 
 		long[] selectedClassNameIds = ArrayUtil.toArray(
 			classNameIds.toArray(new Long[0]));

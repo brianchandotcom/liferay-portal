@@ -97,10 +97,10 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 		String encryptedPassword) {
 
 		try {
+			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
 			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
 				new PBKDF2EncryptionConfiguration();
-
-			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
 
 			pbkdf2EncryptionConfiguration.configure(
 				StringPool.BLANK, encryptedPassword.substring(index + 1));

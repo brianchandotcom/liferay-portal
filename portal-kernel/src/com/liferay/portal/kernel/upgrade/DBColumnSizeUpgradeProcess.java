@@ -25,14 +25,15 @@ import java.util.Set;
 /**
  * @author Preston Crary
  */
-public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
+public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 
-	public BaseDBColumnSizeUpgradeProcess(
-		DBType dbType, String oldColumnType, int size) {
+	public DBColumnSizeUpgradeProcess(
+		DBType dbType, String oldTypeName, int oldSize, String newColumnType) {
 
 		_dbType = dbType;
-		_oldColumnType = oldColumnType;
-		_size = size;
+		_oldTypeName = oldTypeName;
+		_oldSize = oldSize;
+		_newColumnType = newColumnType;
 	}
 
 	@Override
@@ -41,9 +42,6 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 			_upgradeTables();
 		}
 	}
-
-	protected abstract void upgradeColumn(String tableName, String columnName)
-		throws Exception;
 
 	private void _upgradeTables() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -93,9 +91,9 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 					while (columnResultSet.next()) {
 						int size = columnResultSet.getInt("COLUMN_SIZE");
 
-						if ((size == _size) &&
+						if ((size == _oldSize) &&
 							StringUtil.equalsIgnoreCase(
-								_oldColumnType,
+								_oldTypeName,
 								columnResultSet.getString("TYPE_NAME"))) {
 
 							String columnName = columnResultSet.getString(
@@ -108,7 +106,8 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 							}
 
 							try {
-								upgradeColumn(tableName, columnName);
+								alterColumnType(
+									tableName, columnName, _newColumnType);
 							}
 							catch (SQLException sqlException) {
 								if (_log.isWarnEnabled()) {
@@ -128,10 +127,11 @@ public abstract class BaseDBColumnSizeUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDBColumnSizeUpgradeProcess.class);
+		DBColumnSizeUpgradeProcess.class);
 
 	private final DBType _dbType;
-	private final String _oldColumnType;
-	private final int _size;
+	private final String _newColumnType;
+	private final int _oldSize;
+	private final String _oldTypeName;
 
 }

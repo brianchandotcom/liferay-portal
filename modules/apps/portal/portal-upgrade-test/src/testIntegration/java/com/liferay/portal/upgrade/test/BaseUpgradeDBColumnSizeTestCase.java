@@ -7,7 +7,7 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.BaseDBColumnSizeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.Connection;
@@ -62,7 +62,7 @@ public abstract class BaseUpgradeDBColumnSizeTestCase {
 
 	protected abstract String getTypeName();
 
-	protected abstract BaseDBColumnSizeUpgradeProcess getUpgradeProcess();
+	protected abstract DBColumnSizeUpgradeProcess getUpgradeProcess();
 
 	private void _assertSize(int size) throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {

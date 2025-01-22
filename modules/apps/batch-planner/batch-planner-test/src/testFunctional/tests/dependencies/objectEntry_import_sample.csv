@@ -1,2 +1,2 @@
-keywords,externalReferenceCode,permissions,taxonomyCategoryIds,name
-array,string,array,array,string
+keywords,friendlyUrlPath_i18n_en_US,externalReferenceCode,permissions,taxonomyCategoryIds,name,friendlyUrlPath
+array,object,string,array,array,string,string

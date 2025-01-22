@@ -348,6 +348,18 @@
 						"type": "string",
 						"x-parent-map": "properties"
 					},
+					"friendlyUrlPath": {
+						"description": "A relative URL to the page's rendered content.",
+						"type": "string"
+					},
+					"friendlyUrlPath_i18n": {
+						"additionalProperties": {
+							"description": "The localized relative URLs to the page's rendered content.",
+							"type": "string"
+						},
+						"description": "The localized relative URLs to the page's rendered content.",
+						"type": "object"
+					},
 					"id": {
 						"format": "int64",
 						"readOnly": true,

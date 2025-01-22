@@ -17,7 +17,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -136,10 +136,9 @@ public class RelationshipObjectFieldBusinessType
 						externalReferenceCode, objectDefinition, 0L);
 				}
 
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						externalReferenceCode,
-						objectDefinition.getObjectDefinitionId());
+				ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
+					externalReferenceCode,
+					objectDefinition.getObjectDefinitionId());
 
 				if (!Objects.equals(
 						objectDefinition.getObjectDefinitionId(),
@@ -179,8 +178,8 @@ public class RelationshipObjectFieldBusinessType
 					return _getPrimaryKeyObj(null, objectDefinition, valueLong);
 				}
 
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(valueLong);
+				ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
+					valueLong);
 
 				if (!Objects.equals(
 						objectDefinition.getObjectDefinitionId(),
@@ -219,7 +218,7 @@ public class RelationshipObjectFieldBusinessType
 					externalReferenceCode, objectDefinition, 0L);
 			}
 
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
 				externalReferenceCode,
 				objectDefinition.getObjectDefinitionId());
 
@@ -277,7 +276,7 @@ public class RelationshipObjectFieldBusinessType
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

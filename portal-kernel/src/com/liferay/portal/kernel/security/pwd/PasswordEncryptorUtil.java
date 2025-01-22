@@ -83,9 +83,8 @@ public class PasswordEncryptorUtil {
 	public static String getEncryptionAlgorithmConfiguration(
 		String encryptedPassword) {
 
-		String algorithm = _getEncryptedPasswordAlgorithm(encryptedPassword);
-
-		PasswordEncryptor passwordEncryptor = _select(algorithm);
+		PasswordEncryptor passwordEncryptor = _select(
+			_getEncryptedPasswordAlgorithm(encryptedPassword));
 
 		return passwordEncryptor.getEncryptionAlgorithmConfiguration(
 			encryptedPassword);

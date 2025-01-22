@@ -1,0 +1,9 @@
+@import 'cadmin-variables';
+
+.marketplace-modal__image-background {
+	background-color: $cadmin-primary-l3;
+	display: flex;
+	justify-content: center;
+	padding: 48px 48px 24px;
+	position: relative;
+}

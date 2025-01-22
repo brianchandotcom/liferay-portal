@@ -21,9 +21,18 @@ class MarketplaceRestError extends Error {
 	}
 }
 
-export class MarketplaceRest {
-	private authorization?: MarketplaceAuthorization;
+function safeJSONParse(value: string) {
+	try {
+		return JSON.parse(value);
+	}
+	catch {
+		return null;
+	}
+}
 
+const sessionKey = '@marketplace/token';
+
+export class MarketplaceRest {
 	constructor(
 		protected baseResourceURL: string,
 		protected marketplaceConfiguration: MarketplaceConfiguration
@@ -68,7 +77,7 @@ export class MarketplaceRest {
 		} as Partial<Cart>;
 
 		let cart = await this.fetchMarketplace(
-			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts`,
+			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts?nestedFields=cartItems`,
 			{
 				body: JSON.stringify(baseCart),
 				method: 'POST',
@@ -82,7 +91,7 @@ export class MarketplaceRest {
 
 	private async checkoutCart(cart: Cart) {
 		return this.fetchMarketplace(
-			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout`,
+			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout?nestedFields=cartItems`,
 			{
 				method: 'POST',
 			}
@@ -144,8 +153,18 @@ export class MarketplaceRest {
 	}
 
 	public async getMarketplaceToken() {
-		if (this.authorization) {
-			return this.authorization;
+		const cachedToken = safeJSONParse(
+			Liferay.Util.SessionStorage.getItem(
+				sessionKey,
+				Liferay.Util.SessionStorage.TYPES.NECESSARY
+			) as string
+		);
+
+		if (
+			cachedToken &&
+			new Date().getTime() < Number(cachedToken.accessTokenExpirationTime)
+		) {
+			return cachedToken;
 		}
 
 		const response = await fetch(
@@ -155,9 +174,13 @@ export class MarketplaceRest {
 		);
 
 		if (response.ok) {
-			const data = (await response.json()) as MarketplaceAuthorization;
+			const data: MarketplaceAuthorization = await response.json();
 
-			this.authorization = data;
+			Liferay.Util.SessionStorage.setItem(
+				sessionKey,
+				JSON.stringify(data),
+				Liferay.Util.SessionStorage.TYPES.NECESSARY
+			);
 
 			return data;
 		}

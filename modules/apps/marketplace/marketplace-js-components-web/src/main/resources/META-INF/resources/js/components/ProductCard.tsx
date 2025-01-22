@@ -23,7 +23,7 @@ export function ProductCard({children, onClick, product}: ProductCardProps) {
 	return (
 		<div className="border-radius-medium d-flex flex-column justify-content-between marketplace-search-results-card mb-0 text-dark text-decoration-none">
 			<div
-				className="marketplace-search-results-card-content"
+				className="d-flex flex-column font-size-paragraph-small h-100 justify-content-between marketplace-search-results-card-content"
 				onClick={() => onClick(product)}
 			>
 				<div>

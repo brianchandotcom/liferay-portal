@@ -67,6 +67,7 @@ function MarketplaceViews() {
 							onClick={() => {
 								setProduct(product);
 
+								setState(States.CONFIRM_INSTALLATION);
 								setView(MarketplaceView.PURCHASE);
 							}}
 						>
@@ -81,7 +82,10 @@ function MarketplaceViews() {
 					primaryButton={
 						<ClayButton
 							className="ml-auto mt-3 rounded"
-							onClick={() => setView(MarketplaceView.PURCHASE)}
+							onClick={() => {
+								setState(States.CONFIRM_INSTALLATION);
+								setView(MarketplaceView.PURCHASE);
+							}}
 						>
 							{Liferay.Language.get('install')}
 						</ClayButton>

@@ -69,10 +69,10 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 			rounds = matcher.group(1);
 		}
 
-		String algorithm = encryptedPassword.substring(
-			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
-
-		return StringBundler.concat(algorithm, CharPool.FORWARD_SLASH, rounds);
+		return StringBundler.concat(
+			encryptedPassword.substring(
+				1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE)),
+			CharPool.FORWARD_SLASH, rounds);
 	}
 
 	private static final int _ROUNDS = 10;

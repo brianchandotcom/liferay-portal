@@ -5,13 +5,12 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.Base64;
@@ -97,26 +96,26 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 	public String getEncryptionAlgorithmConfiguration(
 		String encryptedPassword) {
 
-		PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
-			new PBKDF2EncryptionConfiguration();
-
-		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
-
 		try {
+			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
+				new PBKDF2EncryptionConfiguration();
+
+			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
 			pbkdf2EncryptionConfiguration.configure(
 				StringPool.BLANK, encryptedPassword.substring(index + 1));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 
-		String algorithm = encryptedPassword.substring(1, index);
+			String algorithm = encryptedPassword.substring(1, index);
 
-		return StringBundler.concat(
-			algorithm, StringPool.FORWARD_SLASH,
-			pbkdf2EncryptionConfiguration.getKeySize(),
-			StringPool.FORWARD_SLASH,
-			pbkdf2EncryptionConfiguration.getRounds());
+			return StringBundler.concat(
+				algorithm, StringPool.FORWARD_SLASH,
+				pbkdf2EncryptionConfiguration.getKeySize(),
+				StringPool.FORWARD_SLASH,
+				pbkdf2EncryptionConfiguration.getRounds());
+		}
+		catch (PwdEncryptorException pwdEncryptorException) {
+			return ReflectionUtil.throwException(pwdEncryptorException);
+		}
 	}
 
 	private static final int _KEY_SIZE = 160;
@@ -124,9 +123,6 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 	private static final int _ROUNDS = 1300000;
 
 	private static final int _SALT_BYTES_LENGTH = 16;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PBKDF2PasswordEncryptor.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"^.*/?([0-9]+)?/([0-9]+)$");

@@ -1532,12 +1532,12 @@ public class UserLocalServiceTest {
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					UserLocalServiceImpl.class,
+					PasswordEncryptorUtil.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
 					newPasswordsEncryptionAlgorithm);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
+					UserLocalServiceImpl.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
 					newPasswordsEncryptionAlgorithm)) {
 

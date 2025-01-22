@@ -148,7 +148,7 @@ test('LPD-22768 Add options to interact with the same entity in other publicatio
 		.waitFor();
 
 	const firstDropdown = entityHistoryModalLocator
-		.locator('.item-actions .dropdown svg.lexicon-icon-ellipsis-v')
+		.locator('.cell-item-actions .dropdown svg.lexicon-icon-ellipsis-v')
 		.first();
 	await firstDropdown.waitFor();
 	await firstDropdown.click();
@@ -193,49 +193,49 @@ test('LPD-38392 Assert View Entity Modification History sorting', async ({
 	await goToPublicationTimelineModal(page, journalPage);
 	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
 
-	const statusColumnHeader = entityHistoryModalLocator.getByRole('button', {
-		name: 'Status',
-	});
+	const statusColumnHeader = entityHistoryModalLocator
+		.getByRole('columnheader', {name: 'Status'})
+		.getByRole('button');
 	await statusColumnHeader.click();
 	await expect(statusColumnHeader).toBeVisible();
 
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(1) > div:nth-child(4)')
+			.locator('td:nth-child(4)')
 			.filter({hasText: 'Approved'})
 	).toBeVisible();
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(1) > div:nth-child(5)')
+			.locator('td:nth-child(5)')
 			.filter({hasText: 'Test Test'})
 	).toBeVisible();
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(1) > div:nth-child(6)')
+			.locator('td:nth-child(6)')
 			.filter({hasText: date})
 	).toBeVisible();
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
 		target: entityHistoryModalLocator
-			.locator('div:nth-child(6) > div:nth-child(4)')
+			.locator('td:nth-child(4)')
 			.filter({hasText: 'Approved'}),
 		trigger: statusColumnHeader,
 	});
 
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(6) > div:nth-child(4)')
+			.locator('td:nth-child(4)')
 			.filter({hasText: 'Approved'})
 	).toBeVisible();
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(6) > div:nth-child(5)')
+			.locator('td:nth-child(5)')
 			.filter({hasText: 'Test Test'})
 	).toBeVisible();
 	await expect(
 		entityHistoryModalLocator
-			.locator('div:nth-child(6) > div:nth-child(6)')
+			.locator('td:nth-child(6)')
 			.filter({hasText: date})
 	).toBeVisible();
 

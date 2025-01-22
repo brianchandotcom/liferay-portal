@@ -9,7 +9,6 @@ import moment from 'moment';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
@@ -225,21 +224,9 @@ test('LPD-23974 Comments link is added to workflow info display', async ({
 
 	await page.waitForLoadState('load');
 
-	const backButton = page.getByRole('link', {name: 'Back'});
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	await backButton.click();
-
-	const reviewChangesHeader = page
-		.getByTestId('headerTitle')
-		.getByText('Review Change');
-
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: backButton,
-		trigger: reviewChangesHeader,
-	});
-
-	await expect(reviewChangesHeader).toBeVisible();
+	await changeTrackingPage.reviewChange(journalName);
 
 	await changeTrackingPage.selectTab('Workflow');
 

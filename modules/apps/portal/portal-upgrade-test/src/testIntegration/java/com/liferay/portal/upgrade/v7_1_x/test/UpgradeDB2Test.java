@@ -10,9 +10,9 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.test.BaseUpgradeDBColumnSizeTestCase;
-import com.liferay.portal.upgrade.v7_1_x.UpgradeDB2;
 
 import org.junit.Assume;
 import org.junit.ClassRule;
@@ -52,8 +52,9 @@ public class UpgradeDB2Test extends BaseUpgradeDBColumnSizeTestCase {
 	}
 
 	@Override
-	protected UpgradeDB2 getUpgradeProcess() {
-		return new UpgradeDB2();
+	protected DBColumnSizeUpgradeProcess getUpgradeProcess() {
+		return new DBColumnSizeUpgradeProcess(
+			DBType.DB2, "varchar", 750, "STRING null");
 	}
 
 }

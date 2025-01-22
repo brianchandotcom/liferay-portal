@@ -5,6 +5,8 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
@@ -47,7 +49,10 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"Counter", "name", "VARCHAR(150) not null"));
 
-		upgradeVersionTreeMap.put(new Version(1, 1, 2), new UpgradeDB2());
+		upgradeVersionTreeMap.put(
+			new Version(1, 1, 2),
+			new DBColumnSizeUpgradeProcess(
+				DBType.DB2, "varchar", 750, "STRING null"));
 
 		upgradeVersionTreeMap.put(
 			new Version(2, 0, 0), new UpgradeAssetTagsPermission());

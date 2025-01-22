@@ -22,10 +22,9 @@ dependencies {
 }
 
 jar {
-	setActions([])
-
 	dependsOn jarPatched
 	finalizedBy jarManifest
+	setActions([])
 }
 
 jarManifest {
@@ -38,7 +37,6 @@ jarPatched {
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
-
 	from sourceSets.main.output
 
 	from {

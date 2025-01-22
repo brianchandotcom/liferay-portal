@@ -224,16 +224,17 @@ public class UserSegmentsEntryMembershipChecker {
 						"])"));
 			}
 			else {
-				String objectString = _toString(fieldValue);
+				String fieldValueString = _toString(fieldValue);
 
-				if (Validator.isNull(objectString)) {
+				if (Validator.isNull(fieldValueString)) {
 					matcher.appendReplacement(sb, "false");
 				}
 				else {
 					matcher.appendReplacement(
 						sb,
 						StringBundler.concat(
-							StringUtil.quote(objectString, StringPool.QUOTE),
+							StringUtil.quote(
+								fieldValueString, StringPool.QUOTE),
 							StringPool.SPACE, operator, StringPool.SPACE,
 							value));
 				}

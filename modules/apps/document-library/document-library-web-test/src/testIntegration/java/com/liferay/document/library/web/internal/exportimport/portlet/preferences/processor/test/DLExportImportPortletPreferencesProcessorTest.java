@@ -722,8 +722,8 @@ public class DLExportImportPortletPreferencesProcessorTest {
 	}
 
 	private void _testExportImportFolderInAssetLibraryWithStagingInProcess(
-			Map<String, String> originalPreferencesValues,
-			Map<String, String> expectedPreferencesValues)
+			Map<String, String> originalPortletPreferencesValues,
+			Map<String, String> expectedPortletPreferencesValues)
 		throws Exception {
 
 		ExportImportThreadLocal.setPortletStagingInProcess(true);
@@ -731,7 +731,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 		try {
 			TestReaderWriter testReaderWriter = _getTestReaderWriter();
 
-			_setPortletPreferences(originalPreferencesValues);
+			_setPortletPreferences(originalPortletPreferencesValues);
 
 			PortletPreferences exportedPortletPreferences =
 				_exportImportPortletPreferencesProcessor.
@@ -740,7 +740,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 						_portletPreferences);
 
 			Assert.assertEquals(
-				originalPreferencesValues,
+				originalPortletPreferencesValues,
 				_getPortletPreferencesValues(exportedPortletPreferences));
 
 			PortletDataContext importPortletDataContext =
@@ -758,7 +758,7 @@ public class DLExportImportPortletPreferencesProcessorTest {
 						importPortletDataContext, exportedPortletPreferences);
 
 			Assert.assertEquals(
-				expectedPreferencesValues,
+				expectedPortletPreferencesValues,
 				_getPortletPreferencesValues(importedPortletPreferences));
 		}
 		finally {

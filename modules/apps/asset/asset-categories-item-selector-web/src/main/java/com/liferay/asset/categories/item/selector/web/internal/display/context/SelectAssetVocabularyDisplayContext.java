@@ -115,6 +115,7 @@ public class SelectAssetVocabularyDisplayContext {
 		List<Long> groupIds = new ArrayList<>();
 
 		groupIds.add(_themeDisplay.getCompanyGroupId());
+		groupIds.add(_themeDisplay.getScopeGroupId());
 
 		List<DepotEntry> depotEntries =
 			DepotEntryServiceUtil.getCurrentAndGroupConnectedDepotEntries(

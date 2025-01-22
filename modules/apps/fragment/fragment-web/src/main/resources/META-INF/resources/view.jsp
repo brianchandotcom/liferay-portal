@@ -64,7 +64,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 						</clay:content-col>
 
 						<clay:content-col>
-							<ul class="navbar-nav">
+							<ul class="align-items-center navbar-nav">
 								<li>
 									<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 										<clay:link
@@ -76,6 +76,25 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 											type="button"
 										/>
 									</c:if>
+								</li>
+								<li>
+									<clay:button
+										additionalProps='<%=
+											HashMapBuilder.<String, Object>put(
+												"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")
+											).put(
+												"heading", LanguageUtil.format(request, "marketplace-is-now-in-x", LanguageUtil.get(request, "fragments"))
+											).build()
+										%>'
+										borderless="<%= true %>"
+										displayType="secondary"
+										icon="marketplace"
+										id='<%= liferayPortletResponse.getNamespace() + "marketplaceButton" %>'
+										monospaced="<%= true %>"
+										propsTransformer="{MarketplaceButtonPropsTransformer} from fragment-web"
+										small="<%= true %>"
+										title='<%= LanguageUtil.get(request, "open-marketplace-explorer") %>'
+									/>
 								</li>
 								<li>
 

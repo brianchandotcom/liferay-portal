@@ -867,12 +867,12 @@
 			"enableCategorization": false,
 			"enableLocalization": false,
 			"enableObjectEntryDraft": false,
-			"externalReferenceCode": "P2S3_EXAM_RESULT_SYNCHRONIZATION",
+			"externalReferenceCode": "P2S3_EXAM_RESULTS_SYNCHRONIZATION",
 			"label": {
-				"en_US": "P2S3 Exam Result Synchronization"
+				"en_US": "P2S3 Exam Results Synchronization"
 			},
 			"modifiable": true,
-			"name": "P2S3ExamResultSynchronization",
+			"name": "P2S3ExamResultsSynchronization",
 			"objectActions": [
 				{
 					"active": true,
@@ -880,7 +880,7 @@
 						"en_US": "Synchronize"
 					},
 					"name": "synchronize",
-					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-exam-result-synchronization",
+					"objectActionExecutorKey": "function#liferay-learn-etc-spring-boot-object-action-exam-results-synchronization",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
@@ -890,14 +890,14 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "EXAM_RESULT_AMOUNT",
+					"externalReferenceCode": "EXAM_RESULTS_AMOUNT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Exam Result Amount"
+						"en_US": "Exam Results Amount"
 					},
 					"localized": false,
-					"name": "examResultAmount",
+					"name": "examResultsAmount",
 					"readOnly": "false",
 					"required": false,
 					"state": false,

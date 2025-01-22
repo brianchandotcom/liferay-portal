@@ -1825,6 +1825,71 @@ test.describe('Page Contents Panel', () => {
 			}).toPass();
 		}
 	);
+
+	test(
+		'When multiple fragments are hidden with "Hide Fragments", the action changes to "Show Fragments"',
+		{
+			tag: '@LPD-46809',
+		},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create a page with two Heading fragments
+
+			const firstHeadingId = getRandomString();
+
+			const firstHeadingDefinition = getFragmentDefinition({
+				id: firstHeadingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const secondHeadingId = getRandomString();
+
+			const secondHeadingDefinition = getFragmentDefinition({
+				id: secondHeadingId,
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layoutTitle = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					firstHeadingDefinition,
+					secondHeadingDefinition,
+				]),
+				siteId: site.id,
+				title: layoutTitle,
+			});
+
+			// Go to edit mode and select both fragments
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			await pageEditorPage.selectFragment(firstHeadingId);
+
+			await page.keyboard.down('Control');
+
+			await pageEditorPage.selectFragment(secondHeadingId);
+
+			await page.keyboard.up('Control');
+
+			//  Open the Action dropdown and select "Hide Fragments"
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Hide Fragments'}),
+				trigger: page.getByLabel('Actions for Selected Items'),
+			});
+
+			// Open again the Action dropdown to check that the "Show Fragments" action is shown
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('menuitem', {name: 'Show Fragments'}),
+				trigger: page.getByLabel('Actions for Selected Items'),
+			});
+		}
+	);
 });
 
 test.describe('Page Design Options', () => {

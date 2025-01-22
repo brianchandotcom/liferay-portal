@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.security.pwd;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,6 +51,11 @@ public interface PasswordEncryptor {
 			String encryptedPassword, boolean upgradeHashSecurity)
 		throws PwdEncryptorException;
 
-	public String getEncryptionAlgorithmConfiguration(String encryptedPassword);
+	public default String getEncryptionAlgorithmConfiguration(
+		String encryptedPassword) {
+
+		return encryptedPassword.substring(
+			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
+	}
 
 }

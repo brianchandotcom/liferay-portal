@@ -5,7 +5,6 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.util.DigesterUtil;
 
@@ -27,14 +26,6 @@ public class DefaultPasswordEncryptor implements PasswordEncryptor {
 		boolean upgradeHashSecurity) {
 
 		return DigesterUtil.digest(algorithm, plainTextPassword);
-	}
-
-	@Override
-	public String getEncryptionAlgorithmConfiguration(
-		String encryptedPassword) {
-
-		return encryptedPassword.substring(
-			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
 	}
 
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.security.password.encryptor.internal;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
@@ -52,14 +51,6 @@ public class CryptPasswordEncryptor implements PasswordEncryptor {
 				unsupportedEncodingException.getMessage(),
 				unsupportedEncodingException);
 		}
-	}
-
-	@Override
-	public String getEncryptionAlgorithmConfiguration(
-		String encryptedPassword) {
-
-		return encryptedPassword.substring(
-			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
 	}
 
 	protected byte[] getSalt(String encryptedPassword)

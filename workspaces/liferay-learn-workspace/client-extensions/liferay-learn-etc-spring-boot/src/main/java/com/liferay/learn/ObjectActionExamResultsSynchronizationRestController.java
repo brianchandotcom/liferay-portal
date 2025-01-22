@@ -33,9 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Nilton Vieira
  */
-@RequestMapping("/object/action/exam/result/synchronization")
+@RequestMapping("/object/action/exam/results/synchronization")
 @RestController
-public class ObjectActionExamResultSynchronizationRestController
+public class ObjectActionExamResultsSynchronizationRestController
 	extends BaseRestController {
 
 	@PostMapping
@@ -43,7 +43,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Started exam result synchronization");
+			_log.info("Started exam results synchronization");
 		}
 
 		int examResultAmount = 0;
@@ -68,7 +68,7 @@ public class ObjectActionExamResultSynchronizationRestController
 			_log.error(exception);
 		}
 		finally {
-			_updateExamResultSynchronization(
+			_updateExamResultsSynchronization(
 				new JSONObject(
 					json
 				).getLong(
@@ -79,7 +79,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Finished exam result synchronization");
+			_log.info("Finished exam results synchronization");
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
@@ -98,7 +98,8 @@ public class ObjectActionExamResultSynchronizationRestController
 				"Bearer " + jwt.getTokenValue(),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					"/o/c/p2s3examresultsynchronizations/scopes/", _siteGroupId,
+					"/o/c/p2s3examresultssynchronizations/scopes/",
+					_siteGroupId,
 					"?fields=dateCreated&filter=synchronizationStatus eq ",
 					"'Successful'&pageSize=1&sort=dateCreated:desc")));
 
@@ -211,7 +212,7 @@ public class ObjectActionExamResultSynchronizationRestController
 		return jsonArray.length();
 	}
 
-	private void _updateExamResultSynchronization(
+	private void _updateExamResultsSynchronization(
 		Long classPK, int examResultAmount, long executionTime, Jwt jwt,
 		String synchronizationStatus) {
 
@@ -227,11 +228,11 @@ public class ObjectActionExamResultSynchronizationRestController
 			).toString(),
 			StringBundler.concat(
 				lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-				"/o/c/p2s3examresultsynchronizations/", classPK));
+				"/o/c/p2s3examresultssynchronizations/", classPK));
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		ObjectActionExamResultSynchronizationRestController.class);
+		ObjectActionExamResultsSynchronizationRestController.class);
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

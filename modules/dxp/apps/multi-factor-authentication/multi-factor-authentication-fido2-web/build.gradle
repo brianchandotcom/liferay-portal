@@ -10,7 +10,6 @@ dependencies {
 	compileInclude group: "net.i2p.crypto", name: "eddsa", version: "0.3.0"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.78"
 	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.78"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"

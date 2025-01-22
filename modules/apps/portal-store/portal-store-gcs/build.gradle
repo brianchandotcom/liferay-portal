@@ -24,7 +24,6 @@ dependencies {
 	compileInclude group: "io.opencensus", name: "opencensus-contrib-http-util", version: "0.28.3"
 	compileInclude group: "org.codehaus.jackson", name: "jackson-core-asl", version: "1.9.11"
 	compileInclude group: "org.threeten", name: "threetenbp", version: "1.5.0"
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"

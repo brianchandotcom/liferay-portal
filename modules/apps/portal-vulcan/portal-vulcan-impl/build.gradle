@@ -28,7 +28,6 @@ dependencies {
 	compileInclude group: "org.javassist", name: "javassist", version: "3.23.1-GA"
 	compileInclude group: "org.reflections", name: "reflections", version: "0.9.11"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
@@ -79,7 +78,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }
 

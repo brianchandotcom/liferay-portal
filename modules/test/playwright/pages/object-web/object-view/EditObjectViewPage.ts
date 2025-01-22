@@ -33,9 +33,9 @@ export class EditObjectViewPage {
 	}
 
 	async createFilter(
+		filterBy: string,
 		filterType: 'Includes' | 'Excludes',
-		objectRelationshipLabel: string,
-		objectEntryId: string
+		objectEntryId?: string
 	) {
 		await this.filtersTab.click();
 
@@ -43,17 +43,17 @@ export class EditObjectViewPage {
 
 		await this.filterBy.click();
 
-		await this.sidePanel
-			.getByRole('option', {name: objectRelationshipLabel})
-			.click();
+		await this.sidePanel.getByRole('option', {name: filterBy}).click();
 
 		await this.filterType.click();
 
 		await this.sidePanel.getByRole('option', {name: filterType}).click();
 
-		await this.filterValue.click();
+		if (objectEntryId) {
+			await this.filterValue.click();
 
-		await this.sidePanel.getByLabel(objectEntryId).check();
+			await this.sidePanel.getByLabel(objectEntryId).check();
+		}
 
 		await this.saveFilter.click();
 	}

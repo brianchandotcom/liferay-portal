@@ -67,22 +67,22 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
-		_layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test
 	public void testAddContentLayoutCopyAssetCategoriesAndAssetTags()
 		throws Exception {
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
 		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
+			layoutPageTemplateEntry.getPlid());
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -98,7 +98,7 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 			new String[] {assetTag.getName()});
 
 		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(),
+			_getMockLiferayPortletActionRequest(layoutPageTemplateEntry),
 			new MockLiferayPortletActionResponse());
 
 		layout = _layoutLocalService.fetchFirstLayout(
@@ -117,8 +117,8 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 		Assert.assertEquals(assetTag, assetTags.get(0));
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -131,7 +131,7 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 		mockLiferayPortletActionRequest.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		mockLiferayPortletActionRequest.setParameter(
 			"name", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(
@@ -172,8 +172,6 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

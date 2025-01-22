@@ -58,6 +58,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -156,6 +157,21 @@ public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 				AssetCategory.class.getName());
 
 		Assert.assertTrue(siteNavigationMenuItemType.isMultiSelection());
+	}
+
+	@Test
+	public void testGetLabel() throws Exception {
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
+			_siteNavigationMenuItemTypeRegistry.
+				getSiteNavigationMenuItemTypes();
+
+		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
+				siteNavigationMenuItemTypes) {
+
+			Assert.assertNotNull(siteNavigationMenuItemType.getLabel(locale));
+		}
 	}
 
 	@Test

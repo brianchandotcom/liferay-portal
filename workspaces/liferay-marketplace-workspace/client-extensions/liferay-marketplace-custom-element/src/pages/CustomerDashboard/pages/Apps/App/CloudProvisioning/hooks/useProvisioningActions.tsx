@@ -59,9 +59,9 @@ const useProvisioningActions = ({
 			return onOpenModal({
 				body: (
 					<p>
-						{i18n.translate(
-							'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project'
-						)}
+						{`${i18n.translate(
+							'you-do-not-have-access-to-cloud-project'
+						)} ${i18n.translate('this-may-restrict-the-functionality-available-to-you')}`}
 					</p>
 				),
 				center: true,

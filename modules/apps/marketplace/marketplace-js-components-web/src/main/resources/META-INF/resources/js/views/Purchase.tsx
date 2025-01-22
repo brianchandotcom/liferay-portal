@@ -35,14 +35,12 @@ export function MarketplacePurchase({
 								{marketplaceProduct.getPrice()}
 							</strong>
 
-							<div className="license-tag px-2">
+							<small className="px-2">
 								{marketplaceProduct.getProductResourceLabel()}
-							</div>
+							</small>
 						</div>
 					}
-					subsectionTitleLeft={Liferay.Language.get(
-						'project-selection'
-					)}
+					subsectionTitleLeft={Liferay.Language.get('project-name')}
 					subsectionTitleRight={rightTitle}
 					subtitle={
 						LATEST_VERSION

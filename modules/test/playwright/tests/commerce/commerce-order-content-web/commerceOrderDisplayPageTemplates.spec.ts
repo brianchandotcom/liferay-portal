@@ -28,10 +28,11 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('LPD-30855 Can map order item detailed information', async ({
+test('LPD-30855 Can map order item information', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminChannelsPage,
+	commerceAdminProductPage,
 	commerceLayoutsPage,
 	page,
 	pageEditorPage,
@@ -69,12 +70,52 @@ test('LPD-30855 Can map order item detailed information', async ({
 		regionISOCode: 'LA',
 	});
 
+	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+		'select',
+		'color',
+		'Color',
+		1
+	);
+
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const linkedProduct =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+		});
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: 'Product1'},
+		productOptions: [
+			{
+				fieldType: 'select',
+				key: option.key,
+				name: option.name,
+				optionId: option.id,
+				priceType: 'static',
+				priority: 1,
+				productOptionValues: [
+					{
+						deltaPrice: 10.0,
+						key: 'black',
+						name: {
+							en_US: 'Black',
+						},
+						priority: 1,
+						quantity: 1,
+						skuId: linkedProduct.skus[0].id,
+					},
+				],
+				skuContributor: true,
+			},
+		],
 	});
+
+	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+	await commerceAdminProductPage.generateSkus();
+
+	await expect(page.getByText('Showing 1 to 2 of 2 entries.')).toBeVisible();
 
 	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
 		.getProduct(product.productId)
@@ -82,7 +123,7 @@ test('LPD-30855 Can map order item detailed information', async ({
 			return product.skus;
 		});
 
-	const sku = productSkus[0];
+	const sku = productSkus.find((sku) => sku.sku === 'BLACK');
 
 	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 		{
@@ -107,7 +148,6 @@ test('LPD-30855 Can map order item detailed information', async ({
 	);
 
 	await pageEditorPage.addFragment('Content Display', 'Collection Display');
-
 	await pageEditorPage.selectFragment(
 		await pageEditorPage.getFragmentId('Collection Display')
 	);
@@ -119,7 +159,6 @@ test('LPD-30855 Can map order item detailed information', async ({
 	await commerceLayoutsPage.orderItemCardButton.click();
 
 	await pageEditorPage.waitForChangesSaved();
-
 	await pageEditorPage.addFragment(
 		'Basic Components',
 		'Heading',
@@ -135,24 +174,26 @@ test('LPD-30855 Can map order item detailed information', async ({
 	await pageEditorPage.selectEditable(headingId, 'element-text');
 
 	await commerceLayoutsPage.labelField.selectOption('Order ID');
+
 	await expect(
-		commerceLayoutsPage.pageEditorText(cart.id.toString())
+		commerceLayoutsPage.pageEditorText(cart.id.toString()).first()
 	).toBeVisible();
+
 	await commerceLayoutsPage.labelField.selectOption('Author Name');
-	await expect(commerceLayoutsPage.pageEditorText(cart.author)).toBeVisible();
+
+	await expect(
+		commerceLayoutsPage.pageEditorText(cart.author).first()
+	).toBeVisible();
+
 	await commerceLayoutsPage.labelField.selectOption('Create Date');
-
-	const createDateFromApi = cart.createDate;
-
-	const modifiedDateFromApi = cart.modifiedDate;
-
 	await commerceLayoutsPage.labelField.waitFor();
 
 	const pageEditorCreateDate = await commerceLayoutsPage
 		.pageEditorElement('h1')
+		.first()
 		.innerText();
 
-	await expect(checkSameDate(createDateFromApi, pageEditorCreateDate)).toBe(
+	await expect(checkSameDate(cart.createDate, pageEditorCreateDate)).toBe(
 		true
 	);
 
@@ -161,17 +202,67 @@ test('LPD-30855 Can map order item detailed information', async ({
 
 	const pageEditorModifiedDate = await commerceLayoutsPage
 		.pageEditorElement('h1')
+		.first()
 		.innerText();
 
-	await expect(
-		checkSameDate(modifiedDateFromApi, pageEditorModifiedDate)
-	).toBe(true);
+	await expect(checkSameDate(cart.modifiedDate, pageEditorModifiedDate)).toBe(
+		true
+	);
 
 	await commerceLayoutsPage.labelField.selectOption('Order Item ID');
 
 	await expect(
-		commerceLayoutsPage.pageEditorText(cart.cartItems[0].id.toString())
+		commerceLayoutsPage
+			.pageEditorText(cart.cartItems[0].id.toString())
+			.first()
 	).toBeVisible();
+
+	await commerceLayoutsPage.labelField.selectOption('Unit Price');
+
+	await expect(
+		commerceLayoutsPage
+			.pageEditorText(cart.cartItems[0].price.priceFormatted.toString())
+			.first()
+	).toBeVisible();
+
+	if (cart.cartItems[0].price.promoPriceFormatted) {
+		await commerceLayoutsPage.labelField.selectOption('Promo Price');
+
+		await expect(
+			commerceLayoutsPage
+				.pageEditorText(
+					cart.cartItems[0].price.promoPriceFormatted.toString()
+				)
+				.first()
+		).toBeVisible();
+	}
+
+	if (cart.cartItems[0].price.discountFormatted) {
+		await commerceLayoutsPage.labelField.selectOption('Discount');
+
+		await expect(
+			commerceLayoutsPage
+				.pageEditorText(
+					cart.cartItems[0].price.discountFormatted.toString()
+				)
+				.first()
+		).toBeVisible();
+	}
+
+	await commerceLayoutsPage.labelField.selectOption('Total Price');
+
+	await expect(
+		commerceLayoutsPage
+			.pageEditorText(
+				cart.cartItems[0].price.finalPriceFormatted.toString()
+			)
+			.first()
+	).toBeVisible();
+
+	await commerceLayoutsPage.labelField.selectOption('Options');
+
+	await expect(commerceLayoutsPage.pageEditorText('Black')).toBeVisible();
+
 	await commerceLayoutsPage.publishButton.click();
 	await commerceLayoutsPage
 		.displayPageTemplateCheckBox('Select Test Commerce Order')

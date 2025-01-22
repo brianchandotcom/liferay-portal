@@ -9,6 +9,7 @@ type TCartItem = {
 	deliveryGroupName?: string;
 	id?: number;
 	options?: string;
+	price?: any;
 	quantity: number;
 	replacedSkuId?: number;
 	requestedDeliveryDate?: string;

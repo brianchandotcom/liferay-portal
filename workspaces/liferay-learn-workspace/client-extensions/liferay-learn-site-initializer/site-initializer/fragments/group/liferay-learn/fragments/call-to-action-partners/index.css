@@ -1,0 +1,19 @@
+.cta-text {
+	align-items: center;
+	color: var(--color-action-neutral-default, #2b3a4b);
+	display: flex;
+	font-family: var(--font-family-sans-serif, 'Source Sans 3');
+	font-size: 13px;
+	gap: 0.5rem;
+	height: 52px;
+	justify-content: right;
+	line-height: 1rem;
+	
+	a	{
+		color: var(--color-action-neutral-default, #2b3a4b);
+		cursor: pointer;
+		font-weight: var(--display4-weight, 600);
+		text-decoration: underline;
+	}
+}
+

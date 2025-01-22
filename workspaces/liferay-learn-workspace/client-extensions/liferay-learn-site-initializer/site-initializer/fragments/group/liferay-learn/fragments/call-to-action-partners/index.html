@@ -1,0 +1,8 @@
+[#if !themeDisplay.isSignedIn()]
+	<div class="cta-text">
+		<span data-lfr-editable-id="text" data-lfr-editable-type="text">
+			${languageUtil.get(locale, 'looking-for-partner-courses', 'Looking for Partner Courses?')}
+		</span>
+		<a data-lfr-editable-id="link" data-lfr-editable-type="link" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}" id="fragment-${fragmentEntryLinkNamespace}-link">${languageUtil.get(locale, 'sign-in-here', 'Sign in Here')}</a>
+	</div>
+[/#if]

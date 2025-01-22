@@ -313,6 +313,16 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm()
+		throws Exception {
+
+		_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
+			"PBKDF2WITHHMACSHA1/160/2600000", "PBKDF2WITHHMACSHA1/160/1300000");
+		_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
+			"SHA-384", "PBKDF2WITHHMACSHA1/160/1300000");
+	}
+
+	@Test
 	public void testAuthenticationWhenUserDoesNotExist() throws Exception {
 		Assert.assertEquals(
 			Authenticator.DNE,
@@ -803,103 +813,6 @@ public class UserLocalServiceTest {
 				_userLocalService.authenticateByEmailAddress(
 					user.getCompanyId(), user.getEmailAddress(), "password",
 					null, null, null));
-		}
-	}
-
-	@Test
-	public void testOutdatedPasswordAlgorithmIsUpdatedAfterLogin()
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		String password = "password";
-
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM",
-					"PBKDF2WITHHMACSHA1/160/1300000")) {
-
-			user = _userLocalService.updatePassword(
-				user.getUserId(), password, password, false, true);
-
-			Assert.assertTrue(
-				user.getPassword(
-				).startsWith(
-					"{PBKDF2WITHHMACSHA1}"
-				));
-		}
-
-		try (AutoCloseable autoCloseable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					UserLocalServiceImpl.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
-			AutoCloseable autoCloseable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
-
-			Assert.assertEquals(
-				Authenticator.SUCCESS,
-				_userLocalService.authenticateByEmailAddress(
-					user.getCompanyId(), user.getDisplayEmailAddress(),
-					password, null, null, null));
-
-			user = _userLocalService.getUser(user.getUserId());
-
-			Assert.assertEquals(
-				"{SHA-384}qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1Eb" +
-					"FmGYMlM5oDEfRnDB4On",
-				user.getPassword());
-		}
-	}
-
-	@Test
-	public void testOutdatedPasswordAlgorithmRoundsAreUpdatedAfterLogin()
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		String password = "password";
-
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM",
-					"PBKDF2WITHHMACSHA1/160/1300000")) {
-
-			user = _userLocalService.updatePassword(
-				user.getUserId(), password, password, false, true);
-
-			Assert.assertEquals(
-				"PBKDF2WITHHMACSHA1/160/1300000",
-				PasswordEncryptorUtil.getEncryptionAlgorithmConfiguration(
-					user.getPassword()));
-		}
-
-		try (AutoCloseable autoCloseable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					UserLocalServiceImpl.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM",
-					"PBKDF2WITHHMACSHA1/160/2600000");
-			AutoCloseable autoCloseable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM",
-					"PBKDF2WITHHMACSHA1/160/2600000")) {
-
-			Assert.assertEquals(
-				Authenticator.SUCCESS,
-				_userLocalService.authenticateByEmailAddress(
-					user.getCompanyId(), user.getDisplayEmailAddress(),
-					password, null, null, null));
-
-			user = _userLocalService.getUser(user.getUserId());
-
-			Assert.assertEquals(
-				"PBKDF2WITHHMACSHA1/160/2600000",
-				PasswordEncryptorUtil.getEncryptionAlgorithmConfiguration(
-					user.getPassword()));
 		}
 	}
 
@@ -1592,6 +1505,57 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(ldapUser ? 1 : -1, user.getLdapServerId());
 		Assert.assertTrue(user.isPasswordReset());
 		Assert.assertNotNull(user.getPasswordPolicy());
+	}
+
+	private void
+			_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
+				String newPasswordsEncryptionAlgorithm,
+				String oldPasswordsEncryptionAlgorithm)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		String password = "password";
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					oldPasswordsEncryptionAlgorithm)) {
+
+			user = _userLocalService.updatePassword(
+				user.getUserId(), password, password, false, true);
+
+			Assert.assertEquals(
+				oldPasswordsEncryptionAlgorithm,
+				PasswordEncryptorUtil.getEncryptionAlgorithmConfiguration(
+					user.getPassword()));
+		}
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					UserLocalServiceImpl.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					newPasswordsEncryptionAlgorithm);
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					newPasswordsEncryptionAlgorithm)) {
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getDisplayEmailAddress(),
+					password, null, null, null));
+
+			user = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				newPasswordsEncryptionAlgorithm,
+				PasswordEncryptorUtil.getEncryptionAlgorithmConfiguration(
+					user.getPassword()));
+		}
 	}
 
 	private void _testVerifyEmailAddress(boolean expired) throws Exception {

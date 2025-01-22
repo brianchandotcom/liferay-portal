@@ -49,7 +49,7 @@ public class SegmentsExperienceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
+		if (!_hasUpdateLayoutPermission(plid)) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
@@ -69,7 +69,7 @@ public class SegmentsExperienceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
+		if (!_hasUpdateLayoutPermission(plid)) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
@@ -101,7 +101,7 @@ public class SegmentsExperienceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
+		if (!_hasUpdateLayoutPermission(plid)) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
@@ -200,7 +200,7 @@ public class SegmentsExperienceServiceImpl
 
 		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
-				groupId, segmentsExperienceKey, _getPublishedLayoutPlid(plid));
+				groupId, segmentsExperienceKey, plid);
 
 		_segmentsExperienceResourcePermission.check(
 			getPermissionChecker(), segmentsExperience, ActionKeys.VIEW);
@@ -229,15 +229,13 @@ public class SegmentsExperienceServiceImpl
 			long groupId, long plid, boolean active)
 		throws PortalException {
 
-		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
-
-		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+		if (_hasUpdateLayoutPermission(plid)) {
 			return segmentsExperiencePersistence.findByG_P_A(
-				groupId, publishedLayoutPlid, active);
+				groupId, plid, active);
 		}
 
 		return segmentsExperiencePersistence.filterFindByG_P_A(
-			groupId, publishedLayoutPlid, active);
+			groupId, plid, active);
 	}
 
 	@Override
@@ -246,17 +244,13 @@ public class SegmentsExperienceServiceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException {
 
-		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
-
-		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+		if (_hasUpdateLayoutPermission(plid)) {
 			return segmentsExperiencePersistence.findByG_P_A(
-				groupId, publishedLayoutPlid, active, start, end,
-				orderByComparator);
+				groupId, plid, active, start, end, orderByComparator);
 		}
 
 		return segmentsExperiencePersistence.filterFindByG_P_A(
-			groupId, publishedLayoutPlid, active, start, end,
-			orderByComparator);
+			groupId, plid, active, start, end, orderByComparator);
 	}
 
 	@Override
@@ -264,15 +258,13 @@ public class SegmentsExperienceServiceImpl
 			long groupId, long plid, boolean active)
 		throws PortalException {
 
-		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
-
-		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+		if (_hasUpdateLayoutPermission(plid)) {
 			return segmentsExperiencePersistence.countByG_P_A(
-				groupId, publishedLayoutPlid, active);
+				groupId, plid, active);
 		}
 
 		return segmentsExperiencePersistence.filterCountByG_P_A(
-			groupId, publishedLayoutPlid, active);
+			groupId, plid, active);
 	}
 
 	@Override
@@ -332,16 +324,6 @@ public class SegmentsExperienceServiceImpl
 
 		return segmentsExperienceLocalService.updateSegmentsExperiencePriority(
 			segmentsExperienceId, newPriority);
-	}
-
-	private long _getPublishedLayoutPlid(long plid) {
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		if ((layout != null) && layout.isDraftLayout()) {
-			return layout.getClassPK();
-		}
-
-		return plid;
 	}
 
 	private boolean _hasUpdateLayoutPermission(long plid)

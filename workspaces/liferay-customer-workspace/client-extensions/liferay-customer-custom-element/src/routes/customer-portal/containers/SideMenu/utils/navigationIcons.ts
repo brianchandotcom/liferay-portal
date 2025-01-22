@@ -14,6 +14,10 @@ const navigationIcons = {
 		NavigationMenuIcons.AttachmentsIcon,
 		NavigationMenuIcons.AttachmentsIcon,
 	],
+	businessEvents: [
+		NavigationMenuIcons.BusinessEventsIcon,
+		NavigationMenuIcons.BusinessEventsIconGray,
+	],
 	commerce: [
 		NavigationMenuIcons.CommerceIcon,
 		NavigationMenuIcons.CommerceIconGray,

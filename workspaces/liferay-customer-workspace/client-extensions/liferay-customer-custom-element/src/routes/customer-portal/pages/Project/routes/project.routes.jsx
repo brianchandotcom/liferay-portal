@@ -31,6 +31,7 @@ import ProductOutlet from './Outlets/ProductOutlet';
 import ProjectUsage from '../ProjectUsage';
 import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
 import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
+import BusinessEvents from '../BusinessEvent';
 
 const ProjectRoutes = () => {
 	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
@@ -264,6 +265,10 @@ const ProjectRoutes = () => {
 					)}
 
 					<Route element={<TeamMembers />} path="team-members" />
+					
+					{featureFlags.includes('LRSD-5119') && (
+						<Route element={<BusinessEvents />} path="business-events" />
+					)}
 
 					{((featureFlags.includes('LRSD-6322') && loggedUserAccount?.isLiferayStaff) ||
 						(featureFlags.includes('LRSD-7805') && loggedUserAccount?.isPartner)) &&

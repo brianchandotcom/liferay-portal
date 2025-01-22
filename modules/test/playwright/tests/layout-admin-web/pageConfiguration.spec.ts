@@ -1269,7 +1269,7 @@ test.describe('SEO configuration', () => {
 
 		// Edit custom meta tags
 
-		await page.getByLabel('Add Custom Tags').waitFor();
+		await page.getByRole('button', {name: 'Add'}).waitFor();
 
 		const property1 = page.getByLabel('Property', {exact: true}).nth(0);
 
@@ -1287,7 +1287,7 @@ test.describe('SEO configuration', () => {
 
 		// Add new custom meta tag
 
-		await page.getByLabel('Add Custom Tags').click();
+		await page.getByRole('button', {name: 'Add'}).click();
 
 		// Edit new custom meta tag
 
@@ -1307,9 +1307,16 @@ test.describe('SEO configuration', () => {
 
 		// Switch language
 
-		await page.getByRole('button').filter({hasText: 'en-US'}).click();
-
-		await page.getByRole('link').filter({hasText: 'es-ES'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Spanish.',
+			}),
+			trigger: page
+				.getByRole('button')
+				.filter({hasText: 'en-US'})
+				.first(),
+		});
 
 		// Translate custom meta tags
 

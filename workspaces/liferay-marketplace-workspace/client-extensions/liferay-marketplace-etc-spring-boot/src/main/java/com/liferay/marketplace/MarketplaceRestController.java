@@ -16,6 +16,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.MarketplaceUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -23,7 +24,6 @@ import java.util.Objects;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,30 +99,14 @@ public class MarketplaceRestController extends BaseRestController {
 			Order order, Page<OrderItem> orderItemPage)
 		throws Exception {
 
-		JSONArray jsonArray = new JSONArray();
-
-		for (OrderItem orderItem : orderItemPage.getItems()) {
-			jsonArray.put(
-				new JSONObject(
-				).put(
-					"deployments", new JSONArray()
-				).put(
-					"orderItemId", orderItem.getId()
-				).put(
-					"sku", orderItem.getSku()
-				).put(
-					"shippedQuantity", 0
-				).put(
-					"quantity",
-					orderItem.getQuantity(
-					).intValue()
-				));
-		}
-
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
-		customFields.put("cloud-provisioning", jsonArray.toString());
+		customFields.put(
+			"cloud-provisioning",
+			MarketplaceUtil.createCloudProvisioningJSONArray(
+				orderItemPage
+			).toString());
 
 		_marketplaceService.updateOrder(
 			customFields, order.getId(),

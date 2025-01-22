@@ -60,7 +60,7 @@ const useProvisioningActions = ({
 				body: (
 					<p>
 						{i18n.translate(
-							'you-currently-do-not-have-access-to-any-cloud-projects-please-login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project'
+							'you-do-not-have-access-to-any-cloud-projects'
 						)}
 					</p>
 				),

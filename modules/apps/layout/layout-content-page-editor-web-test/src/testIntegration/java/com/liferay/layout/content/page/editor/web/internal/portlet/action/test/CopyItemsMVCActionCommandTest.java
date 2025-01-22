@@ -386,8 +386,13 @@ public class CopyItemsMVCActionCommandTest {
 	}
 
 	@Test
-	public void testCopyNoninstanceablePortletFragmentEntryLink()
-		throws Exception {
+	@TestInfo("LPD-37704")
+	public void testCopyPortletFragmentEntryLink() throws Exception {
+		_testCopyPortletFragmentEntryLink(
+			3,
+			_addFragmentStyledLayoutStructureItem(
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET));
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			_addFragmentStyledLayoutStructureItem(
@@ -405,33 +410,13 @@ public class CopyItemsMVCActionCommandTest {
 				"Noninstanciable Test"),
 			new String[] {fragmentStyledLayoutStructureItem.getItemId()},
 			rowStyledLayoutStructureItem.getItemId());
-	}
-
-	@Test
-	@TestInfo("LPD-37704")
-	public void testCopyNoninstanceablePortletFragmentEntryLinkMarkedForDeletion()
-		throws Exception {
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			_addFragmentStyledLayoutStructureItem(
-				LayoutContentPageEditorWebPortletKeys.
-					LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
 		ContentLayoutTestUtil.markItemForDeletionFromLayout(
 			fragmentStyledLayoutStructureItem.getItemId(), _layout,
 			LayoutContentPageEditorWebPortletKeys.
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 
-		_testCopyPortletFragmentEntryLink(2, fragmentStyledLayoutStructureItem);
-	}
-
-	@Test
-	public void testCopyPortletFragmentEntryLink() throws Exception {
-		_testCopyPortletFragmentEntryLink(
-			3,
-			_addFragmentStyledLayoutStructureItem(
-				LayoutContentPageEditorWebPortletKeys.
-					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET));
+		_testCopyPortletFragmentEntryLink(6, fragmentStyledLayoutStructureItem);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(

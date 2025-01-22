@@ -137,7 +137,7 @@ export function MarketplacePurchase({
 				title={Liferay.Language.get('confirmation-required')}
 			>
 				{Liferay.Language.get(
-					'are-you-sure-you-want-to-proceed-with-the-installation-click-install-to-confirm-or-cancel-to-go-back'
+					'are-you-sure-you-want-to-proceed-with-the-installation'
 				)}
 			</ProductPurchase.Body>
 		);

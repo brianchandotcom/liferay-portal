@@ -208,9 +208,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 							LayoutVerifiableResourcedModel) {
 
 						values = new Object[] {
-							values[0], values[1],
-							resultSet.getLong("Layout.groupId"),
-							resultSet.getBoolean("Layout.privateLayout")
+							values[0], values[1], resultSet.getLong("groupId"),
+							resultSet.getBoolean("privateLayout")
 						};
 					}
 

@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -41,12 +45,16 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -100,6 +108,77 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(layoutPageTemplateEntry),
 			new MockLiferayPortletActionResponse());
+
+		layout = _layoutLocalService.fetchFirstLayout(
+			_group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				Layout.class.getName(), layout.getPlid());
+
+		Assert.assertEquals(assetCategory, assetCategories.get(0));
+
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			Layout.class.getName(), layout.getPlid());
+
+		Assert.assertEquals(assetTag, assetTags.get(0));
+	}
+
+	@Test
+	public void testAddWidgetLayoutCopyAssetCategoriesAndAssetTags()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
+
+		Layout layout = layoutPrototype.getLayout();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetTag assetTag = AssetTestUtil.addTag(_group.getGroupId());
+
+		_layoutLocalService.updateAsset(
+			TestPropsValues.getUserId(), layout,
+			new long[] {assetCategory.getCategoryId()},
+			new String[] {assetTag.getName()});
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			HttpServletRequest httpServletRequest =
+				new MockHttpServletRequest();
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+			serviceContext.setRequest(httpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			_mvcActionCommand.processAction(
+				_getMockLiferayPortletActionRequest(layoutPageTemplateEntry),
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		layout = _layoutLocalService.fetchFirstLayout(
 			_group.getGroupId(), false,
@@ -176,6 +255,9 @@ public class AddContentLayoutMVCActionCommandCopyCategoriesAndTagsTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout_admin/add_content_layout")
 	private MVCActionCommand _mvcActionCommand;

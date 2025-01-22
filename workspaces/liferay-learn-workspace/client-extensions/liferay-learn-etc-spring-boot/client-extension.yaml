@@ -17,8 +17,8 @@ liferay-learn-etc-spring-boot-object-action-course:
     oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oauth-application-user-agent
     resourcePath: /object/action/course
     type: objectAction
-liferay-learn-etc-spring-boot-object-action-exam-result-synchronization:
+liferay-learn-etc-spring-boot-object-action-exam-results-synchronization:
     name: Liferay Learn Etc Spring Boot Object Action Exam Result Synchronization
     oAuth2ApplicationExternalReferenceCode: liferay-learn-etc-spring-boot-oauth-application-user-agent
-    resourcePath: /object/action/exam/result/synchronization
+    resourcePath: /object/action/exam/results/synchronization
     type: objectAction

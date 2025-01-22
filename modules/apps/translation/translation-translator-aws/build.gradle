@@ -1,13 +1,27 @@
-configurations {
-	compileIncludePlatform {
-		exclude group: "commons-codec"
-		exclude group: "commons-logging"
-	}
-}
-
 dependencies {
-	compileIncludePlatform group: "software.amazon.awssdk", name: "translate"
-	compileIncludePlatform platform("software.amazon.awssdk:bom:2.25.53")
+	compileInclude group: "software.amazon.awssdk", name: "annotations", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "apache-client", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "auth", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "aws-core", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "aws-json-protocol", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "checksums", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "checksums-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "endpoints-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "http-auth", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "http-auth-aws", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "http-auth-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "http-client-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "identity-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "json-utils", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "metrics-spi", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "profiles", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "protocol-core", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "regions", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "sdk-core", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "third-party-jackson-core", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "translate", version: "2.25.53"
+	compileInclude group: "software.amazon.awssdk", name: "utils", version: "2.25.53"
+	compileInclude group: "software.amazon.eventstream", name: "eventstream", version: "1.0.1"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

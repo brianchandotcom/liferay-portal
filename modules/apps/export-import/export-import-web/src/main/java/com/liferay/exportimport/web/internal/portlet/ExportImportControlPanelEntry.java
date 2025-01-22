@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,11 +44,7 @@ public class ExportImportControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws PortalException {
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (!stagingGroupHelper.isCompanyGroup(group) &&
-			GroupPermissionUtil.contains(
+		if (GroupPermissionUtil.contains(
 				permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS)) {
 
 			return true;

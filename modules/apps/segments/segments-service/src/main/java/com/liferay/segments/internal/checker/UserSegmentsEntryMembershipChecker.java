@@ -126,12 +126,12 @@ public class UserSegmentsEntryMembershipChecker {
 		while (matcher.find()) {
 			String group = matcher.group();
 
-			Object object = _getFieldValue(
+			Object fieldValue = _getFieldValue(
 				_getGroup(group, _fieldNameContainsPattern), userAttributes);
 
-			String value = _getGroup(group, _valuePattern);
+			group = _getGroup(group, _valuePattern);
 
-			if ((object == null) || Validator.isBlank(value)) {
+			if ((fieldValue == null) || Validator.isBlank(group)) {
 				continue;
 			}
 
@@ -139,8 +139,8 @@ public class UserSegmentsEntryMembershipChecker {
 				sb,
 				StringBundler.concat(
 					_NOT_FOUND_INDEX, " < ",
-					StringUtil.quote(_toString(object), StringPool.QUOTE),
-					".indexOf(", value, ")"));
+					StringUtil.quote(_toString(fieldValue), StringPool.QUOTE),
+					".indexOf(", group, ")"));
 		}
 
 		matcher.appendTail(sb);

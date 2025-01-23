@@ -115,7 +115,7 @@ public class VulcanBatchEnginePortletDataHandlerTest {
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
-		_objectEntry2 = _addObjectEntry(
+		ObjectEntry duplicateObjectEntry = _addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, existingValue,
 			TestPropsValues.getUser());
 
@@ -136,6 +136,14 @@ public class VulcanBatchEnginePortletDataHandlerTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		duplicateObjectEntry = _objectEntryLocalService.getObjectEntry(
+			duplicateObjectEntry.getExternalReferenceCode(),
+			_objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertNotEquals(
+			_objectEntry2.getExternalReferenceCode(),
+			duplicateObjectEntry.getExternalReferenceCode());
 	}
 
 	@Test

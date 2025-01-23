@@ -341,6 +341,67 @@ test('LPD-45268 Notes tab should not be visible if user does not have required p
 		[user.emailAddress]
 	);
 
+	const role2 = await apiHelpers.headlessAdminUser.postRole({
+		name: getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com.liferay.commerce.product.model.CommerceChannel',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrder',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'MANAGE_COMMERCE_ORDER_NOTES',
+					'MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+					'VIEW_COMMERCE_ORDERS',
+				],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.order',
+				scope: 1,
+			},
+		],
+	});
+
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user2.alternateName] = {
+		name: user2.givenName,
+		password: 'test',
+		surname: user2.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role2.externalReferenceCode,
+		user2.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user2.emailAddress]
+	);
+
 	await performLogout(page);
 	await performLogin(page, user.alternateName);
 
@@ -354,4 +415,18 @@ test('LPD-45268 Notes tab should not be visible if user does not have required p
 	).click();
 
 	await expect(commerceAdminOrderDetailsPage.orderNotesLink).toHaveCount(0);
+
+	await performLogout(page);
+	await performLogin(page, user2.alternateName);
+
+	await commerceAdminOrdersPage.goto();
+
+	await (
+		await commerceAdminOrdersPage.tableRowLink({
+			colIndex: 1,
+			rowValue: order.id,
+		})
+	).click();
+
+	await expect(commerceAdminOrderDetailsPage.orderNotesLink).toBeVisible();
 });

@@ -9,6 +9,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import PermissionsOptions from '../PermissionsOptions';
+import PublishModalDisplayDate from '../PublishModalDisplayDate';
 import ScheduleOptions from '../ScheduleOptions';
 
 export default function PublishModal({
@@ -68,7 +69,12 @@ export default function PublishModal({
 						setError={setDateError}
 						timeZone={timeZone}
 					/>
-				) : null}
+				) : (
+					<PublishModalDisplayDate
+						formId={formId}
+						portletNamespace={portletNamespace}
+					/>
+				)}
 
 				{(!articleId || Liferay.FeatureFlags['LPD-11228']) &&
 					showPermissionsOptions && (

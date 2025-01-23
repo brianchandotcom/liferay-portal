@@ -32,74 +32,83 @@ if (threadFlag != null) {
 
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
 	<tr>
-		<td class="table-cell" style="padding-left: <%= (depth > 0) ? depth * 10 : 5 %>px; width: 90%;" valign="middle">
-			<c:if test="<%= !message.isRoot() %>">
-				<c:choose>
-					<c:when test="<%= !lastNode %>">
-						<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/message_boards/t.png" />
-					</c:when>
-					<c:otherwise>
-						<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/message_boards/l.png" />
-					</c:otherwise>
-				</c:choose>
-			</c:if>
 
-			<%
-			String rowHREF = null;
+		<%
+		String rowHREF = null;
 
-			if (portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN)) {
-				rowHREF = MBUtil.getMBMessageURL(selMessage.getMessageId(), renderResponse);
+		if (portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN)) {
+			rowHREF = MBUtil.getMBMessageURL(selMessage.getMessageId(), renderResponse);
+		}
+		else {
+			rowHREF = MBUtil.getMBMessageURL(selMessage.getMessageId(), PortalUtil.getLayoutFullURL(themeDisplay), renderResponse);
+		}
+
+		boolean readThread = true;
+
+		if (themeDisplay.isSignedIn()) {
+			Date messageModifiedDate = message.getModifiedDate();
+
+			if (threadFlagModifiedTime < messageModifiedDate.getTime()) {
+				readThread = false;
 			}
-			else {
-				rowHREF = MBUtil.getMBMessageURL(selMessage.getMessageId(), PortalUtil.getLayoutFullURL(themeDisplay), renderResponse);
-			}
+		}
+		%>
 
-			boolean readThread = true;
-
-			if (themeDisplay.isSignedIn()) {
-				Date messageModifiedDate = message.getModifiedDate();
-
-				if (threadFlagModifiedTime < messageModifiedDate.getTime()) {
-					readThread = false;
-				}
-			}
-			%>
-
-			<a href="<%= rowHREF %>">
-				<c:if test="<%= !readThread %>">
-					<strong>
+		<liferay-ui:csp>
+			<td class="table-cell" style="padding-left: <%= (depth > 0) ? depth * 10 : 5 %>px; width: 90%;" valign="middle">
+				<c:if test="<%= !message.isRoot() %>">
+					<c:choose>
+						<c:when test="<%= !lastNode %>">
+							<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/message_boards/t.png" />
+						</c:when>
+						<c:otherwise>
+							<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/message_boards/l.png" />
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 
-				<%= HtmlUtil.escape(message.getSubject()) %>
+				<a href="<%= rowHREF %>">
+					<c:if test="<%= !readThread %>">
+						<strong>
+					</c:if>
 
-				<c:if test="<%= !readThread %>">
-					</strong>
-				</c:if>
-			</a>
-		</td>
-		<td class="table-cell" style="white-space: nowrap;">
-			<a href="<%= rowHREF %>">
-				<c:if test="<%= !readThread %>">
-					<strong>
-				</c:if>
+					<%= HtmlUtil.escape(message.getSubject()) %>
 
-				<c:choose>
-					<c:when test="<%= message.isAnonymous() %>">
-						<liferay-ui:message key="anonymous" />
-					</c:when>
-					<c:otherwise>
-						<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
-					</c:otherwise>
-				</c:choose>
+					<c:if test="<%= !readThread %>">
+						</strong>
+					</c:if>
+				</a>
+			</td>
+		</liferay-ui:csp>
 
-				<c:if test="<%= !readThread %>">
-					</strong>
-				</c:if>
-			</a>
-		</td>
-		<td class="table-cell" style="white-space: nowrap;">
-			<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
-		</td>
+		<liferay-ui:csp>
+			<td class="table-cell" style="white-space: nowrap;">
+				<a href="<%= rowHREF %>">
+					<c:if test="<%= !readThread %>">
+						<strong>
+					</c:if>
+
+					<c:choose>
+						<c:when test="<%= message.isAnonymous() %>">
+							<liferay-ui:message key="anonymous" />
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
+						</c:otherwise>
+					</c:choose>
+
+					<c:if test="<%= !readThread %>">
+						</strong>
+					</c:if>
+				</a>
+			</td>
+		</liferay-ui:csp>
+
+		<liferay-ui:csp>
+			<td class="table-cell" style="white-space: nowrap;">
+				<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
+			</td>
+		</liferay-ui:csp>
 	</tr>
 </c:if>
 

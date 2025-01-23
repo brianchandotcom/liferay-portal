@@ -24,9 +24,11 @@
 	%>
 
 	<div align="right">
-		<a href="javascript:void(0);" id="view-removed-attachments-link" style='display: <%= (deletedAttachmentsFileEntriesCount > 0) ? "initial" : "none" %>;'>
-			<liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;
-		</a>
+		<liferay-ui:csp>
+			<a href="javascript:void(0);" id="view-removed-attachments-link" style='display: <%= (deletedAttachmentsFileEntriesCount > 0) ? "initial" : "none" %>;'>
+				<liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;
+			</a>
+		</liferay-ui:csp>
 	</div>
 </c:if>
 

@@ -67,17 +67,19 @@ if (portletTitleBasedNavigation) {
 					<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= liferayPortletResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
 					<div class="hide" id="<portlet:namespace />explanationPost">
-						<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
-							<aui:validator name="required">
-								function () {
-									var addExplanationPostCheckbox = document.getElementById('<portlet:namespace />addExplanationPost');
+						<liferay-ui:csp>
+							<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
+								<aui:validator name="required">
+									function () {
+										var addExplanationPostCheckbox = document.getElementById('<portlet:namespace />addExplanationPost');
 
-									if (addExplanationPostCheckbox) {
-										return addExplanationPostCheckbox.checked;
+										if (addExplanationPostCheckbox) {
+											return addExplanationPostCheckbox.checked;
+										}
 									}
-								}
-							</aui:validator>
-						</aui:input>
+								</aui:validator>
+							</aui:input>
+						</liferay-ui:csp>
 
 						<div>
 							<c:choose>

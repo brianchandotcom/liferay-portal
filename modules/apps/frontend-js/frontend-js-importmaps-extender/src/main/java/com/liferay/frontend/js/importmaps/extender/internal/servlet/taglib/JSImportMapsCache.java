@@ -76,7 +76,7 @@ public class JSImportMapsCache {
 		Map<Long, String> globalImportMapsValues1 = _getGlobalImportMapsValues(
 			COMPANY_ID_ALL);
 
-		_writeImports(writer, globalImportMapsValues1);
+		_writeImports(globalImportMapsValues1, writer);
 
 		Map<Long, String> globalImportMapsValues2 = _getGlobalImportMapsValues(
 			companyId);
@@ -87,14 +87,14 @@ public class JSImportMapsCache {
 			writer.write(StringPool.COMMA);
 		}
 
-		_writeImports(writer, globalImportMapsValues2);
+		_writeImports(globalImportMapsValues2, writer);
 
 		writer.write("}, \"scopes\": {");
 
 		Map<String, String> scopedImportMapsValues1 =
 			_getScopedImportMapsValues(COMPANY_ID_ALL);
 
-		_writeScopes(writer, scopedImportMapsValues1);
+		_writeScopes(scopedImportMapsValues1, writer);
 
 		Map<String, String> scopedImportMapsValues2 =
 			_getScopedImportMapsValues(companyId);
@@ -105,7 +105,7 @@ public class JSImportMapsCache {
 			writer.write(StringPool.COMMA);
 		}
 
-		_writeScopes(writer, scopedImportMapsValues2);
+		_writeScopes(scopedImportMapsValues2, writer);
 
 		writer.write("}}");
 	}
@@ -139,7 +139,7 @@ public class JSImportMapsCache {
 	}
 
 	private void _writeImports(
-			Writer writer, Map<Long, String> globalImportMapsValues)
+			Map<Long, String> globalImportMapsValues, Writer writer)
 		throws IOException {
 
 		boolean first = true;
@@ -157,7 +157,7 @@ public class JSImportMapsCache {
 	}
 
 	private void _writeScopes(
-			Writer writer, Map<String, String> scopedImportMapsValues)
+			Map<String, String> scopedImportMapsValues, Writer writer)
 		throws IOException {
 
 		boolean first = true;

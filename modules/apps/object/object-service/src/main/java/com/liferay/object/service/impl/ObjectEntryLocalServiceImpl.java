@@ -88,6 +88,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.search.StrictObjectReindexThreadLocal;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -220,6 +221,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -4874,15 +4876,31 @@ public class ObjectEntryLocalServiceImpl
 			assetTagNames = null;
 		}
 
+		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+			objectDefinition.getTitleObjectFieldId());
+
 		String title = StringPool.BLANK;
 
-		try {
-			title = objectEntry.getTitleValue();
+		if ((objectField != null) && objectField.isLocalized()) {
+			title = _localization.getXml(
+				LocalizedMapUtil.getLanguageIdMap(objectEntry.getTitleMap()),
+				objectField.getDefaultLanguageId(), "title");
 		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
+		else {
+			try {
+				title = objectEntry.getTitleValue();
 			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
+				}
+			}
+		}
+
+		String contentTypes = ContentTypes.TEXT_PLAIN;
+
+		if (Validator.isXml(title)) {
+			contentTypes = ContentTypes.TEXT_HTML;
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
@@ -4890,10 +4908,9 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			objectEntry.isApproved(), null, null, null, null,
-			ContentTypes.TEXT_PLAIN, title,
-			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
-			0, priority, serviceContext);
+			objectEntry.isApproved(), null, null, null, null, contentTypes,
+			title, String.valueOf(objectEntry.getObjectEntryId()), null, null,
+			null, 0, 0, priority, serviceContext);
 
 		if (assetLinkEntryIds != null) {
 			_assetLinkLocalService.updateLinks(

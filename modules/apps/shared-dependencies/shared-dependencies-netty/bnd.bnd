@@ -1,5 +1,15 @@
 Bundle-Name: Liferay Shared Dependencies Netty
 Bundle-SymbolicName: com.liferay.shared.dependencies.netty
 Bundle-Version: 1.0.6
-Import-Package: !com.aayushatharva.brotli4j.*
+Import-Package:\
+	!com.aayushatharva.brotli4j.*,\
+	\
+	!com.github.luben.zstd.util.*,\
+	\
+	!com.nimbusds.common.contenttype.*,\
+	!com.nimbusds.langtag.*,\
+	\
+	!net.jcip.annotations.*,\
+	\
+	*
 -exportcontents: io.netty.*

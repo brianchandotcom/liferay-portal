@@ -31,6 +31,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
@@ -43,6 +44,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Sanz
  */
 public abstract class BaseCustomFDSSerializer {
+
+	public Set<ObjectEntry> getCreationActionObjectEntries(
+		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+
+		return _getSortedRelatedObjectEntries(
+			getDataSetObjectDefinition(httpServletRequest),
+			getDataSetObjectEntry(externalReferenceCode, httpServletRequest),
+			"creationActionsOrder",
+			(ObjectEntry objectEntry) -> Objects.equals(
+				_getType(objectEntry), "creation"),
+			"dataSetToDataSetActions");
+	}
 
 	public ObjectDefinition getDataSetObjectDefinition(
 		HttpServletRequest httpServletRequest) {
@@ -191,6 +204,12 @@ public abstract class BaseCustomFDSSerializer {
 		}
 
 		return objectEntries;
+	}
+
+	private String _getType(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		return GetterUtil.getString(properties.get("type"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

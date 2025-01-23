@@ -39,12 +39,12 @@ html#{$cadmin-selector} .cadmin {
 				box-shadow: 0 2px 4px rgba(39, 40, 51, 0.12);
 			}
 
-			.selection-control {
-				display: none;
+			.created-label {
+				margin: 0.5rem 0;
 			}
 
-			.used-label {
-				margin: 0.5rem 0;
+			.selection-control {
+				display: none;
 			}
 		}
 	}

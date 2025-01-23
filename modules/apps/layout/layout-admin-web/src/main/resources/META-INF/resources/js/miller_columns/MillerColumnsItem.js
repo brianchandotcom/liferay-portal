@@ -123,7 +123,7 @@ const MillerColumnsItem = ({
 		addChildLayoutURL,
 		bulkActions = [],
 		checked,
-		description,
+		description = '',
 		draggable,
 		hasChild,
 		hasDuplicatedFriendlyURL = false,
@@ -382,7 +382,7 @@ const MillerColumnsItem = ({
 			<a
 				{...ariaProps}
 				aria-current={active}
-				aria-label={`${title} ${description}`}
+				aria-label={`${title} ${description}`.trim()}
 				aria-owns={groupId}
 				className="miller-columns-item-mask"
 				href={url}

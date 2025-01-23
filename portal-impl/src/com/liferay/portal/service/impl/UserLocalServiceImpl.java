@@ -6108,7 +6108,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (authenticated) {
 				if (!StringUtil.equalsIgnoreCase(
 						PasswordEncryptorUtil.
-							getEncryptionAlgorithmConfiguration(
+							getEncryptedPasswordAlgorithmSettings(
 								user.getPassword()),
 						_PASSWORDS_ENCRYPTION_ALGORITHM)) {
 

@@ -80,13 +80,13 @@ public class PasswordEncryptorUtil {
 		return _encrypt(algorithm, plainTextPassword, encryptedPassword, false);
 	}
 
-	public static String getEncryptionAlgorithmConfiguration(
+	public static String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
 		PasswordEncryptor passwordEncryptor = _select(
 			_getEncryptedPasswordAlgorithm(encryptedPassword));
 
-		return passwordEncryptor.getEncryptionAlgorithmConfiguration(
+		return passwordEncryptor.getEncryptedPasswordAlgorithmSettings(
 			encryptedPassword);
 	}
 

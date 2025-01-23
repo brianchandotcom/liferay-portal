@@ -93,7 +93,7 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 	}
 
 	@Override
-	public String getEncryptionAlgorithmConfiguration(
+	public String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
 		try {

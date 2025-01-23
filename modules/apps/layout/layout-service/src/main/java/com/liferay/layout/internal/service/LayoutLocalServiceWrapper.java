@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -349,7 +348,7 @@ public class LayoutLocalServiceWrapper
 		}
 
 		Map<Long, Long> segmentsExperienceIdsMap = _getSegmentsExperienceIds(
-			segmentsExperiencesIds, sourceLayout, targetLayout, user);
+			segmentsExperiencesIds, targetLayout, user);
 
 		for (Map.Entry<Long, Long> entry :
 				segmentsExperienceIdsMap.entrySet()) {
@@ -686,60 +685,34 @@ public class LayoutLocalServiceWrapper
 	}
 
 	private Map<Long, Long> _getSegmentsExperienceIds(
-		long[] segmentsExperiencesIds, Layout sourceLayout, Layout targetLayout,
-		User user) {
+		long[] segmentsExperiencesIds, Layout targetLayout, User user) {
 
 		Map<Long, Long> segmentsExperienceIdsMap = new HashMap<>();
-
-		if (sourceLayout.isDraftLayout() || targetLayout.isDraftLayout()) {
-			for (long segmentsExperienceId : segmentsExperiencesIds) {
-				SegmentsExperience segmentsExperience =
-					_segmentsExperienceLocalService.fetchSegmentsExperience(
-						segmentsExperienceId);
-
-				if (Objects.equals(
-						segmentsExperience.getSegmentsExperienceKey(),
-						SegmentsExperienceConstants.KEY_DEFAULT)) {
-
-					segmentsExperienceIdsMap.put(
-						segmentsExperience.getSegmentsExperienceId(),
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(
-								targetLayout.getPlid()));
-
-					continue;
-				}
-
-				segmentsExperienceIdsMap.put(
-					segmentsExperienceId, segmentsExperienceId);
-			}
-
-			return segmentsExperienceIdsMap;
-		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		for (long segmentsExperienceId : segmentsExperiencesIds) {
-			SegmentsExperience segmentsExperience =
+			SegmentsExperience sourceSegmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
 
-			if (Objects.equals(
-					segmentsExperience.getSegmentsExperienceKey(),
-					SegmentsExperienceConstants.KEY_DEFAULT)) {
+			SegmentsExperience targetSegmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					targetLayout.getGroupId(),
+					sourceSegmentsExperience.getSegmentsExperienceKey(),
+					targetLayout.getPlid());
 
+			if (targetSegmentsExperience != null) {
 				segmentsExperienceIdsMap.put(
-					segmentsExperience.getSegmentsExperienceId(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(
-							targetLayout.getPlid()));
+					sourceSegmentsExperience.getSegmentsExperienceId(),
+					targetSegmentsExperience.getSegmentsExperienceId());
 
 				continue;
 			}
 
 			SegmentsExperience newSegmentsExperience =
-				(SegmentsExperience)segmentsExperience.clone();
+				(SegmentsExperience)sourceSegmentsExperience.clone();
 
 			newSegmentsExperience.setUuid(serviceContext.getUuid());
 			newSegmentsExperience.setExternalReferenceCode(null);
@@ -752,14 +725,14 @@ public class LayoutLocalServiceWrapper
 			newSegmentsExperience.setModifiedDate(
 				serviceContext.getModifiedDate(new Date()));
 			newSegmentsExperience.setSegmentsExperienceKey(
-				segmentsExperience.getSegmentsExperienceKey());
+				sourceSegmentsExperience.getSegmentsExperienceKey());
 			newSegmentsExperience.setPlid(targetLayout.getPlid());
 
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				newSegmentsExperience);
 
 			segmentsExperienceIdsMap.put(
-				segmentsExperience.getSegmentsExperienceId(),
+				sourceSegmentsExperience.getSegmentsExperienceId(),
 				newSegmentsExperience.getSegmentsExperienceId());
 		}
 

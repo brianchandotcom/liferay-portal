@@ -105,19 +105,21 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		int maxChallenges;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("captcha.enforce.disabled"))) {
-			maxChallenges = getCaptchaConfiguration().maxChallenges();
+			maxChallenges = captchaConfiguration.maxChallenges();
 		}
 		else {
 			maxChallenges = GetterUtil.getInteger(
 				httpSession.getAttribute(
 					_getHttpSessionKey(
 						_CAPTCHA_MAX_CHALLENGES, httpServletRequest)),
-				getCaptchaConfiguration().maxChallenges());
+				captchaConfiguration.maxChallenges());
 		}
 
 		if (maxChallenges == 0) {
@@ -244,7 +246,9 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getHeight() {
-		return getCaptchaConfiguration().simpleCaptchaHeight();
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaHeight();
 	}
 
 	protected NoiseProducer getNoiseProducer() {
@@ -281,7 +285,9 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getWidth() {
-		return getCaptchaConfiguration().simpleCaptchaWidth();
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
+		return captchaConfiguration.simpleCaptchaWidth();
 	}
 
 	protected WordRenderer getWordRenderer() {
@@ -295,7 +301,9 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void incrementCounter(HttpServletRequest httpServletRequest) {
-		if ((getCaptchaConfiguration().maxChallenges() > 0) &&
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
+		if ((captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
 
 			HttpSession httpSession = _getHttpSession(httpServletRequest);
@@ -325,8 +333,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initBackgroundProducers() {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		String[] backgroundProducerClassNames =
-			getCaptchaConfiguration().simpleCaptchaBackgroundProducers();
+			captchaConfiguration.simpleCaptchaBackgroundProducers();
 
 		_backgroundProducers =
 			new BackgroundProducer[backgroundProducerClassNames.length];
@@ -341,8 +351,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initGimpyRenderers() {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		String[] gimpyRendererClassNames =
-			getCaptchaConfiguration().simpleCaptchaGimpyRenderers();
+			captchaConfiguration.simpleCaptchaGimpyRenderers();
 
 		_gimpyRenderers = new GimpyRenderer[gimpyRendererClassNames.length];
 
@@ -355,8 +367,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initNoiseProducers() {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		String[] noiseProducerClassNames =
-			getCaptchaConfiguration().simpleCaptchaNoiseProducers();
+			captchaConfiguration.simpleCaptchaNoiseProducers();
 
 		_noiseProducers = new NoiseProducer[noiseProducerClassNames.length];
 
@@ -369,8 +383,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initTextProducers() {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		String[] textProducerClassNames =
-			getCaptchaConfiguration().simpleCaptchaTextProducers();
+			captchaConfiguration.simpleCaptchaTextProducers();
 
 		_textProducers = new TextProducer[textProducerClassNames.length];
 
@@ -383,8 +399,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initWordRenderers() {
+		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+
 		String[] wordRendererClassNames =
-			getCaptchaConfiguration().simpleCaptchaWordRenderers();
+			captchaConfiguration.simpleCaptchaWordRenderers();
 
 		_wordRenderers = new WordRenderer[wordRendererClassNames.length];
 

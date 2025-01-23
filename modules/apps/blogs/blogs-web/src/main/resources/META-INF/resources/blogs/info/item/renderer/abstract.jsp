@@ -14,7 +14,9 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 <div class="asset-summary">
 	<c:if test="<%= entry.isSmallImage() %>">
-		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= entry.getSmallImageURL(themeDisplay) %>);"></div>
+		<liferay-ui:csp>
+			<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= entry.getSmallImageURL(themeDisplay) %>);"></div>
+		</liferay-ui:csp>
 	</c:if>
 
 	<%

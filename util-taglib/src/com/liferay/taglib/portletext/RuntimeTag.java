@@ -558,7 +558,9 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			_log.error(noSuchMethodException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchMethodException);
+			}
 		}
 
 		return false;

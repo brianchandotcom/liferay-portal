@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -101,17 +102,17 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		Http.Options options = new Http.Options();
 
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
+
+		options.setLocation(captchaConfiguration.reCaptchaVerifyURL());
+
 		try {
-			CaptchaConfiguration captchaConfiguration =
-				captchaProvider.getCaptchaConfiguration();
-
-			options.setLocation(captchaConfiguration.reCaptchaVerifyURL());
-
 			options.addPart(
 				"secret", captchaConfiguration.reCaptchaPrivateKey());
 		}
-		catch (Throwable throwable) {
-			_log.error(throwable);
+		catch (SystemException systemException) {
+			_log.error(systemException);
 		}
 
 		options.addPart("remoteip", httpServletRequest.getRemoteAddr());

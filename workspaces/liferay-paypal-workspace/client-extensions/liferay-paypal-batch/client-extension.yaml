@@ -10,5 +10,6 @@ liferay-paypal-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay PayPal Batch OAuth Application Headless Server
     scopes:
+        - Liferay.Headless.Batch.Engine.everything
         - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

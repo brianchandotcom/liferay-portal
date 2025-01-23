@@ -12,7 +12,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.CharArrayWriter;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,11 +28,6 @@ public class JSImportMapsCacheTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_jsImportMapsCache = new JSImportMapsCache();
-	}
 
 	@Test
 	public void testWriteImportMapsForAllCompanies() throws Exception {
@@ -237,6 +231,6 @@ public class JSImportMapsCacheTest {
 		return charArrayWriter.toString();
 	}
 
-	private JSImportMapsCache _jsImportMapsCache;
+	private JSImportMapsCache _jsImportMapsCache = new JSImportMapsCache();
 
 }

@@ -30,7 +30,14 @@ if (Validator.isNull(width)) {
 	</c:if>
 
 	<div class="preview" id="<%= randomNamespace %>">
-		<div style="margin: 3px; width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %>;">
+		<aui:style type="text/css">
+			.taglib-portlet-preview-pane {
+				margin: 3px !important;
+				width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %> !important;
+			}
+		</aui:style>
+
+		<div class="taglib-portlet-preview-pane">
 			<liferay-portlet:runtime
 				persistSettings="<%= false %>"
 				portletName="<%= portletResource %>"

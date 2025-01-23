@@ -171,18 +171,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.currency.service.jar!icu4j.jar</file-name>
-				<version>57.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/LICENSE</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.google.merchant.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.10.3</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -370,18 +358,6 @@
 					<license>
 						<license-name>Eclipse Public License v1.0</license-name>
 						<license-url>http://www.eclipse.org/org/documents/epl-v10.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!icu4j.jar</file-name>
-				<version>57.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/LICENSE</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1726,17 +1702,6 @@
 					<license>
 						<license-name>MIT</license-name>
 						<license-url>http://github.com/fernandezpablo85/scribe-java/blob/master/LICENSE.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.normalizer.impl.jar!com.ibm.icu4j.jar</file-name>
-				<version>54.1.1.LIFERAY-PATCHED-2</version>
-				<project-name>com.liferay:com.ibm.icu4j</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4220,7 +4185,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!reflections.jar</file-name>
-				<version>0.9.11</version>
+				<version>0.10.2</version>
 				<project-name>Reflections</project-name>
 				<project-url>http://github.com/ronmamo/reflections</project-url>
 				<licenses>
@@ -4869,6 +4834,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.icu4j.jar!icu4j.jar</file-name>
+				<version>69.1</version>
+				<project-name>ICU4J</project-name>
+				<project-url>http://icu-project.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Unicode/ICU License</license-name>
+						<license-url>https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.jdom2.jar!org.jdom2.jar</file-name>
 				<version>2.0.6.LIFERAY-PATCHED-1</version>
 				<project-name>org.jdom2</project-name>
@@ -5390,18 +5367,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.translation.service.jar!icu4j.jar</file-name>
-				<version>65.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Unicode/ICU License</license-name>
-						<license-url>https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.translation.service.jar!okapi-core.jar</file-name>
 				<version>1.42.0</version>
 				<project-name>Okapi Core</project-name>
@@ -5465,6 +5430,275 @@
 					<license>
 						<license-name>The BSD License</license-name>
 						<license-url>http://www.opensource.org/licenses/bsd-license.php</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!annotations.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Annotations</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!apache-client.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: HTTP Clients :: Apache</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!auth.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Auth</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!aws-core.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: AWS Core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!aws-json-protocol.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: AWS Json Protocol</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!checksums-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Checksums SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!checksums.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Checksums</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!endpoints-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Endpoints SPI</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!eventstream.jar</file-name>
+				<version>1.0.1</version>
+				<project-name>AWS Event Stream</project-name>
+				<project-url>https://github.com/awslabs/aws-eventstream-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!http-auth-aws.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: HTTP Auth AWS</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!http-auth-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: HTTP Auth SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!http-auth.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: HTTP Auth</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!http-client-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: HTTP Client Interface</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!identity-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Identity SPI</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!json-utils.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: Json Utils</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!metrics-spi.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Metrics SPI</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!profiles.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Profiles</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!protocol-core.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Core :: Protocols :: Protocol Core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!regions.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Regions</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!sdk-core.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: SDK Core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!third-party-jackson-core.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Third Party :: Jackson-core</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!translate.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Services :: Amazon Translate</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!utils.jar</file-name>
+				<version>2.25.53</version>
+				<project-name>AWS Java SDK :: Utilities</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
 					</license>
 				</licenses>
 			</library>

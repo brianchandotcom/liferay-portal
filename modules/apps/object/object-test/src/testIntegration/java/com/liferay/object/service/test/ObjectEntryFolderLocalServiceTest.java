@@ -131,7 +131,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				ObjectEntryFolderConstants.
 					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID));
 
-		// Folder scope
+		// Scope
 
 		AssertUtils.assertFailure(
 			ObjectEntryFolderScopeException.class,
@@ -263,7 +263,7 @@ public class ObjectEntryFolderLocalServiceTest {
 					objectEntryFolder.getParentObjectEntryFolderId());
 			});
 
-		// Folder scope
+		// Scope
 
 		AssertUtils.assertFailure(
 			ObjectEntryFolderScopeException.class,

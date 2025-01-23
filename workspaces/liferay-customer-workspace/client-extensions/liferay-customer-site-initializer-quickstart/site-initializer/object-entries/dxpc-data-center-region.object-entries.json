@@ -69,6 +69,11 @@
 			"externalReferenceCode": "CP-REGION-14",
 			"name": "Tokyo, Japan",
 			"value": "Tokyo, Japan"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-15",
+			"name": "Zurich, Switzerland",
+			"value": "Zurich, Switzerland"
 		}
 	],
 	"objectDefinitionName": "DXPCDataCenterRegion"

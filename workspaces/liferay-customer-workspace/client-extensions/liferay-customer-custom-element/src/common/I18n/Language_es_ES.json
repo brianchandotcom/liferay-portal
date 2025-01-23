@@ -581,5 +581,6 @@
 	"your-lxc-sm-environments-are-being-set-up-and-will-be-available-soon": "Tus entornos de LXC - SM se están configurando y estarán disponibles en breve.",
 	"your-lxc-sm-environments-are-ready": "Tus entornos de LXC - SM ya están listos.",
 	"your-lxc-sm-environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details": "Tus entornos de LXC - SM ya están listos. Ve a la consola de producto para ver los detalles de DXP Cloud.",
-	"your-request-completed-successfully": "Tu solicitud se completó correctamente."
+	"your-request-completed-successfully": "Tu solicitud se completó correctamente.",
+	"zurich-switzerland": "Zúrich, Suiza"
 }

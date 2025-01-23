@@ -12,133 +12,39 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 --%>
 
-<div class="permissions-table-container table-responsive" id="<%= uniqueNamespace %>inputPermissionsTable" style="margin-bottom: 60px;">
-	<table class="table table-list">
-		<thead>
-			<tr>
-				<th>
-					<liferay-ui:message key="role" />
-				</th>
-
-				<%
-				for (int i = 0; i < supportedActions.size(); i++) {
-					String action = (String)supportedActions.get(i);
-				%>
-
-					<th class="table-column-text-center">
-						<%= ResourceActionsUtil.getAction(request, action) %>
+<liferay-ui:csp>
+	<div class="permissions-table-container table-responsive" id="<%= uniqueNamespace %>inputPermissionsTable" style="margin-bottom: 60px;">
+		<table class="table table-list">
+			<thead>
+				<tr>
+					<th>
+						<liferay-ui:message key="role" />
 					</th>
 
-				<%
-				}
-				%>
+					<%
+					for (int i = 0; i < supportedActions.size(); i++) {
+						String action = (String)supportedActions.get(i);
+					%>
 
-			</tr>
-		</thead>
+						<th class="table-column-text-center">
+							<%= ResourceActionsUtil.getAction(request, action) %>
+						</th>
 
-		<%
-		for (String roleName : roleNames) {
-			Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
-
-			List<String> roleDefaultPermissions = Collections.emptyList();
-
-			if ((defaultPermissions != null) && (defaultPermissions.get(roleName) != null)) {
-				roleDefaultPermissions = Arrays.asList(defaultPermissions.get(roleName));
-			}
-		%>
-
-			<tr>
-				<td class="table-title">
-					<%= role.getTitle(themeDisplay.getLocale()) %>
-				</td>
-
-				<%
-				for (int i = 0; i < supportedActions.size(); i++) {
-					String action = (String)supportedActions.get(i);
-
-					boolean checked = false;
-					boolean disabled = false;
-
-					if (roleName.equals(RoleConstants.GUEST)) {
-						disabled = guestUnsupportedActions.contains(action);
-
-						if (disabled) {
-							checked = false;
-						}
-						else if (submitted) {
-							checked = guestPermissions.contains(action);
-						}
-						else {
-							checked = (guestDefaultActions.contains(action) || roleDefaultPermissions.contains(action)) && inputPermissionsViewRole.equals(RoleConstants.GUEST);
-						}
+					<%
 					}
-					else if (roleName.equals(defaultGroupRole.getName())) {
-						if (submitted) {
-							checked = groupPermissions.contains(action);
-						}
-						else {
-							checked = groupDefaultActions.contains(action) || roleDefaultPermissions.contains(action);
-						}
-					}
-					else {
-						checked = roleDefaultPermissions.contains(action);
-					}
+					%>
 
-					String checkboxFieldId = null;
-					String checkboxFieldName = null;
-
-					if (roleName.equals(RoleConstants.GUEST)) {
-						checkboxFieldId = uniqueNamespace + "guestPermissions";
-						checkboxFieldName = namespace + guestPermissionsName;
-					}
-					else {
-						checkboxFieldId = uniqueNamespace + "groupPermissions";
-						checkboxFieldName = namespace + groupPermissionsName;
-					}
-
-					checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
-				%>
-
-					<td class="table-column-text-center">
-						<label class="sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
-
-						<c:if test="<%= action.equals(ActionKeys.VIEW) %>">
-							<input <%= checked ? "checked" : "" %> class="hide" id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" type="checkbox" value="<%= action %>" />
-
-							<%
-							disabled = true;
-
-							checkboxFieldId = checkboxFieldId + "_display";
-							checkboxFieldName = checkboxFieldName + "_display";
-							%>
-
-						</c:if>
-
-						<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />
-					</td>
-
-				<%
-				}
-				%>
-
-			</tr>
-
-		<%
-		}
-		%>
-
-		<c:if test="<%= showAllRoles && (supportedRoles != null) %>">
-			<input name="<%= uniqueNamespace %>inputPermissionsShowAllRoles" type="hidden" value="<%= showAllRoles %>" />
+				</tr>
+			</thead>
 
 			<%
-			for (Role role : supportedRoles) {
-				String checkboxFieldId = uniqueNamespace + "rolePermissions_" + role.getRoleId();
-				String checkboxFieldName = namespace + "rolePermissions_" + role.getRoleId();
+			for (String roleName : roleNames) {
+				Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
 
 				List<String> roleDefaultPermissions = Collections.emptyList();
 
-				if ((defaultPermissions != null) && (defaultPermissions.get(role.getName()) != null)) {
-					roleDefaultPermissions = Arrays.asList(defaultPermissions.get(role.getName()));
+				if ((defaultPermissions != null) && (defaultPermissions.get(roleName) != null)) {
+					roleDefaultPermissions = Arrays.asList(defaultPermissions.get(roleName));
 				}
 			%>
 
@@ -151,13 +57,65 @@ ServiceContext#deriveDefaultPermissions(long, String).
 					for (int i = 0; i < supportedActions.size(); i++) {
 						String action = (String)supportedActions.get(i);
 
-						boolean checked = roleDefaultPermissions.contains(action);
+						boolean checked = false;
+						boolean disabled = false;
+
+						if (roleName.equals(RoleConstants.GUEST)) {
+							disabled = guestUnsupportedActions.contains(action);
+
+							if (disabled) {
+								checked = false;
+							}
+							else if (submitted) {
+								checked = guestPermissions.contains(action);
+							}
+							else {
+								checked = (guestDefaultActions.contains(action) || roleDefaultPermissions.contains(action)) && inputPermissionsViewRole.equals(RoleConstants.GUEST);
+							}
+						}
+						else if (roleName.equals(defaultGroupRole.getName())) {
+							if (submitted) {
+								checked = groupPermissions.contains(action);
+							}
+							else {
+								checked = groupDefaultActions.contains(action) || roleDefaultPermissions.contains(action);
+							}
+						}
+						else {
+							checked = roleDefaultPermissions.contains(action);
+						}
+
+						String checkboxFieldId = null;
+						String checkboxFieldName = null;
+
+						if (roleName.equals(RoleConstants.GUEST)) {
+							checkboxFieldId = uniqueNamespace + "guestPermissions";
+							checkboxFieldName = namespace + guestPermissionsName;
+						}
+						else {
+							checkboxFieldId = uniqueNamespace + "groupPermissions";
+							checkboxFieldName = namespace + groupPermissionsName;
+						}
+
+						checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
 					%>
 
 						<td class="table-column-text-center">
-							<label class="hide-accessible sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
+							<label class="sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
-							<input <%= checked ? "checked" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title="<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>" type="checkbox" value="<%= action %>" />
+							<c:if test="<%= action.equals(ActionKeys.VIEW) %>">
+								<input <%= checked ? "checked" : "" %> class="hide" id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" type="checkbox" value="<%= action %>" />
+
+								<%
+								disabled = true;
+
+								checkboxFieldId = checkboxFieldId + "_display";
+								checkboxFieldName = checkboxFieldName + "_display";
+								%>
+
+							</c:if>
+
+							<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />
 						</td>
 
 					<%
@@ -170,6 +128,50 @@ ServiceContext#deriveDefaultPermissions(long, String).
 			}
 			%>
 
-		</c:if>
-	</table>
-</div>
+			<c:if test="<%= showAllRoles && (supportedRoles != null) %>">
+				<input name="<%= uniqueNamespace %>inputPermissionsShowAllRoles" type="hidden" value="<%= showAllRoles %>" />
+
+				<%
+				for (Role role : supportedRoles) {
+					String checkboxFieldId = uniqueNamespace + "rolePermissions_" + role.getRoleId();
+					String checkboxFieldName = namespace + "rolePermissions_" + role.getRoleId();
+
+					List<String> roleDefaultPermissions = Collections.emptyList();
+
+					if ((defaultPermissions != null) && (defaultPermissions.get(role.getName()) != null)) {
+						roleDefaultPermissions = Arrays.asList(defaultPermissions.get(role.getName()));
+					}
+				%>
+
+					<tr>
+						<td class="table-title">
+							<%= role.getTitle(themeDisplay.getLocale()) %>
+						</td>
+
+						<%
+						for (int i = 0; i < supportedActions.size(); i++) {
+							String action = (String)supportedActions.get(i);
+
+							boolean checked = roleDefaultPermissions.contains(action);
+						%>
+
+							<td class="table-column-text-center">
+								<label class="hide-accessible sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
+
+								<input <%= checked ? "checked" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title="<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>" type="checkbox" value="<%= action %>" />
+							</td>
+
+						<%
+						}
+						%>
+
+					</tr>
+
+				<%
+				}
+				%>
+
+			</c:if>
+		</table>
+	</div>
+</liferay-ui:csp>

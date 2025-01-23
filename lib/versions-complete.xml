@@ -171,18 +171,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.currency.service.jar!icu4j.jar</file-name>
-				<version>57.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/LICENSE</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.google.merchant.jar!jackson-dataformat-xml.jar</file-name>
 				<version>2.10.3</version>
 				<project-name>Jackson-dataformat-XML</project-name>
@@ -370,18 +358,6 @@
 					<license>
 						<license-name>Eclipse Public License v1.0</license-name>
 						<license-url>http://www.eclipse.org/org/documents/epl-v10.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!icu4j.jar</file-name>
-				<version>57.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/LICENSE</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1647,54 +1623,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!com.nimbusds.jwt.jar</file-name>
-				<version>9.40.LIFERAY-PATCHED-1</version>
-				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!content-type.jar</file-name>
-				<version>2.2</version>
-				<project-name>Nimbus Content Type</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!jcip-annotations.jar</file-name>
-				<version>1.0-1</version>
-				<project-name>JCIP Annotations under Apache License</project-name>
-				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!lang-tag.jar</file-name>
-				<version>1.7</version>
-				<project-name>Nimbus LangTag</project-name>
-				<project-url>https://connect2id.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!msal4j.jar</file-name>
 				<version>1.16.2</version>
 				<project-name>msal4j</project-name>
@@ -1702,18 +1630,6 @@
 				<licenses>
 					<license>
 						<license-name>MIT License</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>10.7.1</version>
-				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
-				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1730,17 +1646,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.normalizer.impl.jar!com.ibm.icu4j.jar</file-name>
-				<version>54.1.1.LIFERAY-PATCHED-2</version>
-				<project-name>com.liferay:com.ibm.icu4j</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!commons-lang3.jar</file-name>
 				<version>3.4</version>
 				<project-name>Apache Commons Lang</project-name>
@@ -1753,18 +1658,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!content-type.jar</file-name>
-				<version>2.3</version>
-				<project-name>Nimbus Content Type</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!jakarta.mail.jar</file-name>
 				<version>1.6.6</version>
 				<project-name>Jakarta Mail API</project-name>
@@ -1773,54 +1666,6 @@
 					<license>
 						<license-name>GPL2 w/ CPE</license-name>
 						<license-url>https://www.gnu.org/software/classpath/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!jcip-annotations.jar</file-name>
-				<version>1.0-1</version>
-				<project-name>JCIP Annotations under Apache License</project-name>
-				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!lang-tag.jar</file-name>
-				<version>1.7</version>
-				<project-name>Nimbus LangTag</project-name>
-				<project-url>https://connect2id.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!nimbus-jose-jwt.jar</file-name>
-				<version>9.40</version>
-				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>11.13</version>
-				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
-				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3048,18 +2893,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!content-type.jar</file-name>
-				<version>2.3</version>
-				<project-name>Nimbus Content Type</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!jakarta.mail.jar</file-name>
 				<version>1.6.6</version>
 				<project-name>Jakarta Mail API</project-name>
@@ -3068,114 +2901,6 @@
 					<license>
 						<license-name>GPL2 w/ CPE</license-name>
 						<license-url>https://www.gnu.org/software/classpath/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!jcip-annotations.jar</file-name>
-				<version>1.0-1</version>
-				<project-name>JCIP Annotations under Apache License</project-name>
-				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!lang-tag.jar</file-name>
-				<version>1.7</version>
-				<project-name>Nimbus LangTag</project-name>
-				<project-url>https://connect2id.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!nimbus-jose-jwt.jar</file-name>
-				<version>9.40</version>
-				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>11.13</version>
-				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
-				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!content-type.jar</file-name>
-				<version>2.3</version>
-				<project-name>Nimbus Content Type</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!jcip-annotations.jar</file-name>
-				<version>1.0-1</version>
-				<project-name>JCIP Annotations under Apache License</project-name>
-				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!lang-tag.jar</file-name>
-				<version>1.7</version>
-				<project-name>Nimbus LangTag</project-name>
-				<project-url>https://connect2id.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!nimbus-jose-jwt.jar</file-name>
-				<version>9.40</version>
-				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://connect2id.com</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>11.13</version>
-				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
-				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4220,7 +3945,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!reflections.jar</file-name>
-				<version>0.9.11</version>
+				<version>0.10.2</version>
 				<project-name>Reflections</project-name>
 				<project-url>http://github.com/ronmamo/reflections</project-url>
 				<licenses>
@@ -4869,6 +4594,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.icu4j.jar!icu4j.jar</file-name>
+				<version>69.1</version>
+				<project-name>ICU4J</project-name>
+				<project-url>http://icu-project.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Unicode/ICU License</license-name>
+						<license-url>https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.jdom2.jar!org.jdom2.jar</file-name>
 				<version>2.0.6.LIFERAY-PATCHED-1</version>
 				<project-name>org.jdom2</project-name>
@@ -5092,6 +4829,66 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.nimbusds.jar!content-type.jar</file-name>
+				<version>2.3</version>
+				<project-name>Nimbus Content Type</project-name>
+				<project-url>https://connect2id.com</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.nimbusds.jar!jcip-annotations.jar</file-name>
+				<version>1.0-1</version>
+				<project-name>JCIP Annotations under Apache License</project-name>
+				<project-url>http://stephenc.github.com/jcip-annotations</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.nimbusds.jar!lang-tag.jar</file-name>
+				<version>1.7</version>
+				<project-name>Nimbus LangTag</project-name>
+				<project-url>https://connect2id.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.nimbusds.jar!nimbus-jose-jwt.jar</file-name>
+				<version>9.40</version>
+				<project-name>Nimbus JOSE+JWT</project-name>
+				<project-url>https://connect2id.com</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.nimbusds.jar!oauth2-oidc-sdk.jar</file-name>
+				<version>11.13</version>
+				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
+				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5386,18 +5183,6 @@
 					<license>
 						<license-name>BSD-3-Clause</license-name>
 						<license-url>http://x-stream.github.io/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.translation.service.jar!icu4j.jar</file-name>
-				<version>65.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Unicode/ICU License</license-name>
-						<license-url>https://raw.githubusercontent.com/unicode-org/icu/master/icu4c/LICENSE</license-url>
 					</license>
 				</licenses>
 			</library>

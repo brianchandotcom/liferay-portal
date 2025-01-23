@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -68,6 +71,12 @@ public interface ObjectEntryFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntryFolder addObjectEntryFolder(
 		ObjectEntryFolder objectEntryFolder);
+
+	public ObjectEntryFolder addObjectEntryFolder(
+			String externalReferenceCode, long userId, long groupId,
+			Map<Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
@@ -301,6 +310,11 @@ public interface ObjectEntryFolderLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public ObjectEntryFolder updateObjectEntryFolder(
+			long userId, long objectEntryFolderId, Map<Locale, String> labelMap,
+			String name, long parentObjectEntryFolderId)
 		throws PortalException;
 
 	/**

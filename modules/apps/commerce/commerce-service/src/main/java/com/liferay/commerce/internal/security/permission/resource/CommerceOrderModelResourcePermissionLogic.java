@@ -280,10 +280,10 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES :
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
 
-		if (_hasRoleAccountSupplier(permissionChecker, commerceOrder) &&
-			_hasPermission(
+		if (_hasPermission(
 				permissionChecker, accountEntry.getAccountEntryGroupId(),
-				actionIds)) {
+				actionIds) ||
+			_hasRoleAccountSupplier(permissionChecker, commerceOrder)) {
 
 			return true;
 		}

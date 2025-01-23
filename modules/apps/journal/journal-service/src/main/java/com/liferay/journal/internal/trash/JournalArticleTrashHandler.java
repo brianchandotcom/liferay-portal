@@ -81,9 +81,8 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 
 		return _systemEventLocalService.addSystemEvent(
 			userId, groupId, getSystemEventClassName(), classPK, classUuid,
-			StringPool.BLANK,
-			referrerClassName, SystemEventConstants.TYPE_DELETE,
-			extraDataJSONObject.toString());
+			StringPool.BLANK, referrerClassName,
+			SystemEventConstants.TYPE_DELETE, extraDataJSONObject.toString());
 	}
 
 	@Override

@@ -128,29 +128,31 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			if (group != null) {
 				SystemEventLocalServiceUtil.addSystemEvent(
 					0, groupId, systemEventHierarchyEntry.getClassName(),
-					classPK, systemEventHierarchyEntry.getUuid(), externalReferenceCode,
-					referrerClassName, systemEvent.type(),
+					classPK, systemEventHierarchyEntry.getUuid(),
+					externalReferenceCode, referrerClassName,
+					systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
 			else {
 				SystemEventLocalServiceUtil.addSystemEvent(
 					getCompanyId(classedModel),
 					systemEventHierarchyEntry.getClassName(), classPK,
-					systemEventHierarchyEntry.getUuid(), externalReferenceCode, referrerClassName,
-					systemEvent.type(),
+					systemEventHierarchyEntry.getUuid(), externalReferenceCode,
+					referrerClassName, systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
 		}
 		else if (group != null) {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				0, groupId, className, classPK, getUuid(classedModel), externalReferenceCode,
-				referrerClassName, systemEvent.type(), StringPool.BLANK);
+				0, groupId, className, classPK, getUuid(classedModel),
+				externalReferenceCode, referrerClassName, systemEvent.type(),
+				StringPool.BLANK);
 		}
 		else {
 			SystemEventLocalServiceUtil.addSystemEvent(
 				getCompanyId(classedModel), className, classPK,
-				getUuid(classedModel), externalReferenceCode, referrerClassName, systemEvent.type(),
-				StringPool.BLANK);
+				getUuid(classedModel), externalReferenceCode, referrerClassName,
+				systemEvent.type(), StringPool.BLANK);
 		}
 	}
 
@@ -185,14 +187,15 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	protected String getClassName(ClassedModel classedModel) {
 		String className = classedModel.getModelClassName();
 
-		if (classedModel instanceof StagedModel ) {
+		if ((classedModel instanceof StagedModel) &&
+			!StringUtil.startsWith(
+				className, _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 			StagedModel stagedModel = (StagedModel)classedModel;
 
 			StagedModelType stagedModelType = stagedModel.getStagedModelType();
 
-			if(!StringUtil.startsWith(className, _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
-				className = stagedModelType.getClassName();
-			}
+			className = stagedModelType.getClassName();
 		}
 
 		return className;
@@ -230,6 +233,32 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		return 0;
 	}
 
+	protected String getExternalReferenceCode(ClassedModel classedModel)
+		throws Exception {
+
+		Class<?> modelClass = classedModel.getClass();
+
+		String className = modelClass.getName();
+
+		Method getUuidMethod = null;
+
+		try {
+			getUuidMethod = modelClass.getMethod(
+				"getExternalReferenceCode", new Class<?>[0]);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			_noUUIDClassNames.add(className);
+
+			return StringPool.BLANK;
+		}
+
+		return (String)getUuidMethod.invoke(classedModel, new Object[0]);
+	}
+
 	protected long getGroupId(ClassedModel classedModel) {
 		if (!(classedModel instanceof GroupedModel)) {
 			return 0;
@@ -259,30 +288,6 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 		try {
 			getUuidMethod = modelClass.getMethod("getUuid", new Class<?>[0]);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			_noUUIDClassNames.add(className);
-
-			return StringPool.BLANK;
-		}
-
-		return (String)getUuidMethod.invoke(classedModel, new Object[0]);
-	}
-
-	protected String getExternalReferenceCode(ClassedModel classedModel) throws Exception {
-
-		Class<?> modelClass = classedModel.getClass();
-
-		String className = modelClass.getName();
-
-		Method getUuidMethod = null;
-
-		try {
-			getUuidMethod = modelClass.getMethod("getExternalReferenceCode", new Class<?>[0]);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -364,6 +369,9 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		return true;
 	}
 
+	private static final String _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION =
+		"com.liferay.object.model.ObjectDefinition#";
+
 	private static final int _PHASE_AFTER_RETURNING = 1;
 
 	private static final int _PHASE_BEFORE = 0;
@@ -375,8 +383,5 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	private final Set<String> _noUUIDClassNames = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
-
-	private static final String _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION =
-		"com.liferay.object.model.ObjectDefinition#";
 
 }

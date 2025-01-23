@@ -471,8 +471,7 @@ public class LayoutLocalServiceStagingAdvice {
 
 					_systemEventLocalService.addSystemEvent(
 						0, layout.getGroupId(), Layout.class.getName(),
-						layout.getPlid(), layout.getUuid(),
-						null, null,
+						layout.getPlid(), layout.getUuid(), null, null,
 						SystemEventConstants.TYPE_DELETE,
 						systemEventHierarchyEntry.getExtraData());
 				}

@@ -43,7 +43,7 @@ public class SystemEventTableReferenceDefinitionTest
 		return _systemEventLocalService.addSystemEvent(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			Group.class.getName(), RandomTestUtil.nextLong(),
-			PortalUUIDUtil.generate(),StringPool.BLANK, StringPool.BLANK,
+			PortalUUIDUtil.generate(), StringPool.BLANK, StringPool.BLANK,
 			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 	}
 

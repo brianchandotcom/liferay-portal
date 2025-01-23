@@ -82,9 +82,9 @@ public class DummyReferenceStagedModelRepository
 			systemEventLocalService.addSystemEvent(
 				0, dummyReference.getGroupId(),
 				dummyReference.getModelClassName(),
-				dummyReference.getPrimaryKey(), dummyReference.getUuid(), StringPool.BLANK,
-				StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
-				StringPool.BLANK);
+				dummyReference.getPrimaryKey(), dummyReference.getUuid(),
+				StringPool.BLANK, StringPool.BLANK,
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 	}
 

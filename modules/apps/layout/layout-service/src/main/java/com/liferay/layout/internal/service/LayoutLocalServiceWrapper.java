@@ -163,6 +163,28 @@ public class LayoutLocalServiceWrapper
 		}
 	}
 
+	private void _cleanDeletedSegmentsExperiences(
+			Map<Long, Long> segmentsExperienceIdsMap, Layout targetLayout)
+		throws Exception {
+
+		List<SegmentsExperience> targetSegmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				targetLayout.getGroupId(), targetLayout.getPlid());
+
+		for (SegmentsExperience targetSegmentsExperience :
+				targetSegmentsExperiences) {
+
+			if (segmentsExperienceIdsMap.containsValue(
+					targetSegmentsExperience.getSegmentsExperienceId())) {
+
+				continue;
+			}
+
+			_segmentsExperienceLocalService.deleteSegmentsExperience(
+				targetSegmentsExperience.getSegmentsExperienceId());
+		}
+	}
+
 	private void _copyAssetCategoryIdsAndAssetTagNames(
 			Layout sourceLayout, Layout targetLayout, long userId)
 		throws Exception {
@@ -349,6 +371,9 @@ public class LayoutLocalServiceWrapper
 
 		Map<Long, Long> segmentsExperienceIdsMap = _getSegmentsExperienceIds(
 			segmentsExperiencesIds, targetLayout, user);
+
+		_cleanDeletedSegmentsExperiences(
+			segmentsExperienceIdsMap, targetLayout);
 
 		for (Map.Entry<Long, Long> entry :
 				segmentsExperienceIdsMap.entrySet()) {

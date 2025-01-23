@@ -1,0 +1,69 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.frontend.data.set.internal.action;
+
+import com.liferay.frontend.data.set.action.FDSCreationMenuSerializer;
+import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Daniel Sanz
+ * @author Marko Cikos
+ */
+@Component(
+	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
+	service = FDSCreationMenuSerializer.class
+)
+public class CustomFDSCreationMenuSerializerImpl
+	extends BaseCustomFDSSerializer implements FDSCreationMenuSerializer {
+
+	@Override
+	public CreationMenu serialize(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		CreationMenu creationMenu = new CreationMenu();
+
+		for (ObjectEntry objectEntry :
+				getCreationActionObjectEntries(fdsName, httpServletRequest)) {
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			creationMenu.addPrimaryDropdownItem(
+				DropdownItemBuilder.putData(
+					"disableHeader",
+					String.valueOf(Validator.isNull(properties.get("title")))
+				).putData(
+					"permissionKey",
+					String.valueOf(properties.get("permissionKey"))
+				).putData(
+					"size", String.valueOf(properties.get("modalSize"))
+				).putData(
+					"title", String.valueOf(properties.get("title"))
+				).setHref(
+					properties.get("url")
+				).setIcon(
+					String.valueOf(properties.get("icon"))
+				).setLabel(
+					String.valueOf(properties.get("label"))
+				).setTarget(
+					String.valueOf(properties.get("target"))
+				).build());
+		}
+
+		return creationMenu;
+	}
+
+}

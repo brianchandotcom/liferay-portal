@@ -11,6 +11,7 @@ import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
@@ -35,6 +36,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	masterPagesPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
 );
@@ -663,5 +665,61 @@ test(
 		await expect(
 			page.locator('.page-editor__topper__title', {hasText: 'Grid'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Show error alert when dropping fragments inside master page fragments dropzone',
+	{tag: '@LPD-47053'},
+	async ({apiHelpers, masterPagesPage, page, pageEditorPage, site}) => {
+
+		// Create a master page
+
+		const layoutPageTemplateEntryName = getRandomString();
+
+		const masterPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+				{
+					groupId: site.id,
+					name: layoutPageTemplateEntryName,
+					type: 'master-layout',
+				}
+			);
+
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		// Add and image fragment and publish
+
+		await masterPagesPage.editMaster(layoutPageTemplateEntryName);
+
+		await pageEditorPage.addFragment('Basic Components', 'Image');
+
+		await pageEditorPage.publishPage();
+
+		// Create a new content page based on master page
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			masterLayoutPlid: masterPage.plid,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Drag and drop a fragment inside master page fragments area, should throw an error
+
+		await dragAndDropElement({
+			dragTarget: page.getByRole('menuitem', {
+				name: 'Add Button',
+			}),
+			dropTarget: page.locator('.page-editor__fragment-content--master'),
+			force: true,
+			page,
+		});
+
+		await expect(page.locator('.alert-danger')).toHaveText(
+			'Error:Fragments and widgets cannot be placed inside this area.'
+		);
 	}
 );

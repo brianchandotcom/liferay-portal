@@ -713,8 +713,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (pageResource != null) {
 			_systemEventLocalService.addSystemEvent(
 				0, page.getGroupId(), page.getModelClassName(),
-				page.getPrimaryKey(), pageResource.getUuid(), StringPool.BLANK, null,
-				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+				page.getPrimaryKey(), pageResource.getUuid(), StringPool.BLANK,
+				null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 	}
 

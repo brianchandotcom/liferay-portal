@@ -44,9 +44,9 @@ public class SystemEventUADExporterTest
 	protected SystemEvent addBaseModel(long userId) throws Exception {
 		SystemEvent systemEvent = _systemEventLocalService.addSystemEvent(
 			userId, TestPropsValues.getGroupId(), Group.class.getName(),
-			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(), StringPool.BLANK,
-			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
-			StringPool.BLANK);
+			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			StringPool.BLANK, StringPool.BLANK,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 
 		_systemEvents.add(systemEvent);
 

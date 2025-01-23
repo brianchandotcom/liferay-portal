@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {UserLocaleOptionsPage} from '../pages/portal-user-locale-options-web/UserLocaleOptionsPage';
 import {SiteConfigurationDetailsPage} from '../pages/site-admin-web/SiteConfigurationDetailsPage';
 import {SiteSettingsPage} from '../pages/site-admin-web/SiteSettingsPage';
 import {ExportUserDataPage} from '../pages/user-associated-data-web/ExportUserDataPage';
@@ -29,6 +30,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	siteConfigurationDetailsPage: SiteConfigurationDetailsPage;
 	siteSettingsPage: SiteSettingsPage;
 	teamsPage: TeamsPage;
+	userLocaleOptionsPage: UserLocaleOptionsPage;
 	userPersonalSitePage: UserPersonalSitePage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
 }>({
@@ -61,6 +63,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	teamsPage: async ({page}, use) => {
 		await use(new TeamsPage(page));
+	},
+	userLocaleOptionsPage: async ({page}, use) => {
+		await use(new UserLocaleOptionsPage(page));
 	},
 	userPersonalSitePage: async ({page}, use) => {
 		await use(new UserPersonalSitePage(page));

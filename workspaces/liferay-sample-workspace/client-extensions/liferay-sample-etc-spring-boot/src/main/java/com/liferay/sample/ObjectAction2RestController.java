@@ -6,13 +6,10 @@
 package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot.BaseRestController;
-import com.liferay.petra.string.StringBundler;
 
 import org.json.JSONObject;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Raymond Augé
@@ -45,28 +41,15 @@ public class ObjectAction2RestController extends BaseRestController {
 		}
 
 		return new ResponseEntity<>(
-			WebClient.create(
-				StringBundler.concat(
-					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					"/o/headless-admin-user/v1.0/user-accounts/",
-					modelDTOAccountJSONObject.getLong("id"))
-			).patch(
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).bodyValue(
+			patch(
+				"Bearer " + jwt.getTokenValue(),
 				new JSONObject(
 				).put(
 					"alternateName",
 					modelDTOAccountJSONObject.getString("givenName")
-				).toString()
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block(),
+				).toString(),
+				"/o/headless-admin-user/v1.0/user-accounts/" +
+					modelDTOAccountJSONObject.getLong("id")),
 			HttpStatus.OK);
 	}
 

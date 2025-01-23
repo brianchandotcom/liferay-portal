@@ -19,7 +19,7 @@ public class JavaClass extends BaseJavaTerm {
 		String name, String packageName, List<String> importNames,
 		String content, String accessModifier, int lineNumber,
 		boolean isAbstract, boolean isFinal, boolean isStatic,
-		boolean isInterface, boolean isNonsealed, boolean isSealed,
+		boolean isInterface, boolean nonsealed, boolean sealed,
 		boolean isStrictfp, boolean anonymous) {
 
 		super(
@@ -29,8 +29,8 @@ public class JavaClass extends BaseJavaTerm {
 		_packageName = packageName;
 		_importNames = importNames;
 		_isInterface = isInterface;
-		_isNonsealed = isNonsealed;
-		_isSealed = isSealed;
+		_nonsealed = nonsealed;
+		_sealed = sealed;
 		_isStrictfp = isStrictfp;
 		_anonymous = anonymous;
 	}
@@ -124,11 +124,11 @@ public class JavaClass extends BaseJavaTerm {
 	}
 
 	public boolean isNonsealed() {
-		return _isNonsealed;
+		return _nonsealed;
 	}
 
 	public boolean isSealed() {
-		return _isSealed;
+		return _sealed;
 	}
 
 	public boolean isStrictfp() {
@@ -142,9 +142,9 @@ public class JavaClass extends BaseJavaTerm {
 		new ArrayList<>();
 	private final List<String> _importNames;
 	private final boolean _isInterface;
-	private final boolean _isNonsealed;
-	private final boolean _isSealed;
 	private final boolean _isStrictfp;
+	private final boolean _nonsealed;
 	private final String _packageName;
+	private final boolean _sealed;
 
 }

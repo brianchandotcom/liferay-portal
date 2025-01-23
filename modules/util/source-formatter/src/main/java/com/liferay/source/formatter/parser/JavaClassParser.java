@@ -117,8 +117,8 @@ public class JavaClassParser {
 			isStrictfp = true;
 		}
 
-		boolean isNonsealed = false;
-		boolean isSealed = false;
+		boolean nonsealed = false;
+		boolean sealed = false;
 
 		String s = matcher.group(5);
 
@@ -126,10 +126,10 @@ public class JavaClassParser {
 			s = s.trim();
 
 			if (s.equals("sealed")) {
-				isSealed = true;
+				sealed = true;
 			}
 			else {
-				isNonsealed = true;
+				nonsealed = true;
 			}
 		}
 
@@ -150,7 +150,7 @@ public class JavaClassParser {
 			className, JavaSourceUtil.getPackageName(content),
 			JavaSourceUtil.getImportNames(content), classContent, lineNumber,
 			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, isFinal, false, isEnum,
-			isInterface, isNonsealed, isSealed, isStrictfp, false);
+			isInterface, nonsealed, sealed, isStrictfp, false);
 
 		return _parseExtendsImplements(
 			javaClass, StringUtil.trim(matcher.group(8)));
@@ -487,14 +487,14 @@ public class JavaClassParser {
 			String className, String packageName, List<String> importNames,
 			String classContent, int classLineNumber, String accessModifier,
 			boolean isAbstract, boolean isFinal, boolean isStatic,
-			boolean isEnum, boolean isInterface, boolean isNonsealed,
-			boolean isSealed, boolean isStrictfp, boolean anonymous)
+			boolean isEnum, boolean isInterface, boolean nonsealed,
+			boolean sealed, boolean isStrictfp, boolean anonymous)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
 			className, packageName, importNames, classContent, accessModifier,
 			classLineNumber, isAbstract, isFinal, isStatic, isInterface,
-			isNonsealed, isSealed, isStrictfp, anonymous);
+			nonsealed, sealed, isStrictfp, anonymous);
 
 		int lineNumber = 0;
 

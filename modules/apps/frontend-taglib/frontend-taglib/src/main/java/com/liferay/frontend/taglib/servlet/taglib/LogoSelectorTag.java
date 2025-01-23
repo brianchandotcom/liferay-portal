@@ -9,35 +9,18 @@ import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.InvokerPortlet;
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.RenderRequestFactory;
-import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletResponse;
-import javax.portlet.WindowState;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -148,7 +131,7 @@ public class LogoSelectorTag extends IncludeTag {
 			_getLogoURL(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:portletNamespace",
-			_getPortletNamespace(httpServletRequest));
+			PortletKeys.IMAGE_UPLOADER);
 
 		String randomKey = PortalUtil.generateRandomKey(
 			httpServletRequest, "taglib_ui_logo_selector");
@@ -172,9 +155,9 @@ public class LogoSelectorTag extends IncludeTag {
 
 		if (fileEntryId > 0) {
 			return ResourceURLBuilder.createResourceURL(
-				PortalUtil.getLiferayPortletResponse(
-					_getPortletResponse(httpServletRequest)),
-				PortletKeys.IMAGE_UPLOADER
+				PortletURLFactoryUtil.create(
+					httpServletRequest, PortletKeys.IMAGE_UPLOADER,
+					PortletRequest.RESOURCE_PHASE)
 			).setMVCResourceCommandName(
 				"/image_uploader/upload_image"
 			).setCMD(
@@ -185,67 +168,13 @@ public class LogoSelectorTag extends IncludeTag {
 		return getCurrentLogoURL();
 	}
 
-	private String _getPortletNamespace(HttpServletRequest httpServletRequest) {
-		return PortalUtil.getLiferayPortletResponse(
-			_getPortletResponse(httpServletRequest)
-		).getNamespace();
-	}
-
-	private PortletResponse _getPortletResponse(
-		HttpServletRequest httpServletRequest) {
-
-		PortletResponse portletResponse =
-			(PortletResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		if (portletResponse != null) {
-			return portletResponse;
-		}
-
-		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				PortletKeys.IMAGE_UPLOADER);
-
-			InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
-				portlet, httpServletRequest.getServletContext());
-
-			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-				portlet, httpServletRequest.getServletContext());
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			LiferayRenderRequest liferayRenderRequest =
-				RenderRequestFactory.create(
-					httpServletRequest, portlet, invokerPortlet,
-					portletConfig.getPortletContext(), WindowState.NORMAL,
-					PortletMode.VIEW,
-					PortletPreferencesFactoryUtil.fromDefaultXML(
-						portlet.getDefaultPreferences()),
-					themeDisplay.getPlid());
-
-			portletResponse = RenderResponseFactory.create(
-				themeDisplay.getResponse(), liferayRenderRequest);
-		}
-		catch (PortletException portletException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get Portlet response", portletException);
-			}
-
-			portletResponse = RenderResponseFactory.create();
-		}
-
-		return portletResponse;
-	}
-
 	private String _getSelectLogoURL(
 		HttpServletRequest httpServletRequest, String randomNamespace) {
 
-		return PortletURLBuilder.createRenderURL(
-			PortalUtil.getLiferayPortletResponse(
-				_getPortletResponse(httpServletRequest)),
-			PortletKeys.IMAGE_UPLOADER
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				httpServletRequest, PortletKeys.IMAGE_UPLOADER,
+				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/image_uploader/upload_image"
 		).setParameter(
@@ -267,9 +196,6 @@ public class LogoSelectorTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/logo_selector/page.jsp";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LogoSelectorTag.class);
 
 	private int _aspectRatio;
 	private String _currentLogoURL;

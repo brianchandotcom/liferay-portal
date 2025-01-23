@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.layout.seo.internal.upgrade.v3_0_0.util.LayoutSEOEntryCustomMetaTagTable;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -109,6 +110,11 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.dropColumns("LayoutSEOEntry", "DDMStorageId")
 		};
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {LayoutSEOEntryCustomMetaTagTable.create()};
 	}
 
 	private void _addLayoutSEOEntryCustomMetaTags(

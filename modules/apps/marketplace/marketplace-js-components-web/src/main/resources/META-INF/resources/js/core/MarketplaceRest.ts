@@ -6,11 +6,17 @@
 import {createResourceURL, fetch} from 'frontend-js-web';
 
 import {
+	APIResponse,
 	Cart,
 	MarketplaceAuthorization,
 	MarketplaceConfiguration,
 	Product,
 } from '../types';
+
+type FetchOptions = RequestInit & {
+	earlyReturn?: boolean;
+	guestOperation?: boolean;
+};
 
 class MarketplaceRestError extends Error {
 	public info: any;
@@ -39,13 +45,17 @@ export class MarketplaceRest {
 	) {}
 
 	public async consoleProvisioningOrder(cart: Cart) {
-		return this.fetchMarketplaceService(`/dxp/provisioning/${cart.id}`, {
-			body: JSON.stringify({
-				orderItemId: cart.cartItems[0]?.id,
-				projectId: this.settings.cloudProject,
-			}),
-			method: 'POST',
-		});
+		return this.fetchMarketplaceService<Response>(
+			`/dxp/provisioning/${cart.id}`,
+			{
+				body: JSON.stringify({
+					orderItemId: cart.cartItems[0]?.id,
+					projectId: this.settings.cloudProject,
+				}),
+				earlyReturn: true,
+				method: 'POST',
+			}
+		);
 	}
 
 	public async createCart(product: Product) {
@@ -76,7 +86,7 @@ export class MarketplaceRest {
 			orderTypeExternalReferenceCode: 'CLOUDAPP',
 		} as Partial<Cart>;
 
-		let cart = await this.fetchMarketplace(
+		let cart = await this.fetchMarketplace<Cart>(
 			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts?nestedFields=cartItems`,
 			{
 				body: JSON.stringify(baseCart),
@@ -90,7 +100,7 @@ export class MarketplaceRest {
 	}
 
 	private async checkoutCart(cart: Cart) {
-		return this.fetchMarketplace(
+		return this.fetchMarketplace<Cart>(
 			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout?nestedFields=cartItems`,
 			{
 				method: 'POST',
@@ -98,7 +108,7 @@ export class MarketplaceRest {
 		);
 	}
 
-	private async getBaseFetch(url: string, options?: RequestInit) {
+	private async getBaseFetch<T>(url: string, options?: FetchOptions) {
 		const response = await fetch(url, options);
 
 		if (!response.ok) {
@@ -111,17 +121,18 @@ export class MarketplaceRest {
 			throw error;
 		}
 
-		return response.json();
+		if (options?.earlyReturn) {
+			return response as T;
+		}
+
+		return response.json() as T;
 	}
 
 	static getBaseResourceURL() {
 		return `/group/guest/~/control_panel/manage?p_p_id=${Liferay.PortletKeys.INSTANCE_SETTINGS}`;
 	}
 
-	public async fetchMarketplace(
-		url: string,
-		options?: RequestInit & {guestOperation?: boolean}
-	) {
+	public async fetchMarketplace<T>(url: string, options?: FetchOptions) {
 		const headers = {
 			...options?.headers,
 			'Authorization': '',
@@ -134,16 +145,19 @@ export class MarketplaceRest {
 			headers.Authorization = `Bearer ${accessToken}`;
 		}
 
-		return this.getBaseFetch(`${this.marketplaceURL}${url}`, {
+		return this.getBaseFetch<T>(`${this.marketplaceURL}${url}`, {
 			...options,
 			headers,
 		});
 	}
 
-	public async fetchMarketplaceService(url: string, options?: RequestInit) {
+	public async fetchMarketplaceService<T>(
+		url: string,
+		options?: FetchOptions
+	) {
 		const {accessToken} = await this.getMarketplaceToken();
 
-		return this.getBaseFetch(`${this.marketplaceServiceURL}${url}`, {
+		return this.getBaseFetch<T>(`${this.marketplaceServiceURL}${url}`, {
 			...options,
 			headers: {
 				'Authorization': `Bearer ${accessToken}`,
@@ -167,29 +181,23 @@ export class MarketplaceRest {
 			return cachedToken;
 		}
 
-		const response = await fetch(
+		const authorization = await this.getBaseFetch<MarketplaceAuthorization>(
 			createResourceURL(this.baseResourceURL, {
 				p_p_resource_id: '/marketplace_settings/get_authorization',
 			}).toString()
 		);
 
-		if (response.ok) {
-			const data: MarketplaceAuthorization = await response.json();
+		Liferay.Util.SessionStorage.setItem(
+			sessionKey,
+			JSON.stringify(authorization),
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		);
 
-			Liferay.Util.SessionStorage.setItem(
-				sessionKey,
-				JSON.stringify(data),
-				Liferay.Util.SessionStorage.TYPES.NECESSARY
-			);
-
-			return data;
-		}
-
-		throw new Error('Unable to get authorization');
+		return authorization;
 	}
 
 	public async getProducts(urlSearchParams = new URLSearchParams()) {
-		return this.fetchMarketplace(
+		return this.fetchMarketplace<APIResponse<Product>>(
 			`/o/headless-commerce-delivery-catalog/v1.0/channels/${this.settings.channelId}/products?${urlSearchParams.toString()}`,
 			{guestOperation: true}
 		);

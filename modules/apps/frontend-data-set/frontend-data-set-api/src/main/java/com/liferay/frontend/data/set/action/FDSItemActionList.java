@@ -7,12 +7,10 @@ package com.liferay.frontend.data.set.action;
 
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Daniel Sanz
@@ -20,9 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface FDSItemActionList {
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException;
+		HttpServletRequest httpServletRequest);
 
 	public default FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
 		return FDSEntryItemImportPolicy.ITEM_PROXY;

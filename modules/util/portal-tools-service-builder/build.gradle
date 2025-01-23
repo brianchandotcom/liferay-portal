@@ -56,11 +56,17 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.48"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.71.9"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "17.1.5"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.12.2"
+
+	constraints {
+		compileOnly(group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "154.0.0") {
+			because "Java 8 runtime support is required"
+		}
+	}
 }
 
 deployDependencies {

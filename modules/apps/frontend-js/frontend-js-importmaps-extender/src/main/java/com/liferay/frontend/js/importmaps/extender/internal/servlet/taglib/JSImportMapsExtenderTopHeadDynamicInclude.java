@@ -115,7 +115,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, JSImportMapsContributor.class,
-			_serviceTrackerCustomizer);
+			new JSImportMapsExtenderServiceTrackerCustomizer(
+				_bundleContext, _jsImportMapsCache));
 
 		_serviceTracker.open();
 	}
@@ -161,50 +162,55 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	private ServiceTracker<JSImportMapsContributor, JSImportMapsRegistration>
 		_serviceTracker;
 
-	private final ServiceTrackerCustomizer
-		<JSImportMapsContributor, JSImportMapsRegistration>
-			_serviceTrackerCustomizer =
-				new ServiceTrackerCustomizer
-					<JSImportMapsContributor, JSImportMapsRegistration>() {
+	private static class JSImportMapsExtenderServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<JSImportMapsContributor, JSImportMapsRegistration> {
 
-					@Override
-					public JSImportMapsRegistration addingService(
-						ServiceReference<JSImportMapsContributor>
-							serviceReference) {
+		public JSImportMapsExtenderServiceTrackerCustomizer(
+			BundleContext bundleContext, JSImportMapsCache jsImportMapsCache) {
 
-						Long companyId = (Long)serviceReference.getProperty(
-							"com.liferay.frontend.js.importmaps.company.id");
+			_bundleContext = bundleContext;
+			_jsImportMapsCache = jsImportMapsCache;
+		}
 
-						if (companyId == null) {
-							companyId = Long.valueOf(
-								JSImportMapsCache.COMPANY_ID_ALL);
-						}
+		@Override
+		public JSImportMapsRegistration addingService(
+			ServiceReference<JSImportMapsContributor> serviceReference) {
 
-						JSImportMapsContributor jsImportMapsContributor =
-							_bundleContext.getService(serviceReference);
+			Long companyId = (Long)serviceReference.getProperty(
+				"com.liferay.frontend.js.importmaps.company.id");
 
-						return _jsImportMapsCache.register(
-							companyId,
-							jsImportMapsContributor.getImportMapsJSONObject(),
-							jsImportMapsContributor.getScope());
-					}
+			if (companyId == null) {
+				companyId = Long.valueOf(JSImportMapsCache.COMPANY_ID_ALL);
+			}
 
-					@Override
-					public void modifiedService(
-						ServiceReference serviceReference,
-						JSImportMapsRegistration jsImportMapsRegistration) {
-					}
+			JSImportMapsContributor jsImportMapsContributor =
+				_bundleContext.getService(serviceReference);
 
-					@Override
-					public void removedService(
-						ServiceReference serviceReference,
-						JSImportMapsRegistration jsImportMapsRegistration) {
+			return _jsImportMapsCache.register(
+				companyId, jsImportMapsContributor.getImportMapsJSONObject(),
+				jsImportMapsContributor.getScope());
+		}
 
-						jsImportMapsRegistration.unregister();
+		@Override
+		public void modifiedService(
+			ServiceReference serviceReference,
+			JSImportMapsRegistration jsImportMapsRegistration) {
+		}
 
-						_bundleContext.ungetService(serviceReference);
-					}
+		@Override
+		public void removedService(
+			ServiceReference serviceReference,
+			JSImportMapsRegistration jsImportMapsRegistration) {
 
-				};
+			jsImportMapsRegistration.unregister();
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+		private final JSImportMapsCache _jsImportMapsCache;
+
+	}
 
 }

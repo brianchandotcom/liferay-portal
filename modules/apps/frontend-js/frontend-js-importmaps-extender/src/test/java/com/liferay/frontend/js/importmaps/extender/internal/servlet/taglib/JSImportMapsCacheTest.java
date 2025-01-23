@@ -229,6 +229,7 @@ public class JSImportMapsCacheTest {
 		return charArrayWriter.toString();
 	}
 
-	private JSImportMapsCache _jsImportMapsCache = new JSImportMapsCache();
+	private final JSImportMapsCache _jsImportMapsCache =
+		new JSImportMapsCache();
 
 }

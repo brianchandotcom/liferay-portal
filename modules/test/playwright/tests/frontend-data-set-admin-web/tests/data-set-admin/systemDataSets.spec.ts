@@ -19,7 +19,6 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
-		'LPS-193005': {enabled: true},
 	}),
 	loginTest()
 );

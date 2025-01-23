@@ -6,32 +6,26 @@
 package com.liferay.exportimport.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Vendel Toreki
  */
-@Component(
-	property = {
-		"panel.app.order:Integer=1300",
-		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_BATCH_PLANNER
-	},
-	service = PanelApp.class
-)
 public class CompanyExportPanelApp extends BasePanelApp {
+
+	public CompanyExportPanelApp(
+		Portal portal, Portlet portlet, StagingGroupHelper stagingGroupHelper) {
+
+		_portal = portal;
+		_portlet = portlet;
+		_stagingGroupHelper = stagingGroupHelper;
+	}
 
 	@Override
 	public Portlet getPortlet() {
@@ -44,25 +38,13 @@ public class CompanyExportPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group) {
-		return FeatureFlagManagerUtil.isEnabled("LPD-35914");
-	}
-
-	@Override
 	protected Group getGroup(HttpServletRequest httpServletRequest) {
 		return _stagingGroupHelper.fetchCompanyGroup(
 			_portal.getCompanyId(httpServletRequest));
 	}
 
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT + ")"
-	)
-	private Portlet _portlet;
-
-	@Reference
-	private StagingGroupHelper _stagingGroupHelper;
+	private final Portal _portal;
+	private final Portlet _portlet;
+	private final StagingGroupHelper _stagingGroupHelper;
 
 }

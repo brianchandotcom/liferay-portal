@@ -6,11 +6,14 @@
 import classNames from 'classnames';
 import {memo, useEffect, useMemo} from 'react';
 import {Link, useMatch, useResolvedPath} from 'react-router-dom';
+
 import {Button} from '../../../../../../common/components';
 import {navigationIcons} from '../../utils/navigationIcons';
 
 const MenuItem = ({children, iconKey, setActive, to}) => {
 	const isActive = !!useMatch({path: useResolvedPath(to)?.pathname});
+
+	const isPortalIcon = iconKey === 'portal';
 
 	useEffect(() => {
 		if (setActive) {
@@ -25,7 +28,8 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 
 				return isActive ? activeIcon : inactiveIcon;
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Error:', error);
 		}
 	}, [iconKey, isActive]);
@@ -42,7 +46,15 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 						}
 					)}
 				>
-					{Icon && <Icon className="mr-2" height={16} width={16} />}
+					{Icon && (
+						<Icon
+							className={classNames('mr-2', {
+								'portal-icon': isPortalIcon,
+							})}
+							height={16}
+							width={16}
+						/>
+					)}
 
 					{children}
 				</Button>

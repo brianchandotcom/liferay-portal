@@ -223,14 +223,11 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected CaptchaConfiguration getCaptchaConfiguration() {
-		if (_captchaConfiguration == null) {
-			try {
-				_captchaConfiguration =
-					captchaProvider.getCaptchaConfiguration();
-			}
-			catch (Throwable throwable) {
-				_log.error(throwable);
-			}
+		try {
+			_captchaConfiguration = captchaProvider.getCaptchaConfiguration();
+		}
+		catch (Throwable throwable) {
+			_log.error(throwable);
 		}
 
 		return _captchaConfiguration;

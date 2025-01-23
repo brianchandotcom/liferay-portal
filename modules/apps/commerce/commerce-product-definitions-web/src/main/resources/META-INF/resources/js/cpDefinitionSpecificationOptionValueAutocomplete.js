@@ -209,8 +209,13 @@ const CPDefinitionSpecificationOptionValueAutocomplete = ({
 				<ClaySelect
 					name="listTypeEntriesSelect"
 					onChange={handleSelectChange}
+					required
 				>
-					<ClaySelect.Option label="Select an option" />
+					<ClaySelect.Option
+						aria-label={Liferay.Language.get('select-an-option')}
+						label={Liferay.Language.get('select-an-option')}
+						value=""
+					/>
 
 					{listTypeDefinitions.map((listTypeDefinition) => (
 						<ClaySelect.OptGroup
@@ -232,7 +237,7 @@ const CPDefinitionSpecificationOptionValueAutocomplete = ({
 			)}
 
 			{!listTypeDefinitions.length && (
-				<ClayInput onChange={handleInputChange} />
+				<ClayInput onChange={handleInputChange} required />
 			)}
 		</ClayForm.Group>
 	);

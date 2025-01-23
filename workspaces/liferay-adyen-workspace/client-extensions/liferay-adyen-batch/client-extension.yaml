@@ -10,5 +10,6 @@ liferay-adyen-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Adyen Batch OAuth Application Headless Server
     scopes:
+        - Liferay.Headless.Batch.Engine.everything
         - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

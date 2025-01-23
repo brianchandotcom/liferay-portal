@@ -8,23 +8,26 @@ import {Locator, Page} from '@playwright/test';
 export default async function dragAndDropElement({
 	dragTarget,
 	dropTarget,
+	force = false,
 	page,
 }: {
 	dragTarget: Locator;
 	dropTarget: Locator;
+	force?: boolean;
 	page: Page;
 }) {
-	await dragTarget.hover();
+	await dragTarget.hover({force});
 
 	await page.mouse.down();
 
-	await dropTarget.hover();
+	await dropTarget.hover({force});
 
 	const boundingClientRect = await dropTarget.evaluate((element) =>
 		element.getBoundingClientRect()
 	);
 
 	await dropTarget.hover({
+		force,
 		position: {
 			x: boundingClientRect.width / 2,
 			y: boundingClientRect.height / 2,

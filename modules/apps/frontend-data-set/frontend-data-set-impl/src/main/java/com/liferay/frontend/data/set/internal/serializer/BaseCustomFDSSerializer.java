@@ -42,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Sanz
  */
-@Component(service = CustomFDSSerializerHelper.class)
-public class CustomFDSSerializerHelper {
+@Component(service = {})
+public class BaseCustomFDSSerializer {
 
 	public ObjectDefinition getDataSetObjectDefinition(
 		HttpServletRequest httpServletRequest) {
@@ -186,7 +186,7 @@ public class CustomFDSSerializerHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomFDSSerializerHelper.class);
+		BaseCustomFDSSerializer.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _dataSetObjectDefinitionLocalService;

@@ -58,78 +58,78 @@ public class GetSystemDataSetsMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put("items", _jsonFactory.createJSONArray()));
+
+			return;
 		}
-		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
-			ObjectDefinition dataSetObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_DATA_SET", themeDisplay.getCompanyId());
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			HttpServletRequest httpServletRequest =
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(resourceRequest));
+		ObjectDefinition dataSetObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET", themeDisplay.getCompanyId());
 
-			String search = ParamUtil.getString(httpServletRequest, "search");
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(resourceRequest));
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"items",
-					JSONUtil.toJSONArray(
-						systemFDSNames,
-						systemFDSName -> {
-							SystemFDSEntry systemFDSEntry =
-								_systemFDSEntryRegistry.getSystemFDSEntry(
-									systemFDSName);
+		String search = ParamUtil.getString(httpServletRequest, "search");
 
-							if (!StringUtil.matchesIgnoreCase(
-									systemFDSEntry.getTitle(), search)) {
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"items",
+				JSONUtil.toJSONArray(
+					systemFDSNames,
+					systemFDSName -> {
+						SystemFDSEntry systemFDSEntry =
+							_systemFDSEntryRegistry.getSystemFDSEntry(
+								systemFDSName);
 
-								return null;
-							}
+						if (!StringUtil.matchesIgnoreCase(
+								systemFDSEntry.getTitle(), search)) {
 
-							ObjectEntry objectEntry =
-								_objectEntryLocalService.fetchObjectEntry(
-									systemFDSEntry.getName(),
-									dataSetObjectDefinition.
-										getObjectDefinitionId());
+							return null;
+						}
 
-							boolean customized = false;
+						ObjectEntry objectEntry =
+							_objectEntryLocalService.fetchObjectEntry(
+								systemFDSEntry.getName(),
+								dataSetObjectDefinition.
+									getObjectDefinitionId());
 
-							if (objectEntry != null) {
-								customized = true;
-							}
+						boolean customized = false;
 
-							return JSONUtil.put(
-								"additionalAPIURLParameters",
-								systemFDSEntry.getAdditionalAPIURLParameters()
-							).put(
-								"customized", customized
-							).put(
-								"defaultItemsPerPage",
-								systemFDSEntry.getDefaultItemsPerPage()
-							).put(
-								"description", systemFDSEntry.getDescription()
-							).put(
-								"name", systemFDSEntry.getName()
-							).put(
-								"restApplication",
-								systemFDSEntry.getRESTApplication()
-							).put(
-								"restEndpoint", systemFDSEntry.getRESTEndpoint()
-							).put(
-								"restSchema", systemFDSEntry.getRESTSchema()
-							).put(
-								"symbol", systemFDSEntry.getSymbol()
-							).put(
-								"title", systemFDSEntry.getTitle()
-							);
-						})));
-		}
+						if (objectEntry != null) {
+							customized = true;
+						}
+
+						return JSONUtil.put(
+							"additionalAPIURLParameters",
+							systemFDSEntry.getAdditionalAPIURLParameters()
+						).put(
+							"customized", customized
+						).put(
+							"defaultItemsPerPage",
+							systemFDSEntry.getDefaultItemsPerPage()
+						).put(
+							"description", systemFDSEntry.getDescription()
+						).put(
+							"name", systemFDSEntry.getName()
+						).put(
+							"restApplication",
+							systemFDSEntry.getRESTApplication()
+						).put(
+							"restEndpoint", systemFDSEntry.getRESTEndpoint()
+						).put(
+							"restSchema", systemFDSEntry.getRESTSchema()
+						).put(
+							"symbol", systemFDSEntry.getSymbol()
+						).put(
+							"title", systemFDSEntry.getTitle()
+						);
+					})));
 	}
 
 	@Reference

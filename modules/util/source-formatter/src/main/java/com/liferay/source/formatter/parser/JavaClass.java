@@ -59,6 +59,15 @@ public class JavaClass extends BaseJavaTerm {
 		}
 	}
 
+	public void addPermittedClassNames(String... permittedClassNames) {
+		for (String permittedClassName : permittedClassNames) {
+			_permittedClassTypes.add(
+				new JavaClassType(
+					StringUtil.trim(permittedClassName), _packageName,
+					_importNames));
+		}
+	}
+
 	public List<JavaTerm> getChildJavaTerms() {
 		return _childJavaTerms;
 	}
@@ -115,6 +124,21 @@ public class JavaClass extends BaseJavaTerm {
 		return _packageName;
 	}
 
+	public List<String> getPermittedClassNames() {
+		return getPermittedClassNames(false);
+	}
+
+	public List<String> getPermittedClassNames(boolean fullyQualifiedName) {
+		List<String> permittedClassNames = new ArrayList<>();
+
+		for (JavaClassType permittedClassType : _permittedClassTypes) {
+			permittedClassNames.add(
+				permittedClassType.toString(fullyQualifiedName));
+		}
+
+		return permittedClassNames;
+	}
+
 	public boolean isAnonymous() {
 		return _anonymous;
 	}
@@ -145,6 +169,7 @@ public class JavaClass extends BaseJavaTerm {
 	private final boolean _isStrictfp;
 	private final boolean _nonsealed;
 	private final String _packageName;
+	private final List<JavaClassType> _permittedClassTypes = new ArrayList<>();
 	private final boolean _sealed;
 
 }

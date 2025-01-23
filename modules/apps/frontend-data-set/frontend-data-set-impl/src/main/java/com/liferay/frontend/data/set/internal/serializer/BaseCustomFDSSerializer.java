@@ -36,27 +36,25 @@ import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Sanz
  */
-@Component(service = CustomFDSSerializerHelper.class)
-public class CustomFDSSerializerHelper {
+public abstract class BaseCustomFDSSerializer {
 
 	public ObjectDefinition getDataSetObjectDefinition(
 		HttpServletRequest httpServletRequest) {
 
-		return _dataSetObjectDefinitionLocalService.fetchObjectDefinition(
-			_portal.getCompanyId(httpServletRequest), "DataSet");
+		return dataSetObjectDefinitionLocalService.fetchObjectDefinition(
+			portal.getCompanyId(httpServletRequest), "DataSet");
 	}
 
 	public ObjectEntry getDataSetObjectEntry(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		return _getObjectEntry(
-			_portal.getCompanyId(httpServletRequest), externalReferenceCode,
+			portal.getCompanyId(httpServletRequest), externalReferenceCode,
 			getDataSetObjectDefinition(httpServletRequest));
 	}
 
@@ -83,6 +81,15 @@ public class CustomFDSSerializerHelper {
 			"dataSetToDataSetTableSections");
 	}
 
+	@Reference
+	protected ObjectDefinitionLocalService dataSetObjectDefinitionLocalService;
+
+	@Reference
+	protected ObjectEntryManagerRegistry dataSetObjectEntryManagerRegistry;
+
+	@Reference
+	protected Portal portal;
+
 	private ObjectEntry _getObjectEntry(
 		long companyId, String externalReferenceCode,
 		ObjectDefinition dataSetObjectDefinition) {
@@ -96,7 +103,7 @@ public class CustomFDSSerializerHelper {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+				dataSetObjectEntryManagerRegistry.getObjectEntryManager(
 					dataSetObjectDefinition.getStorageType()));
 
 		try {
@@ -130,7 +137,7 @@ public class CustomFDSSerializerHelper {
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+				dataSetObjectEntryManagerRegistry.getObjectEntryManager(
 					dataSetObjectDefinition.getStorageType()));
 
 		try {
@@ -186,16 +193,7 @@ public class CustomFDSSerializerHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomFDSSerializerHelper.class);
-
-	@Reference
-	private ObjectDefinitionLocalService _dataSetObjectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryManagerRegistry _dataSetObjectEntryManagerRegistry;
-
-	@Reference
-	private Portal _portal;
+		BaseCustomFDSSerializer.class);
 
 	private static class ObjectEntryComparator
 		implements Comparator<ObjectEntry> {

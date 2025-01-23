@@ -26,10 +26,10 @@ public class ObjectEntryFolderModelDocumentContributor
 	public void contribute(
 		Document document, ObjectEntryFolder objectEntryFolder) {
 
-		document.addLocalizedKeyword(
-			"localized_label", objectEntryFolder.getLabelMap(), true, true);
 		document.addKeyword(
 			Field.FOLDER_ID, objectEntryFolder.getParentObjectEntryFolderId());
+		document.addLocalizedKeyword(
+			"localized_label", objectEntryFolder.getLabelMap(), true, true);
 	}
 
 }

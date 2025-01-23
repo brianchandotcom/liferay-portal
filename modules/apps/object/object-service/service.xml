@@ -282,9 +282,9 @@
 
 		<!-- Other fields -->
 
+		<column name="parentObjectEntryFolderId" parent-container-model="true" type="long" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
-		<column name="parentObjectEntryFolderId" parent-container-model="true" type="long" />
 		<column name="treePath" type="String" />
 
 		<!-- Finder methods -->
@@ -304,11 +304,11 @@
 			<finder-column name="companyId" />
 			<finder-column comparator="LIKE" name="treePath" />
 		</finder>
-		<finder name="G_C_N_P" return-type="ObjectEntryFolder" unique="true">
+		<finder name="G_C_P_N" return-type="ObjectEntryFolder" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
-			<finder-column name="name" />
 			<finder-column name="parentObjectEntryFolderId" />
+			<finder-column name="name" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">

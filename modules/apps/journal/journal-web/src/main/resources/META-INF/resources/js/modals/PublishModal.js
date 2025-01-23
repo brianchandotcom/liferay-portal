@@ -73,6 +73,7 @@ export default function PublishModal({
 					<PublishModalDisplayDate
 						formId={formId}
 						portletNamespace={portletNamespace}
+						timeZone={timeZone}
 					/>
 				)}
 

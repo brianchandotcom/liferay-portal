@@ -6,8 +6,14 @@
 import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-export default function PublishModalDisplayDate({formId, portletNamespace}) {
-	const currentDate = new Date();
+export default function PublishModalDisplayDate({
+	formId,
+	portletNamespace,
+	timeZone,
+}) {
+	const currentDate = new Date(
+		new Date().toLocaleString('en-US', {timeZone})
+	);
 
 	return (
 		<>

@@ -231,13 +231,15 @@ export class ProductDetailsPage {
 	async addSpecificationToProduct(
 		chooseAddOrEdit: string,
 		specificationName: string,
-		specificationValue: string
+		specificationValue?: string
 	) {
 		await this.addSpecification.click();
-		(await this.menuItemSpecification(chooseAddOrEdit)).click();
+		await (await this.menuItemSpecification(chooseAddOrEdit)).click();
 		await this.frameDropdownSpecification.click();
-		(await this.frameChooseSpecification(specificationName)).click();
-		await this.frameChooseSpecificationValue(specificationValue);
+		await (await this.frameChooseSpecification(specificationName)).click();
+		if (specificationValue) {
+			await this.frameChooseSpecificationValue(specificationValue);
+		}
 		await this.frameSubmitSpecification.click();
 	}
 
@@ -245,21 +247,27 @@ export class ProductDetailsPage {
 		chooseAddOrCreate: string,
 		specificationValue: string
 	) {
-		this.ellipsisProductSpecification.click();
-		(await this.dropdownProductSpecification(chooseAddOrCreate)).click();
+		await this.ellipsisProductSpecification.click();
+		await (
+			await this.dropdownProductSpecification(chooseAddOrCreate)
+		).click();
 		await this.editFrameSpecificationProduct(specificationValue);
-		this.saveButtonEditFrame.click();
+		await this.saveButtonEditFrame.click();
 	}
 
 	async createSpecificationProduct(
 		chooseAddOrCreate: string,
 		specificationName: string,
-		specificationValue: string
+		specificationValue?: string
 	) {
 		await this.addSpecification.click();
-		(await this.menuItemSpecification(chooseAddOrCreate)).click();
+		await (await this.menuItemSpecification(chooseAddOrCreate)).click();
 		await this.createNewSpecificationProduct.fill(specificationName);
-		await this.createNewValueSpecificationProduct.fill(specificationValue);
+		if (specificationValue) {
+			await this.createNewValueSpecificationProduct.fill(
+				specificationValue
+			);
+		}
 		await this.frameSubmitSpecification.click();
 	}
 

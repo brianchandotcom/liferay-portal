@@ -180,3 +180,87 @@ test('LPD-29336 Multiple picklist on product specifications page', async ({
 	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(picklist1.id);
 	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(picklist2.id);
 });
+
+test('LPD-45255 Missing error handling for Missing Specifications values', async ({
+	apiHelpers,
+	commerceAdminProductPage,
+	page,
+	productDetailsPage,
+}) => {
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'Catalog',
+	});
+
+	apiHelpers.data.push({id: catalog.id, type: 'catalog'});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product1'},
+	});
+
+	apiHelpers.data.push({id: product.id, type: 'product'});
+
+	const specification =
+		await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
+
+	const picklist1 =
+		await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+	await apiHelpers.listTypeAdmin.postListTypeEntry(
+		picklist1.externalReferenceCode,
+		'item1'
+	);
+
+	await apiHelpers.headlessCommerceAdminCatalog.patchSpecification(
+		specification.id,
+		[picklist1.id]
+	);
+
+	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+	await productDetailsPage.addSpecificationToProduct(
+		'Add an Existing Specification',
+		specification.title.en_US
+	);
+
+	const selectSpecificationValueIframe = page
+		.frameLocator('iframe')
+		.nth(2)
+		.locator('select[name="listTypeEntriesSelect"]');
+
+	await expect(selectSpecificationValueIframe).toHaveAttribute('required');
+
+	await productDetailsPage.frameChooseSpecificationValue('item1');
+	await productDetailsPage.frameSubmitSpecification.click();
+	await expect(
+		await productDetailsPage.checkSpecificationProduct('item1')
+	).toBeVisible();
+	await productDetailsPage.createSpecificationProduct(
+		'Create New Specification',
+		'Specification-1'
+	);
+
+	const inputSpecificationValueIframe = page
+		.frameLocator('iframe')
+		.nth(2)
+		.getByRole('textbox')
+		.nth(1);
+
+	await expect(inputSpecificationValueIframe).toHaveAttribute('required');
+
+	await productDetailsPage.createNewValueSpecificationProduct.fill('item-2');
+	await productDetailsPage.frameSubmitSpecification.click();
+
+	await expect(
+		await productDetailsPage.checkSpecificationProduct('item-2')
+	).toBeVisible();
+
+	const specifications =
+		await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+	for (let i = 0; i < specifications.totalCount; i++) {
+		await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
+			specifications.items[i].id
+		);
+	}
+});

@@ -247,12 +247,12 @@ public class TrialRestController extends BaseRestController {
 			}
 		}
 		catch (WebClientResponseException webClientResponseException) {
-			_trialRollback(
+			_rollBackTrial(
 				webClientResponseException.getResponseBodyAsString(), orderId,
 				portalInstance);
 		}
 		catch (Exception exception) {
-			_trialRollback(exception.getMessage(), orderId, portalInstance);
+			_rollBackTrial(exception.getMessage(), orderId, portalInstance);
 		}
 	}
 
@@ -485,7 +485,7 @@ public class TrialRestController extends BaseRestController {
 		return list.toArray(new String[0]);
 	}
 
-	private void _trialRollback(
+	private void _rollBackTrial(
 			String errorMessage, long orderId, PortalInstance portalInstance)
 		throws Exception {
 

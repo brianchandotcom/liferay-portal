@@ -186,7 +186,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 					</div>
 
 					<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
-						<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace %>editForm<%= index %>" style="display: none;">
+						<div class="hide lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace %>editForm<%= index %>">
 							<div class="editor-wrapper"></div>
 
 							<aui:button-row>
@@ -241,7 +241,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 			</div>
 		</div>
 
-		<div class="lfr-discussion lfr-discussion-form-reply" id="<%= namespace %>postReplyForm<%= index %>" style="display: none;">
+		<div class="hide lfr-discussion lfr-discussion-form-reply" id="<%= namespace %>postReplyForm<%= index %>">
 			<div class="lfr-discussion-reply-container">
 				<clay:content-row
 					noGutters="true"

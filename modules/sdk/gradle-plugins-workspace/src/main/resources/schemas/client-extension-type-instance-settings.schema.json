@@ -3418,7 +3418,7 @@
 				},
 				"allowedProtocols": {
 					"default": "http|https",
-					"description": "Set the protocols which are allowed in redirect URLs. Remove all entries to allow any protocol.",
+					"description": "Set which protocols are allowed in redirect URLs. Remove all entries to allow any protocol.",
 					"items": {
 						"type": "string"
 					},

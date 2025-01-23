@@ -67,9 +67,11 @@ export function ProductCard({children, onClick, product}: ProductCardProps) {
 									{categories[0]?.name}
 								</span>
 
-								<span className="marketplace-search-results-card-tags">
-									{`+ ${categories?.length - 1}`}
-								</span>
+								{categories.length > 1 && (
+									<span className="marketplace-search-results-card-tags">
+										{`+ ${categories.length - 1}`}
+									</span>
+								)}
 							</>
 						)}
 					</div>

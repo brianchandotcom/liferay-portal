@@ -671,8 +671,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_objectDefinition3 =
 			objectDefinitionLocalService.addCustomObjectDefinition(
-				adminUser.getUserId(), 0, null, false, false, true, false,
-				false,
+				adminUser.getUserId(), 0, null, false, false, true, true, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

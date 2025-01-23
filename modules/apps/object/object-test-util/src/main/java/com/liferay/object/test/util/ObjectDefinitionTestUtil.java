@@ -11,6 +11,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,7 +47,8 @@ public class ObjectDefinitionTestUtil {
 			List<ObjectField> objectFields)
 		throws Exception {
 
-		return addCustomObjectDefinition(false, objectFields);
+		return addCustomObjectDefinition(
+			FeatureFlagManagerUtil.isEnabled("LPD-32050"), objectFields);
 	}
 
 	public static ObjectDefinition addCustomObjectDefinition(
@@ -54,7 +56,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return addCustomObjectDefinition(
-			objectFolderId, false, getRandomName(), Collections.emptyList());
+			objectFolderId, FeatureFlagManagerUtil.isEnabled("LPD-32050"),
+			getRandomName(), Collections.emptyList());
 	}
 
 	public static ObjectDefinition addCustomObjectDefinition(
@@ -93,7 +96,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return addCustomObjectDefinition(
-			0, false, name,
+			0, FeatureFlagManagerUtil.isEnabled("LPD-32050"), name,
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).userId(
@@ -145,7 +148,9 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition publishObjectDefinition() throws Exception {
-		return publishObjectDefinition(false, Collections.emptyList());
+		return publishObjectDefinition(
+			FeatureFlagManagerUtil.isEnabled("LPD-32050"),
+			Collections.emptyList());
 	}
 
 	public static ObjectDefinition publishObjectDefinition(
@@ -235,7 +240,8 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return publishObjectDefinition(
-			false, name, objectFields, scope, userId);
+			FeatureFlagManagerUtil.isEnabled("LPD-32050"), name, objectFields,
+			scope, userId);
 	}
 
 }

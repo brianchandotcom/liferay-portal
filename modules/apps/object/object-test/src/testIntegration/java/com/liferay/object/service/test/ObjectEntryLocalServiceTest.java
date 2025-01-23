@@ -234,7 +234,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPD-32050", "LPD-34594"})
+@FeatureFlags("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectEntryLocalServiceTest {
 
@@ -251,14 +251,13 @@ public class ObjectEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_draftObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
 		_irrelevantObjectDefinition = _publishCustomObjectDefinition(
-			false,
+			true,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -279,7 +278,7 @@ public class ObjectEntryLocalServiceTest {
 						"Multiple List Type Entry Key ", 6)));
 
 		_objectDefinition = _publishCustomObjectDefinition(
-			false,
+			true,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
@@ -651,6 +650,7 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
+	@FeatureFlags("LPD-32050")
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		_assertCount(0);
@@ -1059,7 +1059,7 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(objectField));
+				true, Collections.singletonList(objectField));
 
 		ObjectField localizedObjectField1 =
 			ObjectFieldUtil.addCustomObjectField(
@@ -1699,14 +1699,13 @@ public class ObjectEntryLocalServiceTest {
 		_objectFieldLocalService.deleteObjectField(objectField2);
 	}
 
-	@FeatureFlags("LPD-43542")
+	@FeatureFlags({"LPD-32050", "LPD-43542"})
 	@Test
 	public void testAddObjectEntryWithFormulaObjectFieldAndObjectRelationship()
 		throws Exception {
 
 		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true, Collections.emptyList());
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 

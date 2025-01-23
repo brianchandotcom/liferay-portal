@@ -114,7 +114,7 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPD-32050", "LPD-34594"})
+@FeatureFlags("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectFieldLocalServiceTest {
 
@@ -136,6 +136,7 @@ public class ObjectFieldLocalServiceTest {
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
 	}
 
+	@FeatureFlags("LPD-32050")
 	@Test
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
@@ -143,7 +144,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION +
 				" business type is not indexable",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new AggregationObjectFieldBuilder(
 					).indexed(
@@ -183,7 +183,6 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 				"AES", true, ObjectFieldTestUtil.generateKey("AES"),
 				() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					false,
 					Arrays.asList(
 						new EncryptedObjectFieldBuilder(
 						).indexed(
@@ -199,7 +198,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_FORMULA +
 				" business type is not indexable",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new FormulaObjectFieldBuilder(
 					).indexed(
@@ -254,7 +252,7 @@ public class ObjectFieldLocalServiceTest {
 			"Salesforce storage type does not support aggregation and " +
 				"attachment business types",
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
 				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -296,7 +294,7 @@ public class ObjectFieldLocalServiceTest {
 			"Salesforce storage type does not support aggregation and " +
 				"attachment business types",
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
 				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -317,7 +315,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldListTypeDefinitionIdException.class,
 			"List type definition ID is 0",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new MultiselectPicklistObjectFieldBuilder(
 					).labelMap(
@@ -330,7 +327,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldLocalizedException.class,
 			"Localized object fields must not be required",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				true,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -351,7 +347,6 @@ public class ObjectFieldLocalServiceTest {
 				"PrecisionDecimal,RichText and Text business types support ",
 				"localization"),
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new AutoIncrementObjectFieldBuilder(
 					).labelMap(
@@ -534,7 +529,6 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldNameException.MustNotBeReserved.class,
 				"Reserved name " + reservedName,
 				() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					false,
 					Arrays.asList(
 						new TextObjectFieldBuilder(
 						).labelMap(
@@ -549,7 +543,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings anySetting are not allowed for object field text",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -577,7 +570,6 @@ public class ObjectFieldLocalServiceTest {
 			"The settings defaultValue, defaultValueType are not allowed for " +
 				"object field text",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -686,7 +678,6 @@ public class ObjectFieldLocalServiceTest {
 			"The settings acceptedFileExtensions, fileSource, " +
 				"maximumFileSize are required for object field upload",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					new AttachmentObjectFieldBuilder(
 					).labelMap(
@@ -716,7 +707,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings timeStorage are required for object field datetime",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Collections.singletonList(
 					new DateTimeObjectFieldBuilder(
 					).labelMap(
@@ -2118,7 +2108,6 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Collections.singletonList(
 				_getAutoIncrementObjectField(
 					initialValue, 0, prefix, readOnly, required, suffix)));
@@ -2131,7 +2120,7 @@ public class ObjectFieldLocalServiceTest {
 		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			algorithm, enabled, key,
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
 				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -2153,7 +2142,6 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Collections.singletonList(
 				new PicklistObjectFieldBuilder(
 				).labelMap(
@@ -2189,7 +2177,6 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -2646,7 +2633,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Read only condition expression is required",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(
 						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
@@ -2657,7 +2643,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Syntax error in: " + invalidDDMScript,
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(
 						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
@@ -2669,13 +2654,11 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldReadOnlyException.class,
 			"Unknown read only: " + invalidReadOnly,
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(0, invalidReadOnly, null))));
 
 		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false, Collections.emptyList());
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		for (Map.Entry<String, String> entry :
 				_readOnlyObjectFieldDBTypes.entrySet()) {
@@ -2745,7 +2728,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
+				true,
 				Arrays.asList(
 					_getIntegerObjectField(0, Collections.emptyList())));
 
@@ -2781,7 +2764,7 @@ public class ObjectFieldLocalServiceTest {
 
 		objectDefinition1 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
 				false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,

@@ -728,7 +728,6 @@ public class ObjectDefinitionResourceTest
 
 		randomObjectDefinition = randomObjectDefinition();
 
-		randomObjectDefinition.setEnableLocalization(false);
 		randomObjectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {

@@ -47,6 +47,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
@@ -1080,13 +1081,27 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Enable localization
 
-		ObjectDefinition objectDefinition =
-			_addUnmodifiableSystemObjectDefinition("Test");
-
-		Assert.assertFalse(objectDefinition.isEnableLocalization());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableLocalizationException.class,
+			"Enable localization is not allowed for unmodifiable object " +
+				"definitions",
+			() -> ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), 0,
+				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
+				true, true,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, "Test", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_APPROVED,
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						StringUtil.randomId()
+					).build())));
 
 		// Label is null
 
@@ -1109,7 +1124,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ForbiddenModifiableSystemObjectDefinitionName.class,
 			"Forbidden modifiable system object definition name Invalid Test",
 			() -> ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Invalid Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1130,7 +1145,8 @@ public class ObjectDefinitionLocalServiceTest {
 			"The first character of a name must be an upper case letter",
 			() -> _addUnmodifiableSystemObjectDefinition("test"));
 
-		objectDefinition = _addUnmodifiableSystemObjectDefinition("Test");
+		ObjectDefinition objectDefinition =
+			_addUnmodifiableSystemObjectDefinition("Test");
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustNotBeDuplicate.class,
@@ -1315,7 +1331,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2692,7 +2708,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2702,6 +2718,22 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		// Enable localization must be true for modifiable object definitions
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableLocalizationException.class,
+			"Enable localization must be true for modifiable object " +
+				"definitions",
+			() -> _objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition1.getObjectDefinitionId(), 0, 0, 0, 0,
+				false, false, objectDefinition1.getClassName(), false, true,
+				false, true, false, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), null, null, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				objectDefinition1.getStatus()));
 
 		// Object folder does not exist
 
@@ -2714,9 +2746,9 @@ public class ObjectDefinitionLocalServiceTest {
 				null, objectDefinition1.getObjectDefinitionId(), 0, 0,
 				objectFolderId, 0, false, false,
 				objectDefinition1.getClassName(), false, true, false, true,
-				false, false, false,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
-				null, false, LocalizedMapUtil.getLocalizedMap("Charlie"),
+				true, false, false, LocalizedMapUtil.getLocalizedMap("Charlie"),
+				"Charlie", null, null, false,
+				LocalizedMapUtil.getLocalizedMap("Charlie"),
 				ObjectDefinitionConstants.SCOPE_SITE,
 				objectDefinition1.getStatus()));
 
@@ -2728,7 +2760,7 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition1.getObjectDefinitionId(), 0, 0, 0, 0,
 				false, true, objectDefinition1.getClassName(), false, true,
-				false, true, false, false, false,
+				false, true, true, false, false,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				ObjectDefinitionConstants.SCOPE_SITE,
@@ -2742,7 +2774,7 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition1.getObjectDefinitionId(), 0, 0, 0, 0,
 				false, false, objectDefinition1.getClassName(), false, true,
-				false, true, false, false, false, null, "Charlie", null, null,
+				false, true, true, false, false, null, "Charlie", null, null,
 				false, LocalizedMapUtil.getLocalizedMap("Charlie"),
 				ObjectDefinitionConstants.SCOPE_SITE,
 				objectDefinition1.getStatus()));
@@ -2755,7 +2787,7 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition1.getObjectDefinitionId(), 0, 0, 0, 0,
 				false, false, objectDefinition1.getClassName(), false, true,
-				false, true, false, false, false,
+				false, true, true, false, false,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, false, null, ObjectDefinitionConstants.SCOPE_SITE,
 				objectDefinition1.getStatus()));
@@ -2765,11 +2797,9 @@ public class ObjectDefinitionLocalServiceTest {
 		// After update, a modifiable system object definition check its
 		// properties
 
-		boolean enableLocalization = false;
-
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, enableLocalization,
+				TestPropsValues.getUserId(), null, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2794,9 +2824,9 @@ public class ObjectDefinitionLocalServiceTest {
 				null, objectDefinition2.getObjectDefinitionId(), 0, 0,
 				objectFolder.getObjectFolderId(), 0, false, true,
 				objectDefinition2.getClassName(), false, true, false, true,
-				enableLocalization, false, false,
-				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
-				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
+				true, false, false, LocalizedMapUtil.getLocalizedMap("Charlie"),
+				"Charlie", null, null, false,
+				LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition2.getScope(), objectDefinition2.getStatus());
 
 		_assertLabelAndPluralLabel(objectDefinition2, "Charlie", "Charlies");

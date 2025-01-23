@@ -216,7 +216,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPD-32050", "LPS-164801"})
+@FeatureFlags("LPS-164801")
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -9118,6 +9118,7 @@ public class ObjectEntryResourceTest {
 			false);
 	}
 
+	@FeatureFlags("LPD-32050")
 	@Test
 	public void testPutCustomObjectEntryWithLocalizedAttachmentObjectField()
 		throws Exception {

@@ -122,8 +122,6 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 	@Deactivate
 	protected void deactivate() {
-		_jsImportMapsCache = null;
-
 		_serviceTracker.close();
 
 		_serviceTracker = null;

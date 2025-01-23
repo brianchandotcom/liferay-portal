@@ -220,7 +220,9 @@ export class SearchPage {
 			autoClick: true,
 			target: this.searchResultsPaginationItemsPerPageDropdown
 				.nth(index)
-				.locator(`xpath=//*[@id='${delta}']`),
+				.getByRole('option', {
+					name: `${delta.toString()}  Entries per Page`,
+				}),
 			trigger: this.searchResultsPaginationItemsPerPageToggle.nth(index),
 		});
 

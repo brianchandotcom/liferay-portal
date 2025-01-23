@@ -518,6 +518,8 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"hasChild", true
 				).put(
+					"hasGuestViewPermission", true
+				).put(
 					"hasScopeGroup", true
 				).put(
 					"id", LayoutConstants.DEFAULT_PLID

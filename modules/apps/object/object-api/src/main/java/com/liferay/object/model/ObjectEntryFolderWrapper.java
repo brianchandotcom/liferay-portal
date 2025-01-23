@@ -44,10 +44,10 @@ public class ObjectEntryFolderWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("label", getLabel());
-		attributes.put("name", getName());
 		attributes.put(
 			"parentObjectEntryFolderId", getParentObjectEntryFolderId());
+		attributes.put("label", getLabel());
+		attributes.put("name", getName());
 		attributes.put("treePath", getTreePath());
 
 		return attributes;
@@ -116,6 +116,13 @@ public class ObjectEntryFolderWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long parentObjectEntryFolderId = (Long)attributes.get(
+			"parentObjectEntryFolderId");
+
+		if (parentObjectEntryFolderId != null) {
+			setParentObjectEntryFolderId(parentObjectEntryFolderId);
+		}
+
 		String label = (String)attributes.get("label");
 
 		if (label != null) {
@@ -126,13 +133,6 @@ public class ObjectEntryFolderWrapper
 
 		if (name != null) {
 			setName(name);
-		}
-
-		Long parentObjectEntryFolderId = (Long)attributes.get(
-			"parentObjectEntryFolderId");
-
-		if (parentObjectEntryFolderId != null) {
-			setParentObjectEntryFolderId(parentObjectEntryFolderId);
 		}
 
 		String treePath = (String)attributes.get("treePath");

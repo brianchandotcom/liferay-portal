@@ -237,6 +237,20 @@ public interface ObjectEntryFolderModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the parent object entry folder ID of this object entry folder.
+	 *
+	 * @return the parent object entry folder ID of this object entry folder
+	 */
+	public long getParentObjectEntryFolderId();
+
+	/**
+	 * Sets the parent object entry folder ID of this object entry folder.
+	 *
+	 * @param parentObjectEntryFolderId the parent object entry folder ID of this object entry folder
+	 */
+	public void setParentObjectEntryFolderId(long parentObjectEntryFolderId);
+
+	/**
 	 * Returns the label of this object entry folder.
 	 *
 	 * @return the label of this object entry folder
@@ -349,20 +363,6 @@ public interface ObjectEntryFolderModel
 	 * @param name the name of this object entry folder
 	 */
 	public void setName(String name);
-
-	/**
-	 * Returns the parent object entry folder ID of this object entry folder.
-	 *
-	 * @return the parent object entry folder ID of this object entry folder
-	 */
-	public long getParentObjectEntryFolderId();
-
-	/**
-	 * Sets the parent object entry folder ID of this object entry folder.
-	 *
-	 * @param parentObjectEntryFolderId the parent object entry folder ID of this object entry folder
-	 */
-	public void setParentObjectEntryFolderId(long parentObjectEntryFolderId);
 
 	/**
 	 * Returns the tree path of this object entry folder.

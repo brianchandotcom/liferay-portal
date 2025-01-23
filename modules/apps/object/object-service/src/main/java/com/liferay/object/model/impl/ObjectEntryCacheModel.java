@@ -94,10 +94,10 @@ public class ObjectEntryCacheModel
 		sb.append(objectDefinitionId);
 		sb.append(", objectEntryFolderId=");
 		sb.append(objectEntryFolderId);
-		sb.append(", treePath=");
-		sb.append(treePath);
 		sb.append(", rootObjectEntryId=");
 		sb.append(rootObjectEntryId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -161,6 +161,7 @@ public class ObjectEntryCacheModel
 
 		objectEntryImpl.setObjectDefinitionId(objectDefinitionId);
 		objectEntryImpl.setObjectEntryFolderId(objectEntryFolderId);
+		objectEntryImpl.setRootObjectEntryId(rootObjectEntryId);
 
 		if (treePath == null) {
 			objectEntryImpl.setTreePath("");
@@ -168,8 +169,6 @@ public class ObjectEntryCacheModel
 		else {
 			objectEntryImpl.setTreePath(treePath);
 		}
-
-		objectEntryImpl.setRootObjectEntryId(rootObjectEntryId);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			objectEntryImpl.setLastPublishDate(null);
@@ -220,9 +219,9 @@ public class ObjectEntryCacheModel
 		objectDefinitionId = objectInput.readLong();
 
 		objectEntryFolderId = objectInput.readLong();
-		treePath = objectInput.readUTF();
 
 		rootObjectEntryId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -272,6 +271,8 @@ public class ObjectEntryCacheModel
 
 		objectOutput.writeLong(objectEntryFolderId);
 
+		objectOutput.writeLong(rootObjectEntryId);
+
 		if (treePath == null) {
 			objectOutput.writeUTF("");
 		}
@@ -279,7 +280,6 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(treePath);
 		}
 
-		objectOutput.writeLong(rootObjectEntryId);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -308,8 +308,8 @@ public class ObjectEntryCacheModel
 	public long modifiedDate;
 	public long objectDefinitionId;
 	public long objectEntryFolderId;
-	public String treePath;
 	public long rootObjectEntryId;
+	public String treePath;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

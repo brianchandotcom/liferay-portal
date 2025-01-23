@@ -91,12 +91,12 @@ public class ObjectEntryFolderCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", parentObjectEntryFolderId=");
+		sb.append(parentObjectEntryFolderId);
 		sb.append(", label=");
 		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", parentObjectEntryFolderId=");
-		sb.append(parentObjectEntryFolderId);
 		sb.append(", treePath=");
 		sb.append(treePath);
 		sb.append("}");
@@ -152,6 +152,9 @@ public class ObjectEntryFolderCacheModel
 			objectEntryFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectEntryFolderImpl.setParentObjectEntryFolderId(
+			parentObjectEntryFolderId);
+
 		if (label == null) {
 			objectEntryFolderImpl.setLabel("");
 		}
@@ -165,9 +168,6 @@ public class ObjectEntryFolderCacheModel
 		else {
 			objectEntryFolderImpl.setName(name);
 		}
-
-		objectEntryFolderImpl.setParentObjectEntryFolderId(
-			parentObjectEntryFolderId);
 
 		if (treePath == null) {
 			objectEntryFolderImpl.setTreePath("");
@@ -197,10 +197,10 @@ public class ObjectEntryFolderCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		label = objectInput.readUTF();
-		name = objectInput.readUTF();
 
 		parentObjectEntryFolderId = objectInput.readLong();
+		label = objectInput.readUTF();
+		name = objectInput.readUTF();
 		treePath = objectInput.readUTF();
 	}
 
@@ -240,6 +240,8 @@ public class ObjectEntryFolderCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(parentObjectEntryFolderId);
+
 		if (label == null) {
 			objectOutput.writeUTF("");
 		}
@@ -253,8 +255,6 @@ public class ObjectEntryFolderCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
-
-		objectOutput.writeLong(parentObjectEntryFolderId);
 
 		if (treePath == null) {
 			objectOutput.writeUTF("");
@@ -274,9 +274,9 @@ public class ObjectEntryFolderCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long parentObjectEntryFolderId;
 	public String label;
 	public String name;
-	public long parentObjectEntryFolderId;
 	public String treePath;
 
 }

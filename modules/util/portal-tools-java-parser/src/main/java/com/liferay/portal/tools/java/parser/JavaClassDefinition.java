@@ -37,6 +37,12 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		_implementedClassJavaTypes = implementedClassJavaTypes;
 	}
 
+	public void setPermittedClassJavaTypes(
+		List<JavaType> permittedClassJavaTypes) {
+
+		_permittedClassJavaTypes = permittedClassJavaTypes;
+	}
+
 	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
@@ -90,6 +96,12 @@ public class JavaClassDefinition extends BaseJavaTerm {
 				NO_MAX_LINE_LENGTH);
 		}
 
+		if (_permittedClassJavaTypes != null) {
+			appendSingleLine(
+				sb, _permittedClassJavaTypes, " permits ", "",
+				NO_MAX_LINE_LENGTH);
+		}
+
 		sb.append(suffix);
 
 		if ((maxLineLength == -1) ||
@@ -117,14 +129,35 @@ public class JavaClassDefinition extends BaseJavaTerm {
 				appendNewLine(
 					sb, _extendedClassJavaTypes, indent, "extends ", " ",
 					maxLineLength);
-				append(
-					sb, _implementedClassJavaTypes, indent, "implements ",
-					suffix, maxLineLength);
+
+				if (_permittedClassJavaTypes != null) {
+					append(
+						sb, _implementedClassJavaTypes, indent, "implements ",
+						" ", maxLineLength);
+					append(
+						sb, _permittedClassJavaTypes, indent, "permits ",
+						suffix, maxLineLength);
+				}
+				else {
+					append(
+						sb, _implementedClassJavaTypes, indent, "implements ",
+						suffix, maxLineLength);
+				}
 			}
 			else {
-				appendNewLine(
-					sb, _extendedClassJavaTypes, indent, "extends ", suffix,
-					maxLineLength);
+				if (_permittedClassJavaTypes != null) {
+					appendNewLine(
+						sb, _extendedClassJavaTypes, indent, "extends ", " ",
+						maxLineLength);
+					append(
+						sb, _permittedClassJavaTypes, indent, "permits ",
+						suffix, maxLineLength);
+				}
+				else {
+					appendNewLine(
+						sb, _extendedClassJavaTypes, indent, "extends ", suffix,
+						maxLineLength);
+				}
 			}
 
 			return sb.toString();
@@ -133,8 +166,28 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		if (_implementedClassJavaTypes != null) {
 			indent = append(sb, _classJavaType, indent, maxLineLength, false);
 
+			if (_permittedClassJavaTypes != null) {
+				appendNewLine(
+					sb, _implementedClassJavaTypes, indent, "implements ", " ",
+					maxLineLength);
+				append(
+					sb, _permittedClassJavaTypes, indent, "permits ", suffix,
+					maxLineLength);
+			}
+			else {
+				appendNewLine(
+					sb, _implementedClassJavaTypes, indent, "implements ",
+					suffix, maxLineLength);
+			}
+
+			return sb.toString();
+		}
+
+		if (_permittedClassJavaTypes != null) {
+			indent = append(sb, _classJavaType, indent, maxLineLength, false);
+
 			appendNewLine(
-				sb, _implementedClassJavaTypes, indent, "implements ", suffix,
+				sb, _permittedClassJavaTypes, indent, "permits ", suffix,
 				maxLineLength);
 		}
 		else {
@@ -150,6 +203,7 @@ public class JavaClassDefinition extends BaseJavaTerm {
 	private List<JavaType> _implementedClassJavaTypes;
 	private final List<JavaAnnotation> _javaAnnotations;
 	private final List<JavaSimpleValue> _modifiers;
+	private List<JavaType> _permittedClassJavaTypes;
 	private final String _type;
 
 }

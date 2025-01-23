@@ -65,8 +65,9 @@ public class GetSystemDataSetsMVCResourceCommand
 					WebKeys.THEME_DISPLAY);
 
 			ObjectDefinition dataSetObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					themeDisplay.getCompanyId(), "DataSet");
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_DATA_SET", themeDisplay.getCompanyId());
 
 			HttpServletRequest httpServletRequest =
 				_portal.getOriginalServletRequest(

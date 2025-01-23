@@ -118,6 +118,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -133,6 +134,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -161,6 +163,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -4000,6 +4003,39 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSystemEventOnObjectEntryDeletion() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"firstName", "Peter"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		SystemEvent deletionSystemEvent =
+			_systemEventLocalService.getSystemEvents(
+				0, _portal.getClassNameId(objectEntry.getModelClassName()),
+				objectEntry.getPrimaryKey()
+			).stream(
+			).findFirst(
+			).orElse(
+				null
+			);
+
+		Assert.assertNotNull(deletionSystemEvent);
+
+		Assert.assertEquals(1, deletionSystemEvent.getType());
+
+		Assert.assertEquals(
+			deletionSystemEvent.getExternalReferenceCode(),
+			objectEntry.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testUpdateAsset() throws Exception {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition.getObjectDefinitionId(), "emailAddressRequired");
@@ -5773,6 +5809,9 @@ public class ObjectEntryLocalServiceTest {
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Inject
+	private Portal _portal;
+
+	@Inject
 	private ResourceActions _resourceActions;
 
 	@Inject
@@ -5780,6 +5819,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

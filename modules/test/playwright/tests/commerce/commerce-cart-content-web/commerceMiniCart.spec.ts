@@ -13,8 +13,10 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import {miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -604,4 +606,71 @@ test('LPD-26906 Mini cart bundle quantity edit', async ({
 	await expect(
 		page.getByText('$ 20.00', {exact: true}).first()
 	).toBeVisible();
+});
+
+test('LPD-45736 Order items are split on the mini cart with quick add to cart when order splitting is enabled', async ({
+	apiHelpers,
+	commerceAdminChannelsPage,
+	commerceMiniCartPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'admin',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
+		phoneNumber: '12345',
+		regionISOCode: 'LA',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+		new URLSearchParams({
+			filter: `name eq 'ABS Sensor'`,
+		})
+	);
+
+	const productName = product.items[0].name['en_US'];
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill(productName);
+	await commerceMiniCartPage.quickAddToCartSku(productName).click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill(productName);
+	await commerceMiniCartPage.quickAddToCartSku(productName).click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+
+	await expect(
+		page.getByText('$ 100.00', {exact: true}).first()
+	).toBeVisible();
+	await expect(commerceMiniCartPage.miniCartItem(productName)).toHaveCount(1);
+
+	await commerceAdminChannelsPage.goto();
+	await (
+		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+	).click();
+	await commerceAdminChannelsPage
+		.ordersTabToggle('Show Separate Order Items')
+		.click();
+	await commerceAdminChannelsPage.headerActionsSaveButton.click();
+
+	await waitForAlert(page);
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill(productName);
+	await commerceMiniCartPage.quickAddToCartSku(productName).click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+
+	await expect(
+		page.getByText('$ 150.00', {exact: true}).first()
+	).toBeVisible();
+	await expect(commerceMiniCartPage.miniCartItem(productName)).toHaveCount(2);
 });

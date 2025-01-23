@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.annotation.Priority;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
@@ -74,7 +75,9 @@ public class ConfigurationExtension  extends AbstractMap<String, Object> impleme
 
 		Activator.put(_containerState.bundle(), beanManager);
 
-		beanManager.fireEvent(this);
+		Event<Object> event = beanManager.getEvent();
+
+		event.fire(this);
 	}
 
 	void destroy(
@@ -127,3 +130,4 @@ public class ConfigurationExtension  extends AbstractMap<String, Object> impleme
 	private final Map<String, Object> _configuration;
 
 }
+/* @generated */

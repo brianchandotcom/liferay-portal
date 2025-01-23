@@ -93,26 +93,7 @@ public class LoginActionTest {
 	public void testExclusiveStateInModalWhenLoginFromALayoutUtilityPageEntry()
 		throws Exception {
 
-		Group group = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
-
-		_layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
-				true, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
-
-		UserTestUtil.setUser(
-			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
-
-		URL url = new URL(
-			"http://localhost:8080/c/portal/login?p_l_id=" +
-				TestPropsValues.getPlid() + "&windowState=exclusive");
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod("GET");
+		HttpURLConnection httpURLConnection = _getHttpURLConnection();
 
 		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
@@ -132,29 +113,9 @@ public class LoginActionTest {
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					_portal, "_pathContext", context)) {
 
-			Group group = _groupLocalService.getGroup(
-				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
-
-			_layoutUtilityPageEntry =
-				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-					null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
-					true, RandomTestUtil.randomString(),
-					LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0,
-					_serviceContext);
-
-			UserTestUtil.setUser(
-				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
-
-			URL url = new URL(
-				"http://localhost:8080/c/portal/login?p_l_id=" +
-					TestPropsValues.getPlid() + "&windowState=exclusive");
-
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)url.openConnection();
+			HttpURLConnection httpURLConnection = _getHttpURLConnection();
 
 			httpURLConnection.setInstanceFollowRedirects(false);
-
-			httpURLConnection.setRequestMethod("GET");
 
 			Assert.assertEquals(302, httpURLConnection.getResponseCode());
 
@@ -180,27 +141,7 @@ public class LoginActionTest {
 					PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME,
 					StringPool.BLANK)) {
 
-			Group group = _groupLocalService.getGroup(
-				TestPropsValues.getCompanyId(), GroupConstants.GUEST);
-
-			_layoutUtilityPageEntry =
-				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-					null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
-					true, RandomTestUtil.randomString(),
-					LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0,
-					_serviceContext);
-
-			UserTestUtil.setUser(
-				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
-
-			URL url = new URL(
-				"http://localhost:8080/c/portal/login?p_l_id=" +
-					TestPropsValues.getPlid() + "&windowState=exclusive");
-
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)url.openConnection();
-
-			httpURLConnection.setRequestMethod("GET");
+			HttpURLConnection httpURLConnection = _getHttpURLConnection();
 
 			Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
@@ -288,6 +229,31 @@ public class LoginActionTest {
 		}
 
 		return layout;
+	}
+
+	private HttpURLConnection _getHttpURLConnection() throws Exception {
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
+
+		UserTestUtil.setUser(
+			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+
+		URL url = new URL(
+			"http://localhost:8080/c/portal/login?p_l_id=" +
+				TestPropsValues.getPlid() + "&windowState=exclusive");
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestMethod("GET");
+
+		return httpURLConnection;
 	}
 
 	private void _removeGuestViewPermission(Layout layout) throws Exception {

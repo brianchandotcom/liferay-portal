@@ -4,8 +4,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-
-import CopyFragmentModal from './CopyFragmentModal';
+import {CopyFragmentModal} from '@liferay/layout-js-components-web';
 
 const ACTIONS = {
 	copyContributedEntryToFragmentCollection(

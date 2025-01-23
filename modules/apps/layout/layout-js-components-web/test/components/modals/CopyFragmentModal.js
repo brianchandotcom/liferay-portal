@@ -8,7 +8,7 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import CopyFragmentModal from '../../src/main/resources/META-INF/resources/js/CopyFragmentModal';
+import CopyFragmentModal from '../../../src/main/resources/META-INF/resources/js/components/modals/CopyFragmentModal';
 
 const renderComponent = ({fragmentCollections = []} = {}) => {
 	const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});

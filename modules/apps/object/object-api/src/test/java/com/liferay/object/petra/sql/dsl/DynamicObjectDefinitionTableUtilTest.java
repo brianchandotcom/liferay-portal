@@ -6,12 +6,19 @@
 package com.liferay.object.petra.sql.dsl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.portal.dao.db.DBManagerImpl;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Gabriel Albuquerque
@@ -30,8 +37,19 @@ public class DynamicObjectDefinitionTableUtilTest {
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 				ObjectFieldConstants.DB_TYPE_BOOLEAN));
+
+		_setDBType(DBType.MYSQL);
+
 		Assert.assertEquals(
 			"VARCHAR(5000)",
+			DynamicObjectDefinitionTableUtil.getDataType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+				ObjectFieldConstants.DB_TYPE_STRING));
+
+		_setDBType(DBType.SQLSERVER);
+
+		Assert.assertEquals(
+			"VARCHAR(4000)",
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 				ObjectFieldConstants.DB_TYPE_STRING));
@@ -45,6 +63,19 @@ public class DynamicObjectDefinitionTableUtilTest {
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING));
+	}
+
+	private void _setDBType(DBType dbType) {
+		DBManager dbManager = Mockito.mock(DBManagerImpl.class);
+
+		Mockito.when(
+			dbManager.getDBType()
+		).thenReturn(
+			dbType
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			DBManagerUtil.class, "_dbManager", dbManager);
 	}
 
 }

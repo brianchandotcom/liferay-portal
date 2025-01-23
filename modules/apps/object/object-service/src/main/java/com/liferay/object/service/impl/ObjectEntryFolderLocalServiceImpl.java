@@ -72,10 +72,10 @@ public class ObjectEntryFolderLocalServiceImpl
 		objectEntryFolder.setCompanyId(user.getCompanyId());
 		objectEntryFolder.setUserId(user.getUserId());
 		objectEntryFolder.setUserName(user.getFullName());
-		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
-		objectEntryFolder.setName(name);
 		objectEntryFolder.setParentObjectEntryFolderId(
 			parentObjectEntryFolderId);
+		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
+		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
 
 		objectEntryFolder = objectEntryFolderPersistence.update(
@@ -130,10 +130,10 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateParentObjectEntryFolderId(
 			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
 
-		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
-		objectEntryFolder.setName(name);
 		objectEntryFolder.setParentObjectEntryFolderId(
 			parentObjectEntryFolderId);
+		objectEntryFolder.setLabelMap(_getLabelMap(labelMap, name));
+		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
 
 		return objectEntryFolderPersistence.update(objectEntryFolder);
@@ -261,8 +261,8 @@ public class ObjectEntryFolderLocalServiceImpl
 		}
 
 		ObjectEntryFolder objectEntryFolder =
-			objectEntryFolderPersistence.fetchByG_C_N_P(
-				groupId, companyId, name, parentObjectEntryFolderId);
+			objectEntryFolderPersistence.fetchByG_C_P_N(
+				groupId, companyId, parentObjectEntryFolderId, name);
 
 		if ((objectEntryFolder != null) &&
 			(objectEntryFolder.getObjectEntryFolderId() !=

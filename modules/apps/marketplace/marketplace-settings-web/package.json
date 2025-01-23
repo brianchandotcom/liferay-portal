@@ -7,6 +7,7 @@
 		"@clayui/multi-step-nav": "3.124.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
+		"jest-fetch-mock": "3.0.3",
 		"pkce-challenge": "3.0.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

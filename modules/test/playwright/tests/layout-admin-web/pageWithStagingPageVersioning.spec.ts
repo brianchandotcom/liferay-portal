@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -23,8 +24,56 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
 	pageEditorPagesTest,
 	stagingConfigurationPageTest
+);
+
+test(
+	'Assert private indicator is not added to page variations',
+	{
+		tag: '@LPD-47052',
+	},
+	async ({
+		apiHelpers,
+		page,
+		pagesAdminPage,
+		site,
+		stagingConfigurationPage,
+	}) => {
+
+		// Create a widget page
+
+		const layoutTitle = getRandomString();
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'widget',
+			},
+			title: layoutTitle,
+		});
+
+		// Enable staging with page versioning
+
+		await stagingConfigurationPage.gotoStagingConfiguration(
+			site.friendlyUrlPath
+		);
+
+		await stagingConfigurationPage.enableLocalStaging({versioning: true});
+
+		// Go to page administration and assert private indicator doesnot appear
+
+		await pagesAdminPage.goto(`${site.friendlyUrlPath}-staging`);
+
+		await expect(page.getByLabel('Main Variation')).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('menuitem', {exact: true, name: 'Main Variation'})
+				.locator('.lexicon-icon-password-policies')
+		).not.toBeVisible();
+	}
 );
 
 test(

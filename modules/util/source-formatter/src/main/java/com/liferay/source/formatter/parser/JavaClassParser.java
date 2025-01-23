@@ -152,7 +152,7 @@ public class JavaClassParser {
 			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, isFinal, false, isEnum,
 			isInterface, nonsealed, sealed, isStrictfp, false);
 
-		return _parseExtendsImplements(
+		return _parseExtendsImplementsPermits(
 			javaClass, StringUtil.trim(matcher.group(8)));
 	}
 
@@ -333,7 +333,7 @@ public class JavaClassParser {
 			Matcher matcher2 = pattern.matcher(javaTermContent);
 
 			if (matcher2.find()) {
-				javaClass = _parseExtendsImplements(
+				javaClass = _parseExtendsImplementsPermits(
 					javaClass, matcher2.group(2));
 			}
 
@@ -436,7 +436,7 @@ public class JavaClassParser {
 		return StringPool.BLANK;
 	}
 
-	private static JavaClass _parseExtendsImplements(
+	private static JavaClass _parseExtendsImplementsPermits(
 			JavaClass javaClass, String s)
 		throws ParseException {
 
@@ -465,13 +465,24 @@ public class JavaClassParser {
 			}
 		}
 
-		Matcher matcher = _implementsPattern.matcher(s);
+		Matcher matcher = _permitsPattern.matcher(s);
+
+		if (matcher.find()) {
+			javaClass.addPermittedClassNames(
+				StringUtil.split(s.substring(matcher.end())));
+
+			s = s.substring(0, matcher.start());
+		}
+
+		s = StringUtil.trim(s);
+
+		matcher = _implementsPattern.matcher(s);
 
 		if (matcher.find()) {
 			javaClass.addImplementedClassNames(
 				StringUtil.split(s.substring(matcher.end())));
 
-			s = StringUtil.trim(s.substring(0, matcher.start()));
+			s = s.substring(0, matcher.start());
 		}
 
 		s = StringUtil.trim(s);
@@ -624,5 +635,7 @@ public class JavaClassParser {
 		"[;}]\\s*?\n");
 	private static final Pattern _javaTermStartLinePattern = Pattern.compile(
 		".*?[{;]\\s*?\n", Pattern.DOTALL);
+	private static final Pattern _permitsPattern = Pattern.compile(
+		"(\\A|\\s)permits\\s");
 
 }

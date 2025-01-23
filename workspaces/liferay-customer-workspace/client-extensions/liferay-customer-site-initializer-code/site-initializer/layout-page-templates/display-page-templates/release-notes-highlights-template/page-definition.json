@@ -160,6 +160,47 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
+																		"en_US": "https://customer.liferay.com/downloads"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Download 2023.Q4&nbsp; &nbsp;➜</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"backgroundColor": "",
+												"marginRight": "2",
+												"textColor": ""
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] .btn {\n    background-color: var(--color-neutral-0) !important;\n    border-color: var(--color-brand-primary) !important;\n    color: var(--color-brand-primary) !important;\n}\n\n.[$FRAGMENT_CLASS$] p {\n    margin-bottom: 0;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary",
+												"type": "link"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
 																		"en_US": "https://customer.liferay.com/dxp-release-notes"
 																	}
 																}

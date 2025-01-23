@@ -35,7 +35,7 @@ interface IFrontendDataSetContext {
 	selectedItemsValue: Array<any>;
 }
 
-const SystemDataSetModalList = ({
+const SystemDataSetsView = ({
 	frontendDataSetContext,
 	items,
 }: {
@@ -197,7 +197,7 @@ const SelectSystemDataSetModalContent = ({
 					selectionType="single"
 					views={[
 						{
-							component: SystemDataSetModalList,
+							component: SystemDataSetsView,
 						},
 					]}
 				/>

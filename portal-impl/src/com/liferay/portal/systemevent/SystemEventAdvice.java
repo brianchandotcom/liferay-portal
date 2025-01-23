@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -184,12 +185,14 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	protected String getClassName(ClassedModel classedModel) {
 		String className = classedModel.getModelClassName();
 
-		if (classedModel instanceof StagedModel) {
+		if (classedModel instanceof StagedModel ) {
 			StagedModel stagedModel = (StagedModel)classedModel;
 
 			StagedModelType stagedModelType = stagedModel.getStagedModelType();
 
-			className = stagedModelType.getClassName();
+			if(!StringUtil.startsWith(className, _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+				className = stagedModelType.getClassName();
+			}
 		}
 
 		return className;
@@ -372,5 +375,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	private final Set<String> _noUUIDClassNames = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
+
+	private static final String _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION =
+		"com.liferay.object.model.ObjectDefinition#";
 
 }

@@ -568,8 +568,9 @@ public class DLExportImportPortletPreferencesProcessor
 					StringBundler.concat(
 						"Portlet ", portletDataContext.getPortletId(),
 						" refers to an invalid root folder external reference ",
-						"code ", folderExternalReferenceCode, " with group ",
-						"external reference code ", groupExternalReferenceCode),
+						"code ", folderExternalReferenceCode,
+						" with group external reference code ",
+						groupExternalReferenceCode),
 					portalException);
 			}
 		}

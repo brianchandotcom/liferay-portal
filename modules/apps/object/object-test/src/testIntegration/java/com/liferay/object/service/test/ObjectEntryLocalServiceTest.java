@@ -169,6 +169,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -4237,6 +4238,52 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		Assert.assertEquals("john@liferay.com", assetEntry.getTitle());
+
+		objectField = _addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"textLocalized"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
+		_objectDefinitionLocalService.updateTitleObjectFieldId(
+			_objectDefinition.getObjectDefinitionId(),
+			objectField.getObjectFieldId());
+
+		String value1 = "en_US " + RandomTestUtil.randomString();
+		String value2 = "pt_BR " + RandomTestUtil.randomString();
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"textLocalized_i18n",
+				HashMapBuilder.put(
+					"en_US", value1
+				).put(
+					"pt_BR", value2
+				).build()
+			).build());
+
+		assetEntry = _assetEntryLocalService.fetchEntry(
+			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			LocalizationUtil.getXml(
+				HashMapBuilder.put(
+					"en_US", value1
+				).put(
+					"pt_BR", value2
+				).build(),
+				objectField.getDefaultLanguageId(), "title"),
+			assetEntry.getTitle());
 	}
 
 	@Test

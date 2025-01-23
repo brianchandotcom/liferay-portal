@@ -1318,19 +1318,13 @@ public class CTCollectionLocalServiceImpl
 
 		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
 			ctCollectionId);
-		String modelClassNameId = ctPersistence.getModelClass(
-		).getName();
+
+		Class<?> clazz = ctPersistence.getModelClass();
 
 		if (!_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-				ctCollection.getCompanyId(), groupId, modelClassNameId)) {
+				ctCollection.getCompanyId(), groupId, clazz.getName())) {
 
-			return new int[] {
-				WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_DRAFT,
-				WorkflowConstants.STATUS_EXPIRED,
-				WorkflowConstants.STATUS_IN_TRASH,
-				WorkflowConstants.STATUS_SCHEDULED
-			};
+			return _DEFAULT_WORKFLOW_STATUSES;
 		}
 
 		return _DEFAULT_STATUSES;
@@ -1603,6 +1597,12 @@ public class CTCollectionLocalServiceImpl
 	private static final int[] _DEFAULT_STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
 		WorkflowConstants.STATUS_IN_TRASH, WorkflowConstants.STATUS_SCHEDULED
+	};
+
+	private static final int[] _DEFAULT_WORKFLOW_STATUSES = {
+		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
+		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_IN_TRASH,
+		WorkflowConstants.STATUS_SCHEDULED
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

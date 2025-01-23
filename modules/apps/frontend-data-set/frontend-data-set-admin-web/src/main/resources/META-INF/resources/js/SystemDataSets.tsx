@@ -56,7 +56,7 @@ const SystemDataSetModalList = ({
 				return (
 					<ClayList.Item
 						className={classNames({
-							disabled: item.customized,
+							disabled: item.created,
 							selectable,
 							selected: selectedItemsValue?.includes(
 								item[selectedItemsKey]
@@ -111,13 +111,13 @@ const SystemDataSetModalList = ({
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 
-						{item.customized && (
+						{item.created && (
 							<ClayList.ItemField>
 								<ClayLabel
-									className="used-label"
+									className="created-label"
 									displayType="warning"
 								>
-									{Liferay.Language.get('used')}
+									{Liferay.Language.get('created')}
 								</ClayLabel>
 							</ClayList.ItemField>
 						)}
@@ -393,7 +393,7 @@ const SystemDataSets = ({
 					image: '/states/empty_state.svg',
 					title: Liferay.Language.get('no-system-data-sets-created'),
 				}}
-				id="CustomizedSystemDataSets"
+				id="CreatedSystemDataSets"
 				itemsActions={[
 					{
 						data: {

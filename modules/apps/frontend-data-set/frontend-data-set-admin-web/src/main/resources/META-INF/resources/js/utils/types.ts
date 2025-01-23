@@ -183,7 +183,7 @@ export interface ISelectionFilter extends IFilter {
 
 export interface ISystemDataSet {
 	additionalAPIURLParameters: string;
-	customized: boolean;
+	created: boolean;
 	defaultItemsPerPage: number;
 	description: string;
 	name: string;

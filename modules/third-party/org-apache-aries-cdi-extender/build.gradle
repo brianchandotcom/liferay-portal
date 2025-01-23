@@ -1,0 +1,28 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extender", version: "1.1.5"
+	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.1.1"
+	compileOnly group: "org.osgi", name: "org.osgi.service.log", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/aries/cdi/container/internal/container/BundleContextExtension.java"
+	fileNames "org/apache/aries/cdi/container/internal/container/ConfigurationExtension.java"
+	fileNames "org/apache/aries/cdi/container/internal/model/InstanceActivator.java"
+	originalLibModuleName = "org.apache.aries.cdi.extender"
+}

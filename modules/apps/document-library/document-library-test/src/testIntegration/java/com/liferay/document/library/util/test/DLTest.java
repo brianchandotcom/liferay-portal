@@ -85,9 +85,7 @@ public class DLTest {
 
 	@Test
 	public void testGetUniqueTitle() throws Exception {
-		String titlePrefix = RandomTestUtil.randomString();
-
-		String title = titlePrefix;
+		String title = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			title,
@@ -97,7 +95,7 @@ public class DLTest {
 		_addFileEntry(RandomTestUtil.randomString(), title);
 
 		Assert.assertEquals(
-			titlePrefix + " (1)",
+			title + " (1)",
 			DLUtil.getUniqueTitle(
 				_group.getGroupId(), _dlFolder.getFolderId(), title));
 	}

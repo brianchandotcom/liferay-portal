@@ -108,7 +108,7 @@ export class MarketplaceRest {
 		);
 	}
 
-	private async getBaseFetch<T>(url: string, options?: FetchOptions) {
+	private async getBaseFetch<T = any>(url: string, options?: FetchOptions) {
 		const response = await fetch(url, options);
 
 		if (!response.ok) {
@@ -122,10 +122,10 @@ export class MarketplaceRest {
 		}
 
 		if (options?.earlyReturn) {
-			return response as T;
+			return response as unknown as T;
 		}
 
-		return response.json() as T;
+		return response.json() as unknown as T;
 	}
 
 	static getBaseResourceURL() {

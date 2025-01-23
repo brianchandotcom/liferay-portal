@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 
 import java.net.URL;
@@ -48,6 +49,69 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MarketplaceService extends BaseService {
+
+	public void deployCloudService(JSONObject jsonObject, Order order)
+		throws Exception {
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
+		JSONArray cloudProvisioningJSONArray = new JSONArray(
+			customFields.get("cloud-provisioning"));
+
+		JSONObject cloudProvisioningJSONObject =
+			_getCloudProvisioningJSONObject(
+				cloudProvisioningJSONArray, jsonObject.getLong("orderItemId"));
+
+		if (cloudProvisioningJSONObject.getLong("shippedQuantity") >=
+				cloudProvisioningJSONObject.getLong("quantity")) {
+
+			throw new Exception(
+				"Unable to install app for order item " +
+					cloudProvisioningJSONObject.getLong("orderItemId") +
+						" because there are no available resources");
+		}
+
+		String projectId = jsonObject.getString("projectId");
+
+		String temporaryDeploymentId =
+			MarketplaceUtil.createTemporaryDeployment(
+				customFields, cloudProvisioningJSONArray,
+				cloudProvisioningJSONObject, projectId);
+
+		updateOrder(customFields, order.getId(), order.getOrderStatus());
+
+		try {
+			JSONObject appJSONObject = _consoleService.deployApp(
+				order.getCreatorEmailAddress(), String.valueOf(order.getId()),
+				projectId);
+
+			cloudProvisioningJSONObject.put(
+				"deployments",
+				cloudProvisioningJSONObject.getJSONArray(
+					"deployments"
+				).put(
+					appJSONObject
+				)
+			).put(
+				"shippedQuantity",
+				cloudProvisioningJSONObject.getInt("shippedQuantity") + 1
+			);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			_log.error("Unable to install app for order " + order.getId());
+		}
+
+		MarketplaceUtil.deleteDeployment(
+			temporaryDeploymentId, cloudProvisioningJSONObject);
+
+		customFields.put(
+			"cloud-provisioning", cloudProvisioningJSONArray.toString());
+
+		updateOrder(customFields, order.getId(), order.getOrderStatus());
+	}
 
 	public AccountResource getAccountResource() throws Exception {
 		return AccountResource.builder(
@@ -237,6 +301,22 @@ public class MarketplaceService extends BaseService {
 		orderResource.patchOrder(orderId, order);
 	}
 
+	private JSONObject _getCloudProvisioningJSONObject(
+		JSONArray jsonArray, long orderItemId) {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (Objects.equals(
+					jsonObject.getLong("orderItemId"), orderItemId)) {
+
+				return jsonObject;
+			}
+		}
+
+		return new JSONObject();
+	}
+
 	private OrderResource _getOrderResource() throws Exception {
 		return OrderResource.builder(
 		).header(
@@ -276,6 +356,9 @@ public class MarketplaceService extends BaseService {
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceService.class);
+
+	@Autowired
+	private ConsoleService _consoleService;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

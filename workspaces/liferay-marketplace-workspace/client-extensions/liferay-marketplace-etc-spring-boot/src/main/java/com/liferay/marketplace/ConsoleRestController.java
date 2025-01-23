@@ -9,10 +9,9 @@ import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.marketplace.util.MarketplaceUtil;
 
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -74,56 +73,13 @@ public class ConsoleRestController extends BaseRestController {
 			@PathVariable("orderId") long orderId, @RequestBody String json)
 		throws Exception {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Provisioning order " + orderId);
+		}
+
 		Order order = _marketplaceService.getOrder(orderId);
 
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		JSONArray cloudProvisioningJSONArray = new JSONArray(
-			customFields.get("cloud-provisioning"));
-
-		JSONObject jsonObject = new JSONObject(json);
-
-		JSONObject cloudProvisioningJSONObject =
-			_getCloudProvisioningJSONObject(
-				cloudProvisioningJSONArray, jsonObject.getLong("orderItemId"));
-
-		_checkAvailability(cloudProvisioningJSONObject);
-
-		String temporaryDeploymentId = _createTemporaryDeployment(
-			cloudProvisioningJSONArray, cloudProvisioningJSONObject, order,
-			jsonObject.getString("projectId"));
-
-		try {
-			JSONObject appJSONObject = _consoleService.deployApp(
-				jwt.getClaimAsString("username"), String.valueOf(order.getId()),
-				jsonObject.getString("projectId"));
-
-			cloudProvisioningJSONObject.put(
-				"deployments",
-				cloudProvisioningJSONObject.getJSONArray(
-					"deployments"
-				).put(
-					appJSONObject
-				)
-			).put(
-				"shippedQuantity",
-				cloudProvisioningJSONObject.getInt("shippedQuantity") + 1
-			);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			_log.error("Unable to install app for order " + orderId);
-		}
-
-		_deleteDeployment(temporaryDeploymentId, cloudProvisioningJSONObject);
-
-		customFields.put(
-			"cloud-provisioning", cloudProvisioningJSONArray.toString());
-
-		_marketplaceService.updateOrder(
-			customFields, orderId, order.getOrderStatus());
+		_marketplaceService.deployCloudService(new JSONObject(json), order);
 	}
 
 	@PostMapping("uninstall-app/{orderId}")
@@ -145,11 +101,11 @@ public class ConsoleRestController extends BaseRestController {
 				customFields.get("cloud-provisioning"));
 
 			JSONObject cloudProvisioningJSONObject =
-				_getCloudProvisioningJSONObject(
+				MarketplaceUtil.getCloudProvisioningJSONObject(
 					cloudProvisioningJSONArray,
 					jsonObject.getLong("orderItemId"));
 
-			_deleteDeployment(
+			MarketplaceUtil.deleteDeployment(
 				jsonObject.getString("id"), cloudProvisioningJSONObject);
 
 			cloudProvisioningJSONObject.put(
@@ -175,81 +131,6 @@ public class ConsoleRestController extends BaseRestController {
 
 			throw exception;
 		}
-	}
-
-	private void _checkAvailability(JSONObject jsonObject) throws Exception {
-		if (jsonObject.getLong("shippedQuantity") >= jsonObject.getLong(
-				"quantity")) {
-
-			throw new Exception(
-				"Unable to install app for order item " +
-					jsonObject.getLong("orderItemId") +
-						" because there are no available resources");
-		}
-	}
-
-	private String _createTemporaryDeployment(
-			JSONArray jsonArray, JSONObject jsonObject, Order order,
-			String projectId)
-		throws Exception {
-
-		UUID uuid = UUID.randomUUID();
-
-		jsonObject.put(
-			"deployments",
-			jsonObject.getJSONArray(
-				"deployments"
-			).put(
-				new JSONObject(
-				).put(
-					"id", uuid.toString()
-				).put(
-					"loading", true
-				).put(
-					"projectId", projectId
-				)
-			));
-
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		customFields.put("cloud-provisioning", jsonArray.toString());
-
-		_marketplaceService.updateOrder(
-			customFields, order.getId(), order.getOrderStatus());
-
-		return uuid.toString();
-	}
-
-	private void _deleteDeployment(String deploymentId, JSONObject jsonObject) {
-		JSONArray deploymentsJSONArray = jsonObject.getJSONArray("deployments");
-
-		for (int i = 0; i < deploymentsJSONArray.length(); i++) {
-			JSONObject deploymentJSONObject =
-				deploymentsJSONArray.getJSONObject(i);
-
-			if (Objects.equals(
-					deploymentJSONObject.getString("id"), deploymentId)) {
-
-				deploymentsJSONArray.remove(i);
-			}
-		}
-	}
-
-	private JSONObject _getCloudProvisioningJSONObject(
-		JSONArray jsonArray, long orderItemId) {
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (Objects.equals(
-					jsonObject.getLong("orderItemId"), orderItemId)) {
-
-				return jsonObject;
-			}
-		}
-
-		return new JSONObject();
 	}
 
 	private static final Log _log = LogFactory.getLog(

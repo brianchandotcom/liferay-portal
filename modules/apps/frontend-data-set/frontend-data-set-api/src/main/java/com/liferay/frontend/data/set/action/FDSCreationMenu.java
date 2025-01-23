@@ -7,20 +7,15 @@ package com.liferay.frontend.data.set.action;
 
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Daniel Sanz
  */
 public interface FDSCreationMenu {
 
-	public CreationMenu getCreationMenu(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException;
+	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest);
 
 	public default FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
 		return FDSEntryItemImportPolicy.ITEM_PROXY;

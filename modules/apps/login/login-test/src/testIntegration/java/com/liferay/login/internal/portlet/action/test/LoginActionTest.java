@@ -107,8 +107,7 @@ public class LoginActionTest {
 
 		URL url = new URL(
 			"http://localhost:8080/c/portal/login?p_l_id=" +
-				_layoutLocalService.getDefaultPlid(group.getGroupId()) +
-					"&windowState=exclusive");
+				TestPropsValues.getPlid() + "&windowState=exclusive");
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();

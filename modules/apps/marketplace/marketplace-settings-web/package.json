@@ -2,9 +2,9 @@
 	"dependencies": {
 		"@clayui/alert": "3.111.0",
 		"@clayui/button": "3.116.0",
-		"@clayui/form": "3.122.0",
+		"@clayui/form": "3.125.0",
 		"@clayui/loading-indicator": "3.111.0",
-		"@clayui/multi-step-nav": "3.124.0",
+		"@clayui/multi-step-nav": "3.127.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"jest-fetch-mock": "3.0.3",

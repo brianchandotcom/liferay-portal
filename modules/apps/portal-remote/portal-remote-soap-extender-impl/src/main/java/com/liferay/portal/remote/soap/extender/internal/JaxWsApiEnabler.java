@@ -77,27 +77,26 @@ public class JaxWsApiEnabler {
 
 		@Override
 		public Bus addingService(ServiceReference<Bus> serviceReference) {
-			if (_bus == null) {
-				_bus = _bundleContext.getService(serviceReference);
-
-				BusFactory.setDefaultBus(_bus);
-
-				ProviderImpl providerImpl = new ProviderImpl();
-
-				Dictionary<String, Object> providerProperties =
-					new Hashtable<>();
-
-				providerProperties.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-					_contextPath);
-
-				_serviceRegistration = _bundleContext.registerService(
-					Provider.class, providerImpl, providerProperties);
-
-				return _bus;
+			if (_bus != null) {
+				return null;
 			}
 
-			return null;
+			_bus = _bundleContext.getService(serviceReference);
+
+			BusFactory.setDefaultBus(_bus);
+
+			ProviderImpl providerImpl = new ProviderImpl();
+
+			Dictionary<String, Object> providerProperties = new Hashtable<>();
+
+			providerProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+				_contextPath);
+
+			_serviceRegistration = _bundleContext.registerService(
+				Provider.class, providerImpl, providerProperties);
+
+			return _bus;
 		}
 
 		@Override

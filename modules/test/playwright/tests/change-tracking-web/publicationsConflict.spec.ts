@@ -7,9 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
@@ -18,8 +18,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	blogsPagesTest,
 	changeTrackingPagesTest,
-	journalPagesTest,
-	productMenuPageTest
+	journalPagesTest
 );
 
 test('Resolve deletion modification conflict publications by discarding', async ({
@@ -145,7 +144,6 @@ test('Resolve deletion modification conflict publications by restoring from recy
 	journalEditArticlePage,
 	journalPage,
 	page,
-	productMenuPage,
 }) => {
 	await changeTrackingPage.workOnProduction();
 
@@ -212,11 +210,7 @@ test('Resolve deletion modification conflict publications by restoring from recy
 
 	await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-	await productMenuPage.openProductMenuIfClosed();
-
-	await page.getByRole('menuitem', {name: 'Recycle Bin'}).click();
-
-	await page.getByLabel('Recycle Bin').getByTestId('app').click();
+	await page.goto(`/group/guest${PORTLET_URLS.recycleBin}`);
 
 	await expect(
 		page

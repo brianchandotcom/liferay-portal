@@ -213,16 +213,24 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			httpServletRequest, "segmentsExperienceId", -1);
 
 		if (segmentsExperienceId != -1) {
-			SegmentsExperience segmentsExperience =
+			SegmentsExperience publishedSegmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
 
-			if ((segmentsExperience != null) &&
-				((layout.getPlid() == segmentsExperience.getPlid()) ||
-				 (layout.getClassPK() == segmentsExperience.getPlid()))) {
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			SegmentsExperience draftSegmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					draftLayout.getGroupId(),
+					publishedSegmentsExperience.getSegmentsExperienceKey(),
+					draftLayout.getPlid());
+
+			if ((draftSegmentsExperience != null) &&
+				(draftLayout.getPlid() == draftSegmentsExperience.getPlid())) {
 
 				return HttpComponentsUtil.setParameter(
-					url, "segmentsExperienceId", segmentsExperienceId);
+					url, "segmentsExperienceId",
+					draftSegmentsExperience.getSegmentsExperienceId());
 			}
 		}
 

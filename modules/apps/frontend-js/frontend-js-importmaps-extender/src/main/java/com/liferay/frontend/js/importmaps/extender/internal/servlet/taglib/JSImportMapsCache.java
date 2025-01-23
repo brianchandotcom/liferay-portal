@@ -54,7 +54,7 @@ public class JSImportMapsCache {
 				StringBundler.concat(
 					"Import map ", jsonObject, " for scope ", scope, " will ",
 					"be ignored because there is already an import map ",
-					"registered under that scope."));
+					"registered under that scope"));
 
 			return () -> {
 			};
@@ -68,7 +68,7 @@ public class JSImportMapsCache {
 
 		if (companyId == COMPANY_ID_ALL) {
 			throw new IllegalArgumentException(
-				"Do not pass COMPANY_ID_ALL as companyId");
+				"Company ID cannot be " + COMPANY_ID_ALL);
 		}
 
 		writer.write("{\"imports\": {");

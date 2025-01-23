@@ -21,7 +21,7 @@ export default function PublishModalDisplayDate({
 				form={formId}
 				name={`${portletNamespace}displayDateDay`}
 				type="hidden"
-				value={currentDate.getDay()}
+				value={currentDate.getDate()}
 			/>
 
 			<ClayInput

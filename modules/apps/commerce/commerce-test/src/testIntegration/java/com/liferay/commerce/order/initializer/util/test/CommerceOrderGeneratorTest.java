@@ -91,7 +91,7 @@ public class CommerceOrderGeneratorTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
-		_catalog = _commerceCatalogLocalService.addCommerceCatalog(
+		_commerceCatalog = _commerceCatalogLocalService.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), _commerceCurrency.getCode(),
 			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 
@@ -121,7 +121,7 @@ public class CommerceOrderGeneratorTest {
 		modifiableSettings.store();
 
 		_cpDefinition = CPTestUtil.addCPDefinition(
-			_catalog.getGroupId(), SimpleCPTypeConstants.NAME);
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME);
 
 		_country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
@@ -173,7 +173,7 @@ public class CommerceOrderGeneratorTest {
 	@Inject
 	private AddressLocalService _addressLocalService;
 
-	private CommerceCatalog _catalog;
+	private CommerceCatalog _commerceCatalog;
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

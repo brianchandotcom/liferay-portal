@@ -61,7 +61,7 @@ const EnvironmentSelection = () => {
 						}>
 					) => setValue('environment', selectedRadio.value);
 
-					const [environmentName = ''] =
+					const [, environmentName = ''] =
 						projectEnvironment.projectId.split('-');
 
 					return (

@@ -81,6 +81,8 @@ test(
 		await page.mouse.move(targetRect.x, targetRect.y + 1);
 		await page.mouse.up();
 
+		await page.waitForTimeout(300);
+
 		const cardTitles = await page.locator('.card-title').allTextContents();
 
 		await expect(cardTitles[2]).toBe('Parent 3');

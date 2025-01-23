@@ -254,7 +254,9 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch()),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableLocalization()),
+						objectDefinition.getEnableLocalization(),
+						FeatureFlagManagerUtil.isEnabled(
+							contextUser.getCompanyId(), "LPD-32050")),
 					_getLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
@@ -271,7 +273,9 @@ public class ObjectDefinitionResourceImpl
 						objectField -> ObjectFieldUtil.toObjectField(
 							objectDefinition.getDefaultLanguageId(),
 							GetterUtil.getBoolean(
-								objectDefinition.getEnableLocalization()),
+								objectDefinition.getEnableLocalization(),
+								FeatureFlagManagerUtil.isEnabled(
+									contextUser.getCompanyId(), "LPD-32050")),
 							_listTypeDefinitionLocalService, objectField,
 							_objectFieldLocalService,
 							_objectFieldSettingLocalService,
@@ -290,7 +294,9 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch(), true),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableLocalization()),
+						objectDefinition.getEnableLocalization(),
+						FeatureFlagManagerUtil.isEnabled(
+							contextUser.getCompanyId(), "LPD-32050")),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
 					_getLocalizedMap(
@@ -320,7 +326,9 @@ public class ObjectDefinitionResourceImpl
 						objectField -> ObjectFieldUtil.toObjectField(
 							objectDefinition.getDefaultLanguageId(),
 							GetterUtil.getBoolean(
-								objectDefinition.getEnableLocalization()),
+								objectDefinition.getEnableLocalization(),
+								FeatureFlagManagerUtil.isEnabled(
+									contextUser.getCompanyId(), "LPD-32050")),
 							_listTypeDefinitionLocalService, objectField,
 							_objectFieldLocalService,
 							_objectFieldSettingLocalService,
@@ -534,7 +542,10 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch()),
 					GetterUtil.getBoolean(
-						objectDefinition.getEnableLocalization()),
+						objectDefinition.getEnableLocalization(),
+						FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectDefinition.getCompanyId(),
+							"LPD-32050")),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(

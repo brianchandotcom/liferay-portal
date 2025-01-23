@@ -1407,6 +1407,8 @@ public class ObjectDefinitionLocalServiceImpl
 			enableComments, modifiable, storageType, system);
 		_validateEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization, modifiable, storageType, system);
+		_validateEnableLocalization(
+			user.getCompanyId(), enableLocalization, modifiable);
 		_validateLabel(labelMap);
 		_validateName(0, user.getCompanyId(), modifiable, name, system);
 		_validatePluralLabel(pluralLabelMap);
@@ -1439,11 +1441,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
-		objectDefinition.setEnableLocalization(
-			(FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-32050") &&
-			 modifiable) ||
-			enableLocalization);
+		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setModifiable(modifiable);
@@ -2185,6 +2183,9 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
+		_validateEnableLocalization(
+			objectDefinition.getCompanyId(), enableLocalization,
+			objectDefinition.isModifiable());
 		_validateEnableObjectEntryHistory(
 			objectDefinition.isEnableObjectEntryHistory() !=
 				enableObjectEntryHistory,
@@ -2295,11 +2296,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
-		objectDefinition.setEnableLocalization(
-			(FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-32050") &&
-			 objectDefinition.isModifiable()) ||
-			enableLocalization);
+		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);
@@ -2516,6 +2513,25 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableFriendlyURLCustomizationException(
 				"Enable friendly URL customization is only allowed for " +
 					"object definitions with the default storage type");
+		}
+	}
+
+	private void _validateEnableLocalization(
+			long companyId, boolean enableLocalization, boolean modifiable)
+		throws PortalException {
+
+		if (enableLocalization && !modifiable) {
+			throw new ObjectDefinitionEnableLocalizationException(
+				"Enable localization is not allowed for unmodifiable object " +
+					"definitions");
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-32050") &&
+			!enableLocalization && modifiable) {
+
+			throw new ObjectDefinitionEnableLocalizationException(
+				"Enable localization must be true for modifiable object " +
+					"definitions");
 		}
 	}
 

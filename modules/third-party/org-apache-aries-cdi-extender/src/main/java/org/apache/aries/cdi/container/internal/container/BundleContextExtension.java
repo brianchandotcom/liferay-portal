@@ -15,6 +15,7 @@
 package org.apache.aries.cdi.container.internal.container;
 
 import javax.annotation.Priority;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.BeanManager;
@@ -38,7 +39,9 @@ public class BundleContextExtension implements Extension {
 		@Priority(Interceptor.Priority.PLATFORM_BEFORE)
 		@Observes BeforeBeanDiscovery bbd, BeanManager beanManager) {
 
-		beanManager.fireEvent(_bundleContext);
+		Event<Object> event = beanManager.getEvent();
+
+		event.fire(_bundleContext);
 	}
 
 	void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
@@ -50,3 +53,4 @@ public class BundleContextExtension implements Extension {
 	private final BundleContext _bundleContext;
 
 }
+/* @generated */

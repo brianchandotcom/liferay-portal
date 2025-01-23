@@ -24,6 +24,7 @@ import javax.enterprise.context.BeforeDestroyed;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.event.Event;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
@@ -92,8 +93,12 @@ public abstract class InstanceActivator extends Phase {
 
 				final Set<Annotation> qualifiers = bean.getQualifiers();
 
+				Event<Object> event1 = beanManager.getEvent();
+
+				event1 = event1.select(Sets.hashSet(qualifiers, Initialized.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+
 				try {
-					beanManager.fireEvent(object, Sets.hashSet(qualifiers, Initialized.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+					event1.fire(object);
 				}
 				catch (Throwable t) {
 					_log.error(l -> l.error("CCR Error in activator event @Initialized for {} on {}", _instance, bundle(), t));
@@ -102,8 +107,12 @@ public abstract class InstanceActivator extends Phase {
 
 				activationDTO.onClose = a -> {
 					try (With with2 = new With(a)) {
+						Event<Object> event2 = beanManager.getEvent();
+
+						event2 = event2.select(Sets.hashSet(qualifiers, BeforeDestroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+
 						try {
-							beanManager.fireEvent(object, Sets.hashSet(qualifiers, BeforeDestroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+							event2.fire(object);
 						}
 						catch (Throwable t) {
 							_log.error(l -> l.error("CCR Error in activator event @BeforeDestroyed for {} on {}", _instance, bundle(), t));
@@ -112,8 +121,12 @@ public abstract class InstanceActivator extends Phase {
 
 						containerState.componentContext().destroy();
 
+						Event<Object> event3 = beanManager.getEvent();
+
+						event3 = event3.select(Sets.hashSet(qualifiers, Destroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+
 						try {
-							beanManager.fireEvent(object, Sets.hashSet(qualifiers, Destroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
+							event3.fire(object);
 						}
 						catch (Throwable t) {
 							_log.error(l -> l.error("CCR Error in activator event @Destroyed for {} on {}", _instance, bundle(), t));
@@ -139,3 +152,4 @@ public abstract class InstanceActivator extends Phase {
 	protected final ExtendedComponentInstanceDTO _instance;
 
 }
+/* @generated */

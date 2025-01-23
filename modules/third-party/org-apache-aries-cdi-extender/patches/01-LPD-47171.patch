@@ -1,0 +1,118 @@
+diff --git a/org/apache/aries/cdi/container/internal/container/BundleContextExtension.java b/org/apache/aries/cdi/container/internal/container/BundleContextExtension.java
+index 6d8975c67bc58..0c76d8def48f6 100644
+--- a/org/apache/aries/cdi/container/internal/container/BundleContextExtension.java
++++ b/org/apache/aries/cdi/container/internal/container/BundleContextExtension.java
+@@ -15,6 +15,7 @@
+ package org.apache.aries.cdi.container.internal.container;
+ 
+ import javax.annotation.Priority;
++import javax.enterprise.event.Event;
+ import javax.enterprise.event.Observes;
+ import javax.enterprise.inject.spi.AfterBeanDiscovery;
+ import javax.enterprise.inject.spi.BeanManager;
+@@ -38,7 +39,9 @@ public class BundleContextExtension implements Extension {
+ 		@Priority(Interceptor.Priority.PLATFORM_BEFORE)
+ 		@Observes BeforeBeanDiscovery bbd, BeanManager beanManager) {
+ 
+-		beanManager.fireEvent(_bundleContext);
++		Event<Object> event = beanManager.getEvent();
++
++		event.fire(_bundleContext);
+ 	}
+ 
+ 	void afterBeanDiscovery(@Observes AfterBeanDiscovery abd) {
+@@ -50,3 +53,4 @@ public class BundleContextExtension implements Extension {
+ 	private final BundleContext _bundleContext;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/aries/cdi/container/internal/container/ConfigurationExtension.java b/org/apache/aries/cdi/container/internal/container/ConfigurationExtension.java
+index 0558cbe7505e7..6203f12e4c641 100644
+--- a/org/apache/aries/cdi/container/internal/container/ConfigurationExtension.java
++++ b/org/apache/aries/cdi/container/internal/container/ConfigurationExtension.java
+@@ -25,6 +25,7 @@ import java.util.Set;
+ import java.util.TreeMap;
+ 
+ import javax.annotation.Priority;
++import javax.enterprise.event.Event;
+ import javax.enterprise.event.Observes;
+ import javax.enterprise.inject.spi.BeanManager;
+ import javax.enterprise.inject.spi.BeforeBeanDiscovery;
+@@ -74,7 +75,9 @@ public class ConfigurationExtension  extends AbstractMap<String, Object> impleme
+ 
+ 		Activator.put(_containerState.bundle(), beanManager);
+ 
+-		beanManager.fireEvent(this);
++		Event<Object> event = beanManager.getEvent();
++
++		event.fire(this);
+ 	}
+ 
+ 	void destroy(
+@@ -127,3 +130,4 @@ public class ConfigurationExtension  extends AbstractMap<String, Object> impleme
+ 	private final Map<String, Object> _configuration;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/aries/cdi/container/internal/model/InstanceActivator.java b/org/apache/aries/cdi/container/internal/model/InstanceActivator.java
+index 4f3a7ec26a44d..724b90d3aa4a5 100644
+--- a/org/apache/aries/cdi/container/internal/model/InstanceActivator.java
++++ b/org/apache/aries/cdi/container/internal/model/InstanceActivator.java
+@@ -24,6 +24,7 @@ import javax.enterprise.context.BeforeDestroyed;
+ import javax.enterprise.context.Destroyed;
+ import javax.enterprise.context.Initialized;
+ import javax.enterprise.context.spi.CreationalContext;
++import javax.enterprise.event.Event;
+ import javax.enterprise.inject.spi.Bean;
+ import javax.enterprise.inject.spi.BeanManager;
+ 
+@@ -92,8 +93,12 @@ public abstract class InstanceActivator extends Phase {
+ 
+ 				final Set<Annotation> qualifiers = bean.getQualifiers();
+ 
++				Event<Object> event1 = beanManager.getEvent();
++
++				event1 = event1.select(Sets.hashSet(qualifiers, Initialized.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++
+ 				try {
+-					beanManager.fireEvent(object, Sets.hashSet(qualifiers, Initialized.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++					event1.fire(object);
+ 				}
+ 				catch (Throwable t) {
+ 					_log.error(l -> l.error("CCR Error in activator event @Initialized for {} on {}", _instance, bundle(), t));
+@@ -102,8 +107,12 @@ public abstract class InstanceActivator extends Phase {
+ 
+ 				activationDTO.onClose = a -> {
+ 					try (With with2 = new With(a)) {
++						Event<Object> event2 = beanManager.getEvent();
++
++						event2 = event2.select(Sets.hashSet(qualifiers, BeforeDestroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++
+ 						try {
+-							beanManager.fireEvent(object, Sets.hashSet(qualifiers, BeforeDestroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++							event2.fire(object);
+ 						}
+ 						catch (Throwable t) {
+ 							_log.error(l -> l.error("CCR Error in activator event @BeforeDestroyed for {} on {}", _instance, bundle(), t));
+@@ -112,8 +121,12 @@ public abstract class InstanceActivator extends Phase {
+ 
+ 						containerState.componentContext().destroy();
+ 
++						Event<Object> event3 = beanManager.getEvent();
++
++						event3 = event3.select(Sets.hashSet(qualifiers, Destroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++
+ 						try {
+-							beanManager.fireEvent(object, Sets.hashSet(qualifiers, Destroyed.Literal.of(ComponentScoped.class)).toArray(new Annotation[0]));
++							event3.fire(object);
+ 						}
+ 						catch (Throwable t) {
+ 							_log.error(l -> l.error("CCR Error in activator event @Destroyed for {} on {}", _instance, bundle(), t));
+@@ -139,3 +152,4 @@ public abstract class InstanceActivator extends Phase {
+ 	protected final ExtendedComponentInstanceDTO _instance;
+ 
+ }
++/* @generated */
+\ No newline at end of file

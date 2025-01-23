@@ -18,6 +18,7 @@
 		color: var(--color-action-primary-active) !important;
 		transition: max-height 0.3s ease-in;
 	}
+
 	a {
 		text-decoration: none !important;
 	}
@@ -29,7 +30,7 @@
 			color: var(--color-action-primary-hover) !important;
 		}
 
-		&:hover rect {
+		&:hover path {
 			fill: var(--color-action-primary-active);
 		}
 
@@ -48,6 +49,10 @@
 				transform: rotate(90deg);
 				transition: transform 0.3s;
 			}
+		}
+
+		.portal-icon rect {
+			fill: var(--color-neutral-0);
 		}
 	}
 }

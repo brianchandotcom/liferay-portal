@@ -54,8 +54,8 @@ export default function Connect({
 		) as Window;
 
 		const handleMessage = async (event: MessageEvent) => {
-			const {data = {}, origin} = event;
-			const {code, serviceURL, settings} = data;
+			const {data, origin} = event;
+			const {code, serviceURL, settings} = data ?? {};
 
 			if (oAuth2.url !== origin || !code) {
 				return;

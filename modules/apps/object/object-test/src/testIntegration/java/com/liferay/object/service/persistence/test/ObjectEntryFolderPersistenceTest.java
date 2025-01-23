@@ -135,12 +135,12 @@ public class ObjectEntryFolderPersistenceTest {
 
 		newObjectEntryFolder.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.nextLong());
+
 		newObjectEntryFolder.setLabel(RandomTestUtil.randomString());
 
 		newObjectEntryFolder.setName(RandomTestUtil.randomString());
-
-		newObjectEntryFolder.setParentObjectEntryFolderId(
-			RandomTestUtil.nextLong());
 
 		newObjectEntryFolder.setTreePath(RandomTestUtil.randomString());
 
@@ -180,14 +180,14 @@ public class ObjectEntryFolderPersistenceTest {
 			Time.getShortTimestamp(existingObjectEntryFolder.getModifiedDate()),
 			Time.getShortTimestamp(newObjectEntryFolder.getModifiedDate()));
 		Assert.assertEquals(
+			existingObjectEntryFolder.getParentObjectEntryFolderId(),
+			newObjectEntryFolder.getParentObjectEntryFolderId());
+		Assert.assertEquals(
 			existingObjectEntryFolder.getLabel(),
 			newObjectEntryFolder.getLabel());
 		Assert.assertEquals(
 			existingObjectEntryFolder.getName(),
 			newObjectEntryFolder.getName());
-		Assert.assertEquals(
-			existingObjectEntryFolder.getParentObjectEntryFolderId(),
-			newObjectEntryFolder.getParentObjectEntryFolderId());
 		Assert.assertEquals(
 			existingObjectEntryFolder.getTreePath(),
 			newObjectEntryFolder.getTreePath());
@@ -250,14 +250,14 @@ public class ObjectEntryFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_N_P() throws Exception {
-		_persistence.countByG_C_N_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextLong());
+	public void testCountByG_C_P_N() throws Exception {
+		_persistence.countByG_C_P_N(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_C_N_P(0L, 0L, "null", 0L);
+		_persistence.countByG_C_P_N(0L, 0L, 0L, "null");
 
-		_persistence.countByG_C_N_P(0L, 0L, (String)null, 0L);
+		_persistence.countByG_C_P_N(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -288,8 +288,9 @@ public class ObjectEntryFolderPersistenceTest {
 			"ObjectEntryFolder", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "objectEntryFolderId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "label", true,
-			"name", true, "parentObjectEntryFolderId", true, "treePath", true);
+			true, "createDate", true, "modifiedDate", true,
+			"parentObjectEntryFolderId", true, "label", true, "name", true,
+			"treePath", true);
 	}
 
 	@Test
@@ -603,15 +604,15 @@ public class ObjectEntryFolderPersistenceTest {
 				objectEntryFolder, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			objectEntryFolder.getName(),
-			ReflectionTestUtil.invoke(
-				objectEntryFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "name"));
-		Assert.assertEquals(
 			Long.valueOf(objectEntryFolder.getParentObjectEntryFolderId()),
 			ReflectionTestUtil.<Long>invoke(
 				objectEntryFolder, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "parentObjectEntryFolderId"));
+		Assert.assertEquals(
+			objectEntryFolder.getName(),
+			ReflectionTestUtil.invoke(
+				objectEntryFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected ObjectEntryFolder addObjectEntryFolder() throws Exception {
@@ -638,12 +639,12 @@ public class ObjectEntryFolderPersistenceTest {
 
 		objectEntryFolder.setModifiedDate(RandomTestUtil.nextDate());
 
+		objectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.nextLong());
+
 		objectEntryFolder.setLabel(RandomTestUtil.randomString());
 
 		objectEntryFolder.setName(RandomTestUtil.randomString());
-
-		objectEntryFolder.setParentObjectEntryFolderId(
-			RandomTestUtil.nextLong());
 
 		objectEntryFolder.setTreePath(RandomTestUtil.randomString());
 

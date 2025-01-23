@@ -48,8 +48,8 @@ public class ObjectEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
-		attributes.put("treePath", getTreePath());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -134,16 +134,16 @@ public class ObjectEntryWrapper
 			setObjectEntryFolderId(objectEntryFolderId);
 		}
 
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
 		Long rootObjectEntryId = (Long)attributes.get("rootObjectEntryId");
 
 		if (rootObjectEntryId != null) {
 			setRootObjectEntryId(rootObjectEntryId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -175,6 +175,13 @@ public class ObjectEntryWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@Override
+	public String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.buildTreePath();
 	}
 
 	@Override

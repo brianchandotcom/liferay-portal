@@ -5,7 +5,11 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+
+import java.util.Map;
 
 /**
  * Provides the remote service utility for ObjectEntryFolder. This utility wraps
@@ -26,6 +30,31 @@ public class ObjectEntryFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryFolderServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectEntryFolder addObjectEntryFolder(
+			String externalReferenceCode, long groupId,
+			Map<java.util.Locale, String> labelMap, String name,
+			long parentObjectEntryFolderId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addObjectEntryFolder(
+			externalReferenceCode, groupId, labelMap, name,
+			parentObjectEntryFolderId, serviceContext);
+	}
+
+	public static ObjectEntryFolder deleteObjectEntryFolder(
+			long objectEntryFolderId)
+		throws PortalException {
+
+		return getService().deleteObjectEntryFolder(objectEntryFolderId);
+	}
+
+	public static ObjectEntryFolder getObjectEntryFolder(
+			long objectEntryFolderId)
+		throws PortalException {
+
+		return getService().getObjectEntryFolder(objectEntryFolderId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -34,6 +63,15 @@ public class ObjectEntryFolderServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectEntryFolder updateObjectEntryFolder(
+			long objectEntryFolderId, Map<java.util.Locale, String> labelMap,
+			String name, long parentObjectEntryFolderId)
+		throws PortalException {
+
+		return getService().updateObjectEntryFolder(
+			objectEntryFolderId, labelMap, name, parentObjectEntryFolderId);
 	}
 
 	public static ObjectEntryFolderService getService() {

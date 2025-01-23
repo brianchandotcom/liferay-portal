@@ -259,6 +259,20 @@ public interface ObjectEntryModel
 	public void setObjectEntryFolderId(long objectEntryFolderId);
 
 	/**
+	 * Returns the root object entry ID of this object entry.
+	 *
+	 * @return the root object entry ID of this object entry
+	 */
+	public long getRootObjectEntryId();
+
+	/**
+	 * Sets the root object entry ID of this object entry.
+	 *
+	 * @param rootObjectEntryId the root object entry ID of this object entry
+	 */
+	public void setRootObjectEntryId(long rootObjectEntryId);
+
+	/**
 	 * Returns the tree path of this object entry.
 	 *
 	 * @return the tree path of this object entry
@@ -272,20 +286,6 @@ public interface ObjectEntryModel
 	 * @param treePath the tree path of this object entry
 	 */
 	public void setTreePath(String treePath);
-
-	/**
-	 * Returns the root object entry ID of this object entry.
-	 *
-	 * @return the root object entry ID of this object entry
-	 */
-	public long getRootObjectEntryId();
-
-	/**
-	 * Sets the root object entry ID of this object entry.
-	 *
-	 * @param rootObjectEntryId the root object entry ID of this object entry
-	 */
-	public void setRootObjectEntryId(long rootObjectEntryId);
 
 	/**
 	 * Returns the last publish date of this object entry.

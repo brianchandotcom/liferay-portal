@@ -280,6 +280,20 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 <commerce-ui:panel
 	bodyClasses="p-0"
+	title='<%= LanguageUtil.get(request, "shipping-methods") %>'
+>
+	<frontend-data-set:classic-display
+		contextParams="<%= contextParams %>"
+		dataProviderKey="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
+		id="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
+		itemsPerPage="<%= 10 %>"
+		selectedItemsKey="key"
+		showManagementBar="<%= false %>"
+	/>
+</commerce-ui:panel>
+
+<commerce-ui:panel
+	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "tax-calculations") %>'
 >
 	<frontend-data-set:classic-display

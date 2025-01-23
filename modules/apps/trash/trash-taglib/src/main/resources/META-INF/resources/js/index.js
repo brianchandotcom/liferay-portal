@@ -12,6 +12,7 @@ export function undo({alertMessage, namespace}) {
 		autoClose: 15000,
 		message: alertMessage,
 		renderData: {
+			__reactDOMFlushSync: true,
 			componentId,
 		},
 		toastProps: {

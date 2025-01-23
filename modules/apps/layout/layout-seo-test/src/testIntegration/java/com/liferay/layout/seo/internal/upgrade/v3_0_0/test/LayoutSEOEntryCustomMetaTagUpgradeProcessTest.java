@@ -6,6 +6,7 @@
 package com.liferay.layout.seo.internal.upgrade.v3_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -16,7 +17,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
@@ -30,12 +30,15 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -69,7 +72,8 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest {
+public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -140,7 +144,7 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest {
 
 		_updateDDMStorageId(ddmStorageId, layoutSEOEntry.getLayoutSEOEntryId());
 
-		_runUpgrade();
+		runUpgrade();
 
 		Assert.assertNull(
 			_ddmStructureLocalService.fetchStructure(
@@ -181,6 +185,46 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest {
 		Assert.assertEquals(
 			"contenido2",
 			secondLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
+	}
+
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			layout.getUserId(), layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId(), false, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@Override
+	protected CTService<?> getCTService() {
+		return _layoutSEOEntryLocalService;
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+		}
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		LayoutSEOEntry layoutSEOEntry = (LayoutSEOEntry)ctModel;
+
+		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			layoutSEOEntry.getUserId(), layoutSEOEntry.getGroupId(),
+			layoutSEOEntry.isPrivateLayout(), layoutSEOEntry.getLayoutId(),
+			true, RandomTestUtil.randomLocaleStringMap(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	private static void _addDDMStorageIdColumn() throws Exception {
@@ -257,17 +301,6 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest {
 		return ddmFormValues;
 	}
 
-	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-		}
-	}
-
 	private void _updateDDMStorageId(long ddmStorageId, long layoutSEOEntryId)
 		throws Exception {
 
@@ -293,9 +326,6 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcessTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	@Inject
-	private DDM _ddm;
 
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;

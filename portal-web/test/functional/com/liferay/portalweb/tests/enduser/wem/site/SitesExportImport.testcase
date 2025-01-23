@@ -102,6 +102,21 @@ definition {
 	test ExportImportSiteWithEmbeddedWCDInFragment {
 		property portal.acceptance = "true";
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Deprecation",
+			configurationScope = "Virtual Instance Scope");
+
+		Check.checkToggleSwitch(
+			locator1 = "FeatureFlag#TOGGLE_ROW",
+			title_row = "Embedded Widgets in Fragments",
+			toggle_state = "Disabled");
+
 		task ("Add a fragment collection in site") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
@@ -128,6 +143,10 @@ definition {
 			WaitForVisible(locator1 = "FragmentEditor#CHANGES_SAVED_MESSAGE");
 
 			PortletEntry.publish();
+
+			Click(
+				key_text = "Publish",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Add a Content page and add a web content") {

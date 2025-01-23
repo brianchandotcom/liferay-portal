@@ -58,7 +58,7 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 	}
 
 	@Override
-	public String getEncryptionAlgorithmConfiguration(
+	public String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
 		String rounds = String.valueOf(_ROUNDS);

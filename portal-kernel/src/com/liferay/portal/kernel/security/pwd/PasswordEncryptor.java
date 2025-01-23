@@ -51,7 +51,7 @@ public interface PasswordEncryptor {
 			String encryptedPassword, boolean upgradeHashSecurity)
 		throws PwdEncryptorException;
 
-	public default String getEncryptionAlgorithmConfiguration(
+	public default String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
 		return encryptedPassword.substring(

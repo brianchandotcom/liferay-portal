@@ -143,15 +143,15 @@ public class LanguageImplWhenFormattingFromRequestTest {
 
 			@Override
 			public Object getAttribute(String name) {
-				if (name.equals(WebKeys.THEME_DISPLAY)) {
-					ThemeDisplay themeDisplay = new ThemeDisplay();
-
-					themeDisplay.setLocale(locale);
-
-					return themeDisplay;
+				if (!name.equals(WebKeys.THEME_DISPLAY)) {
+					return null;
 				}
 
-				return null;
+				ThemeDisplay themeDisplay = new ThemeDisplay();
+
+				themeDisplay.setLocale(locale);
+
+				return themeDisplay;
 			}
 
 		};

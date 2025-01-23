@@ -5,7 +5,7 @@
 
 package com.liferay.sample;
 
-import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -5,8 +5,8 @@
 
 package com.liferay.partner;
 
-import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
+import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2Util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.WebApplicationType;

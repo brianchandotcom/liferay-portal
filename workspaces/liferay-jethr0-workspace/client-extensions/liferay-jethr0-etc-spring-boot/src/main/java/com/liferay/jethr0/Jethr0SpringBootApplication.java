@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0;
 
-import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.entity.EntityInitializer;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;

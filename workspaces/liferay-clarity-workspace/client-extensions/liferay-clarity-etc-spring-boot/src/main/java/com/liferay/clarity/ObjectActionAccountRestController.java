@@ -5,7 +5,7 @@
 
 package com.liferay.clarity;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
 import org.apache.commons.logging.Log;

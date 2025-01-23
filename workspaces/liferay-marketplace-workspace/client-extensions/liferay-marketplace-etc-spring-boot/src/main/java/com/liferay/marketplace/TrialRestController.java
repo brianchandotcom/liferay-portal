@@ -5,8 +5,8 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -475,16 +475,6 @@ public class TrialRestController extends BaseRestController {
 		return string;
 	}
 
-	private String[] _toStringArray(JSONArray jsonArray) {
-		List<String> list = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			list.add(jsonArray.getString(i));
-		}
-
-		return list.toArray(new String[0]);
-	}
-
 	private void _rollBackTrial(
 			String errorMessage, long orderId, PortalInstance portalInstance)
 		throws Exception {
@@ -509,6 +499,16 @@ public class TrialRestController extends BaseRestController {
 				"trial-virtualhost", portalInstance.getVirtualHost()
 			).build(),
 			orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
+	}
+
+	private String[] _toStringArray(JSONArray jsonArray) {
+		List<String> list = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			list.add(jsonArray.getString(i));
+		}
+
+		return list.toArray(new String[0]);
 	}
 
 	private static final int _TRIAL_MAX_INSTANCES = GetterUtil.getInteger(

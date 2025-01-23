@@ -5,7 +5,7 @@
 
 package com.liferay.ups;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.ups.constants.UPSServiceCodeConstants;
 
 import org.apache.commons.logging.Log;

@@ -5,7 +5,7 @@
 
 package com.liferay.sample;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
 import java.util.Collections;
 import java.util.HashMap;

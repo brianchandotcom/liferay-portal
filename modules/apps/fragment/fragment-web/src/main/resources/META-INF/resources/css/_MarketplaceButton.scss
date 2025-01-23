@@ -1,0 +1,17 @@
+.marketplace-button {
+	position: relative;
+
+	.notification {
+		background-color: $primary;
+		border: 2px $gray-200 solid;
+		border-radius: 50%;
+		height: 10px;
+		margin: 0;
+		padding: 1px;
+		position: absolute;
+		right: 4px;
+		top: 3px;
+		width: 10px;
+		z-index: 1;
+	}
+}

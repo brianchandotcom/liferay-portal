@@ -5,7 +5,16 @@
 
 import {openMarketplaceModal} from '@liferay/layout-js-components-web';
 
-export default function propsTransformer({additionalProps, ...props}) {
+export default function propsTransformer({
+	additionalProps,
+	portletNamespace,
+	...props
+}) {
+
+	const marketplaceBadge = document.getElementById(
+		`${portletNamespace}marketplaceBadge`
+	);
+
 	return {
 		...props,
 		onClick() {
@@ -13,6 +22,12 @@ export default function propsTransformer({additionalProps, ...props}) {
 				component: additionalProps.component,
 				location: additionalProps.location,
 			});
+
+			Liferay.Util.Session.set(portletNamespace + 'marketplaceButton', 'visited');
+
+			if (marketplaceBadge) {
+				marketplaceBadge.remove();
+			}
 		},
 	};
 }

@@ -10063,7 +10063,7 @@ junit.jvm.override.version=21</echo>
 				<local name="workspace.names" />
 
 				<propertycopy from="workspaces.names[workspaces-compile-jdk${batch.jdk.version}][${env.CI_TEST_SUITE}]" name="workspace.names" silent="true" />
-				
+
 				<if>
 					<not>
 						<isset property="workspace.names" />

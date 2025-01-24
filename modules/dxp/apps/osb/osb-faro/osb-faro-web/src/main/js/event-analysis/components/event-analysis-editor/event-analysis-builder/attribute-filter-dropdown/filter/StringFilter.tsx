@@ -93,10 +93,12 @@ const StringFilter: React.FC<IFilterProps> = ({
 										) => {
 											if (data) {
 												return {
-													data:
-														data
-															.eventAttributeValues
-															.eventAttributeValues,
+													data: data.eventAttributeValues.eventAttributeValues.map(
+														value =>
+															decodeURIComponent(
+																value
+															)
+													),
 													total:
 														data
 															.eventAttributeValues

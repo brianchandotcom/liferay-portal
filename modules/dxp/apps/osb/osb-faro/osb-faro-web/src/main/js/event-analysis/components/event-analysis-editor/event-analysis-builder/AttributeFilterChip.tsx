@@ -50,7 +50,7 @@ const AttributeFilterChip: React.FC<{
 					label={label}
 					onCloseClick={onCloseClick}
 					onMove={onMove}
-					value={value}
+					value={decodeURIComponent(value)}
 				/>
 			}
 			uneditableIds={uneditableIds}

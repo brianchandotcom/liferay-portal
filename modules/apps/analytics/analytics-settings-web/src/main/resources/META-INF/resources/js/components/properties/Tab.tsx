@@ -66,7 +66,7 @@ const Tab: React.FC<{children?: React.ReactNode | undefined} & ITabProps> = ({
 
 						return {
 							id: column,
-							value,
+							value: decodeURIComponent(value),
 						};
 					}),
 					disabled: !!(

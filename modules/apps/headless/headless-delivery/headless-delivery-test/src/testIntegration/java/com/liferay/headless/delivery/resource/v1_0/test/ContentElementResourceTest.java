@@ -8,17 +8,20 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentElement;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.ContentElementResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentElementSerDes;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,6 +31,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -90,6 +94,28 @@ public class ContentElementResourceTest
 
 		testGetAssetLibraryContentElementsPageWithSort(
 			EntityField.Type.DOUBLE, _getUnsafeTriConsumer());
+	}
+
+	@Test
+	public void testGetSiteContentElementsPageFilterByContentType()
+		throws Exception {
+
+		Long siteId = testGetSiteContentElementsPage_getSiteId();
+
+		ContentElement contentElement = _toContentElement(
+			JournalTestUtil.addArticle(
+				siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		_toContentElement(DLAppTestUtil.addFileEntry(siteId));
+
+		Page<ContentElement> page =
+			contentElementResource.getSiteContentElementsPage(
+				siteId, null, null, "(contentType eq 'StructuredContent')",
+				Pagination.of(1, 2), null);
+
+		assertEquals(
+			Collections.singletonList(contentElement),
+			(List<ContentElement>)page.getItems());
 	}
 
 	@Override
@@ -220,9 +246,20 @@ public class ContentElementResourceTest
 		);
 	}
 
+	private ContentElement _toContentElement(FileEntry fileEntry) {
+		return new ContentElement() {
+			{
+				contentType = "Document";
+				id = fileEntry.getFileEntryId();
+				title = fileEntry.getTitle();
+			}
+		};
+	}
+
 	private ContentElement _toContentElement(JournalArticle journalArticle) {
 		return new ContentElement() {
 			{
+				contentType = "StructuredContent";
 				id = journalArticle.getId();
 				title = journalArticle.getTitle();
 			}

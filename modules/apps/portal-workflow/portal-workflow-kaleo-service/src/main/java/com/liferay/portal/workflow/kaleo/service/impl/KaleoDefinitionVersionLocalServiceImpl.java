@@ -495,9 +495,11 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			booleanQuery.addMustQueryClauses(keywordsBooleanQuery);
 		}
 
-		if (status != WorkflowConstants.STATUS_ANY) {
-			booleanQuery.addMustQueryClauses(
-				_queries.term(Field.STATUS, status));
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			booleanQuery.addMustQueryClauses(_queries.term("active", 1));
+		}
+		else if (status == WorkflowConstants.STATUS_DRAFT) {
+			booleanQuery.addMustQueryClauses(_queries.term("active", 0));
 		}
 
 		searchSearchRequest.setQuery(booleanQuery);

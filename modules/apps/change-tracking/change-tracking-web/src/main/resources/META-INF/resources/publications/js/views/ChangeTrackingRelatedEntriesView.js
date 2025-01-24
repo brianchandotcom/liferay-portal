@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -219,7 +220,7 @@ export default function ChangeTrackingRelatedEntriesView({
 		);
 	};
 
-	return (
+	return ctEntries.length ? (
 		<>
 			{renderViewModal()}
 
@@ -241,5 +242,12 @@ export default function ChangeTrackingRelatedEntriesView({
 
 			{renderPagination()}
 		</>
+	) : (
+		<ClayEmptyState
+			className="mt-n4"
+			description={Liferay.Language.get('no-changes-were-found')}
+			small
+			title=" "
+		/>
 	);
 }

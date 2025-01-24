@@ -57,8 +57,6 @@ function onInputKeyup(event) {
 	}
 }
 
-let currentLanguageId = themeDisplay.getDefaultLanguageId();
-
 function main() {
 	if (layoutMode === 'edit' && textarea) {
 		textarea.setAttribute('disabled', true);
@@ -75,102 +73,41 @@ function main() {
 
 		textarea.addEventListener('keyup', onInputKeyup);
 
-		if (input.localizable) {
-			Liferay.on('localizationSelect:localeChanged', (event) => {
-				currentLanguageId = event.languageId;
+		if (Liferay.FeatureFlags['LPD-37927']) {
+			import('@liferay/fragment-impl').then(
+				({registerLocalizedInput, registerUnlocalizedInput}) => {
+					if (input.localizable) {
+						const {onChange} = registerLocalizedInput({
+							defaultLanguageId:
+								themeDisplay.getDefaultLanguageId(),
+							initialValues: input.valueI18n,
+							inputElement: textarea,
+							inputName: input.name,
+							localizationInputsContainer: textarea.parentNode,
+							namespace: fragmentNamespace,
+						});
 
-				const translationInput =
-					getOrCreateTranslationInput(currentLanguageId);
-
-				if (translationInput.getAttribute('value') !== null) {
-					textarea.value = translationInput.value;
-				}
-				else {
-					textarea.value = getDefaultLanguageValue();
-				}
-			});
-
-			textarea.addEventListener('input', (event) => {
-				const value = event.target.value;
-
-				const translationInput =
-					getOrCreateTranslationInput(currentLanguageId);
-
-				translationInput.value = value;
-			});
-
-			textarea.addEventListener('change', () => {
-				Liferay.fire('localizationSelect:updateTranslationStatus', {
-					languageId: currentLanguageId,
-				});
-			});
-
-			if (input.valueI18n) {
-				Object.entries(input.valueI18n).forEach(
-					([languageId, value]) => {
-						const translationInput =
-							getOrCreateTranslationInput(languageId);
-
-						translationInput.value = value;
+						textarea.addEventListener('change', (event) => {
+							onChange(event.target.value);
+						});
 					}
-				);
-			}
-		}
-		else if (Liferay.FeatureFlags['LPD-37927']) {
-			Liferay.on('localizationSelect:localeChanged', (event) => {
-				const isDefaultLanguage =
-					event.languageId === themeDisplay.getDefaultLanguageId();
-
-				const unlocalizedInfo = document.getElementById(
-					`${fragmentNamespace}-unlocalized-info`
-				);
-
-				if (isDefaultLanguage) {
-					textarea.removeAttribute(
-						input.attributes.unlocalizedFieldsState === 'disabled'
-							? 'disabled'
-							: 'readonly'
-					);
-
-					unlocalizedInfo?.classList.add('d-none');
+					else {
+						registerUnlocalizedInput({
+							defaultLanguageId:
+								themeDisplay.getDefaultLanguageId(),
+							inputElement: textarea,
+							unlocalizedFieldsState:
+								input.attributes.unlocalizedFieldsState,
+							unlocalizedMessageContainer:
+								document.getElementById(
+									`${fragmentNamespace}-unlocalized-info`
+								),
+						});
+					}
 				}
-				else {
-					textarea.setAttribute(
-						input.attributes.unlocalizedFieldsState === 'disabled'
-							? 'disabled'
-							: 'readonly',
-						''
-					);
-
-					unlocalizedInfo?.classList.remove('d-none');
-				}
-			});
+			);
 		}
 	}
-}
-
-function getDefaultLanguageValue() {
-	const defaultLanguageInput = getOrCreateTranslationInput(
-		themeDisplay.getDefaultLanguageId()
-	);
-
-	return defaultLanguageInput.value;
-}
-
-function getOrCreateTranslationInput(languageId) {
-	const inputId = `${fragmentNamespace}${input.name}_${languageId}`;
-
-	let translationInput = document.getElementById(inputId);
-
-	if (!translationInput) {
-		translationInput = document.createElement('input');
-		translationInput.type = 'hidden';
-		translationInput.id = inputId;
-		translationInput.name = `${input.name}_${languageId}`;
-		textarea.parentNode.appendChild(translationInput);
-	}
-
-	return translationInput;
 }
 
 main();

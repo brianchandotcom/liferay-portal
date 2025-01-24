@@ -91,6 +91,11 @@ Export-Package:\
 	\
 	!unicode-license.txt,\
 	\
+	com.fasterxml.classmate;version='1.5.1',\
+	com.fasterxml.classmate.members;version='1.5.1',\
+	com.fasterxml.classmate.types;version='1.5.1',\
+	com.fasterxml.classmate.util;version='1.5.1',\
+	\
 	com.ibm.crypto.provider,\
 	\
 	com.sun.security.auth.module,\

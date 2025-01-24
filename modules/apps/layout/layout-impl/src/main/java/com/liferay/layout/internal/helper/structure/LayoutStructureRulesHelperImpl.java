@@ -43,11 +43,42 @@ public class LayoutStructureRulesHelperImpl
 			_processActions(
 				layoutStructureRule.getActionsJSONArray(), displayedItemIds,
 				hiddenItemIds,
-				!_isLayoutStructureRuleActive(
+				!_evaluateLayoutStructureRule(
 					layoutStructureRule, layoutStructureRulesContext));
 		}
 
 		return new LayoutStructureRulesResult(displayedItemIds, hiddenItemIds);
+	}
+
+	private boolean _evaluateLayoutStructureRule(
+		LayoutStructureRule layoutStructureRule,
+		LayoutStructureRulesContext layoutStructureRulesContext) {
+
+		JSONArray conditionsJSONArray =
+			layoutStructureRule.getConditionsJSONArray();
+
+		for (int i = 0; i < conditionsJSONArray.length(); i++) {
+			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
+				i);
+
+			boolean conditionActive = _isConditionActive(
+				conditionJSONObject, layoutStructureRulesContext);
+
+			if (conditionActive) {
+				if (Objects.equals(
+						layoutStructureRule.getConditionType(), "any")) {
+
+					return true;
+				}
+			}
+			else if (Objects.equals(
+						layoutStructureRule.getConditionType(), "all")) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private Action _getAction(boolean negated, String type) {
@@ -97,37 +128,6 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		return false;
-	}
-
-	private boolean _isLayoutStructureRuleActive(
-		LayoutStructureRule layoutStructureRule,
-		LayoutStructureRulesContext layoutStructureRulesContext) {
-
-		JSONArray conditionsJSONArray =
-			layoutStructureRule.getConditionsJSONArray();
-
-		for (int i = 0; i < conditionsJSONArray.length(); i++) {
-			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
-				i);
-
-			boolean conditionActive = _isConditionActive(
-				conditionJSONObject, layoutStructureRulesContext);
-
-			if (conditionActive) {
-				if (Objects.equals(
-						layoutStructureRule.getConditionType(), "any")) {
-
-					return true;
-				}
-			}
-			else if (Objects.equals(
-						layoutStructureRule.getConditionType(), "all")) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private void _processActions(

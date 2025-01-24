@@ -121,7 +121,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		serviceContext.setPortalURL(getPortalURL());
-		serviceContext.setPortletPreferencesIds(getPortletPreferencesIds());
+		serviceContext.setPortletPreferencesIds(_portletPreferencesIds);
 		serviceContext.setRemoteAddr(getRemoteAddr());
 		serviceContext.setRemoteHost(getRemoteHost());
 		serviceContext.setRequest(getRequest());

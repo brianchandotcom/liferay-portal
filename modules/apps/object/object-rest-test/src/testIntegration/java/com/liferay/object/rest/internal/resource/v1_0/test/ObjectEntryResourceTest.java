@@ -5950,7 +5950,8 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition1, role);
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition1.getResourceName(), role);
 
 		User user = _addUser("test1", "test1");
 
@@ -10768,9 +10769,15 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition2, role);
+			ActionKeys.VIEW, _objectDefinition2.getClassName(), role);
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition3, role);
+			ActionKeys.VIEW, _objectDefinition3.getClassName(), role);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition2.getResourceName(), role);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition3.getResourceName(), role);
 
 		User user1 = _addUser("test1", "test1");
 		User user2 = _addUser("test2", "test2");
@@ -11801,9 +11808,13 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition2, role);
+			ActionKeys.VIEW, _objectDefinition1.getClassName(), role);
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition3, role);
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition2.getResourceName(), role);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition3.getResourceName(), role);
 
 		User user1 = _addUser("test1", "test1");
 		User user2 = _addUser("test2", "test2");
@@ -12251,7 +12262,8 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition1, role);
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition1.getResourceName(), role);
 
 		User user1 = _addUser("test1", "test1");
 		User user2 = _addUser("test2", "test2");
@@ -12511,12 +12523,11 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(), type);
 	}
 
-	private void _addResourcePermission(
-			String actionId, ObjectDefinition objectDefinition, Role role)
+	private void _addResourcePermission(String actionId, String name, Role role)
 		throws Exception {
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
+			TestPropsValues.getCompanyId(), name,
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			actionId);
@@ -13893,7 +13904,8 @@ public class ObjectEntryResourceTest {
 					user.getUserId(), role.getRoleId());
 
 				_addResourcePermission(
-					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, role);
+					ObjectActionKeys.ADD_OBJECT_ENTRY,
+					objectDefinition.getResourceName(), role);
 
 				_resourcePermissionLocalService.setResourcePermissions(
 					TestPropsValues.getCompanyId(), DLConstants.RESOURCE_NAME,
@@ -14496,7 +14508,8 @@ public class ObjectEntryResourceTest {
 					user.getUserId(), role.getRoleId());
 
 				_addResourcePermission(
-					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, role);
+					ObjectActionKeys.ADD_OBJECT_ENTRY,
+					objectDefinition.getResourceName(), role);
 
 				_testPostCustomObjectEntryWithAttachmentField(
 					fileEntry -> JSONUtil.put(

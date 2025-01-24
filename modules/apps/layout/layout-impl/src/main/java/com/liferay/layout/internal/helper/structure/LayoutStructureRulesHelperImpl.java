@@ -61,10 +61,9 @@ public class LayoutStructureRulesHelperImpl
 			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
 				i);
 
-			boolean conditionActive = _isConditionActive(
-				conditionJSONObject, layoutStructureRulesContext);
+			if (_isConditionActive(
+					conditionJSONObject, layoutStructureRulesContext)) {
 
-			if (conditionActive) {
 				if (Objects.equals(
 						layoutStructureRule.getConditionType(), "any")) {
 

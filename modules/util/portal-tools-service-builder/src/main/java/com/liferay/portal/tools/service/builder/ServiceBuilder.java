@@ -6809,6 +6809,16 @@ public class ServiceBuilder {
 			boolean finderUnique = GetterUtil.getBoolean(
 				finderElement.attributeValue("unique"));
 
+			if (isVersionGTE_7_4_0() &&
+				!Objects.equals(finderReturn, "Collection") && !finderUnique) {
+
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Finder ", entityName, StringPool.PERIOD, finderName,
+						" must set \"unique\" to true as it returns a single ",
+						"object, not a Collection."));
+			}
+
 			String finderWhere = finderElement.attributeValue("where");
 
 			String finderDBWhere = finderWhere;

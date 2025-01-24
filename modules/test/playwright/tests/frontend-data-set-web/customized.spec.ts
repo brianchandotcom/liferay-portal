@@ -617,7 +617,7 @@ test('Select items count label in bulk actions', async ({page}) => {
 			.setChecked(true);
 	});
 
-	await test.step('Check the label displays "10 of 75 Items Selected"', async () => {
+	await test.step('Check the label displays "60 of 75 Items Selected"', async () => {
 		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
 	});
 
@@ -629,7 +629,7 @@ test('Select items count label in bulk actions', async ({page}) => {
 		for (let i = 1; i <= 15; i++) {
 			await page
 				.locator(
-					`.dnd-tbody div:nth-child(${i}) > div > .custom-control > label > input[type="checkbox"]`
+					`tbody tr:nth-child(${i}) > .cell-select-item input[type="checkbox"]`
 				)
 				.setChecked(true);
 		}

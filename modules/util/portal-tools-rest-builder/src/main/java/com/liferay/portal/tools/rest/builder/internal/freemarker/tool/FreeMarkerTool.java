@@ -26,6 +26,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
+import com.liferay.portal.tools.rest.builder.internal.util.GraphQLNamingUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
@@ -38,8 +39,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
-import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1102,7 +1101,7 @@ public class FreeMarkerTool {
 				javaMethodParameter.getParameterName(), "pagination") &&
 			 Objects.equals(
 				 javaMethodParameter.getParameterType(),
-				 Pagination.class.getName())) ||
+				 "com.liferay.portal.vulcan.pagination.Pagination")) ||
 			(Objects.equals(javaMethodParameter.getParameterName(), "sorts") &&
 			 Objects.equals(
 				 javaMethodParameter.getParameterType(),

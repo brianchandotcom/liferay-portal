@@ -18,8 +18,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,7 +131,7 @@ public class GraphQLOpenAPIParser {
 
 			if (Objects.equals(
 					javaMethodParameter.getParameterType(),
-					Pagination.class.getName())) {
+					"com.liferay.portal.vulcan.pagination.Pagination")) {
 
 				javaMethodParameters.add(
 					new JavaMethodParameter("pageSize", int.class.getName()));
@@ -170,8 +168,11 @@ public class GraphQLOpenAPIParser {
 
 			String returnType = resourceJavaMethodSignature.getReturnType();
 
-			if (returnType.startsWith(Page.class.getName() + "<")) {
-				String pageClassName = Page.class.getName();
+			if (returnType.startsWith(
+					"com.liferay.portal.vulcan.pagination.Page<")) {
+
+				String pageClassName =
+					"com.liferay.portal.vulcan.pagination.Page";
 
 				String className = returnType.substring(
 					pageClassName.length() + 1, returnType.length() - 1);

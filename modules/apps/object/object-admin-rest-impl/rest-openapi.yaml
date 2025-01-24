@@ -452,6 +452,8 @@ components:
                     type: boolean
                 objectDefinitionName2:
                     type: string
+                objectDefinitionScope2:
+                    type: string
                 objectDefinitionSystem2:
                     type: boolean
                 objectField:

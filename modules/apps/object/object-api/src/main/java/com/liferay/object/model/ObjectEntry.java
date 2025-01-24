@@ -53,6 +53,9 @@ public interface ObjectEntry
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.Map<String, String> getLocalizedTitleValue()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getModelClassName();
 
 	public long getNonzeroGroupId()

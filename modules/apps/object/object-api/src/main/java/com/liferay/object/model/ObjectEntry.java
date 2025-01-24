@@ -47,6 +47,9 @@ public interface ObjectEntry extends ObjectEntryModel, PersistedModel {
 
 		};
 
+	public java.util.Map<String, String> getLocalizedTitleValue()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getModelClassName();
 
 	public long getNonzeroGroupId()

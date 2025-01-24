@@ -42,7 +42,7 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 		if (Validator.isNull(encryptedPassword)) {
 			int rounds = _ROUNDS;
 
-			Matcher matcher = _pattern.matcher(algorithm);
+			Matcher matcher = _algorithmPattern.matcher(algorithm);
 
 			if (matcher.matches()) {
 				rounds = GetterUtil.getInteger(matcher.group(1), rounds);
@@ -77,9 +77,9 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 
 	private static final int _ROUNDS = 10;
 
+	private static final Pattern _algorithmPattern = Pattern.compile(
+		"^BCrypt/([0-9]+)$", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _encryptedPasswordPattern = Pattern.compile(
 		"\\{BCrypt}\\$2a\\$(\\d+)\\$", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _pattern = Pattern.compile(
-		"^BCrypt/([0-9]+)$", Pattern.CASE_INSENSITIVE);
 
 }

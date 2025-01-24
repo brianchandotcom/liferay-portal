@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -22,16 +23,22 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,6 +51,7 @@ import org.junit.runner.RunWith;
  * @author Crescenzo Rega
  */
 @DataGuard(scope = DataGuard.Scope.NONE)
+@FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
 public class ReturnsManagerRoleUpgradeProcessTest {
 
@@ -57,6 +65,21 @@ public class ReturnsManagerRoleUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_role = _roleLocalService.fetchRole(
+			_group.getCompanyId(),
+			AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER);
+
+		if (_role == null) {
+			_role = _roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0,
+				AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER,
+				Collections.singletonMap(
+					LocaleUtil.US,
+					AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER),
+				null, RoleConstants.TYPE_REGULAR, null,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		}
 	}
 
 	@Test
@@ -182,6 +205,9 @@ public class ReturnsManagerRoleUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

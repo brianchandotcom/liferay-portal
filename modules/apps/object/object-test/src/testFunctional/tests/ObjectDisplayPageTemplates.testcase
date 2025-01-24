@@ -31,9 +31,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
-		LexiconEntry.gotoAdd();
+		Click.javaScriptClick(locator1 = "Button#PLUS");
 
-		LexiconCard.clickCard(card = "Blank");
+		VisualizeObjectDisplayPage.selectBlankPageTemplate();
 
 		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
 

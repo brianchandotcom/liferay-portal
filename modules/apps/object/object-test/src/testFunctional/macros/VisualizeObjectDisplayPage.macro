@@ -21,7 +21,7 @@ definition {
 	macro createObjectPageTemplate(pageTemplateName = null, contentType = null) {
 		VisualizeObjectDisplayPage.openPageTemplate();
 
-		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE");
+		VisualizeObjectDisplayPage.selectBlankPageTemplate();
 
 		Type(
 			locator1 = "VisualizeObjectDisplayPage#NAME_OBJECT_DISPLAY_PAGE_TEMPLATE",
@@ -49,7 +49,14 @@ definition {
 
 		NavItem.gotoDisplayPages();
 
-		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#ADD_PLUS_BUTTON");
+		Click.javaScriptClick(locator1 = "Button#PLUS");
+	}
+
+	@summary = "Default summary"
+	macro selectBlankPageTemplate() {
+		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_BLANK_OBJECT_DISPLAY_PAGE_TEMPLATE");
+
+		Click(locator1 = "VisualizeObjectDisplayPage#CARD_BLANK");
 	}
 
 	@summary = "Default summary"

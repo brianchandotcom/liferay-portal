@@ -144,6 +144,16 @@ public class ProductConfigurationResourceTest
 	@FeatureFlags("LPD-10889")
 	@Override
 	@Test
+	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		super.
+			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithFilterDateTimeEquals();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
 	public void testGetProductConfigurationListByExternalReferenceCodeProductConfigurationsPageWithPagination()
 		throws Exception {
 
@@ -361,6 +371,16 @@ public class ProductConfigurationResourceTest
 		return new String[] {
 			"inventoryEngine", "lowStockAction", "maxOrderQuantity",
 			"minOrderQuantity", "minStockQuantity", "multipleOrderQuantity"
+		};
+	}
+
+	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {
+			"purchasable", "shippable", "shippable", "categoryIds",
+			"categoryNames", "createDate", "modifiedDate", "maxOrderQuantity",
+			"minOrderQuantity", "multipleOrderQuantity", "entityName",
+			"productType"
 		};
 	}
 

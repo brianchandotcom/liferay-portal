@@ -96,4 +96,4 @@ export {default as zIndex} from './liferay/zIndex';
 export {default as loadClientExtensions} from './utils/client_extensions/loadClientExtensions';
 export {default as loadEditorClientExtensions} from './utils/client_extensions/loadEditorClientExtensions';
 export {loadModule} from './utils/client_extensions/loadModule';
-export {default as dateUtils} from './utils/dateUtils';
+export {default as dateUtils} from './utils/date_time/index';

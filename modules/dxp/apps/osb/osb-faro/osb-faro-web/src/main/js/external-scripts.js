@@ -18,7 +18,12 @@ let scripts = [
 	}
 ];
 
-if (FARO_ENV === 'prd') {
+/**
+ * Change it to (FARO_ENV === 'prd') after
+ * test pendo script on STG env
+ */
+
+if (FARO_ENV === 'stg') {
 	scripts = [
 		...scripts,
 		{

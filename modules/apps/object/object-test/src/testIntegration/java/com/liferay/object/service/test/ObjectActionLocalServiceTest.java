@@ -1260,6 +1260,10 @@ public class ObjectActionLocalServiceTest {
 				organizationObjectDefinition.getObjectDefinitionId()
 			).build());
 
+		String comment1 = RandomTestUtil.randomString();
+		String objectFieldValue1 = RandomTestUtil.randomString();
+		String organizationName1 = RandomTestUtil.randomString();
+
 		ObjectAction objectAction3 = _addObjectAction(
 			organizationObjectDefinition.getObjectDefinitionId(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
@@ -1275,24 +1279,28 @@ public class ObjectActionLocalServiceTest {
 					).put(
 						"name", objectField1.getName()
 					).put(
-						"value", "Custom1"
+						"value", objectFieldValue1
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "comment"
 					).put(
-						"value", "test1"
+						"value", comment1
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "name"
 					).put(
-						"value", "Organization1"
+						"value", organizationName1
 					)
 				).toString()
 			).build());
+
+		String comment2 = RandomTestUtil.randomString();
+		String objectFieldValue2 = RandomTestUtil.randomString();
+		String organizationName2 = RandomTestUtil.randomString();
 
 		ObjectAction objectAction4 = _addObjectAction(
 			RandomTestUtil.randomString(),
@@ -1309,21 +1317,21 @@ public class ObjectActionLocalServiceTest {
 					).put(
 						"name", objectField1.getName()
 					).put(
-						"value", "Custom2"
+						"value", objectFieldValue2
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "comment"
 					).put(
-						"value", "test2"
+						"value", comment2
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "name"
 					).put(
-						"value", "Organization2"
+						"value", organizationName2
 					)
 				).toString()
 			).build(),
@@ -1336,8 +1344,8 @@ public class ObjectActionLocalServiceTest {
 			RandomTestUtil.randomString(), false);
 
 		_assertOrganization(
-			"test1", "Organization1", organizationObjectDefinition,
-			objectField1, "Custom1");
+			comment1, organizationName1, organizationObjectDefinition,
+			objectField1, objectFieldValue1);
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -1348,11 +1356,11 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertOrganization(
-			"test1", "Organization1", organizationObjectDefinition,
-			objectField1, "Custom1");
+			comment1, organizationName1, organizationObjectDefinition,
+			objectField1, objectFieldValue1);
 		_assertOrganization(
-			"test2", "Organization2", organizationObjectDefinition,
-			objectField1, "Custom2");
+			comment2, organizationName2, organizationObjectDefinition,
+			objectField1, objectFieldValue2);
 
 		// User system object definition
 

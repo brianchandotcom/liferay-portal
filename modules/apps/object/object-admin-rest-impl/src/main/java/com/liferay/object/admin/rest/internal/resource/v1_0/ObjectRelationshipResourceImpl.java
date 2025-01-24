@@ -12,6 +12,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOCo
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -325,6 +326,9 @@ public class ObjectRelationshipResourceImpl
 			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
+			GetterUtil.get(
+				objectRelationship.getObjectDefinitionScope2(),
+				ObjectDefinitionConstants.SCOPE_COMPANY),
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionSystem2(), false));
 	}

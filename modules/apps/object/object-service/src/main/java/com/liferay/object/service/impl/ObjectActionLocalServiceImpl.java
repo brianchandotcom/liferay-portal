@@ -15,6 +15,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeException;
@@ -824,7 +825,7 @@ public class ObjectActionLocalServiceImpl
 						ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 							objectDefinitionExternalReferenceCode, userId,
 							defaultObjectFolder.getObjectFolderId(), true,
-							false);
+							ObjectDefinitionConstants.SCOPE_COMPANY, false);
 				}
 
 				parametersUnicodeProperties.put(

@@ -100,6 +100,7 @@ public class ObjectRelationshipDTOConverter
 							getObjectDefinitionId2());
 				setObjectDefinitionModifiable2(objectDefinition2::isModifiable);
 				setObjectDefinitionName2(objectDefinition2::getShortName);
+				setObjectDefinitionScope2(objectDefinition2::getScope);
 				setObjectDefinitionSystem2(objectDefinition2::isSystem);
 				setObjectField(
 					() -> {

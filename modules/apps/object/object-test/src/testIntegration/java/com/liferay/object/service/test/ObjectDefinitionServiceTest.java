@@ -432,7 +432,8 @@ public class ObjectDefinitionServiceTest {
 			_setUser(user);
 
 			objectDefinition = _objectDefinitionService.addObjectDefinition(
-				RandomTestUtil.randomString(), objectFolderId, true, false);
+				RandomTestUtil.randomString(), objectFolderId, true,
+				ObjectDefinitionConstants.SCOPE_COMPANY, false);
 		}
 		finally {
 			if (objectDefinition != null) {

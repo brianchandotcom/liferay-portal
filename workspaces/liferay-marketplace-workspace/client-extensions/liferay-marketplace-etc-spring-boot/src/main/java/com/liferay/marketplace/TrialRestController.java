@@ -475,16 +475,6 @@ public class TrialRestController extends BaseRestController {
 		return string;
 	}
 
-	private String[] _toStringArray(JSONArray jsonArray) {
-		List<String> list = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			list.add(jsonArray.getString(i));
-		}
-
-		return list.toArray(new String[0]);
-	}
-
 	private void _rollBackTrial(
 			String errorMessage, long orderId, PortalInstance portalInstance)
 		throws Exception {
@@ -509,6 +499,16 @@ public class TrialRestController extends BaseRestController {
 				"trial-virtualhost", portalInstance.getVirtualHost()
 			).build(),
 			orderId, MarketplaceConstants.ORDER_STATUS_CANCELLED);
+	}
+
+	private String[] _toStringArray(JSONArray jsonArray) {
+		List<String> list = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			list.add(jsonArray.getString(i));
+		}
+
+		return list.toArray(new String[0]);
 	}
 
 	private static final int _TRIAL_MAX_INSTANCES = GetterUtil.getInteger(

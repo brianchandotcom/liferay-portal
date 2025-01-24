@@ -168,11 +168,7 @@ public class NotificationUtil {
 			if (throwable != null) {
 				String throwableMessage = throwable.getMessage();
 
-				if (throwableMessage.contains(
-						JenkinsResultsParserUtil.combine(
-							"javax.activation.UnsupportedDataTypeException: ",
-							"no object DCH for MIME type"))) {
-
+				if (throwableMessage.contains("no object DCH for MIME type")) {
 					return;
 				}
 			}

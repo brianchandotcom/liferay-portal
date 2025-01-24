@@ -179,6 +179,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		objectRelationship.setObjectDefinitionExternalReferenceCode1(regex);
 		objectRelationship.setObjectDefinitionExternalReferenceCode2(regex);
 		objectRelationship.setObjectDefinitionName2(regex);
+		objectRelationship.setObjectDefinitionScope2(regex);
 		objectRelationship.setParameterObjectFieldName(regex);
 
 		String json = ObjectRelationshipSerDes.toJSON(objectRelationship);
@@ -198,6 +199,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			objectRelationship.getObjectDefinitionExternalReferenceCode2());
 		Assert.assertEquals(
 			regex, objectRelationship.getObjectDefinitionName2());
+		Assert.assertEquals(
+			regex, objectRelationship.getObjectDefinitionScope2());
 		Assert.assertEquals(
 			regex, objectRelationship.getParameterObjectFieldName());
 	}
@@ -1809,6 +1812,16 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionScope2", additionalAssertFieldName)) {
+
+				if (objectRelationship.getObjectDefinitionScope2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionSystem2", additionalAssertFieldName)) {
 
 				if (objectRelationship.getObjectDefinitionSystem2() == null) {
@@ -2147,6 +2160,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				if (!Objects.deepEquals(
 						objectRelationship1.getObjectDefinitionName2(),
 						objectRelationship2.getObjectDefinitionName2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionScope2", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.getObjectDefinitionScope2(),
+						objectRelationship2.getObjectDefinitionScope2())) {
 
 					return false;
 				}
@@ -2617,6 +2643,52 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("objectDefinitionScope2")) {
+			Object object = objectRelationship.getObjectDefinitionScope2();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectDefinitionSystem2")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2751,6 +2823,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectDefinitionId2 = RandomTestUtil.randomLong();
 				objectDefinitionModifiable2 = RandomTestUtil.randomBoolean();
 				objectDefinitionName2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				objectDefinitionScope2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				objectDefinitionSystem2 = RandomTestUtil.randomBoolean();
 				parameterObjectFieldId = RandomTestUtil.randomLong();

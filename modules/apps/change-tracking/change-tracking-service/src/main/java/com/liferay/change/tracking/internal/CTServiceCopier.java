@@ -70,7 +70,8 @@ public class CTServiceCopier<T extends CTModel<T>> {
 		Map<String, Integer> tableColumnsMap =
 			ctPersistence.getTableColumnsMap();
 
-		StringBundler sb = new StringBundler((3 * tableColumnsMap.size()) + 5);
+		StringBundler sb = new StringBundler(
+			(7 * _ctEntries.size()) + (5 * tableColumnsMap.size()) + 8);
 
 		sb.append("select ");
 

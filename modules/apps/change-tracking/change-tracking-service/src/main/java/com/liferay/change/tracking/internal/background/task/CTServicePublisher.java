@@ -229,7 +229,11 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					primaryKey, tempCTCollectionId);
 			}
 
-			StringBundler sb = new StringBundler(4);
+			Set<Serializable> modificationCTEntriesKeySet =
+				_modificationCTEntries.keySet();
+
+			StringBundler sb = new StringBundler(
+				(8 * modificationCTEntriesKeySet.size()) + 7);
 
 			sb.append("delete from ");
 			sb.append(tableName);
@@ -241,7 +245,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			int i = 0;
 
-			for (Serializable primaryKey : _modificationCTEntries.keySet()) {
+			for (Serializable primaryKey : modificationCTEntriesKeySet) {
 				if (i == _BATCH_SIZE) {
 					sb.setStringAt(")", sb.index() - 1);
 
@@ -382,7 +386,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler((2 * ctEntries.size()) + 9);
+		StringBundler sb = new StringBundler((5 * ctEntries.size()) + 10);
 
 		sb.append("select ");
 		sb.append(primaryKeyName);

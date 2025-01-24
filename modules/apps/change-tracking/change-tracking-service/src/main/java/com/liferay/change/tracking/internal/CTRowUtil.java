@@ -149,7 +149,8 @@ public class CTRowUtil {
 		Set<Long> primaryKeys) {
 
 		StringBundler sb = new StringBundler(
-			(9 * uniqueIndexColumnNames.length) + 17);
+			(5 * primaryKeys.size()) + (2 * uniqueIndexColumnNames.length) +
+				11);
 
 		sb.append("select ");
 		sb.append(primaryColumnName);

@@ -100,7 +100,7 @@ public class CommercePriceModifierTest {
 			"The original price of the two products is modified"
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -108,13 +108,15 @@ public class CommercePriceModifierTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
-		CPInstance cpInstance1 = CPTestUtil.addCPInstance(catalog.getGroupId());
+		CPInstance cpInstance1 = CPTestUtil.addCPInstance(
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition1 = cpInstance1.getCPDefinition();
 
-		CPInstance cpInstance2 = CPTestUtil.addCPInstance(catalog.getGroupId());
+		CPInstance cpInstance2 = CPTestUtil.addCPInstance(
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition2 = cpInstance2.getCPDefinition();
 
@@ -149,7 +151,7 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				catalog.getGroupId(),
+				commerceCatalog.getGroupId(),
 				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
 				commercePriceList.getCommercePriceListId(),
 				CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT,
@@ -216,7 +218,7 @@ public class CommercePriceModifierTest {
 			"The original price of the two products is modified"
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -224,7 +226,7 @@ public class CommercePriceModifierTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0,
+				commerceCatalog.getGroupId(), 0.0,
 				_commerceCurrency.getCommerceCurrencyId());
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
@@ -236,12 +238,12 @@ public class CommercePriceModifierTest {
 		long[] assetCategoryIds = {assetCategory.getCategoryId()};
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId(), assetCategoryIds);
+			commerceCatalog.getGroupId(), assetCategoryIds);
 
 		CPDefinition cpDefinition1 = cpInstance1.getCPDefinition();
 
 		CPInstance cpInstance2 = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition2 = cpInstance2.getCPDefinition();
 
@@ -263,7 +265,7 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				catalog.getGroupId(),
+				commerceCatalog.getGroupId(),
 				CommercePriceModifierConstants.TARGET_CATEGORIES,
 				commercePriceList.getCommercePriceListId(),
 				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
@@ -276,7 +278,7 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier2 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				catalog.getGroupId(),
+				commerceCatalog.getGroupId(),
 				CommercePriceModifierConstants.TARGET_CATEGORIES,
 				commercePriceList.getCommercePriceListId(),
 				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
@@ -344,7 +346,7 @@ public class CommercePriceModifierTest {
 			"The original price is overridden by the modifier"
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -352,9 +354,10 @@ public class CommercePriceModifierTest {
 
 		CommercePriceList commercePriceList =
 			CommercePriceModifierTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
-		CPInstance cpInstance = CPTestUtil.addCPInstance(catalog.getGroupId());
+		CPInstance cpInstance = CPTestUtil.addCPInstance(
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -368,7 +371,7 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				catalog.getGroupId(),
+				commerceCatalog.getGroupId(),
 				CommercePriceModifierConstants.TARGET_PRODUCTS,
 				commercePriceList.getCommercePriceListId(),
 				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,

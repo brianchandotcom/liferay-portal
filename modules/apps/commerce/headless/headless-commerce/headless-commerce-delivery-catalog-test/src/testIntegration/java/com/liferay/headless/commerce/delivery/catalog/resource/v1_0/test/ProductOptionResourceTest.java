@@ -70,10 +70,10 @@ public class ProductOptionResourceTest
 
 				setCatalogId(
 					() -> {
-						CommerceCatalog catalog =
+						CommerceCatalog commerceCatalog =
 							_cpDefinition.getCommerceCatalog();
 
-						return catalog.getCommerceCatalogId();
+						return commerceCatalog.getCommerceCatalogId();
 					});
 			}
 		};
@@ -166,10 +166,10 @@ public class ProductOptionResourceTest
 
 				setCatalogId(
 					() -> {
-						CommerceCatalog catalog =
+						CommerceCatalog commerceCatalog =
 							_cpDefinition.getCommerceCatalog();
 
-						return catalog.getCommerceCatalogId();
+						return commerceCatalog.getCommerceCatalogId();
 					});
 			}
 		};

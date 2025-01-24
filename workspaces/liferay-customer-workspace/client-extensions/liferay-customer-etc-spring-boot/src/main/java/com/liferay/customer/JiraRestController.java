@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JiraRestController extends BaseRestController {
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "/jira/delete-cache")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/jira/cache")
 	public ResponseEntity<String> delete(@AuthenticationPrincipal Jwt jwt) {
 		try {
 			if (!_hasAdministrator(jwt)) {

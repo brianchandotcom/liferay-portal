@@ -146,8 +146,14 @@ public class LayoutStructureRulesHelperTest {
 			layoutStructureRulesResult.getHiddenItemIds();
 
 		Assert.assertEquals(
-			displayedItemIds.toString(), 0, displayedItemIds.size());
-		Assert.assertEquals(hiddenItemIds.toString(), 0, hiddenItemIds.size());
+			displayedItemIds.toString(), 1, displayedItemIds.size());
+		Assert.assertEquals(hiddenItemIds.toString(), 1, hiddenItemIds.size());
+
+		Assert.assertTrue(
+			displayedItemIds.toString(),
+			displayedItemIds.contains("fragment1"));
+		Assert.assertTrue(
+			hiddenItemIds.toString(), hiddenItemIds.contains("container2"));
 	}
 
 	private String _read(String fileName) throws Exception {

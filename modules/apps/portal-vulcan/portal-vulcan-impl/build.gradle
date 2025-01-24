@@ -7,7 +7,6 @@ import java.util.jar.Manifest
 task jarManifest
 
 dependencies {
-	compileInclude group: "com.fasterxml", name: "classmate", version: "1.5.1"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-xml", version: "2.10.3"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.14.2"
 	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.9.8"
@@ -29,6 +28,7 @@ dependencies {
 	compileInclude group: "org.reflections", name: "reflections", version: "0.10.2"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
+	compileOnly group: "com.fasterxml", name: "classmate", version: "1.5.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"

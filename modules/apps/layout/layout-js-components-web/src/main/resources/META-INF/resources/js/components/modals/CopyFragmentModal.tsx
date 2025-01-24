@@ -8,9 +8,17 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {FormEvent, useMemo, useState} from 'react';
 
 import FormField from './FormField';
+
+type FragmentSet = {fragmentCollectionId: number; name: string};
+
+type Errors = {
+	error?: string;
+	fragmentSets?: string | null;
+	name?: string | null;
+};
 
 export default function CopyFragmentModal({
 	addFragmentCollectionURL,
@@ -19,22 +27,30 @@ export default function CopyFragmentModal({
 	fragmentCollections = [],
 	fragmentEntryIds,
 	portletNamespace,
+}: {
+	addFragmentCollectionURL: string;
+	contributedEntryKeys: string[];
+	copyFragmentEntriesURL: string;
+	fragmentCollections: FragmentSet[];
+	fragmentEntryIds: string[];
+	portletNamespace: string;
 }) {
 	const noFragmentCollections = !fragmentCollections.length;
+
+	const [visible, setVisible] = useState(true);
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false),
 	});
 
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<Errors>({});
 	const [showFragmentSetForm, setShowFragmentSetForm] = useState(
 		noFragmentCollections
 	);
-	const [visible, setVisible] = useState(true);
 
 	const formId = `${portletNamespace}form`;
 
-	const copyFragments = (fragmentCollectionId) => {
+	const copyFragments = (fragmentCollectionId: number) => {
 		const formData = new FormData();
 
 		if (fragmentEntryIds) {
@@ -53,7 +69,7 @@ export default function CopyFragmentModal({
 
 		formData.append(
 			`${portletNamespace}fragmentCollectionId`,
-			fragmentCollectionId
+			fragmentCollectionId.toString()
 		);
 
 		fetch(copyFragmentEntriesURL, {
@@ -86,7 +102,7 @@ export default function CopyFragmentModal({
 
 	return (
 		visible && (
-			<ClayModal observer={observer} size="md">
+			<ClayModal observer={observer}>
 				<ClayModal.Header>
 					{showFragmentSetForm
 						? Liferay.Language.get('add-fragment-set')
@@ -137,7 +153,9 @@ export default function CopyFragmentModal({
 							>
 								{Liferay.Language.get('save-in-new-set')}
 							</ClayButton>
-						) : null
+						) : (
+							<></>
+						)
 					}
 					last={
 						<ClayButton.Group spaced>
@@ -170,6 +188,13 @@ function FragmentSetSelector({
 	fragmentCollections,
 	portletNamespace,
 	setErrors,
+}: {
+	copyFragments: (fragmentCollectionId: number) => void;
+	errors: Errors;
+	formId: string;
+	fragmentCollections: FragmentSet[];
+	portletNamespace: string;
+	setErrors: (errors: Errors) => void;
 }) {
 	const [selectedFragmentCollection, setSelectedFragmentCollection] =
 		useState('');
@@ -177,7 +202,7 @@ function FragmentSetSelector({
 	const items = useMemo(
 		() => [
 			{label: `-- ${Liferay.Language.get('not-selected')} --`, value: ''},
-			...fragmentCollections.map((fragmentSet) => ({
+			...fragmentCollections.map((fragmentSet: FragmentSet) => ({
 				label: fragmentSet.name,
 				value: fragmentSet.fragmentCollectionId,
 			})),
@@ -185,7 +210,7 @@ function FragmentSetSelector({
 		[fragmentCollections]
 	);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (!selectedFragmentCollection) {
@@ -199,7 +224,7 @@ function FragmentSetSelector({
 			return;
 		}
 
-		copyFragments(selectedFragmentCollection);
+		copyFragments(Number(selectedFragmentCollection));
 	};
 
 	return (
@@ -233,13 +258,22 @@ function FragmentSetForm({
 	portletNamespace,
 	setErrors,
 	showNoFragmentCollectionMessage,
+}: {
+	addFragmentCollectionURL: string;
+	copyFragments: (fragmentCollectionId: number) => void;
+	errors: Errors;
+	formId: string;
+	fragmentCollections: FragmentSet[];
+	portletNamespace: string;
+	setErrors: (errors: Errors) => void;
+	showNoFragmentCollectionMessage: boolean;
 }) {
 	const [name, setName] = useState(() =>
 		getDefaultFragmentSetName(fragmentCollections)
 	);
 	const [description, setDescription] = useState('');
 
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (!name) {
@@ -272,7 +306,14 @@ function FragmentSetForm({
 	};
 
 	return (
-		<ClayForm id={formId} noValidate onSubmit={handleSubmit}>
+		<ClayForm
+			id={formId}
+
+			// @ts-ignore
+
+			noValidate
+			onSubmit={handleSubmit}
+		>
 			{showNoFragmentCollectionMessage ? (
 				<p className="text-secondary">
 					{Liferay.Language.get(
@@ -316,9 +357,9 @@ function FragmentSetForm({
 	);
 }
 
-function getDefaultFragmentSetName(fragmentCollections) {
-	const nameIsUsed = (collections, name) =>
-		collections.some((collection) => collection.name === name);
+function getDefaultFragmentSetName(fragmentCollections: FragmentSet[]) {
+	const nameIsUsed = (collections: FragmentSet[], name: string) =>
+		collections.some((collection: FragmentSet) => collection.name === name);
 
 	let name = Liferay.Language.get('untitled-set');
 	let suffix = 0;

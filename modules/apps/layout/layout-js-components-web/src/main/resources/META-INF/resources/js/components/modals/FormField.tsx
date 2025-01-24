@@ -15,6 +15,12 @@ export default function FormField({
 	id,
 	name,
 	required = false,
+}: {
+	children: React.ReactNode;
+	error?: string | null;
+	id: string;
+	name: string;
+	required?: boolean;
 }) {
 	const hasError = Boolean(error);
 

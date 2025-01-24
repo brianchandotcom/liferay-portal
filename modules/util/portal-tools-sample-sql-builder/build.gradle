@@ -29,7 +29,6 @@ classes {
 dependencies {
 	api group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	api group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
-
 	compileInclude project(":apps:account:account-api")
 	compileInclude project(":apps:account:account-service")
 	compileInclude project(":apps:application-list:application-list-api")
@@ -90,7 +89,6 @@ dependencies {
 	compileInclude project(":apps:view-count:view-count-service")
 	compileInclude project(":apps:wiki:wiki-api")
 	compileInclude project(":apps:wiki:wiki-service")
-
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.33.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

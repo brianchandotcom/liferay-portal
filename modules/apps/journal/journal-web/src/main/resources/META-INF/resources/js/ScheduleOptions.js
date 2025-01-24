@@ -8,8 +8,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
-import moment from 'moment/min/moment-with-locales';
+import {dateUtils, sub} from 'frontend-js-web';
 import React, {useEffect} from 'react';
 
 export default function ScheduleOptions({
@@ -25,7 +24,7 @@ export default function ScheduleOptions({
 
 	useEffect(() => {
 		if (displayDate) {
-			if (!moment(displayDate, 'yyyy-MM-DD HH:mm', true).isValid()) {
+			if (displayDate.length !== 16 || !dateUtils.isValid(displayDate)) {
 				setError(Liferay.Language.get('please-enter-a-valid-date'));
 
 				return;
@@ -135,9 +134,7 @@ export default function ScheduleOptions({
 function getDate(value) {
 	const date = new Date(value);
 
-	if (moment(date).isValid()) {
-		const date = new Date(value);
-
+	if (dateUtils.isValid(date)) {
 		return {
 			day: date.getDate(),
 			hour: date.getHours(),

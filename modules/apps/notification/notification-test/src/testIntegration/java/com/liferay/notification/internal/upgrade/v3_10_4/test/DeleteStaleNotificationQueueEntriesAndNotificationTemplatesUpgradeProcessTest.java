@@ -301,25 +301,25 @@ public class
 			"DeleteStaleNotificationQueueEntriesAndNotification" +
 				"TemplatesUpgradeProcess";
 
-	private static final long _COMPANY_ID = RandomTestUtil.nextLong();
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_QUEUE_ENTRY_ATTACHMENT_ID =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_QUEUE_ENTRY_ID =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_RECIPIENT_SETTING_ID_1 =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_RECIPIENT_SETTING_ID_2 =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_TEMPLATE_ATTACHMENT_ID =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	private static final long _NOTIFICATION_TEMPLATE_ID =
-		RandomTestUtil.nextLong();
+		RandomTestUtil.randomLong();
 
 	@Inject(
 		filter = "component.name=com.liferay.notification.internal.upgrade.registry.NotificationUpgradeStepRegistrator"

@@ -1401,7 +1401,7 @@ create table SystemEvent (
 	classNameId LONG,
 	classPK LONG,
 	classUuid VARCHAR(75) null,
-	externalReferenceCode VARCHAR(75) null,
+	classExternalReferenceCode VARCHAR(75) null,
 	referrerClassNameId LONG,
 	parentSystemEventId LONG,
 	systemEventSetKey LONG,

@@ -1,31 +1,25 @@
-[#assign inverted = configuration.inverted /]
-
 <div class="utility-nav-container">
-<lfr-drop-zone class="utility-nav-container-content" data-lfr-drop-zone-id="utility-nav-container-content"></lfr-drop-zone>
+	<lfr-drop-zone class="utility-nav-container-content" data-lfr-drop-zone-id="utility-nav-container-content"></lfr-drop-zone>
 </div>
 
-[#if inverted]
-	<style>
-		:root {
+<style>
+	:root {
+		--utility-nav-background-color: ${configuration.backgroundColor};
+
+		[#if configuration.inverted]
 			--logo-waffle-color: var(--color-neutral-0);
-			--utility-nav-background-color: ${configuration.bgColor};
 			--utility-nav-item-text-color-active: var(--color-neutral-0);
 			--utility-nav-item-text-color-background: rgba(255, 255, 255, 0.1);
 			--utility-nav-item-text-color-default: var(--color-neutral-1);
 			--utility-nav-item-text-color-hover: var(--color-neutral-0);
-			--utility-nav-max-width: ${configuration.maxWidth};
-		}
-	</style>
-[#else]
-	<style>
-		:root {
+		[#else]
 			--logo-waffle-color: var(--color-brand-primary);
-			--utility-nav-background-color: ${configuration.bgColor};
 			--utility-nav-item-text-color-active: var(--color-action-primary-active);
 			--utility-nav-item-text-color-background: var(--color-action-primary-hover-lighten);
 			--utility-nav-item-text-color-default: var(--color-neutral-9);
 			--utility-nav-item-text-color-hover: var(--color-action-primary-hover);
-			--utility-nav-max-width: ${configuration.maxWidth};
-		}
-	</style>
-[/#if]
+		[/#if]
+
+		--utility-nav-max-width: ${configuration.maxWidth};
+	}
+</style>

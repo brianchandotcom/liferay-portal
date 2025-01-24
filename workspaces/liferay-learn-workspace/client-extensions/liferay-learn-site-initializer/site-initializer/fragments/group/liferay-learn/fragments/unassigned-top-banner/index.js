@@ -4,16 +4,14 @@
  */
 if (!themeDisplay.isSignedIn()) {
 	document.addEventListener('DOMContentLoaded', () => {
-		const bannerSignIn = document.querySelector('.banner-sign-in');
-		const iconX = document.querySelector('.icon-x');
-		const learnBanner = document.querySelector('.learn-banner');
-		const navigationContainer = document.querySelector(
-			'.navigation-container'
-		);
+		document.querySelector('.icon-x').addEventListener('click', () => {
+			document.querySelector('.banner-sign-in').style.display = 'none';
+			document.querySelector('.learn-banner').style.marginTop = '0';
 
-		iconX.addEventListener('click', () => {
-			bannerSignIn.style.display = 'none';
-			learnBanner.style.marginTop = '0';
+			const navigationContainer = document.querySelector(
+				'.navigation-container'
+			);
+
 			navigationContainer.style.marginTop = '0';
 			navigationContainer.style.position = 'inherit';
 		});

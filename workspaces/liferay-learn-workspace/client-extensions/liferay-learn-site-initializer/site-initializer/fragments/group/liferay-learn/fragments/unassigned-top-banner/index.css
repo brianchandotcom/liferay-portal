@@ -23,7 +23,7 @@
 	position: fixed;  
 	top: 0px;
 	width: 100%;
-	z-index: 10;
+	z-index: 100;
 
 	&::after {
 		bottom: -10px;
@@ -61,6 +61,15 @@
 	right: 2%;
 	width:13px;
 	z-index: 20;
+}
+
+.learn-banner {
+	margin-top: 150px;
+}
+
+.navigation-container {
+	margin-top: -100px;
+	position: fixed;
 }
 
 @media(max-width: 581px) {

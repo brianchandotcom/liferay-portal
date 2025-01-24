@@ -4,8 +4,11 @@
  */
 if (!themeDisplay.isSignedIn()) {
 	document.addEventListener('DOMContentLoaded', () => {
-		document.querySelector('.icon-x-lesson').addEventListener('click',() => {
-			document.querySelector('.banner-sign-in-lesson').style.display = 'none';
-		});
+		document
+			.querySelector('.icon-x-lesson')
+			.addEventListener('click', () => {
+				document.querySelector('.banner-sign-in-lesson').style.display =
+					'none';
+			});
 	});
 }

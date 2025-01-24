@@ -9,20 +9,19 @@ hideLabel = configuration.hideLabel
 
 	<label class="account-dropdown-toggle" for="${fragmentEntryLinkNamespace}">
 		[#if themeDisplay.isSignedIn()]
-		<img class="account-dropdown-avatar" src="${user.fetchPortraitURL(themeDisplay)}" />
+			<img class="account-dropdown-avatar" src="${user.fetchPortraitURL(themeDisplay)}" />
 		[#else]
-		<svg class="account-dropdown-icon" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+			<svg class="account-dropdown-icon" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 				<path d="M11 3.94067C11 5.59753 9.65685 6.94067 8 6.94067C6.34315 6.94067 5 5.59753 5 3.94067C5 2.28382 6.34315 0.940674 8 0.940674C9.65685 0.940674 11 2.28382 11 3.94067Z" fill="currentColor" />
-
-			<path d="M14 12.4406C14 15.9406 2 15.9406 2 12.4406C2 6.25308 14 6.31558 14 12.4406Z" fill="currentColor" />
+				<path d="M14 12.4406C14 15.9406 2 15.9406 2 12.4406C2 6.25308 14 6.31558 14 12.4406Z" fill="currentColor" />
 			</svg>
 
-		<span class="account-dropdown-title ${configuration.hideLabel?then('hide-label-mobile', '')}">
+			<span class="account-dropdown-title ${configuration.hideLabel?then('hide-label-mobile', '')}">
 				${languageUtil.get(locale, "account", "Account")}
 			</span>
 		[/#if]
 
-	<svg class="account-dropdown-caret" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+		<svg class="account-dropdown-caret" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 			<path d="M4.17044 6.53604L7.58894 10.1013C7.81544 10.3362 8.18456 10.3362 8.41106 10.1013L11.8296 6.53604C12.1945 6.15434 11.9344 5.5 11.4185 5.5H4.5815C4.06557 5.50419 3.80552 6.15434 4.17044 6.53604V6.53604Z" fill="currentColor" />
 		</svg>
 	</label>
@@ -30,14 +29,15 @@ hideLabel = configuration.hideLabel
 	<div class="account-dropdown-content align-dropdown-${configuration.alignDropdown}">
 		[#if additionalItems]
 			<lfr-drop-zone data-lfr-drop-zone-id="account-dropdown-dropzone"></lfr-drop-zone>
+
 			<div class="account-dropdown-content-divider"></div>
 		[/#if]
 
 		<div class="account-dropdown-perminant-links">
 			[#if themeDisplay.isSignedIn()]
-			<a class="account-dropdown-menu-item" href="https://liferay.okta.com/enduser/settings" target="_blank">
+				<a class="account-dropdown-menu-item" href="https://liferay.okta.com/enduser/settings" target="_blank">
 					<div class="account-dropdown-menu-item-icon">
-					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+						<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 							<path d="M14.0921 8.7747C14.164 8.29051 14.0765 7.54705 14.0328 7.20968L15.5482 6.20383C15.9669 5.91332 16.0982 5.35728 15.8576 4.91058L14.7421 2.9426C14.4952 2.4834 13.939 2.29285 13.4609 2.49902L11.8611 3.23311C11.458 2.90824 10.7893 2.549 10.3019 2.35845L10.0925 0.862163C10.0238 0.368606 9.59884 0 9.09889 0H6.91161C6.40854 0 5.98671 0.37173 5.91797 0.865287L5.71486 2.33034C5.1368 2.57087 4.56186 2.92698 4.14315 3.23936L2.58081 2.4834C2.12148 2.30223 1.63091 2.34283 1.38094 2.77079L0.137315 4.6763C-0.109534 5.09488 -0.0157942 5.62905 0.356042 5.94455L1.92775 7.20031C1.87776 7.56579 1.83401 8.29988 1.90901 8.79032L0.42791 9.80867C0.00607857 10.1054 -0.122033 10.674 0.131066 11.1207L1.34656 13.1355C1.60279 13.5822 2.15898 13.7634 2.63081 13.5541L4.14315 12.7513C4.55561 13.0699 5.22116 13.476 5.71174 13.6665L5.88985 15.1097C5.94921 15.6127 6.37417 15.9906 6.88349 15.9938L9.13638 16C9.64571 16 10.0738 15.622 10.1332 15.1191L10.2988 13.654C10.8831 13.4198 11.4611 13.1105 11.8736 12.7856L13.5203 13.4635C14.0015 13.6884 14.5764 13.501 14.8295 13.0355L15.8794 11.1581C16.1169 10.7177 15.9951 10.171 15.5888 9.87739L14.0921 8.7747ZM8.00838 10.7271C4.76809 10.7271 4.55873 5.72901 8.00838 5.72901C11.4049 5.72901 11.2487 10.7271 8.00838 10.7271Z" fill="currentColor" />
 						</svg>
 					</div>
@@ -47,7 +47,7 @@ hideLabel = configuration.hideLabel
 					</div>
 
 					<div class="account-dropdown-menu-item-icon">
-					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+						<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 							<path d="M14 11C14 10.4477 14.4473 10 15 10C15.5527 10 16 10.4477 16 11V14C16 15.1028 15.1025 16 14 16H2C0.897461 16 0 15.1028 0 14V2C0 0.897202 0.897461 0 2 0H5C5.55273 0 6 0.447723 6 1C6 1.55228 5.55273 2 5 2H2V14H14V11Z" fill="currentcolor" />
 							<path d="M10 0H15C15.5527 0 16 0.447708 16 1V6C16 6.55229 15.5527 7 15 7C14.4473 7 14 6.55229 14 6V3.4142L9.70703 7.70711C9.51172 7.90237 9.25586 8 9 8C8.74414 8 8.48828 7.90237 8.29297 7.70711C7.90234 7.31657 7.90234 6.68343 8.29297 6.29289L12.5859 2H10C9.44727 2 9 1.55229 9 1C9 0.447708 9.44727 0 10 0Z" fill="currentColor" />
 						</svg>
@@ -56,10 +56,9 @@ hideLabel = configuration.hideLabel
 
 				<a class="account-dropdown-menu-item" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">
 					<div class="account-dropdown-menu-item-icon">
-					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+						<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 							<path d="M8.99707 7.43568C8.99707 8.01992 8.51953 8.49793 7.93555 8.49793C7.35059 8.49793 6.87305 8.01992 6.87305 7.43568V1.06224C6.87305 0.478008 7.35059 0 7.93555 0C8.51953 0 8.99707 0.478008 8.99707 1.06224V7.43568Z" fill="currentColor" />
-
-						<path d="M12.8926 3.00627C13.665 3.69686 14.2734 4.52279 14.7021 5.46118C15.1465 6.43329 15.3711 7.47183 15.3711 8.54788C15.3711 9.55124 15.1748 10.5251 14.7861 11.4425C14.4121 12.3281 13.876 13.1232 13.1934 13.8057C12.5107 14.4883 11.7158 15.0242 10.8301 15.3988C9.91309 15.7868 8.93945 15.9836 7.93555 15.9836C6.93262 15.9836 5.95801 15.7869 5.04102 15.3988C4.15527 15.0243 3.36035 14.4882 2.67773 13.8057C1.99512 13.1232 1.45898 12.3281 1.08496 11.4425C0.696289 10.5251 0.5 9.55124 0.5 8.54788C0.5 7.47183 0.725586 6.43329 1.16895 5.46115C1.59766 4.52272 2.20703 3.69673 2.97852 3.00617C3.41504 2.6149 4.08691 2.65212 4.47852 3.08923C4.86914 3.52634 4.83203 4.19788 4.39551 4.58915C3.84277 5.08315 3.4082 5.67356 3.10156 6.344C2.78516 7.03711 2.62402 7.77859 2.62402 8.54788C2.62402 9.96654 3.17676 11.3003 4.17969 12.3035C5.18359 13.3066 6.5166 13.8591 7.93555 13.8591C9.35449 13.8591 10.6885 13.3066 11.6914 12.3035C12.6943 11.3003 13.2471 9.96657 13.2471 8.54788C13.2471 7.77862 13.0859 7.03718 12.7695 6.3441C12.4629 5.67369 12.0283 5.08332 11.4766 4.58928C11.0391 4.19801 11.002 3.52647 11.3936 3.08933C11.7842 2.65218 12.4561 2.615 12.8926 3.00627Z" fill="currentColor" />
+							<path d="M12.8926 3.00627C13.665 3.69686 14.2734 4.52279 14.7021 5.46118C15.1465 6.43329 15.3711 7.47183 15.3711 8.54788C15.3711 9.55124 15.1748 10.5251 14.7861 11.4425C14.4121 12.3281 13.876 13.1232 13.1934 13.8057C12.5107 14.4883 11.7158 15.0242 10.8301 15.3988C9.91309 15.7868 8.93945 15.9836 7.93555 15.9836C6.93262 15.9836 5.95801 15.7869 5.04102 15.3988C4.15527 15.0243 3.36035 14.4882 2.67773 13.8057C1.99512 13.1232 1.45898 12.3281 1.08496 11.4425C0.696289 10.5251 0.5 9.55124 0.5 8.54788C0.5 7.47183 0.725586 6.43329 1.16895 5.46115C1.59766 4.52272 2.20703 3.69673 2.97852 3.00617C3.41504 2.6149 4.08691 2.65212 4.47852 3.08923C4.86914 3.52634 4.83203 4.19788 4.39551 4.58915C3.84277 5.08315 3.4082 5.67356 3.10156 6.344C2.78516 7.03711 2.62402 7.77859 2.62402 8.54788C2.62402 9.96654 3.17676 11.3003 4.17969 12.3035C5.18359 13.3066 6.5166 13.8591 7.93555 13.8591C9.35449 13.8591 10.6885 13.3066 11.6914 12.3035C12.6943 11.3003 13.2471 9.96657 13.2471 8.54788C13.2471 7.77862 13.0859 7.03718 12.7695 6.3441C12.4629 5.67369 12.0283 5.08332 11.4766 4.58928C11.0391 4.19801 11.002 3.52647 11.3936 3.08933C11.7842 2.65218 12.4561 2.615 12.8926 3.00627Z" fill="currentColor" />
 						</svg>
 					</div>
 
@@ -68,34 +67,35 @@ hideLabel = configuration.hideLabel
 					</div>
 				</a>
 			[#else]
-			<a class="account-dropdown-menu-item" href="https://login.liferay.com/signin/register" target="_blank">
-					<div class="account-dropdown-menu-item-icon">
-					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-							<path d="M14.9944 7.00012H8.98156V1.00293C8.98156 0.45293 8.53156 0.00292969 7.98156 0.00292969C7.43156 0.00292969 6.98156 0.45293 6.98156 1.00293V7.00012H1C0.45 7.00012 0 7.45012 0 8.00012C0 8.55012 0.45 9.00012 1 9.00012H6.98156V14.9973C6.98156 15.5473 7.43156 15.9973 7.98156 15.9973C8.53156 15.9973 8.98156 15.5473 8.98156 14.9973V9.00015H14.9944C15.5444 9.00015 15.9944 8.55015 15.9944 8.00015C15.9944 7.45015 15.5444 7.00012 14.9944 7.00012Z" fill="currentColor" />
-						</svg>
-					</div>
 
-					<div class="account-dropdown-menu-item-title">
-						${languageUtil.get(locale, "create-an-account", "Create An Account")}
-					</div>
+			<a class="account-dropdown-menu-item" href="https://login.liferay.com/signin/register" target="_blank">
+				<div class="account-dropdown-menu-item-icon">
+					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+						<path d="M14.9944 7.00012H8.98156V1.00293C8.98156 0.45293 8.53156 0.00292969 7.98156 0.00292969C7.43156 0.00292969 6.98156 0.45293 6.98156 1.00293V7.00012H1C0.45 7.00012 0 7.45012 0 8.00012C0 8.55012 0.45 9.00012 1 9.00012H6.98156V14.9973C6.98156 15.5473 7.43156 15.9973 7.98156 15.9973C8.53156 15.9973 8.98156 15.5473 8.98156 14.9973V9.00015H14.9944C15.5444 9.00015 15.9944 8.55015 15.9944 8.00015C15.9944 7.45015 15.5444 7.00012 14.9944 7.00012Z" fill="currentColor" />
+					</svg>
+				</div>
+
+				<div class="account-dropdown-menu-item-title">
+					${languageUtil.get(locale, "create-an-account", "Create An Account")}
+				</div>
 
 				<svg class="account-dropdown-menu-item-external-icon" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-						<path d="M14 11C14 10.4477 14.4473 10 15 10C15.5527 10 16 10.4477 16 11V14C16 15.1028 15.1025 16 14 16H2C0.897461 16 0 15.1028 0 14V2C0 0.897202 0.897461 0 2 0H5C5.55273 0 6 0.447723 6 1C6 1.55228 5.55273 2 5 2H2V14H14V11Z" fill="currentcolor" />
-						<path d="M10 0H15C15.5527 0 16 0.447708 16 1V6C16 6.55229 15.5527 7 15 7C14.4473 7 14 6.55229 14 6V3.4142L9.70703 7.70711C9.51172 7.90237 9.25586 8 9 8C8.74414 8 8.48828 7.90237 8.29297 7.70711C7.90234 7.31657 7.90234 6.68343 8.29297 6.29289L12.5859 2H10C9.44727 2 9 1.55229 9 1C9 0.447708 9.44727 0 10 0Z" fill="currentColor" />
-					</svg>
-				</a>
+					<path d="M14 11C14 10.4477 14.4473 10 15 10C15.5527 10 16 10.4477 16 11V14C16 15.1028 15.1025 16 14 16H2C0.897461 16 0 15.1028 0 14V2C0 0.897202 0.897461 0 2 0H5C5.55273 0 6 0.447723 6 1C6 1.55228 5.55273 2 5 2H2V14H14V11Z" fill="currentcolor" />
+					<path d="M10 0H15C15.5527 0 16 0.447708 16 1V6C16 6.55229 15.5527 7 15 7C14.4473 7 14 6.55229 14 6V3.4142L9.70703 7.70711C9.51172 7.90237 9.25586 8 9 8C8.74414 8 8.48828 7.90237 8.29297 7.70711C7.90234 7.31657 7.90234 6.68343 8.29297 6.29289L12.5859 2H10C9.44727 2 9 1.55229 9 1C9 0.447708 9.44727 0 10 0Z" fill="currentColor" />
+				</svg>
+			</a>
 
 			<a class="account-dropdown-menu-item" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">
-					<div class="account-dropdown-menu-item-icon">
+				<div class="account-dropdown-menu-item-icon">
 					<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-							<path clip-rule="evenodd" d="M11 3.94067C11 5.59753 9.65685 6.94067 8 6.94067C6.34315 6.94067 5 5.59753 5 3.94067C5 2.28382 6.34315 0.940674 8 0.940674C9.65685 0.940674 11 2.28382 11 3.94067ZM14 12.4406C14 15.9406 2 15.9406 2 12.4406C2 6.25308 14 6.31558 14 12.4406Z" fill="currentColor" fill-rule="evenodd" />
-						</svg>
-					</div>
+						<path clip-rule="evenodd" d="M11 3.94067C11 5.59753 9.65685 6.94067 8 6.94067C6.34315 6.94067 5 5.59753 5 3.94067C5 2.28382 6.34315 0.940674 8 0.940674C9.65685 0.940674 11 2.28382 11 3.94067ZM14 12.4406C14 15.9406 2 15.9406 2 12.4406C2 6.25308 14 6.31558 14 12.4406Z" fill="currentColor" fill-rule="evenodd" />
+					</svg>
+				</div>
 
-					<div class="account-dropdown-menu-item-title">
-						${languageUtil.get(locale, "sign-in", "Sign In")}
-					</div>
-				</a>
+				<div class="account-dropdown-menu-item-title">
+					${languageUtil.get(locale, "sign-in", "Sign In")}
+				</div>
+			</a>
 			[/#if]
 		</div>
 	</div>

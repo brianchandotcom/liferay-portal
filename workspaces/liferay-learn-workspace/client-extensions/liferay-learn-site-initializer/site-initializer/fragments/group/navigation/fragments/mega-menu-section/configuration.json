@@ -63,7 +63,7 @@
 					"defaultValue": false,
 					"description": "Add background color to this section",
 					"label": "Background Color",
-					"name": "background",
+					"name": "backgroundColor",
 					"type": "checkbox"
 				}
 			],

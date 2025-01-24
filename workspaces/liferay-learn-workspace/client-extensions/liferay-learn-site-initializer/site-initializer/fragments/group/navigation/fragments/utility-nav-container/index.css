@@ -1,3 +1,7 @@
+.lfr-layout-structure-item-utility-nav-container {
+	background: var(--utility-nav-background-color, #FFFFFF);
+}
+
 .utility-nav-container {
 	background: var(--utility-nav-background-color, #FFFFFF);
 	position: relative;
@@ -22,8 +26,4 @@
 			);
 		}
 	}
-}
-
-.lfr-layout-structure-item-utility-nav-container {
-	background: var(--utility-nav-background-color, #FFFFFF);
 }

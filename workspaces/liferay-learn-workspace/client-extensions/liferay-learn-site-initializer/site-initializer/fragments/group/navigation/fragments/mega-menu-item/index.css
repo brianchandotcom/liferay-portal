@@ -13,6 +13,13 @@
 	outline-offset: 2px;
 	transition: all var(--transition-base);
 
+	.mega-menu-item-html {
+		flex-shrink: 0;
+		height: 2rem;
+		margin-left: 0.5rem;
+		width: 2rem;
+	}
+
 	.mega-menu-item-image {
 		border-radius: var(--border-radius);
 		flex-shrink: 0;
@@ -27,11 +34,10 @@
 		}
 	}
 
-	.mega-menu-item-html {
-		flex-shrink: 0;
-		height: 2rem;
-		margin-left: 0.5rem;
-		width: 2rem;
+	.mega-menu-item-external-icon {
+		margin-right: 0.5rem;
+		opacity: 0;
+		transition: all var(--transition-base);
 	}
 
 	.mega-menu-item-text {
@@ -43,14 +49,6 @@
 		gap: 0.5rem;
 		justify-content: center;
 
-		.mega-menu-item-title {
-			color: var(--color-neutral-10, #282934);
-			font-size: var(--h5-font-size);
-			font-weight: var(--font-weight-semi-bold, 600);
-			margin: 0;
-			transition: all var(--transition-base);
-		}
-
 		.mega-menu-item-description {
 			color: var(--color-neutral-8, #54555F);
 			font-size: var(--text-paragraph-sm-font-size);
@@ -58,12 +56,14 @@
 			line-height: var(--text-paragraph-sm-line-height);
 			margin: 0;
 		}
-	}
 
-	.mega-menu-item-external-icon {
-		margin-right: 0.5rem;
-		opacity: 0;
-		transition: all var(--transition-base);
+		.mega-menu-item-title {
+			color: var(--color-neutral-10, #282934);
+			font-size: var(--h5-font-size);
+			font-weight: var(--font-weight-semi-bold, 600);
+			margin: 0;
+			transition: all var(--transition-base);
+		}
 	}
 
 	&:hover,
@@ -72,26 +72,27 @@
 		background: var(--color-action-primary-hover-lighten);
 		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 
-		.mega-menu-item-title {
-			color: var(--color-action-primary-hover, #0053F0);
-		}
-
 		.mega-menu-item-external-icon {
 			opacity: 1;
 		}
-	}
-	&.mega-menu-item-has-image {
-		.mega-menu-item-title {
-			color: var(--color-neutral-8, #54555F);
-			font-size: var(--text-paragraph-sm-font-size);
-			font-weight: var(--font-weight-semi-bold, 600);
-		}
 
+		.mega-menu-item-title {
+			color: var(--color-action-primary-hover, #0053F0);
+		}
+	}
+
+	&.mega-menu-item-has-image {
 		.mega-menu-item-description {
 			color: var(--color-neutral-10, #282934);
 			font-size: var(--text-paragraph-base-font-size);
 			font-weight: var(--font-weight-semi-bold, 600);
 			line-height: var(--text-paragraph-base-line-height);
+		}
+
+		.mega-menu-item-title {
+			color: var(--color-neutral-8, #54555F);
+			font-size: var(--text-paragraph-sm-font-size);
+			font-weight: var(--font-weight-semi-bold, 600);
 		}
 		
 		&:hover,

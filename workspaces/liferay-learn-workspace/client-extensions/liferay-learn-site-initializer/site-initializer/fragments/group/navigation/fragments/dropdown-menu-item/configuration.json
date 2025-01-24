@@ -3,7 +3,7 @@
 		{
 			"fields": [
 				{
-					"label": "url",
+					"label": "URL",
 					"localizable": true,
 					"name": "url",
 					"type": "url"

@@ -6,18 +6,18 @@
 					"dataType": "string",
 					"defaultValue": "left",
 					"description": "Align dropdown menu left or right",
-					"label": "Dropdown Alignment",
+					"label": "Align Dropdown",
 					"name": "alignDropdown",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "Left",
-								"value": "left"
-							},
-							{
 								"label": "Center",
 								"value": "center"
+							},
+							{
+								"label": "Left",
+								"value": "left"
 							},
 							{
 								"label": "Right",
@@ -30,7 +30,7 @@
 					"dataType": "string",
 					"defaultValue": false,
 					"description": "Hide label text on small screens",
-					"label": "Hide label on Mobile",
+					"label": "Hide Label",
 					"name": "hideLabel",
 					"type": "checkbox"
 				}

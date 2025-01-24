@@ -1,33 +1,24 @@
-[#assign
-	external = configuration.external
-	visual = configuration.visual
-	url = configuration.url
-/]
+<a class="mega-menu-item mega-menu-item-has-${configuration.visual}" href="${configuration.url}" target="${configuration.external?then('_blank', '_self')}">
+	[#if configuration.visual="image"]
+		<img class="mega-menu-item-image" data-lfr-editable-id="image" data-lfr-editable-type="image" src="https://www.liferay.com/documents/d/guest/placeholder-png?download=true" />
+	[#elseIf configuration.visual="icon"]
 
-<a
-	class="mega-menu-item mega-menu-item-has-${configuration.visual}"
-	href="${url}"
-	target="${configuration.external?then('_blank', '_self')}"
->
-	[#if visual="image"]
-	<img class="mega-menu-item-image" data-lfr-editable-id="image" data-lfr-editable-type="image" src="https://www.liferay.com/documents/d/guest/placeholder-png?download=true" />
-	[#elseIf visual="icon"]
 		<lfr-editable class="mega-menu-item-html" id="html" type="html">
 			${languageUtil.get(locale, 'html', 'HTML')}
 		</lfr-editable>
 	[/#if]
 
 	<div class="mega-menu-item-text">
-	<span class="mega-menu-item-title" data-lfr-editable-id="title" data-lfr-editable-type="text">
+		<span class="mega-menu-item-title" data-lfr-editable-id="title" data-lfr-editable-type="text">
 			${languageUtil.get(locale, 'nav-item-header', 'Nav Item Header')}
 		</span>
-	<span class="mega-menu-item-description" data-lfr-editable-id="description" data-lfr-editable-type="text">
-			${languageUtil.get(locale, 'nav-item-description', 'Nav Item Description')}
+		<span class="mega-menu-item-description" data-lfr-editable-id="description" data-lfr-editable-type="text">
+				${languageUtil.get(locale, 'nav-item-description', 'Nav Item Description')}
 		</span>
 	</div>
 
-	[#if external]
-	<svg class="mega-menu-item-external-icon" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+	[#if configuration.external]
+		<svg class="mega-menu-item-external-icon" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 			<path d="M14 11C14 10.4477 14.4473 10 15 10C15.5527 10 16 10.4477 16 11V14C16 15.1028 15.1025 16 14 16H2C0.897461 16 0 15.1028 0 14V2C0 0.897202 0.897461 0 2 0H5C5.55273 0 6 0.447723 6 1C6 1.55228 5.55273 2 5 2H2V14H14V11Z" fill="currentcolor" />
 			<path d="M10 0H15C15.5527 0 16 0.447708 16 1V6C16 6.55229 15.5527 7 15 7C14.4473 7 14 6.55229 14 6V3.4142L9.70703 7.70711C9.51172 7.90237 9.25586 8 9 8C8.74414 8 8.48828 7.90237 8.29297 7.70711C7.90234 7.31657 7.90234 6.68343 8.29297 6.29289L12.5859 2H10C9.44727 2 9 1.55229 9 1C9 0.447708 9.44727 0 10 0Z" fill="currentColor" />
 		</svg>

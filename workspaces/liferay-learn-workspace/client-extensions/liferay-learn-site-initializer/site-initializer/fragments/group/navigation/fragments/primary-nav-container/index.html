@@ -1,7 +1,6 @@
-[#assign inverted = configuration.inverted /]
-
 <nav class="primary-nav-container">
 	<lfr-drop-zone class="primary-nav-logo" data-lfr-drop-zone-id="primary-nav-logo"></lfr-drop-zone>
+
 	<div class="nav-items-container">
 		<input class="nav-items-menu-button-input" id="${fragmentEntryLinkNamespace}" type="checkbox" />
 
@@ -26,28 +25,23 @@
 	</div>
 </nav>
 
-[#if inverted]
-	<style>
-		:root {
+<style>
+	:root {
+		[#if configuration.inverted]
 			--logo-waffle-color: var(--color-neutral-0);
 			--nav-item-text-color-active: var(--color-neutral-0);
 			--nav-item-text-color-background: rgba(255, 255, 255, 0.1);
 			--nav-item-text-color-default: var(--color-neutral-1);
 			--nav-item-text-color-hover: var(--color-neutral-0);
-			--primary-nav-background-color: ${configuration.bgColor};
-			--primary-nav-max-width: ${configuration.maxWidth};
-		}
-	</style>
-[#else]
-	<style>
-		:root {
+		[#else]
 			--logo-waffle-color: var(--color-brand-primary);
 			--nav-item-text-color-active: var(--color-action-default-active);
 			--nav-item-text-color-background: var(--color-action-default-hover-lighten);
 			--nav-item-text-color-default: var(--color-neutral-9);
 			--nav-item-text-color-hover: var(--color-action-default-hover);
-			--primary-nav-background-color: ${configuration.bgColor};
-			--primary-nav-max-width: ${configuration.maxWidth};
-		}
-	</style>
-[/#if]
+		[/#if]
+
+		--primary-nav-background-color: ${configuration.backgroundColor};
+		--primary-nav-max-width: ${configuration.maxWidth};
+	}
+</style>

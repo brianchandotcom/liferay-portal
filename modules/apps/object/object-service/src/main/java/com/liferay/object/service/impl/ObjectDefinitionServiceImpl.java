@@ -69,7 +69,7 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition addObjectDefinition(
 			String externalReferenceCode, long objectFolderId,
-			boolean modifiable, boolean system)
+			boolean modifiable, String scope, boolean system)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -82,7 +82,7 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addObjectDefinition(
 			externalReferenceCode, getUserId(), objectFolderId, modifiable,
-			system);
+			scope, system);
 	}
 
 	@Override

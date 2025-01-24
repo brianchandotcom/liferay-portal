@@ -210,7 +210,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
-			boolean modifiable, boolean system)
+			boolean modifiable, String scope, boolean system)
 		throws PortalException {
 
 		_validateExternalReferenceCode(externalReferenceCode, system);
@@ -233,7 +233,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(externalReferenceCode);
 		objectDefinition.setPluralLabel(externalReferenceCode);
-		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
+		objectDefinition.setScope(scope);
 		objectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 		objectDefinition.setSystem(system);

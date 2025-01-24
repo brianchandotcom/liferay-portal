@@ -8,6 +8,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
@@ -96,6 +97,8 @@ public class ObjectRelationshipResourceTest
 			RandomTestUtil.randomString());
 		randomObjectRelationship.setObjectDefinitionId2(0L);
 		randomObjectRelationship.setObjectDefinitionModifiable2(() -> null);
+		randomObjectRelationship.setObjectDefinitionScope2(
+			ObjectDefinitionConstants.SCOPE_SITE);
 		randomObjectRelationship.setObjectDefinitionSystem2(() -> null);
 
 		ObjectRelationship postObjectRelationship =
@@ -111,6 +114,9 @@ public class ObjectRelationshipResourceTest
 
 		Assert.assertTrue(
 			postObjectRelationship.getObjectDefinitionModifiable2());
+		Assert.assertEquals(
+			randomObjectRelationship.getObjectDefinitionScope2(),
+			postObjectRelationship.getObjectDefinitionScope2());
 		Assert.assertFalse(postObjectRelationship.getObjectDefinitionSystem2());
 	}
 

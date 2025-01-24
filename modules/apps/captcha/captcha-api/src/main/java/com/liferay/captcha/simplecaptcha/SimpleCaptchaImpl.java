@@ -105,7 +105,8 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
@@ -224,17 +225,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		return _backgroundProducers[pos];
 	}
 
-	protected CaptchaConfiguration getCaptchaConfiguration() {
-		try {
-			_captchaConfiguration = captchaProvider.getCaptchaConfiguration();
-		}
-		catch (Throwable throwable) {
-			_log.error(throwable);
-		}
-
-		return _captchaConfiguration;
-	}
-
 	protected GimpyRenderer getGimpyRenderer() {
 		if (_gimpyRenderers.length == 1) {
 			return _gimpyRenderers[0];
@@ -246,7 +236,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getHeight() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		return captchaConfiguration.simpleCaptchaHeight();
 	}
@@ -285,7 +276,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected int getWidth() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		return captchaConfiguration.simpleCaptchaWidth();
 	}
@@ -301,7 +293,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void incrementCounter(HttpServletRequest httpServletRequest) {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		if ((captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
@@ -333,7 +326,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initBackgroundProducers() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		String[] backgroundProducerClassNames =
 			captchaConfiguration.simpleCaptchaBackgroundProducers();
@@ -351,7 +345,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initGimpyRenderers() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		String[] gimpyRendererClassNames =
 			captchaConfiguration.simpleCaptchaGimpyRenderers();
@@ -367,7 +362,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initNoiseProducers() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		String[] noiseProducerClassNames =
 			captchaConfiguration.simpleCaptchaNoiseProducers();
@@ -383,7 +379,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initTextProducers() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		String[] textProducerClassNames =
 			captchaConfiguration.simpleCaptchaTextProducers();
@@ -399,7 +396,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	protected void initWordRenderers() {
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
+		CaptchaConfiguration captchaConfiguration =
+			captchaProvider.getCaptchaConfiguration();
 
 		String[] wordRendererClassNames =
 			captchaConfiguration.simpleCaptchaWordRenderers();
@@ -519,7 +517,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		SimpleCaptchaImpl.class);
 
 	private BackgroundProducer[] _backgroundProducers;
-	private CaptchaConfiguration _captchaConfiguration;
 	private GimpyRenderer[] _gimpyRenderers;
 	private final Map<String, Object> _instances = new ConcurrentHashMap<>();
 	private NoiseProducer[] _noiseProducers;

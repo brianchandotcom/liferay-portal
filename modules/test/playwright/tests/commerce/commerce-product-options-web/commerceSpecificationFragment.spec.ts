@@ -9,7 +9,9 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -17,14 +19,17 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
+	pageEditorPagesTest,
 	loginTest()
 );
 
 test('LPD-13652 Product specification fragment only shows correct specifications', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceLayoutsPage,
+	displayPageTemplatesPage,
 	page,
+	pageEditorPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
@@ -74,17 +79,20 @@ test('LPD-13652 Product specification fragment only shows correct specifications
 		],
 	});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await commerceLayoutsPage.goToDisplayPageTemplates();
-	await commerceLayoutsPage.createDisplayPageTemplate(
-		'Product Details',
-		'Product',
-		site.name
-	);
-	await commerceLayoutsPage.addProductFragment('Price');
+	const displayPageTemplateName = getRandomString();
 
-	await commerceLayoutsPage.addProductFragment('Product Specification');
+	await displayPageTemplatesPage.createTemplate({
+		contentType: 'Product',
+		name: displayPageTemplateName,
+	});
+	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+	await pageEditorPage.addFragment('Product', 'Price');
+	await pageEditorPage.addFragment('Product', 'Product Specification');
+
+	await pageEditorPage.waitForChangesSaved();
 
 	await page
 		.getByText('The Product Specification component will be shown here.')

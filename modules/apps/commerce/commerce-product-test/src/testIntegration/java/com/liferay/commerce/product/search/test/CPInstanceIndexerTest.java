@@ -69,7 +69,7 @@ public class CPInstanceIndexerTest {
 
 	@Test
 	public void testSearchSkuGTIN() throws Exception {
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
@@ -77,7 +77,7 @@ public class CPInstanceIndexerTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		cpInstance.setPurchasable(true);
 
@@ -94,7 +94,7 @@ public class CPInstanceIndexerTest {
 
 	@Test
 	public void testSkuPrefix() throws Exception {
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
@@ -102,7 +102,7 @@ public class CPInstanceIndexerTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		cpInstance.setPurchasable(true);
 

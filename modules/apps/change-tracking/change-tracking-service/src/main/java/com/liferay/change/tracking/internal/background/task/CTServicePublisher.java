@@ -235,8 +235,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(tableName);
 			sb.append(" where ctCollectionId = ");
 			sb.append(tempCTCollectionId);
-			sb.append(" and ");
-			sb.append("(");
+			sb.append(" and (");
 			sb.append(primaryKeyName);
 			sb.append(" in (");
 
@@ -391,8 +390,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		sb.append(tableName);
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
-		sb.append(" and ");
-		sb.append("(");
+		sb.append(" and (");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 

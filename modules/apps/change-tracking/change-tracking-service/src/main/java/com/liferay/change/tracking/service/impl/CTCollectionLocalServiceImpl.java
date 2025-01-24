@@ -471,8 +471,7 @@ public class CTCollectionLocalServiceImpl
 					sb.append(ctPersistence.getTableName());
 					sb.append(" where ctCollectionId = ");
 					sb.append(ctCollection.getCtCollectionId());
-					sb.append(" and ");
-					sb.append("(");
+					sb.append(" and (");
 					sb.append(primaryKeyName);
 					sb.append(" in (");
 
@@ -1467,8 +1466,7 @@ public class CTCollectionLocalServiceImpl
 		sb.append(ctPersistence.getTableName());
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
-		sb.append(" and ");
-		sb.append("(");
+		sb.append(" and (");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
@@ -1531,8 +1529,7 @@ public class CTCollectionLocalServiceImpl
 		sb.append(toCTCollectionId);
 		sb.append(" where ctCollectionId = ");
 		sb.append(fromCTCollectionId);
-		sb.append(" and ");
-		sb.append("(");
+		sb.append(" and (");
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 

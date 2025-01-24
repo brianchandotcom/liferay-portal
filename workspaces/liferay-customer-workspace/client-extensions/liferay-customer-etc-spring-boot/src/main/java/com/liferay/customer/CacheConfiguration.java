@@ -21,7 +21,7 @@ public class CacheConfiguration {
 	@Bean
 	public CacheManager cacheManager() {
 		CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager(
-			"issue", "issues");
+			"affectedVersions", "issue", "issues");
 
 		caffeineCacheManager.setCaffeine(
 			Caffeine.newBuilder(

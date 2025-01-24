@@ -9,7 +9,6 @@ import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.constants.RoleConstants;
 import com.liferay.customer.service.JiraService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.util.Time;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,19 +65,11 @@ public class JiraRestController extends BaseRestController {
 	)
 	public ResponseEntity<String> get() throws Exception {
 		try {
-			if ((_affectedVersionsJSONArray == null) ||
-				(_affectedVersionsExpirationTime <=
-					System.currentTimeMillis())) {
-
-				_affectedVersionsJSONArray =
-					_jiraService.getAffectedVersionsJSONArray();
-
-				_affectedVersionsExpirationTime =
-					System.currentTimeMillis() + Time.DAY;
-			}
+			JSONArray affectedVersionsJSONArray =
+				_jiraService.getAffectedVersionsJSONArray();
 
 			return new ResponseEntity<>(
-				_affectedVersionsJSONArray.toString(), HttpStatus.OK);
+				affectedVersionsJSONArray.toString(), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -253,9 +244,6 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(JiraRestController.class);
-
-	private long _affectedVersionsExpirationTime;
-	private JSONArray _affectedVersionsJSONArray;
 
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;

@@ -39,11 +39,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class JiraService {
 
-	@CacheEvict(allEntries = true, value = {"issue", "issues"})
+	@CacheEvict(
+		allEntries = true, value = {"affectedVersions", "issue", "issues"}
+	)
 	@Scheduled(cron = "0 0 0 * * *")
 	public void cacheEvict() throws Exception {
 	}
 
+	@Cacheable("affectedVersions")
 	public JSONArray getAffectedVersionsJSONArray() throws Exception {
 		try {
 			Set<String> affectedVersions = new TreeSet<>();

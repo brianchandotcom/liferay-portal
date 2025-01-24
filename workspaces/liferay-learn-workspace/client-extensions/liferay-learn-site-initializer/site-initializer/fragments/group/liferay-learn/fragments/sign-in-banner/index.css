@@ -1,7 +1,7 @@
 .banner-sign-in-lesson {
 	align-items: center;
 	background:
-		radial-gradient(52.24% 284.19% at 100% 100%, #FF6DA3 16.34%, rgba(202, 0, 250, 0.8) 55.85%, rgba(202, 0, 250, 0) 100%), 
+		radial-gradient(52.24% 284.19% at 100% 100%, #FF6DA3 16.34%, rgba(202, 0, 250, 0.8) 55.85%, rgba(202, 0, 250, 0) 100%),
 		radial-gradient(100% 300% at 0% 100%, #009CFF 0%, #0001A5 36.46%, #0069FF 75.52%, #00E0FF 100%);
 	border-radius: 10px;
 	color: var(--color-neutral-0, #ffffff);
@@ -65,11 +65,11 @@
 	.banner-sign-in-lesson {
 		height: 124px;
 	}
-	
+
 	.icon-x-lesson {
 		top: 25px;
 	}
-	
+
 	.banner-content {
 		display: flex;
 		flex-direction: column;

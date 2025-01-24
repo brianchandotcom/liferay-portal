@@ -198,4 +198,145 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		await expect(secondCheckBox).toBeChecked();
 	});
+	
+	test('Date fields', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const {objectFields, titleObjectFieldName} = await mockObjectFields({
+			apiHelpers,
+			localizeAllLocalizable: true,
+			objectFieldBusinessTypes: ['date', 'dateTime'],
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				titleObjectFieldName,
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		const dateInput = page.getByPlaceholder('__/__/____').first();
+
+		const dateTimeInput = page.getByPlaceholder('__/__/____').nth(1);
+
+		const firstTranslationsDropdownTrigger = page
+			.getByTestId('triggerButton')
+			.first();
+
+		const secondTranslationsDropdownTrigger = page
+			.getByTestId('triggerButton')
+			.nth(1);
+
+		// with english locale, fill both inputs
+
+		await dateInput.fill('01/10/2025');
+
+		await dateTimeInput.fill('02/20/2025 10:00 PM');
+
+		// use first dropdown locale to switch to catalan
+
+		await firstTranslationsDropdownTrigger.click();
+
+		const catalanOptions = page.getByTestId('availableLocalesDropdownca_ES');
+
+		await catalanOptions.first().click();
+
+		// with catalan locale selected for the first time, all values should be copied from english 
+
+		await expect(dateInput).toHaveValue('10/01/2025');
+
+		await expect(dateTimeInput).toHaveValue('20/02/2025 22:00');
+
+		// change first catalan input
+
+		await dateInput.fill('11/01/2025');
+
+		await secondTranslationsDropdownTrigger.click();
+
+		// check for labels in dropdown, catalan should show as translated
+
+		await expect(catalanOptions.first().locator('.label-item-expand')).toHaveText(
+			'translated',
+			{ignoreCase: true}
+		);
+
+		const englishOption = page.getByTestId('availableLocalesDropdownen_US');
+
+		await expect(englishOption.first().locator('.label-item-expand')).toHaveText(
+			'default',
+			{ignoreCase: true}
+		);
+
+		// save
+
+		const responsePromise = page.waitForResponse(
+			`**${objectDefinition.restContextPath}`
+		);
+		
+		await catalanOptions.nth(1).click();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		const response = await responsePromise;
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		// go back to list
+
+		await page.getByRole('link', {name: 'Back'}).click();
+
+		const responseBody = await response.json();
+
+		// navigate to the entry
+
+		const entryLink = page.getByRole('link', {name: responseBody.id});
+
+		await entryLink.click();
+
+		// check if the saved entry is exactly as we set before
+
+		await expect(dateInput).toHaveValue('01/10/2025');
+
+		await expect(dateTimeInput).toHaveValue('02/20/2025 10:00 PM');
+
+		await firstTranslationsDropdownTrigger.click();
+
+		await catalanOptions.first().click();
+
+		await expect(dateInput).toHaveValue('11/01/2025');
+
+		await expect(dateTimeInput).toHaveValue('20/02/2025 22:00');
+	});
 });

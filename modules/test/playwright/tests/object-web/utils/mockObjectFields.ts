@@ -33,6 +33,7 @@ type ObjectFieldBusinessTypes =
 	| 'autoIncrement'
 	| 'boolean'
 	| 'date'
+	| 'dateTime'
 	| 'decimal'
 	| 'encrypted'
 	| 'integer'
@@ -70,6 +71,11 @@ const objectFieldbusinessTypeInfo: {
 		DBType: ObjectField.DBTypeEnum.Date,
 		businessType: ObjectField.BusinessTypeEnum.Date,
 		type: ObjectField.TypeEnum.Date,
+	},
+	dateTime: {
+		DBType: ObjectField.DBTypeEnum.DateTime,
+		businessType: ObjectField.BusinessTypeEnum.DateTime,
+		type: ObjectField.TypeEnum.DateTime,
 	},
 	decimal: {
 		DBType: ObjectField.DBTypeEnum.Double,
@@ -124,7 +130,7 @@ const objectFieldbusinessTypeInfo: {
 };
 
 function isLocalizable(businessType: ObjectFieldBusinessTypes) {
-	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = ['boolean'];
+	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = ['boolean', 'date', 'dateTime'];
 
 	return localizableBusinessTypes.includes(businessType);
 }
@@ -288,6 +294,15 @@ export async function mockObjectFields({
 						{
 							name: 'initialValue',
 							value: '1',
+						} as any,
+					],
+				};
+			case 'dateTime':
+				return {
+					objectFieldSettings: [
+						{
+							name: 'timeStorage', 
+							value: 'convertToUTC'
 						} as any,
 					],
 				};

@@ -7,6 +7,7 @@ Import-Package:\
 	!com.github.luben.zstd.*,\
 	\
 	!com.google.appengine.api.*,\
+	!com.google.errorprone.annotations.*,\
 	!com.google.protobuf.*,\
 	\
 	!com.jcraft.*,\
@@ -33,6 +34,8 @@ Import-Package:\
 	!org.graalvm.nativeimage.hosted.*,\
 	\
 	!org.jboss.marshalling.*,\
+	\
+	!org.threeten.bp.*,\
 	\
 	!reactor.blockhound.*,\
 	\

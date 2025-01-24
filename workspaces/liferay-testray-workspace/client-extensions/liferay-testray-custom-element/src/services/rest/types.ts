@@ -153,6 +153,7 @@ export type TestrayStatusMetric = {
 	blocked: number;
 	failed: number;
 	inProgress: number;
+	incomplete: number;
 	passed: number;
 	testfix: number;
 	total: number;

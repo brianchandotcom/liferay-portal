@@ -104,8 +104,7 @@ const Teams = () => {
 										blocked: testrayStatusMetric?.blocked,
 										failed: testrayStatusMetric?.failed,
 										incomplete:
-											testrayStatusMetric?.untested +
-											testrayStatusMetric?.inProgress,
+											testrayStatusMetric?.incomplete,
 										passed: testrayStatusMetric?.passed,
 										test_fix: testrayStatusMetric?.testfix,
 									}}

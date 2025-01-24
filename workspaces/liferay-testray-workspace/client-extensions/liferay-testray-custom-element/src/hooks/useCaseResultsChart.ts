@@ -90,11 +90,9 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		return Object.entries(statususes).map(([key, value]) => {
 			return [
 				key,
-				...responseItems.map(({testrayStatusMetric}) =>
-					key === 'INCOMPLETE'
-						? (testrayStatusMetric.untested || 0) +
-							(testrayStatusMetric.inProgress || 0)
-						: testrayStatusMetric[value] ?? getRandom(1000)
+				...responseItems.map(
+					({testrayStatusMetric}) =>
+						testrayStatusMetric[value] ?? getRandom(1000)
 				),
 			];
 		});

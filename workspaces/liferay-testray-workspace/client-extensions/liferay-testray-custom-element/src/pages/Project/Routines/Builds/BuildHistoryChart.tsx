@@ -79,8 +79,7 @@ const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
 							Statuses.INCOMPLETE,
 							...builds.map(
 								({testrayStatusMetric}) =>
-									(testrayStatusMetric?.inProgress as number) +
-									(testrayStatusMetric?.untested as number)
+									testrayStatusMetric?.incomplete
 							),
 						],
 					],

@@ -95,7 +95,7 @@ export default function CSSClassSelectorField({
 						onBlur={() => {
 							requestAnimationFrame(() => {
 								if (
-									!dropdownRef.current.contains(
+									!dropdownRef.current?.contains(
 										document.activeElement
 									)
 								) {

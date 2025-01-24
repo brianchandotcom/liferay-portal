@@ -99,17 +99,11 @@ public class GetSystemDataSetsMVCResourceCommand
 								dataSetObjectDefinition.
 									getObjectDefinitionId());
 
-						boolean created = false;
-
-						if (objectEntry != null) {
-							created = true;
-						}
-
 						return JSONUtil.put(
 							"additionalAPIURLParameters",
 							systemFDSEntry.getAdditionalAPIURLParameters()
 						).put(
-							"created", created
+							"created", objectEntry != null
 						).put(
 							"defaultItemsPerPage",
 							systemFDSEntry.getDefaultItemsPerPage()

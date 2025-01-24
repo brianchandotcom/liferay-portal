@@ -4,11 +4,8 @@
  */
 if (!themeDisplay.isSignedIn()) {
 	document.addEventListener('DOMContentLoaded', () => {
-		const bannerSignIn = document.querySelector('.banner-sign-in-lesson');
-		const iconX = document.querySelector('.icon-x-lesson');
-
-		iconX.addEventListener('click', () => {
-			bannerSignIn.style.display = 'none';
+		document.querySelector('.icon-x-lesson').addEventListener('click',() => {
+			document.querySelector('.banner-sign-in-lesson').style.display = 'none';
 		});
 	});
 }

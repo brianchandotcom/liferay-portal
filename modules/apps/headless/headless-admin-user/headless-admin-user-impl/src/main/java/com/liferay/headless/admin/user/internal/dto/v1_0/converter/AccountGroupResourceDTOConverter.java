@@ -5,13 +5,23 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +73,22 @@ public class AccountGroupResourceDTOConverter
 
 		return new AccountGroup() {
 			{
+				setAccountBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"accountBriefs",
+						fieldName -> TransformUtil.transformToArray(
+							_accountGroupRelLocalService.getAccountGroupRels(
+								accountGroup.getAccountGroupId(),
+								AccountEntry.class.getName()),
+							accountGroupRel -> _toAccountBrief(accountGroupRel),
+							AccountBrief.class)));
+				setCreator(
+					() -> NestedFieldsSupplier.supply(
+						"creator",
+						fieldName -> CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								accountGroup.getUserId()))));
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -81,7 +107,37 @@ public class AccountGroupResourceDTOConverter
 		};
 	}
 
+	private AccountBrief _toAccountBrief(AccountGroupRel accountGroupRel) {
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			accountGroupRel.getClassPK());
+
+		if (accountEntry == null) {
+			return null;
+		}
+
+		return new AccountBrief() {
+			{
+				setExternalReferenceCode(
+					accountEntry::getExternalReferenceCode);
+				setId(accountEntry::getAccountEntryId);
+				setName(accountEntry::getName);
+			}
+		};
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

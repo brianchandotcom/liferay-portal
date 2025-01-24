@@ -317,6 +317,8 @@ public class UserLocalServiceTest {
 		throws Exception {
 
 		_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
+			"BCRYPT/15", "BCRYPT/10");
+		_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
 			"PBKDF2WITHHMACSHA1/160/2600000", "PBKDF2WITHHMACSHA1/160/1300000");
 		_testAuthenticateByEmailAddressWithOutdatedPasswordsEncryptionAlgorithm(
 			"SHA-384", "PBKDF2WITHHMACSHA1/160/1300000");

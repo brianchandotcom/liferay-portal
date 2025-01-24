@@ -21,61 +21,57 @@ export const test = mergeTests(
 test('LPD-28891 Key is not automatically generated when writing new Specifications label', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	commerceProductSpecificationsPage,
+	commerceSpecificationsPage,
 }) => {
 	await applicationsMenuPage.goToCommerceSpecifications();
 
 	await expect(
-		commerceProductSpecificationsPage.createNewSpecificationsProduct
+		commerceSpecificationsPage.createNewSpecificationsProduct
 	).toBeVisible();
 
-	await commerceProductSpecificationsPage.createNewSpecificationsProduct.click();
+	await commerceSpecificationsPage.createNewSpecificationsProduct.click();
 
-	await commerceProductSpecificationsPage.waitForKey('Specification 1');
+	await commerceSpecificationsPage.waitForKey('Specification 1');
 
-	await commerceProductSpecificationsPage.addDescriptionSpecifications.fill(
+	await commerceSpecificationsPage.addDescriptionSpecifications.fill(
 		'Specification-1 Description'
 	);
 
 	await expect(
-		commerceProductSpecificationsPage.addDescriptionSpecifications
+		commerceSpecificationsPage.addDescriptionSpecifications
 	).toBeVisible();
 
-	await commerceProductSpecificationsPage.keyContent.fill('specification-1');
+	await commerceSpecificationsPage.keyContent.fill('specification-1');
 
-	await expect(commerceProductSpecificationsPage.keyContent).toHaveValue(
+	await expect(commerceSpecificationsPage.keyContent).toHaveValue(
 		'specification-1'
 	);
 
-	await commerceProductSpecificationsPage.saveButton.click();
+	await commerceSpecificationsPage.saveButton.click();
 
-	await expect(
-		commerceProductSpecificationsPage.successMessagge
-	).toBeVisible();
+	await expect(commerceSpecificationsPage.successMessage).toBeVisible();
 
-	await commerceProductSpecificationsPage.goBack.click();
+	await commerceSpecificationsPage.goBack.click();
 
-	await commerceProductSpecificationsPage.goToSpecificationGroup.click();
+	await commerceSpecificationsPage.goToSpecificationGroup.click();
 
-	await commerceProductSpecificationsPage.createNewSpecificationsProductGroup.click();
+	await commerceSpecificationsPage.createNewSpecificationsProductGroup.click();
 
-	await commerceProductSpecificationsPage.addNewProductSpecificationsGroup.fill(
+	await commerceSpecificationsPage.addNewProductSpecificationsGroup.fill(
 		'Specification group'
 	);
 
-	await commerceProductSpecificationsPage.addDescriptionSpecificationsGroup.fill(
+	await commerceSpecificationsPage.addDescriptionSpecificationsGroup.fill(
 		'Specification group Description'
 	);
 
-	await expect(commerceProductSpecificationsPage.keyContent).toHaveValue(
+	await expect(commerceSpecificationsPage.keyContent).toHaveValue(
 		'Specification group'
 	);
 
-	await commerceProductSpecificationsPage.saveButton.click();
+	await commerceSpecificationsPage.saveButton.click();
 
-	await expect(
-		commerceProductSpecificationsPage.successMessagge
-	).toBeVisible();
+	await expect(commerceSpecificationsPage.successMessage).toBeVisible();
 
 	const specifications =
 		await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();

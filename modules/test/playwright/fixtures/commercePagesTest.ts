@@ -44,7 +44,7 @@ import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce
 import {CommerceAdminProductDetailsSkusPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsSkusPage';
 import {CommerceAdminProductDetailsVisibilityPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductDetailsVisibilityPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductPage';
-import {CommerceProductSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceProductSpecificationsPage';
+import {CommerceSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceSpecificationsPage';
 import {CommerceAdminShipmentsPage} from '../pages/commerce/commerce-shipment-web/commerceAdminShipmentsPage';
 import {CommerceThemeMiniumCatalogPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumCatalogPage';
 import {CommerceThemeMiniumPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumPage';
@@ -89,7 +89,7 @@ const commercePagesTest = test.extend<{
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
-	commerceProductSpecificationsPage: CommerceProductSpecificationsPage;
+	commerceSpecificationsPage: CommerceSpecificationsPage;
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	commerceWishListPage: CommerceWishListPage;
@@ -207,8 +207,8 @@ const commercePagesTest = test.extend<{
 	commercePaymentsPage: async ({page}, use) => {
 		await use(new CommercePaymentsPage(page));
 	},
-	commerceProductSpecificationsPage: async ({page}, use) => {
-		await use(new CommerceProductSpecificationsPage(page));
+	commerceSpecificationsPage: async ({page}, use) => {
+		await use(new CommerceSpecificationsPage(page));
 	},
 	commerceThemeMiniumCatalogPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumCatalogPage(page));

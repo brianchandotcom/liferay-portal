@@ -51,11 +51,11 @@ public class ObjectDefinitionServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectDefinition addObjectDefinition(
 			String externalReferenceCode, long objectFolderId,
-			boolean modifiable, boolean system)
+			boolean modifiable, String scope, boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addObjectDefinition(
-			externalReferenceCode, objectFolderId, modifiable, system);
+			externalReferenceCode, objectFolderId, modifiable, scope, system);
 	}
 
 	@Override

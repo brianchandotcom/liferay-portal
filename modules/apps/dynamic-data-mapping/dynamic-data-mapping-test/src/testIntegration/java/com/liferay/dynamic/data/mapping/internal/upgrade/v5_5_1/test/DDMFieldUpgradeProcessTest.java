@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -91,12 +90,12 @@ public class DDMFieldUpgradeProcessTest {
 			RandomTestUtil.randomString());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, _group.getCreatorUserId(), _group.getGroupId(), 0,
 			PortalUtil.getClassNameId(DDLRecordSet.class.getName()),
 			"CUSTOM-META-TAGS", RandomTestUtil.randomLocaleStringMap(), null,
 			ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
 			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
-			ServiceContextTestUtil.getServiceContext());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		List<DDMStructureVersion> structureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(

@@ -29,7 +29,7 @@ import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
 import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
-import {createObjectField, mockObjectFields} from './utils/mockObjectFields';
+import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -1006,7 +1006,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await expect(viewObjectEntriesPage.successMessageArabic).toBeVisible();
 	});
-	
+
 	test('can delete relation on relationship tab', async ({
 		apiHelpers,
 		editObjectDetailsPage,
@@ -1014,14 +1014,16 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
+		const objectFields = createObjectFields('text', [
+			{
+				label: 'Custom Field',
+				name: 'customField',
+			},
+		]);
+
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields: [
-					createObjectField('text', {
-						label: 'Custom Field',
-						name: 'customField',
-					}),
-				],
+				objectFields,
 				objectFolderExternalReferenceCode: 'default',
 				panelCategoryKey: 'control_panel.object',
 				status: {code: 0},

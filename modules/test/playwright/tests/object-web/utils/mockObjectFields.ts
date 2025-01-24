@@ -130,7 +130,11 @@ const objectFieldbusinessTypeInfo: {
 };
 
 function isLocalizable(businessType: ObjectFieldBusinessTypes) {
-	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = ['boolean', 'date', 'dateTime'];
+	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = [
+		'boolean',
+		'date',
+		'dateTime',
+	];
 
 	return localizableBusinessTypes.includes(businessType);
 }
@@ -301,8 +305,8 @@ export async function mockObjectFields({
 				return {
 					objectFieldSettings: [
 						{
-							name: 'timeStorage', 
-							value: 'convertToUTC'
+							name: 'timeStorage',
+							value: 'convertToUTC',
 						} as any,
 					],
 				};

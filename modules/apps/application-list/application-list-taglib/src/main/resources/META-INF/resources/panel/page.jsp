@@ -80,48 +80,53 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 									%>
 
 									<c:if test="<%= !scopeLayouts.isEmpty() %>">
-										<div class="scope-selector">
+
+										<%
+										Group curScopeGroup = themeDisplay.getScopeGroup();
+										%>
+
+										<clay:content-row
+											verticalAlign="center"
+										>
+											<clay:content-col
+												expand="<%= true %>"
+											>
+												<span class="d-flex scope-name">
+													<c:choose>
+														<c:when test="<%= curScopeGroup.isLayout() %>">
+															<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
+
+															<div class="c-pl-2">
+																<liferay-frontend:feature-indicator
+																	dark="<%= true %>"
+																	type="deprecated"
+																/>
+															</div>
+														</c:when>
+														<c:otherwise>
+															<liferay-ui:message key="default-scope" />
+														</c:otherwise>
+													</c:choose>
+												</span>
+											</clay:content-col>
 
 											<%
-											Group curScopeGroup = themeDisplay.getScopeGroup();
+											ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(request);
 											%>
 
-											<clay:content-row
-												verticalAlign="center"
-											>
-												<clay:content-col
-													expand="<%= true %>"
-												>
-													<span class="scope-name">
-														<c:choose>
-															<c:when test="<%= curScopeGroup.isLayout() %>">
-																<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
-															</c:when>
-															<c:otherwise>
-																<liferay-ui:message key="default-scope" />
-															</c:otherwise>
-														</c:choose>
-													</span>
-												</clay:content-col>
-
-												<%
-												ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(request);
-												%>
-
-												<clay:content-col>
-													<div>
-														<react:component
-															module="{ScopeDropdown} from application-list-taglib"
-															props='<%=
-																HashMapBuilder.<String, Object>put(
-																	"items", contentPanelCategoryDisplayContext.getScopesDropdownItemList()
-																).build()
-															%>'
-														/>
-													</div>
-												</clay:content-col>
-											</clay:content-row>
-										</div>
+											<clay:content-col>
+												<div>
+													<react:component
+														module="{ScopeDropdown} from application-list-taglib"
+														props='<%=
+															HashMapBuilder.<String, Object>put(
+																"items", contentPanelCategoryDisplayContext.getScopesDropdownItemList()
+															).build()
+														%>'
+													/>
+												</div>
+											</clay:content-col>
+										</clay:content-row>
 									</c:if>
 								</c:if>
 

@@ -117,7 +117,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -159,15 +158,8 @@ public class CompanyLocalServiceTest {
 		setMethod.invoke(backgroundTaskIdField.get(null), 0L);
 	}
 
-	@Before
-	public void setUp() {
-		_companyId = CompanyThreadLocal.getCompanyId();
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		CompanyThreadLocal.setCompanyId(_companyId);
-
 		resetBackgroundTaskThreadLocal();
 
 		for (ServiceRegistration<?> serviceRegistration :
@@ -1433,8 +1425,6 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	private long _companyId;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

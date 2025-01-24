@@ -205,7 +205,7 @@ public class CompanyLocalServiceTest {
 		Group companyOrganizationGroup = null;
 		Group group = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			companyOrganization = _organizationLocalService.addOrganization(
@@ -244,7 +244,7 @@ public class CompanyLocalServiceTest {
 		Group companyGroup = null;
 		Group companyStagingGroup = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			companyGroup = company.getGroup();
 
 			_stagingLocalService.enableLocalStaging(
@@ -272,7 +272,7 @@ public class CompanyLocalServiceTest {
 		DDMStructure ddmStructure = null;
 		DLFileEntryType dlFileEntryType = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group guestGroup = _groupLocalService.getGroup(
@@ -337,7 +337,7 @@ public class CompanyLocalServiceTest {
 
 		LayoutSetPrototype layoutSetPrototype = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
@@ -378,7 +378,7 @@ public class CompanyLocalServiceTest {
 		long layoutSetPrototypeId = 0;
 		long userGroupId = 0;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
@@ -424,7 +424,7 @@ public class CompanyLocalServiceTest {
 		Group group = null;
 		Group parentGroup = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			parentGroup = GroupTestUtil.addGroup(
@@ -522,7 +522,7 @@ public class CompanyLocalServiceTest {
 		Organization companyOrganization = null;
 		Group companyOrganizationGroup = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
 			companyOrganization = _organizationLocalService.addOrganization(
@@ -556,7 +556,7 @@ public class CompanyLocalServiceTest {
 		User user = null;
 		UserGroup userGroup = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			Group group = GroupTestUtil.addGroup(
@@ -591,7 +591,7 @@ public class CompanyLocalServiceTest {
 		User user = null;
 		UserGroup userGroup = null;
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
@@ -790,7 +790,7 @@ public class CompanyLocalServiceTest {
 
 		Company company = addCompany();
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(
 				company.getCompanyId());
 
@@ -898,7 +898,7 @@ public class CompanyLocalServiceTest {
 
 		Company company = addCompany(virtualHostName);
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			Assert.assertEquals(
 				company,
 				_companyLocalService.getCompanyByVirtualHost(virtualHostName));
@@ -917,7 +917,7 @@ public class CompanyLocalServiceTest {
 		Company company = addCompany();
 		String languageId = "ca_ES";
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			TimeZone timeZone = company.getTimeZone();
 
 			_companyLocalService.updateDisplay(
@@ -942,7 +942,7 @@ public class CompanyLocalServiceTest {
 	public void testUpdateCompanyLocalesUpdateGroupLocales() throws Exception {
 		Company company = addCompany();
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			String[] companyLanguageIds = _prefsProps.getStringArray(
 				company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA,
 				PropsValues.LOCALES_ENABLED);
@@ -1023,7 +1023,7 @@ public class CompanyLocalServiceTest {
 
 		String languageId = "ca_ES";
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			long userId = _userLocalService.getGuestUserId(companyId);
 
 			addLayoutSetPrototype(
@@ -1053,7 +1053,7 @@ public class CompanyLocalServiceTest {
 	public void testUpdateDisplay() throws Exception {
 		Company company = addCompany();
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			User user = _userLocalService.getGuestUser(company.getCompanyId());
 
 			_userLocalService.updateUser(user);
@@ -1079,7 +1079,7 @@ public class CompanyLocalServiceTest {
 
 		long companyId = company.getCompanyId();
 
-		try {
+		try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 			Group group = GroupTestUtil.addGroup(
 				companyId, _userLocalService.getGuestUserId(companyId),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
@@ -1164,8 +1164,6 @@ public class CompanyLocalServiceTest {
 
 		PortalInstances.initCompany(company);
 
-		CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
 		return company;
 	}
 
@@ -1230,7 +1228,7 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		for (String companyName : companyNames) {
-			try {
+			try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 				company = _companyLocalService.updateCompany(
 					company.getCompanyId(), company.getVirtualHostname(),
 					company.getMx(), company.getHomeURL(), true, null,
@@ -1258,9 +1256,9 @@ public class CompanyLocalServiceTest {
 
 		String originalMx = company.getMx();
 
-		try (SafeCloseable safeCloseable =
+		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"MAIL_MX_UPDATE", mailMxUpdate)) {
+					"MAIL_MX_UPDATE", mailMxUpdate); SafeCloseable safeCloseable2 = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId()) ) {
 
 			_companyLocalService.updateCompany(
 				company.getCompanyId(), company.getVirtualHostname(), mx,
@@ -1298,7 +1296,7 @@ public class CompanyLocalServiceTest {
 
 		try {
 			for (String virtualHostname : virtualHostnames) {
-				try {
+				try(SafeCloseable safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(company.getCompanyId())) {
 					_companyLocalService.updateCompany(
 						company.getCompanyId(), virtualHostname,
 						company.getMx(), company.getMaxUsers(),

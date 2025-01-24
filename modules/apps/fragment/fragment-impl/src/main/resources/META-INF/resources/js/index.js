@@ -4,3 +4,5 @@
  */
 
 export {LocalizationSelect} from './LocalizationSelect';
+export {registerLocalizedInput} from './registerLocalizedInput';
+export {registerUnlocalizedInput} from './registerUnlocalizedInput';

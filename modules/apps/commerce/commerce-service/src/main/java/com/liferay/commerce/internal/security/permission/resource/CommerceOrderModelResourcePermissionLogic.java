@@ -181,7 +181,8 @@ public class CommerceOrderModelResourcePermissionLogic
 				permissionChecker, commerceOrder);
 		}
 
-		return false;
+		return _hasPermission(
+			permissionChecker, commerceOrder.getGroupId(), actionId);
 	}
 
 	private boolean _containsCheckoutPermission(

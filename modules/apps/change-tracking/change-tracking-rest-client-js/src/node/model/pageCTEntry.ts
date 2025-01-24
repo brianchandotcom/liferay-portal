@@ -1,6 +1,6 @@
 /**
  * 
- * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.change.tracking.rest.client\', and version \'3.3.1\'.
+ * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.change.tracking.rest.client\', and version \'4.0.1\'.
  *
  * The version of the OpenAPI document: v1.0
  * 

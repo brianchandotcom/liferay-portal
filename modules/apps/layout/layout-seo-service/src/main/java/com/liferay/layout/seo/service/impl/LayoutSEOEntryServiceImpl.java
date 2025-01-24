@@ -6,6 +6,7 @@
 package com.liferay.layout.seo.service.impl;
 
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,6 +36,8 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 	@Override
 	public LayoutSEOEntry updateCustomMetaTags(
 			long groupId, boolean privateLayout, long layoutId,
+			List<LayoutSEOEntryCustomMetaTagProperty>
+				layoutSEOEntryCustomMetaTagProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -42,7 +46,8 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			_layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutSEOEntryLocalService.updateCustomMetaTags(
-			getUserId(), groupId, privateLayout, layoutId, serviceContext);
+			getUserId(), groupId, privateLayout, layoutId,
+			layoutSEOEntryCustomMetaTagProperties, serviceContext);
 	}
 
 	@Override

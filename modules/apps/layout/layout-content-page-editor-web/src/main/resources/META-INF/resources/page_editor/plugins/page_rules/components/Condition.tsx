@@ -16,7 +16,13 @@ import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
 export interface Condition {
-	condition?: 'user' | 'role' | 'segment';
+	condition?:
+		| 'user'
+		| 'not_user'
+		| 'role'
+		| 'not_role'
+		| 'segment'
+		| 'not_segment';
 	id: string;
 	type: 'user' | undefined;
 	value?: string;
@@ -42,6 +48,9 @@ export const CONDITION_TYPE_ITEMS = [
 ] as const;
 
 const CONDITION_VALUES = {
+	not_role: 'not_role',
+	not_segment: 'not_segment',
+	not_user: 'not_user',
 	role: 'role',
 	segment: 'segment',
 	user: 'user',
@@ -53,14 +62,25 @@ export const CONDITION_ITEMS = {
 			label: Liferay.Language.get('is-the-user'),
 			value: CONDITION_VALUES.user,
 		},
-
+		{
+			label: Liferay.Language.get('is-not-the-user'),
+			value: CONDITION_VALUES.not_user,
+		},
 		{
 			label: Liferay.Language.get('has-the-role-of'),
 			value: CONDITION_VALUES.role,
 		},
 		{
+			label: Liferay.Language.get('has-not-the-role-of'),
+			value: CONDITION_VALUES.not_role,
+		},
+		{
 			label: Liferay.Language.get('belongs-to-segment'),
 			value: CONDITION_VALUES.segment,
+		},
+		{
+			label: Liferay.Language.get('not-belongs-to-segment'),
+			value: CONDITION_VALUES.not_segment,
 		},
 	],
 } as const;
@@ -69,6 +89,9 @@ const VALUE_SELECTOR_COMPONENTS: Record<
 	(typeof CONDITION_VALUES)[keyof typeof CONDITION_VALUES],
 	FC<SelectorProps> | null
 > = {
+	[CONDITION_VALUES.not_user]: UserSelector,
+	[CONDITION_VALUES.not_role]: RolesSelector,
+	[CONDITION_VALUES.not_segment]: SegmentsSelector,
 	[CONDITION_VALUES.user]: UserSelector,
 	[CONDITION_VALUES.role]: RolesSelector,
 	[CONDITION_VALUES.segment]: SegmentsSelector,

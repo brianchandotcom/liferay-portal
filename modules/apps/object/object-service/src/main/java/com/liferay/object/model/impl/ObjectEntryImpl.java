@@ -5,6 +5,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -96,6 +98,12 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		}
 
 		return groupId;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(getModelClassName()));
 	}
 
 	@Override

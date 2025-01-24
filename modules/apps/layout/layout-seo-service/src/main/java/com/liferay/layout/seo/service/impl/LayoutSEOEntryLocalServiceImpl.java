@@ -135,6 +135,14 @@ public class LayoutSEOEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<LayoutSEOEntryCustomMetaTag> getLayoutSEOEntryCustomMetaTags(
+		long groupId, long layoutSEOEntryId) {
+
+		return _layoutSEOEntryCustomMetaTagPersistence.findByG_L(
+			groupId, layoutSEOEntryId);
+	}
+
+	@Override
 	public LayoutSEOEntry updateCustomMetaTags(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			List<LayoutSEOEntryCustomMetaTagProperty>

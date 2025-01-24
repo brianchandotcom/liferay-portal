@@ -1094,9 +1094,8 @@ public class StagingImpl implements Staging {
 		}
 		else if (exception instanceof FileExtensionException) {
 			errorMessage = _language.format(
-				locale,
-				"document-names-must-end-with-one-of-the-following-extensions",
-				".lar", false);
+				locale, "please-enter-a-file-with-a-valid-extension-x", ".lar",
+				false);
 			errorType = ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 		}
 		else if (exception instanceof FileNameException) {

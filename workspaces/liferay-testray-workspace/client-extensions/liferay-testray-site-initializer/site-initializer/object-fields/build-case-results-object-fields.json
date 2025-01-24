@@ -73,6 +73,20 @@
 		{
 			"DBType": "Integer",
 			"businessType": "Integer",
+			"externalReferenceCode": "CASE-RESULTS-INCOMPLETE",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Results Incomplete"
+			},
+			"name": "caseResultIncomplete",
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
 			"externalReferenceCode": "CASE-RESULTS-PASSED",
 			"indexed": false,
 			"indexedAsKeyword": false,

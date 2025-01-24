@@ -86,6 +86,12 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 	/>
 </div>
 
+<div>
+	<react:component
+		module="{ModalDeleteListType} from object-web"
+	/>
+</div>
+
 <c:if test="<%= cpSpecificationOption == null %>">
 	<liferay-frontend:component
 		module="{CPSpecificationOptionDetails} from commerce-product-options-web"

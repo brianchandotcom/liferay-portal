@@ -14,6 +14,7 @@ export const mockedObjectFields: any = {
 			en_US: 'testAttachment',
 		},
 		listTypeDefinitionId: 0,
+		localized: false,
 		name: 'testAttachment',
 		objectFieldSettings: [
 			{
@@ -46,6 +47,7 @@ export const mockedObjectFields: any = {
 			en_US: 'testAttachment',
 		},
 		listTypeDefinitionId: 0,
+		localized: false,
 		name: 'testAttachment',
 		objectFieldSettings: [
 			{

@@ -79,6 +79,7 @@ export class ObjectAdminApiHelper {
 					indexedLanguageId: '',
 					label: {en_US: 'textField'},
 					listTypeDefinitionId: 0,
+					localized: false,
 					name: 'textField',
 					required: false,
 					system: false,

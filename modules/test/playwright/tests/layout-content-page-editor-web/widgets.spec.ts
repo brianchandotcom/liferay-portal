@@ -518,6 +518,8 @@ test(
 
 		// Check that the page is set as scope
 
-		await expect(page.getByText(layoutTitle + ' (Scope)')).toBeVisible();
+		await expect(
+			page.getByText(layoutTitle + ' (Scope) deprecated')
+		).toBeVisible();
 	}
 );

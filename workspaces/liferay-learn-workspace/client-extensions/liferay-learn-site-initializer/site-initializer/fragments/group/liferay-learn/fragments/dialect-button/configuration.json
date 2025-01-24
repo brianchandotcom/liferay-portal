@@ -5,25 +5,25 @@
 				{
 					"dataType": "string",
 					"defaultValue": "solid",
-					"label": "type",
+					"label": "Type",
 					"name": "type",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "solid",
+								"label": "Solid",
 								"value": "solid"
 							},
 							{
-								"label": "ghost",
+								"label": "Ghost",
 								"value": "ghost"
 							},
 							{
-								"label": "borderless",
+								"label": "Borderless",
 								"value": "borderless"
 							},
 							{
-								"label": "rounded",
+								"label": "Rounded",
 								"value": "rounded"
 							}
 						]
@@ -32,18 +32,21 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "style",
+					"label": "Style",
 					"name": "style",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
+								"label": "Primary",
 								"value": "primary"
 							},
 							{
+								"label": "Secondary",
 								"value": "secondary"
 							},
 							{
+								"label": "Netral",
 								"value": "neutral"
 							}
 						]
@@ -52,22 +55,22 @@
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "size",
+					"label": "Button Size",
 					"name": "buttonSize",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
 								"label": "small",
-								"value": "btn-sm"
+								"value": "Small"
 							},
 							{
 								"label": "medium",
-								"value": ""
+								"value": "Medium"
 							},
 							{
 								"label": "large",
-								"value": "btn-lg"
+								"value": "Large"
 							}
 						]
 					}
@@ -75,14 +78,14 @@
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "inverted",
+					"label": "Inverted",
 					"name": "inverted",
 					"type": "checkbox"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "uppercase",
+					"label": "Uppercase",
 					"name": "uppercase",
 					"type": "checkbox"
 				}

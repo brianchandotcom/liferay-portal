@@ -9,8 +9,10 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,28 +58,23 @@ public class DiscardChangesMVCActionCommand
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
-
+		long[] ctEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "ctEntryIds"), 0L);
 		long modelClassNameId = ParamUtil.getLong(
 			actionRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
 
-		if ((modelClassNameId <= 0) || (modelClassPK <= 0)) {
-			long[] ctEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "ctEntryIds"), 0L);
-
-			for (long ctEntryId : ctEntryIds) {
-				CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
-
-				if (ctEntry != null) {
-					_ctCollectionService.discardCTEntry(
-						ctCollectionId, ctEntry.getModelClassNameId(),
-						ctEntry.getModelClassPK());
-				}
-			}
-		}
-		else {
-			_ctCollectionService.discardCTEntry(
+		if ((modelClassNameId > 0) && (modelClassPK > 0)) {
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
+
+			_discardChange(ctCollectionId, ctEntry);
+		}
+
+		for (long ctEntryId : ctEntryIds) {
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
+
+			_discardChange(ctCollectionId, ctEntry);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -87,8 +84,35 @@ public class DiscardChangesMVCActionCommand
 		}
 	}
 
+	private <T extends BaseModel<T>> void _discardChange(
+			long ctCollectionId, CTEntry ctEntry)
+		throws Exception {
+
+		if (ctEntry == null) {
+			return;
+		}
+
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+		if (!_ctDisplayRendererRegistry.isMovable(
+				model, ctEntry.getModelClassNameId())) {
+
+			return;
+		}
+
+		if (ctEntry.getCtCollectionId() == ctCollectionId) {
+			_ctCollectionService.discardCTEntry(
+				ctEntry.getCtCollectionId(), ctEntry.getModelClassNameId(),
+				ctEntry.getModelClassPK());
+		}
+	}
+
 	@Reference
 	private CTCollectionService _ctCollectionService;
+
+	@Reference
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

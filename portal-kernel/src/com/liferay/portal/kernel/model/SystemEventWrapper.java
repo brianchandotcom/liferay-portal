@@ -45,7 +45,8 @@ public class SystemEventWrapper
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
-		attributes.put("externalReferenceCode", getExternalReferenceCode());
+		attributes.put(
+			"classExternalReferenceCode", getClassExternalReferenceCode());
 		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("parentSystemEventId", getParentSystemEventId());
 		attributes.put("systemEventSetKey", getSystemEventSetKey());
@@ -123,11 +124,11 @@ public class SystemEventWrapper
 			setClassUuid(classUuid);
 		}
 
-		String externalReferenceCode = (String)attributes.get(
-			"externalReferenceCode");
+		String classExternalReferenceCode = (String)attributes.get(
+			"classExternalReferenceCode");
 
-		if (externalReferenceCode != null) {
-			setExternalReferenceCode(externalReferenceCode);
+		if (classExternalReferenceCode != null) {
+			setClassExternalReferenceCode(classExternalReferenceCode);
 		}
 
 		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
@@ -164,6 +165,16 @@ public class SystemEventWrapper
 	@Override
 	public SystemEvent cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the class external reference code of this system event.
+	 *
+	 * @return the class external reference code of this system event
+	 */
+	@Override
+	public String getClassExternalReferenceCode() {
+		return model.getClassExternalReferenceCode();
 	}
 
 	/**
@@ -234,16 +245,6 @@ public class SystemEventWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
-	}
-
-	/**
-	 * Returns the external reference code of this system event.
-	 *
-	 * @return the external reference code of this system event
-	 */
-	@Override
-	public String getExternalReferenceCode() {
-		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -376,6 +377,18 @@ public class SystemEventWrapper
 		model.persist();
 	}
 
+	/**
+	 * Sets the class external reference code of this system event.
+	 *
+	 * @param classExternalReferenceCode the class external reference code of this system event
+	 */
+	@Override
+	public void setClassExternalReferenceCode(
+		String classExternalReferenceCode) {
+
+		model.setClassExternalReferenceCode(classExternalReferenceCode);
+	}
+
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
@@ -439,16 +452,6 @@ public class SystemEventWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Sets the external reference code of this system event.
-	 *
-	 * @param externalReferenceCode the external reference code of this system event
-	 */
-	@Override
-	public void setExternalReferenceCode(String externalReferenceCode) {
-		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

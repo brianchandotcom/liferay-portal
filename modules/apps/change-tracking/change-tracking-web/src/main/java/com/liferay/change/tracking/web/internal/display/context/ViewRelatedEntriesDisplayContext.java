@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -71,14 +72,8 @@ public class ViewRelatedEntriesDisplayContext {
 		_modelClassNameId = ParamUtil.getLong(
 			renderRequest, "modelClassNameId");
 		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
-
-		if ((_modelClassNameId <= 0) || (_modelClassPK <= 0)) {
-			_ctEntryIds = StringUtil.split(
-				ParamUtil.getString(httpServletRequest, "id"), 0L);
-		}
-		else {
-			_ctEntryIds = new long[0];
-		}
+		_ctEntryIds = StringUtil.split(
+			ParamUtil.getString(httpServletRequest, "id"), 0L);
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -88,7 +83,9 @@ public class ViewRelatedEntriesDisplayContext {
 		return _ctCollectionId;
 	}
 
-	public Map<String, Object> getReactData() throws Exception {
+	public <T extends BaseModel<T>> Map<String, Object> getReactData()
+		throws Exception {
+
 		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
 
 		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
@@ -96,19 +93,27 @@ public class ViewRelatedEntriesDisplayContext {
 				_ctCollectionLocalService.getRelatedCTEntriesMap(
 					_ctCollectionId, _modelClassNameId, _modelClassPK));
 		}
-		else {
-			for (long ctEntryId : _ctEntryIds) {
-				CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
-				Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
-					_ctCollectionLocalService.getRelatedCTEntriesMap(
-						_ctCollectionId, ctEntry.getModelClassNameId(),
-						ctEntry.getModelClassPK());
+		for (long ctEntryId : _ctEntryIds) {
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
-				currentRelatedCTEntriesMap.forEach(
-					(key, value) -> relatedCTEntriesMap.merge(
-						key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
+			T model = _ctDisplayRendererRegistry.fetchCTModel(
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+			if (!_ctDisplayRendererRegistry.isMovable(
+					model, ctEntry.getModelClassNameId())) {
+
+				continue;
 			}
+
+			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
+				_ctCollectionLocalService.getRelatedCTEntriesMap(
+					_ctCollectionId, ctEntry.getModelClassNameId(),
+					ctEntry.getModelClassPK());
+
+			currentRelatedCTEntriesMap.forEach(
+				(key, value) -> relatedCTEntriesMap.merge(
+					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
 		}
 
 		Set<CTEntry> ctEntries = new HashSet<>();
@@ -223,32 +228,11 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"ctEntryIds",
-			() -> {
-				if ((_modelClassNameId <= 0) && (_modelClassPK <= 0)) {
-					return StringUtil.merge(_ctEntryIds);
-				}
-
-				return null;
-			}
+			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).setParameter(
-			"modelClassNameId",
-			() -> {
-				if (_modelClassNameId > 0) {
-					return _modelClassNameId;
-				}
-
-				return null;
-			}
+			"modelClassNameId", _modelClassNameId
 		).setParameter(
-			"modelClassPK",
-			() -> {
-				if (_modelClassPK > 0) {
-					return _modelClassPK;
-				}
-
-				return null;
-			}
+			"modelClassPK", _modelClassPK
 		).buildString();
 	}
 
@@ -262,32 +246,11 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctCollectionId", _ctCollectionId
 		).setParameter(
-			"ctEntryIds",
-			() -> {
-				if ((_modelClassNameId <= 0) && (_modelClassPK <= 0)) {
-					return StringUtil.merge(_ctEntryIds);
-				}
-
-				return null;
-			}
+			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).setParameter(
-			"modelClassNameId",
-			() -> {
-				if (_modelClassNameId > 0) {
-					return _modelClassNameId;
-				}
-
-				return null;
-			}
+			"modelClassNameId", _modelClassNameId
 		).setParameter(
-			"modelClassPK",
-			() -> {
-				if (_modelClassPK > 0) {
-					return _modelClassPK;
-				}
-
-				return null;
-			}
+			"modelClassPK", _modelClassPK
 		).buildString();
 	}
 

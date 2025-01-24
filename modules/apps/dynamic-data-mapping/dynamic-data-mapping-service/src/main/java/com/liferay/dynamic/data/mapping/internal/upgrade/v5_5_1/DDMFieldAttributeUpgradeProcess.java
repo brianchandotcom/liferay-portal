@@ -94,7 +94,7 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(2, (Long)values[0]);
 				preparedStatement.setLong(3, fieldAttributeId);
 
-				preparedStatement.executeUpdate();
+				preparedStatement.addBatch();
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

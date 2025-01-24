@@ -129,7 +129,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Navigator.gotoNavItem(navItem = "Scope");
+		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
 
 		Select(
 			locator1 = "Select#SCOPE",
@@ -523,7 +523,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Navigator.gotoNavItem(navItem = "Scope");
+		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
 
 		AssertSelectedLabel(
 			locator1 = "Select#SCOPE",

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVIGATION_PERMISSIONS</td>
 	<td>//*[contains(@class,'nav-link') and contains(.,'Permissions')]</td>
 	<td></td>

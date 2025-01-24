@@ -52,7 +52,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoConfigurationScopePG() {
-		Navigator.gotoNavItem(navItem = "Scope");
+		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
 	}
 
 	@summary = "Default summary"

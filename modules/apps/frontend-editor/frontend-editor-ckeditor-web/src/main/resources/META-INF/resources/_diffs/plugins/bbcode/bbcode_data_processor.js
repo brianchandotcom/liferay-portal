@@ -119,6 +119,8 @@
 
 	const BBCodeDataProcessor = function (editor) {
 		this._editor = editor;
+
+		this.dataFilter = new CKEDITOR.htmlParser.filter();
 	};
 
 	BBCodeDataProcessor.prototype = {

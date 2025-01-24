@@ -63,6 +63,7 @@ const SystemDataSetsView = ({
 								item[selectedItemsKey]
 							),
 						})}
+						data-erc={item.name}
 						flex
 						key={item.name}
 						onClick={() => {

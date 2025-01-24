@@ -122,7 +122,7 @@ public class CTRowUtil {
 		String[] uniqueIndexColumnNames, long targetCTCollectionId) {
 
 		StringBundler sb = new StringBundler(
-			(9 * uniqueIndexColumnNames.length) + 17);
+			(3 * uniqueIndexColumnNames.length) + 9);
 
 		sb.append("select ");
 		sb.append(primaryColumnName);
@@ -149,7 +149,9 @@ public class CTRowUtil {
 		Set<Long> primaryKeys) {
 
 		StringBundler sb = new StringBundler(
-			(9 * uniqueIndexColumnNames.length) + 17);
+			(2 * primaryKeys.size()) +
+				((primaryKeys.size() % _BATCH_SIZE) * 3) +
+					(2 * uniqueIndexColumnNames.length) + 11);
 
 		sb.append("select ");
 		sb.append(primaryColumnName);

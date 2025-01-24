@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment/min/moment-with-locales';
+import {dateUtils} from 'frontend-js-web';
 
 const getLanguage = () => {
 	const language = Liferay.ThemeDisplay.getBCP47LanguageId();
@@ -27,6 +27,6 @@ const getDateFormatted = (date, language = getLanguage()) => {
 	}
 };
 
-const fromNow = (date) => moment(date).locale(getLanguage()).fromNow();
+const fromNow = (date) => dateUtils.fromNow(new Date(date), getLanguage());
 
 export {fromNow, getDateFormatted};

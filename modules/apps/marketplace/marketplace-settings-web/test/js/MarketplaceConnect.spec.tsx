@@ -126,12 +126,14 @@ describe('MarketplaceConnect', () => {
 		expect(connectListItem).toHaveClass('active');
 		expect(queryByText('connect-to-the-marketplace')).toBeInTheDocument();
 
-		const connectButton = container.querySelector('.btn.btn-primary');
+		const connectButton = container.querySelector(
+			'.btn.btn-primary'
+		) as HTMLButtonElement;
 
 		expect(connectButton).toBeInTheDocument();
 		expect(connectButton).toHaveTextContent('connect');
 
-		fireEvent.click(connectButton as HTMLButtonElement);
+		fireEvent.click(connectButton);
 
 		expect(windowOpenSpy).toBeCalledTimes(1);
 
@@ -155,7 +157,7 @@ describe('MarketplaceConnect', () => {
 		expect(fetch.mock.calls.length).toEqual(2);
 
 		const connectPostRequest = fetch.mock.calls[1][1];
-		const connectPostBody = connectPostRequest.body as FormData;
+		const connectPostBody = connectPostRequest!.body as FormData;
 
 		expect(
 			connectPostBody.get(
@@ -189,7 +191,7 @@ describe('MarketplaceConnect', () => {
 	it('renders authorized and to the disconnection flow', async () => {
 		fetch
 			.mockResponseOnce(JSON.stringify({authorized: true, data: {}}))
-			.mockResponseOnce();
+			.mockResponseOnce(JSON.stringify({success: true}));
 
 		const {container, queryByText} = render(<MarketplaceSettingsWrapper />);
 

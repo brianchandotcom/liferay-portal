@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 
 import {RangeSelectors} from '../types/global';
 
@@ -17,15 +17,17 @@ export function formatDate(date: Date) {
 }
 
 export function toUnix(str: string) {
-	return moment.utc(str).valueOf() || null;
+	const date = new Date(str);
+
+	return Math.floor(date.getTime() / 1000) || null;
 }
 
 export function formatTooltipDate(date: Date, rangeSelectors: RangeSelectors) {
 	if (rangeSelectors === RangeSelectors.Last24Hours) {
-		return moment.utc(date).format('MMM D, h A');
+		return dateUtils.format(date, 'MMM D, h A');
 	}
 
-	return moment.utc(date).format('YYYY MMM D');
+	return dateUtils.format(date, 'YYYY MMM D');
 }
 
 export function getDateRange(rangeSelector: RangeSelectors, date = new Date()) {

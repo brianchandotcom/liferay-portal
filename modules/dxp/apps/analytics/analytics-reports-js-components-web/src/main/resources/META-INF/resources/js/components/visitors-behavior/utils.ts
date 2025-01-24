@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 
 import {Colors, MetricName} from '../../types/global';
 import {toUnix} from '../../utils/date';
@@ -134,6 +134,11 @@ export function mapPublishedDatesToHistogram(
 	return resultArray;
 }
 
-export function formatPublishedDate(date: string) {
-	return moment(date).utc().minutes(0).seconds(0).format('YYYY-MM-DDTHH:00');
+export function formatPublishedDate(dateString: string) {
+	const date = new Date(dateString);
+
+	date.setMinutes(0);
+	date.setSeconds(0);
+
+	return dateUtils.format(date, 'yyyy-MM-ddTHH:00');
 }

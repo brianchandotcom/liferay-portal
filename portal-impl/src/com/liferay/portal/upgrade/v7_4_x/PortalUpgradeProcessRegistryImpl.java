@@ -219,8 +219,7 @@ public class PortalUpgradeProcessRegistryImpl
 				null));
 
 		upgradeVersionTreeMap.put(
-			new Version(17, 0, 0),
-			UpgradeProcessFactory.dropColumns("Company", "system"));
+			new Version(17, 0, 0), new DummyUpgradeProcess());
 
 		upgradeVersionTreeMap.put(
 			new Version(18, 0, 0),
@@ -554,6 +553,10 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 14, 1),
+			UpgradeProcessFactory.dropColumns("Company", "system_"));
 	}
 
 }

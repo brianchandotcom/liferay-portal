@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,7 +28,7 @@ import javax.portlet.PortletConfig;
  * @author Sergio González
  */
 public abstract class BaseValidateRootFolderConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

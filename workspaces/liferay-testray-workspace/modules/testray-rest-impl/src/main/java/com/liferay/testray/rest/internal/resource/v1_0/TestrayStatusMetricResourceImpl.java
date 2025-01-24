@@ -45,22 +45,23 @@ public class TestrayStatusMetricResourceImpl
 				String testrayTeamIds, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(24);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("select ct.c_caseTypeId_, ct.name_, count(cr.dueStatus_) ");
 		sb.append("as total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ =  ");
 		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
-		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
-		sb.append("from O_[%COMPANY_ID%]_Build b, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
-		sb.append("O_[%COMPANY_ID%]_CaseType ct, O_[%COMPANY_ID%]_Component ");
-		sb.append("co where b.c_buildId_ = ? and b.c_buildId_ = ");
-		sb.append("cr.r_buildToCaseResult_c_buildId and ");
+		sb.append("cr.dueStatus_ = 'INCOMPLETE' then 1 else 0 end) as ");
+		sb.append("incomplete, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
+		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 ");
+		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
+		sb.append("then 1 else 0 end) as untested from ");
+		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_CaseType ct, ");
+		sb.append("O_[%COMPANY_ID%]_Component co where b.c_buildId_ = ? and ");
+		sb.append("b.c_buildId_ = cr.r_buildToCaseResult_c_buildId and ");
 		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ and ");
 		sb.append("c.r_caseTypeToCases_c_caseTypeId = ct.c_caseTypeId_ and ");
 		sb.append("c.r_componentToCases_c_componentId = co.c_componentId_ ");
@@ -123,21 +124,23 @@ public class TestrayStatusMetricResourceImpl
 				Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("select co.c_componentId_, co.name_, count(cr.dueStatus_) ");
 		sb.append("as total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ =  ");
 		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as  ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
-		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
-		sb.append("from O_[%COMPANY_ID%]_Build b, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
-		sb.append("O_[%COMPANY_ID%]_Component co where b.c_buildId_ = ? and ");
-		sb.append("b.c_buildId_  = cr.r_buildToCaseResult_c_buildId and ");
+		sb.append("cr.dueStatus_ = 'INCOMPLETE' then 1 else 0 end) as ");
+		sb.append("incomplete, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
+		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 ");
+		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
+		sb.append("then 1 else 0 end) as untested from ");
+		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_Component co ");
+		sb.append("where b.c_buildId_ = ? and b.c_buildId_  = ");
+		sb.append("cr.r_buildToCaseResult_c_buildId and ");
 		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ and ");
 		sb.append("c.r_componentToCases_c_componentId = co.c_componentId_ ");
 
@@ -206,19 +209,20 @@ public class TestrayStatusMetricResourceImpl
 				Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("select r.c_runId_, r.name_, r.number_, ");
 		sb.append("count(cr.dueStatus_) as total, sum(case when ");
 		sb.append("cr.dueStatus_ = 'BLOCKED' then 1 else 0 end) as blocked, ");
 		sb.append("sum(case when cr.dueStatus_ = 'FAILED' then 1 else 0 end) ");
-		sb.append("as failed, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
-		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 ");
-		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
-		sb.append("then 1 else 0 end) as untested from ");
-		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Run r, ");
+		sb.append("as failed, sum(case when cr.dueStatus_ = 'INCOMPLETE' ");
+		sb.append("then 1 else 0 end) as incomplete, sum(case when ");
+		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as ");
+		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
+		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
+		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
+		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
+		sb.append("from O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_Run r, ");
 		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
 		sb.append("O_[%COMPANY_ID%]_Component co where b.c_buildId_  = ? and ");
 		sb.append("b.c_buildId_  = r.r_buildToRuns_c_buildId and ");
@@ -293,22 +297,23 @@ public class TestrayStatusMetricResourceImpl
 				String testrayTeamIds, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(30);
 
 		sb.append("select t.c_teamId_ , t.name_, count(cr.dueStatus_) as ");
 		sb.append("total, sum(case when cr.dueStatus_ = 'BLOCKED' then 1 ");
 		sb.append("else 0 end) as blocked, sum(case when cr.dueStatus_ = ");
 		sb.append("'FAILED' then 1 else 0 end) as failed, sum(case when ");
-		sb.append("cr.dueStatus_ = 'INPROGRESS' then 1 else 0 end) as ");
-		sb.append("inprogress, sum(case when cr.dueStatus_ = 'PASSED' then 1 ");
-		sb.append("else 0 end) as passed, sum(case when cr.dueStatus_ = ");
-		sb.append("'TESTFIX' then 1 else 0 end) as testfix, sum(case when ");
-		sb.append("cr.dueStatus_ = 'UNTESTED' then 1 else 0 end) as untested ");
-		sb.append("from O_[%COMPANY_ID%]_Build b, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr, O_[%COMPANY_ID%]_Case c, ");
-		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Team t ");
-		sb.append("where b.c_buildId_ = ? and b.c_buildId_ = ");
-		sb.append("cr.r_buildToCaseResult_c_buildId and ");
+		sb.append("cr.dueStatus_ = 'INCOMPLETE' then 1 else 0 end) as ");
+		sb.append("incomplete, sum(case when cr.dueStatus_ = 'INPROGRESS' ");
+		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
+		sb.append("cr.dueStatus_ = 'PASSED' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'TESTFIX' then 1 else 0 ");
+		sb.append("end) as testfix, sum(case when cr.dueStatus_ = 'UNTESTED' ");
+		sb.append("then 1 else 0 end) as untested from ");
+		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_Component co, ");
+		sb.append("O_[%COMPANY_ID%]_Team t where b.c_buildId_ = ? and ");
+		sb.append("b.c_buildId_ = cr.r_buildToCaseResult_c_buildId and ");
 		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ ");
 
 		List<Object> params = new ArrayList<>();
@@ -381,13 +386,15 @@ public class TestrayStatusMetricResourceImpl
 				Long testrayProjectId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(24);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
-		sb.append("b.caseresultinprogress_ + b.caseresultpassed_ + ");
-		sb.append("b.caseresulttestfix_ + b.caseresultuntested_) as total,");
-		sb.append("b.caseResultBlocked_ as blocked, b.caseresultfailed_ as ");
-		sb.append("failed, b.caseresultinprogress_ as inprogress, ");
+		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
+		sb.append("b.caseresultpassed_ + b.caseresulttestfix_ + ");
+		sb.append("b.caseresultuntested_) as total, b.caseResultBlocked_ as ");
+		sb.append("blocked, b.caseresultfailed_ as failed, ");
+		sb.append("b.caseresultincomplete_ as incomplete, ");
+		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, ");
 		sb.append("r.c_routineId_, r.name_, b.dueDate_ from ");
@@ -405,8 +412,9 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("where cr.r_buildToCaseResult_c_buildId = b3.c_buildId_)) ");
 		sb.append("limit 1) group by r.c_routineId_, r.name_, b.dueDate_, ");
 		sb.append("b.caseresultblocked_, b.caseresultfailed_, ");
-		sb.append("b.caseresultinprogress_, b.caseresultpassed_, ");
-		sb.append("b.caseresulttestfix_, b.caseresultuntested_");
+		sb.append("b.caseresultincomplete_, b.caseresultinprogress_, ");
+		sb.append("b.caseresultpassed_, b.caseresulttestfix_, ");
+		sb.append("b.caseresultuntested_");
 
 		List<Object> params = new ArrayList<>();
 
@@ -505,13 +513,15 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sb = new StringBundler(26);
+		sb = new StringBundler(28);
 
 		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
-		sb.append("b.caseresultinprogress_ + b.caseresultpassed_ + ");
-		sb.append("b.caseresulttestfix_ + b.caseresultuntested_) as total,");
-		sb.append("b.caseResultBlocked_ as blocked, b.caseresultfailed_ as ");
-		sb.append("failed, b.caseresultinprogress_ as inprogress, ");
+		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
+		sb.append("b.caseresultpassed_ + b.caseresulttestfix_ + ");
+		sb.append("b.caseresultuntested_) as total, b.caseResultBlocked_ as ");
+		sb.append("blocked, b.caseresultfailed_ as failed, ");
+		sb.append("b.caseresultincomplete_ as incomplete, ");
+		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
 		sb.append("b.dueDate_, bx.importStatus_, b.gitHash_, b.name_, ");
@@ -609,6 +619,8 @@ public class TestrayStatusMetricResourceImpl
 
 		testrayStatusMetric.setBlocked(GetterUtil.getLong(map.get("blocked")));
 		testrayStatusMetric.setFailed(GetterUtil.getLong(map.get("failed")));
+		testrayStatusMetric.setIncomplete(
+			GetterUtil.getLong(map.get("incomplete")));
 		testrayStatusMetric.setInProgress(
 			GetterUtil.getLong(map.get("inprogress")));
 		testrayStatusMetric.setPassed(GetterUtil.getLong(map.get("passed")));

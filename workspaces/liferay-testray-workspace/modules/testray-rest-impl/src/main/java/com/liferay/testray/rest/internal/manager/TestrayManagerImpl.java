@@ -519,6 +519,8 @@ public class TestrayManagerImpl implements TestrayManager {
 			).put(
 				"caseResultFailed", 0
 			).put(
+				"caseResultIncomplete", 0
+			).put(
 				"caseResultPassed", 0
 			).put(
 				"caseResultTestFix", 0
@@ -639,6 +641,9 @@ public class TestrayManagerImpl implements TestrayManager {
 					}
 					else if (testrayTestcaseStatus.equals("failed")) {
 						return "FAILED";
+					}
+					else if (testrayTestcaseStatus.equals("incomplete")) {
+						return "INCOMPLETE";
 					}
 					else if (testrayTestcaseStatus.equals("in-progress")) {
 						return "INPROGRESS";

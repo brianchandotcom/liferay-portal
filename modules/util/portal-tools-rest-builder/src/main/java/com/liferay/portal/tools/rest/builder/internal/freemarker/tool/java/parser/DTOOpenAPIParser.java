@@ -14,7 +14,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
-import com.liferay.portal.vulcan.permission.Permission;
 
 import java.util.Collections;
 import java.util.List;
@@ -268,7 +267,8 @@ public class DTOOpenAPIParser {
 			String name = OpenAPIParserUtil.getElementClassName(javaDataType);
 
 			if ((name.lastIndexOf('.') != -1) &&
-				!StringUtil.equals(name, Permission.class.getName())) {
+				!StringUtil.equals(
+					name, "com.liferay.portal.vulcan.permission.Permission")) {
 
 				name = name.substring(name.lastIndexOf(".") + 1);
 			}
@@ -292,7 +292,9 @@ public class DTOOpenAPIParser {
 		String propertyType = javaDataType;
 
 		if ((propertyType.lastIndexOf('.') != -1) &&
-			!StringUtil.equals(propertyType, Permission.class.getName())) {
+			!StringUtil.equals(
+				propertyType,
+				"com.liferay.portal.vulcan.permission.Permission")) {
 
 			propertyType = propertyType.substring(
 				propertyType.lastIndexOf(".") + 1);

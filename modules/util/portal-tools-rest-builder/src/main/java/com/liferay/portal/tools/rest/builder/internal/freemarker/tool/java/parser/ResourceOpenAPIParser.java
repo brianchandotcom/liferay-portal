@@ -35,11 +35,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.Permission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -305,7 +300,7 @@ public class ResourceOpenAPIParser {
 		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
 			if (StringUtil.startsWith(
 					javaMethodSignature.getReturnType(),
-					Page.class.getName() + "<")) {
+					"com.liferay.portal.vulcan.pagination.Page<")) {
 
 				getPageJavaMethodSignatures.add(javaMethodSignature);
 			}
@@ -447,7 +442,7 @@ public class ResourceOpenAPIParser {
 		String javaDataType, List<JavaMethodSignature> javaMethodSignatures) {
 
 		String pageJavaDataType = StringBundler.concat(
-			Page.class.getName(), "<", javaDataType, ">");
+			"com.liferay.portal.vulcan.pagination.Page<", javaDataType, ">");
 
 		for (JavaMethodSignature javaMethodSignature :
 				getResourceGetPageJavaMethodSignatures(javaMethodSignatures)) {
@@ -779,12 +774,14 @@ public class ResourceOpenAPIParser {
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(
-					"permissions", Permission[].class.getName()));
+					"permissions",
+					"[Lcom.liferay.portal.vulcan.permission.Permission;"));
 		}
 
 		if (parameterNames.contains("aggregationTerms")) {
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"aggregation", Aggregation.class.getName());
+				"aggregation",
+				"com.liferay.portal.vulcan.aggregation.Aggregation");
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -800,7 +797,8 @@ public class ResourceOpenAPIParser {
 			parameterNames.contains("pageSize")) {
 
 			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
-				"pagination", Pagination.class.getName());
+				"pagination",
+				"com.liferay.portal.vulcan.pagination.Pagination");
 
 			javaMethodParameters.add(javaMethodParameter);
 		}
@@ -822,7 +820,8 @@ public class ResourceOpenAPIParser {
 			else if (requestBodyMediaTypes.contains("multipart/form-data")) {
 				javaMethodParameters.add(
 					new JavaMethodParameter(
-						"multipartBody", MultipartBody.class.getName()));
+						"multipartBody",
+						"com.liferay.portal.vulcan.multipart.MultipartBody"));
 			}
 			else {
 				if (schema == null) {
@@ -938,7 +937,7 @@ public class ResourceOpenAPIParser {
 		}
 
 		boolean collection = StringUtil.startsWith(
-			returnType, Page.class.getName() + "<");
+			returnType, "com.liferay.portal.vulcan.pagination.Page<");
 
 		List<String> methodNameSegments = new ArrayList<>();
 
@@ -980,7 +979,8 @@ public class ResourceOpenAPIParser {
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
-				String pageClassName = Page.class.getName();
+				String pageClassName =
+					"com.liferay.portal.vulcan.pagination.Page";
 
 				String elementClassName = returnType.substring(
 					pageClassName.length() + 1, returnType.length() - 1);
@@ -1065,7 +1065,7 @@ public class ResourceOpenAPIParser {
 
 	private static String _getPageClassName(String returnType) {
 		return StringBundler.concat(
-			Page.class.getName(), "<",
+			"com.liferay.portal.vulcan.pagination.Page<",
 			OpenAPIParserUtil.getElementClassName(returnType), ">");
 	}
 
@@ -1083,7 +1083,9 @@ public class ResourceOpenAPIParser {
 
 		String parameterType = javaMethodParameter.getParameterType();
 
-		if (Objects.equals(parameterType, Aggregation.class.getName()) &&
+		if (Objects.equals(
+				parameterType,
+				"com.liferay.portal.vulcan.aggregation.Aggregation") &&
 			parameterNames.contains("aggregationTerms")) {
 
 			return "@javax.ws.rs.core.Context";
@@ -1095,7 +1097,9 @@ public class ResourceOpenAPIParser {
 			return "@javax.ws.rs.core.Context";
 		}
 
-		if (Objects.equals(parameterType, Pagination.class.getName()) &&
+		if (Objects.equals(
+				parameterType,
+				"com.liferay.portal.vulcan.pagination.Pagination") &&
 			parameterNames.contains("page") &&
 			parameterNames.contains("pageSize")) {
 
@@ -1333,7 +1337,7 @@ public class ResourceOpenAPIParser {
 				path.endsWith("/permissions")) {
 
 				return _getPageClassName(
-					"[L" + Permission.class.getName() + ";");
+					"[Lcom.liferay.portal.vulcan.permission.Permission;");
 			}
 
 			for (Content content : sortedContents.values()) {
@@ -1391,10 +1395,11 @@ public class ResourceOpenAPIParser {
 			return true;
 		}
 
-		if (returnType.startsWith(Page.class.getName() + "<") &&
+		if (returnType.startsWith(
+				"com.liferay.portal.vulcan.pagination.Page<") &&
 			returnType.endsWith(">")) {
 
-			String pageClassName = Page.class.getName();
+			String pageClassName = "com.liferay.portal.vulcan.pagination.Page";
 
 			String className = returnType.substring(
 				pageClassName.length() + 1, returnType.length() - 1);

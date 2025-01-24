@@ -199,6 +199,13 @@ components:
             type: object
         AccountGroup:
             properties:
+                accountBriefs:
+                    description:
+                        The list of accounts associated with this account group.
+                    items:
+                        $ref: "#/components/schemas/AccountBrief"
+                    readOnly: true
+                    type: array
                 actions:
                     additionalProperties:
                         additionalProperties:
@@ -209,6 +216,11 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created the account group.
+                    readOnly: true
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -240,6 +252,13 @@ components:
                 name:
                     example: AccountGroup Name
                     type: string
+                roleBriefs:
+                    description:
+                        The list of roles associated with this account group.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
             type: object
         AccountRole:
             # @review

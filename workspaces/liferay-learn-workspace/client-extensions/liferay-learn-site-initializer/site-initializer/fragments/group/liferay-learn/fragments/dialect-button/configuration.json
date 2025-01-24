@@ -4,56 +4,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "solid",
-					"label": "Type",
-					"name": "type",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Solid",
-								"value": "solid"
-							},
-							{
-								"label": "Ghost",
-								"value": "ghost"
-							},
-							{
-								"label": "Borderless",
-								"value": "borderless"
-							},
-							{
-								"label": "Rounded",
-								"value": "rounded"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "Style",
-					"name": "style",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "Primary",
-								"value": "primary"
-							},
-							{
-								"label": "Secondary",
-								"value": "secondary"
-							},
-							{
-								"label": "Netral",
-								"value": "neutral"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
 					"defaultValue": "",
 					"label": "Button Size",
 					"name": "buttonSize",
@@ -61,16 +11,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
-								"value": "Small"
+								"label": "Small",
+								"value": "small"
 							},
 							{
-								"label": "medium",
-								"value": "Medium"
+								"label": "Medium",
+								"value": "medium"
 							},
 							{
-								"label": "large",
-								"value": "Large"
+								"label": "Large",
+								"value": "large"
 							}
 						]
 					}
@@ -81,6 +31,56 @@
 					"label": "Inverted",
 					"name": "inverted",
 					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "Style",
+					"name": "style",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Netral",
+								"value": "neutral"
+							},
+							{
+								"label": "Primary",
+								"value": "primary"
+							},
+							{
+								"label": "Secondary",
+								"value": "secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "solid",
+					"label": "Type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Borderless",
+								"value": "borderless"
+							},
+							{
+								"label": "Ghost",
+								"value": "ghost"
+							},
+							{
+								"label": "Rounded",
+								"value": "rounded"
+							},
+							{
+								"label": "Solid",
+								"value": "solid"
+							}
+						]
+					}
 				},
 				{
 					"dataType": "string",

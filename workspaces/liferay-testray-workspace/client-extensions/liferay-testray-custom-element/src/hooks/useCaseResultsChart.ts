@@ -92,8 +92,8 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 				key,
 				...responseItems.map(({testrayStatusMetric}) =>
 					key === 'INCOMPLETE'
-						? (testrayStatusMetric.untested || 0) +
-							(testrayStatusMetric.inProgress || 0)
+						? (testrayStatusMetric.incomplete || 0) +
+							(testrayStatusMetric.untested || 0)
 						: testrayStatusMetric[value] ?? getRandom(1000)
 				),
 			];

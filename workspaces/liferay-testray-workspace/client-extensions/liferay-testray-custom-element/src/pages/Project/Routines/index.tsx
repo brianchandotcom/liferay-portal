@@ -164,8 +164,8 @@ const Routines = () => {
 										blocked: testrayStatusMetric?.blocked,
 										failed: testrayStatusMetric?.failed,
 										incomplete:
-											testrayStatusMetric?.untested +
-											testrayStatusMetric?.inProgress,
+											testrayStatusMetric?.incomplete +
+											testrayStatusMetric?.untested,
 										passed: testrayStatusMetric?.passed,
 										test_fix: testrayStatusMetric?.testfix,
 									}}

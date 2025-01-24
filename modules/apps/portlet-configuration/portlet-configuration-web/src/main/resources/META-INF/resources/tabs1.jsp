@@ -13,10 +13,14 @@ PortletConfigurationDisplayContext portletConfigurationDisplayContext = new Port
 PortalUtil.addPortletBreadcrumbEntry(request, PortalUtil.getPortletTitle(renderResponse), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "configuration"), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, portletConfigurationDisplayContext.getTabs1()), currentURL);
+
+List<NavigationItem> navigationItems = portletConfigurationDisplayContext.getNavigationItems();
 %>
 
-<div class="cadmin">
-	<clay:navigation-bar
-		navigationItems="<%= portletConfigurationDisplayContext.getNavigationItems() %>"
-	/>
-</div>
+<c:if test="<%= navigationItems.size() > 1 %>">
+	<div class="cadmin">
+		<clay:navigation-bar
+			navigationItems="<%= navigationItems %>"
+		/>
+	</div>
+</c:if>

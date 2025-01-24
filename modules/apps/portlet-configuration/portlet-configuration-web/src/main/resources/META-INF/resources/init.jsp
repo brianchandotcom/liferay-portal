@@ -20,13 +20,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.exportimport.kernel.exception.LARFileSizeException" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchPortletItemException" %><%@
 page import="com.liferay.portal.kernel.exception.PortletItemNameException" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
@@ -63,6 +62,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@
 page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil" %><%@
+page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationPermissionsDisplayContext" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationTemplatesDisplayContext" %><%@
 page import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationTemplatesManagementToolbarDisplayContext" %><%@
@@ -81,9 +81,6 @@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
-
-<%@ page
-	import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

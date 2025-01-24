@@ -9,6 +9,11 @@ import OrderableTable from '../../../components/OrderableTable';
 import Toggle from '../../../components/Toggle';
 import {IAction} from '../Actions';
 
+enum EItemImportPolicy {
+	GROUP_PROXY = 'GROUP_PROXY',
+	ITEM_PROXY = 'ITEM_PROXY',
+}
+
 const ActionList = ({
 	actions,
 	createAction,
@@ -35,6 +40,16 @@ const ActionList = ({
 			actions={[
 				{
 					icon: 'pencil',
+					isVisible: ({item}: {item: any}) => {
+						if (
+							item.target === EItemImportPolicy.ITEM_PROXY ||
+							item.target === EItemImportPolicy.GROUP_PROXY
+						) {
+							return false;
+						}
+
+						return true;
+					},
 					label: Liferay.Language.get('edit'),
 					onClick: editAction,
 				},

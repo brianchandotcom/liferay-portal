@@ -101,7 +101,7 @@ public class CPDefinitionIndexerTest {
 
 	@Test
 	public void testSearch() throws Exception {
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
@@ -109,7 +109,7 @@ public class CPDefinitionIndexerTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -123,7 +123,7 @@ public class CPDefinitionIndexerTest {
 		searchContext.setCompanyId(_group.getCompanyId());
 		searchContext.setEntryClassNames(
 			new String[] {CPDefinition.class.getName()});
-		searchContext.setGroupIds(new long[] {catalog.getGroupId()});
+		searchContext.setGroupIds(new long[] {commerceCatalog.getGroupId()});
 
 		Hits hits = _indexer.search(searchContext);
 

@@ -115,7 +115,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			_user.getUserId(), _commerceChannel.getGroupId(), cpTaxCategoryId,
 			_commerceTaxMethod.getCommerceTaxMethodId(), rate);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -123,7 +123,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
 		commercePriceList.setNetPrice(false);
 
@@ -133,7 +133,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				catalog.getGroupId());
+				commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -196,7 +196,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			_user.getUserId(), commerceTaxIncludedChannel.getGroupId(),
 			cpTaxCategoryId, commerceTaxMethod.getCommerceTaxMethodId(), rate);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -204,7 +204,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
 		commercePriceList.setNetPrice(true);
 
@@ -214,7 +214,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 		CPInstance cpInstance =
 			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				catalog.getGroupId());
+				commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 

@@ -582,7 +582,7 @@ public class CommerceCheckoutTest {
 		CommerceTestUtil.addCommercePaymentMethodGroupRel(
 			user.getUserId(), commerceOrder.getGroupId());
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
@@ -591,7 +591,7 @@ public class CommerceCheckoutTest {
 		BigDecimal price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			catalog.getGroupId(), price);
+			commerceCatalog.getGroupId(), price);
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),

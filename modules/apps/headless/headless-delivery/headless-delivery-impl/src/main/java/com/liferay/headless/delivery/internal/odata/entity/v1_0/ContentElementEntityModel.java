@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsMapFactory;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -51,7 +52,7 @@ public class ContentElementEntityModel implements EntityModel {
 				locale -> Field.ENTRY_CLASS_NAME,
 				locale -> Field.ENTRY_CLASS_NAME,
 				object -> _getFilterableFieldFunction(
-					dtoConverterRegistry, object)),
+					dtoConverterRegistry, String.valueOf(object))),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"title",
@@ -72,18 +73,20 @@ public class ContentElementEntityModel implements EntityModel {
 	}
 
 	private String _getFilterableFieldFunction(
-		DTOConverterRegistry dtoConverterRegistry, Object object) {
+		DTOConverterRegistry dtoConverterRegistry, String value) {
 
 		for (String dtoClassName : dtoConverterRegistry.getDTOClassNames()) {
 			DTOConverter<?, ?> dtoConverter =
 				dtoConverterRegistry.getDTOConverter(dtoClassName);
 
-			if (object.equals(dtoConverter.getContentType())) {
+			if (StringUtil.equalsIgnoreCase(
+					value, dtoConverter.getContentType())) {
+
 				return dtoConverter.getDTOClassName();
 			}
 		}
 
-		return String.valueOf(object);
+		return value;
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

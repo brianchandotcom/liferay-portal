@@ -79,49 +79,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpOrgRoleCP(orgName = null, roleTitle = null, userLastName = null, userScreenName = null, userEmailAddress = null, newPassword = null, userFirstName = null, pageName = null, currentPassword = null) {
-		JSONUser.addUser(
-			userEmailAddress = ${userEmailAddress},
-			userFirstName = ${userFirstName},
-			userLastName = ${userLastName},
-			userScreenName = ${userScreenName});
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			currentPassword = ${currentPassword},
-			newPassword = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
-			userScreenName = ${userScreenName});
-
-		JSONOrganization.addOrganization(
-			organizationName = ${orgName},
-			organizationSite = "true");
-
-		JSONOrganization.assignUserToOrganization(
-			organizationName = ${orgName},
-			userEmailAddress = ${userEmailAddress});
-
-		JSONLayout.addPublicLayout(
-			groupName = ${orgName},
-			layoutName = ${pageName});
-
-		Navigator.gotoSitePage(
-			pageName = ${pageName},
-			siteName = "Organization Name");
-
-		JSONRole.addOrganizationRole(roleTitle = ${roleTitle});
-
-		JSONGroup.assignGroupRoleToUser(
-			groupName = ${orgName},
-			roleTitle = ${roleTitle},
-			userEmailAddress = ${userEmailAddress});
-	}
-
-	@summary = "Default summary"
 	macro setUpOrgRoleLoginUserPG(orgName = null, roleTitle = null, userEmailAddress = null, newPassword = null, i = null, userFirstName = null, userLoginEmailAddress = null, pageName = null, currentPassword = null, portletName = null, userLastName = null, userScreenName = null, userLoginFullName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},

@@ -5,6 +5,6 @@
 	"htmlPath": "index.html",
 	"icon": "button",
 	"jsPath": "index.js",
-	"name": "dialect-button",
+	"name": "Dialect Button",
 	"type": "component"
 }

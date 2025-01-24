@@ -2951,7 +2951,7 @@ definition {
 			DMDocument.addCP(
 				dmDocumentFile = ${dmDocumentTitle},
 				dmDocumentTitle = ${dmDocumentTitle},
-				validationError = "Document names must end with one of the following extensions: .doc");
+				validationError = "Please enter a file with a valid extension (.doc).");
 		}
 	}
 

@@ -217,7 +217,7 @@ definition {
 			mgDocumentFile = "Document_1.jpeg",
 			mgDocumentTitle = "Document_1.jpeg",
 			siteURLKey = "guest",
-			validationError = "Document names must end with one of the following extensions: .jpg");
+			validationError = "Please enter a file with a valid extension (.jpg).");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

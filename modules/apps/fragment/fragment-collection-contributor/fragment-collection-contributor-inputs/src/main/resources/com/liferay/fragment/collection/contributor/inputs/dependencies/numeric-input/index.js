@@ -36,4 +36,36 @@ if (layoutMode === 'edit') {
 else {
 	numericInput.addEventListener('keydown', handleOnKeydown);
 	numericInput.addEventListener('keyup', handleOnKeyUp);
+
+	if (Liferay.FeatureFlags['LPD-37927']) {
+		import('@liferay/fragment-impl').then(
+			({registerLocalizedInput, registerUnlocalizedInput}) => {
+				if (input.localizable) {
+					const {onChange} = registerLocalizedInput({
+						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						initialValues: input.valueI18n,
+						inputElement: numericInput,
+						inputName: input.name,
+						localizationInputsContainer: numericInput.parentNode,
+						namespace: fragmentNamespace,
+					});
+
+					numericInput.addEventListener('change', (event) => {
+						onChange(event.target.value);
+					});
+				}
+				else {
+					registerUnlocalizedInput({
+						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						inputElement: numericInput,
+						unlocalizedFieldsState:
+							input.attributes.unlocalizedFieldsState,
+						unlocalizedMessageContainer: document.getElementById(
+							`${fragmentNamespace}-unlocalized-info`
+						),
+					});
+				}
+			}
+		);
+	}
 }

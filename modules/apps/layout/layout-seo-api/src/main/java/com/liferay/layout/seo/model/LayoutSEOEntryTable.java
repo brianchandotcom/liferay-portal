@@ -58,8 +58,6 @@ public class LayoutSEOEntryTable extends BaseTable<LayoutSEOEntryTable> {
 		createColumn(
 			"canonicalURLEnabled", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<LayoutSEOEntryTable, Long> DDMStorageId = createColumn(
-		"DDMStorageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<LayoutSEOEntryTable, String> openGraphDescription =
 		createColumn(
 			"openGraphDescription", String.class, Types.VARCHAR,

@@ -50,22 +50,13 @@ public class LayoutSEOEntryLocalServiceWrapper
 	@Override
 	public LayoutSEOEntry copyLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout,
-			long sourceLayoutId, boolean canonicalURLEnabled,
-			java.util.Map<java.util.Locale, String> canonicalURLMap,
-			long copyDDMStorageId, boolean openGraphDescriptionEnabled,
-			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
-			java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-			java.util.Map<java.util.Locale, String> openGraphTitleMap,
+			long targetLayoutId, LayoutSEOEntry sourceLayoutSEOEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSEOEntryLocalService.copyLayoutSEOEntry(
-			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
-			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			userId, groupId, privateLayout, targetLayoutId,
+			sourceLayoutSEOEntry, serviceContext);
 	}
 
 	/**
@@ -403,6 +394,16 @@ public class LayoutSEOEntryLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag>
+			getLayoutSEOEntryCustomMetaTags(
+				long groupId, long layoutSEOEntryId) {
+
+		return _layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+			groupId, layoutSEOEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -427,11 +428,16 @@ public class LayoutSEOEntryLocalServiceWrapper
 	@Override
 	public LayoutSEOEntry updateCustomMetaTags(
 			long userId, long groupId, boolean privateLayout, long layoutId,
+			java.util.List
+				<com.liferay.layout.seo.model.
+					LayoutSEOEntryCustomMetaTagProperty>
+						layoutSEOEntryCustomMetaTagProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSEOEntryLocalService.updateCustomMetaTags(
-			userId, groupId, privateLayout, layoutId, serviceContext);
+			userId, groupId, privateLayout, layoutId,
+			layoutSEOEntryCustomMetaTagProperties, serviceContext);
 	}
 
 	/**

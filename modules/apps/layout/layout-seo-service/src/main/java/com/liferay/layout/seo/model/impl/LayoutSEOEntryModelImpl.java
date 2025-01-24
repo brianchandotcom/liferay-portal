@@ -78,7 +78,7 @@ public class LayoutSEOEntryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
 		{"canonicalURL", Types.VARCHAR}, {"canonicalURLEnabled", Types.BOOLEAN},
-		{"DDMStorageId", Types.BIGINT}, {"openGraphDescription", Types.VARCHAR},
+		{"openGraphDescription", Types.VARCHAR},
 		{"openGraphDescriptionEnabled", Types.BOOLEAN},
 		{"openGraphImageAlt", Types.VARCHAR},
 		{"openGraphImageFileEntryId", Types.BIGINT},
@@ -105,7 +105,6 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("canonicalURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("canonicalURLEnabled", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("openGraphImageAlt", Types.VARCHAR);
@@ -116,7 +115,7 @@ public class LayoutSEOEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null,primary key (layoutSEOEntryId, ctCollectionId))";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null,primary key (layoutSEOEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -305,8 +304,6 @@ public class LayoutSEOEntryModelImpl
 			attributeGetterFunctions.put(
 				"canonicalURLEnabled", LayoutSEOEntry::getCanonicalURLEnabled);
 			attributeGetterFunctions.put(
-				"DDMStorageId", LayoutSEOEntry::getDDMStorageId);
-			attributeGetterFunctions.put(
 				"openGraphDescription",
 				LayoutSEOEntry::getOpenGraphDescription);
 			attributeGetterFunctions.put(
@@ -392,10 +389,6 @@ public class LayoutSEOEntryModelImpl
 				"canonicalURLEnabled",
 				(BiConsumer<LayoutSEOEntry, Boolean>)
 					LayoutSEOEntry::setCanonicalURLEnabled);
-			attributeSetterBiConsumers.put(
-				"DDMStorageId",
-				(BiConsumer<LayoutSEOEntry, Long>)
-					LayoutSEOEntry::setDDMStorageId);
 			attributeSetterBiConsumers.put(
 				"openGraphDescription",
 				(BiConsumer<LayoutSEOEntry, String>)
@@ -828,21 +821,6 @@ public class LayoutSEOEntryModelImpl
 		}
 
 		_canonicalURLEnabled = canonicalURLEnabled;
-	}
-
-	@JSON
-	@Override
-	public long getDDMStorageId() {
-		return _DDMStorageId;
-	}
-
-	@Override
-	public void setDDMStorageId(long DDMStorageId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_DDMStorageId = DDMStorageId;
 	}
 
 	@JSON
@@ -1489,7 +1467,6 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setLayoutId(getLayoutId());
 		layoutSEOEntryImpl.setCanonicalURL(getCanonicalURL());
 		layoutSEOEntryImpl.setCanonicalURLEnabled(isCanonicalURLEnabled());
-		layoutSEOEntryImpl.setDDMStorageId(getDDMStorageId());
 		layoutSEOEntryImpl.setOpenGraphDescription(getOpenGraphDescription());
 		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
 			isOpenGraphDescriptionEnabled());
@@ -1537,8 +1514,6 @@ public class LayoutSEOEntryModelImpl
 			this.<String>getColumnOriginalValue("canonicalURL"));
 		layoutSEOEntryImpl.setCanonicalURLEnabled(
 			this.<Boolean>getColumnOriginalValue("canonicalURLEnabled"));
-		layoutSEOEntryImpl.setDDMStorageId(
-			this.<Long>getColumnOriginalValue("DDMStorageId"));
 		layoutSEOEntryImpl.setOpenGraphDescription(
 			this.<String>getColumnOriginalValue("openGraphDescription"));
 		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
@@ -1692,8 +1667,6 @@ public class LayoutSEOEntryModelImpl
 
 		layoutSEOEntryCacheModel.canonicalURLEnabled = isCanonicalURLEnabled();
 
-		layoutSEOEntryCacheModel.DDMStorageId = getDDMStorageId();
-
 		layoutSEOEntryCacheModel.openGraphDescription =
 			getOpenGraphDescription();
 
@@ -1818,7 +1791,6 @@ public class LayoutSEOEntryModelImpl
 	private String _canonicalURL;
 	private String _canonicalURLCurrentLanguageId;
 	private boolean _canonicalURLEnabled;
-	private long _DDMStorageId;
 	private String _openGraphDescription;
 	private String _openGraphDescriptionCurrentLanguageId;
 	private boolean _openGraphDescriptionEnabled;
@@ -1874,7 +1846,6 @@ public class LayoutSEOEntryModelImpl
 		_columnOriginalValues.put("layoutId", _layoutId);
 		_columnOriginalValues.put("canonicalURL", _canonicalURL);
 		_columnOriginalValues.put("canonicalURLEnabled", _canonicalURLEnabled);
-		_columnOriginalValues.put("DDMStorageId", _DDMStorageId);
 		_columnOriginalValues.put(
 			"openGraphDescription", _openGraphDescription);
 		_columnOriginalValues.put(
@@ -1937,21 +1908,19 @@ public class LayoutSEOEntryModelImpl
 
 		columnBitmasks.put("canonicalURLEnabled", 8192L);
 
-		columnBitmasks.put("DDMStorageId", 16384L);
+		columnBitmasks.put("openGraphDescription", 16384L);
 
-		columnBitmasks.put("openGraphDescription", 32768L);
+		columnBitmasks.put("openGraphDescriptionEnabled", 32768L);
 
-		columnBitmasks.put("openGraphDescriptionEnabled", 65536L);
+		columnBitmasks.put("openGraphImageAlt", 65536L);
 
-		columnBitmasks.put("openGraphImageAlt", 131072L);
+		columnBitmasks.put("openGraphImageFileEntryId", 131072L);
 
-		columnBitmasks.put("openGraphImageFileEntryId", 262144L);
+		columnBitmasks.put("openGraphTitle", 262144L);
 
-		columnBitmasks.put("openGraphTitle", 524288L);
+		columnBitmasks.put("openGraphTitleEnabled", 524288L);
 
-		columnBitmasks.put("openGraphTitleEnabled", 1048576L);
-
-		columnBitmasks.put("lastPublishDate", 2097152L);
+		columnBitmasks.put("lastPublishDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

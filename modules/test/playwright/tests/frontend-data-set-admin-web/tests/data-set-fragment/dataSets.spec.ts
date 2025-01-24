@@ -62,9 +62,9 @@ const taxonomyVocabularyDataSetConfig = {
 };
 
 test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
-	for (const DATA_SET_ERC of dataSetERCs) {
+	for (const erc of dataSetERCs) {
 		await dataSetManagerApiHelpers.deleteDataSet({
-			erc: DATA_SET_ERC,
+			erc,
 		});
 	}
 

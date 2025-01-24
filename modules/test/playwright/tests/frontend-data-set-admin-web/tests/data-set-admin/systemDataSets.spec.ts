@@ -6,8 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {waitForAlert} from '../../../../utils/waitForAlert';
+import {fdsSamplePageTest} from '../../../frontend-data-set-web/fixtures/fdsSamplePageTest';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
@@ -15,6 +17,8 @@ import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
 export const test = mergeTests(
 	actionsPageTest,
 	dataSetManagerApiHelpersTest,
+	fdsSamplePageTest,
+	isolatedSiteTest,
 	systemDataSetsPageTest,
 	featureFlagsTest({
 		'LPD-37531': {enabled: true},
@@ -23,10 +27,24 @@ export const test = mergeTests(
 	loginTest()
 );
 
+const dataSetERCs: string[] = [];
+
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
+	for (const erc of dataSetERCs) {
+		await dataSetManagerApiHelpers.deleteDataSet({
+			erc,
+		});
+	}
+});
+
 test(
 	'Import a system data set to customize',
 	{tag: ['@LPD-37531', '@LPD-40949']},
-	async ({actionsPage, page, systemDataSetsPage}) => {
+	async ({actionsPage, fdsSamplePage, page, site, systemDataSetsPage}) => {
+		await test.step('Add FDS Sample widget for object definition generation', async () => {
+			await fdsSamplePage.setupFDSSampleWidget({site});
+		});
+
 		await test.step('Navigate to system data sets page', async () => {
 			await systemDataSetsPage.goto();
 		});
@@ -38,6 +56,9 @@ test(
 		});
 		const customizedSampleListItem = creationModal.listItems.filter({
 			hasText: 'Customized Sample',
+		});
+		const reactSampleListItem = creationModal.listItems.filter({
+			hasText: 'React Sample',
 		});
 
 		await test.step('Open creation modal and assert modal content', async () => {
@@ -82,22 +103,73 @@ test(
 			await expect(customizedSampleListItem).toBeVisible();
 		});
 
-		await test.step('Select a system data set', async () => {
+		await test.step('Select and import system data sets', async () => {
 			await customizedSampleListItem.click();
 
 			await expect(customizedSampleListItem).toHaveClass(/selected/);
+
+			dataSetERCs.push(
+
+				// eslint-disable-next-line @liferay/no-get-data-attribute
+				await customizedSampleListItem.getAttribute('data-erc')
+			);
+
+			await creationModal.createButton.click();
+
+			await waitForAlert(systemDataSetsPage.page);
+
+			await systemDataSetsPage.createButton.click();
+
+			await classicSampleListItem.click();
+
+			await expect(classicSampleListItem).toHaveClass(/selected/);
+
+			dataSetERCs.push(
+
+				// eslint-disable-next-line @liferay/no-get-data-attribute
+				await classicSampleListItem.getAttribute('data-erc')
+			);
+
+			await creationModal.createButton.click();
+
+			await waitForAlert(systemDataSetsPage.page);
+
+			await systemDataSetsPage.createButton.click();
+
+			await reactSampleListItem.click();
+
+			await expect(reactSampleListItem).toHaveClass(/selected/);
+
+			dataSetERCs.push(
+
+				// eslint-disable-next-line @liferay/no-get-data-attribute
+				await reactSampleListItem.getAttribute('data-erc')
+			);
 
 			await creationModal.createButton.click();
 
 			await waitForAlert(systemDataSetsPage.page);
 		});
 
-		const customizedSampleRow = systemDataSetsPage.pageContainer
-			.locator('.fds tr')
-			.filter({hasText: 'Customized Sample'});
+		const fdsRows = systemDataSetsPage.pageContainer.locator('.fds tr');
 
-		await test.step('Check system data set is imported', async () => {
+		const customizedSampleRow = fdsRows.filter({
+			hasText: 'Customized Sample',
+		});
+
+		await test.step('System data sets are imported', async () => {
 			await expect(customizedSampleRow).toBeVisible();
+
+			expect(
+				fdsRows.filter({
+					hasText: 'Classic Sample',
+				})
+			).toBeVisible();
+			expect(
+				fdsRows.filter({
+					hasText: 'React Sample',
+				})
+			).toBeVisible();
 		});
 
 		await test.step('Check the creation modal labels the data set as created and is disabled', async () => {
@@ -109,7 +181,7 @@ test(
 			await creationModal.cancelButton.click();
 		});
 
-		await test.step('Check item actions are imported', async () => {
+		await test.step('Item actions are imported with "detached" import policy', async () => {
 			await actionsPage.open({dataSetLabel: 'Customized Sample'});
 
 			const itemActionRow = actionsPage.itemActionsTable
@@ -141,7 +213,7 @@ test(
 			await form.cancelButton.click();
 		});
 
-		await test.step('Check creation actions are imported', async () => {
+		await test.step('Creation actions are imported with "detached" import policy', async () => {
 			await actionsPage.selectTab({
 				container: actionsPage.actionsTabs,
 				label: 'Creation Actions',
@@ -174,7 +246,85 @@ test(
 			await page.getByTitle('Back').click();
 		});
 
-		await test.step('Delete system data set', async () => {
+		await test.step('Item actions are imported with "item proxy" import policy', async () => {
+			await actionsPage.open({dataSetLabel: 'Classic Sample'});
+
+			const itemActionRows = actionsPage.itemActionsTable
+				.locator('tr')
+				.filter({hasText: 'ITEM_PROXY'});
+
+			await expect(itemActionRows).toHaveCount(2);
+
+			const firstDropdownToggle = itemActionRows
+				.first()
+				.locator('.dropdown-toggle');
+
+			await firstDropdownToggle.click();
+
+			await expect(
+				actionsPage.page
+					.locator('.dropdown-menu.show')
+					.getByRole('menuitem', {name: 'Edit'})
+			).toBeHidden();
+
+			await firstDropdownToggle.click();
+		});
+
+		await test.step('Creation actions are imported with "item proxy" import policy', async () => {
+			await actionsPage.selectTab({
+				container: actionsPage.actionsTabs,
+				label: 'Creation Actions',
+			});
+
+			const creaationActionRows = actionsPage.creationActionsTable
+				.locator('tr')
+				.filter({hasText: 'ITEM_PROXY'});
+
+			await expect(creaationActionRows).toHaveCount(2);
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Item actions are imported with "group proxy" import policy', async () => {
+			await actionsPage.open({dataSetLabel: 'React Sample'});
+
+			const itemActionRows = actionsPage.itemActionsTable
+				.locator('tr')
+				.filter({hasText: 'GROUP_PROXY'});
+
+			await expect(itemActionRows).toHaveCount(1);
+
+			const firstDropdownToggle = itemActionRows
+				.first()
+				.locator('.dropdown-toggle');
+
+			await firstDropdownToggle.click();
+
+			await expect(
+				actionsPage.page
+					.locator('.dropdown-menu.show')
+					.getByRole('menuitem', {name: 'Edit'})
+			).toBeHidden();
+
+			await firstDropdownToggle.click();
+		});
+
+		await test.step('Creation actions are imported with "group proxy" import policy', async () => {
+			await actionsPage.selectTab({
+				container: actionsPage.actionsTabs,
+				label: 'Creation Actions',
+			});
+
+			const creaationActionRows = actionsPage.creationActionsTable
+				.locator('tr')
+				.filter({hasText: 'GROUP_PROXY'});
+
+			await expect(creaationActionRows).toHaveCount(1);
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Delete an imported system data set', async () => {
 			await customizedSampleRow.locator('.dropdown-toggle').click();
 
 			await systemDataSetsPage.page
@@ -191,11 +341,11 @@ test(
 			await expect(customizedSampleRow).toBeHidden();
 		});
 
-		await test.step('Check the creation modal that the data set is enabled', async () => {
+		await test.step('Check that deleted data set is again available for import ', async () => {
 			await systemDataSetsPage.createButton.click();
 
-			await expect(classicSampleListItem).not.toContainText('Created');
-			await expect(classicSampleListItem).not.toHaveClass(/disabled/);
+			await expect(customizedSampleListItem).not.toContainText('Created');
+			await expect(customizedSampleListItem).not.toHaveClass(/disabled/);
 
 			await creationModal.cancelButton.click();
 		});

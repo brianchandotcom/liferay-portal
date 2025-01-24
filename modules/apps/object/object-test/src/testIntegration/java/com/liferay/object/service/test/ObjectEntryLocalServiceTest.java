@@ -4022,12 +4022,12 @@ public class ObjectEntryLocalServiceTest {
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
 			).name(
 				"textLocalized"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).localized(
-				true
 			).build());
 
 		_objectDefinitionLocalService.updateTitleObjectFieldId(

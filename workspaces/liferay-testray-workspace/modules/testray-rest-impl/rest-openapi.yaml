@@ -279,6 +279,9 @@ components:
                 inProgress:
                     format: int64
                     type: integer
+                incomplete:
+                    format: int64
+                    type: integer
                 passed:
                     format: int64
                     type: integer

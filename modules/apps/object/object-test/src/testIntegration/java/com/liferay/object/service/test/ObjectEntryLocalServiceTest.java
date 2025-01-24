@@ -4010,23 +4010,23 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		SystemEvent deletionSystemEvent =
+		SystemEvent deletionSystemEvent = null;
+		List<SystemEvent> systemEvents =
 			_systemEventLocalService.getSystemEvents(
 				0, _portal.getClassNameId(objectEntry.getModelClassName()),
-				objectEntry.getPrimaryKey()
-			).stream(
-			).findFirst(
-			).orElse(
-				null
-			);
+				objectEntry.getPrimaryKey());
+
+		if (!systemEvents.isEmpty()) {
+			deletionSystemEvent = systemEvents.get(0);
+		}
 
 		Assert.assertNotNull(deletionSystemEvent);
 
 		Assert.assertEquals(1, deletionSystemEvent.getType());
 
 		Assert.assertEquals(
-			deletionSystemEvent.getExternalReferenceCode(),
-			objectEntry.getExternalReferenceCode());
+			objectEntry.getExternalReferenceCode(),
+			deletionSystemEvent.getClassExternalReferenceCode());
 	}
 
 	@Test

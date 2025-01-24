@@ -34,25 +34,25 @@ public class SystemEventLocalServiceWrapper
 	@Override
 	public SystemEvent addSystemEvent(
 			long userId, long groupId, String className, long classPK,
-			String classUuid, String externalReferenceCode,
+			String classUuid, String classExternalReferenceCode,
 			String referrerClassName, int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _systemEventLocalService.addSystemEvent(
 			userId, groupId, className, classPK, classUuid,
-			externalReferenceCode, referrerClassName, type, extraData);
+			classExternalReferenceCode, referrerClassName, type, extraData);
 	}
 
 	@Override
 	public SystemEvent addSystemEvent(
 			long companyId, String className, long classPK, String classUuid,
-			String externalReferenceCode, String referrerClassName, int type,
-			String extraData)
+			String classExternalReferenceCode, String referrerClassName,
+			int type, String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _systemEventLocalService.addSystemEvent(
-			companyId, className, classPK, classUuid, externalReferenceCode,
-			referrerClassName, type, extraData);
+			companyId, className, classPK, classUuid,
+			classExternalReferenceCode, referrerClassName, type, extraData);
 	}
 
 	/**

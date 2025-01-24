@@ -62,14 +62,14 @@ public interface SystemEventLocalService
 	 */
 	public SystemEvent addSystemEvent(
 			long userId, long groupId, String className, long classPK,
-			String classUuid, String externalReferenceCode,
+			String classUuid, String classExternalReferenceCode,
 			String referrerClassName, int type, String extraData)
 		throws PortalException;
 
 	public SystemEvent addSystemEvent(
 			long companyId, String className, long classPK, String classUuid,
-			String externalReferenceCode, String referrerClassName, int type,
-			String extraData)
+			String classExternalReferenceCode, String referrerClassName,
+			int type, String extraData)
 		throws PortalException;
 
 	/**

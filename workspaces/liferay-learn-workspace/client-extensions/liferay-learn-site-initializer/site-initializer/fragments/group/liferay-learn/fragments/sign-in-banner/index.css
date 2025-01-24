@@ -1,3 +1,9 @@
+.banner-info {
+	align-items: center;
+	display: flex;
+	max-width: 90%;
+}
+
 .banner-sign-in-lesson {
 	align-items: center;
 	background:
@@ -32,12 +38,6 @@
 	cursor: pointer;
 }
 
-.banner-info {
-	align-items: center;
-	display: flex;
-	max-width: 90%;
-}
-
 .icon-x-lesson {
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='lexicon-icon lexicon-icon-times' role='presentation' viewBox='0 0 512 512' fill='%23FFFFFF'%3E%3Cpath class='lexicon-icon-outline' d='M300.4,256L467,89.4c29.6-29.6-14.8-74.1-44.4-44.4L256,211.6L89.4,45C59.8,15.3,15.3,59.8,45,89.4L211.6,256L45,422.6 c-29.7,29.7,14.7,74.1,44.4,44.4L256,300.4L422.6,467c29.7,29.7,74.1-14.7,44.4-44.4L300.4,256z'%3E%3C/path%3E%3C/svg%3E");
 	content: '';
@@ -61,25 +61,21 @@
 	white-space: nowrap;
 	width: 10%;
 }
-@media(max-width: 1300px) {
-	.banner-sign-in-lesson {
-		height: 124px;
-	}
 
-	.icon-x-lesson {
-		top: 25px;
-	}
-
+@media(max-width: 514px) {
 	.banner-content {
-		display: flex;
-		flex-direction: column;
-		gap: 25px;
-		padding-right: 10px;
+		gap: 5px;
+		max-width: 90%;
 	}
 
 	.login-button {
-		margin-left: 0;
-		width: 40%;
+		font-size: 0.6rem;
+	}
+}
+
+@media(max-width: 690px) {
+	.login-button {
+		font-size: 0.8rem;
 	}
 }
 
@@ -97,18 +93,25 @@
 		width: 50%;
 	}
 }
-@media(max-width: 690px) {
-	.login-button {
-		font-size: 0.8rem;
-	}
-}
-@media(max-width: 514px) {
-	.login-button {
-		font-size: 0.6rem;
+
+@media(max-width: 1300px) {
+	.banner-content {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		padding-right: 10px;
 	}
 
-	.banner-content {
-		gap: 5px;
-		max-width: 90%;
+	.banner-sign-in-lesson {
+		height: 124px;
+	}
+
+	.icon-x-lesson {
+		top: 25px;
+	}
+
+	.login-button {
+		margin-left: 0;
+		width: 40%;
 	}
 }

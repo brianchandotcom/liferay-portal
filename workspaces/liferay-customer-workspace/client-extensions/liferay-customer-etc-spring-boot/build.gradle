@@ -20,6 +20,7 @@ apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
 dependencies {
+	implementation group: "com.github.ben-manes.caffeine", name: "caffeine", version: "latest.release"
 	implementation group: "com.google.auth", name: "google-auth-library-credentials", version: "1.0.0"
 	implementation group: "com.google.auth", name: "google-auth-library-oauth2-http", version: "1.0.0"
 	implementation group: "com.google.cloud", name: "google-cloud-bigquery", version: "2.32.0"
@@ -34,6 +35,7 @@ dependencies {
 	implementation group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.rest.client", version: "latest.release"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
 	implementation group: "org.json", name: "json", version: "20231013"
+	implementation group: "org.springframework.boot", name: "spring-boot-starter-cache", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"

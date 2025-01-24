@@ -303,7 +303,7 @@ public class PortalRelease {
 		Matcher matcher = _portalVersionPattern.matcher(_portalVersion);
 
 		if (!matcher.find()) {
-			return "master";
+			return getQuarterlyReleaseBranchName();
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -371,6 +371,21 @@ public class PortalRelease {
 
 	public URL getPortalWarURL() {
 		return _getRemoteURL(_portalWarURLString);
+	}
+
+	public String getQuarterlyReleaseBranchName() {
+		Pattern quarterlyReleaseVersionPattern = Pattern.compile(
+			_QUARTERLY_RELEASE_VERSION_REGEX);
+
+		Matcher quarterlyReleaseBranchMatcher =
+			quarterlyReleaseVersionPattern.matcher(_portalVersion);
+
+		if (quarterlyReleaseBranchMatcher.find()) {
+			return "release-" +
+				quarterlyReleaseBranchMatcher.group("branchVersion");
+		}
+
+		return "master";
 	}
 
 	public void setPluginsWarZipURL(URL pluginsWarZipURL) {
@@ -683,7 +698,7 @@ public class PortalRelease {
 			"(\\-(ep|ga|rc|sp)\\d+)?)";
 
 	private static final String _QUARTERLY_RELEASE_VERSION_REGEX =
-		"(?<portalVersion>\\d{4}.[Qq]\\d+.\\d+)";
+		"(?<portalVersion>(?<branchVersion>\\d{4}.[Qq]\\d+).\\d+)";
 
 	private static final MultiPattern _bundleFileNamePattern = new MultiPattern(
 		".+\\-" + _PORTAL_VERSION_REGEX + ".*\\.(7z|tar.gz|zip)",

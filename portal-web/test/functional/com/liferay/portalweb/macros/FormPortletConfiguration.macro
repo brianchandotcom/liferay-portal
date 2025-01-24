@@ -21,7 +21,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Navigator.gotoNavItem(navItem = "Scope");
+		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
 
 		Select(
 			locator1 = "Select#SCOPE",

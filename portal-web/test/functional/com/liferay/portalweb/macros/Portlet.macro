@@ -610,7 +610,7 @@ definition {
 
 	@summary = "Default summary"
 	macro selectScope(scope = null) {
-		Navigator.gotoNavTab(navTab = "Scope");
+		Click(locator1 = "Configuration#NAVIGATION_SCOPE");
 
 		Select(
 			locator1 = "Select#SCOPE",

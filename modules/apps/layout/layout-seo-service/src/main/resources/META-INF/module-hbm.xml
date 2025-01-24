@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.layout.seo.model.LayoutSEOEntry" />
+	<import class="com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag" />
 	<import class="com.liferay.layout.seo.model.LayoutSEOSite" />
 	<class dynamic-update="true" name="com.liferay.layout.seo.model.impl.LayoutSEOEntryImpl" table="LayoutSEOEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutSEOEntryId" type="long">
@@ -21,7 +22,6 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="canonicalURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="canonicalURLEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="DDMStorageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="openGraphDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="openGraphDescriptionEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="openGraphImageAlt" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -29,6 +29,18 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="openGraphTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="openGraphTitleEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagImpl" table="LayoutSEOEntryCustomMetaTag">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutSEOEntryCustomMetaTagId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="ctCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutSEOEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="property" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl" table="LayoutSEOSite">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="layoutSEOSiteId" type="long">

@@ -42,73 +42,24 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class LayoutSEOEntryServiceHttp {
 
 	public static com.liferay.layout.seo.model.LayoutSEOEntry
-			copyLayoutSEOEntry(
-				HttpPrincipal httpPrincipal, long userId, long groupId,
-				boolean privateLayout, long sourceLayoutId,
-				boolean canonicalURLEnabled,
-				java.util.Map<java.util.Locale, String> canonicalURLMap,
-				long copyDDMStorageId, boolean openGraphDescriptionEnabled,
-				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
-				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
-				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-				java.util.Map<java.util.Locale, String> openGraphTitleMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutSEOEntryServiceUtil.class, "copyLayoutSEOEntry",
-				_copyLayoutSEOEntryParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, privateLayout, sourceLayoutId,
-				canonicalURLEnabled, canonicalURLMap, copyDDMStorageId,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.layout.seo.model.LayoutSEOEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.layout.seo.model.LayoutSEOEntry
 			updateCustomMetaTags(
 				HttpPrincipal httpPrincipal, long groupId,
 				boolean privateLayout, long layoutId,
+				java.util.List
+					<com.liferay.layout.seo.model.
+						LayoutSEOEntryCustomMetaTagProperty>
+							layoutSEOEntryCustomMetaTagProperties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSEOEntryServiceUtil.class, "updateCustomMetaTags",
-				_updateCustomMetaTagsParameterTypes1);
+				_updateCustomMetaTagsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, layoutId, serviceContext);
+				methodKey, groupId, privateLayout, layoutId,
+				layoutSEOEntryCustomMetaTagProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -155,7 +106,7 @@ public class LayoutSEOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSEOEntryServiceUtil.class, "updateLayoutSEOEntry",
-				_updateLayoutSEOEntryParameterTypes2);
+				_updateLayoutSEOEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId,
@@ -207,7 +158,7 @@ public class LayoutSEOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSEOEntryServiceUtil.class, "updateLayoutSEOEntry",
-				_updateLayoutSEOEntryParameterTypes3);
+				_updateLayoutSEOEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId,
@@ -255,7 +206,7 @@ public class LayoutSEOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSEOEntryServiceUtil.class, "updateLayoutSEOEntry",
-				_updateLayoutSEOEntryParameterTypes4);
+				_updateLayoutSEOEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId,
@@ -292,33 +243,26 @@ public class LayoutSEOEntryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutSEOEntryServiceHttp.class);
 
-	private static final Class<?>[] _copyLayoutSEOEntryParameterTypes0 =
+	private static final Class<?>[] _updateCustomMetaTagsParameterTypes0 =
 		new Class[] {
-			long.class, long.class, boolean.class, long.class, boolean.class,
-			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
-			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
+			long.class, boolean.class, long.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCustomMetaTagsParameterTypes1 =
-		new Class[] {
-			long.class, boolean.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes2 =
+	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes1 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
 			java.util.Map.class, boolean.class, java.util.Map.class,
 			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes3 =
+	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes2 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
 			java.util.Map.class, java.util.Map.class, long.class, boolean.class,
 			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes4 =
+	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes3 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
 			java.util.Map.class,

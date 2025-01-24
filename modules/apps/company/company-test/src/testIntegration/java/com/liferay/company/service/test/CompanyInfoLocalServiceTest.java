@@ -46,7 +46,8 @@ public class CompanyInfoLocalServiceTest {
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(_company.getCompanyId());
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			_company.getCompanyId());
 	}
 
 	@AfterClass
@@ -113,8 +114,6 @@ public class CompanyInfoLocalServiceTest {
 
 	private static Company _company;
 
-	private static SafeCloseable _safeCloseable;
-
 	@Inject
 	private static CompanyInfoLocalService _companyInfoLocalService;
 
@@ -126,5 +125,7 @@ public class CompanyInfoLocalServiceTest {
 
 	@Inject
 	private static Encryptor _encryptor;
+
+	private static SafeCloseable _safeCloseable;
 
 }

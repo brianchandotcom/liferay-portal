@@ -56,22 +56,13 @@ public class LayoutSEOEntryLocalServiceUtil {
 
 	public static LayoutSEOEntry copyLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout,
-			long sourceLayoutId, boolean canonicalURLEnabled,
-			Map<java.util.Locale, String> canonicalURLMap,
-			long copyDDMStorageId, boolean openGraphDescriptionEnabled,
-			Map<java.util.Locale, String> openGraphDescriptionMap,
-			Map<java.util.Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
-			Map<java.util.Locale, String> openGraphTitleMap,
+			long targetLayoutId, LayoutSEOEntry sourceLayoutSEOEntry,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyLayoutSEOEntry(
-			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
-			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
+			userId, groupId, privateLayout, targetLayoutId,
+			sourceLayoutSEOEntry, serviceContext);
 	}
 
 	/**
@@ -364,6 +355,13 @@ public class LayoutSEOEntryLocalServiceUtil {
 		return getService().getLayoutSEOEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag>
+		getLayoutSEOEntryCustomMetaTags(long groupId, long layoutSEOEntryId) {
+
+		return getService().getLayoutSEOEntryCustomMetaTags(
+			groupId, layoutSEOEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -384,11 +382,16 @@ public class LayoutSEOEntryLocalServiceUtil {
 
 	public static LayoutSEOEntry updateCustomMetaTags(
 			long userId, long groupId, boolean privateLayout, long layoutId,
+			List
+				<com.liferay.layout.seo.model.
+					LayoutSEOEntryCustomMetaTagProperty>
+						layoutSEOEntryCustomMetaTagProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCustomMetaTags(
-			userId, groupId, privateLayout, layoutId, serviceContext);
+			userId, groupId, privateLayout, layoutId,
+			layoutSEOEntryCustomMetaTagProperties, serviceContext);
 	}
 
 	/**

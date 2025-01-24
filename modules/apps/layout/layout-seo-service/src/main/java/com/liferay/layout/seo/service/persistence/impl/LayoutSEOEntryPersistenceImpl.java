@@ -2491,7 +2491,6 @@ public class LayoutSEOEntryPersistenceImpl
 		ctMergeColumnNames.add("layoutId");
 		ctMergeColumnNames.add("canonicalURL");
 		ctMergeColumnNames.add("canonicalURLEnabled");
-		ctMergeColumnNames.add("DDMStorageId");
 		ctMergeColumnNames.add("openGraphDescription");
 		ctMergeColumnNames.add("openGraphDescriptionEnabled");
 		ctMergeColumnNames.add("openGraphImageAlt");

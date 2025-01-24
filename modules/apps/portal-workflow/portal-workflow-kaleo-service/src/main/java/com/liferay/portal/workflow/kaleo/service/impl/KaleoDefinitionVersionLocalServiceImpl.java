@@ -501,6 +501,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		}
 
 		searchSearchRequest.setQuery(booleanQuery);
+		searchSearchRequest.setSize(0);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

@@ -82,6 +82,9 @@ page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
+<%@ page
+	import="com.liferay.portlet.configuration.web.internal.display.context.PortletConfigurationDisplayContext" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

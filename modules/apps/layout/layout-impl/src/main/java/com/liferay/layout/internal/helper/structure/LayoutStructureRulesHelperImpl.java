@@ -40,12 +40,6 @@ public class LayoutStructureRulesHelperImpl
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
 
-			if (!_isLayoutStructureRuleActive(
-					layoutStructureRule, layoutStructureRulesContext)) {
-
-				continue;
-			}
-
 			_processActions(
 				layoutStructureRule.getActionsJSONArray(), displayedItemIds,
 				hiddenItemIds);

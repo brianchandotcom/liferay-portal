@@ -9,7 +9,8 @@ import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.provider.CaptchaProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -20,6 +21,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lily Chi
@@ -28,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class CaptchaProviderImpl implements CaptchaProvider {
 
 	@Override
-	public Captcha getCaptcha() throws ConfigurationException {
+	public Captcha getCaptcha() {
 		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
 
 		String captchaClassName = captchaConfiguration.captchaEngine();
@@ -37,11 +39,14 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	}
 
 	@Override
-	public CaptchaConfiguration getCaptchaConfiguration()
-		throws ConfigurationException {
-
-		return ConfigurationProviderUtil.getCompanyConfiguration(
-			CaptchaConfiguration.class, CompanyThreadLocal.getCompanyId());
+	public CaptchaConfiguration getCaptchaConfiguration() {
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				CaptchaConfiguration.class, CompanyThreadLocal.getCompanyId());
+		}
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
+		}
 	}
 
 	@Activate
@@ -56,6 +61,9 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 

@@ -7,16 +7,14 @@ package com.liferay.captcha.provider;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.kernel.captcha.Captcha;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 /**
  * @author Lily Chi
  */
 public interface CaptchaProvider {
 
-	public Captcha getCaptcha() throws ConfigurationException;
+	public Captcha getCaptcha();
 
-	public CaptchaConfiguration getCaptchaConfiguration()
-		throws ConfigurationException;
+	public CaptchaConfiguration getCaptchaConfiguration();
 
 }

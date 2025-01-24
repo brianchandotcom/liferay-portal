@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
 import com.liferay.petra.string.StringPool;
@@ -202,7 +203,9 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			JSONUtil.put(
 				createOneToManyObjectRelationship(
 					"TESTOBJECTDEFINITION1", "TESTOBJECTDEFINITION2",
-					"TESTOBJECTDEFINITION2", "objectRelationship1"))
+					"TESTOBJECTDEFINITION2",
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					"objectRelationship1"))
 		).put(
 			"rootObjectDefinitionExternalReferenceCode", "TESTOBJECTDEFINITION1"
 		).toString();

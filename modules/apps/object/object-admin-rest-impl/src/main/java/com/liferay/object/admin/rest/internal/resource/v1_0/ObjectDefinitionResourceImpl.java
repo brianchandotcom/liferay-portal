@@ -29,6 +29,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -1058,7 +1059,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinitionExternalReferenceCode1,
 					contextUser.getUserId(),
 					serviceBuilderObjectDefinition2.getObjectFolderId(), true,
-					false);
+					ObjectDefinitionConstants.SCOPE_COMPANY, false);
 		}
 
 		com.liferay.object.model.ObjectRelationship objectRelationship =

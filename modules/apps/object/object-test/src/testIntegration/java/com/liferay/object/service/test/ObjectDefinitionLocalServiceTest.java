@@ -597,13 +597,13 @@ public class ObjectDefinitionLocalServiceTest {
 			"A modifiable object definition is required",
 			() -> _objectDefinitionLocalService.addObjectDefinition(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				false, false));
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, false));
 		AssertUtils.assertFailure(
 			ObjectDefinitionModifiableException.MustBeModifiable.class,
 			"A modifiable object definition is required",
 			() -> _objectDefinitionLocalService.addObjectDefinition(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				false, true));
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, true));
 
 		_testAddObjectDefinition(true, false);
 		_testAddObjectDefinition(true, true);
@@ -683,7 +683,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.addObjectDefinition(
 				ObjectDefinitionTestUtil.getRandomName(),
-				TestPropsValues.getUserId(), 0, true, false);
+				TestPropsValues.getUserId(), 0, true,
+				ObjectDefinitionConstants.SCOPE_COMPANY, false);
 
 		Assert.assertTrue(Validator.isNull(objectDefinition2.getClassName()));
 
@@ -1871,7 +1872,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addObjectDefinition(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				true, false);
+				true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
 
 		objectDefinition =
 			_objectDefinitionLocalService.enableAccountEntryRestricted(
@@ -3246,7 +3247,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addObjectDefinition(
 				externalReferenceCode, user.getUserId(),
-				objectFolder.getObjectFolderId(), modifiable, system);
+				objectFolder.getObjectFolderId(), modifiable,
+				ObjectDefinitionConstants.SCOPE_COMPANY, system);
 
 		_assertLabelAndPluralLabel(
 			objectDefinition, externalReferenceCode, externalReferenceCode);

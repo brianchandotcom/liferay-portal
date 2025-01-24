@@ -8,6 +8,7 @@ package com.liferay.learn;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 /**
  * @author Nilton Vieira
@@ -64,8 +66,8 @@ public class ObjectActionExamResultsSynchronizationRestController
 
 			status = "Successful";
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (WebClientResponseException webClientResponseException) {
+			_log.error(webClientResponseException.getResponseBodyAsString());
 		}
 		finally {
 			_updateExamResultsSynchronization(
@@ -106,7 +108,10 @@ public class ObjectActionExamResultsSynchronizationRestController
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		if (itemsJSONArray.isEmpty()) {
-			return OffsetDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+			return OffsetDateTime.of(
+				GetterUtil.getInteger(
+					System.getenv("LIFERAY_LEARN_ETC_SPRING_BOOT_START_YEAR")),
+				1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		}
 
 		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);

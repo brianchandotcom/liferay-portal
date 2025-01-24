@@ -41,6 +41,7 @@ import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -121,6 +122,12 @@ public class CompileJSPTask extends DefaultTask {
 		}
 	}
 
+	@Classpath
+	@Optional
+	public FileCollection getCompileJspClasspath() {
+		return _compileJspClasspath;
+	}
+
 	@OutputDirectory
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
@@ -157,6 +164,10 @@ public class CompileJSPTask extends DefaultTask {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getWebAppDir() {
 		return GradleUtil.toFile(getProject(), _webAppDir);
+	}
+
+	public void setCompileJspClasspath(FileCollection compileJspClasspath) {
+		_compileJspClasspath = compileJspClasspath;
 	}
 
 	public void setDestinationDir(Object destinationDir) {
@@ -214,6 +225,7 @@ public class CompileJSPTask extends DefaultTask {
 		};
 	}
 
+	private FileCollection _compileJspClasspath;
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;
 	private Object _webAppDir;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 
 import {CONFIG_PREFIX} from '../constants';
 import isEmpty from '../functions/is_empty';
@@ -71,12 +71,11 @@ export default function replaceTemplateVariable({
 				else if (config.type === INPUT_TYPES.DATE) {
 					configValue = initialConfigValue
 						? JSON.parse(
-								moment
-									.unix(initialConfigValue)
-									.format(
-										config.typeOptions?.format ||
-											'YYYYMMDDHHMMSS'
-									)
+								dateUtils.format(
+									new Date(initialConfigValue * 1000),
+									config.typeOptions?.format ||
+										'yyyyMMddhhmmss'
+								)
 							)
 						: '';
 				}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 
 import toNumber from '../functions/to_number';
 import {INPUT_TYPES} from '../types/inputTypes';
@@ -90,8 +90,24 @@ export function getDefaultValue(item) {
 		case INPUT_TYPES.DATE:
 			return typeof itemValue === 'number'
 				? itemValue
-				: moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).isValid()
-					? moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).unix()
+				: dateUtils.isValid(
+							dateUtils.parse(
+								itemValue,
+								itemValue?.indexOf('-') === 2
+									? 'MM-dd-yyyy'
+									: 'yyyy-MM-dd'
+							)
+					  )
+					? Math.floor(
+							dateUtils
+								.parse(
+									itemValue,
+									itemValue?.indexOf('-') === 2
+										? 'MM-dd-yyyy'
+										: 'yyyy-MM-dd'
+								)
+								.getTime() / 1000
+						)
 					: '';
 		case INPUT_TYPES.FIELD_MAPPING:
 			return typeof itemValue === 'object' && itemValue.field

@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
@@ -70,14 +71,14 @@ public class DLConfigurationAction
 
 	@Override
 	protected void postProcess(
-			long companyId, PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
+			long companyId, PortletRequest portletRequest, Settings settings)
 		throws PortalException {
 
-		super.postProcess(companyId, portletRequest, portletPreferences);
+		PortletPreferencesSettings portletPreferencesSettings =
+			(PortletPreferencesSettings)settings.getParentSettings();
 
-		String[] displayViews = StringUtil.split(
-			portletPreferences.getValue("displayViews", null));
+		PortletPreferences portletPreferences =
+			portletPreferencesSettings.getPortletPreferences();
 
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
@@ -86,8 +87,6 @@ public class DLConfigurationAction
 			portletPreferences.getValue("selectedRepositoryId", null));
 
 		try {
-			portletPreferences.setValues("displayViews", displayViews);
-
 			_setPortletPreferences(
 				portletPreferences, rootFolderId, selectedRepositoryId);
 		}

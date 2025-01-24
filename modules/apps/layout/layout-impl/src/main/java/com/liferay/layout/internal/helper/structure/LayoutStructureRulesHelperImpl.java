@@ -42,10 +42,31 @@ public class LayoutStructureRulesHelperImpl
 
 			_processActions(
 				layoutStructureRule.getActionsJSONArray(), displayedItemIds,
-				hiddenItemIds);
+				hiddenItemIds,
+				!_isLayoutStructureRuleActive(
+					layoutStructureRule, layoutStructureRulesContext));
 		}
 
 		return new LayoutStructureRulesResult(displayedItemIds, hiddenItemIds);
+	}
+
+	private Action _getAction(boolean negated, String type) {
+		if (Objects.equals(type, "show")) {
+			if (negated) {
+				return Action.HIDE;
+			}
+
+			return Action.SHOW;
+		}
+		else if (Objects.equals(type, "hide")) {
+			if (negated) {
+				return Action.SHOW;
+			}
+
+			return Action.HIDE;
+		}
+
+		throw new IllegalArgumentException("Unknown action type: " + type);
 	}
 
 	private boolean _isConditionActive(
@@ -111,18 +132,27 @@ public class LayoutStructureRulesHelperImpl
 
 	private void _processActions(
 		JSONArray actionsJSONArray, Set<String> displayedItemIds,
-		Set<String> hiddenItemIds) {
+		Set<String> hiddenItemIds, boolean negated) {
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
 			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
 
-			if (Objects.equals(actionsJSONObject.getString("type"), "show")) {
+			if (Objects.equals(
+					_getAction(negated, actionsJSONObject.getString("type")),
+					Action.SHOW)) {
+
 				displayedItemIds.add(actionsJSONObject.getString("itemId"));
 			}
 			else {
 				hiddenItemIds.add(actionsJSONObject.getString("itemId"));
 			}
 		}
+	}
+
+	private enum Action {
+
+		HIDE, SHOW
+
 	}
 
 	private class LayoutStructureRulesContext {

@@ -98,7 +98,8 @@ public class ObjectDefinitionServiceHttp {
 
 	public static com.liferay.object.model.ObjectDefinition addObjectDefinition(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long objectFolderId, boolean modifiable, boolean system)
+			long objectFolderId, boolean modifiable, String scope,
+			boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -108,7 +109,7 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectFolderId, modifiable,
-				system);
+				scope, system);
 
 			Object returnObj = null;
 
@@ -834,7 +835,9 @@ public class ObjectDefinitionServiceHttp {
 			boolean.class, String.class, String.class, java.util.List.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
-		new Class[] {String.class, long.class, boolean.class, boolean.class};
+		new Class[] {
+			String.class, long.class, boolean.class, String.class, boolean.class
+		};
 	private static final Class<?>[] _addSystemObjectDefinitionParameterTypes2 =
 		new Class[] {
 			String.class, long.class, long.class, boolean.class, boolean.class,

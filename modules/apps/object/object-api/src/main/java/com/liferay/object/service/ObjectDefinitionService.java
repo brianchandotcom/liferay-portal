@@ -57,7 +57,7 @@ public interface ObjectDefinitionService extends BaseService {
 
 	public ObjectDefinition addObjectDefinition(
 			String externalReferenceCode, long objectFolderId,
-			boolean modifiable, boolean system)
+			boolean modifiable, String scope, boolean system)
 		throws PortalException;
 
 	public ObjectDefinition addSystemObjectDefinition(

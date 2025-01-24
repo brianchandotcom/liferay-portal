@@ -14,6 +14,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeDDMTemplate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPreferences;
@@ -103,6 +104,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeAsset());
 		upgrade(new UpgradeAssetTagsResourcePermission());
 		upgrade(new UpgradeCompanyId());
+		upgrade(new UpgradeDDMTemplate());
 		upgrade(new UpgradeDocumentLibrary());
 		upgrade(new UpgradeDocumentLibraryPortletId());
 		upgrade(new UpgradeDocumentLibraryPreferences());

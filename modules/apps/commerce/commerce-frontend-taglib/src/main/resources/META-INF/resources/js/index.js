@@ -228,7 +228,7 @@ export function cart({
 	siteDefaultURL,
 	toggleable,
 }) {
-	MiniCart(miniCartId, miniCartId, {
+	const props = {
 		accountId: Number(accountId),
 		cartActionURLs: {
 			checkoutURL,
@@ -237,7 +237,6 @@ export function cart({
 			signInURL,
 			siteDefaultURL,
 		},
-		cartViews,
 		channel: {
 			currencyCode,
 			groupId,
@@ -248,9 +247,34 @@ export function cart({
 		displayTotalItemsQuantity,
 		guestOrderEnabled,
 		itemsQuantity: Number(itemsQuantity),
-		labels,
 		orderId: Number(orderId),
 		requestQuoteEnabled,
 		toggleable,
-	});
+	};
+
+	const customCartViews = Object.entries(cartViews);
+
+	if (customCartViews.length) {
+		props.cartViews = customCartViews.reduce(
+			(views, [viewName, contentRendererModuleUrl]) => ({
+				...views,
+				[viewName]: {contentRendererModuleUrl},
+			}),
+			{}
+		);
+	}
+
+	const customLabels = Object.entries(labels);
+
+	if (customLabels.length) {
+		props.labels = customLabels.reduce(
+			(labels, [key, value]) => ({
+				...labels,
+				[key]: value,
+			}),
+			{}
+		);
+	}
+
+	MiniCart(miniCartId, miniCartId, props);
 }

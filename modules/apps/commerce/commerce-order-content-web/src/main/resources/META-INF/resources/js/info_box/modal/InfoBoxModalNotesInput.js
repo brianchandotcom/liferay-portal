@@ -8,7 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {InfiniteScrollerComponent} from 'commerce-frontend-js';
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 import React from 'react';
 
 import UserIcon from '../../UserIcon';
@@ -22,11 +22,11 @@ const InfoBoxModalNotes = ({
 	spritemap,
 }) => {
 	const formatUTCDate = (value) => {
-		return moment
-			.utc(value)
-			.locale(Liferay.ThemeDisplay.getBCP47LanguageId())
-			.startOf('seconds')
-			.fromNow();
+		const date = new Date(value);
+
+		date.setMilliseconds(0);
+
+		return dateUtils.fromNow(date);
 	};
 
 	return (

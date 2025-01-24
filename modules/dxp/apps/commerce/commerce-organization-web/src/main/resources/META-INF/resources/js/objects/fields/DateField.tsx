@@ -7,7 +7,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import moment from 'moment';
+import {dateUtils} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import ErrorMessage from '../ErrorMessage';
@@ -35,9 +35,11 @@ const DateField = ({
 			let isoDateString = null;
 
 			if (value) {
-				value = moment(value.replace(/(--)/gi, '00')).format(
-					'YYYY-MM-DD' +
-						(specificProps && specificProps.time ? ' HH:mm' : '')
+				value = dateUtils.format(
+					new Date(value.replace(/(--)/gi, '00')),
+					specificProps && specificProps.time
+						? 'yyyy-MM-dd HH:mm'
+						: 'yyyy-MM-dd'
 				);
 			}
 
@@ -103,8 +105,8 @@ const DateField = ({
 				onChange={onChangeHandler}
 				value={internalValue}
 				years={{
-					end: moment().year() + 100,
-					start: moment().year() - 100,
+					end: new Date().getFullYear() + 100,
+					start: new Date().getFullYear() - 100,
 				}}
 				{...specificProps}
 			/>
@@ -117,11 +119,11 @@ const DateField = ({
 
 			<div className="sidebar-dd">
 				{internalValue
-					? moment(internalValue).format(
-							'YYYY-MM-DD' +
-								(specificProps && specificProps.time
-									? ' HH:mm'
-									: '')
+					? dateUtils.format(
+							internalValue,
+							specificProps && specificProps.time
+								? 'yyyy-MM-dd HH:mm'
+								: 'yyyy-MM-dd'
 						)
 					: '-'}
 			</div>

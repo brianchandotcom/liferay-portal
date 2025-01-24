@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -48,6 +47,7 @@ import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.QueryHelper;
+import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -475,21 +475,22 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		if (Validator.isNotNull(keywords)) {
 			BooleanQuery keywordsBooleanQuery = _queries.booleanQuery();
 
-			keywords =
-				StringPool.STAR + StringUtil.toLowerCase(keywords) +
-					StringPool.STAR;
-
 			keywordsBooleanQuery.addShouldQueryClauses(
-				_queries.wildcard(Field.DESCRIPTION, keywords),
-				_queries.wildcard(Field.NAME, keywords));
+				_queries.match(Field.DESCRIPTION, keywords),
+				_queries.match(Field.NAME, keywords));
 
 			String[] localizedFieldNames =
 				_searchLocalizationHelper.getLocalizedFieldNames(
 					new String[] {Field.TITLE}, new SearchContext());
 
 			for (String localizedFieldName : localizedFieldNames) {
+				StringQuery stringQuery = _queries.string(
+					keywords + StringPool.STAR);
+
+				stringQuery.setDefaultField(localizedFieldName);
+
 				keywordsBooleanQuery.addShouldQueryClauses(
-					_queries.wildcard(localizedFieldName, keywords));
+					stringQuery, _queries.match(localizedFieldName, keywords));
 			}
 
 			booleanQuery.addMustQueryClauses(keywordsBooleanQuery);

@@ -613,6 +613,48 @@ public class ObjectRelationship implements Serializable {
 	private Supplier<String> _objectDefinitionName2Supplier;
 
 	@Schema
+	public String getObjectDefinitionScope2() {
+		if (_objectDefinitionScope2Supplier != null) {
+			objectDefinitionScope2 = _objectDefinitionScope2Supplier.get();
+
+			_objectDefinitionScope2Supplier = null;
+		}
+
+		return objectDefinitionScope2;
+	}
+
+	public void setObjectDefinitionScope2(String objectDefinitionScope2) {
+		this.objectDefinitionScope2 = objectDefinitionScope2;
+
+		_objectDefinitionScope2Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionScope2(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionScope2UnsafeSupplier) {
+
+		_objectDefinitionScope2Supplier = () -> {
+			try {
+				return objectDefinitionScope2UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectDefinitionScope2;
+
+	@JsonIgnore
+	private Supplier<String> _objectDefinitionScope2Supplier;
+
+	@Schema
 	public Boolean getObjectDefinitionSystem2() {
 		if (_objectDefinitionSystem2Supplier != null) {
 			objectDefinitionSystem2 = _objectDefinitionSystem2Supplier.get();
@@ -1118,6 +1160,22 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(objectDefinitionName2));
+
+			sb.append("\"");
+		}
+
+		String objectDefinitionScope2 = getObjectDefinitionScope2();
+
+		if (objectDefinitionScope2 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionScope2\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinitionScope2));
 
 			sb.append("\"");
 		}

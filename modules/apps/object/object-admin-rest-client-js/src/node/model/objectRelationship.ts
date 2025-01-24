@@ -27,6 +27,7 @@ export class ObjectRelationship {
     'objectDefinitionId2'?: number;
     'objectDefinitionModifiable2'?: boolean;
     'objectDefinitionName2'?: string;
+    'objectDefinitionScope2'?: string;
     'objectDefinitionSystem2'?: boolean;
     'objectField'?: ObjectField;
     'parameterObjectFieldId'?: number;
@@ -101,6 +102,11 @@ export class ObjectRelationship {
         {
             "name": "objectDefinitionName2",
             "baseName": "objectDefinitionName2",
+            "type": "string"
+        },
+        {
+            "name": "objectDefinitionScope2",
+            "baseName": "objectDefinitionScope2",
             "type": "string"
         },
         {

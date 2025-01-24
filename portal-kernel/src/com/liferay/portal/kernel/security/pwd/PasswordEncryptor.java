@@ -54,8 +54,13 @@ public interface PasswordEncryptor {
 	public default String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
-		return encryptedPassword.substring(
-			1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE));
+		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
+		if (index < 0) {
+			return null;
+		}
+
+		return encryptedPassword.substring(1, index);
 	}
 
 }

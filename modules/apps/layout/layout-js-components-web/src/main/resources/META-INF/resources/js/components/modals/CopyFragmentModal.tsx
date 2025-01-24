@@ -229,6 +229,12 @@ function FragmentSetSelector({
 
 	return (
 		<ClayForm id={formId} onSubmit={handleSubmit}>
+			<p className="text-secondary">
+				{Liferay.Language.get(
+					'select-an-existing-set-or-create-a-new-one-to-save-your-fragment'
+				)}
+			</p>
+
 			<FormField
 				error={errors.fragmentSets}
 				id={`${portletNamespace}fragment-sets`}

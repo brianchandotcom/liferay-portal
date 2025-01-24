@@ -19,30 +19,23 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchSystemEventException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventTable;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.SystemEventImpl;
 import com.liferay.portal.model.impl.SystemEventModelImpl;
 
@@ -59,7 +52,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2600,45 +2592,6 @@ public class SystemEventPersistenceImpl
 		SystemEventModelImpl systemEventModelImpl =
 			(SystemEventModelImpl)systemEvent;
 
-		if (Validator.isNull(systemEvent.getExternalReferenceCode())) {
-			systemEvent.setExternalReferenceCode(
-				String.valueOf(systemEvent.getPrimaryKey()));
-		}
-		else {
-			if (!Objects.equals(
-					systemEventModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					systemEvent.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = systemEvent.getCompanyId();
-
-					long groupId = systemEvent.getGroupId();
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = systemEvent.getPrimaryKey();
-					}
-
-					try {
-						systemEvent.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								SystemEvent.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								systemEvent.getExternalReferenceCode(), null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-		}
-
 		if (isNew && (systemEvent.getCreateDate() == null)) {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -3171,7 +3124,7 @@ public class SystemEventPersistenceImpl
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
 		ctMergeColumnNames.add("classUuid");
-		ctMergeColumnNames.add("externalReferenceCode");
+		ctMergeColumnNames.add("classExternalReferenceCode");
 		ctMergeColumnNames.add("referrerClassNameId");
 		ctMergeColumnNames.add("parentSystemEventId");
 		ctMergeColumnNames.add("systemEventSetKey");

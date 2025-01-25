@@ -53,17 +53,17 @@ export class AccountsPage {
 	readonly organizationsTab: Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
-
 	readonly usersTab: Locator;
 
 	constructor(page: Page) {
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
 		});
-		this.accountNameLink = (name) => page.getByRole('link', {
-			exact: true,
-			name
-		});
+		this.accountNameLink = (name) =>
+			page.getByRole('link', {
+				exact: true,
+				name,
+			});
 		this.accountRolesTab = page.getByRole('link', {
 			name: 'Roles',
 		});

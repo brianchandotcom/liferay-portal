@@ -42,7 +42,11 @@ export class DataTablePage {
 	readonly clearButton: Locator;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (option: string) => Locator;
+	readonly firstRow: () => Promise<Locator>;
+	readonly lastRow: () => Promise<Locator>;
 	readonly newButton: Locator;
+	readonly orderButton: Locator;
+	readonly orderMenuItem: (option: string) => Locator;
 	readonly page: Page | FrameLocator;
 	readonly row: (
 		colPosition: number,
@@ -70,10 +74,12 @@ export class DataTablePage {
 		this.table = table;
 
 		this.cell = (value) =>
-			this.page.getByRole('cell', {
-				exact: true,
-				name: value,
-			}).first();
+			this.page
+				.getByRole('cell', {
+					exact: true,
+					name: value,
+				})
+				.first();
 		this.cellLink = async (value, colIndex = 1, strictEqual = true) => {
 			const row = await this.row(colIndex, value, strictEqual);
 
@@ -99,9 +105,26 @@ export class DataTablePage {
 				name: option,
 			});
 		};
+		this.firstRow = async () => {
+			await this.table.elementHandle();
+
+			return this.table.getByRole('row').nth(1);
+		};
+		this.lastRow = async () => {
+			await this.table.elementHandle();
+
+			return this.table.getByRole('row').last();
+		};
 		this.newButton = page
 			.getByTestId('creationMenuNewButton')
 			.getByText('New');
+		this.orderButton = page.getByLabel('Order');
+		this.orderMenuItem = (option: string) => {
+			return page.getByRole('menuitem', {
+				exact: true,
+				name: option,
+			});
+		};
 		this.row = async (
 			colPosition: number,
 			value: string,

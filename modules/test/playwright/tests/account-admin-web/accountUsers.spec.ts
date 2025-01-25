@@ -26,135 +26,167 @@ export const test = mergeTests(
 	serverAdministrationPageTest
 );
 
-test('LPS-139430 Can add and remove a user to an account', async ({
-	accountUserSelectorPage,
-	accountUsersPage,
-	accountsPage,
-	apiHelpers,
-	editUserPage,
-	page,
-	usersAndOrganizationsPage,
-}) => {
-	page.on('dialog', (dialog) => dialog.accept());
+test(
+	'LPD-47225 Can add and remove a user to an account',
+	{tag: ['@LPS-139430', '@LPS-149125']},
+	async ({
+		accountUserSelectorPage,
+		accountUsersPage,
+		accountsPage,
+		apiHelpers,
+		editUserPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => dialog.accept());
 
-	const account1 = await apiHelpers.headlessAdminUser.postAccount();
+		const account1 = await apiHelpers.headlessAdminUser.postAccount();
 
-	apiHelpers.data.push({id: account1.id, type: 'account'});
+		apiHelpers.data.push({id: account1.id, type: 'account'});
 
-	const account2 = await apiHelpers.headlessAdminUser.postAccount();
+		const account2 = await apiHelpers.headlessAdminUser.postAccount();
 
-	apiHelpers.data.push({id: account2.id, type: 'account'});
+		apiHelpers.data.push({id: account2.id, type: 'account'});
 
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	await accountsPage.goto();
+		await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.cellLink(account1.name)).click();
-
-	await accountsPage.usersTab.click();
-	await accountUsersPage.usersTable.newButton.click();
-	await accountUsersPage.assignUserMenuItem.click();
-
-	await accountUserSelectorPage.assignUsers([user.name]);
-
-	await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
-
-	await accountsPage.goto();
-
-	await (await accountsPage.accountsTable.cellLink(account2.name)).click();
-
-	await accountsPage.usersTab.click();
-	await accountUsersPage.usersTable.newButton.click();
-	await accountUsersPage.assignUserMenuItem.click();
-
-	await accountUserSelectorPage.assignUsers([user.name]);
-
-	await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
-
-	await usersAndOrganizationsPage.goToUsers();
-
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink(user.alternateName)
-	).click();
-	await editUserPage.membershipsLink.click();
-
-	await expect(
-		(await editUserPage.membershipsAccountsTableRow(0, account1.name, true))
-			.row
-	).toBeVisible();
-	await expect(
-		(await editUserPage.membershipsAccountsTableRow(0, account2.name, true))
-			.row
-	).toBeVisible();
-
-	await accountsPage.goto();
-
-	await (await accountsPage.accountsTable.cellLink(account1.name)).click();
-
-	await accountsPage.usersTab.click();
-
-	await (await accountUsersPage.usersTable.rowActions(user.name)).click();
-	await accountUsersPage.removeButton.click();
-
-	await expect(accountUsersPage.usersTable.cell(user.name)).toHaveCount(0);
-});
-
-test('LPS-139430 Can add and remove users to an account in bulk', async ({
-	accountUserSelectorPage,
-	accountUsersPage,
-	accountsPage,
-	apiHelpers,
-	page,
-}) => {
-	page.on('dialog', (dialog) => dialog.accept());
-
-	const account = await apiHelpers.headlessAdminUser.postAccount();
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const users = [];
-
-	for (let i = 0; i < 5; i++) {
-		users.push(await apiHelpers.headlessAdminUser.postUserAccount());
-	}
-
-	await accountsPage.goto();
-
-	await (await accountsPage.accountsTable.cellLink(account.name)).click();
-
-	await accountsPage.usersTab.click();
-	await accountUsersPage.usersTable.newButton.click();
-	await accountUsersPage.assignUserMenuItem.click();
-
-	await accountUserSelectorPage.assignUsers(users.map((user) => user.name));
-
-	for (const user of users) {
-		await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
-	}
-
-	for (const index of [1, 3]) {
 		await (
-			await accountUsersPage.usersTable.rowCheckBox(users[index].name)
-		).check();
+			await accountsPage.accountsTable.cellLink(account1.name)
+		).click();
+
+		await accountsPage.usersTab.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await accountUserSelectorPage.assignUsers([user.name]);
+
+		await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
+
+		await accountsPage.goto();
+
+		await (
+			await accountsPage.accountsTable.cellLink(account2.name)
+		).click();
+
+		await accountsPage.usersTab.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await accountUserSelectorPage.assignUsers([user.name]);
+
+		await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.membershipsLink.click();
+
+		await expect(
+			(
+				await editUserPage.membershipsAccountsTableRow(
+					0,
+					account1.name,
+					true
+				)
+			).row
+		).toBeVisible();
+		await expect(
+			(
+				await editUserPage.membershipsAccountsTableRow(
+					0,
+					account2.name,
+					true
+				)
+			).row
+		).toBeVisible();
+
+		await accountsPage.goto();
+
+		await (
+			await accountsPage.accountsTable.cellLink(account1.name)
+		).click();
+
+		await accountsPage.usersTab.click();
+
+		await (await accountUsersPage.usersTable.rowActions(user.name)).click();
+		await accountUsersPage.removeButton.click();
+
+		await expect(accountUsersPage.usersTable.cell(user.name)).toHaveCount(
+			0
+		);
 	}
+);
 
-	await accountUsersPage.removeButton.click();
+test(
+	'LPD-47225 Can add and remove users to an account in bulk',
+	{tag: ['@LPS-139430']},
+	async ({
+		accountUserSelectorPage,
+		accountUsersPage,
+		accountsPage,
+		apiHelpers,
+		page,
+	}) => {
+		page.on('dialog', (dialog) => dialog.accept());
 
-	await waitForAlert(page);
+		const account = await apiHelpers.headlessAdminUser.postAccount();
 
-	for (let i = 1; i < 5; i++) {
-		if (i % 2 === 0) {
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const users = [];
+
+		for (let i = 0; i < 5; i++) {
+			users.push(await apiHelpers.headlessAdminUser.postUserAccount());
+		}
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await accountsPage.usersTab.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await accountUserSelectorPage.assignUsers(
+			users.map((user) => user.name)
+		);
+
+		for (const user of users) {
 			await expect(
-				accountUsersPage.usersTable.cell(users[i].name)
+				accountUsersPage.usersTable.cell(user.name)
 			).toBeVisible();
 		}
-		else {
-			await expect(
-				accountUsersPage.usersTable.cell(users[i].name)
-			).toHaveCount(0);
+
+		for (const index of [1, 3]) {
+			await (
+				await accountUsersPage.usersTable.rowCheckBox(users[index].name)
+			).check();
+		}
+
+		await accountUsersPage.removeButton.click();
+
+		await waitForAlert(page);
+
+		for (let i = 1; i < 5; i++) {
+			if (i % 2 === 0) {
+				await expect(
+					accountUsersPage.usersTable.cell(users[i].name)
+				).toBeVisible();
+			}
+			else {
+				await expect(
+					accountUsersPage.usersTable.cell(users[i].name)
+				).toHaveCount(0);
+			}
 		}
 	}
-});
+);
 
 test('LPD-47225 Can search assigned users', async ({
 	accountUserSelectorPage,
@@ -325,4 +357,345 @@ test('LPD-47225 Can paginate users during assignment', async ({
 			).toBeVisible();
 		}
 	}
+});
+
+test('LPD-47225 Can remove user from personal account', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+	await expect(editAccountPage.assignUserMessage).not.toBeVisible();
+	await expect(editAccountPage.personAccountUserContainer).toBeVisible();
+	await expect(
+		editAccountPage.personAccountUserName(user.name)
+	).toBeVisible();
+	await expect(accountsPage.usersTab).not.toBeVisible();
+
+	await editAccountPage.personAccountUserRemoveButton.click();
+
+	await expect(editAccountPage.assignUserMessage).toBeVisible();
+	await expect(editAccountPage.personAccountUserName(user.name)).toHaveCount(
+		0
+	);
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await editAccountPage.backButton.click();
+
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+	await expect(editAccountPage.assignUserMessage).toBeVisible();
+	await expect(editAccountPage.personAccountUserName(user.name)).toHaveCount(
+		0
+	);
+});
+
+test('LPD-47225 Only one user can be assigned to a Person Account', async ({
+	accountPersonUserSelectorPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user1.emailAddress]
+	);
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+	await expect(editAccountPage.assignUserMessage).not.toBeVisible();
+	await expect(editAccountPage.personAccountUserContainer).toBeVisible();
+	await expect(
+		editAccountPage.personAccountUserName(user1.name)
+	).toBeVisible();
+	await expect(editAccountPage.personAccountUserName(user2.name)).toHaveCount(
+		0
+	);
+
+	await editAccountPage.personAccountUserSelectButton.click();
+
+	await accountPersonUserSelectorPage.chooseUser(user2.name);
+
+	await expect(editAccountPage.assignUserMessage).not.toBeVisible();
+	await expect(editAccountPage.personAccountUserContainer).toBeVisible();
+	await expect(editAccountPage.personAccountUserName(user1.name)).toHaveCount(
+		0
+	);
+	await expect(
+		editAccountPage.personAccountUserName(user2.name)
+	).toBeVisible();
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(user1.alternateName)
+	).click();
+
+	await editUserPage.membershipsLink.click();
+
+	await expect(editUserPage.membershipsNoAccountsMessage).toBeVisible();
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(user2.alternateName)
+	).click();
+
+	await editUserPage.membershipsLink.click();
+
+	await expect(editUserPage.membershipsNoAccountsMessage).not.toBeVisible();
+});
+
+test(
+	'LPD-47225 Can search in person account user selector modal',
+	{tag: ['@LPS-117171']},
+	async ({
+		accountPersonUserSelectorPage,
+		accountsPage,
+		apiHelpers,
+		editAccountPage,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await expect(editAccountPage.assignUserMessage).toBeVisible();
+
+		await editAccountPage.personAccountUserSelectButton.click();
+
+		await expect(
+			accountPersonUserSelectorPage.usersTable.filterButton
+		).toHaveCount(0);
+		await expect(
+			accountPersonUserSelectorPage.usersTable.orderButton
+		).toBeVisible();
+
+		await accountPersonUserSelectorPage.usersTable.search(
+			getRandomString()
+		);
+
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user1.name)
+		).toHaveCount(0);
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user2.name)
+		).toHaveCount(0);
+
+		await accountPersonUserSelectorPage.usersTable.search(user1.name);
+
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user1.name)
+		).toBeVisible();
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user2.name)
+		).toHaveCount(0);
+
+		await accountPersonUserSelectorPage.usersTable.search(user2.name);
+
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user1.name)
+		).toHaveCount(0);
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user2.name)
+		).toBeVisible();
+
+		await accountPersonUserSelectorPage.usersTable.search('');
+
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user1.name)
+		).toBeVisible();
+		await expect(
+			accountPersonUserSelectorPage.usersTable.cell(user2.name)
+		).toBeVisible();
+	}
+);
+
+test('LPD-47225 Can search, filter and sort in account user selector modal', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+}) => {
+	const account1 = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	const account2 = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account2.id, type: 'account'});
+
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount({
+		emailAddress: `A${getRandomString()}@liferay.com`,
+		familyName: `Z${getRandomString()}`,
+		givenName: `A${getRandomString()}`,
+	});
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount({
+		emailAddress: `Z${getRandomString()}@liferay.com`,
+		familyName: `A${getRandomString()}`,
+		givenName: `Z${getRandomString()}`,
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account2.id,
+		[user2.emailAddress]
+	);
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTable.cellLink(account1.name)).click();
+
+	await accountsPage.usersTab.click();
+	await accountUsersPage.usersTable.newButton.click();
+	await accountUsersPage.assignUserMenuItem.click();
+
+	await accountUserSelectorPage.usersTable.search(getRandomString());
+
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toHaveCount(0);
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toHaveCount(0);
+
+	await accountUserSelectorPage.usersTable.search(user1.name);
+
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toBeVisible();
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toHaveCount(0);
+
+	await accountUserSelectorPage.usersTable.search(user2.name);
+
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toHaveCount(0);
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toBeVisible();
+
+	await accountUserSelectorPage.usersTable.search('');
+
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toBeVisible();
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toBeVisible();
+
+	await accountUserSelectorPage.usersTable.orderButton.click();
+	await accountUserSelectorPage.usersTable
+		.orderMenuItem('First Name')
+		.click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+	await expect(
+		await accountUserSelectorPage.usersTable.firstRow()
+	).toContainText(user1.name);
+	await expect(
+		await accountUserSelectorPage.usersTable.lastRow()
+	).toContainText(user2.name);
+
+	await accountUserSelectorPage.usersTable.orderButton.click();
+	await accountUserSelectorPage.usersTable.orderMenuItem('Last Name').click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+	await expect(
+		await accountUserSelectorPage.usersTable.firstRow()
+	).toContainText(user2.name);
+	await expect(
+		await accountUserSelectorPage.usersTable.lastRow()
+	).toContainText(user1.name);
+
+	await accountUserSelectorPage.usersTable.orderButton.click();
+	await accountUserSelectorPage.usersTable
+		.orderMenuItem('Email Address')
+		.click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+	await expect(
+		await accountUserSelectorPage.usersTable.firstRow()
+	).toContainText(user1.name);
+	await expect(
+		await accountUserSelectorPage.usersTable.lastRow()
+	).toContainText(user2.name);
+
+	await accountUserSelectorPage.usersTable.orderButton.click();
+	await accountUserSelectorPage.usersTable.orderMenuItem('Last Name').click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+
+	await accountUserSelectorPage.usersTable.filterButton.click();
+	await accountUserSelectorPage.usersTable
+		.filterMenuItem('Account Users')
+		.click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toHaveCount(0);
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toBeVisible();
+
+	await accountUserSelectorPage.usersTable.filterButton.click();
+	await accountUserSelectorPage.usersTable
+		.filterMenuItem('No Assigned Account')
+		.click();
+
+	await expect(accountUserSelectorPage.usersTable.searchInput).toBeEditable();
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user1.name)
+	).toBeVisible();
+	await expect(
+		accountUserSelectorPage.usersTable.cell(user2.name)
+	).toHaveCount(0);
 });

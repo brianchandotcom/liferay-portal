@@ -1,0 +1,5 @@
+dependencies {
+	compileInclude group: "io.opencensus", name: "opencensus-api", version: "0.31.1"
+	compileInclude group: "io.opencensus", name: "opencensus-contrib-http-util", version: "0.31.1"
+	compileOnly group: "io.grpc", name: "grpc-api", version: "1.70.0"
+}

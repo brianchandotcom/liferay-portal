@@ -6023,14 +6023,6 @@ public class ServiceBuilder {
 		return value.equals(type.getFullyQualifiedName());
 	}
 
-	private boolean _isUniqueSingleFindersEntity(String entityName) {
-		if (_uniqueSingleFindersEntities.contains(entityName)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private List<JavaAnnotation> _mergeAnnotations(
 		List<JavaAnnotation> javaAnnotations1,
 		List<JavaAnnotation> javaAnnotations2) {
@@ -6828,7 +6820,7 @@ public class ServiceBuilder {
 				finderElement.attributeValue("unique"));
 
 			if (isVersionGTE_7_4_0() &&
-				_isUniqueSingleFindersEntity(entityName) &&
+				_uniqueSingleFindersEntities.contains(entityName) &&
 				!Objects.equals(finderReturn, "Collection") && !finderUnique) {
 
 				throw new IllegalArgumentException(

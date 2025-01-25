@@ -1073,21 +1073,12 @@ definition {
 			groupName = "Site Name",
 			name = "Collection Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
-
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		var fragmentHtml = '''<lfr-widget-asset-list>''';
-		var htmlSnippet = '''<lfr-''';
-
-		FragmentsEditor.autocompleteFragmentHTML(
-			autocompleteField = "lfr-widget-asset-list",
-			fragmentHtml = ${fragmentHtml},
-			htmlSnippet = ${htmlSnippet});
-
-		PortletEntry.publish();
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			fragmentStatus = "Approved",
+			groupName = "Site Name",
+			html = "<lfr-widget-asset-list></lfr-widget-asset-list>",
+			name = "Fragment Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

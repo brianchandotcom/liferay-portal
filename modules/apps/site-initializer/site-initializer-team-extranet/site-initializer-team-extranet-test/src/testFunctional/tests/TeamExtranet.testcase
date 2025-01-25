@@ -785,23 +785,14 @@ definition {
 			JSONFragment.addFragmentCollection(
 				groupName = ${testSiteName},
 				name = "Collection Name");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${testSiteURL});
 		}
 
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		var fragmentHtml = '''<lfr-widget-search-bar>''';
-		var htmlSnippet = '''<lfr-''';
-
-		FragmentsEditor.autocompleteFragmentHTML(
-			autocompleteField = "lfr-widget-search-bar",
-			fragmentHtml = ${fragmentHtml},
-			htmlSnippet = ${htmlSnippet});
-
-		PortletEntry.publish();
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			fragmentStatus = "Approved",
+			groupName = ${testSiteName},
+			html = "<lfr-widget-search-bar></lfr-widget-search-bar>",
+			name = "Fragment Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

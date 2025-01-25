@@ -124,29 +124,12 @@ definition {
 		}
 
 		task ("Add a fragment with a Web Content Display in it") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			var fragmentHtml = '''<lfr-widget-web-content>''';
-			var htmlSnippet = '''<lfr-''';
-
-			FragmentsEditor.autocompleteFragmentHTML(
-				autocompleteField = "lfr-widget-web-content",
-				fragmentHtml = ${fragmentHtml},
-				htmlSnippet = ${htmlSnippet});
-
-			WaitForElementNotPresent(locator1 = "FragmentEditor#SAVING_CHANGES_MESSAGE");
-
-			WaitForVisible(locator1 = "FragmentEditor#CHANGES_SAVED_MESSAGE");
-
-			PortletEntry.publish();
-
-			Click(
-				key_text = "Publish",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "<lfr-widget-web-content></lfr-widget-web-content>",
+				name = "Fragment Name");
 		}
 
 		task ("Add a Content page and add a web content") {

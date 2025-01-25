@@ -149,10 +149,6 @@ renderResponse.setTitle(editRedirectEntryDisplayContext.getTitle());
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"getRedirectEntryChainCauseURL", editRedirectEntryDisplayContext.getRedirectEntryChainCauseURL()
-		).put(
-			"initialDestinationURL", editRedirectEntryDisplayContext.getDestinationURL()
-		).put(
-			"initialIsPermanent", editRedirectEntryDisplayContext.isRedirectEntryPermanent()
 		).build()
 	%>'
 	module="{editRedirectEntry} from redirect-web"

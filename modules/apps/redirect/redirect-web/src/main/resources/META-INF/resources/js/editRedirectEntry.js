@@ -5,32 +5,9 @@
 
 import {createResourceURL, fetch, openToast, postForm} from 'frontend-js-web';
 
-export default function ({
-	getRedirectEntryChainCauseURL,
-	initialDestinationURL,
-	initialIsPermanent,
-	namespace,
-}) {
+export default function ({getRedirectEntryChainCauseURL, namespace}) {
 	const form = document[`${namespace}fm`];
 	form.addEventListener('submit', saveRedirectEntry);
-	const typeInfoAlert = document.getElementById(`${namespace}typeInfoAlert`);
-	const destinationURLInput = document.getElementById(
-		`${namespace}destinationURL`
-	);
-	const permanentSelect = document.getElementById(`${namespace}permanent`);
-
-	if (typeInfoAlert && initialIsPermanent) {
-		destinationURLInput.addEventListener('input', showTypeInfoAlert);
-		permanentSelect.addEventListener('input', showTypeInfoAlert);
-	}
-
-	function showTypeInfoAlert() {
-		typeInfoAlert.classList.toggle(
-			'hide',
-			permanentSelect.value === 'true' &&
-				destinationURLInput.value === initialDestinationURL
-		);
-	}
 
 	function saveRedirectEntry() {
 		const destinationURL = form.elements[`${namespace}destinationURL`];

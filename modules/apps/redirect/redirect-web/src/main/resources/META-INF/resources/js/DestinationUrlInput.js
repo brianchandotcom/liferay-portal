@@ -8,7 +8,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const REGEX_URL =
 	/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
@@ -37,6 +37,41 @@ const DestinationUrlInput = ({
 	const isAbsoluteUrl = (url) => {
 		return REGEX_URL && REGEX_URL.test(url);
 	};
+
+	useEffect(() => {
+		const destinationURLInput = document.getElementById(
+			`${namespace}destinationURL`
+		);
+		const initialDestinationURL = destinationURLInput.value;
+		const permanentSelect = document.getElementById(
+			`${namespace}permanent`
+		);
+		const typeInfoAlert = document.getElementById(
+			`${namespace}typeInfoAlert`
+		);
+
+		const _showTypeInfoAlert = () => {
+			typeInfoAlert.classList.toggle(
+				'hide',
+				permanentSelect.value === 'true' &&
+					destinationURLInput.value === initialDestinationURL
+			);
+		};
+
+		if (typeInfoAlert && permanentSelect.value === 'true') {
+			destinationURLInput.addEventListener('input', _showTypeInfoAlert);
+			permanentSelect.addEventListener('input', _showTypeInfoAlert);
+		}
+
+		return () => {
+			destinationURLInput?.removeEventListener(
+				'input',
+				_showTypeInfoAlert
+			);
+
+			permanentSelect?.removeEventListener('input', _showTypeInfoAlert);
+		};
+	}, [namespace]);
 
 	return (
 		<ClayForm.Group

@@ -1,57 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFragment(fragmentName = null, supportedFieldTypes = null) {
-		LexiconEntry.gotoAdd();
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Add Fragment");
-
-		if (!(isSet(fragmentType))) {
-			var fragmentType = "Basic Fragment";
-		}
-
-		if ((IsElementPresent(locator1 = "Message#SUBTITLE")) && (IsTextEqual(locator1 = "Message#SUBTITLE", value1 = "Select Fragment Type:"))) {
-			Click.clickAtNotVisible(
-				key_card = ${fragmentType},
-				locator1 = "Card#CARD_RADIO_WITH_LABEL");
-
-			Click(
-				key_text = "Next",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			if (${fragmentType} == "Basic Fragment") {
-				PortletEntry.inputName(name = ${fragmentName});
-
-				Click(
-					key_text = "Add",
-					locator1 = "Modal#MODAL_FOOTER_BUTTON");
-			}
-			else if (${fragmentType} == "Form Fragment") {
-				PortletEntry.inputName(name = ${fragmentName});
-
-				if (isSet(supportedFieldTypes)) {
-					for (var supportedFieldType : list ${supportedFieldTypes}) {
-						Check.checkNotVisibleNoErrors(
-							key_fieldLabel = ${supportedFieldType},
-							locator1 = "Checkbox#CHECKBOX_LABEL");
-					}
-				}
-
-				Click(
-					key_text = "Add",
-					locator1 = "Modal#MODAL_FOOTER_BUTTON");
-			}
-		}
-		else {
-			PortletEntry.inputName(name = ${fragmentName});
-
-			Button.clickSave();
-		}
-	}
-
-	@summary = "Default summary"
 	macro importCollectionFromDependenciesFolder(collectionZipFile = null, importOption = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 

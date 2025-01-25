@@ -26,7 +26,10 @@ public class PortalRelease {
 			return false;
 		}
 
-		return portalVersion.matches(_QUARTERLY_RELEASE_VERSION_REGEX);
+		Matcher matcher = _quarterlyReleaseVersionPattern.matcher(
+			portalVersion);
+
+		return matcher.matches();
 	}
 
 	public PortalRelease(String portalVersion) {
@@ -374,11 +377,8 @@ public class PortalRelease {
 	}
 
 	public String getQuarterlyReleaseBranchName() {
-		Pattern quarterlyReleaseVersionPattern = Pattern.compile(
-			_QUARTERLY_RELEASE_VERSION_REGEX);
-
 		Matcher quarterlyReleaseBranchMatcher =
-			quarterlyReleaseVersionPattern.matcher(_portalVersion);
+			_quarterlyReleaseVersionPattern.matcher(_portalVersion);
 
 		if (quarterlyReleaseBranchMatcher.find()) {
 			return "release-" +
@@ -746,6 +746,8 @@ public class PortalRelease {
 				"(-dxp-(?<dxpVersion>\\d+))?.*");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
 		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
+	private static final Pattern _quarterlyReleaseVersionPattern =
+		Pattern.compile(_QUARTERLY_RELEASE_VERSION_REGEX);
 
 	private final URL _bundlesBaseURL;
 	private String _pluginsWarZipURLString;

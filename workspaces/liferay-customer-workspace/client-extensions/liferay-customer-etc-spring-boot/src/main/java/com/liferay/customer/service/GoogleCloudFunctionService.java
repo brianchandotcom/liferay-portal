@@ -26,7 +26,10 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,6 +39,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoogleCloudFunctionService {
 
+	@CacheEvict(allEntries = true, value = "accountUsage")
+	@Scheduled(cron = "0 0 * * * *")
+	public void cacheEvict() throws Exception {
+	}
+
+	@Cacheable("accountUsage")
 	public JSONObject fetchCustomerAccountUsage(String accountKey)
 		throws Exception {
 

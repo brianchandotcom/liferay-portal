@@ -13,6 +13,7 @@ import {AccountEntriesManagementPortletPage} from '../pages/account-admin-web/Ac
 import {AccountManagementWidgetPage} from '../pages/account-admin-web/AccountManagementWidgetPage';
 import {AccountOrganizationSelectorPage} from '../pages/account-admin-web/AccountOrganizationSelectorPage';
 import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrganizationsPage';
+import {AccountPersonUserSelectorPage} from '../pages/account-admin-web/AccountPersonUserSelectorPage';
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountUserSelectorPage} from '../pages/account-admin-web/AccountUserSelectorPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
@@ -37,6 +38,7 @@ const accountsPagesTest = test.extend<{
 	accountManagementWidgetPage: AccountManagementWidgetPage;
 	accountOrganizationSelectorPage: AccountOrganizationSelectorPage;
 	accountOrganizationsPage: AccountOrganizationsPage;
+	accountPersonUserSelectorPage: AccountPersonUserSelectorPage;
 	accountRolesPage: AccountRolesPage;
 	accountUserSelectorPage: AccountUserSelectorPage;
 	accountUsersPage: AccountUsersPage;
@@ -75,6 +77,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountOrganizationsPage: async ({page}, use) => {
 		await use(new AccountOrganizationsPage(page));
+	},
+	accountPersonUserSelectorPage: async ({page}, use) => {
+		await use(new AccountPersonUserSelectorPage(page));
 	},
 	accountRolesPage: async ({page}, use) => {
 		await use(new AccountRolesPage(page));

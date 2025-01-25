@@ -15,6 +15,7 @@ export class EditAccountPage {
 	readonly addDomainLink: Locator;
 	readonly addDomainFrame: FrameLocator;
 	readonly addressesTab: Locator;
+	readonly assignUserMessage: Locator;
 	readonly backButton: Locator;
 	readonly changeImageButton: Locator;
 	readonly channelDefaultsLink: Locator;
@@ -30,6 +31,10 @@ export class EditAccountPage {
 	readonly frameSaveButton: Locator;
 	readonly imageInput: Locator;
 	readonly page: Page;
+	readonly personAccountUserContainer: Locator;
+	readonly personAccountUserName: (name: string) => Locator;
+	readonly personAccountUserRemoveButton: Locator;
+	readonly personAccountUserSelectButton: Locator;
 	readonly removeBillingDefaultAddressButton: Locator;
 	readonly removeShippingDefaultAddressButton: Locator;
 	readonly rolesLink: Locator;
@@ -52,6 +57,7 @@ export class EditAccountPage {
 		this.addressesTab = page.getByRole('link', {
 			name: 'Addresses',
 		});
+		this.assignUserMessage = page.getByText('Assign a user to this person');
 		this.backButton = page.getByRole('link', {exact: true, name: 'Back'});
 		this.changeImageButton = page.getByLabel('Change Image');
 		this.channelDefaultsLink = page.getByRole('link', {
@@ -87,6 +93,15 @@ export class EditAccountPage {
 		});
 		this.imageInput = page.getByLabel('Image', {exact: true});
 		this.page = page;
+		this.personAccountUserContainer = page.locator(
+			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_personAccountUserContainer'
+		);
+		this.personAccountUserName = (name) =>
+			this.personAccountUserContainer.getByText(name);
+		this.personAccountUserRemoveButton =
+			this.personAccountUserContainer.getByRole('link', {name: 'Remove'});
+		this.personAccountUserSelectButton =
+			this.personAccountUserContainer.getByRole('link', {name: 'Select'});
 		this.removeBillingDefaultAddressButton = page
 			.locator('address')
 			.first()

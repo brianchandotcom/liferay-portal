@@ -77,48 +77,6 @@ definition {
 		}
 	}
 
-	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
-	@priority = 4
-	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
-		property portal.acceptance = "true";
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Person Account");
-
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "Person Account",
-			userEmailAddress = "userfn1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		Account.addNewUserToPersonAccount(
-			accountName = "Person Account",
-			userEmailAddress = "userfn2@liferay.com",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.viewEntryAccounts(
-			accountName = "Person Account",
-			accountUserName = "userfn2 userln2");
-
-		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
-
-		ManagementBar.setFilterAndOrder(filterBy = "No Assigned Account");
-
-		AccountUsers.viewEntryAccounts(
-			accountName = "No Assigned Account",
-			accountUserName = "userfn1 userln1");
-	}
-
 	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
 	@priority = 4
 	test BlockedDomainsAreInstanceWide {
@@ -291,44 +249,6 @@ definition {
 		AssetCategorization.viewCategory(categoryName = "Category Name 1");
 
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
-	}
-
-	@description = "This test assigns an existing user to account through the Users tab"
-	@priority = 4
-	test CanAssignExistingUserToAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.addUser(
-			accountName = "Account Name",
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Account.openAccountsAdmin();
-
-		Account.addAccountWithDomain(
-			accountDescription = "This is a test for adding user to account.",
-			accountName = "Account with Exist User",
-			domainNames = "liferay.com");
-
-		Account.assignUsers(
-			accountName = "Account with Exist User",
-			assigneeName = "userfn");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Manage Users",
-			rowEntry = "Account with Exist User");
-
-		Account.viewAssignee(assigneeName = "userfn");
 	}
 
 	@description = "This test assigns a role to an Account User in the Account Details page via Users tab"
@@ -534,129 +454,6 @@ definition {
 		Account.viewAccountDetails(
 			accountName = "Edit with Custom Field",
 			customFieldText = "Custom Field for Account");
-	}
-
-	@description = "This test asserts that users are correctly filtered by First Name, Last Name, and Email Address in the Assign Users Modal"
-	@priority = 4
-	test CanFilterAndOrderUsersInAssignUsersModal {
-		task ("Add an account and add 3 different users with varying names and email addresses") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Business Account",
-				accountEntryType = "Business");
-
-			JSONAccountEntryUser.addAccountEntryUser(
-				accountEntryName = "Business Account",
-				userEmailAddress = "Z-ea@liferay.com",
-				userFirstName = "A-user",
-				userLastName = "userln2",
-				userScreenName = "A-user");
-
-			JSONAccountEntryUser.addAccountEntryUser(
-				accountEntryName = "Business Account",
-				userEmailAddress = "Y-ea@liferay.com",
-				userFirstName = "B-user",
-				userLastName = "userln3",
-				userScreenName = "B-user");
-
-			JSONAccountEntryUser.addAccountEntryUser(
-				accountEntryName = "Business Account",
-				userEmailAddress = "X-ea@liferay.com",
-				userFirstName = "C-user",
-				userLastName = "userln1",
-				userScreenName = "C-user");
-		}
-
-		task ("Open and click into the Assign Users Modal") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Manage Users",
-				rowEntry = "Business Account");
-
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "Assign Users");
-
-			WaitForElementPresent(
-				key_title = "Assign Users to Business Account",
-				locator1 = "IFrame#MODAL_ANY");
-
-			SelectFrame(
-				key_title = "Assign Users to Business Account",
-				locator1 = "IFrame#MODAL_ANY");
-		}
-
-		task ("Assert users can be ordered by First Name and are in correct order") {
-			ManagementBar.setFilterAndOrder(orderBy = "First Name");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 1,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "A-user");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 2,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "B-user");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 3,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "C-user");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 4,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "Test");
-		}
-
-		task ("Assert users can be ordered by Last Name and are in correct order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Last Name");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 1,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "Test");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 2,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "userln1");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 3,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "userln2");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 4,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "userln3");
-		}
-
-		task ("Assert users can be ordered by Email Address and are in correct order") {
-			ManagementBar.setFilterAndOrder(orderBy = "Email Address");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 1,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "test@liferay.com");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 2,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "x-ea@liferay.com");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 3,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "y-ea@liferay.com");
-
-			AssertTextEquals.assertPartialText(
-				key_rowNumber = 4,
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "z-ea@liferay.com");
-		}
 	}
 
 	@description = "This tests that an admin can invite a new user with the same domain."
@@ -941,47 +738,6 @@ definition {
 		}
 	}
 
-	@description = "This test removes a user from a person account"
-	@priority = 4
-	test CanRemoveUserFromPersonAccount {
-		property portal.acceptance = "true";
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
-
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "Person Account",
-			userEmailAddress = "userfn1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Person Account");
-
-		AssertElementPresent(
-			key_userName = "userfn1",
-			locator1 = "Account#USER_TABLE_NAME");
-
-		Click(
-			key_entryName = "userfn1",
-			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
-
-		Alert.viewMutedMessage(muteMessage = "Assign a user to this person account.");
-
-		Button.clickSave();
-
-		Account.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Person Account");
-
-		AssertElementNotPresent(
-			key_userName = "userfn1",
-			locator1 = "Account#USER_TABLE_NAME");
-	}
-
 	@description = "This test asserts accurate results when searching for account roles available in an account"
 	@priority = 4
 	test CanSearchForAccountRole {
@@ -1071,58 +827,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No users were found.");
-		}
-	}
-
-	@description = "This test asserts accurate results when searching for available users in Assign User to person account modal"
-	@priority = 4
-	test CanSearchInAssignUserToPersonAccountModal {
-		task ("Given a person account and a few users") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Person Account",
-				accountEntryType = "Person");
-
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.addUser(
-				userEmailAddress = "second@liferay.com",
-				userFirstName = "secondfirstname",
-				userLastName = "secondlastname",
-				userScreenName = "secondscreenname");
-		}
-
-		task ("When a user assigns a user to a person account") {
-			Account.openAccountsAdmin();
-
-			Account.goToEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Person Account");
-
-			AssertClick(
-				locator1 = "Account#USER_SELECT_BUTTON",
-				value1 = "Select");
-
-			SelectFrame(
-				key_title = "Assign User",
-				locator1 = "IFrame#MODAL_ANY");
-		}
-
-		task ("Then the user can search for available users") {
-			Search.searchCP(searchTerm = "userea@liferay.com");
-
-			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
-
-			LexiconEntry.viewNoEntry(rowEntry = "secondfirstname secondlastname");
-
-			Search.searchCP(searchTerm = "second@liferay.com");
-
-			LexiconEntry.viewEntryName(rowEntry = "secondfirstname secondlastname");
-
-			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 		}
 	}
 
@@ -1313,41 +1017,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
-	@priority = 4
-	test NoFilterByNavigationForPersonAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Business Account",
-			accountEntryType = "Business");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
-
-		for (var accountUser : list "1,2") {
-			AccountUsers.openAccountUsersAdmin();
-
-			AccountUsers.addUser(
-				accountName = "Business Account",
-				userEmailAddress = "userea${accountUser}@liferay.com",
-				userFirstName = "userfn${accountUser}",
-				userLastName = "userln${accountUser}",
-				userScreenName = "usersn${accountUser}");
-		}
-
-		Account.openAccountsAdmin();
-
-		Account.gotoEdit(accountName = "Person Account");
-
-		AssertClick(
-			locator1 = "Account#USER_SELECT_BUTTON",
-			value1 = "Select");
-
-		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
-
-		AssertElementNotPresent(locator1 = "ManagementBar#FILTER");
-	}
-
 	@description = "This test sets a valid domain for a business account. It adds a user with a same domain and asserts no warning displays."
 	@priority = 4
 	test NoWarningDisplaysWhenAddingAUserWithValidDomain {
@@ -1507,53 +1176,6 @@ definition {
 		task ("Then the user should no longer have this account listed in their memberships") {
 			LexiconTable.viewTableEntryNotPresent(tableEntry = "Account Name");
 		}
-	}
-
-	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."
-	@priority = 4
-	test SelectingUserWillReplaceExistingUserInPersonAccount {
-		property portal.acceptance = "true";
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Business Account",
-			accountEntryType = "Business");
-
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Person Account",
-			accountEntryType = "Person");
-
-		for (var accountUser : list "1,2") {
-			AccountUsers.openAccountUsersAdmin();
-
-			AccountUsers.addUser(
-				accountName = "Business Account",
-				userEmailAddress = "userea${accountUser}@liferay.com",
-				userFirstName = "userfn${accountUser}",
-				userLastName = "userln${accountUser}",
-				userScreenName = "usersn${accountUser}");
-		}
-
-		Account.openAccountsAdmin();
-
-		Account.gotoEdit(accountName = "Person Account");
-
-		for (var navTab : list "Details,Organizations,Roles") {
-			Account.viewAssigneeTab(navTab = ${navTab});
-		}
-
-		Account.viewNoAssigneeTab(navTab = "Users");
-
-		Account.assignExistingUserToPersonAccount(accountUserName = "userfn1");
-
-		Account.openAccountsAdmin();
-
-		Account.gotoEdit(accountName = "Person Account");
-
-		Account.assignExistingUserToPersonAccount(accountUserName = "userfn2");
-
-		AssertElementNotPresent(
-			key_userName = "userfn1",
-			locator1 = "Account#USER_TABLE_NAME");
 	}
 
 	@description = "This is a use case for LPS-177878. TC-1: Verify Service Accounts portlet in CP, no password section,screen name cannot change,roles can assigned removed."

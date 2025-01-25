@@ -19,6 +19,7 @@ export class EditUserPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly membershipsAccountsTable: Locator;
 	readonly membershipsLink: Locator;
+	readonly membershipsNoAccountsMessage: Locator;
 	readonly membershipsUserGroupsTableRow: (
 		colPosition: number,
 		value: string,
@@ -99,6 +100,9 @@ export class EditUserPage {
 		};
 		this.membershipsAccountsTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_accountEntriesSearchContainer'
+		);
+		this.membershipsNoAccountsMessage = page.getByText(
+			'This user does not belong to any accounts.'
 		);
 		this.membershipsUserGroupsTableRow = async (
 			colPosition: number,

@@ -377,12 +377,11 @@ public class PortalRelease {
 	}
 
 	public String getQuarterlyReleaseBranchName() {
-		Matcher quarterlyReleaseBranchMatcher =
-			_quarterlyReleaseVersionPattern.matcher(_portalVersion);
+		Matcher matcher = _quarterlyReleaseVersionPattern.matcher(
+			_portalVersion);
 
-		if (quarterlyReleaseBranchMatcher.find()) {
-			return "release-" +
-				quarterlyReleaseBranchMatcher.group("branchVersion");
+		if (matcher.find()) {
+			return "release-" + matcher.group("branchVersion");
 		}
 
 		return "master";

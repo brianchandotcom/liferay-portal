@@ -183,9 +183,9 @@ export interface ISelectionFilter extends IFilter {
 
 export interface ISystemDataSet {
 	additionalAPIURLParameters: string;
-	created: boolean;
 	defaultItemsPerPage: number;
 	description: string;
+	imported: boolean;
 	name: string;
 	restApplication: string;
 	restEndpoint: string;

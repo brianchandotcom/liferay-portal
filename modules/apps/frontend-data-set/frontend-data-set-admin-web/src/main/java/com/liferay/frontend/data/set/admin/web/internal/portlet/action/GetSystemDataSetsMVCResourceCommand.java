@@ -103,12 +103,12 @@ public class GetSystemDataSetsMVCResourceCommand
 							"additionalAPIURLParameters",
 							systemFDSEntry.getAdditionalAPIURLParameters()
 						).put(
-							"created", objectEntry != null
-						).put(
 							"defaultItemsPerPage",
 							systemFDSEntry.getDefaultItemsPerPage()
 						).put(
 							"description", systemFDSEntry.getDescription()
+						).put(
+							"imported", objectEntry != null
 						).put(
 							"name", systemFDSEntry.getName()
 						).put(

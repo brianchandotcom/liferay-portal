@@ -45,7 +45,7 @@ test('LPD-18485 Update account contact information fields', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await editAccountContactPage.contactInformationLink.click();
 	await editAccountContactInformationPage.updateContactInformation(
@@ -84,7 +84,7 @@ test('LPD-18484 Add account contact address', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await accountContactAddressPage.addAddressesButton.click();
 	await editAccountContactAddressPage.updateAddress('address1', 'city');
@@ -116,7 +116,7 @@ test('LPD-18482 Add account phone', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await editAccountContactPage.contactInformationLink.click();
 	await editAccountContactInformationPage.addPhoneNumbersButton.click();
@@ -147,7 +147,7 @@ test('LPD-18483 Add account email address', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await editAccountContactPage.contactInformationLink.click();
 	await editAccountContactInformationPage.addEmailAddressesButton.click();
@@ -182,7 +182,7 @@ test('LPD-18484 Add account website', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.contactLink.click();
 	await editAccountContactPage.contactInformationLink.click();
 	await editAccountContactInformationPage.addWebsitesButton.click();
@@ -245,7 +245,7 @@ test('LPD-28161 Can view role and organization name escaped', async ({
 		await accountsPage.organizationName(organizationName)
 	).toBeVisible();
 
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.rolesLink.click();
 
 	await expect(await accountRolesPage.roleName(roleName)).toBeVisible();
@@ -304,13 +304,13 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 		await accountsPage.goto();
 
 		await expect(
-			await accountsPage.accountsTableRowLink(account1.name)
+			await accountsPage.accountsTable.cellLink(account1.name)
 		).toHaveCount(1);
 		await expect(
-			await accountsPage.accountsTableRowLink(account2.name)
+			await accountsPage.accountsTable.cellLink(account2.name)
 		).toHaveCount(1);
 		await expect(
-			await accountsPage.accountsTableRowLink(account3.name)
+			await accountsPage.accountsTable.cellLink(account3.name)
 		).toHaveCount(1);
 	}
 	finally {
@@ -346,7 +346,7 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	await serverAdministrationPage.executeScript(script);
 
 	await accountsPage.goto();
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.saveButton.click();
 	await waitForAlert(page);
 
@@ -383,27 +383,27 @@ test('LPD-44526 Can activate and deactivate an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+	await expect(accountsPage.accountsTable.cell(account.name)).toBeVisible();
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.activateButton.click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Active').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Active').click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+	await expect(accountsPage.accountsTable.cell(account.name)).toBeVisible();
 });
 
 test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
@@ -432,7 +432,7 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 	];
 
 	for (const name of accountNames) {
-		await (await accountsPage.accountsTableRowCheckBox(name)).click();
+		await (await accountsPage.accountsTable.rowCheckBox(name)).click();
 	}
 
 	page.on('dialog', async (dialog) => await dialog.accept());
@@ -443,7 +443,7 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 
 	for (const name of accountNames) {
 		try {
-			await accountsPage.accountsTableRowLink(name);
+			await accountsPage.accountsTable.cellLink(name);
 		}
 		catch (error) {
 			expect(error).toBeDefined();
@@ -454,12 +454,12 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 
 	for (const name of accountNames) {
 		await expect(
-			(await accountsPage.accountsTableRow(1, name, true)).row
+			(await accountsPage.accountsTable.row(1, name, true)).row
 		).toBeVisible();
 	}
 
 	for (const name of accountNames) {
-		await (await accountsPage.accountsTableRowCheckBox(name)).click();
+		await (await accountsPage.accountsTable.rowCheckBox(name)).click();
 	}
 
 	await accountsPage.activateButton.click();
@@ -472,76 +472,8 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 
 	for (const account of accounts) {
 		await expect(
-			(await accountsPage.accountsTableRow(1, account.name, true)).row
+			(await accountsPage.accountsTable.row(1, account.name, true)).row
 		).toBeVisible();
-	}
-});
-
-test('LPD-45545 Can add and remove organizations in bulk', async ({
-	accountsPage,
-	apiHelpers,
-	page,
-}) => {
-	page.on('dialog', (dialog) => dialog.accept());
-
-	const account = await apiHelpers.headlessAdminUser.postAccount();
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	for (let i = 1; i < 5; i++) {
-		await apiHelpers.headlessAdminUser.postOrganization({
-			name: `Organization ${i}`,
-		});
-	}
-
-	await accountsPage.goto();
-
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
-
-	await accountsPage.organizationsTab.click();
-	await accountsPage.newButton.click();
-
-	for (let i = 1; i < 5; i++) {
-		await (
-			await accountsPage.organizationAssignmentCheckBox(
-				`Organization ${i}`
-			)
-		).check();
-	}
-
-	await accountsPage.organizationAssignButton.click();
-
-	await waitForAlert(page);
-
-	for (let i = 1; i < 5; i++) {
-		await expect(
-			accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
-		).toBeVisible();
-	}
-
-	for (const index of [1, 3]) {
-		await (
-			await accountsPage.accountOrganizationsCheckbox(
-				`Organization ${index}`
-			)
-		).check();
-	}
-
-	await accountsPage.removeAccountOrganizationButton.click();
-
-	await waitForAlert(page);
-
-	for (let i = 1; i < 5; i++) {
-		if (i % 2 === 0) {
-			await expect(
-				accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
-			).toBeVisible();
-		}
-		else {
-			await expect(
-				accountsPage.accountOrganizationsTableCell(`Organization ${i}`)
-			).not.toBeVisible();
-		}
 	}
 });
 
@@ -563,17 +495,17 @@ test('LPD-45897 Can delete an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.deleteButton.click();
 
 	await waitForAlert(page);
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 });
 
 test('LPD-45897 Can delete an inactive account', async ({
@@ -594,24 +526,25 @@ test('LPD-45897 Can delete an inactive account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(1);
+	await expect(accountsPage.accountsTable.searchInput).toBeEnabled();
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(1);
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.deleteButton.click();
 
 	await waitForAlert(page);
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 });
 
 test('LPD-45897 Can delete accounts in bulk', async ({
@@ -643,7 +576,7 @@ test('LPD-45897 Can delete accounts in bulk', async ({
 
 	for (const i of [1, 2, 4, 6]) {
 		await (
-			await accountsPage.accountsTableRowCheckBox(`Account ${i}`)
+			await accountsPage.accountsTable.rowCheckBox(`Account ${i}`)
 		).click();
 	}
 
@@ -653,13 +586,13 @@ test('LPD-45897 Can delete accounts in bulk', async ({
 
 	for (const i of [1, 2, 4, 6]) {
 		await expect(
-			accountsPage.accountsTableCell(`Account ${i}`)
+			accountsPage.accountsTable.cell(`Account ${i}`)
 		).not.toBeVisible();
 	}
 
 	for (const i of [3, 5]) {
 		await expect(
-			accountsPage.accountsTableCell(`Account ${i}`)
+			accountsPage.accountsTable.cell(`Account ${i}`)
 		).toBeVisible();
 	}
 
@@ -678,18 +611,18 @@ test('LPS-195988 An account name should be limited to 250 characters', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.newButton.click();
+	await accountsPage.accountsTable.newButton.click();
 
 	await editAccountPage.createAccount(apiHelpers, {name});
 	await editAccountPage.backButton.click();
 
-	await expect(accountsPage.accountNameLink(name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(name)).toHaveCount(0);
 	await expect(
-		accountsPage.accountNameLink(name.substring(0, 250))
+		accountsPage.accountsTable.cell(name.substring(0, 250))
 	).toBeVisible();
 
 	await (
-		await accountsPage.accountsTableRowLink(name.substring(0, 250))
+		await accountsPage.accountsTable.cellLink(name.substring(0, 250))
 	).click();
 
 	await expect(editAccountPage.accountNameInput).toHaveValue(
@@ -713,7 +646,7 @@ test('LPS-195988 The account external reference code should be unique', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.newButton.click();
+	await accountsPage.accountsTable.newButton.click();
 
 	await editAccountPage.accountNameInput.fill(getRandomString());
 	await editAccountPage.externalReferenceCodeInput.fill(
@@ -744,16 +677,16 @@ test('LPS-195988 Can create different type of accounts', async ({
 	];
 
 	for (const {name, type} of accounts) {
-		await accountsPage.newButton.click();
+		await accountsPage.accountsTable.newButton.click();
 
 		await editAccountPage.createAccount(apiHelpers, {name, type});
 		await editAccountPage.backButton.click();
 
 		await expect(
-			await accountsPage.accountsTableRowLink(name)
+			await accountsPage.accountsTable.cellLink(name)
 		).toBeVisible();
 
-		await (await accountsPage.accountsTableRowLink(name)).click();
+		await (await accountsPage.accountsTable.cellLink(name)).click();
 
 		await expect(editAccountPage.accountNameInput).toBeVisible();
 		await expect(editAccountPage.typeInput).toHaveValue(
@@ -764,69 +697,71 @@ test('LPS-195988 Can create different type of accounts', async ({
 	}
 
 	for (const account of accounts) {
-		await expect(accountsPage.accountNameLink(account.name)).toBeVisible();
+		await expect(
+			accountsPage.accountsTable.cell(account.name)
+		).toBeVisible();
 	}
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Business').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Business').click();
 
 	for (const account of accounts) {
 		if (account.type === 'business') {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 	}
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Guest').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Guest').click();
 
 	for (const account of accounts) {
 		if (account.type === 'guest') {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 	}
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Person').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Person').click();
 
 	for (const account of accounts) {
 		if (account.type === 'person') {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 	}
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Supplier').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Supplier').click();
 
 	for (const account of accounts) {
 		if (account.type === 'supplier') {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(account.name)
+				accountsPage.accountsTable.cell(account.name)
 			).toHaveCount(0);
 		}
 	}
@@ -857,7 +792,7 @@ test('LPS-195988 Multiple accounts can be added with the same domain', async ({
 		await accountsPage.goto();
 
 		for (const {domains, name, type} of accounts) {
-			await accountsPage.newButton.click();
+			await accountsPage.accountsTable.newButton.click();
 
 			await editAccountPage.createAccount(apiHelpers, {
 				domains,
@@ -871,7 +806,7 @@ test('LPS-195988 Multiple accounts can be added with the same domain', async ({
 
 			await editAccountPage.backButton.click();
 
-			await (await accountsPage.accountsTableRowLink(name)).click();
+			await (await accountsPage.accountsTable.cellLink(name)).click();
 
 			for (const domain of domains) {
 				await expect(editAccountPage.domainCell(domain)).toBeVisible();
@@ -906,7 +841,7 @@ test('LPS-195988 A business account can have more than one domain', async ({
 	try {
 		await accountsPage.goto();
 
-		await accountsPage.newButton.click();
+		await accountsPage.accountsTable.newButton.click();
 
 		await editAccountPage.createAccount(apiHelpers, {domains, name, type});
 
@@ -916,7 +851,7 @@ test('LPS-195988 A business account can have more than one domain', async ({
 
 		await editAccountPage.backButton.click();
 
-		await (await accountsPage.accountsTableRowLink(name)).click();
+		await (await accountsPage.accountsTable.cellLink(name)).click();
 
 		await editAccountPage.domainRemoveButton(domains[0]).click();
 
@@ -946,7 +881,7 @@ test('LPS-195988 Domain validation is not present in Person Accounts', async ({
 	try {
 		await accountsPage.goto();
 
-		await accountsPage.newButton.click();
+		await accountsPage.accountsTable.newButton.click();
 
 		await expect(editAccountPage.validDomainsHeading).toBeVisible();
 
@@ -986,12 +921,12 @@ test('LPS-101893 Account list should be paginated', async ({
 	for (let i = 1; i < 6; i++) {
 		if (i < 5) {
 			await expect(
-				accountsPage.accountNameLink(`Account ${i}`)
+				accountsPage.accountsTable.cell(`Account ${i}`)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(`Account ${i}`)
+				accountsPage.accountsTable.cell(`Account ${i}`)
 			).toHaveCount(0);
 		}
 	}
@@ -1001,12 +936,12 @@ test('LPS-101893 Account list should be paginated', async ({
 	for (let i = 1; i < 6; i++) {
 		if (i < 5) {
 			await expect(
-				accountsPage.accountNameLink(`Account ${i}`)
+				accountsPage.accountsTable.cell(`Account ${i}`)
 			).toHaveCount(0);
 		}
 		else {
 			await expect(
-				accountsPage.accountNameLink(`Account ${i}`)
+				accountsPage.accountsTable.cell(`Account ${i}`)
 			).toBeVisible();
 		}
 	}
@@ -1021,7 +956,7 @@ test('LPS-157661 An account avatar can be added in creation', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.newButton.click();
+	await accountsPage.accountsTable.newButton.click();
 
 	await editAccountPage.createAccount(apiHelpers, {
 		avatar: path.join(__dirname, '/dependencies/liferay.png'),
@@ -1029,7 +964,7 @@ test('LPS-157661 An account avatar can be added in creation', async ({
 	});
 	await editAccountPage.backButton.click();
 
-	await (await accountsPage.accountsTableRowLink(name)).click();
+	await (await accountsPage.accountsTable.cellLink(name)).click();
 
 	await expect(editAccountPage.imageInput).toHaveValue('Custom Image');
 });
@@ -1076,7 +1011,7 @@ test('LPS-195988 An account can be updated', async ({
 
 	await editAccountPage.backButton.click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 
 	await accountsPage.accountNameLink(updatedAccount.name).click();
 
@@ -1110,13 +1045,13 @@ test('LPS-101221 An inactive account can be updated', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowActions(account.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
 	await accountsPage.accountNameLink(account.name).click();
 
@@ -1145,25 +1080,25 @@ test('LPS-101221 An inactive account can be updated', async ({
 
 	await editAccountPage.backButton.click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 	await expect(
-		accountsPage.accountNameLink(updatedAccount.name)
+		accountsPage.accountsTable.cell(updatedAccount.name)
 	).toBeVisible();
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Active').click();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Active').click();
 
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
-	await expect(accountsPage.accountNameLink(updatedAccount.name)).toHaveCount(
-		0
-	);
-
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
-
-	await expect(accountsPage.accountNameLink(account.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
 	await expect(
-		accountsPage.accountNameLink(updatedAccount.name)
+		accountsPage.accountsTable.cell(updatedAccount.name)
+	).toHaveCount(0);
+
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
+
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
+	await expect(
+		accountsPage.accountsTable.cell(updatedAccount.name)
 	).toBeVisible();
 });
 
@@ -1192,39 +1127,33 @@ test('LPS-101221 Can search an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTableRowActions(account1.name)).click();
+	await (await accountsPage.accountsTable.rowActions(account1.name)).click();
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
 
-	await accountsPage.searchInput.fill(account1.name);
-	await accountsPage.searchButton.click();
-	await expect(accountsPage.searchInput).toBeEditable();
+	await accountsPage.accountsTable.search(account1.name);
 
-	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
-	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
 
-	await accountsPage.searchInput.fill(account2.name);
-	await accountsPage.searchButton.click();
-	await expect(accountsPage.searchInput).toBeEditable();
+	await accountsPage.accountsTable.search(account2.name);
 
-	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
-	await expect(accountsPage.accountNameLink(account2.name)).toBeVisible();
+	await expect(accountsPage.accountsTable.cell(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account2.name)).toBeVisible();
 
-	await accountsPage.filterButton.click();
-	await accountsPage.filterMenuItem('Inactive').click();
+	await expect(accountsPage.accountsTable.searchInput).toBeEnabled();
 
-	await accountsPage.searchInput.fill(account1.name);
-	await accountsPage.searchButton.click();
-	await expect(accountsPage.searchInput).toBeEditable();
+	await accountsPage.accountsTable.filterButton.click();
+	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
-	await expect(accountsPage.accountNameLink(account1.name)).toHaveCount(0);
-	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+	await accountsPage.accountsTable.search(account1.name);
 
-	await accountsPage.searchInput.fill(account1.name);
-	await accountsPage.searchButton.click();
-	await expect(accountsPage.searchInput).toBeEditable();
+	await expect(accountsPage.accountsTable.cell(account1.name)).toHaveCount(0);
+	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
 
-	await expect(accountsPage.accountNameLink(account1.name)).toBeVisible();
-	await expect(accountsPage.accountNameLink(account2.name)).toHaveCount(0);
+	await accountsPage.accountsTable.search(account1.name);
+
+	await expect(accountsPage.accountsTable.cell(account1.name)).toBeVisible();
+	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
 });

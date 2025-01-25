@@ -5,94 +5,23 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {searchTableRowByValue} from './AccountsPage';
+import {DataTablePage} from './DataTablePage';
 
 export class AccountAddressesPage {
-	readonly addAddressButton: Locator;
-	readonly addressNameLink: (name: string) => Locator;
-	readonly addressesTable: Locator;
-	readonly addressesTableCell: (name: string) => Locator;
-	readonly addressesTableRow: (
-		colPosition: number,
-		value: string,
-		strictEqual?: boolean
-	) => Promise<{column: Locator; row: Locator}>;
-	readonly addressesTableRowActions: (name: string) => Promise<Locator>;
-	readonly addressesTableRowCheckBox: (name: string) => Promise<Locator>;
+	readonly addressesTable: DataTablePage;
 	readonly deleteButton: Locator;
-	readonly filterButton: Locator;
-	readonly filterMenuItem: (option: string) => Locator;
 	readonly page: Page;
-	readonly searchInput: Locator;
-	readonly searchButton: Locator;
 
 	constructor(page: Page) {
-		this.addAddressButton = page.getByRole('link', {name: 'Add Address'});
-		this.addressNameLink = (name) => {
-			return page.getByRole('link', {exact: true, name});
-		};
-		this.addressesTable = page.locator(
-			'#portlet_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet'
+		this.addressesTable = new DataTablePage(
+			page,
+			page.locator(
+				'#portlet_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet'
+			)
 		);
-		this.addressesTableCell = (name: string) => {
-			return this.page.getByRole('cell', {
-				exact: true,
-				name: `${name}`,
-			});
-		};
-		this.addressesTableRow = async (
-			colPosition: number,
-			value: string,
-			strictEqual: boolean = false
-		) => {
-			return await searchTableRowByValue(
-				this.addressesTable,
-				colPosition,
-				value,
-				strictEqual
-			);
-		};
-		this.addressesTableRowActions = async (name: string) => {
-			const addressesTableRow = await this.addressesTableRow(
-				1,
-				name,
-				true
-			);
-
-			if (addressesTableRow && addressesTableRow.column) {
-				return addressesTableRow.row.getByRole('button');
-			}
-
-			throw new Error(`Cannot locate address row with name ${name}`);
-		};
-		this.addressesTableRowCheckBox = async (name: string) => {
-			const addressesTableRow = await this.addressesTableRow(
-				1,
-				name,
-				true
-			);
-
-			if (addressesTableRow && addressesTableRow.row) {
-				return addressesTableRow.row.getByRole('checkbox', {
-					name,
-				});
-			}
-		};
 		this.deleteButton = page
 			.getByRole('button', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
-		this.filterButton = page.getByRole('button', {
-			exact: true,
-			name: 'Filter',
-		});
-		this.filterMenuItem = (option: string) => {
-			return page.getByRole('menuitem', {
-				exact: true,
-				name: option,
-			});
-		};
 		this.page = page;
-		this.searchInput = page.getByPlaceholder('Search for', {exact: true});
-		this.searchButton = page.getByLabel('Search for', {exact: true});
 	}
 }

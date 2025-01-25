@@ -518,6 +518,9 @@ export class DataApiHelpers extends ApiHelpers {
 					item.id
 				);
 			}
+			else if (item.type === 'role') {
+				await this.headlessAdminUser.deleteRole(item.id);
+			}
 			else if (item.type === 'roleUserAccountAssociation') {
 				const [roleId, userId] = item.id.split('_');
 				await this.headlessAdminUser.deleteRoleUserAccountAssociation(

@@ -56,7 +56,7 @@ const SystemDataSetsView = ({
 				return (
 					<ClayList.Item
 						className={classNames({
-							disabled: item.created,
+							disabled: item.imported,
 							selectable,
 							selected: selectedItemsValue?.includes(
 								item[selectedItemsKey]
@@ -111,7 +111,7 @@ const SystemDataSetsView = ({
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 
-						{item.created && (
+						{item.imported && (
 							<ClayList.ItemField>
 								<ClayLabel
 									className="created-label"

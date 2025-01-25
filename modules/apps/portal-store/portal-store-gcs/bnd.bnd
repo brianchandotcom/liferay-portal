@@ -2,12 +2,6 @@ Bundle-Name: Liferay Portal Store GCS
 Bundle-SymbolicName: com.liferay.portal.store.gcs
 Bundle-Version: 3.0.35
 Import-Package:\
-	!com.google.api.client.json.gson.*,\
-	!com.google.appengine.api.datastore,\
-	!com.google.appengine.api.memcache,\
-	!com.google.appengine.api.urlfetch,\
-	!com.google.errorprone.annotations.*,\
-	\
 	!org.apache.avalon.framework.logger,\
 	!org.apache.log,\
 	\

@@ -447,9 +447,7 @@ test('LPD-28220 Can user with account manager role view and manage channel defau
 			accountManagementWidgetPage.accountCell(account1.name)
 		).toBeVisible();
 		await expect(
-			await accountManagementWidgetPage.accountsTableRowLink(
-				account1.name
-			)
+			accountManagementWidgetPage.accountNameLink(account1.name)
 		).toHaveCount(0);
 		await expect(
 			accountManagementWidgetPage.accountCell(account2.name)
@@ -474,11 +472,9 @@ test('LPD-28220 Can user with account manager role view and manage channel defau
 		for (const account of accounts) {
 			await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-			await (
-				await accountManagementWidgetPage.accountsTableRowLink(
-					account.name
-				)
-			).click();
+			await accountManagementWidgetPage
+				.accountNameLink(account.name)
+				.click();
 
 			await accountsPage.channelDefaultsTab.click();
 

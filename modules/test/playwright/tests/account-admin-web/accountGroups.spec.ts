@@ -52,7 +52,7 @@ test('LPD-25948 Can search for account group', async ({
 	);
 
 	await accountsPage.goto();
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await accountsPage.accountGroupsTab.click();
 
 	await accountAccountGroupsPage.searchInput.fill(accountGroup1.name);
@@ -113,7 +113,7 @@ test('LPD-28159 Account groups are displayed in account details page', async ({
 	);
 
 	await accountsPage.goto();
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cell(account.name)).click();
 	await accountsPage.accountGroupsTab.click();
 
 	await expect(

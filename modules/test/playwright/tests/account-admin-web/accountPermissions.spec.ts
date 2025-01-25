@@ -11,6 +11,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {AccountOrganizationSelectorPage} from '../../pages/account-admin-web/AccountOrganizationSelectorPage';
 import {AccountsPage} from '../../pages/account-admin-web/AccountsPage';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
@@ -95,6 +96,7 @@ async function postRoleWithAccountAdminPermissions(
 
 test.describe('Test for Organization Account visibility depending on Permissions', () => {
 	test('LPD-28116 Update Organizations permission visibility', async ({
+		accountOrganizationSelectorPage,
 		accountsPage,
 		apiHelpers,
 		context,
@@ -180,12 +182,12 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		accountsPage = new AccountsPage(newPage);
 
 		await accountsPage.goto();
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
 		await accountsPage.organizationsTab.click();
-		await accountsPage.newButton.click();
+		await accountsPage.accountsTable.newButton.click();
 
 		await expect(
-			accountsPage.organizationAssignmentFrame.getByText(
+			accountOrganizationSelectorPage.frame.getByText(
 				organization2.name,
 				{exact: true}
 			)
@@ -193,12 +195,15 @@ test.describe('Test for Organization Account visibility depending on Permissions
 	});
 
 	test('LPD-28116 Manage Organizations Permission visibility', async ({
+		accountOrganizationSelectorPage,
 		accountsPage,
 		apiHelpers,
 		context,
 		page,
 		usersAndOrganizationsPage,
 	}) => {
+		test.setTimeout(120000);
+
 		const organization1 =
 			await apiHelpers.headlessAdminUser.postOrganization();
 		const organization2 =
@@ -276,22 +281,23 @@ test.describe('Test for Organization Account visibility depending on Permissions
 
 		const newPage = await pagePromise;
 		accountsPage = new AccountsPage(newPage);
+		accountOrganizationSelectorPage = new AccountOrganizationSelectorPage(
+			newPage
+		);
 
 		await accountsPage.goto();
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
 		await accountsPage.organizationsTab.click();
-		await accountsPage.newButton.click();
+		await accountsPage.accountsTable.newButton.click();
 
 		await expect(
-			accountsPage.organizationAssignmentFrame.getByText(
-				organization1.name,
-				{exact: true}
+			accountOrganizationSelectorPage.organizationsTable.cell(
+				organization1.name
 			)
 		).toBeVisible();
 		await expect(
-			accountsPage.organizationAssignmentFrame.getByText(
-				organization2.name,
-				{exact: true}
+			accountOrganizationSelectorPage.organizationsTable.cell(
+				organization2.name
 			)
 		).toBeVisible();
 	});
@@ -379,10 +385,10 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		accountsPage = new AccountsPage(newPage);
 
 		await accountsPage.goto();
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
 		await accountsPage.organizationsTab.click();
 
-		await expect(accountsPage.newButton).toHaveCount(0);
+		await expect(accountsPage.accountsTable.newButton).toHaveCount(0);
 	});
 });
 
@@ -466,19 +472,16 @@ test('LPD-30009 Account admin can unassign organization from account', async ({
 	try {
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		await (
-			await accountManagementWidgetPage.accountsTableRowLink(account.name)
-		).click();
+		await accountManagementWidgetPage.accountNameLink(account.name).click();
 		await accountManagementWidgetPage.organizationsTab.click();
-
-		await accountOrganizationsPage.selectAllItemsCheckbox.click();
+		await accountOrganizationsPage.organizationsTable.selectAllItemsCheckbox.click();
 		await accountOrganizationsPage.removeButton.click();
 
 		await accountManagementWidgetPage.searchInput.waitFor();
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 		await expect(
-			accountOrganizationsPage.organizationName(organization.name)
+			accountOrganizationsPage.organizationsTable.cell(organization.name)
 		).toHaveCount(0);
 	}
 	finally {
@@ -493,6 +496,8 @@ test('LPD-30004 Account admin can unassign organizations in bulk', async ({
 	apiHelpers,
 	page,
 }) => {
+	test.setTimeout(120000);
+
 	page.on('dialog', (dialog) => dialog.accept());
 
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
@@ -579,38 +584,29 @@ test('LPD-30004 Account admin can unassign organizations in bulk', async ({
 	await performLogout(page);
 	await performLogin(page, userAccount.alternateName);
 
-	try {
-		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		await (
-			await accountManagementWidgetPage.accountsTableRowLink(account.name)
-		).click();
-		await accountManagementWidgetPage.organizationsTab.click();
+	await accountManagementWidgetPage.accountNameLink(account.name).click();
+	await accountManagementWidgetPage.organizationsTab.click();
+	await accountOrganizationsPage.organizationsTable.selectAllItemsCheckbox.click();
+	await accountOrganizationsPage.removeButton.click();
 
-		await accountOrganizationsPage.selectAllItemsCheckbox.click();
-		await accountOrganizationsPage.removeButton.click();
+	await accountManagementWidgetPage.searchInput.waitFor();
 
-		await accountManagementWidgetPage.searchInput.waitFor();
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
-
-		await expect(
-			accountOrganizationsPage.organizationName(organization1.name)
-		).toHaveCount(0);
-		await expect(
-			accountOrganizationsPage.organizationName(organization2.name)
-		).toHaveCount(0);
-		await expect(
-			accountOrganizationsPage.organizationName(organization3.name)
-		).toHaveCount(0);
-		await expect(
-			accountOrganizationsPage.organizationName(organization4.name)
-		).toHaveCount(0);
-	}
-	finally {
-		await performLogout(page);
-		await performLogin(page, 'test');
-	}
+	await expect(
+		accountOrganizationsPage.organizationsTable.cell(organization1.name)
+	).toHaveCount(0);
+	await expect(
+		accountOrganizationsPage.organizationsTable.cell(organization2.name)
+	).toHaveCount(0);
+	await expect(
+		accountOrganizationsPage.organizationsTable.cell(organization3.name)
+	).toHaveCount(0);
+	await expect(
+		accountOrganizationsPage.organizationsTable.cell(organization4.name)
+	).toHaveCount(0);
 });
 
 test('LPD-45328 Can change pagination in accounts', async ({

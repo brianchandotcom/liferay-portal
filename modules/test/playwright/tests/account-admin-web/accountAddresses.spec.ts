@@ -61,9 +61,9 @@ test('LPD-46415 Can add an address to an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account1.name).click();
+	await accountsPage.accountsTable.valueLink(account1.name).click();
 	await editAccountPage.addressesTab.click();
-	await accountAddressesPage.addAddressButton.click();
+	await accountAddressesPage.addressesTable.newButton.click();
 
 	address = {
 		...address,
@@ -71,10 +71,10 @@ test('LPD-46415 Can add an address to an account', async ({
 	};
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 
-	await accountAddressesPage.addressNameLink(address.name).click();
+	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
 	await expect(editAccountAddressPage.cityInput).toHaveValue(address.city);
 	await expect(editAccountAddressPage.countryInput).toHaveValue(
@@ -93,11 +93,11 @@ test('LPD-46415 Can add an address to an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account2.name).click();
+	await accountsPage.accountsTable.valueLink(account2.name).click();
 	await editAccountPage.addressesTab.click();
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toHaveCount(0);
 });
 
@@ -136,11 +136,11 @@ test('LPD-46415 Can paginate the addresses of an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
@@ -150,12 +150,12 @@ test('LPD-46415 Can paginate the addresses of an account', async ({
 	for (const [index, address] of addresses.entries()) {
 		if (index < 4) {
 			await expect(
-				accountAddressesPage.addressNameLink(address.name)
+				accountAddressesPage.addressesTable.valueLink(address.name)
 			).toBeVisible();
 		}
 		else {
 			await expect(
-				accountAddressesPage.addressNameLink(address.name)
+				accountAddressesPage.addressesTable.valueLink(address.name)
 			).toHaveCount(0);
 		}
 	}
@@ -165,12 +165,12 @@ test('LPD-46415 Can paginate the addresses of an account', async ({
 	for (const [index, address] of addresses.entries()) {
 		if (index < 4) {
 			await expect(
-				accountAddressesPage.addressNameLink(address.name)
+				accountAddressesPage.addressesTable.valueLink(address.name)
 			).toHaveCount(0);
 		}
 		else {
 			await expect(
-				accountAddressesPage.addressNameLink(address.name)
+				accountAddressesPage.addressesTable.valueLink(address.name)
 			).toBeVisible();
 		}
 	}
@@ -206,9 +206,9 @@ test('LPD-46415 Can update the address type of an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
-	await accountAddressesPage.addAddressButton.click();
+	await accountAddressesPage.addressesTable.newButton.click();
 
 	address = {
 		...address,
@@ -216,10 +216,10 @@ test('LPD-46415 Can update the address type of an account', async ({
 	};
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 
-	await accountAddressesPage.addressNameLink(address.name).click();
+	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
 	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
 
@@ -231,7 +231,7 @@ test('LPD-46415 Can update the address type of an account', async ({
 
 	await waitForAlert(page);
 
-	await accountAddressesPage.addressNameLink(address.name).click();
+	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
 	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
 
@@ -245,7 +245,7 @@ test('LPD-46415 Can update the address type of an account', async ({
 
 	await waitForAlert(page);
 
-	await accountAddressesPage.addressNameLink(address.name).click();
+	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
 	await expect(editAccountAddressPage.typeInput).toHaveValue(address.typeId);
 });
@@ -275,18 +275,18 @@ test('LPD-46415 Can delete an address of an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
-	await accountAddressesPage.addAddressButton.click();
+	await accountAddressesPage.addressesTable.newButton.click();
 
 	await editAccountAddressPage.addAddress(address);
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 
 	await (
-		await accountAddressesPage.addressesTableRowActions(address.name)
+		await accountAddressesPage.addressesTable.rowActions(address.name)
 	).click();
 	await accountAddressesPage.deleteButton.click();
 
@@ -326,30 +326,30 @@ test('LPD-46415 Can delete addresses of an account in bulk', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toBeVisible();
 
 	await (
-		await accountAddressesPage.addressesTableRowCheckBox(addresses[0].name)
+		await accountAddressesPage.addressesTable.rowCheckBox(addresses[0].name)
 	).check();
 	await (
-		await accountAddressesPage.addressesTableRowCheckBox(addresses[1].name)
+		await accountAddressesPage.addressesTable.rowCheckBox(addresses[1].name)
 	).check();
 
 	await accountAddressesPage.deleteButton.click();
@@ -357,13 +357,13 @@ test('LPD-46415 Can delete addresses of an account in bulk', async ({
 	await waitForAlert(page);
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toBeVisible();
 });
 
@@ -397,9 +397,9 @@ test('LPD-46415 Can update the address of an account', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
-	await accountAddressesPage.addAddressButton.click();
+	await accountAddressesPage.addressesTable.newButton.click();
 
 	address = {
 		...address,
@@ -407,10 +407,10 @@ test('LPD-46415 Can update the address of an account', async ({
 	};
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 
-	await accountAddressesPage.addressNameLink(address.name).click();
+	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
 	const updatedAddress = {
 		city: getRandomString(),
@@ -460,13 +460,15 @@ test('LPD-46415 Can update the address of an account', async ({
 	await waitForAlert(page);
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(updatedAddress.name)
+		accountAddressesPage.addressesTable.valueLink(updatedAddress.name)
 	).toBeVisible();
 
-	await accountAddressesPage.addressNameLink(updatedAddress.name).click();
+	await accountAddressesPage.addressesTable
+		.valueLink(updatedAddress.name)
+		.click();
 
 	await expect(editAccountAddressPage.nameInput).toHaveValue(
 		updatedAddress.name
@@ -534,69 +536,61 @@ test('LPD-46415 Can search / filter an account address', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
 
-	await accountAddressesPage.searchInput.fill(getRandomString());
-	await accountAddressesPage.searchButton.click();
-	await expect(accountAddressesPage.searchInput).toBeEditable();
+	await accountAddressesPage.addressesTable.search(getRandomString());
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toHaveCount(0);
 
-	await accountAddressesPage.searchInput.fill(addresses[0].name);
-	await accountAddressesPage.searchButton.click();
-	await expect(accountAddressesPage.searchInput).toBeEditable();
+	await accountAddressesPage.addressesTable.search(addresses[0].name);
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toHaveCount(0);
 
-	await accountAddressesPage.searchInput.fill(addresses[1].name);
-	await accountAddressesPage.searchButton.click();
-	await expect(accountAddressesPage.searchInput).toBeEditable();
+	await accountAddressesPage.addressesTable.search(addresses[1].name);
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toHaveCount(0);
 
-	await accountAddressesPage.searchInput.fill('');
-	await accountAddressesPage.searchButton.click();
-	await expect(accountAddressesPage.searchInput).toBeEditable();
+	await accountAddressesPage.addressesTable.search('');
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toBeVisible();
 
 	for (const searchTerm of [
@@ -606,43 +600,41 @@ test('LPD-46415 Can search / filter an account address', async ({
 		'Liferay',
 		'116023',
 	]) {
-		await accountAddressesPage.searchInput.fill(searchTerm);
-		await accountAddressesPage.searchButton.click();
-		await expect(accountAddressesPage.searchInput).toBeEditable();
+		await accountAddressesPage.addressesTable.search(searchTerm);
 
 		await expect(
-			accountAddressesPage.addressNameLink(addresses[0].name)
+			accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 		).toBeVisible();
 	}
 
-	await accountAddressesPage.searchInput.fill('');
-	await accountAddressesPage.searchButton.click();
-	await expect(accountAddressesPage.searchInput).toBeEditable();
+	await accountAddressesPage.addressesTable.search('');
 
-	await accountAddressesPage.filterButton.click();
-	await accountAddressesPage.filterMenuItem('Billing').click();
+	await accountAddressesPage.addressesTable.filterButton.click();
+	await accountAddressesPage.addressesTable.filterMenuItem('Billing').click();
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toBeVisible();
 
-	await accountAddressesPage.filterButton.click();
-	await accountAddressesPage.filterMenuItem('Shipping').click();
+	await accountAddressesPage.addressesTable.filterButton.click();
+	await accountAddressesPage.addressesTable
+		.filterMenuItem('Shipping')
+		.click();
 
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[0].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[0].name)
 	).toHaveCount(0);
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[1].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[1].name)
 	).toBeVisible();
 	await expect(
-		accountAddressesPage.addressNameLink(addresses[2].name)
+		accountAddressesPage.addressesTable.valueLink(addresses[2].name)
 	).toBeVisible();
 });
 
@@ -678,11 +670,11 @@ test('LPD-46415 Can set account default addresses', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
@@ -762,11 +754,11 @@ test('LPD-46415 Only the chosen address type displays when setting default shipp
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
@@ -856,11 +848,11 @@ test('LPD-46415 A default account address can be removed', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 	await editAccountPage.addressesTab.click();
 
 	for (const address of addresses) {
-		await accountAddressesPage.addAddressButton.click();
+		await accountAddressesPage.addressesTable.newButton.click();
 
 		await editAccountAddressPage.addAddress(address);
 	}
@@ -947,7 +939,7 @@ test('LPD-46415 A new address can be added via Set Default Address', async ({
 
 	await accountsPage.goto();
 
-	await accountsPage.accountNameLink(account.name).click();
+	await accountsPage.accountsTable.valueLink(account.name).click();
 
 	await page.waitForTimeout(100);
 
@@ -985,7 +977,7 @@ test('LPD-46415 A new address can be added via Set Default Address', async ({
 	await editAccountPage.addressesTab.click();
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 
 	await editAccountPage.detailsTab.click();
@@ -1028,6 +1020,6 @@ test('LPD-46415 A new address can be added via Set Default Address', async ({
 	await editAccountPage.addressesTab.click();
 
 	await expect(
-		accountAddressesPage.addressNameLink(address.name)
+		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 });

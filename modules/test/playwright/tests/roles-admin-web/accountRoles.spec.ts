@@ -142,7 +142,7 @@ test('LPD-44889 Can view account roles with permissions', async ({
 	await performLogin(page, userAccount.alternateName);
 
 	await accountsPage.gotoAccountAdmin();
-	await (await accountsPage.accountsTableRowLink(account1.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account1.name)).click();
 
 	await expect(accountsPage.accountRolesTab).toBeVisible();
 
@@ -153,7 +153,7 @@ test('LPD-44889 Can view account roles with permissions', async ({
 	await expect(accountRolesPage.editRoleButton).not.toBeVisible();
 
 	await accountsPage.gotoAccountAdmin();
-	await (await accountsPage.accountsTableRowLink(account2.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account2.name)).click();
 
 	await expect(accountsPage.detailsTab).toBeVisible();
 	await expect(accountsPage.accountRolesTab).not.toBeVisible();

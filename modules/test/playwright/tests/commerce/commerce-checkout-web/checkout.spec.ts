@@ -269,7 +269,7 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 	);
 
 	await accountsPage.goto();
-	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await (await accountsPage.accountsTable.cellLink(account.name)).click();
 	await editAccountPage.channelDefaultsLink.click();
 	await editAccountChannelDefaultsPage.addDefaultPaymentTerm(paymentTerm2.id);
 

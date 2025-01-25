@@ -628,16 +628,6 @@ public class ServiceBuilder {
 				StringUtil.split(
 					_compatProperties.getProperty("bad.table.names.extra")));
 
-			_uniqueSingleFindersEntities = new HashSet<>();
-
-			if (isVersionGTE_7_4_0()) {
-				Collections.addAll(
-					_uniqueSingleFindersEntities,
-					StringUtil.split(
-						_compatProperties.getProperty(
-							"unique.single.finders.entities")));
-			}
-
 			Element rootElement = document.getRootElement();
 
 			String packagePath = rootElement.attributeValue("package-path");
@@ -6820,8 +6810,12 @@ public class ServiceBuilder {
 				finderElement.attributeValue("unique"));
 
 			if (isVersionGTE_7_4_0() &&
-				_uniqueSingleFindersEntities.contains(entityName) &&
-				!Objects.equals(finderReturn, "Collection") && !finderUnique) {
+				!Objects.equals(finderReturn, "Collection") && !finderUnique &&
+				ArrayUtil.contains(
+					StringUtil.split(
+						_compatProperties.getProperty(
+							"unique.single.finders.entities")),
+					entityName)) {
 
 				throw new IllegalArgumentException(
 					StringBundler.concat(
@@ -8320,6 +8314,5 @@ public class ServiceBuilder {
 	private final Map<String, List<Entity>> _uadApplicationEntities =
 		new HashMap<>();
 	private String _uadDirName;
-	private Set<String> _uniqueSingleFindersEntities;
 
 }

@@ -29,11 +29,11 @@ export const searchTableRowByValue = async function (
 		}
 	}
 
-	throw new Error(`Cannot locate table row with value ${value}`);
+	return null;
 };
 
 export class DataTablePage {
-	readonly cell: (value: string) => Locator;
+	readonly cell: (value: string, exact?: boolean) => Locator;
 	readonly cellLink: (
 		value: string,
 		colIndex?: number,
@@ -67,16 +67,16 @@ export class DataTablePage {
 	readonly searchInput: Locator;
 	readonly selectAllItemsCheckbox: Locator;
 	readonly table: Locator;
-	readonly valueLink: (value: string) => Locator;
+	readonly valueLink: (value: string, exact?: boolean) => Locator;
 
 	constructor(page: Page | FrameLocator, table: Locator) {
 		this.page = page;
 		this.table = table;
 
-		this.cell = (value) =>
+		this.cell = (value, exact = true) =>
 			this.page
 				.getByRole('cell', {
-					exact: true,
+					exact,
 					name: value,
 				})
 				.first();
@@ -92,7 +92,7 @@ export class DataTablePage {
 					.first();
 			}
 
-			throw new Error(`Cannot locate row with value ${value}`);
+			return null;
 		};
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
 		this.filterButton = page.getByRole('button', {
@@ -144,7 +144,7 @@ export class DataTablePage {
 				return row.row.getByRole('button');
 			}
 
-			throw new Error(`Cannot locate row with value ${value}`);
+			return null;
 		};
 		this.rowCheckBox = async (value, colIndex = 1, strictEqual = true) => {
 			const row = await this.row(colIndex, value, strictEqual);
@@ -153,15 +153,15 @@ export class DataTablePage {
 				return row.row.getByRole('checkbox');
 			}
 
-			throw new Error(`Cannot locate row with value ${value}`);
+			return null;
 		};
 		this.searchButton = page.getByLabel('Search for', {exact: true});
 		this.searchInput = page.getByPlaceholder('Search for', {exact: true});
 		this.selectAllItemsCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);
-		this.valueLink = (value) =>
-			page.getByRole('link', {exact: true, name: value});
+		this.valueLink = (value, exact = true) =>
+			page.getByRole('link', {exact, name: value});
 	}
 
 	async search(value: string) {

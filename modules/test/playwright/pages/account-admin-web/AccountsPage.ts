@@ -49,6 +49,7 @@ export class AccountsPage {
 	readonly deleteButton: Locator;
 	readonly detailsTab: Locator;
 	readonly filterStatus: (status: string) => Locator;
+	readonly manageUsersButton: Locator;
 	readonly noAccountsMessage: Locator;
 	readonly organizationsTab: Locator;
 	readonly page: Page;
@@ -92,6 +93,9 @@ export class AccountsPage {
 		this.filterStatus = (status: string) => {
 			return page.getByText('Status: ' + status);
 		};
+		this.manageUsersButton = page.getByRole('menuitem', {
+			name: 'Manage Users',
+		});
 		this.noAccountsMessage = page.getByText('No accounts were found.');
 		this.organizationsTab = page.getByRole('link', {
 			name: 'Organizations',

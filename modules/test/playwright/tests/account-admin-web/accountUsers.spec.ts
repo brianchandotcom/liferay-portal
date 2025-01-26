@@ -699,3 +699,714 @@ test('LPD-47225 Can search, filter and sort in account user selector modal', asy
 		accountUserSelectorPage.usersTable.cell(user2.name)
 	).toHaveCount(0);
 });
+
+test('LPD-47225 A user with a blocked domain cannot be added to an account', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	editUserPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+		true,
+		'yahoo.com,blocked.com'
+	);
+
+	try {
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@blocked.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString);
+		await editUserPage.lastNameInput.fill(randomString);
+		await editUserPage.screenNameInput.fill(randomString);
+
+		await expect(editUserPage.emailAddressError).toContainText(
+			'is a blocked domain.'
+		);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page, 'Your request failed to complete', {
+			type: 'danger',
+		});
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await editAccountPage.usersLink.click();
+
+		await expect(
+			accountUsersPage.usersTable.cell(randomString, false)
+		).toHaveCount(0);
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false,
+			''
+		);
+	}
+});
+
+test('LPD-47225 A user with an invalid domain cannot be added to an account', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	editUserPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	const account = {
+		domains: ['liferay.com', 'google.com', 'si-na.com', '9teen.com'],
+		name: getRandomString(),
+		type: 'business',
+	};
+
+	const {domains, name, type} = account;
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {domains, name, type});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@invalid.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString);
+		await editUserPage.lastNameInput.fill(randomString);
+		await editUserPage.screenNameInput.fill(randomString);
+
+		await expect(editUserPage.emailAddressError).toContainText(
+			'is not a valid domain for the following accounts'
+		);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page, 'Your request failed to complete', {
+			type: 'danger',
+		});
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await editAccountPage.usersLink.click();
+
+		await expect(
+			accountUsersPage.usersTable.cell(randomString, false)
+		).toHaveCount(0);
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPD-47225 A user with a valid domain can be added to an account without warnings', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	editUserPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	const account = {
+		domains: ['liferay.com', 'google.com', 'si-na.com', '9teen.com'],
+		name: getRandomString(),
+		type: 'business',
+	};
+
+	const {domains, name, type} = account;
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {domains, name, type});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${randomString}@liferay.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString);
+		await editUserPage.lastNameInput.fill(randomString);
+		await editUserPage.screenNameInput.fill(randomString);
+
+		await expect(editUserPage.emailAddressError).toHaveCount(0);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await editAccountPage.usersLink.click();
+
+		await expect(
+			accountUsersPage.usersTable.cell(randomString, false)
+		).toBeVisible();
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPD-47225 Can filter valid domain users and all users when assigning', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount({
+		emailAddress: `${getRandomString()}@liferay.com`,
+	});
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount({
+		emailAddress: `${getRandomString()}@invalid.com`,
+	});
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {
+			name: getRandomString(),
+		});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await expect(
+			accountUserSelectorPage.usersTable.searchInput
+		).toBeEditable();
+
+		await accountUserSelectorPage.usersTable.filterButton.click();
+		await accountUserSelectorPage.usersTable
+			.filterMenuItem('Valid Domain Users')
+			.click();
+
+		await page.waitForTimeout(100);
+
+		expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeNull();
+		expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeNull();
+
+		await accountUserSelectorPage.usersTable.filterButton.click();
+		await accountUserSelectorPage.usersTable
+			.filterMenuItem('All Users')
+			.click();
+
+		await page.waitForTimeout(100);
+
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeVisible();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeEnabled();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeVisible();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeEnabled();
+
+		await accountUserSelectorPage.usersTable.selectAllItemsCheckbox.check();
+		await accountUserSelectorPage.assignButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			accountUsersPage.usersTable.cell(user1.name)
+		).toBeVisible();
+		await expect(
+			accountUsersPage.usersTable.cell(user2.name)
+		).toBeVisible();
+
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {
+			domains: ['liferay.com', 'google.com', 'si-na.com', '9teen.com'],
+			name: getRandomString(),
+		});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await expect(
+			accountUserSelectorPage.usersTable.searchInput
+		).toBeEditable();
+
+		await accountUserSelectorPage.usersTable.filterButton.click();
+		await accountUserSelectorPage.usersTable
+			.filterMenuItem('Valid Domain Users')
+			.click();
+
+		await page.waitForTimeout(100);
+
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeVisible();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeEnabled();
+		expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeNull();
+
+		await accountUserSelectorPage.usersTable.filterButton.click();
+		await accountUserSelectorPage.usersTable
+			.filterMenuItem('All Users')
+			.click();
+
+		await page.waitForTimeout(100);
+
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeVisible();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+		).toBeEnabled();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeVisible();
+		await expect(
+			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+		).toBeDisabled();
+
+		await accountUserSelectorPage.usersTable.selectAllItemsCheckbox.check();
+		await accountUserSelectorPage.assignButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			accountUsersPage.usersTable.cell(user1.name)
+		).toBeVisible();
+		await expect(accountUsersPage.usersTable.cell(user2.name)).toHaveCount(
+			0
+		);
+
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+
+		await expect(
+			accountUserSelectorPage.usersTable.searchInput
+		).toBeEditable();
+
+		await accountUserSelectorPage.usersTable.filterButton.click();
+		await accountUserSelectorPage.usersTable
+			.filterMenuItem('Valid Domain Users')
+			.click();
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test('LPD-47225 Cannot invite a user with a different domain', async ({
+	accountUserInvitePage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, {
+			domains: ['liferay.com'],
+			name: getRandomString(),
+		});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.inviteUserMenuItem.click();
+
+		await accountUserInvitePage
+			.emailAddressInput(accountUserInvitePage.firstEntry)
+			.fill(`${getRandomString()}@invalid.com`);
+		await accountUserInvitePage
+			.emailAddressInput(accountUserInvitePage.firstEntry)
+			.press('Enter');
+
+		await expect(
+			accountUserInvitePage.formError(
+				accountUserInvitePage.firstEntry,
+				'has an invalid email domain.'
+			)
+		).toBeVisible();
+
+		await accountUserInvitePage.inviteButton.click();
+
+		await expect(
+			accountUserInvitePage.formError(
+				accountUserInvitePage.firstEntry,
+				'has an invalid email domain.'
+			)
+		).toBeVisible();
+
+		await accountUserInvitePage
+			.clearAllButton(accountUserInvitePage.firstEntry)
+			.click();
+		await accountUserInvitePage
+			.emailAddressInput(accountUserInvitePage.firstEntry)
+			.fill(`${getRandomString()}@liferay.com`);
+		await accountUserInvitePage
+			.emailAddressInput(accountUserInvitePage.firstEntry)
+			.press('Enter');
+
+		await expect(
+			accountUserInvitePage.formError(
+				accountUserInvitePage.firstEntry,
+				'has an invalid email domain.'
+			)
+		).toHaveCount(0);
+
+		await accountUserInvitePage.inviteButton.click();
+
+		await waitForAlert(page);
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test(
+	'LPD-47225 The user is able to add and remove entries when inviting users to an account',
+	{tag: ['@LPS-189434']},
+	async ({
+		accountUserInvitePage,
+		accountUsersPage,
+		accountsPage,
+		apiHelpers,
+		editAccountPage,
+		emailDomainsInstanceSettingsPage,
+		page,
+	}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+		try {
+			await accountsPage.goto();
+
+			await accountsPage.accountsTable.newButton.click();
+
+			await editAccountPage.createAccount(apiHelpers, {
+				domains: ['liferay.com'],
+				name: getRandomString(),
+			});
+
+			await editAccountPage.usersLink.click();
+			await accountUsersPage.usersTable.newButton.click();
+			await accountUsersPage.inviteUserMenuItem.click();
+
+			await expect(accountUserInvitePage.entries).toHaveCount(1);
+
+			await accountUserInvitePage
+				.emailAddressInput(accountUserInvitePage.firstEntry)
+				.fill(`${getRandomString()}@liferay.com`);
+			await accountUserInvitePage
+				.emailAddressInput(accountUserInvitePage.firstEntry)
+				.press('Enter');
+
+			await accountUserInvitePage.addEntryButton.click();
+
+			await expect(accountUserInvitePage.entries).toHaveCount(2);
+
+			await accountUserInvitePage
+				.emailAddressInput(accountUserInvitePage.lastEntry)
+				.fill(`${getRandomString()}@invalid.com`);
+			await accountUserInvitePage
+				.emailAddressInput(accountUserInvitePage.lastEntry)
+				.press('Enter');
+
+			await expect(
+				accountUserInvitePage.formError(
+					accountUserInvitePage.lastEntry,
+					'has an invalid email domain.'
+				)
+			).toBeVisible();
+
+			await accountUserInvitePage.inviteButton.click();
+
+			await expect(
+				accountUserInvitePage.formError(
+					accountUserInvitePage.lastEntry,
+					'has an invalid email domain.'
+				)
+			).toBeVisible();
+
+			await accountUserInvitePage
+				.removeEntryButton(accountUserInvitePage.lastEntry)
+				.click();
+
+			await expect(accountUserInvitePage.entries).toHaveCount(1);
+
+			await accountUserInvitePage.inviteButton.click();
+
+			await waitForAlert(page);
+		}
+		finally {
+			await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+				false
+			);
+		}
+	}
+);
+
+test('LPD-47225 Removes domain set to an account', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	editUserPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+}) => {
+	const account = {
+		domains: ['liferay.com', 'google.com', 'si-na.com', '9teen.com'],
+		name: getRandomString(),
+		type: 'business',
+	};
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation();
+
+	try {
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, account);
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString1 = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@liferay.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString1);
+		await editUserPage.lastNameInput.fill(randomString1);
+		await editUserPage.screenNameInput.fill(randomString1);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			accountUsersPage.usersTable.cell(randomString1, false)
+		).toHaveCount(1);
+
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+
+		await accountsPage.goto();
+
+		await (await accountsPage.accountsTable.cellLink(account.name)).click();
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString2 = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@invalid.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString2);
+		await editUserPage.lastNameInput.fill(randomString2);
+		await editUserPage.screenNameInput.fill(randomString2);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			accountUsersPage.usersTable.cell(randomString1, false)
+		).toHaveCount(1);
+		await expect(
+			accountUsersPage.usersTable.cell(randomString2, false)
+		).toHaveCount(1);
+	}
+	finally {
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false
+		);
+	}
+});
+
+test(
+	'LPD-47225 An account can be removed from a user through the user page',
+	{tag: ['@LPS-139430']},
+	async ({apiHelpers, editUserPage, usersAndOrganizationsPage}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[user.emailAddress]
+		);
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.membershipsLink.click();
+
+		await expect(async () => {
+			await expect(editUserPage.membershipsNoAccountsMessage).toHaveCount(
+				0
+			);
+			await expect(
+				(
+					await editUserPage.membershipsAccountsTableRow(
+						0,
+						account.name,
+						true
+					)
+				).row
+			).toBeVisible();
+		}).toPass();
+
+		await editUserPage
+			.membershipsAccountsRemoveButton(account.name)
+			.click();
+
+		await expect(editUserPage.membershipsNoAccountsMessage).toBeVisible();
+	}
+);
+
+test('LPD-47225 Can view account users from manage users link', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editUserPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+	await accountsPage.manageUsersButton.click();
+
+	await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
+
+	await accountUsersPage.usersTable.newButton.click();
+	await accountUsersPage.assignUserMenuItem.click();
+	await accountUserSelectorPage.usersTable.newButton.click();
+
+	const randomString = getRandomString();
+
+	await editUserPage.emailAddressInput.fill(
+		`${getRandomString()}@liferay.com`
+	);
+	await editUserPage.firstNameInput.fill(randomString);
+	await editUserPage.lastNameInput.fill(randomString);
+	await editUserPage.screenNameInput.fill(randomString);
+
+	await editUserPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountUsersPage.usersTable.cell(user.name)).toBeVisible();
+	await expect(
+		accountUsersPage.usersTable.cell(randomString, false)
+	).toBeVisible();
+});

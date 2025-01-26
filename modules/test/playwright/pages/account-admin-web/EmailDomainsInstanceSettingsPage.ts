@@ -9,12 +9,16 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class EmailDomainsInstanceSettingsPage {
+	readonly blockedEmailDomainsInput: Locator;
 	readonly enableEmailDomainValidationInput: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
+		this.blockedEmailDomainsInput = page.getByLabel(
+			'Blocked Email Domains'
+		);
 		this.enableEmailDomainValidationInput = page.getByLabel(
 			'Enable Email Domain Validation'
 		);
@@ -40,7 +44,7 @@ export class EmailDomainsInstanceSettingsPage {
 		);
 	}
 
-	async enableEmailDomainValidation(enable = true) {
+	async enableEmailDomainValidation(enable = true, blockedDomains = '') {
 		await this.goto();
 
 		if (
@@ -49,6 +53,9 @@ export class EmailDomainsInstanceSettingsPage {
 			(!enable &&
 				(await this.enableEmailDomainValidationInput.isChecked()))
 		) {
+			await this.blockedEmailDomainsInput.fill(
+				blockedDomains.replace(',', '\n')
+			);
 			await this.enableEmailDomainValidationInput.click();
 			await this.saveButton.click();
 

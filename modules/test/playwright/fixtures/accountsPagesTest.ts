@@ -7,6 +7,7 @@ import {test} from '@playwright/test';
 
 import {AccountAccountGroupsPage} from '../pages/account-admin-web/AccountAccountGroupsPage';
 import {AccountAddressesPage} from '../pages/account-admin-web/AccountAddressesPage';
+import {AccountCategorySelectorPage} from '../pages/account-admin-web/AccountCategorySelectorPage';
 import {AccountContactAddressPage} from '../pages/account-admin-web/AccountContactAddressPage';
 import {AccountDefaultAddressSelectorPage} from '../pages/account-admin-web/AccountDefaultAddressSelectorPage';
 import {AccountEntriesManagementPortletPage} from '../pages/account-admin-web/AccountEntriesManagementPortletPage';
@@ -15,6 +16,8 @@ import {AccountOrganizationSelectorPage} from '../pages/account-admin-web/Accoun
 import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrganizationsPage';
 import {AccountPersonUserSelectorPage} from '../pages/account-admin-web/AccountPersonUserSelectorPage';
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
+import {AccountTagSelectorPage} from '../pages/account-admin-web/AccountTagSelectorPage';
+import {AccountUserInvitePage} from '../pages/account-admin-web/AccountUserInvitePage';
 import {AccountUserSelectorPage} from '../pages/account-admin-web/AccountUserSelectorPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
@@ -32,6 +35,7 @@ import {EmailDomainsInstanceSettingsPage} from '../pages/account-admin-web/Email
 const accountsPagesTest = test.extend<{
 	accountAccountGroupsPage: AccountAccountGroupsPage;
 	accountAddressesPage: AccountAddressesPage;
+	accountCategorySelectorPage: AccountCategorySelectorPage;
 	accountContactAddressPage: AccountContactAddressPage;
 	accountDefaultAddressSelectorPage: AccountDefaultAddressSelectorPage;
 	accountEntriesManagementPortletPage: AccountEntriesManagementPortletPage;
@@ -40,6 +44,8 @@ const accountsPagesTest = test.extend<{
 	accountOrganizationsPage: AccountOrganizationsPage;
 	accountPersonUserSelectorPage: AccountPersonUserSelectorPage;
 	accountRolesPage: AccountRolesPage;
+	accountTagSelectorPage: AccountTagSelectorPage;
+	accountUserInvitePage: AccountUserInvitePage;
 	accountUserSelectorPage: AccountUserSelectorPage;
 	accountUsersPage: AccountUsersPage;
 	accountsPage: AccountsPage;
@@ -59,6 +65,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountAddressesPage: async ({page}, use) => {
 		await use(new AccountAddressesPage(page));
+	},
+	accountCategorySelectorPage: async ({page}, use) => {
+		await use(new AccountCategorySelectorPage(page));
 	},
 	accountContactAddressPage: async ({page}, use) => {
 		await use(new AccountContactAddressPage(page));
@@ -83,6 +92,12 @@ const accountsPagesTest = test.extend<{
 	},
 	accountRolesPage: async ({page}, use) => {
 		await use(new AccountRolesPage(page));
+	},
+	accountTagSelectorPage: async ({page}, use) => {
+		await use(new AccountTagSelectorPage(page));
+	},
+	accountUserInvitePage: async ({page}, use) => {
+		await use(new AccountUserInvitePage(page));
 	},
 	accountUserSelectorPage: async ({page}, use) => {
 		await use(new AccountUserSelectorPage(page));

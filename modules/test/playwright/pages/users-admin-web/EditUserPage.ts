@@ -10,8 +10,12 @@ import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 export class EditUserPage {
 	readonly confirmButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
+	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
+	readonly firstNameInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
+	readonly lastNameInput: Locator;
+	readonly membershipsAccountsRemoveButton: (accountName: string) => Locator;
 	readonly membershipsAccountsTableRow: (
 		colPosition: number,
 		value: string,
@@ -82,10 +86,17 @@ export class EditUserPage {
 
 			throw new Error(`Cannot locate Custom Field ${fieldName}`);
 		};
+		this.emailAddressError = page.locator(
+			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_emailAddressHelper'
+		);
 		this.emailAddressInput = page.getByLabel('Email Address');
+		this.firstNameInput = page.getByLabel('First Name');
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'
 		);
+		this.lastNameInput = page.getByLabel('Last Name');
+		this.membershipsAccountsRemoveButton = (accountName) =>
+			page.getByLabel(`Remove ${accountName}`);
 		this.membershipsAccountsTableRow = async (
 			colPosition: number,
 			value: string,

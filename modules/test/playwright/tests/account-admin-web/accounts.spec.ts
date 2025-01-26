@@ -9,23 +9,30 @@ import path from 'path';
 import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {customFieldsPagesTest} from '../../fixtures/customFieldsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {createCategories} from '../../helpers/CreateCategories';
+import {TCustomField} from '../../helpers/CustomFieldTypesHelper';
+import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../utils/pagination';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {tagsPagesTest} from '../asset-tags-admin-web/fixtures/tagsAdminPagesTest';
 
 export const test = mergeTests(
 	accountsPagesTest,
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	customFieldsPagesTest,
 	dataApiHelpersTest,
 	loginTest(),
-	usersAndOrganizationsPagesTest,
-	serverAdministrationPageTest
+	serverAdministrationPageTest,
+	tagsPagesTest,
+	usersAndOrganizationsPagesTest
 );
 
 test('LPD-18485 Update account contact information fields', async ({
@@ -1156,4 +1163,292 @@ test('LPS-101221 Can search an account', async ({
 
 	await expect(accountsPage.accountsTable.cell(account1.name)).toBeVisible();
 	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
+});
+
+test('LPD-47225 Can edit account custom fields', async ({
+	accountsPage,
+	addCustomFieldPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	const customField: TCustomField = {
+		fieldName: getRandomString(),
+		fieldType: 'inputField',
+		resource: 'Account Entry',
+	};
+
+	await addCustomFieldPage.addCustomField(customField);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	const randomString = getRandomString();
+
+	await editAccountPage
+		.customFieldInput(customField.fieldName)
+		.fill(randomString);
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(
+		editAccountPage.customFieldInput(customField.fieldName)
+	).toHaveValue(randomString);
+});
+
+test('LPD-47225 Can add and remove categories to an account', async ({
+	accountCategorySelectorPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+}) => {
+	const categoryNames = [
+		{name: getRandomString()},
+		{name: getRandomString()},
+	];
+	const vocabularyName = getRandomString();
+
+	const categories: Array<any> = await createCategories({
+		apiHelpers,
+		categoryNames,
+		siteId: await getGlobalSiteId(apiHelpers),
+		vocabularyName,
+	});
+
+	apiHelpers.data.push({
+		id: categories[0].vocabularyId,
+		type: 'taxonomyVocabulary',
+	});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+	await editAccountPage.selectCategoriesButton(vocabularyName).click();
+	await accountCategorySelectorPage.selectCategories(
+		[categoryNames[0].name],
+		vocabularyName
+	);
+
+	await expect(editAccountPage.vocabularyLabel(vocabularyName)).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[0].name)
+	).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[1].name)
+	).toHaveCount(0);
+
+	await editAccountPage.selectCategoriesButton(vocabularyName).click();
+	await accountCategorySelectorPage.selectCategories(
+		[categoryNames[1].name],
+		vocabularyName
+	);
+
+	await expect(editAccountPage.vocabularyLabel(vocabularyName)).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[0].name)
+	).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[1].name)
+	).toBeVisible();
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.vocabularyLabel(vocabularyName)).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[0].name)
+	).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[1].name)
+	).toBeVisible();
+
+	await editAccountPage.categoryClearAllButton.click();
+
+	await expect(async () => {
+		await editAccountPage.categoryLabel(vocabularyName).press('Tab');
+
+		await expect(editAccountPage.saveButton).toBeVisible();
+	}).toPass();
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.vocabularyLabel(vocabularyName)).toBeVisible();
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[0].name)
+	).toHaveCount(0);
+	await expect(
+		editAccountPage.categoryLabel(categoryNames[1].name)
+	).toHaveCount(0);
+});
+
+test(
+	'LPD-47225 Tabs are visile only after account creation',
+	{tag: ['@LPS-169033']},
+	async ({accountsPage, apiHelpers, editAccountPage}) => {
+		let account = {
+			name: getRandomString(),
+			type: 'business',
+		};
+
+		await accountsPage.goto();
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await expect(editAccountPage.detailsTab).not.toBeVisible();
+		await expect(editAccountPage.addressesTab).not.toBeVisible();
+		await expect(editAccountPage.contactLink).not.toBeVisible();
+		await expect(editAccountPage.usersLink).not.toBeVisible();
+		await expect(editAccountPage.organizationsLink).not.toBeVisible();
+		await expect(editAccountPage.accountGroupsLink).not.toBeVisible();
+		await expect(editAccountPage.rolesLink).not.toBeVisible();
+		await expect(editAccountPage.channelDefaultsLink).not.toBeVisible();
+
+		await editAccountPage.createAccount(apiHelpers, account);
+
+		await expect(editAccountPage.detailsTab).toBeVisible();
+		await expect(editAccountPage.addressesTab).toBeVisible();
+		await expect(editAccountPage.contactLink).toBeVisible();
+		await expect(editAccountPage.usersLink).toBeVisible();
+		await expect(editAccountPage.organizationsLink).toBeVisible();
+		await expect(editAccountPage.accountGroupsLink).toBeVisible();
+		await expect(editAccountPage.rolesLink).toBeVisible();
+		await expect(editAccountPage.channelDefaultsLink).toBeVisible();
+
+		await editAccountPage.backButton.click();
+
+		await accountsPage.accountNameLink(account.name).click();
+
+		await expect(editAccountPage.detailsTab).toBeVisible();
+		await expect(editAccountPage.addressesTab).toBeVisible();
+		await expect(editAccountPage.contactLink).toBeVisible();
+		await expect(editAccountPage.usersLink).toBeVisible();
+		await expect(editAccountPage.organizationsLink).toBeVisible();
+		await expect(editAccountPage.accountGroupsLink).toBeVisible();
+		await expect(editAccountPage.rolesLink).toBeVisible();
+		await expect(editAccountPage.channelDefaultsLink).toBeVisible();
+
+		await editAccountPage.backButton.click();
+
+		account = {
+			name: getRandomString(),
+			type: 'person',
+		};
+
+		await accountsPage.accountsTable.newButton.click();
+
+		await editAccountPage.createAccount(apiHelpers, account);
+
+		await expect(editAccountPage.detailsTab).toBeVisible();
+		await expect(editAccountPage.addressesTab).toBeVisible();
+		await expect(editAccountPage.contactLink).toBeVisible();
+		await expect(editAccountPage.usersLink).not.toBeVisible();
+		await expect(editAccountPage.organizationsLink).toBeVisible();
+		await expect(editAccountPage.accountGroupsLink).toBeVisible();
+		await expect(editAccountPage.rolesLink).toBeVisible();
+		await expect(editAccountPage.channelDefaultsLink).not.toBeVisible();
+
+		await editAccountPage.backButton.click();
+
+		await accountsPage.accountNameLink(account.name).click();
+
+		await expect(editAccountPage.detailsTab).toBeVisible();
+		await expect(editAccountPage.addressesTab).toBeVisible();
+		await expect(editAccountPage.contactLink).toBeVisible();
+		await expect(editAccountPage.usersLink).not.toBeVisible();
+		await expect(editAccountPage.organizationsLink).toBeVisible();
+		await expect(editAccountPage.accountGroupsLink).toBeVisible();
+		await expect(editAccountPage.rolesLink).toBeVisible();
+		await expect(editAccountPage.channelDefaultsLink).not.toBeVisible();
+	}
+);
+
+test('LPD-47225 Can add and remove tags to an account', async ({
+	accountTagSelectorPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+	page,
+	tagsEditPage,
+}) => {
+	const tags = [
+		{name: getRandomString(), siteUrl: '/global'},
+		{name: getRandomString(), siteUrl: '/global'},
+		{name: getRandomString(), siteUrl: '/guest'},
+	];
+
+	for (const {name, siteUrl} of tags) {
+		await tagsEditPage.add(name, siteUrl);
+	}
+
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	await accountsPage.goto();
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await editAccountPage.selectTagsButton.click();
+	await accountTagSelectorPage.selectTag([tags[0].name, tags[2].name]);
+
+	await expect(editAccountPage.tagInput(tags[0].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
+	await expect(editAccountPage.tagInput(tags[2].name)).toBeVisible();
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await editAccountPage.backButton.click();
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.tagInput(tags[0].name)).toBeVisible();
+	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
+	await expect(editAccountPage.tagInput(tags[2].name)).toBeVisible();
+
+	await editAccountPage.categoryClearAllButton.click();
+
+	await expect(async () => {
+		await page.getByLabel('Tags', {exact: true}).press('Tab');
+
+		await expect(editAccountPage.tagInput(tags[0].name)).toHaveCount(0);
+		await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
+		await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
+	}).toPass();
+
+	await editAccountPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await editAccountPage.backButton.click();
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.tagInput(tags[0].name)).toHaveCount(0);
+	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
+	await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
 });

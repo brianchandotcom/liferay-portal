@@ -9,6 +9,7 @@ import {DataTablePage} from './DataTablePage';
 
 export class AccountUsersPage {
 	readonly assignUserMenuItem: Locator;
+	readonly inviteUserMenuItem: Locator;
 	readonly page: Page;
 	readonly removeButton: Locator;
 	readonly usersTable: DataTablePage;
@@ -16,6 +17,9 @@ export class AccountUsersPage {
 	constructor(page: Page) {
 		this.assignUserMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Users',
+		});
+		this.inviteUserMenuItem = page.getByRole('menuitem', {
+			name: 'Invite Users',
 		});
 		this.page = page;
 		this.removeButton = page

@@ -57,7 +57,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -567,13 +566,9 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 	private List<DocumentFolder> _toDocumentFolders(List<DLFolder> dlFolders)
 		throws Exception {
 
-		List<DocumentFolder> documentFolders = new ArrayList<>();
-
-		for (DLFolder dlFolder : dlFolders) {
-			documentFolders.add(_toDocumentFolder(new LiferayFolder(dlFolder)));
-		}
-
-		return documentFolders;
+		return transform(
+			dlFolders,
+			dlFolder -> _toDocumentFolder(new LiferayFolder(dlFolder)));
 	}
 
 	private DocumentFolder _updateDocumentFolder(

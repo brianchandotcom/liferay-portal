@@ -17,6 +17,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -182,16 +183,15 @@ public class FormNavigatorEntryProviderImpl
 		List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
 		T formModelBean) {
 
-		List<FormNavigatorEntry<T>> filteredFormNavigatorEntries =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			formNavigatorEntries,
+			formNavigatorEntry -> {
+				if (formNavigatorEntry.isVisible(user, formModelBean)) {
+					return formNavigatorEntry;
+				}
 
-		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
-			if (formNavigatorEntry.isVisible(user, formModelBean)) {
-				filteredFormNavigatorEntries.add(formNavigatorEntry);
-			}
-		}
-
-		return filteredFormNavigatorEntries;
+				return null;
+			});
 	}
 
 	private <T> List<FormNavigatorEntry<T>>
@@ -225,18 +225,10 @@ public class FormNavigatorEntryProviderImpl
 			return null;
 		}
 
-		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
-
-		for (String key : formNavigatorEntryKeys) {
-			FormNavigatorEntry<T> formNavigatorEntry = _getFormNavigatorEntry(
-				key, formNavigatorId);
-
-			if (formNavigatorEntry != null) {
-				formNavigatorEntries.add(formNavigatorEntry);
-			}
-		}
-
-		return formNavigatorEntries;
+		return TransformUtil.transform(
+			formNavigatorEntryKeys,
+			formNavigatorEntryKey -> _getFormNavigatorEntry(
+				formNavigatorEntryKey, formNavigatorId));
 	}
 
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(

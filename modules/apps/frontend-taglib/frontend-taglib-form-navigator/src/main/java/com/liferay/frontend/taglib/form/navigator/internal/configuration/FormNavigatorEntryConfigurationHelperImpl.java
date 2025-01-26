@@ -9,13 +9,13 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContext
 import com.liferay.frontend.taglib.form.navigator.context.FormNavigatorContextProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -100,18 +100,10 @@ public class FormNavigatorEntryConfigurationHelperImpl
 			return null;
 		}
 
-		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
-
-		for (String key : formNavigatorEntryKeys) {
-			FormNavigatorEntry<T> formNavigatorEntry = _getFormNavigatorEntry(
-				key, formNavigatorId);
-
-			if (formNavigatorEntry != null) {
-				formNavigatorEntries.add(formNavigatorEntry);
-			}
-		}
-
-		return formNavigatorEntries;
+		return TransformUtil.transform(
+			formNavigatorEntryKeys,
+			formNavigatorEntryKey -> _getFormNavigatorEntry(
+				formNavigatorEntryKey, formNavigatorId));
 	}
 
 	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(

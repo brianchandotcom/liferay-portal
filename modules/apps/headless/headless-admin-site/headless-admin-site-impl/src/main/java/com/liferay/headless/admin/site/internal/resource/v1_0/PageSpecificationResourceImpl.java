@@ -76,7 +76,8 @@ public class PageSpecificationResourceImpl
 		if (!layout.isDraftLayout() ||
 			(layout.isApproved() &&
 			 GetterUtil.getBoolean(
-				 layout.getTypeSettingsProperty("published")))) {
+				 layout.getTypeSettingsProperty(
+					 LayoutTypeSettingsConstants.KEY_PUBLISHED)))) {
 
 			throw new UnsupportedOperationException();
 		}

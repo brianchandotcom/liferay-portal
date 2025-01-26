@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -265,7 +266,8 @@ public class PageSpecificationsTestUtil {
 
 	private static boolean _isPublished(Layout draftLayout) {
 		return GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty("published"));
+			draftLayout.getTypeSettingsProperty(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
 
 }

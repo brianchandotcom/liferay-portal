@@ -16,6 +16,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -1422,7 +1423,8 @@ public class LayoutSetPrototypePropagationTest
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		unicodeProperties.setProperty("published", Boolean.TRUE.toString());
+		unicodeProperties.setProperty(
+			LayoutTypeSettingsConstants.KEY_PUBLISHED, Boolean.TRUE.toString());
 
 		draftLayout.setTypeSettingsProperties(unicodeProperties);
 

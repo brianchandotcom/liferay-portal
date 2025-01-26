@@ -14,7 +14,7 @@
 
 		<div class="entry-body">
 			<div class="entry-author icon-user">
-				<@liferay.language key="written-by" /> ${htmlUtil.escape(portalUtil.getUserName(entry.getUserId(), entry.getUserName()))}
+				<@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(entry.getUserId(), entry.getUserName()))}
 			</div>
 
 			<#assign summary = entry.getDescription() />

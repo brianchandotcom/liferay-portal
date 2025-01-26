@@ -57,7 +57,7 @@
 										<span class="subtext-item">
 											&#183;
 
-											<@liferay.language key="written-by" />
+											<@liferay.language key="by" />
 
 											<strong>${htmlUtil.escape(entry.getCreatorUserName())}</strong>
 										</span>

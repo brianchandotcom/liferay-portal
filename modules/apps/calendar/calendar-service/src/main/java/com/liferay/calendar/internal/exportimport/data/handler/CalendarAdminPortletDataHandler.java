@@ -88,7 +88,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "calendar-resources", true, false, null,
 				CalendarResource.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "calendar-bookings", true, false, null,
+				NAMESPACE, "events", true, false, null,
 				CalendarBooking.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "calendar-notification-templates", true, false,
@@ -142,7 +142,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "calendar-bookings")) {
+				NAMESPACE, "events")) {
 
 			ActionableDynamicQuery calendarBookingActionableDynamicQuery =
 				calendarBookingLocalService.getExportActionableDynamicQuery(
@@ -229,7 +229,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "calendar-bookings")) {
+				NAMESPACE, "events")) {
 
 			Element calendarBookingsElement =
 				portletDataContext.getImportDataGroupElement(

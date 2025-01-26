@@ -2449,7 +2449,7 @@ test.describe('Numeric input field', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		const lemonWeightInput = page.getByLabel('Lemon Weight');
+		const lemonWeightInput = page.getByLabel('Lemon Weight', {exact: true});
 
 		await expect(lemonWeightInput).toHaveAttribute('type', 'number');
 		await expect(lemonWeightInput).toHaveAttribute('max');
@@ -2800,7 +2800,7 @@ test.describe('Submit button', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await page.getByLabel('Lemon Weight').fill('200');
+			await page.getByLabel('Lemon Weight', {exact: true}).fill('200');
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -2972,7 +2972,7 @@ test.describe('Submit button', () => {
 				await pageEditorPage.publishPage();
 			});
 
-			const input = page.getByLabel('Lemon Weight');
+			const input = page.getByLabel('Lemon Weight', {exact: true});
 			const submitDraftButton = page.getByText('Submit as draft', {
 				exact: true,
 			});

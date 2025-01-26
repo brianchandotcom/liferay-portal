@@ -28,7 +28,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -46,20 +45,9 @@ public class EntityFieldsProvider {
 	public List<EntityField> provide(DDMStructure ddmStructure)
 		throws Exception {
 
-		List<EntityField> entityFields = new ArrayList<>();
-
-		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			EntityField entityField = _createEntityField(
-				ddmStructure, ddmFormField);
-
-			if (entityField != null) {
-				entityFields.add(entityField);
-			}
-		}
-
-		return entityFields;
+		return TransformUtil.transform(
+			ddmStructure.getDDMFormFields(false),
+			ddmFormField -> _createEntityField(ddmStructure, ddmFormField));
 	}
 
 	private EntityField _createEntityField(

@@ -94,7 +94,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -991,13 +990,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	private List<Document> _toDocuments(List<DLFileEntry> dlFileEntries)
 		throws Exception {
 
-		List<Document> documents = new ArrayList<>();
-
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			documents.add(_toDocument(new LiferayFileEntry(dlFileEntry)));
-		}
-
-		return documents;
+		return transform(
+			dlFileEntries,
+			dlFileEntry -> _toDocument(new LiferayFileEntry(dlFileEntry)));
 	}
 
 	private Document _updateDocument(

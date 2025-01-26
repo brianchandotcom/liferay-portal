@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -90,13 +91,15 @@ public class LayoutUtil {
 
 		if (layout.isDraftLayout()) {
 			return GetterUtil.getBoolean(
-				layout.getTypeSettingsProperty("published"));
+				layout.getTypeSettingsProperty(
+					LayoutTypeSettingsConstants.KEY_PUBLISHED));
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		return GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty("published"));
+			draftLayout.getTypeSettingsProperty(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
 
 	public static Layout updateLayout(

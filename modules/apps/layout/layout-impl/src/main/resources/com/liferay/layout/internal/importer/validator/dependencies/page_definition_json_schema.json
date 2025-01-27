@@ -2093,12 +2093,23 @@
 					"title": "The id Schema",
 					"type": "string"
 				},
+				"options": {
+					"additionalProperties": false,
+					"properties": {
+						"type": {
+							"title": "The type Schema",
+							"type": "string"
+						},
+						"value": {
+							"title": "The value Schema",
+							"type": "string"
+						}
+					},
+					"title": "The options Schema",
+					"type": "object"
+				},
 				"type": {
 					"title": "The type Schema",
-					"type": "string"
-				},
-				"value": {
-					"title": "The value Schema",
 					"type": "string"
 				}
 			},

@@ -25,7 +25,6 @@ public class OAuth20Util {
 
 		ServiceBuilder serviceBuilder = new ServiceBuilder(apiKey);
 
-		serviceBuilder.apiKey(apiKey);
 		serviceBuilder.apiSecret(apiSecret);
 		serviceBuilder.callback(callbackURL);
 

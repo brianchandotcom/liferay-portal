@@ -26,7 +26,6 @@ public class OAuth10aUtil {
 
 		ServiceBuilder serviceBuilder = new ServiceBuilder(apiKey);
 
-		serviceBuilder.apiKey(apiKey);
 		serviceBuilder.apiSecret(apiSecret);
 
 		OAuth10aService oAuthService = serviceBuilder.build(

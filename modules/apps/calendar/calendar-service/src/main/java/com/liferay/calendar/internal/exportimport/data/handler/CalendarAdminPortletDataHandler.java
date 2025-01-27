@@ -141,9 +141,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 			calendarResourceActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "events")) {
-
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "events")) {
 			ActionableDynamicQuery calendarBookingActionableDynamicQuery =
 				calendarBookingLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
@@ -228,9 +226,7 @@ public class CalendarAdminPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "events")) {
-
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "events")) {
 			Element calendarBookingsElement =
 				portletDataContext.getImportDataGroupElement(
 					CalendarBooking.class);

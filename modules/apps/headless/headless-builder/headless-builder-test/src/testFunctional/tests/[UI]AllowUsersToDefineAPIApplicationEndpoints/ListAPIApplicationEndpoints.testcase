@@ -227,7 +227,7 @@ definition {
 
 		task ("When I order the endpoints by Last updated") {
 			Click(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
+				locator1 = "APIBuilder#DND_TH_WITH_TEXT",
 				value = "Last updated");
 		}
 
@@ -318,18 +318,10 @@ definition {
 				entity = "Endpoints",
 				title = "My-app");
 
-			AssertElementPresent(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
-				value = "Last updated");
-
-			AssertElementPresent(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
-				value = "Path");
-
-			for (var value : list "Method,Description") {
+			for (var value : list "Description,Last updated,Method,Path") {
 				AssertElementPresent(
-					locator1 = "APIBuilder#DND_TR_WITH_TEXT",
-					text = ${value});
+					locator1 = "APIBuilder#DND_TH_WITH_TEXT",
+					value = ${value});
 			}
 		}
 

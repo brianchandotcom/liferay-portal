@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DND_TH_WITH_TEXT</td>
+	<td>//th[contains(.,'${value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DND_TR_WITH_TEXT</td>
 	<td>//tr/div[contains(text(),'${text}')]</td>
 	<td></td>

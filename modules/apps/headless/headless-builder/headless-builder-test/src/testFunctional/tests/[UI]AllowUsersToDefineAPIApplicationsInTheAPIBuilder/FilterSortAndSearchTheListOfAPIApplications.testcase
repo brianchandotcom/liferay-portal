@@ -154,7 +154,7 @@ definition {
 
 		task ("When I sort the APIs by Last Updated") {
 			Click(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
+				locator1 = "APIBuilder#DND_TH_WITH_TEXT",
 				value = "Last updated");
 		}
 
@@ -170,7 +170,7 @@ definition {
 
 		task ("When I sort the APIs by Status") {
 			Click(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
+				locator1 = "APIBuilder#DND_TH_WITH_TEXT",
 				value = "Status");
 		}
 
@@ -186,7 +186,7 @@ definition {
 
 		task ("When I sort the APIs by Title") {
 			Click(
-				locator1 = "APIBuilder#DND_TR_BUTTON",
+				locator1 = "APIBuilder#DND_TH_WITH_TEXT",
 				value = "Title");
 		}
 

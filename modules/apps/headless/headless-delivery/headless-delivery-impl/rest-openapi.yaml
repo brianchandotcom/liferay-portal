@@ -4428,15 +4428,22 @@ components:
                     description:
                         The page rule condition's ID.
                     type: string
+                options:
+                    properties:
+                        type:
+                            description:
+                                The page rule condition option's type.
+                            enum: [Equal, NotEqual]
+                            type: string
+                        value:
+                            description:
+                                The page rule condition's value.
+                            type: string
+                    type: object
                 type:
                     # @review
                     description:
                         The page rule condition's type.
-                    type: string
-                value:
-                    # @review
-                    description:
-                        The page rule condition's value.
                     type: string
             type: object
         PageSectionDefinition:

@@ -401,34 +401,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPageUnderSitePagesVariation(sitePageType = null, pageTemplateName = null, pageName = null, collectionName = null) {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Page");
-
-		WaitForPageLoad();
-
-		PagesAdmin._selectPageType(
-			collectionName = ${collectionName},
-			pageTemplateName = ${pageTemplateName},
-			sitePageType = ${sitePageType});
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${pageName});
-
-		Button.click(button = "Add");
-
-		SelectFrame.selectFrameTop();
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertVisible(locator1 = "TextInput#NAME");
-
-		Button.click(button = "Save");
-
-		WaitForSPARefresh();
-	}
-
-	@summary = "Default summary"
 	macro addPageWithConfirm(pageName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

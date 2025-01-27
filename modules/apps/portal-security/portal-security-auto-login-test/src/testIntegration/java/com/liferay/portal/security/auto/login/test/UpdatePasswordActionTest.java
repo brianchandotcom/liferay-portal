@@ -100,7 +100,6 @@ public class UpdatePasswordActionTest {
 		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
 		connection.setRequestMethod("GET");
-		connection.setRequestMethod("GET");
 
 		BufferedReader reader = new BufferedReader(
 			new InputStreamReader(connection.getInputStream()));

@@ -103,23 +103,19 @@ public class UpdatePasswordActionTest {
 		try (BufferedReader reader = new BufferedReader(
 				new InputStreamReader(connection.getInputStream()))) {
 
-			boolean findText = false;
-			String searchText = "Your password reset link is no longer valid";
+			String expectedText = "Your password reset link is no longer valid";
 
-			StringBuilder response = new StringBuilder();
-			String line;
+			String line = null;
 
-			while (((line = reader.readLine()) != null) && !findText) {
-				findText = line.contains(searchText);
-
-				if (findText) {
-					response.append(StringUtil.trim(line));
+			while ((line = reader.readLine()) != null) {
+				if (line.contains(expectedText)) {
+					break;
 				}
 			}
 
+			Assert.assertNotNull(line);
 			Assert.assertTrue(
-				StringUtil.contains(
-					response.toString(), searchText, StringPool.BLANK));
+				StringUtil.contains(line, expectedText, StringPool.BLANK));
 		}
 	}
 

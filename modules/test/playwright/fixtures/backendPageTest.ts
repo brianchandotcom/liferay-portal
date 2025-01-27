@@ -32,7 +32,7 @@ const backendPageTest = test.extend<BackendPage>({
 		try {
 			const {cookies} = JSON.parse(readTempFile(tempFile));
 
-			backendContext.addCookies(cookies);
+			await backendContext.addCookies(cookies);
 
 			await backendPage.goto('/');
 		}

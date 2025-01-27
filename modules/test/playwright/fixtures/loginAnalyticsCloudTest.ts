@@ -54,7 +54,7 @@ function loginAnalyticsCloudTest() {
 						readTempFile('analyticsCloudStorageState.json')
 					);
 
-					page.context().addCookies(cookies);
+					await page.context().addCookies(cookies);
 				}
 
 				const cookies = await page.context().cookies();

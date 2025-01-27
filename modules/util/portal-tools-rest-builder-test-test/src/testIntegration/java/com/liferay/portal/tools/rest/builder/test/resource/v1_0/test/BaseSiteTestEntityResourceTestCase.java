@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -16,13 +16,16 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -33,14 +36,12 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity1;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity2;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity3;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.TestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.SiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.TestEntityResource;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.TestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.permission.Permission;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.SiteTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.SiteTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -58,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -77,7 +77,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseTestEntityResourceTestCase {
+public abstract class BaseSiteTestEntityResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -98,12 +98,12 @@ public abstract class BaseTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_testEntityResource.setContextCompany(testCompany);
+		_siteTestEntityResource.setContextCompany(testCompany);
 
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		testEntityResource = TestEntityResource.builder(
+		siteTestEntityResource = SiteTestEntityResource.builder(
 		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -124,23 +124,23 @@ public abstract class BaseTestEntityResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		TestEntity testEntity1 = randomTestEntity();
+		SiteTestEntity siteTestEntity1 = randomSiteTestEntity();
 
-		String json = objectMapper.writeValueAsString(testEntity1);
+		String json = objectMapper.writeValueAsString(siteTestEntity1);
 
-		TestEntity testEntity2 = TestEntitySerDes.toDTO(json);
+		SiteTestEntity siteTestEntity2 = SiteTestEntitySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(testEntity1, testEntity2));
+		Assert.assertTrue(equals(siteTestEntity1, siteTestEntity2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		TestEntity testEntity = randomTestEntity();
+		SiteTestEntity siteTestEntity = randomSiteTestEntity();
 
-		String json1 = objectMapper.writeValueAsString(testEntity);
-		String json2 = TestEntitySerDes.toJSON(testEntity);
+		String json1 = objectMapper.writeValueAsString(siteTestEntity);
+		String json2 = SiteTestEntitySerDes.toJSON(siteTestEntity);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -168,251 +168,460 @@ public abstract class BaseTestEntityResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		TestEntity testEntity = randomTestEntity();
+		SiteTestEntity siteTestEntity = randomSiteTestEntity();
 
-		testEntity.setDescription(regex);
-		testEntity.setJsonProperty(regex);
-		testEntity.setName(regex);
-		testEntity.setSelf(regex);
+		siteTestEntity.setDescription(regex);
+		siteTestEntity.setExternalReferenceCode(regex);
 
-		String json = TestEntitySerDes.toJSON(testEntity);
+		String json = SiteTestEntitySerDes.toJSON(siteTestEntity);
 
 		Assert.assertFalse(json.contains(regex));
 
-		testEntity = TestEntitySerDes.toDTO(json);
+		siteTestEntity = SiteTestEntitySerDes.toDTO(json);
 
-		Assert.assertEquals(regex, testEntity.getDescription());
-		Assert.assertEquals(regex, testEntity.getJsonProperty());
-		Assert.assertEquals(regex, testEntity.getName());
-		Assert.assertEquals(regex, testEntity.getSelf());
+		Assert.assertEquals(regex, siteTestEntity.getDescription());
+		Assert.assertEquals(regex, siteTestEntity.getExternalReferenceCode());
 	}
 
 	@Test
-	public void testPostReservedWord() throws Exception {
-		Assert.assertTrue(false);
+	public void testGetSiteTestEntity() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testGetSiteTestEntity_addSiteTestEntity();
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteTestEntity(
+				postSiteTestEntity.getId());
+
+		assertEquals(postSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+	}
+
+	protected SiteTestEntity testGetSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
 	}
 
 	@Test
-	public void testGetTestEntitiesPage() throws Exception {
-		Page<TestEntity> page = testEntityResource.getTestEntitiesPage();
+	public void testPutSiteTestEntity() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testPutSiteTestEntity_addSiteTestEntity();
+
+		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
+
+		SiteTestEntity putSiteTestEntity =
+			siteTestEntityResource.putSiteTestEntity(
+				postSiteTestEntity.getId(), randomSiteTestEntity);
+
+		assertEquals(randomSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteTestEntity(putSiteTestEntity.getId());
+
+		assertEquals(randomSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+	}
+
+	protected SiteTestEntity testPutSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testGetSiteTestEntityPermissionsPage() throws Exception {
+		SiteTestEntity postSiteTestEntity =
+			testGetSiteTestEntityPermissionsPage_addSiteTestEntity();
+
+		Page<Permission> page =
+			siteTestEntityResource.getSiteTestEntityPermissionsPage(
+				postSiteTestEntity.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected SiteTestEntity
+			testGetSiteTestEntityPermissionsPage_addSiteTestEntity()
+		throws Exception {
+
+		return testPostSiteSiteTestEntity_addSiteTestEntity(
+			randomSiteTestEntity());
+	}
+
+	@Test
+	public void testPutSiteTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SiteTestEntity siteTestEntity =
+			testPutSiteTestEntityPermissionsPage_addSiteTestEntity();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
+				siteTestEntity.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteTestEntityResource.putSiteTestEntityPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected SiteTestEntity
+			testPutSiteTestEntityPermissionsPage_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testGetSiteSiteTestEntitiesPage() throws Exception {
+		Long siteId = testGetSiteSiteTestEntitiesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId();
+
+		Page<SiteTestEntity> page =
+			siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
 
 		long totalCount = page.getTotalCount();
 
-		TestEntity testEntity1 = testGetTestEntitiesPage_addTestEntity(
-			randomTestEntity());
+		if (irrelevantSiteId != null) {
+			SiteTestEntity irrelevantSiteTestEntity =
+				testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+					irrelevantSiteId, randomIrrelevantSiteTestEntity());
 
-		TestEntity testEntity2 = testGetTestEntitiesPage_addTestEntity(
-			randomTestEntity());
+			page = siteTestEntityResource.getSiteSiteTestEntitiesPage(
+				irrelevantSiteId);
 
-		page = testEntityResource.getTestEntitiesPage();
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantSiteTestEntity,
+				(List<SiteTestEntity>)page.getItems());
+			assertValid(
+				page,
+				testGetSiteSiteTestEntitiesPage_getExpectedActions(
+					irrelevantSiteId));
+		}
+
+		SiteTestEntity siteTestEntity1 =
+			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
+
+		SiteTestEntity siteTestEntity2 =
+			testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+				siteId, randomSiteTestEntity());
+
+		page = siteTestEntityResource.getSiteSiteTestEntitiesPage(siteId);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertContains(testEntity1, (List<TestEntity>)page.getItems());
-		assertContains(testEntity2, (List<TestEntity>)page.getItems());
-		assertValid(page, testGetTestEntitiesPage_getExpectedActions());
+		assertContains(siteTestEntity1, (List<SiteTestEntity>)page.getItems());
+		assertContains(siteTestEntity2, (List<SiteTestEntity>)page.getItems());
+		assertValid(
+			page, testGetSiteSiteTestEntitiesPage_getExpectedActions(siteId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetTestEntitiesPage_getExpectedActions()
+			testGetSiteSiteTestEntitiesPage_getExpectedActions(Long siteId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/test/v1.0/sites/{siteId}/site-test-entities/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
 		return expectedActions;
 	}
 
-	protected TestEntity testGetTestEntitiesPage_addTestEntity(
-			TestEntity testEntity)
+	protected SiteTestEntity testGetSiteSiteTestEntitiesPage_addSiteTestEntity(
+			Long siteId, SiteTestEntity siteTestEntity)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			siteId, siteTestEntity);
 	}
 
-	@Test
-	public void testPostTestEntity() throws Exception {
-		TestEntity randomTestEntity = randomTestEntity();
-
-		TestEntity postTestEntity = testPostTestEntity_addTestEntity(
-			randomTestEntity);
-
-		assertEquals(randomTestEntity, postTestEntity);
-		assertValid(postTestEntity);
-
-		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				property1 = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity1");
-			}
-		};
-
-		assertEquals(
-			childTestEntity1,
-			testPostTestEntity_addTestEntity(childTestEntity1));
-
-		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				property2 = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity2");
-			}
-		};
-
-		assertEquals(
-			childTestEntity2,
-			testPostTestEntity_addTestEntity(childTestEntity2));
-
-		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				id = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-				type = Type.create("ChildTestEntity3");
-			}
-		};
-
-		assertEquals(
-			childTestEntity3,
-			testPostTestEntity_addTestEntity(childTestEntity3));
-	}
-
-	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
+	protected Long testGetSiteSiteTestEntitiesPage_getSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getGroupId();
 	}
 
-	@Test
-	public void testGetTestEntityCount() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetTestEntity() throws Exception {
-		TestEntity postTestEntity = testGetTestEntity_addTestEntity();
-
-		TestEntity getTestEntity = testEntityResource.getTestEntity(
-			postTestEntity.getId());
-
-		assertEquals(postTestEntity, getTestEntity);
-		assertValid(getTestEntity);
-	}
-
-	protected TestEntity testGetTestEntity_addTestEntity() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPatchTestEntity() throws Exception {
-		TestEntity postTestEntity = testPatchTestEntity_addTestEntity();
-
-		TestEntity randomPatchTestEntity = randomPatchTestEntity();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TestEntity patchTestEntity = testEntityResource.patchTestEntity(
-			postTestEntity.getId(), testPatchTestEntity_getOptionalParameter(),
-			randomPatchTestEntity);
-
-		TestEntity expectedPatchTestEntity = postTestEntity.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchTestEntity, expectedPatchTestEntity);
-
-		TestEntity getTestEntity = testEntityResource.getTestEntity(
-			patchTestEntity.getId());
-
-		assertEquals(expectedPatchTestEntity, getTestEntity);
-		assertValid(getTestEntity);
-	}
-
-	protected TestEntity testPatchTestEntity_addTestEntity() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testPatchTestEntity_getOptionalParameter() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutTestEntity() throws Exception {
-		TestEntity postTestEntity = testPutTestEntity_addTestEntity();
-
-		TestEntity randomTestEntity = randomTestEntity();
-
-		TestEntity putTestEntity = testEntityResource.putTestEntity(
-			postTestEntity.getId(), testPutTestEntity_getOptionalParameter(),
-			randomTestEntity);
-
-		assertEquals(randomTestEntity, putTestEntity);
-		assertValid(putTestEntity);
-
-		TestEntity getTestEntity = testEntityResource.getTestEntity(
-			putTestEntity.getId());
-
-		assertEquals(randomTestEntity, getTestEntity);
-		assertValid(getTestEntity);
-	}
-
-	protected Long testPutTestEntity_getOptionalParameter() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected TestEntity testGraphQLTestEntity_addTestEntity()
+	protected Long testGetSiteSiteTestEntitiesPage_getIrrelevantSiteId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testPostSiteSiteTestEntity() throws Exception {
+		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
+
+		SiteTestEntity postSiteTestEntity =
+			testPostSiteSiteTestEntity_addSiteTestEntity(randomSiteTestEntity);
+
+		assertEquals(randomSiteTestEntity, postSiteTestEntity);
+		assertValid(postSiteTestEntity);
+	}
+
+	protected SiteTestEntity testPostSiteSiteTestEntity_addSiteTestEntity(
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGetSiteSiteTestEntitiesPage_getSiteId(), siteTestEntity);
+	}
+
+	@Test
+	public void testGetSiteSiteTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		SiteTestEntity postSiteTestEntity =
+			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
+				postSiteTestEntity.getExternalReferenceCode(),
+				testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					postSiteTestEntity));
+
+		assertEquals(postSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+	}
+
+	protected Long testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntity.getSiteId();
+	}
+
+	protected SiteTestEntity
+			testGetSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
+	public void testPutSiteSiteTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		SiteTestEntity postSiteTestEntity =
+			testPutSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		SiteTestEntity randomSiteTestEntity = randomSiteTestEntity();
+
+		SiteTestEntity putSiteTestEntity =
+			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
+				postSiteTestEntity.getExternalReferenceCode(),
+				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					postSiteTestEntity),
+				randomSiteTestEntity);
+
+		assertEquals(randomSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		SiteTestEntity getSiteTestEntity =
+			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
+				putSiteTestEntity.getExternalReferenceCode(),
+				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					putSiteTestEntity));
+
+		assertEquals(randomSiteTestEntity, getSiteTestEntity);
+		assertValid(getSiteTestEntity);
+
+		SiteTestEntity newSiteTestEntity =
+			testPutSiteSiteTestEntityByExternalReferenceCode_createSiteTestEntity();
+
+		putSiteTestEntity =
+			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
+				newSiteTestEntity.getExternalReferenceCode(),
+				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					newSiteTestEntity),
+				newSiteTestEntity);
+
+		assertEquals(newSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		getSiteTestEntity =
+			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
+				putSiteTestEntity.getExternalReferenceCode(),
+				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					putSiteTestEntity));
+
+		assertEquals(newSiteTestEntity, getSiteTestEntity);
+
+		Assert.assertEquals(
+			newSiteTestEntity.getExternalReferenceCode(),
+			putSiteTestEntity.getExternalReferenceCode());
+	}
+
+	protected Long testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntity.getSiteId();
+	}
+
+	protected SiteTestEntity
+			testPutSiteSiteTestEntityByExternalReferenceCode_createSiteTestEntity()
+		throws Exception {
+
+		return randomSiteTestEntity();
+	}
+
+	protected SiteTestEntity
+			testPutSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
+	}
+
+	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity()
+		throws Exception {
+
+		return testGraphQLSiteTestEntity_addSiteTestEntity(
+			randomSiteTestEntity());
+	}
+
+	protected SiteTestEntity testGraphQLSiteTestEntity_addSiteTestEntity(
+			SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		JSONDeserializer<SiteTestEntity> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(SiteTestEntity.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(siteTestEntity));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteSiteTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + testGroup.getGroupId() + "\"");
+								put("siteTestEntity", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteSiteTestEntity"),
+			SiteTestEntity.class);
 	}
 
 	protected void assertContains(
-		TestEntity testEntity, List<TestEntity> testEntities) {
+		SiteTestEntity siteTestEntity, List<SiteTestEntity> siteTestEntities) {
 
 		boolean contains = false;
 
-		for (TestEntity item : testEntities) {
-			if (equals(testEntity, item)) {
+		for (SiteTestEntity item : siteTestEntities) {
+			if (equals(siteTestEntity, item)) {
 				contains = true;
 
 				break;
@@ -420,7 +629,7 @@ public abstract class BaseTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			testEntities + " does not contain " + testEntity, contains);
+			siteTestEntities + " does not contain " + siteTestEntity, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -432,36 +641,38 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected void assertEquals(
-		TestEntity testEntity1, TestEntity testEntity2) {
+		SiteTestEntity siteTestEntity1, SiteTestEntity siteTestEntity2) {
 
 		Assert.assertTrue(
-			testEntity1 + " does not equal " + testEntity2,
-			equals(testEntity1, testEntity2));
+			siteTestEntity1 + " does not equal " + siteTestEntity2,
+			equals(siteTestEntity1, siteTestEntity2));
 	}
 
 	protected void assertEquals(
-		List<TestEntity> testEntities1, List<TestEntity> testEntities2) {
+		List<SiteTestEntity> siteTestEntities1,
+		List<SiteTestEntity> siteTestEntities2) {
 
-		Assert.assertEquals(testEntities1.size(), testEntities2.size());
+		Assert.assertEquals(siteTestEntities1.size(), siteTestEntities2.size());
 
-		for (int i = 0; i < testEntities1.size(); i++) {
-			TestEntity testEntity1 = testEntities1.get(i);
-			TestEntity testEntity2 = testEntities2.get(i);
+		for (int i = 0; i < siteTestEntities1.size(); i++) {
+			SiteTestEntity siteTestEntity1 = siteTestEntities1.get(i);
+			SiteTestEntity siteTestEntity2 = siteTestEntities2.get(i);
 
-			assertEquals(testEntity1, testEntity2);
+			assertEquals(siteTestEntity1, siteTestEntity2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<TestEntity> testEntities1, List<TestEntity> testEntities2) {
+		List<SiteTestEntity> siteTestEntities1,
+		List<SiteTestEntity> siteTestEntities2) {
 
-		Assert.assertEquals(testEntities1.size(), testEntities2.size());
+		Assert.assertEquals(siteTestEntities1.size(), siteTestEntities2.size());
 
-		for (TestEntity testEntity1 : testEntities1) {
+		for (SiteTestEntity siteTestEntity1 : siteTestEntities1) {
 			boolean contains = false;
 
-			for (TestEntity testEntity2 : testEntities2) {
-				if (equals(testEntity1, testEntity2)) {
+			for (SiteTestEntity siteTestEntity2 : siteTestEntities2) {
+				if (equals(siteTestEntity1, siteTestEntity2)) {
 					contains = true;
 
 					break;
@@ -469,22 +680,29 @@ public abstract class BaseTestEntityResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				testEntities2 + " does not contain " + testEntity1, contains);
+				siteTestEntities2 + " does not contain " + siteTestEntity1,
+				contains);
 		}
 	}
 
-	protected void assertValid(TestEntity testEntity) throws Exception {
+	protected void assertValid(SiteTestEntity siteTestEntity) throws Exception {
 		boolean valid = true;
 
-		if (testEntity.getDateCreated() == null) {
+		if (siteTestEntity.getDateCreated() == null) {
 			valid = false;
 		}
 
-		if (testEntity.getDateModified() == null) {
+		if (siteTestEntity.getDateModified() == null) {
 			valid = false;
 		}
 
-		if (testEntity.getId() == null) {
+		if (siteTestEntity.getId() == null) {
+			valid = false;
+		}
+
+		if (!Objects.equals(
+				siteTestEntity.getSiteId(), testGroup.getGroupId())) {
+
 			valid = false;
 		}
 
@@ -492,87 +710,25 @@ public abstract class BaseTestEntityResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (testEntity.getDescription() == null) {
+				if (siteTestEntity.getDescription() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("documentId", additionalAssertFieldName)) {
-				if (testEntity.getDocumentId() == null) {
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (siteTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("jsonProperty", additionalAssertFieldName)) {
-				if (testEntity.getJsonProperty() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (testEntity.getName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("nestedTestEntity", additionalAssertFieldName)) {
-				if (testEntity.getNestedTestEntity() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("self", additionalAssertFieldName)) {
-				if (testEntity.getSelf() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("testEntities", additionalAssertFieldName)) {
-				if (testEntity.getTestEntities() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (testEntity.getType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("property1", additionalAssertFieldName)) {
-				if (!(testEntity instanceof ChildTestEntity1)) {
-					continue;
-				}
-
-				if (((ChildTestEntity1)testEntity).getProperty1() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("property2", additionalAssertFieldName)) {
-				if (!(testEntity instanceof ChildTestEntity2)) {
-					continue;
-				}
-
-				if (((ChildTestEntity2)testEntity).getProperty2() == null) {
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (siteTestEntity.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -587,19 +743,19 @@ public abstract class BaseTestEntityResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<TestEntity> page) {
+	protected void assertValid(Page<SiteTestEntity> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<TestEntity> page,
+		Page<SiteTestEntity> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<TestEntity> testEntities = page.getItems();
+		java.util.Collection<SiteTestEntity> siteTestEntities = page.getItems();
 
-		int size = testEntities.size();
+		int size = siteTestEntities.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -637,10 +793,12 @@ public abstract class BaseTestEntityResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("siteId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						TestEntity.class)) {
+						SiteTestEntity.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -688,9 +846,17 @@ public abstract class BaseTestEntityResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(TestEntity testEntity1, TestEntity testEntity2) {
-		if (testEntity1 == testEntity2) {
+	protected boolean equals(
+		SiteTestEntity siteTestEntity1, SiteTestEntity siteTestEntity2) {
+
+		if (siteTestEntity1 == siteTestEntity2) {
 			return true;
+		}
+
+		if (!Objects.equals(
+				siteTestEntity1.getSiteId(), siteTestEntity2.getSiteId())) {
+
+			return false;
 		}
 
 		for (String additionalAssertFieldName :
@@ -698,8 +864,8 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						testEntity1.getDateCreated(),
-						testEntity2.getDateCreated())) {
+						siteTestEntity1.getDateCreated(),
+						siteTestEntity2.getDateCreated())) {
 
 					return false;
 				}
@@ -709,8 +875,8 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						testEntity1.getDateModified(),
-						testEntity2.getDateModified())) {
+						siteTestEntity1.getDateModified(),
+						siteTestEntity2.getDateModified())) {
 
 					return false;
 				}
@@ -720,8 +886,8 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						testEntity1.getDescription(),
-						testEntity2.getDescription())) {
+						siteTestEntity1.getDescription(),
+						siteTestEntity2.getDescription())) {
 
 					return false;
 				}
@@ -729,10 +895,12 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("documentId", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						testEntity1.getDocumentId(),
-						testEntity2.getDocumentId())) {
+						siteTestEntity1.getExternalReferenceCode(),
+						siteTestEntity2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -742,7 +910,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						testEntity1.getId(), testEntity2.getId())) {
+						siteTestEntity1.getId(), siteTestEntity2.getId())) {
 
 					return false;
 				}
@@ -750,96 +918,10 @@ public abstract class BaseTestEntityResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("jsonProperty", additionalAssertFieldName)) {
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						testEntity1.getJsonProperty(),
-						testEntity2.getJsonProperty())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getName(), testEntity2.getName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("nestedTestEntity", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getNestedTestEntity(),
-						testEntity2.getNestedTestEntity())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("self", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getSelf(), testEntity2.getSelf())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("testEntities", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getTestEntities(),
-						testEntity2.getTestEntities())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						testEntity1.getType(), testEntity2.getType())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("property1", additionalAssertFieldName)) {
-				if (!(testEntity1 instanceof ChildTestEntity1) ||
-					!(testEntity2 instanceof ChildTestEntity1)) {
-
-					continue;
-				}
-
-				if (!Objects.deepEquals(
-						((ChildTestEntity1)testEntity1).getProperty1(),
-						((ChildTestEntity1)testEntity2).getProperty1())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("property2", additionalAssertFieldName)) {
-				if (!(testEntity1 instanceof ChildTestEntity2) ||
-					!(testEntity2 instanceof ChildTestEntity2)) {
-
-					continue;
-				}
-
-				if (!Objects.deepEquals(
-						((ChildTestEntity2)testEntity1).getProperty2(),
-						((ChildTestEntity2)testEntity2).getProperty2())) {
+						siteTestEntity1.getPermissions(),
+						siteTestEntity2.getPermissions())) {
 
 					return false;
 				}
@@ -903,13 +985,13 @@ public abstract class BaseTestEntityResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_testEntityResource instanceof EntityModelResource)) {
+		if (!(_siteTestEntityResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_testEntityResource;
+			(EntityModelResource)_siteTestEntityResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -942,7 +1024,8 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, TestEntity testEntity) {
+		EntityField entityField, String operator,
+		SiteTestEntity siteTestEntity) {
 
 		StringBundler sb = new StringBundler();
 
@@ -956,7 +1039,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
-				Date date = testEntity.getDateCreated();
+				Date date = siteTestEntity.getDateCreated();
 
 				sb = new StringBundler();
 
@@ -979,7 +1062,7 @@ public abstract class BaseTestEntityResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(testEntity.getDateCreated()));
+				sb.append(_dateFormat.format(siteTestEntity.getDateCreated()));
 			}
 
 			return sb.toString();
@@ -987,7 +1070,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
-				Date date = testEntity.getDateModified();
+				Date date = siteTestEntity.getDateModified();
 
 				sb = new StringBundler();
 
@@ -1010,14 +1093,14 @@ public abstract class BaseTestEntityResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(testEntity.getDateModified()));
+				sb.append(_dateFormat.format(siteTestEntity.getDateModified()));
 			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
-			Object object = testEntity.getDescription();
+			Object object = siteTestEntity.getDescription();
 
 			String value = String.valueOf(object);
 
@@ -1062,9 +1145,50 @@ public abstract class BaseTestEntityResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("documentId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = siteTestEntity.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -1072,155 +1196,12 @@ public abstract class BaseTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("jsonProperty")) {
-			Object object = testEntity.getJsonProperty();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("name")) {
-			Object object = testEntity.getName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("nestedTestEntity")) {
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("self")) {
-			Object object = testEntity.getSelf();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("testEntities")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("type")) {
+		if (entityFieldName.equals("siteId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1267,92 +1248,34 @@ public abstract class BaseTestEntityResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected TestEntity randomTestEntity() throws Exception {
-		List<Supplier<TestEntity>> suppliers = Arrays.asList(
-			() -> {
-				ChildTestEntity1 testEntity = new ChildTestEntity1();
-
-				testEntity.setDateCreated(RandomTestUtil.nextDate());
-				testEntity.setDateModified(RandomTestUtil.nextDate());
-				testEntity.setDescription(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setId(RandomTestUtil.randomLong());
-				testEntity.setJsonProperty(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setName(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setSelf(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				testEntity.setProperty1(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				testEntity.setType(TestEntity.Type.create("ChildTestEntity1"));
-
-				return testEntity;
-			},
-			() -> {
-				ChildTestEntity2 testEntity = new ChildTestEntity2();
-
-				testEntity.setDateCreated(RandomTestUtil.nextDate());
-				testEntity.setDateModified(RandomTestUtil.nextDate());
-				testEntity.setDescription(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setId(RandomTestUtil.randomLong());
-				testEntity.setJsonProperty(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setName(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setSelf(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				testEntity.setProperty2(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				testEntity.setType(TestEntity.Type.create("ChildTestEntity2"));
-
-				return testEntity;
-			},
-			() -> {
-				ChildTestEntity3 testEntity = new ChildTestEntity3();
-
-				testEntity.setDateCreated(RandomTestUtil.nextDate());
-				testEntity.setDateModified(RandomTestUtil.nextDate());
-				testEntity.setDescription(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setDocumentId(RandomTestUtil.randomLong());
-				testEntity.setId(RandomTestUtil.randomLong());
-				testEntity.setJsonProperty(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setName(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-				testEntity.setSelf(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()));
-
-				testEntity.setType(TestEntity.Type.create("ChildTestEntity3"));
-
-				return testEntity;
-			});
-
-		Supplier<TestEntity> supplier = suppliers.get(
-			RandomTestUtil.randomInt(0, suppliers.size() - 1));
-
-		return supplier.get();
+	protected SiteTestEntity randomSiteTestEntity() throws Exception {
+		return new SiteTestEntity() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				siteId = testGroup.getGroupId();
+			}
+		};
 	}
 
-	protected TestEntity randomIrrelevantTestEntity() throws Exception {
-		TestEntity randomIrrelevantTestEntity = randomTestEntity();
+	protected SiteTestEntity randomIrrelevantSiteTestEntity() throws Exception {
+		SiteTestEntity randomIrrelevantSiteTestEntity = randomSiteTestEntity();
 
-		return randomIrrelevantTestEntity;
+		randomIrrelevantSiteTestEntity.setSiteId(irrelevantGroup.getGroupId());
+
+		return randomIrrelevantSiteTestEntity;
 	}
 
-	protected TestEntity randomPatchTestEntity() throws Exception {
-		return randomTestEntity();
+	protected SiteTestEntity randomPatchSiteTestEntity() throws Exception {
+		return randomSiteTestEntity();
 	}
 
-	protected TestEntityResource testEntityResource;
+	protected SiteTestEntityResource siteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1551,13 +1474,12 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTestEntityResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseSiteTestEntityResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private
-		com.liferay.portal.tools.rest.builder.test.resource.v1_0.
-			TestEntityResource _testEntityResource;
+	private com.liferay.portal.tools.rest.builder.test.resource.v1_0.
+		SiteTestEntityResource _siteTestEntityResource;
 
 }

@@ -2229,12 +2229,6 @@ public class PropsValues {
 	public static final String[] SPRING_CONFIGS = PropsUtil.getArray(
 		PropsKeys.SPRING_CONFIGS);
 
-	public static final String[]
-		SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES =
-			PropsUtil.getArray(
-				PropsKeys.
-					SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES);
-
 	public static volatile boolean SPRING_HIBERNATE_SESSION_DELEGATED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED));

@@ -4,6 +4,7 @@
  */
 
 export {default as CopyFragmentModal} from '././components/modals/CopyFragmentModal';
+export {default as InstallFragmentModal} from '././components/modals/InstallFragmentModal';
 export {
 	default as ColorPicker,
 	DEFAULT_TOKEN_LABEL,

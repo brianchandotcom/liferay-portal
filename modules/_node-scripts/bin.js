@@ -127,6 +127,39 @@ const COMMANDS = {
 		parameters: '',
 		script: './gitmerge/setup.mjs',
 	},
+	'report:bundle:imports': {
+		description: `
+		Generate aggregated information about bundle (external) imports. The report can optionally
+		shows the list of symbols imported from each external module (if the --with-symbols flag is
+		provided).
+
+		This task must be invoked after running 'CREATE_BUNDLE_REPORTS=yes ant all' (i.e: running
+		'ant all' with the environment variable 'CREATE_BUNDLE_REPORTS' set to 'yes', so that JSON
+		reports about bundle sizes are created inside the 'build' directory of each project).
+`,
+		parameters: '[--with-symbols]',
+		script: './report/bundle/imports.mjs',
+	},
+	'report:bundle:sizes': {
+		description: `
+		Show aggregated information about bundle sizes. Optionally report the size of internal
+		files inside each bundle (if the --with-internals flag is provided).
+
+		This task must be invoked after running 'CREATE_BUNDLE_REPORTS=yes ant all' (i.e: running
+		'ant all' with the environment variable 'CREATE_BUNDLE_REPORTS' set to 'yes', so that JSON
+		reports about bundle sizes are created inside the 'build' directory of each project).
+`,
+		parameters: '[--with-internals]',
+		script: './report/bundle/sizes.mjs',
+	},
+	'report:source:imports': {
+		description: `
+		Generate aggregated information about external imports found in each project from the source
+		tree.
+`,
+		parameters: '',
+		script: './report/source/imports.mjs',
+	},
 	'setup': {
 		description: `
 		Setup working environment used by node-scripts (for example: download the binary Sass

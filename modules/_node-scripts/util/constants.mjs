@@ -49,6 +49,8 @@ export const NODE_SCRIPTS_PATH = path.resolve(__dirname, '..');
 export const WORK_PATH = path.join('build', 'node-scripts');
 export const WORK_EXPORT_PATH = path.join(WORK_PATH, 'export');
 
+export const BUNDLE_REPORTS_PATH = path.join('build', 'bundle-reports');
+
 const IGNORED_PROJECT_DIRS = ['modules'];
 const NO_RECURSE_PROJECT_DIRS = [
 	'_node-scripts',

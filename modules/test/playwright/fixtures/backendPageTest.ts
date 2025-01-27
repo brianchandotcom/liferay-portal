@@ -9,7 +9,7 @@ import createTempFile, {
 	TempFileMissingError,
 	readTempFile,
 } from '../utils/createTempFile';
-import performLogin from '../utils/performLogin';
+import {performLoginViaApi} from '../utils/performLogin';
 
 export interface BackendPage {
 	backendPage: Page;
@@ -41,7 +41,7 @@ const backendPageTest = test.extend<BackendPage>({
 				throw error;
 			}
 
-			const cookies = await performLogin(backendPage, 'test');
+			const cookies = await performLoginViaApi(backendPage, 'test');
 
 			createTempFile(tempFile, JSON.stringify({cookies}));
 		}

@@ -10,7 +10,7 @@ import createTempFile, {
 	TempFileMissingError,
 	readTempFile,
 } from '../utils/createTempFile';
-import performLogin, {LoginScreenName} from '../utils/performLogin';
+import {LoginScreenName, performLoginViaApi} from '../utils/performLogin';
 
 export interface LoginOptions {
 	screenName?: LoginScreenName;
@@ -66,7 +66,7 @@ function loginTest(options: LoginOptions = {}) {
 						throw error;
 					}
 
-					cookies = await performLogin(page, screenName);
+					cookies = await performLoginViaApi(page, screenName);
 
 					createTempFile(tempFile, JSON.stringify({cookies}));
 				}

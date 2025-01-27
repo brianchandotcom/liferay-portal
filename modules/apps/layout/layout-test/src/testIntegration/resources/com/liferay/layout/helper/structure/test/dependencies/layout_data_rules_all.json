@@ -63,16 +63,52 @@
 					"id": "condition1",
 					"options": {
 						"type": "equal",
-						"value": "${ROLE_ID}"
+						"value": "${ROLE_ID1}"
+					},
+					"type": "user"
+				},
+				{
+					"condition": "role",
+					"id": "condition2",
+					"options": {
+						"type": "not-equal",
+						"value": "${ROLE_ID2}"
 					},
 					"type": "user"
 				},
 				{
 					"condition": "segment",
-					"id": "condition2",
-					"options":  {
+					"id": "condition3",
+					"options": {
 						"type": "equal",
-						"value": "${SEGMENTS_ENTRY_ID}"
+						"value": "${SEGMENTS_ENTRY_ID1}"
+					},
+					"type": "user"
+				},
+				{
+					"condition": "segment",
+					"id": "condition4",
+					"options": {
+						"type": "not-equal",
+						"value": "${SEGMENTS_ENTRY_ID2}"
+					},
+					"type": "user"
+				},
+				{
+					"condition": "user",
+					"id": "condition5",
+					"options": {
+						"type": "equal",
+						"value": "${USER_ID1}"
+					},
+					"type": "user"
+				},
+				{
+					"condition": "user",
+					"id": "condition6",
+					"options": {
+						"type": "not-equal",
+						"value": "${USER_ID2}"
 					},
 					"type": "user"
 				}

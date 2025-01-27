@@ -5,7 +5,7 @@
 
 package com.liferay.evp;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;

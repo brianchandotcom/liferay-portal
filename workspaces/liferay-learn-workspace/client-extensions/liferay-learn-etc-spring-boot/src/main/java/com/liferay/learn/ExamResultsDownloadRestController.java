@@ -34,9 +34,9 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 /**
  * @author Nilton Vieira
  */
-@RequestMapping("/export/exam/results")
+@RequestMapping("/exam-results/download")
 @RestController
-public class ExportExamResultRestController extends BaseRestController {
+public class ExamResultsDownloadRestController extends BaseRestController {
 
 	@GetMapping
 	@ResponseBody

@@ -275,7 +275,8 @@ export default function FragmentsSidebar() {
 								aria-label={Liferay.Language.get(
 									'components-options'
 								)}
-								className="ml-2"
+								className="components-options ml-2"
+								data-tooltip-align="top"
 								displayType="unstyled"
 								size="sm"
 								symbol="ellipsis-v"

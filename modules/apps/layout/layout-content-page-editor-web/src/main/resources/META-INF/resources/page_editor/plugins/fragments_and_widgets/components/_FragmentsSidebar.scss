@@ -1,0 +1,15 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.components-options {
+			color: $cadmin-secondary;
+
+			&:focus,
+			&:hover {
+				background-color: $cadmin-light-l1;
+				color: $cadmin-dark;
+			}
+		}
+	}
+}

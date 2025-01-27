@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.client.extension.util.spring.boot2;
+package com.liferay.client.extension.util.spring.boot3;
 
-import com.liferay.client.extension.util.spring.boot2.service.BaseService;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 
 import org.springframework.web.bind.annotation.RestController;
 

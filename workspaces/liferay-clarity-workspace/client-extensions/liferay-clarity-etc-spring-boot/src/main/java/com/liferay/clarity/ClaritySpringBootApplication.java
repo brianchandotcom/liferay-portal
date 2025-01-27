@@ -5,7 +5,7 @@
 
 package com.liferay.clarity;
 
-import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot2.ClientExtensionUtilSpringBootComponentScan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

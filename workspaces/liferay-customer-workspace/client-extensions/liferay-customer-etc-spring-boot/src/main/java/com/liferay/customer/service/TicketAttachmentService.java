@@ -5,7 +5,7 @@
 
 package com.liferay.customer.service;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot2.BaseRestController;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
 

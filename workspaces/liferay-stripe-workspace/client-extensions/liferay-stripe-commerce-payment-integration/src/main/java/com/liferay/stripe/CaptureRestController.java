@@ -5,7 +5,7 @@
 
 package com.liferay.stripe;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot2.BaseRestController;
 
 import com.stripe.Stripe;
 import com.stripe.model.checkout.Session;

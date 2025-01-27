@@ -19,7 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Brian Wing Shun Chan
  */
 public class BaseRestController
-	extends com.liferay.client.extension.util.spring.boot.BaseRestController {
+	extends com.liferay.client.extension.util.spring.boot2.BaseRestController {
 
 	protected String getAuthorization(JSONObject jsonObject) {
 		String authorization =

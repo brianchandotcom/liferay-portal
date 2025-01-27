@@ -5,7 +5,7 @@
 
 package com.liferay.ticket;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot2.BaseRestController;
 
 import java.util.Objects;
 

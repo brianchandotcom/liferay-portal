@@ -263,7 +263,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a user and assigns them to the account"
@@ -610,7 +610,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a user and assigns them to the account"
@@ -1640,7 +1640,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new user account"
@@ -1798,7 +1798,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
@@ -1905,6 +1905,10 @@ public abstract class BaseUserAccountResourceImpl
 			existingUserAccount.setPassword(userAccount.getPassword());
 		}
 
+		if (userAccount.getPermissions() != null) {
+			existingUserAccount.setPermissions(userAccount.getPermissions());
+		}
+
 		if (userAccount.getStatus() != null) {
 			existingUserAccount.setStatus(userAccount.getStatus());
 		}
@@ -1918,7 +1922,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -2116,7 +2120,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
@@ -2220,6 +2224,10 @@ public abstract class BaseUserAccountResourceImpl
 			existingUserAccount.setPassword(userAccount.getPassword());
 		}
 
+		if (userAccount.getPermissions() != null) {
+			existingUserAccount.setPermissions(userAccount.getPermissions());
+		}
+
 		if (userAccount.getStatus() != null) {
 			existingUserAccount.setStatus(userAccount.getStatus());
 		}
@@ -2232,7 +2240,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "currentPassword": ___, "customFields": ___, "emailAddress": ___, "externalReferenceCode": ___, "familyName": ___, "gender": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "id": ___, "imageExternalReferenceCode": ___, "imageId": ___, "jobTitle": ___, "languageId": ___, "password": ___, "permissions": ___, "status": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required."

@@ -5881,6 +5881,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (userAccount.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (userAccount.getProfileURL() == null) {
 					valid = false;
@@ -6377,6 +6385,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getPassword(),
 						userAccount2.getPassword())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getPermissions(),
+						userAccount2.getPermissions())) {
 
 					return false;
 				}
@@ -7508,6 +7527,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("profileURL")) {

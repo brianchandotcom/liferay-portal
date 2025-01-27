@@ -69,10 +69,19 @@ public class LayoutStructureRulesHelperTest {
 			StringUtil.replace(
 				_read("layout_data_rules_all.json"), "${", "}",
 				HashMapBuilder.put(
-					"ROLE_ID", String.valueOf(role.getRoleId())
+					"ROLE_ID1", String.valueOf(role.getRoleId())
 				).put(
-					"SEGMENTS_ENTRY_ID",
+					"ROLE_ID2", String.valueOf(RandomTestUtil.randomLong())
+				).put(
+					"SEGMENTS_ENTRY_ID1",
 					String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
+				).put(
+					"SEGMENTS_ENTRY_ID2",
+					String.valueOf(RandomTestUtil.randomLong())
+				).put(
+					"USER_ID1", String.valueOf(_user.getUserId())
+				).put(
+					"USER_ID2", String.valueOf(RandomTestUtil.randomLong())
 				).build()));
 
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
@@ -91,8 +100,11 @@ public class LayoutStructureRulesHelperTest {
 			displayedItemIds.toString(), 1, displayedItemIds.size());
 		Assert.assertEquals(hiddenItemIds.toString(), 1, hiddenItemIds.size());
 
-		Assert.assertTrue(displayedItemIds.contains("container2"));
-		Assert.assertTrue(hiddenItemIds.contains("fragment1"));
+		Assert.assertTrue(
+			displayedItemIds.toString(),
+			displayedItemIds.contains("container2"));
+		Assert.assertTrue(
+			hiddenItemIds.toString(), hiddenItemIds.contains("fragment1"));
 	}
 
 	@Test

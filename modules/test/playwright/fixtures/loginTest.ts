@@ -3,13 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Cookie, test} from '@playwright/test';
+import {test} from '@playwright/test';
 
-import {liferayConfig} from '../liferay.config';
-import createTempFile, {
-	TempFileMissingError,
-	readTempFile,
-} from '../utils/createTempFile';
 import {LoginScreenName, performLoginViaApi} from '../utils/performLogin';
 
 export interface LoginOptions {
@@ -48,28 +43,8 @@ function loginTest(options: LoginOptions = {}) {
 		login: [
 			async ({page}, use) => {
 				const screenName = options.screenName || 'test';
-				const tempFile = `loginTest-${screenName}.json`;
 
-				let cookies: Cookie[];
-
-				try {
-					const json = JSON.parse(readTempFile(tempFile));
-
-					cookies = json.cookies;
-
-					page.context().addCookies(cookies);
-
-					await page.goto(liferayConfig.environment.baseUrl);
-				}
-				catch (error) {
-					if (!(error instanceof TempFileMissingError)) {
-						throw error;
-					}
-
-					cookies = await performLoginViaApi(page, screenName);
-
-					createTempFile(tempFile, JSON.stringify({cookies}));
-				}
+				const cookies = await performLoginViaApi(page, screenName);
 
 				await use({
 					screenName,

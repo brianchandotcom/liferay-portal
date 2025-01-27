@@ -103,7 +103,14 @@ public class LayoutStructureRulesHelperImpl
 		JSONObject conditionJSONObject,
 		LayoutStructureRulesContext layoutStructureRulesContext) {
 
-		long value = conditionJSONObject.getLong("value");
+		long value = 0L;
+
+		JSONObject optionsJSONObject = conditionJSONObject.getJSONObject(
+			"options");
+
+		if (optionsJSONObject != null) {
+			value = optionsJSONObject.getLong("value");
+		}
 
 		if (Objects.equals(
 				conditionJSONObject.getString("condition"), "role")) {

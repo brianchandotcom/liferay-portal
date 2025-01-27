@@ -61,14 +61,20 @@
 				{
 					"condition": "role",
 					"id": "condition1",
-					"type": "user",
-					"value": "${ROLE_ID}"
+					"options": {
+						"type": "equal",
+						"value": "${ROLE_ID}"
+					},
+					"type": "user"
 				},
 				{
 					"condition": "segment",
 					"id": "condition2",
-					"type": "user",
-					"value": "${SEGMENTS_ENTRY_ID}"
+					"options": {
+						"type": "equal",
+						"value": "${SEGMENTS_ENTRY_ID}"
+					},
+					"type": "user"
 				}
 			],
 			"id": "rule1",

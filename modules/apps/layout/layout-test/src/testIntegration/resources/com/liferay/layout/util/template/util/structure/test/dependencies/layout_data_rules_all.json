@@ -55,14 +55,20 @@
 				{
 					"condition": "role",
 					"id": "4e0b68af-d41a-4249-8771-0bfdd36a971a",
-					"type": "user",
-					"value": "${ROLE_ID}"
+					"options": {
+						"type": "equal",
+						"value": "${ROLE_ID}"
+					},
+					"type": "user"
 				},
 				{
 					"condition": "segment",
 					"id": "6da37461-38cf-44ec-99c3-cc6288c12f20",
-					"type": "user",
-					"value": "${SEGMENTS_ENTRY_ID}"
+					"options": {
+						"type": "equal",
+						"value": "${SEGMENTS_ENTRY_ID}"
+					},
+					"type": "user"
 				}
 			],
 			"id": "06883c1a-7291-681f-83ca-c08d73f3ab1e",

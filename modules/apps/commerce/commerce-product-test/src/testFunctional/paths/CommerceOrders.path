@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRODUCT_NAME</td>
-	<td>//td[contains (.,'${key_productName}')]</td>
+	<td>//td[contains(@class,'cell-name') and contains(.,'${key_productName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRODUCT_SKU</td>
-	<td>//td[contains(.,'${key_productSku}')]</td>
+	<td>//td[contains(@class,'cell-sku') and contains(.,'${key_productSku}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
-	<td>//div[contains(text(),'${key_warehouseName}')]//following-sibling::div//following-sibling::div//input[contains(@class, 'form-control')]</td>
+	<td>//td[contains(text(),'${key_warehouseName}')]//following-sibling::td//following-sibling::td//input[contains(@class, 'form-control')]</td>
 	 <td></td>
 </tr>
 <tr>
@@ -237,7 +237,7 @@
 </tr>
 <tr>
 	<td>PLACED_ORDERS_LIST_DATE</td>
-	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::div[5]</td>
+	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::td[5]</td>
 	<td></td>
 </tr>
 <tr>

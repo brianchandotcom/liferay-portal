@@ -1649,8 +1649,9 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 			AssertElementNotPresent(
-				key_userName = "U-Joint",
-				locator1 = "Account#USER_TABLE_NAME");
+				key_cellName1 = "U-Joint",
+				key_columnIndex = 2,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE");
 		}
 
 		task ("When the buyer clicks on the delete button next to a product on the wishlist") {
@@ -1661,8 +1662,9 @@ definition {
 
 		task ("Then the product is removed from the wishlist") {
 			AssertElementNotPresent(
-				key_userName = "Mount",
-				locator1 = "Account#USER_TABLE_NAME");
+				key_cellName1 = "Mount",
+				key_columnIndex = 2,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE");
 		}
 	}
 
@@ -1941,7 +1943,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			var promoPrice = TestUtils.getElementTextContent(element = "//td[contains(.,'MIN93018')]/following-sibling::div[3]");
+			var promoPrice = TestUtils.getElementTextContent(element = "//td[contains(.,'MIN93018')]/following-sibling::td[3]");
 
 			CommerceProducts.openProductsAdmin();
 

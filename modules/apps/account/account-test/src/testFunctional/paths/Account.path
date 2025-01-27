@@ -121,7 +121,7 @@
 
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS</td>
-	<td>//div[contains(@id,'${key_termType}')]//tr["${key_row}"]//div[contains(.,'${key_entryDetails}')]</td>
+	<td>//div[contains(@id,'${key_termType}')]//tr["${key_row}"]//td[contains(.,'${key_entryDetails}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,17 +219,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_SETTINGS_TABLE_ITEM</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_entryDetail}')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//td[contains(.,'${key_entryDetail}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_SETTINGS_TABLE_ACTION_BUTTON</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_currentDefault}')]//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//td[contains(.,'${key_currentDefault}')]//following-sibling::td//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_SETTING_ACTIVE_STATUS</td>
-	<td>//div[contains(@id,'${key_settingHeader}')]//tr//div[contains(.,'${key_currentDefault}')]//following-sibling::div[contains(.,'${key_activeStatus}')]</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//tr//td[contains(.,'${key_currentDefault}')]//following-sibling::td[contains(.,'${key_activeStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,6 +247,11 @@
 </tr>
 <tr>
 	<td>USER_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_NAME_WITH_COLUMN_INDEX</td>
 	<td>//tr[contains(.,'${key_userName}')]/td[1]</td>
 	<td></td>
 </tr>

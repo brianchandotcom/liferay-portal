@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>COLUMN_NAME</td>
-	<td>//div[contains(text(),'${columnName}')]</td>
+	<td>//td[contains(text(),'${columnName}')]</td>
 	<td></td>
 </tr>
 <tr>

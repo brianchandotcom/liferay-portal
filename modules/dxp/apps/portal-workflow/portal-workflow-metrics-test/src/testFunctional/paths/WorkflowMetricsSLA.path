@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>SLA_ERROR_MESSAGE</td>
-	<td>//div[contains(text(), '${key_errorMessage}')]</td>
+	<td>xpath=(//div | //td)[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -410,7 +410,7 @@
 </tr>
 <tr>
 	<td>SPEEDWELL_MY_ORDERS_ORDER_ACCOUNT</td>
-	<td>//div[contains(@class,'tr')]//div[contains(@class,'td') and text()='${key_accountName}']</td>
+	<td>//td[contains(@data-id, 'accountName') and contains(.,'${key_accountName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -862,7 +862,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_DISCOUNT</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[6]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[6]</td>
 	<td></td>
 </tr>
 <tr>
@@ -872,37 +872,37 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[9]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[9]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRICE_2</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[10]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[10]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_QUANTITY</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[7]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SKU</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[3]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_UNIT_PRICE</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[4]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_UOM</td>
-	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../div[8]</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_productName}']/../../../../../td[8]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDERS_ENTRY_VIEW_BUTTON</td>
-	<td>//div[contains(.,'${key_orderAuthor}')]/..//following-sibling::div/a[contains(.,'View')]</td>
+	<td>//tr[contains(.,'${key_orderAuthor}')]/..//following-sibling::td/a[contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>SELECT_ITEM_FROM_LIST</td>
-	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::div//a[contains(.,'Select')]</td>
+	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::td//a[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_ITEM_FROM_LIST</td>
-	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::div//a[contains(.,'View')]</td>
+	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::td//a[contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -447,7 +447,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY</td>
-	<td>//table[contains(@class,'fixed table-style-stacked')]//descendant::div[17][contains(text(),'${key_productQuantity}')]</td>
+	<td>//table//td[contains(@data-id, 'availableQuantity')][contains(text(), '${key_productQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -542,7 +542,7 @@
 </tr>
 <tr>
 	<td>SKU_STATUS_PRODUCT_ADMIN_PAGE</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div//span[text()='${key_label}']</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../td//span[text()='${key_label}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -592,7 +592,7 @@
 </tr>
 <tr>
 	<td>FIX_ISSUE_BUTTON</td>
-	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[contains(@class,'entry-action-column')]/* | //div[text()='${key_fixIssueButtonName}']/following-sibling::div/a[text()='Fix Issue']</td>
+	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[contains(@class,'entry-action-column') or contains(@class,'cell-item-actions')]/* | //div[text()='${key_fixIssueButtonName}']/following-sibling::div/a[text()='Fix Issue']</td>
 	<td></td>
 </tr>
 <tr>
@@ -872,7 +872,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_ROW_FIELD_GENERIC</td>
-	<td>//tr[${key_rowIndex}]//td[${key_columnIndex}]</td>
+	<td>//tr[contains(.,'${key_cellContent}')][${key_rowIndex}]//td[${key_columnIndex}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -882,17 +882,17 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_LABEL_FIELD</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}]//span[text()='${key_label}']</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../td[${key_index}]//span[text()='${key_label}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_FIELD_VALUE</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}][normalize-space()='${key_value}']</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../td[${key_index}][normalize-space()='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//td/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
+	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/../../../../tr//td/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -937,7 +937,7 @@
 </tr>
 <tr>
 	<td>TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON</td>
-	<td>//div[contains(@id,'${key_table}')]//td[text() = '${key_firstColumnValue}']/../td[contains (.,'${key_secondColumnValue}')]/../div[contains(.,'Edit')]</td>
+	<td>//div[contains(@id,'${key_table}')]//td[text() = '${key_firstColumnValue}']/../td[contains (.,'${key_secondColumnValue}')]/../td[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -952,7 +952,7 @@
 </tr>
 <tr>
 	<td>GENERIC_TABLE_ROW_VALUE</td>
-	<td>//th[contains(string(), '${key_firstRowValue}')]/..//td[contains(string(), '${key_secondRowValue}')]</td>
+	<td>//th[contains(string(), '${key_firstRowValue}')]/../../..//td[contains(string(), '${key_secondRowValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1134,7 +1134,7 @@
 </tr>
 <tr>
 	<td>OPTION_TABLE_CHECK</td>
-	<td>//div[(text() = '${key_table}')]//..//..//..//a[(text() = "${key_entryName}")]</td>
+	<td>//td[(text() = '${key_table}')]//..//..//..//a[(text() = "${key_entryName}")]</td>
 	<td></td>
 </tr>
 
@@ -1365,7 +1365,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_GROUPS_COLUMN_VALUE</td>
-	<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]//..//../following-sibling::div[1]</td>
+	<td>//div[contains(@class,'table-list-title')]//a[contains(text(),'${key_name}')]//..//../following-sibling::td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1513,7 +1513,7 @@
 </tr>
 <tr>
 	<td>TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT</td>
-	<td>//td[contains(.,'${key_productName}')]/following-sibling::div[${key_columnNumber}][contains(text(),'${key_value}')]</td>
+	<td>//td[contains(.,'${key_productName}')]/following-sibling::td[${key_columnNumber}][contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1571,7 +1571,7 @@
 </tr>
 <tr>
 	<td>PRICE_ENTRY_WITH_UOM</td>
-	<td>//tr//a[contains(.,"${key_pricing}")]/../../..//div[contains(.,"${key_uomkey}")]/..//a</td>
+	<td>//tr//a[contains(.,"${key_pricing}")]/../../..//td[contains(.,"${key_uomkey}")]/..//a</td>
 	<td></td>
 </tr>
 

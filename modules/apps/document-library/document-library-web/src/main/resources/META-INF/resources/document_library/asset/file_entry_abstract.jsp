@@ -29,7 +29,9 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(previewURL) %>">
-				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= previewURL %>);"></div>
+				<div class="aspect-ratio aspect-ratio-8-to-3 mb-4">
+					<img alt="" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-flush" src="<%= previewURL %>" />
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="aspect-ratio aspect-ratio-8-to-3 bg-light mb-4">

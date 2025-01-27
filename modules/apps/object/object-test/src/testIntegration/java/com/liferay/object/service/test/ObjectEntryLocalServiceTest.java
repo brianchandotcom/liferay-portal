@@ -113,6 +113,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -4010,23 +4011,19 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		SystemEvent deletionSystemEvent = null;
 		List<SystemEvent> systemEvents =
 			_systemEventLocalService.getSystemEvents(
 				0, _portal.getClassNameId(objectEntry.getModelClassName()),
 				objectEntry.getPrimaryKey());
 
-		if (!systemEvents.isEmpty()) {
-			deletionSystemEvent = systemEvents.get(0);
-		}
+		SystemEvent systemEvent = systemEvents.get(0);
 
-		Assert.assertNotNull(deletionSystemEvent);
-
-		Assert.assertEquals(1, deletionSystemEvent.getType());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
 
 		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
-			deletionSystemEvent.getClassExternalReferenceCode());
+			systemEvent.getClassExternalReferenceCode());
 	}
 
 	@Test

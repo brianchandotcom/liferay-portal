@@ -19,7 +19,7 @@ import {liferayConfig} from '../../liferay.config';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../utils/performLogin';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -1205,7 +1205,7 @@ test.describe('SEO configuration', () => {
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}`
 		);
 
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		// Go to SEO
 

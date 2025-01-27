@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * @author Javier Gamarra
+ * @see    com.liferay.portal.tools.rest.builder.internal.util.GraphQLNamingUtil
  */
 public class GraphQLNamingUtil {
 

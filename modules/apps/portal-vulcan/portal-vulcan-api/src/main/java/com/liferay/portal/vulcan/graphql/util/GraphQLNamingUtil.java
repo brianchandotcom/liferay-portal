@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * @author Javier Gamarra
+ * @see    com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil
  */
 public class GraphQLNamingUtil {
 

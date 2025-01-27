@@ -103,17 +103,29 @@ public class LayoutStructureRulesHelperImpl
 		JSONObject conditionJSONObject,
 		LayoutStructureRulesContext layoutStructureRulesContext) {
 
+		boolean negated = false;
 		long value = 0L;
 
 		JSONObject optionsJSONObject = conditionJSONObject.getJSONObject(
 			"options");
 
 		if (optionsJSONObject != null) {
+			if (Objects.equals(
+					optionsJSONObject.getString("type"), "not-equal")) {
+
+				negated = true;
+			}
+
 			value = optionsJSONObject.getLong("value");
 		}
 
 		if (Objects.equals(
 				conditionJSONObject.getString("condition"), "role")) {
+
+			if (negated) {
+				return !ArrayUtil.contains(
+					layoutStructureRulesContext.getRoleIds(), value);
+			}
 
 			return ArrayUtil.contains(
 				layoutStructureRulesContext.getRoleIds(), value);
@@ -122,15 +134,25 @@ public class LayoutStructureRulesHelperImpl
 		if (Objects.equals(
 				conditionJSONObject.getString("condition"), "segment")) {
 
+			if (negated) {
+				return !ArrayUtil.contains(
+					layoutStructureRulesContext.getSegmentsEntryIds(), value);
+			}
+
 			return ArrayUtil.contains(
 				layoutStructureRulesContext.getSegmentsEntryIds(), value);
 		}
 
 		if (Objects.equals(
-				conditionJSONObject.getString("condition"), "user") &&
-			Objects.equals(layoutStructureRulesContext.getUserId(), value)) {
+				conditionJSONObject.getString("condition"), "user")) {
 
-			return true;
+			if (negated) {
+				return !Objects.equals(
+					layoutStructureRulesContext.getUserId(), value);
+			}
+
+			return Objects.equals(
+				layoutStructureRulesContext.getUserId(), value);
 		}
 
 		return false;

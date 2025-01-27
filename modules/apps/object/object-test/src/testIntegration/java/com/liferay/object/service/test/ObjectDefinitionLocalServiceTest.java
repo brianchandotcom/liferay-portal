@@ -2909,14 +2909,14 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
+		ObjectField objectField1 = _objectFieldLocalService.getObjectField(
 			objectDefinition.getObjectDefinitionId(), "externalReferenceCode");
 
 		Assert.assertEquals(
-			objectField.getObjectFieldId(),
+			objectField1.getObjectFieldId(),
 			objectDefinition.getTitleObjectFieldId());
 
-		objectField = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
@@ -2933,10 +2933,20 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition =
 			_objectDefinitionLocalService.updateTitleObjectFieldId(
 				objectDefinition.getObjectDefinitionId(),
-				objectField.getObjectFieldId());
+				objectField2.getObjectFieldId());
 
 		Assert.assertEquals(
-			objectField.getObjectFieldId(),
+			objectField2.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		_objectFieldLocalService.deleteObjectField(
+			objectField2.getObjectFieldId());
+
+		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			objectField1.getObjectFieldId(),
 			objectDefinition.getTitleObjectFieldId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);

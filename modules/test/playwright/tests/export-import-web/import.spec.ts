@@ -467,7 +467,7 @@ test('can import custom object entries at instance level with or without permiss
 	const exportFilePathWithPermissions =
 		await exportImportPage.downloadExportProcess(exportNameWithPermissions);
 
-	// 1. Test with Import Permissions selected
+	// Import with permissions
 
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 
@@ -514,7 +514,7 @@ test('can import custom object entries at instance level with or without permiss
 		})
 	);
 
-	// 2. Test without Import Permissions selected
+	// Import without permissions
 
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 

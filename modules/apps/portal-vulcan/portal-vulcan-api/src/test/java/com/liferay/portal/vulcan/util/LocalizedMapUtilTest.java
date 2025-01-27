@@ -217,6 +217,33 @@ public class LocalizedMapUtilTest {
 				).build(),
 				RandomTestUtil.randomString()));
 
+		// Populate international map with english value when default language
+		// value is undefined
+
+		Locale locale = LocaleUtil.getDefault();
+
+		try {
+			_setDefaultLocale(LocaleUtil.BRAZIL);
+
+			String englishValue = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				HashMapBuilder.put(
+					"en_US", englishValue
+				).put(
+					"pt_BR", englishValue
+				).build(),
+				LocalizedMapUtil.populateI18nMap(
+					null,
+					HashMapBuilder.put(
+						"en_US", englishValue
+					).build(),
+					null));
+		}
+		finally {
+			_setDefaultLocale(locale);
+		}
+
 		// Populate international map with site default value when default
 		// language is undefined
 
@@ -269,6 +296,11 @@ public class LocalizedMapUtilTest {
 
 			Assert.assertTrue(missingNotFoundLocales.isEmpty());
 		}
+	}
+
+	private void _setDefaultLocale(Locale locale) {
+		LocaleUtil.setDefault(
+			locale.getLanguage(), locale.getCountry(), locale.getVariant());
 	}
 
 }

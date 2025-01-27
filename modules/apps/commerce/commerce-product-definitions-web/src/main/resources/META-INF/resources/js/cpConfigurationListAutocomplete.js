@@ -17,6 +17,7 @@ export default function ({
 
 	let commerceCatalogId = 0;
 
+
 	commerceCatalogIdSelect.addEventListener('change', (event) => {
 		commerceCatalogId = event.target.value;
 
@@ -41,7 +42,16 @@ export default function ({
 		required: true,
 	});
 
+	let formSubmitted = false;
+
 	Liferay.provide(window, `${namespace}submitForm`, () => {
+
+		if (formSubmitted) {
+			return;
+		}
+
+		formSubmitted = true;
+
 		const formattedData = {};
 
 		formattedData.catalogId = document.querySelector(
@@ -81,6 +91,7 @@ export default function ({
 						type: 'danger',
 					});
 				}
+				formSubmitted = false;
 			});
 	});
 }

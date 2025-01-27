@@ -10,11 +10,9 @@ import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSN
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,11 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CustomizedFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
-	public CreationMenu getCreationMenu(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
-
+	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			DropdownItemBuilder.putData(
 				"confirmationMessage",

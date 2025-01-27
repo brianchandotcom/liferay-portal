@@ -58,14 +58,14 @@ public class ScopedConfigurationManagedServiceFactory
 		Map<String, Object> scopeConfigurationBeans = _configurationBeans.get(
 			new ScopeKey(scopePK, scope));
 
-		if (MapUtil.isNotEmpty(scopeConfigurationBeans)) {
-			List<Object> valuesList = ListUtil.fromCollection(
-				scopeConfigurationBeans.values());
-
-			return valuesList.get(valuesList.size() - 1);
+		if (MapUtil.isEmpty(scopeConfigurationBeans)) {
+			return null;
 		}
 
-		return null;
+		List<Object> valuesList = ListUtil.fromCollection(
+			scopeConfigurationBeans.values());
+
+		return valuesList.get(valuesList.size() - 1);
 	}
 
 	public LocationVariableResolver getLocationVariableResolver() {

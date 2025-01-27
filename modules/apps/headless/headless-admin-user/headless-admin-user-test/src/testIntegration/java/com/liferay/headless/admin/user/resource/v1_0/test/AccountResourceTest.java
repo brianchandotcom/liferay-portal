@@ -31,6 +31,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.problem.Problem;
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
@@ -38,27 +39,35 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
@@ -274,6 +283,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				hasAccountEntryOrganizationRel(
 					accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
+	public void testGetAccount() throws Exception {
+		super.testGetAccount();
+
+		_testGetAccountWithNestedFields();
 	}
 
 	@Override
@@ -1187,6 +1204,37 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			Collections.singletonList(account), (List<Account>)page.getItems());
 	}
 
+	private void _testGetAccountWithNestedFields() throws Exception {
+		Account postAccount = testGetAccount_addAccount();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postAccount.getId()), role.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		AccountResource accountResource = AccountResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "permissions"
+		).build();
+
+		Account getAccount = accountResource.getAccount(postAccount.getId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getAccount.getPermissions(),
+				permission ->
+					Objects.equals(permission.getRoleName(), role.getName()) &&
+					(permission.getActionIds().length == 1) &&
+					Objects.equals(permission.getActionIds()[0], "DELETE")));
+	}
+
 	private void _testPatchAccountByExternalReferenceCodeWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -1983,6 +2031,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	private GroupLocalService _groupLocalService;
 
 	@Inject
-	private OrganizationLocalService _organizationLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

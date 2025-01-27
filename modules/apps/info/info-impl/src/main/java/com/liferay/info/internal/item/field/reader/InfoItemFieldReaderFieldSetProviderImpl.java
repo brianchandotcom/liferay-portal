@@ -13,6 +13,7 @@ import com.liferay.info.item.field.reader.InfoItemFieldReader;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderRegistry;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,39 +60,35 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
 		String className, Object itemObject) {
 
-		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
-
-		List<InfoItemFieldReader> infoItemFieldReaders =
-			_infoItemFieldReaderRegistry.getInfoItemFieldReaders(className);
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		for (InfoItemFieldReader infoItemFieldReader : infoItemFieldReaders) {
-			InfoField infoField = infoItemFieldReader.getInfoField();
-			Object value = infoItemFieldReader.getValue(itemObject);
+		return TransformUtil.transform(
+			_infoItemFieldReaderRegistry.getInfoItemFieldReaders(className),
+			infoItemFieldReader -> {
+				InfoField infoField = infoItemFieldReader.getInfoField();
+				Object value = infoItemFieldReader.getValue(itemObject);
 
-			if ((serviceContext != null) &&
-				(infoField.getInfoFieldType() != URLInfoFieldType.INSTANCE) &&
-				(value instanceof String)) {
+				if ((serviceContext != null) &&
+					(infoField.getInfoFieldType() !=
+						URLInfoFieldType.INSTANCE) &&
+					(value instanceof String)) {
 
-				try {
-					value = SanitizerUtil.sanitize(
-						serviceContext.getCompanyId(),
-						serviceContext.getScopeGroupId(),
-						serviceContext.getUserId(), className, 0,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						(String)value, null);
+					try {
+						value = SanitizerUtil.sanitize(
+							serviceContext.getCompanyId(),
+							serviceContext.getScopeGroupId(),
+							serviceContext.getUserId(), className, 0,
+							ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+							(String)value, null);
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new RuntimeException(sanitizerException);
+					}
 				}
-				catch (SanitizerException sanitizerException) {
-					throw new RuntimeException(sanitizerException);
-				}
-			}
 
-			infoFieldValues.add(new InfoFieldValue<>(infoField, value));
-		}
-
-		return infoFieldValues;
+				return new InfoFieldValue<>(infoField, value);
+			});
 	}
 
 	@Reference

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -82,12 +83,11 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 				TicketConstants.TYPE_PASSWORD, null, expirationDate,
 				new ServiceContext());
 
-			StringBuffer sb = new StringBuffer();
+			StringBundler sb = new StringBundler(8);
 
 			sb.append(PortalUtil.getPortalURL(httpServletRequest));
 			sb.append(PortalUtil.getPathContext());
-			sb.append("/c/portal/update_password");
-			sb.append("?p_l_id=");
+			sb.append("/c/portal/update_password?p_l_id=");
 			sb.append(LayoutConstants.DEFAULT_PLID);
 			sb.append("&ticketId=");
 			sb.append(ticket.getTicketId());

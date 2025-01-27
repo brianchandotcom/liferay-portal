@@ -25,6 +25,7 @@ import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,7 +74,8 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			Validator.isNull(user.getLastFailedLoginDate()) &&
 			Validator.isNull(user.getLockoutDate())) {
 
-			Date expirationDate = new Date(System.currentTimeMillis() + 600000);
+			Date expirationDate = new Date(
+				System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
 
 			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),

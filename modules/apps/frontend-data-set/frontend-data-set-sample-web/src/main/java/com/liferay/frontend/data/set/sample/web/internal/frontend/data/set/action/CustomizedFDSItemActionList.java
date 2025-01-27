@@ -8,14 +8,12 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.action.FDSItemActionList;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,9 +29,7 @@ public class CustomizedFDSItemActionList implements FDSItemActionList {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		HttpServletRequest httpServletRequest) {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(

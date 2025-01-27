@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,8 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoDefinitionLocalServiceImpl
 	extends KaleoDefinitionLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void activateKaleoDefinition(
+	public KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId, long kaleoDefinitionVersionId,
 			long startKaleoNodeId, ServiceContext serviceContext)
 		throws PortalException {
@@ -68,10 +71,13 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinitionVersion.setStartKaleoNodeId(startKaleoNodeId);
 
 		_kaleoDefinitionVersionPersistence.update(kaleoDefinitionVersion);
+
+		return kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void activateKaleoDefinition(
+	public KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -83,11 +89,12 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
-		kaleoDefinitionPersistence.update(kaleoDefinition);
+		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void activateKaleoDefinition(
+	public KaleoDefinition activateKaleoDefinition(
 			String name, int version, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -100,7 +107,7 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
-		kaleoDefinitionPersistence.update(kaleoDefinition);
+		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
 
 	@Override
@@ -156,8 +163,9 @@ public class KaleoDefinitionLocalServiceImpl
 		return kaleoDefinition;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void deactivateKaleoDefinition(
+	public KaleoDefinition deactivateKaleoDefinition(
 			String name, int version, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -168,7 +176,7 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
 
-		kaleoDefinitionPersistence.update(kaleoDefinition);
+		return kaleoDefinitionPersistence.update(kaleoDefinition);
 	}
 
 	@Override

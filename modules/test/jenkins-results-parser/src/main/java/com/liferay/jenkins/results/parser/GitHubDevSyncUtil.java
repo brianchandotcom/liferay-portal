@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -750,41 +749,6 @@ public class GitHubDevSyncUtil {
 		}
 
 		gitWorkingDirectory.deleteRemoteGitBranches(remoteGitBranches);
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(JenkinsResultsParserUtil.toDateString(new Date()));
-		sb.append("\n\n");
-
-		JenkinsSlave jenkinsSlave = new JenkinsSlave();
-
-		if (jenkinsSlave != null) {
-			sb.append("Build URL: ");
-
-			Build build = jenkinsSlave.getCurrentBuild();
-
-			sb.append(build.getBuildURL());
-
-			sb.append("\n");
-		}
-
-		sb.append("\n\n");
-
-		sb.append("Deleted ");
-		sb.append(String.valueOf(remoteGitBranches.size()));
-		sb.append(" GitHub dev branches:\n");
-
-		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
-			sb.append("    ");
-			sb.append(remoteGitBranch.getRemoteURL());
-			sb.append(" ");
-			sb.append(remoteGitBranch.getName());
-			sb.append("\n");
-		}
-
-		NotificationUtil.sendEmail(
-			sb.toString(), "jenkins", "GitHub dev branches deleted",
-			"peter.yoo@liferay.com");
 	}
 
 	protected static String getCacheBranchName(

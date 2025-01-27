@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site Initializer Customer Portal
-Bundle-SymbolicName: com.liferay.site.initializer.customer.portal
-Bundle-Version: 1.0.3
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-customer-portal

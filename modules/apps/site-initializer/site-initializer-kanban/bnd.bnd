@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site Initializer Kanban
-Bundle-SymbolicName: com.liferay.site.initializer.kanban
-Bundle-Version: 1.0.7
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-kanban

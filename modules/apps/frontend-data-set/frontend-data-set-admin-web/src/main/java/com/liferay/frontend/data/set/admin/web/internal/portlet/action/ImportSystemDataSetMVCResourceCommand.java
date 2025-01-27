@@ -42,7 +42,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,7 +112,6 @@ public class ImportSystemDataSetMVCResourceCommand
 				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsCreationMenu, _portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse),
 				dataSetActionObjectDefinition.getObjectDefinitionId());
 		}
 
@@ -126,7 +124,6 @@ public class ImportSystemDataSetMVCResourceCommand
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsItemActionList,
 				_portal.getHttpServletRequest(resourceRequest),
-				_portal.getHttpServletResponse(resourceResponse),
 				dataSetActionObjectDefinition.getObjectDefinitionId());
 		}
 
@@ -137,12 +134,11 @@ public class ImportSystemDataSetMVCResourceCommand
 	private void _addFDSCreationMenuObjectEntries(
 			long dataSetId, String defaultLanguageId,
 			FDSCreationMenu fdsCreationMenu,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long objectDefinitionId)
+			HttpServletRequest httpServletRequest, long objectDefinitionId)
 		throws Exception {
 
 		CreationMenu creationMenu = fdsCreationMenu.getCreationMenu(
-			httpServletRequest, httpServletResponse);
+			httpServletRequest);
 
 		List<DropdownItem> primaryDropdownItems =
 			(List<DropdownItem>)creationMenu.get("primaryItems");
@@ -203,13 +199,11 @@ public class ImportSystemDataSetMVCResourceCommand
 	private void _addFDSItemActionListObjectEntries(
 			long dataSetId, String defaultLanguageId,
 			FDSItemActionList fdsItemActionList,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long objectDefinitionId)
+			HttpServletRequest httpServletRequest, long objectDefinitionId)
 		throws Exception {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			fdsItemActionList.getFDSActionDropdownItems(
-				httpServletRequest, httpServletResponse);
+			fdsItemActionList.getFDSActionDropdownItems(httpServletRequest);
 
 		for (FDSActionDropdownItem fdsActionDropdownItem :
 				fdsActionDropdownItems) {

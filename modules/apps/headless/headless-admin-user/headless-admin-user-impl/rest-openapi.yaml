@@ -1218,6 +1218,10 @@ components:
                         The user's password.
                     type: string
                     writeOnly: true
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 profileURL:
                     description:
                         A relative URL to the user's profile.

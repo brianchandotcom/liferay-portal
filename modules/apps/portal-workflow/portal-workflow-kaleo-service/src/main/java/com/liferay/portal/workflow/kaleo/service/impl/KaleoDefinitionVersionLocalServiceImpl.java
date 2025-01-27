@@ -6,12 +6,9 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -405,24 +402,14 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-		kaleoDefinitionVersionIds.clear();
+		return TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
 
-		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			Document document = searchHit.getDocument();
-
-			kaleoDefinitionVersionIds.add(
-				document.getLong(Field.ENTRY_CLASS_PK));
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoDefinitionVersion.class, getClassLoader());
-
-		Property property = PropertyFactoryUtil.forName(
-			"kaleoDefinitionVersionId");
-
-		dynamicQuery.add(property.in(kaleoDefinitionVersionIds));
-
-		return dynamicQuery(dynamicQuery);
+				return kaleoDefinitionVersionPersistence.fetchByPrimaryKey(
+					document.getLong(Field.ENTRY_CLASS_PK));
+			});
 	}
 
 	@Override

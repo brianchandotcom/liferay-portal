@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.client.extension.util.spring.boot;
+package com.liferay.client.extension.util.spring.boot2;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -15,10 +15,9 @@ import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
 import java.net.URL;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import org.mockito.MockedStatic;
@@ -30,11 +29,12 @@ import org.mockserver.matchers.Times;
 import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.mockserver.verify.VerificationTimes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtValidationException;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -53,11 +53,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(
-	"LiferayOAuth2ResourceServerEnableWebSecurityTest.properties"
-)
+@TestPropertySource("LiferayOAuth2ClientConfigurationExternalTest.properties")
 @WebMvcTest
-public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
+public class LiferayOAuth2ClientConfigurationExternalTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -105,78 +103,67 @@ public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		new MockServerClient(
+			"localhost", 63636
+		).verify(
+			HttpRequest.request(
+			).withMethod(
+				"GET"
+			).withPath(
+				"/o/oauth2/application"
+			),
+			VerificationTimes.exactly(0)
+		);
+
 		_clientAndServer.stop();
 
 		_mockedStatic.close();
 	}
 
 	@Test
-	public void testGetJWTWithClientIdFromERC() throws Exception {
-		try (CloseableMockServerClient closeableMockServerClient =
-				new CloseableMockServerClient("localhost", 63636)) {
+	public void testFindRegistrationIdForDefaultHeadlessServer() {
+		ClientRegistrationRepository clientRegistrationRepository =
+			_liferayOAuth2ClientConfiguration.clientRegistrationRepository();
 
-			closeableMockServerClient.when(
-				HttpRequest.request(
-				).withMethod(
-					"GET"
-				).withPath(
-					"/o/oauth2/application"
-				).withQueryStringParameter(
-					"externalReferenceCode", "foo-baker"
-				),
-				Times.unlimited()
-			).respond(
-				HttpResponse.response(
-				).withBody(
-					"{\"client_id\": \"987654321\"}"
-				).withHeader(
-					new Header("Content-Type", "application/json")
-				).withStatusCode(
-					200
-				)
-			);
+		ClientRegistration clientRegistration =
+			clientRegistrationRepository.findByRegistrationId(
+				"default-headless-server");
 
-			_jwtDecoder.decode(
-				JWTAssertionUtil.getJWTWithClientId("987654321"));
-		}
+		Assert.assertEquals("123456789", clientRegistration.getClientId());
+		Assert.assertEquals("Shibboleth", clientRegistration.getClientSecret());
+
+		ClientRegistration.ProviderDetails providerDetails =
+			clientRegistration.getProviderDetails();
+
+		Assert.assertEquals(
+			"http://localhost:63636/o/oauth2/token",
+			providerDetails.getTokenUri());
 	}
 
 	@Test
-	public void testGetJWTWithClientIdInProperties() throws Exception {
-		_jwtDecoder.decode(JWTAssertionUtil.getJWTWithClientId("123456789"));
+	public void testFindRegistrationIdForExternalHeadlessServer() {
+		ClientRegistrationRepository clientRegistrationRepository =
+			_liferayOAuth2ClientConfiguration.clientRegistrationRepository();
+
+		ClientRegistration clientRegistration =
+			clientRegistrationRepository.findByRegistrationId(
+				"external-headless-server");
+
+		Assert.assertEquals("987654321", clientRegistration.getClientId());
+		Assert.assertEquals("htelobbihS", clientRegistration.getClientSecret());
+
+		ClientRegistration.ProviderDetails providerDetails =
+			clientRegistration.getProviderDetails();
+
+		Assert.assertEquals(
+			"https://external-headless-server.com/oauth2/token",
+			providerDetails.getTokenUri());
 	}
-
-	@Test
-	public void testGetJWTWithClientIdNotInProperties() throws Exception {
-		expectedException.expect(JwtValidationException.class);
-		expectedException.expectMessage(
-			"An error occurred while attempting to decode the Jwt: The " +
-				"client_id does not match");
-
-		_jwtDecoder.decode(JWTAssertionUtil.getJWTWithClientId("987654321"));
-	}
-
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
 
 	private static ClientAndServer _clientAndServer;
 	private static MockedStatic<JWSAlgorithmFamilyJWSKeySelector> _mockedStatic;
 
 	@Autowired
-	private JwtDecoder _jwtDecoder;
-
-	private static class CloseableMockServerClient
-		extends MockServerClient implements AutoCloseable {
-
-		public CloseableMockServerClient(String remoteHost, int remotePort) {
-			super(remoteHost, remotePort);
-		}
-
-		@Override
-		public void close() {
-			stop();
-		}
-
-	}
+	private LiferayOAuth2ClientConfiguration _liferayOAuth2ClientConfiguration;
 
 }

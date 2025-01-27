@@ -123,6 +123,7 @@ import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -580,6 +581,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testGetUserAccountWithGender();
 		_testGetUserAccountWithMoreExternalReferenceCodes();
+		_testGetUserAccountWithNestedFields();
 	}
 
 	@Override
@@ -2227,6 +2229,38 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				userGroupBrief -> Objects.equals(
 					userGroupBrief.getExternalReferenceCode(),
 					_userGroup.getExternalReferenceCode())));
+	}
+
+	private void _testGetUserAccountWithNestedFields() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), User.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(user.getUserId()), role.getRoleId(),
+			new String[] {ActionKeys.DELETE});
+
+		UserAccountResource userAccountResource = UserAccountResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "permissions"
+		).build();
+
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			user.getUserId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				userAccount.getPermissions(),
+				permission ->
+					Objects.equals(permission.getRoleName(), role.getName()) &&
+					(permission.getActionIds().length == 1) &&
+					Objects.equals(permission.getActionIds()[0], "DELETE")));
 	}
 
 	private void _testGetUserAccountWithRoles(

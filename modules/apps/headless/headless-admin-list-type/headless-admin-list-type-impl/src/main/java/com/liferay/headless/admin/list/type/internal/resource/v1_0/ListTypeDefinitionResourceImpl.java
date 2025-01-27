@@ -133,11 +133,10 @@ public class ListTypeDefinitionResourceImpl
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.addListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
-				LocalizedMapUtil.getLocalizedMap(
-					LocalizedMapUtil.populateI18nMap(
-						listTypeDefinition.getDefaultLanguageId(),
-						listTypeDefinition.getName_i18n(),
-						listTypeDefinition.getName())),
+				LocalizedMapUtil.populateLocalizedMap(
+					listTypeDefinition.getDefaultLanguageId(),
+					listTypeDefinition.getName_i18n(),
+					listTypeDefinition.getName()),
 				GetterUtil.getBoolean(listTypeDefinition.getSystem()),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
@@ -154,11 +153,10 @@ public class ListTypeDefinitionResourceImpl
 			_listTypeDefinitionService.updateListTypeDefinition(
 				listTypeDefinition.getExternalReferenceCode(),
 				listTypeDefinitionId,
-				LocalizedMapUtil.getLocalizedMap(
-					LocalizedMapUtil.populateI18nMap(
-						listTypeDefinition.getDefaultLanguageId(),
-						listTypeDefinition.getName_i18n(),
-						listTypeDefinition.getName())),
+				LocalizedMapUtil.populateLocalizedMap(
+					listTypeDefinition.getDefaultLanguageId(),
+					listTypeDefinition.getName_i18n(),
+					listTypeDefinition.getName()),
 				transformToList(
 					listTypeDefinition.getListTypeEntries(),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(

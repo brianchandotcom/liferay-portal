@@ -165,7 +165,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			_objectLayoutService.addObjectLayout(
 				objectDefinitionId,
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
-				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
+				LocalizedMapUtil.populateLocalizedMap(objectLayout.getName()),
 				transformToList(
 					objectLayout.getObjectLayoutTabs(),
 					objectLayoutTab -> _toObjectLayoutTab(
@@ -193,7 +193,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		return _toObjectLayout(
 			_objectLayoutService.updateObjectLayout(
 				objectLayoutId, objectLayout.getDefaultObjectLayout(),
-				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
+				LocalizedMapUtil.populateLocalizedMap(objectLayout.getName()),
 				transformToList(
 					objectLayout.getObjectLayoutTabs(),
 					objectLayoutTab -> _toObjectLayoutTab(
@@ -239,7 +239,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		serviceBuilderObjectLayoutBox.setCollapsable(
 			objectLayoutBox.getCollapsable());
 		serviceBuilderObjectLayoutBox.setNameMap(
-			LocalizedMapUtil.getLocalizedMap(objectLayoutBox.getName()));
+			LocalizedMapUtil.populateLocalizedMap(objectLayoutBox.getName()));
 		serviceBuilderObjectLayoutBox.setObjectLayoutRows(
 			transformToList(
 				objectLayoutBox.getObjectLayoutRows(),
@@ -301,7 +301,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			_objectLayoutTabPersistence.create(0L);
 
 		serviceBuilderObjectLayoutTab.setNameMap(
-			LocalizedMapUtil.getLocalizedMap(objectLayoutTab.getName()));
+			LocalizedMapUtil.populateLocalizedMap(objectLayoutTab.getName()));
 		serviceBuilderObjectLayoutTab.setObjectLayoutBoxes(
 			transformToList(
 				objectLayoutTab.getObjectLayoutBoxes(),

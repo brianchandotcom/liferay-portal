@@ -142,7 +142,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 		com.liferay.object.model.ObjectFolder serviceBuilderObjectFolder =
 			_objectFolderService.addObjectFolder(
 				objectFolder.getExternalReferenceCode(),
-				LocalizedMapUtil.getLocalizedMap(objectFolder.getLabel()),
+				LocalizedMapUtil.populateLocalizedMap(objectFolder.getLabel()),
 				objectFolder.getName());
 
 		_addObjectFolderResources(
@@ -162,7 +162,7 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 		com.liferay.object.model.ObjectFolder serviceBuilderObjectFolder =
 			_objectFolderService.updateObjectFolder(
 				objectFolder.getExternalReferenceCode(), objectFolderId,
-				LocalizedMapUtil.getLocalizedMap(objectFolder.getLabel()));
+				LocalizedMapUtil.populateLocalizedMap(objectFolder.getLabel()));
 
 		_addObjectFolderResources(
 			objectFolder.getExternalReferenceCode(), objectFolderId,

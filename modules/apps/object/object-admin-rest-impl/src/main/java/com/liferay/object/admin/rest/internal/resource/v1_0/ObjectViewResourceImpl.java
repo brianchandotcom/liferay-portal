@@ -159,7 +159,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 			_objectViewService.addObjectView(
 				objectDefinitionId,
 				GetterUtil.getBoolean(objectView.getDefaultObjectView()),
-				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
+				LocalizedMapUtil.populateLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
@@ -192,7 +192,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 		return _toObjectView(
 			_objectViewService.updateObjectView(
 				objectViewId, objectView.getDefaultObjectView(),
-				LocalizedMapUtil.getLocalizedMap(objectView.getName()),
+				LocalizedMapUtil.populateLocalizedMap(objectView.getName()),
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
@@ -249,7 +249,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				_objectViewColumnPersistence.create(0L);
 
 		serviceBuilderObjectViewColumn.setLabelMap(
-			LocalizedMapUtil.getLocalizedMap(objectViewColumn.getLabel()));
+			LocalizedMapUtil.populateLocalizedMap(objectViewColumn.getLabel()));
 		serviceBuilderObjectViewColumn.setObjectFieldName(
 			objectViewColumn.getObjectFieldName());
 		serviceBuilderObjectViewColumn.setPriority(

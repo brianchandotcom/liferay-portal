@@ -4,10 +4,40 @@
  */
 
 import {EditorConfig} from 'ckeditor5';
+import {sub} from 'frontend-js-web';
 
 const CKEditor5AdvancedPreset: EditorConfig = {
 	alignment: {
 		options: ['left', 'center', 'right'],
+	},
+	heading: {
+		options: [
+			{
+				class: 'ck-heading_paragraph',
+				model: 'paragraph',
+				title: Liferay.Language.get('normal'),
+			},
+			{
+				class: 'ck-heading_heading1',
+				model: 'heading1',
+				title: sub(Liferay.Language.get('heading-x'), 1),
+				view: 'h1',
+			},
+			{
+				class: 'ck-heading_heading2',
+				model: 'heading2',
+				title: sub(Liferay.Language.get('heading-x'), 2),
+				view: 'h2',
+			},
+			{
+				class: 'ck-heading_heading3',
+				model: 'heading3',
+				title: sub(Liferay.Language.get('heading-x'), 3),
+				view: 'h3',
+			},
+			{
+			},
+		],
 	},
 	table: {
 		contentToolbar: [
@@ -20,6 +50,8 @@ const CKEditor5AdvancedPreset: EditorConfig = {
 	toolbar: [
 		'undo',
 		'redo',
+		'|',
+		'heading',
 		'|',
 		'bold',
 		'italic',

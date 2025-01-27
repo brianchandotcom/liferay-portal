@@ -1,0 +1,31 @@
+@import 'atlas-variables';
+
+:root {
+	--ck-font-family: $font-family-base;
+}
+
+.ck {
+	// Headings dropdown
+
+	&.ck-heading_paragraph .ck-button__label {
+		@include font-size($font-size-base);
+	}
+
+	&.ck-heading_heading1 .ck-button__label {
+		@include font-size($h1-font-size);
+	}
+
+	&.ck-heading_heading2 .ck-button__label {
+		@include font-size($h2-font-size);
+	}
+
+	&.ck-heading_heading3 .ck-button__label {
+		@include font-size($h3-font-size);
+	}
+
+	&[class*='ck-heading_heading'] {
+		color: $headings-color;
+		font-family: $headings-font-family;
+		font-weight: $headings-font-weight;
+	}
+}

@@ -13,6 +13,7 @@ import {
 	Essentials,
 	Font,
 	GeneralHtmlSupport,
+	Heading,
 	HorizontalLine,
 	Indent,
 	Italic,
@@ -31,6 +32,8 @@ import {
 } from 'ckeditor5';
 import React from 'react';
 
+import '../../css/ckeditor5/editor.scss';
+
 const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 	const defaultConfig: EditorConfig = {
 		plugins: [
@@ -40,6 +43,7 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 			Essentials,
 			Font,
 			GeneralHtmlSupport,
+			Heading,
 			HorizontalLine,
 			Indent,
 			Italic,

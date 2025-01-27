@@ -204,6 +204,7 @@ module.exports = {
 			'Essentials',
 			'Font',
 			'GeneralHtmlSupport',
+			'Heading',
 			'HorizontalLine',
 			'Indent',
 			'IndentBlock',

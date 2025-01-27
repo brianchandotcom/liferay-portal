@@ -18,6 +18,6 @@ public class CommerceCurrencyFDSNames {
 		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryCurrencies";
 
 	public static final String COMMERCE_CURRENCIES =
-		CommerceCurrencyPortletKeys.COMMERCE_CURRENCY + "-currencies";
+		CommerceCurrencyPortletKeys.COMMERCE_CURRENCY + "-commerceCurrencies";
 
 }

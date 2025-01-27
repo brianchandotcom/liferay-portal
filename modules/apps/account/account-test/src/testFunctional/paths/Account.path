@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DROPDOWN</td>
-	<td>//div[contains(@id,'${key_termType}')]//tr//div[contains(.,'${key_entryDetails}')]/..//button</td>
+	<td>//div[contains(@id,'${key_termType}')]//tr//td[contains(.,'${key_entryDetails}')]/..//button</td>
 	<td></td>
 </tr>
 <tr>

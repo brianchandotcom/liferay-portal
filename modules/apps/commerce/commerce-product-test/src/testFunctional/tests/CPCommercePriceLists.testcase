@@ -1008,7 +1008,7 @@ definition {
 			AssertTextEquals(
 				key_cellName1 = "default",
 				key_cellName2 = "Simple T-Shirt",
-				key_columnNumber = 2,
+				key_columnNumber = 1,
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
 				value1 = "default");
 		}
@@ -2485,7 +2485,7 @@ definition {
 			entryName = ${sku},
 			title = "Add SKUs");
 
-		Refresh();
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 		CommerceNavigator.gotoEntry(entryName = ${sku});
 

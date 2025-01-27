@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>INVENTORY_SKU_ON_HAND_QUANTITY</td>
-	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_sku}']/../../../div[3][text()='${key_quantity}']</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_sku}']/../../../td[3][text()='${key_quantity}']</td>
 	<td></td>
 </tr>
 <tr>

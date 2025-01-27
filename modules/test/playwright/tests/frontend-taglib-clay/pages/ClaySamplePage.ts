@@ -38,7 +38,7 @@ export class ClaySamplePage {
 	}
 
 	async selectTab(tabName: string) {
-		const tabHeading = this.tablist.getByText(tabName);
+		const tabHeading = this.page.getByRole('tab', {name: tabName});
 
 		await expect(tabHeading).toBeInViewport();
 

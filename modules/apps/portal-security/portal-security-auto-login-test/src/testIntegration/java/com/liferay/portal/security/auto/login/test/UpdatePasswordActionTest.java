@@ -100,30 +100,29 @@ public class UpdatePasswordActionTest {
 
 		connection.setRequestMethod("GET");
 
-		BufferedReader reader = new BufferedReader(
-			new InputStreamReader(connection.getInputStream()));
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(connection.getInputStream()))) {
 
-		boolean findText = false;
-		String searchText = "Your password reset link is no longer valid";
+			boolean findText = false;
+			String searchText = "Your password reset link is no longer valid";
 
-		StringBuilder response = new StringBuilder();
-		String line;
+			StringBuilder response = new StringBuilder();
+			String line;
 
-		while (((line = reader.readLine()) != null) && !findText) {
-			findText = line.contains(searchText);
+			while (((line = reader.readLine()) != null) && !findText) {
+				findText = line.contains(searchText);
 
-			if (findText) {
-				response.append(StringUtil.trim(line));
+				if (findText) {
+					response.append(StringUtil.trim(line));
+				}
 			}
+
+			Assert.assertTrue(
+				response.toString(
+				).contains(
+					searchText
+				));
 		}
-
-		reader.close();
-
-		Assert.assertTrue(
-			response.toString(
-			).contains(
-				searchText
-			));
 	}
 
 	private MockHttpServletRequest _mockHttpServletRequest(

@@ -27,7 +27,10 @@ export class PortletConfigurationPermissionsPage {
 		this.editPageLink = page.locator(
 			'.control-menu-nav-item .lfr-portal-tooltip[title="Edit"] a'
 		);
-		this.editPageOptionsMenu = page.getByRole('button', {name: 'Options'});
+		this.editPageOptionsMenu = page.getByRole('button', {
+			exact: true,
+			name: 'Options',
+		});
 		this.page = page;
 		this.pageOptionsMenu = page.getByTitle('Open Page Options Menu');
 		this.permissionsFrame = page.frameLocator(

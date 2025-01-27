@@ -26,7 +26,7 @@ public class UpgradeAssetVocabulary extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"AssetVocabulary", "visibilityType INT")
+				"AssetVocabulary", "visibilityType INTEGER")
 		};
 	}
 

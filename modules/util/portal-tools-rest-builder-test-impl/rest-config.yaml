@@ -11,4 +11,5 @@ compatibilityVersion: 6
 forcePredictableOperationId: true
 generateClientJS: true
 generateGraphQL: false
+generatePermissions: true
 testDir: "../portal-tools-rest-builder-test-test/src/testIntegration/java"

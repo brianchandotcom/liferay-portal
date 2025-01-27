@@ -364,13 +364,13 @@ test('can export and import custom object entries at instance level', async ({
 
 	await applicationsMenuPage.goToImport();
 
-	await page.getByRole('link', {name: 'Import'}).click();
+	await exportImportPage.newImportButton.click();
 
 	await page.locator('input[type="file"]').setInputFiles(exportFilePath);
 
-	await page.getByRole('button', {name: 'Continue'}).click();
+	await exportImportPage.continueButton.click();
 
-	await page.getByRole('button', {name: 'Import'}).click();
+	await exportImportPage.importButton.click();
 
 	await expect(
 		exportImportPage.page
@@ -460,7 +460,7 @@ test('can import custom object entries at instance level with or without permiss
 
 	await exportImportPage.title.fill(exportNameWithPermissions);
 
-	await page.getByLabel('Export Permissions').click();
+	await exportImportPage.exportPermissionsButton.click();
 
 	await exportImportPage.exportButton.click();
 
@@ -480,17 +480,17 @@ test('can import custom object entries at instance level with or without permiss
 
 	await applicationsMenuPage.goToImport();
 
-	await page.getByRole('link', {name: 'Import'}).click();
+	await exportImportPage.newImportButton.click();
 
 	await page
 		.locator('input[type="file"]')
 		.setInputFiles(exportFilePathWithPermissions);
 
-	await page.getByRole('button', {name: 'Continue'}).click();
+	await exportImportPage.continueButton.click();
 
-	await page.getByLabel('Import Permissions').click();
+	await exportImportPage.importPermissionsButton.click();
 
-	await page.getByRole('button', {name: 'Import'}).click();
+	await exportImportPage.importButton.click();
 
 	await expect(
 		exportImportPage.page
@@ -527,15 +527,15 @@ test('can import custom object entries at instance level with or without permiss
 
 	await applicationsMenuPage.goToImport();
 
-	await page.getByRole('link', {name: 'Import'}).click();
+	await exportImportPage.newImportButton.click();
 
 	await page
 		.locator('input[type="file"]')
 		.setInputFiles(exportFilePathWithPermissions);
 
-	await page.getByRole('button', {name: 'Continue'}).click();
+	await exportImportPage.continueButton.click();
 
-	await page.getByRole('button', {name: 'Import'}).click();
+	await exportImportPage.importButton.click();
 
 	await expect(
 		exportImportPage.page

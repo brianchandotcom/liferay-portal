@@ -137,7 +137,7 @@ test('can export custom object entries at instance level with permissions', asyn
 
 	await exportImportPage.title.fill(exportName);
 
-	await page.getByLabel('Export Permissions').click();
+	await exportImportPage.exportPermissionsButton.click();
 
 	await exportImportPage.exportButton.click();
 

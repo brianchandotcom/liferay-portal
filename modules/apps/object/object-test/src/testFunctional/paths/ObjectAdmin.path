@@ -382,7 +382,7 @@
 	</tr>
 	<tr>
 		<td>TABLE_LIST_TITLE</td>
-		<td>//div[contains(@class,'table-list-title')]//a[contains(.,'${key_name}')]</td>
+		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_name}')]</td>
 		<td></td>
 	</tr>
 	<tr>

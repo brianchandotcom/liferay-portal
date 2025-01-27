@@ -625,7 +625,9 @@ test(
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Configuration'}),
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Configuration'}),
 			trigger: page.getByLabel('Options', {exact: true}),
 		});
 

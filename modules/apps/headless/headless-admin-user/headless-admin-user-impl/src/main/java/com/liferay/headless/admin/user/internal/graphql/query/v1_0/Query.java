@@ -299,7 +299,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCode(externalReferenceCode: ___){accountContactInformation, accountUserAccounts, actions, customFields, dateCreated, dateModified, defaultBillingAddressExternalReferenceCode, defaultBillingAddressId, defaultShippingAddressExternalReferenceCode, defaultShippingAddressId, description, domains, externalReferenceCode, id, logoExternalReferenceCode, logoId, logoURL, name, numberOfUsers, organizationExternalReferenceCodes, organizationIds, parentAccountExternalReferenceCode, parentAccountId, postalAddresses, status, taxId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCode(externalReferenceCode: ___){accountContactInformation, accountUserAccounts, actions, customFields, dateCreated, dateModified, defaultBillingAddressExternalReferenceCode, defaultBillingAddressId, defaultShippingAddressExternalReferenceCode, defaultShippingAddressId, description, domains, externalReferenceCode, id, logoExternalReferenceCode, logoId, logoURL, name, numberOfUsers, organizationExternalReferenceCodes, organizationIds, parentAccountExternalReferenceCode, parentAccountId, permissions, postalAddresses, status, taxId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Account accountByExternalReferenceCode(
@@ -317,7 +317,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(accountId: ___){accountContactInformation, accountUserAccounts, actions, customFields, dateCreated, dateModified, defaultBillingAddressExternalReferenceCode, defaultBillingAddressId, defaultShippingAddressExternalReferenceCode, defaultShippingAddressId, description, domains, externalReferenceCode, id, logoExternalReferenceCode, logoId, logoURL, name, numberOfUsers, organizationExternalReferenceCodes, organizationIds, parentAccountExternalReferenceCode, parentAccountId, postalAddresses, status, taxId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {account(accountId: ___){accountContactInformation, accountUserAccounts, actions, customFields, dateCreated, dateModified, defaultBillingAddressExternalReferenceCode, defaultBillingAddressId, defaultShippingAddressExternalReferenceCode, defaultShippingAddressId, description, domains, externalReferenceCode, id, logoExternalReferenceCode, logoId, logoURL, name, numberOfUsers, organizationExternalReferenceCodes, organizationIds, parentAccountExternalReferenceCode, parentAccountId, permissions, postalAddresses, status, taxId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Account account(@GraphQLName("accountId") Long accountId)

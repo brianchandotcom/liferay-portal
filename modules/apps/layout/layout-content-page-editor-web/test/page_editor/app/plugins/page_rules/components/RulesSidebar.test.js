@@ -235,8 +235,11 @@ describe('RulesSidebar', () => {
 							{
 								condition: 'user',
 								id: 'condition-id',
+								options: {
+									type: 'equal',
+									value: 'userId1',
+								},
 								type: 'user',
-								value: 'userId1',
 							},
 						],
 						id: 'rule-1',
@@ -271,8 +274,11 @@ describe('RulesSidebar', () => {
 							{
 								condition: 'user',
 								id: 'condition-id',
+								options: {
+									type: 'equal',
+									value: 'userId1',
+								},
 								type: 'user',
-								value: 'userId1',
 							},
 						],
 						id: 'rule-1',

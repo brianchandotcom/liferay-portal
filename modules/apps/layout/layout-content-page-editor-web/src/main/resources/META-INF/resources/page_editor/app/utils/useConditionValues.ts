@@ -7,6 +7,7 @@ import {
 	CONDITION_ITEMS,
 	CONDITION_TYPE_ITEMS,
 	Condition,
+	convertOptionsToConditionValue,
 } from '../../plugins/page_rules/components/Condition';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {config} from '../config/index';
@@ -37,7 +38,7 @@ export default function useConditionValues({conditionType, conditions}: Props) {
 	const segments = config.availableSegmentsEntries;
 
 	return conditions.map((_condition, index) => {
-		const condition = getCondition(_condition.type, _condition.condition);
+		const condition = getCondition(_condition);
 		const prefix = getPrefix(index, conditionType);
 		const type = getType(_condition.type);
 		const value = getValue(
@@ -45,7 +46,7 @@ export default function useConditionValues({conditionType, conditions}: Props) {
 			segments,
 			users,
 			_condition.condition,
-			_condition.value
+			_condition.options?.value
 		);
 
 		const description = getDescription(condition, prefix, type, value);
@@ -61,15 +62,16 @@ export default function useConditionValues({conditionType, conditions}: Props) {
 	});
 }
 
-function getCondition(
-	type?: Condition['type'],
-	condition?: Condition['condition']
-) {
-	if (!type || !condition) {
+function getCondition(condition: Condition) {
+	if (!condition.type || !condition.condition) {
 		return '';
 	}
 
-	return CONDITION_ITEMS[type].find(({value}) => value === condition)?.label;
+	const conditionValue = convertOptionsToConditionValue(condition);
+
+	return CONDITION_ITEMS[condition.type].find(
+		({value}) => value === conditionValue
+	)?.label;
 }
 
 function getDescription(
@@ -108,7 +110,7 @@ function getValue(
 	segments: Record<string, Segment>,
 	users: User[] | null,
 	condition?: Condition['condition'],
-	value?: Condition['value']
+	value?: string
 ) {
 	if (!value) {
 		return '';

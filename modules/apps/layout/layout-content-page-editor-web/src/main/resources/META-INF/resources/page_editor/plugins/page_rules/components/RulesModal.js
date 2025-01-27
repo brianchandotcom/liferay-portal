@@ -86,7 +86,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 
 		if (
 			actions.some((action) => !action.itemId) ||
-			conditions.some((condition) => !condition.value)
+			conditions.some((condition) => !condition.options?.value)
 		) {
 			setRuleError(true);
 

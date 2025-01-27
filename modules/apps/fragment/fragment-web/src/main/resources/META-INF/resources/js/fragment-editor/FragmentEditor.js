@@ -94,10 +94,12 @@ const FragmentEditor = ({
 		js,
 	]);
 
+	const widgetRegex = new RegExp('<lfr-widget(?:-[^>]+)?>', 'g');
+
 	const handlePublishClick = () => {
 		if (
 			Liferay.FeatureFlags['LPD-40535'] &&
-			(html.includes('<lfr-widget-') ||
+			(widgetRegex.test(html) ||
 				html.includes('[@liferay_portlet["runtime"]'))
 		) {
 			EmbeddedWidgetsModal({learnMessageHTML, onPublish: publish});

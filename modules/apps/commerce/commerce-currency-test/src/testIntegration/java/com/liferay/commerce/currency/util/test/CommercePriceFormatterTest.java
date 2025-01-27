@@ -142,12 +142,12 @@ public class CommercePriceFormatterTest {
 	public void testParsePriceBigDecimal() throws Exception {
 		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.ITALY);
 
-		String expectedParsedPrice = "1234567.890";
+		String expectedParsedPrice = "1234567.89";
 
-		_assertPrice("1,234,567.890", expectedParsedPrice, LocaleUtil.ITALY);
-		_assertPrice("1.234.567,890", expectedParsedPrice, LocaleUtil.ITALY);
-		_assertPrice("1234567,890", expectedParsedPrice, LocaleUtil.ITALY);
-		_assertPrice("1234567.890", expectedParsedPrice, LocaleUtil.ITALY);
+		_assertPrice("1,234,567.89", expectedParsedPrice, LocaleUtil.ITALY);
+		_assertPrice("1.234.567,89", expectedParsedPrice, LocaleUtil.ITALY);
+		_assertPrice("1234567,89", expectedParsedPrice, LocaleUtil.ITALY);
+		_assertPrice("1234567.89", expectedParsedPrice, LocaleUtil.ITALY);
 
 		Assert.assertNotEquals(
 			expectedParsedPrice,

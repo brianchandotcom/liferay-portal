@@ -87,6 +87,7 @@ public class CommerceCurrenciesDisplayContext {
 			renderRequest);
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			renderResponse);
+
 		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 

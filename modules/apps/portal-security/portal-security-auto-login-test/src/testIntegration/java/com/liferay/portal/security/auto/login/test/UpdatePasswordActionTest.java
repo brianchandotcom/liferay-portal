@@ -119,10 +119,8 @@ public class UpdatePasswordActionTest {
 			}
 
 			Assert.assertTrue(
-				response.toString(
-				).contains(
-					searchText
-				));
+				StringUtil.contains(
+					response.toString(), searchText, StringPool.BLANK));
 		}
 	}
 

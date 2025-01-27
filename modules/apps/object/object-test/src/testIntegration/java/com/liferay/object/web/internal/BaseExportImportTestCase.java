@@ -210,9 +210,9 @@ public abstract class BaseExportImportTestCase {
 
 		themeDisplay.setLayout(layout);
 
-		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
+		themeDisplay.setSiteDefaultLocale(LocaleUtil.getSiteDefault());
 		themeDisplay.setUser(user);
 
 		return themeDisplay;

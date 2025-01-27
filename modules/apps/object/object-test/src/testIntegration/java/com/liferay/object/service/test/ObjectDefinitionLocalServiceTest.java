@@ -2909,7 +2909,14 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "externalReferenceCode");
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()

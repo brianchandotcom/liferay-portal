@@ -33,11 +33,18 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
+
+import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -183,6 +190,26 @@ public class AccountResourceDTOConverter
 						return parentAccountEntry.getExternalReferenceCode();
 					});
 				setParentAccountId(accountEntry::getParentAccountEntryId);
+				setPermissions(
+					() -> NestedFieldsSupplier.supply(
+						"permissions",
+						nestedFieldNames -> {
+							_permissionService.checkPermission(
+								accountEntry.getAccountEntryGroupId(),
+								AccountEntry.class.getName(),
+								accountEntry.getAccountEntryId());
+
+							Collection<Permission> permissions =
+								PermissionUtil.getPermissions(
+									accountEntry.getCompanyId(),
+									_resourceActionLocalService.
+										getResourceActions(
+											AccountEntry.class.getName()),
+									accountEntry.getAccountEntryId(),
+									AccountEntry.class.getName(), null);
+
+							return permissions.toArray(new Permission[0]);
+						}));
 				setStatus(accountEntry::getStatus);
 				setTaxId(accountEntry::getTaxIdNumber);
 				setType(() -> Account.Type.create(accountEntry.getType()));
@@ -302,6 +329,12 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private WebServerServletToken _webServerServletToken;

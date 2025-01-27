@@ -97,16 +97,16 @@ public class EntityCacheImpl
 	public Serializable getLocalCacheResult(
 		Class<?> clazz, Serializable primaryKey) {
 
-		if (_isLocalCacheEnabled()) {
-			Map<Serializable, Serializable> localCache = _localCache.get();
-
-			Serializable localCacheKey = new LocalCacheKey(
-				clazz.getName(), primaryKey);
-
-			return localCache.get(localCacheKey);
+		if (!_isLocalCacheEnabled()) {
+			return null;
 		}
 
-		return null;
+		Map<Serializable, Serializable> localCache = _localCache.get();
+
+		Serializable localCacheKey = new LocalCacheKey(
+			clazz.getName(), primaryKey);
+
+		return localCache.get(localCacheKey);
 	}
 
 	@Override

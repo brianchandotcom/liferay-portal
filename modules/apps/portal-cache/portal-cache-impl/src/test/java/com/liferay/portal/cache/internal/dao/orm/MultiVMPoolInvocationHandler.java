@@ -39,31 +39,30 @@ public class MultiVMPoolInvocationHandler implements InvocationHandler {
 				new PortalCacheInvocationHandler((String)args[0], _serialized));
 		}
 
-		if (methodName.equals("getPortalCacheManager")) {
-			return ProxyUtil.newProxyInstance(
-				_classLoader, new Class<?>[] {PortalCacheManager.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						String methodName = method.getName();
-
-						if (methodName.equals(
-								"registerPortalCacheManagerListener")) {
-
-							return true;
-						}
-
-						return null;
-					}
-
-				});
+		if (!methodName.equals("getPortalCacheManager")) {
+			return null;
 		}
 
-		return null;
+		return ProxyUtil.newProxyInstance(
+			_classLoader, new Class<?>[] {PortalCacheManager.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args)
+					throws Throwable {
+
+					String methodName = method.getName();
+
+					if (methodName.equals(
+							"registerPortalCacheManagerListener")) {
+
+						return true;
+					}
+
+					return null;
+				}
+
+			});
 	}
 
 	private final ClassLoader _classLoader;

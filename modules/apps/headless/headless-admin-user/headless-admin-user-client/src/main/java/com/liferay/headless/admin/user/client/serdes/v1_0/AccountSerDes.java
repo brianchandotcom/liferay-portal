@@ -386,6 +386,26 @@ public class AccountSerDes {
 			sb.append(account.getParentAccountId());
 		}
 
+		if (account.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getPermissions().length; i++) {
+				sb.append(account.getPermissions()[i]);
+
+				if ((i + 1) < account.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getPostalAddresses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -659,6 +679,13 @@ public class AccountSerDes {
 				String.valueOf(account.getParentAccountId()));
 		}
 
+		if (account.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(account.getPermissions()));
+		}
+
 		if (account.getPostalAddresses() == null) {
 			map.put("postalAddresses", null);
 		}
@@ -797,6 +824,9 @@ public class AccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "parentAccountId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalAddresses")) {
@@ -997,6 +1027,26 @@ public class AccountSerDes {
 				if (jsonParserFieldValue != null) {
 					account.setParentAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.user.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.user.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.user.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					account.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalAddresses")) {

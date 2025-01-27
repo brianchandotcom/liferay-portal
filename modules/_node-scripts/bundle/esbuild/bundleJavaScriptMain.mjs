@@ -5,10 +5,12 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import Sonda from 'sonda/esbuild';
 
 import {
 	BUILD_LANGUAGE_JSON_PATH,
 	BUILD_MAIN_EXPORTS_PATH,
+	BUNDLE_REPORTS_PATH,
 } from '../../util/constants.mjs';
 import objectSF from '../../util/objectSF.mjs';
 import getExternals from './getExternals.mjs';
@@ -55,6 +57,30 @@ export default async function bundleJavaScriptMain(
 		sourcemap: true,
 		target: ['es2022'],
 	};
+
+	if (process.env.CREATE_BUNDLE_REPORTS) {
+		esbuildConfig.plugins.push(
+			Sonda({
+				brotli: false,
+				detailed: false,
+				enabled: true,
+				filename: path.join(BUNDLE_REPORTS_PATH, `index.js.html`),
+				format: 'html',
+				gzip: true,
+				open: false,
+				sources: false,
+			}),
+			Sonda({
+				brotli: false,
+				detailed: false,
+				enabled: true,
+				filename: path.join(BUNDLE_REPORTS_PATH, `index.js.json`),
+				format: 'json',
+				gzip: true,
+				open: false,
+			})
+		);
+	}
 
 	await runEsbuild(esbuildConfig, 'main');
 

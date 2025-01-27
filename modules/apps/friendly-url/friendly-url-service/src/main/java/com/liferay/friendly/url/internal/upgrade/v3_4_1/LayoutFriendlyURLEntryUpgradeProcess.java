@@ -132,7 +132,7 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 							preparedStatement.setLong(9, classNameId);
 							preparedStatement.setLong(10, plid);
 
-							preparedStatement.executeUpdate();
+							preparedStatement.addBatch();
 						}
 					}
 					catch (Exception exception) {

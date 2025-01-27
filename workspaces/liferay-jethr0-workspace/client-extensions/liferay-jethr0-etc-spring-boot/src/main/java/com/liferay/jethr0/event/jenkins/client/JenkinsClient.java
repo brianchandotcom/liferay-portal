@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.event.jenkins.client;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
-import com.liferay.client.extension.util.spring.boot2.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.petra.function.RetryableUnsafeSupplier;

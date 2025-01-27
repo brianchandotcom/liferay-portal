@@ -5,8 +5,8 @@
 
 package com.liferay.marketplace.service;
 
-import com.liferay.client.extension.util.spring.boot2.LiferayOAuth2AccessTokenManager;
-import com.liferay.client.extension.util.spring.boot2.service.BaseService;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;

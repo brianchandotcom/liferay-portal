@@ -6,7 +6,7 @@
 package com.liferay.ai.content.wizard.service;
 
 import com.liferay.ai.content.wizard.model.Settings;
-import com.liferay.client.extension.util.spring.boot2.service.BaseService;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

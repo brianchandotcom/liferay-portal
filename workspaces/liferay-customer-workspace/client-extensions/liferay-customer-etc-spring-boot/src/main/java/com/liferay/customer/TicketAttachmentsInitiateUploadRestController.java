@@ -5,7 +5,7 @@
 
 package com.liferay.customer;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.customer.service.GoogleCloudStorageService;
 import com.liferay.customer.service.TicketAttachmentService;

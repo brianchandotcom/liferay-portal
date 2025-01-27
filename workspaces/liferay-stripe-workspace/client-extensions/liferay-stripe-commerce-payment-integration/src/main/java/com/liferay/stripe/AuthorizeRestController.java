@@ -5,7 +5,7 @@
 
 package com.liferay.stripe;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
 import com.stripe.Stripe;

@@ -10,7 +10,7 @@ import com.adyen.enums.Environment;
 import com.adyen.model.checkout.SessionResultResponse;
 import com.adyen.service.checkout.PaymentsApi;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;

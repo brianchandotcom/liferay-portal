@@ -5,7 +5,7 @@
 
 package com.liferay.marketplace.service;
 
-import com.liferay.client.extension.util.spring.boot2.service.BaseService;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 
 import java.time.Duration;

@@ -5,7 +5,7 @@
 
 package com.liferay.customer;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.model.AccountUsage;
 import com.liferay.customer.service.GoogleCloudFunctionService;
 import com.liferay.customer.service.KoroneikiService;

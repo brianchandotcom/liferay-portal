@@ -5,7 +5,7 @@
 
 package com.liferay.marketplace;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;

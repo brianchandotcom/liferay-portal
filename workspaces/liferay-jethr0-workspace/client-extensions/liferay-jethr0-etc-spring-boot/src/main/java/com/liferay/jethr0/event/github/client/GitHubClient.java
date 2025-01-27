@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.event.github.client;
 
-import com.liferay.client.extension.util.spring.boot2.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.petra.function.RetryableUnsafeSupplier;
 import com.liferay.petra.function.UnsafeSupplier;

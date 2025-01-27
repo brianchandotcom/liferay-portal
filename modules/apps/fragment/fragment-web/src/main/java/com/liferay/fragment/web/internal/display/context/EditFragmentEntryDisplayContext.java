@@ -30,6 +30,8 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -493,6 +495,15 @@ public class EditFragmentEntryDisplayContext {
 			"initialHTML", _getHtmlContent()
 		).put(
 			"initialJS", _getJsContent()
+		).put(
+			"learnMessageHTML",
+			() -> {
+				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
+					"deprecated-embedded-widgets",
+					_themeDisplay.getLanguageId(), "fragment-web");
+
+				return learnMessage.getHTML();
+			}
 		).put(
 			"name", getName()
 		).put(

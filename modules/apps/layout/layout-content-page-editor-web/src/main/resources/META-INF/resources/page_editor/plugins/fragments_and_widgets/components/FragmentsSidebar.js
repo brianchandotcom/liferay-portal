@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {
+	MarketplaceModal,
 	SearchForm,
 	SearchResultsMessage,
 	isNullOrUndefined,
@@ -146,6 +147,7 @@ export default function FragmentsSidebar() {
 
 	const [searchValue, setSearchValue] = useState(null);
 	const [showReorderModal, setShowReorderModal] = useState(false);
+	const [showMarketPlaceModal, setShowMarketPlaceModal] = useState(false);
 
 	const tabs = useMemo(
 		() => [
@@ -289,6 +291,7 @@ export default function FragmentsSidebar() {
 
 					{Liferay.FeatureFlags['LPD-34938'] && (
 						<ClayButtonWithIcon
+							aria-haspopup="dialog"
 							aria-label={Liferay.Language.get(
 								'explore-marketplace'
 							)}
@@ -296,6 +299,7 @@ export default function FragmentsSidebar() {
 							className="ml-2"
 							data-tooltip-align="top"
 							displayType="secondary"
+							onClick={() => setShowMarketPlaceModal(true)}
 							size="sm"
 							symbol="marketplace"
 							title={Liferay.Language.get('explore-marketplace')}
@@ -321,6 +325,18 @@ export default function FragmentsSidebar() {
 			{showReorderModal && (
 				<ReorderSetsModal
 					onCloseModal={() => setShowReorderModal(false)}
+				/>
+			)}
+
+			{showMarketPlaceModal && (
+				<MarketplaceModal
+					body={Liferay.Language.get(
+						'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
+					)}
+					heading={Liferay.Language.get(
+						'marketplace-is-now-in-page-builder'
+					)}
+					onCloseModal={() => setShowMarketPlaceModal(false)}
 				/>
 			)}
 		</>

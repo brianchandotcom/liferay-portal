@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>APPLICATION_STATUS</td>
-	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_title}')]/../..//div[contains(.,'${key_status}')]</td>
+	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_title}')]/../..//td[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

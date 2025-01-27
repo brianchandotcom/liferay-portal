@@ -185,7 +185,7 @@ test('COMMERCE-9936 A disabled default currency should not be usable', async ({
 		apiHelpers.data.push({id: account.id, type: 'account'});
 
 		await accountsPage.goto();
-		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await accountsPage.accountNameLink(account.name).click();
 		await editAccountPage.channelDefaultsLink.click();
 
 		await commerceChannelDefaultsPage.defaultCommerceCurrenciesButton.click();

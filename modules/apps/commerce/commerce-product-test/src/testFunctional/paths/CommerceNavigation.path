@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>SORT_FIELD</td>
-	<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+	<td>//span[contains(text(), '${key_sortFieldName}')]/../../..//button[@class='component-action']</td>
 	<td></td>
 </tr>
 <tr>

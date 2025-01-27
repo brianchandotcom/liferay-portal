@@ -152,7 +152,7 @@
 </tr>
 <tr>
 	<td>ORDER_ELLIPSIS_BY_STATUS</td>
-	<td>//strong[contains(text(), '${key_orderStatus}')]//../../../../div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//strong[contains(text(), '${key_orderStatus}')]//../../../../td//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

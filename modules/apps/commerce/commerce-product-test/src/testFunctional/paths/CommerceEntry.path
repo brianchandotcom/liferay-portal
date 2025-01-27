@@ -287,7 +287,7 @@
 </tr>
 <tr>
 	<td>ASSERT_NOTIFICATION_QUEUE</td>
-	<td>//tr//div[contains(text(),'${key_name}')][${key_order}]</td>
+	<td>//tr//td[contains(text(),'${key_name}')][${key_order}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -742,12 +742,12 @@
 </tr>
 <tr>
 	<td>CHANNELS_GENERAL_ACTIVE_STATUS</td>
-	<td>//div[contains(text(),'${key_entryName}')]/following-sibling::div/span[contains(@class,'label-success')]</td>
+	<td>//td[contains(text(),'${key_entryName}')]/following-sibling::td/span[contains(@class,'label-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHANNELS_GENERAL_TAB_EDITS</td>
-	<td>//div[contains(text(),'${key_entryName}')]/following-sibling::div[contains(@class,'item-actions')]//*</td>
+	<td>//div//td[contains(text(),'${key_entryName}')]/following-sibling::td[contains(@class,'item-actions')]//*</td>
 	<td></td>
 </tr>
 <tr>
@@ -822,7 +822,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']/../../following-sibling::div//button</td>
+	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_entryName}']/../../following-sibling::td//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -842,7 +842,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//td[2][contains(.,'${key_entryDescription}')]</td>
+	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//..//td[2][contains(.,'${key_entryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -926,6 +926,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_CELL_BY_P</td>
+	<td>//td[contains(string(), '${key_cellName1}')]//..//td[contains(string(), '${key_cellName2}')]//..//td[${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_DELETE_BUTTON</td>
 	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/*[contains(.,'Delete')] | //div[contains(.,'${key_table}')]//tr[contains(.,'${key_entryName}')]//*[contains(text(),'Delete')]</td>
 	<td></td>
@@ -952,7 +957,7 @@
 </tr>
 <tr>
 	<td>TABLE_ASSERT_SPECIFIC_ROW_ANY_COLUMN_VALUE</td>
-	<td>//tbody/div[${key_row}]//div//a[text()='${key_entryName}']/../../../div[${key_column}]</td>
+	<td>//tbody/tr[${key_row}]//div//a[text()='${key_entryName}']/../../../td[${key_column}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1395,7 +1400,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_STATUS_BASED_ON_PRODUCT_NAME</td>
-	<td>//a[text()='${key_productName}']/../../../div/span[contains(@class,'workflow-status')]//strong[contains(.,'${key_status}')]</td>
+	<td>//a[text()='${key_productName}']/../../../td/span[contains(@class,'workflow-status')]//strong[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1528,7 +1533,7 @@
 </tr>
 <tr>
 	<td>TABLE_SEARCH_BY_NAME_AND_CONTENT</td>
-	<td>//td[contains(.,'${key_productName}')]/following-sibling::div[contains(text(),'${key_value}')]</td>
+	<td>//td[contains(.,'${key_productName}')]/following-sibling::td[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

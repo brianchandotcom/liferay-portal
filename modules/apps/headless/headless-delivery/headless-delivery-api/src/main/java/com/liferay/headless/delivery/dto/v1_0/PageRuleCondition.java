@@ -28,6 +28,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -131,6 +133,48 @@ public class PageRuleCondition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
+	@Schema
+	@Valid
+	public Options getOptions() {
+		if (_optionsSupplier != null) {
+			options = _optionsSupplier.get();
+
+			_optionsSupplier = null;
+		}
+
+		return options;
+	}
+
+	public void setOptions(Options options) {
+		this.options = options;
+
+		_optionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOptions(
+		UnsafeSupplier<Options, Exception> optionsUnsafeSupplier) {
+
+		_optionsSupplier = () -> {
+			try {
+				return optionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Options options;
+
+	@JsonIgnore
+	private Supplier<Options> _optionsSupplier;
+
 	@Schema(description = "The page rule condition's type.")
 	public String getType() {
 		if (_typeSupplier != null) {
@@ -169,47 +213,6 @@ public class PageRuleCondition implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
-
-	@Schema(description = "The page rule condition's value.")
-	public String getValue() {
-		if (_valueSupplier != null) {
-			value = _valueSupplier.get();
-
-			_valueSupplier = null;
-		}
-
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-
-		_valueSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		_valueSupplier = () -> {
-			try {
-				return valueUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The page rule condition's value.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
-
-	@JsonIgnore
-	private Supplier<String> _valueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -270,6 +273,18 @@ public class PageRuleCondition implements Serializable {
 			sb.append("\"");
 		}
 
+		Options options = getOptions();
+
+		if (options != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"options\": ");
+
+			sb.append(String.valueOf(options));
+		}
+
 		String type = getType();
 
 		if (type != null) {
@@ -282,22 +297,6 @@ public class PageRuleCondition implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(type));
-
-			sb.append("\"");
-		}
-
-		String value = getValue();
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(value));
 
 			sb.append("\"");
 		}

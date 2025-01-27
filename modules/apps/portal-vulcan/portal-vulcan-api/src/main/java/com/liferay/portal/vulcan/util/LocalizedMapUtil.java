@@ -257,10 +257,6 @@ public class LocalizedMapUtil {
 		String defaultLanguageId, Map<String, String> i18nMap,
 		String siteDefaultValue) {
 
-		if ((defaultLanguageId == null) && (siteDefaultValue == null)) {
-			return i18nMap;
-		}
-
 		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
@@ -279,11 +275,41 @@ public class LocalizedMapUtil {
 				entry.getValue());
 		}
 
+		if (!newI18nMap.containsKey(defaultLanguageId) &&
+			newI18nMap.containsKey("en_US")) {
+
+			defaultLanguageId = "en_US";
+		}
+
+		if ((defaultLanguageId == null) && (siteDefaultValue == null)) {
+			return newI18nMap;
+		}
+
 		newI18nMap.putIfAbsent(
 			siteDefaultLanguageId,
 			MapUtil.getString(newI18nMap, defaultLanguageId, siteDefaultValue));
 
 		return newI18nMap;
+	}
+
+	public static Map<Locale, String> populateLocalizedMap(
+		Map<String, String> i18nMap) {
+
+		return populateLocalizedMap(null, i18nMap, null);
+	}
+
+	public static Map<Locale, String> populateLocalizedMap(
+		String defaultLanguageId, Map<String, String> i18nMap) {
+
+		return populateLocalizedMap(defaultLanguageId, i18nMap, null);
+	}
+
+	public static Map<Locale, String> populateLocalizedMap(
+		String defaultLanguageId, Map<String, String> i18nMap,
+		String siteDefaultValue) {
+
+		return getLocalizedMap(
+			populateI18nMap(defaultLanguageId, i18nMap, siteDefaultValue));
 	}
 
 	public static void validateI18n(

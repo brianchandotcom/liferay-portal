@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class CommerceAdminProductDetailsPage {
+	readonly backLink: Locator;
 	readonly page: Page;
 	readonly productConfigurationLink: Locator;
 	readonly productDetailsInput: (inputName: string) => Promise<Locator>;
@@ -18,6 +19,7 @@ export class CommerceAdminProductDetailsPage {
 	readonly publishLink: Locator;
 
 	constructor(page: Page) {
+		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.page = page;
 		this.productConfigurationLink = page.getByRole('link', {
 			name: 'Configuration',

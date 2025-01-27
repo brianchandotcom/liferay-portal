@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -84,6 +85,9 @@ public abstract class BaseSiteTestEntityResourceImpl
 	implements EntityModelResource, SiteTestEntityResource,
 			   VulcanBatchEngineTaskItemDelegate<SiteTestEntity> {
 
+	protected abstract SiteTestEntity doGetSiteTestEntity(Long siteTestEntityId)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -106,15 +110,37 @@ public abstract class BaseSiteTestEntityResourceImpl
 	@javax.ws.rs.Path("/site-test-entities/{siteTestEntityId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SiteTestEntity getSiteTestEntity(
+	public final SiteTestEntity getSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteTestEntityId")
 			Long siteTestEntityId)
 		throws Exception {
 
-		return new SiteTestEntity();
+		SiteTestEntity getSiteTestEntity = doGetSiteTestEntity(
+			siteTestEntityId);
+
+		getSiteTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getSiteTestEntityPermissionsPage(
+							getSiteTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getSiteTestEntity;
 	}
+
+	protected abstract SiteTestEntity doPutSiteTestEntity(
+			Long siteTestEntityId, SiteTestEntity siteTestEntity)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -139,7 +165,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public SiteTestEntity putSiteTestEntity(
+	public final SiteTestEntity putSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteTestEntityId")
@@ -147,7 +173,28 @@ public abstract class BaseSiteTestEntityResourceImpl
 			SiteTestEntity siteTestEntity)
 		throws Exception {
 
-		return new SiteTestEntity();
+		Permission[] permissions = siteTestEntity.getPermissions();
+
+		SiteTestEntity putSiteTestEntity = doPutSiteTestEntity(
+			siteTestEntityId, siteTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage = putSiteTestEntityPermissionsPage(
+				putSiteTestEntity.getId(), permissions);
+
+			putSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putSiteTestEntity;
 	}
 
 	/**
@@ -347,6 +394,10 @@ public abstract class BaseSiteTestEntityResourceImpl
 			resourceId, resourceName, null);
 	}
 
+	protected abstract Page<SiteTestEntity> doGetSiteSiteTestEntitiesPage(
+			Long siteId)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -369,14 +420,34 @@ public abstract class BaseSiteTestEntityResourceImpl
 	@javax.ws.rs.Path("/sites/{siteId}/site-test-entities")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<SiteTestEntity> getSiteSiteTestEntitiesPage(
+	public final Page<SiteTestEntity> getSiteSiteTestEntitiesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
 			Long siteId)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<SiteTestEntity> siteTestEntityPage = doGetSiteSiteTestEntitiesPage(
+			siteId);
+
+		for (SiteTestEntity siteTestEntity : siteTestEntityPage.getItems()) {
+			siteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionPage =
+							getSiteTestEntityPermissionsPage(
+								siteTestEntity.getId(), null);
+
+						Collection<Permission> permissions =
+							permissionPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return siteTestEntityPage;
 	}
 
 	/**
@@ -450,6 +521,10 @@ public abstract class BaseSiteTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract SiteTestEntity doPostSiteSiteTestEntity(
+			Long siteId, SiteTestEntity siteTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -473,7 +548,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SiteTestEntity postSiteSiteTestEntity(
+	public final SiteTestEntity postSiteSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
@@ -481,7 +556,28 @@ public abstract class BaseSiteTestEntityResourceImpl
 			SiteTestEntity siteTestEntity)
 		throws Exception {
 
-		return new SiteTestEntity();
+		Permission[] permissions = siteTestEntity.getPermissions();
+
+		SiteTestEntity postSiteTestEntity = doPostSiteSiteTestEntity(
+			siteId, siteTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage = putSiteTestEntityPermissionsPage(
+				postSiteTestEntity.getId(), permissions);
+
+			postSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postSiteTestEntity;
 	}
 
 	/**
@@ -538,6 +634,11 @@ public abstract class BaseSiteTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract SiteTestEntity
+			doGetSiteSiteTestEntityByExternalReferenceCode(
+				String externalReferenceCode, Long siteId)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -566,7 +667,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SiteTestEntity getSiteSiteTestEntityByExternalReferenceCode(
+	public final SiteTestEntity getSiteSiteTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -577,8 +678,33 @@ public abstract class BaseSiteTestEntityResourceImpl
 			Long siteId)
 		throws Exception {
 
-		return new SiteTestEntity();
+		SiteTestEntity getSiteTestEntity =
+			doGetSiteSiteTestEntityByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		getSiteTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getSiteTestEntityPermissionsPage(
+							getSiteTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getSiteTestEntity;
 	}
+
+	protected abstract SiteTestEntity
+			doPutSiteSiteTestEntityByExternalReferenceCode(
+				String externalReferenceCode, Long siteId,
+				SiteTestEntity siteTestEntity)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -609,7 +735,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public SiteTestEntity putSiteSiteTestEntityByExternalReferenceCode(
+	public final SiteTestEntity putSiteSiteTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -621,7 +747,29 @@ public abstract class BaseSiteTestEntityResourceImpl
 			SiteTestEntity siteTestEntity)
 		throws Exception {
 
-		return new SiteTestEntity();
+		Permission[] permissions = siteTestEntity.getPermissions();
+
+		SiteTestEntity putSiteTestEntity =
+			doPutSiteSiteTestEntityByExternalReferenceCode(
+				externalReferenceCode, siteId, siteTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage = putSiteTestEntityPermissionsPage(
+				putSiteTestEntity.getId(), permissions);
+
+			putSiteTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putSiteTestEntity;
 	}
 
 	@Override

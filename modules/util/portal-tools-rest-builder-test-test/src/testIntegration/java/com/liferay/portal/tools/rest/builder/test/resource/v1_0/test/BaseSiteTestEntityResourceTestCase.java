@@ -112,6 +112,18 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsSiteTestEntityResource = SiteTestEntityResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
+		).build();
 	}
 
 	@After
@@ -194,6 +206,13 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		assertEquals(postSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
+
+		Assert.assertNull(getSiteTestEntity.getPermissions());
+
+		getSiteTestEntity = permissionsSiteTestEntityResource.getSiteTestEntity(
+			postSiteTestEntity.getId());
+
+		Assert.assertNotNull(getSiteTestEntity.getPermissions());
 	}
 
 	protected SiteTestEntity testGetSiteTestEntity_addSiteTestEntity()
@@ -217,11 +236,29 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		assertEquals(randomSiteTestEntity, putSiteTestEntity);
 		assertValid(putSiteTestEntity);
 
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
 		SiteTestEntity getSiteTestEntity =
 			siteTestEntityResource.getSiteTestEntity(putSiteTestEntity.getId());
 
 		assertEquals(randomSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
+
+		SiteTestEntity randomPermissionsSiteTestEntity =
+			randomPermissionsSiteTestEntity();
+
+		putSiteTestEntity = siteTestEntityResource.putSiteTestEntity(
+			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
+
+		assertEquals(randomPermissionsSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
+		putSiteTestEntity = permissionsSiteTestEntityResource.putSiteTestEntity(
+			postSiteTestEntity.getId(), randomPermissionsSiteTestEntity);
+
+		Assert.assertNotNull(putSiteTestEntity.getPermissions());
 	}
 
 	protected SiteTestEntity testPutSiteTestEntity_addSiteTestEntity()
@@ -342,6 +379,17 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		assertContains(siteTestEntity2, (List<SiteTestEntity>)page.getItems());
 		assertValid(
 			page, testGetSiteSiteTestEntitiesPage_getExpectedActions(siteId));
+
+		for (SiteTestEntity siteTestEntity : page.getItems()) {
+			Assert.assertNull(siteTestEntity.getPermissions());
+		}
+
+		page = permissionsSiteTestEntityResource.getSiteSiteTestEntitiesPage(
+			siteId);
+
+		for (SiteTestEntity siteTestEntity : page.getItems()) {
+			Assert.assertNotNull(siteTestEntity.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -391,6 +439,24 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		assertEquals(randomSiteTestEntity, postSiteTestEntity);
 		assertValid(postSiteTestEntity);
+
+		SiteTestEntity randomPermissionsSiteTestEntity1 =
+			randomPermissionsSiteTestEntity();
+
+		SiteTestEntity postPermissionsSiteTestEntity1 =
+			testPostSiteSiteTestEntity_addSiteTestEntity(
+				randomPermissionsSiteTestEntity1);
+
+		Assert.assertNull(postPermissionsSiteTestEntity1.getPermissions());
+
+		SiteTestEntity randomPermissionsSiteTestEntity2 =
+			randomPermissionsSiteTestEntity();
+
+		SiteTestEntity postPermissionsSiteTestEntity2 =
+			testPostSiteSiteTestEntity_addPermissionsSiteTestEntity(
+				randomPermissionsSiteTestEntity2);
+
+		Assert.assertNotNull(postPermissionsSiteTestEntity2.getPermissions());
 	}
 
 	protected SiteTestEntity testPostSiteSiteTestEntity_addSiteTestEntity(
@@ -398,6 +464,15 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		throws Exception {
 
 		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGetSiteSiteTestEntitiesPage_getSiteId(), siteTestEntity);
+	}
+
+	protected SiteTestEntity
+			testPostSiteSiteTestEntity_addPermissionsSiteTestEntity(
+				SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return permissionsSiteTestEntityResource.postSiteSiteTestEntity(
 			testGetSiteSiteTestEntitiesPage_getSiteId(), siteTestEntity);
 	}
 
@@ -416,6 +491,17 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		assertEquals(postSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
+
+		Assert.assertNull(getSiteTestEntity.getPermissions());
+
+		getSiteTestEntity =
+			permissionsSiteTestEntityResource.
+				getSiteSiteTestEntityByExternalReferenceCode(
+					postSiteTestEntity.getExternalReferenceCode(),
+					testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						postSiteTestEntity));
+
+		Assert.assertNotNull(getSiteTestEntity.getPermissions());
 	}
 
 	protected Long testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
@@ -452,6 +538,8 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		assertEquals(randomSiteTestEntity, putSiteTestEntity);
 		assertValid(putSiteTestEntity);
 
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
 		SiteTestEntity getSiteTestEntity =
 			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
 				putSiteTestEntity.getExternalReferenceCode(),
@@ -460,6 +548,31 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 		assertEquals(randomSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
+
+		SiteTestEntity randomPermissionsSiteTestEntity =
+			randomPermissionsSiteTestEntity();
+
+		putSiteTestEntity =
+			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
+				postSiteTestEntity.getExternalReferenceCode(),
+				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+					postSiteTestEntity),
+				randomPermissionsSiteTestEntity);
+
+		assertEquals(randomPermissionsSiteTestEntity, putSiteTestEntity);
+		assertValid(putSiteTestEntity);
+
+		Assert.assertNull(putSiteTestEntity.getPermissions());
+
+		putSiteTestEntity =
+			permissionsSiteTestEntityResource.
+				putSiteSiteTestEntityByExternalReferenceCode(
+					postSiteTestEntity.getExternalReferenceCode(),
+					testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						postSiteTestEntity),
+					randomPermissionsSiteTestEntity);
+
+		Assert.assertNotNull(putSiteTestEntity.getPermissions());
 
 		SiteTestEntity newSiteTestEntity =
 			testPutSiteSiteTestEntityByExternalReferenceCode_createSiteTestEntity();
@@ -1275,7 +1388,29 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		return randomSiteTestEntity();
 	}
 
+	protected SiteTestEntity randomPermissionsSiteTestEntity()
+		throws Exception {
+
+		SiteTestEntity siteTestEntity = randomSiteTestEntity();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		siteTestEntity.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return siteTestEntity;
+	}
+
 	protected SiteTestEntityResource siteTestEntityResource;
+	protected SiteTestEntityResource permissionsSiteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

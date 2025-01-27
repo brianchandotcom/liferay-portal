@@ -45,6 +45,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -84,6 +85,9 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	implements CompanyTestEntityResource, EntityModelResource,
 			   VulcanBatchEngineTaskItemDelegate<CompanyTestEntity> {
 
+	protected abstract Page<CompanyTestEntity> doGetCompanyTestEntitiesPage()
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -98,10 +102,32 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	@javax.ws.rs.Path("/company-test-entities")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<CompanyTestEntity> getCompanyTestEntitiesPage()
+	public final Page<CompanyTestEntity> getCompanyTestEntitiesPage()
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<CompanyTestEntity> companyTestEntityPage =
+			doGetCompanyTestEntitiesPage();
+
+		for (CompanyTestEntity companyTestEntity :
+				companyTestEntityPage.getItems()) {
+
+			companyTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionPage =
+							getCompanyTestEntityPermissionsPage(
+								companyTestEntity.getId(), null);
+
+						Collection<Permission> permissions =
+							permissionPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return companyTestEntityPage;
 	}
 
 	/**
@@ -167,6 +193,10 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract CompanyTestEntity doPostCompanyTestEntity(
+			CompanyTestEntity companyTestEntity)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -182,11 +212,33 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public CompanyTestEntity postCompanyTestEntity(
+	public final CompanyTestEntity postCompanyTestEntity(
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
-		return new CompanyTestEntity();
+		Permission[] permissions = companyTestEntity.getPermissions();
+
+		CompanyTestEntity postCompanyTestEntity = doPostCompanyTestEntity(
+			companyTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putCompanyTestEntityPermissionsPage(
+					postCompanyTestEntity.getId(), permissions);
+
+			postCompanyTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postCompanyTestEntity;
 	}
 
 	/**
@@ -235,6 +287,11 @@ public abstract class BaseCompanyTestEntityResourceImpl
 		).build();
 	}
 
+	protected abstract CompanyTestEntity
+			doGetCompanyTestEntityByExternalReferenceCode(
+				String externalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -259,15 +316,40 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
+	public final CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 
-		return new CompanyTestEntity();
+		CompanyTestEntity getCompanyTestEntity =
+			doGetCompanyTestEntityByExternalReferenceCode(
+				externalReferenceCode);
+
+		getCompanyTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getCompanyTestEntityPermissionsPage(
+							getCompanyTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getCompanyTestEntity;
 	}
+
+	protected abstract CompanyTestEntity
+			doPutCompanyTestEntityByExternalReferenceCode(
+				String externalReferenceCode,
+				CompanyTestEntity companyTestEntity)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -294,7 +376,7 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
+	public final CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -302,8 +384,35 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
-		return new CompanyTestEntity();
+		Permission[] permissions = companyTestEntity.getPermissions();
+
+		CompanyTestEntity putCompanyTestEntity =
+			doPutCompanyTestEntityByExternalReferenceCode(
+				externalReferenceCode, companyTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putCompanyTestEntityPermissionsPage(
+					putCompanyTestEntity.getId(), permissions);
+
+			putCompanyTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putCompanyTestEntity;
 	}
+
+	protected abstract CompanyTestEntity doGetCompanyTestEntity(
+			Long companyTestEntityId)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -327,15 +436,37 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public CompanyTestEntity getCompanyTestEntity(
+	public final CompanyTestEntity getCompanyTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId)
 		throws Exception {
 
-		return new CompanyTestEntity();
+		CompanyTestEntity getCompanyTestEntity = doGetCompanyTestEntity(
+			companyTestEntityId);
+
+		getCompanyTestEntity.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getCompanyTestEntityPermissionsPage(
+							getCompanyTestEntity.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getCompanyTestEntity;
 	}
+
+	protected abstract CompanyTestEntity doPutCompanyTestEntity(
+			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -360,7 +491,7 @@ public abstract class BaseCompanyTestEntityResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public CompanyTestEntity putCompanyTestEntity(
+	public final CompanyTestEntity putCompanyTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("companyTestEntityId")
@@ -368,7 +499,29 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
-		return new CompanyTestEntity();
+		Permission[] permissions = companyTestEntity.getPermissions();
+
+		CompanyTestEntity putCompanyTestEntity = doPutCompanyTestEntity(
+			companyTestEntityId, companyTestEntity);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putCompanyTestEntityPermissionsPage(
+					putCompanyTestEntity.getId(), permissions);
+
+			putCompanyTestEntity.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putCompanyTestEntity;
 	}
 
 	/**

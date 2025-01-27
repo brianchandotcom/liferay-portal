@@ -111,6 +111,19 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsCompanyTestEntityResource =
+			CompanyTestEntityResource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).parameter(
+				"nestedFields", "permissions"
+			).build();
 	}
 
 	@After
@@ -208,6 +221,17 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		assertContains(
 			companyTestEntity2, (List<CompanyTestEntity>)page.getItems());
 		assertValid(page, testGetCompanyTestEntitiesPage_getExpectedActions());
+
+		for (CompanyTestEntity companyTestEntity : page.getItems()) {
+			Assert.assertNull(companyTestEntity.getPermissions());
+		}
+
+		page =
+			permissionsCompanyTestEntityResource.getCompanyTestEntitiesPage();
+
+		for (CompanyTestEntity companyTestEntity : page.getItems()) {
+			Assert.assertNotNull(companyTestEntity.getPermissions());
+		}
 	}
 
 	protected Map<String, Map<String, String>>
@@ -238,10 +262,38 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		assertEquals(randomCompanyTestEntity, postCompanyTestEntity);
 		assertValid(postCompanyTestEntity);
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity1 =
+			randomPermissionsCompanyTestEntity();
+
+		CompanyTestEntity postPermissionsCompanyTestEntity1 =
+			testPostCompanyTestEntity_addCompanyTestEntity(
+				randomPermissionsCompanyTestEntity1);
+
+		Assert.assertNull(postPermissionsCompanyTestEntity1.getPermissions());
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity2 =
+			randomPermissionsCompanyTestEntity();
+
+		CompanyTestEntity postPermissionsCompanyTestEntity2 =
+			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
+				randomPermissionsCompanyTestEntity2);
+
+		Assert.assertNotNull(
+			postPermissionsCompanyTestEntity2.getPermissions());
 	}
 
 	protected CompanyTestEntity testPostCompanyTestEntity_addCompanyTestEntity(
 			CompanyTestEntity companyTestEntity)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected CompanyTestEntity
+			testPostCompanyTestEntity_addPermissionsCompanyTestEntity(
+				CompanyTestEntity companyTestEntity)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -262,6 +314,15 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		assertEquals(postCompanyTestEntity, getCompanyTestEntity);
 		assertValid(getCompanyTestEntity);
+
+		Assert.assertNull(getCompanyTestEntity.getPermissions());
+
+		getCompanyTestEntity =
+			permissionsCompanyTestEntityResource.
+				getCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode());
+
+		Assert.assertNotNull(getCompanyTestEntity.getPermissions());
 	}
 
 	protected CompanyTestEntity
@@ -290,6 +351,8 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		assertEquals(randomCompanyTestEntity, putCompanyTestEntity);
 		assertValid(putCompanyTestEntity);
 
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
 		CompanyTestEntity getCompanyTestEntity =
 			companyTestEntityResource.
 				getCompanyTestEntityByExternalReferenceCode(
@@ -297,6 +360,28 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		assertEquals(randomCompanyTestEntity, getCompanyTestEntity);
 		assertValid(getCompanyTestEntity);
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity =
+			randomPermissionsCompanyTestEntity();
+
+		putCompanyTestEntity =
+			companyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode(),
+					randomPermissionsCompanyTestEntity);
+
+		assertEquals(randomPermissionsCompanyTestEntity, putCompanyTestEntity);
+		assertValid(putCompanyTestEntity);
+
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
+		putCompanyTestEntity =
+			permissionsCompanyTestEntityResource.
+				putCompanyTestEntityByExternalReferenceCode(
+					postCompanyTestEntity.getExternalReferenceCode(),
+					randomPermissionsCompanyTestEntity);
+
+		Assert.assertNotNull(putCompanyTestEntity.getPermissions());
 
 		CompanyTestEntity newCompanyTestEntity =
 			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity();
@@ -348,6 +433,14 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		assertEquals(postCompanyTestEntity, getCompanyTestEntity);
 		assertValid(getCompanyTestEntity);
+
+		Assert.assertNull(getCompanyTestEntity.getPermissions());
+
+		getCompanyTestEntity =
+			permissionsCompanyTestEntityResource.getCompanyTestEntity(
+				postCompanyTestEntity.getId());
+
+		Assert.assertNotNull(getCompanyTestEntity.getPermissions());
 	}
 
 	protected CompanyTestEntity testGetCompanyTestEntity_addCompanyTestEntity()
@@ -371,12 +464,32 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		assertEquals(randomCompanyTestEntity, putCompanyTestEntity);
 		assertValid(putCompanyTestEntity);
 
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
 		CompanyTestEntity getCompanyTestEntity =
 			companyTestEntityResource.getCompanyTestEntity(
 				putCompanyTestEntity.getId());
 
 		assertEquals(randomCompanyTestEntity, getCompanyTestEntity);
 		assertValid(getCompanyTestEntity);
+
+		CompanyTestEntity randomPermissionsCompanyTestEntity =
+			randomPermissionsCompanyTestEntity();
+
+		putCompanyTestEntity = companyTestEntityResource.putCompanyTestEntity(
+			postCompanyTestEntity.getId(), randomPermissionsCompanyTestEntity);
+
+		assertEquals(randomPermissionsCompanyTestEntity, putCompanyTestEntity);
+		assertValid(putCompanyTestEntity);
+
+		Assert.assertNull(putCompanyTestEntity.getPermissions());
+
+		putCompanyTestEntity =
+			permissionsCompanyTestEntityResource.putCompanyTestEntity(
+				postCompanyTestEntity.getId(),
+				randomPermissionsCompanyTestEntity);
+
+		Assert.assertNotNull(putCompanyTestEntity.getPermissions());
 	}
 
 	protected CompanyTestEntity testPutCompanyTestEntity_addCompanyTestEntity()
@@ -1117,7 +1230,29 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		return randomCompanyTestEntity();
 	}
 
+	protected CompanyTestEntity randomPermissionsCompanyTestEntity()
+		throws Exception {
+
+		CompanyTestEntity companyTestEntity = randomCompanyTestEntity();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		companyTestEntity.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return companyTestEntity;
+	}
+
 	protected CompanyTestEntityResource companyTestEntityResource;
+	protected CompanyTestEntityResource permissionsCompanyTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -1,9 +1,3 @@
-configurations {
-	compileIncludePlatform {
-		exclude group: "jakarta.xml.bind"
-	}
-}
-
 dependencies {
 	compileInclude 	group: "io.projectreactor.netty", name: "reactor-netty-core", version: "1.0.45"
 	compileInclude 	group: "org.slf4j", name: "slf4j-api", version: "1.7.26"

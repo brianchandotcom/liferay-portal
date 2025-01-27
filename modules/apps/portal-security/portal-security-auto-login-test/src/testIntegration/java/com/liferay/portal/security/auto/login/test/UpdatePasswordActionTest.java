@@ -79,11 +79,9 @@ public class UpdatePasswordActionTest {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			user.getCompanyId());
 
-		MockHttpServletRequest mockHttpServletRequest = _mockHttpServletRequest(
-			company, user);
-
 		action.execute(
-			null, mockHttpServletRequest, new MockHttpServletResponse());
+			null, _mockHttpServletRequest(company, user),
+			new MockHttpServletResponse());
 
 		user = UserLocalServiceUtil.getUserByEmailAddress(
 			company.getCompanyId(), user.getEmailAddress());

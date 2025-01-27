@@ -75,12 +75,11 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			Validator.isNull(user.getLastFailedLoginDate()) &&
 			Validator.isNull(user.getLockoutDate())) {
 
-			Date expirationDate = new Date(
-				System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
-
 			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),
-				TicketConstants.TYPE_PASSWORD, null, expirationDate,
+				TicketConstants.TYPE_PASSWORD, null,
+				new Date(
+					System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)),
 				new ServiceContext());
 
 			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));

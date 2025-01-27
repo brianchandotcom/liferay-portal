@@ -16,16 +16,13 @@ import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
 export interface Condition {
-	condition?:
-		| 'user'
-		| 'not_user'
-		| 'role'
-		| 'not_role'
-		| 'segment'
-		| 'not_segment';
+	condition?: 'user' | 'role' | 'segment';
 	id: string;
+	options?: {
+		type: 'equal' | 'not-equal';
+		value?: string;
+	};
 	type: 'user' | undefined;
-	value?: string;
 }
 
 interface ConditionProps {
@@ -114,7 +111,7 @@ export default function Condition({
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();
 
-	const completeConditon = !!condition.value;
+	const completeConditon = !!condition.options?.value;
 
 	return (
 		<RuleBuilderItem
@@ -151,14 +148,15 @@ export default function Condition({
 						Liferay.Language.get('condition')
 					)}
 					items={CONDITION_ITEMS[condition.type]}
-					onSelectionChange={(selectedCondition) =>
+					onSelectionChange={(selectedCondition) => {
 						onConditionChange({
 							...condition,
-							condition: selectedCondition,
-							value: undefined,
-						})
-					}
-					selectedKey={condition.condition}
+							...convertConditionValueToOptions(
+								selectedCondition
+							),
+						});
+					}}
+					selectedKey={convertOptionsToConditionValue(condition)}
 				/>
 			) : null}
 
@@ -167,14 +165,17 @@ export default function Condition({
 					onValueChanged={(value) => {
 						onConditionChange({
 							...condition,
-							value,
+							options: {
+								...condition.options!,
+								value,
+							},
 						});
 
 						sendMessage(
 							Liferay.Language.get('condition-completed')
 						);
 					}}
-					value={condition.value}
+					value={condition.options?.value}
 				/>
 			) : null}
 		</RuleBuilderItem>
@@ -261,4 +262,73 @@ function SegmentsSelector({onValueChanged, value}: SelectorProps) {
 			selectedKey={value}
 		/>
 	);
+}
+
+function convertConditionValueToOptions(
+	condition: keyof typeof CONDITION_VALUES
+): Partial<Condition> {
+	if (condition === CONDITION_VALUES.not_user) {
+		return {
+			condition: CONDITION_VALUES.user,
+			options: {
+				type: 'not-equal',
+			},
+		};
+	}
+
+	if (condition === CONDITION_VALUES.not_role) {
+		return {
+			condition: CONDITION_VALUES.role,
+			options: {
+				type: 'not-equal',
+			},
+		};
+	}
+
+	if (condition === CONDITION_VALUES.not_segment) {
+		return {
+			condition: CONDITION_VALUES.segment,
+			options: {
+				type: 'not-equal',
+			},
+		};
+	}
+
+	return {
+		condition,
+		options: {
+			type: 'equal',
+		},
+	};
+}
+
+export function convertOptionsToConditionValue(
+	condition: Condition
+): keyof typeof CONDITION_VALUES | undefined {
+	if (condition.condition === CONDITION_VALUES.user) {
+		if (condition.options?.type === 'equal') {
+			return CONDITION_VALUES.user;
+		}
+		else {
+			return CONDITION_VALUES.not_user;
+		}
+	}
+	else if (condition.condition === CONDITION_VALUES.role) {
+		if (condition.options?.type === 'equal') {
+			return CONDITION_VALUES.role;
+		}
+		else {
+			return CONDITION_VALUES.not_role;
+		}
+	}
+	else if (condition.condition === CONDITION_VALUES.segment) {
+		if (condition.options?.type === 'equal') {
+			return CONDITION_VALUES.segment;
+		}
+		else {
+			return CONDITION_VALUES.not_segment;
+		}
+	}
+
+	return undefined;
 }

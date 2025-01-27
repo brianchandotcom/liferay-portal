@@ -677,6 +677,30 @@ CATALINA_OPTS="${transformer.agent} -Djakarta.ee.transformer.bundle.header.repla
 				</if>
 			</then>
 		</if>
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<matches pattern="8\.\d+\.\d+" string="${app.server.version}" />
+			</and>
+			<then>
+				<var name="transformer.agent" value="-javaagent:${JBOSS_HOME}/../tools/portal-tools-jakarta-ee-transformer/com.liferay.portal.tools.jakarta.ee.transformer.jar" />
+
+				<if>
+					<not>
+						<resourcecontains
+							resource="${app.server.jboss.bin.dir}/standalone.conf"
+							substring="${transformer.agent}"
+						/>
+					</not>
+					<then>
+						<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
+							<![CDATA[
+JAVA_OPTS="${transformer.agent} -Djakarta.ee.transformer.bundle.header.replacer.logging.disabled=true -Djakarta.ee.transformer.class.remapper.logging.disabled=true -Djakarta.ee.transformer.reverse.text.replacer.disabled=true -Djakarta.ee.transformer.text.replacer.logging.disabled=true $JAVA_OPTS"]]>
+						</echo>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="unzip-glowroot">
@@ -952,6 +976,11 @@ export JDK_JAVA_OPTIONS]]>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+
+		<antcall target="set-up-jakarta-ee-transformer-agent">
+			<param name="app.server.type" value="jboss" />
+			<param name="app.server.version" value="${app.server.jboss.version}" />
+		</antcall>
 	</target>
 
 	<target name="unzip-tomcat">

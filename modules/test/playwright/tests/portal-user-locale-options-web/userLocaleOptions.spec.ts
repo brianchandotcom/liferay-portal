@@ -33,21 +33,25 @@ test('LPD-46913 Language should change properly for admins even if the site does
 
 	await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
-	await siteSettingsLocalizationPage.setCustomDefaultLanguage(
-		'Spanish (Spain)',
-		site.friendlyUrlPath
-	);
+	try {
+		await siteSettingsLocalizationPage.setCustomDefaultLanguage(
+			'Spanish (Spain)',
+			site.friendlyUrlPath
+		);
 
-	await siteSettingsLocalizationPage.disableAllLanguagesExceptSp(
-		site.friendlyUrlPath
-	);
+		await siteSettingsLocalizationPage.disableAllLanguagesExceptSp(
+			site.friendlyUrlPath
+		);
 
-	const siteURL = `/es/group${site.friendlyUrlPath}`
-	await page.goto(siteURL);
+		const siteURL = `/es/group${site.friendlyUrlPath}`
+		await page.goto(siteURL);
 
-	await siteSettingsPage.goToSiteSetting('Localización', 'Idiomas', site.friendlyUrlPath);
+		await siteSettingsPage.goToSiteSetting('Localización', 'Idiomas', site.friendlyUrlPath);
 
-	await userLocaleOptionsPage.changeLanguageWithAlert();
+		await userLocaleOptionsPage.changeLanguageWithAlert();
 
-	expect (siteSettingsLocalizationPage.customDefaultLanguageOption).toBeVisible();
+		expect (siteSettingsLocalizationPage.customDefaultLanguageOption).toBeVisible();
+	} finally {
+		await page.goto('en');
+	}
 });

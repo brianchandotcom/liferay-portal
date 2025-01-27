@@ -182,8 +182,11 @@ describe('RulesSidebar', () => {
 				conditions: [
 					expect.objectContaining({
 						condition: 'user',
+						options: {
+							type: 'equal',
+							value: 'userId1',
+						},
 						type: 'user',
-						value: 'userId1',
 					}),
 				],
 				name: 'rule',

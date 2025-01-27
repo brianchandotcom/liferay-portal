@@ -6049,6 +6049,509 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!animal-sniffer-annotations.jar</file-name>
+				<version>1.24</version>
+				<project-name>Animal Sniffer Annotations</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!api-common.jar</file-name>
+				<version>2.37.1</version>
+				<project-name>API Common</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/api-common-java/blob/main/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!auto-value-annotations.jar</file-name>
+				<version>1.11.0</version>
+				<project-name>AutoValue Annotations</project-name>
+				<project-url>https://github.com/google/auto/tree/main/value</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!conscrypt-openjdk-uber.jar</file-name>
+				<version>2.5.2</version>
+				<project-name>org.conscrypt:conscrypt-openjdk-uber</project-name>
+				<project-url>https://conscrypt.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!gax-grpc.jar</file-name>
+				<version>2.54.1</version>
+				<project-name>GAX (Google Api eXtensions) for Java (gRPC)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!gax-httpjson.jar</file-name>
+				<version>2.54.1</version>
+				<project-name>GAX (Google Api eXtensions) for Java (HTTP JSON)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!gax.jar</file-name>
+				<version>2.54.1</version>
+				<project-name>GAX (Google Api eXtensions) for Java (Core)</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD-3-Clause</license-name>
+						<license-url>https://github.com/googleapis/gax-java/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-api-client.jar</file-name>
+				<version>2.7.0</version>
+				<project-name>Google APIs Client Library for Java</project-name>
+				<project-url>https://developers.google.com/api-client-library/java/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-api-services-translate.jar</file-name>
+				<version>v2-rev20170525-2.0.0</version>
+				<project-name>Google Cloud Translation API v2-rev20170525-2.0.0</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-auth-library-credentials.jar</file-name>
+				<version>1.27.0</version>
+				<project-name>Google Auth Library for Java - Credentials</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD New license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-auth-library-oauth2-http.jar</file-name>
+				<version>1.27.0</version>
+				<project-name>Google Auth Library for Java - OAuth2 HTTP</project-name>
+				<licenses>
+					<license>
+						<license-name>BSD New license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-cloud-core-http.jar</file-name>
+				<version>2.44.1</version>
+				<project-name>Google Cloud Core HTTP</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-cloud-core.jar</file-name>
+				<version>2.44.1</version>
+				<project-name>Google Cloud Core</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-cloud-translate.jar</file-name>
+				<version>2.51.0</version>
+				<project-name>Google Cloud Translate</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-http-client-apache-v2.jar</file-name>
+				<version>1.45.0</version>
+				<project-name>Apache HTTP transport v2 for the Google HTTP Client Library for Java.</project-name>
+				<project-url>https://www.google.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-http-client-appengine.jar</file-name>
+				<version>1.45.0</version>
+				<project-name>Google App Engine extensions to the Google HTTP Client Library for Java.</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-http-client-gson.jar</file-name>
+				<version>1.45.0</version>
+				<project-name>GSON extensions to the Google HTTP Client Library for Java.</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-http-client-jackson2.jar</file-name>
+				<version>1.45.0</version>
+				<project-name>Jackson 2 extensions to the Google HTTP Client Library for Java.</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-http-client.jar</file-name>
+				<version>1.45.0</version>
+				<project-name>Google HTTP Client Library for Java</project-name>
+				<project-url>https://www.google.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!google-oauth-client.jar</file-name>
+				<version>1.34.1</version>
+				<project-name>Google OAuth Client Library for Java</project-name>
+				<project-url>https://www.google.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-alts.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-alts</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-api.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-api</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-auth.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-auth</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-context.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-context</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-core.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-core</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-googleapis.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-googleapis</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-grpclb.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-grpclb</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-inprocess.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-inprocess</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-netty-shaded.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-netty-shaded</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-protobuf-lite.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-protobuf-lite</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-protobuf.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-protobuf</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-services.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-services</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-stub.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-stub</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-util.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-util</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!grpc-xds.jar</file-name>
+				<version>1.68.0</version>
+				<project-name>io.grpc:grpc-xds</project-name>
+				<project-url>https://github.com/grpc/grpc-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!opencensus-api.jar</file-name>
+				<version>0.31.1</version>
+				<project-name>opencensus-api</project-name>
+				<project-url>https://github.com/census-instrumentation/opencensus-java</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!opencensus-contrib-http-util.jar</file-name>
+				<version>0.31.1</version>
+				<project-name>opencensus-contrib-http-util</project-name>
+				<project-url>https://github.com/census-instrumentation/opencensus-java</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!perfmark-api.jar</file-name>
+				<version>0.27.0</version>
+				<project-name>PerfMark (https://www.perfmark.io/)</project-name>
+				<project-url>https://github.com/perfmark/perfmark</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!proto-google-cloud-translate-v3.jar</file-name>
+				<version>2.51.0</version>
+				<project-name>proto-google-cloud-translate-v3</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!proto-google-cloud-translate-v3beta1.jar</file-name>
+				<version>0.133.0</version>
+				<project-name>proto-google-cloud-translate-v3beta1</project-name>
+				<project-url>https://github.com/googleapis/google-cloud-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!proto-google-common-protos.jar</file-name>
+				<version>2.45.1</version>
+				<project-name>proto-google-common-protos</project-name>
+				<project-url>https://github.com/googleapis/sdk-platform-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!proto-google-iam-v1.jar</file-name>
+				<version>1.40.1</version>
+				<project-name>proto-google-iam-v1</project-name>
+				<project-url>https://github.com/googleapis/sdk-platform-java</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.google.cloud.jar!re2j.jar</file-name>
+				<version>1.7</version>
+				<project-name>RE2/J</project-name>
+				<project-url>http://github.com/google/re2j</project-url>
+				<licenses>
+					<license>
+						<license-name>Go License</license-name>
+						<license-url>https://golang.org/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.wiki.engine.creole.jar!antlr.jar</file-name>
 				<version>3.0.1</version>
 				<project-name>AntLR Parser Generator</project-name>
@@ -7329,18 +7832,6 @@
 					</license>
 				</licenses>
 				<comments>Removed org.json.* because it json-java.jar. See LPS-78517.</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/javassist.jar</file-name>
-				<version>3.29.0 GA</version>
-				<project-name>Javassist</project-name>
-				<project-url>http://www.csg.is.titech.ac.jp/~chiba/javassist</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/jaxb-api.jar</file-name>

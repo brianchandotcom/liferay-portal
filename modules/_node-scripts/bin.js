@@ -23,16 +23,6 @@ const COMMANDS = {
 		parameters: '[--serve]',
 		script: './bundle/custom.mjs',
 	},
-	'build:report': {
-		description: `
-		Generates an aggregated report of build timings.
-
-		The <timings directory> arguments falls back to LIFERAY_NPM_SCRIPTS_TIMING environment
-		variable when not provided.
-`,
-		parameters: '[<timings directory>]',
-		script: './bundle/report.mjs',
-	},
 	'build:theme': {
 		description: `
 		Build a theme project with liferay-theme-tasks and gulp.
@@ -126,6 +116,16 @@ const COMMANDS = {
 		description: 'adds gitmerge:self to .git/config file',
 		parameters: '',
 		script: './gitmerge/setup.mjs',
+	},
+	'report:build': {
+		description: `
+		Generates an aggregated report of build timings.
+
+		The <timings directory> arguments falls back to LIFERAY_NPM_SCRIPTS_TIMING environment
+		variable when not provided.
+`,
+		parameters: '[<timings directory>]',
+		script: './report/build.mjs',
 	},
 	'report:bundle:imports': {
 		description: `

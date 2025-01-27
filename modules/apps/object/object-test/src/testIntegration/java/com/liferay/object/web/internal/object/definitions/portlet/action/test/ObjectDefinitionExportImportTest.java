@@ -10,17 +10,23 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -29,8 +35,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -82,16 +86,25 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		objectDefinitionResource.deleteObjectDefinition(
 			getId("TestObjectDefinitionptBR"));
 
-		// Localized object definition with portuguese locale removed from the
-		// company available locales
+		Company company = CompanyTestUtil.addCompany();
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
 
-		try {
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			// Localized object definition with portuguese locale removed from
+			// the company available locales
+
 			CompanyTestUtil.resetCompanyLocales(
-				TestPropsValues.getCompanyId(),
+				company.getCompanyId(),
 				SetUtil.fromArray(LocaleUtil.SPAIN, LocaleUtil.US),
-				LocaleUtil.getDefault());
+				LocaleUtil.US);
+
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
 			String expectedJSON = read(
 				"test-object-definition.site-default-locale.json");
@@ -105,11 +118,29 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 			objectDefinitionResource.deleteObjectDefinition(
 				getId("TestObjectDefinitionptBRRemoved"));
-		}
-		finally {
+
+			// Localized object definition with United States english locale
+			// removed from the company available locales
+
 			CompanyTestUtil.resetCompanyLocales(
-				TestPropsValues.getCompanyId(), availableLocales,
-				LocaleUtil.getDefault());
+				company.getCompanyId(), SetUtil.fromArray(LocaleUtil.UK),
+				LocaleUtil.UK);
+
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.UK);
+
+			testExportImportJSON(
+				read("test-object-definition.json"),
+				StringUtil.replace(
+					StringUtil.replace(
+						read("test-object-definition.json"),
+						"TestObjectDefinition",
+						"TestObjectDefinitionenUSRemoved"),
+					"\"en_US\":", "\"en_GB\":"),
+				"TESTOBJECTDEFINITIONENGLISHREMOVED",
+				"TestObjectDefinitionenUSRemoved");
+
+			objectDefinitionResource.deleteObjectDefinition(
+				getId("TestObjectDefinitionenUSRemoved"));
 		}
 	}
 

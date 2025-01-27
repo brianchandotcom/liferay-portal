@@ -149,8 +149,84 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			}
 		}
 
+		_assertLayoutPageTemplateEntry(
+			false,
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, 0, 0, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext));
+		_assertLayoutPageTemplateEntry(
+			false,
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+		_assertLayoutPageTemplateEntry(
+			true,
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+		_assertLayoutPageTemplateEntry(
+			false,
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryLayoutPageTemplateCollectionIdException(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryLayoutPageTemplateCollectionIdException(
+			_group.getGroupId(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryLayoutPageTemplateCollectionIdException(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
+
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
+
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+			companyGroup.getGroupId(),
+			LayoutPageTemplateEntryTypeConstants.BASIC);
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+			companyGroup.getGroupId(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+			companyGroup.getGroupId(),
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		_assertLayoutPageTemplateEntry(
+			false,
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), companyGroup.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
+
+		_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryLayoutPageTemplateCollectionIdException(
+			companyGroup.getGroupId(), RandomTestUtil.randomLong(),
+			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -159,14 +235,18 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Group depotGroup = depotEntry.getGroup();
 
 		try {
-			_testAddBasicTypeLayoutPageTemplateEntry(
-				companyGroup.getGroupId(), depotGroup.getGroupId());
-			_testAddDisplayPageTypeLayoutPageTemplateEntry(
-				companyGroup.getGroupId(), depotGroup.getGroupId());
-			_testAddMasterTypeLayoutPageTemplateEntry(
-				companyGroup.getGroupId(), depotGroup.getGroupId());
-			_testAddWidgetTypeLayoutPageTemplateEntry(
-				companyGroup.getGroupId(), depotGroup.getGroupId());
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+				depotGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.BASIC);
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+				depotGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+				depotGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+				depotGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 		}
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
@@ -348,62 +428,9 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
-	private void _testAddBasicTypeLayoutPageTemplateEntry(
-			long companyGroupId, long depotGroupId)
-		throws PortalException {
-
-		_assertLayoutPageTemplateEntry(
-			false,
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, 0, 0, 0,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext));
-
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			companyGroupId, LayoutPageTemplateEntryTypeConstants.BASIC);
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			depotGroupId, LayoutPageTemplateEntryTypeConstants.BASIC);
-		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollection(
-			_group.getGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			LayoutPageTemplateEntryTypeConstants.BASIC);
-	}
-
-	private void _testAddDisplayPageTypeLayoutPageTemplateEntry(
-			long companyGroupId, long depotGroupId)
-		throws PortalException {
-
-		_assertLayoutPageTemplateEntry(
-			false,
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
-		_assertLayoutPageTemplateEntry(
-			true,
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
-
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			companyGroupId, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			depotGroupId, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
-	}
-
-	private void _testAddLayoutPageTemplateEntryWithInvalidGroup(
-			long groupId, int type)
+	private void
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryGroupIdException(
+				long groupId, int type)
 		throws PortalException {
 
 		try {
@@ -426,9 +453,9 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 	}
 
 	private void
-			_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollection(
+			_testAddLayoutPageTemplateEntryLayoutPageTemplateEntryLayoutPageTemplateCollectionIdException(
 				long groupId, long layoutPageTemplateCollectionId, int type)
-		throws PortalException {
+		throws Exception {
 
 		try {
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -447,55 +474,6 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 					layoutPageTemplateEntryLayoutPageTemplateCollectionIdException);
 			}
 		}
-	}
-
-	private void _testAddMasterTypeLayoutPageTemplateEntry(
-			long companyGroupId, long depotGroupId)
-		throws PortalException {
-
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			companyGroupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			depotGroupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollection(
-			_group.getGroupId(),
-			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
-	}
-
-	private void _testAddWidgetTypeLayoutPageTemplateEntry(
-			long companyGroupId, long depotGroupId)
-		throws PortalException {
-
-		_assertLayoutPageTemplateEntry(
-			false,
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), companyGroupId,
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
-		_assertLayoutPageTemplateEntry(
-			false,
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				0, 0, RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext));
-
-		_testAddLayoutPageTemplateEntryWithInvalidGroup(
-			depotGroupId, LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
-		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollection(
-			companyGroupId, RandomTestUtil.randomLong(),
-			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
-		_testAddLayoutPageTemplateEntryWithInvalidLayoutPageTemplateCollection(
-			_group.getGroupId(),
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

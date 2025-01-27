@@ -92,17 +92,15 @@ public class IFrameDisplayContext {
 		return TransformUtil.transform(
 			hiddenVariables,
 			hiddenVariable -> {
-				String key = StringPool.BLANK;
-				String value = StringPool.BLANK;
-
 				int pos = hiddenVariable.indexOf(StringPool.EQUAL);
 
-				if (pos != -1) {
-					key = hiddenVariable.substring(0, pos);
-					value = hiddenVariable.substring(pos + 1);
+				if (pos == -1) {
+					return new KeyValuePair(StringPool.BLANK, StringPool.BLANK);
 				}
 
-				return new KeyValuePair(key, value);
+				return new KeyValuePair(
+					hiddenVariable.substring(0, pos),
+					hiddenVariable.substring(pos + 1));
 			});
 	}
 

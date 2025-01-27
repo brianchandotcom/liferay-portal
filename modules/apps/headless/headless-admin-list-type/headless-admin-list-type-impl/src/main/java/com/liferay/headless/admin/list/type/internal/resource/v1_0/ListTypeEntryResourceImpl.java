@@ -174,11 +174,9 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 			_listTypeEntryService.addListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeDefinitionId,
 				listTypeEntry.getKey(),
-				LocalizedMapUtil.getLocalizedMap(
-					LocalizedMapUtil.populateI18nMap(
-						serviceBuilderListTypeDefinition.getDefaultLanguageId(),
-						listTypeEntry.getName_i18n(),
-						listTypeEntry.getName()))));
+				LocalizedMapUtil.populateLocalizedMap(
+					serviceBuilderListTypeDefinition.getDefaultLanguageId(),
+					listTypeEntry.getName_i18n(), listTypeEntry.getName())));
 	}
 
 	@Override
@@ -198,11 +196,9 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.updateListTypeEntry(
 				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
-				LocalizedMapUtil.getLocalizedMap(
-					LocalizedMapUtil.populateI18nMap(
-						serviceBuilderListTypeDefinition.getDefaultLanguageId(),
-						listTypeEntry.getName_i18n(),
-						listTypeEntry.getName()))));
+				LocalizedMapUtil.populateLocalizedMap(
+					serviceBuilderListTypeDefinition.getDefaultLanguageId(),
+					listTypeEntry.getName_i18n(), listTypeEntry.getName())));
 	}
 
 	private Map<String, Map<String, String>> _getActions(

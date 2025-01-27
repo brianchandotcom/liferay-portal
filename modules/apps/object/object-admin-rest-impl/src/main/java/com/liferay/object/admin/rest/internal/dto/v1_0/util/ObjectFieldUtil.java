@@ -244,10 +244,9 @@ public class ObjectFieldUtil {
 			objectField.getIndexedLanguageId());
 
 		Map<Locale, String> localizedLabelMap =
-			LocalizedMapUtil.getLocalizedMap(
-				LocalizedMapUtil.populateI18nMap(
-					defaultLanguageId, objectField.getLabel(),
-					objectField.getName()));
+			LocalizedMapUtil.populateLocalizedMap(
+				defaultLanguageId, objectField.getLabel(),
+				objectField.getName());
 
 		if (GetterUtil.getBoolean(objectField.getSystem())) {
 			Locale siteDefaultLocale = LocaleUtil.getSiteDefault();

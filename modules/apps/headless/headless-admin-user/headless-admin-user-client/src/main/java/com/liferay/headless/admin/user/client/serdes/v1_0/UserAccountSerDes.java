@@ -493,6 +493,26 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getPermissions().length; i++) {
+				sb.append(userAccount.getPermissions()[i]);
+
+				if ((i + 1) < userAccount.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (userAccount.getProfileURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -856,6 +876,14 @@ public class UserAccountSerDes {
 			map.put("password", String.valueOf(userAccount.getPassword()));
 		}
 
+		if (userAccount.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(userAccount.getPermissions()));
+		}
+
 		if (userAccount.getProfileURL() == null) {
 			map.put("profileURL", null);
 		}
@@ -1016,6 +1044,9 @@ public class UserAccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "password")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
@@ -1253,6 +1284,26 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "password")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setPassword((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.user.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.user.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.user.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					userAccount.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {

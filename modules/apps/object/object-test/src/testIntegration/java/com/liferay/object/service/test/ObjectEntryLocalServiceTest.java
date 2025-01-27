@@ -3138,6 +3138,19 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 
+		List<SystemEvent> systemEvents =
+			_systemEventLocalService.getSystemEvents(
+				0, _portal.getClassNameId(objectEntry1.getModelClassName()),
+				objectEntry1.getPrimaryKey());
+
+		SystemEvent systemEvent = systemEvents.get(0);
+
+		Assert.assertEquals(
+			objectEntry1.getExternalReferenceCode(),
+			systemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
+
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			"No ObjectEntry exists with the primary key " +
@@ -4001,34 +4014,6 @@ public class ObjectEntryLocalServiceTest {
 			20);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
-	}
-
-	@Test
-	public void testSystemEventOnObjectEntryDeletion() throws Exception {
-		ObjectEntry objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "peter@liferay.com"
-			).put(
-				"firstName", "Peter"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).build());
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
-
-		List<SystemEvent> systemEvents =
-			_systemEventLocalService.getSystemEvents(
-				0, _portal.getClassNameId(objectEntry.getModelClassName()),
-				objectEntry.getPrimaryKey());
-
-		SystemEvent systemEvent = systemEvents.get(0);
-
-		Assert.assertEquals(
-			objectEntry.getExternalReferenceCode(),
-			systemEvent.getClassExternalReferenceCode());
-		Assert.assertEquals(
-			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
 	}
 
 	@Test

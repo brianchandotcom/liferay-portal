@@ -83,6 +83,10 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 				TicketConstants.TYPE_PASSWORD, null, expirationDate,
 				new ServiceContext());
 
+			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+
+			ticket = TicketLocalServiceUtil.updateTicket(ticket);
+
 			StringBundler sb = new StringBundler(8);
 
 			sb.append(PortalUtil.getPortalURL(httpServletRequest));
@@ -93,10 +97,6 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			sb.append(ticket.getTicketId());
 			sb.append("&ticketKey=");
 			sb.append(ticket.getKey());
-
-			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
-
-			TicketLocalServiceUtil.updateTicket(ticket);
 
 			httpServletRequest.setAttribute(
 				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, sb.toString());

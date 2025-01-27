@@ -1,6 +1,6 @@
 dependencies {
-	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.37.3"
-	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.9.1"
+	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.40"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
 	compileInclude group: "io.netty", name: "netty-buffer", version: "4.1.117.Final"
 	compileInclude group: "io.netty", name: "netty-codec", version: "4.1.117.Final"
 	compileInclude group: "io.netty", name: "netty-codec-dns", version: "4.1.117.Final"

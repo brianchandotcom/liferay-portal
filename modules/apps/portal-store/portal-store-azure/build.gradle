@@ -26,8 +26,8 @@ dependencies {
 	compileInclude group: "com.microsoft.azure", name: "msal4j-persistence-extension", version: "1.3.0"
 	compileInclude group: "com.nimbusds", name: "content-type", version: "2.3"
 	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.7"
-	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.37.3"
-	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.9.1"
+	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.40"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
 	compileInclude group: "io.projectreactor", name: "reactor-core", version: "3.4.38"
 	compileInclude group: "io.projectreactor.netty", name: "reactor-netty-http", version: "1.0.45"
 	compileInclude group: "net.java.dev.jna", name: "jna", version: "5.13.0"
@@ -38,7 +38,6 @@ dependencies {
 	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 	compileInclude group: "org.ow2.asm", name: "asm", version: "9.7"
 	compileInclude group: "org.reactivestreams", name: "reactive-streams", version: "1.0.4"
-
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.netty", name: "netty-buffer", version: "4.1.117.Final"

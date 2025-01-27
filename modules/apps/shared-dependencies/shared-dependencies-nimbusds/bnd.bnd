@@ -10,7 +10,7 @@ Import-Package:\
 	\
 	!org.cryptomator.siv.*,\
 	\
-    !org.joda.time.*,\
+	!org.joda.time.*,\
 	\
 	!org.opensaml.*,\
 	\

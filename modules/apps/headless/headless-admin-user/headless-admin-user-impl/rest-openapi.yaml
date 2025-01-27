@@ -154,6 +154,10 @@ components:
                 parentAccountId:
                     format: int64
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 postalAddresses:
                     description:
                         The addresses linked to the account

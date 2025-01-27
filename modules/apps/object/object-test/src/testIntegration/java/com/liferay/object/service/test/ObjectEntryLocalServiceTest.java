@@ -4025,11 +4025,10 @@ public class ObjectEntryLocalServiceTest {
 		SystemEvent systemEvent = systemEvents.get(0);
 
 		Assert.assertEquals(
-			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
-
-		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
 			systemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
 	}
 
 	@Test

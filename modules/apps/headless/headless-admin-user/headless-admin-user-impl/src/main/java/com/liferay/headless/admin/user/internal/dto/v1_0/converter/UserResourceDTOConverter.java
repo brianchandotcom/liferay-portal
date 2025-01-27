@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -61,6 +63,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collection;
@@ -245,6 +250,25 @@ public class UserResourceDTOConverter
 						organization -> _toOrganizationBrief(
 							dtoConverterContext, organization, user),
 						OrganizationBrief.class));
+				setPermissions(
+					() -> NestedFieldsSupplier.supply(
+						"permissions",
+						nestedFieldNames -> {
+							_permissionService.checkPermission(
+								user.getGroupId(), User.class.getName(),
+								user.getUserId());
+
+							Collection<Permission> permissions =
+								PermissionUtil.getPermissions(
+									user.getCompanyId(),
+									_resourceActionLocalService.
+										getResourceActions(
+											User.class.getName()),
+									user.getUserId(), User.class.getName(),
+									null);
+
+							return permissions.toArray(new Permission[0]);
+						}));
 				setProfileURL(
 					() -> {
 						Group group = user.getGroup();
@@ -532,7 +556,13 @@ public class UserResourceDTOConverter
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

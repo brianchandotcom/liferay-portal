@@ -4,8 +4,10 @@
  */
 
 import classNames from 'classnames';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useDrop} from 'react-dnd';
 
 import {
 	LayoutDataPropTypes,
@@ -50,8 +52,19 @@ export default function MasterPage() {
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];
 
+	const [, targetRef] = useDrop({
+		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
+		drop: () =>
+			openToast({
+				message: Liferay.Language.get(
+					'fragments-and-widgets-cannot-be-placed-inside-this-area'
+				),
+				type: 'danger',
+			}),
+	});
+
 	return (
-		<div className="master-page">
+		<div className="master-page" ref={targetRef}>
 			<MasterLayoutDataItem
 				fragmentEntryLinks={fragmentEntryLinks}
 				item={mainItem}

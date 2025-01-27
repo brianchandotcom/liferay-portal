@@ -29,7 +29,7 @@ export default async function getLoggedInPage(
 	try {
 		const {cookies} = JSON.parse(readTempFile(tempFile));
 
-		browserContext.addCookies(cookies);
+		await browserContext.addCookies(cookies);
 
 		await loggedInPage.goto('/');
 	}

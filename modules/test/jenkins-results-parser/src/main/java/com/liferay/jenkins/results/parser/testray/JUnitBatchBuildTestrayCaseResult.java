@@ -209,7 +209,7 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		if (_isTestClassResultsSkipped()) {
-			return Status.UNTESTED;
+			return Status.INCOMPLETE;
 		}
 
 		if (_isTestClassResultsFailing()) {

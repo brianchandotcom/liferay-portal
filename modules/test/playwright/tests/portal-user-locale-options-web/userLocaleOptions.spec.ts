@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
@@ -13,14 +12,13 @@ import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizatio
 import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
 	loginTest(),
 	siteSettingsPagesTest,
 	usersAndOrganizationsPagesTest
 );
 
-test('LPD-46913 language should change properly for admins even if the site does not have the admin language', async ({
+test('LPD-46913 Language should change properly for admins even if the site does not have the admin language', async ({
 	apiHelpers,
 	siteSettingsLocalizationPage,
 	siteSettingsPage,

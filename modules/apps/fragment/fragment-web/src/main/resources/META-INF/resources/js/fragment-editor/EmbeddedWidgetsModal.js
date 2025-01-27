@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import LearnMessage from 'frontend-js-components-web';
 import {openModal, sub} from 'frontend-js-web';
-import React from 'react';
 
-export default function EmbeddedWidgetsModal({onPublish}) {
+export default function EmbeddedWidgetsModal({learnMessageHTML, onPublish}) {
 	openModal({
 		bodyHTML: `
 			<div class="text-secondary">
@@ -15,10 +13,7 @@ export default function EmbeddedWidgetsModal({onPublish}) {
 					Liferay.Language.get(
 						'embedding-widgets-within-fragments-x'
 					),
-					<LearnMessage
-						resource="fragment-web"
-						resourceKey="deprecated-embedded-widgets"
-					/>
+					learnMessageHTML
 				)}
 			</div>
 			<div class="text-secondary">

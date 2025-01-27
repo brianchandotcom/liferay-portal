@@ -41,6 +41,7 @@ const FragmentEditor = ({
 		initialFieldTypes,
 		initialHTML,
 		initialJS,
+		learnMessageHTML,
 		name,
 		propagationEnabled,
 		readOnly,
@@ -99,7 +100,7 @@ const FragmentEditor = ({
 			(html.includes('<lfr-widget-') ||
 				html.includes('[@liferay_portlet["runtime"]'))
 		) {
-			EmbeddedWidgetsModal({onPublish: publish});
+			EmbeddedWidgetsModal({learnMessageHTML, onPublish: publish});
 		}
 		else {
 			publish();

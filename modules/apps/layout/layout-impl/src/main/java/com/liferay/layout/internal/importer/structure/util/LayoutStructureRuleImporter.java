@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.importer.structure.util;
 
+import com.liferay.headless.delivery.dto.v1_0.Options;
 import com.liferay.headless.delivery.dto.v1_0.PageRule;
 import com.liferay.headless.delivery.dto.v1_0.PageRuleAction;
 import com.liferay.headless.delivery.dto.v1_0.PageRuleCondition;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Objects;
 
 /**
  * @author Lourdes Fernández Besada
@@ -75,9 +78,27 @@ public class LayoutStructureRuleImporter {
 			).put(
 				"id", pageRuleCondition.getId()
 			).put(
-				"type", pageRuleCondition.getType()
+				"options",
+				() -> {
+					Options options = pageRuleCondition.getOptions();
+
+					return JSONUtil.put(
+						"type",
+						() -> {
+							if (Objects.equals(
+									options.getType(), Options.Type.EQUAL)) {
+
+								return "equal";
+							}
+
+							return "not-equal";
+						}
+					).put(
+						"value", options.getValue()
+					);
+				}
 			).put(
-				"value", pageRuleCondition.getValue()
+				"type", pageRuleCondition.getType()
 			),
 			exception -> {
 				if (_log.isWarnEnabled()) {

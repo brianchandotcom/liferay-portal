@@ -194,9 +194,7 @@ definition {
 			structureName = "WC Structure Name",
 			webContentTitle = "WebContent Title");
 
-		Click(
-			key_text = "Publish",
-			locator1 = "Button#ANY");
+		WebContent.publishWithPermissions();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
@@ -315,7 +313,7 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
-		Button.clickPublish();
+		WebContent.publishWithPermissions();
 
 		AssertElementPresent(locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT");
 	}

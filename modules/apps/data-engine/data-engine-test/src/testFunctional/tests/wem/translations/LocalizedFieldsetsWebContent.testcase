@@ -80,7 +80,7 @@ definition {
 
 		PortletEntry.inputTitle(title = "WC Titulo");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewTitle(webContentTitle = "WC Title");
 	}
@@ -742,7 +742,7 @@ definition {
 			webContentTextFieldLabel = "Text en-US",
 			webContentTitle = "Web Content Title en-US");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "02/02/2021",
@@ -753,7 +753,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "02/03/2021",
@@ -766,7 +766,7 @@ definition {
 			webContentTitle = "Web Content Title",
 			webContentTitleTranslated = "Web Content Title en-US");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		NavItem.gotoStructures();
 

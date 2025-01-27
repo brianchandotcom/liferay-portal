@@ -290,7 +290,7 @@ definition {
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Button.clickPublish();
+		WebContent.publishWithPermissions();
 
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}

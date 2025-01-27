@@ -189,7 +189,7 @@ definition {
 			fieldLabel = "Numeric",
 			value = "1.23");
 
-		DataEngine.waitForAutoSave();
+		WebContent.publishWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -305,7 +305,7 @@ definition {
 			fieldLabel = "Numeric",
 			value = "1.00");
 
-		DataEngine.waitForAutoSave();
+		WebContent.publishWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -335,7 +335,7 @@ definition {
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Button.clickPublish();
+		WebContent.publishWithPermissions();
 
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}

@@ -434,7 +434,7 @@ definition {
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",

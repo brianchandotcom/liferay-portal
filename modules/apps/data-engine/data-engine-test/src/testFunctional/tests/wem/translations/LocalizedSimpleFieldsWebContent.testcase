@@ -230,21 +230,7 @@ definition {
 			webContentMultipleSelection = "Option 1 - pt-BR edited",
 			webContentMultipleSelectionFieldLabel = "Multiple Selection - pt-BR edited");
 
-		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentMultipleSelection = "Option 1 - edited",
@@ -299,12 +285,7 @@ definition {
 			webContentMultipleSelection = "Option 2 - pt-BR edited",
 			webContentMultipleSelectionFieldLabel = "Multiple Selection - pt-BR edited");
 
-		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
-			value1 = "Publish");
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentMultipleSelection = "Option 3 - edited",
@@ -585,7 +566,7 @@ definition {
 			webContentText = "Este es un campo de texto",
 			webContentTitle = "Título de contenido web");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
@@ -696,21 +677,11 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
+		WebContent.publishWithPermissions();
 
 		WaitForElementPresent(
 			locator1 = "Modal#SELECT_WITH_LABEL",
 			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
@@ -728,12 +699,7 @@ definition {
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
-		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
-			value1 = "Publish");
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
@@ -801,11 +767,6 @@ definition {
 			webContentTitle = "Web Content Title - en-US");
 
 		WebContent.publishExistingWCArticleWithPermissions();
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
-			value1 = "Publish");
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/20/2021",
@@ -1294,7 +1255,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
@@ -1302,7 +1263,9 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.changeLocale(locale = "ca-ES");
+		PortletEntry.changeLocale(
+			locale = "ca-ES",
+			translated = "false");
 
 		WebContent.addWithStructureCP(
 			webContentDate = "12/04/2021",
@@ -1310,7 +1273,7 @@ definition {
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
@@ -1375,7 +1338,7 @@ definition {
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "18/04/2021",
@@ -1634,7 +1597,7 @@ definition {
 			webContentWebContent = "Web Content Title 2",
 			webContentWebContentFieldLabel = "网页内容");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			column = 1,

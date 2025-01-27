@@ -300,21 +300,7 @@ definition {
 			fieldLabel = "Numeric",
 			value = 123);
 
-		PortletEntry.publish();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
+		WebContent.publishWithPermissions();
 
 		NavItem.gotoStructures();
 
@@ -1641,20 +1627,6 @@ definition {
 			value = 123456);
 
 		WebContent.publishWithPermissions();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

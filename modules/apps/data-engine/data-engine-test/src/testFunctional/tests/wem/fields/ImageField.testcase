@@ -431,7 +431,7 @@ definition {
 			webContentImage = "Document Title",
 			webContentTitle = ${webTitle});
 
-		Button.clickPublish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentImage = "Document Title",

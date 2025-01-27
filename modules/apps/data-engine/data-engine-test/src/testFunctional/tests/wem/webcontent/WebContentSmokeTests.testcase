@@ -90,7 +90,7 @@ definition {
 				webContentUpload = "Document_1.doc",
 				webContentWebContent = "WC 1");
 
-			PortletEntry.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("View web content") {

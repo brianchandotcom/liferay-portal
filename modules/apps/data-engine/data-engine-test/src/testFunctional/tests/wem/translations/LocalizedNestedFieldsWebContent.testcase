@@ -800,7 +800,7 @@ definition {
 			webContentTextFieldLabel = "Text Japan",
 			webContentTitle = "WC Structure Title Japan");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentNumeric = 123,
@@ -923,7 +923,7 @@ definition {
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Título do Web Content");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentColor = 000000,
@@ -984,7 +984,7 @@ definition {
 			webContentText = "frFR Text",
 			webContentTitle = "WC WebContent frFR");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentRichText = "English Rich Text",

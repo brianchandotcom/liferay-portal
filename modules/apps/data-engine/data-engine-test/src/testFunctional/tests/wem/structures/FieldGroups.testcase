@@ -185,7 +185,7 @@ definition {
 			webContentText = "This is Text Field",
 			webContentTitle = "WC Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentNumeric = 12345,
@@ -290,7 +290,7 @@ definition {
 			webContentTextFieldLabel = "Edited Text",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentColor = "FF0D0D",
@@ -313,7 +313,7 @@ definition {
 			webContentText = "This is a Text field - edited",
 			webContentTextFieldLabel = "Edited Text");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentColor = "7F26FF",
@@ -631,7 +631,7 @@ definition {
 			}
 		}
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field - 1",
@@ -657,7 +657,7 @@ definition {
 			}
 		}
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field - 1",
@@ -676,7 +676,7 @@ definition {
 
 		WebContent.removeDuplicatedFieldsGroup(index = 1);
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -710,7 +710,7 @@ definition {
 				value = "This is a Text field - ${labelCount}");
 		}
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field - 1",
@@ -735,7 +735,7 @@ definition {
 
 		WebContent.removeDuplicatedFieldsGroup(index = 2);
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field - 1",

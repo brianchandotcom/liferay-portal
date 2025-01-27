@@ -258,7 +258,7 @@ definition {
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Button.clickPublish();
+		WebContent.publishWithPermissions();
 
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
@@ -289,9 +289,7 @@ definition {
 			valueMonth = "August",
 			valueYear = 2021);
 
-		Click(
-			key_text = "Publish",
-			locator1 = "Button#ANY");
+		WebContent.publishWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

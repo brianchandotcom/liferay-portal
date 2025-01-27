@@ -3234,7 +3234,7 @@ definition {
 			webContentWebContent = "Web Content Title 2",
 			webContentWebContentFieldLabel = "网页内容");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			column = 1,

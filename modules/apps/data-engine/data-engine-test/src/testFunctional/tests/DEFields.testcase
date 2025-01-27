@@ -60,7 +60,7 @@ definition {
 				index = 2,
 				value = "Entry 2");
 
-			Button.clickPublish();
+			WebContent.publishWithPermissions();
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

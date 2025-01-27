@@ -288,7 +288,7 @@ definition {
 			webContentText = "Test",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Navigator.openURL();
 
@@ -391,21 +391,7 @@ definition {
 			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 
-		WebContent.publishWithPermissions();
-
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
+		WebContent.submitForWorkflowWithPermission();
 
 		WebContentAdmin.gotoEntry(entry = "English (United States) Title");
 

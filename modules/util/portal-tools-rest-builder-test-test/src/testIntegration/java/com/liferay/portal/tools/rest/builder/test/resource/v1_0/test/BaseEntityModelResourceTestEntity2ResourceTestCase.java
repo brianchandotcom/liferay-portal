@@ -98,17 +98,16 @@ public abstract class BaseEntityModelResourceTestEntity2ResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		EntityModelResourceTestEntity2Resource.Builder builder =
-			EntityModelResourceTestEntity2Resource.builder();
-
-		entityModelResourceTestEntity2Resource = builder.authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		entityModelResourceTestEntity2Resource =
+			EntityModelResourceTestEntity2Resource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
 	}
 
 	@After

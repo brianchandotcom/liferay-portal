@@ -61,16 +61,19 @@ public interface KaleoDefinitionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kaleo definition local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KaleoDefinitionLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void activateKaleoDefinition(
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId, long kaleoDefinitionVersionId,
 			long startKaleoNodeId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void activateKaleoDefinition(
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void activateKaleoDefinition(
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDefinition activateKaleoDefinition(
 			String name, int version, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -108,7 +111,8 @@ public interface KaleoDefinitionLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deactivateKaleoDefinition(
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoDefinition deactivateKaleoDefinition(
 			String name, int version, ServiceContext serviceContext)
 		throws PortalException;
 

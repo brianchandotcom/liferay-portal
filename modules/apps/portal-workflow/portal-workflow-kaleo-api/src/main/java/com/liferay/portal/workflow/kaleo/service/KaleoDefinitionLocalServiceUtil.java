@@ -36,31 +36,33 @@ public class KaleoDefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void activateKaleoDefinition(
+	public static KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId, long kaleoDefinitionVersionId,
 			long startKaleoNodeId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().activateKaleoDefinition(
+		return getService().activateKaleoDefinition(
 			kaleoDefinitionId, kaleoDefinitionVersionId, startKaleoNodeId,
 			serviceContext);
 	}
 
-	public static void activateKaleoDefinition(
+	public static KaleoDefinition activateKaleoDefinition(
 			long kaleoDefinitionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().activateKaleoDefinition(kaleoDefinitionId, serviceContext);
+		return getService().activateKaleoDefinition(
+			kaleoDefinitionId, serviceContext);
 	}
 
-	public static void activateKaleoDefinition(
+	public static KaleoDefinition activateKaleoDefinition(
 			String name, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().activateKaleoDefinition(name, version, serviceContext);
+		return getService().activateKaleoDefinition(
+			name, version, serviceContext);
 	}
 
 	/**
@@ -112,12 +114,13 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deactivateKaleoDefinition(
+	public static KaleoDefinition deactivateKaleoDefinition(
 			String name, int version,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		getService().deactivateKaleoDefinition(name, version, serviceContext);
+		return getService().deactivateKaleoDefinition(
+			name, version, serviceContext);
 	}
 
 	public static void deleteCompanyKaleoDefinitions(long companyId) {

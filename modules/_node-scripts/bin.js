@@ -107,13 +107,17 @@ const COMMANDS = {
 		script: './generate/tsconfig.mjs',
 	},
 	'gitmerge:self': {
-		description: `implements a Git merge driver for node-scripts' package.json file`,
+		description: `
+		Implements a Git merge driver for node-scripts' package.json file.
+`,
 		parameters:
 			'--current=<current file> --base=<base file> --other=<other file>',
 		script: './gitmerge/self.mjs',
 	},
 	'gitmerge:setup': {
-		description: 'adds gitmerge:self to .git/config file',
+		description: `
+		Adds gitmerge:self to .git/config file.
+`,
 		parameters: '',
 		script: './gitmerge/setup.mjs',
 	},

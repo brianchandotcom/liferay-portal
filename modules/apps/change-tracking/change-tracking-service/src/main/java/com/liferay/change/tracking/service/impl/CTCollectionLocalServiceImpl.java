@@ -1308,6 +1308,9 @@ public class CTCollectionLocalServiceImpl
 		long ctCollectionId, CTPersistence ctPersistence,
 		Map.Entry<Long, CTPersistence<?>> entry) {
 
+		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
+			ctCollectionId);
+
 		long groupId = 0;
 
 		if (entry instanceof GroupedModel) {
@@ -1315,9 +1318,6 @@ public class CTCollectionLocalServiceImpl
 
 			groupId = groupedModel.getGroupId();
 		}
-
-		CTCollection ctCollection = ctCollectionPersistence.fetchByPrimaryKey(
-			ctCollectionId);
 
 		Class<?> clazz = ctPersistence.getModelClass();
 

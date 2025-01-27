@@ -7,6 +7,7 @@ import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TAccount = {
+	alternateName?: string;
 	description?: string;
 	externalReferenceCode?: string;
 	id?: number;
@@ -212,6 +213,12 @@ export class HeadlessAdminUserApiHelper {
 		);
 
 		return accountResponse?.items?.at(0);
+	}
+
+	async getMyUserAccount(): Promise<TAccount> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/my-user-account`
+		);
 	}
 
 	async getOrganizationByName(organizationName: string): Promise<TAccount> {

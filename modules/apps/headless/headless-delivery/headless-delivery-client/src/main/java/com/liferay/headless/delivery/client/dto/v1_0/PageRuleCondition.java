@@ -65,6 +65,27 @@ public class PageRuleCondition implements Cloneable, Serializable {
 
 	protected String id;
 
+	public Options getOptions() {
+		return options;
+	}
+
+	public void setOptions(Options options) {
+		this.options = options;
+	}
+
+	public void setOptions(
+		UnsafeSupplier<Options, Exception> optionsUnsafeSupplier) {
+
+		try {
+			options = optionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Options options;
+
 	public String getType() {
 		return type;
 	}
@@ -83,27 +104,6 @@ public class PageRuleCondition implements Cloneable, Serializable {
 	}
 
 	protected String type;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String value;
 
 	@Override
 	public PageRuleCondition clone() throws CloneNotSupportedException {

@@ -808,6 +808,7 @@ public class DBUpgradeClient {
 		"--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
 		"--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
 		"--add-opens=java.base/java.net=ALL-UNNAMED",
+		"--add-opens java.base/java.util=ALL-UNNAMED",
 		"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED",
 		"--add-opens=java.base/sun.net.www.protocol.https=ALL-UNNAMED",
 		"--add-opens=java.base/sun.util.calendar=ALL-UNNAMED",

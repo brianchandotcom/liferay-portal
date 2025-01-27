@@ -16,13 +16,13 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -75,16 +75,15 @@ public class UpdatePasswordActionTest {
 
 		user.setLastLoginDate(null);
 
-		user = UserLocalServiceUtil.updateUser(user);
+		user = _userLocalService.updateUser(user);
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			user.getCompanyId());
+		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
 		action.execute(
 			null, _mockHttpServletRequest(company, user),
 			new MockHttpServletResponse());
 
-		user = UserLocalServiceUtil.getUserByEmailAddress(
+		user = _userLocalService.getUserByEmailAddress(
 			company.getCompanyId(), user.getEmailAddress());
 
 		Assert.assertNotNull(user.getLastLoginDate());
@@ -152,8 +151,7 @@ public class UpdatePasswordActionTest {
 
 		themeDisplay.setCompany(company);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			PortalUtil.getControlPanelPlid(company.getCompanyId()));
+		Layout layout = _layoutLocalService.getLayout(1);
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
@@ -200,10 +198,19 @@ public class UpdatePasswordActionTest {
 		return mockHttpServletRequest;
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	private String _ticketId;
 	private String _ticketKey;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

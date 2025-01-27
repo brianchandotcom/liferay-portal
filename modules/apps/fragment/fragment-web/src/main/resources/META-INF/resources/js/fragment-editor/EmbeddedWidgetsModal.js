@@ -44,6 +44,6 @@ export default function EmbeddedWidgetsModal({onPublish}) {
 		iframeBodyCssClass: '',
 		size: 'md',
 		status: 'warning',
-		title: 'Fragment with Embedded Widget',
+		title: Liferay.Language.get('fragment-with-embedded-widget'),
 	});
 }

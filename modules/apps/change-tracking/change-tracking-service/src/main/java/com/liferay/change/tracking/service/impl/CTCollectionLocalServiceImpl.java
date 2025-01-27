@@ -1324,10 +1324,20 @@ public class CTCollectionLocalServiceImpl
 		if (!_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				ctCollection.getCompanyId(), groupId, clazz.getName())) {
 
-			return _DEFAULT_WORKFLOW_STATUSES;
+			return new int[] {
+				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_DRAFT,
+				WorkflowConstants.STATUS_EXPIRED,
+				WorkflowConstants.STATUS_IN_TRASH,
+				WorkflowConstants.STATUS_SCHEDULED
+			};
 		}
 
-		return _DEFAULT_STATUSES;
+		return new int[] {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
+			WorkflowConstants.STATUS_IN_TRASH,
+			WorkflowConstants.STATUS_SCHEDULED
+		};
 	}
 
 	private void _moveCTEntries(
@@ -1593,17 +1603,6 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	private static final int _BATCH_SIZE = 1000;
-
-	private static final int[] _DEFAULT_STATUSES = {
-		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
-		WorkflowConstants.STATUS_IN_TRASH, WorkflowConstants.STATUS_SCHEDULED
-	};
-
-	private static final int[] _DEFAULT_WORKFLOW_STATUSES = {
-		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
-		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_IN_TRASH,
-		WorkflowConstants.STATUS_SCHEDULED
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTCollectionLocalServiceImpl.class);

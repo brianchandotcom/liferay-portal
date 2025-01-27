@@ -115,7 +115,7 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 			SessionCreationPolicy.STATELESS
 		).and(
 		).authorizeHttpRequests(
-			customizer -> customizer.antMatchers(
+			customizer -> customizer.requestMatchers(
 				_liferayOauthURLsExcludes
 			).permitAll(
 			).anyRequest(

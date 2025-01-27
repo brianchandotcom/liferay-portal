@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -238,25 +239,26 @@ public abstract class BaseService {
 		_getExchangeToMonoFunction() {
 
 		return clientResponse -> {
-			HttpStatus httpStatus = clientResponse.statusCode();
+			HttpStatusCode httpStatusCode = clientResponse.statusCode();
 
-			if (Objects.equals(
-					clientResponse.statusCode(), HttpStatus.NO_CONTENT)) {
-
+			if (Objects.equals(httpStatusCode, HttpStatus.NO_CONTENT)) {
 				return Mono.just("{}");
 			}
-			else if (httpStatus.is2xxSuccessful()) {
+			else if (httpStatusCode.is2xxSuccessful()) {
 				return clientResponse.bodyToMono(String.class);
 			}
-			else if (httpStatus.is4xxClientError() ||
-					 httpStatus.is5xxServerError()) {
+			else if (httpStatusCode.is4xxClientError() ||
+					 httpStatusCode.is5xxServerError()) {
 
 				return clientResponse.bodyToMono(
 					String.class
 				).flatMap(
 					body -> Mono.error(
 						new WebClientResponseException(
-							httpStatus.value(), httpStatus.getReasonPhrase(),
+							httpStatusCode.value(),
+							HttpStatus.resolve(
+								httpStatusCode.value()
+							).getReasonPhrase(),
 							clientResponse.headers(
 							).asHttpHeaders(),
 							body.getBytes(), null))

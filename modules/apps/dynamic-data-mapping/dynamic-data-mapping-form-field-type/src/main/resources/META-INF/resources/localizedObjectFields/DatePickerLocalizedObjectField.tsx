@@ -93,7 +93,7 @@ export default function DatePickerLocalizedObjectField(
 			name,
 			predefinedValue,
 			rawDate,
-			years: {end: year + 5, start: year - 5},
+			years: {end: year + 25, start: year - 100},
 		};
 	}, [
 		dateMaskParams,

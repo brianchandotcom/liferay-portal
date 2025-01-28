@@ -133,7 +133,7 @@ export function DatePicker({
 			name,
 			rawDate,
 			value,
-			years: {end: year + 5, start: year - 5},
+			years: {end: year + 25, start: year - 100},
 		};
 	}, [momentFormat, defaultLanguageId, locale, name, serverFormat, value]);
 

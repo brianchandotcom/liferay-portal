@@ -526,9 +526,9 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 <aui:script senna="temporary" type="text/javascript">
 	var pageIterator = document.getElementById('<%= namespace + id %>');
+	var button = pageIterator?.querySelector('.pagination .dropdown-toggle');
 
-	if (pageIterator) {
-		var button = pageIterator.querySelector('.pagination .dropdown-toggle');
+	if (button) {
 		var list = pageIterator.querySelector('.pagination .dropdown-menu');
 		var options = list?.querySelectorAll('.pagination .dropdown-item');
 

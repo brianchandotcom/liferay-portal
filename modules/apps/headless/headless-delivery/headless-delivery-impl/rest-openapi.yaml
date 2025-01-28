@@ -4418,10 +4418,10 @@ components:
             description:
                 Represents a definition of a Page Rule Condition.
             properties:
-                condition:
+                field:
                     # @review
                     description:
-                        The page rule condition's description.
+                        The page rule condition's field.
                     type: string
                 id:
                     # @review

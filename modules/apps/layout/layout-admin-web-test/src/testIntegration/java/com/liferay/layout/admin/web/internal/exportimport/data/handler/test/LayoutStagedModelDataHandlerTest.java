@@ -67,6 +67,9 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -281,6 +284,15 @@ public class LayoutStagedModelDataHandlerTest
 				_portal.getClassNameId(AssetCategory.class.getName()), 0, true,
 				WorkflowConstants.STATUS_APPROVED);
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0, false, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
+				0,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+
 		_publishLayouts(group, stagingGroup);
 
 		LayoutPageTemplateEntry liveLayoutPageTemplateEntry =
@@ -295,11 +307,26 @@ public class LayoutStagedModelDataHandlerTest
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 			layoutPageTemplateEntry);
 
+		LayoutUtilityPageEntry liveLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByUuidAndGroupId(
+					layoutUtilityPageEntry.getUuid(), group.getGroupId());
+
+		Assert.assertEquals(
+			layoutUtilityPageEntry.getName(),
+			liveLayoutUtilityPageEntry.getName());
+
+		_layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
+			layoutUtilityPageEntry);
+
 		_publishLayouts(group, stagingGroup);
 
 		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				liveLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		Assert.assertNull(
+			_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+				liveLayoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
 	}
 
 	@Test
@@ -2180,6 +2207,10 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private Portal _portal;

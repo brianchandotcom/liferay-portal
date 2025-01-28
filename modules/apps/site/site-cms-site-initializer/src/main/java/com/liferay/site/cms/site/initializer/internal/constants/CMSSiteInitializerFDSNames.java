@@ -13,4 +13,7 @@ public class CMSSiteInitializerFDSNames {
 	public static final String ALL_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-allSection";
 
+	public static final String CONTENT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-contentSection";
+
 }

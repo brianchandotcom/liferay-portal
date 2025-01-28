@@ -216,6 +216,7 @@ module.exports = {
 			'RemoveFormat',
 			'SourceEditing',
 			'Strikethrough',
+			'Style',
 			'Table',
 			'TableCaption',
 			'TableProperties',

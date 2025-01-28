@@ -35,7 +35,48 @@ const CKEditor5AdvancedPreset: EditorConfig = {
 				title: sub(Liferay.Language.get('heading-x'), 3),
 				view: 'h3',
 			},
+		],
+	},
+	htmlSupport: {
+		allow: [
 			{
+				classes: true,
+				name: /.*/,
+			},
+		],
+		disallow: [
+			{
+				attributes: /^on*/,
+				styles: true,
+			},
+		],
+	},
+	style: {
+		definitions: [
+			{
+				classes: ['alert', 'alert-info'],
+				element: 'p',
+				name: Liferay.Language.get('info-message'),
+			},
+			{
+				classes: ['alert', 'alert-warning'],
+				element: 'p',
+				name: Liferay.Language.get('alert-message'),
+			},
+			{
+				classes: ['alert', 'alert-danger'],
+				element: 'p',
+				name: Liferay.Language.get('error-message'),
+			},
+			{
+				classes: ['cite'],
+				element: 'cite',
+				name: Liferay.Language.get('cited-work'),
+			},
+			{
+				classes: ['code'],
+				element: 'code',
+				name: Liferay.Language.get('computer-code'),
 			},
 		],
 	},
@@ -50,6 +91,8 @@ const CKEditor5AdvancedPreset: EditorConfig = {
 	toolbar: [
 		'undo',
 		'redo',
+		'|',
+		'style',
 		'|',
 		'heading',
 		'|',
@@ -72,9 +115,7 @@ const CKEditor5AdvancedPreset: EditorConfig = {
 		'blockQuote',
 		'|',
 		'link',
-		'|',
 		'insertTable',
-		'|',
 		'mediaEmbed',
 		'|',
 		'horizontalLine',

@@ -11,11 +11,16 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  *
  * {
  *   main: 'src/main/resources/META-INF/resources/index.js',
- *   typescript: 'src/main/resources/META-INF/resources/index.d.ts'
+ *   submodules: {
+ *   	foo: 'src/main/resources/META-INF/resources/foo.js'
+ *   },
+ *   typescript: {
+ *   	main: 'src/main/resources/META-INF/resources/index.d.ts'
+ *   }
  * }
  */
 export default function getProjectEntryPoints(projectDir = '.') {
-	const {main, typescript} = projectScopeRequire(
+	const {main, submodules, typescript} = projectScopeRequire(
 		'./node-scripts.config.js',
 		projectDir
 	);
@@ -23,13 +28,38 @@ export default function getProjectEntryPoints(projectDir = '.') {
 	const entryPoints = {};
 
 	if (main) {
+		verifyResourcePath(main, 'main');
+
 		entryPoints.main = main;
 		entryPoints.typescript = main;
 	}
 
 	if (typescript && typescript.main) {
+		verifyResourcePath(typescript.main, 'typescript');
+
 		entryPoints.typescript = typescript.main;
 	}
 
+	if (submodules) {
+		Object.values(submodules).forEach((submodulePath) => {
+			verifyResourcePath(submodulePath, 'submodule');
+		});
+
+		entryPoints.submodules = submodules;
+	}
+
 	return entryPoints;
+}
+
+function verifyResourcePath(resourcePath, type) {
+	if (
+		resourcePath.startsWith('src/main/resources/META-INF/resources') ||
+		resourcePath.startsWith('src/node/')
+	) {
+		return true;
+	}
+
+	throw Error(
+		`❌ '${type}' path '${resourcePath}' is not allowed, it must be located under 'src/main/resources/META-INF/resources/*'.`
+	);
 }

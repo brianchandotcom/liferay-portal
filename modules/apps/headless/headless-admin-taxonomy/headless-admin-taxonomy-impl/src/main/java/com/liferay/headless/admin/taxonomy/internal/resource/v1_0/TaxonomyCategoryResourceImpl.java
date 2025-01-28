@@ -50,6 +50,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -304,30 +305,38 @@ public class TaxonomyCategoryResourceImpl
 		long assetVocabularyId = _getAssetVocabularyId(
 			assetCategory, taxonomyCategory);
 
-		return _toTaxonomyCategory(
-			_assetCategoryService.updateCategory(
-				assetCategory.getCategoryId(),
-				_getParentAssetCategoryId(
-					assetCategory, assetVocabularyId, taxonomyCategory),
-				LocalizedMapUtil.patchLocalizedMap(
-					assetCategory.getTitleMap(),
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getName(),
-					taxonomyCategory.getName_i18n()),
-				LocalizedMapUtil.patchLocalizedMap(
-					assetCategory.getDescriptionMap(),
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyCategory.getDescription(),
-					taxonomyCategory.getDescription_i18n()),
-				assetVocabularyId,
-				_merge(
-					_assetCategoryPropertyLocalService.getCategoryProperties(
-						assetCategory.getCategoryId()),
-					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextBuilder.create(
-					assetCategory.getGroupId(), contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString()
-				).build()));
+		assetCategory = _assetCategoryService.updateCategory(
+			assetCategory.getCategoryId(),
+			_getParentAssetCategoryId(
+				assetCategory, assetVocabularyId, taxonomyCategory),
+			LocalizedMapUtil.patchLocalizedMap(
+				assetCategory.getTitleMap(),
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()),
+			LocalizedMapUtil.patchLocalizedMap(
+				assetCategory.getDescriptionMap(),
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyCategory.getDescription(),
+				taxonomyCategory.getDescription_i18n()),
+			assetVocabularyId,
+			_merge(
+				_assetCategoryPropertyLocalService.getCategoryProperties(
+					assetCategory.getCategoryId()),
+				taxonomyCategory.getTaxonomyCategoryProperties()),
+			ServiceContextBuilder.create(
+				assetCategory.getGroupId(), contextHttpServletRequest,
+				taxonomyCategory.getViewableByAsString()
+			).build());
+
+		Permission[] permissions = taxonomyCategory.getPermissions();
+
+		if (permissions != null) {
+			putTaxonomyCategoryPermissionsPage(
+				String.valueOf(assetCategory.getCategoryId()),
+				taxonomyCategory.getPermissions());
+		}
+
+		return _toTaxonomyCategory(assetCategory);
 	}
 
 	@Override
@@ -698,7 +707,7 @@ public class TaxonomyCategoryResourceImpl
 		assetCategory.setTitleMap(titleMap);
 		assetCategory.setDescriptionMap(descriptionMap);
 
-		return _assetCategoryService.updateCategory(
+		assetCategory = _assetCategoryService.updateCategory(
 			assetCategory.getCategoryId(), parentAssetCategoryId, titleMap,
 			descriptionMap, assetVocabularyId,
 			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
@@ -706,6 +715,15 @@ public class TaxonomyCategoryResourceImpl
 				assetCategory.getGroupId(), contextHttpServletRequest,
 				taxonomyCategory.getViewableByAsString()
 			).build());
+
+		Permission[] permissions = taxonomyCategory.getPermissions();
+
+		if (permissions != null) {
+			putTaxonomyCategoryPermissionsPage(
+				String.valueOf(assetCategory.getCategoryId()), permissions);
+		}
+
+		return assetCategory;
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

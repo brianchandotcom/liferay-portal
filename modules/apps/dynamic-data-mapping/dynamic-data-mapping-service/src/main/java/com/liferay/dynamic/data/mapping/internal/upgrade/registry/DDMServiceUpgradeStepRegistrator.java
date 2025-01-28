@@ -653,8 +653,12 @@ public class DDMServiceUpgradeStepRegistrator
 					_fileEntryFriendlyURLResolver, _groupLocalService,
 					_userLocalService));
 
+		registry.register("5.6.1", "5.7.0", new DummyUpgradeStep());
+
+		registry.register("5.7.0", "6.0.0", new DummyUpgradeStep());
+
 		registry.register(
-			"5.6.1", "5.7.0",
+			"6.0.0", "6.1.0",
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
 				@Override
@@ -663,6 +667,11 @@ public class DDMServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"6.1.0", "7.0.0",
+			UpgradeProcessFactory.alterColumnType(
+				"DDMTemplate", "name", "TEXT null"));
 	}
 
 	@Activate

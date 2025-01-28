@@ -13,6 +13,7 @@ const getDateParts = (
 	const intl = new Intl.DateTimeFormat(locale, {
 		day: '2-digit',
 		hour: '2-digit',
+		hourCycle: 'h23',
 		minute: '2-digit',
 		month: '2-digit',
 		second: '2-digit',
@@ -90,7 +91,6 @@ const FORMATTER_MAP = {
 	},
 	'MMM dd, hh:mm': (date: Date, locale: string) => {
 		const {day, hour, minute, month} = getDateParts(date, locale, {
-			hour12: false,
 			month: 'short',
 		});
 
@@ -101,7 +101,6 @@ const FORMATTER_MAP = {
 			date,
 			locale,
 			{
-				hour12: false,
 				month: 'short',
 			}
 		);

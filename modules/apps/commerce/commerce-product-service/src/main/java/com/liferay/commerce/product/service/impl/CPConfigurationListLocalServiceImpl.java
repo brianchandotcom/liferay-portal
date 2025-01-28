@@ -151,11 +151,22 @@ public class CPConfigurationListLocalServiceImpl
 								CPConfigurationEntrySettingConstants.
 									TYPE_INDEX_IDS);
 
-					cpConfigurationEntrySetting.setValue(
-						StringBundler.concat(
-							cpConfigurationEntrySetting.getValue(),
-							StringPool.COMMA,
-							cpConfigurationList.getCPConfigurationListId()));
+					if (Validator.isNull(
+							cpConfigurationEntrySetting.getValue())) {
+
+						cpConfigurationEntrySetting.setValue(
+							String.valueOf(
+								cpConfigurationList.
+									getCPConfigurationListId()));
+					}
+					else {
+						cpConfigurationEntrySetting.setValue(
+							StringBundler.concat(
+								cpConfigurationEntrySetting.getValue(),
+								StringPool.COMMA,
+								cpConfigurationList.
+									getCPConfigurationListId()));
+					}
 
 					_cpConfigurationEntrySettingLocalService.
 						updateCPConfigurationEntrySetting(
@@ -249,11 +260,11 @@ public class CPConfigurationListLocalServiceImpl
 			throw new RequiredCPConfigurationListException();
 		}
 
-		cpConfigurationList = super.deleteCPConfigurationList(
-			cpConfigurationList);
-
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			cpConfigurationList.getCPConfigurationListId());
+
+		cpConfigurationList = super.deleteCPConfigurationList(
+			cpConfigurationList);
 
 		return cpConfigurationList;
 	}

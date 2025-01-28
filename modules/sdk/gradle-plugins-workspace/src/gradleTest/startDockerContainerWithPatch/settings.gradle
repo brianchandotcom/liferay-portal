@@ -4,7 +4,7 @@ import java.net.InetAddress
 
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, exclude: "biz.aQute.bnd-6.4.0.jar", include: "*.jar")
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
 	}
 }
 

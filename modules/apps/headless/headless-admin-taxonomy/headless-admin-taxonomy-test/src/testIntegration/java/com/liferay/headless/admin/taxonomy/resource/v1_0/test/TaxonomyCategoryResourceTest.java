@@ -248,6 +248,14 @@ public class TaxonomyCategoryResourceTest
 
 	@Override
 	@Test
+	public void testPutTaxonomyCategory() throws Exception {
+		super.testPutTaxonomyCategory();
+
+		_testPutTaxonomyCategoryWithPermissions();
+	}
+
+	@Override
+	@Test
 	public void testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -1002,6 +1010,37 @@ public class TaxonomyCategoryResourceTest
 
 		_assertPermissions(
 			new String[] {ActionKeys.DELETE}, permissions[1], role.getName());
+	}
+
+	private void _testPutTaxonomyCategoryWithPermissions() throws Exception {
+		TaxonomyCategory postTaxonomyCategory =
+			testPutTaxonomyCategory_addTaxonomyCategory();
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		Permission permission = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.VIEW};
+				roleName = role.getName();
+			}
+		};
+
+		randomTaxonomyCategory.setPermissions(new Permission[] {permission});
+
+		TaxonomyCategory putTaxonomyCategory =
+			taxonomyCategoryResource.putTaxonomyCategory(
+				postTaxonomyCategory.getId(), randomTaxonomyCategory);
+
+		Permission[] permissions = putTaxonomyCategory.getPermissions();
+
+		Assert.assertNotNull(permissions);
+		Assert.assertEquals(
+			Arrays.toString(permissions), 1, permissions.length);
+
+		_assertPermissions(
+			new String[] {ActionKeys.VIEW}, permissions[0], role.getName());
 	}
 
 	@Inject

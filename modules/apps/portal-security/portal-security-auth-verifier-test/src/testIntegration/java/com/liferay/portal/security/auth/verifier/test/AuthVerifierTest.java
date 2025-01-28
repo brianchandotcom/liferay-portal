@@ -253,7 +253,7 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-guest-allowed-false-test" +
 				"/guestAllowed");
 
-		_assertResponseCode(url.openConnection(), "403");
+		_assertHttpResponseStatusCode(url.openConnection(), 403);
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
@@ -276,14 +276,14 @@ public class AuthVerifierTest {
 
 		URLConnection connection = url.openConnection();
 
-		String credentialsToken = DatatypeConverter.printBase64Binary(
+		String credentials = DatatypeConverter.printBase64Binary(
 			"test@liferay.com:wrongpassword".getBytes());
 
 		String basicAuthToken = "Basic " + credentialsToken;
 
 		connection.setRequestProperty("Authorization", basicAuthToken);
 
-		_assertResponseCode(connection, "401");
+		_assertHttpResponseStatusCode(connection, 401);
 	}
 
 	@Test
@@ -300,7 +300,7 @@ public class AuthVerifierTest {
 
 		connection.setRequestProperty("Authorization", oAuthToken);
 
-		_assertResponseCode(connection, "401");
+		_assertHttpResponseStatusCode(connection, 401);
 	}
 
 	@Test
@@ -535,7 +535,9 @@ public class AuthVerifierTest {
 				properties));
 	}
 
-	private void _assertResponseCode(URLConnection connection, String code) {
+	private void _assertHttpResponseStatusCode(
+		URLConnection connection, int expectedHttpResponseStatusCode) {
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
 			InputStream inputStream = connection.getInputStream()) {
@@ -547,7 +549,8 @@ public class AuthVerifierTest {
 
 			Assert.assertTrue(
 				message.startsWith(
-					"Server returned HTTP response code: " + code));
+					"Server returned HTTP response code: " +
+						expectedHttpResponseStatusCode));
 		}
 	}
 

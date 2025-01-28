@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -493,6 +494,10 @@ public class TaxonomyCategoryResourceImpl
 	private ModelPermissions _getModelPermissions(
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-41304")) {
+			return null;
+		}
 
 		return ModelPermissionsUtil.toModelPermissions(
 			contextCompany.getCompanyId(), taxonomyCategory.getPermissions(),

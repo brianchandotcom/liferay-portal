@@ -36,8 +36,10 @@ public class CommerceOrderModelListener
 		CommerceOrder originalCommerceOrder, CommerceOrder commerceOrder) {
 
 		try {
-			if (commerceOrder.getOrderStatus() ==
-					CommerceOrderConstants.ORDER_STATUS_SHIPPED) {
+			if ((originalCommerceOrder.getOrderStatus() !=
+					commerceOrder.getOrderStatus()) &&
+				(commerceOrder.getOrderStatus() ==
+					CommerceOrderConstants.ORDER_STATUS_SHIPPED)) {
 
 				_commerceOrderEngine.checkCommerceOrderShipmentStatus(
 					commerceOrder, true);

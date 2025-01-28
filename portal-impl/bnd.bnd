@@ -1,6 +1,7 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 111.0.0
+CPE-Identifier: ${cpe.identifier}
 Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.dao.orm.hibernate,\

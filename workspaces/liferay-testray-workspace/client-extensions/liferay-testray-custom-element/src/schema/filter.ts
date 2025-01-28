@@ -398,6 +398,10 @@ const filterSchema = {
 						value: CaseResultStatuses.IN_PROGRESS,
 					},
 					{
+						label: i18n.translate('incomplete'),
+						value: CaseResultStatuses.INCOMPLETE,
+					},
+					{
 						label: i18n.translate('passed'),
 						value: CaseResultStatuses.PASSED,
 					},
@@ -474,6 +478,10 @@ const filterSchema = {
 					{
 						label: 'In Progress',
 						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: 'Incomplete',
+						value: CaseResultStatuses.INCOMPLETE,
 					},
 					{
 						label: 'Passed',
@@ -1123,6 +1131,10 @@ const filterSchema = {
 					{
 						label: i18n.translate('in-progress'),
 						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: i18n.translate('incomplete'),
+						value: CaseResultStatuses.INCOMPLETE,
 					},
 					{
 						label: i18n.translate('passed'),

@@ -26,7 +26,7 @@ export const test = mergeTests(
 test(
 	'Import a system data set to customize',
 	{tag: ['@LPD-37531', '@LPD-40949']},
-	async ({actionsPage, page, systemDataSetsPage}) => {
+	async ({actionsPage, systemDataSetsPage}) => {
 		await test.step('Navigate to system data sets page', async () => {
 			await systemDataSetsPage.goto();
 		});
@@ -96,100 +96,105 @@ test(
 			.locator('.fds tr')
 			.filter({hasText: 'Customized Sample'});
 
-		await test.step('Check system data set is imported', async () => {
-			await expect(customizedSampleRow).toBeVisible();
-		});
-
-		await test.step('Check the creation modal labels the data set as created and is disabled', async () => {
-			await systemDataSetsPage.createButton.click();
-
-			await expect(customizedSampleListItem).toContainText('Created');
-			await expect(customizedSampleListItem).toHaveClass(/disabled/);
-
-			await creationModal.cancelButton.click();
-		});
-
-		await test.step('Check item actions are imported', async () => {
-			await actionsPage.open({dataSetLabel: 'Customized Sample'});
-
-			const itemActionRow = actionsPage.itemActionsTable
-				.locator('tr')
-				.filter({hasText: 'Nav Links'})
-				.first();
-
-			await itemActionRow.locator('.dropdown-toggle').click();
-
-			await actionsPage.page
-				.locator('.dropdown-menu.show')
-				.getByRole('menuitem', {name: 'Edit'})
-				.click();
-
-			const form = actionsPage.actionForm;
-
-			await expect(form.labelInput).toHaveValue('Nav Links');
-			await expect(form.iconInput).toHaveValue('home');
-			await expect(form.typeSelect).toHaveValue('link');
-			await expect(form.urlInput).toHaveValue('#');
-			await expect(form.headlessActionKeyInput).toHaveValue('view');
-			await expect(form.confirmationMessageInput).toHaveValue(
-				'Are you sure?'
-			);
-			await expect(form.confirmationMessageTypeSelect).toHaveValue(
-				'danger'
-			);
-
-			await form.cancelButton.click();
-		});
-
-		await test.step('Check creation actions are imported', async () => {
-			await actionsPage.selectTab({
-				container: actionsPage.actionsTabs,
-				label: 'Creation Actions',
+		try {
+			await test.step('Check system data set is imported', async () => {
+				await expect(customizedSampleRow).toBeVisible();
 			});
 
-			const creationActionRow = actionsPage.creationActionsTable
-				.locator('tr')
-				.filter({hasText: 'Open Form'})
-				.first();
+			await test.step('Check the creation modal labels the data set as created and is disabled', async () => {
+				await systemDataSetsPage.createButton.click();
 
-			await creationActionRow.locator('.dropdown-toggle').click();
+				await expect(customizedSampleListItem).toContainText('Created');
+				await expect(customizedSampleListItem).toHaveClass(/disabled/);
 
-			await actionsPage.page
-				.locator('.dropdown-menu.show')
-				.getByRole('menuitem', {name: 'Edit'})
-				.click();
+				await creationModal.cancelButton.click();
+			});
 
-			const form = actionsPage.actionForm;
+			await test.step('Check item actions are imported', async () => {
+				await actionsPage.open({dataSetLabel: 'Customized Sample'});
 
-			await expect(form.labelInput).toHaveValue('Open Form');
-			await expect(form.iconInput).toHaveValue('bolt');
-			await expect(form.typeSelect).toHaveValue('modal');
-			await expect(form.variantSelect).toHaveValue('full-screen');
-			await expect(form.titleInput).toHaveValue('My Products');
-			await expect(form.urlInput).toHaveValue('#');
-			await expect(form.headlessActionKeyInput).toHaveValue('update');
+				const itemActionRow = actionsPage.itemActionsTable
+					.locator('tr')
+					.filter({hasText: 'Nav Links'})
+					.first();
 
-			await form.cancelButton.click();
+				await itemActionRow.locator('.dropdown-toggle').click();
 
-			await page.getByTitle('Back').click();
-		});
+				await actionsPage.page
+					.locator('.dropdown-menu.show')
+					.getByRole('menuitem', {name: 'Edit'})
+					.click();
 
-		await test.step('Delete system data set', async () => {
-			await customizedSampleRow.locator('.dropdown-toggle').click();
+				const form = actionsPage.actionForm;
 
-			await systemDataSetsPage.page
-				.locator('.dropdown-menu.show')
-				.getByRole('menuitem', {name: 'Delete'})
-				.click();
+				await expect(form.labelInput).toHaveValue('Nav Links');
+				await expect(form.iconInput).toHaveValue('home');
+				await expect(form.typeSelect).toHaveValue('link');
+				await expect(form.urlInput).toHaveValue('#');
+				await expect(form.headlessActionKeyInput).toHaveValue('view');
+				await expect(form.confirmationMessageInput).toHaveValue(
+					'Are you sure?'
+				);
+				await expect(form.confirmationMessageTypeSelect).toHaveValue(
+					'danger'
+				);
 
-			const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+				await form.cancelButton.click();
+			});
 
-			await deleteModal.getByRole('button', {name: 'Delete'}).click();
+			await test.step('Check creation actions are imported', async () => {
+				await actionsPage.selectTab({
+					container: actionsPage.actionsTabs,
+					label: 'Creation Actions',
+				});
 
-			await waitForAlert(systemDataSetsPage.page);
+				const creationActionRow = actionsPage.creationActionsTable
+					.locator('tr')
+					.filter({hasText: 'Open Form'})
+					.first();
 
-			await expect(customizedSampleRow).toBeHidden();
-		});
+				await creationActionRow.locator('.dropdown-toggle').click();
+
+				await actionsPage.page
+					.locator('.dropdown-menu.show')
+					.getByRole('menuitem', {name: 'Edit'})
+					.click();
+
+				const form = actionsPage.actionForm;
+
+				await expect(form.labelInput).toHaveValue('Open Form');
+				await expect(form.iconInput).toHaveValue('bolt');
+				await expect(form.typeSelect).toHaveValue('modal');
+				await expect(form.variantSelect).toHaveValue('full-screen');
+				await expect(form.titleInput).toHaveValue('My Products');
+				await expect(form.urlInput).toHaveValue('#');
+				await expect(form.headlessActionKeyInput).toHaveValue('update');
+
+				await form.cancelButton.click();
+			});
+		}
+		finally {
+			await test.step('Navigate to system data sets page', async () => {
+				await systemDataSetsPage.goto();
+			});
+
+			await test.step('Delete system data set', async () => {
+				await customizedSampleRow.locator('.dropdown-toggle').click();
+
+				await systemDataSetsPage.page
+					.locator('.dropdown-menu.show')
+					.getByRole('menuitem', {name: 'Delete'})
+					.click();
+
+				const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+
+				await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+				await waitForAlert(systemDataSetsPage.page);
+
+				await expect(customizedSampleRow).toBeHidden();
+			});
+		}
 
 		await test.step('Check the creation modal that the data set is enabled', async () => {
 			await systemDataSetsPage.createButton.click();

@@ -30,7 +30,7 @@ if (Validator.isNull(width)) {
 	</c:if>
 
 	<div class="preview" id="<%= randomNamespace %>">
-		<div style="margin: 3px; width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %>;">
+		<div>
 			<liferay-portlet:runtime
 				persistSettings="<%= false %>"
 				portletName="<%= portletResource %>"
@@ -54,6 +54,8 @@ if (Validator.isNull(width)) {
 			var item = children[i];
 
 			item.style.cursor = 'default';
+			item.style.margin = '3px';
+			item.style.width = <%= previewWidth %> ? parseInt('<%= HtmlUtil.escape(previewWidth) %>', 10) + 20 + 'px' : '100%';
 
 			item.onclick = emptyFnFalse;
 			item.onmouseover = emptyFnFalse;

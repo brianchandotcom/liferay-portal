@@ -38,6 +38,7 @@ import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -69,6 +70,11 @@ public class SamlLoginActionTest {
 		_setUpSamlSpIdpConnectionLocalService();
 
 		_setUpSamlLoginAction();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_listUtilMockedStatic.close();
 	}
 
 	@Test
@@ -214,7 +220,7 @@ public class SamlLoginActionTest {
 
 		_listUtilMockedStatic.when(
 			() -> ListUtil.filter(
-				Mockito.anyList(), Mockito.any(Predicate.class))
+				Mockito.eq(samlSpIdpConnections), Mockito.any(Predicate.class))
 		).thenReturn(
 			samlSpIdpConnections
 		);

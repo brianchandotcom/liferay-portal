@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -114,15 +115,13 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			File file = null;
 
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
+			try {
+				InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file");
 
-				long formInstanceId = ParamUtil.getLong(
-					uploadPortletRequest, "formInstanceId");
-				long groupId = ParamUtil.getLong(
-					uploadPortletRequest, "groupId");
-				long folderId = ParamUtil.getLong(
-					uploadPortletRequest, "folderId");
+				if (inputStream == null) {
+					inputStream = new UnsyncByteArrayInputStream(new byte[0]);
+				}
 
 				file = FileUtil.createTempFile(inputStream);
 
@@ -139,13 +138,13 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				DDMFormUploadValidator.validateFileExtension(fileName);
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)uploadPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				return addFileEntry(
-					formInstanceId, groupId, folderId, file, fileName,
-					MimeTypesUtil.getContentType(file, fileName), themeDisplay);
+					ParamUtil.getLong(uploadPortletRequest, "formInstanceId"),
+					ParamUtil.getLong(uploadPortletRequest, "groupId"),
+					ParamUtil.getLong(uploadPortletRequest, "folderId"), file,
+					fileName, MimeTypesUtil.getContentType(file, fileName),
+					(ThemeDisplay)uploadPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY));
 			}
 			finally {
 				FileUtil.delete(file);

@@ -331,10 +331,10 @@ public class ResourceActionLocalServiceImpl
 		if (resourceAction == null) {
 			resourceAction = resourceActionPersistence.fetchByN_A(
 				name, actionId);
-		}
 
-		if (resourceAction != null) {
-			_resourceActions.put(encodeKey(name, actionId), resourceAction);
+			if (resourceAction != null) {
+				_resourceActions.put(encodeKey(name, actionId), resourceAction);
+			}
 		}
 
 		return resourceAction;

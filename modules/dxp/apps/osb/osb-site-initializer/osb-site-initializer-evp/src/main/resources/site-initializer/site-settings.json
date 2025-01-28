@@ -1,8 +1,0 @@
-[
-	{
-		"pid": "com.liferay.login.web.internal.configuration.AuthLoginConfiguration",
-		"properties": {
-			"promptEnabled": true
-		}
-	}
-]

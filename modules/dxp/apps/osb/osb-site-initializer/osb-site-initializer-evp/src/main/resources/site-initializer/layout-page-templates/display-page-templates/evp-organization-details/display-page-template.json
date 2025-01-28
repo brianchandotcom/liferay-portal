@@ -1,7 +1,0 @@
-{
-	"contentType": {
-		"className": "[$OBJECT_DEFINITION_CLASS_NAME:EVPOrganization$]"
-	},
-	"defaultTemplate": true,
-	"name": "EVP Organization Details"
-}

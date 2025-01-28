@@ -1,6 +1,0 @@
-{
-	"className": "com.liferay.asset.kernel.model.AssetEntry",
-	"ddmTemplateKey": "NEWS-ENTRIES",
-	"name": "News Entries",
-	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
-}

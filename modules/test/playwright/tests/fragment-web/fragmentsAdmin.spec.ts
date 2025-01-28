@@ -1673,6 +1673,66 @@ test(
 	}
 );
 
+test(
+	'Preview cannot receive messages from other windows',
+	{tag: '@LPD-47375'},
+	async ({apiHelpers, context, fragmentsPage, page, site}) => {
+		const fragmentCollectionName = getRandomString();
+
+		const fragmentCollection =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: site.id,
+					name: fragmentCollectionName,
+				}
+			);
+
+		// Create fragment
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId: fragmentCollection.fragmentCollectionId,
+			groupId: site.id,
+			html: '<div class="fragment-name">hello</div>',
+			name: fragmentEntryName,
+		});
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await fragmentsPage.gotoFragmentSet(fragmentCollectionName);
+
+		await fragmentsPage.clickAction('Edit', fragmentEntryName);
+
+		const url = await page
+			.locator('.fragment-preview__content')
+			.evaluate((element: any) => element.contentWindow.location.href);
+
+		await page.evaluate((url) => {
+			const previewTarget = window.open(url, '_blank');
+
+			setTimeout(() => {
+				previewTarget.postMessage(
+					JSON.stringify({
+						data: '<body><script>alert("This alert should not be shown")</script></body>',
+					}),
+					'*'
+				);
+			}, 1000);
+		}, url);
+
+		context.on('page', async (page) => {
+			await page.waitForLoadState();
+
+			page.on('dialog', async () => {
+				throw new Error('Alert detected');
+			});
+		});
+
+		await page.waitForTimeout(2000);
+	}
+);
+
 testDeprecatedFragmentSet(
 	'The deprecated label and button exist for the contributed Featured Content Fragment Set',
 	{

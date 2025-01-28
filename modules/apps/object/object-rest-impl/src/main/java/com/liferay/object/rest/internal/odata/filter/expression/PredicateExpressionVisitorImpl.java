@@ -161,6 +161,28 @@ public class PredicateExpressionVisitorImpl
 				});
 		}
 
+		EntityModel entityModel = _getObjectDefinitionEntityModel(
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				_objectDefinition,
+				_fetchObjectRelationship(
+					_objectDefinition, complexPropertyExpression.getName())));
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get(
+			propertyExpression.getName());
+
+		if (entityField.getFilterableName(
+				null
+			).contains(
+				"/"
+			)) {
+
+			return complexPropertyExpression.getName() + "/" +
+				entityField.getFilterableName(null);
+		}
+
 		return complexPropertyExpression.toString();
 	}
 
@@ -317,6 +339,24 @@ public class PredicateExpressionVisitorImpl
 	@Override
 	public Object visitPrimitivePropertyExpression(
 		PrimitivePropertyExpression primitivePropertyExpression) {
+
+		EntityModel entityModel = _entityModels.get(
+			_objectDefinition.getObjectDefinitionId());
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get(
+			primitivePropertyExpression.getName());
+
+		if (entityField.getFilterableName(
+				null
+			).contains(
+				"/"
+			)) {
+
+			return entityField.getFilterableName(null);
+		}
 
 		return primitivePropertyExpression.getName();
 	}

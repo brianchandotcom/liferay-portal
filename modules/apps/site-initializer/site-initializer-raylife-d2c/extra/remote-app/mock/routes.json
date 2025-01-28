@@ -1,7 +1,0 @@
-{
-	"/api/jsonws/assetcategory/search-categories-display?*": "/categories",
-	"/api/jsonws/assetcategoryproperty/get-category-properties?*": "/properties",
-	"/o/c/quotecomparisons/": "/quotes",
-	"/o/c/raylifeapplications/": "/applications",
-	"/o/headless-commerce-admin-catalog/v1.0/products?*": "/products"
-}

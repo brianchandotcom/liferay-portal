@@ -133,7 +133,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		_accountEntryModelResourcePermission.check(
-			permissionChecker, accountEntryId, ActionKeys.DELETE);
+			permissionChecker, accountEntryId, ActionKeys.DEACTIVATE);
 
 		return _withServiceContext(
 			() -> accountEntryLocalService.deactivateAccountEntry(

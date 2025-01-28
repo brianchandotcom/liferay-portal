@@ -143,21 +143,25 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!AccountEntryPermission.contains(
+		if (AccountEntryPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				accountEntryDisplay.getAccountEntryId(),
+				ActionKeys.DEACTIVATE)) {
+
+			if (accountEntryDisplay.isApproved()) {
+				availableActions.add("deactivateAccountEntries");
+			}
+			else if (accountEntryDisplay.isInactive()) {
+				availableActions.add("activateAccountEntries");
+			}
+		}
+
+		if (AccountEntryPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				accountEntryDisplay.getAccountEntryId(), ActionKeys.DELETE)) {
 
-			return availableActions;
+			availableActions.add("deleteAccountEntries");
 		}
-
-		if (accountEntryDisplay.isApproved()) {
-			availableActions.add("deactivateAccountEntries");
-		}
-		else if (accountEntryDisplay.isInactive()) {
-			availableActions.add("activateAccountEntries");
-		}
-
-		availableActions.add("deleteAccountEntries");
 
 		return availableActions;
 	}

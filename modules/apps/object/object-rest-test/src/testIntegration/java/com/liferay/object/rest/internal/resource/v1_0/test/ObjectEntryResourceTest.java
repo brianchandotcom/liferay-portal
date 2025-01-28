@@ -7624,11 +7624,7 @@ public class ObjectEntryResourceTest {
 						false)),
 				ObjectDefinitionConstants.SCOPE_COMPANY, adminUser.getUserId());
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"ExceptionMapper,",
-				LoggerTestUtil.ERROR)) {
-
+		try {
 			HTTPTestUtil.customize(
 			).withBaseURL(
 				"http://www.able.com:8080"

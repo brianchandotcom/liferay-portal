@@ -40,6 +40,6 @@ Import-Package:\
 	org.tukaani.*;resolution:=optional,\
 	\
 	*
-Liferay-Require-SchemaVersion: 7.0.0
+Liferay-Require-SchemaVersion: 7.0.1
 Liferay-Service: true
 -dsannotations-options: inherit

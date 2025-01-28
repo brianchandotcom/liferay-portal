@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeKernelPackage;
@@ -65,6 +66,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
@@ -672,6 +674,17 @@ public class DDMServiceUpgradeStepRegistrator
 			"6.1.0", "7.0.0",
 			UpgradeProcessFactory.alterColumnType(
 				"DDMTemplate", "name", "TEXT null"));
+
+		registry.register(
+			"7.0.0", "7.0.1",
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update User_ set externalReferenceCode = '",
+					DDMFormConstants.
+						DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE,
+					"' where emailAddress like '",
+					DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
+					"@%'")));
 	}
 
 	@Activate

@@ -10,6 +10,9 @@ package com.liferay.dynamic.data.mapping.constants;
  */
 public class DDMFormConstants {
 
+	public static final String DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE =
+		"DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE";
+
 	public static final String DDM_FORM_DEFAULT_USER_FIRST_NAME =
 		"DDM_FORM_DEFAULT_USER_FIRST_NAME";
 

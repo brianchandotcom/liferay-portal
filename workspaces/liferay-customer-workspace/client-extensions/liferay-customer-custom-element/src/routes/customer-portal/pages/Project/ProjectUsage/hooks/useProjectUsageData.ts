@@ -110,14 +110,11 @@ const useProjectUsageData = () => {
 		}_liferay-saas'`,
 	});
 
-	const displayUsage = useMemo(
-		() =>
-			!!subscriptionsData?.c?.accountSubscriptions?.items.filter(
-				({name}: {name: string}) =>
-					ACCEPTED_SUBSCRIPTIONS.includes(name)
-			).length || false,
-		[subscriptionsData]
-	);
+	const displayUsage = useMemo(() => {
+		return !!subscriptionsData?.c?.accountSubscriptions?.items.some(
+			({name}: {name: string}) => ACCEPTED_SUBSCRIPTIONS.includes(name)
+		);
+	}, [subscriptionsData]);
 
 	const addOns = useMemo<IAddOn[]>(() => {
 		const filteredAddOns =
@@ -135,7 +132,7 @@ const useProjectUsageData = () => {
 
 	const getSiteAndUsers = useCallback(async () => {
 		if (project?.externalReferenceCode) {
-			if (!displayUsage) {
+			if (!displayUsage && subscriptionsData) {
 				return setIsLoading(false);
 			}
 
@@ -221,7 +218,12 @@ const useProjectUsageData = () => {
 
 			setIsLoading(false);
 		}
-	}, [displayUsage, project?.externalReferenceCode, setUsageData]);
+	}, [
+		displayUsage,
+		project?.externalReferenceCode,
+		setUsageData,
+		subscriptionsData,
+	]);
 
 	useEffect(() => {
 		getSiteAndUsers();

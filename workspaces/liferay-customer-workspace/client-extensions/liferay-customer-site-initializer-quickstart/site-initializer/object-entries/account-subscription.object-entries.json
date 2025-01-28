@@ -324,7 +324,7 @@
 			"accountSubscriptionGroupERC": "ERC-015_liferay-saas",
 			"endDate": "2026-01-31 00:00:00.0",
 			"instanceSize": "1",
-			"name": "Production",
+			"name": "Business Plan",
 			"quantity": 1,
 			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-015",
 			"startDate": "2023-10-01 00:00:00.0",

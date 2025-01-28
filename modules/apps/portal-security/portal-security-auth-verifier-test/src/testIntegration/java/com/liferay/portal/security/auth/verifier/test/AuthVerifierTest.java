@@ -269,35 +269,20 @@ public class AuthVerifierTest {
 	}
 
 	@Test
-	public void testAllowGuestFailsForInvalidBasicAuth() throws Exception {
+	public void testAllowGuestFailsForInvalidCredentials() throws Exception {
 		URL url = new URL(
 			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
 				"/guestAllowed");
-
-		URLConnection connection = url.openConnection();
 
 		String credentials = DatatypeConverter.printBase64Binary(
 			"test@liferay.com:wrongpassword".getBytes());
 
-		connection.setRequestProperty("Authorization", "Basic " + credentials);
+		_testAllowGuestFailsForInvalidCredentials(
+			"Basic " + credentials, url.openConnection());
 
-		_assertHttpResponseStatusCode(connection, 401);
-	}
-
-	@Test
-	public void testAllowGuestFailsForInvalidOAuthToken() throws Exception {
-		URL url = new URL(
-			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
-				"/guestAllowed");
-
-		URLConnection connection = url.openConnection();
-
-		connection.setRequestProperty(
-			"Authorization",
-			"Authorization: Bearer " +
-				"3646534f4654396f6e565648315557534253613062673d3d");
-
-		_assertHttpResponseStatusCode(connection, 401);
+		_testAllowGuestFailsForInvalidCredentials(
+			"Bearer 3646534f4654396f6e565648315557534253613062673d3d",
+			url.openConnection());
 	}
 
 	@Test
@@ -549,6 +534,14 @@ public class AuthVerifierTest {
 					"Server returned HTTP response code: " +
 						expectedHttpResponseStatusCode));
 		}
+	}
+
+	private void _testAllowGuestFailsForInvalidCredentials(
+		String authorization, URLConnection connection) {
+
+		connection.setRequestProperty("Authorization", authorization);
+
+		_assertHttpResponseStatusCode(connection, 401);
 	}
 
 	private static BundleContext _bundleContext;

@@ -7,7 +7,6 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
@@ -359,10 +358,6 @@ const TopperEmptyLabel = ({isActive, isHovered, item, itemElement}) => {
 									symbolLeft="paste"
 								>
 									{Liferay.Language.get('paste')}
-
-									<span className="ml-2">
-										<FeatureIndicator type="beta" />
-									</span>
 								</ClayDropDown.Item>
 							</ClayDropDown.ItemList>
 						</ClayDropDown>

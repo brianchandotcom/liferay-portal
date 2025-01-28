@@ -4,7 +4,6 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
 const KEY_LABEL = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
@@ -57,7 +56,6 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShortcut
-						betaFeatureIndicator
 						description={Liferay.Language.get('cut')}
 						keyCombinations={[KEY_LABEL, 'X']}
 					/>
@@ -65,7 +63,6 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShortcut
-						betaFeatureIndicator
 						description={Liferay.Language.get('copy')}
 						keyCombinations={[KEY_LABEL, 'C']}
 					/>
@@ -73,7 +70,6 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShortcut
-						betaFeatureIndicator
 						description={Liferay.Language.get('paste')}
 						keyCombinations={[KEY_LABEL, 'V']}
 					/>
@@ -91,7 +87,6 @@ export default function ShortcutModal({onCloseModal}) {
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<>
 						<KeyboardShortcut
-							betaFeatureIndicator
 							description={Liferay.Language.get(
 								'range-selection'
 							)}
@@ -102,7 +97,6 @@ export default function ShortcutModal({onCloseModal}) {
 
 				{Liferay.FeatureFlags['LPD-18221'] ? (
 					<KeyboardShortcut
-						betaFeatureIndicator
 						description={Liferay.Language.get(
 							'noncontinuous-selection'
 						)}
@@ -123,11 +117,7 @@ export default function ShortcutModal({onCloseModal}) {
 	);
 }
 
-function KeyboardShortcut({
-	betaFeatureIndicator = false,
-	description,
-	keyCombinations,
-}) {
+function KeyboardShortcut({description, keyCombinations}) {
 	return (
 		<div className="align-items-center d-flex mb-3">
 			<div className="page-editor__shortcut-modal__shortcut text-right">
@@ -147,8 +137,6 @@ function KeyboardShortcut({
 			<p className="mb-0 ml-3 mr-2 page-editor__shortcut-modal__shortcut-description text-3 text-weight-semi-bold">
 				{description}
 			</p>
-
-			{betaFeatureIndicator ? <FeatureIndicator type="beta" /> : null}
 		</div>
 	);
 }

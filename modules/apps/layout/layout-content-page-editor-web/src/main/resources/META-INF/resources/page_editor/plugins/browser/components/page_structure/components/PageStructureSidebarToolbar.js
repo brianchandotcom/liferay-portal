@@ -5,7 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {FeatureIndicator, ManagementToolbar} from 'frontend-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -96,13 +96,11 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 			type: 'divider',
 		},
 		{
-			isBetaFeature: true,
 			label: Liferay.Language.get('copy'),
 			onClick: () => setClipboard(activeItemIds),
 			symbolLeft: 'copy',
 		},
 		{
-			isBetaFeature: true,
 			label: Liferay.Language.get('cut'),
 			onClick: () => {
 				if (itemsCanBeDeleted()) {
@@ -133,7 +131,6 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 		},
 		{
 			className: 'keyboard-only',
-			isBetaFeature: true,
 			label: sub(
 				Liferay.Language.get('move-x-items'),
 				activeItemIds.length
@@ -211,12 +208,6 @@ export default function PageStructureSidebarToolbar({activeItemIds}) {
 									symbolLeft={item.symbolLeft}
 								>
 									{item.label}
-
-									{item.isBetaFeature ? (
-										<span className="ml-2">
-											<FeatureIndicator type="beta" />
-										</span>
-									) : null}
 								</ClayDropDown.Item>
 							)
 						}

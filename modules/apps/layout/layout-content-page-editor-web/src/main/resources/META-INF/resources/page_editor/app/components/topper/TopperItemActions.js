@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import {openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
@@ -141,7 +140,6 @@ export default function TopperItemActions({disabled, item}) {
 				},
 				group: 1,
 				icon: 'cut',
-				isBetaFeature: true,
 				label: Liferay.Language.get('cut'),
 			});
 
@@ -157,7 +155,6 @@ export default function TopperItemActions({disabled, item}) {
 					action: () => setClipboard([item.itemId]),
 					group: 1,
 					icon: 'copy',
-					isBetaFeature: true,
 					label: Liferay.Language.get('copy'),
 				});
 			}
@@ -211,7 +208,6 @@ export default function TopperItemActions({disabled, item}) {
 				disabled: !clipboard?.length,
 				group: 1,
 				icon: 'paste',
-				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
 		}
@@ -303,12 +299,6 @@ export default function TopperItemActions({disabled, item}) {
 								symbolLeft={item.icon}
 							>
 								{item.label}
-
-								{item.isBetaFeature ? (
-									<span className="ml-2">
-										<FeatureIndicator type="beta" />
-									</span>
-								) : null}
 							</ClayDropDown.Item>
 						)
 					}

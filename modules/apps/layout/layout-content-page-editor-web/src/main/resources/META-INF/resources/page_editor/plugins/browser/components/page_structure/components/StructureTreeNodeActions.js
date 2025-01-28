@@ -8,7 +8,6 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -245,7 +244,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					setText(Liferay.Language.get('item-was-cut'));
 				},
 				icon: 'cut',
-				isBetaFeature: true,
 				label: Liferay.Language.get('cut'),
 			});
 		}
@@ -266,7 +264,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					setText(Liferay.Language.get('item-copied'));
 				},
 				icon: 'copy',
-				isBetaFeature: true,
 				label: Liferay.Language.get('copy'),
 			});
 		}
@@ -332,7 +329,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				},
 				disabled: !clipboard?.length,
 				icon: 'paste',
-				isBetaFeature: true,
 				label: Liferay.Language.get('paste'),
 			});
 		}
@@ -406,12 +402,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 								symbolLeft={item.icon}
 							>
 								{item.label}
-
-								{item.isBetaFeature ? (
-									<span className="ml-2">
-										<FeatureIndicator type="beta" />
-									</span>
-								) : null}
 							</ClayDropDown.Item>
 						)
 					}

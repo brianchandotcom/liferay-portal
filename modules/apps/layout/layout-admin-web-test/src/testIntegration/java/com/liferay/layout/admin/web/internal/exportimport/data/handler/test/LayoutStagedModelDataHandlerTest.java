@@ -59,6 +59,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -260,6 +261,45 @@ public class LayoutStagedModelDataHandlerTest
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-46179")
+	public void testDeleteLayoutWithLayoutPageTemplateEntry() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		Group stagingGroup = group.getStagingGroup();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				stagingGroup.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class.getName()), 0, true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		_publishLayouts(group, stagingGroup);
+
+		LayoutPageTemplateEntry liveLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByUuidAndGroupId(
+					layoutPageTemplateEntry.getUuid(), group.getGroupId());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getName(),
+			liveLayoutPageTemplateEntry.getName());
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		_publishLayouts(group, stagingGroup);
+
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				liveLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}
 
 	@Test
@@ -1785,6 +1825,9 @@ public class LayoutStagedModelDataHandlerTest
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildParameterMap();
 
+		parameterMap.put(
+			PortletDataHandlerKeys.DELETIONS,
+			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});

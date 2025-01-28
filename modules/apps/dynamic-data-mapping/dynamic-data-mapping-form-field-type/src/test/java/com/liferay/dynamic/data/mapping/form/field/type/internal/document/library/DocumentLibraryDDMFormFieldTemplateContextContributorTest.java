@@ -789,10 +789,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		User user = _mockUser();
 
 		Mockito.when(
-			_userLocalService.getUserByEmailAddress(
-				_COMPANY_ID,
-				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME +
-					"@liferay.com")
+			_userLocalService.getUserByExternalReferenceCode(
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE,
+				_COMPANY_ID)
 		).thenReturn(
 			user
 		);

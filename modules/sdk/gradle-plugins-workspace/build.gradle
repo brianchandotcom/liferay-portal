@@ -23,44 +23,35 @@ configurations {
 		exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
 		exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
 	}
+
+	runtimeClasspath {
+		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
+	}
 }
 
 dependencies {
-	api group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "6.4.0"
-	api group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
-	api group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.16.1"
-	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.14"
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "16.0.27") {
-		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-	}
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.16") {
-		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-	}
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.22") {
-		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-	}
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.190"
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "4.0.1"
-	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.28") {
-		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-	}
-	api(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.7") {
-		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-	}
-	api(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.7") {
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
+
+	implementation group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "6.4.0"
+	implementation group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
+	implementation group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.16.1"
+	implementation group: "com.liferay", name: "com.liferay.gradle.plugins", version: "16.0.27"
+	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.22"
+	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "4.0.1"
+	implementation group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.28"
+	implementation group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.7"
+	implementation(group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.7") {
 		exclude group: "com.google.template", module: "soy"
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"
 	}
-	api group: "com.liferay", name: "com.liferay.release.util", version: "1.0.0"
-	api group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
-	api group: "net.java.dev.jna", name: "jna", version: "5.8.0"
-	api group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"
-	api group: "org.ow2.asm", name: "asm", version: "9.7"
+	implementation group: "com.liferay", name: "com.liferay.release.util", version: "1.0.0"
+	implementation group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
+	implementation group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"
 
-	compileInclude files("lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")
-
-	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["**/snakeyaml*"])
+	runtimeOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.14"
+	runtimeOnly group: "net.java.dev.jna", name: "jna", version: "5.8.0"
+	runtimeOnly group: "org.ow2.asm", name: "asm", version: "9.7"
 }
 
 downloadNodeInfo {

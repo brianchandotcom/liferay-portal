@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -1511,7 +1512,14 @@ public class DefaultObjectEntryManagerImpl
 			}
 			else {
 				folderExternalReferenceCode = folder.getExternalReferenceCode();
-				folderGroupId = folder.getSiteId();
+
+				Group group = groupLocalService.getGroup(folder.getSiteId());
+
+				if (group.getCompanyId() != objectField.getCompanyId()) {
+					throw new NoSuchGroupException();
+				}
+
+				folderGroupId = group.getGroupId();
 			}
 
 			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(

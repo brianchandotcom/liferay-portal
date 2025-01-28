@@ -77,7 +77,9 @@ public class FileShortcutDisplayContextHelper {
 	}
 
 	public boolean isCopyActionAvailable() throws PortalException {
-		if (hasViewPermission() && !_isExternalRepository()) {
+		if (_permissionChecker.isSignedIn() && hasViewPermission() &&
+			!_isExternalRepository()) {
+
 			return true;
 		}
 

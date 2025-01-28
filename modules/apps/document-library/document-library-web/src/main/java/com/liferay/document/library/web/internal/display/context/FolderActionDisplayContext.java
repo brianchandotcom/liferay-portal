@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -890,7 +891,9 @@ public class FolderActionDisplayContext {
 	private Boolean _isCopyActionVisible() throws PortalException {
 		Folder folder = _getFolder();
 
-		if ((folder == null) ||
+		User user = _dlRequestHelper.getUser();
+
+		if ((folder == null) || user.isGuestUser() ||
 			RepositoryUtil.isExternalRepository(_getRepositoryId())) {
 
 			return false;

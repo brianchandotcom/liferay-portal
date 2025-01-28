@@ -181,8 +181,8 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isCopyActionAvailable() throws PortalException {
-		if (hasViewPermission() && hasDownloadPermission() &&
-			!_isExternalRepository()) {
+		if (_permissionChecker.isSignedIn() && hasViewPermission() &&
+			hasDownloadPermission() && !_isExternalRepository()) {
 
 			return true;
 		}

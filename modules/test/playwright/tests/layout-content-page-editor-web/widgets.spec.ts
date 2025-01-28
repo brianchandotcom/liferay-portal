@@ -502,24 +502,35 @@ test(
 
 		await pageEditorPage.publishPage();
 
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
 		// Check the label in the dropdown at the Product Menu
 
 		await productMenuPage.openProductMenuButton.click();
 
 		await productMenuPage.contentAndDataButton.click();
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: layoutTitle + ' deprecated',
-			}),
-			trigger: page.getByLabel('Choose Scope'),
-		});
+		// Open the dropdown to select the scope
+
+		const dropdownButton = page.getByLabel('Choose Scope');
+
+		const dropdownOption = page
+			.locator('.dropdown-menu')
+			.getByRole('menuitem', {name: layoutTitle});
+
+		await expect(async () => {
+			await dropdownButton.click();
+
+			await expect(dropdownOption).toBeVisible({timeout: 1000});
+			await expect(dropdownOption).toContainText('deprecated');
+
+			await dropdownOption.click();
+		}).toPass();
 
 		// Check that the page is set as scope
 
 		await expect(
-			page.getByText(layoutTitle + ' (Scope) deprecated')
+			page.getByText(`${layoutTitle} (Scope) deprecated`)
 		).toBeVisible();
 	}
 );

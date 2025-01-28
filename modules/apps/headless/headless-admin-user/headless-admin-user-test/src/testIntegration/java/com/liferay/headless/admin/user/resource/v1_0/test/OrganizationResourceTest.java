@@ -19,6 +19,8 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,7 +53,10 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.io.InputStream;
 
+import java.text.DateFormat;
+
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -283,6 +289,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				fetchAccountEntryOrganizationRel(
 					_accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
+	public void testGetOrganizationsPage() throws Exception {
+		super.testGetOrganizationsPage();
+
+		_testGetOrganizationsPageWithFilter();
 	}
 
 	@Ignore
@@ -790,6 +804,59 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			});
 
 		return organizationResource.postOrganization(organization);
+	}
+
+	private void _testGetOrganizationsPageWithFilter() throws Exception {
+		Page<Organization> page = organizationResource.getOrganizationsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		Date date = organization1.getDateCreated();
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		page = organizationResource.getOrganizationsPage(
+			null, null, "dateCreated lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount, page.getTotalCount());
+
+		page = organizationResource.getOrganizationsPage(
+			null, null, "dateCreated ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		organization1.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		organization1 = organizationResource.patchOrganization(
+			organization1.getId(), organization1);
+
+		date = organization1.getDateModified();
+
+		page = organizationResource.getOrganizationsPage(
+			null, null, "dateModified ge " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(organization1, (List<Organization>)page.getItems());
+
+		page = organizationResource.getOrganizationsPage(
+			null, null, "dateModified lt " + dateFormat.format(date.getTime()),
+			Pagination.of(1, 2), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		assertContains(organization2, (List<Organization>)page.getItems());
 	}
 
 	private void _testPatchOrganizationByExternalReferenceCodeWithImageExternalReferenceCode()

@@ -1540,3 +1540,82 @@ test('LPD-47225 Smoke test for service accounts', async ({
 
 	await expect(editUserPage.regularRoleCell(roleName)).toHaveCount(0);
 });
+
+test('LPD-47589 Check delete and deactivate permissions work independently', async ({
+	accountsPage,
+	apiHelpers,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Test Role ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['DEACTIVATE', 'UPDATE', 'VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: 'com_liferay_depot_web_portlet_DepotAdminPortlet',
+				scope: 1,
+			},
+		],
+	});
+
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+		role.externalReferenceCode,
+		userAccount.id
+	);
+
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
+
+	await performLogout(page);
+	await performLogin(page, userAccount.alternateName);
+
+	await accountsPage.goto();
+
+	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+
+	await expect(await accountsPage.deactivateButton).toBeVisible();
+	await expect(await accountsPage.deleteButton).not.toBeVisible();
+
+	page.on('dialog', async (dialog) => await dialog.accept());
+
+	await accountsPage.deactivateButton.click();
+
+	await waitForAlert(page);
+
+	await expect(accountsPage.accountsTable.cell(account.name)).toHaveCount(0);
+});

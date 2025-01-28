@@ -7,6 +7,8 @@ package com.liferay.saml.web.internal.struts;
 
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -17,9 +19,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
@@ -31,7 +33,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -75,10 +76,10 @@ public class SamlLoginActionTest {
 		throws Exception {
 
 		String companyName = RandomTestUtil.randomString();
-		String htmlTitle = RandomTestUtil.randomString();
+		String layoutHtmlTitle = RandomTestUtil.randomString();
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(companyName, htmlTitle);
+			_getMockHttpServletRequest(companyName, layoutHtmlTitle);
 
 		_samlLoginAction.execute(
 			mockHttpServletRequest, new MockHttpServletResponse());
@@ -86,11 +87,10 @@ public class SamlLoginActionTest {
 		Definition definition = (Definition)mockHttpServletRequest.getAttribute(
 			TilesUtil.DEFINITION);
 
-		Map<String, String> definitionAttributes = definition.getAttributes();
-
 		Assert.assertEquals(
-			StringUtil.merge(new String[] {htmlTitle, companyName}, _SEPARATOR),
-			definitionAttributes.get("title"));
+			StringBundler.concat(
+				companyName, StringPool.UNDERLINE, layoutHtmlTitle),
+			MapUtil.getString(definition.getAttributes(), "title"));
 	}
 
 	private static void _setUpLayoutSEOLinkManager() {
@@ -112,9 +112,9 @@ public class SamlLoginActionTest {
 				ListMergeable<String> subtitleListMergeable, String companyName,
 				Locale locale) {
 
-				return StringUtil.merge(
-					new String[] {layout.getHTMLTitle(locale), companyName},
-					_SEPARATOR);
+				return StringBundler.concat(
+					companyName, StringPool.UNDERLINE,
+					layout.getHTMLTitle(locale));
 			}
 
 			@Override
@@ -221,7 +221,7 @@ public class SamlLoginActionTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-		String companyName, String htmlTitle) {
+		String companyName, String layoutHtmlTitle) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -247,7 +247,7 @@ public class SamlLoginActionTest {
 		Mockito.when(
 			layout.getHTMLTitle(Mockito.any(Locale.class))
 		).thenReturn(
-			htmlTitle
+			layoutHtmlTitle
 		);
 
 		Mockito.when(
@@ -267,8 +267,6 @@ public class SamlLoginActionTest {
 
 		return mockHttpServletRequest;
 	}
-
-	private static final String _SEPARATOR = " - ";
 
 	private static LayoutSEOLinkManager _layoutSEOLinkManager;
 	private static final MockedStatic<ListUtil> _listUtilMockedStatic =

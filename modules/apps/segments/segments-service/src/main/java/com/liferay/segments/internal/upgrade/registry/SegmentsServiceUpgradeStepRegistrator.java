@@ -6,6 +6,7 @@
 package com.liferay.segments.internal.upgrade.registry;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -111,9 +112,17 @@ public class SegmentsServiceUpgradeStepRegistrator
 			});
 
 		registry.register("3.1.0", "3.1.1", new SegmentsEntryUpgradeProcess());
+
+		registry.register(
+			"3.1.1", "3.2.0",
+			new com.liferay.segments.internal.upgrade.v3_2_0.
+				SegmentsExperienceUpgradeProcess(_layoutLocalService));
 	}
 
 	@Reference
 	private CounterLocalService _counterLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

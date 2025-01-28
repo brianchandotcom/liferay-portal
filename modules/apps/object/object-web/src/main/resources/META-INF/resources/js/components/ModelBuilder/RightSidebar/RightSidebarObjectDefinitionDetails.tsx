@@ -14,6 +14,7 @@ import {Scope} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
+import {SeoContainer} from '../../ObjectDetails/SeoContainer';
 import {TranslationsContainer} from '../../ObjectDetails/TranslationsContainer';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -282,6 +283,13 @@ export function RightSidebarObjectDefinitionDetails({
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<TranslationsContainer
+					onSubmit={onSubmit}
+					setValues={setValues}
+					values={values}
+				/>
+			</div>
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
+				<SeoContainer
 					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values}

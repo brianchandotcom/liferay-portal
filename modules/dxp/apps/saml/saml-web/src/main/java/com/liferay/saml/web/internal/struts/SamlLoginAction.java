@@ -119,13 +119,13 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 			Company company = themeDisplay.getCompany();
 
-			String title = _layoutSEOLinkManager.getFullPageTitle(
-				themeDisplay.getLayout(), null, null, null, null,
-				company.getName(), themeDisplay.getLocale());
-
 			JspUtil.dispatch(
 				httpServletRequest, httpServletResponse,
-				"/portal/saml/select_idp.jsp", title, true);
+				"/portal/saml/select_idp.jsp",
+				_layoutSEOLinkManager.getFullPageTitle(
+					themeDisplay.getLayout(), null, null, null, null,
+					company.getName(), themeDisplay.getLocale()),
+				true);
 
 			return null;
 		}

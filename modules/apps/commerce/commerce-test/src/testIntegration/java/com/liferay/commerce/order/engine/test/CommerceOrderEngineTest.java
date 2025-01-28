@@ -1050,6 +1050,96 @@ public class CommerceOrderEngineTest {
 	}
 
 	@Test
+	public void testIsSameOrderStatusAndShipmentStatus() throws Exception {
+		frutillaRule.scenario(
+			"Use the Order Engine to checkout an Order, transition it to" +
+				"processing then create a shipment with all of the order items"
+		).given(
+			"An Open Order that has an order item"
+		).and(
+			"A user who has checkout permissions"
+		).when(
+			"We create a shipment with the only order item"
+		).and(
+			"And programmatically update an order"
+		).then(
+			"The order should automatically be transitioned to Shipped"
+		).and(
+			"The order status and shipment status should not change on update"
+		);
+
+		Assert.assertEquals(
+			_commerceOrder.getOrderStatus(), OpenCommerceOrderStatusImpl.KEY);
+
+		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			_commerceOrder, _user.getUserId());
+
+		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			_user.getUserId(), true);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrder.getCommerceOrderItems();
+
+		Assert.assertEquals(
+			commerceOrderItems.toString(), 1, commerceOrderItems.size());
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+			_commerceInventoryWarehouseLocalService.
+				getCommerceInventoryWarehouses(
+					_commerceOrder.getCommerceAccountId(),
+					_commerceChannel.getGroupId(), commerceOrderItem.getSku());
+
+		Assert.assertFalse(commerceInventoryWarehouses.isEmpty());
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			commerceInventoryWarehouses.get(0);
+
+		_commerceShipmentItemLocalService.addCommerceShipmentItem(
+			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceOrderItem.getQuantity(), null, true, _serviceContext);
+
+		_commerceShipment1 = _commerceShipmentLocalService.updateStatus(
+			_commerceShipment1.getCommerceShipmentId(),
+			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
+
+		Assert.assertEquals(
+			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
+			_commerceShipment1.getStatus());
+
+		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_SHIPPED,
+			_commerceOrder.getOrderStatus());
+
+		_commerceOrder.setTotal(new BigDecimal(RandomTestUtil.nextDouble()));
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
+
+		_commerceShipment1 =
+			_commerceShipmentLocalService.fetchCommerceShipment(
+				_commerceShipment1.getCommerceShipmentId());
+
+		Assert.assertEquals(
+			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
+			_commerceShipment1.getStatus());
+
+		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_SHIPPED,
+			_commerceOrder.getOrderStatus());
+	}
+
+	@Test
 	public void testPlaceOrderOnHoldAndRemoveHold() throws Exception {
 		frutillaRule.scenario(
 			"Use the Order Engine to place an Order on hold then remove the " +

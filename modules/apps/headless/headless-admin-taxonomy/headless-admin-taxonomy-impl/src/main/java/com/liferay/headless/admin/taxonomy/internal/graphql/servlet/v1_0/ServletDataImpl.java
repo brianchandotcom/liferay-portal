@@ -431,11 +431,6 @@ public class ServletDataImpl implements ServletData {
 							"getTaxonomyVocabularyPermissionsPage"));
 
 					put(
-						"query#TaxonomyCategory.permissions",
-						new ObjectValuePair<>(
-							TaxonomyCategoryResourceImpl.class,
-							"getTaxonomyCategoryPermissionsPage"));
-					put(
 						"query#TaxonomyVocabulary.permissions",
 						new ObjectValuePair<>(
 							TaxonomyVocabularyResourceImpl.class,

@@ -5,7 +5,7 @@
     osgi.identity;filter:='(osgi.identity=javax.servlet-api)',\
     osgi.identity;filter:='(osgi.identity=slf4j.api)'
 -runprovidedcapabilities:\
-    osgi.ee;osgi.ee="JavaSE";version:List<Version>="1.8,11",\
+    osgi.ee;osgi.ee="JavaSE";version:List<Version>="1.8,11,17,21",\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.model.Portlet',\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle',\
     osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\

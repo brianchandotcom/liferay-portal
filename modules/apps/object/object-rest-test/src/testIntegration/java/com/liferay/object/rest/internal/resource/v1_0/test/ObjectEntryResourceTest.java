@@ -7494,7 +7494,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-39967")
 	@Test
-	public void testPostCustomObjectEntryWithAttachmentFieldInDifferentCompany()
+	public void testPostCustomObjectEntryWithAttachmentObjectFieldInDifferentCompany()
 		throws Exception {
 
 		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry = _toFileEntry(

@@ -192,8 +192,8 @@ function getMonthDiff(startDate: Date, secondDate: Date) {
 
 	let monthsDiff = secondDate.getMonth() - startDate.getMonth();
 
-	if (yearDiff === 0) {
-		monthsDiff += 12;
+	if (yearDiff !== 0) {
+		monthsDiff += 12 * yearDiff;
 	}
 
 	return monthsDiff;

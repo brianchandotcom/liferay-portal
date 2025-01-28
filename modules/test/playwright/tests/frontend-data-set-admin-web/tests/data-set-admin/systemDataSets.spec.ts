@@ -6,8 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {waitForAlert} from '../../../../utils/waitForAlert';
+import {fdsSamplePageTest} from '../../../frontend-data-set-web/fixtures/fdsSamplePageTest';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
@@ -15,6 +17,8 @@ import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
 export const test = mergeTests(
 	actionsPageTest,
 	dataSetManagerApiHelpersTest,
+	fdsSamplePageTest,
+	isolatedSiteTest,
 	systemDataSetsPageTest,
 	featureFlagsTest({
 		'LPD-37531': {enabled: true},
@@ -26,7 +30,11 @@ export const test = mergeTests(
 test(
 	'Import a system data set to customize',
 	{tag: ['@LPD-37531', '@LPD-40949']},
-	async ({actionsPage, systemDataSetsPage}) => {
+	async ({actionsPage, fdsSamplePage, site, systemDataSetsPage}) => {
+		await test.step('Add FDS Sample Widget for object definition generation', async () => {
+			await fdsSamplePage.setupFDSSampleWidget({site});
+		});
+
 		await test.step('Navigate to system data sets page', async () => {
 			await systemDataSetsPage.goto();
 		});

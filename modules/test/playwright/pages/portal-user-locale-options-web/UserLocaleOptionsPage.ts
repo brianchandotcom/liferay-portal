@@ -7,16 +7,21 @@ import {Locator, Page} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 export class UserLocaleOptionsPage {
-	readonly languageChangeLink : Locator;
-	readonly page : Page;
+	readonly languageChangeLink: Locator;
+	readonly page: Page;
 
-	constructor (page : Page) {
-		this.languageChangeLink = page.getByRole('link', {name: "Display the page in"})
+	constructor(page: Page) {
+		this.languageChangeLink = page.getByRole('link', {
+			name: 'Display the page in',
+		});
 		this.page = page;
 	}
 
 	async changeLanguageWithAlert() {
-		await waitForAlert(this.page, "This page is displayed in", {autoClose: false, type: 'info'});
+		await waitForAlert(this.page, 'This page is displayed in', {
+			autoClose: false,
+			type: 'info',
+		});
 
 		await this.languageChangeLink.click();
 	}

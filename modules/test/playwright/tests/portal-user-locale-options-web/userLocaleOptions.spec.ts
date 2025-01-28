@@ -20,10 +20,10 @@ export const test = mergeTests(
 
 test('LPD-46913 Language should change properly for admins even if the site does not have the admin language', async ({
 	apiHelpers,
+	page,
 	siteSettingsLocalizationPage,
 	siteSettingsPage,
-	page,
-	userLocaleOptionsPage
+	userLocaleOptionsPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
@@ -43,15 +43,22 @@ test('LPD-46913 Language should change properly for admins even if the site does
 			site.friendlyUrlPath
 		);
 
-		const siteURL = `/es/group${site.friendlyUrlPath}`
+		const siteURL = `/es/group${site.friendlyUrlPath}`;
 		await page.goto(siteURL);
 
-		await siteSettingsPage.goToSiteSetting('Localización', 'Idiomas', site.friendlyUrlPath);
+		await siteSettingsPage.goToSiteSetting(
+			'Localización',
+			'Idiomas',
+			site.friendlyUrlPath
+		);
 
 		await userLocaleOptionsPage.changeLanguageWithAlert();
 
-		expect (siteSettingsLocalizationPage.customDefaultLanguageOption).toBeVisible();
-	} finally {
+		expect(
+			siteSettingsLocalizationPage.customDefaultLanguageOption
+		).toBeVisible();
+	}
+	finally {
 		await page.goto('en');
 	}
 });

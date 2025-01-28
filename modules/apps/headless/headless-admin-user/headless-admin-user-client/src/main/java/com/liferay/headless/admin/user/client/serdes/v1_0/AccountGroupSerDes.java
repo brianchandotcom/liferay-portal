@@ -8,7 +8,6 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
-import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -197,19 +196,19 @@ public class AccountGroupSerDes {
 			sb.append("\"");
 		}
 
-		if (accountGroup.getRoleBriefs() != null) {
+		if (accountGroup.getPermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"roleBriefs\": ");
+			sb.append("\"permissions\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < accountGroup.getRoleBriefs().length; i++) {
-				sb.append(String.valueOf(accountGroup.getRoleBriefs()[i]));
+			for (int i = 0; i < accountGroup.getPermissions().length; i++) {
+				sb.append(accountGroup.getPermissions()[i]);
 
-				if ((i + 1) < accountGroup.getRoleBriefs().length) {
+				if ((i + 1) < accountGroup.getPermissions().length) {
 					sb.append(", ");
 				}
 			}
@@ -319,11 +318,12 @@ public class AccountGroupSerDes {
 			map.put("name", String.valueOf(accountGroup.getName()));
 		}
 
-		if (accountGroup.getRoleBriefs() == null) {
-			map.put("roleBriefs", null);
+		if (accountGroup.getPermissions() == null) {
+			map.put("permissions", null);
 		}
 		else {
-			map.put("roleBriefs", String.valueOf(accountGroup.getRoleBriefs()));
+			map.put(
+				"permissions", String.valueOf(accountGroup.getPermissions()));
 		}
 
 		return map;
@@ -376,7 +376,7 @@ public class AccountGroupSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 
@@ -468,20 +468,24 @@ public class AccountGroupSerDes {
 					accountGroup.setName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					RoleBrief[] roleBriefsArray =
-						new RoleBrief[jsonParserFieldValues.length];
+					com.liferay.headless.admin.user.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.user.client.permission.
+							Permission[jsonParserFieldValues.length];
 
-					for (int i = 0; i < roleBriefsArray.length; i++) {
-						roleBriefsArray[i] = RoleBriefSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.user.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
-					accountGroup.setRoleBriefs(roleBriefsArray);
+					accountGroup.setPermissions(permissionsArray);
 				}
 			}
 		}

@@ -234,26 +234,34 @@ public class AccountGroup implements Cloneable, Serializable {
 
 	protected String name;
 
-	public RoleBrief[] getRoleBriefs() {
-		return roleBriefs;
+	public com.liferay.headless.admin.user.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
 	}
 
-	public void setRoleBriefs(RoleBrief[] roleBriefs) {
-		this.roleBriefs = roleBriefs;
+	public void setPermissions(
+		com.liferay.headless.admin.user.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
 	}
 
-	public void setRoleBriefs(
-		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.admin.user.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
 
 		try {
-			roleBriefs = roleBriefsUnsafeSupplier.get();
+			permissions = permissionsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected RoleBrief[] roleBriefs;
+	protected com.liferay.headless.admin.user.client.permission.Permission[]
+		permissions;
 
 	@Override
 	public AccountGroup clone() throws CloneNotSupportedException {

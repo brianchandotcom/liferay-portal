@@ -1763,8 +1763,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
-				if (accountGroup.getRoleBriefs() == null) {
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (accountGroup.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -2000,10 +2000,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						accountGroup1.getRoleBriefs(),
-						accountGroup2.getRoleBriefs())) {
+						accountGroup1.getPermissions(),
+						accountGroup2.getPermissions())) {
 
 					return false;
 				}
@@ -2343,7 +2343,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("roleBriefs")) {
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

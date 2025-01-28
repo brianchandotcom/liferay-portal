@@ -8,7 +8,6 @@ package com.liferay.object.internal.field.attachment;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -145,7 +144,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				groupId, externalReferenceCode);
 
-		if (fileEntry != null && companyId == fileEntry.getCompanyId()) {
+		if ((fileEntry != null) && (companyId == fileEntry.getCompanyId())) {
 			return fileEntry;
 		}
 
@@ -182,7 +181,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
 				groupId, externalReferenceCode);
 
-		if (fileEntry != null && companyId == fileEntry.getCompanyId()) {
+		if ((fileEntry != null) && (companyId == fileEntry.getCompanyId())) {
 			return fileEntry;
 		}
 

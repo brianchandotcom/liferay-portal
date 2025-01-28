@@ -7494,6 +7494,16 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-39967")
 	@Test
+	public void testPostCustomObjectEntryWithAttachmentObjectField()
+		throws Exception {
+
+		_testPostCustomObjectEntryWithAttachmentObjectField(_objectDefinition1);
+		_testPostCustomObjectEntryWithAttachmentObjectField(
+			_siteScopedObjectDefinition1);
+	}
+
+	@FeatureFlags("LPD-39967")
+	@Test
 	public void testPostCustomObjectEntryWithAttachmentObjectFieldInDifferentCompany()
 		throws Exception {
 
@@ -7650,16 +7660,6 @@ public class ObjectEntryResourceTest {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
 		}
-	}
-
-	@FeatureFlags("LPD-39967")
-	@Test
-	public void testPostCustomObjectEntryWithAttachmentObjectField()
-		throws Exception {
-
-		_testPostCustomObjectEntryWithAttachmentObjectField(_objectDefinition1);
-		_testPostCustomObjectEntryWithAttachmentObjectField(
-			_siteScopedObjectDefinition1);
 	}
 
 	@Test

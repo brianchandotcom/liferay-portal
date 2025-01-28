@@ -252,12 +252,9 @@ components:
                 name:
                     example: AccountGroup Name
                     type: string
-                roleBriefs:
-                    description:
-                        The list of roles associated with this account group.
+                permissions:
                     items:
-                        $ref: "#/components/schemas/RoleBrief"
-                    readOnly: true
+                        type: permission
                     type: array
             type: object
         AccountRole:

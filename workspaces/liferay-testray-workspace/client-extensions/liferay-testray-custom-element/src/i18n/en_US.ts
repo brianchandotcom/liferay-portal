@@ -205,6 +205,7 @@ export default {
 	'import-status': 'Import Status',
 	'in-analysis': 'In Analysis',
 	'in-progress': 'In Progress',
+	'incomplete': 'Incomplete',
 	'issue': 'Issue',
 	'issues': 'Issues',
 	'issues-in-x': 'Issues in {0}',

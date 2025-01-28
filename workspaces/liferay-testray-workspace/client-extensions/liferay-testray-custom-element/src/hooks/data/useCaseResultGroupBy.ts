@@ -53,14 +53,14 @@ const useTotalTestCases = (testrayBuild: TestrayBuild) => {
 			],
 			[
 				CaseResultStatuses.INCOMPLETE,
-				getAggregationValue(testrayBuild.caseResultUntested) +
-					getAggregationValue(testrayBuild.caseResultInProgress),
+				getAggregationValue(testrayBuild.caseResultIncomplete) +
+					getAggregationValue(testrayBuild.caseResultUntested),
 			],
 		],
 		[
 			testrayBuild.caseResultBlocked,
 			testrayBuild.caseResultFailed,
-			testrayBuild.caseResultInProgress,
+			testrayBuild.caseResultIncomplete,
 			testrayBuild.caseResultPassed,
 			testrayBuild.caseResultTestFix,
 			testrayBuild.caseResultUntested,
@@ -117,8 +117,8 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 		],
 		[
 			CaseResultStatuses.INCOMPLETE,
-			getStatusValue(CaseResultStatuses.UNTESTED) +
-				getStatusValue(CaseResultStatuses.IN_PROGRESS),
+			getStatusValue(CaseResultStatuses.INCOMPLETE) +
+				getStatusValue(CaseResultStatuses.UNTESTED),
 		],
 	];
 

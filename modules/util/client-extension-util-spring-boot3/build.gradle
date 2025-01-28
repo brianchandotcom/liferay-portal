@@ -2,14 +2,12 @@ sourceCompatibility = "17"
 targetCompatibility = "17"
 
 dependencies {
-	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "3.4.2"
-	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "3.4.2"
-	api group: "org.springframework.boot", name: "spring-boot-starter-web", version: "3.4.2"
-	api group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "3.4.2"
-
+	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.18"
+	api group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
+	api group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
+	api group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"
 	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
 	implementation group: "org.json", name: "json", version: "20231013"
-
 	testImplementation group: "com.liferay", name: "com.liferay.petra.function", version: "latest.release"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "latest.release"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"

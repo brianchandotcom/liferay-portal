@@ -206,3 +206,7 @@ gradleTestGenerator {
 	mustRunAfter copyGradleTestProjects
 	mustRunAfter copyHotFixZip
 }
+
+jar {
+	destinationDirectory = file "build/testJar"
+}

@@ -63,6 +63,7 @@ public class ManifestHelperTask extends Task {
 
 		project.setProperty("build.revision", getBuildRevision());
 		project.setProperty("build.time", getDateString(new Date()));
+		project.setProperty("cpe.identifier", getCpeId());
 		project.setProperty(
 			"release.info.build.date",
 			String.valueOf(ReleaseInfo.getBuildDate()));
@@ -113,6 +114,46 @@ public class ManifestHelperTask extends Task {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	protected String getCpeId() {
+		try {
+			StringBuilder sb = new StringBuilder();
+
+			if (ReleaseInfo.isDXP()) {
+				sb.append("cpe:2.3:a:liferay:dxp:");
+
+				String versionDisplayName = ReleaseInfo.getVersionDisplayName();
+
+				String qVersion = versionDisplayName.substring(
+					0, versionDisplayName.lastIndexOf(StringPool.PERIOD));
+
+				String patchVersion = versionDisplayName.substring(
+					versionDisplayName.lastIndexOf(StringPool.PERIOD) + 1);
+
+				if (patchVersion.endsWith(" LTS")) {
+					patchVersion = patchVersion.substring(
+						0, versionDisplayName.indexOf(" LTS"));
+				}
+
+				sb.append(qVersion.toLowerCase());
+				sb.append(StringPool.COLON);
+				sb.append(patchVersion);
+				sb.append(":*:*:*:*:*:*");
+			}
+			else {
+				sb.append("cpe:2.3:a:liferay:portal:");
+				sb.append(ReleaseInfo.getVersion());
+				sb.append(
+					project.getProperty("release.info.version.file.suffix"));
+				sb.append(":*:*:*:*:*:*:*");
+			}
+
+			return sb.toString();
+		}
+		catch (Exception exception) {
+			return StringPool.BLANK;
+		}
 	}
 
 	protected String getDateString(Date date) {

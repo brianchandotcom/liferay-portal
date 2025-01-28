@@ -12,7 +12,6 @@ import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
@@ -25,19 +24,20 @@ import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {readFileFromZip} from '../../utils/zip';
+import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	companyExportImportPageTest,
 	dataApiHelpersTest,
 	depotAdminPageTest,
 	documentLibraryPagesTest,
-	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35013': {enabled: true},
 		'LPD-35914': {enabled: true, system: true},
 	}),
+	exportImportPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
@@ -287,9 +287,7 @@ test('can import a lar file selecting some items to import', async ({
 
 test('can export and import custom object entries at instance level', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	exportImportPage,
-	page,
+	companyExportImportPage,
 }) => {
 	const objectActionApiClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -332,20 +330,8 @@ test('can export and import custom object entries at instance level', async ({
 		'c/tests'
 	);
 
-	await applicationsMenuPage.goToExport();
-
-	await page.getByTestId('creationMenuNewButton').nth(1).click();
-
-	await page.getByLabel('Tests 1 Items').click();
-
-	const exportName = 'CustomObject-' + getRandomString();
-
-	await exportImportPage.title.fill(exportName);
-
-	await exportImportPage.exportButton.click();
-
 	const exportFilePath =
-		await exportImportPage.downloadExportProcess(exportName);
+		await companyExportImportPage.exportCustomObject('Tests');
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -362,22 +348,7 @@ test('can export and import custom object entries at instance level', async ({
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await applicationsMenuPage.goToImport();
-
-	await exportImportPage.newImportButton.click();
-
-	await page.locator('input[type="file"]').setInputFiles(exportFilePath);
-
-	await exportImportPage.continueButton.click();
-
-	await exportImportPage.importButton.click();
-
-	await expect(
-		exportImportPage.page
-			.getByText(exportName)
-			.locator('../../..')
-			.getByText('Successful')
-	).toBeVisible();
+	await companyExportImportPage.importCustomObject(exportFilePath);
 
 	expect(
 		await apiHelpers.get(
@@ -393,9 +364,7 @@ test('can export and import custom object entries at instance level', async ({
 
 test('can import custom object entries at instance level with or without permissions based on selection', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	exportImportPage,
-	page,
+	companyExportImportPage,
 }) => {
 	const objectActionApiClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -449,23 +418,8 @@ test('can import custom object entries at instance level with or without permiss
 
 	// Export with permissions
 
-	await applicationsMenuPage.goToExport();
-
-	await page.getByTestId('creationMenuNewButton').nth(1).click();
-
-	await page.getByLabel('Tests 1 Items').click();
-
-	const exportNameWithPermissions =
-		'CustomObject-WithPermissions-' + getRandomString();
-
-	await exportImportPage.title.fill(exportNameWithPermissions);
-
-	await exportImportPage.exportPermissionsButton.click();
-
-	await exportImportPage.exportButton.click();
-
 	const exportFilePathWithPermissions =
-		await exportImportPage.downloadExportProcess(exportNameWithPermissions);
+		await companyExportImportPage.exportCustomObject('Tests', true);
 
 	// Import with permissions
 
@@ -478,26 +432,10 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await applicationsMenuPage.goToImport();
-
-	await exportImportPage.newImportButton.click();
-
-	await page
-		.locator('input[type="file"]')
-		.setInputFiles(exportFilePathWithPermissions);
-
-	await exportImportPage.continueButton.click();
-
-	await exportImportPage.importPermissionsButton.click();
-
-	await exportImportPage.importButton.click();
-
-	await expect(
-		exportImportPage.page
-			.getByText(exportNameWithPermissions)
-			.locator('../../..')
-			.getByText('Successful')
-	).toBeVisible();
+	await companyExportImportPage.importCustomObject(
+		exportFilePathWithPermissions,
+		true
+	);
 
 	objectEntry = await apiHelpers.get(
 		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`
@@ -525,24 +463,9 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await applicationsMenuPage.goToImport();
-
-	await exportImportPage.newImportButton.click();
-
-	await page
-		.locator('input[type="file"]')
-		.setInputFiles(exportFilePathWithPermissions);
-
-	await exportImportPage.continueButton.click();
-
-	await exportImportPage.importButton.click();
-
-	await expect(
-		exportImportPage.page
-			.getByText(exportNameWithPermissions)
-			.locator('../../..')
-			.getByText('Successful')
-	).toBeVisible();
+	await companyExportImportPage.importCustomObject(
+		exportFilePathWithPermissions
+	);
 
 	objectEntry = await apiHelpers.get(
 		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`

@@ -7494,6 +7494,14 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-39967")
 	@Test
+	public void testPostCustomObjectEntryWithAttachmentFieldInDifferentCompany()
+		throws Exception {
+
+		_testPostCustomObjectEntryWithAttachmentFieldInDifferentCompany();
+	}
+
+	@FeatureFlags("LPD-39967")
+	@Test
 	public void testPostCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
 
@@ -14859,6 +14867,81 @@ public class ObjectEntryResourceTest {
 		_assertJSONObjectWithAttachmentField(
 			expectedJSONObjectUnsafeFunction.apply(fileEntry), jsonObject,
 			objectFieldName);
+	}
+
+	private void _testPostCustomObjectEntryWithAttachmentFieldInDifferentCompany()
+		throws Exception {
+
+		com.liferay.object.rest.dto.v1_0.FileEntry fileEntry = _toFileEntry(
+			Base64::encode, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + ".txt", null, null);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				JSONFactoryUtil.createJSONObject(fileEntry.toString())
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject objectEntryNestedJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+					fileEntry.getId()
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(), "?nestedFields=",
+					_objectDefinition1.getName(), ".folder"),
+				Http.Method.GET);
+
+		JSONArray itemsJSONArray = objectEntryNestedJSONObject.getJSONArray(
+			"items");
+
+		JSONObject itemJSONObject = (JSONObject)itemsJSONArray.get(0);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"ExceptionMapper,",
+				LoggerTestUtil.ERROR)) {
+
+			HTTPTestUtil.customize(
+			).withBaseURL(
+				"http://www.able.com:8080"
+			).withCredentials(
+				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).apply(
+				() -> {
+					Assert.assertEquals(
+						"NOT_FOUND",
+						HTTPTestUtil.invokeToJSONObject(
+							JSONUtil.put(
+								_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+								itemJSONObject.getJSONObject(
+									_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE)
+							).toString(),
+							StringBundler.concat(
+								_objectDefinition1.getRESTContextPath(),
+								"?nestedFields=",
+								_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+								".folder"),
+							Http.Method.POST
+						).getString(
+							"status"
+						));
+				}
+			);
+		}
 	}
 
 	private void

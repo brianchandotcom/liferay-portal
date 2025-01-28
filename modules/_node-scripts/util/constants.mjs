@@ -56,7 +56,6 @@ const NO_RECURSE_PROJECT_DIRS = [
 	'classes',
 	'node_modules',
 	'osb-faro',
-	'osb-site-initializer-evp',
 	'sdk',
 	'test',
 ];

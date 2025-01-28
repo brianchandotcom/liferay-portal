@@ -78,9 +78,7 @@ public class SamlLoginActionTest {
 	}
 
 	@Test
-	public void testPageTitleIsSameWhenRedirectMessageIsDisabled()
-		throws Exception {
-
+	public void testExecuteWhenRedirectMessageIsDisabled() throws Exception {
 		String companyName = RandomTestUtil.randomString();
 		String layoutHtmlTitle = RandomTestUtil.randomString();
 
@@ -159,22 +157,17 @@ public class SamlLoginActionTest {
 		_samlLoginAction = new SamlLoginAction();
 
 		ReflectionTestUtil.setFieldValue(
+			_samlLoginAction, "_jsonFactory", new JSONFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_samlLoginAction, "_layoutSEOLinkManager", _layoutSEOLinkManager);
+		ReflectionTestUtil.setFieldValue(_samlLoginAction, "_portal", _portal);
+		ReflectionTestUtil.setFieldValue(_samlLoginAction, "_props", _props);
+		ReflectionTestUtil.setFieldValue(
 			_samlLoginAction, "_samlProviderConfigurationHelper",
 			_samlProviderConfigurationHelper);
-
-		ReflectionTestUtil.setFieldValue(_samlLoginAction, "_props", _props);
-
-		ReflectionTestUtil.setFieldValue(_samlLoginAction, "_portal", _portal);
-
 		ReflectionTestUtil.setFieldValue(
 			_samlLoginAction, "_samlSpIdpConnectionLocalService",
 			_samlSpIdpConnectionLocalService);
-
-		ReflectionTestUtil.setFieldValue(
-			_samlLoginAction, "_jsonFactory", new JSONFactoryImpl());
-
-		ReflectionTestUtil.setFieldValue(
-			_samlLoginAction, "_layoutSEOLinkManager", _layoutSEOLinkManager);
 	}
 
 	private static void _setUpSamlProviderConfigurationHelper() {
@@ -182,13 +175,13 @@ public class SamlLoginActionTest {
 			SamlProviderConfigurationHelper.class);
 
 		Mockito.when(
-			_samlProviderConfigurationHelper.isRoleSp()
+			_samlProviderConfigurationHelper.isEnabled()
 		).thenReturn(
 			true
 		);
 
 		Mockito.when(
-			_samlProviderConfigurationHelper.isEnabled()
+			_samlProviderConfigurationHelper.isRoleSp()
 		).thenReturn(
 			true
 		);
@@ -200,22 +193,13 @@ public class SamlLoginActionTest {
 
 		List<SamlSpIdpConnection> samlSpIdpConnections = new ArrayList<>();
 
-		SamlSpIdpConnection samlSpIdpConnection = Mockito.mock(
-			SamlSpIdpConnection.class);
-
-		samlSpIdpConnections.add(samlSpIdpConnection);
+		samlSpIdpConnections.add(Mockito.mock(SamlSpIdpConnection.class));
 
 		Mockito.when(
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
 				Mockito.anyLong())
 		).thenReturn(
 			samlSpIdpConnections
-		);
-
-		Mockito.when(
-			samlSpIdpConnection.isEnabled()
-		).thenReturn(
-			true
 		);
 
 		_listUtilMockedStatic.when(

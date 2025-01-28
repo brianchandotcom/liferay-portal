@@ -96,7 +96,8 @@ public class DDMStructureField {
 
 			if ((ddmFormField != null) &&
 				Objects.equals(
-					ddmFormField.getDataType(), FieldConstants.STRING)) {
+					ddmFormField.getDataType(), FieldConstants.STRING) &&
+				ddmFormField.isLocalizable()) {
 
 				ddmStructureNestedTypeSortableFieldName =
 					ddmStructureNestedTypeSortableFieldName +

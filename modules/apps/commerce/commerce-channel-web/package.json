@@ -6,15 +6,29 @@
 		"@liferay/marketplace-js-components-web": "*",
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",
+		"jest-fetch-mock": "3.0.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"
+	},
+	"jest": {
+		"collectCoverage": true,
+		"coverageDirectory": "coverage",
+		"coverageReporters": [
+			"text",
+			"lcov"
+		],
+		"modulePathIgnorePatterns": [
+			"/__mock__/",
+			"/__utils__/"
+		]
 	},
 	"main": "js/index.js",
 	"name": "@liferay/commerce-channel-web",
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
+		"format": "node-scripts format",
+		"test": "node-scripts test"
 	},
 	"version": "4.0.89"
 }

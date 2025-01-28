@@ -19,6 +19,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.PermissionService;
@@ -189,6 +190,10 @@ public class TaxonomyCategoryDTOConverter
 					});
 				setPermissions(
 					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-41304")) {
+							return null;
+						}
+
 						try {
 							_permissionService.checkPermission(
 								assetCategory.getGroupId(),

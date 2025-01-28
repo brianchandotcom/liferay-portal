@@ -279,9 +279,7 @@ public class AuthVerifierTest {
 		String credentials = DatatypeConverter.printBase64Binary(
 			"test@liferay.com:wrongpassword".getBytes());
 
-		String basicAuthToken = "Basic " + credentialsToken;
-
-		connection.setRequestProperty("Authorization", basicAuthToken);
+		connection.setRequestProperty("Authorization", "Basic " + credentials);
 
 		_assertHttpResponseStatusCode(connection, 401);
 	}
@@ -294,11 +292,10 @@ public class AuthVerifierTest {
 
 		URLConnection connection = url.openConnection();
 
-		String oAuthToken =
+		connection.setRequestProperty(
+			"Authorization",
 			"Authorization: Bearer " +
-				"3646534f4654396f6e565648315557534253613062673d3d";
-
-		connection.setRequestProperty("Authorization", oAuthToken);
+				"3646534f4654396f6e565648315557534253613062673d3d");
 
 		_assertHttpResponseStatusCode(connection, 401);
 	}

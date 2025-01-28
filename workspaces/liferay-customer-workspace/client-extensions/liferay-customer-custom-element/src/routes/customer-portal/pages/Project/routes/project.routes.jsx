@@ -29,8 +29,6 @@ import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
 import ProductOutlet from './Outlets/ProductOutlet';
 import ProjectUsage from '../ProjectUsage';
-import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
-import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import BusinessEvents from '../BusinessEvent';
 
 const ProjectRoutes = () => {
@@ -38,28 +36,6 @@ const ProjectRoutes = () => {
 
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 	const {featureFlags} = useAppPropertiesContext();
-
-	const {data: koroneikiData, loading: koroneikiAccountLoading} =
-		useCurrentKoroneikiAccount();
-	const koroneikiAccount =
-		koroneikiData?.koroneikiAccountByExternalReferenceCode;
-
-	const {data: myUserAccountData} =
-		useMyUserAccountByAccountExternalReferenceCode(
-			koroneikiAccountLoading,
-			koroneikiAccount?.accountKey
-		);
-	const loggedUserAccount = myUserAccountData?.myUserAccount;
-
-	const hasSaasSubscription = useMemo(
-		() =>
-			subscriptionGroups?.some(
-				(subscription) =>
-					subscription.externalReferenceCode ===
-					`${project?.externalReferenceCode}_liferay-saas`
-			),
-		[subscriptionGroups]
-	);
 
 	useEffect(() => {
 		if (project && subscriptionGroups) {
@@ -270,13 +246,12 @@ const ProjectRoutes = () => {
 						<Route element={<BusinessEvents />} path="business-events" />
 					)}
 
-					{((featureFlags.includes('LRSD-6322') && loggedUserAccount?.isLiferayStaff) ||
-						(featureFlags.includes('LRSD-7805') && loggedUserAccount?.isPartner)) &&
-							hasSaasSubscription && (
-								<Route
-									element={<ProjectUsage />}
-									path="project-usage"
-								/>
+					{(featureFlags.includes('LRSD-6322') ||
+						featureFlags.includes('LRSD-7805')) && (
+							<Route
+								element={<ProjectUsage />}
+								path="project-usage"
+							/>
 					)}
 
 					<Route element={<h3>Page not found</h3>} path="*" />

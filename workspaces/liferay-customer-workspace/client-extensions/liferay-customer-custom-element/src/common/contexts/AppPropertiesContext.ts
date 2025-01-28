@@ -15,7 +15,7 @@ export const AppPropertiesContext = createContext({
 	articleNotifiedWhenMyActivationKeyIsAboutToExpireURL: '',
 	articleWhatIsMyInstanceSizingValueURL: '',
 	client: null,
-	featureFlags: [],
+	featureFlags: [] as string[],
 	gravatarAPI: '',
 	importDate: null,
 	provisioningServerAPI: '',

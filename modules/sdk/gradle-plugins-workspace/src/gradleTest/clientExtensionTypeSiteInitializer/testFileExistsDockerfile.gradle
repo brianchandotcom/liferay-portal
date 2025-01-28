@@ -1,4 +1,4 @@
-ext.expectedContentStrings = ["COPY /site-initializer /opt/liferay/site-initializer"]
+ext.expectedContentStrings = ["COPY --chown=liferay:liferay /site-initializer /opt/liferay/site-initializer"]
 ext.expectedFilePath = "Dockerfile"
 ext.taskPath = ":site-initializer:createClientExtensionConfig"
 

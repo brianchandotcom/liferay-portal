@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
  * @author Brooke Dalton
  */
 @RunWith(Arquillian.class)
-public class SegmentsCTTest {
+public class SegmentsEntryCTTest {
 
 	@ClassRule
 	@Rule
@@ -65,7 +65,7 @@ public class SegmentsCTTest {
 	}
 
 	@Test
-	public void testAddSegments() throws Exception {
+	public void testAddSegmentsEntry() throws Exception {
 		SegmentsEntry segmentsEntry = null;
 
 		try (SafeCloseable safeCloseable1 =
@@ -102,7 +102,7 @@ public class SegmentsCTTest {
 	}
 
 	@Test
-	public void testModifySegments() throws Exception {
+	public void testModifySegmentsEntry() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 

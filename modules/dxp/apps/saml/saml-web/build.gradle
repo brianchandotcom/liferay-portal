@@ -23,6 +23,5 @@ dependencies {
 	compileOnly project(":dxp:apps:saml:saml-api")
 	compileOnly project(":dxp:apps:saml:saml-opensaml-integration")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }

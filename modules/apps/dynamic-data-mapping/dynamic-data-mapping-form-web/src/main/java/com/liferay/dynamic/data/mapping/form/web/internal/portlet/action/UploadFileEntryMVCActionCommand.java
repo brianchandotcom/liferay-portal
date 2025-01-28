@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.form.web.internal.upload.DDMFormUploadValidator;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -165,22 +167,17 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 			}
 
-			long userId = _getDDMFormDefaultUserId(themeDisplay.getCompanyId());
+			User user = DDMFormUtil.getDDMFormDefaultUser(
+				themeDisplay.getCompanyId());
 
 			String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
 				groupId, folderId, fileName);
 
 			return PortletFileRepositoryUtil.addPortletFileEntry(
-				null, groupId, userId, DDMFormInstance.class.getName(), 0,
+				null, groupId, user.getUserId(),
+				DDMFormInstance.class.getName(), 0,
 				DDMFormConstants.SERVICE_NAME, folderId, file, uniqueFileName,
 				mimeType, true);
-		}
-
-		private long _getDDMFormDefaultUserId(long companyId)
-			throws PortalException {
-
-			return _userLocalService.getUserIdByScreenName(
-				companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
 		}
 
 		private void _validateAttachmentObjectField(

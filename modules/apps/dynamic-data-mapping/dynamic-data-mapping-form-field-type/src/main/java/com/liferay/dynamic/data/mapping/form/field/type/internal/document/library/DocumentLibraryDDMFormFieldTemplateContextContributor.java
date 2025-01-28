@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionChecker;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -309,8 +310,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	private User _getDDMFormDefaultUser(long companyId) {
 		try {
-			return _userLocalService.getUserByScreenName(
-				companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+			return DDMFormUtil.getDDMFormDefaultUser(companyId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

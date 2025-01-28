@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
@@ -41,6 +40,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
@@ -193,9 +193,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				continue;
 			}
 
-			User ddmFormDefaultUser = _userLocalService.fetchUserByScreenName(
-				user.getCompanyId(),
-				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+			User ddmFormDefaultUser = DDMFormUtil.getDDMFormDefaultUser(
+				user.getCompanyId());
 
 			if ((ddmFormDefaultUser == null) ||
 				(ddmFormDefaultUser.getUserId() != dlFileEntry.getUserId())) {

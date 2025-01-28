@@ -6,7 +6,7 @@ definition {
 	property osgi.modules.includes = "site-initializer-team-extranet";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Liferay Online";
+	property testray.main.component.name = "Team Extranet";
 
 	setUp {
 		TestCase.setUpPortalInstance();

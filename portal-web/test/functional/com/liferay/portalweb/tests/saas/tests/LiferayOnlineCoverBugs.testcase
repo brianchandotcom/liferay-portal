@@ -6,7 +6,7 @@ definition {
 	property liferay.online.properties = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Liferay Online";
+	property testray.main.component.name = "Masterclass";
 
 	setUp {
 		TestCase.setUpPortalInstance();

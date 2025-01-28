@@ -192,11 +192,11 @@ public class CPConfigurationEntryLocalServiceImpl
 			CPConfigurationEntry cpConfigurationEntry)
 		throws PortalException {
 
-		cpConfigurationEntry = super.deleteCPConfigurationEntry(
-			cpConfigurationEntry);
-
 		CPConfigurationEntrySetting parentCPConfigurationEntrySetting =
 			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
+
+		cpConfigurationEntry = super.deleteCPConfigurationEntry(
+			cpConfigurationEntry);
 
 		if (parentCPConfigurationEntrySetting == null) {
 			return cpConfigurationEntry;

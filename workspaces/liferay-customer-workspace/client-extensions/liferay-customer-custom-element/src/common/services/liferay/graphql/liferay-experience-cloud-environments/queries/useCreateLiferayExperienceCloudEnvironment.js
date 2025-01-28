@@ -18,7 +18,7 @@ export const CREATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
 				path: "/c/liferayexperiencecloudenvironments"
 			) {
 			accountKey
-			analyticsCloudOwner
+			analyticsCloudOwnersEmailAddress
 			id
 			incidentManagementEmailAddress
 			incidentManagementFullName

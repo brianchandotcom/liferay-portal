@@ -288,8 +288,9 @@ const SetupLiferayExperienceCloudPage = ({
 							<ClayForm.Group className="mb-0 pb-1">
 								<Input
 									groupStyle="pb-1"
-									label={i18n.translate('analytics-cloud-owner')}
-									name="lxc.analyticsCloudOwner"
+									label={i18n.translate('analytics-cloud-owner-s-email-address')}
+									name="lxc.analyticsCloudOwnersEmailAddress"
+									placeholder="email@example.com"
 									required
 									type="text"
 									validations={[

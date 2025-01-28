@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -239,6 +240,14 @@ public class TaxonomyCategoryResourceTest
 
 	@Override
 	@Test
+	public void testPostTaxonomyCategoryTaxonomyCategory() throws Exception {
+		super.testPostTaxonomyCategoryTaxonomyCategory();
+
+		_testPostTaxonomyCategoryTaxonomyCategoryWithPermissions();
+	}
+
+	@Override
+	@Test
 	public void testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
@@ -429,6 +438,21 @@ public class TaxonomyCategoryResourceTest
 
 		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
 			parentTaxonomyCategoryId, taxonomyCategory);
+	}
+
+	private void _assertPermissions(
+		String[] expectedActionIds, Permission permission, String role) {
+
+		Assert.assertEquals(
+			expectedActionIds.length, permission.getActionIds().length);
+
+		Object[] actionIds = permission.getActionIds();
+
+		for (String expectedActionId : expectedActionIds) {
+			Assert.assertTrue(ArrayUtil.contains(actionIds, expectedActionId));
+		}
+
+		Assert.assertEquals(role, permission.getRoleName());
 	}
 
 	private void _assertTaxonomyCategoriesPageOrder(
@@ -941,6 +965,43 @@ public class TaxonomyCategoryResourceTest
 						}
 					}));
 		}
+	}
+
+	private void _testPostTaxonomyCategoryTaxonomyCategoryWithPermissions()
+		throws Exception {
+
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		Permission permission = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.DELETE};
+				roleName = role.getName();
+			}
+		};
+
+		randomTaxonomyCategory.setPermissions(new Permission[] {permission});
+
+		TaxonomyCategory postTaxonomyCategory =
+			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+				randomTaxonomyCategory);
+
+		Permission[] permissions = postTaxonomyCategory.getPermissions();
+
+		Assert.assertNotNull(permissions);
+		Assert.assertEquals(
+			Arrays.toString(permissions), 2, permissions.length);
+
+		_assertPermissions(
+			new String[] {
+				ActionKeys.ADD_CATEGORY, ActionKeys.DELETE,
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			},
+			permissions[0], RoleConstants.OWNER);
+
+		_assertPermissions(
+			new String[] {ActionKeys.DELETE}, permissions[1], role.getName());
 	}
 
 	@Inject

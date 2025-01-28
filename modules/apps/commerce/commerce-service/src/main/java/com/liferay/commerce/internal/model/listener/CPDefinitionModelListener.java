@@ -5,19 +5,28 @@
 
 package com.liferay.commerce.internal.model.listener;
 
+import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntrySettingLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,36 +52,66 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 					cpConfigurationList.getCPConfigurationListId(),
 					cpConfigurationList.getCPConfigurationListId());
 
-			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
-				null, cpDefinition.getUserId(), cpDefinition.getGroupId(),
-				_classNameLocalService.getClassNameId(CPDefinition.class),
-				cpDefinition.getCPDefinitionId(),
-				cpConfigurationList.getCPConfigurationListId(),
-				templateCPConfigurationEntry.getCPTaxCategoryId(),
-				templateCPConfigurationEntry.getAllowedOrderQuantities(),
-				templateCPConfigurationEntry.isBackOrders(),
-				templateCPConfigurationEntry.
-					getCommerceAvailabilityEstimateId(),
-				templateCPConfigurationEntry.getCPDefinitionInventoryEngine(),
-				templateCPConfigurationEntry.getDepth(),
-				templateCPConfigurationEntry.isDisplayAvailability(),
-				templateCPConfigurationEntry.isDisplayStockQuantity(),
-				templateCPConfigurationEntry.isFreeShipping(),
-				templateCPConfigurationEntry.getHeight(),
-				templateCPConfigurationEntry.getLowStockActivity(),
-				templateCPConfigurationEntry.getMaxOrderQuantity(),
-				templateCPConfigurationEntry.getMinOrderQuantity(),
-				templateCPConfigurationEntry.getMinStockQuantity(),
-				templateCPConfigurationEntry.getMultipleOrderQuantity(),
-				templateCPConfigurationEntry.isPurchasable(),
-				templateCPConfigurationEntry.isShippable() &&
-				!Objects.equals(cpDefinition.getProductTypeName(), "virtual"),
-				templateCPConfigurationEntry.getShippingExtraPrice(),
-				templateCPConfigurationEntry.isShipSeparately(),
-				templateCPConfigurationEntry.isTaxExempt(),
-				templateCPConfigurationEntry.isVisible(),
-				templateCPConfigurationEntry.getWeight(),
-				templateCPConfigurationEntry.getWidth());
+			CPConfigurationEntry cpConfigurationEntry =
+				_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+					null, cpDefinition.getUserId(), cpDefinition.getGroupId(),
+					_classNameLocalService.getClassNameId(CPDefinition.class),
+					cpDefinition.getCPDefinitionId(),
+					cpConfigurationList.getCPConfigurationListId(),
+					templateCPConfigurationEntry.getCPTaxCategoryId(),
+					templateCPConfigurationEntry.getAllowedOrderQuantities(),
+					templateCPConfigurationEntry.isBackOrders(),
+					templateCPConfigurationEntry.
+						getCommerceAvailabilityEstimateId(),
+					templateCPConfigurationEntry.
+						getCPDefinitionInventoryEngine(),
+					templateCPConfigurationEntry.getDepth(),
+					templateCPConfigurationEntry.isDisplayAvailability(),
+					templateCPConfigurationEntry.isDisplayStockQuantity(),
+					templateCPConfigurationEntry.isFreeShipping(),
+					templateCPConfigurationEntry.getHeight(),
+					templateCPConfigurationEntry.getLowStockActivity(),
+					templateCPConfigurationEntry.getMaxOrderQuantity(),
+					templateCPConfigurationEntry.getMinOrderQuantity(),
+					templateCPConfigurationEntry.getMinStockQuantity(),
+					templateCPConfigurationEntry.getMultipleOrderQuantity(),
+					templateCPConfigurationEntry.isPurchasable(),
+					templateCPConfigurationEntry.isShippable() &&
+					!Objects.equals(
+						cpDefinition.getProductTypeName(), "virtual"),
+					templateCPConfigurationEntry.getShippingExtraPrice(),
+					templateCPConfigurationEntry.isShipSeparately(),
+					templateCPConfigurationEntry.isTaxExempt(),
+					templateCPConfigurationEntry.isVisible(),
+					templateCPConfigurationEntry.getWeight(),
+					templateCPConfigurationEntry.getWidth());
+
+			CPConfigurationEntrySetting cpConfigurationEntrySetting =
+				_cpConfigurationEntrySettingLocalService.
+					fetchCPConfigurationEntrySetting(
+						cpConfigurationEntry.getCPConfigurationEntryId(),
+						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+			List<CPConfigurationList> cpConfigurationLists =
+				_cpConfigurationListLocalService.getCPConfigurationLists(
+					cpConfigurationList.getGroupId(),
+					cpConfigurationList.getCompanyId());
+
+			if (ListUtil.isNotEmpty(cpConfigurationLists)) {
+				cpConfigurationEntrySetting.setValue(
+					StringUtil.merge(
+						ArrayUtil.filter(
+							TransformUtil.transformToLongArray(
+								cpConfigurationLists,
+								CPConfigurationList::getCPConfigurationListId),
+							curCPConfigurationListId ->
+								curCPConfigurationListId != cpConfigurationList.getCPConfigurationListId()),
+						StringPool.COMMA));
+
+				_cpConfigurationEntrySettingLocalService.
+					updateCPConfigurationEntrySetting(
+						cpConfigurationEntrySetting);
+			}
 
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				cpDefinition.getUserId(), cpDefinition.getCPDefinitionId(),
@@ -102,6 +141,10 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	@Reference
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
+
+	@Reference
+	private CPConfigurationEntrySettingLocalService
+		_cpConfigurationEntrySettingLocalService;
 
 	@Reference
 	private CPConfigurationListLocalService _cpConfigurationListLocalService;

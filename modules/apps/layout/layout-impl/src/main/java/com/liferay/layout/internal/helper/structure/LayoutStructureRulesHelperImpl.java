@@ -40,6 +40,10 @@ public class LayoutStructureRulesHelperImpl
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
 
+			if (!_isActiveLayoutStructureRule(layoutStructureRule)) {
+				continue;
+			}
+
 			_processActions(
 				layoutStructureRule.getActionsJSONArray(), displayedItemIds,
 				hiddenItemIds,
@@ -97,6 +101,26 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		throw new IllegalArgumentException("Unknown action type: " + type);
+	}
+
+	private boolean _isActiveLayoutStructureRule(
+		LayoutStructureRule layoutStructureRule) {
+
+		JSONArray conditionsJSONArray =
+			layoutStructureRule.getConditionsJSONArray();
+
+		for (int i = 0; i < conditionsJSONArray.length(); i++) {
+			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
+				i);
+
+			if (!Objects.equals(
+					conditionJSONObject.getString("type"), "user")) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean _isConditionActive(

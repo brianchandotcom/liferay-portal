@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -83,17 +85,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			_getLiferayAnalyticsChannelId(httpServletRequest, themeDisplay));
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
-			_serialize(
-				HashMapBuilder.put(
-					"dataSourceId",
-					analyticsConfiguration.liferayAnalyticsDataSourceId()
-				).put(
-					"endpointUrl",
-					analyticsConfiguration.liferayAnalyticsEndpointURL()
-				).put(
-					"projectId",
-					analyticsConfiguration.liferayAnalyticsProjectId()
-				).build()));
+			_serialize(_getAnalyticsCloudClientConfig(analyticsConfiguration)));
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
 			_serialize(analyticsConfiguration.syncedGroupIds()));
@@ -128,6 +120,27 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
+	private Map<String, String> _getAnalyticsCloudClientConfig(
+		AnalyticsConfiguration analyticsConfiguration) {
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.ANALYTICS_CLOUD_MOCK_ENABLED))) {
+
+			return HashMapBuilder.put(
+				"endpointUrl", "/o/mock/osb-asah-publisher"
+			).build();
+		}
+
+		return HashMapBuilder.put(
+			"dataSourceId",
+			analyticsConfiguration.liferayAnalyticsDataSourceId()
+		).put(
+			"endpointUrl", analyticsConfiguration.liferayAnalyticsEndpointURL()
+		).put(
+			"projectId", analyticsConfiguration.liferayAnalyticsProjectId()
+		).build();
+	}
+
 	private String _getLiferayAnalyticsChannelId(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
@@ -152,6 +165,12 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	private boolean _isAnalyticsTrackingEnabled(
 		AnalyticsConfiguration analyticsConfiguration,
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.ANALYTICS_CLOUD_MOCK_ENABLED))) {
+
+			return true;
+		}
 
 		Layout layout = themeDisplay.getLayout();
 

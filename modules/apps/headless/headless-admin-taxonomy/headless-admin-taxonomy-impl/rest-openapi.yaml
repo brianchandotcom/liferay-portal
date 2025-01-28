@@ -249,6 +249,10 @@ components:
                             type: object
                     readOnly: true
                     type: object
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 siteExternalReferenceCode:
                     description:
                         The external reference code of the site to which this category is scoped.

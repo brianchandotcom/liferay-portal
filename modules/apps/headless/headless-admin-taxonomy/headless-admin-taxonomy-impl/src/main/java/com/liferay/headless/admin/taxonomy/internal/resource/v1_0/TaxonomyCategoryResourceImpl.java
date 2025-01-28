@@ -330,7 +330,9 @@ public class TaxonomyCategoryResourceImpl
 
 		Permission[] permissions = taxonomyCategory.getPermissions();
 
-		if (permissions != null) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-41304") &&
+			(permissions != null)) {
+
 			putTaxonomyCategoryPermissionsPage(
 				String.valueOf(assetCategory.getCategoryId()),
 				taxonomyCategory.getPermissions());
@@ -718,7 +720,9 @@ public class TaxonomyCategoryResourceImpl
 
 		Permission[] permissions = taxonomyCategory.getPermissions();
 
-		if (permissions != null) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-41304") &&
+			(permissions != null)) {
+
 			putTaxonomyCategoryPermissionsPage(
 				String.valueOf(assetCategory.getCategoryId()), permissions);
 		}

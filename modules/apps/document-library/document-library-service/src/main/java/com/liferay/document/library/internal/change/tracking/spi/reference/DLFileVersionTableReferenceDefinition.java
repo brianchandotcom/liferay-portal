@@ -73,6 +73,37 @@ public class DLFileVersionTableReferenceDefinition
 			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DSLFunctionFactoryUtil.concat(
+					DLFileVersionTable.INSTANCE.version,
+					new Scalar<>(StringPool.TILDE),
+					DLFileVersionTable.INSTANCE.storeUUID,
+					new Scalar<>(".index")
+				).eq(
+					CTSContentTable.INSTANCE.version
+				)
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					CTSContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						CTSContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.folderId.eq(
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						CTSContentTable.INSTANCE.path)
+				).and(
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						DLFileVersionTable.INSTANCE.fileEntryId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
 				FriendlyURLEntryTable.INSTANCE
 			).innerJoinON(
 				DLFileVersionTable.INSTANCE,
@@ -106,6 +137,34 @@ public class DLFileVersionTableReferenceDefinition
 					DLFileVersionTable.INSTANCE.version,
 					new Scalar<>(StringPool.TILDE),
 					DLFileVersionTable.INSTANCE.storeUUID
+				).eq(
+					CTSContentTable.INSTANCE.version
+				)
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					CTSContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.folderId.eq(
+						CTSContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						CTSContentTable.INSTANCE.path)
+				).and(
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						DLFileVersionTable.INSTANCE.fileEntryId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DSLFunctionFactoryUtil.concat(
+					DLFileVersionTable.INSTANCE.version,
+					new Scalar<>(StringPool.TILDE),
+					DLFileVersionTable.INSTANCE.storeUUID,
+					new Scalar<>(".index")
 				).eq(
 					CTSContentTable.INSTANCE.version
 				)

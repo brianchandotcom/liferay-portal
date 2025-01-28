@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -47,6 +48,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -437,6 +439,8 @@ public class TaxonomyCategoryResourceImpl
 				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest,
 					taxonomyCategory.getViewableByAsString()
+				).permissions(
+					_getModelPermissions(taxonomyCategory)
 				).build()));
 	}
 
@@ -484,6 +488,18 @@ public class TaxonomyCategoryResourceImpl
 				_assetCategoryService.getCategory(
 					GetterUtil.getLong(
 						document.get(Field.ASSET_CATEGORY_ID)))));
+	}
+
+	private ModelPermissions _getModelPermissions(
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return ModelPermissionsUtil.toModelPermissions(
+			contextCompany.getCompanyId(), taxonomyCategory.getPermissions(),
+			getPermissionCheckerResourceId(taxonomyCategory.getId()),
+			getPermissionCheckerResourceName(taxonomyCategory.getId()),
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService);
 	}
 
 	private long _getParentAssetCategoryId(

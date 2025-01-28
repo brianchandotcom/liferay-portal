@@ -8,10 +8,14 @@ package com.liferay.layout.helper.structure.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureRule;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
@@ -84,11 +88,13 @@ public class LayoutStructureRulesHelperTest {
 					"USER_ID_2", String.valueOf(RandomTestUtil.randomLong())
 				).build()));
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure,
-					PermissionCheckerFactoryUtil.create(_user),
+					_group.getGroupId(), layoutStructure, permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -105,6 +111,9 @@ public class LayoutStructureRulesHelperTest {
 			displayedItemIds.contains("container2"));
 		Assert.assertTrue(
 			hiddenItemIds.toString(), hiddenItemIds.contains("fragment1"));
+
+		_testProcessLayoutStructureRulesWithFormTypeCondition(
+			layoutStructure, permissionChecker);
 	}
 
 	@Test
@@ -119,11 +128,13 @@ public class LayoutStructureRulesHelperTest {
 					String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
 				).build()));
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure,
-					PermissionCheckerFactoryUtil.create(_user),
+					_group.getGroupId(), layoutStructure, permissionChecker,
 					new long[] {SegmentsEntryConstants.ID_DEFAULT});
 
 		Set<String> displayedItemIds =
@@ -137,6 +148,9 @@ public class LayoutStructureRulesHelperTest {
 
 		Assert.assertTrue(displayedItemIds.contains("container2"));
 		Assert.assertTrue(hiddenItemIds.contains("fragment1"));
+
+		_testProcessLayoutStructureRulesWithFormTypeCondition(
+			layoutStructure, permissionChecker);
 	}
 
 	@Test
@@ -146,11 +160,14 @@ public class LayoutStructureRulesHelperTest {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			_read("layout_data_rules_all.json"));
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult =
 				_layoutStructureRulesHelper.processLayoutStructureRules(
-					_group.getGroupId(), layoutStructure,
-					PermissionCheckerFactoryUtil.create(_user), new long[0]);
+					_group.getGroupId(), layoutStructure, permissionChecker,
+					new long[0]);
 
 		Set<String> displayedItemIds =
 			layoutStructureRulesResult.getDisplayedItemIds();
@@ -166,6 +183,32 @@ public class LayoutStructureRulesHelperTest {
 			displayedItemIds.contains("fragment1"));
 		Assert.assertTrue(
 			hiddenItemIds.toString(), hiddenItemIds.contains("container2"));
+
+		_testProcessLayoutStructureRulesWithFormTypeCondition(
+			layoutStructure, permissionChecker);
+	}
+
+	private void _addFormTypeCondition(
+		LayoutStructureRule layoutStructureRule) {
+
+		JSONArray conditionsJSONArray =
+			layoutStructureRule.getConditionsJSONArray();
+
+		conditionsJSONArray.put(
+			JSONUtil.put(
+				"condition", RandomTestUtil.randomString()
+			).put(
+				"id", RandomTestUtil.randomString()
+			).put(
+				"options",
+				JSONUtil.put(
+					"type", "equal"
+				).put(
+					"value", RandomTestUtil.randomString()
+				)
+			).put(
+				"type", "form"
+			));
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -175,6 +218,31 @@ public class LayoutStructureRulesHelperTest {
 			clazz.getClassLoader(),
 			"com/liferay/layout/helper/structure/test/dependencies/" +
 				fileName);
+	}
+
+	private void _testProcessLayoutStructureRulesWithFormTypeCondition(
+		LayoutStructure layoutStructure, PermissionChecker permissionChecker) {
+
+		for (LayoutStructureRule layoutStructureRule :
+				layoutStructure.getLayoutStructureRules()) {
+
+			_addFormTypeCondition(layoutStructureRule);
+		}
+
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				_layoutStructureRulesHelper.processLayoutStructureRules(
+					_group.getGroupId(), layoutStructure, permissionChecker,
+					new long[] {SegmentsEntryConstants.ID_DEFAULT});
+
+		Set<String> displayedItemIds =
+			layoutStructureRulesResult.getDisplayedItemIds();
+		Set<String> hiddenItemIds =
+			layoutStructureRulesResult.getHiddenItemIds();
+
+		Assert.assertEquals(
+			displayedItemIds.toString(), 0, displayedItemIds.size());
+		Assert.assertEquals(hiddenItemIds.toString(), 0, hiddenItemIds.size());
 	}
 
 	@DeleteAfterTestRun

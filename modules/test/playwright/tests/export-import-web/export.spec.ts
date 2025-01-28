@@ -13,14 +13,13 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
 import {readFileFromZip} from '../../utils/zip';
-import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
+import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
+	companyExportImportPageTest,
 	dataApiHelpersTest,
-	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
@@ -82,9 +81,7 @@ test('cannot export site scoped custom object entries at instance level', async 
 
 test('can export custom object entries at instance level with permissions', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	exportImportPage,
-	page,
+	companyExportImportPage,
 }) => {
 	const objectActionApiClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -127,22 +124,10 @@ test('can export custom object entries at instance level with permissions', asyn
 		'c/tests'
 	);
 
-	await applicationsMenuPage.goToExport();
-
-	await page.getByTestId('creationMenuNewButton').nth(1).click();
-
-	await page.getByLabel('Tests 1 Items').click();
-
-	const exportName = 'CustomObject-WithPermissions-' + getRandomString();
-
-	await exportImportPage.title.fill(exportName);
-
-	await exportImportPage.exportPermissionsButton.click();
-
-	await exportImportPage.exportButton.click();
-
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess(exportName);
+	const exportFilePath = await companyExportImportPage.exportCustomObject(
+		'Tests',
+		true
+	);
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 

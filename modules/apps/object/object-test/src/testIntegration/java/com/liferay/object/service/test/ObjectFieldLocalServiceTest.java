@@ -34,6 +34,7 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
@@ -624,6 +625,12 @@ public class ObjectFieldLocalServiceTest {
 
 		String defaultValue = RandomTestUtil.randomString();
 
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value " + defaultValue +
+				" of setting defaultValue is invalid for object field boolean",
+			() -> _addCustomObjectDefinitionWithBooleanObjectField(
+				defaultValue));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value " + defaultValue +
@@ -2111,6 +2118,35 @@ public class ObjectFieldLocalServiceTest {
 			Collections.singletonList(
 				_getAutoIncrementObjectField(
 					initialValue, 0, prefix, readOnly, required, suffix)));
+	}
+
+	private void _addCustomObjectDefinitionWithBooleanObjectField(
+			String defaultValue)
+		throws Exception {
+
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			Collections.singletonList(
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"boolean"
+				).objectFieldSettings(
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+						).value(
+							defaultValue
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+						).value(
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+						).build())
+				).build()));
 	}
 
 	private void _addCustomObjectDefinitionWithEncryptedObjectField(

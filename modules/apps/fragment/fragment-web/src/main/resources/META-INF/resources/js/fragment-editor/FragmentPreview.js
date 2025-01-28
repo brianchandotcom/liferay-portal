@@ -202,9 +202,9 @@ const updatePreviewDebounced = debounce(
 					setLoading(false);
 				}
 
-				iframe.contentWindow.postMessage(
-					JSON.stringify({data: response}),
-					'*'
+				iframe.contentWindow.Liferay.fire(
+					'fragmentEditor:updatePreview',
+					{data: response}
 				);
 			});
 	},

@@ -8,11 +8,11 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script sandbox="<%= true %>">
-	function handleIframeMessage(event) {
+	Liferay.on('fragmentEditor:updatePreview', (event) => {
 		if (event.data) {
 			var virtualDocument = document.createElement('html');
 
-			virtualDocument.innerHTML = JSON.parse(event.data).data;
+			virtualDocument.innerHTML = event.data;
 
 			const body = virtualDocument.querySelector('body');
 
@@ -24,7 +24,5 @@
 
 			Liferay.Util.runScriptsInElement(body);
 		}
-	}
-
-	window.addEventListener('message', handleIframeMessage);
+	});
 </aui:script>

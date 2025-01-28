@@ -28,4 +28,10 @@
 		font-family: $headings-font-family;
 		font-weight: $headings-font-weight;
 	}
+
+	// Editable area focus
+
+	&.ck-editor__main > .ck-editor__editable:focus {
+        @include clay-form-control-focus();
+	}
 }

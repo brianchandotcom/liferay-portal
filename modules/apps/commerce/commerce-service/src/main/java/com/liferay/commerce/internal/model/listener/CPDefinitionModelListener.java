@@ -86,18 +86,19 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 					templateCPConfigurationEntry.getWeight(),
 					templateCPConfigurationEntry.getWidth());
 
-			CPConfigurationEntrySetting cpConfigurationEntrySetting =
-				_cpConfigurationEntrySettingLocalService.
-					fetchCPConfigurationEntrySetting(
-						cpConfigurationEntry.getCPConfigurationEntryId(),
-						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
 			List<CPConfigurationList> cpConfigurationLists =
 				_cpConfigurationListLocalService.getCPConfigurationLists(
 					cpConfigurationList.getGroupId(),
 					cpConfigurationList.getCompanyId());
 
 			if (ListUtil.isNotEmpty(cpConfigurationLists)) {
+				CPConfigurationEntrySetting cpConfigurationEntrySetting =
+					_cpConfigurationEntrySettingLocalService.
+						fetchCPConfigurationEntrySetting(
+							cpConfigurationEntry.getCPConfigurationEntryId(),
+							CPConfigurationEntrySettingConstants.
+								TYPE_INDEX_IDS);
+
 				cpConfigurationEntrySetting.setValue(
 					StringUtil.merge(
 						ArrayUtil.filter(
@@ -105,7 +106,9 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 								cpConfigurationLists,
 								CPConfigurationList::getCPConfigurationListId),
 							curCPConfigurationListId ->
-								curCPConfigurationListId != cpConfigurationList.getCPConfigurationListId()),
+								curCPConfigurationListId !=
+									cpConfigurationList.
+										getCPConfigurationListId()),
 						StringPool.COMMA));
 
 				_cpConfigurationEntrySettingLocalService.

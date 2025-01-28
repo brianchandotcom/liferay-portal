@@ -20,6 +20,7 @@ import {TranslationsContainer} from './TranslationsContainer';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
+import {SeoContainer} from './SeoContainer';
 
 export type Scope = {
 	items: LabelValueObject[];
@@ -376,6 +377,20 @@ export default function EditObjectDetails({
 					>
 						<ClayPanel.Body>
 							<TranslationsContainer
+								setValues={setValues}
+								values={values}
+							/>
+						</ClayPanel.Body>
+					</ClayPanel>
+
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={Liferay.Language.get('seo')}
+						displayType="unstyled"
+					>
+						<ClayPanel.Body>
+							<SeoContainer
 								setValues={setValues}
 								values={values}
 							/>

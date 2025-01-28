@@ -214,6 +214,8 @@ const GetAppOutlet = () => {
 
 		const orderType = getProductOrderTypes(productSpecificationValues);
 
+		delete billingAddress.saveAddress;
+
 		try {
 			const cart = buildNewCart({
 				billingAddress,

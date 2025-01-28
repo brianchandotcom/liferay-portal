@@ -477,33 +477,35 @@ public class AccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
-		description = "The list of roles associated with this account group."
-	)
+	@Schema
 	@Valid
-	public RoleBrief[] getRoleBriefs() {
-		if (_roleBriefsSupplier != null) {
-			roleBriefs = _roleBriefsSupplier.get();
+	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
 
-			_roleBriefsSupplier = null;
+			_permissionsSupplier = null;
 		}
 
-		return roleBriefs;
+		return permissions;
 	}
 
-	public void setRoleBriefs(RoleBrief[] roleBriefs) {
-		this.roleBriefs = roleBriefs;
+	public void setPermissions(
+		com.liferay.portal.vulcan.permission.Permission[] permissions) {
 
-		_roleBriefsSupplier = null;
+		this.permissions = permissions;
+
+		_permissionsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setRoleBriefs(
-		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.portal.vulcan.permission.Permission[], Exception>
+				permissionsUnsafeSupplier) {
 
-		_roleBriefsSupplier = () -> {
+		_permissionsSupplier = () -> {
 			try {
-				return roleBriefsUnsafeSupplier.get();
+				return permissionsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -514,14 +516,13 @@ public class AccountGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The list of roles associated with this account group."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected RoleBrief[] roleBriefs;
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected com.liferay.portal.vulcan.permission.Permission[] permissions;
 
 	@JsonIgnore
-	private Supplier<RoleBrief[]> _roleBriefsSupplier;
+	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
+		_permissionsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -713,21 +714,22 @@ public class AccountGroup implements Serializable {
 			sb.append("\"");
 		}
 
-		RoleBrief[] roleBriefs = getRoleBriefs();
+		com.liferay.portal.vulcan.permission.Permission[] permissions =
+			getPermissions();
 
-		if (roleBriefs != null) {
+		if (permissions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"roleBriefs\": ");
+			sb.append("\"permissions\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < roleBriefs.length; i++) {
-				sb.append(String.valueOf(roleBriefs[i]));
+			for (int i = 0; i < permissions.length; i++) {
+				sb.append(permissions[i]);
 
-				if ((i + 1) < roleBriefs.length) {
+				if ((i + 1) < permissions.length) {
 					sb.append(", ");
 				}
 			}

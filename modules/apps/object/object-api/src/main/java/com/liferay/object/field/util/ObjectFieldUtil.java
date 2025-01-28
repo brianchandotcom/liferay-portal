@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -328,17 +329,18 @@ public class ObjectFieldUtil {
 		if (Validator.isNull(existingValue) && Validator.isNull(value)) {
 			return;
 		}
-
-		if (Objects.equals(
-				objectField.getDBType(),
-				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE) ||
-			Objects.equals(
-				objectField.getDBType(),
-				ObjectFieldConstants.DB_TYPE_INTEGER) ||
-			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_LONG)) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_INTEGER) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_LONG)) {
 
 			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
 			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
@@ -358,8 +360,21 @@ public class ObjectFieldUtil {
 					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			if (Objects.equals(
-					GetterUtil.getString(value),
-					GetterUtil.getString(existingValue))) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				Objects.equals(
+					JSONFactoryUtil.createJSONObject(
+						JSONFactoryUtil.looseSerializeDeep(value)
+					).get(
+						"key"
+					),
+					existingValue)) {
+
+				return;
+			}
+			else if (Objects.equals(
+						GetterUtil.getString(value),
+						GetterUtil.getString(existingValue))) {
 
 				return;
 			}

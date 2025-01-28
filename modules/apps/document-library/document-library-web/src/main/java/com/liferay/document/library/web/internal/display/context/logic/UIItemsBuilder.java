@@ -48,6 +48,8 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -851,7 +853,11 @@ public class UIItemsBuilder {
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (!stagingGroupHelper.isStagingGroup(
+		if (!GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO) ||
+			!stagingGroupHelper.isStagingGroup(
 				_themeDisplay.getScopeGroupId()) ||
 			!stagingGroupHelper.isStagedPortlet(
 				_themeDisplay.getScopeGroupId(),

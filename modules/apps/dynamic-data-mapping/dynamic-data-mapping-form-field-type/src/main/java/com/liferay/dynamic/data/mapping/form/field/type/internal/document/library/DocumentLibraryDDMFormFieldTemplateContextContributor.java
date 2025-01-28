@@ -246,6 +246,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
 				userGroupIds, sendEmail, serviceContext);
 
+			user = _userLocalService.updateExternalReferenceCode(
+				user,
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE);
+
 			return _userLocalService.updateStatus(
 				user, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
 		}

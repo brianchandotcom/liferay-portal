@@ -188,7 +188,6 @@ export function RightSidebarObjectDefinitionDetails({
 					<span>{objectDefinitionNodeDetailsTitle}</span>
 				</div>
 			</div>
-
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ObjectDataContainer
 					dbTableName={
@@ -209,7 +208,6 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
-
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<EntryDisplayContainer
 					className="lfr-objects__model-builder-right-sidebar-object-definition-entry-display-container"
@@ -244,7 +242,6 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
-
 			{values?.modifiable && (
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<AccountRestrictionContainer
@@ -264,7 +261,6 @@ export function RightSidebarObjectDefinitionDetails({
 					/>
 				</div>
 			)}
-
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission={
@@ -280,7 +276,6 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
-
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<TranslationsContainer
 					onSubmit={onSubmit}
@@ -288,13 +283,15 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values}
 				/>
 			</div>
-			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
-				<SeoContainer
-					onSubmit={onSubmit}
-					setValues={setValues}
-					values={values}
-				/>
-			</div>
+			{Liferay.FeatureFlags['LPD-21926'] && (
+				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
+					<SeoContainer
+						onSubmit={onSubmit}
+						setValues={setValues}
+						values={values}
+					/>
+				</div>
+			)}
 		</>
 	);
 }

@@ -8,22 +8,34 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupService;
+import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.AccountGroupBrief;
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
@@ -35,7 +47,10 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -97,7 +112,36 @@ public class AccountResourceDTOConverter
 				setAccountContactInformation(
 					() -> _toAccountContactInformation(
 						accountEntry, dtoConverterContext));
+				setAccountGroupBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"accountGroupBriefs",
+						nestedFieldNames -> TransformUtil.transformToArray(
+							_accountGroupService.
+								getAccountGroupsByAccountEntryId(
+									accountEntry.getAccountEntryId(),
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+							accountGroup -> _toAccountGroupBrief(accountGroup),
+							AccountGroupBrief.class)));
+				setAccountRoles(
+					() -> NestedFieldsSupplier.supply(
+						"accountRoles",
+						fieldName -> TransformUtil.transformToArray(
+							_accountRoleLocalService.
+								getAccountRolesByAccountEntryIds(
+									accountEntry.getCompanyId(),
+									new long[] {
+										accountEntry.getAccountEntryId()
+									}),
+							accountRole -> _toAccountRole(accountRole),
+							AccountRole.class)));
 				setActions(dtoConverterContext::getActions);
+				setCreator(
+					() -> NestedFieldsSupplier.supply(
+						"creator",
+						fieldName -> CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								accountEntry.getUserId()))));
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -138,6 +182,14 @@ public class AccountResourceDTOConverter
 				setExternalReferenceCode(
 					accountEntry::getExternalReferenceCode);
 				setId(accountEntry::getAccountEntryId);
+				setKeywords(
+					() -> NestedFieldsSupplier.supply(
+						"keywords",
+						nestedFieldNames -> ListUtil.toArray(
+							_assetTagLocalService.getTags(
+								AccountEntry.class.getName(),
+								accountEntry.getAccountEntryId()),
+							AssetTag.NAME_ACCESSOR)));
 				setLogoId(accountEntry::getLogoId);
 				setLogoURL(
 					() -> StringBundler.concat(
@@ -212,6 +264,18 @@ public class AccountResourceDTOConverter
 						}));
 				setStatus(accountEntry::getStatus);
 				setTaxId(accountEntry::getTaxIdNumber);
+				setTaxonomyCategoryBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"taxonomyCategoryBriefs",
+						nestedFieldNames -> TransformUtil.transformToArray(
+							_assetCategoryService.getCategories(
+								AccountEntry.class.getName(),
+								accountEntry.getAccountEntryId()),
+							assetCategory ->
+								TaxonomyCategoryBriefUtil.
+									toTaxonomyCategoryBrief(
+										assetCategory, dtoConverterContext),
+							TaxonomyCategoryBrief.class)));
 				setType(() -> Account.Type.create(accountEntry.getType()));
 			}
 		};
@@ -305,6 +369,31 @@ public class AccountResourceDTOConverter
 		};
 	}
 
+	private AccountGroupBrief _toAccountGroupBrief(AccountGroup accountGroup) {
+		return new AccountGroupBrief() {
+			{
+				setExternalReferenceCode(
+					accountGroup::getExternalReferenceCode);
+				setId(accountGroup::getAccountGroupId);
+				setName(accountGroup::getName);
+			}
+		};
+	}
+
+	private AccountRole _toAccountRole(
+		com.liferay.account.model.AccountRole accountRole) {
+
+		return new AccountRole() {
+			{
+				setAccountId(accountRole::getAccountEntryId);
+				setExternalReferenceCode(accountRole::getExternalReferenceCode);
+				setId(accountRole::getRoleId);
+				setName(accountRole::getRoleName);
+				setRoleId(accountRole::getRoleId);
+			}
+		};
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -322,7 +411,19 @@ public class AccountResourceDTOConverter
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
+	private AccountGroupService _accountGroupService;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
 	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
@@ -334,7 +435,13 @@ public class AccountResourceDTOConverter
 	private PermissionService _permissionService;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WebServerServletToken _webServerServletToken;

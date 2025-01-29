@@ -54,8 +54,9 @@ public abstract class BaseCustomFDSSerializer {
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		return _getObjectEntry(
-			portal.getCompanyId(httpServletRequest), externalReferenceCode,
-			getDataSetObjectDefinition(httpServletRequest));
+			portal.getCompanyId(httpServletRequest),
+			getDataSetObjectDefinition(httpServletRequest),
+			externalReferenceCode);
 	}
 
 	public Map<String, Object> getDataSetObjectEntryProperties(
@@ -91,8 +92,8 @@ public abstract class BaseCustomFDSSerializer {
 	protected Portal portal;
 
 	private ObjectEntry _getObjectEntry(
-		long companyId, String externalReferenceCode,
-		ObjectDefinition dataSetObjectDefinition) {
+		long companyId, ObjectDefinition dataSetObjectDefinition,
+		String externalReferenceCode) {
 
 		ObjectEntry objectEntry = null;
 

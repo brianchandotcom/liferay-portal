@@ -1012,6 +1012,20 @@ tomcat.util.scan.StandardJarScanFilter.jarsToSkip=*
 tomcat.util.scan.StandardJarScanFilter.jarsToScan=]]>
 		</echo>
 
+		<fixcrlf eof="asis" eol="lf" file="${app.server.tomcat.dir}/conf/context.xml" />
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/context.xml"
+		>
+			<replacetoken><![CDATA[    <!-- Uncomment this to enable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="SESSIONS.ser" />
+    -->]]></replacetoken>
+			<replacevalue><![CDATA[    <Manager pathname="SESSIONS.ser" />]]></replacevalue>
+		</replace>
+
+		<fixcrlf eof="asis" eol="crlf" file="${app.server.tomcat.dir}/conf/context.xml" />
+
 		<echo append="true" file="${app.server.tomcat.dir}/conf/logging.properties">
 			<![CDATA[
 org.apache.catalina.startup.Catalina.level=INFO

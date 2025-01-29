@@ -277,8 +277,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		Map<Locale, String> valueI18n = new HashMap<>();
 
-		Map<String, Object> infoFormParameterMap =
-			(Map<String, Object>)SessionMessages.get(
+		Map<String, String> infoFormParameterMap =
+			(Map<String, String>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");
 
 		if (infoFormParameterMap != null) {
@@ -292,7 +292,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				Map<Locale, String> map =
 					(Map<Locale, String>)infoParameterMapValue;
 
-				value = map.get(locale);
+				value = String.valueOf(map.get(locale));
 				valueI18n = map;
 			}
 			else {
@@ -836,20 +836,24 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return defaultValue;
 		}
 
+		return _parseValue(
+			defaultValue, infoField, locale, infoFieldValue.getValue());
+	}
+
+	private Object _parseValue(
+		String defaultValue, InfoField infoField, Locale locale, Object value) {
+
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
 			try {
 				DateFormat dateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(
 						"yyyy-MM-dd", locale);
 
-				return dateFormat.format(infoFieldValue.getValue());
+				return dateFormat.format(value);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse date from " +
-							infoFieldValue.getValue(),
-						exception);
+					_log.debug("Unable to parse date from " + value, exception);
 				}
 			}
 
@@ -861,15 +865,11 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				DateTimeFormatter dateTimeFormatter =
 					DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-				return dateTimeFormatter.format(
-					(TemporalAccessor)infoFieldValue.getValue());
+				return dateTimeFormatter.format((TemporalAccessor)value);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse date from " +
-							infoFieldValue.getValue(),
-						exception);
+					_log.debug("Unable to parse date from " + value, exception);
 				}
 			}
 
@@ -877,12 +877,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		if (infoField.getInfoFieldType() == MultiselectInfoFieldType.INSTANCE) {
-			if (!(infoFieldValue.getValue() instanceof List)) {
+			if (!(value instanceof List)) {
 				return defaultValue;
 			}
 
 			List<KeyLocalizedLabelPair> values =
-				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+				(List<KeyLocalizedLabelPair>)value;
 
 			if (ListUtil.isEmpty(values)) {
 				return defaultValue;
@@ -898,9 +898,9 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		if ((infoField.getInfoFieldType() == NumberInfoFieldType.INSTANCE) &&
-			(infoFieldValue.getValue() instanceof BigDecimal)) {
+			(value instanceof BigDecimal)) {
 
-			BigDecimal bigDecimal = (BigDecimal)infoFieldValue.getValue();
+			BigDecimal bigDecimal = (BigDecimal)value;
 
 			if (Objects.equals(bigDecimal.signum(), 0)) {
 				return "0";
@@ -910,18 +910,18 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (infoField.getInfoFieldType() ==
 				RelationshipInfoFieldType.INSTANCE) {
 
-			return infoFieldValue.getValue();
+			return value;
 		}
 
 		if (infoField.getInfoFieldType() ==
 				PicklistMultiselectInfoFieldType.INSTANCE) {
 
-			if (!(infoFieldValue.getValue() instanceof List)) {
+			if (!(value instanceof List)) {
 				return defaultValue;
 			}
 
 			List<KeyLocalizedLabelPair> values =
-				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+				(List<KeyLocalizedLabelPair>)value;
 
 			if (ListUtil.isEmpty(values)) {
 				return defaultValue;
@@ -939,12 +939,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (infoField.getInfoFieldType() ==
 				PicklistSelectInfoFieldType.INSTANCE) {
 
-			if (!(infoFieldValue.getValue() instanceof List)) {
+			if (!(value instanceof List)) {
 				return defaultValue;
 			}
 
 			List<KeyLocalizedLabelPair> values =
-				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+				(List<KeyLocalizedLabelPair>)value;
 
 			if (ListUtil.isEmpty(values)) {
 				return defaultValue;
@@ -960,12 +960,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {
-			if (!(infoFieldValue.getValue() instanceof List)) {
+			if (!(value instanceof List)) {
 				return defaultValue;
 			}
 
 			List<KeyLocalizedLabelPair> values =
-				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+				(List<KeyLocalizedLabelPair>)value;
 
 			if (ListUtil.isEmpty(values)) {
 				return defaultValue;
@@ -980,15 +980,25 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				StringPool.BLANK);
 		}
 
-		Object value = infoFieldValue.getValue();
-
 		if (infoField.isLocalizable() &&
 			(value instanceof InfoLocalizedValue)) {
 
 			InfoLocalizedValue<?> infoLocalizedValue =
 				(InfoLocalizedValue<?>)value;
 
-			return infoLocalizedValue.getValues();
+			Map<Locale, Object> values =
+				(Map<Locale, Object>)infoLocalizedValue.getValues();
+
+			HashMap<Locale, Object> parsedValues = new HashMap<>();
+
+			for (Map.Entry<Locale, Object> entry : values.entrySet()) {
+				parsedValues.put(
+					entry.getKey(),
+					_parseValue(
+						defaultValue, infoField, locale, entry.getValue()));
+			}
+
+			return parsedValues;
 		}
 
 		if (Validator.isNull(value)) {

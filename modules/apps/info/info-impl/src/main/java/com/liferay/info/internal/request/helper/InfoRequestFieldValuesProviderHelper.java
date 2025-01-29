@@ -60,7 +60,6 @@ import java.time.format.DateTimeParseException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -144,11 +143,7 @@ public class InfoRequestFieldValuesProviderHelper {
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &&
-				infoField.isLocalizable() &&
-				(infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
-				 infoField.getInfoFieldType() instanceof
-					 LongTextInfoFieldType ||
-				 infoField.getInfoFieldType() instanceof TextInfoFieldType)) {
+				infoField.isLocalizable()) {
 
 				infoFieldValues.put(
 					infoField.getUniqueId(),
@@ -174,7 +169,10 @@ public class InfoRequestFieldValuesProviderHelper {
 
 									if (ListUtil.isNotEmpty(values)) {
 										unsafeBiConsumer.accept(
-											locale, values.get(0));
+											locale,
+											_parseValue(
+												infoField, locale,
+												values.get(0)));
 									}
 								}
 							}
@@ -212,58 +210,6 @@ public class InfoRequestFieldValuesProviderHelper {
 		}
 
 		return infoFieldValues;
-	}
-
-	private InfoFieldValue<Object> _getBooleanInfoFieldValue(
-		InfoField<?> infoField, Locale locale, String value) {
-
-		return _getInfoFieldValue(
-			infoField, locale, GetterUtil.getBoolean(value));
-	}
-
-	private InfoFieldValue<Object> _getDateInfoFieldValue(
-		InfoField<?> infoField, Locale locale, String value) {
-
-		if (Validator.isBlank(value)) {
-			return _getInfoFieldValue(
-				infoField, locale, (Object)StringPool.BLANK);
-		}
-
-		try {
-			Date date = DateUtil.parseDate("yyyy-MM-dd", value, locale);
-
-			return _getInfoFieldValue(infoField, locale, date);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(parseException);
-			}
-		}
-
-		return null;
-	}
-
-	private InfoFieldValue<Object> _getDateTimeInfoFieldValue(
-		InfoField<?> infoField, Locale locale, String value) {
-
-		if (Validator.isBlank(value)) {
-			return _getInfoFieldValue(
-				infoField, locale, (Object)StringPool.BLANK);
-		}
-
-		try {
-			LocalDateTime localDateTime = LocalDateTime.parse(
-				value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
-
-			return _getInfoFieldValue(infoField, locale, localDateTime);
-		}
-		catch (DateTimeParseException dateTimeParseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dateTimeParseException);
-			}
-		}
-
-		return null;
 	}
 
 	private InfoFieldValue<Object> _getFileInfoFieldValue(
@@ -354,34 +300,20 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
-		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
-			return _getBooleanInfoFieldValue(infoField, locale, value);
+		Object parsedValue = _parseValue(infoField, locale, value);
+
+		if (infoField.isLocalizable()) {
+			return new InfoFieldValue<>(
+				infoField,
+				InfoLocalizedValue.builder(
+				).defaultLocale(
+					locale
+				).value(
+					locale, parsedValue
+				).build());
 		}
 
-		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
-			return _getDateInfoFieldValue(infoField, locale, value);
-		}
-
-		if (infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) {
-			return _getDateTimeInfoFieldValue(infoField, locale, value);
-		}
-
-		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
-			return _getNumberInfoFieldValue(infoField, locale, value);
-		}
-
-		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
-			infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
-			infoField.getInfoFieldType() instanceof MultiselectInfoFieldType ||
-			infoField.getInfoFieldType() instanceof LongTextInfoFieldType ||
-			infoField.getInfoFieldType() instanceof RelationshipInfoFieldType ||
-			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
-			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
-
-			return _getInfoFieldValue(infoField, locale, (Object)value);
-		}
-
-		return null;
+		return new InfoFieldValue<>(infoField, parsedValue);
 	}
 
 	private InfoFieldValue<Object> _getMultiselectInfoFieldValue(
@@ -394,21 +326,74 @@ public class InfoRequestFieldValuesProviderHelper {
 		return _getInfoFieldValue(infoField, locale, value);
 	}
 
-	private InfoFieldValue<Object> _getNumberInfoFieldValue(
-		InfoField infoField, Locale locale, String value) {
+	private Object _parseValue(
+		InfoField<?> infoField, Locale locale, String value) {
 
-		if (GetterUtil.getBoolean(
-				infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
-
-			if (Validator.isBlank(value)) {
-				return _getInfoFieldValue(
-					infoField, locale, (Object)StringPool.BLANK);
-			}
-
-			return _getInfoFieldValue(infoField, locale, new BigDecimal(value));
+		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
+			return GetterUtil.getBoolean(value);
 		}
 
-		return _getInfoFieldValue(infoField, locale, GetterUtil.getLong(value));
+		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
+			if (Validator.isBlank(value)) {
+				return StringPool.BLANK;
+			}
+
+			try {
+				return DateUtil.parseDate("yyyy-MM-dd", value, locale);
+			}
+			catch (ParseException parseException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(parseException);
+				}
+			}
+		}
+
+		if (infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) {
+			if (Validator.isBlank(value)) {
+				return StringPool.BLANK;
+			}
+
+			try {
+				return LocalDateTime.parse(
+					value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+			}
+			catch (DateTimeParseException dateTimeParseException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(dateTimeParseException);
+				}
+			}
+		}
+
+		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
+			InfoField<NumberInfoFieldType> numberInfoFieldTypeInfoField =
+				(InfoField<NumberInfoFieldType>)infoField;
+
+			if (GetterUtil.getBoolean(
+					numberInfoFieldTypeInfoField.getAttribute(
+						NumberInfoFieldType.DECIMAL))) {
+
+				if (Validator.isBlank(value)) {
+					return StringPool.BLANK;
+				}
+
+				return new BigDecimal(value);
+			}
+
+			return GetterUtil.getLong(value);
+		}
+
+		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
+			infoField.getInfoFieldType() instanceof MultiselectInfoFieldType ||
+			infoField.getInfoFieldType() instanceof LongTextInfoFieldType ||
+			infoField.getInfoFieldType() instanceof RelationshipInfoFieldType ||
+			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
+			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+
+			return value;
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

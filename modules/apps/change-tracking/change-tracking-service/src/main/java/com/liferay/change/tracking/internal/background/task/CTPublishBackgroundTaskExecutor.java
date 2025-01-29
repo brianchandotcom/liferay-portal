@@ -174,18 +174,16 @@ public class CTPublishBackgroundTaskExecutor
 			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
 
-		double publishedCount = 0;
 		double ctServicePublisherCount = ctServicePublishers.size();
+		double publishedCount = 0;
 
 		for (CTServicePublisher<?> ctServicePublisher :
 				ctServicePublishers.values()) {
 
 			ctServicePublisher.publish();
 
-			publishedCount++;
-
 			backgroundTaskStatus.setAttribute(
-				"currentPercentage", publishedCount / ctServicePublisherCount);
+				"currentPercentage", ++publishedCount / ctServicePublisherCount);
 		}
 
 		for (CTTableMapperHelper ctTableMapperHelper :

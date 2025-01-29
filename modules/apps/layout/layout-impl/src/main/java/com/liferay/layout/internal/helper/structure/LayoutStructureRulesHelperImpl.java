@@ -9,7 +9,9 @@ import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,6 +27,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -85,6 +88,29 @@ public class LayoutStructureRulesHelperImpl
 		return new LayoutStructureRulesResult(
 			displayedItemIds, hiddenItemIds, itemIdsMap,
 			layoutStructureRuleIdsMap);
+	}
+
+	@Override
+	public JSONArray processLayoutStructureRules(
+		long groupId, Map<String, Object> fieldValuesMap,
+		List<LayoutStructureRule> layoutStructureRules,
+		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		LayoutStructureRulesContext layoutStructureRulesContext =
+			new LayoutStructureRulesContext(
+				groupId, permissionChecker, segmentsEntryIds);
+
+		for (LayoutStructureRule layoutStructureRule : layoutStructureRules) {
+			_processActions(
+				layoutStructureRule.getActionsJSONArray(), jsonArray,
+				!_evaluateLayoutStructureRule(
+					fieldValuesMap, layoutStructureRule,
+					layoutStructureRulesContext));
+		}
+
+		return jsonArray;
 	}
 
 	private boolean _evaluateLayoutStructureRule(
@@ -252,6 +278,27 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private void _processActions(
+		JSONArray actionsJSONArray, JSONArray jsonArray, boolean negated) {
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
+
+			jsonArray.put(
+				JSONUtil.put(
+					"action",
+					() -> {
+						Action action = _getAction(
+							negated, actionsJSONObject.getString("type"));
+
+						return action.getValue();
+					}
+				).put(
+					"itemId", actionsJSONObject.getString("itemId")
+				));
+		}
+	}
+
+	private void _processActions(
 		JSONArray actionsJSONArray, Set<String> displayedItemIds,
 		Set<String> hiddenItemIds, boolean negated) {
 
@@ -269,6 +316,9 @@ public class LayoutStructureRulesHelperImpl
 			}
 		}
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private enum Action {
 

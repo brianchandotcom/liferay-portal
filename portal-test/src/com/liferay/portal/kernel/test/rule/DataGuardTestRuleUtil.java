@@ -53,7 +53,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -275,7 +275,7 @@ public class DataGuardTestRuleUtil {
 
 		StringBundler sb = new StringBundler();
 
-		Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
+		LinkedHashMap<String, List<BaseModel<?>>> dataMap = _captureDataMap();
 
 		for (Map.Entry<String, List<BaseModel<?>>> entry : dataMap.entrySet()) {
 			String className = entry.getKey();
@@ -334,13 +334,14 @@ public class DataGuardTestRuleUtil {
 			Map<String, List<BaseModel<?>>> previousDataMap)
 		throws Throwable {
 
-		Map<String, PersistedModelLocalService> persistedModelLocalServices =
-			_getPersistedModelLocalServices();
+		LinkedHashMap<String, PersistedModelLocalService>
+			persistedModelLocalServices = _getPersistedModelLocalServices();
 
 		while (true) {
 			boolean deleted = false;
 
-			Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
+			LinkedHashMap<String, List<BaseModel<?>>> dataMap =
+				_captureDataMap();
 
 			for (Map.Entry<String, List<BaseModel<?>>> entry :
 					dataMap.entrySet()) {
@@ -399,11 +400,12 @@ public class DataGuardTestRuleUtil {
 		}
 	}
 
-	private static Map<String, List<BaseModel<?>>> _captureDataMap() {
-		Map<String, PersistedModelLocalService> persistedModelLocalServices =
-			_getPersistedModelLocalServices();
+	private static LinkedHashMap<String, List<BaseModel<?>>> _captureDataMap() {
+		LinkedHashMap<String, PersistedModelLocalService>
+			persistedModelLocalServices = _getPersistedModelLocalServices();
 
-		Map<String, List<BaseModel<?>>> dataMap = new HashMap<>();
+		LinkedHashMap<String, List<BaseModel<?>>> dataMap =
+			new LinkedHashMap<>();
 
 		for (Map.Entry<String, PersistedModelLocalService> entry :
 				persistedModelLocalServices.entrySet()) {
@@ -519,32 +521,34 @@ public class DataGuardTestRuleUtil {
 		return persistedModelLocalService.getBasePersistence();
 	}
 
-	private static Map<String, PersistedModelLocalService>
+	private static LinkedHashMap<String, PersistedModelLocalService>
 		_getPersistedModelLocalServices() {
 
-		Map<String, PersistedModelLocalService>
-			scrubbedPersistedModelLocalServices = new HashMap<>();
+		LinkedHashMap<String, PersistedModelLocalService>
+			scrubbedPersistedModelLocalServices = new LinkedHashMap<>();
 
 		ServiceTrackerMap<String, PersistedModelLocalService>
 			serviceTrackerMap = ReflectionTestUtil.getFieldValue(
 				PersistedModelLocalServiceRegistryUtil.class,
 				"_serviceTrackerMap");
 
-		for (String modeClassName : _prioritizedModelClassNames) {
-			if (serviceTrackerMap.containsKey(modeClassName) &&
-				(modeClassName.indexOf(CharPool.POUND) == -1)) {
+		for (String modelClassName : _prioritizedModelClassNames) {
+			if (serviceTrackerMap.containsKey(modelClassName) &&
+				(modelClassName.indexOf(CharPool.POUND) == -1)) {
 
 				scrubbedPersistedModelLocalServices.put(
-					modeClassName, serviceTrackerMap.getService(modeClassName));
+					modelClassName,
+					serviceTrackerMap.getService(modelClassName));
 			}
 		}
 
-		for (String modeClassName : serviceTrackerMap.keySet()) {
-			if (!_blacklistedModelClassNames.contains(modeClassName) &&
-				(modeClassName.indexOf(CharPool.POUND) == -1)) {
+		for (String modelClassName : serviceTrackerMap.keySet()) {
+			if (!_blacklistedModelClassNames.contains(modelClassName) &&
+				(modelClassName.indexOf(CharPool.POUND) == -1)) {
 
 				scrubbedPersistedModelLocalServices.put(
-					modeClassName, serviceTrackerMap.getService(modeClassName));
+					modelClassName,
+					serviceTrackerMap.getService(modelClassName));
 			}
 		}
 

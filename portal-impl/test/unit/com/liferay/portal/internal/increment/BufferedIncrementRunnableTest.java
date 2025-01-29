@@ -64,9 +64,9 @@ public class BufferedIncrementRunnableTest {
 		BatchablePipe<Serializable, Increment<?>> batchablePipe =
 			new BatchablePipe<Serializable, Increment<?>>() {
 				{
-					put(_invoke(_TEST_COMPANY_ID1));
-					put(_invoke(_TEST_COMPANY_ID2));
-					put(_invoke(_TEST_COMPANY_ID1));
+					put(_invoke(_TEST_COMPANY_ID_1));
+					put(_invoke(_TEST_COMPANY_ID_2));
+					put(_invoke(_TEST_COMPANY_ID_1));
 				}
 			};
 
@@ -80,18 +80,18 @@ public class BufferedIncrementRunnableTest {
 		Assert.assertEquals(
 			Integer.valueOf(1),
 			_testInterceptedClass.companyInvokedMethodCounter.get(
-				_TEST_COMPANY_ID1));
+				_TEST_COMPANY_ID_1));
 		Assert.assertEquals(
 			Integer.valueOf(1),
 			_testInterceptedClass.companyInvokedMethodCounter.get(
-				_TEST_COMPANY_ID2));
+				_TEST_COMPANY_ID_2));
 
 		Assert.assertEquals(
 			Integer.valueOf(2),
-			_testInterceptedClass.companyIncrement.get(_TEST_COMPANY_ID1));
+			_testInterceptedClass.companyIncrement.get(_TEST_COMPANY_ID_1));
 		Assert.assertEquals(
 			Integer.valueOf(1),
-			_testInterceptedClass.companyIncrement.get(_TEST_COMPANY_ID2));
+			_testInterceptedClass.companyIncrement.get(_TEST_COMPANY_ID_2));
 	}
 
 	private AopMethodInvocation _createTestMethodInvocation(Method method) {
@@ -120,9 +120,9 @@ public class BufferedIncrementRunnableTest {
 		}
 	}
 
-	private static final long _TEST_COMPANY_ID1 = 1L;
+	private static final long _TEST_COMPANY_ID_1 = 1L;
 
-	private static final long _TEST_COMPANY_ID2 = 2L;
+	private static final long _TEST_COMPANY_ID_2 = 2L;
 
 	private AopInvocationHandler _aopInvocationHandler;
 	private final Increment<Number> _increment = new NumberIncrement(1);

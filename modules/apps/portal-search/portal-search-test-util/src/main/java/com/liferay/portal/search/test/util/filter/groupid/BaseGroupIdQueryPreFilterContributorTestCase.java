@@ -39,7 +39,7 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		super.setUp();
 
 		Mockito.doReturn(
-			Arrays.asList(_INACTIVE_GROUP_ID1, _INACTIVE_GROUP_ID2)
+			Arrays.asList(_INACTIVE_GROUP_ID_1, _INACTIVE_GROUP_ID_2)
 		).when(
 			_groupLocalService
 		).getGroupIds(
@@ -87,7 +87,7 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 
 	@Test
 	public void testScopeEverythingWithInactiveGroups() {
-		_addDocuments(1, 2, 3, _INACTIVE_GROUP_ID1, _INACTIVE_GROUP_ID2);
+		_addDocuments(1, 2, 3, _INACTIVE_GROUP_ID_1, _INACTIVE_GROUP_ID_2);
 
 		_assertSearch(0, "[1, 2, 3]");
 
@@ -118,7 +118,7 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 			group
 		);
 
-		_addDocuments(1, 2, 3, _INACTIVE_GROUP_ID1, _INACTIVE_GROUP_ID2);
+		_addDocuments(1, 2, 3, _INACTIVE_GROUP_ID_1, _INACTIVE_GROUP_ID_2);
 
 		_assertSearch(2, "[2]");
 	}
@@ -173,9 +173,9 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		return booleanFilter;
 	}
 
-	private static final long _INACTIVE_GROUP_ID1 = 4L;
+	private static final long _INACTIVE_GROUP_ID_1 = 4L;
 
-	private static final long _INACTIVE_GROUP_ID2 = 5L;
+	private static final long _INACTIVE_GROUP_ID_2 = 5L;
 
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);

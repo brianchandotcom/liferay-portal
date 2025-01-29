@@ -233,7 +233,7 @@ describe('RulesSidebar', () => {
 						conditionType: 'all',
 						conditions: [
 							{
-								condition: 'user',
+								field: 'user',
 								id: 'condition-id',
 								options: {
 									type: 'equal',
@@ -272,7 +272,7 @@ describe('RulesSidebar', () => {
 						conditionType: 'all',
 						conditions: [
 							{
-								condition: 'user',
+								field: 'user',
 								id: 'condition-id',
 								options: {
 									type: 'equal',

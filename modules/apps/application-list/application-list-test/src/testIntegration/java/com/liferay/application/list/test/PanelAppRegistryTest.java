@@ -119,7 +119,7 @@ public class PanelAppRegistryTest {
 			_bundleContext.registerService(
 				PanelApp.class, panelApp,
 				HashMapDictionaryBuilder.put(
-					"featureFlagKey", () -> featureFlagKey
+					"feature.flag.key", () -> featureFlagKey
 				).put(
 					"panel.category.key", _PARENT_PANEL_CATEGORY_KEY
 				).build()));

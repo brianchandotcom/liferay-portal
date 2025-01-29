@@ -69,47 +69,9 @@ public class SystemFDSItemActionListSerializerImplTest
 	}
 
 	@Test
-	public void testFDSItemActionListSerialization() throws Exception {
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+	public void testSerialization() throws Exception {
 
-		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
-				"headless"));
-
-		ServiceRegistration<FDSItemActionList>
-			itemActionListServiceRegistration = _registerItemActionList(
-				"fdsName", dropDownItemList);
-
-		Assert.assertEquals(
-			dropDownItemList,
-			_systemFDSItemActionListSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
-
-		itemActionListServiceRegistration.unregister();
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSItemActionListSerializationNoItemActionList()
-		throws Exception {
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
-
-		Assert.assertTrue(
-			_systemFDSItemActionListSerializerImpl.serialize(
-				"fdsName", httpServletRequest
-			).isEmpty());
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSItemActionListSerializationSeparateItemActionLists()
-		throws Exception {
+		// different action lists
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
@@ -158,30 +120,37 @@ public class SystemFDSItemActionListSerializerImplTest
 		systemFDSEntryServiceRegistration1.unregister();
 
 		systemFDSEntryServiceRegistration2.unregister();
-	}
 
-	@Test
-	public void testFDSItemActionListSerializationSharingItemActionList()
-		throws Exception {
+		// no action list
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName", "/app", "/endpoint", "schema");
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+		Assert.assertTrue(
+			_systemFDSItemActionListSerializerImpl.serialize(
+				"fdsName", httpServletRequest
+			).isEmpty());
 
-		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// shared action list
+
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName1", "/app", "/endpoint", "schema");
+
+		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
+			"fdsName2", "/app", "/endpoint", "schema");
+
+		dropDownItemList1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		ServiceRegistration<FDSItemActionList>
-			itemActionListServiceRegistration1 = _registerItemActionList(
-				"fdsName1", dropDownItemList);
+		itemActionListServiceRegistration1 = _registerItemActionList(
+			"fdsName1", dropDownItemList1);
 
-		ServiceRegistration<FDSItemActionList>
-			itemActionListServiceRegistration2 = _registerItemActionList(
-				"fdsName2", dropDownItemList);
+		itemActionListServiceRegistration2 = _registerItemActionList(
+			"fdsName2", dropDownItemList1);
 
 		Assert.assertEquals(
 			_systemFDSItemActionListSerializerImpl.serialize(

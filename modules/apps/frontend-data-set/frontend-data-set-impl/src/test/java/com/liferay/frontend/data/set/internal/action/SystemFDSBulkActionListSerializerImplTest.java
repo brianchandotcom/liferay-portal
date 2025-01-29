@@ -69,47 +69,9 @@ public class SystemFDSBulkActionListSerializerImplTest
 	}
 
 	@Test
-	public void testFDSBulkActionListSerialization() throws Exception {
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+	public void testSerialization() throws Exception {
 
-		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
-				"headless"));
-
-		ServiceRegistration<FDSBulkActionList>
-			bulkActionListServiceRegistration = _registerBulkActionList(
-				"fdsName", dropDownItemList);
-
-		Assert.assertEquals(
-			dropDownItemList,
-			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
-
-		bulkActionListServiceRegistration.unregister();
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSBulkActionListSerializationNoBulkActionList()
-		throws Exception {
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
-
-		Assert.assertTrue(
-			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName", httpServletRequest
-			).isEmpty());
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSBulkActionListSerializationSeparateBulkActionLists()
-		throws Exception {
+		// different bulk action lists
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
@@ -124,7 +86,7 @@ public class SystemFDSBulkActionListSerializerImplTest
 
 		ServiceRegistration<FDSBulkActionList>
 			bulkActionListServiceRegistration1 = _registerBulkActionList(
-				"fdsName1", dropDownItemList1);
+				dropDownItemList1, "fdsName1");
 
 		List<FDSActionDropdownItem> dropDownItemList2 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -133,7 +95,7 @@ public class SystemFDSBulkActionListSerializerImplTest
 
 		ServiceRegistration<FDSBulkActionList>
 			bulkActionListServiceRegistration2 = _registerBulkActionList(
-				"fdsName2", dropDownItemList2);
+				dropDownItemList2, "fdsName2");
 
 		Assert.assertNotEquals(
 			_systemFDSBulkActionListSerializerImpl.serialize(
@@ -158,30 +120,37 @@ public class SystemFDSBulkActionListSerializerImplTest
 		systemFDSEntryServiceRegistration1.unregister();
 
 		systemFDSEntryServiceRegistration2.unregister();
-	}
 
-	@Test
-	public void testFDSBulkActionListSerializationSharingBulkActionList()
-		throws Exception {
+		// no bulk action list
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName", "/app", "/endpoint", "schema");
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+		Assert.assertTrue(
+			_systemFDSBulkActionListSerializerImpl.serialize(
+				"fdsName", httpServletRequest
+			).isEmpty());
 
-		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// shared bulk action list
+
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName1", "/app", "/endpoint", "schema");
+
+		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
+			"fdsName2", "/app", "/endpoint", "schema");
+
+		dropDownItemList1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		ServiceRegistration<FDSBulkActionList>
-			bulkActionListServiceRegistration1 = _registerBulkActionList(
-				"fdsName1", dropDownItemList);
+		bulkActionListServiceRegistration1 = _registerBulkActionList(
+			dropDownItemList1, "fdsName1");
 
-		ServiceRegistration<FDSBulkActionList>
-			bulkActionListServiceRegistration2 = _registerBulkActionList(
-				"fdsName2", dropDownItemList);
+		bulkActionListServiceRegistration2 = _registerBulkActionList(
+			dropDownItemList1, "fdsName2");
 
 		Assert.assertEquals(
 			_systemFDSBulkActionListSerializerImpl.serialize(
@@ -199,7 +168,7 @@ public class SystemFDSBulkActionListSerializerImplTest
 	}
 
 	private ServiceRegistration<FDSBulkActionList> _registerBulkActionList(
-		String fdsName, List<FDSActionDropdownItem> bulkActions) {
+		List<FDSActionDropdownItem> bulkActions, String fdsName) {
 
 		return bundleContext.registerService(
 			FDSBulkActionList.class,

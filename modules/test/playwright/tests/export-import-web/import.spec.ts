@@ -418,8 +418,10 @@ test('can import custom object entries at instance level with or without permiss
 
 	// Export with permissions
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items', true);
+	const exportFilePath = await companyExportImportPage.export(
+		'Tests 1 Items',
+		true
+	);
 
 	// Import with permissions
 
@@ -432,10 +434,7 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await companyExportImportPage.import(
-		exportFilePath,
-		true
-	);
+	await companyExportImportPage.import(exportFilePath, true);
 
 	objectEntry = await apiHelpers.get(
 		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`
@@ -463,9 +462,7 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await companyExportImportPage.import(
-		exportFilePath
-	);
+	await companyExportImportPage.import(exportFilePath);
 
 	objectEntry = await apiHelpers.get(
 		`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}/?nestedFields=permissions`

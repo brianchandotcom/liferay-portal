@@ -29,7 +29,6 @@ public class PageRulesUtil {
 	public static PageRuleAction toPageRuleAction(JSONObject jsonObject) {
 		return new PageRuleAction() {
 			{
-				setAction(() -> jsonObject.getString("action"));
 				setId(() -> jsonObject.getString("id"));
 				setItemId(() -> jsonObject.getString("itemId"));
 				setType(() -> jsonObject.getString("type"));
@@ -40,7 +39,7 @@ public class PageRulesUtil {
 	public static PageRuleCondition toPageRuleCondition(JSONObject jsonObject) {
 		return new PageRuleCondition() {
 			{
-				setCondition(() -> jsonObject.getString("condition"));
+				setField(() -> jsonObject.getString("field"));
 				setId(() -> jsonObject.getString("id"));
 				setOptions(
 					() -> {

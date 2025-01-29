@@ -80,7 +80,7 @@ boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryA
 						displayType="secondary"
 						monospaced="<%= true %>"
 						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder" ) %>'
+						title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
 					>
 						<clay:icon
 							aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'

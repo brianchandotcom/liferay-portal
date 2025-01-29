@@ -62,7 +62,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					<liferay-util:include page="/document_library/subscribe_file_entry.jsp" servletContext="<%= application %>" />
 				</li>
 
-				<% DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper=new DLPortletInstanceSettingsHelper(dlRequestHelper); %>
+				<%
+				DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+				%>
 
 				<c:if test="<%= !hideActions && dlPortletInstanceSettingsHelper.isShowActions() %>">
 					<li class="autofit-col">

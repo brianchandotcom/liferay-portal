@@ -1392,7 +1392,7 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testDeleteObjectField() throws Exception {
 
-		// Delete object field from custom object definition
+		// Delete metadata object field
 
 		ObjectDefinition customObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
@@ -1401,6 +1401,21 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "able")));
+
+		ObjectField externalReferenceCodeObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				customObjectDefinition.getObjectDefinitionId(),
+				"externalReferenceCode");
+
+		AssertUtils.assertFailure(
+			RequiredObjectFieldException.class,
+			String.format(
+				"The object field \"%s\" cannot be deleted",
+				externalReferenceCodeObjectField.getName()),
+			() -> _objectFieldLocalService.deleteObjectField(
+				externalReferenceCodeObjectField));
+
+		// Delete object field from custom object definition
 
 		_assertDeleteObjectField(false, customObjectDefinition, "able");
 

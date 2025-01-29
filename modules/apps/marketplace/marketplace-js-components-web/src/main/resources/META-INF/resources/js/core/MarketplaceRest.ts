@@ -8,8 +8,10 @@ import {createResourceURL, fetch} from 'frontend-js-web';
 import {
 	APIResponse,
 	Cart,
+	CloudUserProject,
 	MarketplaceAuthorization,
 	MarketplaceConfiguration,
+	PlacedOrder,
 	Product,
 } from '../types';
 
@@ -200,6 +202,23 @@ export class MarketplaceRest {
 		return this.fetchMarketplace<APIResponse<Product>>(
 			`/o/headless-commerce-delivery-catalog/v1.0/channels/${this.settings.channelId}/products?${urlSearchParams.toString()}`,
 			{guestOperation: true}
+		);
+	}
+
+	public async getPlacedOrders(urlSearchParams = new URLSearchParams()) {
+		const {
+			account: {id: accountId},
+			channelId,
+		} = this.settings;
+
+		return this.fetchMarketplace<APIResponse<PlacedOrder>>(
+			`/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders?${urlSearchParams.toString()}`
+		);
+	}
+
+	public async getProjectUsage() {
+		return this.fetchMarketplaceService<CloudUserProject>(
+			`/dxp/project-usage?projectId=${this.settings.cloudProject}`
 		);
 	}
 

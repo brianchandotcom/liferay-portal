@@ -6,7 +6,7 @@
 package com.liferay.frontend.data.set.internal.url;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
-import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
+import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -14,7 +14,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -33,13 +32,13 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSAPIURLSerializerImplTest {
+public class SystemFDSAPIURLSerializerImplTest
+	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,7 +47,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_bundleContext = SystemBundleUtil.getBundleContext();
+		super.setUp();
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
@@ -56,10 +55,10 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 		_fdsAPIURLResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, FDSAPIURLResolver.class,
+				bundleContext, FDSAPIURLResolver.class,
 				"fds.rest.application.key",
 				ServiceTrackerCustomizerFactory.
-					<FDSAPIURLResolver>serviceWrapper(_bundleContext));
+					<FDSAPIURLResolver>serviceWrapper(bundleContext));
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
@@ -68,7 +67,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
@@ -78,21 +77,14 @@ public class SystemFDSAPIURLSerializerImplTest {
 			_fdsAPIURLBuilderFactoryImpl);
 		ReflectionTestUtil.setFieldValue(
 			_systemFDSAPIURLSerializerImpl, "_systemFDSEntryRegistry",
-			_systemFDSEntryRegistryImpl);
-
-		_systemFDSEntryServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSEntryRegistryImpl, "_serviceTrackerMap",
-			_systemFDSEntryServiceTrackerMap);
+			systemFDSEntryRegistryImpl);
 	}
 
 	@After
 	public void tearDown() {
+		super.tearDown();
+
 		_fdsAPIURLResolverServiceTrackerMap.close();
-		_systemFDSEntryServiceTrackerMap.close();
 	}
 
 	@Test
@@ -105,20 +97,20 @@ public class SystemFDSAPIURLSerializerImplTest {
 				"/app1", "schema", new String[] {"{foo}"},
 				new String[] {"bar"});
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry(
+			registerSystemFDSEntry(
 				"fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
+			registerSystemFDSEntry(
 				"fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+				"fdsName1", httpServletRequest));
 		Assert.assertEquals(
 			"/o/app2/endpoint/{foo}",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -126,25 +118,25 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 		// No resolver, URL
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		systemFDSEntryServiceRegistration1.unregister();
 
 		// No resolver, URL with parameters
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"param=3", "fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint?param=3",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -152,13 +144,13 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"{foo}=3", "fdsName", "/app", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar?bar=3",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -167,19 +159,19 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint/{foo}", "schema");
-		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
+		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+				"fdsName1", httpServletRequest));
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
 			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -190,7 +182,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 		String restApplication, String restSchema, String[] tokens,
 		String[] values) {
 
-		return _bundleContext.registerService(
+		return bundleContext.registerService(
 			FDSAPIURLResolver.class,
 			new FDSAPIURLResolver() {
 
@@ -213,75 +205,13 @@ public class SystemFDSAPIURLSerializerImplTest {
 				restApplication + "/" + restSchema));
 	}
 
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema) {
-
-		return _registerSystemFDSEntry(
-			null, fdsName, restApplication, restEndpoint, restSchema);
-	}
-
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String additionalURLParameters, String fdsName, String restApplication,
-		String restEndpoint, String restSchema) {
-
-		return _bundleContext.registerService(
-			SystemFDSEntry.class,
-			new SystemFDSEntry() {
-
-				@Override
-				public String getAdditionalAPIURLParameters() {
-					return additionalURLParameters;
-				}
-
-				@Override
-				public String getDescription() {
-					return "";
-				}
-
-				@Override
-				public String getName() {
-					return fdsName;
-				}
-
-				@Override
-				public String getRESTApplication() {
-					return restApplication;
-				}
-
-				@Override
-				public String getRESTEndpoint() {
-					return restEndpoint;
-				}
-
-				@Override
-				public String getRESTSchema() {
-					return restSchema;
-				}
-
-				@Override
-				public String getTitle() {
-					return "";
-				}
-
-			},
-			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
-	private static BundleContext _bundleContext;
 	private static final FDSAPIURLBuilderFactoryImpl
 		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
 	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
 		_fdsAPIURLResolverServiceTrackerMap;
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
 	private static final SystemFDSAPIURLSerializerImpl
 		_systemFDSAPIURLSerializerImpl = new SystemFDSAPIURLSerializerImpl();
-	private static final SystemFDSEntryRegistryImpl
-		_systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
-	private static ServiceTrackerMap<String, SystemFDSEntry>
-		_systemFDSEntryServiceTrackerMap;
 
 }

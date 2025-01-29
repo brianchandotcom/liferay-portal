@@ -244,6 +244,7 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			commerceOrderImporterItemImpl.setQuantity(
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(
 					cpConfigurationListId, cpInstance));
+
 			commerceOrderImporterItemImpl.setUnitOfMeasureKey(StringPool.BLANK);
 		}
 

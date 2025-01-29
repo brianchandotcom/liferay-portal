@@ -41,43 +41,18 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_customFDSCreationMenuSerializerImpl = Mockito.mock(
-			CustomFDSCreationMenuSerializerImpl.class);
+		_resetSerializer();
 	}
 
 	@Test
-	public void testFDSCreationMenuSerialization() throws Exception {
-		_mockFDSCreationActionObjectEntry("fdsName", new String[] {"New"});
+	public void testSerialization() throws Exception {
 
-		CreationMenu creationMenu =
-			_customFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", _httpServletRequest);
+		// different creation menus
 
-		Assert.assertTrue(_containsTitle(creationMenu, "New"));
+		_mockFDSCreationActionObjectEntries(
+			new String[] {"New 1.1", "New 1.2"}, "fdsName1");
 
-		Assert.assertEquals(1, _itemCount(creationMenu));
-	}
-
-	@Test
-	public void testFDSCreationMenuSerializationNoCreationMenu()
-		throws Exception {
-
-		_mockFDSCreationActionObjectEntry("fdsName", null);
-
-		Assert.assertTrue(
-			_customFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", _httpServletRequest
-			).isEmpty());
-	}
-
-	@Test
-	public void testFDSCreationMenuSerializationSeparateCreationMenus()
-		throws Exception {
-
-		_mockFDSCreationActionObjectEntry(
-			"fdsName1", new String[] {"New 1.1", "New 1.2"});
-
-		_mockFDSCreationActionObjectEntry("fdsName2", new String[] {"New 2"});
+		_mockFDSCreationActionObjectEntries(new String[] {"New 2"}, "fdsName2");
 
 		CreationMenu creationMenu1 =
 			_customFDSCreationMenuSerializerImpl.serialize(
@@ -97,18 +72,28 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.1"));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.2"));
-	}
 
-	@Test
-	public void testFDSCreationMenuSerializationSharingCreationMenu()
-		throws Exception {
+		_resetSerializer();
+
+		// no creation menu
+
+		_mockFDSCreationActionObjectEntries(null, "fdsName");
+
+		Assert.assertTrue(
+			_customFDSCreationMenuSerializerImpl.serialize(
+				"fdsName", _httpServletRequest
+			).isEmpty());
+
+		_resetSerializer();
+
+		// shared creation menu
 
 		String[] titles = {"New A", "New B"};
 
 		String[] fdsNames = {"fdsName1", "fdsName2"};
 
 		for (String fdsName : fdsNames) {
-			_mockFDSCreationActionObjectEntry(fdsName, titles);
+			_mockFDSCreationActionObjectEntries(titles, fdsName);
 
 			CreationMenu creationMenu =
 				_customFDSCreationMenuSerializerImpl.serialize(
@@ -144,8 +129,8 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		return dropdownItems.size();
 	}
 
-	private void _mockFDSCreationActionObjectEntry(
-		String fdsName, String[] dropdownItemTitles) {
+	private void _mockFDSCreationActionObjectEntries(
+		String[] dropdownItemTitles, String fdsName) {
 
 		Mockito.when(
 			_customFDSCreationMenuSerializerImpl.serialize(
@@ -185,6 +170,11 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		).thenReturn(
 			objectEntries
 		);
+	}
+
+	private void _resetSerializer() {
+		_customFDSCreationMenuSerializerImpl = Mockito.mock(
+			CustomFDSCreationMenuSerializerImpl.class);
 	}
 
 	private static CustomFDSCreationMenuSerializerImpl

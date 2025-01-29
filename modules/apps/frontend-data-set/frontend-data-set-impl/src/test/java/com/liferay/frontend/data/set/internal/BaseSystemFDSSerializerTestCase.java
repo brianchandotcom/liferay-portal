@@ -50,12 +50,12 @@ public abstract class BaseSystemFDSSerializerTestCase {
 		String restSchema) {
 
 		return registerSystemFDSEntry(
-			fdsName, restApplication, restEndpoint, restSchema, null);
+			null, fdsName, restApplication, restEndpoint, restSchema);
 	}
 
 	protected ServiceRegistration<SystemFDSEntry> registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema, String additionalURLParameters) {
+		String additionalURLParameters, String fdsName, String restApplication,
+		String restEndpoint, String restSchema) {
 
 		return bundleContext.registerService(
 			SystemFDSEntry.class,

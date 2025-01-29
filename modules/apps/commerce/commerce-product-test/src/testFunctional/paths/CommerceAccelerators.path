@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DESCRIPTION</td>
+	<td>//div[contains(@class,'modal-body')]//div[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_LOADED</td>
 	<td>//div[contains(@class,'portlet-title-default') and contains(.,'${key_portletName}')]/../../../div[@data-qa-id='app-loaded']/span</td>
 	<td></td>

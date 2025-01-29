@@ -266,7 +266,7 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
 
 			AssertElementPresent(
-				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+				locator1 = "CommerceEntry#MESSAGE_MORE_INFO_INFORMATION",
 				value = "Hoses Full OLD");
 		}
 
@@ -319,7 +319,7 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
 
 			AssertElementPresent(
-				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+				locator1 = "CommerceEntry#MESSAGE_MORE_INFO_INFORMATION",
 				value = "Hoses Full NEW");
 		}
 	}

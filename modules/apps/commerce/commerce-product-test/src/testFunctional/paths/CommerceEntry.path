@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_MORE_INFO_INFORMATION</td>
+	<td>//p[contains(text(), '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ITEM_FROM_LIST</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::div//a[contains(.,'Select')]</td>
 	<td></td>

@@ -1651,7 +1651,7 @@ definition {
 		task ("Then a warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -1819,7 +1819,7 @@ definition {
 		task ("Then the warning message shows up 'No more than 1.1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1.1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -1915,7 +1915,7 @@ definition {
 		task ("Then a warning message shows up ‘No more than 2 products in this product range can be purchased together.’") {
 			AssertElementPresent(
 				key_text = "No more than 2 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -2041,7 +2041,7 @@ definition {
 		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementNotPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is possible to continue the checkout") {
@@ -2069,7 +2069,7 @@ definition {
 		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -2189,7 +2189,7 @@ definition {
 		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementNotPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is possible to continue the checkout") {
@@ -2217,7 +2217,7 @@ definition {
 		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -2365,7 +2365,7 @@ definition {
 		task ("Then the warning message shows up 'No more than 1.1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1.1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -2486,7 +2486,7 @@ definition {
 		task ("Then the warning message doesn't show up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementNotPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is possible to continue the checkout") {
@@ -2516,7 +2516,7 @@ definition {
 		task ("Then the warning message shows up 'No more than 1 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {
@@ -2633,7 +2633,7 @@ definition {
 		task ("Then a warning message shows up 'No more than 1.9 products in this product range can be purchased together.'") {
 			AssertElementPresent(
 				key_text = "No more than 1.9 products in this product range can be purchased together.",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+				locator1 = "CommerceAccelerators#MODAL_DESCRIPTION");
 		}
 
 		task ("And it is impossible to continue the checkout") {

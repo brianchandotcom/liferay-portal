@@ -1280,7 +1280,7 @@ definition {
 				method = "patchUserAccount",
 				value1 = 200);
 
-			Masterclass.goBackUsingBrowserButton();
+			ExecuteJavaScript(value1 = "window.history.go(-1)");
 
 			Refresh();
 		}

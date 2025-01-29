@@ -242,8 +242,9 @@ public class ProductConfigurationDTOConverter
 	}
 
 	private String[] _getDifferences(
-		CPConfigurationEntry cpConfigurationEntry,
-		DTOConverterContext dtoConverterContext) throws PortalException {
+			CPConfigurationEntry cpConfigurationEntry,
+			DTOConverterContext dtoConverterContext)
+		throws PortalException {
 
 		if (dtoConverterContext.getId() != null) {
 			return null;
@@ -263,11 +264,9 @@ public class ProductConfigurationDTOConverter
 					cpConfigurationEntry.getCPConfigurationEntryId(),
 					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
 
-		if (cpConfigurationEntrySetting == null) {
-			return null;
-		}
+		if ((cpConfigurationEntrySetting == null) ||
+			(cpConfigurationEntry.getParentCPConfigurationList() == null)) {
 
-		if (cpConfigurationEntry.getParentCPConfigurationList() == null ) {
 			return null;
 		}
 

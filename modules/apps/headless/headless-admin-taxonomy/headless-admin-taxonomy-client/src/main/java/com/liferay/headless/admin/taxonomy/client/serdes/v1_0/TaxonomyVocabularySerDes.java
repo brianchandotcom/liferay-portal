@@ -249,6 +249,28 @@ public class TaxonomyVocabularySerDes {
 			sb.append(taxonomyVocabulary.getNumberOfTaxonomyCategories());
 		}
 
+		if (taxonomyVocabulary.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyVocabulary.getPermissions().length;
+				 i++) {
+
+				sb.append(taxonomyVocabulary.getPermissions()[i]);
+
+				if ((i + 1) < taxonomyVocabulary.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (taxonomyVocabulary.getSiteExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -432,6 +454,15 @@ public class TaxonomyVocabularySerDes {
 					taxonomyVocabulary.getNumberOfTaxonomyCategories()));
 		}
 
+		if (taxonomyVocabulary.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(taxonomyVocabulary.getPermissions()));
+		}
+
 		if (taxonomyVocabulary.getSiteExternalReferenceCode() == null) {
 			map.put("siteExternalReferenceCode", null);
 		}
@@ -522,6 +553,9 @@ public class TaxonomyVocabularySerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfTaxonomyCategories")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -641,6 +675,26 @@ public class TaxonomyVocabularySerDes {
 				if (jsonParserFieldValue != null) {
 					taxonomyVocabulary.setNumberOfTaxonomyCategories(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.taxonomy.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.taxonomy.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.taxonomy.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					taxonomyVocabulary.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(

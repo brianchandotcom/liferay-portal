@@ -2744,6 +2744,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (taxonomyVocabulary.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"siteExternalReferenceCode", additionalAssertFieldName)) {
 
@@ -3027,6 +3035,17 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				if (!Objects.deepEquals(
 						taxonomyVocabulary1.getNumberOfTaxonomyCategories(),
 						taxonomyVocabulary2.getNumberOfTaxonomyCategories())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyVocabulary1.getPermissions(),
+						taxonomyVocabulary2.getPermissions())) {
 
 					return false;
 				}
@@ -3455,6 +3474,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					taxonomyVocabulary.getNumberOfTaxonomyCategories()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("siteExternalReferenceCode")) {

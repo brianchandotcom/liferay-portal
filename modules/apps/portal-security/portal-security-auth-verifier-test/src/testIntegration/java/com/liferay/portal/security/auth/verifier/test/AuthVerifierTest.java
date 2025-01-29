@@ -253,7 +253,7 @@ public class AuthVerifierTest {
 			"http://localhost:8080/o/auth-verifier-guest-allowed-false-test" +
 				"/guestAllowed");
 
-		_assertHttpResponseStatusCode(url.openConnection(), 403);
+		_assertHttpResponseStatusCode(403, url.openConnection());
 
 		url = new URL(
 			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
@@ -518,7 +518,7 @@ public class AuthVerifierTest {
 	}
 
 	private void _assertHttpResponseStatusCode(
-		URLConnection urlConnection, int expectedHttpResponseStatusCode) {
+		int expectedHttpResponseStatusCode, URLConnection urlConnection) {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
@@ -541,7 +541,7 @@ public class AuthVerifierTest {
 
 		urlConnection.setRequestProperty("Authorization", authorization);
 
-		_assertHttpResponseStatusCode(urlConnection, 401);
+		_assertHttpResponseStatusCode(401, urlConnection);
 	}
 
 	private static BundleContext _bundleContext;

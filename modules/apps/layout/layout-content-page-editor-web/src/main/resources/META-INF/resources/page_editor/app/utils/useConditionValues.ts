@@ -45,7 +45,7 @@ export default function useConditionValues({conditionType, conditions}: Props) {
 			roles,
 			segments,
 			users,
-			_condition.condition,
+			_condition.field,
 			_condition.options?.value
 		);
 
@@ -63,7 +63,7 @@ export default function useConditionValues({conditionType, conditions}: Props) {
 }
 
 function getCondition(condition: Condition) {
-	if (!condition.type || !condition.condition) {
+	if (!condition.type || !condition.field) {
 		return '';
 	}
 
@@ -109,7 +109,7 @@ function getValue(
 	roles: Role[] | null,
 	segments: Record<string, Segment>,
 	users: User[] | null,
-	condition?: Condition['condition'],
+	condition?: Condition['field'],
 	value?: string
 ) {
 	if (!value) {

@@ -16,7 +16,7 @@ import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
 export interface Condition {
-	condition?: 'user' | 'role' | 'segment';
+	field?: 'user' | 'role' | 'segment';
 	id: string;
 	options?: {
 		type: 'equal' | 'not-equal';
@@ -103,8 +103,8 @@ export default function Condition({
 }: ConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
-	const ValueSelectorComponent: FC<SelectorProps> | null = condition.condition
-		? VALUE_SELECTOR_COMPONENTS[condition.condition]
+	const ValueSelectorComponent: FC<SelectorProps> | null = condition.field
+		? VALUE_SELECTOR_COMPONENTS[condition.field]
 		: null;
 
 	const [{description}] = useConditionValues({conditions: [condition]});
@@ -265,29 +265,29 @@ function SegmentsSelector({onValueChanged, value}: SelectorProps) {
 }
 
 function convertConditionValueToOptions(
-	condition: keyof typeof CONDITION_VALUES
+	field: keyof typeof CONDITION_VALUES
 ): Partial<Condition> {
-	if (condition === CONDITION_VALUES.not_user) {
+	if (field === CONDITION_VALUES.not_user) {
 		return {
-			condition: CONDITION_VALUES.user,
+			field: CONDITION_VALUES.user,
 			options: {
 				type: 'not-equal',
 			},
 		};
 	}
 
-	if (condition === CONDITION_VALUES.not_role) {
+	if (field === CONDITION_VALUES.not_role) {
 		return {
-			condition: CONDITION_VALUES.role,
+			field: CONDITION_VALUES.role,
 			options: {
 				type: 'not-equal',
 			},
 		};
 	}
 
-	if (condition === CONDITION_VALUES.not_segment) {
+	if (field === CONDITION_VALUES.not_segment) {
 		return {
-			condition: CONDITION_VALUES.segment,
+			field: CONDITION_VALUES.segment,
 			options: {
 				type: 'not-equal',
 			},
@@ -295,7 +295,7 @@ function convertConditionValueToOptions(
 	}
 
 	return {
-		condition,
+		field,
 		options: {
 			type: 'equal',
 		},
@@ -305,7 +305,7 @@ function convertConditionValueToOptions(
 export function convertOptionsToConditionValue(
 	condition: Condition
 ): keyof typeof CONDITION_VALUES | undefined {
-	if (condition.condition === CONDITION_VALUES.user) {
+	if (condition.field === CONDITION_VALUES.user) {
 		if (condition.options?.type === 'equal') {
 			return CONDITION_VALUES.user;
 		}
@@ -313,7 +313,7 @@ export function convertOptionsToConditionValue(
 			return CONDITION_VALUES.not_user;
 		}
 	}
-	else if (condition.condition === CONDITION_VALUES.role) {
+	else if (condition.field === CONDITION_VALUES.role) {
 		if (condition.options?.type === 'equal') {
 			return CONDITION_VALUES.role;
 		}
@@ -321,7 +321,7 @@ export function convertOptionsToConditionValue(
 			return CONDITION_VALUES.not_role;
 		}
 	}
-	else if (condition.condition === CONDITION_VALUES.segment) {
+	else if (condition.field === CONDITION_VALUES.segment) {
 		if (condition.options?.type === 'equal') {
 			return CONDITION_VALUES.segment;
 		}

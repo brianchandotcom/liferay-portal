@@ -89,9 +89,7 @@ public class CTPublishingProgressTest {
 			_backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
 				backgroundTask.getBackgroundTaskId());
 
-		int progressPercentage = backgroundTaskDisplay.getPercentage();
-
-		Assert.assertEquals(100, progressPercentage);
+		Assert.assertEquals(100, backgroundTaskDisplay.getPercentage());
 	}
 
 	@Inject

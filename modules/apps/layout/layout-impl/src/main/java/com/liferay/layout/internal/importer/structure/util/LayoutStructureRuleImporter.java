@@ -53,8 +53,6 @@ public class LayoutStructureRuleImporter {
 		return JSONUtil.toJSONArray(
 			pageRuleActions,
 			pageRuleAction -> JSONUtil.put(
-				"action", pageRuleAction.getAction()
-			).put(
 				"id", pageRuleAction.getId()
 			).put(
 				"itemId", pageRuleAction.getItemId()
@@ -74,7 +72,7 @@ public class LayoutStructureRuleImporter {
 		return JSONUtil.toJSONArray(
 			pageRuleConditions,
 			pageRuleCondition -> JSONUtil.put(
-				"condition", pageRuleCondition.getCondition()
+				"field", pageRuleCondition.getField()
 			).put(
 				"id", pageRuleCondition.getId()
 			).put(

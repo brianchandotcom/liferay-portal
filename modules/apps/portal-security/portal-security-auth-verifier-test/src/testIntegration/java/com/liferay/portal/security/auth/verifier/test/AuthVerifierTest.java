@@ -518,11 +518,11 @@ public class AuthVerifierTest {
 	}
 
 	private void _assertHttpResponseStatusCode(
-		URLConnection connection, int expectedHttpResponseStatusCode) {
+		URLConnection urlConnection, int expectedHttpResponseStatusCode) {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN);
-			InputStream inputStream = connection.getInputStream()) {
+			InputStream inputStream = urlConnection.getInputStream()) {
 
 			Assert.fail();
 		}
@@ -537,11 +537,11 @@ public class AuthVerifierTest {
 	}
 
 	private void _testAllowGuestFailsForInvalidCredentials(
-		String authorization, URLConnection connection) {
+		String authorization, URLConnection urlConnection) {
 
-		connection.setRequestProperty("Authorization", authorization);
+		urlConnection.setRequestProperty("Authorization", authorization);
 
-		_assertHttpResponseStatusCode(connection, 401);
+		_assertHttpResponseStatusCode(urlConnection, 401);
 	}
 
 	private static BundleContext _bundleContext;

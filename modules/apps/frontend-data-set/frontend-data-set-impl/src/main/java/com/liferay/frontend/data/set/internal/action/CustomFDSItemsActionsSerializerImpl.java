@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.FDSItemActionListSerializer;
+import com.liferay.frontend.data.set.action.FDSItemsActionsSerializer;
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
-	service = FDSItemActionListSerializer.class
+	service = FDSItemsActionsSerializer.class
 )
-public class CustomFDSItemActionListSerializerImpl
-	extends BaseCustomFDSSerializer implements FDSItemActionListSerializer {
+public class CustomFDSItemsActionsSerializerImpl
+	extends BaseCustomFDSSerializer implements FDSItemsActionsSerializer {
 
 	@Override
 	public List<FDSActionDropdownItem> serialize(

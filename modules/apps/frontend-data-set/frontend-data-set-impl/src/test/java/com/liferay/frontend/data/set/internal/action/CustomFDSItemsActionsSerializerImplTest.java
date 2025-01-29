@@ -31,7 +31,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class CustomFDSItemActionListSerializerImplTest {
+public class CustomFDSItemsActionsSerializerImplTest {
 
 	@ClassRule
 	@Rule
@@ -46,7 +46,7 @@ public class CustomFDSItemActionListSerializerImplTest {
 	@Test
 	public void testSerialization() throws Exception {
 
-		// different action lists
+		// different item actions
 
 		_mockFDSItemActionObjectEntry(
 			new String[] {"New 1.1", "New 1.2"}, "fdsName1");
@@ -54,11 +54,11 @@ public class CustomFDSItemActionListSerializerImplTest {
 		_mockFDSItemActionObjectEntry(new String[] {"New 2"}, "fdsName2");
 
 		List<FDSActionDropdownItem> actionDropdownItems1 =
-			_customFDSItemActionListSerializerImpl.serialize(
+			_customFDSItemsActionsSerializerImpl.serialize(
 				"fdsName1", _httpServletRequest);
 
 		List<FDSActionDropdownItem> actionDropdownItems2 =
-			_customFDSItemActionListSerializerImpl.serialize(
+			_customFDSItemsActionsSerializerImpl.serialize(
 				"fdsName2", _httpServletRequest);
 
 		Assert.assertTrue(_containsLabel(actionDropdownItems1, "New 1.1"));
@@ -74,18 +74,18 @@ public class CustomFDSItemActionListSerializerImplTest {
 
 		_resetSerializer();
 
-		// no item action list
+		// no item actions
 
 		_mockFDSItemActionObjectEntry(null, "fdsName");
 
 		Assert.assertTrue(
-			_customFDSItemActionListSerializerImpl.serialize(
+			_customFDSItemsActionsSerializerImpl.serialize(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
 		_resetSerializer();
 
-		// shared action lists
+		// shared item actions
 
 		String[] labels = {"New A", "New B"};
 
@@ -95,7 +95,7 @@ public class CustomFDSItemActionListSerializerImplTest {
 			_mockFDSItemActionObjectEntry(labels, fdsName);
 
 			List<FDSActionDropdownItem> actionDropdownItems =
-				_customFDSItemActionListSerializerImpl.serialize(
+				_customFDSItemsActionsSerializerImpl.serialize(
 					fdsName, _httpServletRequest);
 
 			for (String label : labels) {
@@ -107,9 +107,9 @@ public class CustomFDSItemActionListSerializerImplTest {
 	}
 
 	private boolean _containsLabel(
-		List<FDSActionDropdownItem> itemActionList, String label) {
+		List<FDSActionDropdownItem> itemActions, String label) {
 
-		for (DropdownItem dropdownItem : itemActionList) {
+		for (DropdownItem dropdownItem : itemActions) {
 			if (label.equals((String)dropdownItem.get("label"))) {
 				return true;
 			}
@@ -122,12 +122,12 @@ public class CustomFDSItemActionListSerializerImplTest {
 		String[] dropdownItemLabels, String fdsName) {
 
 		Mockito.when(
-			_customFDSItemActionListSerializerImpl.serialize(
+			_customFDSItemsActionsSerializerImpl.serialize(
 				fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
 		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_customFDSItemActionListSerializerImpl;
+			(BaseCustomFDSSerializer)_customFDSItemsActionsSerializerImpl;
 
 		if (ArrayUtil.isEmpty(dropdownItemLabels)) {
 			Mockito.when(
@@ -162,12 +162,12 @@ public class CustomFDSItemActionListSerializerImplTest {
 	}
 
 	private void _resetSerializer() throws Exception {
-		_customFDSItemActionListSerializerImpl = Mockito.mock(
-			CustomFDSItemActionListSerializerImpl.class);
+		_customFDSItemsActionsSerializerImpl = Mockito.mock(
+			CustomFDSItemsActionsSerializerImpl.class);
 	}
 
-	private static CustomFDSItemActionListSerializerImpl
-		_customFDSItemActionListSerializerImpl;
+	private static CustomFDSItemsActionsSerializerImpl
+		_customFDSItemsActionsSerializerImpl;
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 

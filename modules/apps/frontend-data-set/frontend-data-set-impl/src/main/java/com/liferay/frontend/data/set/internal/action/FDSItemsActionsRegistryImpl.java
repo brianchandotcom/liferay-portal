@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.FDSItemActionList;
-import com.liferay.frontend.data.set.action.FDSItemActionListRegistry;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
+import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -21,13 +21,12 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Daniel Sanz
  */
-@Component(service = FDSItemActionListRegistry.class)
-public class FDSItemActionListRegistryImpl
-	implements FDSItemActionListRegistry {
+@Component(service = FDSItemsActionsRegistry.class)
+public class FDSItemsActionsRegistryImpl implements FDSItemsActionsRegistry {
 
 	@Override
-	public FDSItemActionList getFDSItemActionList(String fdsName) {
-		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemActionList>
+	public FDSItemsActions getFDSItemsActions(String fdsName) {
+		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>
 			serviceWrapper = _serviceTrackerMap.getService(fdsName);
 
 		if (serviceWrapper == null) {
@@ -46,8 +45,8 @@ public class FDSItemActionListRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSItemActionList.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSItemActionList>serviceWrapper(
+			bundleContext, FDSItemsActions.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSItemsActions>serviceWrapper(
 				bundleContext));
 	}
 
@@ -57,11 +56,11 @@ public class FDSItemActionListRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSItemActionListRegistryImpl.class);
+		FDSItemsActionsRegistryImpl.class);
 
 	private ServiceTrackerMap
 		<String,
-		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemActionList>>
+		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>>
 			_serviceTrackerMap;
 
 }

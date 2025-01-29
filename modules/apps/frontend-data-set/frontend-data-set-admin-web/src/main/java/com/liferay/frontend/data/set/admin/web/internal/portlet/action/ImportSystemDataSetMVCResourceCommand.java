@@ -9,8 +9,8 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
-import com.liferay.frontend.data.set.action.FDSItemActionList;
-import com.liferay.frontend.data.set.action.FDSItemActionListRegistry;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
+import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -115,15 +115,14 @@ public class ImportSystemDataSetMVCResourceCommand
 				dataSetActionObjectDefinition.getObjectDefinitionId());
 		}
 
-		FDSItemActionList fdsItemActionList =
-			_fdsItemActionListRegistry.getFDSItemActionList(fdsName);
+		FDSItemsActions fdsItemsActions =
+			_fdsItemsActionsRegistry.getFDSItemsActions(fdsName);
 
-		if (fdsItemActionList != null) {
-			_addFDSItemActionListObjectEntries(
+		if (fdsItemsActions != null) {
+			_addFDSItemActionObjectEntries(
 				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
-				fdsItemActionList,
-				_portal.getHttpServletRequest(resourceRequest),
+				fdsItemsActions, _portal.getHttpServletRequest(resourceRequest),
 				dataSetActionObjectDefinition.getObjectDefinitionId());
 		}
 
@@ -196,14 +195,14 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
-	private void _addFDSItemActionListObjectEntries(
+	private void _addFDSItemActionObjectEntries(
 			long dataSetId, String defaultLanguageId,
-			FDSItemActionList fdsItemActionList,
+			FDSItemsActions fdsItemsActions,
 			HttpServletRequest httpServletRequest, long objectDefinitionId)
 		throws Exception {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			fdsItemActionList.getFDSActionDropdownItems(httpServletRequest);
+			fdsItemsActions.getFDSActionDropdownItems(httpServletRequest);
 
 		for (FDSActionDropdownItem fdsActionDropdownItem :
 				fdsActionDropdownItems) {
@@ -292,7 +291,7 @@ public class ImportSystemDataSetMVCResourceCommand
 	private FDSCreationMenuRegistry _fdsCreationMenuRegistry;
 
 	@Reference
-	private FDSItemActionListRegistry _fdsItemActionListRegistry;
+	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

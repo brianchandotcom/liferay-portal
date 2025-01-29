@@ -8,8 +8,8 @@ package com.liferay.frontend.data.set.action;
 /**
  * @author Daniel Sanz
  */
-public interface FDSItemActionListRegistry {
+public interface FDSItemsActionsRegistry {
 
-	public FDSItemActionList getFDSItemActionList(String fdsName);
+	public FDSItemsActions getFDSItemsActions(String fdsName);
 
 }

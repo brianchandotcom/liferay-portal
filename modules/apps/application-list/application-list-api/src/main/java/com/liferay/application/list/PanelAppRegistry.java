@@ -207,7 +207,7 @@ public class PanelAppRegistry {
 					}
 
 					String featureFlagKey = String.valueOf(
-						serviceReference.getProperty("featureFlagKey"));
+						serviceReference.getProperty("feature.flag.key"));
 
 					if (Validator.isNotNull(featureFlagKey)) {
 						_featureFlagKeys.put(panelApp, featureFlagKey);

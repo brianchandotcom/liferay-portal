@@ -6,6 +6,7 @@
 package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -47,7 +48,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			_jaxWsApiConfiguration = configurationAdmin.getConfiguration(
 				"com.liferay.portal.remote.soap.extender.internal." +
 					"configuration.JaxWsApiConfiguration",
-				null);
+				StringPool.QUESTION);
 
 			_jaxWsApiConfigurationProperties =
 				_jaxWsApiConfiguration.getProperties();

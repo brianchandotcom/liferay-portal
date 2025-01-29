@@ -8,37 +8,42 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-13560 Can sort specifications by specification group and label priority', async ({
 	apiHelpers,
-	commerceLayoutsPage,
+	page,
+	site,
 	specificationFacetsPage,
 }) => {
 	test.setTimeout(180000);
 
-	const pageLabel = 'Specification Facet Page';
-
-	await commerceLayoutsPage.goToPages();
-	await commerceLayoutsPage.createWidgetPage(pageLabel);
-	await specificationFacetsPage.goToPage();
-	await specificationFacetsPage.addRequiredFacetWidgets();
-	await specificationFacetsPage.configureSearchOptions();
-
-	const site =
-		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Specification Facet Channel',
+		name: getRandomString(),
 		siteGroupId: site.id,
 	});
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+	await specificationFacetsPage.addRequiredFacetWidgets();
+	await specificationFacetsPage.configureSearchOptions();
 
 	const optionCategory1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
@@ -83,7 +88,7 @@ test('LPD-13560 Can sort specifications by specification group and label priorit
 		);
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Specification Facet Catalog',
+		name: getRandomString(),
 	});
 
 	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
@@ -139,25 +144,21 @@ test('LPD-13560 Can sort specifications by specification group and label priorit
 			reverseSpecificationFacetsList[i]
 		);
 	}
-
-	await commerceLayoutsPage.goToPages();
-	await specificationFacetsPage.deleteSpecificationPage();
 });
 
 test('LPD-20340 Option and Specification facet portlets behave the same way', async ({
 	apiHelpers,
-	commerceLayoutsPage,
 	page,
+	site,
 	specificationFacetsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Specification Facet Site',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Specification Facet Channel',
+		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
@@ -204,7 +205,7 @@ test('LPD-20340 Option and Specification facet portlets behave the same way', as
 		);
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Specification Facet Catalog',
+		name: getRandomString(),
 	});
 
 	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
@@ -237,10 +238,7 @@ test('LPD-20340 Option and Specification facet portlets behave the same way', as
 		],
 	});
 
-	await commerceLayoutsPage.goToPages(false, site.name);
-	await commerceLayoutsPage.createWidgetPage('Specification Facet Page');
-
-	await page.goto(`/web/${site.name}/specification-facet-page`);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 	await specificationFacetsPage.addRequiredFacetWidgets();
 	await specificationFacetsPage.configureSearchOptions();

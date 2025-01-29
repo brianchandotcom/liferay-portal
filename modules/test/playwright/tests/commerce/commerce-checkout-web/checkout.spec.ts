@@ -9,9 +9,13 @@ import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
@@ -25,27 +29,30 @@ export const test = mergeTests(
 	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	notificationPagesTest,
+	pageEditorPagesTest,
+	pageViewModePagesTest,
 	systemSettingsPageTest
 );
 
 test('LPD-25860 Checkout widget configuration to display full addresses and phone number', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	checkoutPage,
-	commerceLayoutsPage,
 	page,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -96,13 +103,9 @@ test('LPD-25860 Checkout widget configuration to display full addresses and phon
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await checkoutPage.addCheckoutWidget();
+	await widgetPagePage.addPortlet('Checkout');
 
 	const phoneNumber = '1234567890';
 	const region = 'Florida';
@@ -160,20 +163,19 @@ test('LPD-25860 Checkout widget configuration to display full addresses and phon
 test('LPP-55128 Payment Term is reset correctly', async ({
 	accountsPage,
 	apiHelpers,
-	applicationsMenuPage,
 	checkoutPage,
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	editAccountChannelDefaultsPage,
 	editAccountPage,
 	page,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -327,12 +329,9 @@ test('LPP-55128 Payment Term is reset correctly', async ({
 		'Payment Methods'
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-	await checkoutPage.addCheckoutWidget();
+	await widgetPagePage.addPortlet('Checkout');
 
 	await checkoutPage.addressInput.fill('123 Main St');
 	await checkoutPage.cityInput.fill('Miami');
@@ -560,11 +559,19 @@ test('LPD-35329 Delivery group multishipping checkout summary', async ({
 
 test('LPD-40425 Checkout order detail redirect works correctly when order DPT is enabled', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	checkoutPage,
 	commerceLayoutsPage,
+	displayPageTemplatesPage,
 	page,
+	pageEditorPage,
+	site,
+	widgetPagePage,
 }) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
 		type: 'person',
@@ -572,33 +579,27 @@ test('LPD-40425 Checkout order detail redirect works correctly when order DPT is
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.createTemplate({
+		contentType: 'Order',
+		name: displayPageTemplateName,
 	});
+	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await applicationsMenuPage.goToSite(site.name);
-
-	await commerceLayoutsPage.goToDisplayPageTemplates();
-	await commerceLayoutsPage.createDisplayPageTemplate(
-		getRandomString(),
-		'Order',
-		site.name
-	);
-	await commerceLayoutsPage.addFragment('Heading');
+	await pageEditorPage.addFragment('Basic Components', 'Heading');
 
 	await expect(page.getByText('Heading Example')).toBeVisible();
 
-	await commerceLayoutsPage.publishButton.click();
+	await pageEditorPage.waitForChangesSaved();
 
-	await waitForAlert(
-		page,
-		'The display page template was published successfully.'
+	await displayPageTemplatesPage.publishTemplate();
+	await displayPageTemplatesPage.clickMoreActions(
+		displayPageTemplateName,
+		'Mark as Default'
 	);
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
 	await waitForAlert(page);
 
@@ -631,14 +632,10 @@ test('LPD-40425 Checkout order detail redirect works correctly when order DPT is
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
+	await widgetPagePage.addPortlet('Checkout');
 
-	await page.goto(`/web/${site.name}`);
-
-	await checkoutPage.addCheckoutWidget();
 	await checkoutPage.performCheckout({
 		shippingAddress: {
 			city: 'testCity',

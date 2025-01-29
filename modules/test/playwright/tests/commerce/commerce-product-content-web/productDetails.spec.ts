@@ -10,7 +10,9 @@ import path from 'node:path';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
@@ -25,21 +27,22 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-31658 Users cannot view and download owner limited product attachments', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -95,15 +98,9 @@ test('LPD-31658 Users cannot view and download owner limited product attachments
 
 	apiHelpers.data.push({id: attachment1.id, type: 'attachment'});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-
-	await commerceLayoutsPage.createWidgetPage('View product details');
-
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
+	await widgetPagePage.addPortlet('Product Details');
 
 	await page.goto(`/web/${site.name}/p/` + product.name['en_US']);
 
@@ -186,16 +183,15 @@ test('LPD-31658 Users cannot view and download owner limited product attachments
 
 test('COMMERCE-9677 As a buyer, I want to be able to view a virtual product Detail page', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'View product details',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'View product details',
@@ -210,7 +206,7 @@ test('COMMERCE-9677 As a buyer, I want to be able to view a virtual product Deta
 		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 			catalogId: catalog.id,
 			description: {en_US: 'Full description'},
-			name: {en_US: 'Virtual'},
+			name: {en_US: getRandomString()},
 			productType: 'virtual',
 			productVirtualSettings: {
 				activationStatus: 1,
@@ -257,17 +253,11 @@ test('COMMERCE-9677 As a buyer, I want to be able to view a virtual product Deta
 
 	await apiHelpers.headlessCommerceAdminPricing.postDiscount();
 
-	await applicationsMenuPage.goToSite('View product details');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
+	await widgetPagePage.addPortlet('Product Details');
 
-	await commerceLayoutsPage.createWidgetPage('View product details');
-
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
-
-	await page.goto(`/web/${site.name}/p/virtual`);
+	await page.goto(`/web/${site.name}/p/${virtualProduct.name['en_US']}`);
 
 	await expect(await productDetailsPage.skuField('SkuVirtual')).toBeVisible();
 	await expect(await productDetailsPage.mpnField('mpn')).toBeVisible();
@@ -297,15 +287,15 @@ test('COMMERCE-12167 User can see SKU updated on the product details page when v
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminProductPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'View product details',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'View product details',
@@ -332,12 +322,12 @@ test('COMMERCE-12167 User can see SKU updated on the product details page when v
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 	});
 
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product2'},
+		name: {en_US: getRandomString()},
 	});
 
 	const productBundle =
@@ -481,15 +471,9 @@ test('COMMERCE-12167 User can see SKU updated on the product details page when v
 		}
 	);
 
-	await applicationsMenuPage.goToSite('View product details');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-
-	await commerceLayoutsPage.createWidgetPage('View product details');
-
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
+	await widgetPagePage.addPortlet('Product Details');
 
 	await page.goto(`/web/${site.name}/p/productbundle`);
 
@@ -514,18 +498,15 @@ test('COMMERCE-12167 User can see SKU updated on the product details page when v
 
 test('LPD-18710 Price is correctly calculated for bundle product with options not marked as sku contributor', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const siteName = getRandomString();
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: siteName,
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -605,14 +586,9 @@ test('LPD-18710 Price is correctly calculated for bundle product with options no
 		],
 	});
 
-	await applicationsMenuPage.goToSite(siteName);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('View product details');
-
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
+	await widgetPagePage.addPortlet('Product Details');
 
 	await page.goto(`/web/${site.name}/p/${productBundleName}`);
 
@@ -636,17 +612,16 @@ test('LPD-18710 Price is correctly calculated for bundle product with options no
 
 test(`LPD-29993 Users can view and download a product's attachments`, async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'admin',
@@ -722,13 +697,9 @@ test(`LPD-29993 Users can view and download a product's attachments`, async ({
 
 	await waitForAlert(page);
 
-	await applicationsMenuPage.goToSite(site.name);
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('View product details');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
+	await widgetPagePage.addPortlet('Product Details');
 
 	await performLogout(page);
 
@@ -761,15 +732,15 @@ test(`LPD-29993 Users can view and download a product's attachments`, async ({
 test('LPD-39598 Can view SKU UOM discount is applied on product details page', async ({
 	apiHelpers,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -871,13 +842,9 @@ test('LPD-39598 Can view SKU UOM discount is applied on product details page', a
 			}
 		);
 
-	await commerceLayoutsPage.goToPages(true, site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
-
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
+	await widgetPagePage.addPortlet('Product Details');
 
 	await performLogout(page);
 

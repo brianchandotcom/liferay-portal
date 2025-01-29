@@ -8,28 +8,31 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-30188 Product publisher tag filters can be added and removed', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	productPublisherPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -39,23 +42,18 @@ test('LPD-30188 Product publisher tag filters can be added and removed', async (
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 		tags: ['tag1'],
 	});
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product2'},
+		name: {en_US: getRandomString()},
 		tags: ['tag2'],
 	});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
-
-	await page.goto(`/web/${site.name}`);
-
-	await productPublisherPage.addProductPublisherWidget();
+	await widgetPagePage.addPortlet('Product Publisher');
 
 	await expect(
 		await productPublisherPage.productLink(product1.name.en_US)

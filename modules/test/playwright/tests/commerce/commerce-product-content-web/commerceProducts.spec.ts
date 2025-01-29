@@ -11,7 +11,9 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
@@ -27,7 +29,9 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-5780 Modal title and product name appear properly in product menu', async ({
@@ -84,18 +88,17 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceInstanceSettingsPage,
-	commerceLayoutsPage,
 	page,
-	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
 	await commerceInstanceSettingsPage.toggleShowUnselectableOptions(true);
 
 	try {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'ProductDetailsSite',
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		await apiHelpers.headlessCommerceAdminChannel.postChannel({
 			name: 'ProductDetailsSite',
@@ -157,7 +160,7 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 		const bundleProduct =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				catalogId: catalog.id,
-				name: {en_US: 'ProductBundle'},
+				name: {en_US: getRandomString()},
 				productOptions: [
 					{
 						fieldType: 'select',
@@ -263,16 +266,11 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 			['test@liferay.com']
 		);
 
-		await applicationsMenuPage.goToSite('ProductDetailsSite');
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await commerceLayoutsPage.goToPages(false);
-		await commerceLayoutsPage.createWidgetPage('ProductDetailsSite');
+		await widgetPagePage.addPortlet('Product Details');
 
-		await page.goto(`/web/${site.name}`);
-
-		await productDetailsPage.addProductDetailsWidget();
-
-		await page.goto(`/web/${site.name}/p/productbundle`);
+		await page.goto(`/web/${site.name}/p/${bundleProduct.name.en_US}`);
 
 		await expect(page.getByText('Value1', {exact: true})).toBeVisible();
 		await expect(page.getByText('Value3', {exact: true})).toBeVisible();
@@ -578,18 +576,18 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceInstanceSettingsPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
 	await commerceInstanceSettingsPage.toggleShowUnselectableOptions(true);
 
 	try {
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		await apiHelpers.headlessCommerceAdminChannel.postChannel({
 			siteGroupId: site.id,
@@ -648,7 +646,7 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 		const bundleProduct =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				catalogId: catalog.id,
-				name: {en_US: 'ProductBundle'},
+				name: {en_US: getRandomString()},
 				productOptions: [
 					{
 						fieldType: 'select',
@@ -748,16 +746,11 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 			['test@liferay.com']
 		);
 
-		await applicationsMenuPage.goToSite(site.name);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await commerceLayoutsPage.goToPages(false);
-		await commerceLayoutsPage.createWidgetPage(getRandomString());
+		await widgetPagePage.addPortlet('Product Details');
 
-		await page.goto(`/web/${site.name}`);
-
-		await productDetailsPage.addProductDetailsWidget();
-
-		await page.goto(`/web/${site.name}/p/productbundle`);
+		await page.goto(`/web/${site.name}/p/${bundleProduct.name.en_US}`);
 
 		await expect(page.getByText('Value2', {exact: true})).toBeVisible();
 		await expect(page.getByText('Value4', {exact: true})).toBeVisible();
@@ -775,17 +768,16 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 
 test('LPD-33075 Verify buyers can view the SKU of a product on the product card if it set.', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	productPublisherPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
@@ -842,20 +834,15 @@ test('LPD-33075 Verify buyers can view the SKU of a product on the product card 
 
 	await waitForAlert(page);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('View product Sku');
-
-	await page.goto(`/web/${site.name}`);
-
-	await productPublisherPage.addProductPublisherWidget();
+	await widgetPagePage.addPortlet('Product Publisher');
 
 	await performLogout(page);
 
 	await performLogin(page, 'demo.unprivileged');
 
-	await page.goto(`/web/${site.name}/` + 'view-product-sku');
+	await page.goto(`/web/${site.name}/`);
 
 	await expect(
 		await productPublisherPage.productSku(product.skus[0].sku)
@@ -864,22 +851,21 @@ test('LPD-33075 Verify buyers can view the SKU of a product on the product card 
 
 test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Display Page', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductDetailsDiagramPage,
 	commerceAdminProductDetailsPage,
 	commerceAdminProductPage,
-	commerceLayoutsPage,
 	page,
 	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'ProductDetailsSite',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const account1 = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Account1',
+		name: getRandomString(),
 		type: 'person',
 	});
 
@@ -896,18 +882,18 @@ test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Di
 	});
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'ProductDetailsSite',
+		name: getRandomString(),
 	});
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 	});
 
 	const productDiagram =
 		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 			catalogId: catalog.id,
-			name: {en_US: 'Diagram'},
+			name: {en_US: getRandomString()},
 			productType: 'diagram',
 		});
 
@@ -942,15 +928,11 @@ test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Di
 		}
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('View product Sku');
+	await widgetPagePage.addPortlet('Product Details');
 
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
-	await page.goto(`/web/${site.name}/p/diagram`);
+	await page.goto(`/web/${site.name}/p/${productDiagram.name['en_US']}`);
 	await (await productDetailsPage.diagramPin(pin.sequence)).click();
 	await productDetailsPage.pinAddToCartButton.click();
 	await expect(productDetailsPage.pinAddToCartButton).toHaveClass(/is-added/);
@@ -961,25 +943,23 @@ test('LPD-3424 Can click AddToButton button multiple times on Diagram Product Di
 
 test('LPD-37780 Friendly URLs history for products', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductDetailsPage,
 	commerceAdminProductPage,
-	commerceLayoutsPage,
 	page,
-	productDetailsPage,
+	site,
+	widgetPagePage,
 }) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
 		type: 'person',
 	});
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -990,7 +970,7 @@ test('LPD-37780 Friendly URLs history for products', async ({
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 	});
 
 	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
@@ -1004,16 +984,11 @@ test('LPD-37780 Friendly URLs history for products', async ({
 
 	await waitForAlert(page);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Product details');
+	await widgetPagePage.addPortlet('Product Details');
 
-	await page.goto(`/web/${site.name}`);
-
-	await productDetailsPage.addProductDetailsWidget();
-
-	await page.goto(`/web/${site.name}/p/product1`);
+	await page.goto(`/web/${site.name}/p/${product.name['en_US']}`);
 
 	await expect(page.getByText(product.name['en_US'])).toBeVisible();
 

@@ -9,41 +9,46 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-27036 Cart shows decimal quantities', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceCartPage,
-	commerceLayoutsPage,
+	page,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Cart Site',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Cart Channel',
+		name: getRandomString(),
 		siteGroupId: site.id,
 	});
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Cart Catalog',
+		name: getRandomString(),
 	});
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 		productConfiguration: {
 			minOrderQuantity: 1.22,
 			multipleOrderQuantity: 1.22,
@@ -70,7 +75,7 @@ test('LPD-27036 Cart shows decimal quantities', async ({
 		);
 
 	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Cart Account',
+		name: getRandomString(),
 		type: 'person',
 	});
 
@@ -96,15 +101,11 @@ test('LPD-27036 Cart shows decimal quantities', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite('Cart Site');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Cart Page');
+	await widgetPagePage.addPortlet('Cart');
 
-	await applicationsMenuPage.goToSite('Cart Site');
-
-	await commerceCartPage.addCartWidget();
-	expect(
+	await expect(
 		await commerceCartPage.commerceOrderItemsTableRowQuantityInput(
 			product.name['en_US']
 		)

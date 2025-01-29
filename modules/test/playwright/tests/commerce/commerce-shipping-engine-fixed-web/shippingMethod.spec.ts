@@ -8,30 +8,33 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPP-55641 Variable Shipping Rate is calculated based only on shippable products', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	checkoutPage,
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -129,6 +132,7 @@ test('LPP-55641 Variable Shipping Rate is calculated based only on shippable pro
 		channel.name,
 		'B2B'
 	);
+
 	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
 		'Variable Rate',
 		'Shipping Methods'
@@ -141,12 +145,9 @@ test('LPP-55641 Variable Shipping Rate is calculated based only on shippable pro
 		'10'
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage(getRandomString());
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-	await checkoutPage.addCheckoutWidget();
+	await widgetPagePage.addPortlet('Checkout');
 
 	await checkoutPage.addressInput.fill('123 Main St');
 	await checkoutPage.cityInput.fill('Miami');
@@ -157,5 +158,5 @@ test('LPP-55641 Variable Shipping Rate is calculated based only on shippable pro
 	await checkoutPage.zipInput.fill('33101');
 
 	await checkoutPage.continueButton.click();
-	expect(checkoutPage.shippingCost).toContainText('$ 1.50');
+	await expect(checkoutPage.shippingCost).toContainText('$ 1.50');
 });

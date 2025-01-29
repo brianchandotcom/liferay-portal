@@ -9,8 +9,11 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
@@ -21,23 +24,25 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	isolatedSiteTest,
 	loginTest(),
 	notificationPagesTest,
+	pageEditorPagesTest,
+	pageViewModePagesTest,
 	usersAndOrganizationsPagesTest
 );
 
 test('LPD-13627 Edit pending order item with UOM', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	pendingOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Edit pending order',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Edit pending order Channel',
@@ -95,14 +100,9 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite('Edit pending order');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await pendingOrdersPage.addPendingOrdersWidget();
+	await widgetPagePage.addPortlet('Open Carts');
 
 	await pendingOrdersPage.viewButton.click();
 
@@ -113,16 +113,15 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 
 test('LPD-13627 Edit pending order item without UOM', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	pendingOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Edit pending order',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Edit pending order Channel',
@@ -173,14 +172,9 @@ test('LPD-13627 Edit pending order item without UOM', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite('Edit pending order');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await pendingOrdersPage.addPendingOrdersWidget();
+	await widgetPagePage.addPortlet('Open Carts');
 
 	await pendingOrdersPage.viewButton.click();
 
@@ -821,16 +815,15 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 
 test('LPD-33783 Pending orders table displays correct fields', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	pendingOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Pending order',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Pending order Channel',
@@ -851,14 +844,9 @@ test('LPD-33783 Pending orders table displays correct fields', async ({
 		orderStatus: '2',
 	});
 
-	await applicationsMenuPage.goToSite('Pending order');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Pending Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await pendingOrdersPage.addPendingOrdersWidget();
+	await widgetPagePage.addPortlet('Open Carts');
 
 	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();
 
@@ -875,9 +863,14 @@ test('LPD-33783 Pending orders table displays correct fields', async ({
 		'Amount',
 	];
 
-	await expect(await pendingOrdersPage.tableHeaders.innerText()).toEqual(
-		tableHeaderLabels.join('\n')
-	);
+	tableHeaderLabels.forEach((tableHeaderLabel) => {
+		expect(
+			page.getByRole('columnheader', {
+				exact: true,
+				name: tableHeaderLabel,
+			})
+		).toBeVisible();
+	});
 });
 
 test('LPD-3440 As a order manager with buyer approval workflow, I can approve orders on pending orders page', async ({

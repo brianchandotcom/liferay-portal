@@ -361,7 +361,7 @@ export class CommerceAdminChannelDetailsPage {
 		}
 		await (await this.isActive(tableName)).check();
 		await (await this.frameSaveButton(false, tableName)).click();
-		await waitForAlert(this.page.frameLocator('iframe').nth(1));
+		await waitForAlert(await this.sidePanelFrame(tableName));
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 

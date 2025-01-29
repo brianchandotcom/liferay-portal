@@ -10,6 +10,7 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
@@ -23,19 +24,24 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-10562': {enabled: true},
 	}),
-	loginTest()
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-21633 Returns widget to show return and refunds', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, payment, site} =
 		await commerceReturnSetUp(apiHelpers);
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
 	await apiHelpers.headlessCommerceAdminPaymentApiHelper.postPayment({
 		amount: payment.amount,
@@ -45,14 +51,9 @@ test('LPD-21633 Returns widget to show return and refunds', async ({
 		type: 1,
 	});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({
@@ -79,22 +80,21 @@ test('LPD-21633 Returns widget to show return and refunds', async ({
 
 test('LPD-32515 Returns widget displays amount fields with correct currency pattern', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site, sku} = await commerceReturnSetUp(apiHelpers);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await expect(
 		(await returnsPage.tableRow(1, '$ 0.00', true)).row
@@ -120,11 +120,10 @@ test('LPD-32515 Returns widget displays amount fields with correct currency patt
 
 test('LPD-32522 Returns widget displays status field on return items table when return is submitted', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(
 		apiHelpers,
@@ -135,14 +134,14 @@ test('LPD-32522 Returns widget displays status field on return items table when 
 		'draft'
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({
@@ -166,11 +165,10 @@ test('LPD-32522 Returns widget displays status field on return items table when 
 
 test('LPD-32519 Warning message before submitting a return should not be shown once the return has been submitted', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(
 		apiHelpers,
@@ -181,14 +179,14 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 		'draft'
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({
@@ -216,22 +214,21 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 
 test('LPD-32514 Return external reference code can not be edited in returns widget', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({
@@ -248,21 +245,23 @@ test('LPD-32514 Return external reference code can not be edited in returns widg
 test('LPD-32521 Returns widget details page will only show returns status', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
 
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({
@@ -284,23 +283,21 @@ test('LPD-32521 Returns widget details page will only show returns status', asyn
 
 test('LPD-32524 Returns widget to show comments for return items', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
-
+	await widgetPagePage.addPortlet('Returns');
 	await (
 		await returnsPage.tableRowLink({
 			colIndex: 0,
@@ -329,22 +326,21 @@ test('LPD-32524 Returns widget to show comments for return items', async ({
 
 test('LPD-32523 Returns widget to show received quantity label localized', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	returnDetailsPage,
 	returnsPage,
+	widgetPagePage,
 }) => {
 	const {commerceReturn, site} = await commerceReturnSetUp(apiHelpers);
 
-	await applicationsMenuPage.goToSite(site.name);
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Returns Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await returnsPage.addReturnsWidget();
+	await widgetPagePage.addPortlet('Returns');
 
 	await (
 		await returnsPage.tableRowLink({

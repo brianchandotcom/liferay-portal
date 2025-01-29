@@ -9,7 +9,9 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
@@ -17,23 +19,23 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageViewModePagesTest
 );
 
 test('LPD-3360 Checkout with single approval', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
-	commerceCartSummaryPage,
-	commerceLayoutsPage,
 	commerceMiniCartPage,
 	page,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: `${site.name} Channel`,
@@ -94,14 +96,9 @@ test('LPD-3360 Checkout with single approval', async ({
 		channel.id
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Commerce Cart Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await commerceCartSummaryPage.addCartSummaryWidget();
+	await widgetPagePage.addPortlet('Cart Summary');
 
 	await commerceMiniCartPage.submitButton.waitFor({state: 'visible'});
 

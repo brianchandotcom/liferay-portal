@@ -9,7 +9,9 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -34,23 +36,24 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest(),
-	usersAndOrganizationsPagesTest,
-	systemSettingsPageTest
+	pageViewModePagesTest,
+	systemSettingsPageTest,
+	usersAndOrganizationsPagesTest
 );
 
 test('LPD-25831 Placed orders widget configuration to display full addresses and phone number', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	placedOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -106,14 +109,9 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 		shippingAddressId: address.id,
 	});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await placedOrdersPage.addPlacedOrdersWidget();
+	await widgetPagePage.addPortlet('Placed Orders');
 
 	await placedOrdersPage.viewButton.click();
 
@@ -298,12 +296,17 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 
 test('LPD-32095 A user can search orders by account name', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	placedOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
 	userData[userAccount.alternateName] = {
@@ -311,12 +314,6 @@ test('LPD-32095 A user can search orders by account name', async ({
 		password: 'test',
 		surname: userAccount.familyName,
 	};
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -372,14 +369,9 @@ test('LPD-32095 A user can search orders by account name', async ({
 		[userAccount.emailAddress]
 	);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await placedOrdersPage.addPlacedOrdersWidget();
+	await widgetPagePage.addPortlet('Placed Orders');
 
 	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
 		.getProduct(product.productId)
@@ -453,16 +445,15 @@ test('LPD-32095 A user can search orders by account name', async ({
 
 test('LPD-33783 Placed orders table displays correct fields', async ({
 	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
 	page,
 	placedOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Placed order',
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: 'Placed order Channel',
@@ -483,14 +474,9 @@ test('LPD-33783 Placed orders table displays correct fields', async ({
 		orderStatus: '0',
 	});
 
-	await applicationsMenuPage.goToSite(site.name);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await commerceLayoutsPage.goToPages(false);
-	await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
-
-	await page.goto(`/web/${site.name}`);
-
-	await placedOrdersPage.addPlacedOrdersWidget();
+	await widgetPagePage.addPortlet('Placed Orders');
 
 	await expect(placedOrdersPage.table).toBeVisible();
 
@@ -507,23 +493,28 @@ test('LPD-33783 Placed orders table displays correct fields', async ({
 		'Amount',
 	];
 
-	await expect(await placedOrdersPage.tableHeaders.innerText()).toEqual(
-		tableHeaderLabels.join('\n')
-	);
+	tableHeaderLabels.forEach((tableHeaderLabel) => {
+		expect(
+			page.getByRole('columnheader', {
+				exact: true,
+				name: tableHeaderLabel,
+			})
+		).toBeVisible();
+	});
 });
 
 test('LPD-33658 Assert date and time are displayed as order date', async ({
 	apiHelpers,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	placedOrdersPage,
+	site,
+	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -542,12 +533,9 @@ test('LPD-33658 Assert date and time are displayed as order date', async ({
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await commerceLayoutsPage.goToPages(true, site.name);
-	await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await page.goto(`/web/${site.name}`);
-
-	await placedOrdersPage.addPlacedOrdersWidget();
+	await widgetPagePage.addPortlet('Placed Orders');
 
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
@@ -638,12 +626,12 @@ test('LPD-33658 Assert date and time are displayed as order date', async ({
 
 test('LPD-33658 Global Settings for order date configuration', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
-	commerceLayoutsPage,
 	page,
 	placedOrdersPage,
+	site,
 	systemSettingsPage,
+	widgetPagePage,
 }) => {
 	await systemSettingsPage.goToSystemSetting('Orders', 'Placed Orders');
 
@@ -653,11 +641,10 @@ test('LPD-33658 Global Settings for order date configuration', async ({
 			await page.getByTestId('submitConfiguration').click();
 		}
 
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
@@ -698,12 +685,9 @@ test('LPD-33658 Global Settings for order date configuration', async ({
 			user.emailAddress
 		);
 
-		await commerceLayoutsPage.goToPages(true, site.name);
-		await commerceLayoutsPage.createWidgetPage('Placed Orders Page');
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-		await applicationsMenuPage.goToSite(site.name);
-
-		await placedOrdersPage.addPlacedOrdersWidget();
+		await widgetPagePage.addPortlet('Placed Orders');
 
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();

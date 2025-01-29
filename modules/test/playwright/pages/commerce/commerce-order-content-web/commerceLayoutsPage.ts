@@ -409,29 +409,6 @@ export class CommerceLayoutsPage {
 		await this.saveButton.click();
 	}
 
-	async createWidgetPage(pageName: string) {
-		await this.addPageButton.first().click();
-		await this.createPageMenuItem.click();
-		await this.widgetPageTemplateButton.click();
-		await this.addPageNameInput.waitFor({
-			state: 'attached',
-		});
-		await this.addPageNameInput.click();
-		await this.addPageNameInput.fill(pageName);
-		await Promise.all([
-			this.addPageModalSubmitButton.click(),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp
-						.url()
-						.includes(
-							'p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet'
-						)
-			),
-		]);
-	}
-
 	async expectOrderActionButtons({
 		approveCount = 0,
 		checkoutCount = 0,

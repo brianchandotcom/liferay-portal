@@ -114,6 +114,43 @@ public class LayoutStructureRulesHelperImpl
 		return true;
 	}
 
+	private boolean _evaluateUserTypeCondition(
+		String field, LayoutStructureRulesContext layoutStructureRulesContext,
+		boolean negated, long value) {
+
+		if (Objects.equals(field, "role")) {
+			if (negated) {
+				return !ArrayUtil.contains(
+					layoutStructureRulesContext.getRoleIds(), value);
+			}
+
+			return ArrayUtil.contains(
+				layoutStructureRulesContext.getRoleIds(), value);
+		}
+
+		if (Objects.equals(field, "segment")) {
+			if (negated) {
+				return !ArrayUtil.contains(
+					layoutStructureRulesContext.getSegmentsEntryIds(), value);
+			}
+
+			return ArrayUtil.contains(
+				layoutStructureRulesContext.getSegmentsEntryIds(), value);
+		}
+
+		if (Objects.equals(field, "user")) {
+			if (negated) {
+				return !Objects.equals(
+					layoutStructureRulesContext.getUserId(), value);
+			}
+
+			return Objects.equals(
+				layoutStructureRulesContext.getUserId(), value);
+		}
+
+		return false;
+	}
+
 	private Action _getAction(boolean negated, String type) {
 		if (Objects.equals(type, "disable")) {
 			if (negated) {
@@ -187,34 +224,10 @@ public class LayoutStructureRulesHelperImpl
 			value = optionsJSONObject.getLong("value");
 		}
 
-		if (Objects.equals(conditionJSONObject.getString("field"), "role")) {
-			if (negated) {
-				return !ArrayUtil.contains(
-					layoutStructureRulesContext.getRoleIds(), value);
-			}
-
-			return ArrayUtil.contains(
-				layoutStructureRulesContext.getRoleIds(), value);
-		}
-
-		if (Objects.equals(conditionJSONObject.getString("field"), "segment")) {
-			if (negated) {
-				return !ArrayUtil.contains(
-					layoutStructureRulesContext.getSegmentsEntryIds(), value);
-			}
-
-			return ArrayUtil.contains(
-				layoutStructureRulesContext.getSegmentsEntryIds(), value);
-		}
-
-		if (Objects.equals(conditionJSONObject.getString("field"), "user")) {
-			if (negated) {
-				return !Objects.equals(
-					layoutStructureRulesContext.getUserId(), value);
-			}
-
-			return Objects.equals(
-				layoutStructureRulesContext.getUserId(), value);
+		if (Objects.equals(conditionJSONObject.getString("type"), "user")) {
+			return _evaluateUserTypeCondition(
+				conditionJSONObject.getString("field"),
+				layoutStructureRulesContext, negated, value);
 		}
 
 		return false;

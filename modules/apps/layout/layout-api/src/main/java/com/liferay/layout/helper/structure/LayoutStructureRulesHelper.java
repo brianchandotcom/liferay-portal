@@ -6,6 +6,8 @@
 package com.liferay.layout.helper.structure;
 
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureRule;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public interface LayoutStructureRulesHelper {
 
 	public LayoutStructureRulesResult processLayoutStructureRules(
 		long groupId, LayoutStructure layoutStructure,
+		PermissionChecker permissionChecker, long[] segmentsEntryIds);
+
+	public JSONArray processLayoutStructureRules(
+		long groupId, Map<String, Object> fieldValuesMap,
+		List<LayoutStructureRule> layoutStructureRules,
 		PermissionChecker permissionChecker, long[] segmentsEntryIds);
 
 	public static class LayoutStructureRulesResult {

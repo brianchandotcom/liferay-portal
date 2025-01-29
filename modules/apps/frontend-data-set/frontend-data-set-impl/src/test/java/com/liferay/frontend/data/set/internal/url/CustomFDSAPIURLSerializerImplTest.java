@@ -14,6 +14,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,9 +62,6 @@ public class CustomFDSAPIURLSerializerImplTest {
 	public void setUp() throws Exception {
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
-		_customFDSAPIURLSerializerImpl = Mockito.mock(
-			CustomFDSAPIURLSerializerImpl.class);
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
 			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
@@ -76,10 +75,6 @@ public class CustomFDSAPIURLSerializerImplTest {
 			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
 			_fdsAPIURLResolverRegistry);
 
-		ReflectionTestUtil.setFieldValue(
-			_customFDSAPIURLSerializerImpl, "_fdsAPIURLBuilderFactory",
-			_fdsAPIURLBuilderFactoryImpl);
-
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -87,6 +82,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 		).thenReturn(
 			themeDisplay
 		);
+
+		_resetSerializer();
 	}
 
 	@After
@@ -111,16 +108,15 @@ public class CustomFDSAPIURLSerializerImplTest {
 				"fdsName", _httpServletRequest));
 
 		serviceRegistration.unregister();
+		_resetSerializer();
 
 		// REST application: /app1 and /app2
 
 		_mockFDSObjectEntry("fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
-		serviceRegistration =
-			_registerService(
-				"/app1", "schema", new String[] {"{foo}"},
-				new String[] {"bar"});
+		serviceRegistration = _registerService(
+			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
@@ -132,15 +128,15 @@ public class CustomFDSAPIURLSerializerImplTest {
 				"fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
+		_resetSerializer();
 
 		// REST application: /app
 
 		_mockFDSObjectEntry("fdsName1", "/app", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app", "/endpoint/{foo}", "schema");
 
-		serviceRegistration =
-			_registerService(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+		serviceRegistration = _registerService(
+			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
@@ -152,6 +148,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 				"fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
+		_resetSerializer();
 
 		// Nested fields: creator.name
 
@@ -163,6 +160,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 			"/o/app/endpoint?nestedFields=creator",
 			_customFDSAPIURLSerializerImpl.serialize(
 				"fdsName", _httpServletRequest));
+
+		_resetSerializer();
 
 		// Nested fields: creator.name and status.id
 
@@ -183,6 +182,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 		Assert.assertTrue(nestedFields.contains("status"));
 		Assert.assertTrue(nestedFields.split(",").length == 2);
 
+		_resetSerializer();
+
 		// Nested fields depth
 
 		_mockFDSObjectEntry(
@@ -190,14 +191,14 @@ public class CustomFDSAPIURLSerializerImplTest {
 			new String[] {"creator.name", "status.id", "relation.creator.name"},
 			"/app", "/endpoint", "schema");
 
-		String url = _customFDSAPIURLSerializerImpl.serialize(
+		url = _customFDSAPIURLSerializerImpl.serialize(
 			"fdsName", _httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
-		Map<String, String> parameterMap = _getParameterMap(url);
+		parameterMap = _getParameterMap(url);
 
-		String nestedFields = parameterMap.get("nestedFields");
+		nestedFields = parameterMap.get("nestedFields");
 
 		Assert.assertTrue(nestedFields.contains("creator"));
 		Assert.assertTrue(nestedFields.contains("relation"));
@@ -332,10 +333,20 @@ public class CustomFDSAPIURLSerializerImplTest {
 				restApplication + "/" + restSchema));
 	}
 
-	private static BundleContext _bundleContext;
-	private static CustomFDSAPIURLSerializerImpl
+	private void _resetSerializer() {
 		_customFDSAPIURLSerializerImpl = Mockito.mock(
 			CustomFDSAPIURLSerializerImpl.class);
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSAPIURLSerializerImpl, "_fdsAPIURLBuilderFactory",
+			_fdsAPIURLBuilderFactoryImpl);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CustomFDSAPIURLSerializerImplTest.class);
+
+	private static BundleContext _bundleContext;
+	private static CustomFDSAPIURLSerializerImpl _customFDSAPIURLSerializerImpl;
 	private static final FDSAPIURLBuilderFactoryImpl
 		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =

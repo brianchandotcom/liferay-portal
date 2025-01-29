@@ -13,7 +13,6 @@ import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDD
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -284,10 +283,8 @@ public class ObjectEntryVariablesUtil {
 				ObjectFieldLocalServiceUtil.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
 
-			String defaultValue =
-				ObjectFieldSettingUtil.getDefaultValueAsString(
-					null, objectField,
-					ObjectFieldSettingLocalServiceUtil.getService(), null);
+			Object defaultValue = ObjectFieldSettingUtil.getDefaultValue(
+				null, objectField, null);
 
 			if (Validator.isNotNull(defaultValue) &&
 				keys.contains(objectField.getName())) {

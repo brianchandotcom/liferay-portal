@@ -68,7 +68,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
@@ -1342,9 +1341,8 @@ public class ObjectEntryDisplayContextImpl
 
 				existingValues.put(
 					objectField1.getName(),
-					ObjectFieldSettingUtil.getDefaultValueAsString(
-						null, objectField,
-						ObjectFieldSettingLocalServiceUtil.getService(), null));
+					ObjectFieldSettingUtil.getDefaultValue(
+						null, objectField, null));
 			}
 		}
 		else {

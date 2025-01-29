@@ -19,7 +19,6 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -252,9 +251,8 @@ public class ObjectFieldUtil {
 			if (existingValues.get(objectField.getName()) == null) {
 				existingValues.put(
 					objectField.getName(),
-					ObjectFieldSettingUtil.getDefaultValueAsString(
-						null, objectField,
-						ObjectFieldSettingLocalServiceUtil.getService(), null));
+					ObjectFieldSettingUtil.getDefaultValue(
+						null, objectField, null));
 			}
 
 			if (objectField.isLocalized()) {

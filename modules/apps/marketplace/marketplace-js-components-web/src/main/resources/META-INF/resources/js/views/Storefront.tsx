@@ -186,7 +186,7 @@ export function MarketplaceStorefront({
 					<div className="d-flex">
 						<img
 							alt="app-icon"
-							className="rounded"
+							className="object-fit-contain rounded"
 							draggable={false}
 							height={70}
 							src={marketplaceProduct.productImage}

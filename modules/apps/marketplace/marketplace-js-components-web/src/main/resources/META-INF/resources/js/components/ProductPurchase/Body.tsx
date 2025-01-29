@@ -23,7 +23,7 @@ const ProductPurchaseBody: React.FC<ProductPurchaseBodyProps> = ({
 		<div className="align-items-center d-flex flex-column justify-content-center">
 			<h1 className="mb-5">{title}</h1>
 
-			<p className="text-center text-secondary w-75">{children}</p>
+			<div className="text-center text-secondary w-75">{children}</div>
 		</div>
 
 		<div className="d-flex justify-content-between mt-6 w-100">

@@ -30,7 +30,7 @@ export function ProductCard({children, onClick, product}: ProductCardProps) {
 					<div className="align-items-center card-image-title-container d-flex mb-4">
 						<div className="image-container mr-2 rounded">
 							<img
-								className="marketplace-search-results-card-image"
+								className="marketplace-search-results-card-image object-fit-contain"
 								draggable={false}
 								src={marketplaceProduct.productImage}
 							/>

@@ -27,7 +27,7 @@ export default function PublisherSupportInfoCard({
 				{urlImage ? (
 					<img
 						alt="App Logo"
-						className="catalog-icon rounded-circle"
+						className="object-fit-contain rounded-circle"
 						draggable={false}
 						height={40}
 						src={urlImage}

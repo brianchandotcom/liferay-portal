@@ -72,6 +72,19 @@ export type Category = {
 	vocabulary: string;
 };
 
+export interface CloudUserProject {
+	environments: {
+		isExtensionEnvironment: boolean;
+		projectId: string;
+	}[];
+	rootProjectId: string;
+	rootProjectPlanUsage: {
+		cpu: PlanUsage;
+		instance: PlanUsage;
+		memory: PlanUsage;
+	};
+}
+
 export type CustomField = {
 	customValue: {
 		data: string | string[];
@@ -124,11 +137,110 @@ export type MarketplaceConfiguration = {
 	url: string;
 };
 
+export type OrderStatusInfo = {
+	code: number;
+	label: string;
+	label_i18n: string;
+};
+
+export type PlacedOrder = {
+	account: string;
+	accountId: number;
+	author: string;
+	couponCode: string;
+	createDate: string;
+	customFields: {[key: string]: string};
+	externalReferenceCode: string;
+	id: number;
+	lastPriceUpdateDate: string;
+	modifiedDate: string;
+	orderStatusInfo: OrderStatusInfo;
+	orderTypeExternalReferenceCode: string;
+	orderTypeId: number;
+	orderUUID: string;
+	paymentMethod: string;
+	paymentMethodLabel?: string;
+	paymentStatus: number;
+	paymentStatusInfo: OrderStatusInfo;
+	paymentStatusLabel: string;
+	placedOrderBillingAddressId: number;
+	placedOrderItems: {
+		adaptiveMediaImageHTMLTag: string;
+		customFields: {[key: string]: string};
+		externalReferenceCode: string;
+		id: number;
+		name: string;
+		options: string;
+		parentOrderItemId: number;
+		price: Price;
+		productId: number;
+		productURLs: {
+			en_US: string;
+		};
+		quantity: number;
+		replacedSku: string;
+		sku: string;
+		skuId: number;
+		subscription: boolean;
+		thumbnail: string;
+		unitOfMeasureKey: string;
+		virtualItemURLs?: string[];
+		virtualItems?: {
+			url: string;
+			usages: number;
+			version: string;
+		}[];
+	}[];
+	placedOrderShippingAddressId: number;
+	printedNote: string;
+	purchaseOrderNumber: string;
+	shippingOption: string;
+	status: string;
+	summary: {
+		currency: string;
+		itemsQuantity: number;
+		shippingDiscountPercentages: string[];
+		shippingDiscountValue: number;
+		shippingDiscountValueFormatted: string;
+		shippingValue: number;
+		shippingValueFormatted: string;
+		shippingValueWithTaxAmount: number;
+		shippingValueWithTaxAmountFormatted: string;
+		subtotal: number;
+		subtotalDiscountPercentages: string[];
+		subtotalDiscountValue: number;
+		subtotalDiscountValueFormatted: string;
+		subtotalFormatted: string;
+		taxValue: number;
+		taxValueFormatted: string;
+		total: number;
+		totalDiscountPercentages: string[];
+		totalDiscountValue: number;
+		totalDiscountValueFormatted: string;
+		totalFormatted: string;
+	};
+	workflowStatusInfo: OrderStatusInfo;
+};
+
+interface PlanUsage {
+	free: number;
+	limit: number;
+	used: number;
+}
+
 export type Price = {
 	currency: string;
+	discount: number;
+	discountFormatted: string;
+	discountPercentage: string;
+	discountPercentageLevel1: number;
+	discountPercentageLevel2: number;
+	discountPercentageLevel3: number;
+	discountPercentageLevel4: number;
+	finalPrice: number;
+	finalPriceFormatted: string;
 	price: number;
 	priceFormatted: string;
-	priceOnApplication: boolean;
 };
 
 export type Product = {

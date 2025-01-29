@@ -1,6 +1,7 @@
 .app-icon img {
 	max-height: 70px;
 	max-width: 70px;
+	object-fit: contain;
 }
 
 .app-type {
@@ -46,12 +47,6 @@
 
 .card-title-description {
 	border-bottom: 5px solid #5791ff;
-}
-
-.catalog-icon {
-	height: 40px;
-	object-fit: contain;
-	width: 40px;
 }
 
 .categories-container {
@@ -230,6 +225,10 @@
 
 .modal-link:hover {
 	text-decoration: underline;
+}
+
+.object-fit-contain {
+	object-fit: contain;
 }
 
 .payment-methods-modal-body {

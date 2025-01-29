@@ -11,7 +11,7 @@ import {MarketplaceProduct} from '../core/MarketplaceProduct';
 
 type MarketplacePurchaseProps = {
 	children: ReactNode;
-	rightTitle: string;
+	rightTitle: ReactNode;
 };
 
 export function MarketplacePurchase({

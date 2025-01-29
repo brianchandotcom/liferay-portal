@@ -10,7 +10,7 @@ type ProductPurchaseHeaderProps = {
 	image?: string;
 	rightNode?: ReactNode;
 	subsectionTitleLeft: string;
-	subsectionTitleRight: string;
+	subsectionTitleRight: ReactNode;
 	subtitle?: string | ReactNode;
 	title: string;
 };
@@ -32,7 +32,7 @@ const ProductPurchaseHeader = ({
 				<div className="d-flex flex-row">
 					<img
 						alt="App Icon"
-						className="object-fit-cover rounded"
+						className="object-fit-contain"
 						draggable={false}
 						height="64px"
 						src={image}
@@ -62,7 +62,7 @@ const ProductPurchaseHeader = ({
 
 				<div className="align-items-center d-flex">
 					<div className="align-items-end d-flex flex-column m-2">
-						<strong>{subsectionTitleRight}</strong>
+						{subsectionTitleRight}
 					</div>
 				</div>
 			</div>

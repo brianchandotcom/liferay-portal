@@ -2074,7 +2074,7 @@ test.describe('Form Localization', () => {
 	test(
 		'Disable unlocalized fields when changing language',
 		{tag: '@LPD-37927'},
-		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+		async ({apiHelpers, page, pageEditorPage, site}) => {
 
 			// Create object definition
 
@@ -2143,6 +2143,19 @@ test.describe('Form Localization', () => {
 							name: 'scientificName',
 							required: false,
 						},
+						{
+							DBType: ObjectField.DBTypeEnum.Boolean,
+							businessType: ObjectField.BusinessTypeEnum.Boolean,
+							externalReferenceCode: 'evergreen',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Evergreen',
+							},
+							localized: false,
+							name: 'evergreen',
+							required: false,
+						},
 					],
 					pluralLabel: {
 						en_US: 'Plants',
@@ -2169,14 +2182,11 @@ test.describe('Form Localization', () => {
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
 				pageDefinition: getPageDefinition([formDefinition]),
-				siteId: pageManagementSite.id,
+				siteId: site.id,
 				title: getRandomString(),
 			});
 
-			await pageEditorPage.goto(
-				layout,
-				pageManagementSite.friendlyUrlPath
-			);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			// Map the form to the Plant object and publish the page
 
@@ -2189,7 +2199,7 @@ test.describe('Form Localization', () => {
 			// Go to view mode
 
 			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
 			// Check that unlocalized fields are disabled
@@ -2205,32 +2215,49 @@ test.describe('Form Localization', () => {
 			});
 
 			await expect(
+				page.getByLabel('Evergreen field cannot be localized')
+			).toBeVisible();
+
+			await expect(
 				page.getByLabel('Country field cannot be localized')
 			).toBeVisible();
+
 			await expect(
 				page.getByLabel('Description field cannot be localized')
 			).toBeVisible();
+
 			await expect(
 				page.getByLabel('Name field cannot be localized')
 			).toBeVisible();
 
 			await expect(
+				page.getByRole('checkbox', {
+					name: 'Evergreen',
+				})
+			).toBeDisabled();
+
+			await expect(
 				page.getByLabel('Country', {exact: true})
 			).toBeDisabled();
+
 			expect(
 				await page
 					.frameLocator('iframe[title="editor"]')
 					.locator('body')
 					.evaluate((element) => element.ariaReadOnly)
 			).toBe('true');
+
 			await expect(page.getByLabel('Name', {exact: true})).toBeDisabled();
+
+			const evergreenReadOnlyLabel = page
+				.getByText('Evergreen')
+				.getByText('(Read Only)');
+
+			await expect(evergreenReadOnlyLabel).not.toBeVisible();
 
 			// Go to edit mode and change unlocalized field configuration
 
-			await pageEditorPage.goto(
-				layout,
-				pageManagementSite.friendlyUrlPath
-			);
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			await pageEditorPage.selectFragment(
 				await pageEditorPage.getFragmentId('Form Container')
@@ -2253,7 +2280,7 @@ test.describe('Form Localization', () => {
 			// Go to view mode and check that the config is applied
 
 			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
 			await clickAndExpectToBeVisible({
@@ -2268,17 +2295,21 @@ test.describe('Form Localization', () => {
 
 			await expect(
 				page.getByLabel('field is not localizable message')
-			).toHaveCount(3);
+			).toHaveCount(4);
+
+			await expect(evergreenReadOnlyLabel).toBeVisible();
 
 			await expect(
 				page.getByLabel('Country', {exact: true})
 			).toHaveAttribute('readonly');
+
 			expect(
 				await page
 					.frameLocator('iframe[title="editor"]')
 					.locator('body')
 					.evaluate((element) => element.ariaReadOnly)
 			).toBe('true');
+
 			await expect(
 				page.getByLabel('Name', {exact: true})
 			).toHaveAttribute('readonly');

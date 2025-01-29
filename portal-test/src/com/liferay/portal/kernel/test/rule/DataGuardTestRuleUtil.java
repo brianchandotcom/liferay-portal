@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -529,6 +530,15 @@ public class DataGuardTestRuleUtil {
 				PersistedModelLocalServiceRegistryUtil.class,
 				"_serviceTrackerMap");
 
+		for (String modeClassName : _prioritizedModelClassNames) {
+			if (serviceTrackerMap.containsKey(modeClassName) &&
+				(modeClassName.indexOf(CharPool.POUND) == -1)) {
+
+				scrubbedPersistedModelLocalServices.put(
+					modeClassName, serviceTrackerMap.getService(modeClassName));
+			}
+		}
+
 		for (String modeClassName : serviceTrackerMap.keySet()) {
 			if (!_blacklistedModelClassNames.contains(modeClassName) &&
 				(modeClassName.indexOf(CharPool.POUND) == -1)) {
@@ -647,6 +657,8 @@ public class DataGuardTestRuleUtil {
 	private static final Set<String> _blacklistedModelClassNames =
 		SetUtil.fromArray(
 			"com.liferay.portal.security.audit.storage.model.AuditEvent");
+	private static final List<String> _prioritizedModelClassNames =
+		ListUtil.fromArray("com.liferay.portal.kernel.model.Company");
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

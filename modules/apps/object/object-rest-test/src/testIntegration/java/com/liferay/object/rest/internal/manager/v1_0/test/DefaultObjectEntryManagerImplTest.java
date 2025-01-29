@@ -1202,6 +1202,29 @@ public class DefaultObjectEntryManagerImplTest
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))
+				).build(),
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"booleanObjectFieldName4"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							"isEmailAddress(textObjectFieldName5)"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.
+								VALUE_EXPRESSION_BUILDER))
+				).build(),
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName5"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
@@ -1212,6 +1235,9 @@ public class DefaultObjectEntryManagerImplTest
 					{
 						properties = HashMapBuilder.<String, Object>put(
 							"booleanObjectFieldName1", true
+						).put(
+							"textObjectFieldName5",
+							RandomTestUtil.randomString()
 						).build();
 					}
 				},
@@ -1226,6 +1252,9 @@ public class DefaultObjectEntryManagerImplTest
 			Assert.assertTrue(
 				MapUtil.getBoolean(
 					objectEntry.getProperties(), "booleanObjectFieldName3"));
+			Assert.assertFalse(
+				MapUtil.getBoolean(
+					objectEntry.getProperties(), "booleanObjectFieldName4"));
 		}
 		finally {
 			objectDefinitionLocalService.deleteObjectDefinition(

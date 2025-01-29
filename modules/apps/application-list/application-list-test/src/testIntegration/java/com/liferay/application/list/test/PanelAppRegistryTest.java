@@ -77,17 +77,17 @@ public class PanelAppRegistryTest {
 		_panelApp4 = _registerPanelApp(
 			TestPropsValues.getCompanyId(), "LPD-TEST");
 
-		String randomFeatureFlag = StringUtil.toUpperCase(
+		String featureFlagKey = StringUtil.toUpperCase(
 			RandomTestUtil.randomString());
 
-		_registerPanelApp(TestPropsValues.getCompanyId(), randomFeatureFlag);
-		_registerPanelApp(CompanyConstants.SYSTEM, randomFeatureFlag);
+		_registerPanelApp(TestPropsValues.getCompanyId(), featureFlagKey);
+		_registerPanelApp(CompanyConstants.SYSTEM, featureFlagKey);
 
-		long randomCompanyId = RandomTestUtil.randomLong();
+		long companyId = RandomTestUtil.randomLong();
 
-		_registerPanelApp(randomCompanyId, null);
-		_registerPanelApp(randomCompanyId, "LPD-TEST");
-		_registerPanelApp(randomCompanyId, randomFeatureFlag);
+		_registerPanelApp(companyId, null);
+		_registerPanelApp(companyId, "LPD-TEST");
+		_registerPanelApp(companyId, featureFlagKey);
 	}
 
 	@After

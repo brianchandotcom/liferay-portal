@@ -55,9 +55,16 @@ public class AssetListStagingTestUtil {
 	public static void publishLayouts(Group stagingGroup, Group liveGroup)
 		throws PortalException {
 
-		Map<String, String[]> parameters =
+		publishLayouts(
+			stagingGroup, liveGroup,
 			ExportImportConfigurationParameterMapFactoryUtil.
-				buildFullPublishParameterMap();
+				buildFullPublishParameterMap());
+	}
+
+	public static void publishLayouts(
+			Group stagingGroup, Group liveGroup,
+			Map<String, String[]> parameters)
+		throws PortalException {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

@@ -387,6 +387,10 @@ components:
                         The number of categories that directly depend on this vocabulary.
                     readOnly: true
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 siteExternalReferenceCode:
                     description:
                         The external reference code of the site to which this vocabulary is scoped.

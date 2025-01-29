@@ -394,6 +394,10 @@ public class DefaultObjectEntryManagerImplTest
 						_createObjectFieldSetting(
 							"fileSource", "documentsAndMedia"),
 						_createObjectFieldSetting("maximumFileSize", "100"))
+				).readOnly(
+					"conditional"
+				).readOnlyConditionExpression(
+					"attachmentObjectFieldName != \"\" "
 				).build(),
 				new BooleanObjectFieldBuilder(
 				).labelMap(
@@ -574,6 +578,10 @@ public class DefaultObjectEntryManagerImplTest
 					listTypeDefinition.getListTypeDefinitionId()
 				).name(
 					"picklistObjectFieldName"
+				).readOnly(
+					"conditional"
+				).readOnlyConditionExpression(
+					"picklistObjectFieldName != \"\" "
 				).build(),
 				new PrecisionDecimalObjectFieldBuilder(
 				).labelMap(
@@ -4348,6 +4356,51 @@ public class DefaultObjectEntryManagerImplTest
 			() -> _dlAppLocalService.getFileEntry(fileEntry2.getId()));
 
 		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testPartialUpdateObjectEntryWithReadOnlyFields()
+		throws Exception {
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"attachmentObjectFieldName",
+						_getAttachmentObjectFieldValue()
+					).put(
+						"picklistObjectFieldName", _addListTypeEntry()
+					).put(
+						"textObjectFieldName", "Foo"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Object attachmentObject = objectEntry.getPropertyValue(
+			"attachmentObjectFieldName");
+		Object picklistObject = objectEntry.getPropertyValue(
+			"picklistObjectFieldName");
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.put(
+						"attachmentObjectFieldName", attachmentObject
+					).put(
+						"picklistObjectFieldName", picklistObject
+					).put(
+						"textObjectFieldName", "Edited"
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			"Edited", objectEntry.getPropertyValue("textObjectFieldName"));
 	}
 
 	@Test

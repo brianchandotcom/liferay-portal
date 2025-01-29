@@ -6,8 +6,11 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroupBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
@@ -63,6 +66,46 @@ public class AccountSerDes {
 			sb.append(String.valueOf(account.getAccountContactInformation()));
 		}
 
+		if (account.getAccountGroupBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountGroupBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getAccountGroupBriefs().length; i++) {
+				sb.append(String.valueOf(account.getAccountGroupBriefs()[i]));
+
+				if ((i + 1) < account.getAccountGroupBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (account.getAccountRoles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountRoles\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getAccountRoles().length; i++) {
+				sb.append(String.valueOf(account.getAccountRoles()[i]));
+
+				if ((i + 1) < account.getAccountRoles().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getAccountUserAccounts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -91,6 +134,16 @@ public class AccountSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(account.getActions()));
+		}
+
+		if (account.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(account.getCreator()));
 		}
 
 		if (account.getCustomFields() != null) {
@@ -250,6 +303,26 @@ public class AccountSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(account.getId());
+		}
+
+		if (account.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"keywords\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getKeywords().length; i++) {
+				sb.append(_toJSON(account.getKeywords()[i]));
+
+				if ((i + 1) < account.getKeywords().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (account.getLogoExternalReferenceCode() != null) {
@@ -450,6 +523,29 @@ public class AccountSerDes {
 			sb.append("\"");
 		}
 
+		if (account.getTaxonomyCategoryBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getTaxonomyCategoryBriefs().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(account.getTaxonomyCategoryBriefs()[i]));
+
+				if ((i + 1) < account.getTaxonomyCategoryBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (account.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -494,6 +590,22 @@ public class AccountSerDes {
 				String.valueOf(account.getAccountContactInformation()));
 		}
 
+		if (account.getAccountGroupBriefs() == null) {
+			map.put("accountGroupBriefs", null);
+		}
+		else {
+			map.put(
+				"accountGroupBriefs",
+				String.valueOf(account.getAccountGroupBriefs()));
+		}
+
+		if (account.getAccountRoles() == null) {
+			map.put("accountRoles", null);
+		}
+		else {
+			map.put("accountRoles", String.valueOf(account.getAccountRoles()));
+		}
+
 		if (account.getAccountUserAccounts() == null) {
 			map.put("accountUserAccounts", null);
 		}
@@ -508,6 +620,13 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("actions", String.valueOf(account.getActions()));
+		}
+
+		if (account.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(account.getCreator()));
 		}
 
 		if (account.getCustomFields() == null) {
@@ -601,6 +720,13 @@ public class AccountSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(account.getId()));
+		}
+
+		if (account.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(account.getKeywords()));
 		}
 
 		if (account.getLogoExternalReferenceCode() == null) {
@@ -709,6 +835,15 @@ public class AccountSerDes {
 			map.put("taxId", String.valueOf(account.getTaxId()));
 		}
 
+		if (account.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryBriefs",
+				String.valueOf(account.getTaxonomyCategoryBriefs()));
+		}
+
 		if (account.getType() == null) {
 			map.put("type", null);
 		}
@@ -739,12 +874,23 @@ public class AccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "accountGroupBriefs")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountRoles")) {
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "accountUserAccounts")) {
 
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				return false;
@@ -789,6 +935,9 @@ public class AccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -838,6 +987,11 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "taxId")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
@@ -857,6 +1011,41 @@ public class AccountSerDes {
 					account.setAccountContactInformation(
 						AccountContactInformationSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "accountGroupBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					AccountGroupBrief[] accountGroupBriefsArray =
+						new AccountGroupBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < accountGroupBriefsArray.length; i++) {
+						accountGroupBriefsArray[i] =
+							AccountGroupBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					account.setAccountGroupBriefs(accountGroupBriefsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountRoles")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					AccountRole[] accountRolesArray =
+						new AccountRole[jsonParserFieldValues.length];
+
+					for (int i = 0; i < accountRolesArray.length; i++) {
+						accountRolesArray[i] = AccountRoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setAccountRoles(accountRolesArray);
 				}
 			}
 			else if (Objects.equals(
@@ -881,6 +1070,12 @@ public class AccountSerDes {
 				if (jsonParserFieldValue != null) {
 					account.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					account.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -967,6 +1162,12 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					account.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywords")) {
+				if (jsonParserFieldValue != null) {
+					account.setKeywords(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -1074,6 +1275,28 @@ public class AccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "taxId")) {
 				if (jsonParserFieldValue != null) {
 					account.setTaxId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TaxonomyCategoryBrief[] taxonomyCategoryBriefsArray =
+						new TaxonomyCategoryBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < taxonomyCategoryBriefsArray.length;
+						 i++) {
+
+						taxonomyCategoryBriefsArray[i] =
+							TaxonomyCategoryBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					account.setTaxonomyCategoryBriefs(
+						taxonomyCategoryBriefsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

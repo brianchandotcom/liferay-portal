@@ -383,19 +383,21 @@ export default function EditObjectDetails({
 						</ClayPanel.Body>
 					</ClayPanel>
 
-					<ClayPanel
-						collapsable
-						defaultExpanded
-						displayTitle={Liferay.Language.get('seo')}
-						displayType="unstyled"
-					>
-						<ClayPanel.Body>
-							<SeoContainer
-								setValues={setValues}
-								values={values}
-							/>
-						</ClayPanel.Body>
-					</ClayPanel>
+					{Liferay.FeatureFlags['LPD-21926'] && (
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={Liferay.Language.get('seo')}
+							displayType="unstyled"
+						>
+							<ClayPanel.Body>
+								<SeoContainer
+									setValues={setValues}
+									values={values}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
+					)}
 				</Sheet>
 			</div>
 		</>

@@ -40,15 +40,13 @@ public class CustomFDSAPIURLSerializerImpl
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		FDSAPIURLBuilder fdsAPIURLBuilder = _fdsAPIURLBuilderFactory.create(
-			httpServletRequest,
-			String.valueOf(properties.get("restApplication")),
-			String.valueOf(properties.get("restEndpoint")),
-			String.valueOf(properties.get("restSchema")));
-
 		return _addNestedFields(
 			getDataSetTableSectionObjectEntries(fdsName, httpServletRequest),
-			fdsAPIURLBuilder
+			_fdsAPIURLBuilderFactory.create(
+				httpServletRequest,
+				String.valueOf(properties.get("restApplication")),
+				String.valueOf(properties.get("restEndpoint")),
+				String.valueOf(properties.get("restSchema")))
 		).build();
 	}
 

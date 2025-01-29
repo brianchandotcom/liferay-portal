@@ -34,6 +34,9 @@ if (inputElement) {
 							defaultLanguageId:
 								themeDisplay.getDefaultLanguageId(),
 							inputElement,
+							readOnlyInputLabel: document.getElementById(
+								`${fragmentNamespace}-checkbox-read-only`
+							),
 							unlocalizedFieldsState:
 								input.attributes.unlocalizedFieldsState,
 							unlocalizedMessageContainer:

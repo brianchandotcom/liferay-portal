@@ -29,6 +29,7 @@ export const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-21926': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
@@ -458,6 +459,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 		const {body: department} =
 			await objectDefinitionAPIClient.postObjectDefinition({
 				active: true,
+				enableFriendlyURLCustomization: true,
 				label: {
 					en_US: 'Department',
 					pt_BR: 'Departamento',
@@ -580,6 +582,14 @@ test.describe('Manage object definitions through Model Builder', () => {
 			await expect(
 				modelBuilderRightSidebarPage.objectDefinitionPanelLink
 			).toHaveText(panelLink, {ignoreCase: true});
+
+			// Seo Container
+
+			await expect(
+				modelBuilderRightSidebarPage.objectDefinitionSeo
+			).toBeChecked({
+				checked: objectDefinition.enableFriendlyURLCustomization,
+			});
 		}
 	});
 });

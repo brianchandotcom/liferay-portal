@@ -56,7 +56,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -817,19 +816,21 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Organization organization2 = testGetOrganizationsPage_addOrganization(
 			randomOrganization());
 
-		Date date = organization1.getDateCreated();
-
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 		page = organizationResource.getOrganizationsPage(
-			null, null, "dateCreated lt " + dateFormat.format(date.getTime()),
+			null, null,
+			"dateCreated lt " +
+				dateFormat.format(organization1.getDateCreated()),
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(totalCount, page.getTotalCount());
 
 		page = organizationResource.getOrganizationsPage(
-			null, null, "dateCreated ge " + dateFormat.format(date.getTime()),
+			null, null,
+			"dateCreated ge " +
+				dateFormat.format(organization1.getDateModified()),
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -840,10 +841,10 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		organization1 = organizationResource.patchOrganization(
 			organization1.getId(), organization1);
 
-		date = organization1.getDateModified();
-
 		page = organizationResource.getOrganizationsPage(
-			null, null, "dateModified ge " + dateFormat.format(date.getTime()),
+			null, null,
+			"dateModified ge " +
+				dateFormat.format(organization1.getDateModified()),
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -851,7 +852,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		assertContains(organization1, (List<Organization>)page.getItems());
 
 		page = organizationResource.getOrganizationsPage(
-			null, null, "dateModified lt " + dateFormat.format(date.getTime()),
+			null, null,
+			"dateModified lt " +
+				dateFormat.format(organization1.getDateModified()),
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());

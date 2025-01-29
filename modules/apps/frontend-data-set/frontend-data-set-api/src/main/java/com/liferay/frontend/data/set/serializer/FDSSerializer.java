@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface FDSSerializer<T> {
 
-	public static final String CUSTOM = "custom";
+	public static final String TYPE_CUSTOM = "custom";
 
-	public static final String SYSTEM = "system";
+	public static final String TYPE_SYSTEM = "system";
 
 	public String getKey();
 

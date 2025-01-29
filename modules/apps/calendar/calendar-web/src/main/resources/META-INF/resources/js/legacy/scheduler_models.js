@@ -275,10 +275,9 @@ AUI.add(
 				_uiSetColor(value) {
 					const instance = this;
 					const node = instance.get('node');
-					const opacity = instance._isPastEvent() ? '26' : 'B3';
 
 					node.setStyles({
-						backgroundColor: value + opacity,
+						backgroundColor: value,
 					});
 				},
 

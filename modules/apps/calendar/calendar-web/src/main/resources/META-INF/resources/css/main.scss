@@ -173,8 +173,19 @@
 		}
 
 		.scheduler-event {
-			opacity: 1;
 			z-index: 99;
+
+			&::before {
+				border-left: 1px solid #f9f9f9;
+				border-radius: 6.5px;
+				bottom: -1px;
+				content: '';
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				top: -1px;
+				width: 0.5rem;
+			}
 		}
 	}
 
@@ -227,6 +238,10 @@
 		font-size: inherit;
 		line-height: inherit;
 		padding: 2px 4px;
+	}
+
+	.scheduler-event-past {
+		opacity: 0.8;
 	}
 
 	.scheduler-view-agenda-info-container {
@@ -456,7 +471,7 @@
 	}
 
 	.scheduler-event-disabled {
-		opacity: 0.8;
+		opacity: 1;
 	}
 }
 

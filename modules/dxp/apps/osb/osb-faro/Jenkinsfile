@@ -21,8 +21,8 @@ pipeline {
 				withCredentials([
 					string(credentialsId: "analytics_cloud_ci_ssh", variable: "SECRET"),
 					string(credentialsId: "analytics_cloud_faro_license", variable: "LICENSE"),
-					string(credentialsId: "faro-pendo-api-key", variable: "FARO_PENDO_API_KEY"),
-					usernamePassword(credentialsId: "liferay-nexus-repository-credentials", passwordVariable: "NEXUS_PASSWORD", usernameVariable: "NEXUS_USERNAME")
+					string(credentialsId: "analytics_cloud_faro_pendo_api_key", variable: "FARO_PENDO_API_KEY"),
+					usernamePassword(credentialsId: "liferay_nexus_repository_credentials", passwordVariable: "NEXUS_PASSWORD", usernameVariable: "NEXUS_USERNAME")
 				]) {
 					sh '''
 						export ANT_OPTS=-Xmx6g

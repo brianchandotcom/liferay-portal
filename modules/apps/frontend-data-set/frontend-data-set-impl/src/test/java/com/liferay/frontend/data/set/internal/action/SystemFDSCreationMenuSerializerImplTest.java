@@ -67,47 +67,9 @@ public class SystemFDSCreationMenuSerializerImplTest
 	}
 
 	@Test
-	public void testFDSCreationMenuSerialization() throws Exception {
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+	public void testSerialization() throws Exception {
 
-		CreationMenu creationMenu = CreationMenuBuilder.addDropdownItem(
-			DropdownItemBuilder.setIcon(
-				"times"
-			).build()
-		).build();
-
-		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration =
-			_registerCreationMenu("fdsName", creationMenu);
-
-		Assert.assertEquals(
-			creationMenu,
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
-
-		creationMenuServiceRegistration.unregister();
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSCreationMenuSerializationNoCreationMenu()
-		throws Exception {
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
-
-		Assert.assertTrue(
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", httpServletRequest
-			).isEmpty());
-
-		systemFDSEntryServiceRegistration.unregister();
-	}
-
-	@Test
-	public void testFDSCreationMenuSerializationSeparateCreationMenus()
-		throws Exception {
+		// different creation menus
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
@@ -122,7 +84,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 		).build();
 
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration1 =
-			_registerCreationMenu("fdsName1", creationMenu1);
+			_registerCreationMenu(creationMenu1, "fdsName1");
 
 		CreationMenu creationMenu2 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -131,7 +93,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 		).build();
 
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration2 =
-			_registerCreationMenu("fdsName2", creationMenu2);
+			_registerCreationMenu(creationMenu2, "fdsName2");
 
 		Assert.assertNotEquals(
 			_systemFDSCreationMenuSerializerImpl.serialize(
@@ -156,29 +118,38 @@ public class SystemFDSCreationMenuSerializerImplTest
 		systemFDSEntryServiceRegistration1.unregister();
 
 		systemFDSEntryServiceRegistration2.unregister();
-	}
 
-	@Test
-	public void testFDSCreationMenuSerializationSharingCreationMenu()
-		throws Exception {
+		// no creation menu
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName", "/app", "/endpoint", "schema");
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+		Assert.assertTrue(
+			_systemFDSCreationMenuSerializerImpl.serialize(
+				"fdsName", httpServletRequest
+			).isEmpty());
 
-		CreationMenu creationMenu = CreationMenuBuilder.addDropdownItem(
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// shared creation menu
+
+		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
+			"fdsName1", "/app", "/endpoint", "schema");
+
+		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
+			"fdsName2", "/app", "/endpoint", "schema");
+
+		creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
 				"times"
 			).build()
 		).build();
 
-		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration1 =
-			_registerCreationMenu("fdsName1", creationMenu);
+		creationMenuServiceRegistration1 = _registerCreationMenu(
+			creationMenu1, "fdsName1");
 
-		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration2 =
-			_registerCreationMenu("fdsName2", creationMenu);
+		creationMenuServiceRegistration2 = _registerCreationMenu(
+			creationMenu1, "fdsName2");
 
 		Assert.assertEquals(
 			_systemFDSCreationMenuSerializerImpl.serialize(
@@ -196,7 +167,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 	}
 
 	private ServiceRegistration<FDSCreationMenu> _registerCreationMenu(
-		String fdsName, CreationMenu creationMenu) {
+		CreationMenu creationMenu, String fdsName) {
 
 		return bundleContext.registerService(
 			FDSCreationMenu.class,

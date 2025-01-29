@@ -74,6 +74,7 @@
 		<column name="description" type="String" />
 		<column name="data" type="String" />
 		<column name="previewFileEntryId" type="long" />
+		<column name="marketplace" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -148,6 +149,7 @@
 		<column name="cacheable" type="boolean" />
 		<column name="configuration" type="String" />
 		<column name="icon" type="String" />
+		<column name="marketplace" type="boolean" />
 		<column name="previewFileEntryId" type="long" />
 		<column name="readOnly" type="boolean" />
 		<column name="type" type="int" />

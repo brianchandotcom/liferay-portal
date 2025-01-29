@@ -106,7 +106,7 @@ public class PanelAppRegistryTest {
 
 	@FeatureFlags("LPD-TEST")
 	@Test
-	public void testGetPanelAppsWithFeatureFlag() throws Exception {
+	public void testGetPanelAppsWithFeatureFlagKey() throws Exception {
 		AssertUtils.assertEquals(
 			Arrays.asList(_panelApp1, _panelApp2, _panelApp3, _panelApp4),
 			_panelAppRegistry.getPanelApps(_PARENT_PANEL_CATEGORY_KEY));

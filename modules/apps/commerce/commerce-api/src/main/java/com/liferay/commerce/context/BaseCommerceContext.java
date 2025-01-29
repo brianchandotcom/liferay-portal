@@ -225,10 +225,10 @@ public class BaseCommerceContext implements CommerceContext {
 			return 0;
 		}
 
-		Map<Long, CPConfigurationList> cpConfigurationListMap =
-			_getCPConfigurationListMap();
+		Map<Long, CPConfigurationList> cpConfigurationLists =
+			_getCPConfigurationLists();
 
-		CPConfigurationList cpConfigurationList = cpConfigurationListMap.get(
+		CPConfigurationList cpConfigurationList = cpConfigurationLists.get(
 			groupId);
 
 		return cpConfigurationList.getCPConfigurationListId();
@@ -236,11 +236,11 @@ public class BaseCommerceContext implements CommerceContext {
 
 	@Override
 	public long[] getCPConfigurationListIds() throws PortalException {
-		Map<Long, CPConfigurationList> cpConfigurationListMap =
-			_getCPConfigurationListMap();
+		Map<Long, CPConfigurationList> cpConfigurationLists =
+			_getCPConfigurationLists();
 
 		return TransformUtil.transformToLongArray(
-			cpConfigurationListMap.values(),
+			cpConfigurationLists.values(),
 			CPConfigurationList::getCPConfigurationListId);
 	}
 
@@ -284,14 +284,14 @@ public class BaseCommerceContext implements CommerceContext {
 		return commerceCurrency;
 	}
 
-	private Map<Long, CPConfigurationList> _getCPConfigurationListMap()
+	private Map<Long, CPConfigurationList> _getCPConfigurationLists()
 		throws PortalException {
 
-		if (MapUtil.isNotEmpty(_cpConfigurationListMap)) {
-			return _cpConfigurationListMap;
+		if (MapUtil.isNotEmpty(_cpConfigurationLists)) {
+			return _cpConfigurationLists;
 		}
 
-		_cpConfigurationListMap = new HashMap<>();
+		_cpConfigurationLists = new HashMap<>();
 
 		long orderTypeId = 0;
 
@@ -307,7 +307,7 @@ public class BaseCommerceContext implements CommerceContext {
 						_companyId),
 					CommerceCatalog::getGroupId)) {
 
-			_cpConfigurationListMap.put(
+			_cpConfigurationLists.put(
 				groupId,
 				_cpConfigurationListDiscovery.getCPConfigurationList(
 					_companyId, groupId,
@@ -315,7 +315,7 @@ public class BaseCommerceContext implements CommerceContext {
 					getCommerceChannelId(), orderTypeId));
 		}
 
-		return _cpConfigurationListMap;
+		return _cpConfigurationLists;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -340,7 +340,7 @@ public class BaseCommerceContext implements CommerceContext {
 	private final CommerceOrderService _commerceOrderService;
 	private final long _companyId;
 	private final CPConfigurationListDiscovery _cpConfigurationListDiscovery;
-	private Map<Long, CPConfigurationList> _cpConfigurationListMap;
+	private Map<Long, CPConfigurationList> _cpConfigurationLists;
 	private final long _orderId;
 
 }

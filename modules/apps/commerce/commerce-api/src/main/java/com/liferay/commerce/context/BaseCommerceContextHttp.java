@@ -286,10 +286,10 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			return 0;
 		}
 
-		Map<Long, CPConfigurationList> cpConfigurationListMap =
-			_getCPConfigurationListMap();
+		Map<Long, CPConfigurationList> cpConfigurationLists =
+			_getCPConfigurationLists();
 
-		CPConfigurationList cpConfigurationList = cpConfigurationListMap.get(
+		CPConfigurationList cpConfigurationList = cpConfigurationLists.get(
 			groupId);
 
 		return cpConfigurationList.getCPConfigurationListId();
@@ -297,11 +297,11 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 	@Override
 	public long[] getCPConfigurationListIds() throws PortalException {
-		Map<Long, CPConfigurationList> cpConfigurationListMap =
-			_getCPConfigurationListMap();
+		Map<Long, CPConfigurationList> cpConfigurationLists =
+			_getCPConfigurationLists();
 
 		return TransformUtil.transformToLongArray(
-			cpConfigurationListMap.values(),
+			cpConfigurationLists.values(),
 			CPConfigurationList::getCPConfigurationListId);
 	}
 
@@ -350,14 +350,14 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		return commerceCurrency;
 	}
 
-	private Map<Long, CPConfigurationList> _getCPConfigurationListMap()
+	private Map<Long, CPConfigurationList> _getCPConfigurationLists()
 		throws PortalException {
 
-		if (MapUtil.isNotEmpty(_cpConfigurationListMap)) {
-			return _cpConfigurationListMap;
+		if (MapUtil.isNotEmpty(_cpConfigurationLists)) {
+			return _cpConfigurationLists;
 		}
 
-		_cpConfigurationListMap = new HashMap<>();
+		_cpConfigurationLists = new HashMap<>();
 
 		long orderTypeId = 0;
 
@@ -373,7 +373,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 						_portal.getCompanyId(_httpServletRequest)),
 					CommerceCatalog::getGroupId)) {
 
-			_cpConfigurationListMap.put(
+			_cpConfigurationLists.put(
 				groupId,
 				_cpConfigurationListDiscovery.getCPConfigurationList(
 					_portal.getCompanyId(_httpServletRequest), groupId,
@@ -381,7 +381,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 					getCommerceChannelId(), orderTypeId));
 		}
 
-		return _cpConfigurationListMap;
+		return _cpConfigurationLists;
 	}
 
 	private boolean _isChannelAccountEntry(
@@ -425,7 +425,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	private CommerceOrder _commerceOrder;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final CPConfigurationListDiscovery _cpConfigurationListDiscovery;
-	private Map<Long, CPConfigurationList> _cpConfigurationListMap;
+	private Map<Long, CPConfigurationList> _cpConfigurationLists;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

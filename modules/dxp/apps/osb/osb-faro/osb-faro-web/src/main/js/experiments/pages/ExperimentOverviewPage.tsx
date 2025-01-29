@@ -2,6 +2,7 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import ClayLink from '@clayui/link';
 import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
+import ErrorPage from 'shared/pages/ErrorPage';
 import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TestTrafficCard from 'experiments/components/test-traffic/TestTrafficCard';
@@ -52,18 +53,20 @@ const ExperimentActions = ({experiment}) => {
 };
 
 const ExperimentOverviewPage = () => {
-	const {id} = useParams();
+	const {channelId, id} = useParams();
 
 	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
 		fetchPolicy: 'no-cache',
-		variables: {experimentId: id}
+		variables: {channelId, experimentId: id}
 	});
 
 	return (
 		<StatesRenderer error={!!error} loading={loading}>
 			<StatesRenderer.Loading />
 
-			<StatesRenderer.Error apolloError={error} />
+			<StatesRenderer.Error apolloError={error}>
+				<ErrorPage />
+			</StatesRenderer.Error>
 
 			{!!data && (
 				<StatesRenderer.Success>
@@ -88,7 +91,7 @@ const ExperimentOverviewContent = ({status}) => {
 
 	const {data, error, loading} = useQuery(Query, {
 		fetchPolicy: 'network-only',
-		variables: {experimentId: id}
+		variables: {channelId, experimentId: id}
 	});
 
 	return (

@@ -37,19 +37,8 @@ public class DynamicObjectDefinitionTableUtilTest {
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 				ObjectFieldConstants.DB_TYPE_BOOLEAN));
-
-		_setDBType(DBType.MYSQL);
-
 		Assert.assertEquals(
 			"VARCHAR(5000)",
-			DynamicObjectDefinitionTableUtil.getDataType(
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
-				ObjectFieldConstants.DB_TYPE_STRING));
-
-		_setDBType(DBType.SQLSERVER);
-
-		Assert.assertEquals(
-			"VARCHAR(4000)",
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 				ObjectFieldConstants.DB_TYPE_STRING));
@@ -62,6 +51,14 @@ public class DynamicObjectDefinitionTableUtilTest {
 			"VARCHAR(280)",
 			DynamicObjectDefinitionTableUtil.getDataType(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING));
+
+		_setDBType(DBType.SQLSERVER);
+
+		Assert.assertEquals(
+			"VARCHAR(4000)",
+			DynamicObjectDefinitionTableUtil.getDataType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 				ObjectFieldConstants.DB_TYPE_STRING));
 	}
 

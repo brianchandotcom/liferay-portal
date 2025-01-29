@@ -12,7 +12,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 %>
 
 <commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "change-logs") %>'
+	title='<%= LanguageUtil.get(request, "logs") %>'
 >
 	<frontend-data-set:classic-display
 		contextParams='<%=

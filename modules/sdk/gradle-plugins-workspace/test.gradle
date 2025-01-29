@@ -7,7 +7,6 @@ import de.undercouch.gradle.tasks.download.Download
 apply plugin: "org.ysb33r.gradletest"
 
 task copyBundle(type: Copy)
-task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task copyGradleTestProjects(type: Copy)
 task copyHotFixZip(type: Copy)
@@ -15,17 +14,14 @@ task copyRepo(type: Copy)
 task copyWorkspacesSamples
 task downloadBundle(type: Download)
 task downloadHotFixZip(type: Download)
-task downloadPluginsSdk(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
 String gradleVersion = "8.5"
 String hotFixZipUrl = "https://us-east-1.linodeobjects.com/devtools-s3.liferay.com/gradle-plugins-workspace/liferay-hotfix-1072-7210.zip"
-String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
-	pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 }
 
 cleanCopyLibs {
@@ -48,22 +44,6 @@ copyBundle {
 
 	includeEmptyDirs = false
 	into new File(buildDir, "bundle")
-}
-
-copyDistBundleZipPluginsSdk {
-	ext {
-		autoClean = false
-	}
-
-	dependsOn downloadPluginsSdk
-	eachFile new StripPathSegmentsAction(1)
-
-	from {
-		zipTree(downloadPluginsSdk.dest)
-	}
-
-	includeEmptyDirs = false
-	into "src/gradleTest/distBundleZip/plugins-sdk"
 }
 
 copyGradleTestDependencies {
@@ -156,12 +136,6 @@ downloadHotFixZip {
 	src hotFixZipUrl
 }
 
-downloadPluginsSdk {
-	dest new File(buildDir, "plugins-sdk.zip")
-	onlyIfModified true
-	src pluginsSdkUrl
-}
-
 gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn copyGradleTestProjects
@@ -171,7 +145,6 @@ gradleTest {
 
 	if (!project.hasProperty("testLightExecution")) {
 		dependsOn copyBundle
-		dependsOn copyDistBundleZipPluginsSdk
 		dependsOn copyHotFixZip
 	}
 
@@ -202,7 +175,6 @@ gradleTest {
 }
 
 gradleTestGenerator {
-	mustRunAfter copyDistBundleZipPluginsSdk
 	mustRunAfter copyGradleTestProjects
 	mustRunAfter copyHotFixZip
 }

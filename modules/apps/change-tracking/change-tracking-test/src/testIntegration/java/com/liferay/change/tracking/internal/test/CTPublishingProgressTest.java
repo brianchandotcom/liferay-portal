@@ -67,7 +67,7 @@ public class CTPublishingProgressTest {
 	}
 
 	@Test
-	public void testShouldShowPublishingProgress() throws Exception {
+	public void testGetPercentage() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {

@@ -1669,11 +1669,6 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getUserGroupUsersPage"));
 					put(
-						"query#Account.accountRoles",
-						new ObjectValuePair<>(
-							AccountRoleResourceImpl.class,
-							"getAccountAccountRolesPage"));
-					put(
 						"query#Account.userAccountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,

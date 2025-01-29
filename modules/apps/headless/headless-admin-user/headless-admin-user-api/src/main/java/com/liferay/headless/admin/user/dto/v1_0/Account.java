@@ -107,6 +107,91 @@ public class Account implements Serializable {
 	private Supplier<AccountContactInformation>
 		_accountContactInformationSupplier;
 
+	@Schema(description = "A list of the account's account groups.")
+	@Valid
+	public AccountGroupBrief[] getAccountGroupBriefs() {
+		if (_accountGroupBriefsSupplier != null) {
+			accountGroupBriefs = _accountGroupBriefsSupplier.get();
+
+			_accountGroupBriefsSupplier = null;
+		}
+
+		return accountGroupBriefs;
+	}
+
+	public void setAccountGroupBriefs(AccountGroupBrief[] accountGroupBriefs) {
+		this.accountGroupBriefs = accountGroupBriefs;
+
+		_accountGroupBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccountGroupBriefs(
+		UnsafeSupplier<AccountGroupBrief[], Exception>
+			accountGroupBriefsUnsafeSupplier) {
+
+		_accountGroupBriefsSupplier = () -> {
+			try {
+				return accountGroupBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "A list of the account's account groups.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected AccountGroupBrief[] accountGroupBriefs;
+
+	@JsonIgnore
+	private Supplier<AccountGroupBrief[]> _accountGroupBriefsSupplier;
+
+	@Schema(description = "A list of the account's roles.")
+	@Valid
+	public AccountRole[] getAccountRoles() {
+		if (_accountRolesSupplier != null) {
+			accountRoles = _accountRolesSupplier.get();
+
+			_accountRolesSupplier = null;
+		}
+
+		return accountRoles;
+	}
+
+	public void setAccountRoles(AccountRole[] accountRoles) {
+		this.accountRoles = accountRoles;
+
+		_accountRolesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccountRoles(
+		UnsafeSupplier<AccountRole[], Exception> accountRolesUnsafeSupplier) {
+
+		_accountRolesSupplier = () -> {
+			try {
+				return accountRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "A list of the account's roles.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected AccountRole[] accountRoles;
+
+	@JsonIgnore
+	private Supplier<AccountRole[]> _accountRolesSupplier;
+
 	@Schema(description = "The users linked to the account")
 	@Valid
 	public UserAccount[] getAccountUserAccounts() {
@@ -196,6 +281,48 @@ public class Account implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
+	@Schema(description = "The user who created the account.")
+	@Valid
+	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+
+		_creatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user who created the account.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator creator;
+
+	@JsonIgnore
+	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
 	@Valid
@@ -665,6 +792,47 @@ public class Account implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
+
+	@Schema(description = "A list of keywords describing the account.")
+	public String[] getKeywords() {
+		if (_keywordsSupplier != null) {
+			keywords = _keywordsSupplier.get();
+
+			_keywordsSupplier = null;
+		}
+
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+
+		_keywordsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		_keywordsSupplier = () -> {
+			try {
+				return keywordsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "A list of keywords describing the account.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
+
+	@JsonIgnore
+	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(example = "AB-34098-789-N")
 	public String getLogoExternalReferenceCode() {
@@ -1219,6 +1387,51 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _taxIdSupplier;
 
+	@Schema(description = "The categories associated with this account.")
+	@Valid
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
+
+			_taxonomyCategoryBriefsSupplier = null;
+		}
+
+		return taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
+
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+
+		_taxonomyCategoryBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
+
+		_taxonomyCategoryBriefsSupplier = () -> {
+			try {
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The categories associated with this account.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
+
+	@JsonIgnore
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
+
 	@JsonGetter("type")
 	@Schema
 	@Valid
@@ -1314,6 +1527,50 @@ public class Account implements Serializable {
 			sb.append(String.valueOf(accountContactInformation));
 		}
 
+		AccountGroupBrief[] accountGroupBriefs = getAccountGroupBriefs();
+
+		if (accountGroupBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountGroupBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < accountGroupBriefs.length; i++) {
+				sb.append(String.valueOf(accountGroupBriefs[i]));
+
+				if ((i + 1) < accountGroupBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		AccountRole[] accountRoles = getAccountRoles();
+
+		if (accountRoles != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountRoles\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < accountRoles.length; i++) {
+				sb.append(String.valueOf(accountRoles[i]));
+
+				if ((i + 1) < accountRoles.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		UserAccount[] accountUserAccounts = getAccountUserAccounts();
 
 		if (accountUserAccounts != null) {
@@ -1346,6 +1603,18 @@ public class Account implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Creator creator = getCreator();
+
+		if (creator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(creator));
 		}
 
 		CustomField[] customFields = getCustomFields();
@@ -1528,6 +1797,32 @@ public class Account implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		String[] keywords = getKeywords();
+
+		if (keywords != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"keywords\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		String logoExternalReferenceCode = getLogoExternalReferenceCode();
@@ -1753,6 +2048,29 @@ public class Account implements Serializable {
 			sb.append(_escape(taxId));
 
 			sb.append("\"");
+		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
+
+		if (taxonomyCategoryBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryBriefs.length; i++) {
+				sb.append(String.valueOf(taxonomyCategoryBriefs[i]));
+
+				if ((i + 1) < taxonomyCategoryBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Type type = getType();

@@ -52,6 +52,49 @@ public class Account implements Cloneable, Serializable {
 
 	protected AccountContactInformation accountContactInformation;
 
+	public AccountGroupBrief[] getAccountGroupBriefs() {
+		return accountGroupBriefs;
+	}
+
+	public void setAccountGroupBriefs(AccountGroupBrief[] accountGroupBriefs) {
+		this.accountGroupBriefs = accountGroupBriefs;
+	}
+
+	public void setAccountGroupBriefs(
+		UnsafeSupplier<AccountGroupBrief[], Exception>
+			accountGroupBriefsUnsafeSupplier) {
+
+		try {
+			accountGroupBriefs = accountGroupBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AccountGroupBrief[] accountGroupBriefs;
+
+	public AccountRole[] getAccountRoles() {
+		return accountRoles;
+	}
+
+	public void setAccountRoles(AccountRole[] accountRoles) {
+		this.accountRoles = accountRoles;
+	}
+
+	public void setAccountRoles(
+		UnsafeSupplier<AccountRole[], Exception> accountRolesUnsafeSupplier) {
+
+		try {
+			accountRoles = accountRolesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AccountRole[] accountRoles;
+
 	public UserAccount[] getAccountUserAccounts() {
 		return accountUserAccounts;
 	}
@@ -95,6 +138,27 @@ public class Account implements Cloneable, Serializable {
 	}
 
 	protected Map<String, Map<String, String>> actions;
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
 
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -337,6 +401,27 @@ public class Account implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+	}
+
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] keywords;
 
 	public String getLogoExternalReferenceCode() {
 		return logoExternalReferenceCode;
@@ -629,6 +714,30 @@ public class Account implements Cloneable, Serializable {
 	}
 
 	protected String taxId;
+
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		return taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
+
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryBriefs = taxonomyCategoryBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	public Type getType() {
 		return type;

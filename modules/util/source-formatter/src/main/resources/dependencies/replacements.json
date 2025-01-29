@@ -3449,6 +3449,7 @@
 		],
 		"to": "CommercePaymentMethodConstants.TYPE_ONLINE_STANDARD"
 	},
+	{
 		"classNames": [
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil",

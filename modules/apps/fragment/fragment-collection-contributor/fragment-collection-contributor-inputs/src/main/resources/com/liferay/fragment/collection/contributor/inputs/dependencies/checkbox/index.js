@@ -9,4 +9,28 @@ if (inputElement) {
 	else if (layoutMode === 'edit') {
 		inputElement.setAttribute('disabled', true);
 	}
+	else {
+		if (Liferay.FeatureFlags['LPD-37927']) {
+			import('@liferay/fragment-impl').then(
+				({registerLocalizedInput}) => {
+					if (input.localizable) {
+						const {onChange} = registerLocalizedInput({
+							defaultLanguageId:
+								themeDisplay.getDefaultLanguageId(),
+							initialValues: input.valueI18n,
+							inputElement,
+							inputName: input.name,
+							localizationInputsContainer:
+								inputElement.parentNode,
+							namespace: fragmentNamespace,
+						});
+
+						inputElement.addEventListener('change', (event) => {
+							onChange(event.target.checked);
+						});
+					}
+				}
+			);
+		}
+	}
 }

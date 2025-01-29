@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -1170,8 +1171,9 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	private ObjectDefinition _toObjectDefinition(
-		com.liferay.object.model.ObjectDefinition
-			serviceBuilderObjectDefinition) {
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition)
+		throws Exception {
 
 		if (serviceBuilderObjectDefinition == null) {
 			return null;
@@ -1180,92 +1182,88 @@ public class ObjectDefinitionResourceImpl
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 
-		ObjectDefinition objectDefinition =
-			com.liferay.object.admin.rest.internal.dto.v1_0.util.
-				ObjectDefinitionUtil.toObjectDefinition(
-					contextAcceptLanguage.getPreferredLocale(),
-					_notificationTemplateLocalService,
-					_objectActionLocalService, _objectDefinitionLocalService,
-					_objectFieldDTOConverter, _objectFieldLocalService,
-					_objectLayoutLocalService, _objectRelationshipDTOConverter,
-					_objectRelationshipLocalService,
-					_objectValidationRuleDTOConverter,
-					_objectValidationRuleLocalService, _objectViewDTOConverter,
-					_objectViewLocalService, serviceBuilderObjectDefinition,
-					_systemObjectDefinitionManagerRegistry);
+		return _objectDefinitionRuleDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				false,
+				HashMapBuilder.put(
+					"delete",
+					() -> {
+						if (serviceBuilderObjectDefinition.isSystem()) {
+							return null;
+						}
 
-		objectDefinition.setActions(
-			() -> HashMapBuilder.put(
-				"delete",
-				() -> {
-					if (serviceBuilderObjectDefinition.isSystem()) {
-						return null;
+						return addAction(
+							ActionKeys.DELETE, "deleteObjectDefinition",
+							permissionName,
+							serviceBuilderObjectDefinition.
+								getObjectDefinitionId());
 					}
+				).put(
+					"exportBoundObjectDefinitions",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPS-187142") ||
+							!serviceBuilderObjectDefinition.isRootNode()) {
 
-					return addAction(
-						ActionKeys.DELETE, "deleteObjectDefinition",
-						permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
-				"exportBoundObjectDefinitions",
-				() -> {
-					if (!FeatureFlagManagerUtil.isEnabled(
-							contextCompany.getCompanyId(), "LPD-34594") ||
-						!serviceBuilderObjectDefinition.isRootNode()) {
+							return null;
+						}
 
-						return null;
+						return addAction(
+							ActionKeys.VIEW, "getObjectDefinitionsPage",
+							permissionName,
+							serviceBuilderObjectDefinition.
+								getObjectDefinitionId());
 					}
+				).put(
+					"exportObjectDefinition",
+					() -> {
+						if (serviceBuilderObjectDefinition.
+								isRootDescendantNode() ||
+							serviceBuilderObjectDefinition.isRootNode()) {
 
-					return addAction(
-						ActionKeys.VIEW, "getObjectDefinitionsPage",
-						permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
-				"exportObjectDefinition",
-				() -> {
-					if (serviceBuilderObjectDefinition.isRootDescendantNode() ||
-						serviceBuilderObjectDefinition.isRootNode()) {
+							return null;
+						}
 
-						return null;
+						return addAction(
+							ActionKeys.VIEW, "getObjectDefinition",
+							permissionName,
+							serviceBuilderObjectDefinition.
+								getObjectDefinitionId());
 					}
-
-					return addAction(
+				).put(
+					"get",
+					addAction(
 						ActionKeys.VIEW, "getObjectDefinition", permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, "getObjectDefinition", permissionName,
-					serviceBuilderObjectDefinition.getObjectDefinitionId())
-			).put(
-				"permissions",
-				addAction(
-					ActionKeys.PERMISSIONS, "patchObjectDefinition",
-					permissionName,
-					serviceBuilderObjectDefinition.getObjectDefinitionId())
-			).put(
-				"publish",
-				() -> {
-					if (serviceBuilderObjectDefinition.isApproved()) {
-						return null;
-					}
-
-					return addAction(
-						ActionKeys.UPDATE, "postObjectDefinitionPublish",
+						serviceBuilderObjectDefinition.getObjectDefinitionId())
+				).put(
+					"permissions",
+					addAction(
+						ActionKeys.PERMISSIONS, "patchObjectDefinition",
 						permissionName,
-						serviceBuilderObjectDefinition.getObjectDefinitionId());
-				}
-			).put(
-				"update",
-				addAction(
-					ActionKeys.UPDATE, "putObjectDefinition", permissionName,
-					serviceBuilderObjectDefinition.getObjectDefinitionId())
-			).build());
+						serviceBuilderObjectDefinition.getObjectDefinitionId())
+				).put(
+					"publish",
+					() -> {
+						if (serviceBuilderObjectDefinition.isApproved()) {
+							return null;
+						}
 
-		return objectDefinition;
+						return addAction(
+							ActionKeys.UPDATE, "postObjectDefinitionPublish",
+							permissionName,
+							serviceBuilderObjectDefinition.
+								getObjectDefinitionId());
+					}
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE, "putObjectDefinition",
+						permissionName,
+						serviceBuilderObjectDefinition.getObjectDefinitionId())
+				).build(),
+				null, null, contextAcceptLanguage.getPreferredLocale(), null,
+				null),
+			serviceBuilderObjectDefinition);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1300,6 +1298,11 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(target = DTOConverterConstants.OBJECT_DEFINITION_DTO_CONVERTER)
+	private DTOConverter
+		<com.liferay.object.model.ObjectDefinition, ObjectDefinition>
+			_objectDefinitionRuleDTOConverter;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

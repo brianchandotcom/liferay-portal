@@ -26,6 +26,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>COLUMN_CHECK_UNCHECK_DROPDOWN_ITEM</td>
+		<td>//button[contains(@class,'dropdown-item')]//*//div[contains(text(),'${key_dropdownItem}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>COLUMN_ICON_SEARCH</td>
 		<td>//div[contains(@class,'dropdown-menu')]//span[contains(@class, 'input-group-inset-item')]</td>
 		<td></td>

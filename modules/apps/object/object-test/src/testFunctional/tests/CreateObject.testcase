@@ -3688,7 +3688,7 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 94");
+		ObjectPortlet.selectCustomObject(label = "Update Custom Object 94");
 
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_LABEL",

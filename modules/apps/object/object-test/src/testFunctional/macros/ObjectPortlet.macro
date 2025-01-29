@@ -189,7 +189,7 @@ definition {
 
 		Click(
 			key_dropdownItem = ${dropdownItem},
-			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
+			locator1 = "ObjectPortlet#COLUMN_CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
 	@summary = "Default summary"

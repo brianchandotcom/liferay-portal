@@ -1005,7 +1005,7 @@ definition {
 		task ("Given Custom Object A and Custom Object B with text fields") {
 			for (var letters : list "A,B") {
 				ObjectAdmin.addObjectViaAPI(
-					labelName = "Custom Object ${letters} ",
+					labelName = "Custom Object ${letters}",
 					objectName = "CustomObject${letters}",
 					pluralLabelName = "Custom Objects ${letters}");
 

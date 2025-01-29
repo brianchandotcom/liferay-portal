@@ -44,7 +44,7 @@
 	</tr>
 	<tr>
 		<td>INPUT_VALUE</td>
-		<td>xpath=(//input[(@placeholder='Input a value or create an expression.')])[${key_rowNumber}]</td>
+		<td>xpath=(//input[(@placeholder='Input a value.')])[${key_rowNumber}]</td>
 		<td></td>
 	</tr>
 	<tr>

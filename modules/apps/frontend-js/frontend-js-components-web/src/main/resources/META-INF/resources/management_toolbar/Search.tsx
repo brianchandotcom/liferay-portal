@@ -29,9 +29,7 @@ export default function Search({
 			{onlySearch ? (
 				content
 			) : (
-				<ClayLayout.ContainerFluid
-					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
-				>
+				<ClayLayout.ContainerFluid size="xl">
 					{content}
 				</ClayLayout.ContainerFluid>
 			)}

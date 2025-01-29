@@ -9,7 +9,6 @@
 
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.product.navigation.taglib.display.context.ProductNavigationControlMenuTagDisplayContext" %>

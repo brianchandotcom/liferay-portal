@@ -7,7 +7,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -102,20 +101,11 @@ public class NavigationBarTag extends BaseContainerTag {
 		if (_navigationItems != null) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write("<div class=\"container-fluid");
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-184404")) {
-				jspWriter.write(" container-fluid-max-xl");
-			}
-
+			jspWriter.write(
+				"<div class=\"container-fluid container-fluid-max-xl");
 			jspWriter.write("\"><div ");
 			jspWriter.write("class=\"collapse navbar-collapse\"><div ");
-			jspWriter.write("class=\"container-fluid");
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-184404")) {
-				jspWriter.write(" container-fluid-max-xl");
-			}
-
+			jspWriter.write("class=\"container-fluid container-fluid-max-xl");
 			jspWriter.write("\"><ul class=\"navbar-nav\">");
 
 			for (int i = 0; i < _navigationItems.size(); i++) {

@@ -329,18 +329,31 @@ public class ObjectFieldUtil {
 		if (Validator.isNull(existingValue) && Validator.isNull(value)) {
 			return;
 		}
-		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_DOUBLE) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_INTEGER) ||
-				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_LONG)) {
+
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+			Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_INTEGER) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_LONG)) {
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				Objects.equals(
+					JSONFactoryUtil.createJSONObject(
+						JSONFactoryUtil.looseSerialize(value)
+					).get(
+						"id"
+					),
+					existingValue.toString())) {
+
+				return;
+			}
 
 			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
 			BigDecimal bigDecimal2 = new BigDecimal(value.toString());

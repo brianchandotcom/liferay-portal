@@ -12,6 +12,7 @@
 			"label": {
 				"en_US": "Lemon Size"
 			},
+			"localized": false,
 			"name": "lemonSize",
 			"required": false,
 			"type": "String"
@@ -24,6 +25,7 @@
 			"label": {
 				"en_US": "Lemon Weight"
 			},
+			"localized": false,
 			"name": "lemonWeight",
 			"required": false,
 			"type": "Integer"
@@ -35,6 +37,7 @@
 			"label": {
 				"en_US": "Lemon History"
 			},
+			"localized": false,
 			"name": "lemonHistory",
 			"objectFieldSettings": [
 				{

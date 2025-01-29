@@ -12,6 +12,7 @@
 			"label": {
 				"en_US": "Lemon Basket Color"
 			},
+			"localized": false,
 			"name": "lemonBasketColor",
 			"required": false,
 			"type": "String"
@@ -25,6 +26,7 @@
 				"en_US": "Lemon Dimensions"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Lemon Dimensions$]",
+			"localized": false,
 			"name": "lemonDimensions",
 			"required": true,
 			"type": "String"
@@ -38,6 +40,7 @@
 				"en_US": "Material"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Material$]",
+			"localized": false,
 			"name": "material",
 			"objectFieldSettings": [
 				{

@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.util.spring.boot2;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
@@ -55,17 +57,19 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 
 		if (liferayOauthApplicationExternalReferenceCodes == null) {
 			throw new IllegalArgumentException(
-				"Property " +
-					"\"liferay.oauth.application.external.reference.codes\" " +
-						"is not defined");
+				StringBundler.concat(
+					"Property ",
+					"\"liferay.oauth.application.external.reference.codes\" ",
+					"is not defined"));
 		}
 
 		DefaultJWTProcessor<SecurityContext> defaultJWTProcessor =
 			new DefaultJWTProcessor<>();
 
 		URL jwkSetURL = new URL(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain +
-				"/o/oauth2/jwks");
+			StringBundler.concat(
+				_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
+				"/o/oauth2/jwks"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Using " + jwkSetURL);

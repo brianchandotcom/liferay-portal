@@ -7,6 +7,8 @@ dependencies {
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:account:account-api")
+	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
+	testIntegrationImplementation project(":apps:asset:asset-test-util")
 	testIntegrationImplementation project(":apps:captcha:captcha-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-api")

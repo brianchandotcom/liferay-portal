@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {dateUtils} from 'frontend-js-web';
-
 import {Colors, MetricName} from '../../types/global';
 import {toUnix} from '../../utils/date';
 import {AssetMetricComplement} from '../../utils/metrics';
@@ -137,8 +135,17 @@ export function mapPublishedDatesToHistogram(
 export function formatPublishedDate(dateString: string) {
 	const date = new Date(dateString);
 
-	date.setMinutes(0);
-	date.setSeconds(0);
-
-	return dateUtils.format(date, 'yyyy-MM-ddTHH:00');
+	return new Date(
+		Date.UTC(
+			date.getUTCFullYear(),
+			date.getUTCMonth(),
+			date.getUTCDate(),
+			date.getUTCHours(),
+			0,
+			0,
+			0
+		)
+	)
+		.toISOString()
+		.slice(0, 16);
 }

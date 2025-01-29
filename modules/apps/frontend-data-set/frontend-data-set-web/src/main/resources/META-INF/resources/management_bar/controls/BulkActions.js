@@ -216,7 +216,14 @@ function BulkActions({
 
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
-			{({formId, formName, loadData, namespace, selectable, sidePanelId}) => (
+			{({
+				formId,
+				formName,
+				loadData,
+				namespace,
+				selectable,
+				sidePanelId,
+			}) => (
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
 					<div
 						className={classNames(

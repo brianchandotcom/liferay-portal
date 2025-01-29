@@ -626,27 +626,37 @@ test(
 );
 
 test('Select items count label in bulk actions', async ({page}) => {
+	const itemsSelectorCheckbox = page.locator('input[name="items-selector"]');
+
 	await test.step('Change delta to 60 items', async () => {
 		await page.getByLabel('Items Per Page').click();
 
 		await page.getByRole('option', {name: '60 Items'}).click();
+
+		await expect(
+			page.getByText('Showing 1 to 60 of 75 entries.')
+		).toBeVisible();
 	});
 
-	await test.step('Select all checkboxes using the select all checkbox', async () => {
-		await page
-			.locator('input[name="table-head-selector"]')
-			.setChecked(true);
-	});
+	await test.step('Select all items in current page using the bulk actions checkbox', async () => {
+		await itemsSelectorCheckbox.setChecked(true);
 
-	await test.step('Check the label displays "60 of 75 Items Selected"', async () => {
 		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
 	});
 
-	await test.step('Go to 2nd page', async () => {
-		await page.getByLabel('Go to page, 2').click();
+	await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
+		await itemsSelectorCheckbox.setChecked(false);
+
+		await expect(itemsSelectorCheckbox).not.toBeChecked();
 	});
 
-	await test.step('Select all checkboxes on 2nd page by selecting the checkboxes for each row', async () => {
+	await test.step('Select all items', async () => {
+		await itemsSelectorCheckbox.setChecked(true);
+
+		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
+
+		await page.getByLabel('Go to page, 2').click();
+
 		for (let i = 1; i <= 15; i++) {
 			await page
 				.locator(
@@ -654,9 +664,7 @@ test('Select items count label in bulk actions', async ({page}) => {
 				)
 				.setChecked(true);
 		}
-	});
 
-	await test.step('Check the label displays "All Selected (75 of 75 Items)"', async () => {
 		await expect(
 			page.getByText('All Selected (75 of 75 Items)')
 		).toBeVisible();

@@ -40,7 +40,7 @@ public class FDSSampleDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/c/fdssamples";
+		return "/o/c/fdssamples?sort=title:asc";
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

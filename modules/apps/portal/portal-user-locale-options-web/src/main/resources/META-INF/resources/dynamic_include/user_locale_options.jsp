@@ -11,8 +11,8 @@
 Locale userLocale = user.getLocale();
 
 long groupId = layout.getGroupId();
-long layoutId = layout.getLayoutId();
 boolean privateLayout = layout.isPrivateLayout();
+long layoutId = layout.getLayoutId();
 
 if (layout instanceof VirtualLayout) {
 	VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -20,8 +20,8 @@ if (layout instanceof VirtualLayout) {
 	Layout sourceLayout = virtualLayout.getSourceLayout();
 
 	groupId = sourceLayout.getGroupId();
-	layoutId = sourceLayout.getLayoutId();
 	privateLayout = sourceLayout.isPrivateLayout();
+	layoutId = sourceLayout.getLayoutId();
 }
 %>
 

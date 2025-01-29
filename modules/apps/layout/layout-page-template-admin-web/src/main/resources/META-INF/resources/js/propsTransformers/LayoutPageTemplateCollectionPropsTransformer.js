@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openCreationModal} from '@liferay/layout-js-components-web';
+import {
+	CreationModal,
+	openModalComponent,
+} from '@liferay/layout-js-components-web';
 import {
 	openModal,
 	openSelectionModal,
@@ -118,12 +121,15 @@ const ACTIONS = {
 		},
 		portletNamespace
 	) {
-		openCreationModal({
-			descriptionInputValue: layoutPageTemplateCollectionDescription,
-			formSubmitURL: updateLayoutPageTemplateCollectionURL,
-			heading: dialogTitle,
-			nameInputValue: layoutPageTemplateCollectionName,
-			portletNamespace,
+		openModalComponent({
+			ModalComponent: CreationModal,
+			modalComponentProps: {
+				descriptionInputValue: layoutPageTemplateCollectionDescription,
+				formSubmitURL: updateLayoutPageTemplateCollectionURL,
+				heading: dialogTitle,
+				nameInputValue: layoutPageTemplateCollectionName,
+				portletNamespace,
+			},
 		});
 	},
 };

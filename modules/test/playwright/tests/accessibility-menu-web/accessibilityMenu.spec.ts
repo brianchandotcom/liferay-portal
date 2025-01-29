@@ -10,7 +10,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import performLoginViaApi, {performLogout} from '../../utils/performLogin';
 import {featureFlagPagesTest} from '../feature-flag-web/fixtures/featureFlagPagesTest';
 
 const test = mergeTests(
@@ -37,12 +37,6 @@ test('Verify that the default value is displayed when the user has never changed
 
 	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	userData[userAccount.alternateName] = {
-		name: userAccount.givenName,
-		password: 'test',
-		surname: userAccount.familyName,
-	};
-
 	try {
 		await test.step('Verify that the "underlined links" toggle is off when logged out, then turn it on', async () => {
 			await performLogout(page);
@@ -57,7 +51,7 @@ test('Verify that the default value is displayed when the user has never changed
 		});
 
 		await test.step('Login as a new user and assert that the "underlined links" guest preference is copied to the user', async () => {
-			await performLogin(page, userAccount.alternateName);
+			await performLoginViaApi(page, 'test');
 
 			await accessibilityMenuPage.openAccessibilityMenu();
 
@@ -79,7 +73,7 @@ test('Verify that the default value is displayed when the user has never changed
 		});
 
 		await test.step('Confirm that the "underlined links" toggle is off when logged in, since user did not change the preference', async () => {
-			await performLogin(page, userAccount.alternateName);
+			await performLoginViaApi(page, 'test');
 
 			await accessibilityMenuPage.openAccessibilityMenu();
 
@@ -103,7 +97,7 @@ test('Verify that the default value is displayed when the user has never changed
 		});
 
 		await test.step('Confirm that the "underlined links" toggle is on after logging in', async () => {
-			await performLogin(page, userAccount.alternateName);
+			await performLoginViaApi(page, 'test');
 
 			await accessibilityMenuPage.openAccessibilityMenu();
 

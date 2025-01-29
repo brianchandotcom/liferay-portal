@@ -4,7 +4,11 @@
 
 		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox" id="${fragmentEntryLinkNamespace}-checkbox-label">
 			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">
-				${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+				${htmlUtil.escape(input.label)}
+
+				<span id="${fragmentEntryLinkNamespace}-checkbox-read-only" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
+
+				[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 			</span>
 		</label>
 

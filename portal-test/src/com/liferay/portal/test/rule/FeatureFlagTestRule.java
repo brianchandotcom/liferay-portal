@@ -7,7 +7,6 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
@@ -58,9 +57,23 @@ public class FeatureFlagTestRule
 	}
 
 	private void _restoreFeatureFlags(Map<String, String> previousValues) {
+		Map<String, String> values = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : previousValues.entrySet()) {
+			String value = entry.getValue();
+
+			if (value == null) {
+				PropsUtil.set(entry.getKey(), value);
+
+				continue;
+			}
+
+			values.put(entry.getKey(), entry.getValue());
+		}
+
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.create(
-				previousValues, true
+				values, true
 			).build());
 	}
 
@@ -77,11 +90,7 @@ public class FeatureFlagTestRule
 		for (String key : featureFlags.value()) {
 			String featureFlagKey = "feature.flag." + key;
 
-			String previousValue = PropsUtil.get(featureFlagKey);
-
-			if (Validator.isNotNull(previousValue)) {
-				previousValues.put(featureFlagKey, previousValue);
-			}
+			previousValues.put(featureFlagKey, PropsUtil.get(featureFlagKey));
 
 			PropsUtil.addProperties(
 				UnicodePropertiesBuilder.setProperty(

@@ -63,7 +63,7 @@
 					"id": "condition1",
 					"options": {
 						"type": "equal",
-						"value": "${ROLE_ID1}"
+						"value": "${ROLE_ID_1}"
 					},
 					"type": "user"
 				},
@@ -72,7 +72,7 @@
 					"id": "condition2",
 					"options": {
 						"type": "not-equal",
-						"value": "${ROLE_ID2}"
+						"value": "${ROLE_ID_2}"
 					},
 					"type": "user"
 				},
@@ -81,7 +81,7 @@
 					"id": "condition3",
 					"options": {
 						"type": "equal",
-						"value": "${SEGMENTS_ENTRY_ID1}"
+						"value": "${SEGMENTS_ENTRY_ID_1}"
 					},
 					"type": "user"
 				},
@@ -90,7 +90,7 @@
 					"id": "condition4",
 					"options": {
 						"type": "not-equal",
-						"value": "${SEGMENTS_ENTRY_ID2}"
+						"value": "${SEGMENTS_ENTRY_ID_2}"
 					},
 					"type": "user"
 				},
@@ -99,7 +99,7 @@
 					"id": "condition5",
 					"options": {
 						"type": "equal",
-						"value": "${USER_ID1}"
+						"value": "${USER_ID_1}"
 					},
 					"type": "user"
 				},
@@ -108,7 +108,7 @@
 					"id": "condition6",
 					"options": {
 						"type": "not-equal",
-						"value": "${USER_ID2}"
+						"value": "${USER_ID_2}"
 					},
 					"type": "user"
 				}

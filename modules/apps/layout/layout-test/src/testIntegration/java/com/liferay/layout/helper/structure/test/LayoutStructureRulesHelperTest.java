@@ -69,19 +69,19 @@ public class LayoutStructureRulesHelperTest {
 			StringUtil.replace(
 				_read("layout_data_rules_all.json"), "${", "}",
 				HashMapBuilder.put(
-					"ROLE_ID1", String.valueOf(role.getRoleId())
+					"ROLE_ID_1", String.valueOf(role.getRoleId())
 				).put(
-					"ROLE_ID2", String.valueOf(RandomTestUtil.randomLong())
+					"ROLE_ID_2", String.valueOf(RandomTestUtil.randomLong())
 				).put(
-					"SEGMENTS_ENTRY_ID1",
+					"SEGMENTS_ENTRY_ID_1",
 					String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
 				).put(
-					"SEGMENTS_ENTRY_ID2",
+					"SEGMENTS_ENTRY_ID_2",
 					String.valueOf(RandomTestUtil.randomLong())
 				).put(
-					"USER_ID1", String.valueOf(_user.getUserId())
+					"USER_ID_1", String.valueOf(_user.getUserId())
 				).put(
-					"USER_ID2", String.valueOf(RandomTestUtil.randomLong())
+					"USER_ID_2", String.valueOf(RandomTestUtil.randomLong())
 				).build()));
 
 		LayoutStructureRulesHelper.LayoutStructureRulesResult

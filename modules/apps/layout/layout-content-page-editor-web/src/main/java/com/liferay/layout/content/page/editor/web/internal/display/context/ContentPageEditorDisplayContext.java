@@ -335,6 +335,10 @@ public class ContentPageEditorDisplayContext {
 					return null;
 				}
 			).put(
+				"deleteFormStepURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/delete_form_step")
+			).put(
 				"deleteFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +

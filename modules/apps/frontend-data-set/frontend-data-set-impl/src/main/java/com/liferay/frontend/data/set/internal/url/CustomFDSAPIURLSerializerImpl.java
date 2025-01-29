@@ -67,19 +67,19 @@ public class CustomFDSAPIURLSerializerImpl
 			Map<String, Object> properties =
 				fdsFieldObjectEntry.getProperties();
 
-			String[] fieldNameList = StringUtil.split(
+			String[] fieldNames = StringUtil.split(
 				StringUtil.replace(
 					String.valueOf(properties.get("fieldName")), "[]",
 					StringPool.PERIOD),
 				CharPool.PERIOD);
 
-			if (fieldNameList.length > 1) {
-				for (int i = 0; i < (fieldNameList.length - 1); i++) {
-					nestedFields = StringUtil.add(nestedFields, fieldNameList[i]);
+			if (fieldNames.length > 1) {
+				for (int i = 0; i < (fieldNames.length - 1); i++) {
+					nestedFields = StringUtil.add(nestedFields, fieldNames[i]);
 				}
 
-				if (fieldNameList.length > nestedFieldsDepth) {
-					nestedFieldsDepth = fieldNameList.length - 1;
+				if (fieldNames.length > nestedFieldsDepth) {
+					nestedFieldsDepth = fieldNames.length - 1;
 				}
 			}
 		}

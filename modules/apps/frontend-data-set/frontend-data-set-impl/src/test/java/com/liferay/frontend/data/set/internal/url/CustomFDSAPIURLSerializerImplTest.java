@@ -62,6 +62,10 @@ public class CustomFDSAPIURLSerializerImplTest {
 	public void setUp() throws Exception {
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
+		ReflectionTestUtil.setFieldValue(
+			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
+			_fdsAPIURLResolverRegistry);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
 			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
@@ -70,10 +74,6 @@ public class CustomFDSAPIURLSerializerImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
 			_serviceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
-			_fdsAPIURLResolverRegistry);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 

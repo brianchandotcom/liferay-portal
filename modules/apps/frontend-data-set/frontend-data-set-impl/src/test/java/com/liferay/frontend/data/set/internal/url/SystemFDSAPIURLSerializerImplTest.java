@@ -50,9 +50,9 @@ public class SystemFDSAPIURLSerializerImplTest {
 	public void setUp() throws Exception {
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
-		_systemFDSEntryserviceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
+		ReflectionTestUtil.setFieldValue(
+			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
+			_fdsAPIURLResolverRegistry);
 
 		_fdsAPIURLResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
@@ -65,13 +65,13 @@ public class SystemFDSAPIURLSerializerImplTest {
 			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
 			_fdsAPIURLResolverServiceTrackerMap);
 
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
-			_fdsAPIURLResolverRegistry);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSEntryRegistryImpl, "_serviceTrackerMap",
-			_systemFDSEntryserviceTrackerMap);
+		Mockito.when(
+			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
 
 		ReflectionTestUtil.setFieldValue(
 			_systemFDSAPIURLSerializerImpl, "_fdsAPIURLBuilderFactory",
@@ -80,19 +80,19 @@ public class SystemFDSAPIURLSerializerImplTest {
 			_systemFDSAPIURLSerializerImpl, "_systemFDSEntryRegistry",
 			_systemFDSEntryRegistryImpl);
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+		_systemFDSEntryServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
 
-		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
+		ReflectionTestUtil.setFieldValue(
+			_systemFDSEntryRegistryImpl, "_serviceTrackerMap",
+			_systemFDSEntryServiceTrackerMap);
 	}
 
 	@After
 	public void tearDown() {
 		_fdsAPIURLResolverServiceTrackerMap.close();
-		_systemFDSEntryserviceTrackerMap.close();
+		_systemFDSEntryServiceTrackerMap.close();
 	}
 
 	@Test
@@ -282,6 +282,6 @@ public class SystemFDSAPIURLSerializerImplTest {
 	private static final SystemFDSEntryRegistryImpl
 		_systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
 	private static ServiceTrackerMap<String, SystemFDSEntry>
-		_systemFDSEntryserviceTrackerMap;
+		_systemFDSEntryServiceTrackerMap;
 
 }

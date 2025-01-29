@@ -59,7 +59,7 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
-		kaleoDefinitionPersistence.update(kaleoDefinition);
+		kaleoDefinition = kaleoDefinitionPersistence.update(kaleoDefinition);
 
 		// Kaleo definition version
 
@@ -72,7 +72,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 		_kaleoDefinitionVersionPersistence.update(kaleoDefinitionVersion);
 
-		return kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
+		return kaleoDefinition;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

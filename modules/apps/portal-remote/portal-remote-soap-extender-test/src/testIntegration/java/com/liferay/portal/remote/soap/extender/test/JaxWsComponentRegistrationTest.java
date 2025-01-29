@@ -14,7 +14,6 @@ import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +31,6 @@ public class JaxWsComponentRegistrationTest extends BaseJaxWsTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Ignore
 	@Test
 	public void testIsRegistered() throws Exception {
 		Assert.assertEquals(
@@ -40,7 +38,6 @@ public class JaxWsComponentRegistrationTest extends BaseJaxWsTestCase {
 			getGreeting("http://localhost:8080/o/soap-test/greeter?wsdl"));
 	}
 
-	@Ignore
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
 		URL url = new URL("http://localhost:8080/o/soap-test/services");

@@ -13,3 +13,4 @@ Import-Package:\
 	\
 	*
 -exportcontents: io.netty.*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

@@ -17,7 +17,6 @@ export default function ({
 
 	let commerceCatalogId = 0;
 
-
 	commerceCatalogIdSelect.addEventListener('change', (event) => {
 		commerceCatalogId = event.target.value;
 
@@ -45,7 +44,6 @@ export default function ({
 	let formSubmitted = false;
 
 	Liferay.provide(window, `${namespace}submitForm`, () => {
-
 		if (formSubmitted) {
 			return;
 		}

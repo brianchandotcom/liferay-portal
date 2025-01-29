@@ -19,6 +19,7 @@ export class ModelBuilderRightSidebarPage {
 	readonly objectDefinitionPluralLabel: Locator;
 	readonly objectDefinitionPluralLabelLocalizationButton: Locator;
 	readonly objectDefinitionScope: Locator;
+	readonly objectDefinitionSeo: Locator;
 	readonly objectRelationshipDeletionType: Locator;
 	readonly objectRelationshipManyRecordsOf: Locator;
 	readonly objectRelationshipOneRecordOf: Locator;
@@ -64,6 +65,9 @@ export class ModelBuilderRightSidebarPage {
 			.getByTitle('Open Localizations')
 			.last();
 		this.objectDefinitionScope = page.getByLabel('Scope');
+		this.objectDefinitionSeo = page.getByLabel(
+			'Allow authorized users to customize Entry Friendly URLs. The Friendly URL defined by the Object Admin will be overwritten.'
+		);
 		this.objectRelationshipDeletionType = page.getByLabel('Deletion Type');
 		this.objectRelationshipManyRecordsOf =
 			page.getByLabel('Many Records Of');

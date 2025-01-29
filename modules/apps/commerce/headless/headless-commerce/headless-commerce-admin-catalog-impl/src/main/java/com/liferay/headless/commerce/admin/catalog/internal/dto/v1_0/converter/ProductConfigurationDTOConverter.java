@@ -243,7 +243,7 @@ public class ProductConfigurationDTOConverter
 
 	private String[] _getDifferences(
 		CPConfigurationEntry cpConfigurationEntry,
-		DTOConverterContext dtoConverterContext) {
+		DTOConverterContext dtoConverterContext) throws PortalException {
 
 		if (dtoConverterContext.getId() != null) {
 			return null;
@@ -264,6 +264,10 @@ public class ProductConfigurationDTOConverter
 					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
 
 		if (cpConfigurationEntrySetting == null) {
+			return null;
+		}
+
+		if (cpConfigurationEntry.getParentCPConfigurationList() == null ) {
 			return null;
 		}
 

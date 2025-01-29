@@ -234,7 +234,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 			return parameterMap;
 		}
 		catch (Exception exception) {
-			System.err.println(exception);
+			_log.error(exception);
 
 			return Collections.emptyMap();
 		}

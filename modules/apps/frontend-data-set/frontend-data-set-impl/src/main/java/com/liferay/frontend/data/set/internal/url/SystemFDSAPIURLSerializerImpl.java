@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Sanz
  */
 @Component(
-	property = "frontend.data.set.serializer.type=" + FDSSerializer.SYSTEM,
+	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM,
 	service = FDSAPIURLSerializer.class
 )
 public class SystemFDSAPIURLSerializerImpl implements FDSAPIURLSerializer {

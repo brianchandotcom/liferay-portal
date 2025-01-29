@@ -39,6 +39,6 @@ describe('date utils', () => {
 	it('transform to unix', () => {
 		const unix = toUnix('2025-01-28T10:00');
 
-		expect(unix).toEqual(1738058400000);
+		expect(unix).toEqual(1738058400);
 	});
 });

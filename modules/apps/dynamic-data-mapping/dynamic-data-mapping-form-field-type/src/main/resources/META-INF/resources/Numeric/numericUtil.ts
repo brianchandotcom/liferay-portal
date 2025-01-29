@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
+import {SettingsContext} from 'data-engine-js-components-web';
 import {createNumberMask} from 'text-mask-addons';
 import {conformToMask} from 'text-mask-core';
 
@@ -178,24 +181,47 @@ export function getFormattedValue({
 	};
 }
 
-export function getValue({
-	editingLanguageId,
-	localizedObjectField,
-	value,
-}: {
-	editingLanguageId: Liferay.Language.Locale;
-	localizedObjectField: boolean;
-	value: string | LocalizedValue<string> | undefined;
-}) {
-	if (localizedObjectField) {
-		const localizedValue = (value as LocalizedValue<string>)[
-			editingLanguageId
-		];
+export function getLocalizedObjectFieldValue(
+	editingLocale: Liferay.Language.Locale,
+	value: string | LocalizedValue<string> | undefined
+) {
+	const localizedValue = (value as LocalizedValue<string>)[editingLocale];
 
-		return localizedValue?.toString();
+	return localizedValue ? localizedValue.toString() : '';
+}
+
+export function getSymbols({
+	editingLocale,
+	inputMask,
+	localizedSymbols,
+	settingsContext,
+	symbolsProp,
+}: {
+	editingLocale: Liferay.Language.Locale;
+	inputMask: boolean | undefined;
+	localizedSymbols: LocalizedValue<ISymbols>;
+	settingsContext: any;
+	symbolsProp: any;
+}) {
+	const localizedSymbolsContext = settingsContext
+		? SettingsContext.getSettingsContextProperty(
+				settingsContext,
+				'predefinedValue',
+				'localizedSymbols'
+			)
+		: localizedSymbols;
+
+	if (inputMask) {
+		return {
+			decimalSymbol: symbolsProp.decimalSymbol,
+			thousandsSeparator:
+				symbolsProp.thousandsSeparator === 'none'
+					? null
+					: symbolsProp.thousandsSeparator,
+		};
 	}
 
-	return value as string;
+	return localizedSymbolsContext?.[editingLocale] || symbolsProp;
 }
 
 type formatValueProps = {

@@ -16,7 +16,7 @@ import React, {
 	useState,
 } from 'react';
 
-import '../../css/main.scss';
+import '../../css/ckeditor4/main.scss';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 const CONTEXT_URL = Liferay.ThemeDisplay.getPathContext();

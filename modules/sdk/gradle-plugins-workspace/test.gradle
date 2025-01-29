@@ -32,6 +32,12 @@ cleanCopyLibs {
 	enabled = false
 }
 
+configurations {
+	gradleTestDependencies {
+		extendsFrom configurations.runtimeClasspath
+	}
+}
+
 copyBundle {
 	dependsOn downloadBundle
 	eachFile new StripPathSegmentsAction(1)
@@ -63,7 +69,7 @@ copyDistBundleZipPluginsSdk {
 copyGradleTestDependencies {
 	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-	from configurations.compileClasspath
+	from configurations.gradleTestDependencies
 	from jar
 	into gradleTestDependenciesDir
 
@@ -132,6 +138,10 @@ copyWorkspacesSamples {
 			}
 		}
 	}
+}
+
+dependencies {
+	gradleTestDependencies group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 }
 
 downloadBundle {

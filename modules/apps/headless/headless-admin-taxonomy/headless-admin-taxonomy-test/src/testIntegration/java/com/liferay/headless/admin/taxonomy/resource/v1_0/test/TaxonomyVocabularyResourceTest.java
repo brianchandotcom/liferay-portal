@@ -6,10 +6,12 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
+import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
@@ -17,10 +19,19 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
@@ -264,61 +275,15 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
+	@FeatureFlags("LPD-41304")
 	@Override
 	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
 		super.testGetTaxonomyVocabulary();
 
-		TaxonomyVocabulary postTaxonomyVocabulary =
-			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
+		_testGetTaxonomyVocabularyActions();
 
-		TaxonomyVocabulary getTaxonomyVocabulary =
-			taxonomyVocabularyResource.getTaxonomyVocabulary(
-				postTaxonomyVocabulary.getId());
-
-		assertValid(
-			getTaxonomyVocabulary.getActions(),
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
-				).put(
-					"method", "DELETE"
-				).build()
-			).put(
-				"get",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
-				).put(
-					"method", "GET"
-				).build()
-			).put(
-				"replace",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
-				).put(
-					"method", "PUT"
-				).build()
-			).put(
-				"update",
-				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
-				).put(
-					"method", "PATCH"
-				).build()
-			).build());
+		_testGetTaxonomyVocabularyWithPermissions();
 	}
 
 	@Override
@@ -514,5 +479,96 @@ public class TaxonomyVocabularyResourceTest
 
 		return testDepotEntry.getDepotEntryId();
 	}
+
+	private void _testGetTaxonomyVocabularyActions() throws Exception {
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
+
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			taxonomyVocabularyResource.getTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId());
+
+		assertValid(
+			getTaxonomyVocabulary.getActions(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"get",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "GET"
+				).build()
+			).put(
+				"replace",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "PUT"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href",
+					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
+						"/taxonomy-vocabularies/" +
+							getTaxonomyVocabulary.getId()
+				).put(
+					"method", "PATCH"
+				).build()
+			).build());
+	}
+
+	private void _testGetTaxonomyVocabularyWithPermissions() throws Exception {
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
+
+		_resourcePermissionLocalService.deleteResourcePermissions(
+			testCompany.getCompanyId(), AssetVocabulary.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, postTaxonomyVocabulary.getId());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), AssetVocabulary.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(postTaxonomyVocabulary.getId()), role.getRoleId(),
+			new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS});
+
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			taxonomyVocabularyResource.getTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId());
+
+		Assert.assertNotNull(getTaxonomyVocabulary.getPermissions());
+
+		Permission[] permissions = getTaxonomyVocabulary.getPermissions();
+
+		Assert.assertEquals(
+			Arrays.toString(permissions), 1, permissions.length);
+
+		Permission permission = permissions[0];
+
+		Assert.assertEquals(role.getName(), permission.getRoleName());
+		Assert.assertEquals(
+			new Object[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
+			permission.getActionIds());
+	}
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

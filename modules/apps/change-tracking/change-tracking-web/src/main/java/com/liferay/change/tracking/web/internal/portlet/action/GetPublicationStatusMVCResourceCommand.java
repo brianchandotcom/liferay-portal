@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -147,20 +146,24 @@ public class GetPublicationStatusMVCResourceCommand
 			String displayType, String label, int percentage, boolean published)
 		throws IOException {
 
-		JSONObject jsonObject = JSONUtil.put(
-			"displayType", displayType
-		).put(
-			"label", label
-		).put(
-			"published", published
-		);
-
-		if (percentage >= 0) {
-			jsonObject.put("percentage", percentage);
-		}
-
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"displayType", displayType
+			).put(
+				"label", label
+			).put(
+				"percentage",
+				() -> {
+					if (percentage < 0) {
+						return null;
+					}
+
+					return percentage;
+				}
+			).put(
+				"published", published
+			));
 	}
 
 	@Reference

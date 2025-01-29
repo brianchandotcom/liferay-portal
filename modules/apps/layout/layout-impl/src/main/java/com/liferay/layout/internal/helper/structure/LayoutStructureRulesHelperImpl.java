@@ -12,9 +12,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -54,7 +56,8 @@ public class LayoutStructureRulesHelperImpl
 					layoutStructureRule.getActionsJSONArray(), displayedItemIds,
 					hiddenItemIds,
 					!_evaluateLayoutStructureRule(
-						layoutStructureRule, layoutStructureRulesContext));
+						Collections.emptyMap(), layoutStructureRule,
+						layoutStructureRulesContext));
 
 				continue;
 			}
@@ -85,6 +88,7 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private boolean _evaluateLayoutStructureRule(
+		Map<String, Object> fieldValuesMap,
 		LayoutStructureRule layoutStructureRule,
 		LayoutStructureRulesContext layoutStructureRulesContext) {
 
@@ -96,7 +100,8 @@ public class LayoutStructureRulesHelperImpl
 				i);
 
 			if (_isConditionActive(
-					conditionJSONObject, layoutStructureRulesContext)) {
+					conditionJSONObject, fieldValuesMap,
+					layoutStructureRulesContext)) {
 
 				if (Objects.equals(
 						layoutStructureRule.getConditionType(), "any")) {
@@ -205,11 +210,11 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private boolean _isConditionActive(
-		JSONObject conditionJSONObject,
+		JSONObject conditionJSONObject, Map<String, Object> fieldValuesMap,
 		LayoutStructureRulesContext layoutStructureRulesContext) {
 
 		boolean negated = false;
-		long value = 0L;
+		Object value = 0L;
 
 		JSONObject optionsJSONObject = conditionJSONObject.getJSONObject(
 			"options");
@@ -221,13 +226,26 @@ public class LayoutStructureRulesHelperImpl
 				negated = true;
 			}
 
-			value = optionsJSONObject.getLong("value");
+			value = optionsJSONObject.get("value");
 		}
 
 		if (Objects.equals(conditionJSONObject.getString("type"), "user")) {
 			return _evaluateUserTypeCondition(
 				conditionJSONObject.getString("field"),
-				layoutStructureRulesContext, negated, value);
+				layoutStructureRulesContext, negated,
+				GetterUtil.getLong(value));
+		}
+
+		if (Objects.equals(conditionJSONObject.getString("type"), "form")) {
+			if (negated) {
+				return !Objects.equals(
+					fieldValuesMap.get(conditionJSONObject.getString("field")),
+					value);
+			}
+
+			return Objects.equals(
+				fieldValuesMap.get(conditionJSONObject.getString("field")),
+				value);
 		}
 
 		return false;

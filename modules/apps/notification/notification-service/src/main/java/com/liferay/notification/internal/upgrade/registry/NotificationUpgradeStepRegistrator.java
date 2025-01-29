@@ -156,6 +156,11 @@ public class NotificationUpgradeStepRegistrator
 			new DeleteStaleNotificationQueueEntriesAndNotificationTemplatesUpgradeProcess(
 				_classNameLocalService, _groupLocalService,
 				_portletFileRepository, _resourcePermissionLocalService));
+
+		registry.register(
+			"3.10.4", "4.0.0",
+			UpgradeProcessFactory.alterColumnType(
+				"NotificationQueueEntry", "body", "TEXT null"));
 	}
 
 	@Reference

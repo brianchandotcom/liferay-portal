@@ -110,7 +110,6 @@ public class CustomFDSAPIURLSerializerImplTest {
 			"/o/app1/endpoint/bar",
 			_customFDSAPIURLSerializerImpl.serialize(
 				"fdsName1", _httpServletRequest));
-
 		Assert.assertEquals(
 			"/o/app2/endpoint/{foo}",
 			_customFDSAPIURLSerializerImpl.serialize(
@@ -145,8 +144,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 	@Test
 	public void testFDSAPIURLSerializationWithNestedField() throws Exception {
 		_mockFDSObjectEntry(
-			"fdsName", "/app", "/endpoint", "schema",
-			new String[] {"creator.name"});
+			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
+			"schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
@@ -157,8 +156,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 	@Test
 	public void testFDSAPIURLSerializationWithNestedFields() throws Exception {
 		_mockFDSObjectEntry(
-			"fdsName", "/app", "/endpoint", "schema",
-			new String[] {"creator.name", "status.id"});
+			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
+			"/endpoint", "schema");
 
 		String url = _customFDSAPIURLSerializerImpl.serialize(
 			"fdsName", _httpServletRequest);
@@ -179,10 +178,9 @@ public class CustomFDSAPIURLSerializerImplTest {
 		throws Exception {
 
 		_mockFDSObjectEntry(
-			"fdsName", "/app", "/endpoint", "schema",
-			new String[] {
-				"creator.name", "status.id", "relation.creator.name"
-			});
+			"fdsName",
+			new String[] {"creator.name", "status.id", "relation.creator.name"},
+			"/app", "/endpoint", "schema");
 
 		String url = _customFDSAPIURLSerializerImpl.serialize(
 			"fdsName", _httpServletRequest);
@@ -255,12 +253,12 @@ public class CustomFDSAPIURLSerializerImplTest {
 		String restSchema) {
 
 		_mockFDSObjectEntry(
-			fdsName, restApplication, restEndpoint, restSchema, null);
+			fdsName, null, restApplication, restEndpoint, restSchema);
 	}
 
 	private void _mockFDSObjectEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema, String[] fieldNames) {
+		String fdsName, String[] fieldNames, String restApplication,
+		String restEndpoint, String restSchema) {
 
 		Mockito.when(
 			_customFDSAPIURLSerializerImpl.serialize(

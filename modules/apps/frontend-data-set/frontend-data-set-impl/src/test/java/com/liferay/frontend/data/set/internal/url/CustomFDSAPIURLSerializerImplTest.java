@@ -99,7 +99,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 		_mockFDSObjectEntry("fdsName", "/app", "/endpoint/{foo}", "schema");
 
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerService(
+			_registerFDSAPIURLResolver(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -116,7 +116,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 		_mockFDSObjectEntry("fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
-		serviceRegistration = _registerService(
+		serviceRegistration = _registerFDSAPIURLResolver(
 			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -137,7 +137,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 		_mockFDSObjectEntry("fdsName1", "/app", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app", "/endpoint/{foo}", "schema");
 
-		serviceRegistration = _registerService(
+		serviceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -309,7 +309,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 		);
 	}
 
-	private ServiceRegistration<FDSAPIURLResolver> _registerService(
+	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(
 		String restApplication, String restSchema, String[] tokens,
 		String[] values) {
 

@@ -107,7 +107,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 			_registerSystemFDSEntry(
 				"fdsName2", "/app", "/endpoint/{foo}", "schema");
 
-		ServiceRegistration<FDSAPIURLResolver> fdsAPIURLServiceRegistration = _registerResolver(
+		ServiceRegistration<FDSAPIURLResolver> fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
 			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -156,7 +156,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 			"fdsName", "/app", "/endpoint/{foo}", "schema", "{foo}=3");
 
 		fdsAPIURLServiceRegistration =
-			_registerResolver(
+			_registerFDSAPIURLResolver(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -176,7 +176,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint/{foo}", "schema");
 
-		fdsAPIURLServiceRegistration = _registerResolver(
+		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
 		Assert.assertEquals(
@@ -196,7 +196,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 		fdsAPIURLServiceRegistration.unregister();
 	}
 
-	private ServiceRegistration<FDSAPIURLResolver> _registerResolver(
+	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(
 		String restApplication, String restSchema, String[] tokens,
 		String[] values) {
 

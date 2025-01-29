@@ -32,6 +32,6 @@
 	// Editable area focus
 
 	&.ck-editor__main > .ck-editor__editable:focus {
-        @include clay-form-control-focus();
+		@include clay-form-control-focus();
 	}
 }

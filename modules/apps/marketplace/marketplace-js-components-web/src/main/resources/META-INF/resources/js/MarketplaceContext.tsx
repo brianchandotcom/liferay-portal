@@ -27,7 +27,8 @@ const productSearchParamsDefault = {
 	page: 1,
 	pageSize: 8,
 	search: '',
-	sort: 'desc' as 'asc' | 'desc',
+	sortDirection: 'asc' as 'asc' | 'desc',
+	sortKey: 'createDate',
 };
 
 type State = {
@@ -40,7 +41,7 @@ type State = {
 		productsResponse?: APIResponse<Product>;
 		searchParams: typeof productSearchParamsDefault;
 		setProductSearchParams: React.Dispatch<
-			typeof productSearchParamsDefault
+			React.SetStateAction<typeof productSearchParamsDefault>
 		>;
 	};
 	setProduct: React.Dispatch<Product>;
@@ -136,7 +137,9 @@ export function MarketplaceContextProvider({
 			'pageSize': String(productSearchParams.pageSize),
 			'search': productSearchParams.search,
 			'skus.accountId': '-1',
-			'sort': `name:${productSearchParams.sort}`,
+			...(productSearchParams.sortKey && {
+				sort: `${productSearchParams.sortKey}:${productSearchParams.sortDirection}`,
+			}),
 		});
 
 		marketplaceRest
@@ -150,7 +153,8 @@ export function MarketplaceContextProvider({
 		productSearchParams.page,
 		productSearchParams.pageSize,
 		productSearchParams.search,
-		productSearchParams.sort,
+		productSearchParams.sortKey,
+		productSearchParams.sortDirection,
 		settings,
 	]);
 

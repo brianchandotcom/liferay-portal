@@ -6,6 +6,7 @@
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {sub} from 'frontend-js-web';
 import React, {ReactNode} from 'react';
 
 import {useMarketplaceContext} from '../MarketplaceContext';
@@ -46,24 +47,37 @@ const ProductListView: React.FC<MarketplaceProductsProps> = ({children}) => {
 		},
 	} = useMarketplaceContext();
 
+	const {search} = searchParams;
+
 	const products = productsResponse?.items ?? [];
 
 	if (loading) {
 		return (
-			<div className="align-items-center d-flex justify-content-center payment-methods-modal-body-empty-state pt-4">
+			<>
 				<ClayLoadingIndicator
 					displayType="primary"
 					shape="squares"
-					size="md"
+					size="lg"
 				/>
-			</div>
+
+				<div />
+			</>
 		);
 	}
 
 	if (!products.length) {
 		return (
 			<ClayEmptyState
-				description={Liferay.Language.get('oops')}
+				description={
+					search
+						? sub(
+								Liferay.Language.get(
+									'there-are-no-results-for-the-search-term-x'
+								),
+								search
+							)
+						: Liferay.Language.get('no-products-were-found')
+				}
 				imgSrc="/o/admin-theme/images/states/search_state.svg"
 				title={Liferay.Language.get('no-results-were-found')}
 			/>
@@ -105,7 +119,7 @@ const MarketplaceProducts: React.FC<ProductListViewProps> = ({
 	onClickProduct,
 }) => (
 	<div className="d-flex flex-column h-100 justify-content-between payment-methods-modal-body">
-		<ManagementToolbar filterItems={[]} />
+		<ManagementToolbar />
 
 		<ProductListView>
 			{(product) => (

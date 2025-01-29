@@ -86,21 +86,22 @@ export function MarketplacePurchase({
 		return (
 			<ProductPurchase.Body
 				primaryButtonProps={{
-					borderless: true,
-					children: sub(
-						Liferay.Language.get('contact-x'),
-						Liferay.Language.get('support')
-					),
+					children: Liferay.Language.get('contact-support'),
+					onClick: () => {
+						window.open('mailto:marketplace-admin@liferay.com');
+					},
 				}}
 				secondaryButtonProps={secondaryButtonProps}
 				title={Liferay.Language.get('insufficient-resources')}
 			>
-				{sub(
-					Liferay.Language.get(
-						'x-project-does-not-meet-the-necessary-resource-requirements-for-this-app'
-					),
-					projectId as string
-				)}
+				<span className="text-danger">
+					{sub(
+						Liferay.Language.get(
+							'x-project-does-not-meet-the-necessary-resource-requirements-for-this-app'
+						),
+						projectId as string
+					)}
+				</span>
 			</ProductPurchase.Body>
 		);
 	}

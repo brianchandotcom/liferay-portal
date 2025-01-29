@@ -59,7 +59,7 @@ function MarketplaceViews() {
 								(deployment: {id: string}) => deployment.id
 							);
 					}
-					catch (error) {}
+					catch {}
 
 					return (
 						placedOrderItem.productId === product.productId &&

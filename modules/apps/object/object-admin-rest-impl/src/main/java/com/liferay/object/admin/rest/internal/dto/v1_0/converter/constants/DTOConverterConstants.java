@@ -10,6 +10,10 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants;
  */
 public class DTOConverterConstants {
 
+	public static final String OBJECT_DEFINITION_DTO_CONVERTER =
+		"(component.name=com.liferay.object.admin.rest.internal.dto.v1_0." +
+			"converter.ObjectDefinitionDTOConverter)";
+
 	public static final String OBJECT_FIELD_DTO_CONVERTER =
 		"(component.name=com.liferay.object.admin.rest.internal.dto.v1_0." +
 			"converter.ObjectFieldDTOConverter)";

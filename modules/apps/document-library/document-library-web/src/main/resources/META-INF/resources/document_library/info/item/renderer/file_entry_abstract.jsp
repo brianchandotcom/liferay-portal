@@ -34,11 +34,5 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 	}
 	%>
 
-	<aui:style type="text/css">
-		.file-entry-abstract-info-item-background-image {
-			background-image: url(<%= previewURL %>);
-		}
-	</aui:style>
-
-	<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image file-entry-abstract-info-item-background-image mb-4"></div>
+	<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= previewURL %>);"></div>
 </c:if>

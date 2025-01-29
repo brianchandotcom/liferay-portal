@@ -44,12 +44,6 @@ const CKEditor5AdvancedPreset: EditorConfig = {
 				name: /.*/,
 			},
 		],
-		disallow: [
-			{
-				attributes: /^on*/,
-				styles: true,
-			},
-		],
 	},
 	style: {
 		definitions: [

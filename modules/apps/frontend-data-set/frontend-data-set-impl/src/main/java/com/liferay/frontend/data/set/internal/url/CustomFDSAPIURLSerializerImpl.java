@@ -74,13 +74,8 @@ public class CustomFDSAPIURLSerializerImpl
 				CharPool.PERIOD);
 
 			if (fieldNameList.length > 1) {
-				String[] fieldsName = new String[fieldNameList.length - 1];
-
-				System.arraycopy(
-					fieldNameList, 0, fieldsName, 0, fieldNameList.length - 1);
-
-				for (String fieldName : fieldsName) {
-					nestedFields = StringUtil.add(nestedFields, fieldName);
+				for (int i = 0; i < (fieldNameList.length - 1); i++) {
+					nestedFields = StringUtil.add(nestedFields, fieldNameList[i]);
 				}
 
 				if (fieldNameList.length > nestedFieldsDepth) {

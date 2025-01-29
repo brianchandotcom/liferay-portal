@@ -6,6 +6,7 @@
 import {LayoutData, LayoutDataItem} from '../../types/layout_data/LayoutData';
 import hasDropZoneChild from '../components/layout_data_items/hasDropZoneChild';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import isFirstStep from './isFirstStep';
 
 export default function canBeRemoved(
 	item: LayoutDataItem,
@@ -15,10 +16,16 @@ export default function canBeRemoved(
 		case LAYOUT_DATA_ITEM_TYPES.collectionItem:
 		case LAYOUT_DATA_ITEM_TYPES.column:
 		case LAYOUT_DATA_ITEM_TYPES.dropZone:
-		case LAYOUT_DATA_ITEM_TYPES.formStep:
 		case LAYOUT_DATA_ITEM_TYPES.formStepContainer:
 		case LAYOUT_DATA_ITEM_TYPES.root:
 			return false;
+
+		case LAYOUT_DATA_ITEM_TYPES.formStep:
+			return (
+				Liferay.FeatureFlags['LPD-31772'] &&
+				!hasDropZoneChild(item, layoutData) &&
+				!isFirstStep(item, layoutData)
+			);
 
 		default:
 			return !hasDropZoneChild(item, layoutData);

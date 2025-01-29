@@ -9,8 +9,8 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import ViewsContext from '../../views/ViewsContext';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
 import CustomViewsControls from './CustomViewsControls';
@@ -33,7 +33,7 @@ function NavBar({creationMenu, handleCheckboxClick, items, showSearch}) {
 			data-qa-id="management-toolbar"
 		>
 			<ManagementToolbar.ItemList>
-				{!!items.length && 	selectable && (
+				{!!items.length && selectable && (
 					<ManagementToolbar.Item>
 						<SelectionCheckbox
 							handleCheckboxClick={handleCheckboxClick}

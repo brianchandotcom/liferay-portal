@@ -98,9 +98,37 @@ public class SystemFDSAPIURLSerializerImplTest {
 	@Test
 	public void testSerialization() throws Exception {
 
+		// Different resolvers
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			"fdsName1", "/app1", "/endpoint/{foo}", "schema");
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
+			_registerSystemFDSEntry(
+				"fdsName2", "/app", "/endpoint/{foo}", "schema");
+
+		ServiceRegistration<FDSAPIURLResolver> fdsAPIURLServiceRegistration = _registerResolver(
+			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app1/endpoint/bar",
+			_systemFDSAPIURLSerializerImpl.serialize(
+				"fdsName1", _httpServletRequest));
+
+		Assert.assertEquals(
+			"/o/app/endpoint/{foo}",
+			_systemFDSAPIURLSerializerImpl.serialize(
+				"fdsName2", _httpServletRequest));
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		systemFDSEntryServiceRegistration2.unregister();
+
+		fdsAPIURLServiceRegistration.unregister();
+
 		// No resolver, URL
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
+		systemFDSEntryServiceRegistration1 =
 			_registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertEquals(
@@ -110,7 +138,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 
 		systemFDSEntryServiceRegistration1.unregister();
 
-		// no resolver, URL with parameters
+		// No resolver, URL with parameters
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint", "schema", "param=3");
@@ -127,7 +155,7 @@ public class SystemFDSAPIURLSerializerImplTest {
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint/{foo}", "schema", "{foo}=3");
 
-		ServiceRegistration<FDSAPIURLResolver> fdsAPIURLServiceRegistration =
+		fdsAPIURLServiceRegistration =
 			_registerResolver(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
@@ -137,34 +165,6 @@ public class SystemFDSAPIURLSerializerImplTest {
 				"fdsName", _httpServletRequest));
 
 		systemFDSEntryServiceRegistration1.unregister();
-
-		fdsAPIURLServiceRegistration.unregister();
-
-		// Different resolvers
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName1", "/app1", "/endpoint/{foo}", "schema");
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
-				"fdsName2", "/app", "/endpoint/{foo}", "schema");
-
-		fdsAPIURLServiceRegistration = _registerResolver(
-			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app1/endpoint/bar",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
-
-		Assert.assertEquals(
-			"/o/app/endpoint/{foo}",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
-
-		systemFDSEntryServiceRegistration1.unregister();
-
-		systemFDSEntryServiceRegistration2.unregister();
 
 		fdsAPIURLServiceRegistration.unregister();
 

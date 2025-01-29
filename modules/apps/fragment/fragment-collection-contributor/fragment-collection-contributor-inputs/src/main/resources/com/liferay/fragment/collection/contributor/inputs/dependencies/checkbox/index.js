@@ -12,7 +12,7 @@ if (inputElement) {
 	else {
 		if (Liferay.FeatureFlags['LPD-37927']) {
 			import('@liferay/fragment-impl').then(
-				({registerLocalizedInput}) => {
+				({registerLocalizedInput, registerUnlocalizedInput}) => {
 					if (input.localizable) {
 						const {onChange} = registerLocalizedInput({
 							defaultLanguageId:
@@ -27,6 +27,19 @@ if (inputElement) {
 
 						inputElement.addEventListener('change', (event) => {
 							onChange(event.target.checked);
+						});
+					}
+					else {
+						registerUnlocalizedInput({
+							defaultLanguageId:
+								themeDisplay.getDefaultLanguageId(),
+							inputElement,
+							unlocalizedFieldsState:
+								input.attributes.unlocalizedFieldsState,
+							unlocalizedMessageContainer:
+								document.getElementById(
+									`${fragmentNamespace}-unlocalized-info`
+								),
 						});
 					}
 				}

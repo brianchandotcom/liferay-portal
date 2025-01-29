@@ -191,6 +191,10 @@ public abstract class BaseBuildRunner<T extends BuildData>
 				JSONObject envMapJSONObject =
 					injectedEnvVarsJSONObject.getJSONObject("envMap");
 
+				if (envMapJSONObject.isEmpty()) {
+					return;
+				}
+
 				JenkinsResultsParserUtil.keepJenkinsBuild(
 					false,
 					Integer.valueOf(envMapJSONObject.getString("BUILD_NUMBER")),

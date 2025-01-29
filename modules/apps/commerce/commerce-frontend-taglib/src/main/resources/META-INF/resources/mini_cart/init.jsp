@@ -32,6 +32,7 @@ String cssClasses = (String)request.getAttribute("liferay-commerce:cart:cssClass
 boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
 boolean displayTotalItemsQuantity = (boolean)request.getAttribute("liferay-commerce:cart:displayTotalItemsQuantity");
 boolean guestOrderEnabled = (boolean)request.getAttribute("liferay-commerce:cart:guestOrderEnabled");
+boolean hasCommerceOpenOrderContentPortlet = (boolean)request.getAttribute("liferay-commerce:cart:hasCommerceOpenOrderContentPortlet");
 int itemsQuantity = (int)request.getAttribute("liferay-commerce:cart:itemsQuantity");
 Map<String, String> labels = (Map<String, String>)request.getAttribute("liferay-commerce:cart:labels");
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");

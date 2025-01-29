@@ -30,9 +30,9 @@ public class ObjectFieldUtil {
 			"DBType", objectField.getDBType()
 		).put(
 			"defaultValue",
-			com.liferay.object.field.setting.util.ObjectFieldSettingUtil.
-				getDefaultValueAsString(
-					null, objectField, objectFieldSettingLocalService, null)
+			String.valueOf(
+				com.liferay.object.field.setting.util.ObjectFieldSettingUtil.
+					getDefaultValue(null, objectField, null))
 		).put(
 			"externalReferenceCode", objectField.getExternalReferenceCode()
 		).put(

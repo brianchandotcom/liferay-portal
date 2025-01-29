@@ -2424,12 +2424,11 @@ public class ObjectEntryLocalServiceImpl
 					getObjectFieldObjectFieldSettings(
 						objectField.getObjectFieldId()));
 
-			String value = ObjectFieldSettingUtil.getDefaultValueAsString(
-				_ddmExpressionFactory, objectField,
-				_objectFieldSettingLocalService, (Map)values);
+			Object value = ObjectFieldSettingUtil.getDefaultValue(
+				_ddmExpressionFactory, objectField, (Map)values);
 
 			if (value != null) {
-				values.put(objectField.getName(), value);
+				values.put(objectField.getName(), (Serializable)value);
 			}
 		}
 	}

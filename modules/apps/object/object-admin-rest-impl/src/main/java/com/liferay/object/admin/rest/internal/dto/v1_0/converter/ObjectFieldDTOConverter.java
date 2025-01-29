@@ -75,11 +75,10 @@ public class ObjectFieldDTOConverter
 				setDBType(
 					() -> ObjectField.DBType.create(objectField.getDBType()));
 				setDefaultValue(
-					() ->
+					() -> String.valueOf(
 						com.liferay.object.field.setting.util.
-							ObjectFieldSettingUtil.getDefaultValueAsString(
-								null, objectField,
-								_objectFieldSettingLocalService, null));
+							ObjectFieldSettingUtil.getDefaultValue(
+								null, objectField, null)));
 				setExternalReferenceCode(objectField::getExternalReferenceCode);
 				setId(objectField::getObjectFieldId);
 				setIndexed(objectField::isIndexed);

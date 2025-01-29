@@ -160,6 +160,8 @@ public class FragmentEntryVersionPersistenceTest {
 
 		newFragmentEntryVersion.setIcon(RandomTestUtil.randomString());
 
+		newFragmentEntryVersion.setMarketplace(RandomTestUtil.randomBoolean());
+
 		newFragmentEntryVersion.setPreviewFileEntryId(
 			RandomTestUtil.nextLong());
 
@@ -255,6 +257,9 @@ public class FragmentEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getIcon(),
 			newFragmentEntryVersion.getIcon());
+		Assert.assertEquals(
+			existingFragmentEntryVersion.isMarketplace(),
+			newFragmentEntryVersion.isMarketplace());
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getPreviewFileEntryId(),
 			newFragmentEntryVersion.getPreviewFileEntryId());
@@ -571,9 +576,10 @@ public class FragmentEntryVersionPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "fragmentCollectionId",
 			true, "fragmentEntryKey", true, "name", true, "cacheable", true,
-			"icon", true, "previewFileEntryId", true, "readOnly", true, "type",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"icon", true, "marketplace", true, "previewFileEntryId", true,
+			"readOnly", true, "type", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -931,6 +937,8 @@ public class FragmentEntryVersionPersistenceTest {
 		fragmentEntryVersion.setConfiguration(RandomTestUtil.randomString());
 
 		fragmentEntryVersion.setIcon(RandomTestUtil.randomString());
+
+		fragmentEntryVersion.setMarketplace(RandomTestUtil.randomBoolean());
 
 		fragmentEntryVersion.setPreviewFileEntryId(RandomTestUtil.nextLong());
 

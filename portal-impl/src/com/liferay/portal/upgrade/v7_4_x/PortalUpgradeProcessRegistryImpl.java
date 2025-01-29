@@ -6,11 +6,13 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -568,6 +570,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(31, 15, 0),
 			UpgradeProcessFactory.addColumns(
 				"SystemEvent", "classExternalReferenceCode VARCHAR(75) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 15, 1),
+			new DBColumnSizeUpgradeProcess(
+				DBType.ORACLE, "number", 30, 20, "DOUBLE"));
 	}
 
 }

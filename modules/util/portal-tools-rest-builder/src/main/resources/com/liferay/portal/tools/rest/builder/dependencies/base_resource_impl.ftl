@@ -60,6 +60,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -112,14 +113,17 @@ public abstract class Base${schemaName}ResourceImpl
 		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
+		generateCRUD = false
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
 	<#if generateBatch>
 		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
 	</#if>
-
-	{
+	<#if generateCRUD>
+		, VulcanCRUDItemDelegate<${javaDataType}>
+	</#if>
+{
 
 	<#assign
 		generateGetPermissionCheckerMethods = false
@@ -177,6 +181,23 @@ public abstract class Base${schemaName}ResourceImpl
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
 			<#assign putByERCBatchJavaMethodSignature = javaMethodSignature />
+		</#if>
+
+		<#if generateCRUD && stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
+			<#assign getByIdJavaMethodSignature = javaMethodSignature />
+			@Override
+			public ${schemaName} getItem(Long itemId) throws Exception {
+			<#if getByIdJavaMethodSignature??>
+				return ${javaMethodSignature.methodName}(itemId);
+			<#else>
+				return null;
+			</#if>
+			}
+
+			@Override
+			public String getResourcePath() {
+				return "${configYAML.application.baseURI}";
+			}
 		</#if>
 
 		<#if generatePermissions>

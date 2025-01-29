@@ -322,7 +322,17 @@ public class LayoutStructureRulesHelperImpl
 
 	private enum Action {
 
-		DISABLE, ENABLE, HIDE, SHOW
+		DISABLE("disable"), ENABLE("enable"), HIDE("hide"), SHOW("show");
+
+		public String getValue() {
+			return _value;
+		}
+
+		private Action(String value) {
+			_value = value;
+		}
+
+		private final String _value;
 
 	}
 

@@ -35,7 +35,7 @@ export function ConnectionWithMarketplaceNeededModal(
 	return (
 		<ClayModal center observer={props.observer} status="info">
 			<ClayModal.Header>
-				{Liferay.Language.get('connection-with-markeplace-needed')}
+				{Liferay.Language.get('connection-with-marketplace-needed')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>{props.message}</ClayModal.Body>

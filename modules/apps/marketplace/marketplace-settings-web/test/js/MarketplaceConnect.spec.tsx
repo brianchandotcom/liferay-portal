@@ -21,7 +21,7 @@ const marketplaceSettingsProps = {
 	baseResourceURL: 'http://localhost:8080?p_p_id=marketplace_settings',
 	clientId: 'marketplace-client-id',
 	portletNamespace: '_marketplacePortletNamespace_',
-	redirect: '/web/markeplace/authorize',
+	redirect: '/web/marketplace/authorize',
 	url: 'https://marketplace.liferay.com',
 };
 

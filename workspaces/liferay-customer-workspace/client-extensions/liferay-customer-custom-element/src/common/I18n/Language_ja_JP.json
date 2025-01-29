@@ -1,7 +1,6 @@
 {
 	"a-private-cluster-separates-all-infrastructure-resources-and-allows-for-site-to-site-vpn-configuration": "プライベートクラスターは、すべてのインフラストラクチャのリソースを分離し、Site-to-Site VPNの設定を可能にします。",
 	"a-request-was-just-sent-to-deactivate-the-selected-activation-keys-from-now-on-they-will-be-hidden-and-no-longer-be-visible": "選択したライセンス認証キーを非アクティブ化する申請が送信されました。対象のライセンス認証キーは非表示になり、見えなくなります。",
-	"account-manager": "アカウント・マネージャー",
 	"actions": "操作",
 	"activated": "有効",
 	"activation-key-details": "ライセンス認証キーの詳細",

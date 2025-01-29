@@ -1,7 +1,6 @@
 {
 	"a-private-cluster-separates-all-infrastructure-resources-and-allows-for-site-to-site-vpn-configuration": "A Private Cluster separates all infrastructure resources and allows for Site-to-Site VPN configuration.",
 	"a-request-was-just-sent-to-deactivate-the-selected-activation-keys-from-now-on-they-will-be-hidden-and-no-longer-be-visible": "A request was just sent to deactivate the selected activation keys. From now on they will be hidden and no longer be visible.",
-	"account-manager": "Account Manager",
 	"account-settings": "Account Settings",
 	"actions": "Actions",
 	"activated": "Activated",

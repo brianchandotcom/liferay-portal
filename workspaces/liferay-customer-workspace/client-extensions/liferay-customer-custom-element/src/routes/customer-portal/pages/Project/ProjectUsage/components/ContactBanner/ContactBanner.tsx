@@ -33,7 +33,7 @@ const ContactBanner: React.FC<IProps> = ({className, description, title}) => {
 
 				<div className="col-3 contact-container overflow-hidden p-3 rounded">
 					<p className="mb-3 small">
-						{i18n.translate('account-manager')}
+						{i18n.translate('liferay-contact')}
 					</p>
 
 					{project?.liferayContactName && (

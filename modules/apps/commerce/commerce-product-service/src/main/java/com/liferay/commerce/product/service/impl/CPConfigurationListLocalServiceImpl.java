@@ -263,10 +263,7 @@ public class CPConfigurationListLocalServiceImpl
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			cpConfigurationList.getCPConfigurationListId());
 
-		cpConfigurationList = super.deleteCPConfigurationList(
-			cpConfigurationList);
-
-		return cpConfigurationList;
+		return super.deleteCPConfigurationList(cpConfigurationList);
 	}
 
 	@Override

@@ -563,11 +563,13 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 					_language.getLanguageId(LocaleUtil.getSiteDefault())));
 		}
 
+		if (Validator.isNull(unlocalizedFieldsMessage)) {
+			unlocalizedFieldsMessage = _language.get(
+				locale, "this-field-cannot-be-localized");
+		}
+
 		inputTemplateNode.addAttribute(
-			"unlocalizedFieldsMessage",
-			GetterUtil.getString(
-				unlocalizedFieldsMessage,
-				_language.get(locale, "this-field-cannot-be-localized")));
+			"unlocalizedFieldsMessage", unlocalizedFieldsMessage);
 	}
 
 	private void _addLongTextInfoFieldTypeInputTemplateNodeAttributes(

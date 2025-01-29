@@ -21,17 +21,17 @@ export class CompanyExportImportPage {
 		this.exportImportPage = new ExportImportPage(page);
 	}
 
-	async exportCustomObject(
-		objectName: string,
+	async export(
+		itemLabel: string,
 		includePermissions: boolean = false
 	): Promise<string> {
 		await this.applicationsMenuPage.goToExport();
 
 		await this.page.getByTestId('creationMenuNewButton').nth(1).click();
 
-		await this.page.getByLabel(`${objectName} 1 Items`).click();
+		await this.page.getByLabel(itemLabel).click();
 
-		const exportName = `CustomObject-${includePermissions ? 'WithPermissions-' : ''}${getRandomString()}`;
+		const exportName = 'MyExport-' + getRandomString();
 
 		await this.exportImportPage.title.fill(exportName);
 
@@ -50,7 +50,7 @@ export class CompanyExportImportPage {
 		return await this.exportImportPage.downloadExportProcess(exportName);
 	}
 
-	async importCustomObject(
+	async import(
 		filePath: string,
 		includePermissions: boolean = false
 	): Promise<void> {

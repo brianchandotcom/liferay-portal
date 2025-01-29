@@ -47,14 +47,14 @@ public class CustomFDSAPIURLSerializerImpl
 			String.valueOf(properties.get("restSchema")));
 
 		return _addNestedFields(
-			fdsAPIURLBuilder,
-			getDataSetTableSectionObjectEntries(fdsName, httpServletRequest)
+			getDataSetTableSectionObjectEntries(fdsName, httpServletRequest),
+			fdsAPIURLBuilder
 		).build();
 	}
 
 	private FDSAPIURLBuilder _addNestedFields(
-		FDSAPIURLBuilder fdsAPIURLBuilder,
-		Set<ObjectEntry> dataSetTableSectionObjectEntries) {
+		Set<ObjectEntry> dataSetTableSectionObjectEntries,
+		FDSAPIURLBuilder fdsAPIURLBuilder) {
 
 		if (dataSetTableSectionObjectEntries == null) {
 			return fdsAPIURLBuilder;

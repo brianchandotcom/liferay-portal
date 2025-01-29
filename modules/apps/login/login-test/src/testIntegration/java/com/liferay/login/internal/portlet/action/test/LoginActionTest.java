@@ -121,14 +121,14 @@ public class LoginActionTest {
 
 			Assert.assertEquals(302, httpURLConnection.getResponseCode());
 
-			String location = httpURLConnection.getHeaderField("Location");
-
 			Assert.assertTrue(
-				location.contains(
+				StringUtil.contains(
+					httpURLConnection.getHeaderField("Location"),
 					StringBundler.concat(
 						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
 						"http%3A%2F%2Flocalhost%3A8080",
-						HtmlUtil.escapeURL(context), "%2Fweb%2Fguest%2Fhome")));
+						HtmlUtil.escapeURL(context), "%2Fweb%2Fguest%2Fhome"),
+					StringPool.BLANK));
 		}
 	}
 

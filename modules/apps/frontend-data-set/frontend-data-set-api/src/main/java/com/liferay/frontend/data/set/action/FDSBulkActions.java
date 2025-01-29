@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Daniel Sanz
  */
-public interface FDSBulkActionList {
+public interface FDSBulkActions {
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest);

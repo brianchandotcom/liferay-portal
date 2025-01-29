@@ -43,7 +43,10 @@ export default timeZoneId => [
 	{
 		accessor: 'pageURL',
 		cellRenderer: ({data: {pageURL}}) => (
-			<TableDataCell firstColumn={false} title={pageURL} />
+			<TableDataCell
+				firstColumn={false}
+				title={decodeURIComponent(pageURL)}
+			/>
 		),
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('url').toUpperCase(),

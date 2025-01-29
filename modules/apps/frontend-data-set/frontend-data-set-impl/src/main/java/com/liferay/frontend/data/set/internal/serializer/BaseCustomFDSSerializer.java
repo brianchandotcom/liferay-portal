@@ -114,8 +114,8 @@ public abstract class BaseCustomFDSSerializer {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get data set object entry with ERC " +
-						externalReferenceCode,
+					"Unable to get data set object entry with external " +
+						"reference code " + externalReferenceCode,
 					exception);
 			}
 		}

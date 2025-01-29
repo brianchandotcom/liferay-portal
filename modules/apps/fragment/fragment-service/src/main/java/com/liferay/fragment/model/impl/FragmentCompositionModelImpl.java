@@ -75,7 +75,7 @@ public class FragmentCompositionModelImpl
 		{"fragmentCollectionId", Types.BIGINT},
 		{"fragmentCompositionKey", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"data_", Types.CLOB},
-		{"previewFileEntryId", Types.BIGINT},
+		{"previewFileEntryId", Types.BIGINT}, {"marketplace", Types.BOOLEAN},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -102,6 +102,7 @@ public class FragmentCompositionModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("marketplace", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -110,7 +111,7 @@ public class FragmentCompositionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentComposition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentCompositionId, ctCollectionId))";
+		"create table FragmentComposition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,marketplace BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentCompositionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentComposition";
@@ -322,6 +323,8 @@ public class FragmentCompositionModelImpl
 				"previewFileEntryId",
 				FragmentComposition::getPreviewFileEntryId);
 			attributeGetterFunctions.put(
+				"marketplace", FragmentComposition::getMarketplace);
+			attributeGetterFunctions.put(
 				"lastPublishDate", FragmentComposition::getLastPublishDate);
 			attributeGetterFunctions.put(
 				"status", FragmentComposition::getStatus);
@@ -418,6 +421,10 @@ public class FragmentCompositionModelImpl
 				"previewFileEntryId",
 				(BiConsumer<FragmentComposition, Long>)
 					FragmentComposition::setPreviewFileEntryId);
+			attributeSetterBiConsumers.put(
+				"marketplace",
+				(BiConsumer<FragmentComposition, Boolean>)
+					FragmentComposition::setMarketplace);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<FragmentComposition, Date>)
@@ -824,6 +831,27 @@ public class FragmentCompositionModelImpl
 
 	@JSON
 	@Override
+	public boolean getMarketplace() {
+		return _marketplace;
+	}
+
+	@JSON
+	@Override
+	public boolean isMarketplace() {
+		return _marketplace;
+	}
+
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_marketplace = marketplace;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1093,6 +1121,7 @@ public class FragmentCompositionModelImpl
 		fragmentCompositionImpl.setDescription(getDescription());
 		fragmentCompositionImpl.setData(getData());
 		fragmentCompositionImpl.setPreviewFileEntryId(getPreviewFileEntryId());
+		fragmentCompositionImpl.setMarketplace(isMarketplace());
 		fragmentCompositionImpl.setLastPublishDate(getLastPublishDate());
 		fragmentCompositionImpl.setStatus(getStatus());
 		fragmentCompositionImpl.setStatusByUserId(getStatusByUserId());
@@ -1143,6 +1172,8 @@ public class FragmentCompositionModelImpl
 			this.<String>getColumnOriginalValue("data_"));
 		fragmentCompositionImpl.setPreviewFileEntryId(
 			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		fragmentCompositionImpl.setMarketplace(
+			this.<Boolean>getColumnOriginalValue("marketplace"));
 		fragmentCompositionImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		fragmentCompositionImpl.setStatus(
@@ -1330,6 +1361,8 @@ public class FragmentCompositionModelImpl
 		fragmentCompositionCacheModel.previewFileEntryId =
 			getPreviewFileEntryId();
 
+		fragmentCompositionCacheModel.marketplace = isMarketplace();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1442,6 +1475,7 @@ public class FragmentCompositionModelImpl
 	private String _description;
 	private String _data;
 	private long _previewFileEntryId;
+	private boolean _marketplace;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1499,6 +1533,7 @@ public class FragmentCompositionModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("data_", _data);
 		_columnOriginalValues.put("previewFileEntryId", _previewFileEntryId);
+		_columnOriginalValues.put("marketplace", _marketplace);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1562,15 +1597,17 @@ public class FragmentCompositionModelImpl
 
 		columnBitmasks.put("previewFileEntryId", 65536L);
 
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("marketplace", 131072L);
 
-		columnBitmasks.put("status", 262144L);
+		columnBitmasks.put("lastPublishDate", 262144L);
 
-		columnBitmasks.put("statusByUserId", 524288L);
+		columnBitmasks.put("status", 524288L);
 
-		columnBitmasks.put("statusByUserName", 1048576L);
+		columnBitmasks.put("statusByUserId", 1048576L);
 
-		columnBitmasks.put("statusDate", 2097152L);
+		columnBitmasks.put("statusByUserName", 2097152L);
+
+		columnBitmasks.put("statusDate", 4194304L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -121,6 +121,9 @@ public class FeatureFlagManagerUtil {
 							_serviceRegistration.unregister();
 						}
 
+						enabled = FeatureFlagManagerUtil.isEnabled(
+							companyId, currentFeatureFlagKey);
+
 						setServiceRegistration(
 							bundleContext.registerService(
 								serviceClass, serviceFunction.apply(enabled),

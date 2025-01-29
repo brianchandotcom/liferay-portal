@@ -7,14 +7,13 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
-import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
+import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -28,15 +27,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSCreationMenuSerializerImplTest {
+public class SystemFDSCreationMenuSerializerImplTest
+	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
@@ -45,21 +42,13 @@ public class SystemFDSCreationMenuSerializerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_bundleContext = SystemBundleUtil.getBundleContext();
-
-		_systemFDSEntryserviceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSEntryRegistryImpl, "_serviceTrackerMap",
-			_systemFDSEntryserviceTrackerMap);
+		super.setUp();
 
 		_creationMenuServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, FDSCreationMenu.class, "frontend.data.set.name",
+				bundleContext, FDSCreationMenu.class, "frontend.data.set.name",
 				ServiceTrackerCustomizerFactory.<FDSCreationMenu>serviceWrapper(
-					_bundleContext));
+					bundleContext));
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsCreationMenuRegistryImpl, "_serviceTrackerMap",
@@ -72,14 +61,15 @@ public class SystemFDSCreationMenuSerializerImplTest {
 
 	@After
 	public void tearDown() {
+		super.tearDown();
+
 		_creationMenuServiceTrackerMap.close();
-		_systemFDSEntryserviceTrackerMap.close();
 	}
 
 	@Test
 	public void testFDSCreationMenuSerialization() throws Exception {
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			_registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -93,7 +83,7 @@ public class SystemFDSCreationMenuSerializerImplTest {
 		Assert.assertEquals(
 			creationMenu,
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		creationMenuServiceRegistration.unregister();
 
@@ -105,11 +95,11 @@ public class SystemFDSCreationMenuSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			_registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).isEmpty());
 
 		systemFDSEntryServiceRegistration.unregister();
@@ -120,10 +110,10 @@ public class SystemFDSCreationMenuSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -145,19 +135,19 @@ public class SystemFDSCreationMenuSerializerImplTest {
 
 		Assert.assertNotEquals(
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest),
+				"fdsName1", httpServletRequest),
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		Assert.assertEquals(
 			creationMenu1,
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+				"fdsName1", httpServletRequest));
 
 		Assert.assertEquals(
 			creationMenu2,
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
 
@@ -173,10 +163,10 @@ public class SystemFDSCreationMenuSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -192,9 +182,9 @@ public class SystemFDSCreationMenuSerializerImplTest {
 
 		Assert.assertEquals(
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest),
+				"fdsName1", httpServletRequest),
 			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
 
@@ -208,7 +198,7 @@ public class SystemFDSCreationMenuSerializerImplTest {
 	private ServiceRegistration<FDSCreationMenu> _registerCreationMenu(
 		String fdsName, CreationMenu creationMenu) {
 
-		return _bundleContext.registerService(
+		return bundleContext.registerService(
 			FDSCreationMenu.class,
 			new FDSCreationMenu() {
 
@@ -223,76 +213,14 @@ public class SystemFDSCreationMenuSerializerImplTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema) {
-
-		return _registerSystemFDSEntry(
-			fdsName, restApplication, restEndpoint, restSchema, null);
-	}
-
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema, String additionalURLParameters) {
-
-		return _bundleContext.registerService(
-			SystemFDSEntry.class,
-			new SystemFDSEntry() {
-
-				@Override
-				public String getAdditionalAPIURLParameters() {
-					return additionalURLParameters;
-				}
-
-				@Override
-				public String getDescription() {
-					return "";
-				}
-
-				@Override
-				public String getName() {
-					return fdsName;
-				}
-
-				@Override
-				public String getRESTApplication() {
-					return restApplication;
-				}
-
-				@Override
-				public String getRESTEndpoint() {
-					return restEndpoint;
-				}
-
-				@Override
-				public String getRESTSchema() {
-					return restSchema;
-				}
-
-				@Override
-				public String getTitle() {
-					return "";
-				}
-
-			},
-			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
-	private static BundleContext _bundleContext;
 	private static ServiceTrackerMap
 		<String,
 		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSCreationMenu>>
 			_creationMenuServiceTrackerMap;
 	private static final FDSCreationMenuRegistryImpl
 		_fdsCreationMenuRegistryImpl = new FDSCreationMenuRegistryImpl();
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
 	private static final SystemFDSCreationMenuSerializerImpl
 		_systemFDSCreationMenuSerializerImpl =
 			new SystemFDSCreationMenuSerializerImpl();
-	private static final SystemFDSEntryRegistryImpl
-		_systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
-	private static ServiceTrackerMap<String, SystemFDSEntry>
-		_systemFDSEntryserviceTrackerMap;
 
 }

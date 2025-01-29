@@ -7,12 +7,11 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSBulkActionList;
-import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
+import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -29,15 +28,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSBulkActionListSerializerImplTest {
+public class SystemFDSBulkActionListSerializerImplTest
+	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,22 +43,14 @@ public class SystemFDSBulkActionListSerializerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_bundleContext = SystemBundleUtil.getBundleContext();
-
-		_systemFDSEntryserviceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSEntryRegistryImpl, "_serviceTrackerMap",
-			_systemFDSEntryserviceTrackerMap);
+		super.setUp();
 
 		_bulkActionListServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, FDSBulkActionList.class,
+				bundleContext, FDSBulkActionList.class,
 				"frontend.data.set.name",
 				ServiceTrackerCustomizerFactory.
-					<FDSBulkActionList>serviceWrapper(_bundleContext));
+					<FDSBulkActionList>serviceWrapper(bundleContext));
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsBulkActionListRegistryImpl, "_serviceTrackerMap",
@@ -74,14 +63,15 @@ public class SystemFDSBulkActionListSerializerImplTest {
 
 	@After
 	public void tearDown() {
+		super.tearDown();
+
 		_bulkActionListServiceTrackerMap.close();
-		_systemFDSEntryserviceTrackerMap.close();
 	}
 
 	@Test
 	public void testFDSBulkActionListSerialization() throws Exception {
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			_registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -95,7 +85,7 @@ public class SystemFDSBulkActionListSerializerImplTest {
 		Assert.assertEquals(
 			dropDownItemList,
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		bulkActionListServiceRegistration.unregister();
 
@@ -107,11 +97,11 @@ public class SystemFDSBulkActionListSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration =
-			_registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).isEmpty());
 
 		systemFDSEntryServiceRegistration.unregister();
@@ -122,10 +112,10 @@ public class SystemFDSBulkActionListSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> dropDownItemList1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -147,19 +137,19 @@ public class SystemFDSBulkActionListSerializerImplTest {
 
 		Assert.assertNotEquals(
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest),
+				"fdsName1", httpServletRequest),
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		Assert.assertEquals(
 			dropDownItemList1,
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+				"fdsName1", httpServletRequest));
 
 		Assert.assertEquals(
 			dropDownItemList2,
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		bulkActionListServiceRegistration1.unregister();
 
@@ -175,10 +165,10 @@ public class SystemFDSBulkActionListSerializerImplTest {
 		throws Exception {
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> dropDownItemList = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -195,9 +185,9 @@ public class SystemFDSBulkActionListSerializerImplTest {
 
 		Assert.assertEquals(
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest),
+				"fdsName1", httpServletRequest),
 			_systemFDSBulkActionListSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+				"fdsName2", httpServletRequest));
 
 		bulkActionListServiceRegistration1.unregister();
 
@@ -211,7 +201,7 @@ public class SystemFDSBulkActionListSerializerImplTest {
 	private ServiceRegistration<FDSBulkActionList> _registerBulkActionList(
 		String fdsName, List<FDSActionDropdownItem> bulkActions) {
 
-		return _bundleContext.registerService(
+		return bundleContext.registerService(
 			FDSBulkActionList.class,
 			new FDSBulkActionList() {
 
@@ -226,76 +216,14 @@ public class SystemFDSBulkActionListSerializerImplTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema) {
-
-		return _registerSystemFDSEntry(
-			fdsName, restApplication, restEndpoint, restSchema, null);
-	}
-
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema, String additionalURLParameters) {
-
-		return _bundleContext.registerService(
-			SystemFDSEntry.class,
-			new SystemFDSEntry() {
-
-				@Override
-				public String getAdditionalAPIURLParameters() {
-					return additionalURLParameters;
-				}
-
-				@Override
-				public String getDescription() {
-					return "";
-				}
-
-				@Override
-				public String getName() {
-					return fdsName;
-				}
-
-				@Override
-				public String getRESTApplication() {
-					return restApplication;
-				}
-
-				@Override
-				public String getRESTEndpoint() {
-					return restEndpoint;
-				}
-
-				@Override
-				public String getRESTSchema() {
-					return restSchema;
-				}
-
-				@Override
-				public String getTitle() {
-					return "";
-				}
-
-			},
-			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
 	private static ServiceTrackerMap
 		<String,
 		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActionList>>
 			_bulkActionListServiceTrackerMap;
-	private static BundleContext _bundleContext;
 	private static final FDSBulkActionListRegistryImpl
 		_fdsBulkActionListRegistryImpl = new FDSBulkActionListRegistryImpl();
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
 	private static final SystemFDSBulkActionListSerializerImpl
 		_systemFDSBulkActionListSerializerImpl =
 			new SystemFDSBulkActionListSerializerImpl();
-	private static final SystemFDSEntryRegistryImpl
-		_systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
-	private static ServiceTrackerMap<String, SystemFDSEntry>
-		_systemFDSEntryserviceTrackerMap;
 
 }

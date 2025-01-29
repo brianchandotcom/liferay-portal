@@ -82,6 +82,10 @@ public class SortField implements Serializable {
 	public String getSortableFieldPath(Locale locale) {
 		String sortableFieldName = getSortableFieldName(locale);
 
+		if (sortableFieldName.equals("externalReferenceCode")) {
+			sortableFieldName = _entityField.getFilterableName(locale);
+		}
+
 		if (ListUtil.isEmpty(_parentEntityFields)) {
 			return sortableFieldName;
 		}

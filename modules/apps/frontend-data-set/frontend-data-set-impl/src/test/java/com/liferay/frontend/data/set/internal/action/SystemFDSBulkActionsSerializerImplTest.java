@@ -6,7 +6,7 @@
 package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
-import com.liferay.frontend.data.set.action.FDSBulkActionList;
+import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -33,7 +33,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSBulkActionListSerializerImplTest
+public class SystemFDSBulkActionsSerializerImplTest
 	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
@@ -45,27 +45,26 @@ public class SystemFDSBulkActionListSerializerImplTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_bulkActionListServiceTrackerMap =
+		_bulkActionsServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, FDSBulkActionList.class,
-				"frontend.data.set.name",
-				ServiceTrackerCustomizerFactory.
-					<FDSBulkActionList>serviceWrapper(bundleContext));
+				bundleContext, FDSBulkActions.class, "frontend.data.set.name",
+				ServiceTrackerCustomizerFactory.<FDSBulkActions>serviceWrapper(
+					bundleContext));
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsBulkActionListRegistryImpl, "_serviceTrackerMap",
-			_bulkActionListServiceTrackerMap);
+			_fdsBulkActionsRegistryImpl, "_serviceTrackerMap",
+			_bulkActionsServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSBulkActionListSerializerImpl,
-			"_fdsBulkActionListRegistry", _fdsBulkActionListRegistryImpl);
+			_systemFDSBulkActionsSerializerImpl, "_fdsBulkActionsRegistry",
+			_fdsBulkActionsRegistryImpl);
 	}
 
 	@After
 	public void tearDown() {
 		super.tearDown();
 
-		_bulkActionListServiceTrackerMap.close();
+		_bulkActionsServiceTrackerMap.close();
 	}
 
 	@Test
@@ -84,38 +83,36 @@ public class SystemFDSBulkActionListSerializerImplTest
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		ServiceRegistration<FDSBulkActionList>
-			bulkActionListServiceRegistration1 = _registerBulkActionList(
-				dropDownItemList1, "fdsName1");
+		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration1 =
+			_registerBulkActions(dropDownItemList1, "fdsName1");
 
 		List<FDSActionDropdownItem> dropDownItemList2 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "cog", "permissions", "permissions", "get", "permissions",
 				"modal-permissions"));
 
-		ServiceRegistration<FDSBulkActionList>
-			bulkActionListServiceRegistration2 = _registerBulkActionList(
-				dropDownItemList2, "fdsName2");
+		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration2 =
+			_registerBulkActions(dropDownItemList2, "fdsName2");
 
 		Assert.assertNotEquals(
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName1", httpServletRequest),
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName2", httpServletRequest));
 
 		Assert.assertEquals(
 			dropDownItemList1,
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName1", httpServletRequest));
 
 		Assert.assertEquals(
 			dropDownItemList2,
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName2", httpServletRequest));
 
-		bulkActionListServiceRegistration1.unregister();
+		bulkActionsServiceRegistration1.unregister();
 
-		bulkActionListServiceRegistration2.unregister();
+		bulkActionsServiceRegistration2.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -127,7 +124,7 @@ public class SystemFDSBulkActionListSerializerImplTest
 			"fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName", httpServletRequest
 			).isEmpty());
 
@@ -146,33 +143,33 @@ public class SystemFDSBulkActionListSerializerImplTest
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		bulkActionListServiceRegistration1 = _registerBulkActionList(
+		bulkActionsServiceRegistration1 = _registerBulkActions(
 			dropDownItemList1, "fdsName1");
 
-		bulkActionListServiceRegistration2 = _registerBulkActionList(
+		bulkActionsServiceRegistration2 = _registerBulkActions(
 			dropDownItemList1, "fdsName2");
 
 		Assert.assertEquals(
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName1", httpServletRequest),
-			_systemFDSBulkActionListSerializerImpl.serialize(
+			_systemFDSBulkActionsSerializerImpl.serialize(
 				"fdsName2", httpServletRequest));
 
-		bulkActionListServiceRegistration1.unregister();
+		bulkActionsServiceRegistration1.unregister();
 
-		bulkActionListServiceRegistration2.unregister();
+		bulkActionsServiceRegistration2.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 
-	private ServiceRegistration<FDSBulkActionList> _registerBulkActionList(
+	private ServiceRegistration<FDSBulkActions> _registerBulkActions(
 		List<FDSActionDropdownItem> bulkActions, String fdsName) {
 
 		return bundleContext.registerService(
-			FDSBulkActionList.class,
-			new FDSBulkActionList() {
+			FDSBulkActions.class,
+			new FDSBulkActions() {
 
 				@Override
 				public List<FDSActionDropdownItem> getFDSActionDropdownItems(
@@ -186,13 +183,12 @@ public class SystemFDSBulkActionListSerializerImplTest
 	}
 
 	private static ServiceTrackerMap
-		<String,
-		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActionList>>
-			_bulkActionListServiceTrackerMap;
-	private static final FDSBulkActionListRegistryImpl
-		_fdsBulkActionListRegistryImpl = new FDSBulkActionListRegistryImpl();
-	private static final SystemFDSBulkActionListSerializerImpl
-		_systemFDSBulkActionListSerializerImpl =
-			new SystemFDSBulkActionListSerializerImpl();
+		<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActions>>
+			_bulkActionsServiceTrackerMap;
+	private static final FDSBulkActionsRegistryImpl
+		_fdsBulkActionsRegistryImpl = new FDSBulkActionsRegistryImpl();
+	private static final SystemFDSBulkActionsSerializerImpl
+		_systemFDSBulkActionsSerializerImpl =
+			new SystemFDSBulkActionsSerializerImpl();
 
 }

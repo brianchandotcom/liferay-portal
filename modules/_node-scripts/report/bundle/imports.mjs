@@ -4,6 +4,7 @@
  */
 
 import {parse} from 'acorn';
+import escodegen from 'escodegen';
 import estraverse from 'estraverse';
 import fs from 'fs/promises';
 import path from 'path';
@@ -25,7 +26,7 @@ export default async function main() {
 
 	const bundleSizes = await getBundleSizes(projectDirectories);
 
-	const bundleImports = getBundleImports(bundleSizes);
+	const bundleImports = await getBundleImports(bundleSizes);
 
 	let csvFile;
 	let lines;
@@ -46,7 +47,7 @@ export default async function main() {
 				Object.entries(importsSymbols).forEach(
 					([importPath, symbols]) => {
 						lines.push(
-							`${bundlePath};${importPath};"${[...symbols].join(',')}"`
+							`"${bundlePath}";"${importPath}";"${[...symbols].join(',')}"`
 						);
 					}
 				);
@@ -65,7 +66,7 @@ export default async function main() {
 					.replace(`${BUILD_RESOURCES_PATH}${path.sep}`, '');
 
 				imports.sort().forEach((importPath) => {
-					lines.push(`${bundlePath};${importPath}`);
+					lines.push(`"${bundlePath}";"${importPath}"`);
 				});
 			});
 	}
@@ -96,37 +97,53 @@ async function getBundleImportsSymbols(bundleImports) {
 
 		estraverse.traverse(ast, {
 			enter: (node) => {
-				if (node.type === 'ImportDeclaration') {
-					const importPath = node.source.value;
+				let importPath;
+					const symbols = new Set();
 
-					let set = bundleImportsSymbols[bundle][importPath];
+				switch (node.type) {
+					case 'ImportDeclaration': {
+						importPath = node.source.value;
 
-					if (!set) {
-						bundleImportsSymbols[bundle][importPath] = set =
-							new Set();
+						node.specifiers.forEach((specifier) => {
+							switch (specifier.type) {
+								case 'ImportDefaultSpecifier':
+									symbols.add('default');
+									break;
+
+								case 'ImportNamespaceSpecifier':
+									symbols.add('*');
+									break;
+
+								case 'ImportSpecifier':
+									symbols.add(specifier.imported.name);
+									break;
+
+								default:
+									throw new Error(
+										`Unexpected import specifier: ${specifier.type}`
+									);
+							}
+						});
+						break;
 					}
 
-					node.specifiers.forEach((specifier) => {
-						switch (specifier.type) {
-							case 'ImportDefaultSpecifier':
-								set.add('default');
-								break;
-
-							case 'ImportNamespaceSpecifier':
-								set.add('*');
-								break;
-
-							case 'ImportSpecifier':
-								set.add(specifier.imported.name);
-								break;
-
-							default:
-								throw new Error(
-									`Unexpected import specifier: ${specifier.type}`
-								);
-						}
-					});
+					case 'ImportExpression': {
+						importPath = `import(${escodegen.generate(node.source)})`;
+						break;
+					}
 				}
+
+				if (!importPath) {
+					return;
+				}
+
+				if (!bundleImportsSymbols[bundle][importPath]) {
+					bundleImportsSymbols[bundle][importPath] = new Set();
+				}
+
+				symbols.forEach((symbol) =>
+					bundleImportsSymbols[bundle][importPath].add(symbol)
+				);
 			},
 
 			fallback: 'iteration',
@@ -136,34 +153,49 @@ async function getBundleImportsSymbols(bundleImports) {
 	return bundleImportsSymbols;
 }
 
-function getBundleImports(bundleSizes) {
+async function getBundleImports(bundleSizes) {
 	const bundleImports = {};
 
-	bundleSizes.forEach((stat) => {
+	for (const stat of bundleSizes) {
 		const {projectDir, sizes} = stat;
 
-		Object.entries(sizes).forEach(([bundle, {inputs}]) => {
+		for (const [bundle, {inputs}] of Object.entries(sizes)) {
 			const bundlePath = path.join(projectDir, bundle);
 
-			Object.entries(inputs).forEach(([objectPath]) => {
-				if (!objectPath.includes('/$/')) {
-					return;
-				}
+			if (bundlePath.endsWith('.css')) {
+				continue;
+			}
 
-				if (!bundleImports[bundlePath]) {
-					bundleImports[bundlePath] = [];
-				}
-
-				objectPath = objectPath.replace(
-					/.*\/\$\/bridge\/for\/main\//,
-					''
-				);
-				objectPath = objectPath.replace(/.*\/\$\/css\//, '');
-
-				bundleImports[bundlePath].push(objectPath);
+			const ast = parse(await fs.readFile(bundlePath, 'utf-8'), {
+				ecmaVersion: 2022,
+				sourceType: 'module',
 			});
-		});
-	});
+
+			const set = new Set();
+
+			estraverse.traverse(ast, {
+				enter: (node) => {
+					switch (node.type) {
+						case 'ImportDeclaration': {
+							set.add(node.source.value);
+							break;
+						}
+
+						case 'ImportExpression': {
+							set.add(
+								`import(${escodegen.generate(node.source)})`
+							);
+							break;
+						}
+					}
+				},
+
+				fallback: 'iteration',
+			});
+
+			bundleImports[bundlePath] = [...set];
+		}
+	}
 
 	return bundleImports;
 }

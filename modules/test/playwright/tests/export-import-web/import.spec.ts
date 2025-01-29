@@ -331,7 +331,7 @@ test('can export and import custom object entries at instance level', async ({
 	);
 
 	const exportFilePath =
-		await companyExportImportPage.exportCustomObject('Tests');
+		await companyExportImportPage.export('Tests 1 Items');
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -348,7 +348,7 @@ test('can export and import custom object entries at instance level', async ({
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await companyExportImportPage.importCustomObject(exportFilePath);
+	await companyExportImportPage.import(exportFilePath);
 
 	expect(
 		await apiHelpers.get(
@@ -418,8 +418,8 @@ test('can import custom object entries at instance level with or without permiss
 
 	// Export with permissions
 
-	const exportFilePathWithPermissions =
-		await companyExportImportPage.exportCustomObject('Tests', true);
+	const exportFilePath =
+		await companyExportImportPage.export('Tests 1 Items', true);
 
 	// Import with permissions
 
@@ -432,8 +432,8 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await companyExportImportPage.importCustomObject(
-		exportFilePathWithPermissions,
+	await companyExportImportPage.import(
+		exportFilePath,
 		true
 	);
 
@@ -463,8 +463,8 @@ test('can import custom object entries at instance level with or without permiss
 		)
 	).toEqual({status: 'NOT_FOUND'});
 
-	await companyExportImportPage.importCustomObject(
-		exportFilePathWithPermissions
+	await companyExportImportPage.import(
+		exportFilePath
 	);
 
 	objectEntry = await apiHelpers.get(

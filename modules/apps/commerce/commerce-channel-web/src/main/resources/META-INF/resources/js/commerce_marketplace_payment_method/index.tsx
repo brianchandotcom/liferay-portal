@@ -6,20 +6,26 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {
+	CloudUserProject,
 	Marketplace,
 	MarketplaceContextProvider,
+	MarketplaceProduct,
 	MarketplaceRest,
 	MarketplaceView,
+	PlacedOrder,
 	Product,
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {MarketplacePurchase, States} from './MarketplacePurchase';
 
 import './style/index.scss';
 
 function MarketplaceViews() {
+	const [cloudUserProject, setCloudUserProject] =
+		useState<CloudUserProject>();
+	const [placedOrders, setPlacedOrders] = useState<PlacedOrder[]>([]);
 	const [state, setState] = useState(States.CONFIRM_INSTALLATION);
 
 	const {
@@ -31,8 +37,79 @@ function MarketplaceViews() {
 		view,
 	} = useMarketplaceContext();
 
+	const marketplaceProduct = useMemo(
+		() => new MarketplaceProduct(product),
+		[product]
+	);
+
+	const isProductInstalled = useCallback(
+		(product: Product) =>
+			placedOrders.some((placedOrder) =>
+				placedOrder.placedOrderItems.some((placedOrderItem) => {
+					let hasDeployment = false;
+
+					try {
+						const cloudProvisioningJSON = JSON.parse(
+							placedOrder.customFields['cloud-provisioning']
+						);
+
+						hasDeployment =
+							cloudProvisioningJSON?.length &&
+							cloudProvisioningJSON[0]?.deployments?.some(
+								(deployment: {id: string}) => deployment.id
+							);
+					}
+					catch (error) {}
+
+					return (
+						placedOrderItem.productId === product.productId &&
+						hasDeployment
+					);
+				})
+			),
+		[placedOrders]
+	);
+
+	useEffect(() => {
+		marketplaceRest
+			.getPlacedOrders(
+				new URLSearchParams({
+					filter: "orderTypeExternalReferenceCode eq 'CLOUDAPP'",
+					nestedFields: 'placedOrderItems',
+				})
+			)
+			.then((response) => setPlacedOrders(response.items))
+			.catch(console.error);
+	}, [marketplaceRest]);
+
 	const cloudProject = marketplaceConfiguration.data?.settings
 		?.cloudProject as string;
+
+	useEffect(() => {
+		if (!cloudProject) {
+			return console.warn('No cloud project available');
+		}
+
+		marketplaceRest
+			.getProjectUsage()
+			.then(setCloudUserProject)
+			.catch(console.error);
+	}, [cloudProject, marketplaceRest, product]);
+	const getState = useCallback(() => {
+		if (!cloudProject) {
+			return States.NO_PROJECT;
+		}
+
+		if (
+			!marketplaceProduct.hasEnoughResources(
+				cloudUserProject as CloudUserProject
+			)
+		) {
+			return States.NO_RESOURCES;
+		}
+
+		return state;
+	}, [cloudProject, cloudUserProject, marketplaceProduct, state]);
 
 	async function onClickInstall() {
 		setState(States.IN_PROGRESS);
@@ -63,6 +140,10 @@ function MarketplaceViews() {
 				>
 					{(product) => (
 						<ClayButton
+							{...(isProductInstalled(product) && {
+								disabled: true,
+								title: Liferay.Language.get('installed'),
+							})}
 							className="w-100"
 							onClick={() => {
 								setProduct(product);
@@ -81,6 +162,10 @@ function MarketplaceViews() {
 				<Marketplace.Storefront
 					primaryButton={
 						<ClayButton
+							{...(isProductInstalled(product) && {
+								disabled: true,
+								title: Liferay.Language.get('installed'),
+							})}
 							className="ml-auto mt-3 rounded"
 							onClick={() => {
 								setState(States.CONFIRM_INSTALLATION);
@@ -94,10 +179,25 @@ function MarketplaceViews() {
 			)}
 
 			{view === MarketplaceView.PURCHASE && (
-				<Marketplace.Purchase rightTitle={cloudProject}>
+				<Marketplace.Purchase
+					rightTitle={
+						<small className="align-items-end d-flex flex-column">
+							<span className="font-weight-bold">
+								{cloudProject}
+							</span>
+
+							<span>
+								{marketplaceProduct?.getCloudResourceLabel(
+									cloudUserProject as CloudUserProject
+								)}
+							</span>
+						</small>
+					}
+				>
 					<MarketplacePurchase
 						onClickInstall={onClickInstall}
-						state={cloudProject ? state : States.NO_PROJECT}
+						projectId={cloudProject}
+						state={getState()}
 					/>
 				</Marketplace.Purchase>
 			)}

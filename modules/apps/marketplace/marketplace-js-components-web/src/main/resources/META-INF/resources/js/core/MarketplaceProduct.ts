@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from '../types';
+import {CloudUserProject, Product} from '../types';
 
 const Specifications = {
 	CPU: 'cpu',
@@ -93,8 +93,59 @@ export class MarketplaceProduct {
 		return this.getCategories(Vocabularies.APP_CATEGORY);
 	}
 
+	public getCloudResourceLabel(cloudUserProject: CloudUserProject) {
+		let output = '';
+
+		if (!cloudUserProject) {
+			return output;
+		}
+
+		const round = (value: number) => {
+			if (!value) {
+				return 0;
+			}
+
+			return Math.floor(value);
+		};
+
+		output += `${cloudUserProject.environments.length} ${Liferay.Language.get('environment')}, `;
+		output += `${round(cloudUserProject.rootProjectPlanUsage.cpu.free)} CPUs, `;
+		output += `${round(cloudUserProject.rootProjectPlanUsage.memory.free / 1000)} GB RAM`;
+
+		return output;
+	}
+
 	public getEditions() {
 		return this.getCategories(Vocabularies.EDITION);
+	}
+
+	public hasEnoughResources(cloudUserProject: CloudUserProject) {
+		if (!cloudUserProject) {
+			return false;
+		}
+
+		if (!cloudUserProject.rootProjectPlanUsage.instance.free) {
+			return false;
+		}
+
+		const cpuSpecification = Number(
+			this.getSpecificationValue(Specifications.CPU, '0')
+		);
+
+		const ramSpecification = Number(
+			this.getSpecificationValue(Specifications.RAM, '0')
+		);
+
+		if (
+			cloudUserProject.rootProjectPlanUsage.cpu.free < cpuSpecification ||
+			Math.floor(
+				cloudUserProject.rootProjectPlanUsage.memory.free / 1000
+			) < ramSpecification
+		) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public getPlatformOfferings() {

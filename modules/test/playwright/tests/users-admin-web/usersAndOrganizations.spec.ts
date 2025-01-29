@@ -497,6 +497,8 @@ test('LPD-42940 Can Bulk Activate Users', async ({
 	page,
 	usersAndOrganizationsPage,
 }) => {
+	page.on('dialog', async (dialog) => await dialog.accept());
+
 	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
 	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
 	const user3 = await apiHelpers.headlessAdminUser.postUserAccount();
@@ -635,3 +637,53 @@ test('LPD-35634 Organization Administrator can activate and deactivate users', a
 		)
 	).toBeVisible();
 });
+
+test(
+	'Bulk delete users succeed',
+	{tag: '@LPD-47050'},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		page.on('dialog', async (dialog) => await dialog.accept());
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user3 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user4 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user5 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		const userNames: string[] = [user1.name, user2.name, user3.name];
+
+		await usersAndOrganizationsPage.deActivateUsers(userNames);
+
+		await usersAndOrganizationsPage.filterUsers('inactive');
+
+		for (const userName of userNames) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).toBeVisible();
+		}
+
+		await usersAndOrganizationsPage.deleteUsers(userNames);
+
+		for (const userName of userNames) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).not.toBeVisible();
+		}
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		for (const userName of userNames) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).not.toBeVisible();
+		}
+
+		for (const userName of [user4.name, user5.name]) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).toBeVisible();
+		}
+	}
+);

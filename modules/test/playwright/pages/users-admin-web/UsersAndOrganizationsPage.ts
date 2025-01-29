@@ -53,6 +53,7 @@ export class UsersAndOrganizationsPage {
 	readonly clearButton: Locator;
 	readonly deactivateButton: Locator;
 	readonly deactivateUserMenuItem: Locator;
+	readonly deleteButton: Locator;
 	readonly deletePersonalDataMenuItem: Locator;
 	readonly exportImportOptionsMenuItem: Locator;
 	readonly exportPersonalDataItem: Locator;
@@ -133,6 +134,7 @@ export class UsersAndOrganizationsPage {
 	readonly usersLink: Locator;
 	readonly userPersonalMenuButton: Locator;
 	readonly usersTable: Locator;
+	readonly usersTableCell: (userName: string) => Locator;
 
 	constructor(page: Page) {
 		this.activateButton = page.getByRole('button', {name: 'Activate'});
@@ -167,6 +169,7 @@ export class UsersAndOrganizationsPage {
 		this.deactivateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Deactivate',
 		});
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.deletePersonalDataMenuItem = page.getByRole('menuitem', {
 			name: 'Delete Personal Data',
 		});
@@ -469,6 +472,12 @@ export class UsersAndOrganizationsPage {
 		this.usersTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersSearchContainer'
 		);
+		this.usersTableCell = (userName: string) => {
+			return this.page.getByRole('cell', {
+				exact: true,
+				name: userName,
+			});
+		};
 	}
 
 	async activateUsers(userNames: string[]) {
@@ -483,9 +492,18 @@ export class UsersAndOrganizationsPage {
 		for (const user of userNames) {
 			await (await this.usersCheckbox(user)).check();
 		}
-		this.page.on('dialog', async (dialog) => await dialog.accept());
 
 		await this.deactivateButton.click();
+
+		await waitForAlert(this.page);
+	}
+
+	async deleteUsers(userNames: string[]) {
+		for (const userName of userNames) {
+			await (await this.usersCheckbox(userName)).check();
+		}
+
+		await this.deleteButton.click();
 
 		await waitForAlert(this.page);
 	}

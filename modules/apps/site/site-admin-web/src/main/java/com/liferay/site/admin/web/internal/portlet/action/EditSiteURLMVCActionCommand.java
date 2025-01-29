@@ -65,7 +65,8 @@ public class EditSiteURLMVCActionCommand
 			redirect = true;
 		}
 
-		_groupService.updateFriendlyURL(liveGroup.getGroupId(), friendlyURL);
+		liveGroup = _groupService.updateFriendlyURL(
+			liveGroup.getGroupId(), friendlyURL);
 
 		Set<Locale> availableLocales = _language.getAvailableLocales(
 			liveGroup.getGroupId());
@@ -128,9 +129,9 @@ public class EditSiteURLMVCActionCommand
 			group = group.getStagingGroup();
 		}
 
-		String siteAdministrationURL = _portal.getControlPanelFullURL(
-			group.getGroupId(), ConfigurationAdminPortletKeys.SITE_SETTINGS,
-			null);
+		String siteAdministrationURL = _portal.getSiteAdminURL(
+			themeDisplay.getPortalURL(), group,
+			ConfigurationAdminPortletKeys.SITE_SETTINGS, null);
 
 		String namespace = _portal.getPortletNamespace(
 			ConfigurationAdminPortletKeys.SITE_SETTINGS);

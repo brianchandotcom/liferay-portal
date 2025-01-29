@@ -8,6 +8,8 @@ package com.liferay.layout.helper.structure;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,10 +24,14 @@ public interface LayoutStructureRulesHelper {
 	public static class LayoutStructureRulesResult {
 
 		public LayoutStructureRulesResult(
-			Set<String> displayedItemIds, Set<String> hiddenItemIds) {
+			Set<String> displayedItemIds, Set<String> hiddenItemIds,
+			Map<String, List<String>> itemIdMap,
+			Map<String, List<String>> ruleIdMap) {
 
 			_displayedItemIds = displayedItemIds;
 			_hiddenItemIds = hiddenItemIds;
+			_itemIdMap = itemIdMap;
+			_ruleIdMap = ruleIdMap;
 		}
 
 		public Set<String> getDisplayedItemIds() {
@@ -36,8 +42,18 @@ public interface LayoutStructureRulesHelper {
 			return _hiddenItemIds;
 		}
 
+		public Map<String, List<String>> getItemIdMap() {
+			return _itemIdMap;
+		}
+
+		public Map<String, List<String>> getRuleIdMap() {
+			return _ruleIdMap;
+		}
+
 		private final Set<String> _displayedItemIds;
 		private final Set<String> _hiddenItemIds;
+		private final Map<String, List<String>> _itemIdMap;
+		private final Map<String, List<String>> _ruleIdMap;
 
 	}
 

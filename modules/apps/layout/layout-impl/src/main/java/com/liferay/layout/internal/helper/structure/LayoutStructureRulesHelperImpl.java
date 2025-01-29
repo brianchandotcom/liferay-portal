@@ -12,8 +12,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,22 +41,36 @@ public class LayoutStructureRulesHelperImpl
 		LayoutStructureRulesContext layoutStructureRulesContext =
 			new LayoutStructureRulesContext(
 				groupId, permissionChecker, segmentsEntryIds);
+		Map<String, List<String>> itemIdMap = new HashMap<>();
+		Map<String, List<String>> ruleIdMap = new HashMap<>();
 
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
 
-			if (!_isActiveLayoutStructureRule(layoutStructureRule)) {
+			List<String> itemIds = _getItemIds(layoutStructureRule);
+
+			if (itemIds.isEmpty()) {
+				_processActions(
+					layoutStructureRule.getActionsJSONArray(), displayedItemIds,
+					hiddenItemIds,
+					!_evaluateLayoutStructureRule(
+						layoutStructureRule, layoutStructureRulesContext));
+
 				continue;
 			}
 
-			_processActions(
-				layoutStructureRule.getActionsJSONArray(), displayedItemIds,
-				hiddenItemIds,
-				!_evaluateLayoutStructureRule(
-					layoutStructureRule, layoutStructureRulesContext));
+			ruleIdMap.put(layoutStructureRule.getId(), itemIds);
+
+			for (String itemId : itemIds) {
+				List<String> ruleIds = itemIdMap.computeIfAbsent(
+					itemId, key -> new ArrayList<>());
+
+				ruleIds.add(layoutStructureRule.getId());
+			}
 		}
 
-		return new LayoutStructureRulesResult(displayedItemIds, hiddenItemIds);
+		return new LayoutStructureRulesResult(
+			displayedItemIds, hiddenItemIds, itemIdMap, ruleIdMap);
 	}
 
 	private boolean _evaluateLayoutStructureRule(
@@ -117,8 +136,8 @@ public class LayoutStructureRulesHelperImpl
 		throw new IllegalArgumentException("Unknown action type: " + type);
 	}
 
-	private boolean _isActiveLayoutStructureRule(
-		LayoutStructureRule layoutStructureRule) {
+	private List<String> _getItemIds(LayoutStructureRule layoutStructureRule) {
+		List<String> itemIds = new ArrayList<>();
 
 		JSONArray conditionsJSONArray =
 			layoutStructureRule.getConditionsJSONArray();
@@ -127,14 +146,14 @@ public class LayoutStructureRulesHelperImpl
 			JSONObject conditionJSONObject = conditionsJSONArray.getJSONObject(
 				i);
 
-			if (!Objects.equals(
-					conditionJSONObject.getString("type"), "user")) {
-
-				return false;
+			if (Objects.equals(conditionJSONObject.getString("type"), "user")) {
+				continue;
 			}
+
+			itemIds.add(conditionJSONObject.getString("field"));
 		}
 
-		return true;
+		return itemIds;
 	}
 
 	private boolean _isConditionActive(

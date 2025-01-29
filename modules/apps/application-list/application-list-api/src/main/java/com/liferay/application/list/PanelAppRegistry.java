@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -22,9 +23,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -96,6 +100,16 @@ public class PanelAppRegistry {
 					(portletCompanyId != companyId)) {
 
 					return false;
+				}
+
+				if (_featureFlagKeys.containsKey(panelApp)) {
+					String featureFlagKey = _featureFlagKeys.get(panelApp);
+
+					if (!FeatureFlagManagerUtil.isEnabled(
+							companyId, featureFlagKey)) {
+
+						return false;
+					}
 				}
 
 				return true;
@@ -192,6 +206,13 @@ public class PanelAppRegistry {
 							_portletLocalService);
 					}
 
+					String featureFlagKey = String.valueOf(
+						serviceReference.getProperty("featureFlagKey"));
+
+					if (Validator.isNotNull(featureFlagKey)) {
+						_featureFlagKeys.put(panelApp, featureFlagKey);
+					}
+
 					return panelApp;
 				}
 
@@ -205,6 +226,8 @@ public class PanelAppRegistry {
 				public void removedService(
 					ServiceReference<PanelApp> serviceReference,
 					PanelApp panelApp) {
+
+					_featureFlagKeys.remove(panelApp);
 
 					bundleContext.ungetService(serviceReference);
 				}
@@ -222,6 +245,8 @@ public class PanelAppRegistry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
+
+	private final Map<PanelApp, String> _featureFlagKeys = new HashMap<>();
 
 	@Reference
 	private GroupProvider _groupProvider;

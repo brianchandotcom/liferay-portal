@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -180,7 +181,7 @@ public abstract class BaseCustomFDSSerializer {
 							dataSetObjectEntry.getProperties(),
 							dataSetObjectEntryComparatorIdsPropertyKey),
 						StringPool.COMMA),
-					Long::parseLong)));
+					GetterUtil::getLong)));
 
 		for (String relationshipName : relationshipNames) {
 			objectEntries.addAll(

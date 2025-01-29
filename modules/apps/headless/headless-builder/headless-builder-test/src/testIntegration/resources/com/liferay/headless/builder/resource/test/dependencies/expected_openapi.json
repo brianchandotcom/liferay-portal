@@ -388,7 +388,7 @@
 			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
 		},
 		"title": "title",
-		"version": "v1.0"
+		"version": ""
 	},
 	"openapi": "3.0.1",
 	"paths": {

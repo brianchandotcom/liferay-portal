@@ -1163,6 +1163,85 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testAddObjectEntryWithBooleanObjectField() throws Exception {
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"booleanObjectFieldName1"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							"false"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))
+				).build(),
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"booleanObjectFieldName2"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							"false"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))
+				).build(),
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"booleanObjectFieldName3"
+				).objectFieldSettings(
+					Arrays.asList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							"true"),
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE))
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		try {
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"booleanObjectFieldName1", true
+						).build();
+					}
+				},
+				null);
+
+			Assert.assertTrue(
+				MapUtil.getBoolean(
+					objectEntry.getProperties(), "booleanObjectFieldName1"));
+			Assert.assertFalse(
+				MapUtil.getBoolean(
+					objectEntry.getProperties(), "booleanObjectFieldName2"));
+			Assert.assertTrue(
+				MapUtil.getBoolean(
+					objectEntry.getProperties(), "booleanObjectFieldName3"));
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
 	public void testAddObjectEntryWithDynamicObjectFieldValues()
 		throws Exception {
 

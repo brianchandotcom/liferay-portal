@@ -8,8 +8,8 @@ package com.liferay.frontend.data.set.action;
 /**
  * @author Daniel Sanz
  */
-public interface FDSBulkActionListRegistry {
+public interface FDSBulkActionsRegistry {
 
-	public FDSBulkActionList getFDSBulkActionList(String fdsName);
+	public FDSBulkActions getFDSBulkActions(String fdsName);
 
 }

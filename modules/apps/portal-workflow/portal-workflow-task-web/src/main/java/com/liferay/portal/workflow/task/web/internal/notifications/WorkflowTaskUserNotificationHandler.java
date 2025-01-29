@@ -12,6 +12,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -92,6 +93,44 @@ public class WorkflowTaskUserNotificationHandler
 	}
 
 	@Override
+	public boolean isApplicable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = _jsonFactory.createJSONObject(
+				userNotificationEvent.getPayload());
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		if (jsonObject == null) {
+			return false;
+		}
+
+		long ctCollectionId = jsonObject.getLong(
+			WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection != null) &&
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
+		if (ctCollectionId == CTCollectionThreadLocal.getCTCollectionId()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	protected String getBody(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -113,19 +152,7 @@ public class WorkflowTaskUserNotificationHandler
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		long ctCollectionId = jsonObject.getLong(
-			WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
-
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if ((ctCollection != null) &&
-			(ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
-
-			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		}
-
-		if (ctCollectionId != CTCollectionThreadLocal.getCTCollectionId()) {
+		if (!isApplicable(userNotificationEvent, serviceContext)) {
 			return StringPool.BLANK;
 		}
 
@@ -136,7 +163,9 @@ public class WorkflowTaskUserNotificationHandler
 		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		if ((workflowHandler == null) ||
-			!_hasPermission(ctCollectionId, workflowTaskId, serviceContext)) {
+			!_hasPermission(
+				jsonObject.getLong(WorkflowConstants.CONTEXT_CT_COLLECTION_ID),
+				workflowTaskId, serviceContext)) {
 
 			return StringPool.BLANK;
 		}

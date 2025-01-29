@@ -53,11 +53,11 @@ public class CustomFDSAPIURLSerializerImpl
 	}
 
 	private FDSAPIURLBuilder _addNestedFields(
-		FDSAPIURLBuilder fdsapiurlBuilder,
+		FDSAPIURLBuilder fdsAPIURLBuilder,
 		Set<ObjectEntry> dataSetTableSectionObjectEntries) {
 
 		if (dataSetTableSectionObjectEntries == null) {
-			return fdsapiurlBuilder;
+			return fdsAPIURLBuilder;
 		}
 
 		String nestedFields = StringPool.BLANK;
@@ -92,20 +92,20 @@ public class CustomFDSAPIURLSerializerImpl
 		}
 
 		if (nestedFields.equals(StringPool.BLANK)) {
-			return fdsapiurlBuilder;
+			return fdsAPIURLBuilder;
 		}
 
-		fdsapiurlBuilder.addParameter(
+		fdsAPIURLBuilder.addParameter(
 			"nestedFields",
 			StringUtil.replaceLast(
 				nestedFields, CharPool.COMMA, StringPool.BLANK));
 
 		if (nestedFieldsDepth > 1) {
-			fdsapiurlBuilder.addParameter(
+			fdsAPIURLBuilder.addParameter(
 				"nestedFieldsDepth", String.valueOf(nestedFieldsDepth));
 		}
 
-		return fdsapiurlBuilder;
+		return fdsAPIURLBuilder;
 	}
 
 	@Reference

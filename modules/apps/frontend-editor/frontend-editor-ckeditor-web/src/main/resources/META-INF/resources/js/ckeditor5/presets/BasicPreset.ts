@@ -5,7 +5,7 @@
 
 import {EditorConfig} from 'ckeditor5';
 
-const CKEditor5BasicPreset: EditorConfig = {
+const BasicPreset: EditorConfig = {
 	toolbar: [
 		'undo',
 		'redo',
@@ -21,4 +21,4 @@ const CKEditor5BasicPreset: EditorConfig = {
 	],
 };
 
-export default CKEditor5BasicPreset;
+export default BasicPreset;

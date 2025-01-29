@@ -7,6 +7,7 @@ type Args = {
 	defaultLanguageId: string;
 	inputElement?: HTMLInputElement;
 	onLocaleChange?: (languageId: string) => void;
+	readOnlyInputLabel?: HTMLSpanElement;
 	unlocalizedFieldsState: 'disabled' | 'read-only';
 	unlocalizedMessageContainer: HTMLElement;
 };
@@ -15,6 +16,7 @@ export function registerUnlocalizedInput({
 	defaultLanguageId,
 	inputElement,
 	onLocaleChange,
+	readOnlyInputLabel,
 	unlocalizedFieldsState,
 	unlocalizedMessageContainer,
 }: Args) {
@@ -27,6 +29,7 @@ export function registerUnlocalizedInput({
 			}
 			else {
 				inputElement?.removeAttribute('readonly');
+				readOnlyInputLabel?.classList.add('d-none');
 			}
 
 			unlocalizedMessageContainer?.classList.add('d-none');
@@ -37,6 +40,7 @@ export function registerUnlocalizedInput({
 			}
 			else {
 				inputElement?.setAttribute('readonly', '');
+				readOnlyInputLabel?.classList.remove('d-none');
 			}
 
 			unlocalizedMessageContainer.classList.remove('d-none');

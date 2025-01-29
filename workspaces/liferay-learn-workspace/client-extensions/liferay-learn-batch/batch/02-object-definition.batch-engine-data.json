@@ -1093,24 +1093,6 @@
 			"objectFields": [
 				{
 					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "TITLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Title"
-					},
-					"localized": true,
-					"name": "title",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "Clob",
-					"unique": false
-				},
-				{
-					"DBType": "Clob",
 					"businessType": "RichText",
 					"externalReferenceCode": "ANSWER",
 					"indexed": true,
@@ -1142,6 +1124,24 @@
 					"required": true,
 					"state": false,
 					"type": "Integer",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
 					"unique": false
 				}
 			],
@@ -1232,6 +1232,23 @@
 			"name": "P2S3FAQTopic",
 			"objectFields": [
 				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "POSITION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Position"
+					},
+					"localized": false,
+					"name": "position",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Integer",
+					"unique": false
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "TITLE",
@@ -1254,23 +1271,6 @@
 					"state": false,
 					"type": "String",
 					"unique": true
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "POSITION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Position"
-					},
-					"localized": false,
-					"name": "position",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "Integer",
-					"unique": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",

@@ -52,6 +52,7 @@ function handleDropdown(event, item) {
 	dropdown.classList.toggle('show');
 
 	const ariaExpanded = dropdownButton.getAttribute('aria-expanded');
+
 	dropdownButton.setAttribute(
 		'aria-expanded',
 		ariaExpanded === 'false' ? true : false

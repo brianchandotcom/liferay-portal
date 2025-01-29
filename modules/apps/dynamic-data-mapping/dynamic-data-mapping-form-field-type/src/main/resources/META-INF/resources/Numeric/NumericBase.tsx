@@ -9,19 +9,12 @@ import classNames from 'classnames';
 
 // @ts-ignore
 
-import {SettingsContext} from 'data-engine-js-components-web';
-import React, {ChangeEventHandler, useMemo} from 'react';
+import React from 'react';
 
-import {ISymbols} from '../NumericInputMask/NumericInputMask';
-import {Locale, LocalizedValue} from '../types';
+import {FieldChangeEventHandler, Locale} from '../types';
 import {getTooltipTitle} from '../util/tooltip';
 import {NumericProps} from './Numeric';
-import {
-	formatValue,
-	getFormattedValue,
-	getMaskedValue,
-	getValue,
-} from './numericUtil';
+import {formatValue} from './numericUtil';
 
 export type IMaskedNumber = {
 	masked: string;
@@ -34,31 +27,28 @@ const NumericBase = ({
 	appendType,
 	dataType,
 	decimalPlaces,
-	defaultLanguageId,
 	editingLocale,
-	focused,
 	errorMessage,
+	focused,
 	htmlAutocompleteAttribute,
 	id,
 	inputMask,
 	inputMaskFormat,
-	localizedObjectField,
-	localizedValue,
-	localizedSymbols,
+	inputValue,
 	name,
-	onChange,
 	onBlur,
+	onChange,
 	onFocus,
-	placeholder,
-	predefinedValue,
 	readOnly,
 	required,
-	symbols: symbolsProp = {decimalSymbol: '.'},
-	settingsContext,
+	symbols,
 	tip,
 	valid,
-	value,
-}: Omit<NumericProps, 'availableLocales'> & {editingLocale: Locale}) => {
+}: Omit<NumericProps, 'availableLocales' | 'onChange'> & {
+	editingLocale: Locale;
+	inputValue: IMaskedNumber;
+	onChange: (formattedValue: IMaskedNumber) => void;
+}) => {
 	const accessibleProperties = {
 		...(tip && {
 			'aria-describedby': `${id ?? name}_fieldHelp`,
@@ -70,93 +60,10 @@ const NumericBase = ({
 		'aria-required': required,
 	};
 
-	const localizedSymbolsContext = settingsContext
-		? SettingsContext.getSettingsContextProperty(
-				settingsContext,
-				'predefinedValue',
-				'localizedSymbols'
-			)
-		: localizedSymbols;
-
-	const symbols = useMemo<ISymbols>(() => {
-		if (inputMask) {
-			return {
-				decimalSymbol: symbolsProp.decimalSymbol,
-				thousandsSeparator:
-					symbolsProp.thousandsSeparator === 'none'
-						? null
-						: symbolsProp.thousandsSeparator,
-			};
-		}
-
-		return localizedSymbolsContext?.[editingLocale] || symbolsProp;
-	}, [editingLocale, inputMask, localizedSymbolsContext, symbolsProp]);
-
-	const inputValue = useMemo<IMaskedNumber>(() => {
-		let newValue =
-			getValue({
-				editingLanguageId: editingLocale,
-				localizedObjectField,
-				value,
-			}) ??
-			getValue({
-				editingLanguageId: defaultLanguageId,
-				localizedObjectField,
-				value,
-			}) ??
-			localizedValue?.[editingLocale] ??
-			localizedValue?.[defaultLanguageId] ??
-			predefinedValue ??
-			'';
-
-		if (dataType === 'double') {
-			const symbolsValue = newValue.match(/[^-\d]/g);
-
-			newValue = symbolsValue
-				? newValue.replace(symbolsValue[0], symbols.decimalSymbol)
-				: newValue;
-		}
-
-		return inputMask
-			? getMaskedValue({
-					dataType,
-					decimalPlaces,
-					focused,
-					includeThousandsSeparator: Boolean(
-						symbols.thousandsSeparator
-					),
-					inputMaskFormat: String(inputMaskFormat),
-					symbols,
-					value: newValue,
-				})
-			: {
-					...getFormattedValue({
-						dataType,
-						decimalSymbol: symbols.decimalSymbol,
-						value: newValue,
-					}),
-					placeholder,
-				};
-	}, [
-		dataType,
-		decimalPlaces,
-		defaultLanguageId,
-		editingLocale,
-		focused,
-		inputMask,
-		inputMaskFormat,
-		localizedObjectField,
-		localizedValue,
-		placeholder,
-		predefinedValue,
-		symbols,
-		value,
-	]);
-
-	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-		const targetValue = event.target.value;
-
-		const formatedValue = formatValue({
+	const handleChange: FieldChangeEventHandler<string> = ({
+		target: {value},
+	}) => {
+		const formattedValue = formatValue({
 			dataType,
 			decimalPlaces,
 			focused,
@@ -164,22 +71,10 @@ const NumericBase = ({
 			inputMaskFormat,
 			inputValue,
 			symbols,
-			value: targetValue,
+			value,
 		});
 
-		if (formatedValue && formatedValue.masked !== inputValue.masked) {
-			if (localizedObjectField) {
-				const localizedValue = {
-					...(value as LocalizedValue<string>),
-					[editingLocale]: formatedValue.raw,
-				};
-
-				onChange({target: {value: localizedValue}});
-			}
-			else {
-				onChange({target: {value: formatedValue.raw}});
-			}
-		}
+		onChange(formattedValue as IMaskedNumber);
 	};
 
 	const input = (

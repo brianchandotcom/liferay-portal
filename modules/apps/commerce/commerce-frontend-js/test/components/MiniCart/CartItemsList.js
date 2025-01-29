@@ -18,7 +18,7 @@ import {
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
 
-describe('MiniCart Items List', () => {
+describe.skip('MiniCart Items List', () => {
 	const BASE_CONTEXT_MOCK = {
 		CartViews: {
 			[ITEMS_LIST_ACTIONS]: () => <div>{ITEMS_LIST_ACTIONS}</div>,

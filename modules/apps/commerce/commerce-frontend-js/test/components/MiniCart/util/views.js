@@ -27,7 +27,7 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/utilities/modules'
 );
 
-describe('MiniCart tests_utilities -> Views', () => {
+describe.skip('MiniCart tests_utilities -> Views', () => {
 	const VIEW_TYPES = [
 		CART,
 		HEADER,

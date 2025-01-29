@@ -18,7 +18,7 @@ import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/com
 import * as Basetests_utilities from '../../../src/main/resources/META-INF/resources/utilities';
 import {PRODUCT_REMOVED_FROM_CART} from '../../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
 
-describe('MiniCart Items List Actions', () => {
+describe.skip('MiniCart Items List Actions', () => {
 	const BASE_CONTEXT_MOCK = {
 		CartResource: {
 			updateCartById: jest

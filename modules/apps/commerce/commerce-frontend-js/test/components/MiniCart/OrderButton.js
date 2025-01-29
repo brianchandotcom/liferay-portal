@@ -17,7 +17,7 @@ import {
 import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
 import * as Basetests_utilities from '../../../src/main/resources/META-INF/resources/utilities';
 
-describe('MiniCart Order Button', () => {
+describe.skip('MiniCart Order Button', () => {
 	const DEFAULT_BUTTON_CLASSES = ['btn', 'btn-block', 'btn-primary'];
 
 	const BASE_CONTEXT_MOCK = {

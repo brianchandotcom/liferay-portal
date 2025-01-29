@@ -15,7 +15,7 @@ import {
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
 
-describe('MiniCart Header', () => {
+describe.skip('MiniCart Header', () => {
 	const BASE_CONTEXT_MOCK = {
 		cartState: {},
 		closeCart: jest.fn(),

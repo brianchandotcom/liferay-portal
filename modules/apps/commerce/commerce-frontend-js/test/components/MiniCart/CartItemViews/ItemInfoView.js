@@ -9,7 +9,7 @@ import React from 'react';
 
 import ItemInfoView from '../../../../src/main/resources/META-INF/resources/components/mini_cart/CartItemViews/ItemInfoView';
 
-describe('MiniCart Item Info View', () => {
+describe.skip('MiniCart Item Info View', () => {
 	const BASE_PROPS = {
 		name: 'An Item',
 		sku: 'ITEM001',

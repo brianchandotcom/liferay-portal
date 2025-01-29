@@ -31,7 +31,7 @@ import {getMockedCart} from '../../tests_utilities/fake_data/carts';
 
 jest.mock('../../../src/main/resources/META-INF/resources/ServiceProvider');
 
-describe('MiniCart', () => {
+describe.skip('MiniCart', () => {
 	const BASE_PROPS = {
 		cartActionURLs: {
 			checkoutURL: 'http://checkout.url',

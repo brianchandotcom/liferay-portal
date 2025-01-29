@@ -10,7 +10,7 @@ import React from 'react';
 import MiniCartContext from '../../../src/main/resources/META-INF/resources/components/mini_cart/MiniCartContext';
 import Opener from '../../../src/main/resources/META-INF/resources/components/mini_cart/Opener';
 
-describe('MiniCart Opener', () => {
+describe.skip('MiniCart Opener', () => {
 	const BASE_CONTEXT_MOCK = {
 		cartState: {
 			summary: {

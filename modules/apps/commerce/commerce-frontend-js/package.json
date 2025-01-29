@@ -53,7 +53,6 @@
 			"<rootDir>/test/tests_utilities/setup.spec.ts"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/components/MiniCart",
 			"<rootDir>/test/tests_utilities/"
 		]
 	},

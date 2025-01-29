@@ -10,6 +10,7 @@ import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -126,7 +128,12 @@ public class LayoutStructureRulesHelperTest {
 			MapUtil.isEmpty(layoutStructureRulesResult.getRuleIdMap()));
 
 		_testProcessLayoutStructureRulesWithFormTypeCondition(
-			layoutStructure, permissionChecker);
+			layoutStructure, permissionChecker,
+			HashMapBuilder.put(
+				"hide", ListUtil.fromCollection(hiddenItemIds)
+			).put(
+				"show", ListUtil.fromCollection(displayedItemIds)
+			).build());
 	}
 
 	@Test
@@ -169,7 +176,12 @@ public class LayoutStructureRulesHelperTest {
 			MapUtil.isEmpty(layoutStructureRulesResult.getRuleIdMap()));
 
 		_testProcessLayoutStructureRulesWithFormTypeCondition(
-			layoutStructure, permissionChecker);
+			layoutStructure, permissionChecker,
+			HashMapBuilder.put(
+				"hide", ListUtil.fromCollection(hiddenItemIds)
+			).put(
+				"show", ListUtil.fromCollection(displayedItemIds)
+			).build());
 	}
 
 	@Test
@@ -208,11 +220,16 @@ public class LayoutStructureRulesHelperTest {
 			MapUtil.isEmpty(layoutStructureRulesResult.getRuleIdMap()));
 
 		_testProcessLayoutStructureRulesWithFormTypeCondition(
-			layoutStructure, permissionChecker);
+			layoutStructure, permissionChecker,
+			HashMapBuilder.put(
+				"hide", ListUtil.fromCollection(hiddenItemIds)
+			).put(
+				"show", ListUtil.fromCollection(displayedItemIds)
+			).build());
 	}
 
 	private void _addFormTypeCondition(
-		String itemId, LayoutStructureRule layoutStructureRule) {
+		String itemId, LayoutStructureRule layoutStructureRule, String value) {
 
 		JSONArray conditionsJSONArray =
 			layoutStructureRule.getConditionsJSONArray();
@@ -227,7 +244,7 @@ public class LayoutStructureRulesHelperTest {
 				JSONUtil.put(
 					"type", "equal"
 				).put(
-					"value", RandomTestUtil.randomString()
+					"value", value
 				)
 			).put(
 				"type", "form"
@@ -268,7 +285,8 @@ public class LayoutStructureRulesHelperTest {
 	}
 
 	private void _testProcessLayoutStructureRulesWithFormTypeCondition(
-		LayoutStructure layoutStructure, PermissionChecker permissionChecker) {
+		LayoutStructure layoutStructure, PermissionChecker permissionChecker,
+		Map<String, List<String>> map) {
 
 		String parentItemId = layoutStructure.getMainItemId();
 
@@ -276,6 +294,12 @@ public class LayoutStructureRulesHelperTest {
 
 		layoutStructure.addContainerStyledLayoutStructureItem(
 			itemId, parentItemId, 0);
+
+		String value = RandomTestUtil.randomString();
+
+		Map<String, Object> fieldValuesMap = HashMapBuilder.<String, Object>put(
+			itemId, value
+		).build();
 
 		List<String> ruleIds = new ArrayList<>();
 
@@ -289,7 +313,13 @@ public class LayoutStructureRulesHelperTest {
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
 
-			_addFormTypeCondition(itemId, layoutStructureRule);
+			if (Objects.equals(layoutStructureRule.getConditionType(), "any")) {
+				_addFormTypeCondition(
+					itemId, layoutStructureRule, RandomTestUtil.randomString());
+			}
+			else {
+				_addFormTypeCondition(itemId, layoutStructureRule, value);
+			}
 
 			ruleIds.add(layoutStructureRule.getId());
 
@@ -298,11 +328,28 @@ public class LayoutStructureRulesHelperTest {
 			layoutStructure.addContainerStyledLayoutStructureItem(
 				curItemId, parentItemId, 0);
 
-			_addFormTypeCondition(curItemId, layoutStructureRule);
-			_addFormTypeCondition(curItemId, layoutStructureRule);
+			String curValue = RandomTestUtil.randomString();
 
-			_addFormTypeCondition(
-				RandomTestUtil.randomString(), layoutStructureRule);
+			fieldValuesMap.put(curItemId, curValue);
+
+			if (Objects.equals(layoutStructureRule.getConditionType(), "any")) {
+				_addFormTypeCondition(
+					curItemId, layoutStructureRule,
+					RandomTestUtil.randomString());
+				_addFormTypeCondition(
+					curItemId, layoutStructureRule,
+					RandomTestUtil.randomString());
+
+				_addFormTypeCondition(
+					RandomTestUtil.randomString(), layoutStructureRule,
+					RandomTestUtil.randomString());
+
+				fieldValuesMap.put(curItemId, RandomTestUtil.randomString());
+			}
+			else {
+				_addFormTypeCondition(curItemId, layoutStructureRule, curValue);
+				_addFormTypeCondition(curItemId, layoutStructureRule, curValue);
+			}
 
 			itemIdMap.put(
 				curItemId, ListUtil.fromArray(layoutStructureRule.getId()));
@@ -328,6 +375,25 @@ public class LayoutStructureRulesHelperTest {
 
 		_assertMapEquals(layoutStructureRulesResult.getItemIdMap(), itemIdMap);
 		_assertMapEquals(layoutStructureRulesResult.getRuleIdMap(), ruleIdMap);
+
+		JSONArray jsonArray =
+			_layoutStructureRulesHelper.processLayoutStructureRules(
+				_group.getGroupId(), fieldValuesMap,
+				layoutStructure.getLayoutStructureRules(), permissionChecker,
+				new long[] {SegmentsEntryConstants.ID_DEFAULT});
+
+		Map<String, List<String>> actualMap = new HashMap<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			List<String> list = actualMap.computeIfAbsent(
+				jsonObject.getString("action"), k -> new ArrayList<>());
+
+			list.add(jsonObject.getString("itemId"));
+		}
+
+		_assertMapEquals(map, actualMap);
 	}
 
 	@DeleteAfterTestRun

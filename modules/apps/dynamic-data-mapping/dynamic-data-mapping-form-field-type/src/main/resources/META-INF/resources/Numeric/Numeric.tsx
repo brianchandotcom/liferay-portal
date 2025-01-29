@@ -5,9 +5,6 @@
 
 import {ClayInput} from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
-
-// @ts-ignore
-
 import React, {FocusEventHandler} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
@@ -18,42 +15,102 @@ import {EditingLocale} from '../util/localizable/LocalesDropdown';
 // @ts-ignore
 
 import withConfirmationField from '../util/withConfirmationField.es';
-import NumericBase from './NumericBase';
+import NumericBase, {IMaskedNumber} from './NumericBase';
+import {useNumericInputValueMemo} from './hooks';
+import {getSymbols} from './numericUtil';
 
 import './Numeric.scss';
 
 import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
 
-const Numeric = ({
+const Numeric: React.FC<NumericProps> = (props) => {
+	const {
+		dataType,
+		decimalPlaces,
+		defaultLanguageId,
+		focused,
+		inputMask,
+		inputMaskFormat,
+		localizedValue,
+		localizedSymbols,
+		onChange,
+		placeholder,
+		predefinedValue,
+		settingsContext,
+		symbols: symbolsProp = {decimalSymbol: '.'},
+		value,
+	} = props as Omit<NumericProps, 'value'> & {
+		value: string;
+	};
+
+	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
+
+	const symbols = getSymbols({
+		editingLocale: editingLanguageId,
+		inputMask,
+		localizedSymbols,
+		settingsContext,
+		symbolsProp,
+	});
+
+	const inputValue: any = useNumericInputValueMemo({
+		dataType,
+		decimalPlaces,
+		focused,
+		inputMask,
+		inputMaskFormat,
+		placeholder,
+		symbols,
+		value:
+			value ??
+			localizedValue?.[editingLanguageId] ??
+			localizedValue?.[defaultLanguageId] ??
+			predefinedValue ??
+			'',
+	});
+
+	const handleChange = (formattedValue: IMaskedNumber) => {
+		onChange({
+			target: {value: formattedValue?.raw ? formattedValue.raw : ''},
+		});
+	};
+
+	return (
+		<NumericBase
+			{...props}
+			inputValue={inputValue}
+			onChange={handleChange}
+			symbols={symbols}
+		/>
+	);
+};
+
+const Main = ({
 	localizedObjectField,
 	localizedValue,
 	...otherProps
 }: NumericProps) => {
-	const {defaultLanguageId}: {defaultLanguageId: Locale} = useFormState();
-
 	const Component =
 		Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
 			? NumericLocalizedObjectField
-			: NumericBase;
+			: Numeric;
 
 	return (
 		<FieldBase
-			{...(!localizedObjectField && {localizedValue})}
 			{...otherProps}
+			{...(!localizedObjectField && {localizedValue})}
 		>
 			<ClayInput.Group>
-				<Component
-					{...otherProps}
-					editingLocale={defaultLanguageId}
-					localizedObjectField={localizedObjectField}
-				/>
+				<Component {...otherProps} localizedValue={localizedValue} />
 			</ClayInput.Group>
 		</FieldBase>
 	);
 };
 
-export {Numeric};
-export default withConfirmationField(Numeric);
+Main.displayName = 'Checkbox';
+
+export {Main};
+export default withConfirmationField(Main);
 
 export type NumericProps = {
 	append: string;
@@ -63,6 +120,7 @@ export type NumericProps = {
 	decimalPlaces: number;
 	defaultLanguageId: Locale;
 	defaultLocale: EditingLocale;
+	editingLocale: Locale;
 	errorMessage?: string;
 	fieldName: string;
 	focused: boolean;
@@ -70,8 +128,8 @@ export type NumericProps = {
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;
-	localizedObjectField: boolean;
-	localizedSymbols?: LocalizedValue<ISymbols>;
+	localizedObjectField?: boolean;
+	localizedSymbols: LocalizedValue<ISymbols>;
 	localizedValue?: LocalizedValue<string>;
 	name: string;
 	onBlur: FocusEventHandler<HTMLInputElement>;

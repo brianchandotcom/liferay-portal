@@ -10,15 +10,10 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {BUILD_RESOURCES_PATH, getRootDir} from '../../util/constants.mjs';
-import getNamedArguments from '../../util/getNamedArguments.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
 import getBundleSizes from './getBundleSizes.mjs';
 
 export default async function main() {
-	const {withSymbols} = getNamedArguments({
-		withSymbols: '--with-symbols',
-	});
-
 	const [projectDirectories, rootDir] = await Promise.all([
 		getYarnWorkspaceProjects(),
 		getRootDir(),
@@ -28,48 +23,20 @@ export default async function main() {
 
 	const bundleImports = await getBundleImports(bundleSizes);
 
-	let csvFile;
-	let lines;
+	const csvFile = 'bundle-imports.csv';
+	const lines = ['BUNDLE;IMPORT'];
 
-	if (withSymbols) {
-		csvFile = 'bundle-imports-with-symbols.csv';
-		lines = ['BUNDLE;IMPORT;SYMBOLS'];
+	Object.entries(bundleImports)
+		.sort(([a], [b]) => a.localeCompare(b))
+		.forEach(([bundle, imports]) => {
+			const bundlePath = path
+				.relative(rootDir, bundle)
+				.replace(`${BUILD_RESOURCES_PATH}${path.sep}`, '');
 
-		const bundleImportsSymbols =
-			await getBundleImportsSymbols(bundleImports);
-
-		Object.entries(bundleImportsSymbols).forEach(
-			([bundle, importsSymbols]) => {
-				const bundlePath = path
-					.relative(rootDir, bundle)
-					.replace(`${BUILD_RESOURCES_PATH}${path.sep}`, '');
-
-				Object.entries(importsSymbols).forEach(
-					([importPath, symbols]) => {
-						lines.push(
-							`"${bundlePath}";"${importPath}";"${[...symbols].join(',')}"`
-						);
-					}
-				);
-			}
-		);
-	}
-	else {
-		csvFile = 'bundle-imports.csv';
-		lines = ['BUNDLE;IMPORT'];
-
-		Object.entries(bundleImports)
-			.sort(([a], [b]) => a.localeCompare(b))
-			.forEach(([bundle, imports]) => {
-				const bundlePath = path
-					.relative(rootDir, bundle)
-					.replace(`${BUILD_RESOURCES_PATH}${path.sep}`, '');
-
-				imports.sort().forEach((importPath) => {
-					lines.push(`"${bundlePath}";"${importPath}"`);
-				});
+			imports.sort().forEach((importPath) => {
+				lines.push(`"${bundlePath}";"${importPath}"`);
 			});
-	}
+		});
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
@@ -78,88 +45,13 @@ export default async function main() {
 `);
 }
 
-async function getBundleImportsSymbols(bundleImports) {
-	const bundleImportsSymbols = {};
-
-	const bundles = Object.keys(bundleImports);
-
-	const sources = await Promise.all(
-		bundles.map((bundle) => fs.readFile(bundle, 'utf-8'))
-	);
-
-	bundles.forEach((bundle, i) => {
-		const ast = parse(sources[i], {
-			ecmaVersion: 2022,
-			sourceType: 'module',
-		});
-
-		bundleImportsSymbols[bundle] = {};
-
-		estraverse.traverse(ast, {
-			enter: (node) => {
-				let importPath;
-					const symbols = new Set();
-
-				switch (node.type) {
-					case 'ImportDeclaration': {
-						importPath = node.source.value;
-
-						node.specifiers.forEach((specifier) => {
-							switch (specifier.type) {
-								case 'ImportDefaultSpecifier':
-									symbols.add('default');
-									break;
-
-								case 'ImportNamespaceSpecifier':
-									symbols.add('*');
-									break;
-
-								case 'ImportSpecifier':
-									symbols.add(specifier.imported.name);
-									break;
-
-								default:
-									throw new Error(
-										`Unexpected import specifier: ${specifier.type}`
-									);
-							}
-						});
-						break;
-					}
-
-					case 'ImportExpression': {
-						importPath = `import(${escodegen.generate(node.source)})`;
-						break;
-					}
-				}
-
-				if (!importPath) {
-					return;
-				}
-
-				if (!bundleImportsSymbols[bundle][importPath]) {
-					bundleImportsSymbols[bundle][importPath] = new Set();
-				}
-
-				symbols.forEach((symbol) =>
-					bundleImportsSymbols[bundle][importPath].add(symbol)
-				);
-			},
-
-			fallback: 'iteration',
-		});
-	});
-
-	return bundleImportsSymbols;
-}
-
 async function getBundleImports(bundleSizes) {
 	const bundleImports = {};
 
 	for (const stat of bundleSizes) {
 		const {projectDir, sizes} = stat;
 
-		for (const [bundle, {inputs}] of Object.entries(sizes)) {
+		for (const [bundle] of Object.entries(sizes)) {
 			const bundlePath = path.join(projectDir, bundle);
 
 			if (bundlePath.endsWith('.css')) {
@@ -187,6 +79,9 @@ async function getBundleImports(bundleSizes) {
 							);
 							break;
 						}
+
+						default:
+							break;
 					}
 				},
 

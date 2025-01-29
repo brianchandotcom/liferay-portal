@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Daniel Sanz
  */
-public interface FDSItemActionListSerializer
+public interface FDSItemsActionsSerializer
 	extends FDSSerializer<List<FDSActionDropdownItem>> {
 
 	@Override

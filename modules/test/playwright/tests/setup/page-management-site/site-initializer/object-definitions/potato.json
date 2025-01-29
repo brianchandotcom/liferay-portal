@@ -13,6 +13,7 @@
 			"label": {
 				"en_US": "Potato Origin"
 			},
+			"localized": false,
 			"name": "potatoOrigin",
 			"required": true,
 			"type": "String"

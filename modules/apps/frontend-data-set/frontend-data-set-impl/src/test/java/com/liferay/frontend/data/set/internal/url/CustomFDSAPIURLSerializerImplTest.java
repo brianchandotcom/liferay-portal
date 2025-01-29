@@ -95,13 +95,29 @@ public class CustomFDSAPIURLSerializerImplTest {
 	}
 
 	@Test
-	public void testFDSAPIURLSerializationSeveralSystemFDSDifferentResolvers()
-		throws Exception {
+	public void testSerialize() throws Exception {
+
+		// Interpolation
+
+		_mockFDSObjectEntry("fdsName", "/app", "/endpoint/{foo}", "schema");
+
+		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
+			_registerService(
+				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app/endpoint/bar",
+			_customFDSAPIURLSerializerImpl.serialize(
+				"fdsName", _httpServletRequest));
+
+		serviceRegistration.unregister();
+
+		// REST application: /app1 and /app2
 
 		_mockFDSObjectEntry("fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
-		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
+		serviceRegistration =
 			_registerService(
 				"/app1", "schema", new String[] {"{foo}"},
 				new String[] {"bar"});
@@ -116,16 +132,13 @@ public class CustomFDSAPIURLSerializerImplTest {
 				"fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
-	}
 
-	@Test
-	public void testFDSAPIURLSerializationSeveralSystemFDSSameResolvers()
-		throws Exception {
+		// REST application: /app
 
 		_mockFDSObjectEntry("fdsName1", "/app", "/endpoint/{foo}", "schema");
 		_mockFDSObjectEntry("fdsName2", "/app", "/endpoint/{foo}", "schema");
 
-		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
+		serviceRegistration =
 			_registerService(
 				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 
@@ -139,10 +152,9 @@ public class CustomFDSAPIURLSerializerImplTest {
 				"fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
-	}
 
-	@Test
-	public void testFDSAPIURLSerializationWithNestedField() throws Exception {
+		// Nested fields: creator.name
+
 		_mockFDSObjectEntry(
 			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
 			"schema");
@@ -151,10 +163,9 @@ public class CustomFDSAPIURLSerializerImplTest {
 			"/o/app/endpoint?nestedFields=creator",
 			_customFDSAPIURLSerializerImpl.serialize(
 				"fdsName", _httpServletRequest));
-	}
 
-	@Test
-	public void testFDSAPIURLSerializationWithNestedFields() throws Exception {
+		// Nested fields: creator.name and status.id
+
 		_mockFDSObjectEntry(
 			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
 			"/endpoint", "schema");
@@ -171,11 +182,8 @@ public class CustomFDSAPIURLSerializerImplTest {
 		Assert.assertTrue(nestedFields.contains("creator"));
 		Assert.assertTrue(nestedFields.contains("status"));
 		Assert.assertTrue(nestedFields.split(",").length == 2);
-	}
 
-	@Test
-	public void testFDSAPIURLSerializationWithNestedFieldsAndDepth()
-		throws Exception {
+		// Nested fields depth
 
 		_mockFDSObjectEntry(
 			"fdsName",
@@ -199,22 +207,6 @@ public class CustomFDSAPIURLSerializerImplTest {
 		String nestedFieldsDepth = parameterMap.get("nestedFieldsDepth");
 
 		Assert.assertTrue(nestedFieldsDepth.equals("2"));
-	}
-
-	@Test
-	public void testSerialize() throws Exception {
-		_mockFDSObjectEntry("fdsName", "/app", "/endpoint/{foo}", "schema");
-
-		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerService(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
-
-		serviceRegistration.unregister();
 	}
 
 	private Map<String, String> _getParameterMap(String relativeURL) {

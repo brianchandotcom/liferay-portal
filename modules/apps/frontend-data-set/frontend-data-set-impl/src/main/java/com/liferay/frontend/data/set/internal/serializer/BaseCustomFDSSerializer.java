@@ -95,7 +95,7 @@ public abstract class BaseCustomFDSSerializer {
 			"dataSetToDataSetTableSections");
 	}
 
-	public Set<ObjectEntry> getItemActionObjectEntries(
+	public Set<ObjectEntry> getItemsActionsObjectEntries(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		return _getSortedRelatedObjectEntries(

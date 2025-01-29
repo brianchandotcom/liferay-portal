@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.action;
 
-import com.liferay.frontend.data.set.action.FDSItemActionList;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
-	service = FDSItemActionList.class
+	service = FDSItemsActions.class
 )
-public class CustomizedFDSItemActionList implements FDSItemActionList {
+public class CustomizedFDSItemsActions implements FDSItemsActions {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(

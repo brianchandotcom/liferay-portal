@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.FDSItemActionList;
-import com.liferay.frontend.data.set.action.FDSItemActionListRegistry;
-import com.liferay.frontend.data.set.action.FDSItemActionListSerializer;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
+import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
+import com.liferay.frontend.data.set.action.FDSItemsActionsSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 
@@ -24,26 +24,26 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM,
-	service = FDSItemActionListSerializer.class
+	service = FDSItemsActionsSerializer.class
 )
-public class SystemFDSItemActionListSerializerImpl
-	implements FDSItemActionListSerializer {
+public class SystemFDSItemsActionsSerializerImpl
+	implements FDSItemsActionsSerializer {
 
 	@Override
 	public List<FDSActionDropdownItem> serialize(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		FDSItemActionList fdsItemActionList =
-			_fdsItemActionListRegistry.getFDSItemActionList(fdsName);
+		FDSItemsActions fdsItemsActions =
+			_fdsItemsActionsRegistry.getFDSItemsActions(fdsName);
 
-		if (fdsItemActionList == null) {
+		if (fdsItemsActions == null) {
 			return Collections.emptyList();
 		}
 
-		return fdsItemActionList.getFDSActionDropdownItems(httpServletRequest);
+		return fdsItemsActions.getFDSActionDropdownItems(httpServletRequest);
 	}
 
 	@Reference
-	private FDSItemActionListRegistry _fdsItemActionListRegistry;
+	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;
 
 }

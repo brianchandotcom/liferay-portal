@@ -103,6 +103,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			GraphQLDTOProperty.of("dateModified", true, Date.class));
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("externalReferenceCode", String.class));
+		graphQLDTOProperties.add(GraphQLDTOProperty.of("id", true, Long.class));
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("status", true, String.class));
 		graphQLDTOProperties.add(

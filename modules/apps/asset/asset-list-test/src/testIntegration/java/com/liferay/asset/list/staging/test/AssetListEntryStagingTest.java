@@ -6,31 +6,62 @@
 package com.liferay.asset.list.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.test.util.AssetListStagingTestUtil;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.io.ByteArrayInputStream;
+
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -62,6 +93,100 @@ public class AssetListEntryStagingTest {
 	@After
 	public void tearDown() {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	@Test
+	public void testAssetListAssetEntrySubtypeAfterRepublished()
+		throws Exception {
+
+		_stagingGroup = AssetListStagingTestUtil.enableLocalStaging(
+			_liveGroup, true);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_stagingGroup.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup, TestPropsValues.getUserId());
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				ddmStructure.getStructureId(), null,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+				serviceContext);
+
+		AssetListEntry stagingAssetListEntry =
+			AssetListTestUtil.addAssetListEntry(_stagingGroup.getGroupId());
+
+		stagingAssetListEntry.setAssetEntrySubtype(
+			String.valueOf(dlFileEntryType.getPrimaryKey()));
+		stagingAssetListEntry.setAssetEntryType(DLFileEntry.class.getName());
+
+		stagingAssetListEntry =
+			_assetListEntryLocalService.updateAssetListEntry(
+				stagingAssetListEntry);
+
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_stagingGroup.getGroupId(),
+			_getAssetEntry(
+				_createDLFileEntry(
+					dlFileEntryType.getFileEntryTypeId(),
+					_stagingGroup.getGroupId(), serviceContext),
+				_stagingGroup.getGroupId()),
+			stagingAssetListEntry, SegmentsEntryConstants.ID_DEFAULT);
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+				_stagingGroup.getGroupId(),
+				_getAssetEntry(
+					_createDLFileEntry(
+						dlFileEntryType.getFileEntryTypeId(),
+						_stagingGroup.getGroupId(), serviceContext),
+					_stagingGroup.getGroupId()),
+				stagingAssetListEntry, SegmentsEntryConstants.ID_DEFAULT);
+
+		AssetListStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
+
+		AssetListEntry liveGroupAssetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntryByUuidAndGroupId(
+				stagingAssetListEntry.getUuid(), _liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			liveGroupAssetListEntry.getAssetEntryType(),
+			stagingAssetListEntry.getAssetEntryType());
+		Assert.assertNotEquals(
+			liveGroupAssetListEntry.getAssetEntrySubtype(),
+			stagingAssetListEntry.getAssetEntrySubtype());
+
+		_assetListEntryAssetEntryRelLocalService.
+			deleteAssetListEntryAssetEntryRel(assetListEntryAssetEntryRel);
+
+		List<String> portletIds = ListUtil.fromArray(
+			AssetListPortletKeys.ASSET_LIST, DLPortletKeys.DOCUMENT_LIBRARY);
+
+		AssetListStagingTestUtil.publishLayouts(
+			_stagingGroup, _liveGroup,
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR, true, false, true,
+				false, false, true, true, true, true, true, null, true, false,
+				portletIds, true, null, ExportImportDateUtil.RANGE_ALL, true,
+				true, UserIdStrategy.CURRENT_USER_ID));
+
+		liveGroupAssetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntryByUuidAndGroupId(
+				stagingAssetListEntry.getUuid(), _liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			liveGroupAssetListEntry.getAssetEntryType(),
+			stagingAssetListEntry.getAssetEntryType());
+		Assert.assertNotEquals(
+			liveGroupAssetListEntry.getAssetEntrySubtype(),
+			stagingAssetListEntry.getAssetEntrySubtype());
 	}
 
 	@Test
@@ -278,12 +403,58 @@ public class AssetListEntryStagingTest {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 	}
 
+	private DLFileEntry _createDLFileEntry(
+			long fileEntryTypeId, long groupId, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), groupId, groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, fileEntryTypeId, null,
+			null, new ByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			TestDataConstants.TEST_BYTE_ARRAY.length, null, null, null,
+			serviceContext);
+
+		return _dlFileEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), dlFileEntry,
+			dlFileEntry.getLatestFileVersion(true),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			Collections.emptyMap());
+	}
+
+	private AssetEntry _getAssetEntry(DLFileEntry dlFileEntry, long groupId)
+		throws Exception {
+
+		return _assetEntryLocalService.updateEntry(
+			TestPropsValues.getUserId(), groupId, dlFileEntry.getCreateDate(),
+			dlFileEntry.getModifiedDate(), DLFileEntry.class.getName(),
+			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
+			dlFileEntry.getFileEntryTypeId(), null, null, true, true, null,
+			null, null, dlFileEntry.getExpirationDate(), ContentTypes.TEXT_HTML,
+			dlFileEntry.getTitle(), dlFileEntry.getDescription(),
+			dlFileEntry.getDescription(), null, null, 0, 0, 0.0D);
+	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
@@ -293,6 +464,7 @@ public class AssetListEntryStagingTest {
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
+	@DeleteAfterTestRun
 	private Group _stagingGroup;
 
 }

@@ -10,6 +10,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import {flushSync} from 'react-dom';
 import ReactFlow, {
 	Background,
 	Controls,
@@ -198,6 +199,30 @@ export default function DiagramBuilder() {
 		setReactFlowInstance(reactFlowInstance);
 	};
 
+	const onNodeDrag = (event, node) => {
+		const reactFlowBounds =
+			reactFlowWrapperRef.current.getBoundingClientRect();
+
+		const position = reactFlowInstance.project({
+			x:
+				event.clientX -
+				reactFlowBounds.left -
+				elementRectangle.mouseXInRectangle,
+			y:
+				event.clientY -
+				reactFlowBounds.top -
+				elementRectangle.mouseYInRectangle,
+		});
+
+		const newElements = elements.filter(
+			(element) => element.id !== node.id
+		);
+
+		setCollidingElements(
+			getCollidingElements(newElements, elementRectangle, position)
+		);
+	};
+
 	const onNodeDragStart = (event) => {
 		const elementRectangle = event.currentTarget.getBoundingClientRect();
 		const reactFlowBounds =
@@ -233,18 +258,20 @@ export default function DiagramBuilder() {
 				elementRectangle.mouseYInRectangle,
 		});
 
-		setElements((elements) =>
-			elements.map((element) => {
-				if (element.id === node.id) {
-					element = {
-						...element,
-						position,
-					};
-				}
+		flushSync(() => {
+			setElements((elements) =>
+				elements.map((element) => {
+					if (element.id === node.id) {
+						element = {
+							...element,
+							position,
+						};
+					}
 
-				return element;
-			})
-		);
+					return element;
+				})
+			);
+		});
 
 		const newElements = elements.filter(
 			(element) => element.id !== node.id
@@ -262,6 +289,8 @@ export default function DiagramBuilder() {
 					return element;
 				})
 			);
+
+			setCollidingElements(null);
 		}
 	};
 
@@ -474,6 +503,7 @@ export default function DiagramBuilder() {
 						onDragOver={onDragOver}
 						onDrop={onDrop}
 						onLoad={onLoad}
+						onNodeDrag={onNodeDrag}
 						onNodeDragStart={onNodeDragStart}
 						onNodeDragStop={onNodeDragStop}
 					/>

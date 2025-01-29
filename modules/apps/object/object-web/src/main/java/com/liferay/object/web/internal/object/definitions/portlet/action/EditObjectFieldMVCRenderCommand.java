@@ -13,7 +13,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +65,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 					_listTypeDefinitionService,
 					_objectDefinitionModelResourcePermission,
 					_objectFieldBusinessTypeRegistry,
-					_objectFieldSettingLocalService,
 					_objectFolderLocalService));
 		}
 		catch (PortalException portalException) {
@@ -93,9 +91,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;

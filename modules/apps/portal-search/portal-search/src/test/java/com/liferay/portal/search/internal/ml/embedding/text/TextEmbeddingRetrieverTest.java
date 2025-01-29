@@ -6,6 +6,7 @@
 package com.liferay.portal.search.internal.ml.embedding.text;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -167,6 +168,16 @@ public class TextEmbeddingRetrieverTest {
 		Assert.assertTrue(
 			textEmbeddingProviderConfigurationJSONs[0].contains(
 				_TEST_PROVIDER_NAME));
+	}
+
+	@Test
+	public void testGetTextEmbeddingWithBlankText() {
+		Double[] textEmbedding = _textEmbeddingRetrieverImpl.getTextEmbedding(
+			_TEST_PROVIDER_NAME, StringPool.BLANK);
+
+		Assert.assertNotNull(textEmbedding);
+		Assert.assertEquals(
+			Arrays.toString(textEmbedding), 0, textEmbedding.length);
 	}
 
 	@Test

@@ -120,7 +120,9 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public Double[] getTextEmbedding(String providerName, String text) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920") ||
+			Validator.isBlank(text)) {
+
 			return new Double[0];
 		}
 

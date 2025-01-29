@@ -13,7 +13,6 @@ import {
 } from '../../util/constants.mjs';
 import getNamedArguments from '../../util/getNamedArguments.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
-import launchSoffice from '../../util/launchSoffice.mjs';
 import getBundleSizes from './getBundleSizes.mjs';
 
 export default async function main() {
@@ -67,7 +66,9 @@ export default async function main() {
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
-	await launchSoffice(csvFile);
+	console.log(`
+ℹ️  The report has been created at: ${csvFile}
+`);
 }
 
 function getInternalBundleSizes(bundleSizes) {

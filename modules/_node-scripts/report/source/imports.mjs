@@ -12,7 +12,6 @@ import path from 'path';
 
 import {SRC_PATH, getRootDir} from '../../util/constants.mjs';
 import getYarnWorkspaceProjects from '../../util/getYarnWorkspaceProjects.mjs';
-import launchSoffice from '../../util/launchSoffice.mjs';
 
 export default async function main() {
 	const [projectDirectories, rootDir] = await Promise.all([
@@ -156,5 +155,7 @@ export default async function main() {
 
 	await fs.writeFile(csvFile, lines.join('\n'));
 
-	await launchSoffice(csvFile);
+	console.log(`
+ℹ️  The report has been created at: ${csvFile}
+`);
 }

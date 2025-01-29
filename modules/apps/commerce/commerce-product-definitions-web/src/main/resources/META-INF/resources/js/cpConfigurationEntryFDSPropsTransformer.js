@@ -34,7 +34,9 @@ function render(props) {
 }
 
 function CPConfigurationEntryDataRenderer(props) {
-	const {itemData, rootPropertyName} = props;
+	const {itemData, valuePath} = props;
+
+	const rootPropertyName = valuePath.pop();
 
 	const differences = itemData.differences || [];
 	const showIcon =

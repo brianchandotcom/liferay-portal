@@ -1,4 +1,4 @@
-@component-name = "portal-search-ee"
+@component-name = "portal-search"
 definition {
 
 	property custom.properties = "feature.flag.LPD-35013=false";

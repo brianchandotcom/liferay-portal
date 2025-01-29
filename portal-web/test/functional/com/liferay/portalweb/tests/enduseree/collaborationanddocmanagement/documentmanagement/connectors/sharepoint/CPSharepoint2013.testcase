@@ -1,4 +1,4 @@
-@component-name = "portal-content-management-ee"
+@component-name = "portal-content-management"
 definition {
 
 	// Stop running on release until ISIT-32385 fixed

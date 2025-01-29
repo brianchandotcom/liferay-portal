@@ -1,4 +1,4 @@
-@component-name = "portal-bpm-ee"
+@component-name = "portal-bpm"
 @ignore = "true"
 definition {
 

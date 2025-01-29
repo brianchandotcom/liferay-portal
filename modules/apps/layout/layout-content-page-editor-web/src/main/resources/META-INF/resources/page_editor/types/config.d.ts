@@ -158,6 +158,7 @@ export interface Config {
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;
 	isConversionDraft: boolean;
+	isMarketplaceButtonVisited: boolean;
 	isPrivateLayoutsEnabled: boolean;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;

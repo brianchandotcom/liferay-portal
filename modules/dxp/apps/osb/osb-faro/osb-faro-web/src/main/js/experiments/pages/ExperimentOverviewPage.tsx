@@ -121,13 +121,19 @@ const ExperimentOverviewContent = ({status}) => {
 							<BasePage.Header.TitleSection
 								subtitle={
 									<TextTruncate
-										title={data.experiment.pageURL}
+										title={decodeURIComponent(
+											data.experiment.pageURL
+										)}
 									>
 										<ClayLink
-											href={data.experiment.pageURL}
+											href={decodeURIComponent(
+												data.experiment.pageURL
+											)}
 											target='_blank'
 										>
-											{data.experiment.pageURL}
+											{decodeURIComponent(
+												data.experiment.pageURL
+											)}
 										</ClayLink>
 									</TextTruncate>
 								}

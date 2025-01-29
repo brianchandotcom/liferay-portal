@@ -183,7 +183,7 @@ public class CTPublishBackgroundTaskExecutor
 			ctServicePublisher.publish();
 
 			backgroundTaskStatus.setAttribute(
-				"currentPercentage", ++publishedCount / ctServicePublisherCount);
+				"percentage", ++publishedCount / ctServicePublisherCount);
 		}
 
 		for (CTTableMapperHelper ctTableMapperHelper :

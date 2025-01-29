@@ -27,7 +27,7 @@ public class CTPublishBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 	public int getPercentage() {
 		if (backgroundTaskStatus != null) {
 			double percentage = GetterUtil.getDouble(
-				backgroundTaskStatus.getAttribute("currentPercentage"));
+				backgroundTaskStatus.getAttribute("percentage"));
 
 			return GetterUtil.getInteger(
 				Math.max(Math.round(percentage * 100), PERCENTAGE_MIN));

@@ -85,7 +85,21 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private Action _getAction(boolean negated, String type) {
-		if (Objects.equals(type, "show")) {
+		if (Objects.equals(type, "disable")) {
+			if (negated) {
+				return Action.ENABLE;
+			}
+
+			return Action.DISABLE;
+		}
+		else if (Objects.equals(type, "enable")) {
+			if (negated) {
+				return Action.DISABLE;
+			}
+
+			return Action.ENABLE;
+		}
+		else if (Objects.equals(type, "show")) {
 			if (negated) {
 				return Action.HIDE;
 			}
@@ -203,7 +217,7 @@ public class LayoutStructureRulesHelperImpl
 
 	private enum Action {
 
-		HIDE, SHOW
+		DISABLE, ENABLE, HIDE, SHOW
 
 	}
 

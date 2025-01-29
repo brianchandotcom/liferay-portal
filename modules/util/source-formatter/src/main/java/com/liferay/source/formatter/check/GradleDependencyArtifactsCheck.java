@@ -42,7 +42,8 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
 
-		content = _enforceDependencyVersions(content, enforceVersionArtifacts);
+		content = _enforceDependencyVersions(
+			content, enforceVersionArtifacts, absolutePath);
 
 		Matcher matcher = _artifactPattern.matcher(content);
 
@@ -68,11 +69,21 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 	}
 
 	private String _enforceDependencyVersions(
-		String content, List<String> enforceVersionArtifacts) {
+		String content, List<String> enforceVersionArtifacts,
+		String absolutePath) {
+
+		List<String> allowedVersionArtifacts = getAttributeValues(
+			_ALLOWED_VERSION_ARTIFACTS_KEY, absolutePath);
 
 		for (String artifact : enforceVersionArtifacts) {
 			String[] artifactParts = StringUtil.split(
 				artifact, StringPool.COLON);
+
+			if (allowedVersionArtifacts.contains(
+					artifactParts[0] + ":" + artifactParts[1])) {
+
+				continue;
+			}
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
@@ -335,6 +346,9 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 	private static final String _ALLOWED_ARTIFACTS_FILE_NAMES_KEY =
 		"allowedArtifactsFileNames";
+
+	private static final String _ALLOWED_VERSION_ARTIFACTS_KEY =
+		"allowedVersionArtifacts";
 
 	private static final String _ENFORCE_VERSION_ARTIFACTS_KEY =
 		"enforceVersionArtifacts";

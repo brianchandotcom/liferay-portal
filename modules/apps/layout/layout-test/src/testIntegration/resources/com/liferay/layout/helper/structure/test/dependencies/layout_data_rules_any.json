@@ -44,13 +44,11 @@
 		{
 			"actions": [
 				{
-					"action": "fragment",
 					"id": "action1",
 					"itemId": "container2",
 					"type": "show"
 				},
 				{
-					"action": "fragment",
 					"id": "action2",
 					"itemId": "fragment1",
 					"type": "hide"
@@ -59,7 +57,7 @@
 			"conditionType": "any",
 			"conditions": [
 				{
-					"condition": "role",
+					"field": "role",
 					"id": "condition1",
 					"options": {
 						"type": "equal",
@@ -68,7 +66,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "segment",
+					"field": "segment",
 					"id": "condition2",
 					"options": {
 						"type": "equal",

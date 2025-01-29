@@ -196,7 +196,7 @@ public class LayoutStructureRulesHelperTest {
 
 		conditionsJSONArray.put(
 			JSONUtil.put(
-				"condition", RandomTestUtil.randomString()
+				"field", RandomTestUtil.randomString()
 			).put(
 				"id", RandomTestUtil.randomString()
 			).put(

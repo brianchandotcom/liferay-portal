@@ -44,13 +44,11 @@
 		{
 			"actions": [
 				{
-					"action": "fragment",
 					"id": "action1",
 					"itemId": "container2",
 					"type": "show"
 				},
 				{
-					"action": "fragment",
 					"id": "action2",
 					"itemId": "fragment1",
 					"type": "hide"
@@ -59,7 +57,7 @@
 			"conditionType": "all",
 			"conditions": [
 				{
-					"condition": "role",
+					"field": "role",
 					"id": "condition1",
 					"options": {
 						"type": "equal",
@@ -68,7 +66,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "role",
+					"field": "role",
 					"id": "condition2",
 					"options": {
 						"type": "not-equal",
@@ -77,7 +75,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "segment",
+					"field": "segment",
 					"id": "condition3",
 					"options": {
 						"type": "equal",
@@ -86,7 +84,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "segment",
+					"field": "segment",
 					"id": "condition4",
 					"options": {
 						"type": "not-equal",
@@ -95,7 +93,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "user",
+					"field": "user",
 					"id": "condition5",
 					"options": {
 						"type": "equal",
@@ -104,7 +102,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "user",
+					"field": "user",
 					"id": "condition6",
 					"options": {
 						"type": "not-equal",

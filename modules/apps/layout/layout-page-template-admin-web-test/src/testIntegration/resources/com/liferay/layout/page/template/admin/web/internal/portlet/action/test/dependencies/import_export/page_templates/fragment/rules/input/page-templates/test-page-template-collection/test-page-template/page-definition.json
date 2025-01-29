@@ -36,13 +36,11 @@
 			"name": "RuleName",
 			"pageRuleActions": [
 				{
-					"action": "fragment",
 					"id": "action1",
 					"itemId": "item2",
 					"type": "show"
 				},
 				{
-					"action": "fragment",
 					"id": "action2",
 					"itemId": "item2",
 					"type": "hide"
@@ -50,7 +48,7 @@
 			],
 			"pageRuleConditions": [
 				{
-					"condition": "role",
+					"field": "role",
 					"id": "condition1",
 					"options": {
 						"type": "Equal",
@@ -59,7 +57,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "user",
+					"field": "user",
 					"id": "condition2",
 					"options": {
 						"type": "Equal",

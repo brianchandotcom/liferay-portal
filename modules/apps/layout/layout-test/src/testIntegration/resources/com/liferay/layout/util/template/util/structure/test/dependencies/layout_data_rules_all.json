@@ -53,7 +53,7 @@
 			"conditionType": "all",
 			"conditions": [
 				{
-					"condition": "role",
+					"field": "role",
 					"id": "4e0b68af-d41a-4249-8771-0bfdd36a971a",
 					"options": {
 						"type": "equal",
@@ -62,7 +62,7 @@
 					"type": "user"
 				},
 				{
-					"condition": "segment",
+					"field": "segment",
 					"id": "6da37461-38cf-44ec-99c3-cc6288c12f20",
 					"options": {
 						"type": "equal",

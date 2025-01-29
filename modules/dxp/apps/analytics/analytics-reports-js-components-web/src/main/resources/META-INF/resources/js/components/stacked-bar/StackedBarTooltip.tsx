@@ -17,8 +17,11 @@ import {ChartData, chartBgColors, chartColors} from './StackedBarChart';
 
 const TOOLTIP_WIDTH = 450;
 
-function formatStackedBarTooltipDate(rangeSelector: RangeSelectors) {
-	const {endDate, startDate} = getDateRange(rangeSelector);
+export function formatStackedBarTooltipDate(
+	rangeSelector: RangeSelectors,
+	date = new Date()
+) {
+	const {endDate, startDate} = getDateRange(rangeSelector, date);
 
 	const dayFormat = utcFormat('%-d');
 	const dayMonthFormat = utcFormat('%b %-d');

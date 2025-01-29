@@ -28,9 +28,9 @@ export function formatTooltipDate(date: Date, rangeSelectors: RangeSelectors) {
 	return moment.utc(date).format('YYYY MMM D');
 }
 
-export function getDateRange(rangeSelector: RangeSelectors) {
+export function getDateRange(rangeSelector: RangeSelectors, date = new Date()) {
 	function getDate(value: number) {
-		return new Date(new Date().setDate(new Date().getDate() - value));
+		return new Date(date.setDate(date.getDate() - value));
 	}
 
 	const startDate = getDate(1);

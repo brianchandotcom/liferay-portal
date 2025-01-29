@@ -133,20 +133,24 @@ const COMMANDS = {
 	},
 	'report:bundle:imports': {
 		description: `
-		Generate aggregated information about bundle (external) imports. The report can optionally
-		shows the list of symbols imported from each external module (if the --with-symbols flag is
-		provided).
+		Generate aggregated information about external imports found in each bundle.
+
+		This report only shows information about packages, not symbols. If you need to find out the
+		symbols imported from each bundle use report:source:imports instead.
+
+		It is impossible to find symbols in bundled JavaScript files because our build process
+		transforms everything into default and * imports internally.
 
 		This task must be invoked after running 'CREATE_BUNDLE_REPORTS=yes ant all' (i.e: running
 		'ant all' with the environment variable 'CREATE_BUNDLE_REPORTS' set to 'yes', so that JSON
 		reports about bundle sizes are created inside the 'build' directory of each project).
 `,
-		parameters: '[--with-symbols]',
+		parameters: '',
 		script: './report/bundle/imports.mjs',
 	},
 	'report:bundle:sizes': {
 		description: `
-		Show aggregated information about bundle sizes. Optionally report the size of internal
+		Generate aggregated information about bundle sizes. Optionally report the size of internal
 		files inside each bundle (if the --with-internals flag is provided).
 
 		This task must be invoked after running 'CREATE_BUNDLE_REPORTS=yes ant all' (i.e: running
@@ -166,8 +170,13 @@ const COMMANDS = {
 	},
 	'report:source:imports': {
 		description: `
-		Generate aggregated information about external imports found in each project from the source
-		tree.
+		Generate aggregated information about imported external symbols by parsing JavaScript source
+		files.
+
+		Note that, in general, it is preferred to use report:bundle:imports because it shows dynamic
+		imports. On the contrary, this report only shows static imports because it is focused in
+		finding the	symbols involved in each import, something that is impossible to know for
+		dynamic imports.
 `,
 		parameters: '',
 		script: './report/source/imports.mjs',

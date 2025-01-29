@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.FDSBulkActionList;
-import com.liferay.frontend.data.set.action.FDSBulkActionListRegistry;
+import com.liferay.frontend.data.set.action.FDSBulkActions;
+import com.liferay.frontend.data.set.action.FDSBulkActionsRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -21,20 +21,19 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Daniel Sanz
  */
-@Component(service = FDSBulkActionListRegistry.class)
-public class FDSBulkActionListRegistryImpl
-	implements FDSBulkActionListRegistry {
+@Component(service = FDSBulkActionsRegistry.class)
+public class FDSBulkActionsRegistryImpl implements FDSBulkActionsRegistry {
 
 	@Override
-	public FDSBulkActionList getFDSBulkActionList(String fdsName) {
-		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActionList>
+	public FDSBulkActions getFDSBulkActions(String fdsName) {
+		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActions>
 			serviceWrapper = _serviceTrackerMap.getService(fdsName);
 
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set bulk action list is associated " +
-						"with " + fdsName);
+					"No frontend data set bulk actions are associated with " +
+						fdsName);
 			}
 
 			return null;
@@ -46,8 +45,8 @@ public class FDSBulkActionListRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSBulkActionList.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSBulkActionList>serviceWrapper(
+			bundleContext, FDSBulkActions.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSBulkActions>serviceWrapper(
 				bundleContext));
 	}
 
@@ -57,11 +56,10 @@ public class FDSBulkActionListRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FDSBulkActionListRegistryImpl.class);
+		FDSBulkActionsRegistryImpl.class);
 
 	private ServiceTrackerMap
-		<String,
-		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActionList>>
+		<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSBulkActions>>
 			_serviceTrackerMap;
 
 }

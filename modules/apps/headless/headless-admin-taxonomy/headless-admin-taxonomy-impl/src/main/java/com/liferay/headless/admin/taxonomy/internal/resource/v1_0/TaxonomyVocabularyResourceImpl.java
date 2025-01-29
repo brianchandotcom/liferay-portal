@@ -23,6 +23,9 @@ import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.Vocabulary
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.PermissionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,6 +51,8 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -54,6 +61,7 @@ import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -723,6 +731,37 @@ public class TaxonomyVocabularyResourceImpl
 
 						return 0;
 					});
+				setPermissions(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-41304")) {
+							return null;
+						}
+
+						try {
+							_permissionService.checkPermission(
+								assetVocabulary.getGroupId(),
+								AssetVocabulary.class.getName(),
+								assetVocabulary.getVocabularyId());
+
+							Collection<Permission> permissions =
+								PermissionUtil.getPermissions(
+									assetVocabulary.getCompanyId(),
+									_resourceActionLocalService.
+										getResourceActions(
+											AssetVocabulary.class.getName()),
+									assetVocabulary.getVocabularyId(),
+									AssetVocabulary.class.getName(), null);
+
+							return permissions.toArray(new Permission[0]);
+						}
+						catch (Exception exception) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception);
+							}
+
+							return null;
+						}
+					});
 				setSiteId(() -> GroupUtil.getSiteId(group));
 			}
 		};
@@ -754,6 +793,9 @@ public class TaxonomyVocabularyResourceImpl
 				assetVocabulary.getGroupId()),
 			new ServiceContext());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TaxonomyVocabularyResourceImpl.class);
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
 		new HashMap<>();
@@ -789,7 +831,13 @@ public class TaxonomyVocabularyResourceImpl
 	private DTOActionProvider _dtoActionProvider;
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

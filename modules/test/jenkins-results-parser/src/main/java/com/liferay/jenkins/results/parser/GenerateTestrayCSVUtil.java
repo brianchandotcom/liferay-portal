@@ -61,8 +61,10 @@ public class GenerateTestrayCSVUtil {
 		for (TestrayCaseResult testrayCaseResult :
 				testrayBuild.getTestrayCaseResults()) {
 
-			if ((testrayCaseResult.getStatus() !=
-					TestrayCaseResult.Status.FAILED) ||
+			if (((testrayCaseResult.getStatus() !=
+					TestrayCaseResult.Status.FAILED) &&
+				 (testrayCaseResult.getStatus() !=
+					 TestrayCaseResult.Status.UNTESTED)) ||
 				Objects.equals(
 					testrayCaseResult.getName(), "Top Level Build")) {
 

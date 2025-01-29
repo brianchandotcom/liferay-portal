@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -46,6 +48,17 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 		catch (ConfigurationException configurationException) {
 			return ReflectionUtil.throwException(configurationException);
 		}
+	}
+
+	@Override
+	public Map<String, Captcha> getCaptchas() {
+		Map<String, Captcha> captchas = new HashMap<>();
+
+		for (String captcha : _serviceTrackerMap.keySet()) {
+			captchas.put(captcha, _serviceTrackerMap.getService(captcha));
+		}
+
+		return Collections.unmodifiableMap(captchas);
 	}
 
 	@Activate

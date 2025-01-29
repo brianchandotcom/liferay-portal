@@ -74,11 +74,12 @@ public class FragmentEntryVersionModelImpl
 		{"fragmentEntryKey", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"css", Types.CLOB}, {"html", Types.CLOB}, {"js", Types.CLOB},
 		{"cacheable", Types.BOOLEAN}, {"configuration", Types.CLOB},
-		{"icon", Types.VARCHAR}, {"previewFileEntryId", Types.BIGINT},
-		{"readOnly", Types.BOOLEAN}, {"type_", Types.INTEGER},
-		{"typeOptions", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"icon", Types.VARCHAR}, {"marketplace", Types.BOOLEAN},
+		{"previewFileEntryId", Types.BIGINT}, {"readOnly", Types.BOOLEAN},
+		{"type_", Types.INTEGER}, {"typeOptions", Types.CLOB},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,6 +108,7 @@ public class FragmentEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("cacheable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("configuration", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("icon", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("marketplace", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
@@ -119,7 +121,7 @@ public class FragmentEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,typeOptions TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentEntryVersionId, ctCollectionId))";
+		"create table FragmentEntryVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,fragmentEntryVersionId LONG not null,version INTEGER,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,cacheable BOOLEAN,configuration TEXT null,icon VARCHAR(75) null,marketplace BOOLEAN,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,typeOptions TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentEntryVersionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentEntryVersion";
@@ -348,6 +350,8 @@ public class FragmentEntryVersionModelImpl
 				"configuration", FragmentEntryVersion::getConfiguration);
 			attributeGetterFunctions.put("icon", FragmentEntryVersion::getIcon);
 			attributeGetterFunctions.put(
+				"marketplace", FragmentEntryVersion::getMarketplace);
+			attributeGetterFunctions.put(
 				"previewFileEntryId",
 				FragmentEntryVersion::getPreviewFileEntryId);
 			attributeGetterFunctions.put(
@@ -473,6 +477,10 @@ public class FragmentEntryVersionModelImpl
 				(BiConsumer<FragmentEntryVersion, String>)
 					FragmentEntryVersion::setIcon);
 			attributeSetterBiConsumers.put(
+				"marketplace",
+				(BiConsumer<FragmentEntryVersion, Boolean>)
+					FragmentEntryVersion::setMarketplace);
+			attributeSetterBiConsumers.put(
 				"previewFileEntryId",
 				(BiConsumer<FragmentEntryVersion, Long>)
 					FragmentEntryVersion::setPreviewFileEntryId);
@@ -540,6 +548,7 @@ public class FragmentEntryVersionModelImpl
 		fragmentEntry.setCacheable(getCacheable());
 		fragmentEntry.setConfiguration(getConfiguration());
 		fragmentEntry.setIcon(getIcon());
+		fragmentEntry.setMarketplace(getMarketplace());
 		fragmentEntry.setPreviewFileEntryId(getPreviewFileEntryId());
 		fragmentEntry.setReadOnly(getReadOnly());
 		fragmentEntry.setType(getType());
@@ -1030,6 +1039,25 @@ public class FragmentEntryVersionModelImpl
 	}
 
 	@Override
+	public boolean getMarketplace() {
+		return _marketplace;
+	}
+
+	@Override
+	public boolean isMarketplace() {
+		return _marketplace;
+	}
+
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_marketplace = marketplace;
+	}
+
+	@Override
 	public long getPreviewFileEntryId() {
 		return _previewFileEntryId;
 	}
@@ -1369,6 +1397,7 @@ public class FragmentEntryVersionModelImpl
 		fragmentEntryVersionImpl.setCacheable(isCacheable());
 		fragmentEntryVersionImpl.setConfiguration(getConfiguration());
 		fragmentEntryVersionImpl.setIcon(getIcon());
+		fragmentEntryVersionImpl.setMarketplace(isMarketplace());
 		fragmentEntryVersionImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 		fragmentEntryVersionImpl.setReadOnly(isReadOnly());
 		fragmentEntryVersionImpl.setType(getType());
@@ -1433,6 +1462,8 @@ public class FragmentEntryVersionModelImpl
 			this.<String>getColumnOriginalValue("configuration"));
 		fragmentEntryVersionImpl.setIcon(
 			this.<String>getColumnOriginalValue("icon"));
+		fragmentEntryVersionImpl.setMarketplace(
+			this.<Boolean>getColumnOriginalValue("marketplace"));
 		fragmentEntryVersionImpl.setPreviewFileEntryId(
 			this.<Long>getColumnOriginalValue("previewFileEntryId"));
 		fragmentEntryVersionImpl.setReadOnly(
@@ -1664,6 +1695,8 @@ public class FragmentEntryVersionModelImpl
 			fragmentEntryVersionCacheModel.icon = null;
 		}
 
+		fragmentEntryVersionCacheModel.marketplace = isMarketplace();
+
 		fragmentEntryVersionCacheModel.previewFileEntryId =
 			getPreviewFileEntryId();
 
@@ -1796,6 +1829,7 @@ public class FragmentEntryVersionModelImpl
 	private boolean _cacheable;
 	private String _configuration;
 	private String _icon;
+	private boolean _marketplace;
 	private long _previewFileEntryId;
 	private boolean _readOnly;
 	private int _type;
@@ -1861,6 +1895,7 @@ public class FragmentEntryVersionModelImpl
 		_columnOriginalValues.put("cacheable", _cacheable);
 		_columnOriginalValues.put("configuration", _configuration);
 		_columnOriginalValues.put("icon", _icon);
+		_columnOriginalValues.put("marketplace", _marketplace);
 		_columnOriginalValues.put("previewFileEntryId", _previewFileEntryId);
 		_columnOriginalValues.put("readOnly", _readOnly);
 		_columnOriginalValues.put("type_", _type);
@@ -1938,23 +1973,25 @@ public class FragmentEntryVersionModelImpl
 
 		columnBitmasks.put("icon", 2097152L);
 
-		columnBitmasks.put("previewFileEntryId", 4194304L);
+		columnBitmasks.put("marketplace", 4194304L);
 
-		columnBitmasks.put("readOnly", 8388608L);
+		columnBitmasks.put("previewFileEntryId", 8388608L);
 
-		columnBitmasks.put("type_", 16777216L);
+		columnBitmasks.put("readOnly", 16777216L);
 
-		columnBitmasks.put("typeOptions", 33554432L);
+		columnBitmasks.put("type_", 33554432L);
 
-		columnBitmasks.put("lastPublishDate", 67108864L);
+		columnBitmasks.put("typeOptions", 67108864L);
 
-		columnBitmasks.put("status", 134217728L);
+		columnBitmasks.put("lastPublishDate", 134217728L);
 
-		columnBitmasks.put("statusByUserId", 268435456L);
+		columnBitmasks.put("status", 268435456L);
 
-		columnBitmasks.put("statusByUserName", 536870912L);
+		columnBitmasks.put("statusByUserId", 536870912L);
 
-		columnBitmasks.put("statusDate", 1073741824L);
+		columnBitmasks.put("statusByUserName", 1073741824L);
+
+		columnBitmasks.put("statusDate", 2147483648L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

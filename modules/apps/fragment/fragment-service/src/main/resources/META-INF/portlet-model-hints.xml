@@ -44,6 +44,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="previewFileEntryId" type="long" />
+		<field name="marketplace" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -82,6 +83,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="icon" type="String" />
+		<field name="marketplace" type="boolean" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
@@ -170,6 +172,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="icon" type="String" />
+		<field name="marketplace" type="boolean" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />

@@ -53,6 +53,7 @@ public class FragmentCompositionWrapper
 		attributes.put("description", getDescription());
 		attributes.put("data", getData());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -168,6 +169,12 @@ public class FragmentCompositionWrapper
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
+		}
+
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -333,6 +340,16 @@ public class FragmentCompositionWrapper
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
+	}
+
+	/**
+	 * Returns the marketplace of this fragment composition.
+	 *
+	 * @return the marketplace of this fragment composition
+	 */
+	@Override
+	public boolean getMarketplace() {
+		return model.getMarketplace();
 	}
 
 	/**
@@ -536,6 +553,16 @@ public class FragmentCompositionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this fragment composition is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment composition is marketplace; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isMarketplace() {
+		return model.isMarketplace();
+	}
+
+	/**
 	 * Returns <code>true</code> if this fragment composition is pending.
 	 *
 	 * @return <code>true</code> if this fragment composition is pending; <code>false</code> otherwise
@@ -686,6 +713,16 @@ public class FragmentCompositionWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	 * Sets whether this fragment composition is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment composition
+	 */
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		model.setMarketplace(marketplace);
 	}
 
 	/**

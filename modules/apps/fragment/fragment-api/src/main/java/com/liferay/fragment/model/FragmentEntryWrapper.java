@@ -57,6 +57,7 @@ public class FragmentEntryWrapper
 		attributes.put("cacheable", isCacheable());
 		attributes.put("configuration", getConfiguration());
 		attributes.put("icon", getIcon());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
@@ -198,6 +199,12 @@ public class FragmentEntryWrapper
 
 		if (icon != null) {
 			setIcon(icon);
+		}
+
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
 		}
 
 		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
@@ -440,6 +447,16 @@ public class FragmentEntryWrapper
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
+	}
+
+	/**
+	 * Returns the marketplace of this fragment entry.
+	 *
+	 * @return the marketplace of this fragment entry
+	 */
+	@Override
+	public boolean getMarketplace() {
+		return model.getMarketplace();
 	}
 
 	/**
@@ -693,6 +710,16 @@ public class FragmentEntryWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this fragment entry is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment entry is marketplace; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isMarketplace() {
+		return model.isMarketplace();
+	}
+
+	/**
 	 * Returns <code>true</code> if this fragment entry is pending.
 	 *
 	 * @return <code>true</code> if this fragment entry is pending; <code>false</code> otherwise
@@ -925,6 +952,16 @@ public class FragmentEntryWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	 * Sets whether this fragment entry is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment entry
+	 */
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		model.setMarketplace(marketplace);
 	}
 
 	/**

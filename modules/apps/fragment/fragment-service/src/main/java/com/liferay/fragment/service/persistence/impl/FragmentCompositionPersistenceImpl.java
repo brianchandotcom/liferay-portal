@@ -6344,6 +6344,7 @@ public class FragmentCompositionPersistenceImpl
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("data_");
 		ctMergeColumnNames.add("previewFileEntryId");
+		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("lastPublishDate");
 		ctMergeColumnNames.add("status");
 		ctMergeColumnNames.add("statusByUserId");

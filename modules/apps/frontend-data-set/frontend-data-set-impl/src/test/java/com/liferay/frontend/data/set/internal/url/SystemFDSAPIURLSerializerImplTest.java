@@ -106,14 +106,14 @@ public class SystemFDSAPIURLSerializerImplTest {
 			"fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
 			_registerSystemFDSEntry(
-				"fdsName2", "/app", "/endpoint/{foo}", "schema");
+				"fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
 			_systemFDSAPIURLSerializerImpl.serialize(
 				"fdsName1", _httpServletRequest));
 		Assert.assertEquals(
-			"/o/app/endpoint/{foo}",
+			"/o/app2/endpoint/{foo}",
 			_systemFDSAPIURLSerializerImpl.serialize(
 				"fdsName2", _httpServletRequest));
 

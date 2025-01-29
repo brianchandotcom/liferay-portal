@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -52,7 +51,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Carolina Barbosa
  */
-@FeatureFlags("LPD-43542")
 @RunWith(Arquillian.class)
 public class GetObjectFieldInfoMVCResourceCommandTest {
 

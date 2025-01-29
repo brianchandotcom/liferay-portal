@@ -16,7 +16,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -131,9 +130,7 @@ public class ObjectCodeEditorUtil {
 					ddmExpressionFunctions, "functions", locale));
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-43542") &&
-			includeRelatedObjectFields) {
-
+		if (includeRelatedObjectFields) {
 			_includeRelatedObjectFields(
 				codeEditorElements, locale, objectDefinitionId,
 				objectFieldPredicate);

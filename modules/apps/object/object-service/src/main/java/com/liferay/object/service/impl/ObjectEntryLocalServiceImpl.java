@@ -3349,10 +3349,6 @@ public class ObjectEntryLocalServiceImpl
 			ObjectDefinition objectDefinition2, long primaryKey, String script)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-43542")) {
-			return Collections.emptyMap();
-		}
-
 		Map<String, Object> queryExpressions = new HashMap<>();
 
 		for (ObjectRelationship objectRelationship :

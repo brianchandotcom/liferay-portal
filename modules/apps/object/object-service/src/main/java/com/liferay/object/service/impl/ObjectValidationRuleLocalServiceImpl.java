@@ -50,7 +50,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -592,10 +591,6 @@ public class ObjectValidationRuleLocalServiceImpl
 			long objectDefinitionId, String script, long userId,
 			Map<String, Object> variables)
 		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-43542")) {
-			return;
-		}
 
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipPersistence.findByObjectDefinitionId2(

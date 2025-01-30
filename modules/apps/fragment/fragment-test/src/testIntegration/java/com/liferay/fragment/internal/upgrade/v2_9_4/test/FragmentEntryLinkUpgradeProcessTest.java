@@ -63,9 +63,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 	}
 
 	@Test
@@ -79,16 +81,15 @@ public class FragmentEntryLinkUpgradeProcessTest
 						RandomTestUtil.randomString(),
 						RandomTestUtil.randomString())
 				).toString(),
-				_layout.fetchDraftLayout(), _segmentsExperienceId);
+				_draftLayout, _segmentsExperienceId);
 		FragmentEntryLink draftLayoutPortletFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
 					"portletId", RandomTestUtil.randomString()
 				).toString(),
-				_layout.fetchDraftLayout(), _segmentsExperienceId);
+				_draftLayout, _segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(
-			_layout.fetchDraftLayout(), _layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -131,7 +132,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			"{}", _layout.fetchDraftLayout(), _segmentsExperienceId);
+			"{}", _draftLayout, _segmentsExperienceId);
 	}
 
 	@Override
@@ -203,6 +204,8 @@ public class FragmentEntryLinkUpgradeProcessTest
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private EntityCache _entityCache;

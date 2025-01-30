@@ -231,10 +231,12 @@ public class FragmentEntryStagedModelDataHandlerTest
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			StringPool.BLANK, stagingGroup, "<div class=\"fragment_1\"></div>");
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-		Layout draftLayout = _layout.fetchDraftLayout();
+				draftLayout.getPlid());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

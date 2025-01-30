@@ -222,9 +222,11 @@ public class RenderLayoutStructureTagTest {
 			StringUtil.contains(
 				url, _group.getFriendlyURL(), StringPool.BLANK));
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
@@ -327,9 +329,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		_addCollectionStyledLayoutStructureItem(
 			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
@@ -388,9 +392,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		_addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
@@ -465,9 +471,11 @@ public class RenderLayoutStructureTagTest {
 		mockHttpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM, journalArticle);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		_addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
@@ -570,17 +578,28 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		long segmentsExperienceId = _addSegmentsExperience(
-			layout, segmentsEntry2.getSegmentsEntryId());
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsExperience draftSegmentsExperience = _addSegmentsExperience(
+			draftLayout, segmentsEntry2.getSegmentsEntryId());
 
 		_addCollectionStyledLayoutStructureItem(
-			assetListEntry.getAssetListEntryId(), layout, segmentsExperienceId);
+			assetListEntry.getAssetListEntryId(), layout,
+			draftSegmentsExperience.getSegmentsExperienceId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
+		SegmentsExperience publishedSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_group.getGroupId(),
+				draftSegmentsExperience.getSegmentsExperienceKey(),
+				layout.getPlid());
+
 		mockHttpServletRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
+			"segmentsExperienceId",
+			String.valueOf(
+				publishedSegmentsExperience.getSegmentsExperienceId()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -588,7 +607,7 @@ public class RenderLayoutStructureTagTest {
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			_getRenderLayoutStructureTag(
 				layout, mockHttpServletRequest, mockHttpServletResponse,
-				segmentsExperienceId);
+				publishedSegmentsExperience.getSegmentsExperienceId());
 
 		renderLayoutStructureTag.doTag(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -649,17 +668,28 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		long segmentsExperienceId = _addSegmentsExperience(
-			layout, segmentsEntry.getSegmentsEntryId());
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsExperience draftSegmentsExperience = _addSegmentsExperience(
+			draftLayout, segmentsEntry.getSegmentsEntryId());
 
 		_addCollectionStyledLayoutStructureItem(
-			assetListEntry.getAssetListEntryId(), layout, segmentsExperienceId);
+			assetListEntry.getAssetListEntryId(), layout,
+			draftSegmentsExperience.getSegmentsExperienceId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
+		SegmentsExperience publishedSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_group.getGroupId(),
+				draftSegmentsExperience.getSegmentsExperienceKey(),
+				layout.getPlid());
+
 		mockHttpServletRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
+			"segmentsExperienceId",
+			String.valueOf(
+				publishedSegmentsExperience.getSegmentsExperienceId()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -667,7 +697,7 @@ public class RenderLayoutStructureTagTest {
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			_getRenderLayoutStructureTag(
 				layout, mockHttpServletRequest, mockHttpServletResponse,
-				segmentsExperienceId);
+				publishedSegmentsExperience.getSegmentsExperienceId());
 
 		renderLayoutStructureTag.doTag(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -810,9 +840,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		_addCollectionStyledLayoutStructureItem(
 			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
@@ -897,6 +929,8 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		_addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
 				"classNameId", _portal.getClassNameId(AssetListEntry.class)
@@ -911,7 +945,7 @@ public class RenderLayoutStructureTagTest {
 			"com.liferay.journal.web.internal.info.list.renderer." +
 				"BulletedJournalArticleBasicInfoListRenderer",
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				draftLayout.getPlid()));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
@@ -957,9 +991,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String itemId = _addCollectionStyledLayoutStructureItem(
 			JSONUtil.put(
@@ -1049,10 +1085,12 @@ public class RenderLayoutStructureTagTest {
 		try {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+			Layout draftLayout = layout.fetchDraftLayout();
+
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
 					fetchLayoutPageTemplateStructure(
-						_group.getGroupId(), layout.getPlid());
+						_group.getGroupId(), draftLayout.getPlid());
 
 			LayoutStructure layoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
@@ -1085,10 +1123,12 @@ public class RenderLayoutStructureTagTest {
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), layout.getPlid(),
+					_group.getGroupId(), draftLayout.getPlid(),
 					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+						fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
 					layoutStructure.toString());
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 			String content = _getRenderLayoutHTML(layout);
 
@@ -1108,9 +1148,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
@@ -1558,6 +1600,8 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		_addFragmentEntryLinkToLayout(
 			JSONUtil.put(
 				"image-square",
@@ -1588,7 +1632,7 @@ public class RenderLayoutStructureTagTest {
 				)),
 			"BASIC_COMPONENT-image", layout.fetchDraftLayout(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				draftLayout.getPlid()));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
@@ -1621,6 +1665,8 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		_addFragmentEntryLinkToLayout(
 			JSONUtil.put(
 				"element-text",
@@ -1641,7 +1687,7 @@ public class RenderLayoutStructureTagTest {
 				)),
 			"BASIC_COMPONENT-heading", layout.fetchDraftLayout(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+				draftLayout.getPlid()));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
@@ -1672,9 +1718,11 @@ public class RenderLayoutStructureTagTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String itemId = _addCollectionStyledLayoutStructureItem(
 			assetListEntry, layout, _COUNT_INFO_LIST_ITEMS, "none",
@@ -1997,10 +2045,9 @@ public class RenderLayoutStructureTagTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 	}
 
-	private long _addSegmentsExperience(Layout layout, long segmentsEntryId)
+	private SegmentsExperience _addSegmentsExperience(
+			Layout layout, long segmentsEntryId)
 		throws Exception {
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		MVCActionCommand addSegmentsExperienceMVCActionCommand =
 			ContentLayoutTestUtil.getMVCActionCommand(
@@ -2009,14 +2056,14 @@ public class RenderLayoutStructureTagTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_companyLocalService.getCompany(_group.getCompanyId()), _group,
-				draftLayout);
+				layout);
 
 		mockLiferayPortletActionRequest.setParameter(
-			"groupId", String.valueOf(draftLayout.getGroupId()));
+			"groupId", String.valueOf(layout.getGroupId()));
 		mockLiferayPortletActionRequest.setParameter(
 			"name", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(
-			"plid", String.valueOf(draftLayout.getPlid()));
+			"plid", String.valueOf(layout.getPlid()));
 		mockLiferayPortletActionRequest.setParameter(
 			"segmentsEntryId", String.valueOf(segmentsEntryId));
 
@@ -2029,11 +2076,8 @@ public class RenderLayoutStructureTagTest {
 		JSONObject segmentsExperienceJSONObject = jsonObject.getJSONObject(
 			"segmentsExperience");
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
-
-		return segmentsExperience.getSegmentsExperienceId();
+		return _segmentsExperienceLocalService.getSegmentsExperience(
+			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
 	}
 
 	private void _assertErrorMessage(

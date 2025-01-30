@@ -146,9 +146,19 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(html.contains(assetVocabulary1.getName()));
 		Assert.assertFalse(html.contains(assetVocabulary2.getName()));
 
+		SegmentsExperience draftLayoutSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		SegmentsExperience publishLayoutSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				draftLayoutSegmentsExperience.getGroupId(),
+				draftLayoutSegmentsExperience.getSegmentsExperienceKey(),
+				_layout.getPlid());
+
 		html = ContentLayoutTestUtil.getRenderLayoutHTML(
 			_layout, _layoutServiceContextHelper, _layoutStructureProvider,
-			segmentsExperienceId);
+			publishLayoutSegmentsExperience.getSegmentsExperienceId());
 
 		Assert.assertFalse(html.contains(assetVocabulary1.getName()));
 		Assert.assertTrue(html.contains(assetVocabulary2.getName()));
@@ -160,7 +170,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				"{}", _draftLayout,
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 
 		String name = RandomTestUtil.randomString(10);
 

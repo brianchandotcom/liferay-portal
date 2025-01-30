@@ -110,7 +110,7 @@ public class MapToFieldInformationTemplateTest {
 
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 	}
 
 	@After

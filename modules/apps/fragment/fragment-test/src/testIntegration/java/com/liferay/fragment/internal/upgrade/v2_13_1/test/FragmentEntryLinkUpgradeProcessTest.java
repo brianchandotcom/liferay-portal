@@ -78,9 +78,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 	}
 
 	@Test
@@ -108,13 +110,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 				}
 			).build());
 
-		Layout draftLayout = _layout.fetchDraftLayout();
-
 		FragmentEntryLink draftLayoutFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				editableValues, draftLayout, _segmentsExperienceId);
+				editableValues, _draftLayout, _segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		List<FragmentEntryLink> publishedLayoutFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -143,7 +143,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			"{}", _layout.fetchDraftLayout(), _segmentsExperienceId);
+			"{}", _draftLayout, _segmentsExperienceId);
 	}
 
 	@Override
@@ -262,6 +262,8 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private EntityCache _entityCache;

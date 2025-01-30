@@ -583,7 +583,7 @@ public class LayoutLocalServiceTest {
 			fragmentEntry.getJs(), draftLayout,
 			fragmentEntry.getFragmentEntryKey(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()),
+				draftLayout.getPlid()),
 			fragmentEntry.getType());
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);

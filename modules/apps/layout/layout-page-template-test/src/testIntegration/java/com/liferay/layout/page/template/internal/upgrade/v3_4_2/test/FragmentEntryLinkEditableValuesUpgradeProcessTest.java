@@ -70,9 +70,11 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 	}
 
 	@Test
@@ -166,7 +168,7 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 
 	private void _assertFragmentEntryLink(
 			JSONObject expectedJSONObject, long fragmentEntryLinkId,
-			Layout layout)
+			Layout layout, long segmentsExperienceId)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -175,7 +177,7 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 
 		Assert.assertEquals(layout.getPlid(), fragmentEntryLink.getPlid());
 		Assert.assertEquals(
-			_segmentsExperienceId, fragmentEntryLink.getSegmentsExperienceId());
+			segmentsExperienceId, fragmentEntryLink.getSegmentsExperienceId());
 
 		_assertEditableValues(expectedJSONObject, fragmentEntryLink);
 	}
@@ -183,8 +185,6 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 	private void _assertUpgrade(
 			JSONObject expectedJSONObject, JSONObject jsonObject)
 		throws Exception {
-
-		Layout draftLayout = _layout.fetchDraftLayout();
 
 		FragmentEntryLink draftFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
@@ -195,11 +195,11 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 				).toString(),
 				_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
 				_fragmentEntry.getFragmentEntryId(), _fragmentEntry.getHtml(),
-				_fragmentEntry.getJs(), draftLayout,
+				_fragmentEntry.getJs(), _draftLayout,
 				_fragmentEntry.getFragmentEntryKey(), _segmentsExperienceId,
 				_fragmentEntry.getType());
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -213,10 +213,12 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 
 		_assertFragmentEntryLink(
 			expectedJSONObject, draftFragmentEntryLink.getFragmentEntryLinkId(),
-			draftLayout);
+			_draftLayout, _segmentsExperienceId);
 		_assertFragmentEntryLink(
 			expectedJSONObject, fragmentEntryLink.getFragmentEntryLinkId(),
-			_layout);
+			_layout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()));
 	}
 
 	private static final String _CLASS_NAME =
@@ -227,6 +229,8 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private EntityCache _entityCache;

@@ -108,7 +108,7 @@ function getInfoItemFieldValue({
 	editableTypeOptions: EditableValue['config'];
 	externalReferenceCode: string;
 	fieldId: string;
-	languageId: string;
+	languageId: Liferay.Language.Locale;
 }) {
 	const body: {
 		classNameId: string;
@@ -116,7 +116,7 @@ function getInfoItemFieldValue({
 		editableTypeOptions: string;
 		externalReferenceCode?: string;
 		fieldId: string;
-		languageId: string;
+		languageId: Liferay.Language.Locale;
 	} = {
 		classNameId,
 		editableTypeOptions: JSON.stringify(editableTypeOptions),

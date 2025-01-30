@@ -6,6 +6,7 @@
 import layoutDataReducer from '../app/reducers/layoutDataReducer';
 
 export interface State {
+	languageId: Liferay.Language.Locale;
 	layoutData: ReturnType<typeof layoutDataReducer>;
 	segmentsExperienceId: string;
 }

@@ -14,7 +14,7 @@ let args: Array<DataType> = [];
 let callbacks: Array<(content: string) => void> = [];
 
 export default function batchRenderFragmentEntryContentRequest(
-	languageId: string,
+	languageId: Liferay.Language.Locale,
 	segmentsExperienceId: string,
 	data: DataType,
 	callback: (content: string) => void
@@ -29,7 +29,10 @@ export default function batchRenderFragmentEntryContentRequest(
 	timeoutId = setTimeout(() => doCall(languageId, segmentsExperienceId), 100);
 }
 
-function doCall(languageId: string, segmentsExperienceId: string) {
+function doCall(
+	languageId: Liferay.Language.Locale,
+	segmentsExperienceId: string
+) {
 	timeoutId = 0;
 	const currentArguments = args;
 	const currentCallbacks = callbacks;

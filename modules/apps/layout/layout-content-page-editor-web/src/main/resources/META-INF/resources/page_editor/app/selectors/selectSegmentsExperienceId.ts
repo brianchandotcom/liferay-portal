@@ -18,5 +18,5 @@ export default function selectSegmentsExperienceId(state: State) {
 	const segmentsExperienceId =
 		state.segmentsExperienceId || config.defaultSegmentsExperienceId;
 
-	return segmentsExperienceId ? `${segmentsExperienceId}` : null;
+	return `${segmentsExperienceId}`;
 }

@@ -5,7 +5,11 @@
 
 import {UPDATE_LANGUAGE_ID} from './types';
 
-export default function updateLanguageId({languageId}: {languageId: string}) {
+export default function updateLanguageId({
+	languageId,
+}: {
+	languageId: Liferay.Language.Locale;
+}) {
 	return {
 		languageId,
 		type: UPDATE_LANGUAGE_ID,

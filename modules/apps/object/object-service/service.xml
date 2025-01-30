@@ -204,6 +204,7 @@
 
 		<!-- Other fields -->
 
+		<column name="defaultLanguageId" type="String" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="objectEntryFolderId" type="long" />
 		<column name="rootObjectEntryId" type="long" />

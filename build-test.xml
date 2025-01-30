@@ -7574,6 +7574,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<text name="run.options" optional="true" />
 
 		<sequential>
+			<lstopwatch action="start" name="start.docker.container.@{name}" />
+
 			<local name="docker.network.run.option" />
 			<local name="docker.start.script" />
 
@@ -7671,6 +7673,8 @@ ${docker.start.error}</fail>
 			<echo>${docker.start.output}</echo>
 
 			<delete file="${docker.start.script}" />
+
+			<lstopwatch action="total" name="start.docker.container.@{name}" />
 		</sequential>
 	</macrodef>
 
@@ -16717,6 +16721,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="start-docker-containers">
+		<lstopwatch action="start" name="start.docker.containers" />
+
 		<get-database-property property.name="database.docker.image" />
 
 		<if>
@@ -16749,6 +16755,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				<start-docker-browser />
 			</then>
 		</if>
+
+		<lstopwatch action="total" name="start.docker.containers" />
 	</target>
 
 	<target name="start-docker-database">

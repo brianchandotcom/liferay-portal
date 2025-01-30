@@ -6,12 +6,11 @@
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 import {EditableValue} from '../../types/editables/EditableValue';
-import {LanguageId} from '../../types/layout_data/BaseLayoutDataItem';
 import {config} from '../config/index';
 
 export function getEditableLocalizedValue(
 	editableValue: EditableValue,
-	languageId: LanguageId | null = null,
+	languageId: Liferay.Language.Locale | null = null,
 	defaultValue = ''
 ) {
 	let content;

@@ -243,7 +243,7 @@ export default {
 		movedItemIds: {itemId: string; parentId: string}[];
 		onNetworkStatus: OnNetworkStatus;
 		removedItemIds: string[];
-		segmentsExperienceId: string | null;
+		segmentsExperienceId: string;
 		stepperFragmentEntryLinkId?: FragmentEntryLink['fragmentEntryLinkId'];
 	}) {
 		return draftServiceFetch<{

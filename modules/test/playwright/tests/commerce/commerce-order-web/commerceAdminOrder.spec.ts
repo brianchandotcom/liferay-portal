@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -16,12 +17,14 @@ import performLogin, {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
+import { CommerceAdminOrderNotesPage } from '../../../pages/commerce/commerce-order-web/commerceAdminOrderNotesPage';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	isolatedSiteTest,
 	loginTest()
 );
 
@@ -429,4 +432,257 @@ test('LPD-45268 Notes tab should not be visible if user does not have required p
 	).click();
 
 	await expect(commerceAdminOrderDetailsPage.orderNotesLink).toBeVisible();
+});
+
+test('LPD-47793 Notes should be visible using their respective permissions in the Order menu', async ({
+	apiHelpers,
+	commerceAdminOrderDetailsPage,
+	commerceAdminOrderNotesPage,
+	commerceAdminOrdersPage,
+	page,
+	site
+}) => {
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{
+			regionISOCode: 'CA',
+		}
+	);
+
+	const warehouse =
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+			{
+				active: true,
+				latitude: getRandomInt(),
+				longitude: getRandomInt(),
+				warehouseItems: [
+					{
+						quantity: 1,
+						sku: sku.sku,
+					},
+				],
+			}
+		);
+
+	await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+		warehouse.id,
+		channel.id
+	);
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		billingAddressId: address.id,
+		channelId: channel.id,
+		orderItems: [
+			{
+				quantity: 1,
+				skuId: sku.id,
+			},
+		],
+		orderStatus: '1',
+		paymentMethod: 'money-order',
+		paymentStatus: '0',
+		shippingAddressId: address.id,
+		shippingMethod: 'by-weight',
+		shippingOption: 'standard-option',
+	});
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com.liferay.commerce.product.model.CommerceChannel',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrder',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'MANAGE_COMMERCE_ORDER_NOTES',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+					'VIEW_COMMERCE_ORDERS',
+				],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.order',
+				scope: 1,
+			},
+		],
+	});
+
+	const publicOrderNote = await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+		order.id, {restricted: false}
+	);
+
+	const privateOrderNote = await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+		order.id, {restricted: true}
+	);
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	const role2 = await apiHelpers.headlessAdminUser.postRole({
+		name: getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com.liferay.commerce.product.model.CommerceChannel',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrder',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'MANAGE_COMMERCE_ORDER_NOTES',
+					'MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+					'VIEW_COMMERCE_ORDERS',
+				],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.order',
+				scope: 1,
+			},
+		],
+	});
+
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user2.alternateName] = {
+		name: user2.givenName,
+		password: 'test',
+		surname: user2.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role2.externalReferenceCode,
+		user2.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user2.emailAddress]
+	);
+
+	await performLogout(page);
+	await performLogin(page, user.alternateName);
+
+	await commerceAdminOrdersPage.goto();
+
+	await (
+		await commerceAdminOrdersPage.tableRowLink({
+			colIndex: 1,
+			rowValue: order.id,
+		})
+	).click();
+
+	await commerceAdminOrderDetailsPage.orderNotesLink.click();
+
+	expect(
+		await commerceAdminOrderNotesPage.orderNoteContent(publicOrderNote.content)
+	).toBeVisible();
+
+	expect(
+		await commerceAdminOrderNotesPage.orderNoteContent(privateOrderNote.content)
+	).toHaveCount(0);
+
+	await performLogout(page);
+	await performLogin(page, user2.alternateName);
+
+	await commerceAdminOrdersPage.goto();
+
+	await (
+		await commerceAdminOrdersPage.tableRowLink({
+			colIndex: 1,
+			rowValue: order.id,
+		})
+	).click();
+
+	await commerceAdminOrderDetailsPage.orderNotesLink.click();
+
+	expect(
+		await commerceAdminOrderNotesPage.orderNoteContent(publicOrderNote.content)
+	).toBeVisible();
+	
+	expect(
+		await commerceAdminOrderNotesPage.orderNoteContent(privateOrderNote.content)
+	).toBeVisible();
 });

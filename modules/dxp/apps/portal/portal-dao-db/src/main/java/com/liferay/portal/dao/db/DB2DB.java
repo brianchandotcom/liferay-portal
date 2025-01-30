@@ -542,22 +542,24 @@ public class DB2DB extends BaseDB {
 							"data type @type@;",
 						REWORD_TEMPLATE, template);
 
+					String defaultAlter = null;
+
 					String defaultValue = template[template.length - 2];
 
 					if (Validator.isBlank(defaultValue)) {
-						line = line.concat(
-							StringUtil.replace(
-								"alter table @table@ alter column " +
-									"@old-column@ drop default;",
-								REWORD_TEMPLATE, template));
+						defaultAlter = StringUtil.replace(
+							"alter table @table@ alter column @old-column@ " +
+								"drop default;",
+							REWORD_TEMPLATE, template);
 					}
 					else {
-						line = line.concat(
-							StringUtil.replace(
-								"alter table @table@ alter column " +
-									"@old-column@ set default @default@;",
-								REWORD_TEMPLATE, template));
+						defaultAlter = StringUtil.replace(
+							"alter table @table@ alter column @old-column@ " +
+								"set default @default@;",
+							REWORD_TEMPLATE, template);
 					}
+
+					runSQL(defaultAlter);
 
 					String nullable = template[template.length - 1];
 

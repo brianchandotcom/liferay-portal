@@ -354,6 +354,55 @@ public class CPConfigurationEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testForceDeleteCPConfigurationEntry() throws Exception {
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNotNull(cpConfigurationEntrySetting);
+
+		_cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntry(
+			cpConfigurationEntry);
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		Assert.assertNull(cpConfigurationEntrySetting);
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		Assert.assertNull(cpConfigurationEntrySetting);
+	}
+
+	@Test
 	public void testInheritCPConfigurationEntry() throws Exception {
 		frutillaRule.scenario(
 			"Inherit Product Configuration Entry"

@@ -18,6 +18,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../fixtures/displayPageTemplatesPagesTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -44,10 +45,12 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
+		'LPD-32050': {enabled: true},
 		'LPD-37927': {enabled: true},
 		'LPD-46393': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	masterPagesPagesTest,
 	objectPagesTest,
@@ -1681,7 +1684,7 @@ test.describe('File Upload Fragment', () => {
 
 test.describe('Form Localization', () => {
 	test(
-		'Can translate form fields',
+		'Can translate text form fields',
 		{tag: '@LPD-37927'},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
 
@@ -1829,6 +1832,189 @@ test.describe('Form Localization', () => {
 			await expect(page.locator('input.ddm-field-text')).toHaveValue(
 				'text español'
 			);
+		}
+	);
+
+	test(
+		'Can translate numeric form fields',
+		{tag: '@LPD-43808'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'numericERC',
+					label: {
+						en_US: 'Numeric',
+					},
+					name: 'Numeric',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.LongInteger,
+							externalReferenceCode: 'longIntegerERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Long Integer',
+							},
+							localized: true,
+							name: 'longInteger',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Integer,
+							businessType: ObjectField.BusinessTypeEnum.Integer,
+							externalReferenceCode: 'integerERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Integer',
+							},
+							localized: true,
+							name: 'integer',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.BigDecimal,
+							businessType:
+								ObjectField.BusinessTypeEnum.PrecisionDecimal,
+							externalReferenceCode: 'precisionDecimalERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Precision Decimal',
+							},
+							localized: true,
+							name: 'precisionDecimal',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Double,
+							businessType: ObjectField.BusinessTypeEnum.Decimal,
+							externalReferenceCode: 'decimalERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Decimal',
+							},
+							localized: true,
+							name: 'decimal',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Numerics',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the form to the Plant object and publish the page
+
+			await pageEditorPage.mapFormFragment(formId, 'Numeric', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page
+				.getByLabel('Long Integer', {exact: true})
+				.fill('11111111111');
+			await page.getByLabel('Integer', {exact: true}).fill('1111');
+			await page
+				.getByLabel('Precision Decimal', {exact: true})
+				.fill('111.11');
+			await page.getByLabel('Decimal', {exact: true}).fill('1111.22222');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await page
+				.getByLabel('Long Integer', {exact: true})
+				.fill('22222222222');
+			await page.getByLabel('Integer', {exact: true}).fill('2222');
+			await page
+				.getByLabel('Precision Decimal', {exact: true})
+				.fill('222.22');
+			await page.getByLabel('Decimal', {exact: true}).fill('2222.33333');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/numerics'
+				);
+
+			const item = items[0];
+
+			expect(item.precisionDecimal_i18n).toStrictEqual({
+				en_US: 111.11,
+				es_ES: 222.22,
+			});
+
+			expect(item.decimal_i18n).toStrictEqual({
+				en_US: 1111.22222,
+				es_ES: 2222.33333,
+			});
+
+			expect(item.integer_i18n).toStrictEqual({
+				en_US: 1111,
+				es_ES: 2222,
+			});
+
+			expect(item.longInteger_i18n).toStrictEqual({
+				en_US: 11111111111,
+				es_ES: 22222222222,
+			});
 		}
 	);
 

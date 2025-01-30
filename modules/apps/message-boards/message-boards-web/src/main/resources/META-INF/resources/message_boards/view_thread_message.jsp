@@ -80,7 +80,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 
 				String[] ranks = {StringPool.BLANK, StringPool.BLANK};
 
-				if (!message.isAnonymous()) {
+				if (!message.isAnonymous() && (messageUser != null)) {
 					ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
 				}
 				%>

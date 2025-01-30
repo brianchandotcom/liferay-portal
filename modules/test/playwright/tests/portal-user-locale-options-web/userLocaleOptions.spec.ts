@@ -22,7 +22,6 @@ test('LPD-46913 Language should change properly for admins even if the site does
 	apiHelpers,
 	page,
 	siteSettingsLocalizationPage,
-	siteSettingsPage,
 	userLocaleOptionsPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
@@ -46,13 +45,9 @@ test('LPD-46913 Language should change properly for admins even if the site does
 		const siteURL = `/es/group${site.friendlyUrlPath}`;
 		await page.goto(siteURL);
 
-		await siteSettingsPage.goToSiteSetting(
-			'Localización',
-			'Idiomas',
-			site.friendlyUrlPath
-		);
-
 		await userLocaleOptionsPage.changeLanguageWithAlert();
+
+		await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 
 		expect(
 			siteSettingsLocalizationPage.customDefaultLanguageOption

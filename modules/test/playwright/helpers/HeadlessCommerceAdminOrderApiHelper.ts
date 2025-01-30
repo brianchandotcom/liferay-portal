@@ -38,6 +38,16 @@ type TOrderItem = {
 	unitPrice?: number;
 };
 
+type TOrderNote = {
+	author?: string;
+	content?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	orderExternalReferenceCode?: string;
+	orderId?: number;
+	restricted?: boolean;
+};
+
 type TOrderRule = {
 	active?: boolean;
 	id?: number;
@@ -159,6 +169,32 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		}
 
 		return patchOrder;
+	}
+
+	async postOrderIdOrderNote(orderId: number, orderNote: TOrderNote): Promise<TOrderNote> {
+		orderNote = {
+			author: getRandomString(),
+			content: getRandomString(),
+			externalReferenceCode: getRandomString(),
+			...(orderNote || {}),
+		};
+
+		const postOrder = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/orders/${orderId}/orderNotes`,
+			{
+				data: orderNote,
+				failOnStatusCode: true
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postOrder.id,
+				type: 'order',
+			});
+		}
+
+		return postOrder;
 	}
 
 	async postTerm(terms: TTerm) {

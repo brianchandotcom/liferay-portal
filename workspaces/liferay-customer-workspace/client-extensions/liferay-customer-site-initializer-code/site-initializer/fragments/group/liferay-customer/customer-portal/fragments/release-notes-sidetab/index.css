@@ -17,11 +17,8 @@
 	}
 
 	& img {
+		height: auto;
 		max-width: 100%;
-		
-		&:hover {
-			cursor: pointer;
-		}
 	}
 
 	.close:hover {

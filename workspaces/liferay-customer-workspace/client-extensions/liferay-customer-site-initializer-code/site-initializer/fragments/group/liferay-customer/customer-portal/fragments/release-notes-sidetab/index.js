@@ -25,7 +25,6 @@ const restArticle = async (requestId) => {
 	);
 
 	updateArticleContent(journalArticleResponse.contentFields);
-	updateArticleImages();
 	updateArticleLinks(journalArticleResponse.contentFields);
 	updateArticleTitle(journalArticleResponse.title);
 	updateLabelProductCapabilities(
@@ -69,20 +68,6 @@ function updateArticleContent(contentFields) {
 
 			articleContent.appendChild(contentDiv);
 		}
-	});
-}
-
-function updateArticleImages() {
-	const sideTabImages = document
-		.getElementById('sidetabFeature')
-		.querySelectorAll('img');
-
-	sideTabImages.forEach((image) => {
-		image.addEventListener('click', (event) => {
-			event.preventDefault();
-
-			window.open(image.src, '_blank').focus();
-		});
 	});
 }
 

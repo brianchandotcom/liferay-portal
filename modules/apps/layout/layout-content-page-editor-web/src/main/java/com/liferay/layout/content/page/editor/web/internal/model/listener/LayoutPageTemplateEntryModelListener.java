@@ -236,24 +236,14 @@ public class LayoutPageTemplateEntryModelListener
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		for (SegmentsExperience segmentsExperience :
 				_segmentsExperienceLocalService.getSegmentsExperiences(
-					layoutPageTemplateEntry.getGroupId(),
-					layoutPageTemplateEntry.getPlid())) {
+					layout.getGroupId(), layout.getPlid())) {
 
 			_updateLayoutPageTemplateStructureData(
 				layout, layoutPageTemplateEntry,
 				originalLayoutPageTemplateEntry,
 				segmentsExperience.getSegmentsExperienceId());
-
-			if (draftLayout != null) {
-				_updateLayoutPageTemplateStructureData(
-					draftLayout, layoutPageTemplateEntry,
-					originalLayoutPageTemplateEntry,
-					segmentsExperience.getSegmentsExperienceId());
-			}
 		}
 
 		for (FragmentEntryLink fragmentEntryLink :
@@ -263,7 +253,19 @@ public class LayoutPageTemplateEntryModelListener
 			_updateFragmentEntryLinkEditableValues(fragmentEntryLink);
 		}
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		if (draftLayout != null) {
+			for (SegmentsExperience segmentsExperience :
+					_segmentsExperienceLocalService.getSegmentsExperiences(
+						draftLayout.getGroupId(), draftLayout.getPlid())) {
+
+				_updateLayoutPageTemplateStructureData(
+					draftLayout, layoutPageTemplateEntry,
+					originalLayoutPageTemplateEntry,
+					segmentsExperience.getSegmentsExperienceId());
+			}
+
 			for (FragmentEntryLink fragmentEntryLink :
 					_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 						draftLayout.getGroupId(), draftLayout.getPlid())) {

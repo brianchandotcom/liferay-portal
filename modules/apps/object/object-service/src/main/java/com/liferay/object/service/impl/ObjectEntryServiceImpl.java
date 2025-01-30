@@ -109,7 +109,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long groupId, long objectDefinitionId,
+			long groupId, String defaultLanguageId, long objectDefinitionId,
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 

@@ -279,8 +279,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			long userId, long groupId, String defaultLanguageId,
+			long objectDefinitionId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setStrictAdd(true);

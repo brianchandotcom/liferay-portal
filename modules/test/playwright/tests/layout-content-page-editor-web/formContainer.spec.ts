@@ -5693,6 +5693,7 @@ test.describe('Edit mode form errors', () => {
 							label: {
 								en_US: 'Name',
 							},
+							localized: false,
 							name: 'name',
 							required: true,
 						},

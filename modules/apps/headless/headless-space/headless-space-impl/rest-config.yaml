@@ -1,0 +1,11 @@
+apiDir: "../headless-space-api/src/main/java"
+apiPackagePath: "com.liferay.headless.space"
+application:
+    baseURI: "/headless-space"
+    className: "HeadlessSpaceApplication"
+    name: "Liferay.Headless.Space"
+author: "Roberto Díaz"
+clientDir: "../headless-space-client/src/main/java"
+forcePredictableOperationId: true
+generateBatch: false
+generateGraphQL: false

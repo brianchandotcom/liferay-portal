@@ -1,0 +1,107 @@
+components:
+    schemas:
+        Space:
+            description:
+                Represents a Space
+            properties:
+                dateCreated:
+                    description:
+                        The document's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time a field of the space changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    description:
+                        The navigation space's description.
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized space's description.
+                    type: object
+                externalReferenceCode:
+                    description:
+                        The space's external reference code.
+                    readOnly: true
+                    type: string
+                groupId:
+                    description:
+                        The space's groupId.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                id:
+                    description:
+                        The space's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                linkedSiteIds:
+                    description:
+                        The space linked site ids.
+                    items:
+                        format: int64
+                        type: integer
+                    readOnly: true
+                    type: array
+                linkedSitesExternalReferenceCodes:
+                    description:
+                        The space linked sites external reference codes.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                name:
+                    description:
+                        The navigation space's name.
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized space's name.
+                    type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.headless.space.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Liferay Spaces Headless API
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /spaces:
+        post:
+            description:
+                Adds a new space
+            operationId: postSpace
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Space"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Space"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                    description:
+                        default response
+            # @review
+            tags: ["Space"]

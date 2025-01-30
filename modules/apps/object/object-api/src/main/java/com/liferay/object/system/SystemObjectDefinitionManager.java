@@ -56,6 +56,10 @@ public interface SystemObjectDefinitionManager {
 	public String getBaseModelExternalReferenceCode(long primaryKey)
 		throws PortalException;
 
+	public default boolean getEnableLocalization() {
+		return false;
+	}
+
 	public String getExternalReferenceCode();
 
 	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor();
@@ -65,6 +69,10 @@ public interface SystemObjectDefinitionManager {
 	}
 
 	public Map<Locale, String> getLabelMap();
+
+	public default Table getLocalizationTable() {
+		return null;
+	}
 
 	public Class<?> getModelClass();
 

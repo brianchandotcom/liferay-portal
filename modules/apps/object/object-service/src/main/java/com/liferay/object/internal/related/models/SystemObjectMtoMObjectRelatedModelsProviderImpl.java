@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
@@ -24,6 +25,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -57,6 +59,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
 
+		_localizationTable =
+			systemObjectDefinitionManager.getLocalizationTable();
 		_table = systemObjectDefinitionManager.getTable();
 	}
 
@@ -251,16 +255,35 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn1 =
 			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1();
+
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn2 =
 			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
 
-		return fromStep.from(
+		JoinStep joinStep = fromStep.from(
 			dynamicObjectDefinitionTable
 		).innerJoinON(
 			dynamicObjectRelationshipMappingTable,
 			primaryKeyColumn2.eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
-		).where(
+		);
+
+		if (_localizationTable != null) {
+			joinStep = joinStep.leftJoinOn(
+				_localizationTable,
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					_localizationTable.getColumn(
+						dynamicObjectDefinitionTable.getPrimaryKeyColumnName())
+				).and(
+					_localizationTable.getColumn(
+						"languageId"
+					).eq(
+						ObjectEntrySearchUtil.getLanguageId()
+					)
+				));
+		}
+
+		return joinStep.where(
 			primaryKeyColumn1.eq(
 				primaryKey
 			).and(
@@ -293,11 +316,22 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 						objectRelationship.getCompanyId());
 				}
 			).and(
-				ObjectEntrySearchUtil.getRelatedModelsPredicate(
-					objectDefinition2, _objectFieldLocalService, search,
-					dynamicObjectDefinitionTable)
-			)
-		);
+				() -> {
+					ObjectField titleObjectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition2.getTitleObjectFieldId());
+
+					if (titleObjectField.isLocalized()) {
+						return ObjectEntrySearchUtil.getRelatedModelsPredicate(
+							objectDefinition2, _objectFieldLocalService, search,
+							_localizationTable);
+					}
+
+					return ObjectEntrySearchUtil.getRelatedModelsPredicate(
+						objectDefinition2, _objectFieldLocalService, search,
+						dynamicObjectDefinitionTable);
+				}
+			));
 	}
 
 	private GroupByStep _getUnrelatedModelsGroupByStep(
@@ -375,6 +409,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		);
 	}
 
+	private final Table _localizationTable;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

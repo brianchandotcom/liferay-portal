@@ -23,13 +23,16 @@ export const test = mergeTests(
 
 test.beforeEach(
 	'Setup site and Clay Sample widget',
-	async ({apiHelpers, claySamplePage, site}) => {
+	async ({apiHelpers, claySamplePage, page, site}) => {
 		await test.step('Create a content site and the clay sample widget', async () => {
 			await claySamplePage.setupClaySampleWidget({apiHelpers, site});
 		});
 
 		await test.step('Select Management Toolbars tab', async () => {
-			await claySamplePage.selectTab('Management Toolbars');
+			await claySamplePage.selectTab(
+				'Management Toolbars',
+				page.getByRole('heading', {name: 'DEFAULT STATE'})
+			);
 		});
 	}
 );

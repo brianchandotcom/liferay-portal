@@ -30,7 +30,10 @@ test(
 		});
 
 		await test.step('Select Vertical Nav tab', async () => {
-			await claySamplePage.selectTab('Vertical Nav');
+			await claySamplePage.selectTab(
+				'Vertical Nav',
+				page.getByText('Panel Content 5')
+			);
 		});
 
 		await test.step('Check that alert did not pop up', async () => {

@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
@@ -37,12 +38,14 @@ export class ClaySamplePage {
 		this.tooltip = page.locator('.tooltip-inner');
 	}
 
-	async selectTab(tabName: string) {
+	async selectTab(tabName: string, target) {
 		const tabHeading = this.tablist.getByText(tabName);
 
-		await expect(tabHeading).toBeInViewport();
-
-		await tabHeading.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target,
+			trigger: tabHeading,
+		});
 	}
 
 	async setupClaySampleWidget({apiHelpers, site}) {

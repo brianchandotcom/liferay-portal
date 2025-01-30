@@ -30,7 +30,10 @@ test(
 		});
 
 		await test.step('Select Panel tab', async () => {
-			await claySamplePage.selectTab('Panel');
+			await claySamplePage.selectTab(
+				'Panel',
+				page.getByRole('heading', {name: 'DEFAULT PANEL'})
+			);
 		});
 
 		await test.step('Check that role and aria-orientation is not present', async () => {

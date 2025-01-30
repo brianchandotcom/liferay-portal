@@ -75,6 +75,7 @@ create table ObjectEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	defaultLanguageId VARCHAR(75) null,
 	objectDefinitionId LONG,
 	objectEntryFolderId LONG,
 	rootObjectEntryId LONG,

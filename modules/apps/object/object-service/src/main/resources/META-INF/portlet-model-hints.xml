@@ -94,6 +94,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="objectEntryFolderId" type="long" />
 		<field name="rootObjectEntryId" type="long" />

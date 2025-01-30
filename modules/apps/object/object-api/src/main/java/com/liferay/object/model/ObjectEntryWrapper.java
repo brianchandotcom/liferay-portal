@@ -46,6 +46,7 @@ public class ObjectEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
@@ -120,6 +121,12 @@ public class ObjectEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long objectDefinitionId = (Long)attributes.get("objectDefinitionId");
@@ -207,6 +214,16 @@ public class ObjectEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the default language ID of this object entry.
+	 *
+	 * @return the default language ID of this object entry
+	 */
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -553,6 +570,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the default language ID of this object entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this object entry
+	 */
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**

@@ -50,4 +50,12 @@ module.exports = {
 		'@clayui/upper-toolbar',
 	],
 	main: 'src/main/resources/META-INF/resources/index.js',
+	symbols: {
+		'@clayui/charts': ['bb', 'default'],
+		'@clayui/css': [
+
+			// Need to explicitly disable exports because the package differs in browser and server
+
+		],
+	},
 };

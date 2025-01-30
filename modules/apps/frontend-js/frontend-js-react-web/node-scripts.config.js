@@ -18,4 +18,10 @@ module.exports = {
 		'react-dom-18',
 	],
 	main: 'src/main/resources/META-INF/resources/js/index.ts',
+	symbols: {
+		'prop-types': ['*', 'default'],
+		'react': ['*', 'default'],
+		'react-dnd': ['*', 'default'],
+		'react-dom': ['*', 'default'],
+	},
 };

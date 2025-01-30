@@ -48,4 +48,37 @@ module.exports = {
 		'text-mask-addons',
 		'text-mask-core',
 	],
+	symbols: {
+		'axe-core': ['*', 'default'],
+		'clipboard': ['*', 'default'],
+		'cropperjs': ['*', 'default'],
+		'dagre': ['*', 'default'],
+		'fuzzy': ['*', 'default'],
+		'graphql-hooks-memcache': ['*', 'default'],
+		'highlight.js': ['*', 'default'],
+		'highlight.js/lib/core': ['*', 'default'],
+		'highlight.js/lib/languages/java': ['*', 'default'],
+		'highlight.js/lib/languages/javascript': ['*', 'default'],
+		'highlight.js/lib/languages/plaintext': ['*', 'default'],
+		'image-promise': ['*', 'default'],
+		'liferay-ckeditor': [],
+		'lodash.groupby': ['*', 'default'],
+		'lodash.isequal': ['*', 'default'],
+		'moment': ['*', 'default'],
+		'moment/min/moment-with-locales': ['*', 'default'],
+		'numeral': ['*', 'default'],
+		'object-hash': ['*', 'default'],
+		'qrcode': [
+
+			// Need to explicitly list exports because the package differs in browser and server
+
+			'create',
+			'toCanvas',
+			'toString',
+			'toDataURL',
+		],
+		'qs': ['*', 'default'],
+		'text-mask-addons': ['*', 'default'],
+		'text-mask-core': ['*', 'default'],
+	},
 };

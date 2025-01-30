@@ -325,6 +325,18 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class RequiredLanguageId extends ObjectEntryValuesException {
+
+		public RequiredLanguageId(String languageId, String objectFieldName) {
+			super(
+				String.format(
+					"No value was provided for the language ID \"%s\" in the " +
+						"required object field \"%s\".",
+					languageId, objectFieldName));
+		}
+
+	}
+
 	public static class UniqueValueConstraintViolation
 		extends ObjectEntryValuesException {
 

@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -282,7 +285,7 @@ public class TaxonomyVocabularyResourceTest
 		super.testGetTaxonomyVocabulary();
 
 		_testGetTaxonomyVocabularyActions();
-
+		_testGetTaxonomyVocabularyWithoutPermissionsAction();
 		_testGetTaxonomyVocabularyWithPermissions();
 	}
 
@@ -533,6 +536,44 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
+	private void _testGetTaxonomyVocabularyWithoutPermissionsAction()
+		throws Exception {
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setViewableBy(
+			TaxonomyVocabulary.ViewableBy.MEMBERS);
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), randomTaxonomyVocabulary);
+
+		User siteMemberUser = UserTestUtil.addGroupUser(
+			testGroup, RoleConstants.SITE_MEMBER);
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			siteMemberUser.getUserId(), password, password, false, true);
+
+		TaxonomyVocabularyResource siteMemberTaxonomyVocabularyResource =
+			TaxonomyVocabularyResource.builder(
+			).authentication(
+				siteMemberUser.getEmailAddress(), password
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			siteMemberTaxonomyVocabularyResource.getTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId());
+
+		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
+	}
+
 	private void _testGetTaxonomyVocabularyWithPermissions() throws Exception {
 		TaxonomyVocabulary postTaxonomyVocabulary =
 			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
@@ -563,12 +604,15 @@ public class TaxonomyVocabularyResourceTest
 		Permission permission = permissions[0];
 
 		Assert.assertEquals(role.getName(), permission.getRoleName());
-		Assert.assertEquals(
+		Assert.assertArrayEquals(
 			new Object[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
 			permission.getActionIds());
 	}
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -164,12 +164,12 @@ public class HighlightTranslatorTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	protected BoundaryScanner getBoundaryScanner(String boundaryScannerType) {
-		if (boundaryScannerType != null) {
-			return BoundaryScanner.valueOf(
-				StringUtils.capitalize(boundaryScannerType));
+		if (boundaryScannerType == null) {
+			return null;
 		}
 
-		return null;
+		return BoundaryScanner.valueOf(
+			StringUtils.capitalize(boundaryScannerType));
 	}
 
 	protected HighlighterOrder getOrder(String order) {
@@ -715,18 +715,14 @@ public class HighlightTranslatorTest {
 	}
 
 	private String _getHighlighterType(HighlighterType highlighterType) {
-		if (highlighterType == null) {
+		if ((highlighterType == null) || !highlighterType.isBuiltin()) {
 			return null;
 		}
 
-		if (highlighterType.isBuiltin()) {
-			BuiltinHighlighterType builtinHighlighterType =
-				highlighterType.builtin();
+		BuiltinHighlighterType builtinHighlighterType =
+			highlighterType.builtin();
 
-			return builtinHighlighterType.jsonValue();
-		}
-
-		return null;
+		return builtinHighlighterType.jsonValue();
 	}
 
 	private Object _getQueryKind(
@@ -743,18 +739,18 @@ public class HighlightTranslatorTest {
 	}
 
 	private String _getQueryKind(Query query) {
-		if (query != null) {
-			org.opensearch.client.opensearch._types.query_dsl.Query
-				openSearchQuery =
-					new org.opensearch.client.opensearch._types.query_dsl.Query(
-						_openSearchQueryTranslator.translate(query));
-
-			Kind kind = openSearchQuery._kind();
-
-			return kind.jsonValue();
+		if (query == null) {
+			return null;
 		}
 
-		return null;
+		org.opensearch.client.opensearch._types.query_dsl.Query
+			openSearchQuery =
+				new org.opensearch.client.opensearch._types.query_dsl.Query(
+					_openSearchQueryTranslator.translate(query));
+
+		Kind kind = openSearchQuery._kind();
+
+		return kind.jsonValue();
 	}
 
 	private HighlightPrototype _highlightPrototype;

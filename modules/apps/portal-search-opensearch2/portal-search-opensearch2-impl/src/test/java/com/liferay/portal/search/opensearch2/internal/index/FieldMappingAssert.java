@@ -105,13 +105,13 @@ public class FieldMappingAssert {
 			return jsonObject.getString(key);
 		}
 
-		if (property.isText() && key.equals("analyzer")) {
-			TextProperty textProperty = property.text();
-
-			return textProperty.analyzer();
+		if (!property.isText() || !key.equals("analyzer")) {
+			return null;
 		}
 
-		return null;
+		TextProperty textProperty = property.text();
+
+		return textProperty.analyzer();
 	}
 
 	private static TypeFieldMappings _getTypeFieldMappings(

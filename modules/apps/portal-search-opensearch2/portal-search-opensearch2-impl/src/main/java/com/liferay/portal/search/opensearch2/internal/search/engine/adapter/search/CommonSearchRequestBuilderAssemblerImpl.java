@@ -585,12 +585,12 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private org.opensearch.client.opensearch._types.query_dsl.Query
 		_translateQuery(Query query) {
 
-		if (query != null) {
-			return new org.opensearch.client.opensearch._types.query_dsl.Query(
-				_queryTranslator.translate(query));
+		if (query == null) {
+			return null;
 		}
 
-		return null;
+		return new org.opensearch.client.opensearch._types.query_dsl.Query(
+			_queryTranslator.translate(query));
 	}
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")

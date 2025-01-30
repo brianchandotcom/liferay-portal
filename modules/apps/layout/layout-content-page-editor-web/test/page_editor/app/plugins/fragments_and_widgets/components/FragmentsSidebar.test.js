@@ -4,12 +4,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {setIn} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/setIn';
 import FragmentsSidebar, {
@@ -548,6 +549,63 @@ describe('FragmentsSidebar', () => {
 			expect(
 				screen.getByText('switch-to-list[noun]-view')
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('Button to explore marketplace', () => {
+		it('shows button highlighted until user clicks it', async () => {
+			Liferay.FeatureFlags['LPD-34938'] = true;
+			Liferay.Util.Session = {
+				set: jest.fn(),
+			};
+
+			const {container} = renderComponent();
+
+			const exploreMarketplaceButton = screen.getByLabelText(
+				'explore-marketplace'
+			);
+
+			expect(exploreMarketplaceButton).toBeInTheDocument();
+
+			expect(
+				container.querySelector('.lexicon-icon-marketplace')
+			).toBeTruthy();
+
+			expect(
+				container.querySelector('.marketplace-button.notification')
+			).toBeTruthy();
+
+			userEvent.click(exploreMarketplaceButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('marketplace-is-now-in-page-builder')
+				).toBeInTheDocument();
+
+				expect(
+					screen.getByText(
+						'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
+					)
+				).toBeInTheDocument();
+			});
+
+			Liferay.FeatureFlags['LPD-34938'] = false;
+		});
+
+		it('does not display a notification after being clicked', () => {
+			Liferay.FeatureFlags['LPD-34938'] = true;
+
+			config.isMarketplaceButtonVisited = true;
+
+			const {container} = renderComponent();
+
+			expect(
+				container.querySelector('.marketplace-button .notification')
+			).not.toBeTruthy();
+
+			config.isMarketplaceButtonVisited = false;
+
+			Liferay.FeatureFlags['LPD-34938'] = false;
 		});
 	});
 });

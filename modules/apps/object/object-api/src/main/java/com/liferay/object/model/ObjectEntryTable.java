@@ -45,6 +45,10 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryTable, String> defaultLanguageId =
+		createColumn(
+			"defaultLanguageId", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Long> objectDefinitionId =
 		createColumn(
 			"objectDefinitionId", Long.class, Types.BIGINT,

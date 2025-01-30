@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Shared Dependencies Google API Common
+Bundle-SymbolicName: com.liferay.shared.dependencies.google.api.common
+Bundle-Version: 1.0.0
+-exportcontents:\
+	com.google.api.core.*,\
+	com.google.api.pathtemplate.*,\
+	com.google.api.resourcenames.*,\
+	com.google.auto.value.*

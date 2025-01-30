@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>TABLE_COLUMN_NAME</td>
-	<td>//table//th[contains(text(),'${columnName}')] | //table//th//a[contains(.,'${columnName}')]</td>
+	<td>//table//th[contains(text(),'${columnName}')] | //table//th//a[contains(.,'${columnName}')] | //table//th//span[contains(text(),'${columnName}')]</td>
 	<td></td>
 </tr>
 </tbody>

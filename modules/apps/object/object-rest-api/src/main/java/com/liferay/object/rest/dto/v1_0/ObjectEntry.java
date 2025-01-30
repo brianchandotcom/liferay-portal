@@ -273,6 +273,47 @@ public class ObjectEntry implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageIdSupplier != null) {
+			defaultLanguageId = _defaultLanguageIdSupplier.get();
+
+			_defaultLanguageIdSupplier = null;
+		}
+
+		return defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		this.defaultLanguageId = defaultLanguageId;
+
+		_defaultLanguageIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultLanguageId(
+		UnsafeSupplier<String, Exception> defaultLanguageIdUnsafeSupplier) {
+
+		_defaultLanguageIdSupplier = () -> {
+			try {
+				return defaultLanguageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String defaultLanguageId;
+
+	@JsonIgnore
+	private Supplier<String> _defaultLanguageIdSupplier;
+
+	@Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -817,6 +858,9 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "dateModified")) {
 			return getDateModified();
 		}
+		else if (Objects.equals(propertyName, "defaultLanguageId")) {
+			return getDefaultLanguageId();
+		}
 		else if (Objects.equals(propertyName, "externalReferenceCode")) {
 			return getExternalReferenceCode();
 		}
@@ -986,6 +1030,22 @@ public class ObjectEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		String defaultLanguageId = getDefaultLanguageId();
+
+		if (defaultLanguageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultLanguageId));
 
 			sb.append("\"");
 		}

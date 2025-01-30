@@ -5,6 +5,8 @@
 
 package com.liferay.style.book.web.internal.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -13,7 +15,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -22,6 +26,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
 import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryActionDropdownItemsProvider;
+import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,12 +42,14 @@ public class StyleBookVerticalCard
 
 	public StyleBookVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker) {
+		RenderResponse renderResponse, RowChecker rowChecker,
+		CETManager cetManager) {
 
 		super(baseModel, rowChecker);
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_cetManager = cetManager;
 
 		_styleBookEntry = (StyleBookEntry)baseModel;
 
@@ -115,6 +122,21 @@ public class StyleBookVerticalCard
 		StyleBookEntry draftStyleBookEntry =
 			StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
 
+		CET cet = _cetManager.getCET(
+			_styleBookEntry.getCompanyId(), _styleBookEntry.getThemeId());
+
+		Theme theme = ThemeLocalServiceUtil.fetchTheme(
+			_styleBookEntry.getCompanyId(), _styleBookEntry.getThemeId());
+
+		if (StyleBookUtil.isThemeInactive(cet, theme)) {
+			return LabelItemListBuilder.add(
+				labelItem -> {
+					labelItem.setStatus(WorkflowConstants.STATUS_INACTIVE);
+					labelItem.setStyle("danger");
+				}
+			).build();
+		}
+
 		if (_styleBookEntry.isHead() && (draftStyleBookEntry != null)) {
 			return LabelItemListBuilder.add(
 				labelItem -> labelItem.setStatus(
@@ -175,6 +197,7 @@ public class StyleBookVerticalCard
 		return false;
 	}
 
+	private final CETManager _cetManager;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;

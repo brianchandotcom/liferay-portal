@@ -43,4 +43,12 @@ public class StyleBookUtil {
 		return name;
 	}
 
+	public static boolean isThemeInactive(CET cet, Theme theme) {
+		if ((cet == null) && (theme == null)) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

@@ -9,6 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -4527,20 +4533,27 @@ public class ObjectEntryLocalServiceTest {
 			Map<String, Object> entryDTO =
 				(Map<String, Object>)inputObjects.get("entryDTO");
 
-			List<Map<String, Object>> customFields =
-				(List<Map<String, Object>>)entryDTO.get("customFields");
+			if (entryDTO.containsKey("customFields")) {
+				List<Map<String, Object>> customFields =
+					(List<Map<String, Object>>)entryDTO.get("customFields");
 
-			Map<String, Object> customField = customFields.get(0);
+				Map<String, Object> customField = customFields.get(0);
 
-			Assert.assertEquals("customFieldName", customField.get("name"));
+				Assert.assertEquals("customFieldName", customField.get("name"));
 
-			Map<String, Object> customValue =
-				(Map<String, Object>)customField.get("customValue");
+				Map<String, Object> customValue =
+					(Map<String, Object>)customField.get("customValue");
 
-			Assert.assertEquals("customFieldValue", customValue.get("data"));
+				Assert.assertEquals(
+					"customFieldValue", customValue.get("data"));
 
-			Assert.assertEquals(
-				"textObjectFieldValue", entryDTO.get("textObjectFieldName"));
+				Assert.assertEquals(
+					"textObjectFieldValue",
+					entryDTO.get("textObjectFieldName"));
+			}
+			else {
+				Assert.assertTrue(entryDTO.containsKey("customFieldName"));
+			}
 		};
 
 		String key =
@@ -4550,24 +4563,29 @@ public class ObjectEntryLocalServiceTest {
 		try (Closeable closeable = _registerTestObjectValidationRuleEngine(
 				consumer, key)) {
 
-			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
+			ExpandoTable expandoTableCommerceOrder = ExpandoTestUtil.addTable(
+				PortalUtil.getClassNameId(CommerceOrder.class),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+			ExpandoTestUtil.addColumn(
+				expandoTableCommerceOrder, "customFieldName",
+				ExpandoColumnConstants.STRING);
+
+			ExpandoTable expandoTableUser = ExpandoTestUtil.addTable(
 				PortalUtil.getClassNameId(User.class),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-				expandoTable, "customFieldName", ExpandoColumnConstants.STRING);
+			ExpandoColumn expandoColumnUser = ExpandoTestUtil.addColumn(
+				expandoTableUser, "customFieldName",
+				ExpandoColumnConstants.STRING);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();
 
 			serviceContext.setExpandoBridgeAttributes(
 				HashMapBuilder.<String, Serializable>put(
-					expandoColumn.getName(), "customFieldValue"
+					expandoColumnUser.getName(), "customFieldValue"
 				).build());
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchSystemObjectDefinition(
-					TestPropsValues.getCompanyId(), "User");
 
 			User user = UserTestUtil.addUser(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -4578,6 +4596,40 @@ public class ObjectEntryLocalServiceTest {
 				RandomTestUtil.randomString(),
 				new long[] {serviceContext.getScopeGroupId()}, serviceContext);
 
+			Group group = GroupTestUtil.addGroup();
+
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyTestUtil.addCommerceCurrency(
+					group.getCompanyId());
+
+			CommerceChannel commerceChannel =
+				CommerceTestUtil.addCommerceChannel(
+					group.getGroupId(), commerceCurrency.getCode());
+
+			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+				user.getUserId(), commerceChannel.getGroupId(),
+				commerceCurrency);
+
+			ObjectDefinition objectDefinitionCommerceOrder =
+				_fetchSystemObjectDefinition("CommerceOrder");
+
+			ObjectValidationRule objectValidationRule1 =
+				_objectValidationRuleLocalService.addObjectValidationRule(
+					StringPool.BLANK, TestPropsValues.getUserId(),
+					objectDefinitionCommerceOrder.getObjectDefinitionId(), true,
+					key,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+					"", false, Collections.emptyList());
+
+			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+
+			ObjectDefinition objectDefinitionUser =
+				_fetchSystemObjectDefinition("User");
+
 			ObjectField objectField = _addCustomObjectField(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -4586,22 +4638,22 @@ public class ObjectEntryLocalServiceTest {
 				).name(
 					"textObjectFieldName"
 				).objectDefinitionId(
-					objectDefinition.getObjectDefinitionId()
+					objectDefinitionUser.getObjectDefinitionId()
 				).build());
 
 			_objectEntryLocalService.
 				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
-					TestPropsValues.getUserId(), objectDefinition,
+					TestPropsValues.getUserId(), objectDefinitionUser,
 					user.getPrimaryKey(),
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getName(), "textObjectFieldValue"
 					).build(),
 					serviceContext);
 
-			ObjectValidationRule objectValidationRule =
+			ObjectValidationRule objectValidationRule2 =
 				_objectValidationRuleLocalService.addObjectValidationRule(
 					StringPool.BLANK, TestPropsValues.getUserId(),
-					objectDefinition.getObjectDefinitionId(), true, key,
+					objectDefinitionUser.getObjectDefinitionId(), true, key,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					LocalizedMapUtil.getLocalizedMap(
@@ -4612,7 +4664,10 @@ public class ObjectEntryLocalServiceTest {
 			UserTestUtil.updateUser(user);
 
 			_objectValidationRuleLocalService.deleteObjectValidationRule(
-				objectValidationRule);
+				objectValidationRule1);
+
+			_objectValidationRuleLocalService.deleteObjectValidationRule(
+				objectValidationRule2);
 		}
 	}
 
@@ -4915,6 +4970,13 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return listTypeEntries;
+	}
+
+	private ObjectDefinition _fetchSystemObjectDefinition(String name)
+		throws PortalException {
+
+		return _objectDefinitionLocalService.fetchSystemObjectDefinition(
+			TestPropsValues.getCompanyId(), name);
 	}
 
 	private BigDecimal _getBigDecimal(long value) {
@@ -5637,6 +5699,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

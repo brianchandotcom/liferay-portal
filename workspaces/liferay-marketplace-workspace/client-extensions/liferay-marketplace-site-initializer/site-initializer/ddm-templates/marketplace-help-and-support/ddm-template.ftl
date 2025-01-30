@@ -10,12 +10,12 @@
 		text-decoration: none;
 	}
 
-	.help-and-support-link-icon {
-		color: rgb(133, 140, 148);
-	}
-
 	.help-and-support-link-arrow {
 		fill: rgb(133, 140, 148);
+	}
+
+	.help-and-support-link-icon {
+		color: rgb(133, 140, 148);
 	}
 
 	.help-and-support-svg mask,

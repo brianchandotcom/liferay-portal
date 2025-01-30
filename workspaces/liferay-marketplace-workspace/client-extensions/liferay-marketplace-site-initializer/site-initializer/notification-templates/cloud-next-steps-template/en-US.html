@@ -1,128 +1,124 @@
 <!DOCTYPE html>
 
 <html lang="en">
+	<head>
+		<title>
+			Cloud App Template
+		</title>
 
-<head>
-	<title>
-		Cloud App Template
-	</title>
+		<style data-lfr-nonce>
+			.cloud-app-class-31 {
+				background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png');
+				background-position: left;
+				background-size: cover;
+				display: flex;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
 
-	<style data-lfr-nonce>
-		.cloud-app-class-31 {
-			background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png');
-			background-size: cover;
-			background-position: left;
-			display: flex;
-			font-family: 'Source Sans Pro', sans-serif;
-		}
+			.cloud-app-class-262 {
+				font-size: 30px;
+				font-weight: bolder;
+				margin-bottom: 1rem;
+				margin-top: 2.5rem;
+			}
 
-		.cloud-app-class-347 {
-			background-color: #fff;
-			border-radius: 16px;
-			border: 1px solid #6b6c7e;
-			margin-bottom: 4rem;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 4rem;
-			padding: 3rem;
-			width: 925px;
-		}
+			.cloud-app-class-320 {
+				background-color: #0b5fff;
+				border-radius: 8px;
+				color: #ffffff;
+				font-weight: bold;
+				height: 2.5rem;
+				padding: .5rem 1.5rem;
+				text-decoration: none;
+				width: 10rem;
+			}
 
-		.cloud-app-class-799 {
-			display: flex;
-			margin-left: auto;
-			margin-right: auto;
-			width: fit-content
-		}
+			.cloud-app-class-347 {
+				background-color: #fff;
+				border: 1px solid #6b6c7e;
+				border-radius: 16px;
+				margin-bottom: 4rem;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 4rem;
+				padding: 3rem;
+				width: 925px;
+			}
 
-		.cloud-app-class-792 {
-			margin-bottom: 35px;
-			margin-top: 35px;
-		}
+			.cloud-app-class-632 {
+				margin: 2.5rem;
+				padding: 10px;
+				text-align: center;
+			}
 
-		.cloud-app-class-987 {
-			display: flex;
-			gap: 0.75rem;
-			margin-left: auto;
-			margin-right: auto;
-			width: fit-content;
-		}
+			.cloud-app-class-744 {
+				color: #54555f;
+				margin: 1rem 11rem;
+				text-align: center;
+			}
 
-		.cloud-app-class-262 {
-			font-size: 30px;
-			font-weight: bolder;
-			margin-bottom: 1rem;
-			margin-top: 2.5rem;
-		}
+			.cloud-app-class-760 {
+				color: #000;
+			}
 
-		.cloud-app-class-744 {
-			color: #54555f;
-			margin: 1rem 11rem;
-			text-align: center;
-		}
+			.cloud-app-class-792 {
+				margin-bottom: 35px;
+				margin-top: 35px;
+			}
 
-		.cloud-app-class-760 {
-			color: #000
-		}
+			.cloud-app-class-799 {
+				display: flex;
+				margin-left: auto;
+				margin-right: auto;
+				width: fit-content;
+			}
 
-		.cloud-app-class-632 {
-			margin: 2.5rem;
-			padding: 10px;
-			text-align: center;
-		}
+			.cloud-app-class-987 {
+				display: flex;
+				gap: .75rem;
+				margin-left: auto;
+				margin-right: auto;
+				width: fit-content;
+			}
+		</style>
+	</head>
 
-		.cloud-app-class-320 {
-			background-color: #0b5fff;
-			border-radius: 8px;
-			color: #ffffff;
-			font-weight: bold;
-			height: 2.5rem;
-			padding: 0.5rem 1.5rem;
-			text-decoration: none;
-			width: 10rem;
-		}
-	</style>
-</head>
+	<body>
+		<div class="cloud-app-class-31">
+			<div class="cloud-app-class-347">
+				<div class="cloud-app-class-799">
+					<img alt="Liferay Logo" class="cloud-app-class-792" height="58" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_logo-png" />
+				</div>
 
-<body>
-<div class="cloud-app-class-31">
-	<div class="cloud-app-class-347">
-		<div class="cloud-app-class-799">
-		<img alt="Liferay Logo" class="cloud-app-class-792" height="58" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_logo-png" />
+				<div>
+					<main>
+						<div class="cloud-app-class-987">
+							<h2 class="cloud-app-class-262">
+								Next Steps
+							</h2>
+						</div>
+
+						<div class="cloud-app-class-744">
+							<p>
+								Congratulations on the purchase of
+								<b>[%GETAPPINFORMATION_PRODUCTNAME%]</b>. You
+								will need to deploy the app to your project in
+								the Cloud Console. To access the Cloud Console,
+								click the button below and provide your Order ID
+								when prompted.
+							</p>
+
+							<p>Your Order ID is: <b class="cloud-app-class-760">[%GETAPPINFORMATION_ORDERID%]</b></p>
+						</div>
+
+						<div class="cloud-app-class-632">
+							<a class="cloud-app-class-320" href="[%GETAPPINFORMATION_DASHBOARDLINK%]">
+								Go to Dashboard
+							</a>
+						</div>
+					</main>
+				</div>
+			</div>
 		</div>
-
-		<div>
-			<main>
-				<div class="cloud-app-class-987">
-					<h2 class="cloud-app-class-262">
-						Next Steps
-					</h2>
-				</div>
-
-				<div class="cloud-app-class-744">
-					<p>
-						Congratulations on the purchase of
-						<b>[%GETAPPINFORMATION_PRODUCTNAME%]</b>. You
-						will need to deploy the app to your project in
-						the Cloud Console. To access the Cloud Console,
-						click the button below and provide your Order ID
-						when prompted.
-					</p>
-
-					<p>Your Order ID is: <b class="cloud-app-class-760">[%GETAPPINFORMATION_ORDERID%]</b>
-					</p>
-				</div>
-
-				<div class="cloud-app-class-632">
-				<a class="cloud-app-class-320" href="[%GETAPPINFORMATION_DASHBOARDLINK%]">
-						Go to Dashboard
-					</a>
-				</div>
-			</main>
-		</div>
-	</div>
-</div>
-
-</body>
-
+	</body>
 </html>

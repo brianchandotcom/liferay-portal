@@ -1,296 +1,251 @@
 <!DOCTYPE html>
 
 <html lang="en">
+	<head>
+		<link href="styles.css" rel="stylesheet" />
 
-<head>
-	<link href="styles.css" rel="stylesheet" />
+		<title>
+			Invite Members
+		</title>
 
-	<title>
-		Invite Members
-	</title>
+		<style data-lfr-nonce>
+			.invite-members-class-32 {
+				display: block;
+				font-size: 14px;
+				text-align: center;
+			}
 
-	<style data-lfr-nonce>
-		.invite-members-class-978 {
-			background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png');
-			background-size: cover;
-			background-position: left;
-			display: flex;
-			font-family: 'Source Sans Pro', sans-serif;
-		}
+			.invite-members-class-48 {
+				margin-right: 6px;
+				margin-top: 4px;
+			}
 
-		.invite-members-class-918 {
-			background-color: #fff;
-			border: 1px solid #6b6c7e;
-			border-radius: 4px;
-			margin-bottom: 4rem;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 4rem;
-			padding: 3rem;
-			width: 598px;
-		}
+			.invite-members-class-49 {
+				margin: 0;
+			}
 
-		.invite-members-class-840 {
-			display: flex;
-			margin-left: auto;
-			margin-right: auto;
-			width: fit-content
-		}
+			.invite-members-class-73 {
+				background-color: #0b5fff;
+				border: none;
+				border-radius: 8px;
+				color: #fff;
+				height: 2.5rem;
+				margin-top: 2.5rem;
+				text-decoration: none;
+				width: 10.938rem;
+				padding: .5rem 1.5rem;
+			}
 
-		.invite-members-class-48 {
-			margin-right: 6px;
-			margin-top: 4px;
-		}
+			.invite-members-class-95,
+			.invite-members-class-201,
+			.invite-members-class-732,
+			.invite-members-class-920 {
+				color: #0B5FFF;
+				border-left: solid 2px grey;
+				text-decoration: none;
+				padding: 0 8px;
+			}
 
-		.invite-members-class-49 {
-			margin: 0;
-		}
+			.invite-members-class-100 {
+				font-size: 14px;
+				text-align: center;
+			}
 
-		.invite-members-class-919 {
-			margin: 19px 0 56px;
-		}
+			.invite-members-class-136,
+			.invite-members-class-352,
+			.invite-members-class-485 {
+				color: #6B6C7E;
+				margin-top: 4px;
+			}
 
-		.invite-members-class-453 {
-			font-size: 2rem;
-			margin: 0 0 16px;
-		}
+			.invite-members-class-270 {
+				margin-left: auto;
+				margin-right: auto;
+				width: fit-content;
+			}
 
-		.invite-members-class-271 {
-			margin-bottom: 40px;
-		}
+			.invite-members-class-271 {
+				margin-bottom: 40px;
+			}
 
-		.invite-members-class-73 {
-			background-color: #0b5fff;
-			border: none;
-			border-radius: 8px;
-			color: #fff;
-			height: 2.5rem;
-			margin-top: 2.5rem;
-			padding: 0.5rem 1.5rem;
-			text-decoration: none;
-			width: 10.938rem;
-		}
+			.invite-members-class-278 {
+				color: #6b6c7e;
+			}
 
-		.invite-members-class-894 {
-			color: #6b6c7e;
-			margin-top: 18px;
-		}
+			.invite-members-class-453 {
+				font-size: 2rem;
+				margin: 0 0 16px;
+			}
 
-		.invite-members-class-278 {
-			color: #6b6c7e
-		}
+			.invite-members-class-514 {
+				height: 258px;
+			}
 
-		.invite-members-class-705 {
-			margin: 56px 0
-		}
+			.invite-members-class-640 {
+				color: #0B5FFF;
+				text-decoration: none;
+			}
 
-		.invite-members-class-514 {
-			height: 258px
-		}
+			.invite-members-class-672 {
+				margin-bottom: 23px;
+				text-align: center;
+			}
 
-		.invite-members-class-672 {
-			margin-bottom: 23px;
-			text-align: center
-		}
+			.invite-members-class-705 {
+				margin: 56px 0;
+			}
 
-		.invite-members-class-903 {
-			color: #6B6C7E;
-			margin-top: 0;
-			font-size: 14px;
-		}
+			.invite-members-class-840 {
+				display: flex;
+				margin-left: auto;
+				margin-right: auto;
+				width: fit-content;
+			}
 
-		.invite-members-class-640 {
-			color: #0B5FFF;
-			text-decoration: none;
-		}
+			.invite-members-class-870 {
+				color: #0B5FFF;
+				padding-right: 8px;
+				text-decoration: none;
+			}
 
-		.invite-members-class-270 {
-			margin-left: auto;
-			margin-right: auto;
-			width: fit-content;
-		}
+			.invite-members-class-886 {
+				height: 56.9px;
+				width: 180px;
+				margin: 32px auto;
+			}
 
-		.invite-members-class-886 {
-			height: 56.9px;
-			margin-bottom: 32px;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 32px;
-			width: 180px;
-		}
+			.invite-members-class-894 {
+				color: #6b6c7e;
+				margin-top: 18px;
+			}
 
-		.invite-members-class-32 {
-			display: block;
-			font-size: 14px;
-			text-align: center
-		}
+			.invite-members-class-903 {
+				color: #6B6C7E;
+				margin-top: 0;
+				font-size: 14px;
+			}
 
-		.invite-members-class-136 {
-			color: #6B6C7E;
-			margin-top: 4px;
-		}
+			.invite-members-class-918 {
+				background-color: #fff;
+				border: 1px solid #6b6c7e;
+				border-radius: 4px;
+				width: 598px;
+				margin: 4rem auto;
+				padding: 3rem;
+			}
 
-		.invite-members-class-352 {
-			color: #6B6C7E;
-			margin-top: 4px;
-		}
+			.invite-members-class-919 {
+				margin: 19px 0 56px;
+			}
 
-		.invite-members-class-485 {
-			color: #6B6C7E;
-			margin-top: 4px;
-		}
+			.invite-members-class-978 {
+				background-image: url('[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/backgroud-png');
+				background-size: cover;
+				background-position: left;
+				display: flex;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+		</style>
+	</head>
 
-		.invite-members-class-100 {
-			font-size: 14px;
-			text-align: center;
-		}
+	<body>
+		<div class="invite-members-class-978">
+			<div class="invite-members-class-918">
+				<div class="invite-members-class-840">
+					<img alt="Liferay Logo" class="invite-members-class-48" height="28" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_inc-png" width="28" />
 
-		.invite-members-class-870 {
-			color: #0B5FFF;
-			padding-right: 8px;
-			text-decoration: none;
-		}
+					<h1 class="invite-members-class-49">
+						Marketplace
+					</h1>
+				</div>
 
-		.invite-members-class-732 {
-			color: #0B5FFF;
-			border-left: solid 2px grey;
-			padding: 0 8px;
-			text-decoration: none;
-		}
+				<hr class="invite-members-class-919" />
 
-		.invite-members-class-201 {
-			color: #0B5FFF;
-			border-left: solid 2px grey;
-			padding: 0 8px;
-			text-decoration: none;
-		}
-
-		.invite-members-class-920 {
-			color: #0B5FFF;
-			border-left: solid 2px grey;
-			padding: 0 8px;
-			text-decoration: none;
-		}
-
-		.invite-members-class-95 {
-			color: #0B5FFF;
-			border-left: solid 2px grey;
-			padding: 0 8px;
-			text-decoration: none;
-		}
-	</style>
-</head>
-
-<body>
-<div class="invite-members-class-978">
-	<div class="invite-members-class-918">
-		<div class="invite-members-class-840">
-		<img alt="Liferay Logo" class="invite-members-class-48" height="28" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_inc-png" width="28" />
-
-			<h1 class="invite-members-class-49">
-				Marketplace
-			</h1>
-		</div>
-
-		<hr class="invite-members-class-919" />
-
-		<main>
-			<div>
-				<h2 class="invite-members-class-453">
-					New Publisher Account Request
-				</h2>
-			</div>
-
-			<div class="invite-members-class-271">
-				<p>
-					A new request has been submitted to the Marketplace for a
-					publisher account. Please review the
-					submission and create the publisher account. Invite the user
-					to the account as per existing
-					Marketplace functionality.
-				</p>
-			</div>
-
-			<a class="invite-members-class-73" href="#">
-				Review Submission
-			</a>
-
-			<p class="invite-members-class-894">
-				Or copy and paste the link below into you browser
-			</p>
-
-			<a class="invite-members-class-278" href="#">
-				placeholder
-			</a>
-		</main>
-
-		<hr class="invite-members-class-705" />
-
-		<footer>
-			<div class="invite-members-class-514">
-				<div class="invite-members-class-672">
+				<main>
 					<div>
-						<p class="invite-members-class-903">
-							This email was sent by
-							<span>
-								<a class="invite-members-class-640" href="#">
-										Liferay, Inc.
-									</a>
-								</span>
+						<h2 class="invite-members-class-453">
+							New Publisher Account Request
+						</h2>
+					</div>
+
+					<div class="invite-members-class-271">
+						<p>
+							A new request has been submitted to the Marketplace for a
+							publisher account. Please review the
+							submission and create the publisher account. Invite the user
+							to the account as per existing
+							Marketplace functionality.
 						</p>
 					</div>
 
-					<div class="invite-members-class-270">
-					<img alt="Liferay Logo" class="invite-members-class-886" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_logo-png" />
+					<a class="invite-members-class-73" href="#">
+						Review Submission
+					</a>
+
+					<p class="invite-members-class-894">
+						Or copy and paste the link below into you browser
+					</p>
+
+					<a class="invite-members-class-278" href="#">
+						placeholder
+					</a>
+				</main>
+
+				<hr class="invite-members-class-705" />
+
+				<footer>
+					<div class="invite-members-class-514">
+						<div class="invite-members-class-672">
+							<div>
+								<p class="invite-members-class-903">
+									This email was sent by
+									<span>
+										<a class="invite-members-class-640" href="#">
+											Liferay, Inc.
+										</a>
+									</span>
+								</p>
+							</div>
+
+							<div class="invite-members-class-270">
+								<img alt="Liferay Logo" class="invite-members-class-886" src="[$PORTAL_URL$]/documents/d/[$GROUP_KEY$]/liferay_logo-png" />
+							</div>
+
+							<div class="invite-members-class-32">
+								<div class="invite-members-class-136">
+									Copyright © 2022 Liferay, Inc.
+								</div>
+
+								<div class="invite-members-class-352">
+									1400 Montefino Ave
+								</div>
+
+								<div class="invite-members-class-485">
+									Diamond Bar, CA 91765
+								</div>
+							</div>
+						</div>
+
+						<div class="invite-members-class-100">
+							<span>
+								<a class="invite-members-class-870" href="#">Contact Support</a>
+							</span>
+							<span>
+								<a class="invite-members-class-732" href="#">Documentation</a>
+							</span>
+							<span>
+								<a class="invite-members-class-201" href="#">Help Center</a>
+							</span>
+							<span>
+								<a class="invite-members-class-920" href="#">Announcements</a>
+							</span>
+							<span>
+								<a class="invite-members-class-95" href="#">Uptime Status</a>
+							</span>
+						</div>
 					</div>
-
-					<div class="invite-members-class-32">
-						<div class="invite-members-class-136">
-							Copyright © 2022 Liferay, Inc.
-						</div>
-
-						<div class="invite-members-class-352">
-							1400 Montefino Ave
-						</div>
-
-						<div class="invite-members-class-485">
-							Diamond Bar, CA 91765
-						</div>
-					</div>
-				</div>
-
-				<div class="invite-members-class-100">
-						<span>
-<a class="invite-members-class-870" href="#">
-								Contact Support
-							</a>
-						</span>
-					<span>
-<a class="invite-members-class-732" href="#">
-								Documentation
-							</a>
-						</span>
-					<span>
-<a class="invite-members-class-201" href="#">
-								Help Center
-							</a>
-						</span>
-					<span>
-<a class="invite-members-class-920" href="#">
-								Announcements
-							</a>
-						</span>
-					<span>
-<a class="invite-members-class-95" href="#">
-								Uptime Status
-							</a>
-						</span>
-				</div>
+				</footer>
 			</div>
-		</footer>
-	</div>
-</div>
-
-</body>
-
+		</div>
+	</body>
 </html>

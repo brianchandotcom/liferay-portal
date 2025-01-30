@@ -48,14 +48,21 @@ export class MessageBoardsEditThreadPage {
 		await this.messageBoardsPage.goToCreateNewThread();
 	}
 
-	async publishNewBasicThread(
+	async gotoAndPublishNewBasicThread(
 		subject: string,
 		body: string,
 		siteUrl?: Site['friendlyUrlPath'],
 		filePath?: string
 	) {
 		await this.goto(siteUrl);
+		await this.publishNewBasicThread(subject, body, filePath);
+	}
 
+	async publishNewBasicThread(
+		subject: string,
+		body: string,
+		filePath?: string
+	) {
 		await this.subjectSelector.fill(subject);
 		await this.bodyTextBox.fill(body);
 
@@ -63,6 +70,12 @@ export class MessageBoardsEditThreadPage {
 			await this.selectFile(filePath);
 		}
 
+		await this.publishButton.click();
+	}
+
+	async publishReply(body: string) {
+		await this.page.getByRole('button', {name: 'Reply'}).click();
+		await this.bodyTextBox.fill(body);
 		await this.publishButton.click();
 	}
 

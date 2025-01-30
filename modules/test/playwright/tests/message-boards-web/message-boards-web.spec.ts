@@ -67,7 +67,7 @@ test(
 			site.friendlyUrlPath
 		);
 
-		await messageBoardsEditThreadPage.publishNewBasicThread(
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
 			'Thread Subject',
 			'Thread Body',
 			site.friendlyUrlPath
@@ -171,7 +171,7 @@ test(
 	async ({messageBoardsEditThreadPage, page, site}) => {
 		const fileName = 'attachment , file.txt';
 
-		await messageBoardsEditThreadPage.publishNewBasicThread(
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
 			'Thread Subject',
 			'Thread Body',
 			site.friendlyUrlPath,

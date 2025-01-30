@@ -59,6 +59,14 @@ export class MessageBoardsPage {
 		);
 	}
 
+	async goToCreateNewThread() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Thread'}),
+			trigger: this.page.getByRole('button', {exact: true, name: 'New'}),
+		});
+	}
+
 	async goToThreadPriorities(siteUrl?: Site['friendlyUrlPath']) {
 		this.goto(siteUrl);
 
@@ -73,14 +81,6 @@ export class MessageBoardsPage {
 		await this.page
 			.getByRole('menuitem', {name: 'Thread Priorities'})
 			.click();
-	}
-
-	async goToCreateNewThread() {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Thread'}),
-			trigger: this.page.getByRole('button', {exact: true, name: 'New'}),
-		});
 	}
 
 	async setGuestCategoryPermissions(siteUrl?: Site['friendlyUrlPath']) {

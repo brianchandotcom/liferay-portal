@@ -1007,7 +1007,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getOrderCreationDateFromTable(columnIndex = null, rowIndex = null) {
+	macro getOrderCreationDateFromTable(columnIndex = null, orderId = null, rowIndex = null) {
+		var key_cellContent = ${orderId};
 		var key_columnIndex = ${columnIndex};
 		var key_rowIndex = ${rowIndex};
 		var orderCreationDate = selenium.getText("CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");

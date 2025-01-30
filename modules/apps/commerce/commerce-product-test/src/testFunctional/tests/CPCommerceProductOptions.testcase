@@ -287,6 +287,10 @@ definition {
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
+			Click(
+				key_cellContent = "ABS Sensor",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
+
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "20.00",
 				productName = "ABS Sensor",
@@ -494,6 +498,10 @@ definition {
 
 		task ("Then can view the bundled product shown with the correct option values in the placed order") {
 			var productOptions = '''Blue,option-checkbox-key,2023-10-23,10,Text Content,value1,value2,value2''';
+
+			Click(
+				key_cellContent = "ABS Sensor",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "20.00",
@@ -1218,6 +1226,10 @@ definition {
 		}
 
 		task ("Then on the order summary the linked product is listed") {
+			Click(
+				key_cellContent = "ABS Sensor",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
+
 			AssertTextEquals(
 				key_productName = "Test Simple Product",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME",

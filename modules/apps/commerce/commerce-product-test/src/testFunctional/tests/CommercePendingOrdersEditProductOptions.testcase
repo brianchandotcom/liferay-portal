@@ -158,7 +158,7 @@ definition {
 
 				Click(
 					key_value = ${productName},
-					locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+					locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 				Click(
 					key_menuItem = "Edit",
@@ -362,7 +362,7 @@ definition {
 		task ("And edits all the fields from the Pending Orders selecting value2 and value4") {
 			Click(
 				key_value = "Options Product",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+				locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 			Click(
 				key_menuItem = "Edit",

@@ -2537,6 +2537,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			AssertTextEquals(
+				key_cellContent = "Minium Base Price List",
 				key_columnIndex = 4,
 				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",

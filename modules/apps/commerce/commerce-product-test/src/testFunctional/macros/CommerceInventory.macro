@@ -244,7 +244,7 @@ definition {
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 		else {
-			AssertElementPresent(locator1 = "//*[contains(@class, 'table-list-title')]/a[text()='${warehouse}']/../../../div[2][contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}')]");
+			AssertElementPresent(locator1 = "//*[contains(@class, 'table-list-title')]/a[text()='${warehouse}']/../../../td[2][contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}')]");
 
 			AssertElementPresent(
 				key_entryTitle = ${warehouse},

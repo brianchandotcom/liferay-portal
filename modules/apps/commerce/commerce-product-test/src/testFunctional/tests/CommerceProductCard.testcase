@@ -1649,9 +1649,10 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 
 			AssertElementNotPresent(
-				key_cellName1 = "U-Joint",
+				key_cellContent = "U-Joint",
 				key_columnIndex = 2,
-				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE");
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");
 		}
 
 		task ("When the buyer clicks on the delete button next to a product on the wishlist") {
@@ -1662,9 +1663,10 @@ definition {
 
 		task ("Then the product is removed from the wishlist") {
 			AssertElementNotPresent(
-				key_cellName1 = "Mount",
+				key_cellContent = "Mount",
 				key_columnIndex = 2,
-				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE");
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");
 		}
 	}
 

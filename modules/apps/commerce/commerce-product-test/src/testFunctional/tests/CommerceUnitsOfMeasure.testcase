@@ -1877,14 +1877,16 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			AssertTextEquals(
+				key_cellContent = "Minium Base Price List",
 				key_columnIndex = 4,
 				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 				value1 = "$ 75.00");
 
 			AssertTextEquals(
+				key_cellContent = "Minium Base Promotion",
 				key_columnIndex = 4,
-				key_rowIndex = 2,
+				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 				value1 = "$ 70.00");
 		}
@@ -2169,19 +2171,21 @@ definition {
 		}
 
 		task ("Then Unit Price is set to the default value and UOM field is empty") {
-			for (var rowAndValue : list "1:$ 50.00,2:$ 0.00") {
-				var rowIndex = StringUtil.extractFirst(${rowAndValue}, ":");
+			for (var rowAndValue : list "Minium Base Price List:$ 50.00,Minium Base Promotion:$ 0.00") {
+				var row = StringUtil.extractFirst(${rowAndValue}, ":");
 				var value = StringUtil.extractLast(${rowAndValue}, ":");
 
 				AssertTextEquals(
+					key_cellContent = ${row},
 					key_columnIndex = 4,
-					key_rowIndex = ${rowIndex},
+					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = ${value});
 
 				AssertTextEquals(
+					key_cellContent = ${row},
 					key_columnIndex = 2,
-					key_rowIndex = ${rowIndex},
+					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "");
 			}
@@ -2203,6 +2207,7 @@ definition {
 				var value = StringUtil.extractLast(${columnAndValue}, ":");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = ${columnIndex},
 					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2226,6 +2231,7 @@ definition {
 				var value = StringUtil.extractLast(${columnAndValue}, ":");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = ${columnIndex},
 					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2269,17 +2275,38 @@ definition {
 		}
 
 		task ("Then the UOM and unit price fields are correctly filled") {
-			for (var rowAndValue : list "1:1,2:1,3:2,4:2") {
+			for (var rowAndValue : list "1:1,2:2") {
 				var rowIndex = StringUtil.extractFirst(${rowAndValue}, ":");
 				var value = StringUtil.extractLast(${rowAndValue}, ":");
 
 				AssertTextEquals(
+					key_cellContent = "Minium Base Price List",
 					key_columnIndex = 4,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ ${value}.00");
 
 				AssertTextEquals(
+					key_cellContent = "Minium Base Price List",
+					key_columnIndex = 2,
+					key_rowIndex = ${rowIndex},
+					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+					value1 = "uom${value}");
+			}
+
+			for (var rowAndValue : list "1:1,2:2") {
+				var rowIndex = StringUtil.extractFirst(${rowAndValue}, ":");
+				var value = StringUtil.extractLast(${rowAndValue}, ":");
+
+				AssertTextEquals(
+					key_cellContent = "Minium Base Promotion",
+					key_columnIndex = 4,
+					key_rowIndex = ${rowIndex},
+					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+					value1 = "$ ${value}.00");
+
+				AssertTextEquals(
+					key_cellContent = "Minium Base Promotion",
 					key_columnIndex = 2,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2300,18 +2327,21 @@ definition {
 		task ("Then the fields are correctly filled on Minium Base Price List SKU entry") {
 			for (var rowIndex : list "1,2") {
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 4,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "uom${rowIndex}");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 6,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 1.00");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 7,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2332,18 +2362,21 @@ definition {
 		task ("Then the fields are correctly filled on Minium Base Promotion SKU entry") {
 			for (var rowIndex : list "1,2") {
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 4,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "uom${rowIndex}");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 6,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 1.00");
 
 				AssertTextEquals(
+					key_cellContent = "MIN93015",
 					key_columnIndex = 7,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2372,16 +2405,18 @@ definition {
 		}
 
 		task ("Then the UOM and unit price fields are correctly updated") {
-			for (var rowIndex : list "1,2") {
+			for (var row : list "Minium Base Price List,Minium Base Promotion") {
 				AssertTextEquals(
+					key_cellContent = ${row},
 					key_columnIndex = 4,
-					key_rowIndex = ${rowIndex},
+					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 2.00");
 
 				AssertTextEquals(
+					key_cellContent = ${row},
 					key_columnIndex = 2,
-					key_rowIndex = ${rowIndex},
+					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "uom2");
 			}
@@ -2399,6 +2434,7 @@ definition {
 
 		task ("Then the fields are correctly updated on Minium Base Price List SKU entry") {
 			AssertTextEquals(
+				key_cellContent = "Minium Base Price List",
 				key_columnIndex = 4,
 				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2406,6 +2442,7 @@ definition {
 
 			for (var columnIndex : list "6,7") {
 				AssertTextEquals(
+					key_cellContent = "Minium Base Price List",
 					key_columnIndex = ${columnIndex},
 					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2425,6 +2462,7 @@ definition {
 
 		task ("Then the fields are correctly updated on Minium Base Promotion SKU entry") {
 			AssertTextEquals(
+				key_cellContent = "Minium Base Promotion",
 				key_columnIndex = 4,
 				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
@@ -2432,6 +2470,7 @@ definition {
 
 			for (var columnIndex : list "6,7") {
 				AssertTextEquals(
+					key_cellContent = "Minium Base Promotion",
 					key_columnIndex = ${columnIndex},
 					key_rowIndex = 1,
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",

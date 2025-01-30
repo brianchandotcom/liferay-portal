@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("And then 1 product is not imported (ABS Sensor)") {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 		}
@@ -309,11 +309,11 @@ definition {
 		}
 
 		task ("And then 2 products are not imported (U-Joint and Torque Convertes") {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_productName = "Torque Converters",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 		}
@@ -425,15 +425,15 @@ definition {
 				productSku = "MIN00675",
 				productTotalPrice = "$ 120.00");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_productName = "Torque Converters",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 
@@ -578,7 +578,7 @@ definition {
 		}
 
 		task ("And then the subscription product is not imported (ABS Sensor)") {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 		}

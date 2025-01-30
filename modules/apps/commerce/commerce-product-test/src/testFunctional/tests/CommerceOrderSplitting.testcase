@@ -1648,6 +1648,10 @@ definition {
 
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 162.00");
 
+			Click(
+				key_cellContent = "VALUE1VALUE2",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
+
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "49.00",
 				productName = "ABS Sensor",
@@ -3329,6 +3333,7 @@ definition {
 
 			for (var rowIndex : list "1,2,3") {
 				AssertTextEquals(
+					key_cellContent = "",
 					key_columnIndex = 5,
 					key_rowIndex = ${rowIndex},
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",

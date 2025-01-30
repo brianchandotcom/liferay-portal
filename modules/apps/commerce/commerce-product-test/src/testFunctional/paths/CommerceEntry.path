@@ -471,6 +471,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUNDLE_PRODUCT_EXPAND_BUTTON</td>
+	<td>//td[contains(.,'${key_cellContent}')]/..//div[contains(@class,'autofit-col-toggle autofit-col')]//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REQUIRED_CHECKBOX</td>
 	<td>//input[contains(@id,'required') and (@type='checkbox')]</td>
 	<td></td>
@@ -812,7 +817,7 @@
 </tr>
 <tr>
 	<td>MODAL_DATASET_ROW_ITEM</td>
-	<td>//div[contains(@class,'modal-iframe-content')]//tbody//tr[contains(.,'${key_entry}')]/div[${key_index}]</td>
+	<td>//div[contains(@class,'modal-iframe-content')]//tbody//tr[contains(.,'${key_entry}')]/td[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1568,7 +1573,7 @@
 </tr>
 <tr>
 	<td>QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
-	<td>//tbody//div[contains(text(),'${key_warehouseName}')]/..//div[6]</td>
+	<td>//tbody//td[contains(text(),'${key_warehouseName}')]/..//td[6]</td>
 	<td></td>
 </tr>
 

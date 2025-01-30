@@ -2362,10 +2362,12 @@ definition {
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
@@ -2389,10 +2391,12 @@ definition {
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
@@ -2416,10 +2420,12 @@ definition {
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
@@ -2443,10 +2449,12 @@ definition {
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = 1,
+				columnIndex = 6,
+				orderId = "",
 				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
@@ -3496,8 +3504,8 @@ definition {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
 		AssertElementPresent(
-			key_productName = "Commerce Account 1",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 1",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 
 		Button.click(button = "Reset Filters");
 
@@ -3514,8 +3522,8 @@ definition {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
 		AssertElementPresent(
-			key_productName = "Commerce Account 2",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 2",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 
 		Button.click(button = "Reset Filters");
 
@@ -3536,8 +3544,8 @@ definition {
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 
 		AssertElementPresent(
-			key_productName = "Commerce Account 2",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 2",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 
 		Button.click(button = "Reset Filters");
 
@@ -3552,8 +3560,8 @@ definition {
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 
 		AssertElementNotPresent(
-			key_productName = "Commerce Account 2",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 2",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 
 		Button.click(button = "Reset Filters");
 
@@ -3576,8 +3584,8 @@ definition {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
 		AssertElementPresent(
-			key_productName = "Commerce Account 2",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 2",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 
 		Button.click(button = "Reset Filters");
 
@@ -3594,8 +3602,8 @@ definition {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
 		AssertElementPresent(
-			key_productName = "Commerce Account 1",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			accountName = "Commerce Account 1",
+			locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"

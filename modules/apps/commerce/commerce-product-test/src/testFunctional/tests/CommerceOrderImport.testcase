@@ -424,7 +424,7 @@ definition {
 		task ("When the buyer deletes an entry from the order") {
 			ClickNoError(
 				key_value = "U-Joint",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+				locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 			CommerceEntry.clickNoError(menuItem = "Delete");
 
@@ -489,7 +489,7 @@ definition {
 		task ("When the buyer edits an entry from the order") {
 			Click(
 				key_value = "U-Joint",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+				locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 			CommerceEntry.clickNoError(menuItem = "View");
 

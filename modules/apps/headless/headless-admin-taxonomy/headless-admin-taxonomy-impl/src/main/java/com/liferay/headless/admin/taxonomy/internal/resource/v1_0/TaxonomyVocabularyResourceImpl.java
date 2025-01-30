@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -51,6 +52,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
@@ -411,6 +413,8 @@ public class TaxonomyVocabularyResourceImpl
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
+			).permissions(
+				_getModelPermissions(taxonomyVocabulary)
 			).build());
 	}
 
@@ -602,6 +606,22 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		throw new BadRequestException("Invalid subtype " + subtype);
+	}
+
+	private ModelPermissions _getModelPermissions(
+			TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-41304")) {
+			return null;
+		}
+
+		return ModelPermissionsUtil.toModelPermissions(
+			contextCompany.getCompanyId(), taxonomyVocabulary.getPermissions(),
+			getPermissionCheckerResourceId(taxonomyVocabulary.getId()),
+			getPermissionCheckerResourceName(taxonomyVocabulary.getId()),
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService);
 	}
 
 	private String _getModelResource(

@@ -1182,7 +1182,7 @@ public class ObjectDefinitionResourceImpl
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 
-		return _objectDefinitionRuleDTOConverter.toDTO(
+		return _objectDefinitionDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				false,
 				HashMapBuilder.put(
@@ -1202,7 +1202,7 @@ public class ObjectDefinitionResourceImpl
 					"exportBoundObjectDefinitions",
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled(
-								contextCompany.getCompanyId(), "LPS-187142") ||
+								contextCompany.getCompanyId(), "LPD-34594") ||
 							!serviceBuilderObjectDefinition.isRootNode()) {
 
 							return null;
@@ -1296,13 +1296,13 @@ public class ObjectDefinitionResourceImpl
 	@Reference
 	private ObjectActionService _objectActionService;
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
 	@Reference(target = DTOConverterConstants.OBJECT_DEFINITION_DTO_CONVERTER)
 	private DTOConverter
 		<com.liferay.object.model.ObjectDefinition, ObjectDefinition>
-			_objectDefinitionRuleDTOConverter;
+			_objectDefinitionDTOConverter;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

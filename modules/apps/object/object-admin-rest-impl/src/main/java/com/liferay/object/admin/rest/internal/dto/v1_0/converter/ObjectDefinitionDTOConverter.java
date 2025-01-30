@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Feliphe Marinho
+ * @author Marco Leo
  */
 @Component(
 	property = "dto.class.name=com.liferay.object.model.ObjectDefinition",
@@ -46,14 +46,15 @@ public class ObjectDefinitionDTOConverter
 	@Override
 	public ObjectDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
-			com.liferay.object.model.ObjectDefinition objectDefinition)
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition)
 		throws Exception {
 
-		if (objectDefinition == null) {
+		if (serviceBuilderObjectDefinition == null) {
 			return null;
 		}
 
-		ObjectDefinition objectDefinition1 =
+		ObjectDefinition objectDefinition =
 			ObjectDefinitionUtil.toObjectDefinition(
 				dtoConverterContext.getLocale(),
 				_notificationTemplateLocalService, _objectActionLocalService,
@@ -63,12 +64,12 @@ public class ObjectDefinitionDTOConverter
 				_objectRelationshipLocalService,
 				_objectValidationRuleDTOConverter,
 				_objectValidationRuleLocalService, _objectViewDTOConverter,
-				_objectViewLocalService, objectDefinition,
+				_objectViewLocalService, serviceBuilderObjectDefinition,
 				_systemObjectDefinitionManagerRegistry);
 
-		objectDefinition1.setActions(dtoConverterContext::getActions);
+		objectDefinition.setActions(dtoConverterContext::getActions);
 
-		return objectDefinition1;
+		return objectDefinition;
 	}
 
 	@Reference

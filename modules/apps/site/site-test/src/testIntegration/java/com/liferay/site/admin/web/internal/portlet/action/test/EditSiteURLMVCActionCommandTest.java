@@ -55,8 +55,10 @@ public class EditSiteURLMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"liveGroupId", String.valueOf(_group.getGroupId()));
@@ -70,25 +72,21 @@ public class EditSiteURLMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
-		_themeDisplay =
-			(ThemeDisplay)mockLiferayPortletActionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String redirect = (String)mockLiferayPortletActionRequest.getAttribute(
 			WebKeys.REDIRECT);
 
-		Assert.assertTrue(redirect.contains(_themeDisplay.getPortalURL()));
+		Assert.assertTrue(redirect.contains(themeDisplay.getPortalURL()));
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
-		_themeDisplay = new ThemeDisplay();
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		_themeDisplay.setPortalURL(_VIRTUAL_HOSTNAME);
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-		_themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setPortalURL(_VIRTUAL_HOSTNAME);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
-		return _themeDisplay;
+		return themeDisplay;
 	}
 
 	private static final String _VIRTUAL_HOSTNAME = "test.com";
@@ -97,7 +95,5 @@ public class EditSiteURLMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/site_admin/edit_site_url")
 	private MVCActionCommand _mvcActionCommand;
-
-	private ThemeDisplay _themeDisplay;
 
 }

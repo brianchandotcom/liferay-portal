@@ -99,6 +99,11 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
+	public String getName() {
+		return "SimpleCaptcha";
+	}
+
+	@Override
 	public String getTaglibPath() {
 		return _TAGLIB_PATH;
 	}

@@ -40,6 +40,58 @@
 			)
 		}
 	}
+
+	const _addEventListener = (selectors, oppositeSelectors) => {
+		document.querySelectorAll(selectors).forEach((element) => {
+			element.addEventListener("click", (event) => {
+				event.preventDefault();
+
+				const isBtnThumbsPressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+				const currentBtnThumbsValue = parseInt(event.currentTarget.getAttribute("value"), 10) || 0;
+
+				const newBtnthumbsValue = isBtnThumbsPressed ? currentBtnThumbsValue - 1 : currentBtnThumbsValue + 1;
+
+				document.querySelectorAll(selectors).forEach((el) => {
+					el.setAttribute("aria-pressed", !isBtnThumbsPressed);
+					el.setAttribute("value", newBtnthumbsValue);
+					const counterSpan = el.querySelector(".current");
+
+					if (counterSpan) {
+						counterSpan.textContent = newBtnthumbsValue;
+					}
+				});
+
+				let oppositeBtnThumbsIsPressed = false;
+				document.querySelectorAll(oppositeSelectors).forEach((el) => {
+					if (el.getAttribute("aria-pressed") === "true") {
+						oppositeBtnThumbsIsPressed = true;
+					}
+				});
+
+				if (oppositeBtnThumbsIsPressed) {
+					document.querySelectorAll(oppositeSelectors).forEach((el) => {
+						const oppBtnThumbsValue = parseInt(el.getAttribute("value"), 10) || 0;
+
+						const newBtnThumbsOppValue = oppBtnThumbsValue > 0 ? oppBtnThumbsValue - 1 : 0;
+
+						el.setAttribute("aria-pressed", "false");
+						el.setAttribute("value", newBtnThumbsOppValue);
+
+						const counterSpan = el.querySelector(".current");
+
+						if (counterSpan) {
+							counterSpan.textContent = newBtnThumbsOppValue;
+						}
+					});
+				}
+			});
+		});
+	};
+
+	window.addEventListener("load", function () {
+		_addEventListener(".btn-thumbs-up", ".btn-thumbs-down");
+		_addEventListener(".btn-thumbs-down", ".btn-thumbs-up");
+	});
 </script>
 
 <div class="learn-recipe-container">
@@ -147,10 +199,12 @@
 		<#if Steps.getSiblings()?has_content>
 			<ol>
 				<#list Steps.getSiblings() as currentStep>
-					<li>${currentStep.Step.StepInstruction.getData()}</li>
+					<li>
+					
+					${currentStep.Step.StepInstruction.getData()}
 
 					<#if currentStep.Step.AdditionalNotes.getSiblings()?has_content>
-	  					<#list currentStep.Step.AdditionalNotes.getSiblings() as currentNote>
+	  				<#list currentStep.Step.AdditionalNotes.getSiblings() as currentNote>
 							<#if currentNote?? && currentNote.NoteText.getData()?has_content>
 								<div class="adm-block adm-${currentNote.NoteType.getData()}">
 									<div class="adm-heading">
@@ -170,17 +224,18 @@
 							</#if>
 						</#list>
 					</#if>
-
-					<#if currentStep.Step.Resources.Image.getData()?has_content>
+					
+				  <#if currentStep.Step.Resources.Image.getData()?has_content>
 						<div class="mb-3">
 							<img
 								class="rounded img-fluid"
 								height="75%"
 								src="${currentStep.Step.Resources.Image.getData()}"
+								width="75%"
 							/>
 						</div>
 					</#if>
-
+					
 					<#if currentStep.Step.Resources.code.getData()?has_content>
 						<div class="code-toolbar">
 							<pre class="language-bash" tabindex="0">
@@ -201,6 +256,7 @@
 							</div>
 						</div>
 					</#if>
+					</li>					
 				</#list>
 			</ol>
 		</#if>
@@ -236,6 +292,22 @@
 				</#if>
 			</#list>
 		</#if>
+		<#assign journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number />
+
+		<div class="page-nav-menu voting-box-bottom">
+
+			<div class="d-flex flex-row align-items-center justify-content-evenly voting-box__content">
+				<div>
+					<@liferay_ui["message"] key="was-this-article-helpful" />
+				</div>
+
+				<@liferay_ratings["ratings"]
+					className="com.liferay.journal.model.JournalArticle"
+					classPK=journalArticlePK
+					type="thumbs"
+				/>
+			</div>
+		</div>
 	</article>
 </div>
 
@@ -319,3 +391,50 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.voting-box__content {
+		gap: 1rem;
+		height: 3rem;
+		justify-content: center;
+
+		.btn-thumbs-down {
+			padding-bottom: 2px;
+		}
+	}
+
+	.voting-box-bottom {
+		background: linear-gradient(123.06deg, #1514A4 0%, #00C2FB 173.41%);
+		color: #FFFFFF;
+		margin-top: 50px;
+		width: 30%;
+		
+		.on .lexicon-icon {
+    		color: #FFF !important;
+		}
+
+		.ratings-thumbs {
+			button {
+				padding: 5px 3px;
+			}
+		}
+
+		div {
+			font-weight: 600;
+		}
+
+		span, svg {
+			color: #FFFFFF;
+		}
+	}
+
+	@media(max-width: 768px) {
+		.voting-box-bottom {
+			width: 100%;
+		}
+
+		.voting-box__content {
+			justify-content: flex-start;
+		}
+	}
+</style>

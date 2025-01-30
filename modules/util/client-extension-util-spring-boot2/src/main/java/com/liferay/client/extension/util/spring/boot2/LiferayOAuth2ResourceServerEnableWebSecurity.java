@@ -57,10 +57,8 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 
 		if (liferayOauthApplicationExternalReferenceCodes == null) {
 			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Property ",
-					"\"liferay.oauth.application.external.reference.codes\" ",
-					"is not defined"));
+				"Property \"liferay.oauth.application.external.reference." +
+					"codes\" is not defined");
 		}
 
 		DefaultJWTProcessor<SecurityContext> defaultJWTProcessor =

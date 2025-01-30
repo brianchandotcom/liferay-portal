@@ -152,6 +152,14 @@ gradleTest {
 
 	exclude "src/gradleTest/*.gradle"
 
+	JavaVersion javaVersion = JavaVersion.current()
+
+	if (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) {
+		exclude "**/ExtAlternativeSpec*"
+		exclude "**/ExtSpec*"
+		exclude "**/Test_extSpec*"
+	}
+
 	fileTree(dir: "src/gradleTest", include: "*.gradle").each {
 		String propertyName = "commonScript.${it.name}"
 

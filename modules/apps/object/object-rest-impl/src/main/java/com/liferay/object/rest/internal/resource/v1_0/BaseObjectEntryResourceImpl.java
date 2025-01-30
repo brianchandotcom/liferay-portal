@@ -416,6 +416,11 @@ public abstract class BaseObjectEntryResourceImpl
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
 		}
 
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
+		}
+
 		if (objectEntry.getExternalReferenceCode() != null) {
 			existingObjectEntry.setExternalReferenceCode(
 				objectEntry.getExternalReferenceCode());
@@ -644,6 +649,11 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getDateModified() != null) {
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
 		}
 
 		if (objectEntry.getExternalReferenceCode() != null) {
@@ -898,6 +908,11 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getDateModified() != null) {
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getDefaultLanguageId() != null) {
+			existingObjectEntry.setDefaultLanguageId(
+				objectEntry.getDefaultLanguageId());
 		}
 
 		if (objectEntry.getExternalReferenceCode() != null) {

@@ -15,9 +15,11 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.Collections;
 import java.util.List;
@@ -89,11 +91,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				getClass(), tableName)) {
-
-			_executeUpdate(tableName, columnName, names, wildcardMode);
-		}
+		upgradeTable(tableName, columnName, names, wildcardMode, false);
 	}
 
 	protected void upgradeTable(
@@ -101,33 +99,18 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode, boolean preventDuplicates)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				getClass(), tableName)) {
-
-			// MySQL and MariaDB don't allow to specify same table in FROM
-			// clause and subselect
-
-			if ((DBManagerUtil.getDBType() == DBType.MYSQL) ||
-				(DBManagerUtil.getDBType() == DBType.MARIADB)) {
-
-				String[][] switchedNames = ArrayUtil.clone(names);
-
-				for (String[] name : switchedNames) {
-					String temp = name[0];
-					name[0] = name[1];
-					name[1] = temp;
-				}
-
-				_executeUpdate(
-					tableName, columnName, switchedNames, wildcardMode, true);
-
-				_executeDelete(
-					tableName, columnName, switchedNames, wildcardMode);
+		if (!preventDuplicates) {
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					getClass(), tableName)) {
 
 				_executeUpdate(tableName, columnName, names, wildcardMode);
-
-				return;
 			}
+
+			return;
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				getClass(), tableName)) {
 
 			DB db = DBManagerUtil.getDB();
 
@@ -144,13 +127,31 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
 					connection, tableName);
 
+				StringBundler sb = new StringBundler();
+
+				try (Statement s = connection.createStatement();
+					ResultSet resultSet = s.executeQuery(
+						StringBundler.concat(
+							"select MIN(", primaryKeyColumnNames[0], ") from ",
+							tableName, " group by ",
+							StringUtil.merge(indexMetadata.getColumnNames())))) {
+
+					while (resultSet.next()) {
+						sb.append(resultSet.getLong(1));
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+
+					if (sb.length() == 0) {
+						return;
+					}
+
+					sb.setIndex(sb.index() - 1);
+				}
+
 				runSQL(
 					StringBundler.concat(
 						"delete from ", tableName, " where ",
-						primaryKeyColumnNames[0], " not in (select MIN(",
-						primaryKeyColumnNames[0], ") from ", tableName,
-						" group by ",
-						StringUtil.merge(indexMetadata.getColumnNames()),
+						primaryKeyColumnNames[0], " not in (", sb,
 						StringPool.CLOSE_PARENTHESIS));
 			}
 			finally {
@@ -160,43 +161,13 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 	}
 
-	private void _executeDelete(
-			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode)
-		throws Exception {
-
-		for (String[] name : names) {
-			runSQL(
-				StringBundler.concat(
-					"delete from ", tableName,
-					_getWhereClause(columnName, name[0], wildcardMode),
-					_getNotLikeClause(
-						columnName, (String)ArrayUtil.getValue(name, 2),
-						wildcardMode)));
-		}
-	}
-
 	private void _executeUpdate(
 			String tableName, String columnName, String[][] names,
 			WildcardMode wildcardMode)
 		throws Exception {
-
-		_executeUpdate(tableName, columnName, names, wildcardMode, false);
-	}
-
-	private void _executeUpdate(
-			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode, boolean ignoreDuplicates)
-		throws Exception {
-
-		String updateClause = "update ";
-
-		if (ignoreDuplicates) {
-			updateClause = "update ignore ";
-		}
 
 		String tableSQL = StringBundler.concat(
-			updateClause, tableName, " set ", columnName, " = replace(",
+			"update ", tableName, " set ", columnName, " = replace(",
 			_transformColumnName(columnName), ", '");
 
 		StringBundler sb2 = new StringBundler(6);
@@ -213,19 +184,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			sb2.setIndex(0);
 		}
-	}
-
-	private String _getNotLikeClause(
-		String columnName, String value, WildcardMode wildcardMode) {
-
-		if (value == null) {
-			return StringPool.BLANK;
-		}
-
-		return StringBundler.concat(
-			" and ", columnName, " not like '",
-			wildcardMode.getLeadingWildcard(), value,
-			wildcardMode.getTrailingWildcard(), StringPool.APOSTROPHE);
 	}
 
 	private String _getWhereClause(

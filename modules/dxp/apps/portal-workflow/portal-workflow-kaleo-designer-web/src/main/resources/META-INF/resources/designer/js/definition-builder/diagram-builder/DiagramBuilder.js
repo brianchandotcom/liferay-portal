@@ -214,12 +214,12 @@ export default function DiagramBuilder() {
 				elementRectangle.mouseYInRectangle,
 		});
 
-		const newElements = elements.filter(
+		const filteredElements = elements.filter(
 			(element) => element.id !== node.id
 		);
 
 		setCollidingElements(
-			getCollidingElements(newElements, elementRectangle, position)
+			getCollidingElements(filteredElements, elementRectangle, position)
 		);
 	};
 
@@ -273,12 +273,13 @@ export default function DiagramBuilder() {
 			);
 		});
 
-		const newElements = elements.filter(
+		const filteredElements = elements.filter(
 			(element) => element.id !== node.id
 		);
 
 		if (
-			getCollidingElements(newElements, elementRectangle, position).length
+			getCollidingElements(filteredElements, elementRectangle, position)
+				.length
 		) {
 			setElements((elements) =>
 				elements.map((element) => {

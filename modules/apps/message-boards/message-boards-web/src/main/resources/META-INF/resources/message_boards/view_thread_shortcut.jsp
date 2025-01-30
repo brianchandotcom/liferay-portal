@@ -81,34 +81,29 @@ if (threadFlag != null) {
 			</td>
 		</liferay-ui:csp>
 
-		<liferay-ui:csp>
-			<td class="table-cell" style="white-space: nowrap;">
-				<a href="<%= rowHREF %>">
-					<c:if test="<%= !readThread %>">
-						<strong>
-					</c:if>
+		<td class="table-cell text-nowrap">
+			<a href="<%= rowHREF %>">
+				<c:if test="<%= !readThread %>">
+					<strong>
+				</c:if>
 
-					<c:choose>
-						<c:when test="<%= message.isAnonymous() %>">
-							<liferay-ui:message key="anonymous" />
-						</c:when>
-						<c:otherwise>
-							<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
-						</c:otherwise>
-					</c:choose>
+				<c:choose>
+					<c:when test="<%= message.isAnonymous() %>">
+						<liferay-ui:message key="anonymous" />
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
+					</c:otherwise>
+				</c:choose>
 
-					<c:if test="<%= !readThread %>">
-						</strong>
-					</c:if>
-				</a>
-			</td>
-		</liferay-ui:csp>
-
-		<liferay-ui:csp>
-			<td class="table-cell" style="white-space: nowrap;">
-				<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
-			</td>
-		</liferay-ui:csp>
+				<c:if test="<%= !readThread %>">
+					</strong>
+				</c:if>
+			</a>
+		</td>
+		<td class="table-cell text-nowrap">
+			<a href="<%= rowHREF %>"><%= dateTimeFormat.format(message.getModifiedDate()) %></a>
+		</td>
 	</tr>
 </c:if>
 

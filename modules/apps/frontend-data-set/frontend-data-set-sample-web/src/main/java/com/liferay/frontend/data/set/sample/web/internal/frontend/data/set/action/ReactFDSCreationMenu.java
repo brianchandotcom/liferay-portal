@@ -22,40 +22,31 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.REACT,
 	service = FDSCreationMenu.class
 )
-public class CustomizedFDSCreationMenu implements FDSCreationMenu {
+public class ReactFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
-			DropdownItemBuilder.putData(
-				"confirmationMessage",
-				_language.get(httpServletRequest, "are-you-sure")
-			).putData(
-				"confirmationMessageType", "warning"
-			).putData(
-				"modalSize", "full-screen"
-			).putData(
-				"permissionKey", "update"
-			).putData(
-				"title", _language.get(httpServletRequest, "my-products")
-			).setHref(
-				"#"
-			).setIcon(
-				"bolt"
+			DropdownItemBuilder.setIcon(
+				"date"
 			).setLabel(
-				_language.get(httpServletRequest, "open-form")
-			).setTarget(
-				"modal"
+				_language.get(httpServletRequest, "date")
+			).build()
+		).addPrimaryDropdownItem(
+			DropdownItemBuilder.setIcon(
+				"time"
+			).setLabel(
+				_language.get(httpServletRequest, "time")
 			).build()
 		).build();
 	}
 
 	@Override
 	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
-		return FDSEntryItemImportPolicy.DETACHED;
+		return FDSEntryItemImportPolicy.GROUP_PROXY;
 	}
 
 	@Reference

@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CLASSIC,
 	service = FDSCreationMenu.class
 )
-public class CustomizedFDSCreationMenu implements FDSCreationMenu {
+public class ClassicFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {
@@ -40,13 +40,27 @@ public class CustomizedFDSCreationMenu implements FDSCreationMenu {
 			).putData(
 				"permissionKey", "update"
 			).putData(
-				"title", _language.get(httpServletRequest, "my-products")
+				"title", _language.get(httpServletRequest, "calendar")
 			).setHref(
 				"#"
 			).setIcon(
-				"bolt"
+				"calendar"
 			).setLabel(
-				_language.get(httpServletRequest, "open-form")
+				_language.get(httpServletRequest, "calendar")
+			).setTarget(
+				"modal"
+			).build()
+		).addPrimaryDropdownItem(
+			DropdownItemBuilder.putData(
+				"modalSize", "full-screen"
+			).putData(
+				"title", _language.get(httpServletRequest, "blogs")
+			).setHref(
+				"#"
+			).setIcon(
+				"blogs"
+			).setLabel(
+				_language.get(httpServletRequest, "blogs")
 			).setTarget(
 				"modal"
 			).build()
@@ -55,7 +69,7 @@ public class CustomizedFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
-		return FDSEntryItemImportPolicy.DETACHED;
+		return FDSEntryItemImportPolicy.ITEM_PROXY;
 	}
 
 	@Reference

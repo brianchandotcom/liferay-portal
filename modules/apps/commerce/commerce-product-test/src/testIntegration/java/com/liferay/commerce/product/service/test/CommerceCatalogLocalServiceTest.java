@@ -1,0 +1,76 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.product.service.test;
+
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.model.CPConfigurationList;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Stefano Motta
+ */
+@RunWith(Arquillian.class)
+public class CommerceCatalogLocalServiceTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testForceDeleteCommerceCatalog() throws Exception {
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				RandomTestUtil.randomString(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				RandomTestUtil.randomString(), "USD", "en_US", false,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		List<CPConfigurationList> cpConfigurationLists =
+			_cpConfigurationListLocalService.getCPConfigurationLists(
+				commerceCatalog.getGroupId(), TestPropsValues.getCompanyId());
+
+		Assert.assertFalse(cpConfigurationLists.isEmpty());
+
+		_commerceCatalogLocalService.forceDeleteCommerceCatalog(
+			commerceCatalog);
+
+		cpConfigurationLists =
+			_cpConfigurationListLocalService.getCPConfigurationLists(
+				commerceCatalog.getGroupId(), TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(cpConfigurationLists.isEmpty());
+	}
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
+
+}

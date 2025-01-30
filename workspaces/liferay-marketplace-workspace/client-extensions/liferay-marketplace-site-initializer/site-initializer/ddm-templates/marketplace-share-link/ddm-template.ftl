@@ -9,7 +9,7 @@
 		color: rgb(133, 140, 148);
 	}
 
-	svg.link-arrow mask {
+	.link-arrow mask {
 		mask-type: alpha;
 	}
 </style>

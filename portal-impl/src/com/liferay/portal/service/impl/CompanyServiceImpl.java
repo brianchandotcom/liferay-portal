@@ -171,17 +171,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the company with the logo.
-	 *
-	 * @param  logoId the ID of the company's logo
-	 * @return Returns the company with the logo
-	 */
-	@Override
-	public Company getCompanyByLogoId(long logoId) throws PortalException {
-		return companyLocalService.getCompanyByLogoId(logoId);
-	}
-
-	/**
 	 * Returns the company with the mail domian.
 	 *
 	 * @param  mx the company's mail domain

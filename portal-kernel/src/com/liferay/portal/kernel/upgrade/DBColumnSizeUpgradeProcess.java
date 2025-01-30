@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -19,7 +20,9 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -50,6 +53,8 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 		String catalog = dbInspector.getCatalog();
 		String schema = dbInspector.getSchema();
+
+		List<String> tableColumns = new ArrayList<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			ResultSet tableResultSet = databaseMetaData.getTables(
@@ -105,22 +110,27 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 								continue;
 							}
 
-							try {
-								alterColumnType(
-									tableName, columnName, _newColumnType);
-							}
-							catch (SQLException sqlException) {
-								if (_log.isWarnEnabled()) {
-									_log.warn(
-										StringBundler.concat(
-											"Unable to alter length of column ",
-											columnName, " for table ",
-											tableName),
-										sqlException);
-								}
-							}
+							tableColumns.add(
+								tableName + StringPool.PERIOD + columnName);
 						}
 					}
+				}
+			}
+		}
+
+		for (String tableColumn : tableColumns) {
+			String[] splits = StringUtil.split(tableColumn, StringPool.PERIOD);
+
+			try {
+				alterColumnType(splits[0], splits[1], _newColumnType);
+			}
+			catch (SQLException sqlException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to alter length of column ", splits[0],
+							" for table ", splits[1]),
+						sqlException);
 				}
 			}
 		}

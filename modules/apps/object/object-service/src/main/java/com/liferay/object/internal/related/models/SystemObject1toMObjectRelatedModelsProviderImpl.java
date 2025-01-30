@@ -27,6 +27,7 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,6 +69,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
 
+		_localizationTable =
+			systemObjectDefinitionManager.getLocalizationTable();
 		_table = systemObjectDefinitionManager.getTable();
 	}
 
@@ -415,7 +418,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 						objectField.getDBColumnName());
 		}
 
-		return fromStep.from(
+		JoinStep joinStep = fromStep.from(
 			_table
 		).innerJoinON(
 			dynamicObjectDefinitionTable,
@@ -423,7 +426,25 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			).eq(
 				_systemObjectDefinitionManager.getPrimaryKeyColumn()
 			)
-		).where(
+		);
+
+		if (_localizationTable != null) {
+			joinStep = joinStep.leftJoinOn(
+				_localizationTable,
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					_localizationTable.getColumn(
+						dynamicObjectDefinitionTable.getPrimaryKeyColumnName())
+				).and(
+					_localizationTable.getColumn(
+						"languageId"
+					).eq(
+						ObjectEntrySearchUtil.getLanguageId()
+					)
+				));
+		}
+
+		return joinStep.where(
 			primaryKeyColumn.eq(
 				primaryKey
 			).and(
@@ -455,11 +476,22 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 					return companyIdColumn.eq(objectField.getCompanyId());
 				}
 			).and(
-				ObjectEntrySearchUtil.getRelatedModelsPredicate(
-					objectDefinition2, _objectFieldLocalService, search,
-					dynamicObjectDefinitionTable)
-			)
-		);
+				() -> {
+					ObjectField titleObjectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition2.getTitleObjectFieldId());
+
+					if (titleObjectField.isLocalized()) {
+						return ObjectEntrySearchUtil.getRelatedModelsPredicate(
+							objectDefinition2, _objectFieldLocalService, search,
+							_localizationTable);
+					}
+
+					return ObjectEntrySearchUtil.getRelatedModelsPredicate(
+						objectDefinition2, _objectFieldLocalService, search,
+						dynamicObjectDefinitionTable);
+				}
+			));
 	}
 
 	private GroupByStep _getUnrelatedModelsGroupByStep(
@@ -538,6 +570,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		);
 	}
 
+	private final Table _localizationTable;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

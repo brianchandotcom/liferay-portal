@@ -16,6 +16,7 @@ import {
 	MOVE_ITEM,
 	MOVE_STEPPER,
 	PASTE_ITEM,
+	REMOVE_FORM_STEP,
 	SWITCH_VIEWPORT_SIZE,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	TOGGLE_WIDGET_HIGHLIGHTED,
@@ -39,6 +40,7 @@ import * as undoDeleteRule from './undoDeleteRule';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoMoveItems from './undoMoveItems';
 import * as undoPasteItems from './undoPasteItems';
+import * as undoRemoveFormStep from './undoRemoveFormStep';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoStepperAction from './undoStepperAction';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
@@ -66,6 +68,7 @@ const UNDO_ACTIONS = {
 	[MOVE_ITEM]: undoMoveItems,
 	[MOVE_STEPPER]: undoStepperAction,
 	[PASTE_ITEM]: undoPasteItems,
+	[REMOVE_FORM_STEP]: undoRemoveFormStep,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[TOGGLE_FRAGMENT_HIGHLIGHTED]: undoToggleFragmentHighlighted,

@@ -73,13 +73,13 @@ public class OpenSearchAggregationResultsTranslator {
 		PipelineAggregation pipelineAggregation =
 			_pipelineAggregationLookup.lookup(name);
 
-		if (pipelineAggregation != null) {
-			return pipelineAggregation.accept(
-				_pipelineAggregationResultTranslatorFactory.
-					createPipelineAggregationResultTranslator(aggregate));
+		if (pipelineAggregation == null) {
+			return null;
 		}
 
-		return null;
+		return pipelineAggregation.accept(
+			_pipelineAggregationResultTranslatorFactory.
+				createPipelineAggregationResultTranslator(aggregate));
 	}
 
 	private final AggregationLookup _aggregationLookup;

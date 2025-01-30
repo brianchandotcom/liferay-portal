@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -368,6 +369,24 @@ public class TaxonomyVocabularyResourceTest
 					taxonomyVocabulariesJSONObject.getString("items"))));
 	}
 
+	@FeatureFlags("LPD-41304")
+	@Override
+	@Test
+	public void testPostAssetLibraryTaxonomyVocabulary() throws Exception {
+		super.testPostAssetLibraryTaxonomyVocabulary();
+
+		_testPostAssetLibraryTaxonomyVocabularyWithPermissions();
+	}
+
+	@FeatureFlags("LPD-41304")
+	@Override
+	@Test
+	public void testPostSiteTaxonomyVocabulary() throws Exception {
+		super.testPostSiteTaxonomyVocabulary();
+
+		_testPostSiteTaxonomyVocabularyWithPermissions();
+	}
+
 	@Override
 	@Test
 	public void testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
@@ -607,6 +626,98 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertArrayEquals(
 			new Object[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
 			permission.getActionIds());
+	}
+
+	private void _testPostAssetLibraryTaxonomyVocabularyWithPermissions()
+		throws Exception {
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		randomTaxonomyVocabulary.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						actionIds = new String[] {ActionKeys.DELETE};
+						roleName = role.getName();
+					}
+				}
+			});
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostAssetLibraryTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
+
+		Permission[] permissions = postTaxonomyVocabulary.getPermissions();
+
+		Assert.assertNotNull(permissions);
+		Assert.assertEquals(
+			Arrays.toString(permissions), 2, permissions.length);
+
+		for (Permission permission : permissions) {
+			if (Objects.equals(permission.getRoleName(), role.getName())) {
+				Assert.assertArrayEquals(
+					new String[] {ActionKeys.DELETE},
+					permission.getActionIds());
+			}
+
+			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
+				Assert.assertArrayEquals(
+					new String[] {
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.VIEW
+					},
+					permission.getActionIds());
+			}
+		}
+	}
+
+	private void _testPostSiteTaxonomyVocabularyWithPermissions()
+		throws Exception {
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		randomTaxonomyVocabulary.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						actionIds = new String[] {ActionKeys.DELETE};
+						roleName = role.getName();
+					}
+				}
+			});
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
+				randomTaxonomyVocabulary);
+
+		Permission[] permissions = postTaxonomyVocabulary.getPermissions();
+
+		Assert.assertNotNull(permissions);
+		Assert.assertEquals(
+			Arrays.toString(permissions), 2, permissions.length);
+
+		for (Permission permission : permissions) {
+			if (Objects.equals(permission.getRoleName(), role.getName())) {
+				Assert.assertArrayEquals(
+					new String[] {ActionKeys.DELETE},
+					permission.getActionIds());
+			}
+
+			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
+				Assert.assertArrayEquals(
+					new String[] {
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.VIEW
+					},
+					permission.getActionIds());
+			}
+		}
 	}
 
 	@Inject

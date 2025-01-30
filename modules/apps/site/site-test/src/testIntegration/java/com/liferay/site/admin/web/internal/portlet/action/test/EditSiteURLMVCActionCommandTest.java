@@ -63,8 +63,10 @@ public class EditSiteURLMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"liveGroupId", String.valueOf(_group.getGroupId()));
 
+		String groupFriendlyURL = "/testfriendlyurl";
+
 		mockLiferayPortletActionRequest.addParameter(
-			"groupFriendlyURL", "/testFriendlyURL");
+			"groupFriendlyURL", groupFriendlyURL);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
@@ -76,6 +78,7 @@ public class EditSiteURLMVCActionCommandTest {
 			WebKeys.REDIRECT);
 
 		Assert.assertTrue(redirect.contains(themeDisplay.getPortalURL()));
+		Assert.assertTrue(redirect.contains(groupFriendlyURL));
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

@@ -197,6 +197,8 @@ test('LPD-32519 Warning message before submitting a return should not be shown o
 		})
 	).click();
 
+	await page.waitForLoadState('networkidle');
+
 	await expect(
 		page.getByText(
 			'Warning:Please review the details of the returning items before submitting the request.'

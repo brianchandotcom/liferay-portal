@@ -411,7 +411,6 @@ export class CommerceLayoutsPage {
 
 	async createWidgetPage(pageName: string) {
 		await this.addPageButton.first().click();
-		await this.createPageMenuItem.click();
 		await this.widgetPageTemplateButton.click();
 		await this.addPageNameInput.waitFor({
 			state: 'attached',

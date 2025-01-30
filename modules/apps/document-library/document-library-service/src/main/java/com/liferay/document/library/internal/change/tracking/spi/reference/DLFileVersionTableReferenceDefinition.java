@@ -104,32 +104,6 @@ public class DLFileVersionTableReferenceDefinition
 			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
-				FriendlyURLEntryTable.INSTANCE
-			).innerJoinON(
-				DLFileVersionTable.INSTANCE,
-				DLFileVersionTable.INSTANCE.fileEntryId.eq(
-					FriendlyURLEntryTable.INSTANCE.classPK)
-			).innerJoinON(
-				DLFileEntryTable.INSTANCE,
-				DLFileEntryTable.INSTANCE.groupId.eq(
-					FriendlyURLEntryTable.INSTANCE.groupId
-				).and(
-					DLFileVersionTable.INSTANCE.fileEntryId.eq(
-						DLFileEntryTable.INSTANCE.fileEntryId)
-				).and(
-					DLFileEntryTable.INSTANCE.fileEntryId.eq(
-						FriendlyURLEntryTable.INSTANCE.classPK)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					FriendlyURLEntryTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
 				CTSContentTable.INSTANCE
 			).innerJoinON(
 				DLFileVersionTable.INSTANCE,
@@ -203,6 +177,32 @@ public class DLFileVersionTableReferenceDefinition
 				).and(
 					DLFileEntryTable.INSTANCE.fileEntryId.eq(
 						DLFileVersionTable.INSTANCE.fileEntryId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				FriendlyURLEntryTable.INSTANCE
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileEntryId.eq(
+					FriendlyURLEntryTable.INSTANCE.classPK)
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.groupId.eq(
+					FriendlyURLEntryTable.INSTANCE.groupId
+				).and(
+					DLFileVersionTable.INSTANCE.fileEntryId.eq(
+						DLFileEntryTable.INSTANCE.fileEntryId)
+				).and(
+					DLFileEntryTable.INSTANCE.fileEntryId.eq(
+						FriendlyURLEntryTable.INSTANCE.classPK)
+				)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					FriendlyURLEntryTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
 				)
 			)
 		).referenceInnerJoin(

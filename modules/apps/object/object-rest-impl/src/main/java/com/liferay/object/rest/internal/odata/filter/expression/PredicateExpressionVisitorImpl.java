@@ -176,11 +176,12 @@ public class PredicateExpressionVisitorImpl
 		if (entityField.getFilterableName(
 				null
 			).contains(
-				"/"
+				StringPool.SLASH
 			)) {
 
-			return complexPropertyExpression.getName() + "/" +
-				entityField.getFilterableName(null);
+			return StringBundler.concat(
+				complexPropertyExpression.getName(), StringPool.SLASH,
+				entityField.getFilterableName(null));
 		}
 
 		return complexPropertyExpression.toString();
@@ -352,7 +353,7 @@ public class PredicateExpressionVisitorImpl
 		if (entityField.getFilterableName(
 				null
 			).contains(
-				"/"
+				StringPool.SLASH
 			)) {
 
 			return entityField.getFilterableName(null);

@@ -406,6 +406,43 @@ export class ChangeTrackingPage {
 		}
 	}
 
+	async viewChanges({changed, site, title, type}) {
+		if (changed) {
+			await this.page
+				.locator('.fds tbody tr')
+				.filter({
+					has: this.page.getByText(title),
+				})
+				.filter({
+					has: this.page.getByRole('cell', {name: changed}),
+				})
+				.isVisible();
+		}
+
+		if (site) {
+			await this.page
+				.locator('.fds tbody tr')
+				.filter({
+					has: this.page.getByText(title),
+				})
+				.filter({
+					has: this.page.getByRole('cell', {name: site}),
+				})
+				.isVisible();
+		}
+		if (type) {
+			await this.page
+				.locator('.fds tbody tr')
+				.filter({
+					has: this.page.getByText(title),
+				})
+				.filter({
+					has: this.page.getByRole('cell', {name: type}),
+				})
+				.isVisible();
+		}
+	}
+
 	async viewDisplayTab(tabLabel: string, {isHidden} = {isHidden: false}) {
 		const tab = this.page.locator('nav.navbar');
 

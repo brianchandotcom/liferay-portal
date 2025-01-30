@@ -570,7 +570,20 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
+		SystemObjectDefinitionManager systemObjectDefinitionManager = null;
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			systemObjectDefinitionManager =
+				_systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+		}
+
 		if (objectField.isLocalized()) {
+			if (objectDefinition.isUnmodifiableSystemObject()) {
+				return systemObjectDefinitionManager.getLocalizationTable();
+			}
+
 			return DynamicObjectDefinitionLocalizationTableFactory.create(
 				objectDefinition, this);
 		}
@@ -580,11 +593,6 @@ public class ObjectFieldLocalServiceImpl
 				objectDefinition.getDBTableName())) {
 
 			if (objectDefinition.isUnmodifiableSystemObject()) {
-				SystemObjectDefinitionManager systemObjectDefinitionManager =
-					_systemObjectDefinitionManagerRegistry.
-						getSystemObjectDefinitionManager(
-							objectDefinition.getName());
-
 				return systemObjectDefinitionManager.getTable();
 			}
 
@@ -1717,7 +1725,7 @@ public class ObjectFieldLocalServiceImpl
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-32050") &&
-			required) {
+			!objectDefinition.isUnmodifiableSystemObject() && required) {
 
 			throw new ObjectFieldLocalizedException(
 				"Localized object fields must not be required");

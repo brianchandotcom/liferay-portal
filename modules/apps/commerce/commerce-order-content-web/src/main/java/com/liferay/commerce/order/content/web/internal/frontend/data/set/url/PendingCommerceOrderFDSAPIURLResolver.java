@@ -12,6 +12,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,10 +45,20 @@ public class PendingCommerceOrderFDSAPIURLResolver
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+		if (accountEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		if (commerceOrder == null) {
+			return StringPool.BLANK;
+		}
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
 				commerceContext.getCommerceChannelId());
-		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 		return StringUtil.replace(
 			baseURL,

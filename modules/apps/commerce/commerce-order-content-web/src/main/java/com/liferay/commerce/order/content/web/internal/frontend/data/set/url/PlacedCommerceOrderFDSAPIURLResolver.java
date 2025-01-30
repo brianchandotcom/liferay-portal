@@ -42,19 +42,20 @@ public class PlacedCommerceOrderFDSAPIURLResolver implements FDSAPIURLResolver {
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		_accountEntry = commerceContext.getAccountEntry();
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-		if (_accountEntry == null) {
+		if (accountEntry == null) {
 			return StringPool.BLANK;
 		}
 
-		_commerceChannel = _commerceChannelLocalService.getCommerceChannel(
-			commerceContext.getCommerceChannelId());
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(
+				commerceContext.getCommerceChannelId());
 
 		String externalReferenceCode = StringPool.BLANK;
 
 		if (baseURL.startsWith("/v1.0/channels/by-externalReferenceCode")) {
-			externalReferenceCode = _commerceChannel.getExternalReferenceCode();
+			externalReferenceCode = commerceChannel.getExternalReferenceCode();
 		}
 
 		return StringUtil.replace(
@@ -65,16 +66,13 @@ public class PlacedCommerceOrderFDSAPIURLResolver implements FDSAPIURLResolver {
 				"{externalReferenceCode}"
 			},
 			new String[] {
-				_accountEntry.getExternalReferenceCode(),
-				String.valueOf(_accountEntry.getAccountEntryId()),
-				_commerceChannel.getExternalReferenceCode(),
-				String.valueOf(_commerceChannel.getCommerceChannelId()),
+				accountEntry.getExternalReferenceCode(),
+				String.valueOf(accountEntry.getAccountEntryId()),
+				commerceChannel.getExternalReferenceCode(),
+				String.valueOf(commerceChannel.getCommerceChannelId()),
 				externalReferenceCode
 			});
 	}
-
-	private AccountEntry _accountEntry;
-	private CommerceChannel _commerceChannel;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

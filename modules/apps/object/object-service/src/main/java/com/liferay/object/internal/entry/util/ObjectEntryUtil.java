@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.entry.util;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -207,6 +208,10 @@ public class ObjectEntryUtil {
 		Class<?> modelClass, long userId) {
 
 		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		ExpandoBridge expandoBridge = baseModel.getExpandoBridge();
+
+		modelAttributes.putAll(expandoBridge.getAttributes());
 
 		if (dtoConverter == null) {
 			if (_log.isWarnEnabled()) {

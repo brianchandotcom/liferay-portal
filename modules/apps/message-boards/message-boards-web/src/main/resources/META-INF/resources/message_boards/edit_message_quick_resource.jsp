@@ -99,19 +99,26 @@ String redirect = ParamUtil.getString(request, "redirect");
 			</div>
 
 			<%
-			String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
+			User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 			%>
 
-			<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
-				<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[1]) %>">
-					<%= HtmlUtil.escape(ranks[1]) %>
-				</span>
-			</c:if>
+			<c:if test="<%= messageUser != null %>">
 
-			<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
-				<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
-					<%= HtmlUtil.escape(ranks[0]) %>
-				</span>
+				<%
+				String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
+				%>
+
+				<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
+					<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[1]) %>">
+						<%= HtmlUtil.escape(ranks[1]) %>
+					</span>
+				</c:if>
+
+				<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+					<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
+						<%= HtmlUtil.escape(ranks[0]) %>
+					</span>
+				</c:if>
 			</c:if>
 		</clay:content-col>
 	</clay:content-row>

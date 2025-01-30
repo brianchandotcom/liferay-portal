@@ -66,6 +66,10 @@ public interface SystemObjectDefinitionManager {
 
 	public Map<Locale, String> getLabelMap();
 
+	public default Table getLocalizationTable() {
+		return null;
+	}
+
 	public Class<?> getModelClass();
 
 	public String getModelClassName();
@@ -166,6 +170,10 @@ public interface SystemObjectDefinitionManager {
 	}
 
 	public int getVersion();
+
+	public default boolean isEnableLocalization() {
+		return false;
+	}
 
 	public void updateBaseModel(
 			long primaryKey, User user, Map<String, Object> values)

@@ -327,8 +327,17 @@ public class CommerceOrderEditDisplayContext {
 			return Collections.emptyList();
 		}
 
+		if (hasModelPermission(
+			_commerceOrder,
+			CommerceOrderActionKeys.
+				MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
+
+			return _commerceOrderNoteService.getCommerceOrderNotes(
+				commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
 		return _commerceOrderNoteService.getCommerceOrderNotes(
-			commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			commerceOrderId, false);
 	}
 
 	public String getCommerceOrderPaymentMethodDescription()

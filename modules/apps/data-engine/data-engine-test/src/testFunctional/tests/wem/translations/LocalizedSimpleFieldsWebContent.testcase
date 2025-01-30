@@ -355,7 +355,7 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "Titulo do WC");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		AssertElementPresent(
 			key_webContentTitle = "WC Title",

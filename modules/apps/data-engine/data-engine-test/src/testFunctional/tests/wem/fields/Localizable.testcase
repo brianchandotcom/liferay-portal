@@ -61,7 +61,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "Web Content Title - pt-BR");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		NavItem.gotoStructures();
 
@@ -130,7 +130,7 @@ definition {
 			webContentTextFieldLabel = "Text",
 			webContentTitle = "Web Content Title - pt-BR edited");
 
-		PortletEntry.publish();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",

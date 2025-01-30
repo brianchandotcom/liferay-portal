@@ -114,7 +114,7 @@ public class ConfigurationModelToDDMFormConverter {
 		getConfigurationFieldOptionsProvider(
 			AttributeDefinition attributeDefinition) {
 
-		String pid = _configurationModel.getID();
+		String pid = _configurationModel.getBaseID();
 
 		if (_configurationModel.isFactory()) {
 			pid = _configurationModel.getFactoryPid();

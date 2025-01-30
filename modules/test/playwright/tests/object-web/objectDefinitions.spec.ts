@@ -480,7 +480,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				},
 				scope: 'company',
 				status: {code: 0},
-				titleObjectFieldName: 'id',
+				titleObjectFieldName: 'name',
 			});
 
 		apiHelpers.data.push({id: department.id, type: 'objectDefinition'});
@@ -502,7 +502,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				},
 				scope: 'site',
 				status: {code: 1},
-				titleObjectFieldName: 'name',
+				titleObjectFieldName: 'id',
 			});
 
 		apiHelpers.data.push({id: employee.id, type: 'objectDefinition'});

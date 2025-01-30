@@ -11,9 +11,11 @@ export class UserLocaleOptionsPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.languageChangeLink = page.getByRole('link', {
-			name: 'Display the page in',
-		});
+		this.languageChangeLink = page
+			.getByRole('link', {
+				name: 'Display the page in',
+			})
+			.first();
 		this.page = page;
 	}
 
@@ -24,5 +26,7 @@ export class UserLocaleOptionsPage {
 		});
 
 		await this.languageChangeLink.click();
+
+		await this.page.waitForLoadState();
 	}
 }

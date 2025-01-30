@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {LanguageId} from '../../types/layout_data/BaseLayoutDataItem';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {getEditableLocalizedValue} from '../utils/getEditableLocalizedValue';
 import selectEditableValue from './selectEditableValue';
@@ -16,7 +15,7 @@ export default function selectEditableValueContent(
 		languageId,
 	}: {
 		fragmentEntryLinks: FragmentEntryLinkMap;
-		languageId: LanguageId;
+		languageId: Liferay.Language.Locale;
 	},
 	fragmentEntryLinkId: string,
 	editableId: string,

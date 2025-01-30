@@ -7,7 +7,7 @@ import {UPDATE_LANGUAGE_ID} from '../actions/types';
 import updateLanguageId from '../actions/updateLanguageId';
 
 export default function languageReducer(
-	languageId: string = 'en-US',
+	languageId: Liferay.Language.Locale = 'en_US',
 	action: ReturnType<typeof updateLanguageId>
 ) {
 	switch (action.type) {

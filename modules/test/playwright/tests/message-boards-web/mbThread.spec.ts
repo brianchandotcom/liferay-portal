@@ -14,9 +14,71 @@ import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	loginTest(),
 	isolatedSiteTest,
-	messageBoardsPagesTest,
-	loginTest()
+	messageBoardsPagesTest
+);
+
+test(
+	'Can reply on a thread of a deleted user',
+	{
+		tag: '@LPD-47731',
+	},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		page,
+		site,
+	}) => {
+		const testUser = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const siteAdminRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Site Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteAdminRole.id,
+			site.id,
+			testUser.id
+		);
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await page.waitForURL(/MBAdminPortlet/);
+
+		const currentURL = page.url();
+
+		await page.goto(`${currentURL}&doAsUserId=${testUser.id}`);
+
+		await messageBoardsPage.goToCreateNewThread();
+
+		const mbTitle = getRandomString();
+
+		await messageBoardsEditThreadPage.publishNewBasicThread(
+			mbTitle,
+			getRandomString()
+		);
+
+		const replyContent = getRandomString();
+
+		await messageBoardsEditThreadPage.publishReply(replyContent);
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(
+			Number(testUser.id)
+		);
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('link', {name: mbTitle}).click();
+
+		await expect(page.getByText(replyContent)).toBeVisible();
+
+		await page.getByRole('button', {name: 'Reply'}).click();
+
+		await expect(messageBoardsEditThreadPage.bodyTextBox).toBeVisible();
+	}
 );
 
 test(
@@ -29,7 +91,7 @@ test(
 
 		const mbTitle = getRandomString();
 
-		await messageBoardsEditThreadPage.publishNewBasicThread(
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
 			mbTitle,
 			site.friendlyUrlPath
 		);
@@ -52,7 +114,7 @@ test(
 		tag: '@LPD-45630',
 	},
 	async ({messageBoardsEditThreadPage, page, site}) => {
-		await messageBoardsEditThreadPage.publishNewBasicThread(
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
 			'MB subject',
 			`
 - [b]BBcode list item strong / bold[/b]

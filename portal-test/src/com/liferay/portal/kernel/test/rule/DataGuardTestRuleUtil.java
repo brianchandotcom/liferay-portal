@@ -662,8 +662,7 @@ public class DataGuardTestRuleUtil {
 		SetUtil.fromArray(
 			"com.liferay.portal.security.audit.storage.model.AuditEvent");
 	private static final Set<String> _prioritizedModelClassNames =
-		new LinkedHashSet<>(
-			Arrays.<String>asList("com.liferay.portal.kernel.model.Company"));
+		new LinkedHashSet<>(Set.of("com.liferay.portal.kernel.model.Company"));
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

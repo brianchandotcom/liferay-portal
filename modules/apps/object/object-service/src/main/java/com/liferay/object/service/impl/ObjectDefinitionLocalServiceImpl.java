@@ -326,8 +326,9 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getExternalReferenceCode(),
 				userId, objectFolderId,
 				systemObjectDefinitionManager.getModelClassName(),
-				table.getTableName(), false, false, true, false, false, false,
-				null, systemObjectDefinitionManager.getLabelMap(), false,
+				table.getTableName(), false, false, true,
+				systemObjectDefinitionManager.isEnableLocalization(), false,
+				false, null, systemObjectDefinitionManager.getLabelMap(), false,
 				systemObjectDefinitionManager.getName(), null, null,
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionManager.getPluralLabelMap(), false,
@@ -2945,9 +2946,7 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (enableLocalization && !modifiable) {
-			throw new ObjectDefinitionEnableLocalizationException(
-				"Enable localization is not allowed for unmodifiable object " +
-					"definitions");
+			return;
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-32050") &&

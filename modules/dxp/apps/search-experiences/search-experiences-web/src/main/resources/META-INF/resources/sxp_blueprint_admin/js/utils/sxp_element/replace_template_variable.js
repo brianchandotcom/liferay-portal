@@ -73,13 +73,14 @@ export default function replaceTemplateVariable({
 						configValue = '';
 					}
 					else {
-						const formattedDate = dateUtils.format(
-							new Date(initialConfigValue * 1000),
-							config.typeOptions?.format || 'yyyyMMddhhmmss'
-						);
-
 						try {
-							configValue = JSON.parse(formattedDate);
+							configValue = JSON.parse(
+								dateUtils.format(
+									new Date(initialConfigValue * 1000),
+									config.typeOptions?.format ||
+										'yyyyMMddhhmmss'
+								)
+							);
 						}
 						catch {
 							configValue = '';

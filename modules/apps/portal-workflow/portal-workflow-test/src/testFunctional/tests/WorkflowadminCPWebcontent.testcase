@@ -90,9 +90,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureAndWorkflowCP(
+		WebContent.addCP(
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
+
+		WebContent.submitForWorkflowWithPermission();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

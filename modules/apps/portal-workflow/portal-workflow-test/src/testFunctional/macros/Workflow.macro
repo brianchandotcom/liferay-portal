@@ -42,7 +42,7 @@ definition {
 			Button.clickSave();
 		}
 
-		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Content Page,Knowledge Base Article,Message Boards Message,Page Revision,Web Content Article,Wiki Page") {
+		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Content Page,Knowledge Base Article,Message Boards Message,Page Revision,Web Content Article") {
 			if (IsElementNotPresent(assetType = ${workflowResourceValue}, locator1 = "WorkflowConfiguration#ASSET_TYPE_WORKFLOW_ASSIGNED", workflowAssigned = "No Workflow")) {
 				AssertClick.pauseAssertTextClickAt(
 					key_rowEntry = ${workflowResourceValue},
@@ -959,7 +959,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "No Workflow");
+		DMDocument.expandInfo();
 	}
 
 	@summary = "Default summary"

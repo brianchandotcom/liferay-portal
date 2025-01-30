@@ -265,7 +265,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Web Content");
 
-		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
+		DMDocument.expandInfo();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -274,10 +274,9 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureAndWorkflowCP(
-			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
-			webContentTitle = "WC WebContent Title");
+		WebContent.addCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.submitForWorkflowWithPermission();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -380,7 +379,7 @@ definition {
 			workflowProcess = "Single Approver");
 
 		AssertElementPresent(
-			key_workflowItemSubject = "Web Content Article: Web Content Title",
+			key_workflowItemSubject = "Web Content Title",
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_ITEM_SUBJECT");
 
 		Navigator.openURL();
@@ -423,8 +422,6 @@ definition {
 		Click(
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
-
-		PortletEntry.submitForWorkflow();
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",

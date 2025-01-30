@@ -112,7 +112,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		Button.click(button = "Submit for Workflow");
+		WebContent.submitForWorkflowWithPermission();
 
 		WaitForElementPresent(locator1 = "Message#ERROR_3");
 

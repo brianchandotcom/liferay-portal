@@ -911,9 +911,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
-			value1 = "Submit for Workflow");
+		WebContent.submitForWorkflowWithPermission();
 
 		SelectFrame();
 

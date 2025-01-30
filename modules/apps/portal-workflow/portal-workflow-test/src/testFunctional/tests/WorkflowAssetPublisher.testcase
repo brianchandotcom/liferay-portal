@@ -63,8 +63,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			MessageboardsThread.tearDownCP();
-
 			BlogsEntry.tearDownCP();
 
 			WebContent.tearDownCP();
@@ -142,7 +140,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -348,7 +346,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -430,7 +428,7 @@ definition {
 
 		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
-		Button.clickSubmitForWorkflow();
+		WebContent.submitForWorkflowWithPermission();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

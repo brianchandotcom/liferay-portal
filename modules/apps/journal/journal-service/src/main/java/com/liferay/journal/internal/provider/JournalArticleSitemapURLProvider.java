@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -247,6 +249,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 		String portalURL = _portal.getPortalURL(layoutSet, themeDisplay);
 
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			themeDisplay.getScopeGroupId());
+
 		for (JournalArticle journalArticle : journalArticles) {
 			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
 				(journalArticle.getStatus() !=
@@ -304,7 +309,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
 				articleURL, themeDisplay, articleLayout,
-				_getAvailableLocales(journalArticle));
+				_getAvailableLocales(journalArticle, siteAvailableLocales));
 
 			for (String alternateURL : alternateURLs.values()) {
 				_sitemapManager.addURLElement(
@@ -317,14 +322,23 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		}
 	}
 
-	private Set<Locale> _getAvailableLocales(JournalArticle journalArticle) {
+	private Set<Locale> _getAvailableLocales(
+		JournalArticle journalArticle, Set<Locale> siteAvailableLocales) {
+
 		Set<Locale> availableLocales = new HashSet<>();
+
+		if (SetUtil.isEmpty(siteAvailableLocales)) {
+			return availableLocales;
+		}
 
 		for (String availableLanguageId :
 				journalArticle.getAvailableLanguageIds()) {
 
-			availableLocales.add(
-				LocaleUtil.fromLanguageId(availableLanguageId));
+			Locale locale = LocaleUtil.fromLanguageId(availableLanguageId);
+
+			if (siteAvailableLocales.contains(locale)) {
+				availableLocales.add(locale);
+			}
 		}
 
 		return availableLocales;
@@ -373,6 +387,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

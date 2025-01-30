@@ -32,14 +32,14 @@ public class ObjectEntryFolderServiceUtil {
 	 */
 	public static ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long groupId,
-			Map<java.util.Locale, String> labelMap, String name,
 			long parentObjectEntryFolderId,
+			Map<java.util.Locale, String> labelMap, String name,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addObjectEntryFolder(
-			externalReferenceCode, groupId, labelMap, name,
-			parentObjectEntryFolderId, serviceContext);
+			externalReferenceCode, groupId, parentObjectEntryFolderId, labelMap,
+			name, serviceContext);
 	}
 
 	public static ObjectEntryFolder deleteObjectEntryFolder(
@@ -66,12 +66,12 @@ public class ObjectEntryFolderServiceUtil {
 	}
 
 	public static ObjectEntryFolder updateObjectEntryFolder(
-			long objectEntryFolderId, Map<java.util.Locale, String> labelMap,
-			String name, long parentObjectEntryFolderId)
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			Map<java.util.Locale, String> labelMap, String name)
 		throws PortalException {
 
 		return getService().updateObjectEntryFolder(
-			objectEntryFolderId, labelMap, name, parentObjectEntryFolderId);
+			objectEntryFolderId, parentObjectEntryFolderId, labelMap, name);
 	}
 
 	public static ObjectEntryFolderService getService() {

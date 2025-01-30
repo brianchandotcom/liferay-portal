@@ -378,6 +378,16 @@ public class ObjectEntryWrapper
 		return model.getTitleValue();
 	}
 
+	/**
+	 * Returns the tree path of this object entry.
+	 *
+	 * @return the tree path of this object entry
+	 */
+	@Override
+	public String getTreePath() {
+		return model.getTreePath();
+	}
+
 	@Override
 	public String getURLTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -390,16 +400,6 @@ public class ObjectEntryWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getURLTitleMap();
-	}
-
-	/**
-	 * Returns the tree path of this object entry.
-	 *
-	 * @return the tree path of this object entry
-	 */
-	@Override
-	public String getTreePath() {
-		return model.getTreePath();
 	}
 
 	/**

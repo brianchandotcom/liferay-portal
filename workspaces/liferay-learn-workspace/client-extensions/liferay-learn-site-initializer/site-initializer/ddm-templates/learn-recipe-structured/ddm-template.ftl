@@ -40,6 +40,60 @@
 			)
 		}
 	}
+
+	const _addEventListener = (btnThumbs) => {
+
+		document.querySelectorAll(btnThumbs).forEach((element) => {
+			element.addEventListener("click", (event) => {
+				event.preventDefault();
+
+				const isPressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+				const currentValue = parseInt(event.currentTarget.getAttribute("value"), 10) || 0;
+
+				const newValue = isPressed ? currentValue - 1 : currentValue + 1;
+
+				document.querySelectorAll(btnThumbs).forEach((element) => {
+					element.setAttribute("aria-pressed", !isPressed);
+		  			element.setAttribute("value", newValue);
+		  			const counterSpan = element.querySelector(".current");
+		  			if (counterSpan) {
+						counterSpan.textContent = newValue;
+		  				}
+				});
+
+				let oppositeThumbsPressed = Array.from(
+					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up")
+				).some(element => element.getAttribute("aria-pressed") === "true");
+
+				if (oppositeThumbsPressed) {
+					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up").forEach((element) => {
+						const oppositeValue = parseInt(element.getAttribute("value"), 10) || 0;
+
+						const newOppositeValue = oppositeValue > 0 ? oppositeValue - 1 : 0;
+
+						element.setAttribute("aria-pressed", "false");
+						element.setAttribute("value", newOppositeValue);
+
+						const current = element.querySelector(".current");
+
+						if (current) {
+							current.textContent = newOppositeValue;
+						}
+					});
+				}
+			});
+		});
+	};
+
+	if (document.readyState === 'complete') {
+		callback();
+	} else {
+		window.addEventListener("load", function () {
+			_addEventListener(".btn-thumbs-up");
+			_addEventListener(".btn-thumbs-down");
+		});
+	}
+
 </script>
 
 <div class="learn-recipe-container">
@@ -147,10 +201,12 @@
 		<#if Steps.getSiblings()?has_content>
 			<ol>
 				<#list Steps.getSiblings() as currentStep>
-					<li>${currentStep.Step.StepInstruction.getData()}</li>
+					<li>
+
+					${currentStep.Step.StepInstruction.getData()}
 
 					<#if currentStep.Step.AdditionalNotes.getSiblings()?has_content>
-	  					<#list currentStep.Step.AdditionalNotes.getSiblings() as currentNote>
+	  				<#list currentStep.Step.AdditionalNotes.getSiblings() as currentNote>
 							<#if currentNote?? && currentNote.NoteText.getData()?has_content>
 								<div class="adm-block adm-${currentNote.NoteType.getData()}">
 									<div class="adm-heading">
@@ -171,12 +227,13 @@
 						</#list>
 					</#if>
 
-					<#if currentStep.Step.Resources.Image.getData()?has_content>
+				  <#if currentStep.Step.Resources.Image.getData()?has_content>
 						<div class="mb-3">
 							<img
 								class="rounded img-fluid"
 								height="75%"
 								src="${currentStep.Step.Resources.Image.getData()}"
+								width="75%"
 							/>
 						</div>
 					</#if>
@@ -201,6 +258,7 @@
 							</div>
 						</div>
 					</#if>
+					</li>
 				</#list>
 			</ol>
 		</#if>
@@ -236,6 +294,21 @@
 				</#if>
 			</#list>
 		</#if>
+		<#assign journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number />
+
+		<div class="page-nav-menu voting-box-bottom">
+			<div class="d-flex flex-row align-items-center justify-content-evenly voting-box__content">
+				<div>
+					<@liferay_ui["message"] key="was-this-article-helpful" />
+				</div>
+
+				<@liferay_ratings["ratings"]
+					className="com.liferay.journal.model.JournalArticle"
+					classPK=journalArticlePK
+					type="thumbs"
+				/>
+			</div>
+		</div>
 	</article>
 </div>
 
@@ -319,3 +392,51 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.voting-box__content {
+		gap: 1rem;
+		height: 3rem;
+		justify-content: center;
+
+		.btn-thumbs-down {
+			padding-bottom: 2px;
+		}
+	}
+
+	.voting-box-bottom {
+		background: linear-gradient(123.06deg, #1514A4 0%, #00C2FB 173.41%);
+		color: #FFFFFF;
+		margin-top: 50px;
+		width: 30%;
+
+		.on .lexicon-icon {
+			color: #FFF !important;
+		}
+
+		.ratings-thumbs {
+			button {
+				padding: 5px 3px;
+			}
+		}
+
+		div {
+			font-weight: 600;
+		}
+
+		span, svg {
+			color: #FFFFFF;
+		}
+	}
+
+	@media(max-width: 768px) {
+		.voting-box-bottom {
+			width: 100%;
+		}
+
+		.voting-box__content {
+			justify-content: flex-start;
+		}
+	}
+
+</style>

@@ -68,7 +68,7 @@ export const CONDITION_ITEMS = {
 			value: CONDITION_VALUES.role,
 		},
 		{
-			label: Liferay.Language.get('has-not-the-role-of'),
+			label: Liferay.Language.get('does-not-have-the-role-of'),
 			value: CONDITION_VALUES.not_role,
 		},
 		{
@@ -76,7 +76,7 @@ export const CONDITION_ITEMS = {
 			value: CONDITION_VALUES.segment,
 		},
 		{
-			label: Liferay.Language.get('not-belongs-to-segment'),
+			label: Liferay.Language.get('does-not-belong-to-segment'),
 			value: CONDITION_VALUES.not_segment,
 		},
 	],

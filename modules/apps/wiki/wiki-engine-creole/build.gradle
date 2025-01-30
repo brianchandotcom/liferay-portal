@@ -1,18 +1,3 @@
-import com.liferay.gradle.util.FileUtil
-
-import org.apache.tools.ant.filters.FixCrLfFilter
-
-apply plugin: "antlr"
-
-String parserDirName = "com/liferay/wiki/engine/creole/internal/parser/parser"
-List<String> startParameterTaskNames = gradle.startParameter.taskNames
-
-configurations {
-	compileInclude {
-		extendsFrom antlr
-	}
-}
-
 dependencies {
 	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
@@ -30,72 +15,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-}
-
-generateGrammarSource {
-	setActions([])
-
-	File grammarFile = file("src/main/antlr/${parserDirName}/Creole10.g")
-
-	dependsOn cleanGenerateGrammarSource
-
-	doFirst {
-		delete fileTree("src/main/java/" + parserDirName) {
-			exclude "**/source_formatter.ignore"
-		}
-
-		delete fileTree("src/main/resources/" + parserDirName) {
-			exclude "**/source_formatter.ignore"
-		}
-
-		javaexec {
-			args "-o", FileUtil.relativize(generateGrammarSource.outputDirectory, grammarFile.parentFile)
-			args grammarFile.name
-
-			classpath = generateGrammarSource.antlrClasspath
-			main = "org.antlr.Tool"
-			maxHeapSize = generateGrammarSource.maxHeapSize
-			workingDir = grammarFile.parentFile
-		}
-	}
-
-	doLast {
-		copy {
-			eachFile {
-				if (name in ["Creole10Lexer.java", "Creole10Parser.java"]) {
-					String javaClass = name[0 .. -6]
-
-					filter {
-						String line ->
-
-						line.replace "public class ${javaClass}", """\
-@SuppressWarnings(\"all\")
-public class ${javaClass}"""
-					}
-				}
-			}
-
-			filter(FixCrLfFilter, javafiles: true, tab: FixCrLfFilter.AddAsisRemove.newInstance("add"))
-
-			from outputDirectory
-			include "**/*.java"
-			into "src/main/java/" + parserDirName
-		}
-
-		copy {
-			from outputDirectory
-			exclude "**/*.java"
-			into "src/main/resources/" + parserDirName
-		}
-	}
-
-	ext {
-		autoClean = false
-	}
-
-	enabled = startParameterTaskNames.contains("generateGrammarSource")
-	maxHeapSize = "1512m"
-	outputDirectory = new File(temporaryDir, "generated")
 }
 
 liferayOSGi {

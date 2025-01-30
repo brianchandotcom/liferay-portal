@@ -2576,9 +2576,8 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
-				if (!equals(
-						(Map)order1.getCustomFields(),
-						(Map)order2.getCustomFields())) {
+				if (!Objects.deepEquals(
+						order1.getCustomFields(), order2.getCustomFields())) {
 
 					return false;
 				}

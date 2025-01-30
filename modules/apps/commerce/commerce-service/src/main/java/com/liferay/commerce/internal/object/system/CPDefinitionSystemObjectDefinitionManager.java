@@ -6,6 +6,7 @@
 package com.liferay.commerce.internal.object.system;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -108,6 +109,11 @@ public class CPDefinitionSystemObjectDefinitionManager
 	}
 
 	@Override
+	public boolean getEnableLocalization() {
+		return true;
+	}
+
+	@Override
 	public String getExternalReferenceCode() {
 		return "L_COMMERCE_PRODUCT_DEFINITION";
 	}
@@ -126,6 +132,11 @@ public class CPDefinitionSystemObjectDefinitionManager
 		).put(
 			"pluralLabel", "cp-definitions"
 		).build();
+	}
+
+	@Override
+	public Table getLocalizationTable() {
+		return CPDefinitionLocalizationTable.INSTANCE;
 	}
 
 	@Override
@@ -159,6 +170,8 @@ public class CPDefinitionSystemObjectDefinitionManager
 			new TextObjectFieldBuilder(
 			).labelMap(
 				createLabelMap("description")
+			).localized(
+				true
 			).name(
 				"description"
 			).system(
@@ -167,6 +180,8 @@ public class CPDefinitionSystemObjectDefinitionManager
 			new TextObjectFieldBuilder(
 			).labelMap(
 				createLabelMap("name")
+			).localized(
+				true
 			).name(
 				"name"
 			).required(
@@ -197,6 +212,8 @@ public class CPDefinitionSystemObjectDefinitionManager
 			new TextObjectFieldBuilder(
 			).labelMap(
 				createLabelMap("short-description")
+			).localized(
+				true
 			).name(
 				"shortDescription"
 			).system(

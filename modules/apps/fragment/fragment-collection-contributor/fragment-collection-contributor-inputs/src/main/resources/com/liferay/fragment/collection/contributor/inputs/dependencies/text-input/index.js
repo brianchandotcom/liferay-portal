@@ -98,6 +98,9 @@ function main() {
 							defaultLanguageId:
 								themeDisplay.getDefaultLanguageId(),
 							inputElement,
+							readOnlyInputLabel: document.getElementById(
+								`${fragmentNamespace}-text-input-readonly`
+							),
 							unlocalizedFieldsState:
 								input.attributes.unlocalizedFieldsState,
 							unlocalizedMessageContainer:

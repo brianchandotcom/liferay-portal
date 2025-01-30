@@ -1,3 +1,61 @@
+task buildCreoleLexer(type: Copy)
+task buildCreoleParser(type: Copy)
+
+buildCreoleLexer {
+	doFirst {
+		delete "src/main/java/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Lexer.java"
+	}
+
+	ext {
+		autoClean = false
+	}
+
+	filter {
+		line -> line.replaceAll(/\bthis.type\b/, "this.state.type")
+	}
+
+	from "src/main/antlr/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Lexer.java"
+	into "src/main/java/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Lexer.java"
+}
+
+buildCreoleParser {
+	doFirst {
+		delete "src/main/java/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Parser.java"
+	}
+
+	ext {
+		autoClean = false
+	}
+
+	filter {
+		line -> line.replaceAll(/\bruleMemo\b/, "state.ruleMemo")
+	}
+
+	filter {
+		line -> line.replaceAll(/\b_fsp\b/, "state._fsp")
+	}
+
+	filter {
+		line -> line.replaceAll(/\bfailed\b/, "state.failed")
+	}
+
+	filter {
+		line -> line.replaceAll(/\bbacktracking\b/, "state.backtracking")
+	}
+
+	filter {
+		line -> line.replaceAll(/\berrorRecovery\b/, "state.errorRecovery")
+	}
+
+	from "src/main/antlr/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Parser.java"
+	into "src/main/java/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Parser.java"
+}
+
+compileJava {
+	dependsOn buildCreoleLexer
+	dependsOn buildCreoleParser
+}
+
 dependencies {
 	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.5.3"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.2.1"

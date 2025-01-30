@@ -111,9 +111,10 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(
 				StringUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), null, StringUtil.randomString(),
+				_group.getGroupId(),
 				ObjectEntryFolderConstants.
 					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID,
+				null, StringUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertEquals(
@@ -216,8 +217,8 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
-					objectEntryFolder.getLabelMap(), name,
-					objectEntryFolder.getParentObjectEntryFolderId());
+					objectEntryFolder.getParentObjectEntryFolderId(),
+					objectEntryFolder.getLabelMap(), name);
 			});
 
 		// Null label map
@@ -234,10 +235,10 @@ public class ObjectEntryFolderLocalServiceTest {
 		ObjectEntryFolder objectEntryFolder2 =
 			_objectEntryFolderLocalService.updateObjectEntryFolder(
 				TestPropsValues.getUserId(),
-				objectEntryFolder1.getObjectEntryFolderId(), null,
-				objectEntryFolder1.getName(),
+				objectEntryFolder1.getObjectEntryFolderId(),
 				ObjectEntryFolderConstants.
-					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID);
+					DEFAULT_PARENT_OBJECT_ENTRY_FOLDER_ID,
+				null, objectEntryFolder1.getName());
 
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(
@@ -259,8 +260,8 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
-					objectEntryFolder.getLabelMap(), null,
-					objectEntryFolder.getParentObjectEntryFolderId());
+					objectEntryFolder.getParentObjectEntryFolderId(),
+					objectEntryFolder.getLabelMap(), null);
 			});
 
 		// Scope
@@ -288,9 +289,9 @@ public class ObjectEntryFolderLocalServiceTest {
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
+					parentObjectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(),
-					objectEntryFolder.getName(),
-					parentObjectEntryFolder.getObjectEntryFolderId());
+					objectEntryFolder.getName());
 			});
 	}
 
@@ -341,11 +342,11 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, TestPropsValues.getUserId(), groupId,
+			parentObjectEntryFolderId,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
-			name, parentObjectEntryFolderId,
-			ServiceContextTestUtil.getServiceContext());
+			name, ServiceContextTestUtil.getServiceContext());
 	}
 
 	@DeleteAfterTestRun

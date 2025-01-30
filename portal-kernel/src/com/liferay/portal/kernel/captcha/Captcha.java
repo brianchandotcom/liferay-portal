@@ -32,6 +32,8 @@ public interface Captcha {
 
 	public void enforceCaptcha(PortletRequest portletRequest);
 
+	public String getName();
+
 	public String getTaglibPath();
 
 	public boolean isEnabled(HttpServletRequest httpServletRequest);

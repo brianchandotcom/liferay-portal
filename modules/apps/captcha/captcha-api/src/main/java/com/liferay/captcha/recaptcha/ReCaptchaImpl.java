@@ -52,6 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 	@Override
+	public String getName() {
+		return "reCAPTCHA";
+	}
+
+	@Override
 	public String getTaglibPath() {
 		return _TAGLIB_PATH;
 	}

@@ -18,6 +18,7 @@ import {
 	MOVE_ITEM,
 	MOVE_STEPPER,
 	PASTE_ITEM,
+	REMOVE_FORM_STEP,
 	SWITCH_VIEWPORT_SIZE,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	TOGGLE_WIDGET_HIGHLIGHTED,
@@ -75,6 +76,8 @@ export default function getActionLabel(
 		case MOVE_ITEM:
 		case MOVE_STEPPER:
 			return sub(Liferay.Language.get('move-x'), action.itemName);
+		case REMOVE_FORM_STEP:
+			return Liferay.Language.get('remove-step');
 		case SELECT_SEGMENTS_EXPERIENCE:
 			return type === UNDO_TYPES.undo
 				? sub(

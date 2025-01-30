@@ -48,8 +48,8 @@ public class ObjectEntryFolderLocalServiceImpl
 	@Override
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long userId, long groupId,
-			Map<Locale, String> labelMap, String name,
-			long parentObjectEntryFolderId, ServiceContext serviceContext)
+			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -57,7 +57,7 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateExternalReferenceCode(
 			externalReferenceCode, groupId, user.getCompanyId());
 		_validateName(
-			groupId, user.getCompanyId(), name, 0, parentObjectEntryFolderId);
+			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
 
 		_validateParentObjectEntryFolderId(groupId, parentObjectEntryFolderId);
 
@@ -114,8 +114,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
-			long userId, long objectEntryFolderId, Map<Locale, String> labelMap,
-			String name, long parentObjectEntryFolderId)
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
+			String name)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder =
@@ -124,8 +125,8 @@ public class ObjectEntryFolderLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateName(
-			objectEntryFolder.getGroupId(), user.getCompanyId(), name,
-			objectEntryFolderId, parentObjectEntryFolderId);
+			objectEntryFolder.getGroupId(), user.getCompanyId(),
+			objectEntryFolderId, parentObjectEntryFolderId, name);
 
 		_validateParentObjectEntryFolderId(
 			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
@@ -252,8 +253,8 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private void _validateName(
-			long groupId, long companyId, String name, long objectEntryFolderId,
-			long parentObjectEntryFolderId)
+			long groupId, long companyId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {

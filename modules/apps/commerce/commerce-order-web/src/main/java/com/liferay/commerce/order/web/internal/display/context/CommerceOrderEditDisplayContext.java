@@ -328,9 +328,9 @@ public class CommerceOrderEditDisplayContext {
 		}
 
 		if (hasModelPermission(
-			_commerceOrder,
-			CommerceOrderActionKeys.
-				MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
+				_commerceOrder,
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
 
 			return _commerceOrderNoteService.getCommerceOrderNotes(
 				commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

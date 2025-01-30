@@ -16,13 +16,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONArray;
@@ -31,39 +29,9 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class ScanCodeProject {
+public abstract class ScanCodePipeline {
 
-	public ScanCodeProject(String buildURL, String pipelineName) {
-		_buildURL = buildURL;
-
-		_pipelineNames.add(pipelineName);
-	}
-
-	public void addFileInput(String filePath)
-		throws IOException, TimeoutException {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("curl ");
-		sb.append(_projectAPIURL);
-		sb.append("add_input/ --form \"upload_file=@");
-		sb.append(filePath);
-		sb.append("\" --header \"Authorization:Token ");
-		sb.append(_API_KEY);
-		sb.append("\" --request POST ");
-
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			sb.toString());
-
-		try {
-			JenkinsResultsParserUtil.readInputStream(process.getInputStream());
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-	}
-
-	public void addPipeline(String pipelineName)
+	public void addAdditionalPipeline(String pipelineName)
 		throws IOException, TimeoutException {
 
 		_pipelineNames.add(pipelineName);
@@ -93,6 +61,30 @@ public class ScanCodeProject {
 		sb.append(_API_KEY);
 		sb.append("\"");
 		sb.append(" --request POST ");
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.readInputStream(process.getInputStream());
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+	}
+
+	public void addFileInput(String filePath)
+		throws IOException, TimeoutException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("curl ");
+		sb.append(_projectAPIURL);
+		sb.append("add_input/ --form \"upload_file=@");
+		sb.append(filePath);
+		sb.append("\" --header \"Authorization:Token ");
+		sb.append(_API_KEY);
+		sb.append("\" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			sb.toString());
@@ -194,35 +186,10 @@ public class ScanCodeProject {
 		uploadResultsToBucket(resultsTarGzFile.toString());
 	}
 
-	public JSONObject getAnalyzeDockerImageJSONObject(String dockerTag) {
-		Matcher matcher = _dockerTagPattern.matcher(dockerTag);
+	public abstract void execute() throws IOException, TimeoutException;
 
-		if (!matcher.find()) {
-			throw new IllegalArgumentException(
-				"Invalid Docker tag " + dockerTag);
-		}
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"execute_now", false
-		).put(
-			"input_urls", "docker://liferay/" + dockerTag
-		).put(
-			"labels",
-			_getLabels(
-				"docker", matcher.group("buildProfile"),
-				matcher.group("releaseVersion"))
-		).put(
-			"name",
-			JenkinsResultsParserUtil.combine(
-				dockerTag, " Docker Scan-",
-				_simpleDateFormat.format(new Date()))
-		).put(
-			"pipeline", "analyze_docker_image"
-		);
-
-		return jsonObject;
+	public String getBuildURL() {
+		return _buildURL;
 	}
 
 	public String getComplianceAlertMessage(
@@ -259,63 +226,16 @@ public class ScanCodeProject {
 			ComplianceAlertType.valueOf(complianceAlertTypeString));
 	}
 
-	public JSONObject getInspectPackagesJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+	public List<String> getLabels(String... labelsArray) {
+		List<String> labels = new ArrayList<>();
 
-		jsonObject.put(
-			"execute_now", true
-		).put(
-			"input_urls",
-			"https://github.com/liferay/liferay-portal/archive/refs/heads" +
-				"/master.tar.gz"
-		).put(
-			"labels", _getLabels("master")
-		).put(
-			"name", "Master Daily Scan-" + _simpleDateFormat.format(new Date())
-		).put(
-			"pipeline", "inspect_packages"
-		);
+		labels.add("automated");
 
-		return jsonObject;
-	}
+		for (String label : labelsArray) {
+			labels.add(label);
+		}
 
-	public JSONObject getMapDevelopToDeployJSONObject() throws IOException {
-		JSONObject jsonObject = new JSONObject();
-
-		List<String> inputURLS = new ArrayList<>();
-
-		String tomcatURL = JenkinsResultsParserUtil.getBuildParameter(
-			_buildURL, "TEST_PORTAL_RELEASE_TOMCAT_URL");
-
-		inputURLS.add(tomcatURL + "#to");
-
-		inputURLS.add(getReleaseTarballLink());
-		inputURLS.add(
-			JenkinsResultsParserUtil.getBuildProperty("scancode.tar.gz.url"));
-		inputURLS.add(
-			JenkinsResultsParserUtil.getBuildProperty(
-				"scancode.config.file.url"));
-
-		String portalReleaseVersion =
-			JenkinsResultsParserUtil.getBuildParameter(
-				_buildURL, "TEST_PORTAL_RELEASE_VERSION");
-
-		jsonObject.put(
-			"execute_now", true
-		).put(
-			"input_urls", inputURLS
-		).put(
-			"labels", _getLabels(portalReleaseVersion)
-		).put(
-			"name",
-			JenkinsResultsParserUtil.combine(
-				portalReleaseVersion, " Scan-",
-				_simpleDateFormat.format(new Date()))
-		).put(
-			"pipeline", "map_deploy_to_develop:Java,Javascript"
-		);
-
-		return jsonObject;
+		return labels;
 	}
 
 	public String getPipelineRunURL(String pipelineName) {
@@ -363,56 +283,21 @@ public class ScanCodeProject {
 		return null;
 	}
 
-	public String getProjectID() {
-		return _projectID;
-	}
-
-	public String getReleaseTarballLink() {
-		String portalBranchUsername =
-			JenkinsResultsParserUtil.getBuildParameter(
-				_buildURL, "TEST_PORTAL_USER_NAME");
-
-		String portalSHA = JenkinsResultsParserUtil.getBuildParameter(
-			_buildURL, "TEST_PORTAL_RELEASE_GIT_ID");
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("https://github.com/");
-		sb.append(portalBranchUsername);
-		sb.append("/liferay-portal-ee/archive/");
-		sb.append(portalSHA);
-		sb.append(".tar.gz");
-		sb.append("#from");
-
-		return sb.toString();
-	}
-
 	public String getS3URL() {
 		return _s3URL;
 	}
 
-	public void invokeScan() throws IOException, TimeoutException {
+	public SimpleDateFormat getSimpleDateFormat() {
+		return _simpleDateFormat;
+	}
+
+	public void invokeScan(JSONObject jsonObject)
+		throws IOException, TimeoutException {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("curl ");
 		sb.append(_API_URL);
-
-		JSONObject jsonObject = null;
-
-		String pipelineName = _pipelineNames.get(0);
-
-		if (pipelineName.equals("inspect_packages")) {
-			jsonObject = getInspectPackagesJSONObject();
-		}
-		else if (pipelineName.equals("analyze_docker_image")) {
-			String dockerTag = JenkinsResultsParserUtil.getBuildParameter(
-				_buildURL, "LIFERAY_DOCKER_TAG");
-
-			jsonObject = getAnalyzeDockerImageJSONObject(dockerTag);
-		}
-		else if (pipelineName.equals("map_deploy_to_develop")) {
-			jsonObject = getMapDevelopToDeployJSONObject();
-		}
 
 		sb.append(" --data ");
 		sb.append("'");
@@ -457,9 +342,14 @@ public class ScanCodeProject {
 			subject = ":red-alert: Release blocker :red-alert:";
 		}
 
+		String complianceAlertErrorMessage = getComplianceAlertMessage(
+			ComplianceAlertType.ERROR);
+
+		String complianceAlertWarningMessage = getComplianceAlertMessage(
+			ComplianceAlertType.WARNING);
+
 		String complianceAlertMessages =
-			getComplianceAlertMessage(ComplianceAlertType.ERROR) +
-				getComplianceAlertMessage(ComplianceAlertType.WARNING);
+			complianceAlertErrorMessage + complianceAlertWarningMessage;
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(complianceAlertMessages)) {
 			sb.append("*Compliance alerts:* ");
@@ -639,16 +529,10 @@ public class ScanCodeProject {
 
 	}
 
-	private List<String> _getLabels(String... labelsArray) {
-		List<String> labels = new ArrayList<>();
+	protected ScanCodePipeline(String buildURL, String pipelineName) {
+		_buildURL = buildURL;
 
-		labels.add("automated");
-
-		for (String label : labelsArray) {
-			labels.add(label);
-		}
-
-		return labels;
+		_pipelineNames.add(pipelineName);
 	}
 
 	private boolean _hasErrors() {
@@ -675,9 +559,6 @@ public class ScanCodeProject {
 
 	private static final Map<String, Integer> _complianceAlertCountsMap =
 		new HashMap<>();
-	private static final Pattern _dockerTagPattern = Pattern.compile(
-		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
-			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
 
 	static {
 		try {

@@ -106,6 +106,8 @@ components:
                 dateModified:
                     format: date
                     type: string
+                defaultLanguageId:
+                    type: string
                 externalReferenceCode:
                     type: string
                 friendlyUrlPath:

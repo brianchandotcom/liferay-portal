@@ -41,46 +41,43 @@
 		}
 	}
 
-	const _addEventListener = (selectors, oppositeSelectors) => {
-		document.querySelectorAll(selectors).forEach((element) => {
+	const _addEventListener = (btnThumbs) => {
+
+		document.querySelectorAll(btnThumbs).forEach((element) => {
 			element.addEventListener("click", (event) => {
 				event.preventDefault();
 
-				const isBtnThumbsPressed = event.currentTarget.getAttribute("aria-pressed") === "true";
-				const currentBtnThumbsValue = parseInt(event.currentTarget.getAttribute("value"), 10) || 0;
+				const isPressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+				const currentValue = parseInt(event.currentTarget.getAttribute("value"), 10) || 0;
 
-				const newBtnthumbsValue = isBtnThumbsPressed ? currentBtnThumbsValue - 1 : currentBtnThumbsValue + 1;
+				const newValue = isPressed ? currentValue - 1 : currentValue + 1;
 
-				document.querySelectorAll(selectors).forEach((el) => {
-					el.setAttribute("aria-pressed", !isBtnThumbsPressed);
-					el.setAttribute("value", newBtnthumbsValue);
-					const counterSpan = el.querySelector(".current");
-
-					if (counterSpan) {
-						counterSpan.textContent = newBtnthumbsValue;
-					}
+				document.querySelectorAll(btnThumbs).forEach((element) => {
+					element.setAttribute("aria-pressed", !isPressed);
+		  			element.setAttribute("value", newValue);
+		  			const counterSpan = element.querySelector(".current");
+		  			if (counterSpan) {
+						counterSpan.textContent = newValue;
+		  				}
 				});
 
-				let oppositeBtnThumbsIsPressed = false;
-				document.querySelectorAll(oppositeSelectors).forEach((el) => {
-					if (el.getAttribute("aria-pressed") === "true") {
-						oppositeBtnThumbsIsPressed = true;
-					}
-				});
+				let oppositeThumbsPressed = Array.from(
+					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up")
+				).some(element => element.getAttribute("aria-pressed") === "true");
 
-				if (oppositeBtnThumbsIsPressed) {
-					document.querySelectorAll(oppositeSelectors).forEach((el) => {
-						const oppBtnThumbsValue = parseInt(el.getAttribute("value"), 10) || 0;
+				if (oppositeThumbsPressed) {
+					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up").forEach((element) => {
+						const oppositeValue = parseInt(element.getAttribute("value"), 10) || 0;
 
-						const newBtnThumbsOppValue = oppBtnThumbsValue > 0 ? oppBtnThumbsValue - 1 : 0;
+						const newOppositeValue = oppositeValue > 0 ? oppositeValue - 1 : 0;
 
-						el.setAttribute("aria-pressed", "false");
-						el.setAttribute("value", newBtnThumbsOppValue);
+						element.setAttribute("aria-pressed", "false");
+						element.setAttribute("value", newOppositeValue);
 
-						const counterSpan = el.querySelector(".current");
+						const current = element.querySelector(".current");
 
-						if (counterSpan) {
-							counterSpan.textContent = newBtnThumbsOppValue;
+						if (current) {
+							current.textContent = newOppositeValue;
 						}
 					});
 				}
@@ -88,10 +85,15 @@
 		});
 	};
 
-	window.addEventListener("load", function () {
-		_addEventListener(".btn-thumbs-up", ".btn-thumbs-down");
-		_addEventListener(".btn-thumbs-down", ".btn-thumbs-up");
-	});
+	if (document.readyState === 'complete') {
+		callback();
+	} else {
+		window.addEventListener("load", function () {
+			_addEventListener(".btn-thumbs-up");
+			_addEventListener(".btn-thumbs-down");
+		});
+	}
+
 </script>
 
 <div class="learn-recipe-container">
@@ -200,7 +202,7 @@
 			<ol>
 				<#list Steps.getSiblings() as currentStep>
 					<li>
-					
+
 					${currentStep.Step.StepInstruction.getData()}
 
 					<#if currentStep.Step.AdditionalNotes.getSiblings()?has_content>
@@ -224,7 +226,7 @@
 							</#if>
 						</#list>
 					</#if>
-					
+
 				  <#if currentStep.Step.Resources.Image.getData()?has_content>
 						<div class="mb-3">
 							<img
@@ -235,7 +237,7 @@
 							/>
 						</div>
 					</#if>
-					
+
 					<#if currentStep.Step.Resources.code.getData()?has_content>
 						<div class="code-toolbar">
 							<pre class="language-bash" tabindex="0">
@@ -256,7 +258,7 @@
 							</div>
 						</div>
 					</#if>
-					</li>					
+					</li>
 				</#list>
 			</ol>
 		</#if>
@@ -295,7 +297,6 @@
 		<#assign journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number />
 
 		<div class="page-nav-menu voting-box-bottom">
-
 			<div class="d-flex flex-row align-items-center justify-content-evenly voting-box__content">
 				<div>
 					<@liferay_ui["message"] key="was-this-article-helpful" />
@@ -408,9 +409,9 @@
 		color: #FFFFFF;
 		margin-top: 50px;
 		width: 30%;
-		
+
 		.on .lexicon-icon {
-    		color: #FFF !important;
+			color: #FFF !important;
 		}
 
 		.ratings-thumbs {
@@ -437,4 +438,5 @@
 			justify-content: flex-start;
 		}
 	}
+
 </style>

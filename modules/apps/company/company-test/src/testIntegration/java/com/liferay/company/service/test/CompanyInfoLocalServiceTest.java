@@ -52,9 +52,9 @@ public class CompanyInfoLocalServiceTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
-
 		_safeCloseable.close();
+
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test

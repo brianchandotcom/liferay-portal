@@ -1777,6 +1777,11 @@
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeImportsCheck">
+			<category name="Upgrade" />
+			<description name="Replaces deprecated package references with updated values from `imports.txt` and handles class renaming by updating variable declarations and references when a package change involves a class name change." />
+			<weight>3</weight>
+		</check>
 		<check name="UpgradeJavaAssetEntryAssetCategoriesCheck">
 			<category name="Upgrade" />
 			<description name="Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`." />
@@ -1792,11 +1797,6 @@
 		<check name="UpgradeJavaBasePanelAppExtendedClassesCheck">
 			<category name="Upgrade" />
 			<description name="Replace the setPortlet method with getPortlet." />
-		</check>
-		<check name="UpgradeJavaCheck">
-			<category name="Upgrade" />
-			<description name="Performs upgrade checks for `java` files." />
-			<weight>3</weight>
 		</check>
 		<check name="UpgradeJavaCommerceOrderValidatorCheck">
 			<category name="Upgrade" />

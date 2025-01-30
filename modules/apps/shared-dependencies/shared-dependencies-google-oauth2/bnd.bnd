@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Shared Dependencies Google OAuth2
+Bundle-SymbolicName: com.liferay.shared.dependencies.google.oauth2
+Bundle-Version: 1.0.0
+-exportcontents:\
+	com.google.api.client.auth.*,\
+	com.google.auth.*

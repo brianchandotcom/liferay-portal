@@ -132,6 +132,30 @@ export class ChangeTrackingPage {
 		await this.deleteComment(editedComment);
 	}
 
+	async assertStatus(status: string, title: string) {
+		await this.goToPublicationHistory();
+
+		await this.page
+			.locator('.fds tbody tr')
+			.filter({
+				has: this.page.getByText(title),
+			})
+			.filter({
+				has: this.page.getByText(status, {exact: true}),
+			})
+			.waitFor();
+
+		await this.page
+			.locator('.fds tbody tr')
+			.filter({
+				has: this.page.getByText(title),
+			})
+			.filter({
+				has: this.page.getByText(status, {exact: true}),
+			})
+			.isVisible();
+	}
+
 	async deleteComment(comment) {
 		const commentsDiv = this.page.locator('div.publications-comments');
 

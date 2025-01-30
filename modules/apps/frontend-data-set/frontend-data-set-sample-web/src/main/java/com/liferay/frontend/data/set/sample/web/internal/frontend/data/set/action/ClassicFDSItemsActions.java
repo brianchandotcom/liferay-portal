@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CLASSIC,
 	service = FDSItemsActions.class
 )
-public class CustomizedFDSItemsActions implements FDSItemsActions {
+public class ClassicFDSItemsActions implements FDSItemsActions {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
@@ -34,15 +34,18 @@ public class CustomizedFDSItemsActions implements FDSItemsActions {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				_language.get(httpServletRequest, "are-you-sure"), "danger",
-				null, "#", "home", "navigateHome",
-				_language.get(httpServletRequest, "nav-link"), null, null,
-				"view", null, null, "link", null, "item"));
+				null, null, null, "#", "book", "navigateToLibrary",
+				_language.get(httpServletRequest, "book"), null, null, null,
+				null, null, "link", null, "item"),
+			new FDSActionDropdownItem(
+				null, null, null, "#", "archive", "navigateToArchive",
+				_language.get(httpServletRequest, "job-archive"), null, null,
+				null, null, null, "link", null, "item"));
 	}
 
 	@Override
 	public FDSEntryItemImportPolicy getFDSEntryItemImportPolicy() {
-		return FDSEntryItemImportPolicy.DETACHED;
+		return FDSEntryItemImportPolicy.ITEM_PROXY;
 	}
 
 	@Reference

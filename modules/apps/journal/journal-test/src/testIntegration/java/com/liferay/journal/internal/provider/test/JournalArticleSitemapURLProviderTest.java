@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,10 +34,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -46,8 +51,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.provider.SitemapURLProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -226,6 +234,44 @@ public class JournalArticleSitemapURLProviderTest {
 		_assertVisitLayoutDefaultLayout("noindex");
 	}
 
+	@Test
+	public void testJournalArticleSitemapWithADisabledLanguage()
+		throws Exception {
+
+		Element rootElement = _getRootElement();
+
+		JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(), true);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(article.getAvailableLanguageIds(), "de_DE"));
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"inheritLocales", Boolean.FALSE.toString());
+
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES, "en_US,es_ES");
+
+		_groupLocalService.updateGroup(
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				article.getDDMStructureId(), true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		_assertRootElement(
+			article,
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			rootElement,
+			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+	}
+
 	private void _assertRootElement(
 			JournalArticle article, Layout layout, Element rootElement,
 			String urlSeparator)
@@ -236,7 +282,7 @@ public class JournalArticleSitemapURLProviderTest {
 
 		Assert.assertTrue(rootElement.hasContent());
 
-		String[] availableLanguageIds = article.getAvailableLanguageIds();
+		String[] availableLanguageIds = _getAvailableLanguageIds(article);
 
 		List<Element> elements = rootElement.elements();
 
@@ -317,6 +363,29 @@ public class JournalArticleSitemapURLProviderTest {
 		Assert.assertFalse(rootElement.hasContent());
 	}
 
+	private String[] _getAvailableLanguageIds(JournalArticle journalArticle) {
+		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
+			_group.getGroupId());
+
+		if (SetUtil.isEmpty(siteAvailableLocales)) {
+			return new String[0];
+		}
+
+		List<String> availableLanguageIds = new ArrayList<>();
+
+		for (String availableLanguageId :
+				journalArticle.getAvailableLanguageIds()) {
+
+			if (siteAvailableLocales.contains(
+					LocaleUtil.fromLanguageId(availableLanguageId))) {
+
+				availableLanguageIds.add(availableLanguageId);
+			}
+		}
+
+		return ArrayUtil.toStringArray(availableLanguageIds);
+	}
+
 	private Element _getRootElement() {
 		Document document = _saxReader.createDocument();
 
@@ -362,6 +431,9 @@ public class JournalArticleSitemapURLProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

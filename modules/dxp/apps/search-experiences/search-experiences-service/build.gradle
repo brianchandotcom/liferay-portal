@@ -6,7 +6,7 @@ buildService {
 dependencies {
 	compileInclude group: "com.damnhandy", name: "handy-uri-templates", version: "2.1.8"
 	compileInclude group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
-	compileInclude group: "com.google.re2j", name: "re2j", version: "1.2"
+	compileInclude group: "com.google.re2j", name: "re2j", version: "1.8"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

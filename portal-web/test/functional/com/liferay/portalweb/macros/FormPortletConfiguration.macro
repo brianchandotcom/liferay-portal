@@ -36,6 +36,8 @@ definition {
 			var formName = ${formTitle};
 		}
 
+		Navigator.gotoNavItem(navItem = "Setup");
+
 		AssertClick(
 			key_formName = ${formName},
 			locator1 = "FormPortletConfiguration#FORMS_TABLE_NAME",

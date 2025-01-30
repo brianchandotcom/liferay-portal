@@ -13,6 +13,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.product.constants.CommerceCatalogConstants;
 import com.liferay.commerce.product.exception.CommerceCatalogProductsException;
 import com.liferay.commerce.product.exception.CommerceCatalogSystemException;
+import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -264,6 +265,14 @@ public class CommerceCatalogLocalServiceImpl
 			commerceCatalog.getCommerceCatalogId());
 
 		if (group != null) {
+			for (CPConfigurationList cpConfigurationList :
+					_cpConfigurationListLocalService.getCPConfigurationLists(
+						group.getGroupId(), commerceCatalog.getCompanyId())) {
+
+				_cpConfigurationListLocalService.forceDeleteCPConfigurationList(
+					cpConfigurationList);
+			}
+
 			_groupLocalService.deleteGroup(group);
 		}
 

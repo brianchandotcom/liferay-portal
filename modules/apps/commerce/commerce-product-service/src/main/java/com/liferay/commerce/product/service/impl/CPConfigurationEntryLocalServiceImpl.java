@@ -253,10 +253,22 @@ public class CPConfigurationEntryLocalServiceImpl
 			_cpConfigurationEntrySettingLocalService.
 				fetchCPConfigurationEntrySetting(
 					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		if (cpConfigurationEntrySetting != null) {
+			_cpConfigurationEntrySettingLocalService.
+				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
+		}
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
 					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
-		if (cpConfigurationEntrySetting == null) {
-			return cpConfigurationEntry;
+		if (cpConfigurationEntrySetting != null) {
+			_cpConfigurationEntrySettingLocalService.
+				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
 		}
 
 		_cpConfigurationEntrySettingLocalService.

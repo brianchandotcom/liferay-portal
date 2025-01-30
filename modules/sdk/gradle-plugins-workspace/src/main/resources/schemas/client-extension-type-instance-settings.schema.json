@@ -1368,6 +1368,27 @@
 		},
 		{
 			"properties": {
+				"fileMimeTypes": {
+					"default": "*",
+					"description": "A file mime type of * will permit all file mime types.",
+					"items": {
+						"type": "string"
+					},
+					"title": "File Mime Types",
+					"type": "array"
+				},
+				"pid": {
+					"const": "com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration",
+					"title": "Mime Type"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Mime Type"
+		},
+		{
+			"properties": {
 				"clientId": {
 					"description": "Set the OAuth 2 client id for the Google Drive API. Go to {0} to create it.",
 					"title": "Client ID",
@@ -4088,6 +4109,7 @@
 				"com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration",
 				"com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration",
 				"com.liferay.document.library.configuration.DLFileEntryFriendlyURLConfiguration",
+				"com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration",
 				"com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration",
 				"com.liferay.document.library.internal.configuration.DLIndexerConfiguration",
 				"com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration",

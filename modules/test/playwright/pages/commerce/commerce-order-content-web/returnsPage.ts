@@ -5,6 +5,7 @@
 
 import {Page} from '@playwright/test';
 
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 import {CommerceLayoutsPage} from './commerceLayoutsPage';
 
@@ -24,6 +25,10 @@ export class ReturnsPage extends CommerceDNDTablePage {
 
 	async addReturnsWidget() {
 		await this.layoutsPage.addWidgetToPage('Returns');
+		await waitForAlert(
+			this.page,
+			'Success:The application was added to the page.'
+		);
 	}
 
 	async goto() {

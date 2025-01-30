@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SessionWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -662,7 +663,7 @@ public class DataGuardTestRuleUtil {
 		SetUtil.fromArray(
 			"com.liferay.portal.security.audit.storage.model.AuditEvent");
 	private static final Set<String> _prioritizedModelClassNames =
-		new LinkedHashSet<>(Set.of("com.liferay.portal.kernel.model.Company"));
+		new LinkedHashSet<>(Set.of(Company.class.getName()));
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

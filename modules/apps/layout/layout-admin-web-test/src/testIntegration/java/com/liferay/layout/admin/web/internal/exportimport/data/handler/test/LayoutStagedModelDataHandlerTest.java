@@ -395,16 +395,17 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		ContentLayoutTestUtil.addItemToLayout(
-			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER,
-			layout.fetchDraftLayout(), _layoutStructureProvider,
-			segmentsExperienceId);
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		Layout importedLayout = _getExportImportLayout(layout);
 
@@ -427,10 +428,9 @@ public class LayoutStagedModelDataHandlerTest
 
 		FragmentEntryLink draftLayoutFragmentEntryLink =
 			_addFragmentEntryLinkToLayout(
-				fileEntry, languageId, layout.fetchDraftLayout(),
-				segmentsExperienceId);
+				fileEntry, languageId, draftLayout, segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		Assert.assertNotNull(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -720,9 +720,11 @@ public class LayoutStagedModelDataHandlerTest
 		Layout stagingLayout = LayoutTestUtil.addTypeContentLayout(
 			stagingGroup);
 
+		Layout stagingDraftLayout = stagingLayout.fetchDraftLayout();
+
 		long stagingSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				stagingLayout.getPlid());
+				stagingDraftLayout.getPlid());
 
 		_mapJournalArticleToContentDisplay(
 			journalArticle, stagingLayout, stagingSegmentsExperienceId);
@@ -747,7 +749,9 @@ public class LayoutStagedModelDataHandlerTest
 		_updateJournalArticle(updatedContent, journalArticle);
 
 		_assertRenderLayoutHTML(
-			updatedContent, stagingLayout, stagingSegmentsExperienceId);
+			updatedContent, stagingLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				stagingLayout.getPlid()));
 
 		_assertRenderLayoutHTML(content, layout, segmentsExperienceId);
 
@@ -837,7 +841,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
-				group.getGroupId(), layout.getPlid());
+				group.getGroupId(), draftLayout.getPlid());
 
 		_layoutPageTemplateStructureRelLocalService.
 			addLayoutPageTemplateStructureRel(
@@ -850,7 +854,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
-				group.getGroupId(), layout.getPlid());
+				group.getGroupId(), draftLayout.getPlid());
 
 		_layoutPageTemplateStructureRelLocalService.
 			addLayoutPageTemplateStructureRel(
@@ -863,7 +867,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		SegmentsExperience segmentsExperience3 =
 			SegmentsTestUtil.addSegmentsExperience(
-				group.getGroupId(), layout.getPlid());
+				group.getGroupId(), draftLayout.getPlid());
 
 		_layoutPageTemplateStructureRelLocalService.
 			addLayoutPageTemplateStructureRel(
@@ -1468,6 +1472,8 @@ public class LayoutStagedModelDataHandlerTest
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		FragmentEntryLink fragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
@@ -1481,9 +1487,9 @@ public class LayoutStagedModelDataHandlerTest
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				null, 0,
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()));
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		return fragmentEntryLink;
 	}

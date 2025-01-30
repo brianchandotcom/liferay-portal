@@ -226,13 +226,15 @@ public class FragmentEntryLinkManagerTest {
 		List<InfoField<?>> allInfoFields = ListUtil.filter(
 			infoForm.getAllInfoFields(), InfoField::isEditable);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 			false,
 			String.valueOf(
 				_portal.getClassNameId(objectDefinition.getClassName())),
 			"0", layout.fetchDraftLayout(), _layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()),
+				draftLayout.getPlid()),
 			allInfoFields.toArray(new InfoField<?>[0]));
 
 		LayoutStructure layoutStructure = (LayoutStructure)jsonObject.get(

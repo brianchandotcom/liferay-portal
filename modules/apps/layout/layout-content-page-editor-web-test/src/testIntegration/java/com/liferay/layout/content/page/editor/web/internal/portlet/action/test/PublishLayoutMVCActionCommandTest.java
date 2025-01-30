@@ -112,9 +112,10 @@ public class PublishLayoutMVCActionCommandTest {
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 	}
 
 	@Test

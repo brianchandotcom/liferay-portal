@@ -133,6 +133,8 @@ public class LayoutModelDocumentContributorTest {
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
 
+		Layout draftLayout = _layout.fetchDraftLayout();
+
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
@@ -151,7 +153,7 @@ public class LayoutModelDocumentContributorTest {
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
 			0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
+				draftLayout.getPlid()));
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 

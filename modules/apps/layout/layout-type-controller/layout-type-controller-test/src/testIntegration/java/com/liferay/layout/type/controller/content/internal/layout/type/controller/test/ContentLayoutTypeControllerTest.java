@@ -207,6 +207,8 @@ public class ContentLayoutTypeControllerTest {
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
 
+		Layout draftLayout = _layout.fetchDraftLayout();
+
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
@@ -214,10 +216,9 @@ public class ContentLayoutTypeControllerTest {
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
 			0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
+				draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(
-			_layout.fetchDraftLayout(), _layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
 
 		_layout = _layoutLocalService.getLayout(_layout.getPlid());
 
@@ -255,6 +256,8 @@ public class ContentLayoutTypeControllerTest {
 		Layout masterLayout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
+		Layout draftMasterLayout = masterLayout.fetchDraftLayout();
+
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
@@ -262,10 +265,9 @@ public class ContentLayoutTypeControllerTest {
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
 			0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				masterLayout.getPlid()));
+				draftMasterLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(
-			masterLayout.fetchDraftLayout(), masterLayout);
+		ContentLayoutTestUtil.publishLayout(draftMasterLayout, masterLayout);
 
 		html = ContentLayoutTestUtil.getRenderLayoutHTML(
 			_layout, _layoutServiceContextHelper, _layoutStructureProvider,

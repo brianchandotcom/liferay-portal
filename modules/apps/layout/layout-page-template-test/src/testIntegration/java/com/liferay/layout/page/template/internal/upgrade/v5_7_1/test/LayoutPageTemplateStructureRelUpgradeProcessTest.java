@@ -75,11 +75,14 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
@@ -111,44 +114,48 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			),
-			_layout.fetchDraftLayout(), _layoutStructureProvider, null, null, 0,
+			_draftLayout, _layoutStructureProvider, null, null, 0,
 			_segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(
-			_layout.fetchDraftLayout(), _layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		Assert.assertEquals(
-			key, _getLayoutPageTemplateStructureDataKey(_layout));
+			key,
+			_getLayoutPageTemplateStructureDataKey(
+				_layout,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
 		Assert.assertEquals(
 			key,
-			_getLayoutPageTemplateStructureDataKey(_layout.fetchDraftLayout()));
+			_getLayoutPageTemplateStructureDataKey(
+				_draftLayout, _segmentsExperienceId));
 
 		runUpgrade();
 
 		Assert.assertEquals(
 			_objectDefinition.getClassName(),
-			_getLayoutPageTemplateStructureDataKey(_layout));
+			_getLayoutPageTemplateStructureDataKey(
+				_layout,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
 		Assert.assertEquals(
 			_objectDefinition.getClassName(),
-			_getLayoutPageTemplateStructureDataKey(_layout.fetchDraftLayout()));
+			_getLayoutPageTemplateStructureDataKey(
+				_draftLayout, _segmentsExperienceId));
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid());
+					_draftLayout.getGroupId(), _draftLayout.getPlid());
 
 		return _layoutPageTemplateStructureRelLocalService.
 			fetchLayoutPageTemplateStructureRel(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()));
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 	}
 
 	@Override
@@ -201,12 +208,12 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 					getLayoutPageTemplateStructureRelId());
 	}
 
-	private String _getLayoutPageTemplateStructureDataKey(Layout layout)
-		throws Exception {
+	private String _getLayoutPageTemplateStructureDataKey(
+		Layout layout, long segmentsExperienceId) {
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(), _segmentsExperienceId);
+				layout.getPlid(), segmentsExperienceId);
 
 		List<CollectionStyledLayoutStructureItem>
 			collectionStyledLayoutStructureItems =
@@ -234,6 +241,8 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private EntityCache _entityCache;

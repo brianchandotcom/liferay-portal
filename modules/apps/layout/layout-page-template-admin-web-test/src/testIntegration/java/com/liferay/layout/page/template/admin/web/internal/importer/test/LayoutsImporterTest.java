@@ -179,7 +179,7 @@ public class LayoutsImporterTest {
 
 			long defaultSegmentsExperienceId =
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid());
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid());
 
 			String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 				JSONUtil.put(
@@ -1182,9 +1182,10 @@ public class LayoutsImporterTest {
 			layoutPageTemplateEntry.getPlid());
 
 		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -1199,7 +1200,7 @@ public class LayoutsImporterTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			fragmentEntryLink, draftLayout, null, 0, segmentsExperienceId);
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		return layoutPageTemplateEntry;
 	}

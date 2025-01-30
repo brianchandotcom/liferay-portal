@@ -101,6 +101,8 @@ public class CopyLayoutMVCActionCommandTest {
 			_group, RandomTestUtil.randomString(),
 			WorkflowConstants.STATUS_APPROVED);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_serviceContext = _getServiceContext(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
@@ -115,7 +117,7 @@ public class CopyLayoutMVCActionCommandTest {
 	public void testDoProcessActionCopyLayout() throws Exception {
 		_addFragmentEntryLinkToLayout(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
+				_draftLayout.getPlid()));
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -155,7 +157,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addFragmentEntryLinkToLayout(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
+				_draftLayout.getPlid()));
 
 		_addModelResources(RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
 
@@ -185,7 +187,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		_addFragmentEntryLinkToLayout(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()));
+				_draftLayout.getPlid()));
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -232,12 +234,11 @@ public class CopyLayoutMVCActionCommandTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), _layout.fetchDraftLayout(),
+			fragmentEntry.getJs(), _draftLayout,
 			fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
 			fragmentEntry.getType());
 
-		ContentLayoutTestUtil.publishLayout(
-			_layout.fetchDraftLayout(), _layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 	}
 
 	private void _addModelResources(Role role) throws Exception {
@@ -485,6 +486,8 @@ public class CopyLayoutMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Layout _draftLayout;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

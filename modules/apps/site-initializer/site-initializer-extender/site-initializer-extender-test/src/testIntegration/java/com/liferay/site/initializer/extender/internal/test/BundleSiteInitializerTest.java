@@ -3623,36 +3623,71 @@ public class BundleSiteInitializerTest {
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
+		LayoutPageTemplateStructure publishLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid());
+					layout.getGroupId(), layout.getPlid());
 
-		List<SegmentsExperience> segmentsExperiences =
+		List<SegmentsExperience> publishLayoutSegmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
 				_group.getGroupId(),
 				new long[] {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId()
 				},
-				draftLayout.getClassPK(), true);
+				layout.getPlid(), true);
 
 		Assert.assertEquals(
-			segmentsExperiences.toString(), 2, segmentsExperiences.size());
+			publishLayoutSegmentsExperiences.toString(), 2,
+			publishLayoutSegmentsExperiences.size());
 
-		SegmentsExperience segmentsExperience1 = segmentsExperiences.get(0);
-
-		_assertLayoutStructureItems(
-			layoutPageTemplateStructure, 3,
-			segmentsExperience1.getSegmentsExperienceId());
-
-		SegmentsExperience segmentsExperience2 = segmentsExperiences.get(1);
+		SegmentsExperience publishLayoutSegmentsExperience1 =
+			publishLayoutSegmentsExperiences.get(0);
 
 		_assertLayoutStructureItems(
-			layoutPageTemplateStructure, 3,
-			segmentsExperience2.getSegmentsExperienceId());
+			publishLayoutPageTemplateStructure, 3,
+			publishLayoutSegmentsExperience1.getSegmentsExperienceId());
+
+		SegmentsExperience publishLayoutSegmentsExperience2 =
+			publishLayoutSegmentsExperiences.get(1);
+
+		_assertLayoutStructureItems(
+			publishLayoutPageTemplateStructure, 3,
+			publishLayoutSegmentsExperience2.getSegmentsExperienceId());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure draftLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid());
+
+		List<SegmentsExperience> draftLayoutSegmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				_group.getGroupId(),
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				},
+				draftLayout.getPlid(), true);
+
+		Assert.assertEquals(
+			draftLayoutSegmentsExperiences.toString(), 2,
+			draftLayoutSegmentsExperiences.size());
+
+		SegmentsExperience draftLayoutSegmentsExperience1 =
+			draftLayoutSegmentsExperiences.get(0);
+
+		_assertLayoutStructureItems(
+			draftLayoutPageTemplateStructure, 3,
+			draftLayoutSegmentsExperience1.getSegmentsExperienceId());
+
+		SegmentsExperience draftLayoutSegmentsExperience2 =
+			draftLayoutSegmentsExperiences.get(1);
+
+		_assertLayoutStructureItems(
+			draftLayoutPageTemplateStructure, 3,
+			draftLayoutSegmentsExperience2.getSegmentsExperienceId());
 	}
 
 	private void _assertSiteConfiguration() {

@@ -826,24 +826,26 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		String draftLayoutItemId = _addFragmentStyledLayoutStructureItem(
 			configurationJSONObject, editableValuesJSONObject, draftLayout, map,
-			segmentsExperienceId);
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 
 		String layoutItemId = _addFragmentStyledLayoutStructureItem(
 			configurationJSONObject, editableValuesJSONObject, layout, map,
-			segmentsExperienceId);
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 
 		_runUpgrade();
 
 		_assertItemConfigJSONObject(
-			expectedMap, draftLayoutItemId, draftLayout, segmentsExperienceId);
+			expectedMap, draftLayoutItemId, draftLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 		_assertItemConfigJSONObject(
-			expectedMap, layoutItemId, layout, segmentsExperienceId);
+			expectedMap, layoutItemId, layout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	private void _assertUpgradeWithViewportConfigurationSize(
@@ -861,22 +863,26 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		String draftLayoutItemId = _addColumnLayoutStructureItem(
-			draftLayout, map, segmentsExperienceId);
+			draftLayout, map,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 
 		String layoutItemId = _addColumnLayoutStructureItem(
-			layout, map, segmentsExperienceId);
+			layout, map,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 
 		_runUpgrade();
 
 		_assertViewportSizeConfiguration(
-			expectedMap, draftLayoutItemId, draftLayout, segmentsExperienceId);
+			expectedMap, draftLayoutItemId, draftLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
 		_assertViewportSizeConfiguration(
-			expectedMap, layoutItemId, layout, segmentsExperienceId);
+			expectedMap, layoutItemId, layout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	private void _assertViewportSizeConfiguration(

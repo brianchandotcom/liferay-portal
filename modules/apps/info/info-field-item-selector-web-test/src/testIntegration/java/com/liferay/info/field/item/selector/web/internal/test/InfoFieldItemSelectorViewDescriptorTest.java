@@ -181,7 +181,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				draftLayout.getPlid());
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -271,13 +271,15 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		List<InfoField<?>> allInfoFields = ListUtil.filter(
 			infoForm.getAllInfoFields(), InfoField::isEditable);
 
+		Layout draftLayout = _layout.fetchDraftLayout();
+
 		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 			false,
 			String.valueOf(
 				_portal.getClassNameId(_objectDefinition1.getClassName())),
-			"0", _layout.fetchDraftLayout(), _layoutStructureProvider,
+			"0", draftLayout, _layoutStructureProvider,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()),
+				draftLayout.getPlid()),
 			allInfoFields.toArray(new InfoField<?>[0]));
 
 		mockHttpServletRequest.setParameter(
@@ -348,11 +350,14 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		mockHttpServletRequest.setParameter(
 			"itemType", _objectDefinition1.getClassName());
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
 		mockHttpServletRequest.setParameter(
 			"segmentsExperienceId",
 			String.valueOf(
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid())));
 
 		_infoFieldProviderItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(),

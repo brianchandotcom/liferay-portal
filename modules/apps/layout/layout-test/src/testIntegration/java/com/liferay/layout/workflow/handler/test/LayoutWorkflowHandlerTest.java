@@ -275,20 +275,18 @@ public class LayoutWorkflowHandlerTest {
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(_group));
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		String defaultExperienceHeadingText = RandomTestUtil.randomString();
 
 		_addHeadingFragmentToLayout(
-			draftLayout, languageId, defaultSegmentsExperienceId,
+			draftLayout, languageId,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
 			defaultExperienceHeadingText);
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -300,7 +298,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 
@@ -329,12 +327,26 @@ public class LayoutWorkflowHandlerTest {
 					_group.getGroupId(), layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
-			languageId, defaultSegmentsExperienceId,
+			languageId,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
 			defaultExperienceHeadingText, layoutPageTemplateStructure);
+
+		segmentsExperience1 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience1.getGroupId(),
+				segmentsExperience1.getSegmentsExperienceKey(),
+				layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
 			languageId, segmentsExperience1.getSegmentsExperienceId(),
 			experience1HeadingText, layoutPageTemplateStructure);
+
+		segmentsExperience2 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience2.getGroupId(),
+				segmentsExperience2.getSegmentsExperienceKey(),
+				layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
 			languageId, segmentsExperience2.getSegmentsExperienceId(),
@@ -354,20 +366,18 @@ public class LayoutWorkflowHandlerTest {
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(_group));
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		String defaultExperienceHeadingText = RandomTestUtil.randomString();
 
 		_addHeadingFragmentToLayout(
-			draftLayout, languageId, defaultSegmentsExperienceId,
+			draftLayout, languageId,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
 			defaultExperienceHeadingText);
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -379,7 +389,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 
@@ -417,12 +427,26 @@ public class LayoutWorkflowHandlerTest {
 					_group.getGroupId(), layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
-			languageId, defaultSegmentsExperienceId,
+			languageId,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
 			defaultExperienceHeadingText, layoutPageTemplateStructure);
+
+		segmentsExperience1 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience1.getGroupId(),
+				segmentsExperience1.getSegmentsExperienceKey(),
+				layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
 			languageId, segmentsExperience1.getSegmentsExperienceId(),
 			experience1HeadingText, layoutPageTemplateStructure);
+
+		segmentsExperience2 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience2.getGroupId(),
+				segmentsExperience2.getSegmentsExperienceKey(),
+				layout.getPlid());
 
 		_assertSegmentExperienceFragmentEntryLink(
 			languageId, segmentsExperience2.getSegmentsExperienceId(),

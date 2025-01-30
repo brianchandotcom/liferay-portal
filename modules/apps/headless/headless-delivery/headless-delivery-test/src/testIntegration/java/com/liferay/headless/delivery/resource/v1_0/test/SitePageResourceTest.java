@@ -58,13 +58,10 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.importer.LayoutsImporter;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -90,7 +87,6 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -114,12 +110,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalService;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.net.URLEncoder;
@@ -178,7 +171,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Override
 	@Test
 	public void testGetSiteSitePage() throws Exception {
-		Layout layout = _addLayout(testGroup);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -203,8 +196,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Override
 	@Test
 	public void testGetSiteSitePageExperienceExperienceKey() throws Exception {
-		Layout layout = _addLayout(
-			testGroup, true, RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -222,13 +214,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testGetSiteSitePageExperienceExperienceKeyRenderedPage()
 		throws Exception {
 
-		Layout layout = _addLayout(
-			testGroup, true, RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		String friendlyURL = layout.getFriendlyURL();
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			layout,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				testGroup.getGroupId(), draftLayout.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		Assert.assertNotNull(
 			sitePageResource.getSiteSitePageExperienceExperienceKeyRenderedPage(
@@ -239,7 +235,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Override
 	@Test
 	public void testGetSiteSitePageRenderedPage() throws Exception {
-		Layout layout = _addLayout(testGroup);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -252,7 +248,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Override
 	@Test
 	public void testGetSiteSitePagesExperiencesPage() throws Exception {
-		Layout layout = _addLayout(testGroup);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -261,9 +257,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		long originalPageCount = page.getTotalCount();
 
-		_addSegmentsExperience(
-			layout,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		SegmentsTestUtil.addSegmentsExperience(
+			testGroup.getGroupId(), draftLayout.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		page = sitePageResource.getSiteSitePagesExperiencesPage(
 			testGroup.getGroupId(), friendlyURL.substring(1));
@@ -285,7 +284,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Test
 	@TestInfo("LPD-35928")
 	public void testGetSiteSitePagesPageSet() throws Exception {
-		_addLayout(testGroup);
+		LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -317,7 +316,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {
 		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		_addLayout(_groupLocalService.fetchGroup(siteId));
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			_groupLocalService.fetchGroup(siteId));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		BaseSitePageResourceTestCase.GraphQLField graphQLField =
 			new BaseSitePageResourceTestCase.GraphQLField(
@@ -432,96 +434,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			).buildString());
 	}
 
-	private Layout _addLayout(Group group) throws Exception {
-		return _addLayout(group, false, RandomTestUtil.randomString());
-	}
-
-	private Layout _addLayout(
-			Group group, boolean importPageDefinition, String title)
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
-			group, title, WorkflowConstants.STATUS_APPROVED);
-
-		if (importPageDefinition) {
-			String name = PrincipalThreadLocal.getName();
-
-			try {
-				PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-				ServiceContextThreadLocal.pushServiceContext(
-					ServiceContextTestUtil.getServiceContext(
-						testGroup.getGroupId()));
-
-				LayoutPageTemplateStructure layoutPageTemplateStructure =
-					_layoutPageTemplateStructureLocalService.
-						fetchLayoutPageTemplateStructure(
-							testGroup.getGroupId(), layout.getPlid());
-
-				LayoutStructure layoutStructure = LayoutStructure.of(
-					layoutPageTemplateStructure.
-						getDefaultSegmentsExperienceData());
-
-				layoutStructure.addRootLayoutStructureItem();
-
-				_layoutsImporter.importPageElement(
-					layout, layoutStructure, layoutStructure.getMainItemId(),
-					_read("test-page-element.json"), 0, true);
-			}
-			finally {
-				PrincipalThreadLocal.setName(name);
-
-				ServiceContextThreadLocal.popServiceContext();
-			}
-		}
-
-		return layout;
-	}
-
-	private SegmentsExperience _addSegmentsExperience(
-			Layout layout, ServiceContext serviceContext)
-		throws Exception {
-
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.addSegmentsEntry(
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()
-				).build(),
-				null, true, null, serviceContext);
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
-				null, TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()
-				).build(),
-				true, new UnicodeProperties(true), serviceContext);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					testGroup.getGroupId(), layout.getPlid());
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid()));
-
-		layoutPageTemplateStructureRel.setSegmentsExperienceId(
-			segmentsExperience.getSegmentsExperienceId());
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				layoutPageTemplateStructureRel);
-
-		return segmentsExperience;
-	}
-
 	private void _assertEqualsIgnoringOrder(
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs1,
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs2) {
@@ -550,15 +462,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					" does not contain " + taxonomyCategoryBrief1,
 				contains);
 		}
-	}
-
-	private String _read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
 	}
 
 	private void _testPostSiteSitePageFailureDuplicateFriendlyURL()
@@ -1984,9 +1887,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
 
-	@Inject
-	private LayoutsImporter _layoutsImporter;
-
 	private final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
@@ -2005,11 +1905,5 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
-	@Inject
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

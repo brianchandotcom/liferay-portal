@@ -127,9 +127,10 @@ public abstract class BaseInputFragmentRendererTestCase {
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
 		Layout draftLayout = layout.fetchDraftLayout();
+
 		long segmentsExperienceId =
 			segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+				draftLayout.getPlid());
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 			false,

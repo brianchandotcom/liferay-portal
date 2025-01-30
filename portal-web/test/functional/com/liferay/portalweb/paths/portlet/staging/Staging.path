@@ -247,7 +247,7 @@
 
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
-	<td>xpath=(//ul//li//a[@aria-label='${key_sitePagesVariationName}'])[1]</td>
+	<td>xpath=(//ul//li//a[contains(.,'${key_sitePagesVariationName}')])[1]</td>
 	<td></td>
 </tr>
 <tr>

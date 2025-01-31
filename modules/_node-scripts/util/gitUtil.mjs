@@ -25,6 +25,9 @@ export default async function gitUtil(gitType) {
 
 	const {stdout} = await $({
 		cwd: portalDir,
+		env: {
+			ANT_ARGS: '',
+		},
 	})`ant git-util -Dgit.type=${gitType}`;
 
 	if (process.env['DEBUG_GIT_UTIL']) {

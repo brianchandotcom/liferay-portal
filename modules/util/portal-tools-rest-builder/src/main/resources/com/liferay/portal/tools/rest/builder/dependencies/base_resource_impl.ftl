@@ -70,6 +70,7 @@ import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.io.Serializable;
 
@@ -1407,7 +1408,11 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	public void setContextUriInfo(UriInfo contextUriInfo) {
-		this.contextUriInfo = contextUriInfo;
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 7)>
+			this.contextUriInfo = UriInfoUtil.getVulcanUriInfo(getApplicationPath(), contextUriInfo);
+		<#else>
+			this.contextUriInfo = contextUriInfo;
+		</#if>
 	}
 
 	public void setContextUser(com.liferay.portal.kernel.model.User contextUser) {
@@ -1441,6 +1446,16 @@ public abstract class Base${schemaName}ResourceImpl
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
 	}
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 7)>
+		protected String getApplicationPath() {
+			<#if configYAML.application??>
+				return "${stringUtil.removeFirst(configYAML.application.baseURI, "/")}";
+			<#else>
+				return null;
+			</#if>
+		}
+	</#if>
 
 	<#if generateBatch>
 		<#if freeMarkerTool.isVersionCompatible(configYAML, 2)>

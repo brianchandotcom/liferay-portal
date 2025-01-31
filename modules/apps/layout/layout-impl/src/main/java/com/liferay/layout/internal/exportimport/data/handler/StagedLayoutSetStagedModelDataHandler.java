@@ -981,26 +981,24 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 
 			if (action.equals(Constants.ADD)) {
-				long layoutId = GetterUtil.getLong(
-					layoutElement.attributeValue("layout-id"));
-
-				Layout layout = layouts.get(layoutId);
+				Layout layout = layouts.get(
+					GetterUtil.getLong(
+						layoutElement.attributeValue("layout-id")));
+				String uuid = layoutElement.attributeValue("uuid");
 
 				if ((layout != null) &&
-					!Objects.equals(
-						layout.getUuid(),
-						layoutElement.attributeValue("uuid"))) {
+					!Objects.equals(layout.getUuid(), uuid)) {
 
 					layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-						layoutElement.attributeValue("uuid"),
-						portletDataContext.getScopeGroupId(), privateLayout);
+						uuid, portletDataContext.getScopeGroupId(),
+						privateLayout);
 				}
 
 				if (layout == null) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Layout ", layoutElement.attributeValue("uuid"),
+								"Layout ", uuid,
 								" might not have been imported due to a ",
 								"controlled error. See ",
 								"SitesImpl#addMergeFailFriendlyURLLayout."));

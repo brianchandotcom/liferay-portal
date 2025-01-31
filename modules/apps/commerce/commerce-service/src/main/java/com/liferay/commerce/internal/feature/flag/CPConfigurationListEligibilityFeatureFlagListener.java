@@ -56,12 +56,12 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 
 		try {
 			if (!enabled) {
-				_onFeatureFlagDisabled(companyId);
+				_onValueDisabled(companyId);
 
 				return;
 			}
 
-			_onFeatureFlagEnabled(companyId);
+			_onValueEnabled(companyId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -311,7 +311,7 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 		}
 	}
 
-	private void _onFeatureFlagDisabled(long companyId) throws PortalException {
+	private void _onValueDisabled(long companyId) throws PortalException {
 		List<Group> groups = _groupLocalService.getGroups(
 			companyId, CommerceCatalog.class.getName(), 0);
 
@@ -339,7 +339,7 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 		}
 	}
 
-	private void _onFeatureFlagEnabled(long companyId) {
+	private void _onValueEnabled(long companyId) {
 		List<Group> groups = _groupLocalService.getGroups(
 			companyId, CommerceCatalog.class.getName(), 0);
 
@@ -368,53 +368,56 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 
 		try (Connection connection = DataAccess.getConnection();
 
-			 PreparedStatement selectPreparedStatement1 =
-				 connection.prepareStatement(
-					 "select Group_.companyId, Group_.groupId from " +
-					 "CommerceCatalog join Group_ on Group_.classNameId = ? " +
-					 "and Group_.classPK = CommerceCatalog.commerceCatalogId");
+			PreparedStatement selectPreparedStatement1 =
+				connection.prepareStatement(
+					"select Group_.groupId, Group_.companyId from " +
+					"CommerceCatalog join Group_ on Group_.classNameId = ? " +
+					"and Group_.classPK = CommerceCatalog.commerceCatalogId");
 
-			 PreparedStatement selectPreparedStatement2 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						 "select CPDefinition.CPDefinitionId, Rel.type_, ",
-						 "Rel.classPK, Rel.resourceId from CPDefinition join ",
-						 "(select 'C' as type_, classPK, commerceChannelId as ",
-						 "resourceId from CommerceChannelRel where ",
-						 "classNameId = ? union select 'A' as type_, classPK, ",
-						 "accountGroupId as resourceId from AccountGroupRel ",
-						 "where classNameId = ?) Rel on ",
-						 "(CPDefinition.CPDefinitionId = Rel.classPK and ",
-						 "CPDefinition.groupId = ?) order by Rel.classPK"));
+			PreparedStatement selectPreparedStatement2 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select CPDefinition.CPDefinitionId, Rel.type_, ",
+						"Rel.classPK, Rel.resourceId from CPDefinition join ",
+						"(select 'C' as type_, classPK, commerceChannelId as ",
+						"resourceId from CommerceChannelRel where classNameId ",
+						"= ? union select 'A' as type_, classPK, ",
+						"accountGroupId as resourceId from AccountGroupRel ",
+						"where classNameId = ?) Rel on (CPDefinition.",
+						"CPDefinitionId = Rel.classPK and CPDefinition.",
+						"groupId = ?) order by Rel.classPK"));
 
-			 PreparedStatement selectPreparedStatement3 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-					 	"select distinct CPConfigurationListRel.",
-					 	"CPConfigurationListId from CPConfigurationListRel ",
+			PreparedStatement selectPreparedStatement3 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select distinct CPConfigurationListRel.",
+						"CPConfigurationListId from CPConfigurationListRel ",
 						"join CPConfigurationList on CPConfigurationList.",
 						"CPConfigurationListId = CPConfigurationListRel.",
-					 	"CPConfigurationListId where classNameId = ? and ",
-					 	"classPK = ? and groupId = ?"));
+						"CPConfigurationListId where CPConfigurationListRel.",
+						"classNameId = ? and CPConfigurationListRel.classPK = ",
+						"? and CPConfigurationList.groupId = ?"));
 
-			 PreparedStatement selectPreparedStatement4 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
+			PreparedStatement selectPreparedStatement4 =
+				connection.prepareStatement(
+					StringBundler.concat(
 						"select distinct classPK as CPConfigurationListId ",
 						"from CommerceChannelRel join CPConfigurationList on ",
-					 	"CPConfigurationList.CPConfigurationListId = classPK ",
-					 	"where classNameId = ? and commerceChannelId = ? and ",
-					 	"groupId = ?"));
+						"CPConfigurationList.CPConfigurationListId = ",
+						"CommerceChannelRel.classPK where CommerceChannelRel.",
+						"classNameId = ? and CommerceChannelRel.",
+						"commerceChannelId = ? and CPConfigurationList.",
+						"groupId = ?"));
 
-			 PreparedStatement updatePreparedStatement =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						 "update CPConfigurationEntry set visible = ? where ",
-						 "classNameId = ? and CPConfigurationListId = ? and ",
-						 "groupId = ? and classPK in (select classPK from ",
-						 "(select classPK from CPConfigurationEntry where ",
-						 "classNameId = ? and CPConfigurationListId != ? and ",
-						 "groupId = ?) Internal)"))) {
+			PreparedStatement updatePreparedStatement =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"update CPConfigurationEntry set visible = ? where ",
+						"groupId = ? and classNameId = ? and classPK in ",
+						"(select classPK from (select classPK from ",
+						"CPConfigurationEntry where groupId = ? and ",
+						"classNameId = ? and CPConfigurationListId != ?) ",
+						"Internal) and CPConfigurationListId = ?"))) {
 
 			selectPreparedStatement1.setLong(1, commerceCatalogClassNameId);
 
@@ -470,14 +473,14 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 		throws Exception {
 
 		preparedStatement.setBoolean(1, false);
-		preparedStatement.setLong(2, cpDefinitionClassNameId);
-		preparedStatement.setLong(
-			3, masterCPConfigurationList.getCPConfigurationListId());
+		preparedStatement.setLong(2, groupId);
+		preparedStatement.setLong(3, cpDefinitionClassNameId);
 		preparedStatement.setLong(4, groupId);
 		preparedStatement.setLong(5, cpDefinitionClassNameId);
 		preparedStatement.setLong(
 			6, masterCPConfigurationList.getCPConfigurationListId());
-		preparedStatement.setLong(7, groupId);
+		preparedStatement.setLong(
+			7, masterCPConfigurationList.getCPConfigurationListId());
 
 		preparedStatement.executeUpdate();
 	}

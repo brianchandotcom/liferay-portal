@@ -2073,7 +2073,7 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
-		'Disable unlocalized fields when changing language',
+		'Set unlocalized fields to disabled or readonly when changing language',
 		{tag: '@LPD-37927'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
 
@@ -2119,28 +2119,28 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Clob,
-							businessType: ObjectField.BusinessTypeEnum.LongText,
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
 							externalReferenceCode: 'nameERC',
 							indexed: true,
 							indexedAsKeyword: false,
 							label: {
 								en_US: 'Name',
 							},
-							localized: false,
+							localized: true,
 							name: 'name',
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Text,
+							DBType: ObjectField.DBTypeEnum.Clob,
+							businessType: ObjectField.BusinessTypeEnum.LongText,
 							externalReferenceCode: 'scientificName',
 							indexed: true,
 							indexedAsKeyword: false,
 							label: {
 								en_US: 'Scientific Name',
 							},
-							localized: true,
+							localized: false,
 							name: 'scientificName',
 							required: false,
 						},
@@ -2203,7 +2203,7 @@ test.describe('Form Localization', () => {
 				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			// Check that unlocalized fields are disabled
+			// Change the translation language to spanish
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -2214,6 +2214,8 @@ test.describe('Form Localization', () => {
 					'Select a language, current language:'
 				),
 			});
+
+			// Check the tooltip when the unlocalized fields are disabled
 
 			await expect(
 				page.getByLabel('Evergreen field cannot be localized')
@@ -2228,8 +2230,10 @@ test.describe('Form Localization', () => {
 			).toBeVisible();
 
 			await expect(
-				page.getByLabel('Name field cannot be localized')
+				page.getByLabel('Scientific Name field cannot be localized')
 			).toBeVisible();
+
+			// Check that unlocalized fields are disabled
 
 			await expect(
 				page.getByRole('checkbox', {
@@ -2238,25 +2242,44 @@ test.describe('Form Localization', () => {
 			).toBeDisabled();
 
 			await expect(
-				page.getByLabel('Country', {exact: true})
+				page.getByRole('textbox', {name: 'Country'})
 			).toBeDisabled();
 
-			expect(
-				await page
+			await expect(
+				page
+					.locator('.rich-text-input', {
+						hasText: 'Description',
+					})
 					.frameLocator('iframe[title="editor"]')
 					.locator('body')
-					.evaluate((element) => element.ariaReadOnly)
-			).toBe('true');
+			).toHaveAttribute('aria-disabled', 'true');
 
-			await expect(page.getByLabel('Name', {exact: true})).toBeDisabled();
+			await expect(page.locator('.rich-text-input--disabled'))
+				.toBeAttached;
 
-			const evergreenReadOnlyLabel = page
+			await expect(
+				page.getByRole('textbox', {name: 'Scientific Name'})
+			).toBeDisabled();
+
+			// Check that the read only labels are not visibles
+
+			const checkboxReadOnlyLabel = page
 				.getByText('Evergreen')
 				.getByText('(Read Only)');
 
-			await expect(evergreenReadOnlyLabel).not.toBeVisible();
+			const inputTextReadOnlyLabel = page
+				.getByText('Country')
+				.getByText('(Read Only)');
 
-			// Go to edit mode and change unlocalized field configuration
+			const textareaReadOnlyLabel = page
+				.getByText('Scientific Name')
+				.getByText('(Read Only)');
+
+			await expect(checkboxReadOnlyLabel).not.toBeVisible();
+			await expect(inputTextReadOnlyLabel).not.toBeVisible();
+			await expect(textareaReadOnlyLabel).not.toBeVisible();
+
+			// Go to edit mode and change unlocalized field configuration to read only
 
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
@@ -2294,26 +2317,32 @@ test.describe('Form Localization', () => {
 				),
 			});
 
+			// Check the read only unlocalized fields
+
 			await expect(
 				page.getByLabel('field is not localizable message')
 			).toHaveCount(4);
 
-			await expect(evergreenReadOnlyLabel).toBeVisible();
+			await expect(checkboxReadOnlyLabel).toBeVisible();
+			await expect(inputTextReadOnlyLabel).toBeVisible();
+			await expect(textareaReadOnlyLabel).toBeVisible();
+
+			await expect(page.getByLabel('Country')).toHaveAttribute(
+				'readonly'
+			);
 
 			await expect(
-				page.getByLabel('Country', {exact: true})
-			).toHaveAttribute('readonly');
-
-			expect(
-				await page
-					.frameLocator('iframe[title="editor"]')
+				page
+					.locator('.rich-text-input', {
+						hasText: 'Description (Read Only)',
+					})
+					.frameLocator('iframe')
 					.locator('body')
-					.evaluate((element) => element.ariaReadOnly)
-			).toBe('true');
+			).toHaveAttribute('aria-readonly', 'true');
 
-			await expect(
-				page.getByLabel('Name', {exact: true})
-			).toHaveAttribute('readonly');
+			await expect(page.getByLabel('Scientific Name')).toHaveAttribute(
+				'readonly'
+			);
 		}
 	);
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -218,6 +219,87 @@ public class ZendeskService {
 		return toSearchHits(jsonObject);
 	}
 
+	public void updateZendeskOrganization(
+			ZendeskOrganization zendeskOrganization, String businessEvents)
+		throws Exception {
+
+		JSONObject organizationFieldsJSONObject = new JSONObject(
+		).put(
+			"business_events", businessEvents
+		);
+
+		JSONObject organizationJSONObject = new JSONObject(
+		).put(
+			"organization_fields", organizationFieldsJSONObject
+		);
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"organization", organizationJSONObject
+		);
+
+		WebClient.create(
+			_zendeskURL
+		).put(
+		).uri(
+			"/api/v2/organizations/" +
+				zendeskOrganization.getZendeskOrganizationId() + ".json"
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _zendeskAuthorization
+		).body(
+			BodyInserters.fromValue(jsonObject.toString())
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
+	public void updateZendeskTicket(
+			ZendeskTicket zendeskTicket, Map<Long, String> customFields,
+			Set<String> tags)
+		throws Exception {
+
+		JSONObject ticketJSONObject = new JSONObject(
+		).put(
+			"custom_fields", _transformToCustomFieldsJSONArray(customFields)
+		).put(
+			"organization_id", zendeskTicket.getZendeskOrganizationId()
+		).put(
+			"requester_id", zendeskTicket.getRequesterId()
+		).put(
+			"status", zendeskTicket.getStatus()
+		).put(
+			"tags", _transformToTagsJSONArray(tags)
+		);
+
+		JSONObject jsonObject = new JSONObject(
+		).put(
+			"ticket", ticketJSONObject
+		);
+
+		WebClient.create(
+			_zendeskURL
+		).put(
+		).uri(
+			"/api/v2/tickets/" + zendeskTicket.getZendeskTicketId() + ".json"
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _zendeskAuthorization
+		).body(
+			BodyInserters.fromValue(jsonObject.toString())
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
 	protected SearchHits<ZendeskTicket> toSearchHits(JSONObject jsonObject) {
 		SearchHits<ZendeskTicket> searchHits = new SearchHits<>();
 
@@ -272,6 +354,34 @@ public class ZendeskService {
 		}
 
 		return url.substring(y + name.length() + 1, z);
+	}
+
+	private JSONArray _transformToCustomFieldsJSONArray(
+		Map<Long, String> customFields) {
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (Map.Entry<Long, String> entry : customFields.entrySet()) {
+			jsonArray.put(
+				new JSONObject(
+				).put(
+					"id", entry.getKey()
+				).put(
+					"value", entry.getValue()
+				));
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _transformToTagsJSONArray(Set<String> tags) {
+		JSONArray jsonArray = new JSONArray();
+
+		for (String tag : tags) {
+			jsonArray.put(tag);
+		}
+
+		return jsonArray;
 	}
 
 	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")

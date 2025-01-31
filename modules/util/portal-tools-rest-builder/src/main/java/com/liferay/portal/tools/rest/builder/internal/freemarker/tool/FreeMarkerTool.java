@@ -126,6 +126,20 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean generateCRUD(
+		ConfigYAML configYAML, List<JavaMethodSignature> javaMethodSignatures,
+		String schemaName) {
+
+		if (configYAML.isGenerateCRUD() && isVersionCompatible(configYAML, 7) &&
+			containsJavaMethodSignature(
+				javaMethodSignatures, "get" + schemaName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getActionName(String propertyName) {
 		if (StringUtil.equals(propertyName, "delete")) {
 			return ActionKeys.DELETE;

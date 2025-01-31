@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -286,7 +285,10 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getDescription(),
 				taxonomyVocabulary.getDescription_i18n()),
 			_getSettings(assetTypes, assetVocabulary.getGroupId()),
-			new ServiceContext());
+			ServiceContextBuilder.create(
+				assetVocabulary.getGroupId(), contextHttpServletRequest,
+				taxonomyVocabulary.getViewableByAsString()
+			).build());
 
 		Permission[] permissions = taxonomyVocabulary.getPermissions();
 
@@ -825,7 +827,10 @@ public class TaxonomyVocabularyResourceImpl
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId()),
-			new ServiceContext());
+			ServiceContextBuilder.create(
+				assetVocabulary.getGroupId(), contextHttpServletRequest,
+				taxonomyVocabulary.getViewableByAsString()
+			).build());
 
 		Permission[] permissions = taxonomyVocabulary.getPermissions();
 

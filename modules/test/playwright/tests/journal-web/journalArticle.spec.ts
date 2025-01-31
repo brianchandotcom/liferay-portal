@@ -706,7 +706,7 @@ prefixUrlTest(
 
 		await friendlyUrlInstanceSettingsPage.goto();
 
-		const urlSeparator = 'content';
+		const urlSeparator = 'web-content';
 
 		await friendlyUrlInstanceSettingsPage.modifySeparator(
 			'Web Content URL Separator',

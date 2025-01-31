@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,6 +73,12 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getIcon() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			_fragmentComposition.isMarketplace()) {
+
+			return "marketplace";
+		}
+
 		return "edit-layout";
 	}
 
@@ -93,6 +100,12 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			_fragmentComposition.isMarketplace()) {
+
+			return null;
+		}
+
 		return LabelItemListBuilder.add(
 			labelItem -> labelItem.setStatus(_fragmentComposition.getStatus())
 		).build();
@@ -100,16 +113,34 @@ public class BasicFragmentCompositionVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			_fragmentComposition.isMarketplace()) {
+
+			return "fragment-marketplace-sticker";
+		}
+
 		return "fragment-composition-sticker";
 	}
 
 	@Override
 	public String getStickerIcon() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			_fragmentComposition.isMarketplace()) {
+
+			return "marketplace";
+		}
+
 		return getIcon();
 	}
 
 	@Override
 	public String getSubtitle() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			_fragmentComposition.isMarketplace()) {
+
+			return null;
+		}
+
 		Date modifiedDate = _fragmentComposition.getModifiedDate();
 
 		String modifiedDateDescription = LanguageUtil.getTimeDescription(

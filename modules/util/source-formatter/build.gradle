@@ -35,7 +35,7 @@ dependencies {
 		exclude group: "com.ibm.icu", module: "icu4j"
 	}
 	api group: "junit", name: "junit", version: "4.13.1"
-	api group: "org.antlr", name: "antlr4-runtime", version: "4.8-1"
+	api group: "org.antlr", name: "antlr4-runtime", version: "4.13.2"
 	api group: "org.apache.ant", name: "ant", version: "1.10.14"
 	api group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
 	api group: "org.dom4j", name: "dom4j", version: "2.1.3"

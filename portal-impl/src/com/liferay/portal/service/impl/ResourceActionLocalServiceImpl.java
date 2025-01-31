@@ -349,23 +349,13 @@ public class ResourceActionLocalServiceImpl
 	public ResourceAction getResourceAction(String name, String actionId)
 		throws PortalException {
 
-		String key = encodeKey(name, actionId);
-
-		ResourceAction resourceAction = _resourceActions.get(key);
+		ResourceAction resourceAction = fetchResourceAction(name, actionId);
 
 		if (resourceAction != null) {
 			return resourceAction;
 		}
 
-		resourceAction = resourceActionPersistence.fetchByN_A(name, actionId);
-
-		if (resourceAction == null) {
-			throw new NoSuchResourceActionException(key);
-		}
-
-		_resourceActions.put(encodeKey(name, actionId), resourceAction);
-
-		return resourceAction;
+		throw new NoSuchResourceActionException(encodeKey(name, actionId));
 	}
 
 	@Override

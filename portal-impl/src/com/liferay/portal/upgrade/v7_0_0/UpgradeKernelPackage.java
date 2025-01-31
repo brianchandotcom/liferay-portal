@@ -132,9 +132,10 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				try (Statement s = connection.createStatement();
 					ResultSet resultSet = s.executeQuery(
 						StringBundler.concat(
-							"select MIN(", primaryKeyColumnNames[0], ") from ",
+							"select MAX(", primaryKeyColumnNames[0], ") from ",
 							tableName, " group by ",
-							StringUtil.merge(indexMetadata.getColumnNames())))) {
+							StringUtil.merge(indexMetadata.getColumnNames()),
+							" having count(*) > 1"))) {
 
 					while (resultSet.next()) {
 						sb.append(resultSet.getLong(1));
@@ -151,7 +152,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				runSQL(
 					StringBundler.concat(
 						"delete from ", tableName, " where ",
-						primaryKeyColumnNames[0], " not in (", sb,
+						primaryKeyColumnNames[0], " in (", sb,
 						StringPool.CLOSE_PARENTHESIS));
 			}
 			finally {

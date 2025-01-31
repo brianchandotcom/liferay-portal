@@ -333,6 +333,13 @@ export default function fragmentEntryLinksReducer(
 				);
 			}
 
+			if (action.fragmentEntryLinks) {
+				return {
+					...newFragmentEntryLinks,
+					...action.fragmentEntryLinks,
+				};
+			}
+
 			return {
 				...newFragmentEntryLinks,
 			};

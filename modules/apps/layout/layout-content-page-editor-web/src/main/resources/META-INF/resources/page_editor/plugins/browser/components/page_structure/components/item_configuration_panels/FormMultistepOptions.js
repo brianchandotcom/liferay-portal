@@ -12,16 +12,11 @@ import {CheckboxField} from '../../../../../../app/components/fragment_configura
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
 import {FORM_DEFAULT_NUMBER_OF_STEPS} from '../../../../../../app/config/constants/formDefaultNumberOfSteps';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {
 	useItemLocalConfig,
 	useUpdateItemLocalConfig,
 } from '../../../../../../app/contexts/LocalConfigContext';
-import {
-	useDispatch,
-	useSelector,
-} from '../../../../../../app/contexts/StoreContext';
-import updateFragmentConfiguration from '../../../../../../app/thunks/updateFragmentConfiguration';
+import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getStepperChild} from '../../../../../../app/utils/getStepperChild';
 
 const FORM_TYPE_OPTIONS = [
@@ -40,7 +35,6 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 		item.config.numberOfSteps
 	);
 
-	const dispatch = useDispatch();
 	const layoutData = useSelector((state) => state.layoutData);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 
@@ -48,33 +42,9 @@ export default function FormMultistepOptions({item, onValueSelect}) {
 		(value) => {
 			setNumberOfSteps(value);
 
-			onValueSelect({numberOfSteps: value}).then(() => {
-				const stepper = getStepperChild(
-					item,
-					layoutData,
-					fragmentEntryLinks
-				);
-
-				if (stepper) {
-					updateStepperConfiguration({
-						dispatch,
-						fragmentEntryLink:
-							fragmentEntryLinks[
-								stepper.config.fragmentEntryLinkId
-							],
-						numberOfSteps: value,
-					});
-				}
-			});
+			onValueSelect({numberOfSteps: value});
 		},
-		[
-			dispatch,
-			fragmentEntryLinks,
-			item,
-			layoutData,
-			onValueSelect,
-			setNumberOfSteps,
-		]
+		[onValueSelect, setNumberOfSteps]
 	);
 
 	return (
@@ -198,24 +168,4 @@ function openWarningModal({onCancel, onContinue}) {
 		status: 'info',
 		title: Liferay.Language.get('convert-to-simple-form'),
 	});
-}
-
-function updateStepperConfiguration({
-	dispatch,
-	fragmentEntryLink,
-	numberOfSteps,
-}) {
-	const configurationValues = {
-		...fragmentEntryLink.editableValues[
-			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		],
-		numberOfSteps,
-	};
-
-	dispatch(
-		updateFragmentConfiguration({
-			configurationValues,
-			fragmentEntryLink,
-		})
-	);
 }

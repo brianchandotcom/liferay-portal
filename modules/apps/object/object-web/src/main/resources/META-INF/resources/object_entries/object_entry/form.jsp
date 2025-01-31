@@ -38,6 +38,30 @@ portletDisplay.setURLBack(backURL);
 					<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
 				</clay:col>
 			</clay:row>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && (objectEntryDisplayContext.getObjectLayoutTab() == null) %>'>
+				<clay:panel-group>
+					<clay:panel
+						collapsable="<%= false %>"
+						displayTitle='<%= LanguageUtil.get(request, "seo") %>'
+						expanded="<%= true %>"
+					>
+						<div class="panel-body">
+							<div class="ddm-row">
+								<div class="ddm-field-container">
+									<liferay-friendly-url:input
+										className="<%= objectDefinition.getClassName() %>"
+										classPK="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>"
+										helpMessage='<%= LanguageUtil.get(request, "the-friendly-url-is-automatically-generated-based-on-the-entry-title-field") %>'
+										inputAddon="<%= objectEntryDisplayContext.getURLSeparator() %>"
+										name="friendlyURL"
+									/>
+								</div>
+							</div>
+						</div>
+					</clay:panel>
+				</clay:panel-group>
+			</c:if>
 		</clay:sheet-section>
 
 		<%@ include file="/object_entries/object_entry/categorization.jspf" %>

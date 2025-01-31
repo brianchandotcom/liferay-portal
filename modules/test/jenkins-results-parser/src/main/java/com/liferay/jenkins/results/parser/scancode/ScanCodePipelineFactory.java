@@ -14,16 +14,18 @@ public class ScanCodePipelineFactory {
 		String buildURL, String pipelineName) {
 
 		if (pipelineName.equals("analyze_docker_image")) {
-			return new AnalyzeDockerImagePipeline(buildURL, pipelineName);
+			return new AnalyzeDockerImageScanCodePipeline(
+				buildURL, pipelineName);
 		}
 		else if (pipelineName.equals("inspect_packages")) {
-			return new InspectPackagesPipeline(buildURL, pipelineName);
+			return new InspectPackagesScanCodePipeline(buildURL, pipelineName);
 		}
 		else if (pipelineName.equals("map_deploy_to_develop")) {
-			return new MapDevelopToDeployPipeline(buildURL, pipelineName);
+			return new MapDevelopToDeployScanCodePipeline(
+				buildURL, pipelineName);
 		}
 
-		return null;
+		return new DefaultScanCodePipeline(buildURL, pipelineName);
 	}
 
 }

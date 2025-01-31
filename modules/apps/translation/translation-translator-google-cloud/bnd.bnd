@@ -2,43 +2,13 @@ Bundle-Name: Liferay Translation Translator Google Cloud
 Bundle-SymbolicName: com.liferay.translation.translator.google.cloud
 Bundle-Version: 1.0.20
 Import-Package:\
-	!com.aayushatharva.brotli4j.*,\
-	\
-	!com.github.luben.zstd.*,\
-	\
 	!com.google.errorprone.annotations.*,\
-	!com.google.protobuf.nano.*,\
-	\
-	!com.jcraft.*,\
-	\
-	!com.ning.compress.*,\
-	\
-	!com.oracle.svm.core.annotate.*,\
-	\
-	!io.opentelemetry.*,\
-	\
-	!lzma.sdk.*,\
-	\
-	!net.jpountz.lz4.*,\
-	!net.jpountz.xxhash.*,\
 	\
 	!org.apache.avalon.framework.*,\
 	!org.apache.log.*,\
-	!org.apache.log4j.*,\
-	\
-	!org.bouncycastle.*,\
-	\
-	!org.eclipse.jetty.*,\
 	\
 	!org.graalvm.nativeimage.hosted.*,\
-	\
-	!org.jboss.marshalling.*,\
-	\
-	!org.threeten.bp.*,\
-	\
-	!reactor.blockhound.*,\
 	\
 	!sun.security.x509.*,\
 	\
 	*
--fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

@@ -54,7 +54,9 @@ public class InspectPackagesScanCodePipeline extends BaseScanCodePipeline {
 		return jsonObject;
 	}
 
-	protected InspectPackagesScanCodePipeline(String buildURL, String pipelineName) {
+	protected InspectPackagesScanCodePipeline(
+		String buildURL, String pipelineName) {
+
 		super(buildURL, pipelineName);
 
 		_pipelineName = pipelineName;

@@ -99,7 +99,9 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 		return sb.toString();
 	}
 
-	protected MapDevelopToDeployScanCodePipeline(String buildURL, String pipelineName) {
+	protected MapDevelopToDeployScanCodePipeline(
+		String buildURL, String pipelineName) {
+
 		super(buildURL, pipelineName);
 
 		_buildURL = buildURL;

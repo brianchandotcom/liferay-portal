@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.util;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -18,8 +19,12 @@ import java.lang.reflect.Field;
 
 import java.net.URI;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -78,6 +83,14 @@ public class UriInfoUtil {
 			basePath = StringUtil.removeLast(basePath, "c/");
 		}
 
+		if (applicationPath.startsWith(
+				Portal.PATH_MODULE + StringPool.FORWARD_SLASH)) {
+
+			applicationPath = applicationPath.substring(
+				Portal.PATH_MODULE.length() +
+					StringPool.FORWARD_SLASH.length());
+		}
+
 		basePath = basePath + applicationPath;
 
 		return UriBuilder.fromPath(basePath);
@@ -85,6 +98,120 @@ public class UriInfoUtil {
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {
 		return _updateUriBuilder(uriInfo.getBaseUriBuilder());
+	}
+
+	public static UriInfo getVulcanUriInfo(
+		String applicationPath, UriInfo uriInfo) {
+
+		if ((applicationPath == null) || (uriInfo == null)) {
+			return uriInfo;
+		}
+
+		return new UriInfo() {
+
+			@Override
+			public URI getAbsolutePath() {
+				return _uriInfo.getAbsolutePath();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return _uriInfo.getAbsolutePathBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
+					applicationPath, uriInfo);
+
+				return uriBuilder.build();
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriInfoUtil.getBaseUriBuilder(applicationPath, uriInfo);
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return _uriInfo.getMatchedResources();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return _uriInfo.getMatchedURIs();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean b) {
+				return _uriInfo.getMatchedURIs(b);
+			}
+
+			@Override
+			public String getPath() {
+				return _uriInfo.getPath();
+			}
+
+			@Override
+			public String getPath(boolean b) {
+				return _uriInfo.getPath(b);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return _uriInfo.getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(boolean b) {
+				return _uriInfo.getPathParameters(b);
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return _uriInfo.getPathSegments();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean b) {
+				return _uriInfo.getPathSegments(b);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return _uriInfo.getQueryParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean b) {
+
+				return _uriInfo.getQueryParameters(b);
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return _uriInfo.getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return _uriInfo.getRequestUriBuilder();
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return _uriInfo.relativize(uri);
+			}
+
+			@Override
+			public URI resolve(URI uri) {
+				return _uriInfo.resolve(uri);
+			}
+
+			private final UriInfo _uriInfo = uriInfo;
+
+		};
 	}
 
 	private static String _getHost(UriBuilder uriBuilder) {

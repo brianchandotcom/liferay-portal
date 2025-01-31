@@ -17,7 +17,6 @@ import performLogin, {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
-import { CommerceAdminOrderNotesPage } from '../../../pages/commerce/commerce-order-web/commerceAdminOrderNotesPage';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -440,7 +439,7 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 	commerceAdminOrderNotesPage,
 	commerceAdminOrdersPage,
 	page,
-	site
+	site,
 }) => {
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -555,13 +554,17 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 		],
 	});
 
-	const publicOrderNote = await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
-		order.id, {restricted: false}
-	);
+	const publicOrderNote =
+		await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+			order.id,
+			{restricted: false}
+		);
 
-	const privateOrderNote = await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
-		order.id, {restricted: true}
-	);
+	const privateOrderNote =
+		await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+			order.id,
+			{restricted: true}
+		);
 
 	const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -657,11 +660,15 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 	await commerceAdminOrderDetailsPage.orderNotesLink.click();
 
 	expect(
-		await commerceAdminOrderNotesPage.orderNoteContent(publicOrderNote.content)
+		await commerceAdminOrderNotesPage.orderNoteContent(
+			publicOrderNote.content
+		)
 	).toBeVisible();
 
 	expect(
-		await commerceAdminOrderNotesPage.orderNoteContent(privateOrderNote.content)
+		await commerceAdminOrderNotesPage.orderNoteContent(
+			privateOrderNote.content
+		)
 	).toHaveCount(0);
 
 	await performLogout(page);
@@ -679,10 +686,14 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 	await commerceAdminOrderDetailsPage.orderNotesLink.click();
 
 	expect(
-		await commerceAdminOrderNotesPage.orderNoteContent(publicOrderNote.content)
+		await commerceAdminOrderNotesPage.orderNoteContent(
+			publicOrderNote.content
+		)
 	).toBeVisible();
-	
+
 	expect(
-		await commerceAdminOrderNotesPage.orderNoteContent(privateOrderNote.content)
+		await commerceAdminOrderNotesPage.orderNoteContent(
+			privateOrderNote.content
+		)
 	).toBeVisible();
 });

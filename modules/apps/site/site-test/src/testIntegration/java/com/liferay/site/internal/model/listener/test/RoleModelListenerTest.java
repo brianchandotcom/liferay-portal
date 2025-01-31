@@ -99,34 +99,28 @@ public class RoleModelListenerTest {
 
 	@Test
 	public void testAddRole() throws Exception {
-		Role role = _roleLocalService.addRole(
+		_roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			StringUtil.randomString(), null, null, RoleConstants.TYPE_SITE,
 			null, _serviceContext);
 
-		_assertConfiguration(new String[] {String.valueOf(role.getRoleId())});
+		_assertConfiguration(new String[0]);
 	}
 
 	@Test
 	public void testDeleteRole() throws Exception {
-		Role role1 = _roleLocalService.addRole(
+		Role role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			StringUtil.randomString(), null, null, RoleConstants.TYPE_REGULAR,
 			null, _serviceContext);
-		Role role2 = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
-			StringUtil.randomString(), null, null, RoleConstants.TYPE_SITE,
-			null, _serviceContext);
 
-		_assertConfiguration(
-			new String[] {
-				String.valueOf(role1.getRoleId()),
-				String.valueOf(role2.getRoleId())
-			});
+		_menuAccessConfigurationManager.addAccessRoleToControlMenu(role);
 
-		_roleLocalService.deleteRole(role1);
+		_assertConfiguration(new String[] {String.valueOf(role.getRoleId())});
 
-		_assertConfiguration(new String[] {String.valueOf(role2.getRoleId())});
+		_roleLocalService.deleteRole(role);
+
+		_assertConfiguration(new String[0]);
 	}
 
 	private void _assertConfiguration(String[] expectedRolesCanSeeControlMenu)

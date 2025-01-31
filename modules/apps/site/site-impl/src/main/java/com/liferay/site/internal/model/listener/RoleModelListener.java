@@ -24,21 +24,6 @@ import org.osgi.service.component.annotations.Reference;
 public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
-	public void onAfterCreate(Role role) throws ModelListenerException {
-		if ((role.getType() == RoleConstants.TYPE_REGULAR) ||
-			(role.getType() == RoleConstants.TYPE_SITE)) {
-
-			try {
-				_menuAccessConfigurationManager.addAccessRoleToControlMenu(
-					role);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-		}
-	}
-
-	@Override
 	public void onAfterRemove(Role role) throws ModelListenerException {
 		if ((role.getType() == RoleConstants.TYPE_REGULAR) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {

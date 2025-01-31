@@ -594,7 +594,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("403", problem.getStatus());
+			Assert.assertEquals("401", problem.getStatus());
 		}
 	}
 

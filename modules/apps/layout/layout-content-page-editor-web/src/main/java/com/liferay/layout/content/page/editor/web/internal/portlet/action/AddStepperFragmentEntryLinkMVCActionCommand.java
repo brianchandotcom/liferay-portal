@@ -245,6 +245,8 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		).put(
 			"fragmentEntryLinks",
 			JSONUtil.put(
+				String.valueOf(
+					stepperFragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					stepperFragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),

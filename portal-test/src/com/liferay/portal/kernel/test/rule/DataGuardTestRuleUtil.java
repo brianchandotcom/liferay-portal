@@ -530,7 +530,7 @@ public class DataGuardTestRuleUtil {
 				PersistedModelLocalServiceRegistryUtil.class,
 				"_serviceTrackerMap");
 
-		for (String modelClassName : _prioritizedModelClassNames) {
+		for (String modelClassName : _PRIORITIZED_MODEL_CLASS_NAMES) {
 			if (serviceTrackerMap.containsKey(modelClassName) &&
 				(modelClassName.indexOf(CharPool.POUND) == -1)) {
 
@@ -656,12 +656,13 @@ public class DataGuardTestRuleUtil {
 			basePersistence, "_sessionFactory", originalSessionFactory);
 	}
 
+	private static final String[] _PRIORITIZED_MODEL_CLASS_NAMES = {
+		Company.class.getName()
+	};
+
 	private static final Set<String> _blacklistedModelClassNames =
 		SetUtil.fromArray(
 			"com.liferay.portal.security.audit.storage.model.AuditEvent");
-	private static final String[] _prioritizedModelClassNames = {
-		Company.class.getName()
-	};
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

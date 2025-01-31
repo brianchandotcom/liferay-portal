@@ -116,6 +116,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -1978,11 +1979,12 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _invalidatePortalCache(ObjectDefinition objectDefinition) {
+		ClassName className = _classNameLocalService.getClassName(
+			objectDefinition.getClassName());
+
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
-				objectDefinition.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					objectDefinition.getClassName()),
+				objectDefinition.getCompanyId(), className.getClassNameId(),
 				_portal.getClassNameId(FragmentEntryLink.class));
 
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
@@ -1991,6 +1993,8 @@ public class ObjectDefinitionLocalServiceImpl
 			_fragmentEntryLinkCache.removeFragmentEntryLinkCache(
 				GetterUtil.getLong(layoutClassedModelUsage.getContainerKey()));
 		}
+
+		_classNameLocalService.deleteClassName(className);
 	}
 
 	private boolean _isUnmodifiableSystemObject(

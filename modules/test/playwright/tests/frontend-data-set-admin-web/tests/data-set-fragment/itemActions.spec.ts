@@ -299,13 +299,18 @@ test.describe('Item Actions in Data Set fragment', () => {
 				})
 				.click();
 
+			await expect(
+				page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})).not.toBeVisible()
+
 			const frame = dataSetFragmentPage.sidePanelFrame;
 
 			await expect(
 				frame.locator('.side-panel-iframe-header')
 			).not.toBeInViewport();
 
-			await expect(frame.getByTitle('Go to Liferay DXP')).toBeVisible();
+			await expect(frame.getByText('Welcome to Liferay')).toBeVisible();
 
 			await page.keyboard.press('Escape');
 

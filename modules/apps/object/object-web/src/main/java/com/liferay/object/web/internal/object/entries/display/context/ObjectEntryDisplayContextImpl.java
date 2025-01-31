@@ -88,14 +88,19 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -563,6 +568,40 @@ public class ObjectEntryDisplayContextImpl
 		).put(
 			"readOnly", String.valueOf(_readOnly || isGuestUser())
 		).build();
+	}
+
+	@Override
+	public String getURLSeparator() {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_themeDisplay.getPortalURL());
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
+
+		if (group != null) {
+			sb.append(group.getPathFriendlyURL(false, _themeDisplay));
+			sb.append(group.getFriendlyURL());
+		}
+
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
+
+		if (friendlyURLResolver == null) {
+			sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
+		}
+		else {
+			sb.append(friendlyURLResolver.getURLSeparator());
+		}
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		sb.append(objectDefinition.getName());
+
+		sb.append(StringPool.SLASH);
+
+		return sb.toString();
 	}
 
 	@Override

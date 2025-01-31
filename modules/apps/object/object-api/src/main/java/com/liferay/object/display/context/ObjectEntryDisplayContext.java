@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectLayoutBox;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
 import java.util.Map;
 
@@ -54,6 +55,10 @@ public interface ObjectEntryDisplayContext {
 
 	public Map<String, String> getRelationshipContextParams()
 		throws PortalException;
+
+	public default String getURLSeparator() {
+		return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;
+	}
 
 	public boolean isGuestUser();
 

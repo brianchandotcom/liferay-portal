@@ -21,6 +21,8 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
+	compileOnly project(":apps:friendly-url:friendly-url-taglib")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-api")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

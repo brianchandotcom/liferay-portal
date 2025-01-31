@@ -108,12 +108,6 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
-			fragmentEntry.isMarketplace()) {
-
-			return null;
-		}
-
 		if (fragmentEntry.isApproved() &&
 			(fragmentEntry.fetchDraftFragmentEntry() != null)) {
 
@@ -175,12 +169,6 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
-			fragmentEntry.isMarketplace()) {
-
-			return null;
-		}
-
 		return LanguageUtil.format(
 			_httpServletRequest, "x-usages",
 			FragmentEntryLinkLocalServiceUtil.

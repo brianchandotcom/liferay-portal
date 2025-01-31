@@ -70,8 +70,22 @@ public class TemplateDisplayTemplateTransformer {
 				continue;
 			}
 
-			TemplateNode templateNode = _templateNodeFactory.createTemplateNode(
-				infoFieldValue, themeDisplay);
+			TemplateNode templateNode;
+
+			if (infoField.isRepeatable()) {
+				TemplateNode siblingTemplateNode =
+					_templateNodeFactory.createTemplateNode(
+						infoFieldValue, themeDisplay);
+
+				templateNode = (TemplateNode)contextObjects.computeIfAbsent(
+					infoField.getName(), key -> siblingTemplateNode);
+
+				templateNode.appendSibling(siblingTemplateNode);
+			}
+			else {
+				templateNode = _templateNodeFactory.createTemplateNode(
+					infoFieldValue, themeDisplay);
+			}
 
 			contextObjects.put(infoField.getName(), templateNode);
 			contextObjects.put(infoField.getUniqueId(), templateNode);

@@ -986,6 +986,16 @@ public class StagedLayoutSetStagedModelDataHandler
 
 				Layout layout = layouts.get(layoutId);
 
+				if ((layout != null) &&
+					!Objects.equals(
+						layout.getUuid(),
+						layoutElement.attributeValue("uuid"))) {
+
+					layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+						layoutElement.attributeValue("uuid"),
+						portletDataContext.getScopeGroupId(), privateLayout);
+				}
+
 				if (layout == null) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(

@@ -50,9 +50,7 @@ export class CaptchaConfigPage {
 		this.reCaptchaPublicKey = page.getByLabel('reCAPTCHA Public Key');
 		this.reCaptchaScriptURL = page.getByLabel('reCAPTCHA Script URL');
 		this.reCaptchaVerifyURL = page.getByLabel('reCAPTCHA Verify URL');
-		this.resetDefaultValues = page.getByRole('link', {
-			name: 'Reset Default Values',
-		});
+		this.resetDefaultValues = page.getByText('Reset Default Values');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.sendPasswordCaptchaEnabled = page.getByText(
 			'Send Password CAPTCHA Enabled'

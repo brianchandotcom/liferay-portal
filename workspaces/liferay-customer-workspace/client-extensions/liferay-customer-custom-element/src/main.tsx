@@ -10,18 +10,18 @@ import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
-import './common/styles/global.scss';
-import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
-import useApollo from './common/hooks/useApollo';
-import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
-import {Liferay} from './common/services/liferay';
-import getIconSpriteMap from './common/utils/getIconSpriteMap';
-import swrCacheProvider from './common/utils/swrCacheProvider';
-import AttachmentFileUploader from './routes/attachment-uploader';
-import CustomerPortal from './routes/customer-portal';
-import Home from './routes/home';
-import Onboarding from './routes/onboarding';
-import SecurityVulnerabilities from './routes/security-vulnerabilities';
+import './styles/global.scss';
+import {AppPropertiesContext} from './contexts/AppPropertiesContext';
+import AttachmentFileUploader from './features/attachment-uploader';
+import Home from './features/home';
+import Onboarding from './features/onboarding';
+import CustomerPortal from './features/project';
+import SecurityVulnerabilities from './features/security-vulnerabilities';
+import useApollo from './hooks/useApollo';
+import useGlobalNetworkIndicator from './hooks/useGlobalNetworkIndicator';
+import {Liferay} from './services/liferay';
+import getIconSpriteMap from './utils/getIconSpriteMap';
+import swrCacheProvider from './utils/swrCacheProvider';
 
 const ELEMENT_ID = 'liferay-customer-custom-element';
 

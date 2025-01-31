@@ -114,13 +114,14 @@ public abstract class Base${schemaName}ResourceImpl
 		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
-		generateCRUD = false
+		generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
 	<#if generateBatch>
 		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${javaDataType}>
 	</#if>
+
 	<#if generateCRUD>
 		, VulcanCRUDItemDelegate<${javaDataType}>
 	</#if>
@@ -148,6 +149,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName>
+			<#assign getByIdJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
 			<#assign getByERCBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
@@ -182,23 +185,6 @@ public abstract class Base${schemaName}ResourceImpl
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
 			<#assign putByERCBatchJavaMethodSignature = javaMethodSignature />
-		</#if>
-
-		<#if generateCRUD && stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
-			<#assign getByIdJavaMethodSignature = javaMethodSignature />
-			@Override
-			public ${schemaName} getItem(Long itemId) throws Exception {
-			<#if getByIdJavaMethodSignature??>
-				return ${javaMethodSignature.methodName}(itemId);
-			<#else>
-				return null;
-			</#if>
-			}
-
-			@Override
-			public String getResourcePath() {
-				return "${configYAML.application.baseURI}";
-			}
 		</#if>
 
 		<#if generatePermissions>
@@ -1276,6 +1262,18 @@ public abstract class Base${schemaName}ResourceImpl
 				return null;
 			}
 		</#list>
+	</#if>
+
+	<#if generateCRUD>
+		@Override
+		public ${schemaName} getItem(Long itemId) throws Exception {
+			return ${getByIdJavaMethodSignature.methodName}(itemId);
+		}
+
+		@Override
+		public String getResourcePath() {
+			return "${configYAML.application.baseURI}";
+		}
 	</#if>
 
 	<#if generateGetPermissionCheckerMethods>

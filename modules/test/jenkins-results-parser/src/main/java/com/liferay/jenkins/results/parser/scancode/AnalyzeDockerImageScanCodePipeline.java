@@ -22,7 +22,7 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class AnalyzeDockerImagePipeline extends ScanCodePipeline {
+public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 
 	@Override
 	public void execute() throws IOException, TimeoutException {
@@ -101,7 +101,7 @@ public class AnalyzeDockerImagePipeline extends ScanCodePipeline {
 		return jsonObject;
 	}
 
-	protected AnalyzeDockerImagePipeline(String buildURL, String pipelineName) {
+	protected AnalyzeDockerImageScanCodePipeline(String buildURL, String pipelineName) {
 		super(buildURL, pipelineName);
 
 		_pipelineName = pipelineName;

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class MapDevelopToDeployPipeline extends ScanCodePipeline {
+public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 
 	@Override
 	public void execute() throws IOException, TimeoutException {
@@ -99,7 +99,7 @@ public class MapDevelopToDeployPipeline extends ScanCodePipeline {
 		return sb.toString();
 	}
 
-	protected MapDevelopToDeployPipeline(String buildURL, String pipelineName) {
+	protected MapDevelopToDeployScanCodePipeline(String buildURL, String pipelineName) {
 		super(buildURL, pipelineName);
 
 		_buildURL = buildURL;

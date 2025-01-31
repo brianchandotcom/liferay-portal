@@ -17,7 +17,7 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class InspectPackagesPipeline extends ScanCodePipeline {
+public class InspectPackagesScanCodePipeline extends BaseScanCodePipeline {
 
 	@Override
 	public void execute() throws IOException, TimeoutException {
@@ -54,7 +54,7 @@ public class InspectPackagesPipeline extends ScanCodePipeline {
 		return jsonObject;
 	}
 
-	protected InspectPackagesPipeline(String buildURL, String pipelineName) {
+	protected InspectPackagesScanCodePipeline(String buildURL, String pipelineName) {
 		super(buildURL, pipelineName);
 
 		_pipelineName = pipelineName;

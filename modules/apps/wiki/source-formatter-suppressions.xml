@@ -5,6 +5,7 @@
 		<suppress checks="PlusStatementCheck" files="wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/internal/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="JavaModuleInternalImportsCheck" files="wiki-engine-creole/src/main/java/com/liferay/wiki/engine/creole/internal/CreoleWikiEngine\.java" />
 		<suppress checks="XMLWhitespaceCheck" files="wiki-test/src/testIntegration/resources/com/liferay/wiki/service/test/dependencies/liferay_media_wiki\.xml" />
 	</source-check>
 </suppressions>

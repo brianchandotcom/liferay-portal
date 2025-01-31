@@ -31,6 +31,15 @@ import java.util.Set;
 public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 	public DBColumnSizeUpgradeProcess(
+		DBType dbType, String oldTypeName, int oldSize, int oldDecimalDigits,
+		String newColumnType) {
+
+		this(dbType, oldTypeName, oldSize, newColumnType);
+
+		_oldDecimalDigits = oldDecimalDigits;
+	}
+
+	public DBColumnSizeUpgradeProcess(
 		DBType dbType, String oldTypeName, int oldSize, String newColumnType) {
 
 		_dbType = dbType;
@@ -94,9 +103,13 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 						catalog, schema, tableName, null)) {
 
 					while (columnResultSet.next()) {
+						int decimalDigits = columnResultSet.getInt(
+							"DECIMAL_DIGITS");
 						int size = columnResultSet.getInt("COLUMN_SIZE");
 
-						if ((size == _oldSize) &&
+						if (((_oldDecimalDigits == null) ||
+							 (decimalDigits == _oldDecimalDigits)) &&
+							(size == _oldSize) &&
 							StringUtil.equalsIgnoreCase(
 								_oldTypeName,
 								columnResultSet.getString("TYPE_NAME"))) {
@@ -141,6 +154,7 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 	private final DBType _dbType;
 	private final String _newColumnType;
+	private Integer _oldDecimalDigits;
 	private final int _oldSize;
 	private final String _oldTypeName;
 

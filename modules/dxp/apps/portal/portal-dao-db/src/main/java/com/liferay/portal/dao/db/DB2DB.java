@@ -547,6 +547,12 @@ public class DB2DB extends BaseDB {
 					String defaultValue = template[template.length - 2];
 
 					if (Validator.isBlank(defaultValue)) {
+						runSQL(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set default 0;",
+								REWORD_TEMPLATE, template));
+
 						defaultAlter = StringUtil.replace(
 							"alter table @table@ alter column @old-column@ " +
 								"drop default;",

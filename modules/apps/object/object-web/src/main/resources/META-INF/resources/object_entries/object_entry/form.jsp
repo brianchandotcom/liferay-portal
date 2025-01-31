@@ -223,6 +223,24 @@ portletDisplay.setURLBack(backURL);
 							});
 						}
 
+						const friendlyURLInputs = document.querySelectorAll(
+							'[data-field-name="friendlyURL"]'
+						);
+
+						if (friendlyURLInputs) {
+							const friendlyURLValues = {};
+
+							friendlyURLInputs.forEach((input) => {
+								friendlyURLValues[input.dataset.languageid] =
+									input.value;
+							});
+
+							values = Object.assign(values, {
+								['friendlyUrlPath']: '',
+								['friendlyUrlPath_i18n']: friendlyURLValues,
+							});
+						}
+
 						Liferay.Util.fetch(path, {
 							body: JSON.stringify(values),
 							headers: new Headers({

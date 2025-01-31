@@ -9,8 +9,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
@@ -87,7 +85,8 @@ public class FeatureFlagTestRule
 	}
 
 	private void _invokeFeatureFlagListeners(
-		long companyId, String key2, boolean enabled) {
+			String featureFlagKey, boolean enabled)
+		throws PortalException {
 
 		try (ServiceTrackerMap<String, List<FeatureFlagListener>>
 				serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
@@ -107,13 +106,22 @@ public class FeatureFlagTestRule
 					})) {
 
 			List<FeatureFlagListener> featureFlagListeners =
-				serviceTrackerMap.getService(key2);
+				serviceTrackerMap.getService(featureFlagKey);
 
 			if (featureFlagListeners != null) {
+				String featureFlagSystemKey =
+					"feature.flag." + featureFlagKey + ".system";
+
+				boolean system = GetterUtil.getBoolean(
+					PropsUtil.get(featureFlagSystemKey));
+
 				for (FeatureFlagListener featureFlagListener :
 						featureFlagListeners) {
 
-					featureFlagListener.onValue(companyId, key2, enabled);
+					featureFlagListener.onValue(
+						system ? CompanyConstants.SYSTEM :
+							TestPropsValues.getCompanyId(),
+						featureFlagKey, enabled);
 				}
 			}
 		}
@@ -140,7 +148,9 @@ public class FeatureFlagTestRule
 			).build());
 	}
 
-	private Map<String, String> _updateFeatureFlags(Description description) {
+	private Map<String, String> _updateFeatureFlags(Description description)
+		throws PortalException {
+
 		FeatureFlags featureFlags = description.getAnnotation(
 			FeatureFlags.class);
 
@@ -160,27 +170,10 @@ public class FeatureFlagTestRule
 					featureFlagKey, String.valueOf(featureFlags.enable())
 				).build());
 
-			boolean system = GetterUtil.getBoolean(
-				PropsUtil.get(featureFlagKey + ".system"));
-
-			long companyId = CompanyConstants.SYSTEM;
-
-			if (!system) {
-				try {
-					companyId = TestPropsValues.getCompanyId();
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-				}
-			}
-
-			_invokeFeatureFlagListeners(companyId, key, featureFlags.enable());
+			_invokeFeatureFlagListeners(key, featureFlags.enable());
 		}
 
 		return previousValues;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FeatureFlagTestRule.class);
 
 }

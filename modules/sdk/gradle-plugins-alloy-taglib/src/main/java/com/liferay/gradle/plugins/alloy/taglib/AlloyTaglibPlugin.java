@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
@@ -39,6 +40,26 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 	private BuildTaglibsTask _addTaskBuildTaglibs(Project project) {
 		final BuildTaglibsTask buildTaglibsTask = GradleUtil.addTask(
 			project, BUILD_TAGLIBS_TASK_NAME, BuildTaglibsTask.class);
+
+		JavaVersion javaVersion = buildTaglibsTask.getJavaVersion();
+
+		if (javaVersion.isJava11Compatible()) {
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "java.base/java.lang=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "java.base/java.net=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens",
+				"java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "java.base/sun.util.calendar=ALL-UNNAMED");
+			buildTaglibsTask.jvmArgs(
+				"--add-opens", "jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
 
 		buildTaglibsTask.setDescription(
 			"Builds the AlloyUI JSP Taglibs for this project.");

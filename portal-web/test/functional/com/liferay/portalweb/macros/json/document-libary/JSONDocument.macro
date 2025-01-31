@@ -185,7 +185,7 @@ definition {
 			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
-		if (isSet(site) && (${site} == "true")) {
+		if (isSet(site)) {
 			var serviceContext = JSONDocumentSetter.setServiceContext(
 				addGroupPermissions = ${groupPermissions},
 				addGuestPermissions = ${guestPermissions},

@@ -9,12 +9,12 @@ UpgradeCatchAllCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Perfo
 UpgradeCatchAllJavaImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
 UpgradeCatchAllJavaTermOrderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts javaterms in `LPD_XXXXX.java` and `LPS_XXXXX.java` files. |
 UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
+UpgradeImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces deprecated package references with updated values from `imports.txt` and handles class renaming by updating variable declarations and references when a package change involves a class name change. |
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to remove 'fieldset-group' tag. |
 UpgradeJavaAssetEntryAssetCategoriesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |
 UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor` |
 UpgradeJavaBaseModelListenerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class. |
 UpgradeJavaBasePanelAppExtendedClassesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the setPortlet method with getPortlet. |
-UpgradeJavaCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs upgrade checks for `java` files. |
 UpgradeJavaCommerceOrderValidatorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
 UpgradeJavaDisplayPageInfoItemCapabilityCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |

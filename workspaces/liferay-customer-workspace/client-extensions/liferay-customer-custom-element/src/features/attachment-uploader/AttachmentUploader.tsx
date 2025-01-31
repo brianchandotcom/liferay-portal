@@ -5,7 +5,7 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 
@@ -29,7 +29,7 @@ const AttachmentUploader = () => {
 
 	const ticketId = urlParams.get('ticketId');
 
-	const completeUpload = async () => {
+	const completeUpload = useCallback(async () => {
 		try {
 			const response: Response =
 				(await Liferay.OAuth2Client.FromUserAgentApplication(
@@ -50,7 +50,7 @@ const AttachmentUploader = () => {
 		catch (error) {
 			console.error(error);
 		}
-	};
+	}, [attachment?.comment, ticketId]);
 
 	const initiateUpload = async (attachment: IAttachment) => {
 		try {
@@ -84,7 +84,7 @@ const AttachmentUploader = () => {
 		}
 	};
 
-	const uploadFileToGcs = async () => {
+	const uploadFileToGcs = useCallback(async () => {
 		if (!attachment || !gcsSessionURL) {
 			return;
 		}
@@ -107,7 +107,7 @@ const AttachmentUploader = () => {
 		catch (error) {
 			console.error(error);
 		}
-	};
+	}, [attachment, gcsSessionURL]);
 
 	const _handleCloseOnClick = () => {
 		if (window.history.length > 1) {
@@ -148,9 +148,13 @@ const AttachmentUploader = () => {
 		if (gcsSessionURL) {
 			uploadFileToGcs();
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [gcsSessionURL, ticketAttachmentId]);
+	}, [
+		attachment,
+		completeUpload,
+		uploadFileToGcs,
+		gcsSessionURL,
+		ticketAttachmentId,
+	]);
 
 	return (
 		<div className="container-attach">

@@ -21,23 +21,23 @@ export default function useIntersectionObserver() {
 	}, []);
 
 	useEffect(() => {
+		const observedElement = trackedRefCurrent.current;
+
 		const observer = new IntersectionObserver(
 			memoizedSetIntersecting,
 			INTERSECTION_OPTIONS
 		);
 
-		if (trackedRefCurrent.current) {
-			observer.observe(trackedRefCurrent.current);
+		if (observedElement) {
+			observer.observe(observedElement);
 		}
 
 		return () => {
-			if (trackedRefCurrent.current) {
-
-				// eslint-disable-next-line react-hooks/exhaustive-deps
-				observer.unobserve(trackedRefCurrent.current);
+			if (observedElement) {
+				observer.unobserve(observedElement);
 			}
 		};
-	}, [memoizedSetIntersecting]);
+	}, [memoizedSetIntersecting, trackedRefCurrent]);
 
 	return [trackedRefCurrent, isIntersecting];
 }

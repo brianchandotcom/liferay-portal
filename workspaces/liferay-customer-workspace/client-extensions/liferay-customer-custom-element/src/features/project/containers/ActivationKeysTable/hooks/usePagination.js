@@ -37,6 +37,10 @@ export default function usePagination(
 		setAllActivationKeys(activationKeysFilteredByStatus);
 	}, [activationKeysFilteredByStatus, setAllActivationKeys]);
 
+	useEffect(() => {
+		setCurrentTotalCount(activationKeysFilteredByStatus.length);
+	}, [activationKeysFilteredByStatus]);
+
 	const paginationConfig = useMemo(
 		() => ({
 			activePage,
@@ -61,8 +65,6 @@ export default function usePagination(
 	);
 
 	const activationKeysByStatusPaginated = useMemo(() => {
-		setCurrentTotalCount(activationKeysFilteredByStatus.length);
-
 		const activationKeysFilteredByStatusPerPage =
 			activationKeysFilteredByStatus.slice(
 				itemsPerPage * activePage - itemsPerPage,

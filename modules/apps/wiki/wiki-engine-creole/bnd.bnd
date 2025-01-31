@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Wiki Engine Creole
 Bundle-SymbolicName: com.liferay.wiki.engine.creole
 Bundle-Version: 6.0.23
+Import-Package:\
+	!antlr.*,\
+	\
+	*
 Web-ContextPath: /wiki-engine-creole

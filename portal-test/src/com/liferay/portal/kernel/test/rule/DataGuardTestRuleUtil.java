@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -660,8 +659,9 @@ public class DataGuardTestRuleUtil {
 	private static final Set<String> _blacklistedModelClassNames =
 		SetUtil.fromArray(
 			"com.liferay.portal.security.audit.storage.model.AuditEvent");
-	private static final Set<String> _prioritizedModelClassNames =
-		new LinkedHashSet<>(Set.of(Company.class.getName()));
+	private static final String[] _prioritizedModelClassNames = {
+		Company.class.getName()
+	};
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

@@ -273,21 +273,35 @@ public class TaxonomyVocabularyResourceImpl
 				assetVocabulary.getGroupId());
 		}
 
-		return _toTaxonomyVocabulary(
-			_assetVocabularyService.updateVocabulary(
-				assetVocabulary.getVocabularyId(), null,
-				LocalizedMapUtil.patchLocalizedMap(
-					assetVocabulary.getTitleMap(),
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyVocabulary.getName(),
-					taxonomyVocabulary.getName_i18n()),
-				LocalizedMapUtil.patchLocalizedMap(
-					assetVocabulary.getDescriptionMap(),
-					contextAcceptLanguage.getPreferredLocale(),
-					taxonomyVocabulary.getDescription(),
-					taxonomyVocabulary.getDescription_i18n()),
-				_getSettings(assetTypes, assetVocabulary.getGroupId()),
-				new ServiceContext()));
+		assetVocabulary = _assetVocabularyService.updateVocabulary(
+			assetVocabulary.getVocabularyId(), null,
+			LocalizedMapUtil.patchLocalizedMap(
+				assetVocabulary.getTitleMap(),
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyVocabulary.getName(),
+				taxonomyVocabulary.getName_i18n()),
+			LocalizedMapUtil.patchLocalizedMap(
+				assetVocabulary.getDescriptionMap(),
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyVocabulary.getDescription(),
+				taxonomyVocabulary.getDescription_i18n()),
+			_getSettings(assetTypes, assetVocabulary.getGroupId()),
+			new ServiceContext());
+
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-41304") &&
+			(permissions != null)) {
+
+			putTaxonomyVocabularyPermissionsPage(
+				assetVocabulary.getVocabularyId(),
+				taxonomyVocabulary.getPermissions());
+
+			assetVocabulary = _assetVocabularyService.getVocabulary(
+				assetVocabulary.getVocabularyId());
+		}
+
+		return _toTaxonomyVocabulary(assetVocabulary);
 	}
 
 	@Override
@@ -806,12 +820,27 @@ public class TaxonomyVocabularyResourceImpl
 			false, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
-		return _assetVocabularyService.updateVocabulary(
+		assetVocabulary = _assetVocabularyService.updateVocabulary(
 			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId()),
 			new ServiceContext());
+
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-41304") &&
+			(permissions != null)) {
+
+			putTaxonomyVocabularyPermissionsPage(
+				assetVocabulary.getVocabularyId(),
+				taxonomyVocabulary.getPermissions());
+
+			assetVocabulary = _assetVocabularyService.getVocabulary(
+				assetVocabulary.getVocabularyId());
+		}
+
+		return assetVocabulary;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

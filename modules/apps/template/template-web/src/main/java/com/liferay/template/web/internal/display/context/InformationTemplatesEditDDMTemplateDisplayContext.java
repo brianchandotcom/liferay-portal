@@ -214,7 +214,8 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 						infoField.getLabel(_themeDisplay.getLocale()),
 						TemplateNode.class, infoField.getUniqueId(),
 						infoField.getLabel(_themeDisplay.getLocale()),
-						infoFieldType.getName(), infoField.isMultivalued(),
+						infoFieldType.getName(),
+						infoField.isMultivalued() || infoField.isRepeatable(),
 						_templateVariableCodeHandler);
 				}
 			}

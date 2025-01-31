@@ -36,6 +36,8 @@ import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
+import com.liferay.object.exception.ObjectEntryDefaultLanguageIdException;
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
@@ -64,6 +66,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
@@ -178,6 +181,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1267,6 +1271,23 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
 		}
+	}
+
+	@Test
+	public void testAddObjectEntryWithDefaultLanguageId() throws Exception {
+		_testAddObjectEntryWithDefaultLanguageId(
+			ObjectDefinitionTestUtil.publishObjectDefinition());
+		_testAddObjectEntryWithDefaultLanguageId(
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE));
 	}
 
 	@Test
@@ -6215,6 +6236,256 @@ public class DefaultObjectEntryManagerImplTest
 
 		_removeResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _buyerRole);
+	}
+
+	private void _testAddObjectEntryWithDefaultLanguageId(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String scopeKey;
+
+		if (StringUtil.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+			scopeKey = ObjectDefinitionConstants.SCOPE_COMPANY;
+		}
+		else {
+			Group group = GroupTestUtil.addGroup();
+
+			scopeKey = String.valueOf(group.getGroupId());
+		}
+
+		String invalidLanguageId = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectEntryDefaultLanguageIdException.class,
+			"Language ID " + invalidLanguageId + " is not available",
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						defaultLanguageId = invalidLanguageId;
+						properties = Collections.emptyMap();
+					}
+				},
+				scopeKey));
+
+		ObjectFieldUtil.addCustomObjectField(
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"requiredLocalizedLongInteger"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).required(
+				true
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.RequiredLanguageId.class,
+			"No value was provided for the language ID \"pt_BR\" in the " +
+				"required object field \"requiredLocalizedLongInteger\".",
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						defaultLanguageId = "pt_BR";
+						properties = Collections.emptyMap();
+					}
+				},
+				scopeKey));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.RequiredLanguageId.class,
+			"No value was provided for the language ID \"pt_BR\" in the " +
+				"required object field \"requiredLocalizedLongInteger\".",
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						defaultLanguageId = "pt_BR";
+						properties = HashMapBuilder.<String, Object>put(
+							"requiredLocalizedLongInteger_i18n",
+							HashMapBuilder.put(
+								"pt_BR", StringPool.BLANK
+							).build()
+						).build();
+					}
+				},
+				scopeKey));
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		try {
+			if (StringUtil.equals(
+					ObjectDefinitionConstants.SCOPE_COMPANY, scopeKey)) {
+
+				LocaleUtil.setDefault(
+					LocaleUtil.BRAZIL.getLanguage(),
+					LocaleUtil.BRAZIL.getCountry(),
+					LocaleUtil.BRAZIL.getVariant());
+			}
+			else {
+				GroupTestUtil.updateDisplaySettings(
+					GetterUtil.getLong(scopeKey),
+					Arrays.asList(LocaleUtil.BRAZIL, LocaleUtil.US),
+					LocaleUtil.BRAZIL);
+			}
+
+			// No value provided for the default language ID in the required
+			// object field of a draft object entry
+
+			objectDefinition.setEnableObjectEntryDraft(true);
+
+			objectDefinitionLocalService.updateObjectDefinition(
+				objectDefinition);
+
+			assertEquals(
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = Collections.emptyMap();
+							status = new Status() {
+								{
+									code = WorkflowConstants.STATUS_DRAFT;
+								}
+							};
+						}
+					},
+					scopeKey),
+				new ObjectEntry() {
+					{
+						properties = Collections.emptyMap();
+					}
+				});
+
+			// No value provided for the default language ID in the required
+			// object field of a published object entry
+
+			AssertUtils.assertFailure(
+				ObjectEntryValuesException.RequiredLanguageId.class,
+				"No value was provided for the language ID \"pt_BR\" in the " +
+					"required object field \"requiredLocalizedLongInteger\".",
+				() -> _defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = Collections.emptyMap();
+						}
+					},
+					scopeKey));
+			AssertUtils.assertFailure(
+				ObjectEntryValuesException.RequiredLanguageId.class,
+				"No value was provided for the language ID \"pt_BR\" in the " +
+					"required object field \"requiredLocalizedLongInteger\".",
+				() -> _defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"requiredLocalizedLongInteger_i18n",
+								HashMapBuilder.put(
+									"pt_BR", StringPool.BLANK
+								).build()
+							).build();
+						}
+					},
+					scopeKey));
+
+			assertEquals(
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							defaultLanguageId = "en_US";
+							properties = HashMapBuilder.<String, Object>put(
+								"requiredLocalizedLongInteger", 0
+							).build();
+						}
+					},
+					scopeKey),
+				new ObjectEntry() {
+					{
+						defaultLanguageId = "en_US";
+						properties = HashMapBuilder.<String, Object>put(
+							"requiredLocalizedLongInteger_i18n",
+							HashMapBuilder.<String, Object>put(
+								"en_US", 0
+							).build()
+						).build();
+					}
+				});
+			assertEquals(
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"requiredLocalizedLongInteger", 0
+							).build();
+						}
+					},
+					scopeKey),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"requiredLocalizedLongInteger_i18n",
+							HashMapBuilder.<String, Object>put(
+								"pt_BR", 0
+							).build()
+						).build();
+					}
+				});
+
+			// Value provided for the default language ID in the required
+			// object field of a published object entry
+
+			int randomInt = RandomTestUtil.randomInt();
+
+			assertEquals(
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"requiredLocalizedLongInteger_i18n",
+								HashMapBuilder.put(
+									"pt_BR", randomInt
+								).build()
+							).build();
+						}
+					},
+					scopeKey),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"requiredLocalizedLongInteger_i18n",
+							HashMapBuilder.<String, Object>put(
+								"pt_BR", randomInt
+							).build()
+						).build();
+					}
+				});
+		}
+		finally {
+			if (scopeKey.equals(ObjectDefinitionConstants.SCOPE_COMPANY)) {
+				LocaleUtil.setDefault(
+					defaultLocale.getLanguage(), defaultLocale.getCountry(),
+					defaultLocale.getVariant());
+			}
+			else {
+				_groupLocalService.deleteGroup(GetterUtil.getLong(scopeKey));
+			}
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

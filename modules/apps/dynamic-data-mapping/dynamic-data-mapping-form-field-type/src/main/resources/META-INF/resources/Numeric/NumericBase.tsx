@@ -27,7 +27,7 @@ const NumericBase = ({
 	appendType,
 	dataType,
 	decimalPlaces,
-	editingLocale,
+	editingLanguageId,
 	errorMessage,
 	focused,
 	htmlAutocompleteAttribute,
@@ -93,7 +93,8 @@ const NumericBase = ({
 					})}
 					className={classNames({
 						'ddm-form-field-type__numeric--rtl':
-							Liferay.Language.direction[editingLocale] === 'rtl',
+							Liferay.Language.direction[editingLanguageId] ===
+							'rtl',
 					})}
 					disabled={readOnly}
 					id={id ?? name}

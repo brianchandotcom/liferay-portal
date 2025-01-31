@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.ParameterizedType;
@@ -65,7 +66,8 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 
 					emitter.emit(
 						_encodeKey(
-							(Long)serviceReference.getProperty("companyId"),
+							GetterUtil.getLong(
+								serviceReference.getProperty("companyId")),
 							itemClass.getName(),
 							(String)serviceReference.getProperty(
 								"batch.engine.task.item.delegate.name")));

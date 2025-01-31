@@ -323,8 +323,7 @@ public class TestrayCaseResult {
 
 		BLOCKED(4, "blocked"), DIDNOTRUN(6, "dnr"), FAILED(3, "failed"),
 		INCOMPLETE(1, "incomplete"), INPROGRESS(1, "in-progress"),
-		PASSED(2, "passed"), TESTFIX(7, "test-fix"),
-		UNTESTED(1, "untested");
+		PASSED(2, "passed"), TESTFIX(7, "test-fix"), UNTESTED(1, "untested");
 
 		public static Status get(Integer id) {
 			return _statuses.get(id);

@@ -84,7 +84,8 @@ public class TestrayRoutineDurationReportResourceImpl
 
 		if (Validator.isNotNull(testrayCaseTypeIds)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(TestrayUtil.interpolateParams(params, priority));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCaseTypeIds));
 			sb.append(") ");
 		}
 

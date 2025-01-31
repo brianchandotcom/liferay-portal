@@ -75,7 +75,6 @@ definition {
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name-staging",
 				mimeType = "image/jpeg",
-				site = "false",
 				sourceFileName = "Document_1.jpg");
 		}
 

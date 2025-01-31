@@ -931,7 +931,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name-staging",
 			mimeType = "image/jpeg",
-			site = "false",
 			sourceFileName = "Document_1.jpeg");
 
 		DMNavigator.openToEditEntryInSite(

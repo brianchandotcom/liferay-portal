@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 
@@ -332,9 +333,16 @@ public class ResourceActionLocalServiceImpl
 			resourceAction = resourceActionPersistence.fetchByN_A(
 				name, actionId);
 
-			if (resourceAction != null) {
+			if (resourceAction == null) {
+				_resourceActions.put(encodeKey(name, actionId), _NULL_HOLDER);
+			}
+			else {
 				_resourceActions.put(encodeKey(name, actionId), resourceAction);
 			}
+		}
+
+		if (resourceAction == _NULL_HOLDER) {
+			return null;
 		}
 
 		return resourceAction;
@@ -391,6 +399,9 @@ public class ResourceActionLocalServiceImpl
 		return DBPartitionUtil.getPartitionKey(
 			StringBundler.concat(name, StringPool.POUND, actionId));
 	}
+
+	private static final ResourceAction _NULL_HOLDER =
+		ProxyFactory.newDummyInstance(ResourceAction.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceActionLocalServiceImpl.class);

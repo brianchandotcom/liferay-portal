@@ -80,7 +80,7 @@ public class AllSectionFragmentRenderer implements FragmentRenderer {
 			HeadlessDisplayTag headlessDisplayTag = new HeadlessDisplayTag();
 
 			headlessDisplayTag.setApiURL(
-				"/o/search/v1.0/search?emptySearch=true");
+				"/o/search/v1.0/search?emptySearch=true&nestedFields=embedded");
 			headlessDisplayTag.setBulkActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFdsActionDropdownItems(new ArrayList<>());
 			headlessDisplayTag.setFormName("fm");

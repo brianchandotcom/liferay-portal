@@ -84,6 +84,7 @@ const Numeric: React.FC<NumericProps> = (props) => {
 	return (
 		<NumericBase
 			{...props}
+			editingLanguageId={editingLanguageId}
 			inputValue={inputValue}
 			onChange={handleChange}
 			symbols={symbols}
@@ -126,6 +127,7 @@ export type NumericProps = {
 	decimalPlaces: number;
 	defaultLanguageId: Locale;
 	defaultLocale: EditingLocale;
+	editingLanguageId: Locale;
 	editingLocale: Locale;
 	errorMessage?: string;
 	fieldName: string;

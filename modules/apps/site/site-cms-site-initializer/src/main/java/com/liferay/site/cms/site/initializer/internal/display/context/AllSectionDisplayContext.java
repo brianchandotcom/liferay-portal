@@ -17,7 +17,7 @@ import java.util.List;
 public class AllSectionDisplayContext {
 
 	public String getAPIURL() {
-		return "/o/search/v1.0/search?emptySearch=true";
+		return "/o/search/v1.0/search?emptySearch=true&nestedFields=embedded";
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

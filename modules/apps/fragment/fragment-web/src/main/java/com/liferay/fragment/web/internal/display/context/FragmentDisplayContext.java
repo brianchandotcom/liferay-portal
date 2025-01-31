@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -164,16 +166,37 @@ public class FragmentDisplayContext {
 			return "exportFragmentCompositionsAndFragmentEntries";
 		}
 
-		List<String> availableActions = new ArrayList<>();
-
-		availableActions.add("exportFragmentCompositionsAndFragmentEntries");
+		List<String> availableActions = new ArrayList<>(
+			Arrays.asList(
+				"exportFragmentCompositionsAndFragmentEntries",
+				"deleteFragmentCompositionsAndFragmentEntries",
+				"moveFragmentCompositionsAndFragmentEntries"));
 
 		if (object instanceof FragmentEntry) {
 			availableActions.add("copySelectedFragmentEntries");
+
+			FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+				fragmentEntry.isMarketplace()) {
+
+				availableActions.remove("copySelectedFragmentEntries");
+				availableActions.remove(
+					"exportFragmentCompositionsAndFragmentEntries");
+			}
 		}
 
-		availableActions.add("deleteFragmentCompositionsAndFragmentEntries");
-		availableActions.add("moveFragmentCompositionsAndFragmentEntries");
+		if (object instanceof FragmentComposition) {
+			FragmentComposition fragmentComposition =
+				(FragmentComposition)object;
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+				fragmentComposition.isMarketplace()) {
+
+				availableActions.remove(
+					"exportFragmentCompositionsAndFragmentEntries");
+			}
+		}
 
 		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}

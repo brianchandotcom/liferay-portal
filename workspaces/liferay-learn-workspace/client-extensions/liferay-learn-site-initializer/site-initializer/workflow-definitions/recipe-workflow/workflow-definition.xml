@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 
-<workflow-definition xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd">
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
 	<name>Recipe Workflow</name>
 	<description>A single approver can approve a workflow content.</description>
-	<version>50</version>
+	<version>2</version>
 	<state>
 		<name>created</name>
 		<description>Begin a workflow.</description>
@@ -43,11 +46,11 @@
 		<metadata>
 			<![CDATA[
 				{
+					"terminal": true,
 					"xy": [
 						539,
 						74
-					],
-					"terminal": true
+					]
 				}
 			]]>
 		</metadata>

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.object.entries.frontend.data.set.data.model;
+package com.liferay.object.entries.frontend.data.set.data.model;
 
 /**
  * @author Marco Leo

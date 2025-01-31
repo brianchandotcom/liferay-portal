@@ -15,6 +15,7 @@ Export-Package:\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\
 	com.liferay.object.dynamic.data.mapping.expression,\
+	com.liferay.object.entries.frontend.data.set.data.model,\
 	com.liferay.object.entry,\
 	com.liferay.object.entry.contributor,\
 	com.liferay.object.entry.util,\

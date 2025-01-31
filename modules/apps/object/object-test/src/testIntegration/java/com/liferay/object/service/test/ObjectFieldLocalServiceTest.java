@@ -629,8 +629,30 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value " + defaultValue +
 				" of setting defaultValue is invalid for object field boolean",
-			() -> _addCustomObjectDefinitionWithBooleanObjectField(
-				defaultValue));
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				Collections.singletonList(
+					new BooleanObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"boolean"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+							).value(
+								defaultValue
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_DEFAULT_VALUE_TYPE
+							).value(
+								ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+							).build())
+					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value " + defaultValue +
@@ -2118,35 +2140,6 @@ public class ObjectFieldLocalServiceTest {
 			Collections.singletonList(
 				_getAutoIncrementObjectField(
 					initialValue, 0, prefix, readOnly, required, suffix)));
-	}
-
-	private void _addCustomObjectDefinitionWithBooleanObjectField(
-			String defaultValue)
-		throws Exception {
-
-		ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			Collections.singletonList(
-				new BooleanObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"boolean"
-				).objectFieldSettings(
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-						).value(
-							defaultValue
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
-						).value(
-							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-						).build())
-				).build()));
 	}
 
 	private void _addCustomObjectDefinitionWithEncryptedObjectField(

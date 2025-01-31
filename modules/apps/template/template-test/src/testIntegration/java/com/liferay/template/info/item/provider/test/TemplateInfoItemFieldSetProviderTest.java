@@ -13,7 +13,12 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -21,6 +26,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -33,6 +40,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +54,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -61,6 +70,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -775,6 +786,95 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-47739")
+	public void testGetInfoFieldValuesRenderingRepeatableField()
+		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				_portal.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			_portal.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_deserialize(
+				_readFileToString("structure_with_repeatable_field.json")),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(),
+				_readFileToString("repeatable_field_content.xml"),
+				ddmStructure.getStructureKey(), null,
+				LocaleUtil.getSiteDefault());
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(false);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"Text1");
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 4, ddmFormFieldValues.size());
+
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				String.valueOf(journalArticle.getDDMStructureId()),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TemplateTestUtil.getRepeatableFieldSampleScriptFTL(
+					"DDMStructure_Text1"),
+				_serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				String.valueOf(journalArticle.getDDMStructureId()),
+				journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField<?> infoField = infoFieldValue.getInfoField();
+
+		Assert.assertTrue(
+			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				journalArticleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		_assertExpectedNames(
+			(String)infoFieldValue.getValue(LocaleUtil.US),
+			TransformUtil.transformToArray(
+				ddmFormFieldValues,
+				ddmFormFieldValue -> {
+					Value ddmFormFieldValueValue = ddmFormFieldValue.getValue();
+
+					return ddmFormFieldValueValue.getString(LocaleUtil.US);
+				},
+				String.class));
+		_assertExpectedNames(
+			(String)infoFieldValue.getValue(LocaleUtil.SPAIN),
+			TransformUtil.transformToArray(
+				ddmFormFieldValues,
+				ddmFormFieldValue -> {
+					Value ddmFormFieldValueValue = ddmFormFieldValue.getValue();
+
+					return ddmFormFieldValueValue.getString(LocaleUtil.SPAIN);
+				},
+				String.class));
+	}
+
+	@Test
 	public void testGetInfoFieldValuesRenderingSelectInfoFieldTypeMultipleSelection()
 		throws Exception {
 
@@ -1073,6 +1173,17 @@ public class TemplateInfoItemFieldSetProviderTest {
 		return ddmFormField;
 	}
 
+	private DDMForm _deserialize(String content) {
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_jsonDDMFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
 	private String _formatDate(Date date, Locale locale) {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
@@ -1128,6 +1239,16 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		return themeDisplay;
 	}
+
+	private String _readFileToString(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + fileName));
+	}
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

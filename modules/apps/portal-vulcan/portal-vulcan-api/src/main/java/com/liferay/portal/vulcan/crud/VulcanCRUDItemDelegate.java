@@ -15,13 +15,12 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marco Leo
+ * @author Carlos Correa
  */
 @ProviderType
 public interface VulcanCRUDItemDelegate<T> {
 
-	public T getItem(Long itemId) throws Exception;
-
-	public String getResourcePath();
+	public T getItem(Long id) throws Exception;
 
 	public void setContextCompany(Company contextCompany);
 

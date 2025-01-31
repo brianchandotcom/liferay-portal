@@ -80,11 +80,6 @@ import java.util.Objects;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.apache.cxf.jaxrs.impl.UriInfoImpl;
-import org.apache.cxf.message.ExchangeImpl;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.message.MessageImpl;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -143,31 +138,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		return _postSearchPage(
 			entryClassNames, scope, search, filter, pagination, sorts,
 			searchRequestBody);
-	}
-
-	private Message _createMessage(String resourcePath) {
-		Message message = new MessageImpl();
-
-		String requestURL = String.valueOf(
-			contextHttpServletRequest.getRequestURL());
-
-		String contextPath = GetterUtil.getString(
-			contextHttpServletRequest.getContextPath());
-
-		String endPoint = "";
-		int index = requestURL.lastIndexOf(contextPath);
-
-		if (index > 0) {
-			endPoint = requestURL.substring(0, index);
-		}
-
-		endPoint = endPoint + "/o" + resourcePath;
-
-		message.put(Message.ENDPOINT_ADDRESS, endPoint);
-
-		message.setExchange(new ExchangeImpl());
-
-		return message;
 	}
 
 	private AssetRenderer<?> _getAssetRenderer(
@@ -524,12 +494,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		if (vulcanCRUDItemDelegate != null) {
 			vulcanCRUDItemDelegate.setContextCompany(contextCompany);
-
-			UriInfoImpl uriInfoImpl = new UriInfoImpl(
-				_createMessage(vulcanCRUDItemDelegate.getResourcePath()));
-
-			vulcanCRUDItemDelegate.setContextUriInfo(uriInfoImpl);
-
+			vulcanCRUDItemDelegate.setContextUriInfo(contextUriInfo);
 			vulcanCRUDItemDelegate.setContextUser(contextUser);
 			vulcanCRUDItemDelegate.setLanguageId(contextUser.getLanguageId());
 

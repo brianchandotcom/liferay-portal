@@ -149,7 +149,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
 			<#assign getByERCBatchJavaMethodSignature = javaMethodSignature />
@@ -1266,13 +1266,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#if generateCRUD>
 		@Override
-		public ${schemaName} getItem(Long itemId) throws Exception {
-			return ${getByIdJavaMethodSignature.methodName}(itemId);
-		}
-
-		@Override
-		public String getResourcePath() {
-			return "${configYAML.application.baseURI}";
+		public ${schemaName} getItem(Long id) throws Exception {
+			return ${getByIdJavaMethodSignature.methodName}(id);
 		}
 	</#if>
 

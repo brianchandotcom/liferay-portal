@@ -51,6 +51,11 @@ if (layoutMode !== 'edit') {
 						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 						onLocaleChange: (languageId) => {
 							editorPromise.then((editor) => {
+								const editorWrapper = document.getElementById(
+									`cke_${editorName}`
+								);
+								const iframe =
+									editorWrapper.querySelector('iframe');
 								const inputLabel = document.querySelector(
 									`label[for="${editorName}"]`
 								);
@@ -67,6 +72,17 @@ if (layoutMode !== 'edit') {
 									if (isReadOnly) {
 										inputLabel.innerHTML = input.label;
 									}
+									else {
+										editorWrapper.classList.remove(
+											'rich-text-input--disabled'
+										);
+
+										iframe.setAttribute('tabindex', '0');
+
+										iframe.contentDocument.body.removeAttribute(
+											'aria-disabled'
+										);
+									}
 								}
 								else {
 									editor.setReadOnly(true);
@@ -74,6 +90,18 @@ if (layoutMode !== 'edit') {
 									if (isReadOnly) {
 										inputLabel.innerHTML =
 											inputContainer.dataset.readonlyLabel;
+									}
+									else {
+										editorWrapper.classList.add(
+											'rich-text-input--disabled'
+										);
+
+										iframe.setAttribute('tabindex', '-1');
+
+										iframe.contentDocument.body.setAttribute(
+											'aria-disabled',
+											'true'
+										);
 									}
 								}
 							});

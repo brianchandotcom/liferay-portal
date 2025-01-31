@@ -3,3 +3,18 @@
 	pointer-events: none;
 	position: absolute;
 }
+
+.rich-text-input--disabled {
+	position: relative;
+}
+
+.rich-text-input--disabled:after {
+	background-color: transparent;
+	content: '';
+	cursor: not-allowed;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

@@ -43,7 +43,18 @@ html#{$cadmin-selector} {
 				text-align: center;
 			}
 
-			&-item,
+			&-item {
+				border: 1px solid fade_out($cadmin-purple, 0.9);
+				min-height: 80px;
+
+				&__title {
+					color: $cadmin-purple-d3;
+					font-size: 14px;
+					font-style: italic;
+					font-weight: 500;
+				}
+			}
+
 			&-item-old {
 				border: 1px solid fade_out($cadmin-purple, 0.9);
 				min-height: 80px;
@@ -100,6 +111,12 @@ html#{$cadmin-selector} {
 		&__collection-item,
 		&__collection-item-old {
 			position: relative;
+
+			.page-editor__no-fragments-state {
+				background: fade_out($cadmin-purple-l4, 0.9);
+				border: $dashedBorderWidth dashed $cadmin-purple-l4;
+				padding: 4vh 12% 6vh;
+			}
 
 			&:before {
 				$spacingUnit: 12px;

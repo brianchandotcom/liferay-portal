@@ -493,10 +493,11 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				contextCompany.getCompanyId(), entityClassName);
 
 		if (vulcanCRUDItemDelegate != null) {
+			vulcanCRUDItemDelegate.setContextAcceptLanguage(
+				contextAcceptLanguage);
 			vulcanCRUDItemDelegate.setContextCompany(contextCompany);
 			vulcanCRUDItemDelegate.setContextUriInfo(contextUriInfo);
 			vulcanCRUDItemDelegate.setContextUser(contextUser);
-			vulcanCRUDItemDelegate.setLanguageId(contextUser.getLanguageId());
 
 			searchResult.setEmbedded(
 				() -> vulcanCRUDItemDelegate.getItem(entryClassPK));

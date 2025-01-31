@@ -7,7 +7,7 @@ package com.liferay.portal.vulcan.crud;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -22,14 +22,12 @@ public interface VulcanCRUDItemDelegate<T> {
 
 	public T getItem(Long id) throws Exception;
 
+	public void setContextAcceptLanguage(AcceptLanguage acceptLanguage);
+
 	public void setContextCompany(Company company);
 
 	public void setContextUriInfo(UriInfo uriInfo);
 
 	public void setContextUser(User user);
-
-	public void setGroupLocalService(GroupLocalService groupLocalService);
-
-	public void setLanguageId(String languageId);
 
 }

@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -97,6 +98,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -2644,6 +2646,32 @@ public class ObjectDefinitionLocalServiceTest {
 				Collections.<ObjectField>emptyList());
 
 		_testSystemObjectFields(objectDefinition);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testUndeployObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ClassName className = ClassNameLocalServiceUtil.getClassName(
+			objectDefinition.getClassName());
+
+		Assert.assertNotNull(className);
+
+		_objectDefinitionLocalService.deployObjectDefinition(objectDefinition);
+
+		Assert.assertNotNull(
+			ClassNameLocalServiceUtil.fetchByClassNameId(
+				className.getClassNameId()));
+
+		_objectDefinitionLocalService.undeployObjectDefinition(
+			objectDefinition);
+
+		Assert.assertNull(
+			ClassNameLocalServiceUtil.fetchByClassNameId(
+				className.getClassNameId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

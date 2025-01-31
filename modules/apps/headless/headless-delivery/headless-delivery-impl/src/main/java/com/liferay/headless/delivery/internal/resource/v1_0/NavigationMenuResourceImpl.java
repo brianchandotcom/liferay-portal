@@ -123,10 +123,18 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Long siteId, NavigationMenu navigationMenu)
 		throws Exception {
 
+		int type = SiteNavigationConstants.TYPE_DEFAULT;
+
+		NavigationMenu.NavigationType navigationType =
+			navigationMenu.getNavigationType();
+
+		if (navigationType != null) {
+			type = navigationType.ordinal() + 1;
+		}
+
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.addSiteNavigationMenu(
-				null, siteId, navigationMenu.getName(),
-				SiteNavigationConstants.TYPE_DEFAULT, true,
+				null, siteId, navigationMenu.getName(), type, true,
 				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest, null
 				).build());

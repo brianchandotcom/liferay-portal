@@ -100,16 +100,6 @@ export function getMaskedValue({
 		'g'
 	);
 
-	let raw = masked.replace(regex, '');
-
-	if (dataType === 'double') {
-		const symbolsValue = raw.match(/[^-\d]/g);
-
-		if (symbolsValue) {
-			raw = raw.replace(symbolsValue[0], '.');
-		}
-	}
-
 	const splitNumbers = masked.split(symbols.decimalSymbol);
 
 	const decimalDigitsLength =
@@ -124,7 +114,7 @@ export function getMaskedValue({
 			dataType === 'double'
 				? `0${symbols.decimalSymbol}${'0'.repeat(decimalPlaces)}`
 				: inputMaskFormat.replace(/\d/g, '_'),
-		raw,
+		raw: masked.replace(regex, ''),
 	};
 }
 

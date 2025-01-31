@@ -89,8 +89,7 @@ export default function fragmentEntryLinksReducer(
 			return fragmentEntryLinks;
 		}
 
-		case ADD_FRAGMENT_ENTRY_LINKS:
-		case ADD_STEPPER: {
+		case ADD_FRAGMENT_ENTRY_LINKS: {
 			const newFragmentEntryLinks: FragmentEntryLinkMap = {};
 
 			action.fragmentEntryLinks.forEach((fragmentEntryLink) => {
@@ -101,6 +100,13 @@ export default function fragmentEntryLinksReducer(
 			return {
 				...fragmentEntryLinks,
 				...newFragmentEntryLinks,
+			};
+		}
+
+		case ADD_STEPPER: {
+			return {
+				...fragmentEntryLinks,
+				...action.fragmentEntryLinks,
 			};
 		}
 

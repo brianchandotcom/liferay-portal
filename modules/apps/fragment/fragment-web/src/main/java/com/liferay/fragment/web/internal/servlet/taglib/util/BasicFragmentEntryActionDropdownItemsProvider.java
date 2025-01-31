@@ -72,7 +72,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							hasManageFragmentEntriesPermission &&
-							!_fragmentEntry.isTypeReact(),
+							!_fragmentEntry.isTypeReact() &&
+							!_fragmentEntry.isMarketplace(),
 						_getEditFragmentEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -83,13 +84,15 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() ->
 							hasManageFragmentEntriesPermission &&
-							!_fragmentEntry.isReadOnly(),
+							!_fragmentEntry.isReadOnly() &&
+							!_fragmentEntry.isMarketplace(),
 						_getUpdateFragmentEntryPreviewActionUnsafeConsumer()
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly() &&
-							(_fragmentEntry.getPreviewFileEntryId() > 0),
+							(_fragmentEntry.getPreviewFileEntryId() > 0) &&
+							!_fragmentEntry.isMarketplace(),
 						_getDeleteFragmentEntryPreviewActionUnsafeConsumer()
 					).add(
 						() ->
@@ -98,12 +101,14 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 							(_fragmentEntry.isDraft() ||
 							 (_fragmentEntry.fetchDraftFragmentEntry() !=
 								 null)) &&
-							!_fragmentEntry.isTypeReact(),
+							!_fragmentEntry.isTypeReact() &&
+							!_fragmentEntry.isMarketplace(),
 						_getDeleteDraftFragmentEntryActionUnsafeConsumer()
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
-							!_fragmentEntry.isReadOnly(),
+							!_fragmentEntry.isReadOnly() &&
+							!_fragmentEntry.isMarketplace(),
 						_getRenameFragmentEntryActionUnsafeConsumer()
 					).add(
 						() ->
@@ -111,7 +116,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 							!_fragmentEntry.isCacheable() &&
 							!_fragmentEntry.isReadOnly() &&
 							!_fragmentEntry.isTypeInput() &&
-							!_fragmentEntry.isTypeReact(),
+							!_fragmentEntry.isTypeReact() &&
+							!_fragmentEntry.isMarketplace(),
 						_getMarkAsCacheableActionUnsafeConsumer()
 					).add(
 						() ->
@@ -119,7 +125,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 							_fragmentEntry.isCacheable() &&
 							!_fragmentEntry.isReadOnly() &&
 							!_fragmentEntry.isTypeInput() &&
-							!_fragmentEntry.isTypeReact(),
+							!_fragmentEntry.isTypeReact() &&
+							!_fragmentEntry.isMarketplace(),
 						_getUnmarkAsCacheableActionUnsafeConsumer()
 					).add(
 						() ->
@@ -145,10 +152,13 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 						() ->
 							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly() &&
-							!_fragmentEntry.isTypeReact(),
+							!_fragmentEntry.isTypeReact() &&
+							!_fragmentEntry.isMarketplace(),
 						_getExportFragmentEntryActionUnsafeConsumer()
 					).add(
-						() -> hasManageFragmentEntriesPermission,
+						() ->
+							hasManageFragmentEntriesPermission &&
+							!_fragmentEntry.isMarketplace(),
 						_getCopyFragmentEntryActionUnsafeConsumer()
 					).add(
 						() ->

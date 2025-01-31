@@ -16,6 +16,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,7 +75,9 @@ public class BasicFragmentEntryVerticalCard
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ||
-			fragmentEntry.isTypeReact()) {
+			fragmentEntry.isTypeReact() ||
+			(FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			 fragmentEntry.isMarketplace())) {
 
 			return null;
 		}
@@ -93,7 +96,24 @@ public class BasicFragmentEntryVerticalCard
 	}
 
 	@Override
+	public String getIcon() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			fragmentEntry.isMarketplace()) {
+
+			return "marketplace";
+		}
+
+		return super.getIcon();
+	}
+
+	@Override
 	public List<LabelItem> getLabels() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			fragmentEntry.isMarketplace()) {
+
+			return null;
+		}
+
 		if (fragmentEntry.isApproved() &&
 			(fragmentEntry.fetchDraftFragmentEntry() != null)) {
 
@@ -132,7 +152,35 @@ public class BasicFragmentEntryVerticalCard
 	}
 
 	@Override
+	public String getStickerCssClass() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			fragmentEntry.isMarketplace()) {
+
+			return "fragment-marketplace-sticker";
+		}
+
+		return super.getStickerCssClass();
+	}
+
+	@Override
+	public String getStickerIcon() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			fragmentEntry.isMarketplace()) {
+
+			return "marketplace";
+		}
+
+		return super.getStickerIcon();
+	}
+
+	@Override
 	public String getSubtitle() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
+			fragmentEntry.isMarketplace()) {
+
+			return null;
+		}
+
 		return LanguageUtil.format(
 			_httpServletRequest, "x-usages",
 			FragmentEntryLinkLocalServiceUtil.

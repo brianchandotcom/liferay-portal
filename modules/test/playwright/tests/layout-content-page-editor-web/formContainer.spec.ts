@@ -6780,7 +6780,22 @@ test(
 
 		await pageEditorPage.mapFormFragment(formId, 'Read Only Object');
 
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
 		// Check that all fields have the corresponding attribute and label
+
+		await expect(
+			page
+				.locator('.rich-text-input', {
+					hasText: 'Rich Text (Read Only)',
+				})
+				.frameLocator('iframe')
+				.locator('body')
+		).toHaveAttribute('aria-readonly', 'true');
 
 		[
 			'Boolean (Read Only)',
@@ -6797,10 +6812,6 @@ test(
 				''
 			);
 		});
-
-		await expect(
-			page.getByLabel('Rich Text (Read Only)', {exact: true})
-		).toHaveAttribute('aria-readonly', 'true');
 
 		(
 			await page

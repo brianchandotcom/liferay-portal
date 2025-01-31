@@ -335,6 +335,35 @@ public class UpdateFormItemConfigMVCActionCommand
 				TransformUtil.transform(
 					addedLayoutStructureItems, LayoutStructureItem::getItemId))
 		).put(
+			"fragmentEntryLinks",
+			() -> {
+				long stepperFragmentEntryLinkId = ParamUtil.getLong(
+					actionRequest, "stepperFragmentEntryLinkId");
+
+				FragmentEntryLink stepperFragmentEntryLink =
+					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+						stepperFragmentEntryLinkId);
+
+				if (stepperFragmentEntryLink == null) {
+					return null;
+				}
+
+				stepperFragmentEntryLink =
+					_formItemManager.updateNumberOfStepps(
+						actionRequest, actionResponse,
+						formStyledLayoutStructureItem.getNumberOfSteps(),
+						stepperFragmentEntryLink);
+
+				return JSONUtil.put(
+					String.valueOf(
+						stepperFragmentEntryLink.getFragmentEntryLinkId()),
+					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+						stepperFragmentEntryLink,
+						_portal.getHttpServletRequest(actionRequest),
+						_portal.getHttpServletResponse(actionResponse),
+						layoutStructure));
+			}
+		).put(
 			"layoutData", updatedLayoutStructure.toJSONObject()
 		).put(
 			"movedItemIds",

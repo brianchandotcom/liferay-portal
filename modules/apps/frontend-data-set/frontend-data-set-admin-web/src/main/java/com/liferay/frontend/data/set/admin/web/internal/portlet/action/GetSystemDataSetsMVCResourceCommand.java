@@ -18,11 +18,14 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.ResourceRequest;
@@ -62,6 +65,9 @@ public class GetSystemDataSetsMVCResourceCommand
 			return;
 		}
 
+		List<String> systemFDSNamesSortedList = ListUtil.sort(
+			new ArrayList<>(systemFDSNames));
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -81,7 +87,7 @@ public class GetSystemDataSetsMVCResourceCommand
 			JSONUtil.put(
 				"items",
 				JSONUtil.toJSONArray(
-					systemFDSNames,
+					systemFDSNamesSortedList,
 					systemFDSName -> {
 						SystemFDSEntry systemFDSEntry =
 							_systemFDSEntryRegistry.getSystemFDSEntry(

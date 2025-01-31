@@ -106,15 +106,35 @@ public class LayoutLocalServiceWrapper
 	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				sourceLayout.getGroupId(), sourceLayout.getPlid());
+
 		long[] sourceSegmentsExperiencesIds =
 			TransformUtil.transformToLongArray(
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					sourceLayout.getGroupId(), sourceLayout.getPlid()),
+				segmentsExperiences,
 				SegmentsExperienceModel::getSegmentsExperienceId);
+
+		long[] targetSegmentsExperiencesIds =
+			TransformUtil.transformToLongArray(
+				segmentsExperiences,
+				segmentsExperience -> {
+					SegmentsExperience targetSegmentsExperience =
+						_segmentsExperienceLocalService.fetchSegmentsExperience(
+							targetLayout.getGroupId(),
+							segmentsExperience.getSegmentsExperienceKey(),
+							targetLayout.getPlid());
+
+					if (targetSegmentsExperience == null) {
+						return null;
+					}
+
+					return targetSegmentsExperience.getSegmentsExperienceId();
+				});
 
 		return _copyLayoutContent(
 			false, sourceLayout, sourceSegmentsExperiencesIds, targetLayout,
-			sourceSegmentsExperiencesIds);
+			targetSegmentsExperiencesIds);
 	}
 
 	@Override
@@ -339,19 +359,19 @@ public class LayoutLocalServiceWrapper
 	}
 
 	private void _copyLayoutPageTemplateStructure(
-			long[] segmentsExperiencesIds, Layout sourceLayout,
-			Layout targetLayout, User user)
+			long[] sourceSegmentsExperiencesIds, Layout sourceLayout,
+			long[] targetSegmentsExperiencesIds, Layout targetLayout, User user)
 		throws Exception {
 
 		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
 			_getFragmentEntryLinksMap(
-				sourceLayout, segmentsExperiencesIds, targetLayout);
+				sourceLayout, sourceSegmentsExperiencesIds, targetLayout);
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					sourceLayout.getGroupId(), sourceLayout.getPlid());
 		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
-			segmentsExperiencesIds, targetLayout);
+			targetSegmentsExperiencesIds, targetLayout);
 
 		LayoutPageTemplateStructure targetLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -370,7 +390,7 @@ public class LayoutLocalServiceWrapper
 		}
 
 		Map<Long, Long> segmentsExperienceIdsMap = _getSegmentsExperienceIds(
-			segmentsExperiencesIds, targetLayout, user);
+			sourceSegmentsExperiencesIds, targetLayout, user);
 
 		_cleanDeletedSegmentsExperiences(
 			segmentsExperienceIdsMap, targetLayout);
@@ -1127,7 +1147,7 @@ public class LayoutLocalServiceWrapper
 				else {
 					_copyLayoutPageTemplateStructure(
 						_sourceSegmentsExperiencesIds, _sourceLayout,
-						_targetLayout, _user);
+						_targetSegmentsExperiencesIds, _targetLayout, _user);
 				}
 
 				List<String> portletIds = _getLayoutPortletIds(

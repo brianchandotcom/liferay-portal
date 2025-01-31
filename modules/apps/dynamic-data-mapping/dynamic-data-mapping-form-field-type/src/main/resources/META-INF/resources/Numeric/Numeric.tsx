@@ -17,7 +17,7 @@ import {EditingLocale} from '../util/localizable/LocalesDropdown';
 import withConfirmationField from '../util/withConfirmationField.es';
 import NumericBase, {IMaskedNumber} from './NumericBase';
 import {useNumericInputValueMemo} from './hooks';
-import {getSymbols} from './numericUtil';
+import {getSymbols, maxLengthExceeded} from './numericUtil';
 
 import './Numeric.scss';
 
@@ -70,9 +70,15 @@ const Numeric: React.FC<NumericProps> = (props) => {
 	});
 
 	const handleChange = (formattedValue: IMaskedNumber) => {
-		onChange({
-			target: {value: formattedValue?.raw ? formattedValue.raw : ''},
-		});
+		if (maxLengthExceeded(formattedValue.raw, inputMaskFormat)) {
+			return;
+		}
+
+		if (formattedValue.masked !== inputValue.masked) {
+			onChange({
+				target: {value: formattedValue?.raw ? formattedValue.raw : ''},
+			});
+		}
 	};
 
 	return (

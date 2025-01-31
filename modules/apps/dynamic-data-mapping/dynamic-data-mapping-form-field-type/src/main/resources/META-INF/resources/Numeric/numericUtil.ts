@@ -245,10 +245,6 @@ export function formatValue({
 	symbols,
 	value,
 }: formatValueProps) {
-	if (maxLengthExceeded(value, inputMaskFormat)) {
-		return;
-	}
-
 	value =
 		inputMask && dataType === 'integer'
 			? value

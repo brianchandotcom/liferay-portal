@@ -98,7 +98,7 @@ const NumericBase = ({
 					})}
 					disabled={readOnly}
 					id={id ?? name}
-					name={name}
+					name={`${name}${inputMask ? '_masked' : ''}`}
 					onBlur={onBlur}
 					onChange={handleChange}
 					onFocus={onFocus}

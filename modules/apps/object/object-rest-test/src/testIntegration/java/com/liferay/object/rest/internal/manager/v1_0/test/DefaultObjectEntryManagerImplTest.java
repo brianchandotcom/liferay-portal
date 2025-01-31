@@ -1221,7 +1221,7 @@ public class DefaultObjectEntryManagerImplTest
 					Arrays.asList(
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-							"isEmailAddress(textObjectFieldName5)"),
+							"isEmailAddress(textObjectFieldName)"),
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 							ObjectFieldSettingConstants.
@@ -1232,7 +1232,7 @@ public class DefaultObjectEntryManagerImplTest
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).name(
-					"textObjectFieldName5"
+					"textObjectFieldName"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
@@ -1244,8 +1244,7 @@ public class DefaultObjectEntryManagerImplTest
 						properties = HashMapBuilder.<String, Object>put(
 							"booleanObjectFieldName1", true
 						).put(
-							"textObjectFieldName5",
-							RandomTestUtil.randomString()
+							"textObjectFieldName", RandomTestUtil.randomString()
 						).build();
 					}
 				},

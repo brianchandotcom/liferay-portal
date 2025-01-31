@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal.parser;
+package com.liferay.dynamic.data.mapping.expression.internal.parser.generated;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

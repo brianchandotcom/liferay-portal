@@ -454,6 +454,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"batch.planner.import.enabled", "true"
 							).put(
 								"companyId", objectDefinition.getCompanyId()
+							).put(
+								"crud.item.delegate", "true"
 							).build()),
 						_bundleContext.registerService(
 							ObjectRelationshipElementsParser.class,

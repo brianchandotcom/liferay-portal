@@ -515,6 +515,23 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	protected String getApplicationPath() {
+		String restContextPath = null;
+
+		if (_objectDefinition != null) {
+			restContextPath = _objectDefinition.getRESTContextPath();
+		}
+		else {
+			ObjectDefinition objectDefinition = _objectDefinitions.get(
+				contextCompany.getCompanyId());
+
+			restContextPath = objectDefinition.getRESTContextPath();
+		}
+
+		return StringUtil.removeFirst(restContextPath, "/");
+	}
+
+	@Override
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryLocalService.getObjectEntry(GetterUtil.getLong(id));

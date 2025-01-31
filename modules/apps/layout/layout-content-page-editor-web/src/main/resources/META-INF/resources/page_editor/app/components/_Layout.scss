@@ -43,11 +43,12 @@ html#{$cadmin-selector} {
 				text-align: center;
 			}
 
-			&-item {
+			&-item,
+			&-item-old {
 				border: 1px solid fade_out($cadmin-purple, 0.9);
 				min-height: 80px;
 
-				&__title {
+				.page-editor__collection-item__title {
 					color: $cadmin-purple;
 					font-size: 12px;
 					font-style: italic;
@@ -96,7 +97,8 @@ html#{$cadmin-selector} {
 
 		&__col,
 		&__row,
-		&__collection-item {
+		&__collection-item,
+		&__collection-item-old {
 			position: relative;
 
 			&:before {
@@ -138,7 +140,8 @@ html#{$cadmin-selector} {
 			justify-content: flex-start;
 		}
 
-		&__collection-item {
+		&__collection-item,
+		&__collection-item-old {
 			&:before {
 				left: 0;
 				width: 100%;
@@ -293,7 +296,8 @@ html#{$cadmin-selector} {
 
 		&__container.flex-row,
 		&__collection .flex-row {
-			.page-editor__collection-item.empty {
+			.page-editor__collection-item.empty,
+			.page-editor__collection-item-old.empty {
 				min-width: $emptyCollectionItemMinWidth;
 			}
 

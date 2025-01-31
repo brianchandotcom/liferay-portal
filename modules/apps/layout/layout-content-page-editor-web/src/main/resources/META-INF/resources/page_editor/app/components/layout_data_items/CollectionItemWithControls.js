@@ -38,9 +38,14 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				{React.Children.count(children) === 0 ? (
 					<div
-						className={classNames('page-editor__collection-item', {
-							empty: !children.length,
-						})}
+						className={classNames(
+							Liferay.FeatureFlags['LPD-18221']
+								? 'page-editor__collection-item'
+								: 'page-editor__collection-item-old',
+							{
+								empty: !children.length,
+							}
+						)}
 						ref={setRef}
 					>
 						<div className="page-editor__collection-item__border">

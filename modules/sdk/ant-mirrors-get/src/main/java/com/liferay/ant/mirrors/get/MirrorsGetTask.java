@@ -433,8 +433,10 @@ public class MirrorsGetTask extends Task {
 
 		File mirrorsCacheFile = _getMirrorsCacheFile();
 
+		long time = System.currentTimeMillis();
+
 		File mirrorsCacheTempFile = new File(
-			mirrorsCacheFile.toString() + ".tmp");
+			time.toString() + mirrorsCacheFile.toString());
 
 		if (mirrorsCacheFile.exists() && !_force) {
 			if (_is7zFileName(_fileName)) {

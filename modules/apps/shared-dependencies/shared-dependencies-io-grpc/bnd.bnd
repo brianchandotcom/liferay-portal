@@ -1,4 +1,42 @@
 Bundle-Name: Liferay Shared Dependencies IO GRPC
 Bundle-SymbolicName: com.liferay.shared.dependencies.io.grpc
 Bundle-Version: 1.0.0
--exportcontents: io.grpc.*
+Import-Package:\
+	!com.aayushatharva.brotli4j.*,\
+	\
+	!com.github.*,\
+	\
+	!com.google.errorprone.annotations.*,\
+	!com.google.protobuf.nano.*,\
+	\
+	!com.jcraft.*,\
+	\
+	!com.ning.compress.*,\
+	\
+	!com.oracle.*,\
+	\
+	!io.opentelemetry.*,\
+	\
+	!lzma.sdk.*,\
+	\
+	!net.jpountz.*,\
+	\
+	!org.apache.log4j.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.eclipse.jetty.*,\
+	\
+	!org.jboss.*,\
+	\
+	!org.slf4j.*,\
+	\
+	!reactor.blockhound.*,\
+	\
+	!sun.security.x509,\
+	\
+	*
+-exportcontents:\
+	grpc.*;version='1.70.0',\
+	\
+	io.grpc.*;version='1.70.0'

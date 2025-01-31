@@ -115,7 +115,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			DB db = DBManagerUtil.getDB();
 
 			List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
-				connection, tableName, null, true);
+				connection, tableName, columnName, true);
 
 			IndexMetadata indexMetadata = indexMetadatas.get(0);
 

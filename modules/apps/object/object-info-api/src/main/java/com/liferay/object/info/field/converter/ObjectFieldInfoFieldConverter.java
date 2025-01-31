@@ -383,8 +383,8 @@ public class ObjectFieldInfoFieldConverter {
 	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
 		ObjectField objectField) {
 
-		String defaultValue = (String)ObjectFieldSettingUtil.getDefaultValue(
-			null, objectField, null);
+		String defaultValue = String.valueOf(
+			ObjectFieldSettingUtil.getDefaultValue(null, objectField, null));
 
 		if (!objectField.isState()) {
 			return _getOptionInfoFieldTypes(

@@ -126,8 +126,9 @@ public class PicklistObjectFieldBusinessType
 
 				localizedValue.addString(
 					objectFieldRenderingContext.getLocale(),
-					(String)ObjectFieldSettingUtil.getDefaultValue(
-						null, objectField, null));
+					String.valueOf(
+						ObjectFieldSettingUtil.getDefaultValue(
+							null, objectField, null)));
 
 				return localizedValue;
 			}
@@ -293,8 +294,8 @@ public class PicklistObjectFieldBusinessType
 				objectField.getListTypeDefinitionId());
 		}
 
-		String listEntryKey = (String)ObjectFieldSettingUtil.getDefaultValue(
-			null, objectField, null);
+		String listEntryKey = String.valueOf(
+			ObjectFieldSettingUtil.getDefaultValue(null, objectField, null));
 
 		if (MapUtil.isNotEmpty(objectFieldRenderingContext.getProperties())) {
 			ListEntry listEntry =

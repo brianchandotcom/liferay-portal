@@ -171,7 +171,10 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		return patchOrder;
 	}
 
-	async postOrderIdOrderNote(orderId: number, orderNote: TOrderNote): Promise<TOrderNote> {
+	async postOrderIdOrderNote(
+		orderId: number,
+		orderNote: TOrderNote
+	): Promise<TOrderNote> {
 		orderNote = {
 			author: getRandomString(),
 			content: getRandomString(),
@@ -183,7 +186,7 @@ export class HeadlessCommerceAdminOrderApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/orders/${orderId}/orderNotes`,
 			{
 				data: orderNote,
-				failOnStatusCode: true
+				failOnStatusCode: true,
 			}
 		);
 

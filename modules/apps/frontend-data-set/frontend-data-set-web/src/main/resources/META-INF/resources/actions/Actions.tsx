@@ -21,14 +21,10 @@ function Actions({
 	actions,
 	itemData,
 	itemId,
-	menuActive,
-	onMenuActiveChange,
 }: {
 	actions: Array<IItemsActions>;
 	itemData: any;
 	itemId: string | number;
-	menuActive?: boolean;
-	onMenuActiveChange?: Function;
 }) {
 	const {
 		executeAsyncItemAction,
@@ -48,6 +44,7 @@ function Actions({
 	]: any = useContext(ViewsContext);
 
 	const [loading, setLoading] = useState(false);
+	const [menuActive, setMenuActive] = useState(false);
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;
@@ -110,7 +107,7 @@ function Actions({
 				loading={loading}
 				menuActive={menuActive}
 				onClick={handleClick}
-				onMenuActiveChange={onMenuActiveChange}
+				onMenuActiveChange={setMenuActive}
 				setLoading={setLoading}
 			/>
 		</>

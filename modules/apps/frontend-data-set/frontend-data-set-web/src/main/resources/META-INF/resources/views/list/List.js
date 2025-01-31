@@ -10,7 +10,7 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
@@ -78,8 +78,6 @@ const ListItem = ({item, schema}) => {
 		selectionType,
 	} = useContext(FrontendDataSetContext);
 
-	const [menuActive, setMenuActive] = useState(false);
-
 	const {description, image, sticker, symbol, title, titleRenderer} = schema;
 
 	const SelectionInput =
@@ -88,9 +86,8 @@ const ListItem = ({item, schema}) => {
 	return (
 		<ClayList.Item
 			className={classNames({
-				'menu-active': menuActive,
 				selectable,
-				'selected': selectedItemsValue.includes(item[selectedItemsKey]),
+				selected: selectedItemsValue.includes(item[selectedItemsKey]),
 			})}
 			flex
 			onClick={() => {
@@ -150,8 +147,6 @@ const ListItem = ({item, schema}) => {
 						actions={itemsActions || item.actionDropdownItems}
 						itemData={item}
 						itemId={item[selectedItemsKey]}
-						menuActive={menuActive}
-						onMenuActiveChange={setMenuActive}
 					/>
 				)}
 			</ClayList.ItemField>

@@ -453,7 +453,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							).put(
 								"batch.planner.import.enabled", "true"
 							).put(
-								"companyId", objectDefinition.getCompanyId()
+								"companyId",
+								String.valueOf(objectDefinition.getCompanyId())
 							).put(
 								"crud.item.delegate", "true"
 							).build()),

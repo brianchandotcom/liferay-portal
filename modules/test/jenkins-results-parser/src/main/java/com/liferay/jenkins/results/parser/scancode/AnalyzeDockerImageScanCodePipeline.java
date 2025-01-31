@@ -101,7 +101,9 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 		return jsonObject;
 	}
 
-	protected AnalyzeDockerImageScanCodePipeline(String buildURL, String pipelineName) {
+	protected AnalyzeDockerImageScanCodePipeline(
+		String buildURL, String pipelineName) {
+
 		super(buildURL, pipelineName);
 
 		_pipelineName = pipelineName;

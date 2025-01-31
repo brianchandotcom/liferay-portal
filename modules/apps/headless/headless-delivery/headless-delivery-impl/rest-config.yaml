@@ -7,7 +7,7 @@ application:
 author: "Javier Gamarra"
 changeTrackingEnabled: true
 clientDir: "../headless-delivery-client/src/main/java"
-compatibilityVersion: 6
+compatibilityVersion: 7
 forcePredictableOperationId: true
 managePermissions: true
 testDir: "../headless-delivery-test/src/testIntegration/java"

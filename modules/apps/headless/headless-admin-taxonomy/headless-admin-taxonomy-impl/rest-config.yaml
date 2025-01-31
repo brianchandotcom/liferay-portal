@@ -6,7 +6,7 @@ application:
     name: "Liferay.Headless.Admin.Taxonomy"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-taxonomy-client/src/main/java"
-compatibilityVersion: 6
+compatibilityVersion: 7
 forcePredictableOperationId: true
 generateActionProviders: true
 generatePermissions: true
